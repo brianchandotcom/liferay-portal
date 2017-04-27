@@ -26,20 +26,20 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.commerce.product.constants.CommerceProductWebKeys" %><%@
-page import="com.liferay.commerce.product.definitions.web.internal.display.context.CommerceProductDefinitionOptionRelDisplayContext" %><%@
-page import="com.liferay.commerce.product.definitions.web.internal.display.context.CommerceProductDefinitionOptionValueRelDisplayContext" %><%@
-page import="com.liferay.commerce.product.definitions.web.internal.display.context.CommerceProductDefinitionsDisplayContext" %><%@
-page import="com.liferay.commerce.product.definitions.web.internal.display.context.CommerceProductInstanceDisplayContext" %><%@
-page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CommerceProductDefinitionFormNavigatorConstants" %><%@
-page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CommerceProductDefinitionOptionRelFormNavigatorConstants" %><%@
-page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CommerceProductDefinitionOptionValueRelFormNavigatorConstants" %><%@
+<%@ page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
+page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionOptionRelDisplayContext" %><%@
+page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionOptionValueRelDisplayContext" %><%@
+page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionsDisplayContext" %><%@
+page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceDisplayContext" %><%@
+page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionFormNavigatorConstants" %><%@
+page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionOptionRelFormNavigatorConstants" %><%@
+page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionOptionValueRelFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchProductDefinitionException" %><%@
-page import="com.liferay.commerce.product.model.CommerceProductDefinition" %><%@
-page import="com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel" %><%@
-page import="com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel" %><%@
-page import="com.liferay.commerce.product.model.CommerceProductInstance" %><%@
-page import="com.liferay.commerce.product.type.CommerceProductType" %><%@
+page import="com.liferay.commerce.product.model.CPDefinition" %><%@
+page import="com.liferay.commerce.product.model.CPDefinitionOptionRel" %><%@
+page import="com.liferay.commerce.product.model.CPDefinitionOptionValueRel" %><%@
+page import="com.liferay.commerce.product.model.CPInstance" %><%@
+page import="com.liferay.commerce.product.type.CPType" %><%@
 page import="com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

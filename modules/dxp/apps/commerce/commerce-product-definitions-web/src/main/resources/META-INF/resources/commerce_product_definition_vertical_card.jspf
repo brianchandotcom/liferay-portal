@@ -18,21 +18,21 @@
 	<liferay-ui:user-portrait
 		cssClass="sticker sticker-bottom"
 		imageCssClass="user-icon-lg"
-		userId="<%= commerceProductDefinition.getUserId() %>"
+		userId="<%= cpDefinition.getUserId() %>"
 	/>
 </liferay-frontend:vertical-card-sticker-bottom>
 
 <liferay-frontend:vertical-card-header>
 
 	<%
-	Date createDate = commerceProductDefinition.getModifiedDate();
+	Date createDate = cpDefinition.getModifiedDate();
 
 	String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 	%>
 
-	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(commerceProductDefinition.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(cpDefinition.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 </liferay-frontend:vertical-card-header>
 
 <liferay-frontend:vertical-card-footer>
-	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= commerceProductDefinition.getStatus() %>" />
+	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpDefinition.getStatus() %>" />
 </liferay-frontend:vertical-card-footer>

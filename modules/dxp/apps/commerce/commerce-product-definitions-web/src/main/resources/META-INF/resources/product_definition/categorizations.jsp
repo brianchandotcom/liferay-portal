@@ -19,16 +19,16 @@
 <%
 long classPK = 0;
 
-CommerceProductDefinition commerceProductDefinition = (CommerceProductDefinition)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION);
+CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITION);
 
-if (commerceProductDefinition != null) {
-	classPK = commerceProductDefinition.getCommerceProductDefinitionId();
+if (cpDefinition != null) {
+	classPK = cpDefinition.getCPDefinitionId();
 }
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="categorizations" />
 
-<aui:model-context bean="<%= commerceProductDefinition %>" model="<%= CommerceProductDefinition.class %>" />
+<aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
 <liferay-ui:asset-categories-error />
 
@@ -36,10 +36,10 @@ if (commerceProductDefinition != null) {
 
 <div class="metadata">
 	<aui:field-wrapper>
-		<liferay-asset:asset-categories-selector className="<%= CommerceProductDefinition.class.getName() %>" classPK="<%= classPK %>" />
+		<liferay-asset:asset-categories-selector className="<%= CPDefinition.class.getName() %>" classPK="<%= classPK %>" />
 	</aui:field-wrapper>
 
 	<aui:field-wrapper label="tags">
-		<liferay-asset:asset-tags-selector className="<%= CommerceProductDefinition.class.getName() %>" classPK="<%= classPK %>" />
+		<liferay-asset:asset-tags-selector className="<%= CPDefinition.class.getName() %>" classPK="<%= classPK %>" />
 	</aui:field-wrapper>
 </div>

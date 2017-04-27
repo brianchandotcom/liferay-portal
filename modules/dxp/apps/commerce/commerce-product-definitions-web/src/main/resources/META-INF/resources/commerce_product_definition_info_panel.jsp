@@ -17,20 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<CommerceProductDefinition> commerceProductDefinitions = (List<CommerceProductDefinition>)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITIONS);
+List<CPDefinition> cpDefinitions = (List<CPDefinition>)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITIONS);
 
-if (ListUtil.isEmpty(commerceProductDefinitions)) {
-	commerceProductDefinitions = new ArrayList<CommerceProductDefinition>();
+if (ListUtil.isEmpty(cpDefinitions)) {
+	cpDefinitions = new ArrayList<CPDefinition>();
 }
 %>
 
 <c:choose>
-	<c:when test="<%= commerceProductDefinitions.size() == 1 %>">
+	<c:when test="<%= cpDefinitions.size() == 1 %>">
 
 		<%
-		CommerceProductDefinition commerceProductDefinition = commerceProductDefinitions.get(0);
+		CPDefinition cpDefinition = cpDefinitions.get(0);
 
-		request.setAttribute("info_panel.jsp-entry", commerceProductDefinition);
+		request.setAttribute("info_panel.jsp-entry", cpDefinition);
 		%>
 
 		<div class="sidebar-header">
@@ -43,7 +43,7 @@ if (ListUtil.isEmpty(commerceProductDefinitions)) {
 				</li>
 			</ul>
 
-			<h4><%= HtmlUtil.escape(commerceProductDefinition.getTitle(themeDisplay.getLanguageId())) %></h4>
+			<h4><%= HtmlUtil.escape(cpDefinition.getTitle(themeDisplay.getLanguageId())) %></h4>
 		</div>
 
 		<aui:nav-bar markupView="lexicon">
@@ -56,19 +56,19 @@ if (ListUtil.isEmpty(commerceProductDefinitions)) {
 			<h5><liferay-ui:message key="id" /></h5>
 
 			<p>
-				<%= HtmlUtil.escape(String.valueOf(commerceProductDefinition.getCommerceProductDefinitionId())) %>
+				<%= HtmlUtil.escape(String.valueOf(cpDefinition.getCPDefinitionId())) %>
 			</p>
 
 			<h5><liferay-ui:message key="status" /></h5>
 
 			<p>
-				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= commerceProductDefinition.getStatus() %>" />
+				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpDefinition.getStatus() %>" />
 			</p>
 		</div>
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h4><liferay-ui:message arguments="<%= commerceProductDefinitions.size() %>" key="x-items-are-selected" /></h4>
+			<h4><liferay-ui:message arguments="<%= cpDefinitions.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
 		<aui:nav-bar>
@@ -78,7 +78,7 @@ if (ListUtil.isEmpty(commerceProductDefinitions)) {
 		</aui:nav-bar>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message arguments="<%= commerceProductDefinitions.size() %>" key="x-items-are-selected" /></h5>
+			<h5><liferay-ui:message arguments="<%= cpDefinitions.size() %>" key="x-items-are-selected" /></h5>
 		</div>
 	</c:otherwise>
 </c:choose>

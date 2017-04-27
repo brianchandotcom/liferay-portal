@@ -19,14 +19,14 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-options");
 
-SearchContainer<CommerceProductOption> productOptionSearchContainer = commerceProductOptionsDisplayContext.getCommerceProductOptionSearchContainer();
+SearchContainer<CPOption> productOptionSearchContainer = cpOptionsDisplayContext.getCPOptionSearchContainer();
 
-String displayStyle = commerceProductOptionsDisplayContext.getDisplayStyle();
+String displayStyle = cpOptionsDisplayContext.getDisplayStyle();
 
-PortletURL portletURL = commerceProductOptionsDisplayContext.getPortletURL();
+PortletURL portletURL = cpOptionsDisplayContext.getPortletURL();
 
 portletURL.setParameter("toolbarItem", toolbarItem);
-portletURL.setParameter("searchContainerId", "commerceProductOptions");
+portletURL.setParameter("searchContainerId", "cpOptions");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
@@ -53,12 +53,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 </aui:nav-bar>
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchContainerId" value="commerceProductOptions" />
+	<liferay-util:param name="searchContainerId" value="cpOptions" />
 </liferay-util:include>
 
 <div id="<portlet:namespace />productOptionsContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<c:if test="<%= commerceProductOptionsDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= cpOptionsDisplayContext.isShowInfoPanel() %>">
 			<liferay-portlet:resourceURL
 				copyCurrentRenderParameters="<%= false %>"
 				id="infoPanel"
@@ -67,7 +67,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			<liferay-frontend:sidebar-panel
 				resourceURL="<%= sidebarPanelURL %>"
-				searchContainerId="commerceProductOptions"
+				searchContainerId="cpOptions"
 			>
 				<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
@@ -79,20 +79,20 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 				<div class="product-options-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
-						id="commerceProductOptions"
+						id="cpOptions"
 						searchContainer="<%= productOptionSearchContainer %>"
 					>
 						<liferay-ui:search-container-row
-							className="com.liferay.commerce.product.model.CommerceProductOption"
+							className="com.liferay.commerce.product.model.CPOption"
 							cssClass="entry-display-style"
-							keyProperty="commerceProductOptionId"
-							modelVar="commerceProductOption"
+							keyProperty="cpOptionId"
+							modelVar="cpOption"
 						>
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
 								name="name"
 							>
-								<%= commerceProductOption.getName(locale) %>
+								<%= cpOption.getName(locale) %>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-date

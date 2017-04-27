@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long commerceProductOptionId = ParamUtil.getLong(request, "commerceProductOptionId");
+long cpOptionId = ParamUtil.getLong(request, "cpOptionId");
 
-SearchContainer<CommerceProductOptionValue> commerceProductOptionValueSearchContainer = commerceProductOptionsDisplayContext.getCommerceProductOptionValueSearchContainer();
+SearchContainer<CPOptionValue> cpOptionValueSearchContainer = cpOptionsDisplayContext.getCPOptionValueSearchContainer();
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
@@ -29,14 +29,14 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 portletURL.setParameter("mvcRenderCommandName", "editProductOption");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("backURL", redirect);
-portletURL.setParameter("commerceProductOptionId", String.valueOf(commerceProductOptionId));
+portletURL.setParameter("cpOptionId", String.valueOf(cpOptionId));
 portletURL.setParameter("orderByCol", orderByCol);
 portletURL.setParameter("orderByType", orderByType);
-portletURL.setParameter("searchContainerId", "commerceProductOptionValues");
+portletURL.setParameter("searchContainerId", "cpOptionValues");
 %>
 
 <liferay-frontend:management-bar
-	searchContainerId="commerceProductOptionValues"
+	searchContainerId="cpOptionValues"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
@@ -58,20 +58,20 @@ portletURL.setParameter("searchContainerId", "commerceProductOptionValues");
 
 	<div class="product-option-values-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
-			id="commerceProductOptionValues"
-			searchContainer="<%= commerceProductOptionValueSearchContainer %>"
+			id="cpOptionValues"
+			searchContainer="<%= cpOptionValueSearchContainer %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.commerce.product.model.CommerceProductOptionValue"
+				className="com.liferay.commerce.product.model.CPOptionValue"
 				cssClass="entry-display-style"
-				keyProperty="commerceProductOptionValueId"
-				modelVar="commerceProductOptionValue"
+				keyProperty="cpOptionValueId"
+				modelVar="cpOptionValue"
 			>
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					name="title"
 				>
-					<%= commerceProductOptionValue.getTitle(locale) %>
+					<%= cpOptionValue.getTitle(locale) %>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
@@ -94,7 +94,7 @@ portletURL.setParameter("searchContainerId", "commerceProductOptionValues");
 <liferay-portlet:renderURL var="addProductOptionValueURL">
 	<portlet:param name="mvcRenderCommandName" value="editProductOptionValue" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="commerceProductOptionId" value="<%= String.valueOf(commerceProductOptionId) %>" />
+	<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOptionId) %>" />
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>

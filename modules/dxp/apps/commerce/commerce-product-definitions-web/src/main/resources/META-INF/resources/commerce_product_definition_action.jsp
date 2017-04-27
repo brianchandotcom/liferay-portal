@@ -19,13 +19,13 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceProductDefinition commerceProductDefinition = null;
+CPDefinition cpDefinition = null;
 
 if (row != null) {
-	commerceProductDefinition = (CommerceProductDefinition)row.getObject();
+	cpDefinition = (CPDefinition)row.getObject();
 }
 else {
-	commerceProductDefinition = (CommerceProductDefinition)request.getAttribute("commerce_product_definition_info_panel.jsp-entry");
+	cpDefinition = (CPDefinition)request.getAttribute("commerce_product_definition_info_panel.jsp-entry");
 }
 %>
 
@@ -33,7 +33,7 @@ else {
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceProductDefinitionId" value="<%= String.valueOf(commerceProductDefinition.getCommerceProductDefinitionId()) %>" />
+		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>" />
 		<portlet:param name="toolbarItem" value="view-product-definition-details" />
 	</portlet:renderURL>
 
@@ -45,7 +45,7 @@ else {
 	<portlet:actionURL name="editProductDefinition" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
-		<portlet:param name="commerceProductDefinitionId" value="<%= String.valueOf(commerceProductDefinition.getCommerceProductDefinitionId()) %>" />
+		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete

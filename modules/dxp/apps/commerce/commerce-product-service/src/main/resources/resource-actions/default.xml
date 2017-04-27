@@ -5,8 +5,8 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.product</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_product_definitions_web_internal_portlet_CommerceProductDefinitionsPortlet</portlet-name>
-			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CommerceProductOptionsPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionsPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -26,9 +26,9 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.commerce.product.model.CommerceProductDefinition</model-name>
+		<model-name>com.liferay.commerce.product.model.CPDefinition</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_product_definitions_web_internal_portlet_CommerceProductDefinitionsPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -54,9 +54,9 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.commerce.product.model.CommerceProductOption</model-name>
+		<model-name>com.liferay.commerce.product.model.CPOption</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CommerceProductOptionsPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionsPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

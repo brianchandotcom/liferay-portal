@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean class="com.liferay.commerce.product.service.impl.CommerceProductDefinitionLocalServiceImpl" id="com.liferay.commerce.product.service.CommerceProductDefinitionLocalService" />
-	<bean class="com.liferay.commerce.product.service.impl.CommerceProductDefinitionServiceImpl" id="com.liferay.commerce.product.service.CommerceProductDefinitionService" />
-	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceProductDefinitionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CommerceProductDefinitionPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceProductDefinitionLocalizationPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CommerceProductDefinitionLocalizationPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.product.service.impl.CommerceProductDefinitionOptionRelLocalServiceImpl" id="com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelLocalService" />
-	<bean class="com.liferay.commerce.product.service.impl.CommerceProductDefinitionOptionRelServiceImpl" id="com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelService" />
-	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceProductDefinitionOptionRelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CommerceProductDefinitionOptionRelPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.product.service.impl.CommerceProductDefinitionOptionValueRelLocalServiceImpl" id="com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelLocalService" />
-	<bean class="com.liferay.commerce.product.service.impl.CommerceProductDefinitionOptionValueRelServiceImpl" id="com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelService" />
-	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceProductDefinitionOptionValueRelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CommerceProductDefinitionOptionValueRelPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.product.service.impl.CommerceProductInstanceLocalServiceImpl" id="com.liferay.commerce.product.service.CommerceProductInstanceLocalService" />
-	<bean class="com.liferay.commerce.product.service.impl.CommerceProductInstanceServiceImpl" id="com.liferay.commerce.product.service.CommerceProductInstanceService" />
-	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceProductInstancePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CommerceProductInstancePersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.product.service.impl.CommerceProductOptionLocalServiceImpl" id="com.liferay.commerce.product.service.CommerceProductOptionLocalService" />
-	<bean class="com.liferay.commerce.product.service.impl.CommerceProductOptionServiceImpl" id="com.liferay.commerce.product.service.CommerceProductOptionService" />
-	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceProductOptionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CommerceProductOptionPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.product.service.impl.CommerceProductOptionValueLocalServiceImpl" id="com.liferay.commerce.product.service.CommerceProductOptionValueLocalService" />
-	<bean class="com.liferay.commerce.product.service.impl.CommerceProductOptionValueServiceImpl" id="com.liferay.commerce.product.service.CommerceProductOptionValueService" />
-	<bean class="com.liferay.commerce.product.service.persistence.impl.CommerceProductOptionValuePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CommerceProductOptionValuePersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLocalizationPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionRelLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionRelServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionRelService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionOptionRelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionValueRelLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionValueRelServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionValueRelService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionOptionValueRelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPInstanceLocalServiceImpl" id="com.liferay.commerce.product.service.CPInstanceLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPInstanceServiceImpl" id="com.liferay.commerce.product.service.CPInstanceService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstancePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPInstancePersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPOptionLocalServiceImpl" id="com.liferay.commerce.product.service.CPOptionLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPOptionServiceImpl" id="com.liferay.commerce.product.service.CPOptionService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPOptionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPOptionValueLocalServiceImpl" id="com.liferay.commerce.product.service.CPOptionValueLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPOptionValueServiceImpl" id="com.liferay.commerce.product.service.CPOptionValueService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionValuePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPOptionValuePersistence" parent="basePersistence" />
 </beans>

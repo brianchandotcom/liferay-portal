@@ -17,7 +17,7 @@
 <liferay-ui:search-container-column-text>
 	<liferay-ui:user-portrait
 		cssClass="user-icon-lg"
-		userId="<%= commerceProductDefinition.getUserId() %>"
+		userId="<%= cpDefinition.getUserId() %>"
 	/>
 </liferay-ui:search-container-column-text>
 
@@ -26,21 +26,21 @@
 >
 
 	<%
-	Date createDate = commerceProductDefinition.getModifiedDate();
+	Date createDate = cpDefinition.getModifiedDate();
 
 	String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 	%>
 
 	<h6 class="text-default">
-		<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(commerceProductDefinition.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+		<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(cpDefinition.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 	</h6>
 
 	<h5>
-		<%= HtmlUtil.escape(commerceProductDefinition.getTitle(themeDisplay.getLanguageId())) %>
+		<%= HtmlUtil.escape(cpDefinition.getTitle(themeDisplay.getLanguageId())) %>
 	</h5>
 
 	<h6 class="text-default">
-		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= commerceProductDefinition.getStatus() %>" />
+		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpDefinition.getStatus() %>" />
 	</h6>
 </liferay-ui:search-container-column-text>
 

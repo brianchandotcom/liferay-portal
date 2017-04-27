@@ -18,7 +18,7 @@
 	cssClass="table-cell-content"
 	name="product-name"
 >
-	<%= commerceProductDefinition.getTitle(themeDisplay.getLanguageId()) %>
+	<%= cpDefinition.getTitle(themeDisplay.getLanguageId()) %>
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
@@ -36,7 +36,7 @@
 <liferay-ui:search-container-column-status
 	cssClass="table-cell-content"
 	name="status"
-	status="<%= commerceProductDefinition.getStatus() %>"
+	status="<%= cpDefinition.getStatus() %>"
 />
 
 <liferay-ui:search-container-column-date

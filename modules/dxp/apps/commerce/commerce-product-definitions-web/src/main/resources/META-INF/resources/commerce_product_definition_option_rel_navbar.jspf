@@ -19,7 +19,7 @@
 		<liferay-portlet:renderURL var="editProductDefinitionOptionRelUrl">
 			<portlet:param name="mvcRenderCommandName" value="editProductDefinitionOptionRel" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="commerceProductDefinitionOptionRelId" value="<%= String.valueOf(commerceProductDefinitionOptionRelId) %>" />
+			<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRelId) %>" />
 			<portlet:param name="toolbarItem" value="view-commerce-product-definition-option-rel-details" />
 		</liferay-portlet:renderURL>
 
@@ -29,11 +29,11 @@
 			selected='<%= toolbarItem.equals("view-commerce-product-definition-option-rel-details") %>'
 		/>
 
-		<c:if test="<%= commerceProductDefinition != null %>">
+		<c:if test="<%= cpDefinition != null %>">
 			<liferay-portlet:renderURL varImpl="viewProductDefinitionImagesURL">
 				<portlet:param name="mvcRenderCommandName" value="viewProductDefinitionOptionValueRels" />
 				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="commerceProductDefinitionOptionRelId" value="<%= String.valueOf(commerceProductDefinitionOptionRelId) %>" />
+				<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRelId) %>" />
 				<portlet:param name="toolbarItem" value="view-commerce-product-definition-option-value-rels" />
 			</liferay-portlet:renderURL>
 

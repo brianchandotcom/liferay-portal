@@ -20,7 +20,7 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.product.model.CommerceProductOption" %><%@
+<%@ page import="com.liferay.commerce.product.model.CPOption" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %>
 
 <%@ page import="java.util.List" %>

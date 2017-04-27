@@ -17,13 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceProductDefinitionOptionRelDisplayContext commerceProductDefinitionOptionRelDisplayContext = (CommerceProductDefinitionOptionRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPDefinitionOptionRelDisplayContext cpDefinitionOptionRelDisplayContext = (CPDefinitionOptionRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceProductDefinition commerceProductDefinition = commerceProductDefinitionOptionRelDisplayContext.getCommerceProductDefinition();
+CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition();
 
-CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = commerceProductDefinitionOptionRelDisplayContext.getCommerceProductDefinitionOptionRel();
+CPDefinitionOptionRel cpDefinitionOptionRel = cpDefinitionOptionRelDisplayContext.getCPDefinitionOptionRel();
 
-long commerceProductDefinitionOptionRelId = commerceProductDefinitionOptionRelDisplayContext.getCommerceProductDefinitionOptionRelId();
+long cpDefinitionOptionRelId = cpDefinitionOptionRelDisplayContext.getCPDefinitionOptionRelId();
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-commerce-product-definition-option-rel-details");
 
@@ -34,7 +34,7 @@ portletURL.setParameter("mvcRenderCommandName", "editProductDefinitionOptionRel"
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
-renderResponse.setTitle(commerceProductDefinition.getTitle(languageId) + " - " + commerceProductDefinitionOptionRel.getName(locale));
+renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getName(locale));
 %>
 
 <%@ include file="/commerce_product_definition_option_rel_navbar.jspf" %>
@@ -45,15 +45,15 @@ renderResponse.setTitle(commerceProductDefinition.getTitle(languageId) + " - " +
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-	<aui:input name="commerceProductDefinitionId" type="hidden" value="<%= commerceProductDefinitionOptionRel.getCommerceProductDefinitionId() %>" />
-	<aui:input name="commerceProductDefinitionOptionRelId" type="hidden" value="<%= String.valueOf(commerceProductDefinitionOptionRelId) %>" />
-	<aui:input name="commerceProductOptionId" type="hidden" value="<%= commerceProductDefinitionOptionRel.getCommerceProductOptionId() %>" />
+	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionOptionRel.getCPDefinitionId() %>" />
+	<aui:input name="cpDefinitionOptionRelId" type="hidden" value="<%= String.valueOf(cpDefinitionOptionRelId) %>" />
+	<aui:input name="cpOptionId" type="hidden" value="<%= cpDefinitionOptionRel.getCPOptionId() %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
 			backURL="<%= backURL %>"
-			formModelBean="<%= commerceProductDefinitionOptionRel %>"
-			id="<%= CommerceProductDefinitionOptionRelFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION_OPTION_REL %>"
+			formModelBean="<%= cpDefinitionOptionRel %>"
+			id="<%= CPDefinitionOptionRelFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION_OPTION_REL %>"
 			markupView="lexicon"
 		/>
 	</div>

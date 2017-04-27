@@ -17,28 +17,28 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceProductDefinition commerceProductDefinition = (CommerceProductDefinition)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION);
+CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITION);
 
-CommerceProductDefinitionsDisplayContext commerceProductDefinitionsDisplayContext = (CommerceProductDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-List<CommerceProductType> commerceProductTypes = commerceProductDefinitionsDisplayContext.getCommerceProductTypes();
+List<CPType> cpTypes = cpDefinitionsDisplayContext.getCPTypes();
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="base-information" />
 
-<aui:model-context bean="<%= commerceProductDefinition %>" model="<%= CommerceProductDefinition.class %>" />
+<aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
 <aui:fieldset cssClass="col-md-4">
 	<aui:select label="product-type" name="productTypeName">
 
 		<%
-		for (CommerceProductType commerceProductType : commerceProductTypes) {
+		for (CPType cpType : cpTypes) {
 		%>
 
 			<aui:option
-				label="<%= commerceProductType.getName() %>"
-				selected="<%= (commerceProductDefinition != null) && commerceProductDefinition.getProductTypeName().equals(commerceProductType.getName()) %>"
-				value="<%= commerceProductType.getName() %>"
+				label="<%= cpType.getName() %>"
+				selected="<%= (cpDefinition != null) && cpDefinition.getProductTypeName().equals(cpType.getName()) %>"
+				value="<%= cpType.getName() %>"
 			/>
 
 		<%

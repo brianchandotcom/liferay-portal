@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.product.options.web.internal.portlet.action;
 
-import com.liferay.commerce.product.model.CommerceProductOption;
-import com.liferay.commerce.product.service.CommerceProductOptionLocalService;
+import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.ArrayList;
@@ -32,28 +32,28 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ActionHelper.class)
 public class ActionHelper {
 
-	public List<CommerceProductOption> getCommerceProductOptions(
+	public List<CPOption> getCPOptions(
 			ResourceRequest resourceRequest)
 		throws Exception {
 
-		long[] commerceProductOptionsIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIdsCommerceProductOption");
+		long[] cpOptionsIds = ParamUtil.getLongValues(
+			resourceRequest, "rowIdsCPOption");
 
-		List<CommerceProductOption> commerceProductOptions = new ArrayList<>();
+		List<CPOption> cpOptions = new ArrayList<>();
 
-		for (long commerceProductOptionsId : commerceProductOptionsIds) {
-			CommerceProductOption commerceProductOption =
-				_commerceProductOptionLocalService.getCommerceProductOption(
-					commerceProductOptionsId);
+		for (long cpOptionsId : cpOptionsIds) {
+			CPOption cpOption =
+				_cpOptionLocalService.getCPOption(
+					cpOptionsId);
 
-			commerceProductOptions.add(commerceProductOption);
+			cpOptions.add(cpOption);
 		}
 
-		return commerceProductOptions;
+		return cpOptions;
 	}
 
 	@Reference
-	private CommerceProductOptionLocalService
-		_commerceProductOptionLocalService;
+	private CPOptionLocalService
+		_cpOptionLocalService;
 
 }

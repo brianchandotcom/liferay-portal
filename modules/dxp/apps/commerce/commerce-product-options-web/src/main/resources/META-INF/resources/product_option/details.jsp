@@ -17,13 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceProductOption commerceProductOption = (CommerceProductOption)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_OPTION);
-List<DDMFormFieldType> ddmFormFieldTypes = commerceProductOptionsDisplayContext.getDDMFormFieldTypes();
+CPOption cpOption = (CPOption)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_OPTION);
+List<DDMFormFieldType> ddmFormFieldTypes = cpOptionsDisplayContext.getDDMFormFieldTypes();
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="product-option-base-information" />
 
-<aui:model-context bean="<%= commerceProductOption %>" model="<%= CommerceProductOption.class %>" />
+<aui:model-context bean="<%= cpOption %>" model="<%= CPOption.class %>" />
 
 <aui:fieldset>
 	<aui:input label="name" name="name" />
@@ -41,7 +41,7 @@ List<DDMFormFieldType> ddmFormFieldTypes = commerceProductOptionsDisplayContext.
 
 			<aui:option
 				label="<%= ddmFormFieldType.getName() %>"
-				selected="<%= (commerceProductOption != null) && commerceProductOption.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>"
+				selected="<%= (cpOption != null) && cpOption.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>"
 				value="<%= ddmFormFieldType.getName() %>"
 			/>
 

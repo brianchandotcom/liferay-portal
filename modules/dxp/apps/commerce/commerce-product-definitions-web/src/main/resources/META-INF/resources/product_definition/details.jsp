@@ -17,12 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceProductDefinition commerceProductDefinition = (CommerceProductDefinition)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION);
+CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITION);
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
 
-<aui:model-context bean="<%= commerceProductDefinition %>" model="<%= CommerceProductDefinition.class %>" />
+<aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
 <aui:fieldset>
 	<aui:input autoFocus="<%= true %>" label="title" localized="<%= true %>" name="titleMapAsXML" type="text" wrapperCssClass="commerce-product-definition-title">

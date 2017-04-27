@@ -19,14 +19,14 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceProductOptionValue commerceProductOptionValue = (CommerceProductOptionValue)row.getObject();
+CPOptionValue cpOptionValue = (CPOptionValue)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editProductOptionValue" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceProductOptionValueId" value="<%= String.valueOf(commerceProductOptionValue.getCommerceProductOptionValueId()) %>" />
+		<portlet:param name="cpOptionValueId" value="<%= String.valueOf(cpOptionValue.getCPOptionValueId()) %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon
@@ -38,7 +38,7 @@ CommerceProductOptionValue commerceProductOptionValue = (CommerceProductOptionVa
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="backURL" value="<%= backURL %>" />
-		<portlet:param name="commerceProductOptionValueId" value="<%= String.valueOf(commerceProductOptionValue.getCommerceProductOptionValueId()) %>" />
+		<portlet:param name="cpOptionValueId" value="<%= String.valueOf(cpOptionValue.getCPOptionValueId()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

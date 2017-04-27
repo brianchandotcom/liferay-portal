@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceProductDefinition commerceProductDefinition = (CommerceProductDefinition)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION);
+CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITION);
 
-long commerceProductDefinitionId = 0;
+long cpDefinitionId = 0;
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-definition-images");
 
@@ -39,7 +39,7 @@ String backURLString = backUrl.toString();
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURLString);
 
-renderResponse.setTitle((commerceProductDefinition == null) ? LanguageUtil.get(request, "add-product-definition") : commerceProductDefinition.getTitle(languageId));
+renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-product-definition") : cpDefinition.getTitle(languageId));
 %>
 
 <%@ include file="/commerce_product_definition_navbar.jspf" %>

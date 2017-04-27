@@ -17,16 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = (CommerceProductDefinitionOptionRel)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_REL);
+CPDefinitionOptionRel cpDefinitionOptionRel = (CPDefinitionOptionRel)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_REL);
 
-CommerceProductDefinitionOptionRelDisplayContext commerceProductDefinitionOptionRelDisplayContext = (CommerceProductDefinitionOptionRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPDefinitionOptionRelDisplayContext cpDefinitionOptionRelDisplayContext = (CPDefinitionOptionRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-List<DDMFormFieldType> ddmFormFieldTypes = commerceProductDefinitionOptionRelDisplayContext.getDDMFormFieldTypes();
+List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.getDDMFormFieldTypes();
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
 
-<aui:model-context bean="<%= commerceProductDefinitionOptionRel %>" model="<%= CommerceProductDefinitionOptionRel.class %>" />
+<aui:model-context bean="<%= cpDefinitionOptionRel %>" model="<%= CPDefinitionOptionRel.class %>" />
 
 <aui:fieldset>
 	<aui:select
@@ -41,7 +41,7 @@ List<DDMFormFieldType> ddmFormFieldTypes = commerceProductDefinitionOptionRelDis
 
 			<aui:option
 				label="<%= ddmFormFieldType.getName() %>"
-				selected="<%= (commerceProductDefinitionOptionRel != null) && commerceProductDefinitionOptionRel.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>"
+				selected="<%= (cpDefinitionOptionRel != null) && cpDefinitionOptionRel.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>"
 				value="<%= ddmFormFieldType.getName() %>"
 			/>
 

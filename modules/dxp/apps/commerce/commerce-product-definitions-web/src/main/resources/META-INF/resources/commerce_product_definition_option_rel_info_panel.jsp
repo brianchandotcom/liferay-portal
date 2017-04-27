@@ -17,20 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<CommerceProductDefinitionOptionRel> commerceProductDefinitionOptionRels = (List<CommerceProductDefinitionOptionRel>)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_RELS);
+List<CPDefinitionOptionRel> cpDefinitionOptionRels = (List<CPDefinitionOptionRel>)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_RELS);
 
-if (ListUtil.isEmpty(commerceProductDefinitionOptionRels)) {
-	commerceProductDefinitionOptionRels = new ArrayList<CommerceProductDefinitionOptionRel>();
+if (ListUtil.isEmpty(cpDefinitionOptionRels)) {
+	cpDefinitionOptionRels = new ArrayList<CPDefinitionOptionRel>();
 }
 %>
 
 <c:choose>
-	<c:when test="<%= commerceProductDefinitionOptionRels.size() == 1 %>">
+	<c:when test="<%= cpDefinitionOptionRels.size() == 1 %>">
 
 		<%
-		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = commerceProductDefinitionOptionRels.get(0);
+		CPDefinitionOptionRel cpDefinitionOptionRel = cpDefinitionOptionRels.get(0);
 
-		request.setAttribute("commerce_product_definition_option_rel_info_panel.jsp-entry", commerceProductDefinitionOptionRel);
+		request.setAttribute("commerce_product_definition_option_rel_info_panel.jsp-entry", cpDefinitionOptionRel);
 		%>
 
 		<div class="sidebar-header">
@@ -43,7 +43,7 @@ if (ListUtil.isEmpty(commerceProductDefinitionOptionRels)) {
 				</li>
 			</ul>
 
-			<h4><%= HtmlUtil.escape(commerceProductDefinitionOptionRel.getName(locale)) %></h4>
+			<h4><%= HtmlUtil.escape(cpDefinitionOptionRel.getName(locale)) %></h4>
 		</div>
 
 		<aui:nav-bar markupView="lexicon">
@@ -56,7 +56,7 @@ if (ListUtil.isEmpty(commerceProductDefinitionOptionRels)) {
 			<h5><liferay-ui:message key="id" /></h5>
 
 			<p>
-				<%= HtmlUtil.escape(String.valueOf(commerceProductDefinitionOptionRel.getCommerceProductDefinitionOptionRelId())) %>
+				<%= HtmlUtil.escape(String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId())) %>
 			</p>
 		</div>
 	</c:when>
@@ -68,7 +68,7 @@ if (ListUtil.isEmpty(commerceProductDefinitionOptionRels)) {
 		</aui:nav-bar>
 
 		<div class="sidebar-header">
-			<h4><liferay-ui:message arguments="<%= commerceProductDefinitionOptionRels.size() %>" key="x-items-are-selected" /></h4>
+			<h4><liferay-ui:message arguments="<%= cpDefinitionOptionRels.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 	</c:otherwise>
 </c:choose>

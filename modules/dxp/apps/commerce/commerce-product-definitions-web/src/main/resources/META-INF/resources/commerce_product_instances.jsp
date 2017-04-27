@@ -17,15 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceProductInstanceDisplayContext commerceProductInstanceDisplayContext = (CommerceProductInstanceDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceProductDefinition commerceProductDefinition = commerceProductInstanceDisplayContext.getCommerceProductDefinition();
+CPDefinition cpDefinition = cpInstanceDisplayContext.getCPDefinition();
 
-long commerceProductDefinitionId = commerceProductInstanceDisplayContext.getCommerceProductDefinitionId();
+long cpDefinitionId = cpInstanceDisplayContext.getCPDefinitionId();
 
-SearchContainer<CommerceProductInstance> commerceProductInstanceSearchContainer = commerceProductInstanceDisplayContext.getSearchContainer();
+SearchContainer<CPInstance> cpInstanceSearchContainer = cpInstanceDisplayContext.getSearchContainer();
 
-PortletURL portletURL = commerceProductInstanceDisplayContext.getPortletURL();
+PortletURL portletURL = cpInstanceDisplayContext.getPortletURL();
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "sku");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
@@ -36,27 +36,27 @@ portletURL.setParameter("toolbarItem", toolbarItem);
 portletURL.setParameter("mvcRenderCommandName", "viewProductInstances");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("backURL", backURL);
-portletURL.setParameter("commerceProductDefinitionId", String.valueOf(commerceProductDefinitionId));
+portletURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
 portletURL.setParameter("orderByCol", orderByCol);
 portletURL.setParameter("orderByType", orderByType);
-portletURL.setParameter("searchContainerId", "commerceProductInstances");
+portletURL.setParameter("searchContainerId", "cpInstances");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle((commerceProductDefinition == null) ? LanguageUtil.get(request, "add-product-definition") : commerceProductDefinition.getTitle(languageId));
+renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-product-definition") : cpDefinition.getTitle(languageId));
 %>
 
 <%@ include file="/commerce_product_definition_navbar.jspf" %>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= false %>"
-	searchContainerId="commerceProductInstances"
+	searchContainerId="cpInstances"
 >
 	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= commerceProductInstanceDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= cpInstanceDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"
@@ -66,7 +66,7 @@ renderResponse.setTitle((commerceProductDefinition == null) ? LanguageUtil.get(r
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= commerceProductInstanceDisplayContext.getDisplayStyle() %>"
+			selectedDisplayStyle="<%= cpInstanceDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
@@ -85,7 +85,7 @@ renderResponse.setTitle((commerceProductDefinition == null) ? LanguageUtil.get(r
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<c:if test="<%= commerceProductInstanceDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= cpInstanceDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"
@@ -96,16 +96,16 @@ renderResponse.setTitle((commerceProductDefinition == null) ? LanguageUtil.get(r
 
 <div id="<portlet:namespace />productInstancesContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<c:if test="<%= commerceProductInstanceDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= cpInstanceDisplayContext.isShowInfoPanel() %>">
 			<liferay-portlet:resourceURL
 				copyCurrentRenderParameters="<%= false %>"
-				id="commerceProductInstanceInfoPanel"
+				id="cpInstanceInfoPanel"
 				var="sidebarPanelURL"
 			/>
 
 	<liferay-frontend:sidebar-panel
 		resourceURL="<%= sidebarPanelURL %>"
-		searchContainerId="commerceProductInstances"
+		searchContainerId="cpInstances"
 	>
 		<liferay-util:include page="/commerce_product_instance_info_panel.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:sidebar-panel>
@@ -117,15 +117,15 @@ renderResponse.setTitle((commerceProductDefinition == null) ? LanguageUtil.get(r
 
 	<div class="product-skus-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
-			id="commerceProductInstances"
+			id="cpInstances"
 			iteratorURL="<%= portletURL %>"
-			searchContainer="<%= commerceProductInstanceSearchContainer %>"
+			searchContainer="<%= cpInstanceSearchContainer %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.commerce.product.model.CommerceProductInstance"
+				className="com.liferay.commerce.product.model.CPInstance"
 				cssClass="entry-display-style"
-				keyProperty="commerceProductInstanceId"
-				modelVar="commerceProductInstance"
+				keyProperty="cpInstanceId"
+				modelVar="cpInstance"
 			>
 
 				<%
@@ -134,8 +134,8 @@ renderResponse.setTitle((commerceProductDefinition == null) ? LanguageUtil.get(r
 				rowURL.setParameter(Constants.CMD, Constants.UPDATE);
 				rowURL.setParameter("mvcRenderCommandName", "editProductInstance");
 				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("commerceProductDefinitionId", String.valueOf(commerceProductDefinitionId));
-				rowURL.setParameter("commerceProductInstanceId", String.valueOf(commerceProductInstance.getCommerceProductInstanceId()));
+				rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
+				rowURL.setParameter("cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
 				%>
 
 				<liferay-ui:search-container-column-text
@@ -151,7 +151,7 @@ renderResponse.setTitle((commerceProductDefinition == null) ? LanguageUtil.get(r
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= commerceProductInstanceSearchContainer %>" />
+			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= cpInstanceSearchContainer %>" />
 		</liferay-ui:search-container>
 	</div>
 </aui:form>
@@ -160,7 +160,7 @@ renderResponse.setTitle((commerceProductDefinition == null) ? LanguageUtil.get(r
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_MULTIPLE %>" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
-	<portlet:param name="commerceProductDefinitionId" value="<%= String.valueOf(commerceProductDefinitionId) %>" />
+	<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 	<portlet:param name="toolbarItem" value="view-product-instances" />
 </liferay-portlet:actionURL>
 

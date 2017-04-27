@@ -18,28 +18,28 @@
 
 <%
 PortletURL myportletURL = (PortletURL)request.getAttribute("portletURL");
-List<CommerceProductOption> commerceProductOptions = (List<CommerceProductOption>)request.getAttribute("commerceProductOptions");
+List<CPOption> cpOptions = (List<CPOption>)request.getAttribute("cpOptions");
 String itemSelectedEventName = (String)request.getAttribute("itemSelectedEventName");
 %>
 
-<div id="<portlet:namespace />commerceProductOptionSelectorWrapper">
+<div id="<portlet:namespace />cpOptionSelectorWrapper">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-product-options-were-found"
 		iteratorURL="<%= myportletURL %>"
 		total='<%= GetterUtil.getInteger(request.getAttribute("total")) %>'
 	>
 		<liferay-ui:search-container-results
-			results="<%= commerceProductOptions %>"
+			results="<%= cpOptions %>"
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.commerce.product.model.CommerceProductOption"
-			cssClass="commerce-product-option-row" modelVar="commerceProductOption"
+			className="com.liferay.commerce.product.model.CPOption"
+			cssClass="commerce-product-option-row" modelVar="cpOption"
 		>
 			<liferay-ui:search-container-column-text>
 				<div class="commerce-product-option-name"
-					data-id="<%= commerceProductOption.getCommerceProductOptionId() %>"
-					<%= commerceProductOption.getName() %>
+					data-id="<%= cpOption.getCPOptionId() %>"
+					<%= cpOption.getName() %>
 				</div>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -51,9 +51,9 @@ String itemSelectedEventName = (String)request.getAttribute("itemSelectedEventNa
 </div>
 
 <aui:script use="product-option-item-selector">
-	var commerceProductOptionSelectorWrapper = A.one("#<portlet:namespace />commerceProductOptionSelectorWrapper");
+	var cpOptionSelectorWrapper = A.one("#<portlet:namespace />cpOptionSelectorWrapper");
 
-	commerceProductOptionSelectorWrapper.delegate(
+	cpOptionSelectorWrapper.delegate(
 		'click',
 		function(event) {
 			var currentTarget = event.currentTarget;
@@ -62,16 +62,16 @@ String itemSelectedEventName = (String)request.getAttribute("itemSelectedEventNa
 
 			currentTarget.addClass('active');
 
-			var commerceProductOptionName = currentTarget.one('.commerce-product-option-name');
+			var cpOptionName = currentTarget.one('.commerce-product-option-name');
 
-			var commerceProductOptionId = commerceProductOptionName.attr('data-id');
+			var cpOptionId = cpOptionName.attr('data-id');
 
 			var data =
 				{
 					data: {
 						returnType: 'COMMERCE-PRODUCT-OPTION',
 						value: {
-							id: commerceProductOptionId
+							id: cpOptionId
 						}
 					}
 				};

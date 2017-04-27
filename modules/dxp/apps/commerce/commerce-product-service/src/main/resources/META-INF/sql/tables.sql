@@ -1,6 +1,6 @@
-create table CommerceProductDefinition (
+create table CPDefinition (
 	uuid_ VARCHAR(75) null,
-	commerceProductDefinitionId LONG not null primary key,
+	CPDefinitionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -21,28 +21,28 @@ create table CommerceProductDefinition (
 	defaultLanguageId VARCHAR(75) null
 );
 
-create table CommerceProductDefinitionLocalization (
+create table CPDefinitionLocalization (
 	mvccVersion LONG default 0 not null,
-	commerceProductDefinitionLocalizationId LONG not null primary key,
+	cpDefinitionLocalizationId LONG not null primary key,
 	companyId LONG,
-	commerceProductDefinitionPK LONG,
+	cpDefinitionPK LONG,
 	languageId VARCHAR(75) null,
 	title VARCHAR(75) null,
 	urlTitle VARCHAR(75) null,
 	description VARCHAR(75) null
 );
 
-create table CommerceProductDefinitionOptionRel (
+create table CPDefinitionOptionRel (
 	uuid_ VARCHAR(75) null,
-	definitionOptionRelId LONG not null primary key,
+	CPDefinitionOptionRelId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	commerceProductDefinitionId LONG,
-	commerceProductOptionId LONG,
+	CPDefinitionId LONG,
+	CPOptionId LONG,
 	name STRING null,
 	description STRING null,
 	DDMFormFieldTypeName VARCHAR(75) null,
@@ -51,30 +51,30 @@ create table CommerceProductDefinitionOptionRel (
 	skuContributor BOOLEAN
 );
 
-create table CommerceProductDefinitionOptionValueRel (
+create table CPDefinitionOptionValueRel (
 	uuid_ VARCHAR(75) null,
-	definitionOptionValueRelId LONG not null primary key,
+	CPDefinitionOptionValueRelId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	definitionOptionRelId LONG,
+	CPDefinitionOptionRelId LONG,
 	title STRING null,
 	priority INTEGER
 );
 
-create table CommerceProductInstance (
+create table CPInstance (
 	uuid_ VARCHAR(75) null,
-	commerceProductInstanceId LONG not null primary key,
+	CPInstanceId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	commerceProductDefinitionId LONG,
+	CPDefinitionId LONG,
 	sku VARCHAR(75) null,
 	DDMContent TEXT null,
 	displayDate DATE null,
@@ -86,9 +86,9 @@ create table CommerceProductInstance (
 	statusDate DATE null
 );
 
-create table CommerceProductOption (
+create table CPOption (
 	uuid_ VARCHAR(75) null,
-	commerceProductOptionId LONG not null primary key,
+	CPOptionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -100,16 +100,16 @@ create table CommerceProductOption (
 	DDMFormFieldTypeName VARCHAR(75) null
 );
 
-create table CommerceProductOptionValue (
+create table CPOptionValue (
 	uuid_ VARCHAR(75) null,
-	commerceProductOptionValueId LONG not null primary key,
+	CPOptionValueId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	commerceProductOptionId LONG,
+	CPOptionId LONG,
 	title STRING null,
 	priority INTEGER
 );

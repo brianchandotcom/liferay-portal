@@ -17,20 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<CommerceProductOption> commerceProductOptions = (List<CommerceProductOption>)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_OPTIONS);
+List<CPOption> cpOptions = (List<CPOption>)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_OPTIONS);
 
-if (ListUtil.isEmpty(commerceProductOptions)) {
-	commerceProductOptions = new ArrayList<>();
+if (ListUtil.isEmpty(cpOptions)) {
+	cpOptions = new ArrayList<>();
 }
 %>
 
 <c:choose>
-	<c:when test="<%= commerceProductOptions.size() == 1 %>">
+	<c:when test="<%= cpOptions.size() == 1 %>">
 
 		<%
-		CommerceProductOption commerceProductOption = commerceProductOptions.get(0);
+		CPOption cpOption = cpOptions.get(0);
 
-		request.setAttribute("info_panel.jsp-entry", commerceProductOption);
+		request.setAttribute("info_panel.jsp-entry", cpOption);
 		%>
 
 		<div class="sidebar-header">
@@ -43,7 +43,7 @@ if (ListUtil.isEmpty(commerceProductOptions)) {
 				</li>
 			</ul>
 
-			<h4><%= HtmlUtil.escape(commerceProductOption.getName(locale)) %></h4>
+			<h4><%= HtmlUtil.escape(cpOption.getName(locale)) %></h4>
 		</div>
 
 		<aui:nav-bar markupView="lexicon">
@@ -56,7 +56,7 @@ if (ListUtil.isEmpty(commerceProductOptions)) {
 			<h5><liferay-ui:message key="id" /></h5>
 
 			<p>
-				<%= HtmlUtil.escape(String.valueOf(commerceProductOption.getCommerceProductOptionId())) %>
+				<%= HtmlUtil.escape(String.valueOf(cpOption.getCPOptionId())) %>
 			</p>
 		</div>
 	</c:when>
@@ -68,7 +68,7 @@ if (ListUtil.isEmpty(commerceProductOptions)) {
 		</aui:nav-bar>
 
 		<div class="sidebar-header">
-			<h4><liferay-ui:message arguments="<%= commerceProductOptions.size() %>" key="x-items-are-selected" /></h4>
+			<h4><liferay-ui:message arguments="<%= cpOptions.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 	</c:otherwise>
 </c:choose>

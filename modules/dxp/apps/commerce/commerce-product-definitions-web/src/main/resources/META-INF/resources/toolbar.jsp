@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String searchContainerId = ParamUtil.getString(request, "searchContainerId", "commerceProductDefinitions");
+String searchContainerId = ParamUtil.getString(request, "searchContainerId", "cpDefinitions");
 
-CommerceProductDefinitionsDisplayContext commerceProductDefinitionsDisplayContext = (CommerceProductDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <liferay-frontend:management-bar
@@ -27,7 +27,7 @@ CommerceProductDefinitionsDisplayContext commerceProductDefinitionsDisplayContex
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= commerceProductDefinitionsDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= cpDefinitionsDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"
@@ -36,27 +36,27 @@ CommerceProductDefinitionsDisplayContext commerceProductDefinitionsDisplayContex
 
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= commerceProductDefinitionsDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="<%= commerceProductDefinitionsDisplayContext.getDisplayStyle() %>"
+			portletURL="<%= cpDefinitionsDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= cpDefinitionsDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= commerceProductDefinitionsDisplayContext.getPortletURL() %>"
+			portletURL="<%= cpDefinitionsDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= commerceProductDefinitionsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= commerceProductDefinitionsDisplayContext.getOrderByType() %>"
+			orderByCol="<%= cpDefinitionsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= cpDefinitionsDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"create-date", "display-date"} %>'
-			portletURL="<%= commerceProductDefinitionsDisplayContext.getPortletURL() %>"
+			portletURL="<%= cpDefinitionsDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<c:if test="<%= commerceProductDefinitionsDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= cpDefinitionsDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"

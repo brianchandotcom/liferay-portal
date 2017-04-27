@@ -19,13 +19,13 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = null;
+CPDefinitionOptionRel cpDefinitionOptionRel = null;
 
 if (row != null) {
-	commerceProductDefinitionOptionRel = (CommerceProductDefinitionOptionRel)row.getObject();
+	cpDefinitionOptionRel = (CPDefinitionOptionRel)row.getObject();
 }
 else {
-	commerceProductDefinitionOptionRel = (CommerceProductDefinitionOptionRel)request.getAttribute("commerce_product_definition_option_rel_info_panel.jsp-entry");
+	cpDefinitionOptionRel = (CPDefinitionOptionRel)request.getAttribute("commerce_product_definition_option_rel_info_panel.jsp-entry");
 }
 %>
 
@@ -33,7 +33,7 @@ else {
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editProductDefinitionOptionRel" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceProductDefinitionOptionRelId" value="<%= String.valueOf(commerceProductDefinitionOptionRel.getCommerceProductDefinitionOptionRelId()) %>" />
+		<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()) %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon
@@ -44,7 +44,7 @@ else {
 	<portlet:actionURL name="editProductDefinitionOptionRel" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceProductDefinitionOptionRelId" value="<%= String.valueOf(commerceProductDefinitionOptionRel.getCommerceProductDefinitionOptionRelId()) %>" />
+		<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete

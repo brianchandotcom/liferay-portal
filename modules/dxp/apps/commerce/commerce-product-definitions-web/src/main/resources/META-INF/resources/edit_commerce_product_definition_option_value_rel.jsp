@@ -17,17 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceProductDefinitionOptionValueRelDisplayContext commerceProductDefinitionOptionValueRelDisplayContext = (CommerceProductDefinitionOptionValueRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPDefinitionOptionValueRelDisplayContext cpDefinitionOptionValueRelDisplayContext = (CPDefinitionOptionValueRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceProductDefinition commerceProductDefinition = commerceProductDefinitionOptionValueRelDisplayContext.getCommerceProductDefinition();
+CPDefinition cpDefinition = cpDefinitionOptionValueRelDisplayContext.getCPDefinition();
 
-CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = commerceProductDefinitionOptionValueRelDisplayContext.getCommerceProductDefinitionOptionRel();
+CPDefinitionOptionRel cpDefinitionOptionRel = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionRel();
 
-long commerceProductDefinitionOptionRelId = commerceProductDefinitionOptionValueRelDisplayContext.getCommerceProductDefinitionOptionRelId();
+long cpDefinitionOptionRelId = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionRelId();
 
-CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel = commerceProductDefinitionOptionValueRelDisplayContext.getCommerceProductDefinitionOptionValueRel();
+CPDefinitionOptionValueRel cpDefinitionOptionValueRel = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionValueRel();
 
-long commerceProductDefinitionOptionValueRelId = commerceProductDefinitionOptionValueRelDisplayContext.getCommerceProductDefinitionOptionValueRelId();
+long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionValueRelId();
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -36,15 +36,15 @@ portletURL.setParameter("mvcRenderCommandName", "editProductDefinitionOptionValu
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-String contextTitle = commerceProductDefinition.getTitle(languageId) + " - " + commerceProductDefinitionOptionRel.getName(locale);
+String contextTitle = cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getName(locale);
 
 String title;
 
-if (commerceProductDefinitionOptionValueRel == null) {
+if (cpDefinitionOptionValueRel == null) {
 	title = LanguageUtil.get(request, "add-product-definition-option-value-rel-to-x", contextTitle);
 }
 else {
-	title = contextTitle + " - " + commerceProductDefinitionOptionValueRel.getTitle(locale);
+	title = contextTitle + " - " + cpDefinitionOptionValueRel.getTitle(locale);
 }
 
 renderResponse.setTitle(title);
@@ -53,17 +53,17 @@ renderResponse.setTitle(title);
 <portlet:actionURL name="editProductDefinitionOptionValueRel" var="editProductDefinitionOptionValueRelActionURL" />
 
 <aui:form action="<%= editProductDefinitionOptionValueRelActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceProductDefinitionOptionValueRel == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpDefinitionOptionValueRel == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-	<aui:input name="commerceProductDefinitionOptionRelId" type="hidden" value="<%= String.valueOf(commerceProductDefinitionOptionRelId) %>" />
-	<aui:input name="commerceProductDefinitionOptionValueRelId" type="hidden" value="<%= String.valueOf(commerceProductDefinitionOptionValueRelId) %>" />
+	<aui:input name="cpDefinitionOptionRelId" type="hidden" value="<%= String.valueOf(cpDefinitionOptionRelId) %>" />
+	<aui:input name="cpDefinitionOptionValueRelId" type="hidden" value="<%= String.valueOf(cpDefinitionOptionValueRelId) %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
 			backURL="<%= backURL %>"
-			formModelBean="<%= commerceProductDefinitionOptionRel %>"
-			id="<%= CommerceProductDefinitionOptionValueRelFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL %>"
+			formModelBean="<%= cpDefinitionOptionRel %>"
+			id="<%= CPDefinitionOptionValueRelFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL %>"
 			markupView="lexicon"
 		/>
 	</div>

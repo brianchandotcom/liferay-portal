@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
-import com.liferay.commerce.product.constants.CommerceProductWebKeys;
-import com.liferay.commerce.product.model.CommerceProductDefinition;
-import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
-import com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel;
-import com.liferay.commerce.product.service.CommerceProductDefinitionOptionRelService;
-import com.liferay.commerce.product.service.CommerceProductDefinitionOptionValueRelService;
-import com.liferay.commerce.product.service.CommerceProductDefinitionService;
+import com.liferay.commerce.product.constants.CPWebKeys;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
+import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -39,226 +39,226 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ActionHelper.class)
 public class ActionHelper {
 
-	public CommerceProductDefinition getCommerceProductDefinition(
+	public CPDefinition getCPDefinition(
 			RenderRequest renderRequest)
 		throws PortalException {
 
-		CommerceProductDefinition commerceProductDefinition = null;
+		CPDefinition cpDefinition = null;
 
-		commerceProductDefinition =
-			(CommerceProductDefinition)renderRequest.getAttribute(
-				CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION);
+		cpDefinition =
+			(CPDefinition)renderRequest.getAttribute(
+				CPWebKeys.COMMERCE_PRODUCT_DEFINITION);
 
-		if (commerceProductDefinition != null) {
-			return commerceProductDefinition;
+		if (cpDefinition != null) {
+			return cpDefinition;
 		}
 
-		long commerceProductDefinitionId = ParamUtil.getLong(
-			renderRequest, "commerceProductDefinitionId");
+		long cpDefinitionId = ParamUtil.getLong(
+			renderRequest, "cpDefinitionId");
 
-		if (commerceProductDefinitionId <= 0) {
+		if (cpDefinitionId <= 0) {
 
 			//Try to get from an related entity if exist
 
-			CommerceProductDefinitionOptionRel
-				commerceProductDefinitionOptionRel =
-					getCommerceProductDefinitionOptionRel(renderRequest);
+			CPDefinitionOptionRel
+				cpDefinitionOptionRel =
+					getCPDefinitionOptionRel(renderRequest);
 
-			if (commerceProductDefinitionOptionRel != null) {
-				commerceProductDefinitionId =
-					commerceProductDefinitionOptionRel.
-						getCommerceProductDefinitionId();
+			if (cpDefinitionOptionRel != null) {
+				cpDefinitionId =
+					cpDefinitionOptionRel.
+						getCPDefinitionId();
 			}
 		}
 
-		if (commerceProductDefinitionId > 0) {
-			commerceProductDefinition =
-				_commerceProductDefinitionService.
-					fetchCommerceProductDefinition(commerceProductDefinitionId);
+		if (cpDefinitionId > 0) {
+			cpDefinition =
+				_cpDefinitionService.
+					fetchCPDefinition(cpDefinitionId);
 		}
 
-		if (commerceProductDefinition != null) {
+		if (cpDefinition != null) {
 			renderRequest.setAttribute(
-				CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION,
-				commerceProductDefinition);
+				CPWebKeys.COMMERCE_PRODUCT_DEFINITION,
+				cpDefinition);
 		}
 
-		return commerceProductDefinition;
+		return cpDefinition;
 	}
 
-	public CommerceProductDefinitionOptionRel
-			getCommerceProductDefinitionOptionRel(
+	public CPDefinitionOptionRel
+			getCPDefinitionOptionRel(
 				RenderRequest renderRequest)
 		throws PortalException {
 
-		CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel =
+		CPDefinitionOptionRel cpDefinitionOptionRel =
 			null;
 
-		commerceProductDefinitionOptionRel =
-			(CommerceProductDefinitionOptionRel)renderRequest.getAttribute(
-				CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_REL);
+		cpDefinitionOptionRel =
+			(CPDefinitionOptionRel)renderRequest.getAttribute(
+				CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_REL);
 
-		if (commerceProductDefinitionOptionRel != null) {
-			return commerceProductDefinitionOptionRel;
+		if (cpDefinitionOptionRel != null) {
+			return cpDefinitionOptionRel;
 		}
 
-		long commerceProductDefinitionOptionRelId = ParamUtil.getLong(
-			renderRequest, "commerceProductDefinitionOptionRelId");
+		long cpDefinitionOptionRelId = ParamUtil.getLong(
+			renderRequest, "cpDefinitionOptionRelId");
 
-		if (commerceProductDefinitionOptionRelId <= 0) {
+		if (cpDefinitionOptionRelId <= 0) {
 
 			//Try to get from an related entity if exist
 
-			CommerceProductDefinitionOptionValueRel
-				commerceProductDefinitionOptionValueRel =
-					getCommerceProductDefinitionOptionValueRel(renderRequest);
+			CPDefinitionOptionValueRel
+				cpDefinitionOptionValueRel =
+					getCPDefinitionOptionValueRel(renderRequest);
 
-			if (commerceProductDefinitionOptionValueRel != null) {
-				commerceProductDefinitionOptionRelId =
-					commerceProductDefinitionOptionValueRel.
-						getCommerceProductDefinitionOptionRelId();
+			if (cpDefinitionOptionValueRel != null) {
+				cpDefinitionOptionRelId =
+					cpDefinitionOptionValueRel.
+						getCPDefinitionOptionRelId();
 			}
 		}
 
-		if (commerceProductDefinitionOptionRelId > 0) {
-			commerceProductDefinitionOptionRel =
-				_commerceProductDefinitionOptionRelService.
-					fetchCommerceProductDefinitionOptionRel(
-						commerceProductDefinitionOptionRelId);
+		if (cpDefinitionOptionRelId > 0) {
+			cpDefinitionOptionRel =
+				_cpDefinitionOptionRelService.
+					fetchCPDefinitionOptionRel(
+						cpDefinitionOptionRelId);
 		}
 
-		if (commerceProductDefinitionOptionRel != null) {
+		if (cpDefinitionOptionRel != null) {
 			renderRequest.setAttribute(
-				CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_REL,
-				commerceProductDefinitionOptionRel);
+				CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_REL,
+				cpDefinitionOptionRel);
 		}
 
-		return commerceProductDefinitionOptionRel;
+		return cpDefinitionOptionRel;
 	}
 
-	public List<CommerceProductDefinitionOptionRel>
-			getCommerceProductDefinitionOptionRels(
+	public List<CPDefinitionOptionRel>
+			getCPDefinitionOptionRels(
 				ResourceRequest resourceRequest)
 		throws Exception {
 
-		long[] commerceProductDefinitionOptionRelIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIdsCommerceProductDefinitionOptionRel");
+		long[] cpDefinitionOptionRelIds = ParamUtil.getLongValues(
+			resourceRequest, "rowIdsCPDefinitionOptionRel");
 
-		List<CommerceProductDefinitionOptionRel>
-			commerceProductDefinitionOptionRels = new ArrayList<>();
+		List<CPDefinitionOptionRel>
+			cpDefinitionOptionRels = new ArrayList<>();
 
-		for (long commerceProductDefinitionOptionRelId :
-				commerceProductDefinitionOptionRelIds) {
+		for (long cpDefinitionOptionRelId :
+				cpDefinitionOptionRelIds) {
 
-			CommerceProductDefinitionOptionRel
-				commerceProductDefinitionOptionRel =
-					_commerceProductDefinitionOptionRelService.
-						getCommerceProductDefinitionOptionRel(
-							commerceProductDefinitionOptionRelId);
+			CPDefinitionOptionRel
+				cpDefinitionOptionRel =
+					_cpDefinitionOptionRelService.
+						getCPDefinitionOptionRel(
+							cpDefinitionOptionRelId);
 
-			commerceProductDefinitionOptionRels.add(
-				commerceProductDefinitionOptionRel);
+			cpDefinitionOptionRels.add(
+				cpDefinitionOptionRel);
 		}
 
-		return commerceProductDefinitionOptionRels;
+		return cpDefinitionOptionRels;
 	}
 
-	public CommerceProductDefinitionOptionValueRel
-			getCommerceProductDefinitionOptionValueRel(
+	public CPDefinitionOptionValueRel
+			getCPDefinitionOptionValueRel(
 				RenderRequest renderRequest)
 		throws PortalException {
 
-		CommerceProductDefinitionOptionValueRel
-			commerceProductDefinitionOptionValueRel = null;
+		CPDefinitionOptionValueRel
+			cpDefinitionOptionValueRel = null;
 
-		commerceProductDefinitionOptionValueRel =
-			(CommerceProductDefinitionOptionValueRel)renderRequest.getAttribute(
-				CommerceProductWebKeys.
+		cpDefinitionOptionValueRel =
+			(CPDefinitionOptionValueRel)renderRequest.getAttribute(
+				CPWebKeys.
 					COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL);
 
-		if (commerceProductDefinitionOptionValueRel != null) {
-			return commerceProductDefinitionOptionValueRel;
+		if (cpDefinitionOptionValueRel != null) {
+			return cpDefinitionOptionValueRel;
 		}
 
-		long commerceProductDefinitionOptionValueRelId = ParamUtil.getLong(
-			renderRequest, "commerceProductDefinitionOptionValueRelId");
+		long cpDefinitionOptionValueRelId = ParamUtil.getLong(
+			renderRequest, "cpDefinitionOptionValueRelId");
 
-		if (commerceProductDefinitionOptionValueRelId > 0) {
-			commerceProductDefinitionOptionValueRel =
-				_commerceProductDefinitionOptionValueRelService.
-					fetchCommerceProductDefinitionOptionValueRel(
-						commerceProductDefinitionOptionValueRelId);
+		if (cpDefinitionOptionValueRelId > 0) {
+			cpDefinitionOptionValueRel =
+				_cpDefinitionOptionValueRelService.
+					fetchCPDefinitionOptionValueRel(
+						cpDefinitionOptionValueRelId);
 		}
 
-		if (commerceProductDefinitionOptionValueRel != null) {
+		if (cpDefinitionOptionValueRel != null) {
 			renderRequest.setAttribute(
-				CommerceProductWebKeys.
+				CPWebKeys.
 					COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL,
-				commerceProductDefinitionOptionValueRel);
+				cpDefinitionOptionValueRel);
 		}
 
-		return commerceProductDefinitionOptionValueRel;
+		return cpDefinitionOptionValueRel;
 	}
 
-	public List<CommerceProductDefinitionOptionValueRel>
-			getCommerceProductDefinitionOptionValueRels(
+	public List<CPDefinitionOptionValueRel>
+			getCPDefinitionOptionValueRels(
 				ResourceRequest resourceRequest)
 		throws Exception {
 
-		long[] commerceProductDefinitionOptionValueRelIds =
+		long[] cpDefinitionOptionValueRelIds =
 			ParamUtil.getLongValues(
 				resourceRequest,
-				"rowIdsCommerceProductDefinitionOptionValueRel");
+				"rowIdsCPDefinitionOptionValueRel");
 
-		List<CommerceProductDefinitionOptionValueRel>
-			commerceProductDefinitionOptionValueRels = new ArrayList<>();
+		List<CPDefinitionOptionValueRel>
+			cpDefinitionOptionValueRels = new ArrayList<>();
 
-		for (long commerceProductDefinitionOptionValueRelId :
-				commerceProductDefinitionOptionValueRelIds) {
+		for (long cpDefinitionOptionValueRelId :
+				cpDefinitionOptionValueRelIds) {
 
-			CommerceProductDefinitionOptionValueRel
-				commerceProductDefinitionOptionValueRel =
-					_commerceProductDefinitionOptionValueRelService.
-						getCommerceProductDefinitionOptionValueRel(
-							commerceProductDefinitionOptionValueRelId);
+			CPDefinitionOptionValueRel
+				cpDefinitionOptionValueRel =
+					_cpDefinitionOptionValueRelService.
+						getCPDefinitionOptionValueRel(
+							cpDefinitionOptionValueRelId);
 
-			commerceProductDefinitionOptionValueRels.add(
-				commerceProductDefinitionOptionValueRel);
+			cpDefinitionOptionValueRels.add(
+				cpDefinitionOptionValueRel);
 		}
 
-		return commerceProductDefinitionOptionValueRels;
+		return cpDefinitionOptionValueRels;
 	}
 
-	public List<CommerceProductDefinition> getCommerceProductDefinitions(
+	public List<CPDefinition> getCPDefinitions(
 			ResourceRequest resourceRequest)
 		throws Exception {
 
-		long[] commerceProductDefinitionIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIdsCommerceProductDefinition");
+		long[] cpDefinitionIds = ParamUtil.getLongValues(
+			resourceRequest, "rowIdsCPDefinition");
 
-		List<CommerceProductDefinition> commerceProductDefinitions =
+		List<CPDefinition> cpDefinitions =
 			new ArrayList<>();
 
-		for (long commerceProductDefinitionId : commerceProductDefinitionIds) {
-			CommerceProductDefinition commerceProductDefinition =
-				_commerceProductDefinitionService.getCommerceProductDefinition(
-					commerceProductDefinitionId);
+		for (long cpDefinitionId : cpDefinitionIds) {
+			CPDefinition cpDefinition =
+				_cpDefinitionService.getCPDefinition(
+					cpDefinitionId);
 
-			commerceProductDefinitions.add(commerceProductDefinition);
+			cpDefinitions.add(cpDefinition);
 		}
 
-		return commerceProductDefinitions;
+		return cpDefinitions;
 	}
 
 	@Reference
-	private CommerceProductDefinitionOptionRelService
-		_commerceProductDefinitionOptionRelService;
+	private CPDefinitionOptionRelService
+		_cpDefinitionOptionRelService;
 
 	@Reference
-	private CommerceProductDefinitionOptionValueRelService
-		_commerceProductDefinitionOptionValueRelService;
+	private CPDefinitionOptionValueRelService
+		_cpDefinitionOptionValueRelService;
 
 	@Reference
-	private CommerceProductDefinitionService _commerceProductDefinitionService;
+	private CPDefinitionService _cpDefinitionService;
 
 }

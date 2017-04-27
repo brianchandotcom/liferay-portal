@@ -19,16 +19,16 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-definitions");
 
-CommerceProductDefinitionsDisplayContext commerceProductDefinitionsDisplayContext = (CommerceProductDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-SearchContainer productDefinitionSearchContainer = commerceProductDefinitionsDisplayContext.getSearchContainer();
+SearchContainer productDefinitionSearchContainer = cpDefinitionsDisplayContext.getSearchContainer();
 
-String displayStyle = commerceProductDefinitionsDisplayContext.getDisplayStyle();
+String displayStyle = cpDefinitionsDisplayContext.getDisplayStyle();
 
-PortletURL portletURL = commerceProductDefinitionsDisplayContext.getPortletURL();
+PortletURL portletURL = cpDefinitionsDisplayContext.getPortletURL();
 
 portletURL.setParameter("toolbarItem", toolbarItem);
-portletURL.setParameter("searchContainerId", "commerceProductDefinitions");
+portletURL.setParameter("searchContainerId", "cpDefinitions");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
@@ -55,21 +55,21 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 </aui:nav-bar>
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchContainerId" value="commerceProductDefinitions" />
+	<liferay-util:param name="searchContainerId" value="cpDefinitions" />
 </liferay-util:include>
 
 <div id="<portlet:namespace />productDefinitionsContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<c:if test="<%= commerceProductDefinitionsDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= cpDefinitionsDisplayContext.isShowInfoPanel() %>">
 			<liferay-portlet:resourceURL
 				copyCurrentRenderParameters="<%= false %>"
-				id="commerceProductDefinitionInfoPanel"
+				id="cpDefinitionInfoPanel"
 				var="sidebarPanelURL"
 			/>
 
 			<liferay-frontend:sidebar-panel
 				resourceURL="<%= sidebarPanelURL %>"
-				searchContainerId="commerceProductDefinitions"
+				searchContainerId="cpDefinitions"
 			>
 				<liferay-util:include page="/commerce_product_definition_info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
@@ -80,14 +80,14 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<div class="products-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
 						emptyResultsMessage="no-products-were-found"
-						id="commerceProductDefinitions"
+						id="cpDefinitions"
 						searchContainer="<%= productDefinitionSearchContainer %>"
 					>
 						<liferay-ui:search-container-row
-							className="com.liferay.commerce.product.model.CommerceProductDefinition"
+							className="com.liferay.commerce.product.model.CPDefinition"
 							cssClass="entry-display-style"
-							keyProperty="commerceProductDefinitionId"
-							modelVar="commerceProductDefinition"
+							keyProperty="cpDefinitionId"
+							modelVar="cpDefinition"
 						>
 							<c:choose>
 								<c:when test='<%= displayStyle.equals("descriptive") %>'>
@@ -105,8 +105,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 											actionJspServletContext="<%= application %>"
 											icon="web-content"
 											resultRow="<%= row %>"
-											rowChecker="<%= commerceProductDefinitionsDisplayContext.getRowChecker() %>"
-											title="<%= HtmlUtil.escape(commerceProductDefinition.getTitle(languageId)) %>"
+											rowChecker="<%= cpDefinitionsDisplayContext.getRowChecker() %>"
+											title="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
 										>
 											<%@ include file="/commerce_product_definition_vertical_card.jspf" %>
 										</liferay-frontend:icon-vertical-card>

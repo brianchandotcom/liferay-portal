@@ -19,13 +19,13 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceProductOption commerceProductOption = null;
+CPOption cpOption = null;
 
 if (row != null) {
-	commerceProductOption = (CommerceProductOption)row.getObject();
+	cpOption = (CPOption)row.getObject();
 }
 else {
-	commerceProductOption = (CommerceProductOption)request.getAttribute("info_panel.jsp-entry");
+	cpOption = (CPOption)request.getAttribute("info_panel.jsp-entry");
 }
 %>
 
@@ -34,7 +34,7 @@ else {
 		<portlet:param name="mvcRenderCommandName" value="editProductOption" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceProductOptionId" value="<%= String.valueOf(commerceProductOption.getCommerceProductOptionId()) %>" />
+		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon
@@ -45,7 +45,7 @@ else {
 	<portlet:actionURL name="editProductOption" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceProductOptionId" value="<%= String.valueOf(commerceProductOption.getCommerceProductOptionId()) %>" />
+		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

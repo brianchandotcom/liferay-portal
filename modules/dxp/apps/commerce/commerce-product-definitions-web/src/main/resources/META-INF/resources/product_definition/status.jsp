@@ -17,18 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceProductDefinition commerceProductDefinition = (CommerceProductDefinition)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_DEFINITION);
+CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITION);
 
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 
-if ((commerceProductDefinition != null) && (commerceProductDefinition.getExpirationDate() != null)) {
+if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 	neverExpire = false;
 }
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="status" />
 
-<aui:model-context bean="<%= commerceProductDefinition %>" model="<%= CommerceProductDefinition.class %>" />
+<aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
 <aui:fieldset>
 	<aui:input name="published" type="checkbox" />

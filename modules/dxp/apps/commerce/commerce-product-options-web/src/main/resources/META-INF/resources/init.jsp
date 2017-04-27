@@ -25,14 +25,14 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.commerce.product.constants.CommerceProductWebKeys" %><%@
+<%@ page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchProductOptionException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchProductOptionValueException" %><%@
-page import="com.liferay.commerce.product.model.CommerceProductOption" %><%@
-page import="com.liferay.commerce.product.model.CommerceProductOptionValue" %><%@
-page import="com.liferay.commerce.product.options.web.internal.display.context.CommerceProductOptionsDisplayContext" %><%@
-page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CommerceProductOptionFormNavigatorConstants" %><%@
-page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CommerceProductOptionValueFormNavigatorConstants" %><%@
+page import="com.liferay.commerce.product.model.CPOption" %><%@
+page import="com.liferay.commerce.product.model.CPOptionValue" %><%@
+page import="com.liferay.commerce.product.options.web.internal.display.context.CPOptionsDisplayContext" %><%@
+page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CPOptionFormNavigatorConstants" %><%@
+page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CPOptionValueFormNavigatorConstants" %><%@
 page import="com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
@@ -61,5 +61,5 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-CommerceProductOptionsDisplayContext commerceProductOptionsDisplayContext = (CommerceProductOptionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPOptionsDisplayContext cpOptionsDisplayContext = (CPOptionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>

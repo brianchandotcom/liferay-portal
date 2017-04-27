@@ -19,13 +19,13 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceProductDefinitionOptionValueRel commerceProductDefinitionOptionValueRel = null;
+CPDefinitionOptionValueRel cpDefinitionOptionValueRel = null;
 
 if (row != null) {
-	commerceProductDefinitionOptionValueRel = (CommerceProductDefinitionOptionValueRel)row.getObject();
+	cpDefinitionOptionValueRel = (CPDefinitionOptionValueRel)row.getObject();
 }
 else {
-	commerceProductDefinitionOptionValueRel = (CommerceProductDefinitionOptionValueRel)request.getAttribute("commerce_product_definition_option_value_rel_info_panel.jsp-entry");
+	cpDefinitionOptionValueRel = (CPDefinitionOptionValueRel)request.getAttribute("commerce_product_definition_option_value_rel_info_panel.jsp-entry");
 }
 %>
 
@@ -33,7 +33,7 @@ else {
 	<portlet:renderURL var="editProductDefinitionOptionValueRelURL">
 		<portlet:param name="mvcRenderCommandName" value="editProductDefinitionOptionValueRel" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceProductDefinitionOptionValueRelId" value="<%= String.valueOf(commerceProductDefinitionOptionValueRel.getCommerceProductDefinitionOptionValueRelId()) %>" />
+		<portlet:param name="cpDefinitionOptionValueRelId" value="<%= String.valueOf(cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId()) %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon
@@ -44,7 +44,7 @@ else {
 	<portlet:actionURL name="editProductDefinitionOptionValueRel" var="deleteProductDefinitionOptionValueRelURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceProductDefinitionOptionValueRelId" value="<%= String.valueOf(commerceProductDefinitionOptionValueRel.getCommerceProductDefinitionOptionValueRelId()) %>" />
+		<portlet:param name="cpDefinitionOptionValueRelId" value="<%= String.valueOf(cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete

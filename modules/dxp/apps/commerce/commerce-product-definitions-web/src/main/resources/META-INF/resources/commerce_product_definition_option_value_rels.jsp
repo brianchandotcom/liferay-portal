@@ -17,17 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceProductDefinitionOptionValueRelDisplayContext commerceProductDefinitionOptionValueRelDisplayContext = (CommerceProductDefinitionOptionValueRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPDefinitionOptionValueRelDisplayContext cpDefinitionOptionValueRelDisplayContext = (CPDefinitionOptionValueRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceProductDefinition commerceProductDefinition = commerceProductDefinitionOptionValueRelDisplayContext.getCommerceProductDefinition();
+CPDefinition cpDefinition = cpDefinitionOptionValueRelDisplayContext.getCPDefinition();
 
-CommerceProductDefinitionOptionRel commerceProductDefinitionOptionRel = commerceProductDefinitionOptionValueRelDisplayContext.getCommerceProductDefinitionOptionRel();
+CPDefinitionOptionRel cpDefinitionOptionRel = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionRel();
 
-long commerceProductDefinitionOptionRelId = commerceProductDefinitionOptionValueRelDisplayContext.getCommerceProductDefinitionOptionRelId();
+long cpDefinitionOptionRelId = cpDefinitionOptionValueRelDisplayContext.getCPDefinitionOptionRelId();
 
-SearchContainer<CommerceProductDefinitionOptionValueRel> commerceProductDefinitionOptionValueRelSearchContainer = commerceProductDefinitionOptionValueRelDisplayContext.getSearchContainer();
+SearchContainer<CPDefinitionOptionValueRel> cpDefinitionOptionValueRelSearchContainer = cpDefinitionOptionValueRelDisplayContext.getSearchContainer();
 
-PortletURL portletURL = commerceProductDefinitionOptionValueRelDisplayContext.getPortletURL();
+PortletURL portletURL = cpDefinitionOptionValueRelDisplayContext.getPortletURL();
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-commerce-product-definition-option-value-rels");
 
@@ -38,17 +38,17 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-	renderResponse.setTitle(commerceProductDefinition.getTitle(languageId) + " - " + commerceProductDefinitionOptionRel.getName(locale));
+	renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getName(locale));
 %>
 
 <%@ include file="/commerce_product_definition_option_rel_navbar.jspf" %>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= false %>"
-	searchContainerId="commerceProductDefinitionOptionValueRels"
+	searchContainerId="cpDefinitionOptionValueRels"
 >
 	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= commerceProductDefinitionOptionValueRelDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= cpDefinitionOptionValueRelDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"
@@ -59,7 +59,7 @@ portletDisplay.setURLBack(backURL);
 			disabled=""
 			displayViews='<%= new String[] {"list"} %>'
 			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= commerceProductDefinitionOptionValueRelDisplayContext.getDisplayStyle() %>"
+			selectedDisplayStyle="<%= cpDefinitionOptionValueRelDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
@@ -70,15 +70,15 @@ portletDisplay.setURLBack(backURL);
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= commerceProductDefinitionOptionValueRelDisplayContext.getOrderByCol() %>"
-			orderByType="<%= commerceProductDefinitionOptionValueRelDisplayContext.getOrderByType() %>"
+			orderByCol="<%= cpDefinitionOptionValueRelDisplayContext.getOrderByCol() %>"
+			orderByType="<%= cpDefinitionOptionValueRelDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"priority", "title", "create-date"} %>'
 			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<c:if test="<%= commerceProductDefinitionOptionValueRelDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= cpDefinitionOptionValueRelDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"
@@ -89,16 +89,16 @@ portletDisplay.setURLBack(backURL);
 
 <div id="<portlet:namespace />productDefinitionOptionRelsContainer">
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-<c:if test="<%= commerceProductDefinitionOptionValueRelDisplayContext.isShowInfoPanel() %>">
+<c:if test="<%= cpDefinitionOptionValueRelDisplayContext.isShowInfoPanel() %>">
 	<liferay-portlet:resourceURL
 		copyCurrentRenderParameters="<%= false %>"
-		id="commerceProductDefinitionOptionValueRelInfoPanel"
+		id="cpDefinitionOptionValueRelInfoPanel"
 		var="sidebarPanelURL"
 	/>
 
 	<liferay-frontend:sidebar-panel
 		resourceURL="<%= sidebarPanelURL %>"
-		searchContainerId="commerceProductDefinitionOptionValueRels"
+		searchContainerId="cpDefinitionOptionValueRels"
 	>
 		<liferay-util:include page="/commerce_product_definition_option_value_rel_info_panel.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:sidebar-panel>
@@ -111,21 +111,21 @@ portletDisplay.setURLBack(backURL);
 
 	<div class="product-definition-option-rels-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
-			id="commerceProductDefinitionOptionValueRels"
+			id="cpDefinitionOptionValueRels"
 			iteratorURL="<%= portletURL %>"
-			searchContainer="<%= commerceProductDefinitionOptionValueRelSearchContainer %>"
+			searchContainer="<%= cpDefinitionOptionValueRelSearchContainer %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel"
+				className="com.liferay.commerce.product.model.CPDefinitionOptionValueRel"
 				cssClass="entry-display-style"
-				keyProperty="commerceProductDefinitionOptionValueRelId"
-				modelVar="commerceProductDefinitionOptionValueRel"
+				keyProperty="cpDefinitionOptionValueRelId"
+				modelVar="cpDefinitionOptionValueRel"
 			>
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					name="title"
 				>
-					<%= commerceProductDefinitionOptionValueRel.getTitle(locale) %>
+					<%= cpDefinitionOptionValueRel.getTitle(locale) %>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
@@ -146,7 +146,7 @@ portletDisplay.setURLBack(backURL);
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= commerceProductDefinitionOptionValueRelSearchContainer %>" />
+			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= cpDefinitionOptionValueRelSearchContainer %>" />
 		</liferay-ui:search-container>
 	</div>
 </aui:form>
@@ -155,7 +155,7 @@ portletDisplay.setURLBack(backURL);
 	<portlet:param name="mvcRenderCommandName" value="editProductDefinitionOptionValueRel" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="backURL" value="<%= redirect %>" />
-	<portlet:param name="commerceProductDefinitionOptionRelId" value="<%= String.valueOf(commerceProductDefinitionOptionRelId) %>" />
+	<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRelId) %>" />
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>

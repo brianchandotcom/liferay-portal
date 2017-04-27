@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.product.internal.util;
 
-import com.liferay.commerce.product.model.CommerceProductDefinitionOptionRel;
-import com.liferay.commerce.product.model.CommerceProductDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -26,16 +26,16 @@ import java.util.TreeSet;
  * @author Marco Leo
  */
 public class SKUCombinationsIterator
-	implements Iterator<CommerceProductDefinitionOptionValueRel[]> {
+	implements Iterator<CPDefinitionOptionValueRel[]> {
 
 	public SKUCombinationsIterator(
-		Map<CommerceProductDefinitionOptionRel, CommerceProductDefinitionOptionValueRel[]>
+		Map<CPDefinitionOptionRel, CPDefinitionOptionValueRel[]>
 			map) {
 
 		_combinationLength = map.size();
 
 		_values =
-			new CommerceProductDefinitionOptionValueRel[_combinationLength][];
+			new CPDefinitionOptionValueRel[_combinationLength][];
 		_maxIndexes = new int[_combinationLength];
 		_currentIndexes = new int[_combinationLength];
 
@@ -48,12 +48,12 @@ public class SKUCombinationsIterator
 
 		int valuesIndex = 0;
 
-		for (CommerceProductDefinitionOptionRel
-				commerceProductDefinitionOptionRel :
+		for (CPDefinitionOptionRel
+				cpDefinitionOptionRel :
 					new TreeSet<>(map.keySet())) {
 
 			_values[valuesIndex++] = map.get(
-				commerceProductDefinitionOptionRel);
+				cpDefinitionOptionRel);
 		}
 
 		for (int i = 0; i < _combinationLength; ++i) {
@@ -73,13 +73,13 @@ public class SKUCombinationsIterator
 	}
 
 	@Override
-	public CommerceProductDefinitionOptionValueRel[] next() {
+	public CPDefinitionOptionValueRel[] next() {
 		if (!_hasNext) {
 			throw new NoSuchElementException(
 				"No more combinations are available");
 		}
 
-		final CommerceProductDefinitionOptionValueRel[] combination =
+		final CPDefinitionOptionValueRel[] combination =
 			_getCombinationByCurrentIndexes();
 		_nextIndexesCombination();
 		return combination;
@@ -91,11 +91,11 @@ public class SKUCombinationsIterator
 			"Remove operation is not supported");
 	}
 
-	private CommerceProductDefinitionOptionValueRel[]
+	private CPDefinitionOptionValueRel[]
 		_getCombinationByCurrentIndexes() {
 
-		final CommerceProductDefinitionOptionValueRel[] combination =
-			new CommerceProductDefinitionOptionValueRel[_combinationLength];
+		final CPDefinitionOptionValueRel[] combination =
+			new CPDefinitionOptionValueRel[_combinationLength];
 
 		for (int i = 0; i < _combinationLength; ++i) {
 			combination[i] = _values[i][_currentIndexes[i]];
@@ -123,6 +123,6 @@ public class SKUCombinationsIterator
 	private final int[] _currentIndexes;
 	private boolean _hasNext;
 	private final int[] _maxIndexes;
-	private final CommerceProductDefinitionOptionValueRel[][] _values;
+	private final CPDefinitionOptionValueRel[][] _values;
 
 }

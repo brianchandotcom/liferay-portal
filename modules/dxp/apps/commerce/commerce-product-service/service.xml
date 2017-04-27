@@ -4,11 +4,11 @@
 <service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.product">
 	<author>Marco Leo</author>
 	<namespace>Commerce</namespace>
-	<entity local-service="true" name="CommerceProductDefinition" remote-service="true" trash-enabled="true" uuid="true">
+	<entity local-service="true" name="CPDefinition" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="commerceProductDefinitionId" primary="true" type="long" />
+		<column name="CPDefinitionId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -65,11 +65,11 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
-	<entity local-service="true" name="CommerceProductDefinitionOptionRel" remote-service="true"  uuid="true">
+	<entity local-service="true" name="CPDefinitionOptionRel" remote-service="true"  uuid="true">
 
 		<!-- PK fields -->
 
-		<column db-name="definitionOptionRelId" name="commerceProductDefinitionOptionRelId" primary="true" type="long" />
+		<column name="CPDefinitionOptionRelId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -85,8 +85,8 @@
 
 		<!-- Other fields -->
 
-		<column name="commerceProductDefinitionId" type="long" />
-		<column name="commerceProductOptionId" type="long" />
+		<column name="CPDefinitionId" type="long" />
+		<column name="CPOptionId" type="long" />
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="DDMFormFieldTypeName" type="String" />
@@ -108,11 +108,11 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="CommerceProductDefinitionId" return-type="Collection">
-			<finder-column name="commerceProductDefinitionId" />
+		<finder name="CPDefinitionId" return-type="Collection">
+			<finder-column name="CPDefinitionId" />
 		</finder>
 		<finder name="C_SC" return-type="Collection">
-			<finder-column name="commerceProductDefinitionId" />
+			<finder-column name="CPDefinitionId" />
 			<finder-column name="skuContributor" />
 		</finder>
 
@@ -120,11 +120,11 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="true" name="CommerceProductDefinitionOptionValueRel" remote-service="true"  uuid="true">
+	<entity local-service="true" name="CPDefinitionOptionValueRel" remote-service="true"  uuid="true">
 
 		<!-- PK fields -->
 
-		<column db-name="definitionOptionValueRelId" name="commerceProductDefinitionOptionValueRelId" primary="true" type="long" />
+		<column name="CPDefinitionOptionValueRelId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -140,7 +140,7 @@
 
 		<!-- Other fields -->
 
-		<column db-name="definitionOptionRelId" name="commerceProductDefinitionOptionRelId"  type="long" />
+		<column name="CPDefinitionOptionRelId"  type="long" />
 		<column localized="true" name="title" type="String" />
 		<column name="priority" type="int" />
 
@@ -152,8 +152,8 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CommerceProductDefinitionOptionRelId" return-type="Collection">
-			<finder-column name="commerceProductDefinitionOptionRelId" />
+		<finder name="CPDefinitionOptionRelId" return-type="Collection">
+			<finder-column name="CPDefinitionOptionRelId" />
 		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
@@ -166,11 +166,11 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="true" name="CommerceProductInstance" remote-service="true" trash-enabled="true" uuid="true">
+	<entity local-service="true" name="CPInstance" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="commerceProductInstanceId" primary="true" type="long" />
+		<column name="CPInstanceId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -186,7 +186,7 @@
 
 		<!-- Other fields -->
 
-		<column name="commerceProductDefinitionId" type="long" />
+		<column name="CPDefinitionId" type="long" />
 		<column name="sku" type="String" />
 		<column name="DDMContent" type="String" />
 		<column name="displayDate" type="Date" />
@@ -212,11 +212,11 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="CommerceProductDefinitionId" return-type="Collection">
-			<finder-column name="commerceProductDefinitionId" />
+		<finder name="CPDefinitionId" return-type="Collection">
+			<finder-column name="CPDefinitionId" />
 		</finder>
-		<finder name="C_S" return-type="CommerceProductInstance" unique="true">
-			<finder-column name="commerceProductDefinitionId" />
+		<finder name="C_S" return-type="CPInstance" unique="true">
+			<finder-column name="CPDefinitionId" />
 			<finder-column name="sku" />
 		</finder>
 
@@ -228,11 +228,11 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
-	<entity local-service="true" name="CommerceProductOption" remote-service="true"  uuid="true">
+	<entity local-service="true" name="CPOption" remote-service="true"  uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="commerceProductOptionId" primary="true" type="long" />
+		<column name="CPOptionId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -271,11 +271,11 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="true" name="CommerceProductOptionValue" remote-service="true"  uuid="true">
+	<entity local-service="true" name="CPOptionValue" remote-service="true"  uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="commerceProductOptionValueId" primary="true" type="long" />
+		<column name="CPOptionValueId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -291,7 +291,7 @@
 
 		<!-- Other fields -->
 
-		<column name="commerceProductOptionId"  type="long" />
+		<column name="CPOptionId"  type="long" />
 		<column localized="true" name="title" type="String" />
 		<column name="priority" type="int" />
 
@@ -309,8 +309,8 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="CommerceProductOptionId" return-type="Collection">
-			<finder-column name="commerceProductOptionId" />
+		<finder name="CPOptionId" return-type="Collection">
+			<finder-column name="CPOptionId" />
 		</finder>
 
 		<!-- References -->
@@ -318,9 +318,9 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<exceptions>
-		<exception>CommerceProductDefinitionDisplayDate</exception>
-		<exception>CommerceProductDefinitionExpirationDate</exception>
-		<exception>CommerceProductInstanceDisplayDate</exception>
-		<exception>CommerceProductInstanceExpirationDate</exception>
+		<exception>CPDefinitionDisplayDate</exception>
+		<exception>CPDefinitionExpirationDate</exception>
+		<exception>CPInstanceDisplayDate</exception>
+		<exception>CPInstanceExpirationDate</exception>
 	</exceptions>
 </service-builder>

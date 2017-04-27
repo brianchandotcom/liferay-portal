@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_commerce_product_definitions_web_internal_portlet_CommerceProductDefinitionsPortlet</portlet-name>
+		<portlet-name>com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>

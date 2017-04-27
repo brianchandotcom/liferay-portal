@@ -17,29 +17,29 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceProductOption commerceProductOption = (CommerceProductOption)request.getAttribute(CommerceProductWebKeys.COMMERCE_PRODUCT_OPTION);
+CPOption cpOption = (CPOption)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_OPTION);
 
-long commerceProductOptionId = BeanParamUtil.getLong(commerceProductOption, request, "commerceProductOptionId");
+long cpOptionId = BeanParamUtil.getLong(cpOption, request, "cpOptionId");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle((commerceProductOption == null) ? LanguageUtil.get(request, "add-product-option") : commerceProductOption.getName(locale));
+renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-product-option") : cpOption.getName(locale));
 %>
 
 <portlet:actionURL name="editProductOption" var="editProductOptionActionURL" />
 
 <aui:form action="<%= editProductOptionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceProductOption == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpOption == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-	<aui:input name="commerceProductOptionId" type="hidden" value="<%= commerceProductOptionId %>" />
+	<aui:input name="cpOptionId" type="hidden" value="<%= cpOptionId %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
 			backURL="<%= backURL %>"
-			formModelBean="<%= commerceProductOption %>"
-			id="<%= CommerceProductOptionFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_OPTION %>"
+			formModelBean="<%= cpOption %>"
+			id="<%= CPOptionFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_OPTION %>"
 			markupView="lexicon"
 		/>
 	</div>

@@ -26,11 +26,11 @@ portletURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
-CommerceProductDefinitionsDisplayContext commerceProductDefinitionsDisplayContext = (CommerceProductDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceProductDefinition commerceProductDefinition = commerceProductDefinitionsDisplayContext.getCommerceProductDefinition();
+CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 
-long commerceProductDefinitionId = commerceProductDefinitionsDisplayContext.getCommerceProductDefinitionId();
+long cpDefinitionId = cpDefinitionsDisplayContext.getCPDefinitionId();
 
 PortletURL backUrl = liferayPortletResponse.createRenderURL();
 
@@ -41,14 +41,14 @@ String backURLString = backUrl.toString();
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURLString);
 
-renderResponse.setTitle((commerceProductDefinition == null) ? LanguageUtil.get(request, "add-product-definition") : commerceProductDefinition.getTitle(languageId));
+renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-product-definition") : cpDefinition.getTitle(languageId));
 
 String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
 Set<Locale> availableLocalesSet = new HashSet<>();
 
 availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
-availableLocalesSet.addAll(commerceProductDefinitionsDisplayContext.getAvailableLocales());
+availableLocalesSet.addAll(cpDefinitionsDisplayContext.getAvailableLocales());
 
 Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
 %>
@@ -61,17 +61,17 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURLString %>" />
-	<aui:input name="commerceProductDefinitionId" type="hidden" value="<%= String.valueOf(commerceProductDefinitionId) %>" />
+	<aui:input name="cpDefinitionId" type="hidden" value="<%= String.valueOf(cpDefinitionId) %>" />
 
-	<c:if test="<%= (commerceProductDefinition != null) && !commerceProductDefinition.isNew() %>">
+	<c:if test="<%= (cpDefinition != null) && !cpDefinition.isNew() %>">
 		<liferay-frontend:info-bar>
 			<aui:workflow-status
-				id="<%= String.valueOf(commerceProductDefinitionId) %>"
+				id="<%= String.valueOf(cpDefinitionId) %>"
 				markupView="lexicon"
 				showHelpMessage="<%= false %>"
 				showIcon="<%= false %>"
 				showLabel="<%= false %>"
-				status="<%= commerceProductDefinition.getStatus() %>"
+				status="<%= cpDefinition.getStatus() %>"
 			/>
 		</liferay-frontend:info-bar>
 	</c:if>
@@ -86,8 +86,8 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
 			backURL="<%= backURLString %>"
-			formModelBean="<%= commerceProductDefinition %>"
-			id="<%= CommerceProductDefinitionFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION %>"
+			formModelBean="<%= cpDefinition %>"
+			id="<%= CPDefinitionFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION %>"
 			markupView="lexicon"
 		/>
 	</div>

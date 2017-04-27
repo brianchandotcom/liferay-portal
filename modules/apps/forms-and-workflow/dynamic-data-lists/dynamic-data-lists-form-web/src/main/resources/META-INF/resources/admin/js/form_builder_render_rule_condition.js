@@ -366,7 +366,7 @@ AUI.add(
 
 				var value = instance._getOperatorValue(index);
 
-				return value === 'equals-to' || value === 'not-equals-to' || value === 'contains' || value === 'not-contains' || value === 'belongs-to';
+				return value === 'equals-to' || value === 'not-equals-to' || value === 'contains' || value === 'not-contains' || value === 'belongs-to' || value === 'greater-than' || value === 'greater-than-equals' || value === 'less-than' || value === 'less-than-equals';
 			},
 
 			_isFieldList: function(field) {
@@ -657,7 +657,7 @@ AUI.add(
 						);
 					}
 				}
-				else if (dataType === 'number') {
+				else if (dataType === 'integer') {
 					for (var j = 0; j < operatorTypes.number.length; j++) {
 						options.push(
 							A.merge(

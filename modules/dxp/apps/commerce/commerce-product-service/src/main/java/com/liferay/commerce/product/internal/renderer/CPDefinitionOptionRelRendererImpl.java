@@ -44,9 +44,9 @@ public class CPDefinitionOptionRelRendererImpl
 	implements CPDefinitionOptionRelRenderer {
 
 	@Override
-	public String render(long cpDefinitionId,
-						HttpServletRequest httpServletRequest,
-						HttpServletResponse httpServletResponse)
+	public String render(
+			long cpDefinitionId, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		DDMForm ddmForm = new DDMForm();
@@ -57,24 +57,26 @@ public class CPDefinitionOptionRelRendererImpl
 			_cpDefinitionOptionRelService.
 				getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
 
-		for (CPDefinitionOptionRel cpDefinitionOptionRel
-			: cpDefinitionOptionRels) {
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				cpDefinitionOptionRels) {
 
 			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 				cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
 
 			DDMFormField ddmFormField = new DDMFormField(
-				String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()),
+				String.valueOf(cpDefinitionOptionRel.
+					getCPDefinitionOptionRelId()),
 				cpDefinitionOptionRel.getDDMFormFieldTypeName());
 
-			if (cpDefinitionOptionValueRels.size() > 0) {
+			if (!cpDefinitionOptionValueRels.isEmpty()) {
 				DDMFormFieldOptions options = new DDMFormFieldOptions();
 
 				for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 						cpDefinitionOptionValueRels) {
 
 					options.addOptionLabel(
-						String.valueOf(cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId()),
+						String.valueOf(cpDefinitionOptionValueRel.
+							getCPDefinitionOptionValueRelId()),
 						locale, cpDefinitionOptionValueRel.getTitle(locale));
 				}
 

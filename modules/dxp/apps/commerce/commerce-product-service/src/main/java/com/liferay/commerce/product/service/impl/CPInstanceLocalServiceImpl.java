@@ -179,7 +179,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpDefinitionOptionRelLocalService.
 				getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
 
-		if (cpDefinitionOptionRels.size() == 0) {
+		if (cpDefinitionOptionRels.isEmpty()) {
 			throw new NoSuchSkuContributorCPDefinitionOptionRelException();
 		}
 

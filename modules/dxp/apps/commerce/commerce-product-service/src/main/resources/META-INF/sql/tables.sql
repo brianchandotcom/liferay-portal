@@ -127,7 +127,9 @@ create table CPOption (
 	modifiedDate DATE null,
 	name STRING null,
 	description STRING null,
-	DDMFormFieldTypeName VARCHAR(75) null
+	DDMFormFieldTypeName VARCHAR(75) null,
+	facetable BOOLEAN,
+	skuContributor BOOLEAN
 );
 
 create table CPOptionValue (

@@ -429,6 +429,48 @@ public interface CPOptionModel extends BaseModel<CPOption>, GroupedModel,
 	 */
 	public void setDDMFormFieldTypeName(String DDMFormFieldTypeName);
 
+	/**
+	 * Returns the facetable of this cp option.
+	 *
+	 * @return the facetable of this cp option
+	 */
+	public boolean getFacetable();
+
+	/**
+	 * Returns <code>true</code> if this cp option is facetable.
+	 *
+	 * @return <code>true</code> if this cp option is facetable; <code>false</code> otherwise
+	 */
+	public boolean isFacetable();
+
+	/**
+	 * Sets whether this cp option is facetable.
+	 *
+	 * @param facetable the facetable of this cp option
+	 */
+	public void setFacetable(boolean facetable);
+
+	/**
+	 * Returns the sku contributor of this cp option.
+	 *
+	 * @return the sku contributor of this cp option
+	 */
+	public boolean getSkuContributor();
+
+	/**
+	 * Returns <code>true</code> if this cp option is sku contributor.
+	 *
+	 * @return <code>true</code> if this cp option is sku contributor; <code>false</code> otherwise
+	 */
+	public boolean isSkuContributor();
+
+	/**
+	 * Sets whether this cp option is sku contributor.
+	 *
+	 * @param skuContributor the sku contributor of this cp option
+	 */
+	public void setSkuContributor(boolean skuContributor);
+
 	@Override
 	public boolean isNew();
 

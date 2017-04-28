@@ -70,6 +70,8 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
+		attributes.put("facetable", getFacetable());
+		attributes.put("skuContributor", getSkuContributor());
 
 		return attributes;
 	}
@@ -142,6 +144,18 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 		if (DDMFormFieldTypeName != null) {
 			setDDMFormFieldTypeName(DDMFormFieldTypeName);
 		}
+
+		Boolean facetable = (Boolean)attributes.get("facetable");
+
+		if (facetable != null) {
+			setFacetable(facetable);
+		}
+
+		Boolean skuContributor = (Boolean)attributes.get("skuContributor");
+
+		if (skuContributor != null) {
+			setSkuContributor(skuContributor);
+		}
 	}
 
 	@Override
@@ -154,6 +168,26 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 		return new CPOptionWrapper(_cpOption.toUnescapedModel());
 	}
 
+	/**
+	* Returns the facetable of this cp option.
+	*
+	* @return the facetable of this cp option
+	*/
+	@Override
+	public boolean getFacetable() {
+		return _cpOption.getFacetable();
+	}
+
+	/**
+	* Returns the sku contributor of this cp option.
+	*
+	* @return the sku contributor of this cp option
+	*/
+	@Override
+	public boolean getSkuContributor() {
+		return _cpOption.getSkuContributor();
+	}
+
 	@Override
 	public boolean isCachedModel() {
 		return _cpOption.isCachedModel();
@@ -164,9 +198,29 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 		return _cpOption.isEscapedModel();
 	}
 
+	/**
+	* Returns <code>true</code> if this cp option is facetable.
+	*
+	* @return <code>true</code> if this cp option is facetable; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isFacetable() {
+		return _cpOption.isFacetable();
+	}
+
 	@Override
 	public boolean isNew() {
 		return _cpOption.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp option is sku contributor.
+	*
+	* @return <code>true</code> if this cp option is sku contributor; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isSkuContributor() {
+		return _cpOption.isSkuContributor();
 	}
 
 	@Override
@@ -628,6 +682,16 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	}
 
 	/**
+	* Sets whether this cp option is facetable.
+	*
+	* @param facetable the facetable of this cp option
+	*/
+	@Override
+	public void setFacetable(boolean facetable) {
+		_cpOption.setFacetable(facetable);
+	}
+
+	/**
 	* Sets the group ID of this cp option.
 	*
 	* @param groupId the group ID of this cp option
@@ -726,6 +790,16 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_cpOption.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets whether this cp option is sku contributor.
+	*
+	* @param skuContributor the sku contributor of this cp option
+	*/
+	@Override
+	public void setSkuContributor(boolean skuContributor) {
+		_cpOption.setSkuContributor(skuContributor);
 	}
 
 	/**

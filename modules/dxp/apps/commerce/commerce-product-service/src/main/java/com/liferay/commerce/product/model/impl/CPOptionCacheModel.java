@@ -65,7 +65,7 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -89,6 +89,10 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		sb.append(description);
 		sb.append(", DDMFormFieldTypeName=");
 		sb.append(DDMFormFieldTypeName);
+		sb.append(", facetable=");
+		sb.append(facetable);
+		sb.append(", skuContributor=");
+		sb.append(skuContributor);
 		sb.append("}");
 
 		return sb.toString();
@@ -152,6 +156,9 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 			cpOptionImpl.setDDMFormFieldTypeName(DDMFormFieldTypeName);
 		}
 
+		cpOptionImpl.setFacetable(facetable);
+		cpOptionImpl.setSkuContributor(skuContributor);
+
 		cpOptionImpl.resetOriginalValues();
 
 		return cpOptionImpl;
@@ -174,6 +181,10 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		DDMFormFieldTypeName = objectInput.readUTF();
+
+		facetable = objectInput.readBoolean();
+
+		skuContributor = objectInput.readBoolean();
 	}
 
 	@Override
@@ -224,6 +235,10 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		else {
 			objectOutput.writeUTF(DDMFormFieldTypeName);
 		}
+
+		objectOutput.writeBoolean(facetable);
+
+		objectOutput.writeBoolean(skuContributor);
 	}
 
 	public String uuid;
@@ -237,4 +252,6 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 	public String name;
 	public String description;
 	public String DDMFormFieldTypeName;
+	public boolean facetable;
+	public boolean skuContributor;
 }

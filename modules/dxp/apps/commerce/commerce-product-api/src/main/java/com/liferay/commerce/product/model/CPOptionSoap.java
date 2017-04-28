@@ -45,6 +45,8 @@ public class CPOptionSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDDMFormFieldTypeName(model.getDDMFormFieldTypeName());
+		soapModel.setFacetable(model.getFacetable());
+		soapModel.setSkuContributor(model.getSkuContributor());
 
 		return soapModel;
 	}
@@ -185,6 +187,30 @@ public class CPOptionSoap implements Serializable {
 		_DDMFormFieldTypeName = DDMFormFieldTypeName;
 	}
 
+	public boolean getFacetable() {
+		return _facetable;
+	}
+
+	public boolean isFacetable() {
+		return _facetable;
+	}
+
+	public void setFacetable(boolean facetable) {
+		_facetable = facetable;
+	}
+
+	public boolean getSkuContributor() {
+		return _skuContributor;
+	}
+
+	public boolean isSkuContributor() {
+		return _skuContributor;
+	}
+
+	public void setSkuContributor(boolean skuContributor) {
+		_skuContributor = skuContributor;
+	}
+
 	private String _uuid;
 	private long _CPOptionId;
 	private long _groupId;
@@ -196,4 +222,6 @@ public class CPOptionSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private String _DDMFormFieldTypeName;
+	private boolean _facetable;
+	private boolean _skuContributor;
 }

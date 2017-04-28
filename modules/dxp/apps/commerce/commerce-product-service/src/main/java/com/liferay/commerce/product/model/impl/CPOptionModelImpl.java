@@ -90,7 +90,9 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "DDMFormFieldTypeName", Types.VARCHAR }
+			{ "DDMFormFieldTypeName", Types.VARCHAR },
+			{ "facetable", Types.BOOLEAN },
+			{ "skuContributor", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -106,9 +108,11 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMFormFieldTypeName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("facetable", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("skuContributor", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPOption (uuid_ VARCHAR(75) null,CPOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CPOption (uuid_ VARCHAR(75) null,CPOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,facetable BOOLEAN,skuContributor BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CPOption";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpOption.name DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPOption.name DESC";
@@ -153,6 +157,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setDDMFormFieldTypeName(soapModel.getDDMFormFieldTypeName());
+		model.setFacetable(soapModel.getFacetable());
+		model.setSkuContributor(soapModel.getSkuContributor());
 
 		return model;
 	}
@@ -228,6 +234,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
+		attributes.put("facetable", getFacetable());
+		attributes.put("skuContributor", getSkuContributor());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -302,6 +310,18 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 		if (DDMFormFieldTypeName != null) {
 			setDDMFormFieldTypeName(DDMFormFieldTypeName);
+		}
+
+		Boolean facetable = (Boolean)attributes.get("facetable");
+
+		if (facetable != null) {
+			setFacetable(facetable);
+		}
+
+		Boolean skuContributor = (Boolean)attributes.get("skuContributor");
+
+		if (skuContributor != null) {
+			setSkuContributor(skuContributor);
 		}
 	}
 
@@ -677,6 +697,40 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		_DDMFormFieldTypeName = DDMFormFieldTypeName;
 	}
 
+	@JSON
+	@Override
+	public boolean getFacetable() {
+		return _facetable;
+	}
+
+	@JSON
+	@Override
+	public boolean isFacetable() {
+		return _facetable;
+	}
+
+	@Override
+	public void setFacetable(boolean facetable) {
+		_facetable = facetable;
+	}
+
+	@JSON
+	@Override
+	public boolean getSkuContributor() {
+		return _skuContributor;
+	}
+
+	@JSON
+	@Override
+	public boolean isSkuContributor() {
+		return _skuContributor;
+	}
+
+	@Override
+	public void setSkuContributor(boolean skuContributor) {
+		_skuContributor = skuContributor;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -807,6 +861,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		cpOptionImpl.setName(getName());
 		cpOptionImpl.setDescription(getDescription());
 		cpOptionImpl.setDDMFormFieldTypeName(getDDMFormFieldTypeName());
+		cpOptionImpl.setFacetable(getFacetable());
+		cpOptionImpl.setSkuContributor(getSkuContributor());
 
 		cpOptionImpl.resetOriginalValues();
 
@@ -955,12 +1011,16 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			cpOptionCacheModel.DDMFormFieldTypeName = null;
 		}
 
+		cpOptionCacheModel.facetable = getFacetable();
+
+		cpOptionCacheModel.skuContributor = getSkuContributor();
+
 		return cpOptionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -984,6 +1044,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(getDescription());
 		sb.append(", DDMFormFieldTypeName=");
 		sb.append(getDDMFormFieldTypeName());
+		sb.append(", facetable=");
+		sb.append(getFacetable());
+		sb.append(", skuContributor=");
+		sb.append(getSkuContributor());
 		sb.append("}");
 
 		return sb.toString();
@@ -991,7 +1055,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPOption");
@@ -1041,6 +1105,14 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			"<column><column-name>DDMFormFieldTypeName</column-name><column-value><![CDATA[");
 		sb.append(getDDMFormFieldTypeName());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>facetable</column-name><column-value><![CDATA[");
+		sb.append(getFacetable());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>skuContributor</column-name><column-value><![CDATA[");
+		sb.append(getSkuContributor());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1070,6 +1142,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private String _DDMFormFieldTypeName;
+	private boolean _facetable;
+	private boolean _skuContributor;
 	private long _columnBitmask;
 	private CPOption _escapedModel;
 }

@@ -302,7 +302,13 @@ Import-Package: !*
 	@../../../lib/portal/jaxen.jar,\
 	@../../../lib/portal/jaxrpc.jar,\
 	@../../../lib/portal/jdom.jar!/org/**,\
-	@../../../lib/portal/jodd.jar,\
+	@../../../lib/portal/jodd-bean.jar,\
+	@../../../lib/portal/jodd-core.jar,\
+	@../../../lib/portal/jodd-http.jar,\
+	@../../../lib/portal/jodd-json.jar,\
+	@../../../lib/portal/jodd-proxetta.jar,\
+	@../../../lib/portal/jodd-servlet.jar,\
+	@../../../lib/portal/jodd-upload.jar,\
 	@../../../lib/portal/json-java.jar,\
 	@../../../lib/portal/liferay-icu4j.jar,\
 	@../../../lib/portal/log4j-extras.jar,\

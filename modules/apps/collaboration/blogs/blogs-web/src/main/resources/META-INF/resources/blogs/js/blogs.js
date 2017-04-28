@@ -291,6 +291,29 @@ AUI.add(
 						instance.setDescription(description);
 					},
 
+					_getContentImages: function(content) {
+						var contentDom = document.createElement('div');
+
+						contentDom.innerHTML = content;
+
+						var contentImages = contentDom.getElementsByTagName('img');
+
+						var finalImages = [];
+
+						for (var i = 0; i < contentImages.length; i++) {
+							var currentImage = contentImages[i];
+
+							if (currentImage.parentElement.tagName.toLowerCase() === 'picture') {
+								finalImages.push(currentImage.parentElement);
+							}
+							else {
+								finalImages.push(currentImage);
+							}
+						}
+
+						return finalImages;
+					},
+
 					_getPrincipalForm: function(formName) {
 						var instance = this;
 
@@ -449,8 +472,8 @@ AUI.add(
 
 													instance.one('#entryId').val(message.entryId);
 
-													if (message.blogsEntryAttachmentReferences) {
-														instance._updateImages(message.blogsEntryAttachmentReferences);
+													if (message.content) {
+														instance._updateContentImages(message.content, message.attributeDataImageId);
 													}
 
 													var tabs1BackButton = instance.one('#tabs1TabsBack');
@@ -527,20 +550,47 @@ AUI.add(
 						}
 					},
 
-					_updateImages: function(persistentImages) {
+					_updateContentImages: function(finalContent, attributeDataImageId) {
 						var instance = this;
 
-						persistentImages.forEach(
-							function(item, index) {
-								var el = instance.one('img[' + item.attributeDataImageId + '="' + item.fileEntryId + '"]');
+						var originalContent = window[instance.ns('contentEditor')].getHTML();
+
+						var originalContentImages = instance._getContentImages(originalContent);
+
+						var finalContentImages = instance._getContentImages(finalContent);
+
+						if (originalContentImages.length != finalContentImages.length) {
+							return;
+						}
+
+						for (var i = 0; i < originalContentImages.length; i++) {
+							var image = originalContentImages[i];
+
+							var tempImageId = image.getAttribute(attributeDataImageId);
+
+							if (tempImageId) {
+								var el = instance.one('img[' + attributeDataImageId + '"=' + tempImageId + '"]');
 
 								if (el) {
-									el.attr('src', item.fileEntryUrl);
+									var finalImage = finalContentImages[i];
 
-									el.removeAttribute(item.attributeDataImageId);
+									if (el.get('tagName') === finalImage.tagName) {
+										el.removeAttribute('data-cke-saved-src');
+
+										for (var j = 0; j < finalImage.attributes.length; j++) {
+											var attr = finalImage.attributes[j];
+
+											el.attr(attr.name, attr.value);
+										}
+
+										el.removeAttribute(attributeDataImageId);
+									}
+									else {
+										el.replace(finalContentImages[i]);
+									}
 								}
 							}
-						);
+						}
 					},
 
 					_updateStatus: function(text) {

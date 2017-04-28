@@ -223,17 +223,14 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 						selectedItemChange: function(event) {
 							var selectedItem = event.newVal;
 
-							if (selectedItem != null) {
+							if (selectedItem) {
+								var cpOptionId = selectedItem.value.id;
 
-								if (selectedItem) {
-									var cpOptionId = selectedItem.value.id;
+								$('#<portlet:namespace />cpOptionId').val(cpOptionId);
 
-									$('#<portlet:namespace />cpOptionId').val(cpOptionId);
+								var addCPDefinitionOptionRelFm = $('#<portlet:namespace />addCPDefinitionOptionRelFm');
 
-									var addCPDefinitionOptionRelFm = $('#<portlet:namespace />addCPDefinitionOptionRelFm');
-
-									submitForm(addCPDefinitionOptionRelFm);
-								}
+								submitForm(addCPDefinitionOptionRelFm);
 							}
 						}
 					},

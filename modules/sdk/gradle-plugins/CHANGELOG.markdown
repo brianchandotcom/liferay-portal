@@ -1546,6 +1546,10 @@ version 2.3.11.
 ## 3.3.6 - 2017-04-27
 
 ### Changed
+- [LPS-53392]: Update the [Liferay Gradle Plugins Upgrade Table Builder]
+dependency to version 2.0.1.
+- [LPS-53392]: Update the [Liferay Portal Tools Upgrade Table Builder]
+dependency to version 1.0.7.
 - [LPS-71728]: Update the [Liferay Ant BND] dependency to version 2.0.36.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin

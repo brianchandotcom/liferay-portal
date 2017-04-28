@@ -177,6 +177,14 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionId, true);
 	}
 
+	@Override
+	public int getSkuContributorCPDefinitionOptionRelCount(
+		long cpDefinitionId) {
+
+		return cpDefinitionOptionRelPersistence.countByC_SC(
+			cpDefinitionId, true);
+	}
+
 	public CPDefinitionOptionRel
 			updateCPDefinitionOptionRel(
 				long cpDefinitionOptionRelId, long cpOptionId,

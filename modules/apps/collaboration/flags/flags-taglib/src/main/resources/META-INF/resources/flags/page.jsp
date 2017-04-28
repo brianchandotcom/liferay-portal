@@ -29,22 +29,22 @@ long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-f
 
 String cssClass = randomNamespace;
 
-if (!enabled) {
+if (enabled) {
 	cssClass = randomNamespace + " flag-enable";
 }
 %>
 
-<div class="taglib-flags" title="<liferay-ui:message key='<%= !enabled ? message : "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" %>' />">
+<div class="taglib-flags" title="<liferay-ui:message key='<%= enabled ? message : "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" %>' />">
 	<liferay-ui:icon
 		cssClass="<%= cssClass %>"
 		iconCssClass="icon-flag"
 		label="<%= label %>"
 		message="<%= message %>"
-		url='<%= !enabled ? "javascript:;" : null %>'
+		url='<%= enabled ? "javascript:;" : null %>'
 	/>
 </div>
 
-<c:if test="<%= !enabled %>">
+<c:if test="<%= enabled %>">
 	<c:choose>
 		<c:when test="<%= flagsGroupServiceConfiguration.guestUsersEnabled() || themeDisplay.isSignedIn() %>">
 			<aui:script use="aui-io-plugin-deprecated,aui-modal">

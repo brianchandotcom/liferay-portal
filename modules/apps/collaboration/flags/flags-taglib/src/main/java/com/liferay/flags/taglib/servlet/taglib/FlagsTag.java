@@ -65,7 +65,7 @@ public class FlagsTag extends IncludeTag {
 		_className = null;
 		_classPK = 0;
 		_contentTitle = null;
-		_enabled = false;
+		_enabled = true;
 		_label = true;
 		_message = null;
 		_reportedUserId = 0;

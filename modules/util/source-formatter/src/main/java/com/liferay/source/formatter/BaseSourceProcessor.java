@@ -104,9 +104,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		_initSourceChecks();
 
-		if ((portalSource || subrepository) && _containsModuleFile(fileNames)) {
-			_initModuleSourceChecks();
-		}
+		_initModuleSourceChecks();
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceFormatterArgs.getProcessorThreadCount());
@@ -442,10 +440,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		content = _processSourceChecks(
 			fileName, absolutePath, content, _sourceChecksList);
 
-		if (_isModulesFile(absolutePath)) {
-			content = _processSourceChecks(
-				fileName, absolutePath, content, _moduleSourceChecks);
-		}
+		content = _processSourceChecks(
+			fileName, absolutePath, content, _moduleSourceChecks);
 
 		return content;
 	}
@@ -753,6 +749,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		List<JavaClass> anonymousClasses = null;
 
 		for (SourceCheck sourceCheck : sourceChecks) {
+			if (sourceCheck.isModulesCheck() && !_isModulesFile(absolutePath)) {
+				continue;
+			}
+
 			String newContent = null;
 
 			if (sourceCheck instanceof FileCheck) {

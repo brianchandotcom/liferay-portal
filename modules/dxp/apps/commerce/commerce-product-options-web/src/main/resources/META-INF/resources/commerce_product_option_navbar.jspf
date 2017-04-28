@@ -45,18 +45,11 @@
 		</c:if>
 	</aui:nav>
 
-	<%
-	if (toolbarItem.equals("view-product-option-values")) {
-	%>
-
+	<c:if test='<%= toolbarItem.equals("view-product-option-values") %>'>
 		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
 			<aui:nav-bar-search>
 				<liferay-ui:input-search markupView="lexicon" />
 			</aui:nav-bar-search>
 		</aui:form>
-
-	<%
-	}
-	%>
-
+	</c:if>
 </aui:nav-bar>

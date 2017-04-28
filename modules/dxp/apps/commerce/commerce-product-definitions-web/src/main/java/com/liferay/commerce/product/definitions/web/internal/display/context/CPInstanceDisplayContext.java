@@ -58,7 +58,7 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 		return portletURL;
 	}
 
-	public SearchContainer
+	public SearchContainer<CPInstance>
 		getSearchContainer() throws PortalException {
 
 		if (searchContainer != null) {

@@ -111,7 +111,7 @@ public class CPDefinitionOptionValueRelDisplayContext
 	}
 
 	@Override
-	public SearchContainer
+	public SearchContainer<CPDefinitionOptionValueRel>
 		getSearchContainer() throws PortalException {
 
 		if (searchContainer != null) {

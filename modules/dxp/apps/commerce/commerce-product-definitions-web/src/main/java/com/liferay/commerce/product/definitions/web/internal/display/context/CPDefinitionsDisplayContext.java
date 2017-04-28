@@ -54,7 +54,9 @@ public class CPDefinitionsDisplayContext
 	}
 
 	@Override
-	public SearchContainer getSearchContainer() throws PortalException {
+	public SearchContainer<CPDefinition> getSearchContainer()
+		throws PortalException {
+
 		if (searchContainer != null) {
 			return searchContainer;
 		}

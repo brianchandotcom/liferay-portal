@@ -25,6 +25,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 <%@ page import="java.util.List" %>

@@ -301,6 +301,8 @@
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="DDMFormFieldTypeName" type="String" />
+		<column name="facetable" type="boolean" />
+		<column name="skuContributor" type="boolean" />
 
 		<!-- Order -->
 

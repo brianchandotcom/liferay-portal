@@ -27,6 +27,8 @@ SearchContainer<CPInstance> cpInstanceSearchContainer = cpInstanceDisplayContext
 
 PortletURL portletURL = cpInstanceDisplayContext.getPortletURL();
 
+String displayStyle = cpInstanceDisplayContext.getDisplayStyle();
+
 String orderByCol = ParamUtil.getString(request, "orderByCol", "sku");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
@@ -91,6 +93,7 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-
 				label="info"
 			/>
 		</c:if>
+
 		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPInstances();" %>' icon="trash" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
@@ -132,31 +135,36 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-
 				keyProperty="CPInstanceId"
 				modelVar="cpInstance"
 			>
+				<c:choose>
+					<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<%@ include file="/commerce_product_instance_descriptive.jspf" %>
+					</c:when>
+					<c:when test='<%= displayStyle.equals("icon") %>'>
 
-				<%
-				PortletURL rowURL = renderResponse.createRenderURL();
+						<%
+						row.setCssClass("entry-card lfr-asset-folder " + row.getCssClass());
+						%>
 
-				rowURL.setParameter(Constants.CMD, Constants.UPDATE);
-				rowURL.setParameter("mvcRenderCommandName", "editProductInstance");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
-				rowURL.setParameter("cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
-				%>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					href="<%= rowURL %>"
-					name="sku"
-					property="sku"
-				/>
-
-				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
-					path="/commerce_product_instance_action.jsp"
-				/>
+						<liferay-ui:search-container-column-text>
+							<liferay-frontend:icon-vertical-card
+								actionJsp="/commerce_product_instance_action.jsp"
+								actionJspServletContext="<%= application %>"
+								icon="web-content"
+								resultRow="<%= row %>"
+								rowChecker="<%= cpInstanceDisplayContext.getRowChecker() %>"
+								title="<%= HtmlUtil.escape(cpInstance.getSku()) %>"
+							>
+								<%@ include file="/commerce_product_instance_vertical_card.jspf" %>
+							</liferay-frontend:icon-vertical-card>
+						</liferay-ui:search-container-column-text>
+					</c:when>
+					<c:otherwise>
+						<%@ include file="/commerce_product_instance_columns.jspf" %>
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= cpInstanceSearchContainer %>" />
+			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= cpInstanceSearchContainer %>" />
 		</liferay-ui:search-container>
 	</div>
 </aui:form>

@@ -17,25 +17,8 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.service.base.CPDefinitionMediaServiceBaseImpl;
 
 /**
- * The implementation of the cp definition media remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.product.service.CPDefinitionMediaService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Marco Leo
- * @see CPDefinitionMediaServiceBaseImpl
- * @see com.liferay.commerce.product.service.CPDefinitionMediaServiceUtil
  */
 public class CPDefinitionMediaServiceImpl
 	extends CPDefinitionMediaServiceBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.service.CPDefinitionMediaServiceUtil} to access the cp definition media remote service.
-	 */
 }

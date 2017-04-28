@@ -17,22 +17,11 @@ package com.liferay.commerce.product.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the CPMediaType service. Represents a row in the &quot;CPMediaType&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.product.model.CPMediaType} interface.
- * </p>
- *
  * @author Marco Leo
  */
 @ProviderType
 public class CPMediaTypeImpl extends CPMediaTypeBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a cp media type model instance should use the {@link com.liferay.commerce.product.model.CPMediaType} interface instead.
-	 */
 	public CPMediaTypeImpl() {
 	}
 

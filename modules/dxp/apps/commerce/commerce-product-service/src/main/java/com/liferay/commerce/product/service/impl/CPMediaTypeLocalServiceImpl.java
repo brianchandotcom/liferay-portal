@@ -17,25 +17,8 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.service.base.CPMediaTypeLocalServiceBaseImpl;
 
 /**
- * The implementation of the cp media type local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.product.service.CPMediaTypeLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Marco Leo
- * @see CPMediaTypeLocalServiceBaseImpl
- * @see com.liferay.commerce.product.service.CPMediaTypeLocalServiceUtil
  */
 public class CPMediaTypeLocalServiceImpl
 	extends CPMediaTypeLocalServiceBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.service.CPMediaTypeLocalServiceUtil} to access the cp media type local service.
-	 */
 }

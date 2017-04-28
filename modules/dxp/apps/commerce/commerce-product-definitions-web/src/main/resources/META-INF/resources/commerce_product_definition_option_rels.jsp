@@ -94,82 +94,84 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 </liferay-frontend:management-bar>
 
 <div id="<portlet:namespace />productDefinitionOptionRelsContainer">
-<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-<c:if test="<%= cpDefinitionOptionRelDisplayContext.isShowInfoPanel() %>">
-	<liferay-portlet:resourceURL
-		copyCurrentRenderParameters="<%= false %>"
-		id="cpDefinitionOptionRelInfoPanel"
-		var="sidebarPanelURL"
-	/>
+	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+		<c:if test="<%= cpDefinitionOptionRelDisplayContext.isShowInfoPanel() %>">
+			<liferay-portlet:resourceURL
+				copyCurrentRenderParameters="<%= false %>"
+				id="cpDefinitionOptionRelInfoPanel"
+				var="sidebarPanelURL"
+			/>
 
-	<liferay-frontend:sidebar-panel
-		resourceURL="<%= sidebarPanelURL %>"
-		searchContainerId="cpDefinitionOptionRels"
-	>
-		<liferay-util:include page="/commerce_product_definition_option_rel_info_panel.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:sidebar-panel>
-</c:if>
-
-<div class="sidenav-content">
-
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="deleteCPDefinitionOptionRelIds" type="hidden" />
-
-	<div class="product-definition-option-rels-container" id="<portlet:namespace />entriesContainer">
-		<liferay-ui:search-container
-			id="cpDefinitionOptionRels"
-			iteratorURL="<%= portletURL %>"
-			searchContainer="<%= cpDefinitionOptionRelSearchContainer %>"
-		>
-			<liferay-ui:search-container-row
-				className="com.liferay.commerce.product.model.CPDefinitionOptionRel"
-				cssClass="entry-display-style"
-				keyProperty="CPDefinitionOptionRelId"
-				modelVar="cpDefinitionOptionRel"
+			<liferay-frontend:sidebar-panel
+				resourceURL="<%= sidebarPanelURL %>"
+				searchContainerId="cpDefinitionOptionRels"
 			>
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					name="name"
-				>
-					<%= cpDefinitionOptionRel.getName(locale) %>
-				</liferay-ui:search-container-column-text>
+				<liferay-util:include page="/commerce_product_definition_option_rel_info_panel.jsp" servletContext="<%= application %>" />
+			</liferay-frontend:sidebar-panel>
+		</c:if>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					name="facetable"
-					property="facetable"
-				/>
+		<div class="sidenav-content">
+			<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+				<aui:input name="<%= Constants.CMD %>" type="hidden" />
+				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+				<aui:input name="deleteCPDefinitionOptionRelIds" type="hidden" />
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					name="sku-contributor"
-					property="skuContributor"
-				/>
+				<div class="product-definition-option-rels-container" id="<portlet:namespace />entriesContainer">
+					<liferay-ui:search-container
+						id="cpDefinitionOptionRels"
+						iteratorURL="<%= portletURL %>"
+						searchContainer="<%= cpDefinitionOptionRelSearchContainer %>"
+					>
+						<liferay-ui:search-container-row
+							className="com.liferay.commerce.product.model.CPDefinitionOptionRel"
+							cssClass="entry-display-style"
+							keyProperty="CPDefinitionOptionRelId"
+							modelVar="cpDefinitionOptionRel"
+						>
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								name="name"
+							>
+								<%= cpDefinitionOptionRel.getName(locale) %>
+							</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					name="priority"
-					property="priority"
-				/>
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								name="facetable"
+								property="facetable"
+							/>
 
-				<liferay-ui:search-container-column-date
-					cssClass="table-cell-content"
-					name="create-date"
-					property="createDate"
-				/>
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								name="sku-contributor"
+								property="skuContributor"
+							/>
 
-				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
-					path="/commerce_product_definition_option_rel_action.jsp"
-				/>
-			</liferay-ui:search-container-row>
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								name="priority"
+								property="priority"
+							/>
 
-			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= cpDefinitionOptionRelSearchContainer %>" />
-		</liferay-ui:search-container>
+							<liferay-ui:search-container-column-date
+								cssClass="table-cell-content"
+								name="create-date"
+								property="createDate"
+							/>
+
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action-column"
+								path="/commerce_product_definition_option_rel_action.jsp"
+							/>
+						</liferay-ui:search-container-row>
+
+						<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= cpDefinitionOptionRelSearchContainer %>" />
+					</liferay-ui:search-container>
+				</div>
+			</aui:form>
+		</div>
 	</div>
-</aui:form>
+</div>
 
 <portlet:actionURL name="editProductDefinitionOptionRel" var="addCPDefinitionOptionRelURL" />
 

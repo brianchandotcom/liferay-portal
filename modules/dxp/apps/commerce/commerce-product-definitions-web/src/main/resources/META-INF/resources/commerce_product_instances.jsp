@@ -103,67 +103,70 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 				var="sidebarPanelURL"
 			/>
 
-	<liferay-frontend:sidebar-panel
-		resourceURL="<%= sidebarPanelURL %>"
-		searchContainerId="cpInstances"
-	>
-		<liferay-util:include page="/commerce_product_instance_info_panel.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:sidebar-panel>
-</c:if>
-
-<div class="sidenav-content">
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="deleteCPInstanceIds" type="hidden" />
-
-	<liferay-ui:error exception="<%= NoSuchSkuContributorCPDefinitionOptionRelException.class %>" message="there-are-no-options-set-as-sku-contributor" />
-
-	<div class="product-skus-container" id="<portlet:namespace />entriesContainer">
-		<liferay-ui:search-container
-			id="cpInstances"
-			iteratorURL="<%= portletURL %>"
-			searchContainer="<%= cpInstanceSearchContainer %>"
-		>
-			<liferay-ui:search-container-row
-				className="com.liferay.commerce.product.model.CPInstance"
-				cssClass="entry-display-style"
-				keyProperty="CPInstanceId"
-				modelVar="cpInstance"
+			<liferay-frontend:sidebar-panel
+				resourceURL="<%= sidebarPanelURL %>"
+				searchContainerId="cpInstances"
 			>
-				<c:choose>
-					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<%@ include file="/commerce_product_instance_descriptive.jspf" %>
-					</c:when>
-					<c:when test='<%= displayStyle.equals("icon") %>'>
+				<liferay-util:include page="/commerce_product_instance_info_panel.jsp" servletContext="<%= application %>" />
+			</liferay-frontend:sidebar-panel>
+		</c:if>
 
-						<%
-						row.setCssClass("entry-card lfr-asset-folder " + row.getCssClass());
-						%>
+		<div class="sidenav-content">
+			<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+				<aui:input name="<%= Constants.CMD %>" type="hidden" />
+				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+				<aui:input name="deleteCPInstanceIds" type="hidden" />
 
-						<liferay-ui:search-container-column-text>
-							<liferay-frontend:icon-vertical-card
-								actionJsp="/commerce_product_instance_action.jsp"
-								actionJspServletContext="<%= application %>"
-								icon="web-content"
-								resultRow="<%= row %>"
-								rowChecker="<%= cpInstanceDisplayContext.getRowChecker() %>"
-								title="<%= HtmlUtil.escape(cpInstance.getSku()) %>"
-							>
-								<%@ include file="/commerce_product_instance_vertical_card.jspf" %>
-							</liferay-frontend:icon-vertical-card>
-						</liferay-ui:search-container-column-text>
-					</c:when>
-					<c:otherwise>
-						<%@ include file="/commerce_product_instance_columns.jspf" %>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-row>
+				<liferay-ui:error exception="<%= NoSuchSkuContributorCPDefinitionOptionRelException.class %>" message="there-are-no-options-set-as-sku-contributor" />
 
-			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= cpInstanceSearchContainer %>" />
-		</liferay-ui:search-container>
+				<div class="product-skus-container" id="<portlet:namespace />entriesContainer">
+					<liferay-ui:search-container
+						id="cpInstances"
+						iteratorURL="<%= portletURL %>"
+						searchContainer="<%= cpInstanceSearchContainer %>"
+					>
+						<liferay-ui:search-container-row
+							className="com.liferay.commerce.product.model.CPInstance"
+							cssClass="entry-display-style"
+							keyProperty="CPInstanceId"
+							modelVar="cpInstance"
+						>
+							<c:choose>
+								<c:when test='<%= displayStyle.equals("descriptive") %>'>
+									<%@ include file="/commerce_product_instance_descriptive.jspf" %>
+								</c:when>
+								<c:when test='<%= displayStyle.equals("icon") %>'>
+
+									<%
+									row.setCssClass("entry-card lfr-asset-folder " + row.getCssClass());
+									%>
+
+									<liferay-ui:search-container-column-text>
+										<liferay-frontend:icon-vertical-card
+											actionJsp="/commerce_product_instance_action.jsp"
+											actionJspServletContext="<%= application %>"
+											icon="web-content"
+											resultRow="<%= row %>"
+											rowChecker="<%= cpInstanceDisplayContext.getRowChecker() %>"
+											title="<%= HtmlUtil.escape(cpInstance.getSku()) %>"
+										>
+											<%@ include file="/commerce_product_instance_vertical_card.jspf" %>
+										</liferay-frontend:icon-vertical-card>
+									</liferay-ui:search-container-column-text>
+								</c:when>
+								<c:otherwise>
+									<%@ include file="/commerce_product_instance_columns.jspf" %>
+								</c:otherwise>
+							</c:choose>
+						</liferay-ui:search-container-row>
+
+						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= cpInstanceSearchContainer %>" />
+					</liferay-ui:search-container>
+				</div>
+			</aui:form>
+		</div>
 	</div>
-</aui:form>
+</div>
 
 <liferay-portlet:actionURL name="editProductInstance" var="addProductDefinitionURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_MULTIPLE %>" />

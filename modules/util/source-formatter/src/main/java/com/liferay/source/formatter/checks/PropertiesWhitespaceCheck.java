@@ -24,10 +24,6 @@ import com.liferay.portal.kernel.util.StringPool;
  */
 public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 
-	public PropertiesWhitespaceCheck(boolean allowLeadingSpaces) {
-		super(allowLeadingSpaces);
-	}
-
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)

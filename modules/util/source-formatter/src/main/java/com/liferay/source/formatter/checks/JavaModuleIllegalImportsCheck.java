@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.util.regex.Matcher;
@@ -23,10 +24,6 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
-
-	public JavaModuleIllegalImportsCheck(boolean checkRegistryInTestClasses) {
-		_checkRegistryInTestClasses = checkRegistryInTestClasses;
-	}
 
 	@Override
 	public boolean isModulesCheck() {

@@ -48,10 +48,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "removed-attachments"));
 		<portlet:param name="nodeId" value="<%= String.valueOf(node.getPrimaryKey()) %>" />
 	</portlet:actionURL>
 
+	<%
+	String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, TrashUtil.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
+	%>
+
 	<liferay-trash:empty
 		confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-wiki-node"
 		emptyMessage="remove-the-attachments-for-this-wiki-node"
-		infoMessage="attachments-that-have-been-removed-for-more-than-x-will-be-automatically-deleted"
+		infoMessage='<%= LanguageUtil.format(request, "attachments-that-have-been-removed-for-more-than-x-will-be-automatically-deleted", trashEntriesMaxAgeTimeDescription, false) %>'
 		portletURL="<%= emptyTrashURL.toString() %>"
 		totalEntries="<%= attachmentsFileEntries.size() %>"
 	/>

@@ -48,10 +48,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachm
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:actionURL>
 
+		<%
+		String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, TrashUtil.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
+		%>
+
 		<liferay-trash:empty
 			confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-page"
 			emptyMessage="remove-the-attachments-for-this-page"
-			infoMessage="attachments-that-have-been-removed-for-more-than-x-will-be-automatically-deleted"
+			infoMessage='<%= LanguageUtil.format(request, "attachments-that-have-been-removed-for-more-than-x-will-be-automatically-deleted", trashEntriesMaxAgeTimeDescription, false) %>'
 			portletURL="<%= emptyTrashURL.toString() %>"
 			totalEntries="<%= wikiPage.getDeletedAttachmentsFileEntriesCount() %>"
 		/>

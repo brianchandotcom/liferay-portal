@@ -28,6 +28,11 @@ import java.util.regex.Pattern;
 public class BNDIncludeResourceCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isModulesCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 

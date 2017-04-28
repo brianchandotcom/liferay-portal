@@ -22,6 +22,11 @@ import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 public class BNDWebContextPathCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isModulesCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 

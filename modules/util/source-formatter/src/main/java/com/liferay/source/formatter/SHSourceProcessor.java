@@ -14,9 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.source.formatter.checks.SourceCheck;
-
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,11 +29,6 @@ public class SHSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
-	}
-
-	@Override
-	protected List<SourceCheck> getSourceChecks() {
-		return Collections.emptyList();
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.sh"};

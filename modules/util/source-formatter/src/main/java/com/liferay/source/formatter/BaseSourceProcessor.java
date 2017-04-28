@@ -27,9 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.source.formatter.checks.FileCheck;
-import com.liferay.source.formatter.checks.IncorrectFileLocationCheck;
 import com.liferay.source.formatter.checks.JavaTermCheck;
-import com.liferay.source.formatter.checks.ReturnCharacterCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.configuration.ConfigurationLoader;
 import com.liferay.source.formatter.checks.configuration.SourceCheckConfiguration;
@@ -55,7 +53,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,12 +104,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			getPluginsInsideModulesDirectoryNames();
 
 		_sourceChecks = _getSourceChecks();
-
-		_initGenericSourceChecks();
-
-		_initSourceChecks();
-
-		_initModuleSourceChecks();
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceFormatterArgs.getProcessorThreadCount());
@@ -307,10 +298,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			_allFileNames, excludes, includes);
 	}
 
-	protected List<SourceCheck> getModuleSourceChecks() throws Exception {
-		return Collections.emptyList();
-	}
-
 	protected List<String> getPluginsInsideModulesDirectoryNames()
 		throws Exception {
 
@@ -357,8 +344,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return ListUtil.fromString(
 			GetterUtil.getString(getProperty(key)), StringPool.COMMA);
 	}
-
-	protected abstract List<SourceCheck> getSourceChecks() throws Exception;
 
 	protected void postFormat() throws Exception {
 	}
@@ -692,23 +677,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_excludes = _getExcludes();
 	}
 
-	private void _initGenericSourceChecks() throws Exception {
-		_genericSourceChecks.add(new IncorrectFileLocationCheck());
-		_genericSourceChecks.add(new ReturnCharacterCheck());
-
-		for (SourceCheck sourceCheck : _genericSourceChecks) {
-			_initSourceCheck(sourceCheck);
-		}
-	}
-
-	private void _initModuleSourceChecks() throws Exception {
-		_moduleSourceChecks = getModuleSourceChecks();
-
-		for (SourceCheck sourceCheck : _moduleSourceChecks) {
-			_initSourceCheck(sourceCheck);
-		}
-	}
-
 	private void _initSourceCheck(SourceCheck sourceCheck) throws Exception {
 		sourceCheck.setAllFileNames(_allFileNames);
 		sourceCheck.setBaseDirName(sourceFormatterArgs.getBaseDirName());
@@ -721,14 +689,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		sourceCheck.setSubrepository(subrepository);
 
 		sourceCheck.init();
-	}
-
-	private void _initSourceChecks() throws Exception {
-		_sourceChecksList = getSourceChecks();
-
-		for (SourceCheck sourceCheck : _sourceChecksList) {
-			_initSourceCheck(sourceCheck);
-		}
 	}
 
 	private boolean _isMatchPath(String fileName) {
@@ -868,14 +828,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private boolean _browserStarted;
 	private String[] _excludes;
 	private SourceMismatchException _firstSourceMismatchException;
-	private final List<SourceCheck> _genericSourceChecks = new ArrayList<>();
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
-	private List<SourceCheck> _moduleSourceChecks = new ArrayList<>();
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private Properties _properties;
 	private List<SourceCheck> _sourceChecks = new ArrayList<>();
-	private List<SourceCheck> _sourceChecksList = new ArrayList<>();
 	private Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 

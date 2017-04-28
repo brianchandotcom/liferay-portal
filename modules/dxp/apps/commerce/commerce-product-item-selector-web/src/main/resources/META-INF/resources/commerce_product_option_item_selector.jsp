@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.commerce.product.model.CPOption" %>
+
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -17,7 +19,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List cpOptions = (List)request.getAttribute("cpOptions");
+List<CPOption> cpOptions = (List<CPOption>)request.getAttribute("cpOptions");
 int cpOptionsCount = GetterUtil.getInteger(request.getAttribute("cpOptionsCount"));
 String displayStyle = GetterUtil.getString(request.getAttribute("displayStyle"));
 String emptyResultsMessage = GetterUtil.getString(request.getAttribute("emptyResultsMessage"));

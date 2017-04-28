@@ -163,7 +163,7 @@ portletDisplay.setURLBack(backURL);
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title="add-option-value" url="<%= addProductDefinitionOptionValueRelURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-option-value") %>' url="<%= addProductDefinitionOptionValueRelURL.toString() %>" />
 </liferay-frontend:add-menu>
 
 <aui:script>

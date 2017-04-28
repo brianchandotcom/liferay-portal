@@ -22,6 +22,11 @@ import com.liferay.portal.kernel.util.StringBundler;
 public class JavaXMLSecurityCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isPortalCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 

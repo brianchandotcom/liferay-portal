@@ -25,6 +25,11 @@ import java.util.regex.Pattern;
 public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 
 	@Override
+	public boolean isPortalCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 

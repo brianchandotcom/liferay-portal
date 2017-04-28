@@ -68,6 +68,11 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
+	public boolean isPortalCheck() {
+		return false;
+	}
+
+	@Override
 	public void setAllFileNames(List<String> allFileNames) {
 	}
 

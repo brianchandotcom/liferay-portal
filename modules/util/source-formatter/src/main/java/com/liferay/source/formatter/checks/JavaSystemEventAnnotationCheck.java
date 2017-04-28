@@ -30,6 +30,11 @@ import java.util.regex.Pattern;
 public class JavaSystemEventAnnotationCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isPortalCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws Exception {

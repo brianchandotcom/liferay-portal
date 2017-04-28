@@ -33,6 +33,11 @@ import java.util.regex.Pattern;
 public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 
 	@Override
+	public boolean isPortalCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {

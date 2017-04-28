@@ -22,6 +22,11 @@ import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 public class JavaServiceUtilCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isPortalCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 

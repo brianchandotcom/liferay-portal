@@ -70,7 +70,7 @@ public class EmptyTag extends IncludeTag {
 	protected void cleanUp() {
 		_confirmMessage = _CONFIRM_MESSAGE;
 		_emptyMessage = _EMPTY_MESSAGE;
-		_infoMessage = _INFO_MESSAGE;
+		_infoMessage = null;
 		_portletURL = null;
 		_totalEntries = 0;
 	}
@@ -102,15 +102,11 @@ public class EmptyTag extends IncludeTag {
 
 	private static final String _EMPTY_MESSAGE = "empty-the-recycle-bin";
 
-	private static final String _INFO_MESSAGE =
-		"entries-that-have-been-in-the-recycle-bin-for-more-than-x-are-" +
-			"automatically-deleted";
-
 	private static final String _PAGE = "/empty/page.jsp";
 
 	private String _confirmMessage = _CONFIRM_MESSAGE;
 	private String _emptyMessage = _EMPTY_MESSAGE;
-	private String _infoMessage = _INFO_MESSAGE;
+	private String _infoMessage;
 	private String _portletURL;
 	private int _totalEntries;
 

@@ -29,26 +29,22 @@ PortletURL portletURL = cpInstanceDisplayContext.getPortletURL();
 
 String displayStyle = cpInstanceDisplayContext.getDisplayStyle();
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", "sku");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-instances");
 
 portletURL.setParameter("toolbarItem", toolbarItem);
-portletURL.setParameter("mvcRenderCommandName", "viewProductInstances");
-portletURL.setParameter("redirect", redirect);
-portletURL.setParameter("backURL", backURL);
-portletURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
-portletURL.setParameter("orderByCol", orderByCol);
-portletURL.setParameter("orderByType", orderByType);
-portletURL.setParameter("searchContainerId", "cpInstances");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+PortletURL backUrl = liferayPortletResponse.createRenderURL();
 
-renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-product-definition") : cpDefinition.getTitle(languageId));
+backUrl.setParameter("mvcPath", "/view.jsp");
+
+String backURLString = backUrl.toString();
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURLString);
+
+renderResponse.setTitle(cpDefinition.getTitle(languageId));
 %>
 
 <%@ include file="/commerce_product_definition_navbar.jspf" %>
@@ -68,7 +64,7 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= cpInstanceDisplayContext.getDisplayStyle() %>"
+			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
@@ -79,8 +75,8 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol="<%= cpInstanceDisplayContext.getOrderByCol() %>"
+			orderByType="<%= cpInstanceDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"sku", "create-date", "display-date"} %>'
 			portletURL="<%= portletURL %>"
 		/>
@@ -121,7 +117,7 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="deleteCPInstanceIds" type="hidden" />
 
-    <liferay-ui:error exception="<%= NoSuchSkuContributorCPDefinitionOptionRelException.class %>" message="there-are-no-options-set-as-sku-contributor" />
+	<liferay-ui:error exception="<%= NoSuchSkuContributorCPDefinitionOptionRelException.class %>" message="there-are-no-options-set-as-sku-contributor" />
 
 	<div class="product-skus-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container

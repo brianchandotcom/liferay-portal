@@ -35,6 +35,7 @@ page import="com.liferay.commerce.product.definitions.web.internal.servlet.tagli
 page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionOptionRelFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionOptionValueRelFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchProductDefinitionException" %><%@
+page import="com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionOptionRel" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionOptionValueRel" %><%@
@@ -52,8 +53,7 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.taglib.search.ResultRow" %><%@ page
-        import="com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException" %>
+page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Date" %><%@

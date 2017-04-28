@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -43,6 +45,17 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 		setDefaultOrderByCol("sku");
 
 		_cpInstanceService = cpInstanceService;
+	}
+
+	@Override
+	public PortletURL getPortletURL() throws PortalException {
+		PortletURL portletURL = super.getPortletURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "viewProductInstances");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+
+		return portletURL;
 	}
 
 	public SearchContainer

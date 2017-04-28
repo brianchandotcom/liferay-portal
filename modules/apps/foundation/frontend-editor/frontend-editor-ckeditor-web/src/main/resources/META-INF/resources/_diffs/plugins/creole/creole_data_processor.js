@@ -47,7 +47,18 @@
 
 	var attachmentURLPrefix;
 
-	var CreoleDataProcessor = function() {
+	var brFiller = CKEDITOR.env.needsBrFiller ? '<br>' : '';
+
+	var enterModeEmptyValue = {
+		1: ['<p>' + brFiller + '</p>'],
+		2: [brFiller],
+		3: ['<div>' + brFiller + '</div>']
+	};
+
+	var CreoleDataProcessor = function(editor) {
+		var instance = this;
+
+		instance._editor = editor;
 	};
 
 	CreoleDataProcessor.prototype = {
@@ -91,7 +102,7 @@
 				data = div.innerHTML;
 			}
 
-			return data;
+			return data || enterModeEmptyValue[instance._editor.enterMode];
 		},
 
 		_appendNewLines: function(total) {

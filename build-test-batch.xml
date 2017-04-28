@@ -1244,9 +1244,17 @@ app.server.type=@{app.server.type}]]></echo>
 								<arg value="-Dtest.class.group.index=${axis.variable}" />
 							</gradle-execute>
 
-							<ant dir="portal-kernel" inheritAll="false" target="test-class">
-								<property name="test.class" value="PortalLogAssertorTest" />
-							</ant>
+							<if>
+								<and>
+									<available file="${app.server.parent.dir}/logs" />
+									<available file="${app.server.parent.dir}/osgi/state" />
+								</and>
+								<then>
+									<ant dir="portal-kernel" inheritAll="false" target="test-class">
+										<property name="test.class" value="PortalLogAssertorTest" />
+									</ant>
+								</then>
+							</if>
 						</test-action>
 					</database-test-run-test>
 				</test-action>

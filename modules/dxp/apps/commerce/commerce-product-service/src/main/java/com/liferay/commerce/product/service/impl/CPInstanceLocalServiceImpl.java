@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
+import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
 import com.liferay.commerce.product.internal.util.SKUCombinationsIterator;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -177,6 +178,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
 			cpDefinitionOptionRelLocalService.
 				getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
+
+		if(cpDefinitionOptionRels.size() == 0){
+			throw new  NoSuchSkuContributorCPDefinitionOptionRelException();
+		}
 
 		for (CPDefinitionOptionRel
 				cpDefinitionOptionRel :

@@ -118,6 +118,8 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="deleteCPInstanceIds" type="hidden" />
 
+    <liferay-ui:error exception="<%= NoSuchSkuContributorCPDefinitionOptionRelException.class %>" message="there-are-no-options-set-as-sku-contributor" />
+
 	<div class="product-skus-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
 			id="cpInstances"

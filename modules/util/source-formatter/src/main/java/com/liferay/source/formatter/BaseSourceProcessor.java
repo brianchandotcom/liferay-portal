@@ -223,36 +223,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return filteredIncludes;
 	}
 
-	protected String getContent(String fileName, int level) throws IOException {
-		File file = getFile(fileName, level);
-
-		if (file != null) {
-			String content = FileUtil.read(file);
-
-			if (Validator.isNotNull(content)) {
-				return content;
-			}
-		}
-
-		return StringPool.BLANK;
-	}
-
-	protected String getCopyright() throws Exception {
-		String copyright = getContent(
-			sourceFormatterArgs.getCopyrightFileName(), PORTAL_MAX_DIR_LEVEL);
-
-		if (Validator.isNotNull(copyright)) {
-			return copyright;
-		}
-
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		return StringUtil.read(
-			classLoader.getResourceAsStream("dependencies/copyright.txt"));
-	}
-
 	protected File getFile(String fileName, int level) {
 		return SourceFormatterUtil.getFile(
 			sourceFormatterArgs.getBaseDirName(), fileName, level);
@@ -466,12 +436,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return content;
-	}
-
-	protected Document readXML(String content) throws DocumentException {
-		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
-
-		return saxReader.read(new UnsyncStringReader(content));
 	}
 
 	protected static Pattern javaSourceInsideJSPLinePattern = Pattern.compile(

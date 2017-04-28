@@ -362,24 +362,16 @@ public class CPDefinitionOptionRelServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRel updateCPDefinitionOptionRel(
-		HttpPrincipal httpPrincipal, long cpDefinitionOptionRelId,
-		long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
-		boolean skuContributor,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static int getSkuContributorCPDefinitionOptionRelCount(
+		HttpPrincipal httpPrincipal, long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
-					"updateCPDefinitionOptionRel",
-					_updateCPDefinitionOptionRelParameterTypes9);
+					"getSkuContributorCPDefinitionOptionRelCount",
+					_getSkuContributorCPDefinitionOptionRelCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionOptionRelId, cpOptionId, nameMap,
-					descriptionMap, ddmFormFieldTypeName, priority, facetable,
-					skuContributor, serviceContext);
+					cpDefinitionId);
 
 			Object returnObj = null;
 
@@ -394,7 +386,7 @@ public class CPDefinitionOptionRelServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.commerce.product.model.CPDefinitionOptionRel)returnObj;
+			return ((Integer)returnObj).intValue();
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -436,16 +428,24 @@ public class CPDefinitionOptionRelServiceHttp {
 		}
 	}
 
-	public static int getSkuContributorCPDefinitionOptionRelCount(
-		HttpPrincipal httpPrincipal, long cpDefinitionId)
+	public static com.liferay.commerce.product.model.CPDefinitionOptionRel updateCPDefinitionOptionRel(
+		HttpPrincipal httpPrincipal, long cpDefinitionOptionRelId,
+		long cpOptionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
+		boolean skuContributor,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
-					"getSkuContributorCPDefinitionOptionRelCount",
-					_getSkuContributorCPDefinitionOptionRelCountParameterTypes11);
+					"updateCPDefinitionOptionRel",
+					_updateCPDefinitionOptionRelParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId);
+					cpDefinitionOptionRelId, cpOptionId, nameMap,
+					descriptionMap, ddmFormFieldTypeName, priority, facetable,
+					skuContributor, serviceContext);
 
 			Object returnObj = null;
 
@@ -460,7 +460,7 @@ public class CPDefinitionOptionRelServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return ((Integer)returnObj).intValue();
+			return (com.liferay.commerce.product.model.CPDefinitionOptionRel)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -500,13 +500,14 @@ public class CPDefinitionOptionRelServiceHttp {
 		};
 	private static final Class<?>[] _getCPDefinitionOptionRelsCountParameterTypes8 =
 		new Class[] { long.class };
-	private static final Class<?>[] _updateCPDefinitionOptionRelParameterTypes9 = new Class[] {
+	private static final Class<?>[] _getSkuContributorCPDefinitionOptionRelCountParameterTypes9 =
+		new Class[] { long.class };
+	private static final Class<?>[] _getSkuContributorCPDefinitionOptionRelsParameterTypes10 =
+		new Class[] { long.class };
+	private static final Class<?>[] _updateCPDefinitionOptionRelParameterTypes11 =
+		new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class, int.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _getSkuContributorCPDefinitionOptionRelsParameterTypes10 =
-		new Class[] { long.class };
-	private static final Class<?>[] _getSkuContributorCPDefinitionOptionRelCountParameterTypes11 =
-		new Class[] { long.class };
 }

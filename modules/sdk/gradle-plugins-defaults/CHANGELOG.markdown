@@ -1438,6 +1438,13 @@ task if the URL is protected.
 - [LPS-71728]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.1.5.
 
+## 3.6.9 - 2017-04-28
+
+### Changed
+- [LPS-71728]: Update the [Liferay Gradle Plugins] dependency to version 3.3.7.
+- [LPS-71728]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 1.1.6.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

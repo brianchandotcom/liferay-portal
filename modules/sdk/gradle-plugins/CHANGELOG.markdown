@@ -1548,6 +1548,11 @@ version 2.3.11.
 ### Changed
 - [LPS-71728]: Update the [Liferay Ant BND] dependency to version 2.0.36.
 
+## 3.3.7 - 2017-04-28
+
+### Changed
+- [LPS-71728]: Update the [Liferay Ant BND] dependency to version 2.0.37.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

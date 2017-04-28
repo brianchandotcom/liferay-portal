@@ -36,12 +36,27 @@ String itemSelectedEventName = (String)request.getAttribute("itemSelectedEventNa
 			className="com.liferay.commerce.product.model.CPOption"
 			cssClass="commerce-product-option-row" modelVar="cpOption"
 		>
-			<liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-text
+                    cssClass="table-cell-content"
+                    name="name">
 				<div class="commerce-product-option-name"
 					data-id="<%= cpOption.getCPOptionId() %>"
 					<%= cpOption.getName() %>
 				</div>
 			</liferay-ui:search-container-column-text>
+
+            <liferay-ui:search-container-column-text
+                    cssClass="table-cell-content"
+                    name="facetable"
+                    property="facetable"
+            />
+
+            <liferay-ui:search-container-column-text
+                    cssClass="table-cell-content"
+                    name="sku-contributor"
+                    property="skuContributor"
+            />
+
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator markupView="lexicon" />

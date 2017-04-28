@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
@@ -28,6 +29,11 @@ public class CopyrightCheck extends BaseFileCheck {
 
 	public CopyrightCheck(String copyright) {
 		_copyright = copyright;
+	}
+
+	@Override
+	public void init() throws Exception {
+		_copyright = _getCopyright();
 	}
 
 	public void setCopyrightFileName(String copyrightFileName) {
@@ -79,6 +85,22 @@ public class CopyrightCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private String _getCopyright() throws Exception {
+		String copyright = getContent(
+			_copyrightFileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (Validator.isNotNull(copyright)) {
+			return copyright;
+		}
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		return StringUtil.read(
+			classLoader.getResourceAsStream("dependencies/copyright.txt"));
+	}
+
 	private String _getCustomCopyright(String absolutePath) throws Exception {
 		for (int x = absolutePath.length();;) {
 			x = absolutePath.lastIndexOf(CharPool.SLASH, x);
@@ -100,7 +122,7 @@ public class CopyrightCheck extends BaseFileCheck {
 		return null;
 	}
 
-	private final String _copyright;
+	private String _copyright;
 	private String _copyrightFileName = "copyright.txt";
 
 }

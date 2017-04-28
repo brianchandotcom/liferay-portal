@@ -732,35 +732,40 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String redact(String string) {
-		Set<String> redactTokens = new HashSet<>();
+		if (_redactTokens == null) {
+			_redactTokens = new HashSet<>();
 
-		Properties properties = null;
+			Properties properties = null;
 
-		try {
-			properties = getBuildProperties();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get build properties", ioe);
-		}
-
-		for (int i = 1; properties.containsKey(_getRedactTokenKey(i)); i++) {
-			String key = properties.getProperty(_getRedactTokenKey(i));
-
-			String redactToken = key;
-
-			if (key.startsWith("${") && key.endsWith("}")) {
-				redactToken = properties.getProperty(
-					key.substring(2, key.length() - 1));
+			try {
+				properties = getBuildProperties();
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(
+					"Unable to get build properties", ioe);
 			}
 
-			if ((redactToken != null) && !redactToken.isEmpty()) {
-				redactTokens.add(redactToken);
+			for (int i =
+				1; properties.containsKey(_getRedactTokenKey(i)); i++) {
+
+				String key = properties.getProperty(_getRedactTokenKey(i));
+
+				String redactToken = key;
+
+				if (key.startsWith("${") && key.endsWith("}")) {
+					redactToken = properties.getProperty(
+						key.substring(2, key.length() - 1));
+				}
+
+				if ((redactToken != null) && !redactToken.isEmpty()) {
+					_redactTokens.add(redactToken);
+				}
 			}
+
+			_redactTokens.remove("test");
 		}
 
-		redactTokens.remove("test");
-
-		for (String redactToken : redactTokens) {
+		for (String redactToken : _redactTokens) {
 			string = string.replace(redactToken, "[REDACTED]");
 		}
 
@@ -1202,6 +1207,7 @@ public class JenkinsResultsParserUtil {
 
 	private static Hashtable<?, ?> _buildProperties;
 	private static String[] _buildPropertiesURLs;
+	private static Set<String> _redactTokens;
 	private static final Pattern _remoteURLAuthorityPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");
 	private static final Pattern _remoteURLAuthorityPattern2 = Pattern.compile(

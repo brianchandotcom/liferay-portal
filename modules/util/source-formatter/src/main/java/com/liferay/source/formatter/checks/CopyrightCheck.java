@@ -30,6 +30,10 @@ public class CopyrightCheck extends BaseFileCheck {
 		_copyright = copyright;
 	}
 
+	public void setCopyrightFileName(String copyrightFileName) {
+		_copyrightFileName = copyrightFileName;
+	}
+
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
@@ -97,5 +101,6 @@ public class CopyrightCheck extends BaseFileCheck {
 	}
 
 	private final String _copyright;
+	private String _copyrightFileName = "copyright.txt";
 
 }

@@ -38,6 +38,10 @@ public class WhitespaceCheck extends BaseFileCheck {
 		_allowLeadingSpaces = allowLeadingSpaces;
 	}
 
+	public void setAllowLeadingSpaces(String allowLeadingSpaces) {
+		_allowLeadingSpaces = GetterUtil.getBoolean(allowLeadingSpaces);
+	}
+
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
@@ -301,6 +305,6 @@ public class WhitespaceCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final boolean _allowLeadingSpaces;
+	private boolean _allowLeadingSpaces;
 
 }

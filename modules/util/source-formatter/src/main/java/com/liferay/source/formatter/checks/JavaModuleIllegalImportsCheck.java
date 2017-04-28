@@ -33,6 +33,13 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 		return true;
 	}
 
+	public void setCheckRegistryInTestClasses(
+		String checkRegistryInTestClasses) {
+
+		_checkRegistryInTestClasses = GetterUtil.getBoolean(
+			checkRegistryInTestClasses);
+	}
+
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
@@ -88,7 +95,7 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final boolean _checkRegistryInTestClasses;
+	private boolean _checkRegistryInTestClasses;
 	private final Pattern _registryImportPattern = Pattern.compile(
 		"\nimport (com\\.liferay\\.registry\\..+);");
 

@@ -56,7 +56,7 @@
 	});
 
 	clipboard.on('error', function() {
-		var popoverContent = A.one('.publish-popover-content.view-popover');
+		var popoverContent = A.one('.publish-popover-content');
 
 		popoverContent.one('.form-group').addClass('has-error');
 		popoverContent.one('.form-group').removeClass('has-success');

@@ -163,7 +163,7 @@ AUI.add(
 						instance.createEditor(instance.ns('descriptionEditor'));
 						instance.createEditor(instance.ns('nameEditor'));
 
-						instance.createPublishPopover();
+						instance.createCopyPublishFormURLPopover();
 						instance.createPublishTooltip();
 					},
 
@@ -205,7 +205,7 @@ AUI.add(
 
 						(new A.EventHandle(instance._eventHandlers)).detach();
 
-						instance._publishPopover.destroy();
+						instance._copyPublishFormURLPopover.destroy();
 						instance._publishTooltip.destroy();
 					},
 
@@ -229,56 +229,18 @@ AUI.add(
 						}
 					},
 
-					createPublishPopover: function() {
+					createCopyPublishFormURLPopover: function() {
 						var instance = this;
 
-						instance._publishPopover = new A.Popover(
+						instance._copyPublishFormURLPopover = new Liferay.DDL.FormBuilderCopyPublishFormURLPopover(
 							{
-								align: {
-									node: A.one('.publish-icon'),
-									points: [A.WidgetPositionAlign.RC, A.WidgetPositionAlign.LC]
-								},
-								bodyContent: A.one('.publish-popover-content'),
-								constrain: false,
-								cssClass: 'form-builder-publish-popover',
-								position: 'left',
-								visible: false,
-								width: 500,
-								zIndex: 999
+								portletNamespace: instance.get('namespace')
 							}
-						).render();
-
-						instance._publishPopover.set(
-							'hideOn',[
-								{
-									eventName: 'key',
-									keyCode: 'esc',
-									node: A.getDoc()
-								},
-								{
-									eventName: 'clickoutside',
-									node: A.one('.form-builder-publish-popover')
-								}
-							]
 						);
 
-						instance._publishPopover.after("visibleChange", function(event) {
-
-							if (event.prevVal) {
-								var popoverContent = A.one('.publish-popover-content');
-
-								var formGroup = popoverContent.one('.form-group');
-
-								formGroup.removeClass('has-error');
-								formGroup.removeClass('has-success');
-
-								var copyButton = popoverContent.one('.btn');
-
-								copyButton.removeClass('btn-danger');
-								copyButton.removeClass('btn-success');
-
-								popoverContent.one('.publish-button-text').html(Liferay.Language.get('copy'));
-							}
+						instance._copyPublishFormURLPopover.setAlign({
+							node: A.one('.publish-icon'),
+							points: [A.WidgetPositionAlign.RC, A.WidgetPositionAlign.LC]
 						});
 					},
 
@@ -672,11 +634,9 @@ AUI.add(
 							return;
 						}
 
-						var clipboardInput = instance.one('#clipboard');
+						instance._copyPublishFormURLPopover.set('publishURL', instance._createFormURL());
 
-						clipboardInput.set('value', instance._createFormURL());
-
-						instance._publishPopover.show();
+						instance._copyPublishFormURLPopover.show();
 					},
 
 					_onPublishButtonClick: function() {
@@ -868,6 +828,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-popover', 'aui-tooltip', 'io-base', 'event-outside', 'liferay-alert', 'liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-ddl-form-builder-rule-builder', 'liferay-portlet-base', 'liferay-util-window', 'querystring-parse']
+		requires: ['aui-tooltip', 'io-base', 'liferay-alert', 'liferay-ddl-form-builder', 'liferay-ddl-form-builder-copy-publish-form-url-popover', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-ddl-form-builder-rule-builder', 'liferay-portlet-base', 'liferay-util-window', 'querystring-parse']
 	}
 );

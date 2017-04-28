@@ -115,77 +115,37 @@ portletURL.setParameter("displayStyle", displayStyle);
 
 <%@ include file="/admin/copy_form_publish_url.jspf" %>
 
-<aui:script use="aui-popover,event-outside">
+<aui:script use="liferay-ddl-form-builder-copy-publish-form-url-popover">
 	var A = AUI();
 
-	var popover = new A.Popover(
+	var copyPublishFormURLPopover = new Liferay.DDL.FormBuilderCopyPublishFormURLPopover(
 		{
-			bodyContent: A.one('.publish-popover-content'),
-			constrain: false,
-			cssClass: 'form-builder-publish-popover',
-			position: 'left',
-			visible: false,
-			width: 500,
-			zIndex: 999
+			portletNamespace: '<portlet:namespace />'
 		}
-	).render();
-
-	popover.set(
-		'hideOn',[
-			{
-				eventName: 'key',
-				keyCode: 'esc',
-				node: A.getDoc()
-			},
-			{
-				eventName: 'clickoutside',
-				node: A.one('.form-builder-publish-popover')
-			}
-		]
 	);
-
-	popover.after("visibleChange", function(event) {
-		if (event.prevVal) {
-			var popoverContent = A.one('.publish-popover-content');
-
-			var formGroup = popoverContent.one('.form-group');
-
-			formGroup.removeClass('has-error');
-			formGroup.removeClass('has-success');
-
-			var copyButton = popoverContent.one('.btn');
-
-			copyButton.removeClass('btn-danger');
-			copyButton.removeClass('btn-success');
-
-			popoverContent.one('.publish-button-text').html('<liferay-ui:message key="copy" />');
-		}
-	});
 
 	Liferay.on(
 		'<portlet:namespace />copyFormURL',
 		function(event) {
 
-			if (popover.get('visible')) {
-				popover.hide();
+			if (copyPublishFormURLPopover.isVisible()) {
+				copyPublishFormURLPopover.hide();
 			}
 
-			var url = event.url;
+			copyPublishFormURLPopover.set('publishURL', event.url);
 
-			var clipboardInput = A.one('#<portlet:namespace />clipboard');
+			copyPublishFormURLPopover.setAlign(
+				{
+					node: Liferay.Menu._INSTANCE._activeTrigger,
+					points: [A.WidgetPositionAlign.TR, A.WidgetPositionAlign.TR]
+				}
+			);
 
-			clipboardInput.set('value', url);
-
-			popover.set("align", {
-				node: Liferay.Menu._INSTANCE._activeTrigger,
-				points: [A.WidgetPositionAlign.TR, A.WidgetPositionAlign.TR]
-			});
-
-			popover.show();
+			copyPublishFormURLPopover.show();
 		}
 	);
 
 	Liferay.on('destroyPortlet', function() {
-		popover.destroy();
+		copyPublishFormURLPopover.destroy();
 	});
 </aui:script>

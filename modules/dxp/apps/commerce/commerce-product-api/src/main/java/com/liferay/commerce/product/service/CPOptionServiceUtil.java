@@ -44,12 +44,13 @@ public class CPOptionServiceUtil {
 	public static com.liferay.commerce.product.model.CPOption addCPOption(
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName,
+		java.lang.String ddmFormFieldTypeName, boolean facetable,
+		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCPOption(nameMap, descriptionMap, ddmFormFieldTypeName,
-			serviceContext);
+			facetable, skuContributor, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPOption deleteCPOption(
@@ -80,12 +81,13 @@ public class CPOptionServiceUtil {
 		long cpOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName,
+		java.lang.String ddmFormFieldTypeName, boolean facetable,
+		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCPOption(cpOptionId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, serviceContext);
+			ddmFormFieldTypeName, facetable, skuContributor, serviceContext);
 	}
 
 	public static int getCPOptionsCount(long groupId) {

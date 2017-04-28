@@ -74,7 +74,8 @@ public class CPOptionServiceSoap {
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
-		java.lang.String ddmFormFieldTypeName,
+		java.lang.String ddmFormFieldTypeName, boolean facetable,
+		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -84,7 +85,8 @@ public class CPOptionServiceSoap {
 					descriptionMapValues);
 
 			com.liferay.commerce.product.model.CPOption returnValue = CPOptionServiceUtil.addCPOption(nameMap,
-					descriptionMap, ddmFormFieldTypeName, serviceContext);
+					descriptionMap, ddmFormFieldTypeName, facetable,
+					skuContributor, serviceContext);
 
 			return com.liferay.commerce.product.model.CPOptionSoap.toSoapModel(returnValue);
 		}
@@ -204,7 +206,8 @@ public class CPOptionServiceSoap {
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
-		java.lang.String ddmFormFieldTypeName,
+		java.lang.String ddmFormFieldTypeName, boolean facetable,
+		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -214,8 +217,8 @@ public class CPOptionServiceSoap {
 					descriptionMapValues);
 
 			com.liferay.commerce.product.model.CPOption returnValue = CPOptionServiceUtil.updateCPOption(cpOptionId,
-					nameMap, descriptionMap, ddmFormFieldTypeName,
-					serviceContext);
+					nameMap, descriptionMap, ddmFormFieldTypeName, facetable,
+					skuContributor, serviceContext);
 
 			return com.liferay.commerce.product.model.CPOptionSoap.toSoapModel(returnValue);
 		}

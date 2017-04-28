@@ -59,7 +59,8 @@ public class CPOptionServiceHttp {
 		HttpPrincipal httpPrincipal,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName,
+		java.lang.String ddmFormFieldTypeName, boolean facetable,
+		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -67,7 +68,8 @@ public class CPOptionServiceHttp {
 					"addCPOption", _addCPOptionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nameMap,
-					descriptionMap, ddmFormFieldTypeName, serviceContext);
+					descriptionMap, ddmFormFieldTypeName, facetable,
+					skuContributor, serviceContext);
 
 			Object returnObj = null;
 
@@ -304,7 +306,8 @@ public class CPOptionServiceHttp {
 		HttpPrincipal httpPrincipal, long cpOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName,
+		java.lang.String ddmFormFieldTypeName, boolean facetable,
+		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -313,7 +316,7 @@ public class CPOptionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpOptionId, nameMap, descriptionMap, ddmFormFieldTypeName,
-					serviceContext);
+					facetable, skuContributor, serviceContext);
 
 			Object returnObj = null;
 
@@ -340,6 +343,7 @@ public class CPOptionServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CPOptionServiceHttp.class);
 	private static final Class<?>[] _addCPOptionParameterTypes0 = new Class[] {
 			java.util.Map.class, java.util.Map.class, java.lang.String.class,
+			boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPOptionParameterTypes1 = new Class[] {
@@ -366,7 +370,7 @@ public class CPOptionServiceHttp {
 		};
 	private static final Class<?>[] _updateCPOptionParameterTypes8 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class,
+			java.lang.String.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

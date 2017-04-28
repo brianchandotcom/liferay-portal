@@ -127,8 +127,18 @@ renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-prod
 							keyProperty="CPOptionValueId"
 							modelVar="cpOptionValue"
 						>
+
+							<%
+							PortletURL rowURL = renderResponse.createRenderURL();
+
+							rowURL.setParameter("mvcRenderCommandName", "editProductOptionValue");
+							rowURL.setParameter("redirect", currentURL);
+							rowURL.setParameter("cpOptionValueId", String.valueOf(cpOptionValue.getCPOptionValueId()));
+							%>
+
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
+								href="<%= rowURL %>"
 								name="title"
 							>
 								<%= cpOptionValue.getTitle(locale) %>

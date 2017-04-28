@@ -36,7 +36,9 @@
 	</h6>
 
 	<h5>
-		<%= HtmlUtil.escape(cpDefinition.getTitle(themeDisplay.getLanguageId())) %>
+		<a href="<%= rowURL %>">
+			<%= HtmlUtil.escape(cpDefinition.getTitle(themeDisplay.getLanguageId())) %>
+		</a>
 	</h5>
 
 	<h6 class="text-default">

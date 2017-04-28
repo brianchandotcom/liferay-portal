@@ -128,8 +128,18 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 							keyProperty="CPDefinitionOptionRelId"
 							modelVar="cpDefinitionOptionRel"
 						>
+
+							<%
+							PortletURL rowURL = renderResponse.createRenderURL();
+
+							rowURL.setParameter("mvcRenderCommandName", "editProductDefinitionOptionRel");
+							rowURL.setParameter("redirect", currentURL);
+							rowURL.setParameter("cpDefinitionOptionRelId", String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()));
+							%>
+
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
+								href="<%= rowURL %>"
 								name="name"
 							>
 								<%= cpDefinitionOptionRel.getName(locale) %>

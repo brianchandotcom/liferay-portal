@@ -36,7 +36,9 @@
 	</h6>
 
 	<h5>
-		<%= HtmlUtil.escape(cpInstance.getSku()) %>
+		<a href="<%= rowURL %>">
+			<%= HtmlUtil.escape(cpInstance.getSku()) %>
+		</a>
 	</h5>
 
 	<h6 class="text-default">

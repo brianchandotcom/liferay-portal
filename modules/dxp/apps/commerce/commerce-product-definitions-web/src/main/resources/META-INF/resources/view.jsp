@@ -93,6 +93,16 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							keyProperty="CPDefinitionId"
 							modelVar="cpDefinition"
 						>
+
+							<%
+							PortletURL rowURL = renderResponse.createRenderURL();
+
+							rowURL.setParameter("mvcRenderCommandName", "editProductDefinition");
+							rowURL.setParameter("redirect", currentURL);
+							rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+							rowURL.setParameter("toolbarItem", "view-product-definition-details");
+							%>
+
 							<c:choose>
 								<c:when test='<%= displayStyle.equals("descriptive") %>'>
 									<%@ include file="/commerce_product_definition_descriptive.jspf" %>
@@ -111,6 +121,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 											resultRow="<%= row %>"
 											rowChecker="<%= cpDefinitionsDisplayContext.getRowChecker() %>"
 											title="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
+											url="<%= rowURL.toString() %>"
 										>
 											<%@ include file="/commerce_product_definition_vertical_card.jspf" %>
 										</liferay-frontend:icon-vertical-card>

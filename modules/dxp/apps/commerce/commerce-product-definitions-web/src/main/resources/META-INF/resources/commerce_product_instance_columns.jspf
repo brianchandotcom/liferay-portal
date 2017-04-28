@@ -14,16 +14,6 @@
  */
 --%>
 
-<%
-PortletURL rowURL = renderResponse.createRenderURL();
-
-rowURL.setParameter(Constants.CMD, Constants.UPDATE);
-rowURL.setParameter("mvcRenderCommandName", "editProductInstance");
-rowURL.setParameter("redirect", currentURL);
-rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
-rowURL.setParameter("cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
-%>
-
 <liferay-ui:search-container-column-text
 	cssClass="table-cell-content"
 	href="<%= rowURL %>"

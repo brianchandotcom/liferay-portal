@@ -97,7 +97,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							PortletURL rowURL = renderResponse.createRenderURL();
 
 							rowURL.setParameter("mvcRenderCommandName", "editProductOption");
-							rowURL.setParameter(Constants.CMD, Constants.UPDATE);
 							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cpOptionId", String.valueOf(cpOption.getCPOptionId()));
 							%>

@@ -131,6 +131,15 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 							keyProperty="CPInstanceId"
 							modelVar="cpInstance"
 						>
+
+							<%
+							PortletURL rowURL = renderResponse.createRenderURL();
+
+							rowURL.setParameter("mvcRenderCommandName", "editProductInstance");
+							rowURL.setParameter("redirect", currentURL);
+							rowURL.setParameter("cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
+							%>
+
 							<c:choose>
 								<c:when test='<%= displayStyle.equals("descriptive") %>'>
 									<%@ include file="/commerce_product_instance_descriptive.jspf" %>
@@ -149,6 +158,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 											resultRow="<%= row %>"
 											rowChecker="<%= cpInstanceDisplayContext.getRowChecker() %>"
 											title="<%= HtmlUtil.escape(cpInstance.getSku()) %>"
+											url="<%= rowURL.toString() %>"
 										>
 											<%@ include file="/commerce_product_instance_vertical_card.jspf" %>
 										</liferay-frontend:icon-vertical-card>

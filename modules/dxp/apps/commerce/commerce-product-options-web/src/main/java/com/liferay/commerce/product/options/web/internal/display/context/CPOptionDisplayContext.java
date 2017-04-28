@@ -35,7 +35,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPOptionDisplayContext extends BaseCPOptionsDisplayContext {
+public class CPOptionDisplayContext
+	extends BaseCPOptionsDisplayContext<CPOption> {
 
 	public CPOptionDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
@@ -69,7 +70,9 @@ public class CPOptionDisplayContext extends BaseCPOptionsDisplayContext {
 		return formFieldTypes;
 	}
 
-	public SearchContainer getSearchContainer() throws PortalException {
+	public SearchContainer<CPOption> getSearchContainer()
+		throws PortalException {
+
 		if (searchContainer != null) {
 			return searchContainer;
 		}

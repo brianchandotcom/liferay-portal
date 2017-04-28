@@ -301,7 +301,7 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final PortalPreferences portalPreferences;
-	protected SearchContainer searchContainer;
+	protected SearchContainer<T> searchContainer;
 
 	private CPOption _cpOption;
 	private String _defaultOrderByCol;

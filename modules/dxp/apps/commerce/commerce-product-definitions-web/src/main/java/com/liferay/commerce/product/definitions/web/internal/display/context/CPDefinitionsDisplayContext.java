@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Marco Leo
  */
 public class CPDefinitionsDisplayContext
-	extends BaseCPDefinitionsDisplayContext {
+	extends BaseCPDefinitionsDisplayContext<CPDefinition> {
 
 	public CPDefinitionsDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,

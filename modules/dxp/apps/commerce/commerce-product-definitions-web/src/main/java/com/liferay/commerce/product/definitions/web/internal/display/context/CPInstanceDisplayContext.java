@@ -32,7 +32,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alessio Antonio Rendina
  * @author Marco Leo
  */
-public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
+public class CPInstanceDisplayContext
+	extends BaseCPDefinitionsDisplayContext<CPInstance> {
 
 	public CPInstanceDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,

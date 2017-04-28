@@ -31,7 +31,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPOptionValueDisplayContext extends BaseCPOptionsDisplayContext {
+public class CPOptionValueDisplayContext
+	extends BaseCPOptionsDisplayContext<CPOptionValue> {
 
 	public CPOptionValueDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
@@ -56,7 +57,9 @@ public class CPOptionValueDisplayContext extends BaseCPOptionsDisplayContext {
 		return portletURL;
 	}
 
-	public SearchContainer getSearchContainer() throws PortalException {
+	public SearchContainer<CPOptionValue> getSearchContainer()
+		throws PortalException {
+
 		if (searchContainer != null) {
 			return searchContainer;
 		}

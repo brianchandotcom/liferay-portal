@@ -176,4 +176,24 @@ public class CPDefinitionOptionRelServiceImpl
 			serviceContext);
 	}
 
+	@Override
+	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
+		long cpDefinitionId) throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionOptionRelLocalService.getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
+	}
+
+	@Override
+	public int getSkuContributorCPDefinitionOptionRelCount(
+		long cpDefinitionId) throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionOptionRelLocalService.getSkuContributorCPDefinitionOptionRelCount(cpDefinitionId);
+	}
+
 }

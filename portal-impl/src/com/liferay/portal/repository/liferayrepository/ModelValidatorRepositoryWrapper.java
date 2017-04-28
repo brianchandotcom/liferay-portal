@@ -87,8 +87,8 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 
 		FileContentReference fileContentReference =
 			FileContentReference.fromFile(
-				sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
-				mimeType, file);
+				fileEntryId, sourceFileName,
+				DLAppUtil.getExtension(title, sourceFileName), mimeType, file);
 
 		_modelValidator.validate(fileContentReference);
 
@@ -107,8 +107,9 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 
 		FileContentReference fileContentReference =
 			FileContentReference.fromInputStream(
-				sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
-				mimeType, is, size);
+				fileEntryId, sourceFileName,
+				DLAppUtil.getExtension(title, sourceFileName), mimeType, is,
+				size);
 
 		_modelValidator.validate(fileContentReference);
 

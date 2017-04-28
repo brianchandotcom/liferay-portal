@@ -23,8 +23,8 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Portal;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -51,6 +51,8 @@ public class CPDefinitionOptionRelRenderImpl
 
 		DDMForm ddmForm = new DDMForm();
 
+		Locale locale = _portal.getLocale(httpServletRequest);
+
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
 			_cpDefinitionOptionRelService.
 				getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
@@ -67,46 +69,33 @@ public class CPDefinitionOptionRelRenderImpl
 
 				DDMFormFieldOptions options = new DDMFormFieldOptions();
 
-				options.addOptionLabel("key1", Locale.US , "label1");
-				options.addOptionLabel("key2", Locale.US , "label2");
-				options.addOptionLabel("key3", Locale.US , "label3");
-				options.addOptionLabel("key5", Locale.US , "label4");
+				for(CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels){
+					options.addOptionLabel(String.valueOf(cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId()), locale , cpDefinitionOptionValueRel.getTitle(locale));
+				}
 
+				ddmFormField.setDDMFormFieldOptions(options);
 
 			}
 
+			LocalizedValue locval = new LocalizedValue(locale);
+
+			locval.addString(locale,cpDefinitionOptionRel.getName(locale));
+
+			ddmFormField.setLabel(locval);
 			ddmFormField.setRequired(true);
 
+			ddmForm.addDDMFormField(ddmFormField);
 		}
 
 
 
-
-
-		LocalizedValue locval = new LocalizedValue(Locale.US);
-		locval.addString(Locale.US,"testselect");
-
-		ddmFormField.setLabel(locval);
-		ddmFormField.setDDMFormFieldOptions(options);
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		DDMFormField ddmFormField2 = new DDMFormField("testtext","text");
-
-		LocalizedValue locval2 = new LocalizedValue(Locale.US);
-		locval.addString(Locale.US,"testtext");
-
-		ddmFormField2.setLabel(locval);
-
-
-		ddmForm.addDDMFormField(ddmFormField2);
-
 		DDMFormRenderingContext context = new DDMFormRenderingContext();
 
-		context.setLocale(Locale.US);
+		context.setLocale(locale);
 		context.setHttpServletRequest(httpServletRequest);
 		context.setHttpServletResponse(httpServletResponse);
-		context.setContainerId("testid");
+		context.
+			setContainerId("prodcut-options-" + String.valueOf(cpDefinitionId));
 
 		String html = _ddmFormRenderer.render(ddmForm,context);
 
@@ -118,5 +107,8 @@ public class CPDefinitionOptionRelRenderImpl
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
+
+	@Reference
+	private Portal _portal;
 
 }

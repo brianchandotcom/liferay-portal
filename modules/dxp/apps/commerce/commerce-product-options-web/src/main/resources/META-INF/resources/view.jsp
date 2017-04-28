@@ -105,9 +105,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 								cssClass="table-cell-content"
 								href="<%= rowURL %>"
 								name="name"
-							>
-								<%= cpOption.getName(locale) %>
-							</liferay-ui:search-container-column-text>
+								value="<%= HtmlUtil.escape(cpOption.getName(locale)) %>"
+							/>
 
 							<liferay-ui:search-container-column-date
 								cssClass="table-cell-content"

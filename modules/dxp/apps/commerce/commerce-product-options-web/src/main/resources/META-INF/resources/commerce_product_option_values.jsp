@@ -140,9 +140,8 @@ renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-prod
 								cssClass="table-cell-content"
 								href="<%= rowURL %>"
 								name="title"
-							>
-								<%= cpOptionValue.getTitle(locale) %>
-							</liferay-ui:search-container-column-text>
+								value="<%= HtmlUtil.escape(cpOptionValue.getTitle(locale)) %>"
+							/>
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"

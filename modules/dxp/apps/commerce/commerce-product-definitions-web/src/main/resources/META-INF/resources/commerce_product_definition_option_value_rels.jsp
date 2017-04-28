@@ -136,9 +136,8 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition
 								cssClass="table-cell-content"
 								href="<%= rowURL %>"
 								name="title"
-							>
-								<%= cpDefinitionOptionValueRel.getTitle(locale) %>
-							</liferay-ui:search-container-column-text>
+								value="<%= HtmlUtil.escape(cpDefinitionOptionValueRel.getTitle(locale)) %>"
+							/>
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"

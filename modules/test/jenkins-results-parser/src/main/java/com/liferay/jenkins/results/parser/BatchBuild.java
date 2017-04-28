@@ -184,6 +184,59 @@ public class BatchBuild extends BaseBuild {
 		return testResults;
 	}
 
+	@Override
+	public void update() {
+		super.update();
+
+		String status = getStatus();
+
+		if (!badBuildNumbers.isEmpty()) {
+			return;
+		}
+
+		if (status.equals("completed") && result.equals("SUCCESS")) {
+			return;
+		}
+
+		for (Build downstreamBuild : getDownstreamBuilds("completed")) {
+			for (ReinvokeRule reinvockeRule : reinvokeRules) {
+				String downstreamBuildResult = downstreamBuild.getResult();
+
+				if ((downstreamBuildResult == null) ||
+					downstreamBuildResult.equals("SUCCESS")) {
+
+					continue;
+				}
+
+				if (!reinvockeRule.matches(downstreamBuild)) {
+					continue;
+				}
+
+				String message = JenkinsResultsParserUtil.combine(
+					reinvockeRule.getName(), " failure detected at ",
+					getBuildURL(), ". This build will be reinvoked.\n",
+					reinvockeRule.toString());
+
+				System.out.println(message);
+
+				String notificationList = reinvockeRule.getNotificationList();
+
+				if ((notificationList != null) && !notificationList.isEmpty()) {
+					try {
+						JenkinsResultsParserUtil.sendEmail(
+							message, "root", "Build reinvoked",
+							reinvockeRule.notificationList);
+					}
+					catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+				}
+
+				reinvoke();
+			}
+		}
+	}
+
 	protected BatchBuild(String url) {
 		this(url, null);
 	}

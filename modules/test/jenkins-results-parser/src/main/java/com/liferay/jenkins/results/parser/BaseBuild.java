@@ -937,13 +937,53 @@ public abstract class BaseBuild implements Build {
 
 						setStatus("completed");
 					}
+
+					findDownstreamBuilds();
+
+					if (this instanceof AxisBuild ||
+						this instanceof BatchBuild ||
+						this instanceof TopLevelBuild) {
+
+						return;
+					}
+
+					if (result.equals("FAILURE") || result.equals("ABORTED")) {
+						for (ReinvokeRule reinvokeRule : reinvokeRules) {
+							if (!badBuildNumbers.isEmpty()) {
+								break;
+							}
+
+							if (!reinvokeRule.matches(this)) {
+								continue;
+							}
+
+							String message = JenkinsResultsParserUtil.combine(
+								reinvokeRule.getName(), " failure detected at ",
+								getBuildURL(),
+								". This build will be reinvoked.\n",
+								reinvokeRule.toString());
+
+							System.out.println(message);
+
+							String notificationList =
+								reinvokeRule.getNotificationList();
+
+							if ((notificationList != null) &&
+								notificationList.isEmpty()) {
+
+								JenkinsResultsParserUtil.sendEmail(
+									message, "root", "Build reinvoked",
+									reinvokeRule.notificationList);
+							}
+
+							reinvoke();
+						}
+					}
 				}
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-
-			findDownstreamBuilds();
 		}
 	}
 
@@ -1814,6 +1854,8 @@ public abstract class BaseBuild implements Build {
 	protected boolean fromArchive;
 	protected String jobName;
 	protected String master;
+	protected List<ReinvokeRule> reinvokeRules =
+		ReinvokeRule.getReinvokeRules();
 	protected String repositoryName;
 	protected String result;
 	protected long statusModifiedTime;

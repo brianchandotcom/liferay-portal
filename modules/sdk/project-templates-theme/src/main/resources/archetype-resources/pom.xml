@@ -45,7 +45,6 @@
 				<version>@com.liferay.css.builder.version@</version>
 				<executions>
 					<execution>
-						<id>default-build</id>
 						<phase>compile</phase>
 						<goals>
 							<goal>build</goal>

@@ -66,6 +66,13 @@ public class ModelValidatorUtil {
 				public void validate(FileContentReference fileContentReference)
 					throws PortalException {
 
+					if ((fileContentReference.getFileEntryId() != 0) &&
+						Validator.isNull(
+							fileContentReference.getSourceFileName())) {
+
+						return;
+					}
+
 					DLValidatorUtil.validateFileExtension(
 						fileContentReference.getSourceFileName());
 

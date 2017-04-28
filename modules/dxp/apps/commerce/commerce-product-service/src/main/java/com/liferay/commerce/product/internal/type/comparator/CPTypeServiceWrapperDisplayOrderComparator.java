@@ -39,14 +39,14 @@ public class CPTypeServiceWrapperDisplayOrderComparator
 		ServiceWrapper<CPType> serviceWrapper1,
 		ServiceWrapper<CPType> serviceWrapper2) {
 
-		Integer displayOrder1 = MapUtil.getInteger(
+		int displayOrder1 = MapUtil.getInteger(
 			serviceWrapper1.getProperties(),
 			"commerce.product.type.display.order", Integer.MAX_VALUE);
-		Integer displayOrder2 = MapUtil.getInteger(
+		int displayOrder2 = MapUtil.getInteger(
 			serviceWrapper2.getProperties(),
 			"commerce.product.type.display.order", Integer.MAX_VALUE);
 
-		int value = displayOrder1.compareTo(displayOrder2);
+		int value = Integer.compare(displayOrder1, displayOrder2);
 
 		if (_ascending) {
 			return value;

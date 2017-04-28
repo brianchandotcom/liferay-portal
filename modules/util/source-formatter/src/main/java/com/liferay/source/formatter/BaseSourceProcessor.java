@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.nio.charset.CharsetDecoderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JavaTermCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
@@ -40,7 +38,6 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 import java.awt.Desktop;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.lang.reflect.Constructor;
 
@@ -69,10 +66,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.tools.ant.types.selectors.SelectorUtils;
-
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.io.SAXReader;
 
 /**
  * @author Brian Wing Shun Chan

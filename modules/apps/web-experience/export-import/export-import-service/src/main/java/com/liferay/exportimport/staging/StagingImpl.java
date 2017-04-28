@@ -906,6 +906,8 @@ public class StagingImpl implements Staging {
 		else if (e instanceof PortletDataException) {
 			PortletDataException pde = (PortletDataException)e;
 
+			String portletId = pde.getPortletId();
+
 			StagedModel stagedModel = pde.getStagedModel();
 
 			String referrerClassName = StringPool.BLANK;
@@ -924,7 +926,80 @@ public class StagingImpl implements Staging {
 			String modelResource = ResourceActionsUtil.getModelResource(
 				locale, referrerClassName);
 
-			if (pde.getType() == PortletDataException.INVALID_GROUP) {
+			if (pde.getType() == PortletDataException.DELETE_PORTLET_DATA) {
+				if (Validator.isNotNull(pde.getLocalizedMessage())) {
+					errorMessage = LanguageUtil.format(
+						locale,
+						"the-following-error-in-x-while-deleting-its-data-" +
+							"has-stopped-the-process-x",
+						new String[] {
+							_portal.getPortletTitle(portletId, locale),
+							pde.getLocalizedMessage()
+						},
+						false);
+				}
+				else {
+					errorMessage = LanguageUtil.format(
+						locale,
+						"an-unexpected-error-in-x-while-deleting-its-data-" +
+							"has-stopped-the-process",
+						new String[] {
+							_portal.getPortletTitle(portletId, locale)
+						},
+						false);
+				}
+			}
+			else if (pde.getType() ==
+						PortletDataException.EXPORT_PORTLET_DATA) {
+
+				if (Validator.isNotNull(pde.getLocalizedMessage())) {
+					errorMessage = LanguageUtil.format(
+						locale,
+						"the-following-error-in-x-while-exporting-its-data-" +
+							"has-stopped-the-process-x",
+						new String[] {
+							_portal.getPortletTitle(portletId, locale),
+							pde.getLocalizedMessage()
+						},
+						false);
+				}
+				else {
+					errorMessage = LanguageUtil.format(
+						locale,
+						"an-unexpected-error-in-x-while-exporting-its-data-" +
+							"has-stopped-the-process",
+						new String[] {
+							_portal.getPortletTitle(portletId, locale)
+						},
+						false);
+				}
+			}
+			else if (pde.getType() ==
+						PortletDataException.IMPORT_PORTLET_DATA) {
+
+				if (Validator.isNotNull(pde.getLocalizedMessage())) {
+					errorMessage = LanguageUtil.format(
+						locale,
+						"the-following-error-in-x-while-importing-its-data-" +
+							"has-stopped-the-process-x",
+						new String[] {
+							_portal.getPortletTitle(portletId, locale),
+							pde.getLocalizedMessage()
+						},
+						false);
+				}
+				else {
+					errorMessage = LanguageUtil.format(
+						locale,
+						"an-unexpected-error-in-x-while-importing-its-data-" +
+							"has-stopped-the-process",
+						new String[] {
+							_portal.getPortletTitle(portletId, locale)
+						},
+						false);
+				}
+			}
+			else if (pde.getType() == PortletDataException.INVALID_GROUP) {
 				errorMessage = LanguageUtil.format(
 					locale,
 					"the-x-x-could-not-be-exported-because-it-is-not-in-the-" +
@@ -937,6 +1012,31 @@ public class StagingImpl implements Staging {
 					"the-x-x-has-missing-references-that-could-not-be-found-" +
 						"during-the-process",
 					new String[] {modelResource, referrerDisplayName}, false);
+			}
+			else if (pde.getType() ==
+						PortletDataException.PREPARE_MANIFEST_SUMMARY) {
+
+				if (Validator.isNotNull(pde.getLocalizedMessage())) {
+					errorMessage = LanguageUtil.format(
+						locale,
+						"the-following-error-in-x-while-preparing-its-" +
+							"manifest-has-stopped-the-process-x",
+						new String[] {
+							_portal.getPortletTitle(portletId, locale),
+							pde.getLocalizedMessage()
+						},
+						false);
+				}
+				else {
+					errorMessage = LanguageUtil.format(
+						locale,
+						"an-unexpected-error-in-x-while-preparing-its-" +
+							"manifest-has-stopped-the-process",
+						new String[] {
+							_portal.getPortletTitle(portletId, locale)
+						},
+						false);
+				}
 			}
 			else if (pde.getType() == PortletDataException.STATUS_IN_TRASH) {
 				errorMessage = LanguageUtil.format(

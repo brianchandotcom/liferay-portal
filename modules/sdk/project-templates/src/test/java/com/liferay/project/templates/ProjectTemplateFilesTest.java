@@ -310,6 +310,11 @@ public class ProjectTemplateFilesTest {
 			if (idElement != null) {
 				String id = idElement.getTextContent();
 
+				Assert.assertFalse(
+					"Execution ID \"" + id + "\" in " + pomXmlPath +
+						" cannot start with \"default-\"",
+					id.startsWith("default-"));
+
 				Matcher matcher = _pomXmlExecutionIdPattern.matcher(id);
 
 				Assert.assertTrue(

@@ -159,6 +159,29 @@ public class CPDefinitionOptionRelServiceImpl
 	}
 
 	@Override
+	public int getSkuContributorCPDefinitionOptionRelCount(long cpDefinitionId)
+		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionOptionRelLocalService.
+			getSkuContributorCPDefinitionOptionRelCount(cpDefinitionId);
+	}
+
+	@Override
+	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
+			long cpDefinitionId)
+		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionOptionRelLocalService.
+			getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
+	}
+
+	@Override
 	public CPDefinitionOptionRel
 			updateCPDefinitionOptionRel(
 				long cpDefinitionOptionRelId, long cpOptionId,
@@ -174,26 +197,6 @@ public class CPDefinitionOptionRelServiceImpl
 			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
 			ddmFormFieldTypeName, priority, facetable, skuContributor,
 			serviceContext);
-	}
-
-	@Override
-	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
-		long cpDefinitionId) throws PortalException {
-
-		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
-
-		return cpDefinitionOptionRelLocalService.getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
-	}
-
-	@Override
-	public int getSkuContributorCPDefinitionOptionRelCount(
-		long cpDefinitionId) throws PortalException {
-
-		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
-
-		return cpDefinitionOptionRelLocalService.getSkuContributorCPDefinitionOptionRelCount(cpDefinitionId);
 	}
 
 }

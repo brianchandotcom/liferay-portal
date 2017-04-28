@@ -170,18 +170,18 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	@Override
-	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
-		long cpDefinitionId) {
-
-		return cpDefinitionOptionRelPersistence.findByC_SC(
-			cpDefinitionId, true);
-	}
-
-	@Override
 	public int getSkuContributorCPDefinitionOptionRelCount(
 		long cpDefinitionId) {
 
 		return cpDefinitionOptionRelPersistence.countByC_SC(
+			cpDefinitionId, true);
+	}
+
+	@Override
+	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
+		long cpDefinitionId) {
+
+		return cpDefinitionOptionRelPersistence.findByC_SC(
 			cpDefinitionId, true);
 	}
 

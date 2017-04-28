@@ -98,13 +98,13 @@ public class CPOptionItemSelectorView
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		int delta = GetterUtil.getInteger(
-			request.getParameter(SearchContainer.DEFAULT_DELTA_PARAM),
-			SearchContainer.DEFAULT_DELTA);
-
 		int cur = GetterUtil.getInteger(
 			request.getParameter(SearchContainer.DEFAULT_CUR_PARAM),
 			SearchContainer.DEFAULT_CUR);
+
+		int delta = GetterUtil.getInteger(
+			request.getParameter(SearchContainer.DEFAULT_DELTA_PARAM),
+			SearchContainer.DEFAULT_DELTA);
 
 		int start = (delta * cur) - delta;
 		int end = (delta * cur) + delta;
@@ -116,9 +116,11 @@ public class CPOptionItemSelectorView
 			themeDisplay.getScopeGroupId());
 
 		request.setAttribute("cpOptions", cpOptions);
+		request.setAttribute("cpOptionsCount", cpOptionsCount);
+		request.setAttribute("displayStyle", "list");
+		request.setAttribute("emptyResultsMessage", "no-options-were-found");
 		request.setAttribute("itemSelectedEventName", itemSelectedEventName);
 		request.setAttribute("portletURL", portletURL);
-		request.setAttribute("total", cpOptionsCount);
 
 		ServletContext servletContext = getServletContext();
 

@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -17,16 +17,53 @@
 <%@ include file="/init.jsp" %>
 
 <%
+List cpOptions = (List)request.getAttribute("cpOptions");
+int cpOptionsCount = GetterUtil.getInteger(request.getAttribute("cpOptionsCount"));
+String displayStyle = GetterUtil.getString(request.getAttribute("displayStyle"));
+String emptyResultsMessage = GetterUtil.getString(request.getAttribute("emptyResultsMessage"));
+String itemSelectedEventName = GetterUtil.getString(request.getAttribute("itemSelectedEventName"));
 PortletURL portletURL = (PortletURL)request.getAttribute("portletURL");
-List<CPOption> cpOptions = (List<CPOption>)request.getAttribute("cpOptions");
-String itemSelectedEventName = (String)request.getAttribute("itemSelectedEventName");
+
+SearchContainer searchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, emptyResultsMessage);
 %>
 
-<div id="<portlet:namespace />cpOptionSelectorWrapper">
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="cpOptions"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+
+		<%
+		PortletURL sortURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+
+		String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+		String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+		%>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"name"} %>'
+			portletURL="<%= sortURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
+
+<div class="container-fluid-1280" id="<portlet:namespace />cpOptionSelectorWrapper">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-options-were-found"
-		iteratorURL="<%= portletURL %>"
-		total='<%= GetterUtil.getInteger(request.getAttribute("total")) %>'
+		id="cpOptions"
+		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
+		searchContainer="<%= searchContainer %>"
+		total="<%= cpOptionsCount %>"
+		var="listSearchContainer"
 	>
 		<liferay-ui:search-container-results
 			results="<%= cpOptions %>"
@@ -34,7 +71,8 @@ String itemSelectedEventName = (String)request.getAttribute("itemSelectedEventNa
 
 		<liferay-ui:search-container-row
 			className="com.liferay.commerce.product.model.CPOption"
-			cssClass="commerce-product-option-row" modelVar="cpOption"
+			cssClass="commerce-product-option-row"
+			modelVar="cpOption"
 		>
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
@@ -42,7 +80,7 @@ String itemSelectedEventName = (String)request.getAttribute("itemSelectedEventNa
 			>
 				<div class="commerce-product-option-name"
 					data-id="<%= cpOption.getCPOptionId() %>"
-					<%= cpOption.getName() %>
+					<%= HtmlUtil.escape(cpOption.getName()) %>
 				</div>
 			</liferay-ui:search-container-column-text>
 
@@ -59,7 +97,7 @@ String itemSelectedEventName = (String)request.getAttribute("itemSelectedEventNa
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= searchContainer %>" />
 
 		<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
 	</liferay-ui:search-container>
@@ -94,4 +132,5 @@ String itemSelectedEventName = (String)request.getAttribute("itemSelectedEventNa
 		},
 		'.commerce-product-option-row'
 	);
+
 </aui:script>

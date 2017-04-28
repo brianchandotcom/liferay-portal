@@ -86,7 +86,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
 			cpDefinitionId, cpOptionId, cpOption.getNameMap(),
 			cpOption.getDescriptionMap(), cpOption.getDDMFormFieldTypeName(), 0,
-			false, false, serviceContext);
+			cpOption.getFacetable(), cpOption.getSkuContributor(),
+			serviceContext);
 	}
 
 	@Override

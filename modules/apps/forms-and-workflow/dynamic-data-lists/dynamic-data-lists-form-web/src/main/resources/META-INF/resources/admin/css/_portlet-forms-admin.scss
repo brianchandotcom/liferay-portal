@@ -13,7 +13,6 @@
 
 			.help-block {
 				display: block;
-				margin-bottom: 0px;
 			}
 
 			.publish-button-success-icon {
@@ -30,7 +29,6 @@
 
 			.help-block {
 				display: block;
-				margin-bottom: 0px;
 			}
 		}
 
@@ -93,14 +91,6 @@
 
 		&:hover:not(.disabled) {
 			color: #65B3F0;
-		}
-	}
-
-	.publish-icon-modal {
-		z-index: 10;
-
-		.modal-body {
-			background-color: #FFF;
 		}
 	}
 

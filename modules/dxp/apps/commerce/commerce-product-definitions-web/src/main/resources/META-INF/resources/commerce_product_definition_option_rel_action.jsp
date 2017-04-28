@@ -48,7 +48,6 @@ else {
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete
-		message="delete"
 		url="<%= deleteURL %>"
 	/>
 </liferay-ui:icon-menu>

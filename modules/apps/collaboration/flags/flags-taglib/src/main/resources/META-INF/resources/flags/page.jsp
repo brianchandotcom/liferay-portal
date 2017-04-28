@@ -34,7 +34,7 @@ if (enabled) {
 }
 %>
 
-<div class="taglib-flags" title="<liferay-ui:message key='<%= message %>' />">
+<div class="taglib-flags" title="<liferay-ui:message key="<%= message %>" />">
 	<liferay-ui:icon
 		cssClass="<%= cssClass %>"
 		iconCssClass="icon-flag"

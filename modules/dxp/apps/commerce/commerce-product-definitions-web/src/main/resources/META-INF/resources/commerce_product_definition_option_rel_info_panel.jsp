@@ -20,7 +20,7 @@
 List<CPDefinitionOptionRel> cpDefinitionOptionRels = (List<CPDefinitionOptionRel>)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_RELS);
 
 if (ListUtil.isEmpty(cpDefinitionOptionRels)) {
-	cpDefinitionOptionRels = new ArrayList<CPDefinitionOptionRel>();
+	cpDefinitionOptionRels = Collections.emptyList();
 }
 %>
 

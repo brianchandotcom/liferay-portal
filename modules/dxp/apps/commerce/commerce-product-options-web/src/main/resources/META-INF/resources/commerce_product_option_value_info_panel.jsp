@@ -20,7 +20,7 @@
 List<CPOptionValue> cpOptionValues = (List<CPOptionValue>)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_OPTION_VALUES);
 
 if (ListUtil.isEmpty(cpOptionValues)) {
-	cpOptionValues = new ArrayList<>();
+	cpOptionValues = Collections.emptyList();
 }
 %>
 

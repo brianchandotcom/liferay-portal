@@ -20,7 +20,7 @@
 List<CPDefinition> cpDefinitions = (List<CPDefinition>)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITIONS);
 
 if (ListUtil.isEmpty(cpDefinitions)) {
-	cpDefinitions = new ArrayList<CPDefinition>();
+	cpDefinitions = Collections.emptyList();
 }
 %>
 

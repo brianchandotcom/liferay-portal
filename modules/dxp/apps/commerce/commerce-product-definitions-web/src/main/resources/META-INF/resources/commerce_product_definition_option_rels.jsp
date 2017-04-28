@@ -211,7 +211,6 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 </aui:script>
 
 <aui:script use="liferay-item-selector-dialog">
-
 	$('#<portlet:namespace />addCommerceProducOption').on(
 		'click',
 		function(event) {

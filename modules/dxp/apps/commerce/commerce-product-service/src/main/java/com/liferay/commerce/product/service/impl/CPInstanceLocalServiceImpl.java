@@ -173,9 +173,14 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPDefinition cpDefinition = cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
 
-		Map<CPDefinitionOptionRel,
-			CPDefinitionOptionValueRel[]> combinationGeneratorMap =
-				new HashMap<>();
+		boolean neverExpire = false;
+
+		if (cpDefinition.getExpirationDate() == null) {
+			neverExpire = true;
+		}
+
+		Map<CPDefinitionOptionRel, CPDefinitionOptionValueRel[]>
+			combinationGeneratorMap = new HashMap<>();
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
 			cpDefinitionOptionRelLocalService.
@@ -185,17 +190,15 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			throw new NoSuchSkuContributorCPDefinitionOptionRelException();
 		}
 
-		for (CPDefinitionOptionRel
-				cpDefinitionOptionRel :
-					cpDefinitionOptionRels) {
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				cpDefinitionOptionRels) {
 
 			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 				cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
 
-			CPDefinitionOptionValueRel[]
-				cpDefinitionOptionValueRelArray =
-					new CPDefinitionOptionValueRel[
-						cpDefinitionOptionValueRels.size()];
+			CPDefinitionOptionValueRel[] cpDefinitionOptionValueRelArray =
+				new CPDefinitionOptionValueRel[
+					cpDefinitionOptionValueRels.size()];
 
 			cpDefinitionOptionValueRelArray =
 				cpDefinitionOptionValueRels.toArray(
@@ -212,8 +215,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			CPDefinitionOptionValueRel[]
 				cpDefinitionOptionValueRels = iterator.next();
 
-			JSONArray skuCombinationJSONArray =
-				JSONFactoryUtil.createJSONArray();
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 			StringBuilder sku = new StringBuilder(cpDefinition.getBaseSKU());
 
@@ -226,26 +228,23 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 						cpDefinitionOptionValueRel.getTitle(
 							serviceContext.getLanguageId())));
 
-				JSONObject skuCombinationJSONObject =
-					JSONFactoryUtil.createJSONObject();
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-				skuCombinationJSONObject.put(
+				jsonObject.put(
+					"cpDefinitionOptionRelId",
+					cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
+				jsonObject.put(
 					"cpDefinitionOptionValueRelId",
 					cpDefinitionOptionValueRel.
 						getCPDefinitionOptionValueRelId());
 
-				skuCombinationJSONObject.put(
-					"cpDefinitionOptionRelId",
-					cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
-
-				skuCombinationJSONArray.put(skuCombinationJSONObject);
+				jsonArray.put(jsonObject);
 			}
 
 			cpInstanceLocalService.addCPInstance(
-				cpDefinitionId, sku.toString(),
-				skuCombinationJSONArray.toString(),
+				cpDefinitionId, sku.toString(), jsonArray.toString(),
 				cpDefinition.getDisplayDate(), cpDefinition.getExpirationDate(),
-				cpDefinition.getExpirationDate() == null, serviceContext);
+				neverExpire, serviceContext);
 		}
 	}
 

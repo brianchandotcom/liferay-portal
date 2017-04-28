@@ -99,10 +99,10 @@ public class CPDefinitionOptionRelRendererImpl
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
-		ddmFormRenderingContext.setLocale(locale);
+		ddmFormRenderingContext.setContainerId("options");
 		ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
 		ddmFormRenderingContext.setHttpServletResponse(httpServletResponse);
-		ddmFormRenderingContext.setContainerId("options");
+		ddmFormRenderingContext.setLocale(locale);
 
 		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
 	}

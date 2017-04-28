@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL myportletURL = (PortletURL)request.getAttribute("portletURL");
+PortletURL portletURL = (PortletURL)request.getAttribute("portletURL");
 List<CPOption> cpOptions = (List<CPOption>)request.getAttribute("cpOptions");
 String itemSelectedEventName = (String)request.getAttribute("itemSelectedEventName");
 %>
@@ -25,7 +25,7 @@ String itemSelectedEventName = (String)request.getAttribute("itemSelectedEventNa
 <div id="<portlet:namespace />cpOptionSelectorWrapper">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-options-were-found"
-		iteratorURL="<%= myportletURL %>"
+		iteratorURL="<%= portletURL %>"
 		total='<%= GetterUtil.getInteger(request.getAttribute("total")) %>'
 	>
 		<liferay-ui:search-container-results
@@ -81,15 +81,14 @@ String itemSelectedEventName = (String)request.getAttribute("itemSelectedEventNa
 
 			var cpOptionId = cpOptionName.attr('data-id');
 
-			var data =
-				{
-					data: {
-						returnType: 'COMMERCE-PRODUCT-OPTION',
-						value: {
-							id: cpOptionId
-						}
+			var data = {
+				data: {
+					returnType: 'COMMERCE-PRODUCT-OPTION',
+					value: {
+						id: cpOptionId
 					}
-				};
+				}
+			};
 
 			Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', data);
 		},

@@ -38,10 +38,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	extends CPDefinitionOptionValueRelLocalServiceBaseImpl {
 
 	@Override
-	public CPDefinitionOptionValueRel
-			addCPDefinitionOptionValueRel(
-				long cpDefinitionOptionRelId, CPOptionValue cpOptionValue,
-				ServiceContext serviceContext)
+	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
+			long cpDefinitionOptionRelId, CPOptionValue cpOptionValue,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return cpDefinitionOptionValueRelLocalService.
@@ -51,10 +50,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	}
 
 	@Override
-	public CPDefinitionOptionValueRel
-			addCPDefinitionOptionValueRel(
-				long cpDefinitionOptionRelId, Map<Locale, String> titleMap,
-				int priority, ServiceContext serviceContext)
+	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
+			long cpDefinitionOptionRelId, Map<Locale, String> titleMap,
+			int priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition option value rel
@@ -86,10 +84,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public CPDefinitionOptionValueRel
-			deleteCPDefinitionOptionValueRel(
-				CPDefinitionOptionValueRel
-					cpDefinitionOptionValueRel)
+	public CPDefinitionOptionValueRel deleteCPDefinitionOptionValueRel(
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
 		throws PortalException {
 
 		// Commerce product definition option value rel
@@ -106,9 +102,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	}
 
 	@Override
-	public CPDefinitionOptionValueRel
-			deleteCPDefinitionOptionValueRel(
-				long cpDefinitionOptionValueRelId)
+	public CPDefinitionOptionValueRel deleteCPDefinitionOptionValueRel(
+			long cpDefinitionOptionValueRelId)
 		throws PortalException {
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
@@ -120,9 +115,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	}
 
 	@Override
-	public void
-			deleteCPDefinitionOptionValueRels(
-				long cpDefinitionOptionRelId)
+	public void deleteCPDefinitionOptionValueRels(long cpDefinitionOptionRelId)
 		throws PortalException {
 
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
@@ -194,10 +187,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	}
 
 	@Override
-	public CPDefinitionOptionValueRel
-			updateCPDefinitionOptionValueRel(
-				long cpDefinitionOptionValueRelId, Map<Locale, String> titleMap,
-				int priority, ServiceContext serviceContext)
+	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
+			long cpDefinitionOptionValueRelId, Map<Locale, String> titleMap,
+			int priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition option value rel

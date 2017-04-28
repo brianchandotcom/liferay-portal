@@ -111,10 +111,8 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-
 		String ddmFormFieldTypeName = ParamUtil.getString(
 			actionRequest, "ddmFormFieldTypeName");
-
 		boolean facetable = ParamUtil.getBoolean(actionRequest, "facetable");
 		boolean skuContributor = ParamUtil.getBoolean(
 			actionRequest, "skuContributor");

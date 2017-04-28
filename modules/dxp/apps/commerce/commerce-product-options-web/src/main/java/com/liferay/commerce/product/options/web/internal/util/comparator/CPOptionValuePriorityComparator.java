@@ -39,12 +39,10 @@ public class CPOptionValuePriorityComparator
 
 	@Override
 	public int compare(
-		CPOptionValue productOptionValue1, CPOptionValue productOptionValue2) {
+		CPOptionValue cpOptionValue1, CPOptionValue cpOptionValue2) {
 
-		int priority1 = productOptionValue1.getPriority();
-		int priority2 = productOptionValue2.getPriority();
-
-		int value = Integer.compare(priority1, priority2);
+		int value = Integer.compare(
+			cpOptionValue1.getPriority(), cpOptionValue2.getPriority());
 
 		if (_ascending) {
 			return value;

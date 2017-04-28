@@ -36,12 +36,11 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	extends CPDefinitionOptionRelLocalServiceBaseImpl {
 
 	@Override
-	public CPDefinitionOptionRel
-			addCPDefinitionOptionRel(
-				long cpDefinitionId, long cpOptionId,
-				Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-				String ddmFormFieldTypeName, int priority, boolean facetable,
-				boolean skuContributor, ServiceContext serviceContext)
+	public CPDefinitionOptionRel addCPDefinitionOptionRel(
+			long cpDefinitionId, long cpOptionId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+			int priority, boolean facetable, boolean skuContributor,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition option rel
@@ -77,10 +76,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	@Override
-	public CPDefinitionOptionRel
-			addCPDefinitionOptionRel(
-				long cpDefinitionId, long cpOptionId,
-				ServiceContext serviceContext)
+	public CPDefinitionOptionRel addCPDefinitionOptionRel(
+			long cpDefinitionId, long cpOptionId, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPOption cpOption = cpOptionLocalService.getCPOption(cpOptionId);
@@ -94,10 +91,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public CPDefinitionOptionRel
-			deleteCPDefinitionOptionRel(
-				CPDefinitionOptionRel
-					cpDefinitionOptionRel)
+	public CPDefinitionOptionRel deleteCPDefinitionOptionRel(
+			CPDefinitionOptionRel cpDefinitionOptionRel)
 		throws PortalException {
 
 		// Commerce product definition option rel
@@ -119,9 +114,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	@Override
-	public CPDefinitionOptionRel
-			deleteCPDefinitionOptionRel(
-				long cpDefinitionOptionRelId)
+	public CPDefinitionOptionRel deleteCPDefinitionOptionRel(
+			long cpDefinitionOptionRelId)
 		throws PortalException {
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
@@ -189,12 +183,11 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	@Override
-	public CPDefinitionOptionRel
-			updateCPDefinitionOptionRel(
-				long cpDefinitionOptionRelId, long cpOptionId,
-				Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-				String ddmFormFieldTypeName, int priority, boolean facetable,
-				boolean skuContributor, ServiceContext serviceContext)
+	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
+			long cpDefinitionOptionRelId, long cpOptionId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String ddmFormFieldTypeName, int priority, boolean facetable,
+			boolean skuContributor, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition option rel

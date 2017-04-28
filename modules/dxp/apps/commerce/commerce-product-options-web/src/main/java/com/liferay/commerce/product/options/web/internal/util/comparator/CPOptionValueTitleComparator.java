@@ -40,10 +40,10 @@ public class CPOptionValueTitleComparator
 
 	@Override
 	public int compare(
-		CPOptionValue productOptionValue1, CPOptionValue productOptionValue2) {
+		CPOptionValue cpOptionValue1, CPOptionValue cpOptionValue2) {
 
-		String title1 = StringUtil.toLowerCase(productOptionValue1.getTitle());
-		String title2 = StringUtil.toLowerCase(productOptionValue2.getTitle());
+		String title1 = StringUtil.toLowerCase(cpOptionValue1.getTitle());
+		String title2 = StringUtil.toLowerCase(cpOptionValue2.getTitle());
 
 		int value = title1.compareTo(title2);
 

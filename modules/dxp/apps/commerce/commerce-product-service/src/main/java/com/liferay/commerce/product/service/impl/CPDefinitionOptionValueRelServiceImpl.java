@@ -33,10 +33,9 @@ public class CPDefinitionOptionValueRelServiceImpl
 	extends CPDefinitionOptionValueRelServiceBaseImpl {
 
 	@Override
-	public CPDefinitionOptionValueRel
-			addCPDefinitionOptionValueRel(
-				long cpDefinitionOptionRelId, Map<Locale, String> titleMap,
-				int priority, ServiceContext serviceContext)
+	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
+			long cpDefinitionOptionRelId, Map<Locale, String> titleMap,
+			int priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.checkCPDefinitionOptionRel(
@@ -48,10 +47,8 @@ public class CPDefinitionOptionValueRelServiceImpl
 	}
 
 	@Override
-	public CPDefinitionOptionValueRel
-			deleteCPDefinitionOptionValueRel(
-				CPDefinitionOptionValueRel
-					cpDefinitionOptionValueRel)
+	public CPDefinitionOptionValueRel deleteCPDefinitionOptionValueRel(
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
 		throws PortalException {
 
 		CPDefinitionPermission.checkCPDefinitionOptionValueRel(
@@ -63,9 +60,8 @@ public class CPDefinitionOptionValueRelServiceImpl
 	}
 
 	@Override
-	public CPDefinitionOptionValueRel
-			deleteCPDefinitionOptionValueRel(
-				long cpDefinitionOptionValueRelId)
+	public CPDefinitionOptionValueRel deleteCPDefinitionOptionValueRel(
+			long cpDefinitionOptionValueRelId)
 		throws PortalException {
 
 		CPDefinitionPermission.checkCPDefinitionOptionValueRel(
@@ -77,9 +73,8 @@ public class CPDefinitionOptionValueRelServiceImpl
 	}
 
 	@Override
-	public CPDefinitionOptionValueRel
-			fetchCPDefinitionOptionValueRel(
-				long cpDefinitionOptionValueRelId)
+	public CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRel(
+			long cpDefinitionOptionValueRelId)
 		throws PortalException {
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
@@ -96,9 +91,8 @@ public class CPDefinitionOptionValueRelServiceImpl
 	}
 
 	@Override
-	public CPDefinitionOptionValueRel
-			getCPDefinitionOptionValueRel(
-				long cpDefinitionOptionValueRelId)
+	public CPDefinitionOptionValueRel getCPDefinitionOptionValueRel(
+			long cpDefinitionOptionValueRelId)
 		throws PortalException {
 
 		CPDefinitionPermission.checkCPDefinitionOptionValueRel(
@@ -147,10 +141,9 @@ public class CPDefinitionOptionValueRelServiceImpl
 	}
 
 	@Override
-	public CPDefinitionOptionValueRel
-			updateCPDefinitionOptionValueRel(
-				long cpDefinitionOptionValueRelId, Map<Locale, String> titleMap,
-				int priority, ServiceContext serviceContext)
+	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
+			long cpDefinitionOptionValueRelId, Map<Locale, String> titleMap,
+			int priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.checkCPDefinitionOptionValueRel(

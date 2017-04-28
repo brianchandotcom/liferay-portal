@@ -37,11 +37,12 @@ public class SKUCombinationsIterator
 
 		_cpDefinitionOptionValueRels =
 			new CPDefinitionOptionValueRel[_combinationLength][];
-		_maxIndexes = new int[_combinationLength];
 		_currentIndexes = new int[_combinationLength];
+		_maxIndexes = new int[_combinationLength];
 
 		if (_combinationLength == 0) {
 			_hasNext = false;
+
 			return;
 		}
 
@@ -52,22 +53,22 @@ public class SKUCombinationsIterator
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>(
 			cpDefinitionOptionRelMap.keySet());
 
-		for (CPDefinitionOptionRel
-				cpDefinitionOptionRel :
-					cpDefinitionOptionRels) {
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				cpDefinitionOptionRels) {
 
 			_cpDefinitionOptionValueRels[valuesIndex++] =
 				cpDefinitionOptionRelMap.get(cpDefinitionOptionRel);
 		}
 
-		for (int i = 0; i < _combinationLength; ++i) {
+		for (int i = 0; i < _combinationLength; i++) {
 			if (_cpDefinitionOptionValueRels[i].length == 0) {
 				_hasNext = false;
+
 				return;
 			}
 
-			_maxIndexes[i] = _cpDefinitionOptionValueRels[i].length - 1;
 			_currentIndexes[i] = 0;
+			_maxIndexes[i] = _cpDefinitionOptionValueRels[i].length - 1;
 		}
 	}
 
@@ -83,9 +84,11 @@ public class SKUCombinationsIterator
 				"No more combinations are available");
 		}
 
-		final CPDefinitionOptionValueRel[] combination =
+		CPDefinitionOptionValueRel[] combination =
 			_getCombinationByCurrentIndexes();
+
 		_nextIndexesCombination();
+
 		return combination;
 	}
 
@@ -95,13 +98,11 @@ public class SKUCombinationsIterator
 			"Remove operation is not supported");
 	}
 
-	private CPDefinitionOptionValueRel[]
-		_getCombinationByCurrentIndexes() {
-
-		final CPDefinitionOptionValueRel[] combination =
+	private CPDefinitionOptionValueRel[] _getCombinationByCurrentIndexes() {
+		CPDefinitionOptionValueRel[] combination =
 			new CPDefinitionOptionValueRel[_combinationLength];
 
-		for (int i = 0; i < _combinationLength; ++i) {
+		for (int i = 0; i < _combinationLength; i++) {
 			combination[i] =
 				_cpDefinitionOptionValueRels[i][_currentIndexes[i]];
 		}
@@ -110,15 +111,14 @@ public class SKUCombinationsIterator
 	}
 
 	private void _nextIndexesCombination() {
-		for (int i = _combinationLength - 1; i >= 0; --i) {
+		for (int i = _combinationLength - 1; i >= 0; i--) {
 			if (_currentIndexes[i] < _maxIndexes[i]) {
-
 				++_currentIndexes[i];
+
 				return;
 			}
-			else {
-				_currentIndexes[i] = 0;
-			}
+
+			_currentIndexes[i] = 0;
 		}
 
 		_hasNext = false;

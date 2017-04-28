@@ -485,10 +485,9 @@ public class CPDefinitionLocalServiceImpl
 		return cpDefinitionLocalizations;
 	}
 
-	private CPDefinitionLocalization
-			_addCPDefinitionLocalizedFields(
-				long companyId, long cpDefinitionId, String title,
-				String description, String languageId)
+	private CPDefinitionLocalization _addCPDefinitionLocalizedFields(
+			long companyId, long cpDefinitionId, String title,
+			String description, String languageId)
 		throws PortalException {
 
 		CPDefinitionLocalization cpDefinitionLocalization =

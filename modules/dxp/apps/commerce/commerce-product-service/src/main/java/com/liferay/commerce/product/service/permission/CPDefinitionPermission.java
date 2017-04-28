@@ -67,8 +67,7 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 
 	public static void checkCPDefinitionOptionRel(
 			PermissionChecker permissionChecker,
-			CPDefinitionOptionRel
-				cpDefinitionOptionRel, String actionId)
+			CPDefinitionOptionRel cpDefinitionOptionRel, String actionId)
 		throws PortalException {
 
 		long cpDefinitionId = cpDefinitionOptionRel.getCPDefinitionId();
@@ -91,8 +90,8 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 
 	public static void checkCPDefinitionOptionValueRel(
 			PermissionChecker permissionChecker,
-			CPDefinitionOptionValueRel
-				cpDefinitionOptionValueRel, String actionId)
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel,
+			String actionId)
 		throws PortalException {
 
 		long cpDefinitionOptionRelId =
@@ -185,16 +184,14 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 
 	@Reference(unbind = "-")
 	protected void setCPDefinitionLocalService(
-		CPDefinitionLocalService
-			cpDefinitionLocalService) {
+		CPDefinitionLocalService cpDefinitionLocalService) {
 
 		_cpDefinitionLocalService = cpDefinitionLocalService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setCPDefinitionOptionRelLocalService(
-		CPDefinitionOptionRelLocalService
-			cpDefinitionOptionRelLocalService) {
+		CPDefinitionOptionRelLocalService cpDefinitionOptionRelLocalService) {
 
 		_cpDefinitionOptionRelLocalService = cpDefinitionOptionRelLocalService;
 	}
@@ -210,8 +207,7 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 
 	@Reference(unbind = "-")
 	protected void setCPInstanceLocalService(
-		CPInstanceLocalService
-			cpInstanceLocalService) {
+		CPInstanceLocalService cpInstanceLocalService) {
 
 		_cpInstanceLocalService = cpInstanceLocalService;
 	}

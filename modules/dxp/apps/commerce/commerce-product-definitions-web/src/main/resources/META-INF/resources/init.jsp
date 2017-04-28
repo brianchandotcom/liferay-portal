@@ -60,13 +60,11 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <%@ page import="java.util.Collections" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.HashSet" %><%@
-page import="java.util.List" %>
+page import="java.util.List" %><%@
+page import="java.util.Locale" %><%@
+page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
-
-<%@
-		page import="java.util.Locale" %><%@
-		page import="java.util.Set" %>
 
 <liferay-frontend:defineObjects />
 
@@ -75,9 +73,9 @@ page import="java.util.List" %>
 <portlet:defineObjects />
 
 <%
-	String redirect = ParamUtil.getString(request, "redirect");
+String redirect = ParamUtil.getString(request, "redirect");
 
-	String backURL = ParamUtil.getString(request, "backURL", redirect);
+String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-	String languageId = LanguageUtil.getLanguageId(locale);
+String languageId = LanguageUtil.getLanguageId(locale);
 %>

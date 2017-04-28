@@ -38,9 +38,9 @@ public class CPOptionNameComparator extends OrderByComparator<CPOption> {
 	}
 
 	@Override
-	public int compare(CPOption productOption1, CPOption productOption2) {
-		String name1 = StringUtil.toLowerCase(productOption1.getName());
-		String name2 = StringUtil.toLowerCase(productOption2.getName());
+	public int compare(CPOption cpOption1, CPOption cpOption2) {
+		String name1 = StringUtil.toLowerCase(cpOption1.getName());
+		String name2 = StringUtil.toLowerCase(cpOption2.getName());
 
 		int value = name1.compareTo(name2);
 

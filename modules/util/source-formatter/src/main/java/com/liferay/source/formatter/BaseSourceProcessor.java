@@ -440,7 +440,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			fileName, absolutePath, content, _genericSourceChecks);
 
 		content = _processSourceChecks(
-			fileName, absolutePath, content, _sourceChecks);
+			fileName, absolutePath, content, _sourceChecksList);
 
 		if (_isModulesFile(absolutePath)) {
 			content = _processSourceChecks(
@@ -604,9 +604,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private void _initSourceChecks() throws Exception {
-		_sourceChecks = getSourceChecks();
+		_sourceChecksList = getSourceChecks();
 
-		for (SourceCheck sourceCheck : _sourceChecks) {
+		for (SourceCheck sourceCheck : _sourceChecksList) {
 			_initSourceCheck(sourceCheck);
 		}
 	}
@@ -695,6 +695,51 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return pattern;
 	}
 
+	private String _processFileCheck(
+			FileCheck fileCheck, String fileName, String absolutePath,
+			String content)
+		throws Exception {
+
+		content = fileCheck.process(fileName, absolutePath, content);
+
+		for (SourceFormatterMessage sourceFormatterMessage :
+				fileCheck.getSourceFormatterMessages(fileName)) {
+
+			processMessage(fileName, sourceFormatterMessage);
+		}
+
+		return content;
+	}
+
+	private String _processJavaTermCheck(
+			JavaTermCheck javaTermCheck, JavaClass javaClass,
+			List<JavaClass> anonymousClasses, String fileName,
+			String absolutePath, String content)
+		throws Exception {
+
+		content = javaTermCheck.process(
+			fileName, absolutePath, javaClass, content);
+
+		for (SourceFormatterMessage sourceFormatterMessage :
+				javaTermCheck.getSourceFormatterMessages(fileName)) {
+
+			processMessage(fileName, sourceFormatterMessage);
+		}
+
+		for (JavaClass anonymousClass : anonymousClasses) {
+			content = javaTermCheck.process(
+				fileName, absolutePath, anonymousClass, content);
+
+			for (SourceFormatterMessage sourceFormatterMessage :
+					javaTermCheck.getSourceFormatterMessages(fileName)) {
+
+				processMessage(fileName, sourceFormatterMessage);
+			}
+		}
+
+		return content;
+	}
+
 	private String _processSourceChecks(
 			String fileName, String absolutePath, String content,
 			List<SourceCheck> sourceChecks)
@@ -711,20 +756,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			String newContent = null;
 
 			if (sourceCheck instanceof FileCheck) {
-				FileCheck fileCheck = (FileCheck)sourceCheck;
-
-				newContent = fileCheck.process(fileName, absolutePath, content);
-
-				for (SourceFormatterMessage sourceFormatterMessage :
-						sourceCheck.getSourceFormatterMessages(fileName)) {
-
-					processMessage(fileName, sourceFormatterMessage);
-				}
+				newContent = _processFileCheck(
+					(FileCheck)sourceCheck, fileName, absolutePath, content);
 			}
 			else if ((sourceCheck instanceof JavaTermCheck) &&
 					 (this instanceof JavaSourceProcessor)) {
-
-				JavaTermCheck javaTermCheck = (JavaTermCheck)sourceCheck;
 
 				if (javaClass == null) {
 					anonymousClasses = JavaClassParser.parseAnonymousClasses(
@@ -733,25 +769,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						fileName, content);
 				}
 
-				newContent = javaTermCheck.process(
-					fileName, absolutePath, javaClass, content);
-
-				for (SourceFormatterMessage sourceFormatterMessage :
-						sourceCheck.getSourceFormatterMessages(fileName)) {
-
-					processMessage(fileName, sourceFormatterMessage);
-				}
-
-				for (JavaClass anonymousClass : anonymousClasses) {
-					newContent = javaTermCheck.process(
-						fileName, absolutePath, anonymousClass, newContent);
-
-					for (SourceFormatterMessage sourceFormatterMessage :
-							sourceCheck.getSourceFormatterMessages(fileName)) {
-
-						processMessage(fileName, sourceFormatterMessage);
-					}
-				}
+				newContent = _processJavaTermCheck(
+					(JavaTermCheck)sourceCheck, javaClass, anonymousClasses,
+					fileName, absolutePath, content);
 			}
 
 			if (!newContent.equals(content)) {
@@ -776,7 +796,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private List<SourceCheck> _moduleSourceChecks = new ArrayList<>();
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private Properties _properties;
-	private List<SourceCheck> _sourceChecks = new ArrayList<>();
+	private List<SourceCheck> _sourceChecksList = new ArrayList<>();
 	private Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 

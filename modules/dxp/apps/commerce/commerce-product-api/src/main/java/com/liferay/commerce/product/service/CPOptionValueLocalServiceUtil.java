@@ -353,6 +353,11 @@ public class CPOptionValueLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static void deleteCPOptionValues(long cpOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCPOptionValues(cpOptionId);
+	}
+
 	public static CPOptionValueLocalService getService() {
 		return _serviceTracker.getService();
 	}

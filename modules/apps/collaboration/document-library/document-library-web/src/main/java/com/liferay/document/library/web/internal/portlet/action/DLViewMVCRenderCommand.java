@@ -68,18 +68,6 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 		return super.render(renderRequest, renderResponse);
 	}
 
-	@Reference(unbind = "-")
-	public void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
-	}
-
-	@Reference(unbind = "-")
-	public void setDLFolderLocalService(
-		DLFolderLocalService dlFolderLocalService) {
-
-		_dlFolderLocalService = dlFolderLocalService;
-	}
-
 	@Override
 	protected DLTrashUtil getDLTrashUtil() {
 		return _dlTrashUtil;
@@ -116,15 +104,13 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 			dlFolder.getRepositoryId(), dlFolder.getFolderId());
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLPortletToolbarContributor(
-		DLPortletToolbarContributor dlPortletToolbarContributor) {
-
-		_dlPortletToolbarContributor = dlPortletToolbarContributor;
-	}
-
+	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
 	private DLPortletToolbarContributor _dlPortletToolbarContributor;
 
 	@Reference

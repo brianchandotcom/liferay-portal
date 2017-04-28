@@ -150,22 +150,15 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 		return true;
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.document.library.web)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = resourceBundleLoader;
-	}
-
 	@Reference
 	private DLTrashUtil _dlTrashUtil;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.document.library.web)"
+	)
 	private ResourceBundleLoader _resourceBundleLoader;
 
 }

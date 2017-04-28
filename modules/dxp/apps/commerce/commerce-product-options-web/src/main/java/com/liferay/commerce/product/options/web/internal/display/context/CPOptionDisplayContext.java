@@ -24,15 +24,11 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import javax.portlet.ResourceRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,28 +43,10 @@ public class CPOptionDisplayContext extends BaseCPOptionsDisplayContext {
 			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker)
 		throws PortalException {
 
-		super(actionHelper, httpServletRequest, "rowIdsCPOption", "CPOption");
+		super(actionHelper, httpServletRequest, "CPOption");
 
 		_cpOptionService = cpOptionService;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-	}
-
-	public List<CPOption> getCommerceProductOptions(ResourceRequest request)
-		throws Exception {
-
-		String[] cpOptionIds = ParamUtil.getStringValues(
-			request, "rowIdsCPOption");
-
-		List<CPOption> cpOptions = new ArrayList<>();
-
-		for (String cpOptionId : cpOptionIds) {
-			CPOption cpOption = _cpOptionService.getCPOption(
-				Long.parseLong(cpOptionId));
-
-			cpOptions.add(cpOption);
-		}
-
-		return cpOptions;
 	}
 
 	public List<DDMFormFieldType> getDDMFormFieldTypes() {

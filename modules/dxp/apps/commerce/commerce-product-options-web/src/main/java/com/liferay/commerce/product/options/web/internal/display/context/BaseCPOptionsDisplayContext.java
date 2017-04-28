@@ -47,11 +47,10 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 
 	public BaseCPOptionsDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-		String rowCheckerIds, String portalPreferenceNamespace) {
+		String portalPreferenceNamespace) {
 
 		this.actionHelper = actionHelper;
 		this.httpServletRequest = httpServletRequest;
-		_rowCheckerIds = rowCheckerIds;
 		_portalPreferenceNamespace = portalPreferenceNamespace;
 
 		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
@@ -236,8 +235,6 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 		RowChecker rowChecker = new EmptyOnClickRowChecker(
 			liferayPortletResponse);
 
-		rowChecker.setRowIds(_rowCheckerIds);
-
 		_rowChecker = rowChecker;
 
 		return _rowChecker;
@@ -315,6 +312,5 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 	private String _orderByType;
 	private final String _portalPreferenceNamespace;
 	private RowChecker _rowChecker;
-	private final String _rowCheckerIds;
 
 }

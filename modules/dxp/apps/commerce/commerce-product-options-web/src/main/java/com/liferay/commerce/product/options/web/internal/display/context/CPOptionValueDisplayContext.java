@@ -38,9 +38,7 @@ public class CPOptionValueDisplayContext extends BaseCPOptionsDisplayContext {
 			CPOptionValueService cpOptionValueService)
 		throws PortalException {
 
-		super(
-			actionHelper, httpServletRequest, "rowIdsCPOptionValue",
-			"CPOptionValue");
+		super(actionHelper, httpServletRequest, "CPOptionValue");
 
 		_cpOptionValueService = cpOptionValueService;
 

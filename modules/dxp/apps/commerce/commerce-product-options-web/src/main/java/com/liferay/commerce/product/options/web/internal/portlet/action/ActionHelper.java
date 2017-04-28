@@ -78,7 +78,7 @@ public class ActionHelper {
 		throws Exception {
 
 		long[] cpOptionsIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIdsCPOption");
+			resourceRequest, "rowIds");
 
 		List<CPOption> cpOptions = new ArrayList<>();
 
@@ -124,7 +124,7 @@ public class ActionHelper {
 		throws Exception {
 
 		long[] cpOptionValuesIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIdsCPOptionValue");
+			resourceRequest, "rowIds");
 
 		List<CPOptionValue> cpOptionValues = new ArrayList<>();
 

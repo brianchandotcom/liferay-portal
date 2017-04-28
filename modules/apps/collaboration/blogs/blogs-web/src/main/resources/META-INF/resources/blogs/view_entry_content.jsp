@@ -301,6 +301,7 @@ String socialBookmarksDisplayPosition = blogsPortletInstanceConfiguration.social
 								className="<%= BlogsEntry.class.getName() %>"
 								classPK="<%= entry.getEntryId() %>"
 								contentTitle="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"
+								inTrash="<%= entry.isInTrash() %>"
 								reportedUserId="<%= entry.getUserId() %>"
 							/>
 						</div>

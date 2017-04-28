@@ -162,11 +162,17 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		</c:if>
 
 		<c:if test="<%= assetPublisherDisplayContext.isEnableFlags() %>">
+
+			<%
+			TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(assetRenderer.getClassName());
+			%>
+
 			<div class="asset-flag">
 				<liferay-flags:flags
 					className="<%= assetEntry.getClassName() %>"
 					classPK="<%= assetEntry.getClassPK() %>"
 					contentTitle="<%= title %>"
+					inTrash="<%= trashHandler.isInTrash(assetEntry.getClassPK()) %>"
 					reportedUserId="<%= assetRenderer.getUserId() %>"
 				/>
 			</div>

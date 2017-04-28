@@ -868,6 +868,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-popover', 'aui-tooltip', 'io-base', 'event-outside', 'liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-ddl-form-builder-rule-builder', 'liferay-portlet-base', 'liferay-util-window', 'querystring-parse']
+		requires: ['aui-popover', 'aui-tooltip', 'io-base', 'event-outside', 'liferay-alert', 'liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-ddl-form-builder-rule-builder', 'liferay-portlet-base', 'liferay-util-window', 'querystring-parse']
 	}
 );

@@ -1,0 +1,74 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<div class="publish-popover-content">
+	<div class="form-group">
+		<label><liferay-ui:message key="copy-url" /></label>
+		<div class="input-group">
+			<input class="form-control" id="<portlet:namespace />clipboard" readOnly type="text" value="<%= ddlFormAdminDisplayContext.getPublishedFormURL() %>" />
+
+			<div class="help-block"><liferay-ui:message key="copied-to-clipboard" /></div>
+
+			<span class="input-group-btn">
+				<button class="btn btn-default" data-clipboard data-target="#<portlet:namespace />clipboard" type="button">
+					<span class="publish-button-text">
+						<liferay-ui:message key="copy" />
+					</span>
+					<span class="publish-button-success-icon">
+						<svg class="lexicon-icon">
+							<use xlink:href="<%= ddlFormAdminDisplayContext.getLexiconIconsPath() %>check" />
+						</svg>
+					</span>
+				</button>
+			</span>
+		</div>
+	</div>
+</div>
+
+<aui:script require="metal-clipboard/src/Clipboard">
+	var A = AUI();
+
+	var clipboard = new metalClipboardSrcClipboard.default();
+
+	clipboard.on('success', function() {
+		var popoverContent = A.one('.publish-popover-content');
+
+		popoverContent.one('.form-group').addClass('has-success');
+		popoverContent.one('.form-group').removeClass('has-error');
+
+		popoverContent.one('.btn').addClass('btn-success');
+		popoverContent.one('.btn').removeClass('btn-danger');
+
+		popoverContent.one('.help-block').html('<liferay-ui:message key="copied-to-clipboard" />');
+	});
+
+	clipboard.on('error', function() {
+		var popoverContent = A.one('.publish-popover-content.view-popover');
+
+		popoverContent.one('.form-group').addClass('has-error');
+		popoverContent.one('.form-group').removeClass('has-success');
+
+		popoverContent.one('.btn').addClass('btn-danger');
+		popoverContent.one('.btn').removeClass('btn-success');
+
+		popoverContent.one('.help-block').html('<liferay-ui:message key="sorry-something-wrong-happened" />');
+		popoverContent.one('.publish-button-text').html('<liferay-ui:message key="retry" />');
+	});
+
+	Liferay.on('destroyPortlet', function() {
+		clipboard.dispose();
+	});
+</aui:script>

@@ -238,7 +238,7 @@ AUI.add(
 									node: A.one('.publish-icon'),
 									points: [A.WidgetPositionAlign.RC, A.WidgetPositionAlign.LC]
 								},
-								bodyContent: A.one('.publish-popover-content.edit-popover'),
+								bodyContent: A.one('.publish-popover-content'),
 								constrain: false,
 								cssClass: 'form-builder-publish-popover',
 								position: 'left',
@@ -265,7 +265,7 @@ AUI.add(
 						instance._publishPopover.after("visibleChange", function(event) {
 
 							if (event.prevVal) {
-								var popoverContent = A.one('.publish-popover-content.edit-popover');
+								var popoverContent = A.one('.publish-popover-content');
 
 								var formGroup = popoverContent.one('.form-group');
 
@@ -672,7 +672,7 @@ AUI.add(
 							return;
 						}
 
-						var clipboardInput = instance.one('#clipboardEdit');
+						var clipboardInput = instance.one('#clipboard');
 
 						clipboardInput.set('value', instance._createFormURL());
 

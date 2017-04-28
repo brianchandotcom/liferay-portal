@@ -60,30 +60,6 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 		</div>
 	</div>
 
-	<div class="edit-popover publish-popover-content">
-		<div class="form-group">
-			<label><liferay-ui:message key="copy-url" /></label>
-			<div class="input-group">
-				<input class="form-control" id="<portlet:namespace />clipboardEdit" readOnly type="text" value="<%= ddlFormAdminDisplayContext.getPublishedFormURL() %>" />
-
-				<div class="help-block"><liferay-ui:message key="copied-to-clipboard" /></div>
-
-				<span class="input-group-btn">
-					<button class="btn btn-default" data-clipboard data-target="#<portlet:namespace />clipboardEdit" type="button">
-						<span class="publish-button-text">
-							<liferay-ui:message key="copy" />
-						</span>
-						<span class="publish-button-success-icon">
-							<svg class="lexicon-icon">
-								<use xlink:href="<%= ddlFormAdminDisplayContext.getLexiconIconsPath() %>check" />
-							</svg>
-						</span>
-					</button>
-				</span>
-			</div>
-		</div>
-	</div>
-
 	<aui:form action="<%= saveRecordSetURL %>" cssClass="ddl-form-builder-form" enctype="multipart/form-data" method="post" name="editForm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />
@@ -362,39 +338,5 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 		};
 	</aui:script>
 
-	<aui:script require="metal-clipboard/src/Clipboard">
-		var A = AUI();
-
-		var editClipboard = new metalClipboardSrcClipboard.default();
-
-		editClipboard.on('success', function() {
-			var popoverContent = A.one('.publish-popover-content.edit-popover');
-
-			popoverContent.one('.form-group').addClass('has-success');
-			popoverContent.one('.form-group').removeClass('has-error');
-
-			popoverContent.one('.btn').addClass('btn-success');
-			popoverContent.one('.btn').removeClass('btn-danger');
-
-			popoverContent.one('.help-block').html('<liferay-ui:message key="copied-to-clipboard" />');
-			popoverContent.one('.publish-button-text').html('<liferay-ui:message key="Copy" />');
-		});
-
-		editClipboard.on('error', function() {
-			var popoverContent = A.one('.publish-popover-content.edit-popover');
-
-			popoverContent.one('.form-group').addClass('has-error');
-			popoverContent.one('.form-group').removeClass('has-success');
-
-			popoverContent.one('.btn').addClass('btn-danger');
-			popoverContent.one('.btn').removeClass('btn-success');
-
-			popoverContent.one('.help-block').html('<liferay-ui:message key="sorry-something-wrong-happened" />');
-			popoverContent.one('.publish-button-text').html('<liferay-ui:message key="retry" />');
-		});
-
-		Liferay.on('destroyPortlet', function() {
-			editClipboard.dispose();
-		});
-	</aui:script>
+	<%@ include file="/admin/copy_form_publish_url.jspf" %>
 </div>

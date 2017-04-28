@@ -1118,10 +1118,12 @@ public class UIItemsBuilder {
 
 		_trashEnabled = false;
 
-		if (_dlTrashUtil != null) {
-			_trashEnabled = _dlTrashUtil.isTrashEnabled(
-				_themeDisplay.getScopeGroupId(), _fileEntry.getRepositoryId());
+		if (_dlTrashUtil == null) {
+			return _trashEnabled;
 		}
+
+		_trashEnabled = _dlTrashUtil.isTrashEnabled(
+			_themeDisplay.getScopeGroupId(), _fileEntry.getRepositoryId());
 
 		return _trashEnabled;
 	}

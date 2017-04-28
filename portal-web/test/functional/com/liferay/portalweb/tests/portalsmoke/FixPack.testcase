@@ -1,0 +1,14 @@
+<definition component-name="portal-smoke">
+	<property name="portal.fixpack.release" value="true" />
+	<property name="testray.main.component.name" value="Smoke" />
+
+	<set-up>
+		<execute macro="SignIn#signInTestSetup" />
+	</set-up>
+
+	<command description="Ensures that a fix pack can be reverted." name="RevertFixPack" priority="5">
+		<property name="test.assert.warning.exceptions" value="true" />
+
+		<execute macro="SignOut#signOut" />
+	</command>
+</definition>

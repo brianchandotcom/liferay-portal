@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.commerce.product.render;
+package com.liferay.commerce.product.renderer;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Marco Leo
  */
 @ProviderType
-public interface CPDefinitionOptionRelRender {
+public interface CPDefinitionOptionRelRenderer {
 
 	public String render(
 		long cpDefinitionId, HttpServletRequest httpServletRequest,

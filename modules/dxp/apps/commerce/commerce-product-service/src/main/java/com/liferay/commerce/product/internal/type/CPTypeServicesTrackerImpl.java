@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.product.type.internal;
+package com.liferay.commerce.product.internal.type;
 
+import com.liferay.commerce.product.internal.type.comparator.CPTypeServiceWrapperDisplayOrderComparator;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
-import com.liferay.commerce.product.type.internal.util.comparator.CPTypeServiceWrapperDisplayOrderComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;

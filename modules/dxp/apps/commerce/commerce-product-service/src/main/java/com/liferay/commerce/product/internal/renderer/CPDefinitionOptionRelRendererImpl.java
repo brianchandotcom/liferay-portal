@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.product.render;
+package com.liferay.commerce.product.internal.renderer;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.renderer.CPDefinitionOptionRelRenderer;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
@@ -25,28 +26,27 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Portal;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  */
-@Component(
-	immediate = true,
-	service = CPDefinitionOptionRelRender.class
-)
-public class CPDefinitionOptionRelRenderImpl
-	implements CPDefinitionOptionRelRender {
+@Component(immediate = true)
+public class CPDefinitionOptionRelRendererImpl
+	implements CPDefinitionOptionRelRenderer {
 
 	@Override
 	public String render(long cpDefinitionId,
-						 HttpServletRequest httpServletRequest,
-						 HttpServletResponse httpServletResponse)
+						HttpServletRequest httpServletRequest,
+						HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		DDMForm ddmForm = new DDMForm();
@@ -57,56 +57,58 @@ public class CPDefinitionOptionRelRenderImpl
 			_cpDefinitionOptionRelService.
 				getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
 
-		for(CPDefinitionOptionRel cpDefinitionOptionRel
-			: cpDefinitionOptionRels){
+		for (CPDefinitionOptionRel cpDefinitionOptionRel
+			: cpDefinitionOptionRels) {
 
 			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 				cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
 
-			DDMFormField ddmFormField = new DDMFormField(String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()),cpDefinitionOptionRel.getDDMFormFieldTypeName());
+			DDMFormField ddmFormField = new DDMFormField(
+				String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()),
+				cpDefinitionOptionRel.getDDMFormFieldTypeName());
 
-			if(cpDefinitionOptionValueRels.size() > 0){
-
+			if (cpDefinitionOptionValueRels.size() > 0) {
 				DDMFormFieldOptions options = new DDMFormFieldOptions();
 
-				for(CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels){
-					options.addOptionLabel(String.valueOf(cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId()), locale , cpDefinitionOptionValueRel.getTitle(locale));
+				for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+						cpDefinitionOptionValueRels) {
+
+					options.addOptionLabel(
+						String.valueOf(cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId()),
+						locale, cpDefinitionOptionValueRel.getTitle(locale));
 				}
 
 				ddmFormField.setDDMFormFieldOptions(options);
-
 			}
 
 			LocalizedValue locval = new LocalizedValue(locale);
 
-			locval.addString(locale,cpDefinitionOptionRel.getName(locale));
+			locval.addString(locale, cpDefinitionOptionRel.getName(locale));
 
 			ddmFormField.setLabel(locval);
+
 			ddmFormField.setRequired(true);
 
 			ddmForm.addDDMFormField(ddmFormField);
 		}
-
-
 
 		DDMFormRenderingContext context = new DDMFormRenderingContext();
 
 		context.setLocale(locale);
 		context.setHttpServletRequest(httpServletRequest);
 		context.setHttpServletResponse(httpServletResponse);
-		context.
-			setContainerId("prodcut-options-" + String.valueOf(cpDefinitionId));
+		context.setContainerId("options");
 
-		String html = _ddmFormRenderer.render(ddmForm,context);
+		String html = _ddmFormRenderer.render(ddmForm, context);
 
 		return html;
 	}
 
 	@Reference
-	private DDMFormRenderer _ddmFormRenderer;
+	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 
 	@Reference
-	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
+	private DDMFormRenderer _ddmFormRenderer;
 
 	@Reference
 	private Portal _portal;

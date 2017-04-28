@@ -26,7 +26,7 @@ if (cpDefinition != null) {
 }
 %>
 
-<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="categorizations" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="categorization" />
 
 <aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 

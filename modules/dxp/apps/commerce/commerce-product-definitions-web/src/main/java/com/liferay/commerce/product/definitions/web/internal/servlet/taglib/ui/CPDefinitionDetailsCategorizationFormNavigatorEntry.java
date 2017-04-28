@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {"form.navigator.entry.order:Integer=20"},
 	service = FormNavigatorEntry.class
 )
-public class CPDefinitionDetailsCategorizationsFormNavigatorEntry
+public class CPDefinitionDetailsCategorizationFormNavigatorEntry
 	extends BaseJSPFormNavigatorEntry<CPDefinition>
 	implements FormNavigatorEntry<CPDefinition> {
 
@@ -48,17 +48,17 @@ public class CPDefinitionDetailsCategorizationsFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "categorizations";
+		return "categorization";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "categorizations");
+		return LanguageUtil.get(locale, "categorization");
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/product_definition/categorizations.jsp";
+		return "/product_definition/categorization.jsp";
 	}
 
 }

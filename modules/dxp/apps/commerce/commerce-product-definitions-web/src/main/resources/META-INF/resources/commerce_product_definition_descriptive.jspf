@@ -37,7 +37,7 @@
 
 	<h5>
 		<a href="<%= rowURL %>">
-			<%= HtmlUtil.escape(cpDefinition.getTitle(themeDisplay.getLanguageId())) %>
+			<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
 		</a>
 	</h5>
 

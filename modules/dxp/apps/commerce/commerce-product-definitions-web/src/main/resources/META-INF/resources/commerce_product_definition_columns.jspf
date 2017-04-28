@@ -18,7 +18,7 @@
 	cssClass="table-cell-content"
 	href="<%= rowURL %>"
 	name="product-name"
-	value="<%= HtmlUtil.escape(cpDefinition.getTitle(themeDisplay.getLanguageId())) %>"
+	value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
 />
 
 <liferay-ui:search-container-column-text

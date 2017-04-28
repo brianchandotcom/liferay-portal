@@ -43,7 +43,7 @@ if (ListUtil.isEmpty(cpDefinitions)) {
 				</li>
 			</ul>
 
-			<h4><%= HtmlUtil.escape(cpDefinition.getTitle(themeDisplay.getLanguageId())) %></h4>
+			<h4><%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %></h4>
 		</div>
 
 		<aui:nav-bar markupView="lexicon">

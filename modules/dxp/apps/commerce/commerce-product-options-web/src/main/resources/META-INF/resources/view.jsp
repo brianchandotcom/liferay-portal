@@ -96,8 +96,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							<%
 							PortletURL rowURL = renderResponse.createRenderURL();
 
-							rowURL.setParameter(Constants.CMD, Constants.UPDATE);
 							rowURL.setParameter("mvcRenderCommandName", "editProductOption");
+							rowURL.setParameter(Constants.CMD, Constants.UPDATE);
 							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cpOptionId", String.valueOf(cpOption.getCPOptionId()));
 							%>
@@ -137,5 +137,5 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-product-option") %>' url="<%= addProductOptionURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-option") %>' url="<%= addProductOptionURL.toString() %>" />
 </liferay-frontend:add-menu>

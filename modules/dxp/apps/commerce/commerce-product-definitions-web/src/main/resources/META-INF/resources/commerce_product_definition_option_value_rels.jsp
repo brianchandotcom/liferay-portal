@@ -38,7 +38,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-	renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getName(locale));
+renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getName(locale));
 %>
 
 <%@ include file="/commerce_product_definition_option_rel_navbar.jspf" %>

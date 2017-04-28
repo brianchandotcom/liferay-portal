@@ -181,7 +181,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 </aui:form>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addCommerceProducOption" title='<%= LanguageUtil.get(request, "add-product-option") %>' url="javascript:;" />
+	<liferay-frontend:add-menu-item id="addCommerceProducOption" title='<%= LanguageUtil.get(request, "add-option") %>' url="javascript:;" />
 </liferay-frontend:add-menu>
 
 <aui:script>

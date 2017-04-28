@@ -162,7 +162,7 @@ renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-prod
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-product-option-value") %>' url="<%= addProductOptionValueURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-option-value") %>' url="<%= addProductOptionValueURL.toString() %>" />
 </liferay-frontend:add-menu>
 
 <aui:script>

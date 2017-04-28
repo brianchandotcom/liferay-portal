@@ -60,7 +60,6 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 		</c:if>
 
 		<liferay-frontend:management-bar-display-buttons
-			disabled=""
 			displayViews='<%= new String[] {"list"} %>'
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= cpDefinitionOptionRelDisplayContext.getDisplayStyle() %>"

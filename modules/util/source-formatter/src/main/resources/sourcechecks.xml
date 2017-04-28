@@ -69,7 +69,9 @@
 
 		<!-- Other checks -->
 
-		<check name="CopyrightCheck" />
+		<check name="CopyrightCheck">
+			<property name="copyrightFileName" value="copyright.txt" />
+		</check>
 		<check name="EmptyArrayCheck" />
 		<check name="EmptyCollectionCheck" />
 		<check name="GetterUtilCheck" />
@@ -113,7 +115,9 @@
 		<!-- Module checks -->
 
 		<check name="JavaModuleExtendedObjectClassDefinitionCheck" />
-		<check name="JavaModuleIllegalImportsCheck" />
+		<check name="JavaModuleIllegalImportsCheck">
+			<property name="checkRegistryInTestClasses" value="false" />
+		</check>
 		<check name="JavaModuleInternalImportsCheck" />
 		<check name="JavaModuleServiceProxyFactoryCheck" />
 		<check name="JavaModuleTestCheck" />
@@ -164,7 +168,9 @@
 
 		<!-- Checks that should come first -->
 
-		<check name="JSONWhitespaceCheck" />
+		<check name="JSONWhitespaceCheck">
+			<property name="allowLeadingSpaces" value="true" />
+		</check>
 
 		<!-- Other checks -->
 
@@ -179,7 +185,9 @@
 
 		<!-- Other checks -->
 
-		<check name="CopyrightCheck" />
+		<check name="CopyrightCheck">
+			<property name="copyrightFileName" value="copyright.txt" />
+		</check>
 		<check name="EmptyArrayCheck" />
 		<check name="EmptyCollectionCheck" />
 		<check name="GetterUtilCheck" />
@@ -239,13 +247,17 @@
 		<check name="LanguageKeysCheck" />
 	</source-processor>
 	<source-processor name="MarkdownSourceProcessor">
-		<check name="WhitespaceCheck" />
+		<check name="WhitespaceCheck">
+			<property name="allowLeadingSpaces" value="true" />
+		</check>
 	</source-processor>
 	<source-processor name="PropertiesSourceProcessor">
 
 		<!-- Checks that should come first -->
 
-		<check name="PropertiesWhitespaceCheck" />
+		<check name="PropertiesWhitespaceCheck">
+			<property name="allowLeadingSpaces" value="true" />
+		</check>
 
 		<!-- Other checks -->
 

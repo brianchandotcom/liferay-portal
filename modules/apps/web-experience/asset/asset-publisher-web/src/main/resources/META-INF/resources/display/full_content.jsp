@@ -166,7 +166,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			<%
 			TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(assetRenderer.getClassName());
 
-			boolean isInTrash = trashHandler.isInTrash(assetEntry.getClassPK());
+			boolean inTrash = trashHandler.isInTrash(assetEntry.getClassPK());
 			%>
 
 			<div class="asset-flag">
@@ -174,8 +174,8 @@ request.setAttribute("view.jsp-showIconLabel", true);
 					className="<%= assetEntry.getClassName() %>"
 					classPK="<%= assetEntry.getClassPK() %>"
 					contentTitle="<%= title %>"
-					enabled="<%= !isInTrash %>"
-					message='<%= isInTrash ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : StringPool.BLANK %>'
+					enabled="<%= !inTrash %>"
+					message='<%= inTrash ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : StringPool.BLANK %>'
 					reportedUserId="<%= assetRenderer.getUserId() %>"
 				/>
 			</div>

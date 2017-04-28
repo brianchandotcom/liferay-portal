@@ -74,6 +74,11 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		cpOptionPersistence.remove(cpOption);
 
+		// Commerce product option values
+
+		cpOptionValueLocalService.deleteCPOptionValues(
+			cpOption.getCPOptionId());
+
 		// Resources
 
 		resourceLocalService.deleteResource(

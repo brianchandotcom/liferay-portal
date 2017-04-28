@@ -403,6 +403,72 @@ public class CPDefinitionOptionRelServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
+		HttpPrincipal httpPrincipal, long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
+					"getSkuContributorCPDefinitionOptionRels",
+					_getSkuContributorCPDefinitionOptionRelsParameterTypes10);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpDefinitionId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getSkuContributorCPDefinitionOptionRelCount(
+		HttpPrincipal httpPrincipal, long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
+					"getSkuContributorCPDefinitionOptionRelCount",
+					_getSkuContributorCPDefinitionOptionRelCountParameterTypes11);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpDefinitionId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CPDefinitionOptionRelServiceHttp.class);
 	private static final Class<?>[] _addCPDefinitionOptionRelParameterTypes0 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
@@ -439,4 +505,8 @@ public class CPDefinitionOptionRelServiceHttp {
 			java.lang.String.class, int.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
+	private static final Class<?>[] _getSkuContributorCPDefinitionOptionRelsParameterTypes10 =
+		new Class[] { long.class };
+	private static final Class<?>[] _getSkuContributorCPDefinitionOptionRelCountParameterTypes11 =
+		new Class[] { long.class };
 }

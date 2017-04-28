@@ -545,7 +545,7 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 
 			cpDefinitionLocalization.setCompanyId(cpDefinition.getCompanyId());
 
-			cpDefinitionLocalization.setCpDefinitionPK(cpDefinition.getPrimaryKey());
+			cpDefinitionLocalization.setCPDefinitionPK(cpDefinition.getPrimaryKey());
 			cpDefinitionLocalization.setLanguageId(languageId);
 		}
 
@@ -633,7 +633,7 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 
 			cpDefinitionLocalization.setCompanyId(cpDefinition.getCompanyId());
 
-			cpDefinitionLocalization.setCpDefinitionPK(cpDefinition.getPrimaryKey());
+			cpDefinitionLocalization.setCPDefinitionPK(cpDefinition.getPrimaryKey());
 			cpDefinitionLocalization.setLanguageId(languageId);
 
 			cpDefinitionLocalization.setTitle(localizedValues[0]);

@@ -257,5 +257,34 @@ public class CPDefinitionOptionRelServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap[] getSkuContributorCPDefinitionOptionRels(
+		long cpDefinitionId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> returnValue =
+				CPDefinitionOptionRelServiceUtil.getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
+
+			return com.liferay.commerce.product.model.CPDefinitionOptionRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getSkuContributorCPDefinitionOptionRelCount(
+		long cpDefinitionId) throws RemoteException {
+		try {
+			int returnValue = CPDefinitionOptionRelServiceUtil.getSkuContributorCPDefinitionOptionRelCount(cpDefinitionId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CPDefinitionOptionRelServiceSoap.class);
 }

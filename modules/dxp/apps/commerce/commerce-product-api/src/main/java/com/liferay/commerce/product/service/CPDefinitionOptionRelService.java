@@ -95,6 +95,10 @@ public interface CPDefinitionOptionRelService extends BaseService {
 	public int getCPDefinitionOptionRelsCount(long cpDefinitionId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSkuContributorCPDefinitionOptionRelCount(long cpDefinitionId)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -111,4 +115,8 @@ public interface CPDefinitionOptionRelService extends BaseService {
 		long cpDefinitionId, int start, int end,
 		OrderByComparator<CPDefinitionOptionRel> orderByComparator)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
+		long cpDefinitionId) throws PortalException;
 }

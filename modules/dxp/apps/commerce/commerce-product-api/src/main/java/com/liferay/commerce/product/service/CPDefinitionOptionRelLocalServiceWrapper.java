@@ -238,6 +238,11 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 		return _cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(cpDefinitionId);
 	}
 
+	@Override
+	public int getSkuContributorCPDefinitionOptionRelCount(long cpDefinitionId) {
+		return _cpDefinitionOptionRelLocalService.getSkuContributorCPDefinitionOptionRelCount(cpDefinitionId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

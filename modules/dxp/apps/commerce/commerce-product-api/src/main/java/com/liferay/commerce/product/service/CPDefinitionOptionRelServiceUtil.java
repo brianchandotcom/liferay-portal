@@ -107,6 +107,13 @@ public class CPDefinitionOptionRelServiceUtil {
 		return getService().getCPDefinitionOptionRelsCount(cpDefinitionId);
 	}
 
+	public static int getSkuContributorCPDefinitionOptionRelCount(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getSkuContributorCPDefinitionOptionRelCount(cpDefinitionId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -129,6 +136,13 @@ public class CPDefinitionOptionRelServiceUtil {
 		return getService()
 				   .getCPDefinitionOptionRels(cpDefinitionId, start, end,
 			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
 	}
 
 	public static CPDefinitionOptionRelService getService() {

@@ -213,6 +213,9 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionOptionRelsCount(long cpDefinitionId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSkuContributorCPDefinitionOptionRelCount(long cpDefinitionId);
+
 	/**
 	* Returns the OSGi service identifier.
 	*

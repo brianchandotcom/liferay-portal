@@ -36,6 +36,9 @@ public class ResourceBundleLoaderAnalyzerPlugin implements AnalyzerPlugin {
 		return modified;
 	}
 
+	protected static final String LIFERAY_RESOURCE_BUNDLE =
+		"liferay.resource.bundle";
+
 	private final AnalyzerPlugin[] _analyzerPlugins = new AnalyzerPlugin[] {
 		new AggregateResourceBundleLoaderAnalyzerPlugin(),
 		new ProvidesResourceBundleLoaderAnalyzerPlugin()

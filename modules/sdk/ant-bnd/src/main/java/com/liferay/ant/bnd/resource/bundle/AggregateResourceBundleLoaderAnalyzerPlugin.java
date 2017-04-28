@@ -103,7 +103,8 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 
 		Parameters parameters = new Parameters();
 
-		parameters.add("liferay.resource.bundle", attrs);
+		parameters.add(
+			ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE, attrs);
 
 		provideCapabilityHeaders.mergeWith(parameters, false);
 
@@ -127,7 +128,9 @@ public class AggregateResourceBundleLoaderAnalyzerPlugin
 
 			attrs.put("filter:", filter.toString());
 
-			parameters.add("liferay.resource.bundle", attrs);
+			parameters.add(
+				ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE,
+				attrs);
 		}
 
 		requireCapabilityHeaders.mergeWith(parameters, false);

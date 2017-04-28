@@ -46,10 +46,15 @@ public class ProvidesResourceBundleLoaderAnalyzerPlugin
 		attrs.put("bundle.symbolic.name", analyzer.getBsn());
 		attrs.put("resource.bundle.base.name", "content.Language");
 
-		parameters.add(_LIFERAY_RESOURCE_BUNDLE, attrs);
+		parameters.add(
+			ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE, attrs);
 
-		if (provideCapabilityHeaders.get(_LIFERAY_RESOURCE_BUNDLE) != null) {
-			provideCapabilityHeaders.add(_LIFERAY_RESOURCE_BUNDLE, attrs);
+		if (provideCapabilityHeaders.containsKey(
+				ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE)) {
+
+			provideCapabilityHeaders.add(
+				ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE,
+				attrs);
 		}
 		else {
 			provideCapabilityHeaders.mergeWith(parameters, false);
@@ -60,8 +65,5 @@ public class ProvidesResourceBundleLoaderAnalyzerPlugin
 
 		return true;
 	}
-
-	private static final String _LIFERAY_RESOURCE_BUNDLE =
-		"liferay.resource.bundle";
 
 }

@@ -28,7 +28,7 @@
 		</if>
 	</tear-down>
 
-	<command name="CannotAddNullTag" priority="4">
+	<command name="CannotAddEmptyTag" priority="4">
 		<execute macro="Tag#addWithNullTitleCP">
 			<var name="tagName" value=" " />
 		</execute>

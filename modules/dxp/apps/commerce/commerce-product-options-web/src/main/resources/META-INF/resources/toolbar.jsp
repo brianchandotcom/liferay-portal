@@ -56,5 +56,21 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId", "cp
 				label="info"
 			/>
 		</c:if>
+
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPOptions();" %>' icon="trash" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
+
+<aui:script>
+	function <portlet:namespace />deleteCPOptions() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-options") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.attr('method', 'post');
+			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+			form.fm('deleteCPOptionIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			submitForm(form, '<portlet:actionURL name="editProductOption" />');
+		}
+	}
+</aui:script>

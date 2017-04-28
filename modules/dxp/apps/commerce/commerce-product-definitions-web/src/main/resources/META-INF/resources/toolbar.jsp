@@ -76,7 +76,6 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 			form.fm('deleteCPDefinitionIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			console.log('CIAO ' + Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 			submitForm(form, '<portlet:actionURL name="editProductDefinition" />');
 		}
 	}

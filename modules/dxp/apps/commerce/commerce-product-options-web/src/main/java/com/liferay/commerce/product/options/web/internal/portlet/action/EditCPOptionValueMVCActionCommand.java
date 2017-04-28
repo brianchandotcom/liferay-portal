@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -50,13 +51,26 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCPOptionValueMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteCPOptionValue(ActionRequest actionRequest)
+	protected void deleteCPOptionValues(ActionRequest actionRequest)
 		throws Exception {
+
+		long[] deleteCPOptionValueIds = null;
 
 		long cpOptionValueId = ParamUtil.getLong(
 			actionRequest, "cpOptionValueId");
 
-		_cpOptionValueService.deleteCPOptionValue(cpOptionValueId);
+		if (cpOptionValueId > 0) {
+			deleteCPOptionValueIds = new long[] {cpOptionValueId};
+		}
+		else {
+			deleteCPOptionValueIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteCPOptionValueIds"),
+				0L);
+		}
+
+		for (long deleteCPOptionValueId : deleteCPOptionValueIds) {
+			_cpOptionValueService.deleteCPOptionValue(deleteCPOptionValueId);
+		}
 	}
 
 	@Override
@@ -68,7 +82,7 @@ public class EditCPOptionValueMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteCPOptionValue(actionRequest);
+				deleteCPOptionValues(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {

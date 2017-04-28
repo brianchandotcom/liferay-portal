@@ -44,7 +44,7 @@ portletDisplay.setURLBack(backURL);
 <%@ include file="/commerce_product_definition_option_rel_navbar.jspf" %>
 
 <liferay-frontend:management-bar
-	includeCheckBox="<%= false %>"
+	includeCheckBox="<%= true %>"
 	searchContainerId="cpDefinitionOptionValueRels"
 >
 	<liferay-frontend:management-bar-buttons>
@@ -84,6 +84,8 @@ portletDisplay.setURLBack(backURL);
 				label="info"
 			/>
 		</c:if>
+
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPDefinitionOptionValueRels();" %>' icon="trash" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -107,7 +109,9 @@ portletDisplay.setURLBack(backURL);
 <div class="sidenav-content">
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="deleteCPDefinitionOptionValueRelIds" type="hidden" />
 
 	<div class="product-definition-option-rels-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
@@ -161,3 +165,17 @@ portletDisplay.setURLBack(backURL);
 <liferay-frontend:add-menu>
 	<liferay-frontend:add-menu-item title="add-option-value" url="<%= addProductDefinitionOptionValueRelURL.toString() %>" />
 </liferay-frontend:add-menu>
+
+<aui:script>
+	function <portlet:namespace />deleteCPDefinitionOptionValueRels() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-option-values") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.attr('method', 'post');
+			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+			form.fm('deleteCPDefinitionOptionValueRelIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			submitForm(form, '<portlet:actionURL name="editProductDefinitionOptionValueRel" />');
+		}
+	}
+</aui:script>

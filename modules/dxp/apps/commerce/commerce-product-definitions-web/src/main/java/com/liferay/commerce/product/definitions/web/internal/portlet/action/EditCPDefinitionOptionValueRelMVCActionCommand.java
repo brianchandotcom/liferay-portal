@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -48,16 +49,32 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCPDefinitionOptionValueRelMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCPDefinitionOptionValueRel(ActionRequest actionRequest)
+	protected void deleteCPDefinitionOptionValueRels(
+			ActionRequest actionRequest)
 		throws Exception {
+
+		long[] deleteCPDefinitionOptionValueRelIds = null;
 
 		long cpDefinitionOptionValueRelId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionOptionValueRelId");
 
-		// Delete commerce product definition option value rel
+		if (cpDefinitionOptionValueRelId > 0) {
+			deleteCPDefinitionOptionValueRelIds =
+				new long[] {cpDefinitionOptionValueRelId};
+		}
+		else {
+			deleteCPDefinitionOptionValueRelIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "deleteCPDefinitionOptionValueRelIds"),
+				0L);
+		}
 
-		_cpDefinitionOptionValueRelService.deleteCPDefinitionOptionValueRel(
-			cpDefinitionOptionValueRelId);
+		for (long deleteCPDefinitionOptionValueRelId :
+				deleteCPDefinitionOptionValueRelIds) {
+
+			_cpDefinitionOptionValueRelService.deleteCPDefinitionOptionValueRel(
+				deleteCPDefinitionOptionValueRelId);
+		}
 	}
 
 	@Override
@@ -72,7 +89,7 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 				updateCPDefinitionOptionValueRel(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCPDefinitionOptionValueRel(actionRequest);
+				deleteCPDefinitionOptionValueRels(actionRequest);
 			}
 		}
 		catch (Exception e) {

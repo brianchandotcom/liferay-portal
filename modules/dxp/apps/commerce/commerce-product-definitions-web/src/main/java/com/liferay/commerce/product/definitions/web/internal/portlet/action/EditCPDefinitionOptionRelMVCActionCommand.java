@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -48,14 +49,31 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCPDefinitionOptionRelMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCPDefinitionOptionRel(ActionRequest actionRequest)
+	protected void deleteCPDefinitionOptionRels(ActionRequest actionRequest)
 		throws Exception {
+
+		long[] deleteCPDefinitionOptionRelIds = null;
 
 		long cpDefinitionOptionRelId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionOptionRelId");
 
-		_cpDefinitionOptionRelService.deleteCPDefinitionOptionRel(
-			cpDefinitionOptionRelId);
+		if (cpDefinitionOptionRelId > 0) {
+			deleteCPDefinitionOptionRelIds =
+				new long[] {cpDefinitionOptionRelId};
+		}
+		else {
+			deleteCPDefinitionOptionRelIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "deleteCPDefinitionOptionRelIds"),
+				0L);
+		}
+
+		for (long deleteCPDefinitionOptionRelId :
+				deleteCPDefinitionOptionRelIds) {
+
+			_cpDefinitionOptionRelService.deleteCPDefinitionOptionRel(
+				deleteCPDefinitionOptionRelId);
+		}
 	}
 
 	@Override
@@ -70,7 +88,7 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 				updateCPDefinitionOptionRel(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCPDefinitionOptionRel(actionRequest);
+				deleteCPDefinitionOptionRels(actionRequest);
 			}
 		}
 		catch (Exception e) {

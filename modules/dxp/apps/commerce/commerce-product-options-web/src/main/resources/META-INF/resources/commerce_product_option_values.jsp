@@ -48,7 +48,7 @@ renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-prod
 <%@ include file="/commerce_product_option_navbar.jspf" %>
 
 <liferay-frontend:management-bar
-	includeCheckBox="<%= false %>"
+	includeCheckBox="<%= true %>"
 	searchContainerId="cpOptionValues"
 >
 	<liferay-frontend:management-bar-buttons>
@@ -87,6 +87,8 @@ renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-prod
 				label="info"
 			/>
 		</c:if>
+
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPOptionValues();" %>' icon="trash" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -109,7 +111,9 @@ renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-prod
 
 		<div class="sidenav-content">
 			<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+				<aui:input name="<%= Constants.CMD %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+				<aui:input name="deleteCPOptionValueIds" type="hidden" />
 
 				<div class="product-option-values-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
@@ -160,3 +164,17 @@ renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-prod
 <liferay-frontend:add-menu>
 	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-product-option-value") %>' url="<%= addProductOptionValueURL.toString() %>" />
 </liferay-frontend:add-menu>
+
+<aui:script>
+	function <portlet:namespace />deleteCPOptionValues() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-option-values") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.attr('method', 'post');
+			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+			form.fm('deleteCPOptionValueIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			submitForm(form, '<portlet:actionURL name="editProductOptionValue" />');
+		}
+	}
+</aui:script>

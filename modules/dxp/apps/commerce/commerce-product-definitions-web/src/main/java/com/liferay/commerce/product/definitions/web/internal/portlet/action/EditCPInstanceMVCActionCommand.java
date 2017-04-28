@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -57,12 +58,24 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		_cpInstanceService.buildCPInstances(cpDefinitionId, serviceContext);
 	}
 
-	protected void deleteCPInstance(ActionRequest actionRequest)
+	protected void deleteCPInstances(ActionRequest actionRequest)
 		throws Exception {
+
+		long[] deleteCPInstanceIds = null;
 
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 
-		_cpInstanceService.deleteCPInstance(cpInstanceId);
+		if (cpInstanceId > 0) {
+			deleteCPInstanceIds = new long[] {cpInstanceId};
+		}
+		else {
+			deleteCPInstanceIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteCPInstanceIds"), 0L);
+		}
+
+		for (long deleteCPInstanceId : deleteCPInstanceIds) {
+			_cpInstanceService.deleteCPInstance(deleteCPInstanceId);
+		}
 	}
 
 	@Override
@@ -74,7 +87,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteCPInstance(actionRequest);
+				deleteCPInstances(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
 				autoGenerateCPInstances(actionRequest);

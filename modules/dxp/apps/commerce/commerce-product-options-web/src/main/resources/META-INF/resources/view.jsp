@@ -77,6 +77,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 		<div class="sidenav-content">
 			<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+				<aui:input name="<%= Constants.CMD %>" type="hidden" />
+				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+				<aui:input name="deleteCPOptionIds" type="hidden" />
+
 				<div class="product-options-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
 						id="cpOptions"

@@ -52,7 +52,7 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-
 <%@ include file="/commerce_product_definition_navbar.jspf" %>
 
 <liferay-frontend:management-bar
-	includeCheckBox="<%= false %>"
+	includeCheckBox="<%= true %>"
 	searchContainerId="cpInstances"
 >
 	<liferay-frontend:management-bar-buttons>
@@ -91,6 +91,7 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-
 				label="info"
 			/>
 		</c:if>
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPInstances();" %>' icon="trash" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -113,7 +114,9 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-
 
 <div class="sidenav-content">
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="deleteCPInstanceIds" type="hidden" />
 
 	<div class="product-skus-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
@@ -168,3 +171,17 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-
 	<liferay-frontend:add-menu-item id="addSkuButton" title='<%= LanguageUtil.get(request, "add-sku") %>' url="javascript:;" />
 	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "generate-all-possible-sku-combinations") %>' url="<%= addProductDefinitionURL.toString() %>" />
 </liferay-frontend:add-menu>
+
+<aui:script>
+	function <portlet:namespace />deleteCPInstances() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-skus") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.attr('method', 'post');
+			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+			form.fm('deleteCPInstanceIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			submitForm(form, '<portlet:actionURL name="editProductInstance" />');
+		}
+	}
+</aui:script>

@@ -48,7 +48,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 <%@ include file="/commerce_product_definition_navbar.jspf" %>
 
 <liferay-frontend:management-bar
-	includeCheckBox="<%= false %>"
+	includeCheckBox="<%= true %>"
 	searchContainerId="cpDefinitionOptionRels"
 >
 	<liferay-frontend:management-bar-buttons>
@@ -88,6 +88,8 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 				label="info"
 			/>
 		</c:if>
+
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPDefinitionOptionRels();" %>' icon="trash" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -111,7 +113,9 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 <div class="sidenav-content">
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="deleteCPDefinitionOptionRelIds" type="hidden" />
 
 	<div class="product-definition-option-rels-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
@@ -133,21 +137,21 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						name="facetable"
-						property="facetable"
+					cssClass="table-cell-content"
+					name="facetable"
+					property="facetable"
 				/>
 
 				<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						name="sku-contributor"
-						property="skuContributor"
+					cssClass="table-cell-content"
+					name="sku-contributor"
+					property="skuContributor"
 				/>
 
 				<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						name="priority"
-						property="priority"
+					cssClass="table-cell-content"
+					name="priority"
+					property="priority"
 				/>
 
 				<liferay-ui:search-container-column-date
@@ -179,6 +183,20 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 <liferay-frontend:add-menu>
 	<liferay-frontend:add-menu-item id="addCommerceProducOption" title='<%= LanguageUtil.get(request, "add-product-option") %>' url="javascript:;" />
 </liferay-frontend:add-menu>
+
+<aui:script>
+	function <portlet:namespace />deleteCPDefinitionOptionRels() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-options") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.attr('method', 'post');
+			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+			form.fm('deleteCPDefinitionOptionRelIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			submitForm(form, '<portlet:actionURL name="editProductDefinitionOptionRel" />');
+		}
+	}
+</aui:script>
 
 <aui:script use="liferay-item-selector-dialog">
 

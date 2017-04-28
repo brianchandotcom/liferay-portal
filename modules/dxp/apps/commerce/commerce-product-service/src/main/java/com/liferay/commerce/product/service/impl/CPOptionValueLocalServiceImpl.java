@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.base.CPOptionValueLocalServiceBaseImpl;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -87,6 +88,21 @@ public class CPOptionValueLocalServiceImpl
 			cpOptionValueId);
 
 		return cpOptionValueLocalService.deleteCPOptionValue(cpOptionValue);
+	}
+
+	@Override
+	public void deleteCPOptionValues(long cpOptionId)
+		throws PortalException {
+
+		List<CPOptionValue> cpOptionValues =
+			cpOptionValueLocalService.getCPOptionValues(
+				cpOptionId, QueryUtil.ALL_POS,QueryUtil.ALL_POS);
+
+		for(CPOptionValue cpOptionValue : cpOptionValues){
+
+			cpOptionValueLocalService.deleteCPOptionValue(cpOptionValue);
+		}
+
 	}
 
 	@Override

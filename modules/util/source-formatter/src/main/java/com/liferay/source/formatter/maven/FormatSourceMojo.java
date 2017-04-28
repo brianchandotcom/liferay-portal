@@ -72,13 +72,6 @@ public class FormatSourceMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
-	public void setCopyright(String copyright) {
-		_sourceFormatterArgs.setCopyrightFileName(copyright);
-	}
-
-	/**
-	 * @parameter
-	 */
 	public void setFileNames(String[] fileNames) {
 		_sourceFormatterArgs.setFileNames(Arrays.asList(fileNames));
 	}

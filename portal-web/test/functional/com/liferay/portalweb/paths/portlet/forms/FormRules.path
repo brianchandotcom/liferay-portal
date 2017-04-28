@@ -30,13 +30,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RULE_BUILDER_ADD_CONDITION</td>
-	<td>//a[contains(@class,'form-builder-rule-add-condition')]</td>
+	<td>RULE_BUILDER_ADD_ACTION</td>
+	<td>//a[contains(@class,'form-builder-rule-add-action')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_ADD_CONDITION</td>
-	<td>//a[contains(@class,'form-builder-rule-add-action')]</td>
+	<td>//a[contains(@class,'form-builder-rule-add-condition')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,6 +1,6 @@
 <definition>
 	<command name="addAction">
-		<execute function="Click" locator1="FormRules#RULE_BUILDER_ADD_CONDITION" />
+		<execute function="Click" locator1="FormRules#RULE_BUILDER_ADD_ACTION" />
 	</command>
 
 	<command name="addCondition">

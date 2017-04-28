@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jodd</groupId>
+  <artifactId>jodd-servlet</artifactId>
+  <version>3.6.4</version>
+  <name>Jodd Servlet</name>
+  <description>Jodd Servlet is set of web tools, including the nice tag library, wrappers and some filters.</description>
+  <url>http://jodd.org</url>
+  <organization>
+    <name>Jodd</name>
+    <url>http://jodd.org</url>
+  </organization>
+  <licenses>
+    <license>
+      <name>The New BSD License</name>
+      <url>http://jodd.org/license.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>igor</id>
+      <name>Igor Spasic</name>
+      <email>igor@jodd.org</email>
+      <timezone>+1</timezone>
+    </developer>
+  </developers>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/oblac/jodd/issues</url>
+  </issueManagement>
+  <scm>
+    <connection>scm:git:git://github.com/oblac/jodd.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/oblac/jodd.git</developerConnection>
+    <url>https://github.com/oblac/jodd</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.0.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jodd</groupId>
+      <artifactId>jodd-bean</artifactId>
+      <version>3.6.4</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jodd</groupId>
+      <artifactId>jodd-upload</artifactId>
+      <version>3.6.4</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jodd</groupId>
+      <artifactId>jodd-core</artifactId>
+      <version>3.6.4</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>2.2</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+</project>

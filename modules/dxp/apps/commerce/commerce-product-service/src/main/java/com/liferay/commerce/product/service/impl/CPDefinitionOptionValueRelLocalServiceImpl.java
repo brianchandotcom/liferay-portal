@@ -37,6 +37,7 @@ import java.util.Map;
 public class CPDefinitionOptionValueRelLocalServiceImpl
 	extends CPDefinitionOptionValueRelLocalServiceBaseImpl {
 
+	@Override
 	public CPDefinitionOptionValueRel
 			addCPDefinitionOptionValueRel(
 				long cpDefinitionOptionRelId, CPOptionValue cpOptionValue,
@@ -49,6 +50,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 				cpOptionValue.getPriority(), serviceContext);
 	}
 
+	@Override
 	public CPDefinitionOptionValueRel
 			addCPDefinitionOptionValueRel(
 				long cpDefinitionOptionRelId, Map<Locale, String> titleMap,
@@ -164,6 +166,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			countByCPDefinitionOptionRelId(cpDefinitionOptionRelId);
 	}
 
+	@Override
 	public void importCPDefinitionOptionRels(
 			long cpDefinitionOptionRelId, ServiceContext serviceContext)
 		throws PortalException {
@@ -190,6 +193,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		}
 	}
 
+	@Override
 	public CPDefinitionOptionValueRel
 			updateCPDefinitionOptionValueRel(
 				long cpDefinitionOptionValueRelId, Map<Locale, String> titleMap,

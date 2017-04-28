@@ -70,6 +70,7 @@ public class CPOptionDisplayContext
 		return formFieldTypes;
 	}
 
+	@Override
 	public SearchContainer<CPOption> getSearchContainer()
 		throws PortalException {
 

@@ -57,6 +57,7 @@ public class CPOptionValueDisplayContext
 		return portletURL;
 	}
 
+	@Override
 	public SearchContainer<CPOptionValue> getSearchContainer()
 		throws PortalException {
 

@@ -57,6 +57,7 @@ import java.util.Map;
 @ProviderType
 public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
+	@Override
 	public CPInstance addCPInstance(
 			long cpDefinitionId, String sku, String ddmContent,
 			Date displayDate, Date expirationDate, boolean neverExpire,
@@ -164,6 +165,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			user.getUserId(), cpInstance, serviceContext);
 	}
 
+	@Override
 	public void buildCPInstances(
 			long cpDefinitionId, ServiceContext serviceContext)
 		throws PortalException {

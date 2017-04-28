@@ -35,6 +35,7 @@ import java.util.Map;
 public class CPDefinitionOptionRelLocalServiceImpl
 	extends CPDefinitionOptionRelLocalServiceBaseImpl {
 
+	@Override
 	public CPDefinitionOptionRel
 			addCPDefinitionOptionRel(
 				long cpDefinitionId, long cpOptionId,
@@ -75,6 +76,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		return cpDefinitionOptionRel;
 	}
 
+	@Override
 	public CPDefinitionOptionRel
 			addCPDefinitionOptionRel(
 				long cpDefinitionId, long cpOptionId,
@@ -186,6 +188,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionId, true);
 	}
 
+	@Override
 	public CPDefinitionOptionRel
 			updateCPDefinitionOptionRel(
 				long cpDefinitionOptionRelId, long cpOptionId,

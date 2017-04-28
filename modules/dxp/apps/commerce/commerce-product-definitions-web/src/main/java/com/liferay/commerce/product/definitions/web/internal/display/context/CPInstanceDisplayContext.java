@@ -59,6 +59,7 @@ public class CPInstanceDisplayContext
 		return portletURL;
 	}
 
+	@Override
 	public SearchContainer<CPInstance>
 		getSearchContainer() throws PortalException {
 

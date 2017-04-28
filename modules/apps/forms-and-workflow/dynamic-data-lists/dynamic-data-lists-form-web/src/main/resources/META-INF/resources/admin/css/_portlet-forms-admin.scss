@@ -1,7 +1,5 @@
 .form-builder-publish-popover{
-	&:not(.popover-hidden) {
-		display: table !important;
-	}
+	max-width: 500px;
 }
 
 .form-builder-publish-popover .publish-popover-content {

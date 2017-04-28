@@ -103,7 +103,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_pluginsInsideModulesDirectoryNames =
 			getPluginsInsideModulesDirectoryNames();
 
-		_sourceChecks = _getSourceChecks();
+		_sourceChecks = _getSourceChecks(_containsModuleFile(fileNames));
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceFormatterArgs.getProcessorThreadCount());
@@ -576,24 +576,28 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return excludesList.toArray(new String[excludesList.size()]);
 	}
 
-	private List<SourceCheck> _getSourceChecks() throws Exception {
+	private List<SourceCheck> _getSourceChecks(boolean includeModuleChecks)
+		throws Exception {
+
 		SourceFormatterConfiguration sourceFormatterConfiguration =
 			ConfigurationLoader.loadConfiguration("sourcechecks.xml");
 
 		Class<?> clazz = getClass();
 
 		List<SourceCheck> sourceChecks = _getSourceChecks(
-			sourceFormatterConfiguration, clazz.getSimpleName());
+			sourceFormatterConfiguration, clazz.getSimpleName(),
+			includeModuleChecks);
 
 		sourceChecks.addAll(
-			_getSourceChecks(sourceFormatterConfiguration, "all"));
+			_getSourceChecks(
+				sourceFormatterConfiguration, "all", includeModuleChecks));
 
 		return sourceChecks;
 	}
 
 	private List<SourceCheck> _getSourceChecks(
 			SourceFormatterConfiguration sourceFormatterConfiguration,
-			String sourceProcessorName)
+			String sourceProcessorName, boolean includeModuleChecks)
 		throws Exception {
 
 		List<SourceCheck> sourceChecks = new ArrayList<>();
@@ -641,8 +645,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			SourceCheck sourceCheck = (SourceCheck)instance;
 
-			if (!portalSource && !subrepository &&
-				sourceCheck.isPortalCheck()) {
+			if ((!portalSource && !subrepository &&
+				 sourceCheck.isPortalCheck()) ||
+				(!includeModuleChecks && sourceCheck.isModulesCheck())) {
 
 				continue;
 			}

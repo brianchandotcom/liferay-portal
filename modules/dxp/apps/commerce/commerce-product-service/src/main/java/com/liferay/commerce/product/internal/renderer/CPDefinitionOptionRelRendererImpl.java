@@ -69,41 +69,39 @@ public class CPDefinitionOptionRelRendererImpl
 				cpDefinitionOptionRel.getDDMFormFieldTypeName());
 
 			if (!cpDefinitionOptionValueRels.isEmpty()) {
-				DDMFormFieldOptions options = new DDMFormFieldOptions();
+				DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
 				for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 						cpDefinitionOptionValueRels) {
 
-					options.addOptionLabel(
+					ddmFormFieldOptions.addOptionLabel(
 						String.valueOf(cpDefinitionOptionValueRel.
 							getCPDefinitionOptionValueRelId()),
 						locale, cpDefinitionOptionValueRel.getTitle(locale));
 				}
 
-				ddmFormField.setDDMFormFieldOptions(options);
+				ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
 			}
 
-			LocalizedValue locval = new LocalizedValue(locale);
+			LocalizedValue localizedValue = new LocalizedValue(locale);
 
-			locval.addString(locale, cpDefinitionOptionRel.getName(locale));
+			localizedValue.addString(locale, cpDefinitionOptionRel.getName(locale));
 
-			ddmFormField.setLabel(locval);
+			ddmFormField.setLabel(localizedValue);
 
 			ddmFormField.setRequired(true);
 
 			ddmForm.addDDMFormField(ddmFormField);
 		}
 
-		DDMFormRenderingContext context = new DDMFormRenderingContext();
+		DDMFormRenderingContext ddmFormRenderingContext = new DDMFormRenderingContext();
 
-		context.setLocale(locale);
-		context.setHttpServletRequest(httpServletRequest);
-		context.setHttpServletResponse(httpServletResponse);
-		context.setContainerId("options");
+		ddmFormRenderingContext.setLocale(locale);
+		ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
+		ddmFormRenderingContext.setHttpServletResponse(httpServletResponse);
+		ddmFormRenderingContext.setContainerId("options");
 
-		String html = _ddmFormRenderer.render(ddmForm, context);
-
-		return html;
+		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
 	}
 
 	@Reference

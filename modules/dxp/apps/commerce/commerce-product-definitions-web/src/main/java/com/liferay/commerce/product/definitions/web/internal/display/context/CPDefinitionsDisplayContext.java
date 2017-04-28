@@ -37,10 +37,8 @@ public class CPDefinitionsDisplayContext
 
 	public CPDefinitionsDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CPDefinitionService
-				cpDefinitionService,
-			CPTypeServicesTracker
-				cpTypeServicesTracker)
+			CPDefinitionService cpDefinitionService,
+			CPTypeServicesTracker cpTypeServicesTracker)
 		throws PortalException {
 
 		super(actionHelper, httpServletRequest, "CPDefinition");

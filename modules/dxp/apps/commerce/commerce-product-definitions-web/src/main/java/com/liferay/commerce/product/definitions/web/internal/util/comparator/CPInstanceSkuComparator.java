@@ -38,11 +38,9 @@ public class CPInstanceSkuComparator extends OrderByComparator<CPInstance> {
 	}
 
 	@Override
-	public int compare(
-		CPInstance productInstance1, CPInstance productInstance2) {
-
-		String sku1 = StringUtil.toLowerCase(productInstance1.getSku());
-		String sku2 = StringUtil.toLowerCase(productInstance2.getSku());
+	public int compare(CPInstance cpInstance1, CPInstance cpInstance2) {
+		String sku1 = StringUtil.toLowerCase(cpInstance1.getSku());
+		String sku2 = StringUtil.toLowerCase(cpInstance2.getSku());
 
 		int value = sku1.compareTo(sku2);
 

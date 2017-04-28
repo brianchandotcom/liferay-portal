@@ -37,8 +37,7 @@ public class CPInstanceDisplayContext
 
 	public CPInstanceDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CPInstanceService
-				cpInstanceService)
+			CPInstanceService cpInstanceService)
 		throws PortalException {
 
 		super(actionHelper, httpServletRequest, "CPInstance");
@@ -60,8 +59,8 @@ public class CPInstanceDisplayContext
 	}
 
 	@Override
-	public SearchContainer<CPInstance>
-		getSearchContainer() throws PortalException {
+	public SearchContainer<CPInstance> getSearchContainer()
+		throws PortalException {
 
 		if (searchContainer != null) {
 			return searchContainer;

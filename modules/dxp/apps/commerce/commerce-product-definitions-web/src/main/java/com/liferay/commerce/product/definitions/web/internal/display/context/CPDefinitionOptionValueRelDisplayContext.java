@@ -37,8 +37,7 @@ public class CPDefinitionOptionValueRelDisplayContext
 
 	public CPDefinitionOptionValueRelDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CPDefinitionOptionValueRelService
-				cpDefinitionOptionValueRelService)
+			CPDefinitionOptionValueRelService cpDefinitionOptionValueRelService)
 		throws PortalException {
 
 		super(actionHelper, httpServletRequest, "CPDefinitionOptionValueRel");
@@ -48,8 +47,8 @@ public class CPDefinitionOptionValueRelDisplayContext
 		_cpDefinitionOptionValueRelService = cpDefinitionOptionValueRelService;
 	}
 
-	public CPDefinitionOptionRel
-		getCPDefinitionOptionRel() throws PortalException {
+	public CPDefinitionOptionRel getCPDefinitionOptionRel()
+		throws PortalException {
 
 		if (_cpDefinitionOptionRel != null) {
 			return _cpDefinitionOptionRel;
@@ -72,8 +71,8 @@ public class CPDefinitionOptionValueRelDisplayContext
 		return cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 	}
 
-	public CPDefinitionOptionValueRel
-		getCPDefinitionOptionValueRel() throws PortalException {
+	public CPDefinitionOptionValueRel getCPDefinitionOptionValueRel()
+		throws PortalException {
 
 		if (_cpDefinitionOptionValueRel != null) {
 			return _cpDefinitionOptionValueRel;
@@ -111,8 +110,8 @@ public class CPDefinitionOptionValueRelDisplayContext
 	}
 
 	@Override
-	public SearchContainer<CPDefinitionOptionValueRel>
-		getSearchContainer() throws PortalException {
+	public SearchContainer<CPDefinitionOptionValueRel> getSearchContainer()
+		throws PortalException {
 
 		if (searchContainer != null) {
 			return searchContainer;

@@ -39,12 +39,9 @@ public class CPInstanceDisplayDateComparator
 	}
 
 	@Override
-	public int compare(
-		CPInstance productInstance1, CPInstance productInstance2) {
-
+	public int compare(CPInstance cpInstance1, CPInstance cpInstance2) {
 		int value = DateUtil.compareTo(
-			productInstance1.getDisplayDate(),
-			productInstance2.getDisplayDate());
+			cpInstance1.getDisplayDate(), cpInstance2.getDisplayDate());
 
 		if (_ascending) {
 			return value;

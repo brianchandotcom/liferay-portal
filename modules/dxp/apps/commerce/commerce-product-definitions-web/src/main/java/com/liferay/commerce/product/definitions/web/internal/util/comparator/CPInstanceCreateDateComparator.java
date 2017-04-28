@@ -39,11 +39,9 @@ public class CPInstanceCreateDateComparator
 	}
 
 	@Override
-	public int compare(
-		CPInstance productInstance1, CPInstance productInstance2) {
-
+	public int compare(CPInstance cpInstance1, CPInstance cpInstance2) {
 		int value = DateUtil.compareTo(
-			productInstance1.getCreateDate(), productInstance2.getCreateDate());
+			cpInstance1.getCreateDate(), cpInstance2.getCreateDate());
 
 		if (_ascending) {
 			return value;

@@ -40,10 +40,8 @@ public class CPDefinitionOptionValueRelTitleComparator
 
 	@Override
 	public int compare(
-		CPDefinitionOptionValueRel
-			cpDefinitionOptionValueRel1,
-		CPDefinitionOptionValueRel
-			cpDefinitionOptionValueRel2) {
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel1,
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel2) {
 
 		String title1 = StringUtil.toLowerCase(
 			cpDefinitionOptionValueRel1.getTitle());

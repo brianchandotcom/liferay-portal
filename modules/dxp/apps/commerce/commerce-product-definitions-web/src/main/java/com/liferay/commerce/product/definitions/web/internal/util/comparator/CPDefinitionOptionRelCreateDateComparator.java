@@ -40,12 +40,12 @@ public class CPDefinitionOptionRelCreateDateComparator
 
 	@Override
 	public int compare(
-		CPDefinitionOptionRel productDefinitionOptionRel1,
-		CPDefinitionOptionRel productDefinitionOptionRel2) {
+		CPDefinitionOptionRel cpDefinitionOptionRel1,
+		CPDefinitionOptionRel cpDefinitionOptionRel2) {
 
 		int value = DateUtil.compareTo(
-			productDefinitionOptionRel1.getCreateDate(),
-			productDefinitionOptionRel2.getCreateDate());
+			cpDefinitionOptionRel1.getCreateDate(),
+			cpDefinitionOptionRel2.getCreateDate());
 
 		if (_ascending) {
 			return value;

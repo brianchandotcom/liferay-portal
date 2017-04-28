@@ -39,12 +39,9 @@ public class CPDefinitionCreateDateComparator
 	}
 
 	@Override
-	public int compare(
-		CPDefinition productDefinition1, CPDefinition productDefinition2) {
-
+	public int compare(CPDefinition cpDefinition1, CPDefinition cpDefinition2) {
 		int value = DateUtil.compareTo(
-			productDefinition1.getCreateDate(),
-			productDefinition2.getCreateDate());
+			cpDefinition1.getCreateDate(), cpDefinition2.getCreateDate());
 
 		if (_ascending) {
 			return value;

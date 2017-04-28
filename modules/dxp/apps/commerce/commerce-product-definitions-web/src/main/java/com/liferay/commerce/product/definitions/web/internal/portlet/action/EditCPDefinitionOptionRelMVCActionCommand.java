@@ -97,9 +97,8 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		}
 	}
 
-	protected CPDefinitionOptionRel
-			updateCPDefinitionOptionRel(
-				ActionRequest actionRequest)
+	protected CPDefinitionOptionRel updateCPDefinitionOptionRel(
+			ActionRequest actionRequest)
 		throws Exception {
 
 		long cpDefinitionOptionRelId = ParamUtil.getLong(
@@ -109,17 +108,13 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 			actionRequest, "cpDefinitionId");
 
 		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
-
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-
 		String ddmFormFieldTypeName = ParamUtil.getString(
 			actionRequest, "ddmFormFieldTypeName");
-
 		int priority = ParamUtil.getInteger(actionRequest, "priority");
-
 		boolean facetable = ParamUtil.getBoolean(actionRequest, "facetable");
 		boolean skuContributor = ParamUtil.getBoolean(
 			actionRequest, "skuContributor");

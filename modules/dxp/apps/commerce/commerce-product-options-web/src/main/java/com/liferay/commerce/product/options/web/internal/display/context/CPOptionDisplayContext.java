@@ -51,10 +51,10 @@ public class CPOptionDisplayContext
 	}
 
 	public List<DDMFormFieldType> getDDMFormFieldTypes() {
-		Stream<DDMFormFieldType> stream =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes().stream();
+		List<DDMFormFieldType> ddmFormFieldTypes =
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
 
-		stream = stream.filter(
+		Stream<DDMFormFieldType> stream = ddmFormFieldTypes.stream().filter(
 			fieldType -> {
 				Map<String, Object> properties =
 					_ddmFormFieldTypeServicesTracker.
@@ -64,10 +64,7 @@ public class CPOptionDisplayContext
 					properties, "ddm.form.field.type.system");
 			});
 
-		List<DDMFormFieldType> formFieldTypes = stream.collect(
-			Collectors.toList());
-
-		return formFieldTypes;
+		return stream.collect(Collectors.toList());
 	}
 
 	@Override

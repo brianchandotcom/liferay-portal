@@ -50,8 +50,7 @@ public class CPDefinitionOptionRelDisplayContext
 
 	public CPDefinitionOptionRelDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CPDefinitionOptionRelService
-				cpDefinitionOptionRelService,
+			CPDefinitionOptionRelService cpDefinitionOptionRelService,
 			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 			ItemSelector itemSelector)
 		throws PortalException {
@@ -61,14 +60,11 @@ public class CPDefinitionOptionRelDisplayContext
 		setDefaultOrderByCol("priority");
 
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
-
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-
 		_itemSelector = itemSelector;
 	}
 
-	public CPDefinitionOptionRel
-			getCPDefinitionOptionRel()
+	public CPDefinitionOptionRel getCPDefinitionOptionRel()
 		throws PortalException {
 
 		if (_cpDefinitionOptionRel != null) {
@@ -93,10 +89,10 @@ public class CPDefinitionOptionRelDisplayContext
 	}
 
 	public List<DDMFormFieldType> getDDMFormFieldTypes() {
-		Stream<DDMFormFieldType> stream =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes().stream();
+		List<DDMFormFieldType> ddmFormFieldTypes =
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
 
-		stream = stream.filter(
+		Stream<DDMFormFieldType> stream = ddmFormFieldTypes.stream().filter(
 			fieldType -> {
 				Map<String, Object> properties =
 					_ddmFormFieldTypeServicesTracker.
@@ -106,10 +102,7 @@ public class CPDefinitionOptionRelDisplayContext
 					properties, "ddm.form.field.type.system");
 			});
 
-		List<DDMFormFieldType> formFieldTypes = stream.collect(
-			Collectors.toList());
-
-		return formFieldTypes;
+		return stream.collect(Collectors.toList());
 	}
 
 	public String getItemSelectorUrl() {
@@ -146,8 +139,8 @@ public class CPDefinitionOptionRelDisplayContext
 	}
 
 	@Override
-	public SearchContainer<CPDefinitionOptionRel>
-		getSearchContainer() throws PortalException {
+	public SearchContainer<CPDefinitionOptionRel> getSearchContainer()
+		throws PortalException {
 
 		if (searchContainer != null) {
 			return searchContainer;

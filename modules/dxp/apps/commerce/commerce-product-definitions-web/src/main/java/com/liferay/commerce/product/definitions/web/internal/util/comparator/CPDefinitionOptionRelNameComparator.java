@@ -41,13 +41,11 @@ public class CPDefinitionOptionRelNameComparator
 
 	@Override
 	public int compare(
-		CPDefinitionOptionRel productDefinitionOptionRel1,
-		CPDefinitionOptionRel productDefinitionOptionRel2) {
+		CPDefinitionOptionRel cpDefinitionOptionRel1,
+		CPDefinitionOptionRel cpDefinitionOptionRel2) {
 
-		String name1 = StringUtil.toLowerCase(
-			productDefinitionOptionRel1.getName());
-		String name2 = StringUtil.toLowerCase(
-			productDefinitionOptionRel2.getName());
+		String name1 = StringUtil.toLowerCase(cpDefinitionOptionRel1.getName());
+		String name2 = StringUtil.toLowerCase(cpDefinitionOptionRel2.getName());
 
 		int value = name1.compareTo(name2);
 

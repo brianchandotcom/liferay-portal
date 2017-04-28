@@ -98,9 +98,8 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 		}
 	}
 
-	protected CPDefinitionOptionValueRel
-			updateCPDefinitionOptionValueRel(
-				ActionRequest actionRequest)
+	protected CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
+			ActionRequest actionRequest)
 		throws Exception {
 
 		long cpDefinitionOptionValueRelId = ParamUtil.getLong(
@@ -108,10 +107,8 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 
 		long cpDefinitionOptionRelId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionOptionRelId");
-
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
-
 		int priority = ParamUtil.getInteger(actionRequest, "priority");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

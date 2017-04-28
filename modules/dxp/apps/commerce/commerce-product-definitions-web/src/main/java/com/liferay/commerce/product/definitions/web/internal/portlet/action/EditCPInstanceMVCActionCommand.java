@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void autoGenerateCPInstances(ActionRequest actionRequest)
+	protected void buildCPInstances(ActionRequest actionRequest)
 		throws Exception {
 
 		long cpDefinitionId = ParamUtil.getLong(
@@ -55,8 +55,6 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPInstance.class.getName(), actionRequest);
-
-		// Generate commerce product instances
 
 		_cpInstanceService.buildCPInstances(cpDefinitionId, serviceContext);
 	}
@@ -89,19 +87,19 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.DELETE)) {
-				deleteCPInstances(actionRequest);
+			if (cmd.equals(Constants.ADD_MULTIPLE)) {
+				buildCPInstances(actionRequest);
 			}
-			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
-				autoGenerateCPInstances(actionRequest);
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteCPInstances(actionRequest);
 			}
 		}
 		catch (Exception e) {
 			if (e instanceof
 					NoSuchSkuContributorCPDefinitionOptionRelException) {
 
-				hideDefaultSuccessMessage(actionRequest);
 				hideDefaultErrorMessage(actionRequest);
+				hideDefaultSuccessMessage(actionRequest);
 
 				SessionErrors.add(actionRequest, e.getClass());
 

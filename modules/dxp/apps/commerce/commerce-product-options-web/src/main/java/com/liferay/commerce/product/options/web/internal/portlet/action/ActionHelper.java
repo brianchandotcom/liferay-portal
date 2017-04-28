@@ -40,9 +40,7 @@ public class ActionHelper {
 	public CPOption getCPOption(RenderRequest renderRequest)
 		throws PortalException {
 
-		CPOption cpOption = null;
-
-		cpOption = (CPOption)renderRequest.getAttribute(
+		CPOption cpOption = (CPOption)renderRequest.getAttribute(
 			CPWebKeys.COMMERCE_PRODUCT_OPTION);
 
 		if (cpOption != null) {
@@ -52,9 +50,6 @@ public class ActionHelper {
 		long cpOptionId = ParamUtil.getLong(renderRequest, "cpOptionId");
 
 		if (cpOptionId <= 0) {
-
-			//Try to get from an related entity if exist
-
 			CPOptionValue cpOptionValue = getCPOptionValue(renderRequest);
 
 			if (cpOptionValue != null) {
@@ -77,10 +72,10 @@ public class ActionHelper {
 	public List<CPOption> getCPOptions(ResourceRequest resourceRequest)
 		throws Exception {
 
+		List<CPOption> cpOptions = new ArrayList<>();
+
 		long[] cpOptionsIds = ParamUtil.getLongValues(
 			resourceRequest, "rowIds");
-
-		List<CPOption> cpOptions = new ArrayList<>();
 
 		for (long cpOptionsId : cpOptionsIds) {
 			CPOption cpOption = _cpOptionService.getCPOption(cpOptionsId);
@@ -94,9 +89,7 @@ public class ActionHelper {
 	public CPOptionValue getCPOptionValue(RenderRequest renderRequest)
 		throws PortalException {
 
-		CPOptionValue cpOptionValue = null;
-
-		cpOptionValue = (CPOptionValue)renderRequest.getAttribute(
+		CPOptionValue cpOptionValue = (CPOptionValue)renderRequest.getAttribute(
 			CPWebKeys.COMMERCE_PRODUCT_OPTION_VALUE);
 
 		if (cpOptionValue != null) {
@@ -123,10 +116,10 @@ public class ActionHelper {
 			ResourceRequest resourceRequest)
 		throws Exception {
 
+		List<CPOptionValue> cpOptionValues = new ArrayList<>();
+
 		long[] cpOptionValuesIds = ParamUtil.getLongValues(
 			resourceRequest, "rowIds");
-
-		List<CPOptionValue> cpOptionValues = new ArrayList<>();
 
 		for (long cpOptionValuesId : cpOptionValuesIds) {
 			CPOptionValue cpOptionValue =

@@ -42,9 +42,7 @@ public class ActionHelper {
 	public CPDefinition getCPDefinition(RenderRequest renderRequest)
 		throws PortalException {
 
-		CPDefinition cpDefinition = null;
-
-		cpDefinition = (CPDefinition)renderRequest.getAttribute(
+		CPDefinition cpDefinition = (CPDefinition)renderRequest.getAttribute(
 			CPWebKeys.COMMERCE_PRODUCT_DEFINITION);
 
 		if (cpDefinition != null) {
@@ -55,9 +53,6 @@ public class ActionHelper {
 			renderRequest, "cpDefinitionId");
 
 		if (cpDefinitionId <= 0) {
-
-			//Try to get from an related entity if exist
-
 			CPDefinitionOptionRel cpDefinitionOptionRel =
 				getCPDefinitionOptionRel(renderRequest);
 
@@ -79,14 +74,11 @@ public class ActionHelper {
 		return cpDefinition;
 	}
 
-	public CPDefinitionOptionRel
-			getCPDefinitionOptionRel(
-				RenderRequest renderRequest)
+	public CPDefinitionOptionRel getCPDefinitionOptionRel(
+			RenderRequest renderRequest)
 		throws PortalException {
 
-		CPDefinitionOptionRel cpDefinitionOptionRel = null;
-
-		cpDefinitionOptionRel =
+		CPDefinitionOptionRel cpDefinitionOptionRel =
 			(CPDefinitionOptionRel)renderRequest.getAttribute(
 				CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_REL);
 
@@ -98,9 +90,6 @@ public class ActionHelper {
 			renderRequest, "cpDefinitionOptionRelId");
 
 		if (cpDefinitionOptionRelId <= 0) {
-
-			//Try to get from an related entity if exist
-
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 				getCPDefinitionOptionValueRel(renderRequest);
 
@@ -129,10 +118,10 @@ public class ActionHelper {
 			ResourceRequest resourceRequest)
 		throws Exception {
 
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
+
 		long[] cpDefinitionOptionRelIds = ParamUtil.getLongValues(
 			resourceRequest, "rowIds");
-
-		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
 
 		for (long cpDefinitionOptionRelId : cpDefinitionOptionRelIds) {
 			CPDefinitionOptionRel cpDefinitionOptionRel =
@@ -145,14 +134,11 @@ public class ActionHelper {
 		return cpDefinitionOptionRels;
 	}
 
-	public CPDefinitionOptionValueRel
-			getCPDefinitionOptionValueRel(
-				RenderRequest renderRequest)
+	public CPDefinitionOptionValueRel getCPDefinitionOptionValueRel(
+			RenderRequest renderRequest)
 		throws PortalException {
 
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel = null;
-
-		cpDefinitionOptionValueRel =
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 			(CPDefinitionOptionValueRel)renderRequest.getAttribute(
 				CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL);
 
@@ -183,11 +169,11 @@ public class ActionHelper {
 			ResourceRequest resourceRequest)
 		throws Exception {
 
-		long[] cpDefinitionOptionValueRelIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIdsCPDefinitionOptionValueRel");
-
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 			new ArrayList<>();
+
+		long[] cpDefinitionOptionValueRelIds = ParamUtil.getLongValues(
+			resourceRequest, "rowIdsCPDefinitionOptionValueRel");
 
 		for (long cpDefinitionOptionValueRelId :
 				cpDefinitionOptionValueRelIds) {
@@ -205,10 +191,10 @@ public class ActionHelper {
 	public List<CPDefinition> getCPDefinitions(ResourceRequest resourceRequest)
 		throws Exception {
 
+		List<CPDefinition> cpDefinitions = new ArrayList<>();
+
 		long[] cpDefinitionIds = ParamUtil.getLongValues(
 			resourceRequest, "rowIds");
-
-		List<CPDefinition> cpDefinitions = new ArrayList<>();
 
 		for (long cpDefinitionId : cpDefinitionIds) {
 			CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(

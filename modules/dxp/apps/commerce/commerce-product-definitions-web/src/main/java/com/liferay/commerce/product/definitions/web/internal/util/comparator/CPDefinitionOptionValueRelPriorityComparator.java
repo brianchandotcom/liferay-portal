@@ -39,15 +39,12 @@ public class CPDefinitionOptionValueRelPriorityComparator
 
 	@Override
 	public int compare(
-		CPDefinitionOptionValueRel
-			cpDefinitionOptionValueRel1,
-		CPDefinitionOptionValueRel
-			cpDefinitionOptionValueRel2) {
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel1,
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel2) {
 
-		int priority1 = cpDefinitionOptionValueRel1.getPriority();
-		int priority2 = cpDefinitionOptionValueRel2.getPriority();
-
-		int value = Integer.compare(priority1, priority2);
+		int value = Integer.compare(
+			cpDefinitionOptionValueRel1.getPriority(),
+			cpDefinitionOptionValueRel2.getPriority());
 
 		if (_ascending) {
 			return value;

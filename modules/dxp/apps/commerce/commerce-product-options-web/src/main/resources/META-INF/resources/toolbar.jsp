@@ -33,6 +33,12 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId", "cp
 				label="info"
 			/>
 		</c:if>
+
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= cpOptionDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= cpOptionDisplayContext.getDisplayStyle() %>"
+		/>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>

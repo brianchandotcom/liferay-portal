@@ -102,7 +102,8 @@ public class SKUCombinationsIterator
 			new CPDefinitionOptionValueRel[_combinationLength];
 
 		for (int i = 0; i < _combinationLength; ++i) {
-			combination[i] = _cpDefinitionOptionValueRels[i][_currentIndexes[i]];
+			combination[i] =
+				_cpDefinitionOptionValueRels[i][_currentIndexes[i]];
 		}
 
 		return combination;
@@ -124,9 +125,9 @@ public class SKUCombinationsIterator
 	}
 
 	private final int _combinationLength;
+	private final CPDefinitionOptionValueRel[][] _cpDefinitionOptionValueRels;
 	private final int[] _currentIndexes;
 	private boolean _hasNext;
 	private final int[] _maxIndexes;
-	private final CPDefinitionOptionValueRel[][] _cpDefinitionOptionValueRels;
 
 }

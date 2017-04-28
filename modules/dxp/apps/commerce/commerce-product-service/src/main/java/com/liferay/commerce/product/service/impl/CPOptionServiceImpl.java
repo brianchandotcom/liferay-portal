@@ -46,7 +46,7 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 
 		return cpOptionLocalService.addCPOption(
 			nameMap, descriptionMap, ddmFormFieldTypeName, facetable,
-			skuContributor,serviceContext);
+			skuContributor, serviceContext);
 	}
 
 	@Override

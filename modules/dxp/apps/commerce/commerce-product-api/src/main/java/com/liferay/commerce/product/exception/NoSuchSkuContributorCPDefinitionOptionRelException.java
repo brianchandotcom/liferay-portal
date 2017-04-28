@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Marco Leo
  */
 @ProviderType
-public class NoSuchSkuContributorCPDefinitionOptionRelException extends NoSuchModelException {
+public class NoSuchSkuContributorCPDefinitionOptionRelException
+	extends NoSuchModelException {
 
 	public NoSuchSkuContributorCPDefinitionOptionRelException() {
 	}
@@ -30,7 +31,9 @@ public class NoSuchSkuContributorCPDefinitionOptionRelException extends NoSuchMo
 		super(msg);
 	}
 
-	public NoSuchSkuContributorCPDefinitionOptionRelException(String msg, Throwable cause) {
+	public NoSuchSkuContributorCPDefinitionOptionRelException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

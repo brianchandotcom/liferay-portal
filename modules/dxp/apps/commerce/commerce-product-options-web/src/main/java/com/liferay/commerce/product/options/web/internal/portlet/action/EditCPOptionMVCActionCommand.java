@@ -115,8 +115,9 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 		String ddmFormFieldTypeName = ParamUtil.getString(
 			actionRequest, "ddmFormFieldTypeName");
 
-		boolean facetable = ParamUtil.getBoolean(actionRequest,"facetable");
-		boolean skuContributor= ParamUtil.getBoolean(actionRequest,"skuContributor");
+		boolean facetable = ParamUtil.getBoolean(actionRequest, "facetable");
+		boolean skuContributor = ParamUtil.getBoolean(
+			actionRequest, "skuContributor");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPOption.class.getName(), actionRequest);
@@ -128,7 +129,8 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 			// Add commerce product option
 
 			cpOption = _cpOptionService.addCPOption(
-				nameMap, descriptionMap, ddmFormFieldTypeName,facetable,skuContributor, serviceContext);
+				nameMap, descriptionMap, ddmFormFieldTypeName, facetable,
+				skuContributor, serviceContext);
 		}
 		else {
 

@@ -91,18 +91,14 @@ public class CPOptionValueLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCPOptionValues(long cpOptionId)
-		throws PortalException {
-
+	public void deleteCPOptionValues(long cpOptionId) throws PortalException {
 		List<CPOptionValue> cpOptionValues =
 			cpOptionValueLocalService.getCPOptionValues(
-				cpOptionId, QueryUtil.ALL_POS,QueryUtil.ALL_POS);
+				cpOptionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		for(CPOptionValue cpOptionValue : cpOptionValues){
-
+		for (CPOptionValue cpOptionValue : cpOptionValues) {
 			cpOptionValueLocalService.deleteCPOptionValue(cpOptionValue);
 		}
-
 	}
 
 	@Override

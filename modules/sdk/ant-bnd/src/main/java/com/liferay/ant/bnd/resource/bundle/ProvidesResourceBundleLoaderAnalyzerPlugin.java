@@ -61,5 +61,7 @@ public class ProvidesResourceBundleLoaderAnalyzerPlugin
 		return true;
 	}
 
-	private final static String _LIFERAY_RESOURCE_BUNDLE = "liferay.resource.bundle";
+	private static final String _LIFERAY_RESOURCE_BUNDLE =
+		"liferay.resource.bundle";
+
 }

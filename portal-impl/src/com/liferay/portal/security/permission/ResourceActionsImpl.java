@@ -706,7 +706,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	@Override
-	public synchronized void removePortletResource(String portletName) {
+	public void removePortletResource(String portletName) {
 		PortletResourceActionsBag portletResourceActionsBag =
 			_portletResourceActionsBags.remove(portletName);
 

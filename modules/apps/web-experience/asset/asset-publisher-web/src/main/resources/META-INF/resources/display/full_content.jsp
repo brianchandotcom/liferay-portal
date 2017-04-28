@@ -172,7 +172,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 					className="<%= assetEntry.getClassName() %>"
 					classPK="<%= assetEntry.getClassPK() %>"
 					contentTitle="<%= title %>"
-					inTrash="<%= trashHandler.isInTrash(assetEntry.getClassPK()) %>"
+					enabled="<%= trashHandler.isInTrash(assetEntry.getClassPK()) %>"
 					reportedUserId="<%= assetRenderer.getUserId() %>"
 				/>
 			</div>

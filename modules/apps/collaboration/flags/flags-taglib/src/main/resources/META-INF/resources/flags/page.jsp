@@ -22,29 +22,29 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 String className = (String)request.getAttribute("liferay-flags:flags:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-flags:flags:classPK"));
 String contentTitle = GetterUtil.getString((String)request.getAttribute("liferay-flags:flags:contentTitle"));
-boolean inTrash = GetterUtil.getBoolean((String)request.getAttribute("liferay-flags:flags:inTrash"));
+boolean enabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-flags:flags:enabled"));
 boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-flags:flags:label"), true);
 String message = GetterUtil.getString((String)request.getAttribute("liferay-flags:flags:message"), "flag[action]");
 long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-flags:flags:reportedUserId"));
 
 String cssClass = randomNamespace;
 
-if (!inTrash) {
+if (!enabled) {
 	cssClass = randomNamespace + " flag-enable";
 }
 %>
 
-<div class="taglib-flags" title="<liferay-ui:message key='<%= !inTrash ? message : "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" %>' />">
+<div class="taglib-flags" title="<liferay-ui:message key='<%= !enabled ? message : "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" %>' />">
 	<liferay-ui:icon
 		cssClass="<%= cssClass %>"
 		iconCssClass="icon-flag"
 		label="<%= label %>"
 		message="<%= message %>"
-		url='<%= !inTrash ? "javascript:;" : null %>'
+		url='<%= !enabled ? "javascript:;" : null %>'
 	/>
 </div>
 
-<c:if test="<%= !inTrash %>">
+<c:if test="<%= !enabled %>">
 	<c:choose>
 		<c:when test="<%= flagsGroupServiceConfiguration.guestUsersEnabled() || themeDisplay.isSignedIn() %>">
 			<aui:script use="aui-io-plugin-deprecated,aui-modal">

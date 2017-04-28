@@ -373,6 +373,13 @@ public class PortletFileRepositoryUtil {
 			repositoryId, searchContext);
 	}
 
+	public FileEntry fetchPortletFileEntry(
+		long groupId, long folderId, String fileName) {
+
+		return getPortletFileRepository().fetchPortletFileEntry(
+			groupId, folderId, fileName);
+	}
+
 	public void setPortletFileRepository(
 		PortletFileRepository portletFileRepository) {
 

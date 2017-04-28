@@ -100,7 +100,7 @@ public class FileContentReference {
 		return _sourceFileName;
 	}
 
-	protected FileContentReference(
+	private FileContentReference(
 		long fileEntryId, String sourceFileName, String extension,
 		String mimeType, File file, InputStream inputStream, long size) {
 

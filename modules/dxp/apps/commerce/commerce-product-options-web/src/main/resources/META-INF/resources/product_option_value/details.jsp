@@ -25,6 +25,6 @@ CPOptionValue cpOptionValue = (CPOptionValue)request.getAttribute(CPWebKeys.COMM
 <aui:model-context bean="<%= cpOptionValue %>" model="<%= CPOptionValue.class %>" />
 
 <aui:fieldset>
-	<aui:input label="title" name="title" />
-	<aui:input label="priority" name="priority" />
+	<aui:input name="title" />
+	<aui:input name="priority" />
 </aui:fieldset>

@@ -116,7 +116,7 @@ public class ActionHelper {
 
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
 			ResourceRequest resourceRequest)
-		throws Exception {
+		throws PortalException {
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
 
@@ -167,7 +167,7 @@ public class ActionHelper {
 
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
 			ResourceRequest resourceRequest)
-		throws Exception {
+		throws PortalException {
 
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 			new ArrayList<>();
@@ -189,7 +189,7 @@ public class ActionHelper {
 	}
 
 	public List<CPDefinition> getCPDefinitions(ResourceRequest resourceRequest)
-		throws Exception {
+		throws PortalException {
 
 		List<CPDefinition> cpDefinitions = new ArrayList<>();
 

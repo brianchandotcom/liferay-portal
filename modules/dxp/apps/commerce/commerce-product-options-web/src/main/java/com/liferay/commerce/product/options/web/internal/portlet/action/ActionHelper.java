@@ -70,7 +70,7 @@ public class ActionHelper {
 	}
 
 	public List<CPOption> getCPOptions(ResourceRequest resourceRequest)
-		throws Exception {
+		throws PortalException {
 
 		List<CPOption> cpOptions = new ArrayList<>();
 
@@ -114,7 +114,7 @@ public class ActionHelper {
 
 	public List<CPOptionValue> getCPOptionValues(
 			ResourceRequest resourceRequest)
-		throws Exception {
+		throws PortalException {
 
 		List<CPOptionValue> cpOptionValues = new ArrayList<>();
 

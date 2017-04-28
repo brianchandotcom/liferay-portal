@@ -69,7 +69,8 @@ public class CPDefinitionOptionRelRendererImpl
 				cpDefinitionOptionRel.getDDMFormFieldTypeName());
 
 			if (!cpDefinitionOptionValueRels.isEmpty()) {
-				DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+				DDMFormFieldOptions ddmFormFieldOptions =
+					new DDMFormFieldOptions();
 
 				for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 						cpDefinitionOptionValueRels) {
@@ -85,7 +86,8 @@ public class CPDefinitionOptionRelRendererImpl
 
 			LocalizedValue localizedValue = new LocalizedValue(locale);
 
-			localizedValue.addString(locale, cpDefinitionOptionRel.getName(locale));
+			localizedValue.addString(
+				locale, cpDefinitionOptionRel.getName(locale));
 
 			ddmFormField.setLabel(localizedValue);
 
@@ -94,7 +96,8 @@ public class CPDefinitionOptionRelRendererImpl
 			ddmForm.addDDMFormField(ddmFormField);
 		}
 
-		DDMFormRenderingContext ddmFormRenderingContext = new DDMFormRenderingContext();
+		DDMFormRenderingContext ddmFormRenderingContext =
+			new DDMFormRenderingContext();
 
 		ddmFormRenderingContext.setLocale(locale);
 		ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);

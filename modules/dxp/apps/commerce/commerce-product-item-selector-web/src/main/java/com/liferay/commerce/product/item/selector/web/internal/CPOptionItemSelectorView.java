@@ -90,8 +90,7 @@ public class CPOptionItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
-			CPOptionItemSelectorCriterion
-				cpOptionItemSelectorCriterion,
+			CPOptionItemSelectorCriterion cpOptionItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
@@ -101,7 +100,6 @@ public class CPOptionItemSelectorView
 		int cur = GetterUtil.getInteger(
 			request.getParameter(SearchContainer.DEFAULT_CUR_PARAM),
 			SearchContainer.DEFAULT_CUR);
-
 		int delta = GetterUtil.getInteger(
 			request.getParameter(SearchContainer.DEFAULT_DELTA_PARAM),
 			SearchContainer.DEFAULT_DELTA);

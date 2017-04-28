@@ -132,5 +132,4 @@ SearchContainer searchContainer = new SearchContainer(renderRequest, PortletURLU
 		},
 		'.commerce-product-option-row'
 	);
-
 </aui:script>

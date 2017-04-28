@@ -84,17 +84,11 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCPDefinitionOptionValueRel(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteCPDefinitionOptionValueRels(actionRequest);
-			}
+		if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+			updateCPDefinitionOptionValueRel(actionRequest);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw e;
+		else if (cmd.equals(Constants.DELETE)) {
+			deleteCPDefinitionOptionValueRels(actionRequest);
 		}
 	}
 

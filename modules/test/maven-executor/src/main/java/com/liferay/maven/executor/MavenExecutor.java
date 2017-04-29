@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.junit.rules.ExternalResource;
 
@@ -43,6 +44,8 @@ import org.junit.rules.ExternalResource;
 public class MavenExecutor extends ExternalResource {
 
 	public Result execute(File projectDir, String... args) throws Exception {
+		writeSettingsXmlFile();
+
 		boolean mavenDebug = isMavenDebug();
 		Path mavenHomeDirPath = _checkMavenHomeDirPath();
 
@@ -95,8 +98,16 @@ public class MavenExecutor extends ExternalResource {
 		return new Result(exitCode, sb.toString());
 	}
 
+	public String getHttpNonProxyHosts() {
+		return System.getProperty("http.nonProxyHosts");
+	}
+
 	public String getHttpProxyHost() {
 		return System.getProperty("http.proxyHost");
+	}
+
+	public String getHttpProxyPassword() {
+		return System.getProperty("http.proxyPassword");
 	}
 
 	public int getHttpProxyPort() {
@@ -107,6 +118,10 @@ public class MavenExecutor extends ExternalResource {
 		}
 
 		return Integer.parseInt(port);
+	}
+
+	public String getHttpProxyUser() {
+		return System.getProperty("http.proxyUser");
 	}
 
 	public Path getMavenHomeDirPath() {
@@ -172,8 +187,6 @@ public class MavenExecutor extends ExternalResource {
 			Files.setPosixFilePermissions(
 				_mavenHomeDirPath.resolve("bin/mvn"), posixFilePermissions);
 		}
-
-		writeSettingsXmlFile();
 	};
 
 	protected String getMavenDistributionFileName() {
@@ -216,43 +229,51 @@ public class MavenExecutor extends ExternalResource {
 			return;
 		}
 
-		String mavenSettingsXml = FileUtil.read(
+		String settingsXml = FileUtil.read(
 			MavenExecutor.class, "dependencies/settings_xml.tmpl");
 
 		if (localRepository) {
-			mavenSettingsXml = mavenSettingsXml.replace(
+			settingsXml = settingsXml.replace(
 				"[$LOCAL_REPOSITORY_DIR$]",
 				FileUtil.getAbsolutePath(localRepositoryDirPath));
 		}
 		else {
-			mavenSettingsXml = mavenSettingsXml.replaceFirst(
+			settingsXml = settingsXml.replaceFirst(
 				"<localRepository>[\\s\\S]+<\\/localRepository>", "");
 		}
 
 		if (mirrors) {
-			mavenSettingsXml = mavenSettingsXml.replace(
+			settingsXml = settingsXml.replace(
 				"[$REPOSITORY_URL$]", repositoryUrl);
 		}
 		else {
-			mavenSettingsXml = mavenSettingsXml.replaceFirst(
+			settingsXml = settingsXml.replaceFirst(
 				"<mirrors>[\\s\\S]+<\\/mirrors>", "");
 		}
 
 		if (proxies) {
-			mavenSettingsXml = mavenSettingsXml.replace(
+			settingsXml = settingsXml.replace(
 				"[$HTTP_PROXY_HOST$]", httpProxyHost);
-			mavenSettingsXml = mavenSettingsXml.replace(
+			settingsXml = settingsXml.replace(
 				"[$HTTP_PROXY_PORT$]", String.valueOf(httpProxyPort));
+
+			settingsXml = _replaceSettingsXmlElement(
+				settingsXml, "[$HTTP_PROXY_USERNAME$]", getHttpProxyUser());
+			settingsXml = _replaceSettingsXmlElement(
+				settingsXml, "[$HTTP_PROXY_PASSWORD$]", getHttpProxyPassword());
+			settingsXml = _replaceSettingsXmlElement(
+				settingsXml, "[$HTTP_PROXY_NON_PROXY_HOSTS$]",
+				getHttpNonProxyHosts());
 		}
 		else {
-			mavenSettingsXml = mavenSettingsXml.replaceFirst(
+			settingsXml = settingsXml.replaceFirst(
 				"<proxies>[\\s\\S]+<\\/proxies>", "");
 		}
 
 		Path settingsXmlPath = _mavenHomeDirPath.resolve("conf/settings.xml");
 
 		Files.write(
-			settingsXmlPath, mavenSettingsXml.getBytes(StandardCharsets.UTF_8));
+			settingsXmlPath, settingsXml.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private static void _append(StringBuilder sb, InputStream inputStream)
@@ -279,6 +300,20 @@ public class MavenExecutor extends ExternalResource {
 		}
 
 		return false;
+	}
+
+	private static String _replaceSettingsXmlElement(
+		String settingsXml, String placeholder, String value) {
+
+		if (Validator.isNotNull(value)) {
+			settingsXml = settingsXml.replace(placeholder, value);
+		}
+		else {
+			settingsXml = settingsXml.replaceFirst(
+				"<\\w+>" + Pattern.quote(placeholder) + "<\\/\\w+>\\s+", "");
+		}
+
+		return settingsXml;
 	}
 
 	private Path _checkMavenHomeDirPath() {

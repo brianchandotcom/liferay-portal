@@ -284,18 +284,19 @@ public class BundleSupportCommandsTest {
 	}
 
 	protected void initBundle(
-			File cacheDir, File configsDir, File liferayHomeDir,
-			String password, URL url, String userName)
+			File cacheDir, File configsDir, String environment,
+			File liferayHomeDir, String password, int stripComponents, URL url,
+			String userName)
 		throws Exception {
 
 		InitBundleCommand initBundleCommand = new InitBundleCommand();
 
 		initBundleCommand.setCacheDir(cacheDir);
 		initBundleCommand.setConfigsDir(configsDir);
-		initBundleCommand.setEnvironment("local");
+		initBundleCommand.setEnvironment(environment);
 		initBundleCommand.setLiferayHomeDir(liferayHomeDir);
 		initBundleCommand.setPassword(password);
-		initBundleCommand.setStripComponents(0);
+		initBundleCommand.setStripComponents(stripComponents);
 		initBundleCommand.setUrl(url);
 		initBundleCommand.setUserName(userName);
 
@@ -502,8 +503,8 @@ public class BundleSupportCommandsTest {
 		URI uri = file.toURI();
 
 		initBundle(
-			cacheDir, configsDir, liferayHomeDir, password, uri.toURL(),
-			userName);
+			cacheDir, configsDir, _INIT_BUNDLE_ENVIRONMENT, liferayHomeDir,
+			password, _INIT_BUNDLE_STRIP_COMPONENTS, uri.toURL(), userName);
 	}
 
 	private void _initBundle(
@@ -516,7 +517,8 @@ public class BundleSupportCommandsTest {
 			"http", "localhost.localdomain", _HTTP_SERVER_PORT, contextPath);
 
 		initBundle(
-			cacheDir, configsDir, liferayHomeDir, password, url, userName);
+			cacheDir, configsDir, _INIT_BUNDLE_ENVIRONMENT, liferayHomeDir,
+			password, _INIT_BUNDLE_STRIP_COMPONENTS, url, userName);
 	}
 
 	private void _testDistBundle(String format) throws Exception {
@@ -588,7 +590,8 @@ public class BundleSupportCommandsTest {
 
 		File configsDir = temporaryFolder.newFolder("configs");
 
-		File configsLocalDir = _createDirectory(configsDir, "local");
+		File configsLocalDir = _createDirectory(
+			configsDir, _INIT_BUNDLE_ENVIRONMENT);
 
 		File localPropertiesFile = _createFile(
 			configsLocalDir, "portal-ext.properties");
@@ -635,6 +638,10 @@ public class BundleSupportCommandsTest {
 	private static final String _HTTP_SERVER_REALM = "test";
 
 	private static final String _HTTP_SERVER_USER_NAME = "test";
+
+	private static final String _INIT_BUNDLE_ENVIRONMENT = "local";
+
+	private static final int _INIT_BUNDLE_STRIP_COMPONENTS = 0;
 
 	private static final AtomicBoolean _authenticatedHttpProxyHit =
 		new AtomicBoolean();

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.bundle.support.maven;
 
+import java.io.File;
+
 import java.net.URL;
 
 import org.apache.maven.plugins.annotations.Parameter;
@@ -22,6 +24,9 @@ import org.apache.maven.plugins.annotations.Parameter;
  * @author David Truong
  */
 public abstract class AbstractBundleMojo extends AbstractLiferayMojo {
+
+	@Parameter(defaultValue = "${user.home}/.liferay/bundles")
+	protected File cacheDir;
 
 	@Parameter(defaultValue = "configs")
 	protected String configs;

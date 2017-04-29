@@ -64,6 +64,7 @@ public class InitBundleMojo extends AbstractBundleMojo {
 		try {
 			InitBundleCommand initBundleCommand = new InitBundleCommand();
 
+			initBundleCommand.setCacheDir(cacheDir);
 			initBundleCommand.setConfigsDir(
 				new File(project.getBasedir(), configs));
 			initBundleCommand.setEnvironment(environment);

@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import java.net.InetSocketAddress;
+import java.net.ServerSocket;
 import java.net.URI;
 import java.net.URL;
 
@@ -402,6 +403,30 @@ public class BundleSupportCommandsTest {
 		return httpServer.createContext(contextPath, httpHandler);
 	}
 
+	private static int _getTestPort(int... excludedPorts) throws IOException {
+		for (int i = 0; i < _TEST_PORT_RETRIES; i++) {
+			try (ServerSocket serverSocket = new ServerSocket(0)) {
+				int port = serverSocket.getLocalPort();
+
+				boolean found = false;
+
+				for (int excludedPort : excludedPorts) {
+					if (excludedPort == port) {
+						found = true;
+
+						break;
+					}
+				}
+
+				if (!found) {
+					return port;
+				}
+			}
+		}
+
+		throw new IOException("Unable to find a test port");
+	}
+
 	private static HttpProxyServer _startHttpProxyServer(
 		int port, boolean authenticate, final AtomicBoolean hit) {
 
@@ -617,7 +642,7 @@ public class BundleSupportCommandsTest {
 			liferayHomeDir, "bin/hello.sh", _expectedPosixFilePermissions);
 	}
 
-	private static final int _AUTHENTICATED_HTTP_PROXY_SERVER_PORT = 9999;
+	private static final int _AUTHENTICATED_HTTP_PROXY_SERVER_PORT;
 
 	private static final String _CONTEXT_PATH_TAR = "/test.tar.gz";
 
@@ -625,7 +650,7 @@ public class BundleSupportCommandsTest {
 
 	private static final String _HTTP_PROXY_SERVER_PASSWORD = "proxyTest";
 
-	private static final int _HTTP_PROXY_SERVER_PORT = 9998;
+	private static final int _HTTP_PROXY_SERVER_PORT;
 
 	private static final String _HTTP_PROXY_SERVER_REALM = "proxyTest";
 
@@ -633,7 +658,7 @@ public class BundleSupportCommandsTest {
 
 	private static final String _HTTP_SERVER_PASSWORD = "test";
 
-	private static final int _HTTP_SERVER_PORT = 8888;
+	private static final int _HTTP_SERVER_PORT;
 
 	private static final String _HTTP_SERVER_REALM = "test";
 
@@ -642,6 +667,8 @@ public class BundleSupportCommandsTest {
 	private static final String _INIT_BUNDLE_ENVIRONMENT = "local";
 
 	private static final int _INIT_BUNDLE_STRIP_COMPONENTS = 0;
+
+	private static final int _TEST_PORT_RETRIES = 20;
 
 	private static final AtomicBoolean _authenticatedHttpProxyHit =
 		new AtomicBoolean();
@@ -653,5 +680,20 @@ public class BundleSupportCommandsTest {
 	private static final AtomicBoolean _httpProxyHit = new AtomicBoolean();
 	private static HttpProxyServer _httpProxyServer;
 	private static HttpServer _httpServer;
+
+	static {
+		try {
+			_AUTHENTICATED_HTTP_PROXY_SERVER_PORT = _getTestPort();
+
+			_HTTP_PROXY_SERVER_PORT = _getTestPort(
+				_AUTHENTICATED_HTTP_PROXY_SERVER_PORT);
+
+			_HTTP_SERVER_PORT = _getTestPort(
+				_AUTHENTICATED_HTTP_PROXY_SERVER_PORT, _HTTP_PROXY_SERVER_PORT);
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
+	}
 
 }

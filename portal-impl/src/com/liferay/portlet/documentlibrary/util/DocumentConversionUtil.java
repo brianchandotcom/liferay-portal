@@ -24,7 +24,10 @@ import java.io.InputStream;
 /**
  * @author Bruno Farache
  * @author Alexander Chow
+ * @deprecated As of 7.0.0, moved to {@link
+ * 			   com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil}
  */
+@Deprecated
 public class DocumentConversionUtil {
 
 	public static File convert(

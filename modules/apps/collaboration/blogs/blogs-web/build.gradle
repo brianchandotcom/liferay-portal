@@ -9,7 +9,6 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.expando.taglib", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.exportimport.service", version: "3.0.0"
-	provided group: "com.liferay", name: "com.liferay.flags.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.taglib", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
@@ -27,6 +26,7 @@ dependencies {
 	provided project(":apps:collaboration:blogs:blogs-api")
 	provided project(":apps:collaboration:blogs:blogs-service")
 	provided project(":apps:collaboration:comment:comment-taglib")
+	provided project(":apps:collaboration:flags:flags-taglib")
 	provided project(":apps:collaboration:item-selector:item-selector-api")
 	provided project(":apps:collaboration:item-selector:item-selector-criteria-api")
 	provided project(":apps:collaboration:subscription:subscription-api")

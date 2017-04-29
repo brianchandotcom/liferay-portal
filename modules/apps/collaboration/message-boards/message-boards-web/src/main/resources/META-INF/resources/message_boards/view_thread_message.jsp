@@ -146,7 +146,8 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								className="<%= MBMessage.class.getName() %>"
 								classPK="<%= message.getMessageId() %>"
 								contentTitle="<%= message.getSubject() %>"
-								message=""
+								enabled="<%= !message.isInTrash() %>"
+								message='<%= message.isInTrash() ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : StringPool.BLANK %>'
 								reportedUserId="<%= message.getUserId() %>"
 							/>
 						</c:if>

@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.display.context.logic;
 
 import com.liferay.document.library.display.context.DLUIItemKeys;
+import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -61,7 +62,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.HashMap;

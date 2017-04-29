@@ -36,15 +36,29 @@ public class ProvidesResourceBundleLoaderAnalyzerPlugin
 			return false;
 		}
 
-		Parameters provideCapabilityHeaders = new SortedParameters(
+		Parameters provideCapabilityHeaders = new Parameters(
 			analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
+
+		Parameters parameters = new Parameters();
 
 		Attrs attrs = new Attrs();
 
 		attrs.put("bundle.symbolic.name", analyzer.getBsn());
 		attrs.put("resource.bundle.base.name", "content.Language");
 
-		provideCapabilityHeaders.add("liferay.resource.bundle", attrs);
+		parameters.add(
+			ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE, attrs);
+
+		if (provideCapabilityHeaders.containsKey(
+				ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE)) {
+
+			provideCapabilityHeaders.add(
+				ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE,
+				attrs);
+		}
+		else {
+			provideCapabilityHeaders.mergeWith(parameters, false);
+		}
 
 		analyzer.setProperty(
 			Constants.PROVIDE_CAPABILITY, provideCapabilityHeaders.toString());

@@ -73,7 +73,9 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 
 			Entry<String, Attrs> entry = provides.get(0);
 
-			Assert.assertEquals("liferay.resource.bundle", entry.getKey());
+			Assert.assertEquals(
+				ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE,
+				entry.getKey());
 
 			Attrs attrs = entry.getValue();
 
@@ -127,7 +129,8 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			Entry<String, Attrs> aggregateEntry = provides.get(0);
 
 			Assert.assertEquals(
-				"liferay.resource.bundle", aggregateEntry.getKey());
+				ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE,
+				aggregateEntry.getKey());
 
 			Attrs aggregateEntryAttrs = aggregateEntry.getValue();
 
@@ -162,7 +165,8 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 			Entry<String, Attrs> liferayResourceBundleEntry = provides.get(1);
 
 			Assert.assertEquals(
-				"liferay.resource.bundle~",
+				ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE +
+					"~",
 				liferayResourceBundleEntry.getKey());
 
 			Attrs liferayResourceBundleAttrs =
@@ -240,7 +244,7 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 				analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
 
 			Attrs attrs = provideCapabilityHeaders.get(
-				"liferay.resource.bundle");
+				ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE);
 
 			Assert.assertNotNull(attrs);
 
@@ -272,7 +276,7 @@ public class ResourceBundleLoaderAnalyzerPluginTest {
 				analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
 
 			Attrs attrs = provideCapabilityHeaders.get(
-				"liferay.resource.bundle");
+				ResourceBundleLoaderAnalyzerPlugin.LIFERAY_RESOURCE_BUNDLE);
 
 			Assert.assertNull(attrs);
 		}

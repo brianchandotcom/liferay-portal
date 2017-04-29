@@ -162,11 +162,20 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		</c:if>
 
 		<c:if test="<%= assetPublisherDisplayContext.isEnableFlags() %>">
+
+			<%
+			TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(assetRenderer.getClassName());
+
+			boolean inTrash = trashHandler.isInTrash(assetEntry.getClassPK());
+			%>
+
 			<div class="asset-flag">
 				<liferay-flags:flags
 					className="<%= assetEntry.getClassName() %>"
 					classPK="<%= assetEntry.getClassPK() %>"
 					contentTitle="<%= title %>"
+					enabled="<%= !inTrash %>"
+					message='<%= inTrash ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : StringPool.BLANK %>'
 					reportedUserId="<%= assetRenderer.getUserId() %>"
 				/>
 			</div>

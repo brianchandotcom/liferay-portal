@@ -301,6 +301,8 @@ String socialBookmarksDisplayPosition = blogsPortletInstanceConfiguration.social
 								className="<%= BlogsEntry.class.getName() %>"
 								classPK="<%= entry.getEntryId() %>"
 								contentTitle="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"
+								enabled="<%= !entry.isInTrash() %>"
+								message='<%= entry.isInTrash() ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : StringPool.BLANK %>'
 								reportedUserId="<%= entry.getUserId() %>"
 							/>
 						</div>

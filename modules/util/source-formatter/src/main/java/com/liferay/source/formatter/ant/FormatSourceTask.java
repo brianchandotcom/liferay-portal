@@ -75,10 +75,6 @@ public class FormatSourceTask extends Task {
 		_sourceFormatterArgs.setBaseDirName(baseDir);
 	}
 
-	public void setCopyright(String copyright) {
-		_sourceFormatterArgs.setCopyrightFileName(copyright);
-	}
-
 	public void setFileNames(String fileNames) {
 		_sourceFormatterArgs.setFileNames(
 			Arrays.asList(StringUtil.split(fileNames)));

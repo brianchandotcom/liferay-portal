@@ -56,11 +56,19 @@ public class FormatSourceTask extends JavaExec {
 		return _sourceFormatterArgs.getBaseDirName();
 	}
 
+	/**
+	 * @deprecated As of 1.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public File getCopyrightFile() {
 		return GradleUtil.toFile(
 			getProject(), _sourceFormatterArgs.getCopyrightFileName());
 	}
 
+	/**
+	 * @deprecated As of 1.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String getCopyrightFileName() {
 		return _sourceFormatterArgs.getCopyrightFileName();
 	}
@@ -141,6 +149,10 @@ public class FormatSourceTask extends JavaExec {
 		_sourceFormatterArgs.setBaseDirName(baseDirName);
 	}
 
+	/**
+	 * @deprecated As of 1.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setCopyrightFileName(String copyrightFileName) {
 		_sourceFormatterArgs.setCopyrightFileName(copyrightFileName);
 	}

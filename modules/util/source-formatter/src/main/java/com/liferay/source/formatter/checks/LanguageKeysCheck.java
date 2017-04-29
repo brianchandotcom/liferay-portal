@@ -47,11 +47,18 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	}
 
 	@Override
+	public boolean isPortalCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!fileName.endsWith("JSPLanguageUtilCheck.java")) {
+		if (!isSubrepository() &&
+			!fileName.endsWith("JSPLanguageUtilCheck.java")) {
+
 			_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
 		}
 

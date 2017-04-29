@@ -28,6 +28,11 @@ import org.dom4j.Element;
 public class XMLTestIgnorableErrorLinesFileCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isPortalCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws Exception {

@@ -32,7 +32,8 @@ public class CompatClassImportsCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (absolutePath.contains("/ext-") ||
+		if (isPortalSource() || isSubrepository() ||
+			absolutePath.contains("/ext-") ||
 			absolutePath.contains("/portal-compat-shared/")) {
 
 			return content;

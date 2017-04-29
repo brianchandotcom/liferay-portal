@@ -30,6 +30,10 @@ public interface SourceCheck {
 
 	public void init() throws Exception;
 
+	public boolean isModulesCheck();
+
+	public boolean isPortalCheck();
+
 	public void setAllFileNames(List<String> allFileNames);
 
 	public void setBaseDirName(String baseDirName);

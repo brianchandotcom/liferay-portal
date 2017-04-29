@@ -23,6 +23,11 @@ public class JavaModuleExtendedObjectClassDefinitionCheck
 	extends BaseFileCheck {
 
 	@Override
+	public boolean isModulesCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 

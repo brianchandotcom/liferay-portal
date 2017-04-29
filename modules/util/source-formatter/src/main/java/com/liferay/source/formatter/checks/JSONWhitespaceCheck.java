@@ -29,10 +29,6 @@ import java.util.regex.Pattern;
  */
 public class JSONWhitespaceCheck extends WhitespaceCheck {
 
-	public JSONWhitespaceCheck(boolean allowLeadingSpaces) {
-		super(allowLeadingSpaces);
-	}
-
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)

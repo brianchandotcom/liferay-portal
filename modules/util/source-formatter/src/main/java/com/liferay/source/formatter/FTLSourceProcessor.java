@@ -14,16 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.source.formatter.checks.FTLEmptyLinesCheck;
-import com.liferay.source.formatter.checks.FTLIfStatementCheck;
-import com.liferay.source.formatter.checks.FTLImportsCheck;
-import com.liferay.source.formatter.checks.FTLLiferayVariableOrderCheck;
-import com.liferay.source.formatter.checks.FTLStringRelationalOperatorCheck;
-import com.liferay.source.formatter.checks.FTLTagCheck;
-import com.liferay.source.formatter.checks.FTLWhitespaceCheck;
-import com.liferay.source.formatter.checks.SourceCheck;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,22 +34,6 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
-	}
-
-	@Override
-	protected List<SourceCheck> getSourceChecks() {
-		List<SourceCheck> sourceChecks = new ArrayList<>();
-
-		sourceChecks.add(new FTLWhitespaceCheck());
-
-		sourceChecks.add(new FTLEmptyLinesCheck());
-		sourceChecks.add(new FTLIfStatementCheck());
-		sourceChecks.add(new FTLImportsCheck());
-		sourceChecks.add(new FTLLiferayVariableOrderCheck());
-		sourceChecks.add(new FTLStringRelationalOperatorCheck());
-		sourceChecks.add(new FTLTagCheck());
-
-		return sourceChecks;
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.ftl"};

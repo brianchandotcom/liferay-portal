@@ -14,12 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.source.formatter.checks.JSONIndentationCheck;
-import com.liferay.source.formatter.checks.JSONPropertyOrderCheck;
-import com.liferay.source.formatter.checks.JSONWhitespaceCheck;
-import com.liferay.source.formatter.checks.SourceCheck;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,18 +29,6 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
-	}
-
-	@Override
-	protected List<SourceCheck> getSourceChecks() {
-		List<SourceCheck> sourceChecks = new ArrayList<>();
-
-		sourceChecks.add(new JSONWhitespaceCheck(true));
-
-		sourceChecks.add(new JSONIndentationCheck());
-		sourceChecks.add(new JSONPropertyOrderCheck());
-
-		return sourceChecks;
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.json"};

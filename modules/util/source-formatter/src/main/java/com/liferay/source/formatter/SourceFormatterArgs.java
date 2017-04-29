@@ -26,8 +26,6 @@ public class SourceFormatterArgs {
 
 	public static final String BASE_DIR_NAME = "./";
 
-	public static final String COPYRIGHT_FILE_NAME = "copyright.txt";
-
 	public static final boolean FORMAT_CURRENT_BRANCH = false;
 
 	public static final boolean FORMAT_LATEST_AUTHOR = false;
@@ -53,10 +51,6 @@ public class SourceFormatterArgs {
 
 	public String getBaseDirName() {
 		return _baseDirName;
-	}
-
-	public String getCopyrightFileName() {
-		return _copyrightFileName;
 	}
 
 	public List<String> getFileExtensions() {
@@ -131,10 +125,6 @@ public class SourceFormatterArgs {
 		_baseDirName = baseDirName;
 	}
 
-	public void setCopyrightFileName(String copyrightFileName) {
-		_copyrightFileName = copyrightFileName;
-	}
-
 	public void setFileExtensions(List<String> fileExtensions) {
 		_fileExtensions = fileExtensions;
 	}
@@ -198,7 +188,6 @@ public class SourceFormatterArgs {
 
 	private boolean _autoFix = AUTO_FIX;
 	private String _baseDirName = BASE_DIR_NAME;
-	private String _copyrightFileName = COPYRIGHT_FILE_NAME;
 	private List<String> _fileExtensions = new ArrayList<>();
 	private List<String> _fileNames;
 	private boolean _formatCurrentBranch = FORMAT_CURRENT_BRANCH;

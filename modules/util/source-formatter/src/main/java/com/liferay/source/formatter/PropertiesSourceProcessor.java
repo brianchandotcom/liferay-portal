@@ -14,17 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.source.formatter.checks.PropertiesDefinitionKeysCheck;
-import com.liferay.source.formatter.checks.PropertiesDependenciesFileCheck;
-import com.liferay.source.formatter.checks.PropertiesLiferayPluginPackageFileCheck;
-import com.liferay.source.formatter.checks.PropertiesLongLinesCheck;
-import com.liferay.source.formatter.checks.PropertiesPortalFileCheck;
-import com.liferay.source.formatter.checks.PropertiesPortletFileCheck;
-import com.liferay.source.formatter.checks.PropertiesSourceFormatterFileCheck;
-import com.liferay.source.formatter.checks.PropertiesWhitespaceCheck;
-import com.liferay.source.formatter.checks.SourceCheck;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,23 +43,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			"**/portal-ext.properties", "**/portlet.properties",
 			"**/source-formatter.properties"
 		};
-	}
-
-	@Override
-	protected List<SourceCheck> getSourceChecks() throws Exception {
-		List<SourceCheck> sourceChecks = new ArrayList<>();
-
-		sourceChecks.add(new PropertiesWhitespaceCheck(true));
-
-		sourceChecks.add(new PropertiesDefinitionKeysCheck());
-		sourceChecks.add(new PropertiesDependenciesFileCheck());
-		sourceChecks.add(new PropertiesLiferayPluginPackageFileCheck());
-		sourceChecks.add(new PropertiesLongLinesCheck());
-		sourceChecks.add(new PropertiesPortalFileCheck());
-		sourceChecks.add(new PropertiesPortletFileCheck());
-		sourceChecks.add(new PropertiesSourceFormatterFileCheck());
-
-		return sourceChecks;
 	}
 
 }

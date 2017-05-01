@@ -33,8 +33,7 @@ public class WeDeployAuthAppLocalServiceImpl
 	extends WeDeployAuthAppLocalServiceBaseImpl {
 
 	public WeDeployAuthApp addWeDeployAuthApp(
-			long companyId, long userId, String name,
-			ServiceContext serviceContext)
+			long userId, String name, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.fetchUserById(userId);

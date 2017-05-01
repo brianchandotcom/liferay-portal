@@ -26,11 +26,9 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CompanyId" return-type="WeDeployAuthApp">
-			<finder-column name="companyId" />
-		</finder>
-		<finder name="ClientId" return-type="WeDeployAuthApp">
+		<finder name="CI_CS" return-type="WeDeployAuthApp">
 			<finder-column name="clientId" />
+			<finder-column name="clientSecret" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="WeDeployAuthToken" remote-service="true" uuid="false">
@@ -55,17 +53,10 @@
 
 		<!-- Finder methods -->
 
-		<finder name="ClientId" return-type="WeDeployAuthToken">
+		<finder name="CI_T_T" return-type="WeDeployAuthToken">
 			<finder-column name="clientId" />
-		</finder>
-		<finder name="ClientIdAndTokenType" return-type="WeDeployAuthToken">
-			<finder-column name="clientId" />
+			<finder-column name="token" />
 			<finder-column name="type" />
 		</finder>
 	</entity>
-	<exceptions>
-		<exception>ClientSecretMismatch</exception>
-		<exception>NoSuchClient</exception>
-		<exception>RequestTokenMismatch</exception>
-	</exceptions>
 </service-builder>

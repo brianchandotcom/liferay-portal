@@ -100,10 +100,10 @@ public class WeDeployAuthTokenLocalServiceImpl
 		throws PortalException {
 
 		WeDeployAuthApp weDeployAuthApp =
-			weDeployAuthAppPersistence.findByClientId(clientId, clientSecret);
+			weDeployAuthAppPersistence.findByCI_CS(clientId, clientSecret);
 
 		WeDeployAuthToken weDeployAuthToken =
-			weDeployAuthTokenPersistence.getByCI_T_T(
+			weDeployAuthTokenPersistence.findByCI_T_T(
 				clientId, authorizationToken, type);
 	}
 

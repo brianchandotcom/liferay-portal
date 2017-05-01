@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Upgrade
 Bundle-SymbolicName: com.liferay.portal.upgrade
-Bundle-Version: 2.5.3
+Bundle-Version: 2.6.0
 Export-Package:\
 	com.liferay.portal.upgrade.registry,\
 	com.liferay.portal.upgrade.release

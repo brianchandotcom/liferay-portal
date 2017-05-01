@@ -113,8 +113,8 @@ portlet URLs without passing the request as a necessary parameter.
 #### What changed?
 
 The Users File Uploads portlet properties have been moved from Server
-Administration to an OSGI configuration named `UserFileUploadsConfiguration`
-in the `users-admin-api` module.
+Administration to an OSGI configuration named
+`UserFileUploadsConfiguration.java` in the `users-admin-api` module.
 
 #### Who is affected?
 
@@ -129,9 +129,9 @@ This affects anyone who is using the following portlet properties:
 
 Instead of overriding the `portal.properties` file, you can manage the
 properties from Portal's configuration administrator. This can be accessed by
-navigating to Liferay's *Control Panel* &rarr; *Configuration* &rarr; *System
-Settings* &rarr; *Foundation* &rarr; *User Images* and editing the settings
-there.
+navigating to Liferay Portal's *Control Panel* &rarr; *Configuration* &rarr;
+*System Settings* &rarr; *Foundation* &rarr; *User Images* and editing the
+settings there.
 
 If you would like to include the new configuration in your application, follow
 the instructions for
@@ -201,7 +201,7 @@ configuration changes.
 #### What changed?
 
 The OpenOffice properties have been moved from Server Administration to an OSGi
-configuration named `OpenOfficeConfiguration` in the
+configuration named `OpenOfficeConfiguration.java` in the
 `document-library-document-conversion` module.
 
 #### Who is affected?
@@ -217,8 +217,8 @@ This affects anyone who is using the following portal properties:
 
 Instead of overriding the `portal.properties` file, you can manage the
 properties from Portal's configuration administrator. This can be accessed by
-navigating to Liferay's *Control Panel* &rarr; *Configuration* &rarr; *System
-Settings* &rarr; *Other* &rarr; *OpenOffice Integration* and editing the
+navigating to Liferay Portal's *Control Panel* &rarr; *Configuration* &rarr;
+*System Settings* &rarr; *Other* &rarr; *OpenOffice Integration* and editing the
 settings there.
 
 If you would like to include the new configuration in your application, follow

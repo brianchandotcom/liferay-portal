@@ -20,12 +20,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.wedeploy.auth.constants.WeDeployAuthTokenConstants;
-import com.liferay.portal.security.wedeploy.auth.exception.ClientSecretMismatchException;
-import com.liferay.portal.security.wedeploy.auth.exception.NoSuchClientException;
-import com.liferay.portal.security.wedeploy.auth.exception.RequestTokenMismatchException;
-import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken;
 import com.liferay.portal.security.wedeploy.auth.service.base.WeDeployAuthTokenLocalServiceBaseImpl;
 
@@ -38,76 +33,46 @@ public class WeDeployAuthTokenLocalServiceImpl
 	extends WeDeployAuthTokenLocalServiceBaseImpl {
 
 	public WeDeployAuthToken addAccessWeDeployAuthToken(
-			long companyId, long userId, String clientId, String clientSecret,
-			String requestToken, int type, ServiceContext serviceContext)
+			long userId, String clientId, String clientSecret,
+			String authorizationToken, int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		WeDeployAuthApp weDeployAuthApp =
-			weDeployAuthAppPersistence.fetchByClientId(clientId);
-
-		if (weDeployAuthApp == null) {
-			throw new NoSuchClientException("No such client exists ");
-		}
-
-		if (!StringUtil.equalsIgnoreCase(
-				clientSecret, weDeployAuthApp.getClientSecret())) {
-
-			throw new ClientSecretMismatchException(
-				"Client secret does not match ");
-		}
-
-		WeDeployAuthToken weDeployAuthToken =
-			weDeployAuthTokenPersistence.fetchByClientIdAndTokenType(
-				clientId, type);
-
-		if (!StringUtil.equalsIgnoreCase(
-				requestToken, weDeployAuthToken.getToken())) {
-
-			throw new RequestTokenMismatchException(
-				"Request token does not match ");
-		}
+		validate(clientId, clientSecret, authorizationToken, type);
 
 		String token = DigesterUtil.digestHex(
-			Digester.MD5, clientId.concat(requestToken),
+			Digester.MD5, clientId.concat(authorizationToken),
 			PwdGenerator.getPassword());
 
 		return addWeDeployAuthToken(
-			companyId, userId, clientId, token,
+			userId, clientId, token,
 			WeDeployAuthTokenConstants.TOKEN_TYPE_ACCESS, new ServiceContext());
 	}
 
-	public WeDeployAuthToken addRequestWeDeployAuthToken(
-			long companyId, long userId, String clientId,
-			ServiceContext serviceContext)
+	public WeDeployAuthToken addAuthorizationWeDeployAuthToken(
+			long userId, String clientId, ServiceContext serviceContext)
 		throws PortalException {
 
 		String token = DigesterUtil.digestHex(
 			Digester.MD5, clientId, PwdGenerator.getPassword());
 
 		return addWeDeployAuthToken(
-			companyId, userId, clientId, token,
-			WeDeployAuthTokenConstants.TOKEN_TYPE_REQUEST,
+			userId, clientId, token,
+			WeDeployAuthTokenConstants.TOKEN_TYPE_AUTHORIZATION,
 			new ServiceContext());
 	}
 
 	public WeDeployAuthToken addWeDeployAuthToken(
-			long companyId, long userId, String clientId, String token,
-			int type, ServiceContext serviceContext)
+			long userId, String clientId, String token, int type,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.fetchUserById(userId);
 		Date date = new Date();
 
+		long weDeployAuthTokenId = counterLocalService.increment();
+
 		WeDeployAuthToken weDeployAuthToken =
-			weDeployAuthTokenPersistence.fetchByClientIdAndTokenType(
-				clientId, type);
-
-		if (weDeployAuthToken == null) {
-			long weDeployAuthTokenId = counterLocalService.increment();
-
-			weDeployAuthToken = weDeployAuthTokenPersistence.create(
-				weDeployAuthTokenId);
-		}
+			weDeployAuthTokenPersistence.create(weDeployAuthTokenId);
 
 		weDeployAuthToken.setCompanyId(user.getCompanyId());
 		weDeployAuthToken.setUserId(user.getUserId());
@@ -126,6 +91,17 @@ public class WeDeployAuthTokenLocalServiceImpl
 			weDeployAuthToken, serviceContext);
 
 		return weDeployAuthToken;
+	}
+
+	protected void validate(
+			String clientId, String clientSecret, String authorizationToken,
+			int type)
+		throws PortalException {
+
+		weDeployAuthAppPersistence.findByCI_CS(clientId, clientSecret);
+
+		weDeployAuthTokenPersistence.findByCI_T_T(
+			clientId, authorizationToken, type);
 	}
 
 }

@@ -12,4 +12,15 @@
 		<field name="clientId" type="String" />
 		<field name="clientSecret" type="String" />
 	</model>
+	<model name="com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken">
+		<field name="weDeployAuthTokenId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="clientId" type="String" />
+		<field name="token" type="String" />
+		<field name="type" type="int" />
+	</model>
 </model-hints>

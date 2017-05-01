@@ -2581,7 +2581,7 @@
 
 	<command name="SubmitFormWithAllFieldTypesAndThreePages" priority="5">
 		<description message="This is a use case for LPS-64798." />
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="pending" />
 
 		<execute macro="Navigator#openURL" />
 

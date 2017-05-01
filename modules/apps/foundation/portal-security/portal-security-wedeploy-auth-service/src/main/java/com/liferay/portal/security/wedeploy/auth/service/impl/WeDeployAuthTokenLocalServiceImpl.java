@@ -15,13 +15,17 @@
 package com.liferay.portal.security.wedeploy.auth.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.wedeploy.auth.constants.WeDeployAuthTokenConstants;
+import com.liferay.portal.security.wedeploy.auth.exception.ClientSecretMismatchException;
+import com.liferay.portal.security.wedeploy.auth.exception.NoSuchClientException;
+import com.liferay.portal.security.wedeploy.auth.exception.RequestTokenMismatchException;
+import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken;
 import com.liferay.portal.security.wedeploy.auth.service.base.WeDeployAuthTokenLocalServiceBaseImpl;
 
@@ -33,25 +37,85 @@ import java.util.Date;
 public class WeDeployAuthTokenLocalServiceImpl
 	extends WeDeployAuthTokenLocalServiceBaseImpl {
 
-	public WeDeployAuthToken addWeDeployAuthToken(
-			long userId, String token, int type,
-			long companyId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+	public WeDeployAuthToken addAccessWeDeployAuthToken(
+			long companyId, long userId, String clientId, String clientSecret,
+			String requestToken, int type, ServiceContext serviceContext)
+		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
-		Date date = new Date();
+		WeDeployAuthApp weDeployAuthApp =
+			weDeployAuthAppPersistence.fetchByClientId(clientId);
 
-		long weDeployAuthTokenId = counterLocalService.increment();
+		if (weDeployAuthApp == null) {
+			throw new NoSuchClientException("No such client exists ");
+		}
+
+		if (!StringUtil.equalsIgnoreCase(
+				clientSecret, weDeployAuthApp.getClientSecret())) {
+
+			throw new ClientSecretMismatchException(
+				"Client secret does not match ");
+		}
 
 		WeDeployAuthToken weDeployAuthToken =
-			weDeployAuthTokenPersistence.create(weDeployAuthTokenId);
+			weDeployAuthTokenPersistence.fetchByClientIdAndTokenType(
+				clientId, type);
+
+		if (!StringUtil.equalsIgnoreCase(
+				requestToken, weDeployAuthToken.getToken())) {
+
+			throw new RequestTokenMismatchException(
+				"Request token does not match ");
+		}
+
+		String token = DigesterUtil.digestHex(
+			Digester.MD5, clientId.concat(requestToken),
+			PwdGenerator.getPassword());
+
+		return addWeDeployAuthToken(
+			companyId, userId, clientId, token,
+			WeDeployAuthTokenConstants.TOKEN_TYPE_ACCESS, new ServiceContext());
+	}
+
+	public WeDeployAuthToken addRequestWeDeployAuthToken(
+			long companyId, long userId, String clientId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		String token = DigesterUtil.digestHex(
+			Digester.MD5, clientId, PwdGenerator.getPassword());
+
+		return addWeDeployAuthToken(
+			companyId, userId, clientId, token,
+			WeDeployAuthTokenConstants.TOKEN_TYPE_REQUEST,
+			new ServiceContext());
+	}
+
+	public WeDeployAuthToken addWeDeployAuthToken(
+			long companyId, long userId, String clientId, String token,
+			int type, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.fetchUserById(userId);
+		Date date = new Date();
+
+		WeDeployAuthToken weDeployAuthToken =
+			weDeployAuthTokenPersistence.fetchByClientIdAndTokenType(
+				clientId, type);
+
+		if (weDeployAuthToken == null) {
+			long weDeployAuthTokenId = counterLocalService.increment();
+
+			weDeployAuthToken = weDeployAuthTokenPersistence.create(
+				weDeployAuthTokenId);
+		}
 
 		weDeployAuthToken.setCompanyId(user.getCompanyId());
-		weDeployAuthToken.setToken(token);
 		weDeployAuthToken.setUserId(user.getUserId());
 		weDeployAuthToken.setUserName(user.getFullName());
 		weDeployAuthToken.setCreateDate(serviceContext.getCreateDate(date));
 		weDeployAuthToken.setModifiedDate(serviceContext.getModifiedDate(date));
+		weDeployAuthToken.setClientId(clientId);
+		weDeployAuthToken.setToken(token);
 		weDeployAuthToken.setType(type);
 
 		weDeployAuthTokenPersistence.update(weDeployAuthToken);
@@ -62,39 +126,6 @@ public class WeDeployAuthTokenLocalServiceImpl
 			weDeployAuthToken, serviceContext);
 
 		return weDeployAuthToken;
-	}
-
-	public WeDeployAuthToken addWeDeployAuthorizationCode(
-			String clientId, long userId, long companyId,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		String token = randomizeToken(clientId);
-
-		WeDeployAuthToken weDeployAuthToken= addWeDeployAuthToken(
-			userId, token, WeDeployAuthTokenConstants.TOKEN_TYPE_REQUEST,
-			companyId, serviceContext);
-
-		return weDeployAuthToken;
-	}
-
-	public WeDeployAuthToken addWeDeployAccessToken(
-			String clientId, String clientSecret, String authorizationCode,
-			long userId, long companyId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		String token = randomizeToken(clientId.concat(authorizationCode));
-
-		WeDeployAuthToken weDeployAuthToken= addWeDeployAuthToken(
-			userId, token, WeDeployAuthTokenConstants.TOKEN_TYPE_ACCESS,
-			companyId, new ServiceContext());
-
-		return weDeployAuthToken;
-	}
-
-	private static String randomizeToken(String token) {
-		return DigesterUtil.digestHex(
-			Digester.MD5, token, PwdGenerator.getPassword());
 	}
 
 }

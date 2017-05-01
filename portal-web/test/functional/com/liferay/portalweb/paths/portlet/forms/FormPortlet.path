@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>FORM_PAGE_ACTIVE</td>
-	<td>//ul[contains(@class,'multi-step-progress-bar')]/li[@class='active' and contains(.,'${key_formPageName}')]/div[@class='progress-bar-title']</td>
+	<td>//ul[contains(@class,'pagination-content')]//li[@class='active']/a[contains(.,'${key_formPageName}')] | //ul[contains(@class,'multi-step-progress-bar')]/li[@class='active' and contains(.,'${key_formPageName}')]/div[@class='progress-bar-title']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_PAGE_INACTIVE</td>
-	<td>//ul[contains(@class,'multi-step-progress-bar')]/li[not(contains(@class,'active')) and contains(.,'${key_formPageName}')]/div[@class='progress-bar-title']</td>
+	<td>//ul[contains(@class,'pagination-content')]//li[contains(.,'${key_formPageName}')] | //ul[contains(@class,'multi-step-progress-bar')]/li[not(contains(@class,'active')) and contains(.,'${key_formPageName}')]/div[@class='progress-bar-title']</td>
 	<td></td>
 </tr>
 <tr>

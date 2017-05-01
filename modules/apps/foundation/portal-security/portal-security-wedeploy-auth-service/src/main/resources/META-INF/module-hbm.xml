@@ -3,6 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp" />
+	<import class="com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken" />
 	<class name="com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthAppImpl" table="WeDeployAuth_WeDeployAuthApp">
 		<id name="weDeployAuthAppId" type="long">
 			<generator class="assigned" />
@@ -15,5 +16,18 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="clientId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="clientSecret" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthTokenImpl" table="WeDeployAuth_WeDeployAuthToken">
+		<id name="weDeployAuthTokenId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="clientId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="token" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 </hibernate-mapping>

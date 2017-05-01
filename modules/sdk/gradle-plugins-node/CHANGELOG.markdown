@@ -105,12 +105,12 @@ executing the `PublishNodeModuleTask`.
 
 ### Added
 - [LPS-72152]: Add property `npmUrl` to all tasks that extend
-`DownloadNodeTask`. If set, it allows to download a specific version of NPM in
-order to override the one that comes with the Node.js installation.
+`DownloadNodeTask`. If set, it downloads a specific version of NPM to override
+the one that comes with the Node.js installation.
 - [LPS-72152]: Add properties `npmUrl` and `npmVersion` to the `node` extension
 object. By default, `npmUrl` is equal to
 `https://registry.npmjs.org/npm/-/npm-${node.npmVersion}.tgz`. These properties
-allow to set a specific version of NPM to download with the `downloadNode` task.
+let you set a specific version of NPM to download with the `downloadNode` task.
 
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

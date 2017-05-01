@@ -1430,7 +1430,7 @@ task if the URL is protected.
 
 ### Added
 - [LPS-68813]: Execute `findSecurityBugs` with the `check` task.
-- [LPS-68813]: Make `findSecurityBugs` task visible in `gradle task`.
+- [LPS-68813]: Make the `findSecurityBugs` task visible in `gradle task`.
 
 ### Changed
 - [LPS-67039]: Embed and use [Liferay's PMD rule set file](https://github.com/liferay/liferay-plugins/blob/master/dependencies/net.sourceforge.pmd/rulesets/java/standard-rules.xml).

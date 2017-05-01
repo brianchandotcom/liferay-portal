@@ -24,8 +24,8 @@ Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
 Provide-Capability:\
 	liferay.resource.bundle;\
-		aggregate:String="(bundle.symbolic.name=com.liferay.journal.lang)";\
-		baseName="content.Language"
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.journal.lang)";\
+		resource.bundle.base.name="content.Language"
 Require-Capability:\
 	liferay.resource.bundle;\
 		filter:="(bundle.symbolic.name=com.liferay.journal.lang)"

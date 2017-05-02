@@ -120,6 +120,8 @@
 	</command>
 
 	<command name="openPublishURL">
+		<execute function="Click" locator1="Form#PUBLISH_ICON" />
+
 		<var locator="Form#PUBLISH_FORM_PUBLIC_URL" name="publishFormURL" />
 
 		<execute macro="Navigator#openSpecificURL">

@@ -190,6 +190,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISH_ICON</td>
+	<td>//button[contains(@id,'publishIcon')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

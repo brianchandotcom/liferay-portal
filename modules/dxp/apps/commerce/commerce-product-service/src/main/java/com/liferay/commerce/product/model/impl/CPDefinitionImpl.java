@@ -38,6 +38,16 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
+	public Object clone() {
+		CPDefinitionImpl cpDefinitionImpl = (CPDefinitionImpl)super.clone();
+
+		cpDefinitionImpl.setDescriptionMap(getDescriptionMap());
+		cpDefinitionImpl.setTitleMap(getTitleMap());
+
+		return cpDefinitionImpl;
+	}
+
+	@Override
 	public String[] getAvailableLanguageIds() {
 		Set<String> availableLanguageIds = new TreeSet<>();
 

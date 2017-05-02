@@ -82,7 +82,7 @@ public class EditCPDefinitionOptionRelMVCRenderCommand
 			}
 		}
 
-		return "/edit_commerce_product_definition_option_rel.jsp";
+		return "/edit_definition_option_rel.jsp";
 	}
 
 	@Reference

@@ -17,20 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-definition-details");
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-option-details");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("toolbarItem", toolbarItem);
-portletURL.setParameter("mvcRenderCommandName", "editProductDefinition");
+portletURL.setParameter("mvcRenderCommandName", "editProductOption");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
-CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
+CPOption cpOption = cpOptionDisplayContext.getCPOption();
 
-long cpDefinitionId = cpDefinitionsDisplayContext.getCPDefinitionId();
+long cpOptionId = cpOptionDisplayContext.getCPOptionId();
 
 PortletURL backUrl = liferayPortletResponse.createRenderURL();
 
@@ -41,40 +41,27 @@ String backURLString = backUrl.toString();
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURLString);
 
-renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-product") : cpDefinition.getTitle(languageId));
+renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-product-option") : cpOption.getName(locale));
 
 String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
 Set<Locale> availableLocalesSet = new HashSet<>();
 
 availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
-availableLocalesSet.addAll(cpDefinitionsDisplayContext.getAvailableLocales());
+availableLocalesSet.addAll(cpOptionDisplayContext.getAvailableLocales());
 
 Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
 %>
 
-<%@ include file="/commerce_product_definition_navbar.jspf" %>
+<%@ include file="/option_navbar.jspf" %>
 
-<portlet:actionURL name="editProductDefinition" var="editProductDefinitionActionURL" />
+<portlet:actionURL name="editProductOption" var="editProductOptionActionURL" />
 
-<aui:form action="<%= editProductDefinitionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+<aui:form action="<%= editProductOptionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpOption == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURLString %>" />
-	<aui:input name="cpDefinitionId" type="hidden" value="<%= String.valueOf(cpDefinitionId) %>" />
-
-	<c:if test="<%= (cpDefinition != null) && !cpDefinition.isNew() %>">
-		<liferay-frontend:info-bar>
-			<aui:workflow-status
-				id="<%= String.valueOf(cpDefinitionId) %>"
-				markupView="lexicon"
-				showHelpMessage="<%= false %>"
-				showIcon="<%= false %>"
-				showLabel="<%= false %>"
-				status="<%= cpDefinition.getStatus() %>"
-			/>
-		</liferay-frontend:info-bar>
-	</c:if>
+	<aui:input name="cpOptionId" type="hidden" value="<%= String.valueOf(cpOptionId) %>" />
 
 	<liferay-frontend:translation-manager
 		availableLocales="<%= availableLocales %>"
@@ -86,8 +73,8 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
 			backURL="<%= backURLString %>"
-			formModelBean="<%= cpDefinition %>"
-			id="<%= CPDefinitionFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION %>"
+			formModelBean="<%= cpOption %>"
+			id="<%= CPOptionFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_OPTION %>"
 			markupView="lexicon"
 		/>
 	</div>

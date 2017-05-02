@@ -66,7 +66,7 @@ public class EditCPOptionMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
-		return "/edit_commerce_product_option.jsp";
+		return "/edit_option.jsp";
 	}
 
 	protected void setCPOptionRequestAttribute(RenderRequest renderRequest)

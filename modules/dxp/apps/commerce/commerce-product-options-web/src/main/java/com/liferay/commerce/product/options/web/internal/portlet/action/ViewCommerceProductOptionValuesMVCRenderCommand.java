@@ -66,7 +66,7 @@ public class ViewCommerceProductOptionValuesMVCRenderCommand
 			SessionErrors.add(renderRequest, pe.getClass());
 		}
 
-		return "/commerce_product_option_values.jsp";
+		return "/option_values.jsp";
 	}
 
 	@Reference

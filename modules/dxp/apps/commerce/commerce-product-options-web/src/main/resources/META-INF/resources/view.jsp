@@ -71,7 +71,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				resourceURL="<%= sidebarPanelURL %>"
 				searchContainerId="cpOptions"
 			>
-				<liferay-util:include page="/commerce_product_option_info_panel.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/option_info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
 		</c:if>
 
@@ -116,7 +116,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 							<liferay-ui:search-container-column-jsp
 								cssClass="entry-action-column"
-								path="/commerce_product_option_action.jsp"
+								path="/option_action.jsp"
 							/>
 						</liferay-ui:search-container-row>
 

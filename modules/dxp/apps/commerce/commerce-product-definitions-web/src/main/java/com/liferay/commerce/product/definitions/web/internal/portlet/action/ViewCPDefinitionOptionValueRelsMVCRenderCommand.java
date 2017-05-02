@@ -70,7 +70,7 @@ public class ViewCPDefinitionOptionValueRelsMVCRenderCommand
 			SessionErrors.add(renderRequest, pe.getClass());
 		}
 
-		return "/commerce_product_definition_option_value_rels.jsp";
+		return "/definition_option_value_rels.jsp";
 	}
 
 	@Reference

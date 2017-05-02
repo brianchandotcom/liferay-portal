@@ -41,7 +41,7 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getName(locale));
 %>
 
-<%@ include file="/commerce_product_definition_option_rel_navbar.jspf" %>
+<%@ include file="/definition_option_rel_navbar.jspf" %>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -101,7 +101,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition
 				resourceURL="<%= sidebarPanelURL %>"
 				searchContainerId="cpDefinitionOptionValueRels"
 			>
-				<liferay-util:include page="/commerce_product_definition_option_value_rel_info_panel.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/definition_option_value_rel_info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
 		</c:if>
 
@@ -153,7 +153,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition
 
 							<liferay-ui:search-container-column-jsp
 								cssClass="entry-action-column"
-								path="/commerce_product_definition_option_value_rel_action.jsp"
+								path="/definition_option_value_rel_action.jsp"
 							/>
 						</liferay-ui:search-container-row>
 
@@ -168,7 +168,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition
 <liferay-portlet:renderURL var="addProductDefinitionOptionValueRelURL">
 	<portlet:param name="mvcRenderCommandName" value="editProductDefinitionOptionValueRel" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="backURL" value="<%= redirect %>" />
+	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRelId) %>" />
 </liferay-portlet:renderURL>
 

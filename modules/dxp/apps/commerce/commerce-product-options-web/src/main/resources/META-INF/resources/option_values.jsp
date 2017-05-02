@@ -45,7 +45,7 @@ portletDisplay.setURLBack(backURLString);
 renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-product-option") : cpOption.getName(locale));
 %>
 
-<%@ include file="/commerce_product_option_navbar.jspf" %>
+<%@ include file="/option_navbar.jspf" %>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -105,7 +105,7 @@ renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-prod
 				resourceURL="<%= sidebarPanelURL %>"
 				searchContainerId="cpOptionValues"
 			>
-				<liferay-util:include page="/commerce_product_option_value_info_panel.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/option_value_info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
 		</c:if>
 
@@ -151,7 +151,7 @@ renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-prod
 
 							<liferay-ui:search-container-column-jsp
 								cssClass="entry-action-column"
-								path="/commerce_product_option_value_action.jsp"
+								path="/option_value_action.jsp"
 							/>
 						</liferay-ui:search-container-row>
 

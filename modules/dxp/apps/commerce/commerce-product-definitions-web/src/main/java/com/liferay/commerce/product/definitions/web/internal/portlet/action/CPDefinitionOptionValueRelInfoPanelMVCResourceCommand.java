@@ -56,7 +56,7 @@ public class CPDefinitionOptionValueRelInfoPanelMVCResourceCommand
 
 		include(
 			resourceRequest, resourceResponse,
-			"/commerce_product_definition_option_value_rel_info_panel.jsp");
+			"/definition_option_value_rel_info_panel.jsp");
 	}
 
 	@Reference

@@ -45,7 +45,7 @@ portletDisplay.setURLBack(backURLString);
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
 %>
 
-<%@ include file="/commerce_product_definition_navbar.jspf" %>
+<%@ include file="/definition_navbar.jspf" %>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -105,7 +105,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 				resourceURL="<%= sidebarPanelURL %>"
 				searchContainerId="cpDefinitionOptionRels"
 			>
-				<liferay-util:include page="/commerce_product_definition_option_rel_info_panel.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/definition_option_rel_info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
 		</c:if>
 
@@ -169,7 +169,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
 							<liferay-ui:search-container-column-jsp
 								cssClass="entry-action-column"
-								path="/commerce_product_definition_option_rel_action.jsp"
+								path="/definition_option_rel_action.jsp"
 							/>
 						</liferay-ui:search-container-row>
 

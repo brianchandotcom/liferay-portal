@@ -71,7 +71,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				resourceURL="<%= sidebarPanelURL %>"
 				searchContainerId="cpDefinitions"
 			>
-				<liferay-util:include page="/commerce_product_definition_info_panel.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/definition_info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
 		</c:if>
 
@@ -105,7 +105,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 							<c:choose>
 								<c:when test='<%= displayStyle.equals("descriptive") %>'>
-									<%@ include file="/commerce_product_definition_descriptive.jspf" %>
+									<%@ include file="/definition_descriptive.jspf" %>
 								</c:when>
 								<c:when test='<%= displayStyle.equals("icon") %>'>
 
@@ -115,7 +115,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 									<liferay-ui:search-container-column-text>
 										<liferay-frontend:icon-vertical-card
-											actionJsp="/commerce_product_definition_action.jsp"
+											actionJsp="/definition_action.jsp"
 											actionJspServletContext="<%= application %>"
 											icon="web-content"
 											resultRow="<%= row %>"
@@ -123,12 +123,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 											title="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
 											url="<%= rowURL.toString() %>"
 										>
-											<%@ include file="/commerce_product_definition_vertical_card.jspf" %>
+											<%@ include file="/definition_vertical_card.jspf" %>
 										</liferay-frontend:icon-vertical-card>
 									</liferay-ui:search-container-column-text>
 								</c:when>
 								<c:otherwise>
-									<%@ include file="/commerce_product_definition_columns.jspf" %>
+									<%@ include file="/definition_columns.jspf" %>
 								</c:otherwise>
 							</c:choose>
 						</liferay-ui:search-container-row>

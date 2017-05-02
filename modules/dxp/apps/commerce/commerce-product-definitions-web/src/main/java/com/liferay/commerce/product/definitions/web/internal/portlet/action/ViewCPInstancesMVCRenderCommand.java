@@ -66,7 +66,7 @@ public class ViewCPInstancesMVCRenderCommand implements MVCRenderCommand {
 			SessionErrors.add(renderRequest, pe.getClass());
 		}
 
-		return "/commerce_product_instances.jsp";
+		return "/instances.jsp";
 	}
 
 	@Reference

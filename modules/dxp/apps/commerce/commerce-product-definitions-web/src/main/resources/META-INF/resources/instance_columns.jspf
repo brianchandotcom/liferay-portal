@@ -23,5 +23,5 @@
 
 <liferay-ui:search-container-column-jsp
 	cssClass="entry-action-column"
-	path="/commerce_product_instance_action.jsp"
+	path="/instance_action.jsp"
 />

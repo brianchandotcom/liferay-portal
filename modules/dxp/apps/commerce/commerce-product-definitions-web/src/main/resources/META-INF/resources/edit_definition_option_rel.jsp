@@ -37,7 +37,7 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getName(locale));
 %>
 
-<%@ include file="/commerce_product_definition_option_rel_navbar.jspf" %>
+<%@ include file="/definition_option_rel_navbar.jspf" %>
 
 <portlet:actionURL name="editProductDefinitionOptionRel" var="editProductDefinitionOptionRelActionURL" />
 

@@ -17,33 +17,33 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = (List<CPDefinitionOptionValueRel>)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_RELS);
+List<CPDefinition> cpDefinitions = (List<CPDefinition>)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITIONS);
 
-if (ListUtil.isEmpty(cpDefinitionOptionValueRels)) {
-	cpDefinitionOptionValueRels = Collections.emptyList();
+if (ListUtil.isEmpty(cpDefinitions)) {
+	cpDefinitions = Collections.emptyList();
 }
 %>
 
 <c:choose>
-	<c:when test="<%= cpDefinitionOptionValueRels.size() == 1 %>">
+	<c:when test="<%= cpDefinitions.size() == 1 %>">
 
 		<%
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel = cpDefinitionOptionValueRels.get(0);
+		CPDefinition cpDefinition = cpDefinitions.get(0);
 
-		request.setAttribute("info_panel.jsp-entry", cpDefinitionOptionValueRel);
+		request.setAttribute("info_panel.jsp-entry", cpDefinition);
 		%>
 
 		<div class="sidebar-header">
 			<ul class="sidebar-header-actions">
 				<li>
 					<liferay-util:include
-						page="/commerce_product_definition_option_value_rel_action.jsp"
+						page="/definition_action.jsp"
 						servletContext="<%= application %>"
 					/>
 				</li>
 			</ul>
 
-			<h4><%= HtmlUtil.escape(cpDefinitionOptionValueRel.getTitle(languageId)) %></h4>
+			<h4><%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %></h4>
 		</div>
 
 		<aui:nav-bar markupView="lexicon">
@@ -56,19 +56,29 @@ if (ListUtil.isEmpty(cpDefinitionOptionValueRels)) {
 			<h5><liferay-ui:message key="id" /></h5>
 
 			<p>
-				<%= HtmlUtil.escape(String.valueOf(cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId())) %>
+				<%= HtmlUtil.escape(String.valueOf(cpDefinition.getCPDefinitionId())) %>
+			</p>
+
+			<h5><liferay-ui:message key="status" /></h5>
+
+			<p>
+				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpDefinition.getStatus() %>" />
 			</p>
 		</div>
 	</c:when>
 	<c:otherwise>
+		<div class="sidebar-header">
+			<h4><liferay-ui:message arguments="<%= cpDefinitions.size() %>" key="x-items-are-selected" /></h4>
+		</div>
+
 		<aui:nav-bar>
 			<aui:nav cssClass="navbar-nav">
 				<aui:nav-item label="details" selected="<%= true %>" />
 			</aui:nav>
 		</aui:nav-bar>
 
-		<div class="sidebar-header">
-			<h4><liferay-ui:message arguments="<%= cpDefinitionOptionValueRels.size() %>" key="x-items-are-selected" /></h4>
+		<div class="sidebar-body">
+			<h5><liferay-ui:message arguments="<%= cpDefinitions.size() %>" key="x-items-are-selected" /></h5>
 		</div>
 	</c:otherwise>
 </c:choose>

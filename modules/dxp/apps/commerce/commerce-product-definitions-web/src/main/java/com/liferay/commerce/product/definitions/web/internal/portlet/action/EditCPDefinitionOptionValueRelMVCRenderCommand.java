@@ -79,7 +79,7 @@ public class EditCPDefinitionOptionValueRelMVCRenderCommand
 			}
 		}
 
-		return "/edit_commerce_product_definition_option_value_rel.jsp";
+		return "/edit_definition_option_value_rel.jsp";
 	}
 
 	@Reference

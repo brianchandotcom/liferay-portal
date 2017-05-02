@@ -83,7 +83,7 @@ public class EditCPDefinitionMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
-		return "/edit_commerce_product_definition.jsp";
+		return "/edit_definition.jsp";
 	}
 
 	protected void setCPDefinitionRequestAttribute(RenderRequest renderRequest)

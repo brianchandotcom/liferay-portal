@@ -47,7 +47,7 @@ portletDisplay.setURLBack(backURLString);
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
 %>
 
-<%@ include file="/commerce_product_definition_navbar.jspf" %>
+<%@ include file="/definition_navbar.jspf" %>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -107,7 +107,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 				resourceURL="<%= sidebarPanelURL %>"
 				searchContainerId="cpInstances"
 			>
-				<liferay-util:include page="/commerce_product_instance_info_panel.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/instance_info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
 		</c:if>
 
@@ -143,7 +143,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
 							<c:choose>
 								<c:when test='<%= displayStyle.equals("descriptive") %>'>
-									<%@ include file="/commerce_product_instance_descriptive.jspf" %>
+									<%@ include file="/instance_descriptive.jspf" %>
 								</c:when>
 								<c:when test='<%= displayStyle.equals("icon") %>'>
 
@@ -153,7 +153,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
 									<liferay-ui:search-container-column-text>
 										<liferay-frontend:icon-vertical-card
-											actionJsp="/commerce_product_instance_action.jsp"
+											actionJsp="/instance_action.jsp"
 											actionJspServletContext="<%= application %>"
 											icon="web-content"
 											resultRow="<%= row %>"
@@ -161,12 +161,12 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 											title="<%= HtmlUtil.escape(cpInstance.getSku()) %>"
 											url="<%= rowURL.toString() %>"
 										>
-											<%@ include file="/commerce_product_instance_vertical_card.jspf" %>
+											<%@ include file="/instance_vertical_card.jspf" %>
 										</liferay-frontend:icon-vertical-card>
 									</liferay-ui:search-container-column-text>
 								</c:when>
 								<c:otherwise>
-									<%@ include file="/commerce_product_instance_columns.jspf" %>
+									<%@ include file="/instance_columns.jspf" %>
 								</c:otherwise>
 							</c:choose>
 						</liferay-ui:search-container-row>

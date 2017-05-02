@@ -54,7 +54,7 @@ public class CommerceProductOptionInfoPanelMVCResourceCommand
 
 		include(
 			resourceRequest, resourceResponse,
-			"/commerce_product_option_info_panel.jsp");
+			"/option_info_panel.jsp");
 	}
 
 	@Reference

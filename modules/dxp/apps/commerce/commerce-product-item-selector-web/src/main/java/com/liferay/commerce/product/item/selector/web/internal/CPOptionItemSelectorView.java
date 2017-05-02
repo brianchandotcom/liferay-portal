@@ -124,7 +124,7 @@ public class CPOptionItemSelectorView
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(
-				"/commerce_product_option_item_selector.jsp");
+				"/option_item_selector.jsp");
 
 		requestDispatcher.include(request, response);
 	}

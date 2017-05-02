@@ -42,7 +42,7 @@ public class ViewCPDefinitionImagesMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/commerce_product_definition_images.jsp";
+		return "/definition_images.jsp";
 	}
 
 }

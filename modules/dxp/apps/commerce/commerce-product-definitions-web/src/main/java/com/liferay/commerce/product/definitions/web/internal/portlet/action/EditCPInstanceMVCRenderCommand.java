@@ -75,7 +75,7 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 
-		return "/edit_commerce_product_instance.jsp";
+		return "/edit_instance.jsp";
 	}
 
 	@Reference

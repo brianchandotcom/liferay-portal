@@ -3,23 +3,29 @@
 /**
  * Prints the DDL Data Provider settings.
  *
+ * @param hasInputs
+ * @param hasRequiredInputs
  * @param strings
  */
 {template .settings autoescape="deprecated-contextual"}
-	<div class="data-provider-parameter-input-container">
-		<div class="data-provider-label-container">
-			<p class="data-provider-parameter-input-required-field">{$strings.requiredField}</p>
-			<span class="icon-asterisk text-warning"></span>
-		</div>
+	{if $hasInputs}
+		<div class="data-provider-parameter-input-container">
+			{if $hasRequiredInputs}
+				<div class="data-provider-label-container">
+					<p class="data-provider-parameter-input-required-field">{$strings.requiredField}</p>
+					<span class="icon-asterisk text-warning"></span>
+				</div>
+			{/if}
 
-		<div class="data-provider-label-container">
-			<p class="data-provider-parameter-input"><b>{$strings.dataProviderParameterInput}</b></p>
-			<p class="data-provider-parameter-input-description">{$strings.dataProviderParameterInputDescription}</p>
-		</div>
+			<div class="data-provider-label-container">
+				<p class="data-provider-parameter-input"><b>{$strings.dataProviderParameterInput}</b></p>
+				<p class="data-provider-parameter-input-description">{$strings.dataProviderParameterInputDescription}</p>
+			</div>
 
-		<div class="data-provider-parameter-input-list row">
+			<div class="data-provider-parameter-input-list row">
+			</div>
 		</div>
-	</div>
+	{/if}
 
 	<div class="data-provider-parameter-output-container">
 		<div class="data-provider-label-container">

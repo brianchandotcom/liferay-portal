@@ -54,6 +54,7 @@ AUI.add(
 
 					strings: {
 						value: {
+							and: Liferay.Language.get('and'),
 							'auto-fill': Liferay.Language.get('autofill-x-from-data-provider-x'),
 							'belongs-to': Liferay.Language.get('belongs-to'),
 							'calculate-field': Liferay.Language.get('calculate-field-x-as-x'),
@@ -63,11 +64,16 @@ AUI.add(
 							emptyListText: Liferay.Language.get('there-are-no-rules-yet-click-on-plus-icon-below-to-add-the-first'),
 							'enable-field': Liferay.Language.get('enable-x'),
 							'equals-to': Liferay.Language.get('is-equal-to'),
+							'greater-than': Liferay.Language.get('is-greater-than'),
+							'greater-than-equals': Liferay.Language.get('is-greater-than-or-equal-to'),
 							'is-empty': Liferay.Language.get('is-empty'),
 							'jump-to-page': Liferay.Language.get('jump-to-page-x'),
+							'less-than': Liferay.Language.get('is-less-than'),
+							'less-than-equals': Liferay.Language.get('is-less-than-or-equal-to'),
 							'not-contains': Liferay.Language.get('does-not-contain'),
 							'not-equals-to': Liferay.Language.get('is-not-equal-to'),
 							'not-is-empty': Liferay.Language.get('is-not-empty'),
+							or: Liferay.Language.get('or'),
 							'require-field': Liferay.Language.get('require-x'),
 							ruleBuilder: Liferay.Language.get('rule-builder'),
 							'show-field': Liferay.Language.get('show-x')
@@ -419,7 +425,7 @@ AUI.add(
 								{
 									actions: instance._getActionsDescription(rules[i].actions),
 									conditions: rules[i].conditions,
-									logicOperator: rules[i]['logical-operator']
+									logicOperator: rules[i]['logical-operator'].toLowerCase()
 								}
 							);
 						}
@@ -490,7 +496,7 @@ AUI.add(
 
 						var rule = {
 							actions: event.actions,
-							conditions: event.condition,
+							conditions: event.conditions,
 							'logical-operator': event['logical-operator']
 						};
 

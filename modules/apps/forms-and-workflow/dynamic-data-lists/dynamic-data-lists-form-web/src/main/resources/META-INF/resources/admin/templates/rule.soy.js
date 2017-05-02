@@ -11,24 +11,26 @@ if (typeof ddl.rule == 'undefined') { ddl.rule = {}; }
 
 
 ddl.rule.settings = function(opt_data, opt_ignored) {
-  var output = '<h2 class="form-builder-section-title text-default">' + soy.$$escapeHtml(opt_data.strings.title) + '</h2><h4 class="text-default">' + soy.$$escapeHtml(opt_data.strings.description) + '</h4><div class="ddl-form-body-content"><ul class="liferay-ddl-form-builder-rule-condition-list liferay-ddl-form-rule-builder-timeline timeline ' + soy.$$escapeHtmlAttribute(opt_data.conditions.length > 1 ? 'can-remove-item' : '') + '">' + ddl.rule.rulesHeader({extraContent: soydata.VERY_UNSAFE.$$ordainSanitizedHtmlForInternalBlocks('' + ddl.rule.logicOperatorDropDown(opt_data)), logicalOperator: opt_data.logicalOperator, title: 'Condition'});
-  var conditionList79 = opt_data.conditions;
-  var conditionListLen79 = conditionList79.length;
-  if (conditionListLen79 > 0) {
-    for (var conditionIndex79 = 0; conditionIndex79 < conditionListLen79; conditionIndex79++) {
-      var conditionData79 = conditionList79[conditionIndex79];
-      output += ddl.rule.condition({deleteIcon: opt_data.deleteIcon, if: opt_data.strings['if'], index: conditionIndex79, logicOperator: opt_data.logicalOperator});
+  var output = '<h2 class="form-builder-section-title text-default">' + soy.$$escapeHtml(opt_data.strings.title) + '</h2><h4 class="text-default">' + soy.$$escapeHtml(opt_data.strings.description) + '</h4><div class="ddl-form-body-content"><ul class="liferay-ddl-form-builder-rule-condition-list liferay-ddl-form-rule-builder-timeline timeline ' + soy.$$escapeHtmlAttribute(opt_data.conditions.length > 1 ? 'can-remove-item' : '') + '">';
+  var showLogicalOperator__soy85 = opt_data.conditions.length > 1 ? true : false;
+  output += ddl.rule.rulesHeader({extraContent: soydata.VERY_UNSAFE.$$ordainSanitizedHtmlForInternalBlocks('' + ddl.rule.logicOperatorDropDown(opt_data)), logicalOperator: opt_data.logicalOperator, title: 'Condition'});
+  var conditionList102 = opt_data.conditions;
+  var conditionListLen102 = conditionList102.length;
+  if (conditionListLen102 > 0) {
+    for (var conditionIndex102 = 0; conditionIndex102 < conditionListLen102; conditionIndex102++) {
+      var conditionData102 = conditionList102[conditionIndex102];
+      output += ddl.rule.condition({deleteIcon: opt_data.deleteIcon, if: opt_data.strings['if'], index: conditionIndex102, logicOperator: opt_data.logicalOperator});
     }
   } else {
     output += ddl.rule.condition({deleteIcon: opt_data.deleteIcon, if: opt_data.strings['if'], index: 0, logicOperator: opt_data.logicalOperator});
   }
   output += '</ul>' + ddl.rule.btnAddNewTimelineItem({cssClass: 'form-builder-rule-add-condition', plusIcon: opt_data.plusIcon}) + '<ul class="action-list liferay-ddl-form-builder-rule-action-list liferay-ddl-form-rule-builder-timeline timeline ' + soy.$$escapeHtmlAttribute(opt_data.actions.length > 1 ? 'can-remove-item' : '') + '">' + ddl.rule.rulesHeader({logicalOperator: opt_data.logicalOperator, title: 'Actions'});
-  var actionList100 = opt_data.actions;
-  var actionListLen100 = actionList100.length;
-  if (actionListLen100 > 0) {
-    for (var actionIndex100 = 0; actionIndex100 < actionListLen100; actionIndex100++) {
-      var actionData100 = actionList100[actionIndex100];
-      output += ddl.rule.action({deleteIcon: opt_data.deleteIcon, do: opt_data.strings['do'], index: actionIndex100});
+  var actionList123 = opt_data.actions;
+  var actionListLen123 = actionList123.length;
+  if (actionListLen123 > 0) {
+    for (var actionIndex123 = 0; actionIndex123 < actionListLen123; actionIndex123++) {
+      var actionData123 = actionList123[actionIndex123];
+      output += ddl.rule.action({deleteIcon: opt_data.deleteIcon, do: opt_data.strings['do'], index: actionIndex123});
     }
   } else {
     output += ddl.rule.action({deleteIcon: opt_data.deleteIcon, do: opt_data.strings['do'], index: 0});

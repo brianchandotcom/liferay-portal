@@ -1,13 +1,17 @@
 AUI.add(
 	'liferay-ddl-form-builder-action-autofill',
 	function(A) {
+		var AObject = A.Object;
+
 		var Lang = A.Lang;
 
 		var TPL_CONTAINER_INPUT_OUTPUT_COMPONENT = '<div class="col-md-9 container-input-field container-input-field-{index}"></div>';
 
-		var TPL_CONTAINER_INPUT_OUTPUT_FIELD = '<div class="col-md-3 container-input-label">{field}</div>';
+		var TPL_CONTAINER_INPUT_OUTPUT_FIELD = '<div class="col-md-3 container-input-label">{field}{required}</div>';
 
 		var TPL_LABEL_ACTION = '<h4>{message}</h4>';
+
+		var TPL_REQUIRED_ACTION = '<span class="icon-asterisk text-warning"></span>';
 
 		var FormBuilderActionAutofill = A.Component.create(
 			{
@@ -73,7 +77,8 @@ AUI.add(
 							action: 'auto-fill',
 							ddmDataProviderInstanceUUID: instance._getUUId(instance._dataProvidersList.getValue()),
 							inputs: instance._getInputValue(),
-							outputs: instance._getOutputValue()
+							outputs: instance._getOutputValue(),
+							requiredInputs: instance._getRequiredInputs()
 						};
 					},
 
@@ -150,6 +155,7 @@ AUI.add(
 
 						for (var i = 0; i < inputParameters.length; i++) {
 							var name = inputParameters[i].name;
+							var requiredField = inputParameters[i].required;
 
 							value = null;
 
@@ -157,7 +163,8 @@ AUI.add(
 								Lang.sub(
 									TPL_CONTAINER_INPUT_OUTPUT_FIELD,
 									{
-										field: name
+										field: name,
+										required: requiredField ? TPL_REQUIRED_ACTION : ''
 									}
 								)
 							);
@@ -177,6 +184,7 @@ AUI.add(
 
 							inputParameterField = new Liferay.DDM.Field.Select(
 								{
+									bubbleTargets: [instance],
 									fieldName: instance.get('index') + '-action',
 									options: instance.getFieldsByType(inputParameters[i].type),
 									showLabel: false,
@@ -188,7 +196,8 @@ AUI.add(
 							instance._inputParameters.push(
 								{
 									field: inputParameterField,
-									parameter: name
+									parameter: name,
+									required: requiredField
 								}
 							);
 						}
@@ -199,6 +208,7 @@ AUI.add(
 
 						instance._dataProvidersList = new Liferay.DDM.Field.Select(
 							{
+								bubbleTargets: [instance],
 								fieldName: instance.get('index') + '-action',
 								showLabel: false,
 								visible: true
@@ -236,7 +246,8 @@ AUI.add(
 								Lang.sub(
 									TPL_CONTAINER_INPUT_OUTPUT_FIELD,
 									{
-										field: name
+										field: name,
+										required: ''
 									}
 								)
 							);
@@ -256,6 +267,7 @@ AUI.add(
 
 							outputParameterField = new Liferay.DDM.Field.Select(
 								{
+									bubbleTargets: [instance],
 									fieldName: instance.get('index') + '-action',
 									label: outputParameters[i],
 									options: instance.getFieldsByType(outputParameters[i].type),
@@ -281,7 +293,9 @@ AUI.add(
 
 						var dataProviderParametersContainer = instance.get('boundingBox').one('.additional-info-' + index);
 
-						dataProviderParametersContainer.setHTML(instance._getRuleContainerTemplate());
+						instance._retriveRequiredInputs(dataProviderParametersSettings.inputs);
+
+						dataProviderParametersContainer.setHTML(instance._getRuleContainerTemplate(dataProviderParametersSettings.inputs));
 
 						instance._createDataProviderInputParametersSettings(dataProviderParametersSettings.inputs);
 
@@ -345,7 +359,13 @@ AUI.add(
 						return outputParameterValues;
 					},
 
-					_getRuleContainerTemplate: function() {
+					_getRequiredInputs: function() {
+						var instance = this;
+
+						return instance._requiredInputs;
+					},
+
+					_getRuleContainerTemplate: function(inputs) {
 						var instance = this;
 
 						var strings = instance.get('strings');
@@ -354,6 +374,8 @@ AUI.add(
 
 						return dataProviderParametersTemplateRenderer(
 							{
+								hasInputs: inputs.length > 0,
+								hasRequiredInputs: !AObject.isEmpty(instance._getRequiredInputs()),
 								strings: strings
 							}
 						);
@@ -403,6 +425,18 @@ AUI.add(
 						instance._dataProvidersList.set('options', dataProvidersList);
 
 						instance._dataProvidersList.setValue(value);
+					},
+
+					_retriveRequiredInputs: function(inputs) {
+						var instance = this;
+
+						instance._requiredInputs = {};
+
+						for (var i = 0; i < inputs.length; i++) {
+							if (inputs[i].required) {
+								instance._requiredInputs[inputs[i].name] = true;
+							}
+						}
 					}
 				}
 			}

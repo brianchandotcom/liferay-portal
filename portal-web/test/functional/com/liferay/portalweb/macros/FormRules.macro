@@ -1,11 +1,6 @@
 <definition>
 	<command name="addCondition">
 		<execute function="Click" locator1="FormRules#RULE_BUILDER_ADD_CONDITION" />
-
-		<var name="key_condition" value="${condition}" />
-		<var name="key_conditonRowNumber" value="${conditonRowNumber}" />
-
-		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_TIMELINE_RULE_CONDITION" value1="${condition}" />
 	</command>
 
 	<command name="addRule">
@@ -262,6 +257,13 @@
 
 	<command name="viewInactiveSaveButton">
 		<execute function="AssertElementPresent" locator1="FormRules#RULE_BUILDER_SAVE_BUTTON_DISABLED" />
+	</command>
+
+	<command name="viewRuleCondition">
+		<var name="key_condition" value="${condition}" />
+		<var name="key_conditonRowNumber" value="${conditonRowNumber}" />
+
+		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_TIMELINE_RULE_CONDITION" value1="${condition}" />
 	</command>
 
 	<command name="viewSummary">

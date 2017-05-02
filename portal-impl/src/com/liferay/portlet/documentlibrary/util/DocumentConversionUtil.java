@@ -14,9 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.document.library.kernel.document.conversion.DocumentConversion;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,37 +32,39 @@ public class DocumentConversionUtil {
 			String targetExtension)
 		throws IOException {
 
-		return _documentConversion.convert(
-			id, inputStream, sourceExtension, targetExtension);
+		return com.liferay.document.library.kernel.document.conversion.
+			DocumentConversionUtil.convert(
+				id, inputStream, sourceExtension, targetExtension);
 	}
 
 	public static void disconnect() {
-		_documentConversion.disconnect();
+		com.liferay.document.library.kernel.document.conversion.
+			DocumentConversionUtil.disconnect();
 	}
 
 	public static String[] getConversions(String extension) {
-		return _documentConversion.getConversions(extension);
+		return com.liferay.document.library.kernel.document.conversion.
+			DocumentConversionUtil.getConversions(extension);
 	}
 
 	public static String getFilePath(String id, String targetExtension) {
-		return _documentConversion.getFilePath(id, targetExtension);
+		return com.liferay.document.library.kernel.document.conversion.
+			DocumentConversionUtil.getFilePath(id, targetExtension);
 	}
 
 	public static boolean isComparableVersion(String extension) {
-		return _documentConversion.isComparableVersion(extension);
+		return com.liferay.document.library.kernel.document.conversion.
+			DocumentConversionUtil.isComparableVersion(extension);
 	}
 
 	public static boolean isConvertBeforeCompare(String extension) {
-		return _documentConversion.isConvertBeforeCompare(extension);
+		return com.liferay.document.library.kernel.document.conversion.
+			DocumentConversionUtil.isConvertBeforeCompare(extension);
 	}
 
 	public static boolean isEnabled() {
-		return _documentConversion.isEnabled();
+		return com.liferay.document.library.kernel.document.conversion.
+			DocumentConversionUtil.isEnabled();
 	}
-
-	private static volatile DocumentConversion _documentConversion =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			DocumentConversion.class, DocumentConversionUtil.class,
-			"_documentConversion", false);
 
 }

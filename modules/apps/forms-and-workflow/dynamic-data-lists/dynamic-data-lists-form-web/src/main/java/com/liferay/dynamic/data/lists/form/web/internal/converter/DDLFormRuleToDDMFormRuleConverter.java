@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -115,9 +116,14 @@ public class DDLFormRuleToDDMFormRuleConverter {
 
 		String[] values = StringUtil.split(value);
 
-		Stream<String> valueStream = Stream.of(values).map(StringUtil::quote);
+		UnaryOperator<String> quoteOperation = StringUtil::quote;
+		UnaryOperator<String> trimOperation = StringUtil::trim;
 
-		return valueStream.collect(Collectors.joining(StringPool.COMMA));
+		Stream<String> valueStream = Stream.of(values).map(
+			trimOperation.andThen(quoteOperation));
+
+		return valueStream.collect(
+			Collectors.joining(StringPool.COMMA_AND_SPACE));
 	}
 
 	protected String convertOperands(

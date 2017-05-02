@@ -15,7 +15,7 @@
 					},
 					{
 						"type": "list",
-						"value": "Role1,Role2"
+						"value": "Role1, Role2"
 					}
 				],
 				"operator": "belongs-to"

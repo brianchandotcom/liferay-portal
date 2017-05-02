@@ -1623,10 +1623,6 @@
 
 		<execute macro="Form#publishForm" />
 
-		<execute macro="Form#clickPublishSwitcher" />
-
-		<execute macro="Button#clickConfirm" />
-
 		<execute macro="Form#submitFormPublish">
 			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldName" value="TextField" />
@@ -1655,10 +1651,6 @@
 		<execute macro="FormsAdminNavigator#gotoEditFormByName" />
 
 		<execute macro="Form#publishForm" />
-
-		<execute macro="Form#clickPublishSwitcher" />
-
-		<execute macro="Button#clickConfirm" />
 
 		<execute macro="Form#viewFormNotPublished" />
 	</command>
@@ -2128,14 +2120,10 @@
 
 		<execute macro="Form#publishForm" />
 
-		<execute macro="Form#clickPublishSwitcher" />
-
 		<execute macro="Form#getPublishedFormPublicURL">
 			<return from="publicURL" name="publishedFormPublicURL" />
 			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
 		</execute>
-
-		<execute macro="Button#clickConfirm" />
 
 		<execute macro="Form#save" />
 

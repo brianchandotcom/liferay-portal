@@ -80,10 +80,6 @@
 
 		<execute macro="Form#publishForm" />
 
-		<execute macro="Form#clickPublishSwitcher" />
-
-		<execute macro="Button#clickConfirm" />
-
 		<execute macro="FormsAdminNavigator#openPublishURL" />
 
 		<execute macro="FormFields#editText">

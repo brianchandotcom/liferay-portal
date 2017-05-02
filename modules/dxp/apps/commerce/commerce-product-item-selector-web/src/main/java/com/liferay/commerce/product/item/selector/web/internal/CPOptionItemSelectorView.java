@@ -15,15 +15,13 @@
 package com.liferay.commerce.product.item.selector.web.internal;
 
 import com.liferay.commerce.product.item.selector.criterion.CPOptionItemSelectorCriterion;
-import com.liferay.commerce.product.model.CPOption;
-import com.liferay.commerce.product.service.CPOptionLocalService;
+import com.liferay.commerce.product.item.selector.web.internal.display.context.CPOptionItemSelectorViewDisplayContext;
+import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -42,6 +40,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -94,31 +93,17 @@ public class CPOptionItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
 
-		int cur = GetterUtil.getInteger(
-			request.getParameter(SearchContainer.DEFAULT_CUR_PARAM),
-			SearchContainer.DEFAULT_CUR);
-		int delta = GetterUtil.getInteger(
-			request.getParameter(SearchContainer.DEFAULT_DELTA_PARAM),
-			SearchContainer.DEFAULT_DELTA);
+		CPOptionItemSelectorViewDisplayContext
+			cpOptionItemSelectorViewDisplayContext =
+				new CPOptionItemSelectorViewDisplayContext(
+					httpServletRequest, portletURL, itemSelectedEventName,
+					_cpOptionService, "cpOptionItemSelectorView");
 
-		int start = (delta * cur) - delta;
-		int end = (delta * cur) + delta;
-
-		List<CPOption> cpOptions = _cpOptionLocalService.getCPOptions(
-			themeDisplay.getScopeGroupId(), start, end);
-
-		long cpOptionsCount = _cpOptionLocalService.getCPOptionsCount(
-			themeDisplay.getScopeGroupId());
-
-		request.setAttribute("cpOptions", cpOptions);
-		request.setAttribute("cpOptionsCount", cpOptionsCount);
-		request.setAttribute("displayStyle", "list");
-		request.setAttribute("emptyResultsMessage", "no-options-were-found");
-		request.setAttribute("itemSelectedEventName", itemSelectedEventName);
-		request.setAttribute("portletURL", portletURL);
+		request.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			cpOptionItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();
 
@@ -136,7 +121,7 @@ public class CPOptionItemSelectorView
 				}));
 
 	@Reference
-	private CPOptionLocalService _cpOptionLocalService;
+	private CPOptionService _cpOptionService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.item.selector.web)"

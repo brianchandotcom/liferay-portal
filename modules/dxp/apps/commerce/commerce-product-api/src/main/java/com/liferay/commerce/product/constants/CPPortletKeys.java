@@ -23,6 +23,10 @@ public class CPPortletKeys {
 		"com_liferay_commerce_product_definitions_web_internal_portlet_" +
 			"CPDefinitionsPortlet";
 
+	public static final String COMMERCE_PRODUCT_MEDIA_TYPES =
+		"com_liferay_commerce_product_definitions_web_internal_portlet_" +
+			"CPMediaTypesPortlet";
+
 	public static final String COMMERCE_PRODUCT_OPTIONS =
 		"com_liferay_commerce_product_options_web_internal_portlet_" +
 			"CPOptionsPortlet";

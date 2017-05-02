@@ -812,7 +812,7 @@ public abstract class BaseBuild implements Build {
 
 			String notificationList = reinvokeRule.getNotificationList();
 
-			if ((notificationList != null) && notificationList.isEmpty()) {
+			if ((notificationList != null) && !notificationList.isEmpty()) {
 				try {
 					JenkinsResultsParserUtil.sendEmail(
 						message, "jenkins", "Build Reinvoked",

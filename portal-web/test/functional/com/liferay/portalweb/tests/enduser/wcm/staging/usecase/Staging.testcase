@@ -1146,7 +1146,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="The selected web content no longer exists." />
+		<execute macro="WebContentDisplayPortlet#viewDeletedArticle" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -1157,7 +1157,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="The selected web content no longer exists." />
+		<execute macro="WebContentDisplayPortlet#viewDeletedArticle" />
 	</command>
 
 	<command name="StagingRemoteDocumentSubtypeViaAP" priority="3">

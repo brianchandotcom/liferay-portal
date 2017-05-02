@@ -363,8 +363,8 @@
 		<execute function="AssertClick" locator1="Pagination#PREVIOUS_LINK" value1="Previous" />
 	</command>
 
-	<command name="viewDeletedArticlePGViaWCD">
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="The selected web content no longer exists." />
+	<command name="viewDeletedArticle">
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_3" value1="The selected web content no longer exists." />
 	</command>
 
 	<command name="viewEnabledFileTypesPGViaWCD">

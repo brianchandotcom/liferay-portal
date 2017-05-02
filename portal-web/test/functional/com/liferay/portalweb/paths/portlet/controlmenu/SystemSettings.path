@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SERVER_ENABLED</td>
+	<td>//input[contains(@id,'serverEnabled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHOW_INACTIVE_REQUEST_MESSAGE</td>
 	<td>//input[contains(@id,'show.inactive.request.message')]</td>
 	<td></td>

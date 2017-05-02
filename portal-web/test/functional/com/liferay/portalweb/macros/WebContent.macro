@@ -1702,10 +1702,6 @@
 		<execute function="AssertElementNotPresent" locator1="Portlet#BODY" />
 	</command>
 
-	<command name="viewNoContentPGViaWCD">
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="The selected web content no longer exists." />
-	</command>
-
 	<command name="viewNoConversionLinksPGViaAP">
 		<var name="key_assetTitle" value="${webContentTitle}" />
 

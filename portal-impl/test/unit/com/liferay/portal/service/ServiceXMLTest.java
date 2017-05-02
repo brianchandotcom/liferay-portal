@@ -14,19 +14,15 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
-import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -38,48 +34,36 @@ public class ServiceXMLTest {
 
 	@Test
 	public void testTXRequired() throws Exception {
-		Path portalPath = Paths.get(System.getProperty("user.dir"));
+		Stream<Path> stream = Files.find(
+			Paths.get(System.getProperty("user.dir")), Integer.MAX_VALUE,
+			ServiceXMLTest::_isServiceXml, FileVisitOption.FOLLOW_LINKS);
 
-		Files.walkFileTree(
-			portalPath,
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					Path fileNamePath = path.getFileName();
-
-					String fileName = fileNamePath.toString();
-
-					if (fileName.equals("service.xml")) {
-						_assertNoTXRequiredElement(path.toFile());
-
-						return FileVisitResult.SKIP_SIBLINGS;
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
+		stream.forEach(ServiceXMLTest::_assertNoTXRequiredElement);
 	}
 
-	private void _assertNoTXRequiredElement(File file) throws IOException {
-		try (FileInputStream fileInputStream = new FileInputStream(file);
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(
-					new InputStreamReader(fileInputStream))) {
+	private static void _assertNoTXRequiredElement(Path path) {
+		try {
+			Stream<String> stream = Files.lines(path);
 
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				Assert.assertFalse(
-					"Remove deprecated tx-required element from " +
-						file.getPath(),
-					line.contains("<tx-required>"));
-			}
+			Assert.assertFalse(
+				"Remove deprecated tx-required element from " + path,
+				stream.anyMatch(line -> line.contains("<tx-required>")));
 		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	private static boolean _isServiceXml(
+		Path path, BasicFileAttributes basicFileAttributes) {
+
+		Path fileNamePath = path.getFileName();
+
+		if ("service.xml".equals(fileNamePath.toString())) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

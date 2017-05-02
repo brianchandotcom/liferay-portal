@@ -149,6 +149,7 @@ AUI.add(
 						var action = instance.get('action');
 
 						for (var i = 0; i < inputParameters.length; i++) {
+							var label = inputParameters[i].label;
 							var name = inputParameters[i].name;
 
 							value = null;
@@ -157,7 +158,7 @@ AUI.add(
 								Lang.sub(
 									TPL_CONTAINER_INPUT_OUTPUT_FIELD,
 									{
-										field: name
+										field: label
 									}
 								)
 							);

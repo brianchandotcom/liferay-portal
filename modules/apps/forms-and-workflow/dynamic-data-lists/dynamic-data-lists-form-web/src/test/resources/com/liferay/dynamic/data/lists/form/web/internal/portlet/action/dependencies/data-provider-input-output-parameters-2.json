@@ -1,19 +1,19 @@
 {
 	"inputs": [
 		{
-			"label": "aLabel",
+			"label": "A",
 			"name": "A",
 			"required": true,
 			"type": "number"
 		},
 		{
-			"label": "bLabel",
+			"label": "B",
 			"name": "B",
 			"required": false,
 			"type": "text"
 		},
 		{
-			"label": "cLabel",
+			"label": "C",
 			"name": "C",
 			"required": true,
 			"type": "text"
@@ -21,11 +21,11 @@
 	],
 	"outputs": [
 		{
-			"name": "D",
+			"name": "d",
 			"type": "text"
 		},
 		{
-			"name": "E",
+			"name": "e",
 			"type": "number"
 		}
 	]

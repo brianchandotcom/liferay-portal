@@ -75,7 +75,9 @@ public class GetDataProviderParametersSettingsMVCResourceCommandTest {
 		JSONObject parametersJSONObject =
 			_getDataProviderParametersSettingsMVCResourceCommand.
 				createParametersJSONObject(
-					_ddmDataProvider, getDataProviderFormValues());
+					_ddmDataProvider,
+					getDataProviderFormValues(
+						"form-values-data-provider-settings.json"));
 
 		String expectedValue = read(
 			"data-provider-input-output-parameters.json");
@@ -84,12 +86,29 @@ public class GetDataProviderParametersSettingsMVCResourceCommandTest {
 			expectedValue, parametersJSONObject.toString(), false);
 	}
 
-	protected DDMFormValues getDataProviderFormValues() throws Exception {
+	@Test
+	public void testCreateParametersJSONObjectWithoutLabels() throws Exception {
+		JSONObject parametersJSONObject =
+			_getDataProviderParametersSettingsMVCResourceCommand.
+				createParametersJSONObject(
+					_ddmDataProvider,
+					getDataProviderFormValues(
+						"form-values-data-provider-settings-2.json"));
+
+		String expectedValue = read(
+			"data-provider-input-output-parameters-2.json");
+
+		JSONAssert.assertEquals(
+			expectedValue, parametersJSONObject.toString(), false);
+	}
+
+	protected DDMFormValues getDataProviderFormValues(String file)
+		throws Exception {
+
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
 			DDMFormFactory.create(DDMDataProviderSettings.class);
 
-		String serializedDDMFormValues = read(
-			"form-values-data-provider-settings.json");
+		String serializedDDMFormValues = read(file);
 
 		return _ddmFormValuesJSONDeserializer.deserialize(
 			ddmForm, serializedDDMFormValues);

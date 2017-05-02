@@ -7,6 +7,8 @@ AUI.add(
 			value: 'user'
 		};
 
+		var CSS_CAN_REMOVE_ITEM = A.getClassName('can', 'remove', 'item');
+
 		var FormBuilderRenderRuleCondition = function(config) {};
 
 		FormBuilderRenderRuleCondition.ATTRS = {
@@ -37,11 +39,13 @@ AUI.add(
 				boundingBox.delegate('click', A.bind(instance._handleDeleteConditionClick, instance), '.condition-card-delete');
 				boundingBox.delegate('click', A.bind(instance._handleAddConditionClick, instance), '.form-builder-rule-add-condition');
 
-				instance.after(instance._toggleShowRemoveButton, instance, '_addCondition');
+				instance.after(instance._toggleDeleteConditionButton, instance, '_addCondition');
 
 				instance.on('logicOperatorChange', A.bind(instance._onLogicOperatorChange, instance));
 
 				instance.after('*:valueChange', A.bind(instance._handleConditionFieldsChange, instance));
+
+				instance._validator = new Liferay.DDL.FormBuilderRuleValidator();
 			},
 
 			_addCondition: function(index, condition) {
@@ -290,6 +294,8 @@ AUI.add(
 				);
 
 				instance._addCondition(index);
+
+				instance._updateLogicOperatorEnableState();
 			},
 
 			_handleConditionFieldsChange: function(event) {
@@ -328,7 +334,9 @@ AUI.add(
 					instance._deleteCondition(index);
 				}
 
-				instance._toggleShowRemoveButton();
+				instance._toggleDeleteConditionButton();
+
+				instance._updateLogicOperatorEnableState();
 			},
 
 			_handleLogicOperatorChange: function(event) {
@@ -358,7 +366,7 @@ AUI.add(
 
 				var value = instance._getOperatorValue(index);
 
-				return value === 'equals-to' || value === 'not-equals-to' || value === 'contains' || value === 'not-contains' || value === 'belongs-to';
+				return value === 'equals-to' || value === 'not-equals-to' || value === 'contains' || value === 'not-contains' || value === 'belongs-to' || value === 'greater-than' || value === 'greater-than-equals' || value === 'less-than' || value === 'less-than-equals';
 			},
 
 			_isFieldList: function(field) {
@@ -603,6 +611,31 @@ AUI.add(
 				}
 			},
 
+			_toggleDeleteConditionButton: function() {
+				var instance = this;
+
+				var contentBox = instance.get('contentBox');
+
+				var conditionList = contentBox.one('.liferay-ddl-form-builder-rule-condition-list');
+
+				var conditionItems = conditionList.all('.timeline-item');
+
+				conditionList.toggleClass(CSS_CAN_REMOVE_ITEM, conditionItems.size() > 2);
+			},
+
+			_updateLogicOperatorEnableState: function() {
+				var instance = this;
+
+				var logicOperatorNode = instance.get('boundingBox').one('.liferay-ddl-form-builder-rule-condition-list').one('.dropdown button');
+
+				if (instance._conditionsIndexes.length > 1) {
+					logicOperatorNode.removeAttribute('disabled');
+				}
+				else {
+					logicOperatorNode.setAttribute('disabled', '');
+				}
+			},
+
 			_updateOperatorList: function(dataType, conditionIndex) {
 				var instance = this;
 
@@ -624,7 +657,7 @@ AUI.add(
 						);
 					}
 				}
-				else if (dataType === 'number') {
+				else if (dataType === 'integer') {
 					for (var j = 0; j < operatorTypes.number.length; j++) {
 						options.push(
 							A.merge(

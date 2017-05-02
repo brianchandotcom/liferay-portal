@@ -432,8 +432,15 @@
 
 		<execute macro="FormRules#addRule" />
 
+		<execute macro="FormRules#addCondition" />
+
 		<execute macro="FormRules#selectRuleCondition">
 			<var name="condition" value="and" />
+		</execute>
+
+		<execute macro="FormRules#viewRuleCondition">
+			<var name="condition" value="AND" />
+			<var name="conditonRowNumber" value="1" />
 		</execute>
 
 		<execute macro="FormRules#configureConditionOptions">
@@ -442,11 +449,6 @@
 			<var name="conditionOperator" value="Is equal to" />
 			<var name="conditionRowNumber" value="1" />
 			<var name="conditionValueType" value="Value" />
-		</execute>
-
-		<execute macro="FormRules#addCondition">
-			<var name="condition" value="AND" />
-			<var name="conditonRowNumber" value="1" />
 		</execute>
 
 		<execute macro="FormRules#configureConditionOptions">

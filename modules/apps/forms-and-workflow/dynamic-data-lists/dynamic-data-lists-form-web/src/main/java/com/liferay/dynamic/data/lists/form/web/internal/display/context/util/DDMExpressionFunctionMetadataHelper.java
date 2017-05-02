@@ -68,6 +68,17 @@ public class DDMExpressionFunctionMetadataHelper {
 
 		addDDMExpressionFunctionMetadata(
 			new DDMExpressionFunctionMetadata(
+				"is-empty", LanguageUtil.get(resourceBundle, "is-empty"),
+				_TYPE_BOOLEAN, new String[] {_TYPE_NUMBER}));
+
+		addDDMExpressionFunctionMetadata(
+			new DDMExpressionFunctionMetadata(
+				"not-is-empty",
+				LanguageUtil.get(resourceBundle, "is-not-empty"), _TYPE_BOOLEAN,
+				new String[] {_TYPE_NUMBER}));
+
+		addDDMExpressionFunctionMetadata(
+			new DDMExpressionFunctionMetadata(
 				"greater-than",
 				LanguageUtil.get(resourceBundle, "is-greater-than"),
 				_TYPE_BOOLEAN, new String[] {_TYPE_NUMBER, _TYPE_NUMBER}));

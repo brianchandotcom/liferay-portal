@@ -74,9 +74,6 @@
 				<div class="list-group-item-field">
 					<div class="card-col-field">
 						<div class="dropdown">
-							<a class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="#1">
-								{$kebab|noAutoescape}
-							</a>
 							<ul class="dropdown-menu dropdown-menu-right">
 								<li class="rule-card-edit" data-card-id="{index($rule)}">
 									<a href="javascript:;">{$strings.edit}</a>
@@ -85,6 +82,9 @@
 									<a href="javascript:;">{$strings.delete}</a>
 								</li>
 							</ul>
+							<a class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="#1">
+								{$kebab|noAutoescape}
+							</a>
 						</div>
 					</div>
 				</div>

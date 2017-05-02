@@ -21,5 +21,6 @@
 <liferay-ui:error exception="<%= NoSuchProductDefinitionException.class %>" message="the-product-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchProductDefinitionOptionRelException.class %>" message="the-option-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchProductDefinitionOptionValueRelException.class %>" message="the-option-value-could-not-be-found" />
+<liferay-ui:error exception="<%= NoSuchProductInstanceException.class %>" message="the-sku-could-not-be-found" />
 
 <liferay-ui:error-principal />

@@ -221,17 +221,22 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public WikiPage getLatestPage(long resourcePrimKey, long nodeId,
 		int status, boolean preferApproved) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getPage(long nodeId, java.lang.String title)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getPage(long nodeId, java.lang.String title, double version)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getPage(long nodeId, java.lang.String title,
 		java.lang.Boolean head) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getPage(long resourcePrimKey) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getPage(long resourcePrimKey, java.lang.Boolean head)
 		throws PortalException;
 

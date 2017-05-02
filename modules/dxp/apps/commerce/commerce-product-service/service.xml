@@ -277,6 +277,25 @@
 		<column localized="true" name="title" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="priority" type="int" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CPOption" remote-service="true"  uuid="true">
 

@@ -79,9 +79,8 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 
 			// Add commerce product definition option rel
 
-			cpDefinitionOptionRel =
-				_cpDefinitionOptionRelService.addCPDefinitionOptionRel(
-					cpDefinitionId, addCPOptionId, serviceContext);
+			_cpDefinitionOptionRelService.addCPDefinitionOptionRel(
+				cpDefinitionId, addCPOptionId, serviceContext);
 		}
 	}
 

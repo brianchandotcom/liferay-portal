@@ -30,6 +30,19 @@ else {
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<portlet:renderURL var="editURL">
+		<portlet:param name="mvcRenderCommandName" value="editProductInstance" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="backURL" value="<%= redirect %>" />
+		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpInstance.getCPDefinitionId()) %>" />
+		<portlet:param name="cpInstanceId" value="<%= String.valueOf(cpInstance.getCPInstanceId()) %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		message="edit"
+		url="<%= editURL %>"
+	/>
+
 	<portlet:actionURL name="editProductInstance" var="copyURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.COPY %>" />
 		<portlet:param name="redirect" value="<%= redirect %>" />

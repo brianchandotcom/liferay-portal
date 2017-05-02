@@ -137,6 +137,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
 							rowURL.setParameter("mvcRenderCommandName", "editProductInstance");
 							rowURL.setParameter("redirect", currentURL);
+							rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
 							rowURL.setParameter("cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
 							%>
 
@@ -178,7 +179,13 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 	</div>
 </div>
 
-<liferay-portlet:actionURL name="editProductInstance" var="addProductDefinitionURL">
+<liferay-portlet:renderURL var="addProductInstanceURL">
+	<portlet:param name="mvcRenderCommandName" value="editProductInstance" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
+</liferay-portlet:renderURL>
+
+<liferay-portlet:actionURL name="editProductInstance" var="addProductInstancesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_MULTIPLE %>" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
@@ -187,8 +194,8 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 </liferay-portlet:actionURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addSkuButton" title='<%= LanguageUtil.get(request, "add-sku") %>' url="javascript:;" />
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "generate-all-possible-sku-combinations") %>' url="<%= addProductDefinitionURL.toString() %>" />
+	<liferay-frontend:add-menu-item id="addSkuButton" title='<%= LanguageUtil.get(request, "add-sku") %>' url="<%= addProductInstanceURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "generate-all-possible-sku-combinations") %>' url="<%= addProductInstancesURL.toString() %>" />
 </liferay-frontend:add-menu>
 
 <aui:script>

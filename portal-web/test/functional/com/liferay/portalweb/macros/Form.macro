@@ -254,6 +254,12 @@
 		<execute function="AssertElementNotPresent" locator1="Button#SUBMIT" value1="Submit" />
 	</command>
 
+	<command name="publishForm">
+		<execute function="AssertElementPresent" locator1="Form#NAME_FIELD" />
+
+		<execute function="Click" locator1="Button#PUBLISH" />
+	</command>
+
 	<command name="save">
 		<execute function="AssertClick" locator1="Form#SAVE_FORM_BUTTON" value1="Save Form" />
 

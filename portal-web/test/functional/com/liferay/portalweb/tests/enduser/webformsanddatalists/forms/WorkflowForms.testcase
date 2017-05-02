@@ -78,7 +78,7 @@
 
 		<execute macro="FormsAdminNavigator#gotoEditFormByName" />
 
-		<execute macro="FormsAdminNavigator#gotoPublish" />
+		<execute macro="Form#publishForm" />
 
 		<execute macro="Form#clickPublishSwitcher" />
 

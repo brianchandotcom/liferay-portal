@@ -1601,7 +1601,7 @@
 
 		<execute macro="FormsAdminNavigator#gotoEditFormByName" />
 
-		<execute macro="FormsAdminNavigator#gotoPublish" />
+		<execute macro="Form#publishForm" />
 
 		<execute macro="FormsAdminNavigator#gotoPreviewForm" />
 
@@ -1621,7 +1621,7 @@
 
 		<execute macro="FormsAdminNavigator#gotoEditFormByName" />
 
-		<execute macro="FormsAdminNavigator#gotoPublish" />
+		<execute macro="Form#publishForm" />
 
 		<execute macro="Form#clickPublishSwitcher" />
 
@@ -1654,7 +1654,7 @@
 
 		<execute macro="FormsAdminNavigator#gotoEditFormByName" />
 
-		<execute macro="FormsAdminNavigator#gotoPublish" />
+		<execute macro="Form#publishForm" />
 
 		<execute macro="Form#clickPublishSwitcher" />
 
@@ -2126,7 +2126,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="FormsAdminNavigator#gotoPublish" />
+		<execute macro="Form#publishForm" />
 
 		<execute macro="Form#clickPublishSwitcher" />
 

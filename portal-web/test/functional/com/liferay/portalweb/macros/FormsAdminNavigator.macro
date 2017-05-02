@@ -73,12 +73,6 @@
 		<execute function="AssertClick" locator1="Message#INFO_LINK" value1="Click here to preview the form in a new window." />
 	</command>
 
-	<command name="gotoPublish">
-		<execute function="AssertElementPresent" locator1="Form#NAME_FIELD" />
-
-		<execute function="Click" locator1="Button#PUBLISH" />
-	</command>
-
 	<command name="gotoRules">
 		<var name="key_assetTitle" value="Rules" />
 

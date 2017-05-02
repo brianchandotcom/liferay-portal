@@ -164,7 +164,7 @@
 		<description message="This is a use case for LPS-69372." />
 		<property name="portal.acceptance" value="pending" />
 
-		<execute macro="FormsAdminNavigator#gotoPublish" />
+		<execute macro="Form#publishForm" />
 
 		<execute macro="Form#clickPublishSwitcher" />
 

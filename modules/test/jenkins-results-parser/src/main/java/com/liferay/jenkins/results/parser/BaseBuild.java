@@ -974,7 +974,7 @@ public abstract class BaseBuild implements Build {
 						return;
 					}
 
-					if (result.equals("ABORTED") || result.equals("FAILURE")) {
+					if ((result != null) && !result.equals("SUCCESS")) {
 						for (ReinvokeRule reinvokeRule : reinvokeRules) {
 							if (!badBuildNumbers.isEmpty()) {
 								break;

@@ -15,6 +15,7 @@
 package com.liferay.document.library.document.conversion.internal.upgrade.v1_0_0;
 
 import com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration;
+import com.liferay.document.library.document.conversion.constants.LegacyOpenOfficePropsKeys;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
@@ -50,28 +51,53 @@ public class UpgradeOpenOfficeConfiguration extends UpgradeProcess {
 			properties = new HashMapDictionary();
 		}
 
-		PortletPreferences portletPreferences = _prefsProps.getPreferences();
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyOpenOfficePropsKeys.OPENOFFICE_CACHE_ENABLED))) {
 
-		String[][] propertyMethodNamePairs = {
-			{"openoffice.cache.enabled", "cacheEnabled"},
-			{"openoffice.server.enabled", "serverEnabled"},
-			{"openoffice.server.host", "serverHost"},
-			{"openoffice.server.port", "serverPort"}
-		};
+			properties.put(
+				"cacheEnabled",
+				_prefsProps.getBoolean(
+					LegacyOpenOfficePropsKeys.OPENOFFICE_CACHE_ENABLED));
+		}
 
-		for (String[] propertyMethodNamePair : propertyMethodNamePairs) {
-			String oldPropertyKey = propertyMethodNamePair[0];
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_ENABLED))) {
 
-			String oldPropertyValue = _prefsProps.getString(oldPropertyKey);
+			properties.put(
+				"serverEnabled",
+				_prefsProps.getBoolean(
+					LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_ENABLED));
+		}
 
-			if (Validator.isNotNull(oldPropertyValue)) {
-				properties.put(propertyMethodNamePair[1], oldPropertyValue);
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_HOST))) {
 
-				portletPreferences.reset(oldPropertyKey);
-			}
+			properties.put(
+				"serverHost",
+				_prefsProps.getString(
+					LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_HOST));
+		}
+
+		if (Validator.isNotNull(
+				_prefsProps.getString(
+					LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_PORT))) {
+
+			properties.put(
+				"serverPort",
+				_prefsProps.getInteger(
+					LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_PORT));
 		}
 
 		configuration.update(properties);
+
+		PortletPreferences portletPreferences = _prefsProps.getPreferences();
+
+		for (String key : LegacyOpenOfficePropsKeys.KEYS) {
+			portletPreferences.reset(key);
+		}
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;

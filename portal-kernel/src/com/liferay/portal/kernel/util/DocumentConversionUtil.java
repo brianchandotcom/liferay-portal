@@ -19,7 +19,10 @@ import java.io.InputStream;
 
 /**
  * @author Bruno Farache
+* @deprecated As of 7.0.0, replaced by {@link
+ * 			   com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil}
  */
+@Deprecated
 public class DocumentConversionUtil {
 
 	public static File convert(
@@ -52,7 +55,8 @@ public class DocumentConversionUtil {
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.portlet.documentlibrary.util.DocumentConversionUtil";
+		"com.liferay.document.library.kernel.document.conversion." +
+			"DocumentConversionUtil";
 
 	private static final MethodKey _convertMethodKey = new MethodKey(
 		ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME), "convert",

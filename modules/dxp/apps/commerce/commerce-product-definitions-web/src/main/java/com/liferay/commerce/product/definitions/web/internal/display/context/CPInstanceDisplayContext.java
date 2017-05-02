@@ -16,6 +16,8 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 
 import com.liferay.commerce.product.definitions.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -45,6 +47,27 @@ public class CPInstanceDisplayContext
 		setDefaultOrderByCol("sku");
 
 		_cpInstanceService = cpInstanceService;
+	}
+
+	public CPInstance getCPInstance() throws PortalException {
+		if (_cpInstance != null) {
+			return _cpInstance;
+		}
+
+		_cpInstance = actionHelper.getCPInstance(
+			cpRequestHelper.getRenderRequest());
+
+		return _cpInstance;
+	}
+
+	public long getCPInstanceId() throws PortalException {
+		CPInstance cpInstance = getCPInstance();
+
+		if (cpInstance == null) {
+			return 0;
+		}
+
+		return cpInstance.getCPInstanceId();
 	}
 
 	@Override
@@ -95,6 +118,21 @@ public class CPInstanceDisplayContext
 		return this.searchContainer;
 	}
 
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(long cpDefinitionOptionValueRelId)
+		throws PortalException {
+
+		return actionHelper.getCPDefinitionOptionValueRels(
+			cpDefinitionOptionValueRelId);
+	}
+
+	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels()
+		throws PortalException {
+
+		return actionHelper.getSkuContributorCPDefinitionOptionRels(
+			getCPDefinitionId());
+	}
+
+	private CPInstance _cpInstance;
 	private final CPInstanceService _cpInstanceService;
 
 }

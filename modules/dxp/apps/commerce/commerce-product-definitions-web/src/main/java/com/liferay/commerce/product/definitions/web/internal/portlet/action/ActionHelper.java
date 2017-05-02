@@ -18,9 +18,11 @@ import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -166,6 +168,18 @@ public class ActionHelper {
 	}
 
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+			long cpDefinitionOptionRelId)
+		throws PortalException {
+
+		int total =
+			_cpDefinitionOptionValueRelService.
+				getCPDefinitionOptionValueRelsCount(cpDefinitionOptionRelId);
+
+		return _cpDefinitionOptionValueRelService.
+			getCPDefinitionOptionValueRels(cpDefinitionOptionRelId, 0, total);
+	}
+
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
 			ResourceRequest resourceRequest)
 		throws PortalException {
 
@@ -206,6 +220,38 @@ public class ActionHelper {
 		return cpDefinitions;
 	}
 
+	public CPInstance getCPInstance(RenderRequest renderRequest)
+		throws PortalException {
+
+		CPInstance cpInstance = (CPInstance)renderRequest.getAttribute(
+			CPWebKeys.COMMERCE_PRODUCT_INSTANCE);
+
+		if (cpInstance != null) {
+			return cpInstance;
+		}
+
+		long cpInstanceId = ParamUtil.getLong(renderRequest, "cpInstanceId");
+
+		if (cpInstanceId > 0) {
+			cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
+		}
+
+		if (cpInstance != null) {
+			renderRequest.setAttribute(
+				CPWebKeys.COMMERCE_PRODUCT_INSTANCE, cpInstance);
+		}
+
+		return cpInstance;
+	}
+
+	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
+			long cpDefinitionId)
+		throws PortalException {
+
+		return _cpDefinitionOptionRelService.
+			getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
+	}
+
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 
@@ -215,5 +261,8 @@ public class ActionHelper {
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private CPInstanceService _cpInstanceService;
 
 }

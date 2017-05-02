@@ -239,6 +239,16 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public void deleteCPDefinitions(long groupId) throws PortalException {
+		List<CPDefinition> cpDefinitions =
+			cpDefinitionPersistence.findByGroupId(groupId);
+
+		for (CPDefinition cpDefinition : cpDefinitions) {
+			cpDefinitionLocalService.deleteCPDefinition(cpDefinition);
+		}
+	}
+
+	@Override
 	public Map<Locale, String> getCPDefinitionDescriptionMap(
 		long cpDefinitionPK) {
 

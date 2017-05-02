@@ -166,6 +166,12 @@
 		</not>
 	</condition>
 
+	<condition else="Enterprise" property="liferay.releng.lite" value="Lite">
+		<not>
+			<istrue value="${liferay.releng.ee}" />
+		</not>
+	</condition>
+
 	<condition else="Liferay DXP" property="liferay.releng.product.display.name" value="Liferay Portal CE">
 		<not>
 			<istrue value="${liferay.releng.ee}" />
@@ -1380,6 +1386,7 @@ rerun your task.
 					<propertyref name="liferay.home" />
 					<propertyref name="liferay.releng.app.title.prefix" />
 					<propertyref name="liferay.releng.product.display.name" />
+					<propertyref name="liferay.releng.lite" />
 					<propertyref name="liferay.releng.public" />
 					<propertyref name="liferay.releng.supported" />
 					<propertyref name="release.versions.test.other.dir" />

@@ -187,7 +187,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
-	<aui:input name="cpOptionId" type="hidden" value="" />
+	<aui:input name="cpOptionIds" type="hidden" value="" />
 </aui:form>
 
 <liferay-frontend:add-menu>
@@ -219,12 +219,11 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 					eventName: 'productOptionsSelectItem',
 					on: {
 						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
+							var selectedItems = event.newVal;
 
-							if (selectedItem) {
-								var cpOptionId = selectedItem.value.id;
+							if (selectedItems) {
 
-								$('#<portlet:namespace />cpOptionId').val(cpOptionId);
+								$('#<portlet:namespace />cpOptionIds').val(selectedItems);
 
 								var addCPDefinitionOptionRelFm = $('#<portlet:namespace />addCPDefinitionOptionRelFm');
 

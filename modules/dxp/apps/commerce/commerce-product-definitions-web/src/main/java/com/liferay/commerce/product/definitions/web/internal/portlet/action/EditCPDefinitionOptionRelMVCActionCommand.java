@@ -49,6 +49,42 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCPDefinitionOptionRelMVCActionCommand
 	extends BaseMVCActionCommand {
 
+	protected void addCPDefinitionOptionRels(
+		ActionRequest actionRequest)
+		throws Exception {
+
+		long[] addCPOptionIds = null;
+
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+		long cpOptionId = ParamUtil.getLong(
+			actionRequest, "cpOptionId");
+
+		if (cpOptionId > 0) {
+			addCPOptionIds =
+				new long[] {cpOptionId};
+		}
+		else {
+			addCPOptionIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "cpOptionIds"),
+				0L);
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPDefinitionOptionRel.class.getName(), actionRequest);
+
+		for (long addCPOptionId :
+			addCPOptionIds) {
+
+			// Add commerce product definition option rel
+
+			cpDefinitionOptionRel =
+				_cpDefinitionOptionRelService.addCPDefinitionOptionRel(
+					cpDefinitionId, addCPOptionId, serviceContext);
+		}
+	}
+
 	protected void deleteCPDefinitionOptionRels(ActionRequest actionRequest)
 		throws Exception {
 
@@ -83,7 +119,11 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+
+		if (cmd.equals(Constants.ADD) || cmd.equals(Constants.ADD_MULTIPLE)) {
+			addCPDefinitionOptionRels(actionRequest);
+		}
+		else if (cmd.equals(Constants.UPDATE)) {
 			updateCPDefinitionOptionRel(actionRequest);
 		}
 		else if (cmd.equals(Constants.DELETE)) {
@@ -118,24 +158,13 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 
 		CPDefinitionOptionRel cpDefinitionOptionRel = null;
 
-		if (cpDefinitionOptionRelId <= 0) {
+		// Update commerce product definition option rel
 
-			// Add commerce product definition option rel
-
-			cpDefinitionOptionRel =
-				_cpDefinitionOptionRelService.addCPDefinitionOptionRel(
-					cpDefinitionId, cpOptionId, serviceContext);
-		}
-		else {
-
-			// Update commerce product definition option rel
-
-			cpDefinitionOptionRel =
-				_cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
-					cpDefinitionOptionRelId, cpOptionId, nameMap,
-					descriptionMap, ddmFormFieldTypeName, priority, facetable,
-					skuContributor, serviceContext);
-		}
+		cpDefinitionOptionRel =
+			_cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
+				cpDefinitionOptionRelId, cpOptionId, nameMap,
+				descriptionMap, ddmFormFieldTypeName, priority, facetable,
+				skuContributor, serviceContext);
 
 		return cpDefinitionOptionRel;
 	}

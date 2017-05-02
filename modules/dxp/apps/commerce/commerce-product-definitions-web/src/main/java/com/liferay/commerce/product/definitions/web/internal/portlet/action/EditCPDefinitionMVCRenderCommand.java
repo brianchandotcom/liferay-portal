@@ -17,7 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionsDisplayContext;
-import com.liferay.commerce.product.exception.NoSuchProductDefinitionException;
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
@@ -71,7 +71,7 @@ public class EditCPDefinitionMVCRenderCommand implements MVCRenderCommand {
 			setCPDefinitionRequestAttribute(renderRequest);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchProductDefinitionException ||
+			if (e instanceof NoSuchCPDefinitionException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());

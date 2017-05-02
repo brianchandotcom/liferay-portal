@@ -16,7 +16,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionOptionRelDisplayContext;
-import com.liferay.commerce.product.exception.NoSuchProductDefinitionOptionRelException;
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionRelException;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.item.selector.ItemSelector;
@@ -70,7 +70,7 @@ public class EditCPDefinitionOptionRelMVCRenderCommand
 				cpDefinitionOptionRelDisplayContext);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchProductDefinitionOptionRelException ||
+			if (e instanceof NoSuchCPDefinitionOptionRelException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());

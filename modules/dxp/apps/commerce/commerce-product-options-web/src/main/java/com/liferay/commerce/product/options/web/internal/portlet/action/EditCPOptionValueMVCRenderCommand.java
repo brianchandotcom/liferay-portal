@@ -16,7 +16,7 @@ package com.liferay.commerce.product.options.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
-import com.liferay.commerce.product.exception.NoSuchProductOptionValueException;
+import com.liferay.commerce.product.exception.NoSuchCPOptionValueException;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,7 +54,7 @@ public class EditCPOptionValueMVCRenderCommand implements MVCRenderCommand {
 			setCPOptionValueRequestAttribute(renderRequest);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchProductOptionValueException ||
+			if (e instanceof NoSuchCPOptionValueException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());

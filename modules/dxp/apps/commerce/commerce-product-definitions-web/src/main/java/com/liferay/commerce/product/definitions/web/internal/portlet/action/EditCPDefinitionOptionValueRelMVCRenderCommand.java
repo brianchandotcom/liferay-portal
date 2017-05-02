@@ -16,7 +16,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionOptionValueRelDisplayContext;
-import com.liferay.commerce.product.exception.NoSuchProductDefinitionOptionRelException;
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionRelException;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -67,7 +67,7 @@ public class EditCPDefinitionOptionValueRelMVCRenderCommand
 				cpDefinitionOptionValueRelDisplayContext);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchProductDefinitionOptionRelException ||
+			if (e instanceof NoSuchCPDefinitionOptionRelException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());

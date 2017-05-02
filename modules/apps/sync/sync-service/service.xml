@@ -171,10 +171,6 @@
 		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLSyncEvent" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLTrash" package-path="com.liferay.portlet.documentlibrary" />
-
-		<!-- Transactions -->
-
-		<tx-required>getFileDeltaAsStream</tx-required>
 	</entity>
 	<exceptions>
 		<exception>SyncDeviceActive</exception>

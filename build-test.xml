@@ -3718,6 +3718,40 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="uninstall-patches">
+		<attribute name="patching.tool.dir" />
+
+		<sequential>
+			<delete file="@{patching.tool.dir}/default.properties" />
+
+			<if>
+				<equals arg1="${app.server.type}" arg2="weblogic" />
+				<then>
+					<echo file="@{patching.tool.dir}/default.properties">global.lib.path=${app.server.weblogic.lib.global.dir}
+liferay.home=${liferay.home}
+patching.mode=binary
+war.path=${app.server.weblogic.portal.dir}/</echo>
+
+					<execute dir="@{patching.tool.dir}" failonerror="true">
+						patching-tool${file.suffix.bat} revert -force
+						patching-tool${file.suffix.bat} update-plugins
+					</execute>
+				</then>
+				<else>
+					<execute dir="@{patching.tool.dir}" failonerror="true">
+						patching-tool${file.suffix.bat} auto-discovery
+						patching-tool${file.suffix.bat} revert -force
+						patching-tool${file.suffix.bat} update-plugins
+					</execute>
+				</else>
+			</if>
+
+			<delete dir="@{patching.tool.dir}/patches" />
+
+			<mkdir dir="@{patching.tool.dir}/patches" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="wait-for-app-server">
 		<attribute name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />
@@ -8081,7 +8115,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			</else>
 		</if>
 
-
 		<if>
 			<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
 			<then>
@@ -9673,6 +9706,10 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<ant dir="portal-impl" inheritAll="false" target="test-unit" />
 
 		<ant dir="util-java" inheritAll="false" target="test-unit" />
+	</target>
+
+	<target name="uninstall-patches">
+		<uninstall-patches patching.tool.dir="${app.server.parent.dir}/patching-tool" />
 	</target>
 
 	<target name="upgrade-legacy-database">

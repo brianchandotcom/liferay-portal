@@ -624,6 +624,37 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-patch-requirements">
+		<attribute name="patch.file.zip.url" />
+
+		<sequential>
+			<var name="patch.requirements" unset="true" />
+
+			<local name="tstamp.value" />
+
+			<tstamp>
+				<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
+			</tstamp>
+
+			<mirrors-get dest="${tstamp.value}.zip" src="@{patch.file.zip.url}" />
+
+			<mkdir dir="${tstamp.value}-dir" />
+
+			<unzip dest="${tstamp.value}-dir" src="${tstamp.value}.zip" />
+
+			<xmlproperty file="${tstamp.value}-dir/fixpack_documentation.xml" />
+
+			<antelope:stringutil property="patch.requirements" string="${patch.requirements}">
+				<antelope:replace regex="!" replacement="" />
+				<antelope:replace regex="&gt;=" replacement="-" />
+				<antelope:replace regex="=" replacement="-" />
+			</antelope:stringutil>
+
+			<delete dir="${tstamp.value}-dir" />
+			<delete file="${tstamp.value}.zip" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-poshi-class-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />
@@ -1285,6 +1316,82 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="install-patch">
+		<attribute name="patch.file.zip.url" />
+		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
+
+		<sequential>
+			<local name="patch.file.name" />
+
+			<basename file="@{patch.file.zip.url}" property="patch.file.name" />
+
+			<mirrors-get dest="@{patching.tool.dir}/patches/${patch.file.name}" src="@{patch.file.zip.url}" />
+
+			<if>
+				<contains string="${patch.file.name}" substring="hotfix" />
+				<then>
+					<install-patch-dependencies hotfix.file.zip.url="@{patch.file.zip.url}" />
+				</then>
+			</if>
+
+			<delete file="@{patching.tool.dir}/default.properties" />
+
+			<if>
+				<equals arg1="${app.server.type}" arg2="weblogic" />
+				<then>
+					<echo file="@{patching.tool.dir}/default.properties">global.lib.path=${app.server.weblogic.lib.global.dir}
+liferay.home=${liferay.home}
+patching.mode=binary
+war.path=${app.server.weblogic.portal.dir}/</echo>
+
+					<execute dir="@{patching.tool.dir}" failonerror="true">
+						patching-tool${file.suffix.bat} install -force
+						patching-tool${file.suffix.bat} update-plugins
+					</execute>
+				</then>
+				<else>
+					<execute dir="@{patching.tool.dir}" failonerror="true">
+						patching-tool${file.suffix.bat} auto-discovery
+						patching-tool${file.suffix.bat} install -force
+						patching-tool${file.suffix.bat} update-plugins
+					</execute>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="install-patch-dependencies">
+		<attribute name="hotfix.file.zip.url" />
+		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
+
+		<sequential>
+			<local name="hotfix.build.version" />
+			<local name="hotfix.portal.version" />
+			<local name="patch.requirements" />
+
+			<get-patch-requirements patch.file.zip.url="@{hotfix.file.zip.url}" />
+
+			<propertyregex
+				input="@{hotfix.file.zip.url}"
+				property="hotfix.build.version"
+				regexp=".+/hotfix/liferay-hotfix-\d+-(\d)(\d)(\d\d).zip"
+				replace="\1\2\3"
+			/>
+
+			<propertyregex
+				input="@{hotfix.file.zip.url}"
+				property="hotfix.portal.version"
+				regexp=".+/hotfix/liferay-hotfix-\d+-(\d)(\d)(\d\d).zip"
+				replace="\1.\2.\3"
+			/>
+
+			<mirrors-get
+				dest="@{patching.tool.dir}/patches"
+				src="http://files.liferay.com/private/ee/fix-packs/${hotfix.portal.version}/de/liferay-fix-pack-${patch.requirements}-${hotfix.build.version}.zip"
+			/>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="poshi-execute">
 		<attribute name="task" />
 
@@ -1602,115 +1709,6 @@ logExceptionsOnly=&quot;false&quot;</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-fix-pack">
-		<attribute default="${app.server.parent.dir}" name="bundles.dir" />
-		<attribute name="fix.pack.zip.url" />
-		<attribute name="patching.tool.zip.url" />
-
-		<sequential>
-			<mirrors-get
-				dest="${basedir}"
-				src="@{patching.tool.zip.url}"
-			/>
-
-			<unzip dest="@{bundles.dir}">
-				<fileset
-					dir="${basedir}"
-					includes="patching-tool*"
-				/>
-			</unzip>
-
-			<chmod perm="a+x">
-				<fileset dir="@{bundles.dir}/patching-tool">
-					<include name="*.sh" />
-				</fileset>
-			</chmod>
-
-			<mirrors-get
-				dest="@{bundles.dir}/patching-tool/patches"
-				src="@{fix.pack.zip.url}"
-			/>
-
-			<local name="fix.pack.file.name" />
-
-			<basename file="@{fix.pack.zip.url}" property="fix.pack.file.name" />
-
-			<check-fix-pack-requirements
-				fix.pack.dir="@{bundles.dir}/patching-tool/patches"
-				fix.pack.file.name="${fix.pack.file.name}"
-			/>
-
-			<delete file="@{bundles.dir}/patching-tool/default.properties" />
-
-			<if>
-				<equals arg1="${app.server.type}" arg2="weblogic" />
-				<then>
-					<echo file="@{bundles.dir}/patching-tool/default.properties">global.lib.path=${app.server.weblogic.lib.global.dir}
-liferay.home=${liferay.home}
-patching.mode=binary
-war.path=${app.server.weblogic.portal.dir}/</echo>
-
-					<execute dir="@{bundles.dir}/patching-tool">
-						patching-tool${file.suffix.bat} install -force
-						patching-tool${file.suffix.bat} update-plugins
-					</execute>
-				</then>
-				<else>
-					<execute dir="@{bundles.dir}/patching-tool">
-						patching-tool${file.suffix.bat} auto-discovery
-						patching-tool${file.suffix.bat} install -force
-						patching-tool${file.suffix.bat} update-plugins
-					</execute>
-				</else>
-			</if>
-
-			<local name="patching.tool.file.name" />
-
-			<basename file="@{patching.tool.zip.url}" property="patching.tool.file.name" />
-
-			<delete file="${basedir}/${patching.tool.file.name}" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-fix-pack-bundle" >
-		<sequential>
-			<if>
-				<and>
-					<isset property="test.fix.pack.base.url" />
-					<isset property="test.fix.pack.zip.name" />
-				</and>
-				<then>
-					<property name="test.build.fix.pack.zip.url" value="${test.fix.pack.base.url}/${test.fix.pack.zip.name}" />
-				</then>
-			</if>
-
-			<if>
-				<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
-				<then>
-					<mirrors-get
-						dest="${basedir}"
-						src="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}"
-					/>
-
-					<loadfile
-						property="patching.tool.version"
-						srcFile="${patching.tool.latest.txt}"
-					/>
-
-					<delete file="${basedir}/${patching.tool.latest.txt}" />
-
-					<property name="test.build.patching.tool.zip.url" value="${test.fix.pack.base.url}/patching-tool/patching-tool-${patching.tool.version}.zip" />
-
-					<prepare-fix-pack
-						bundles.dir="${app.server.parent.dir}"
-						fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-						patching.tool.zip.url="${test.build.patching.tool.zip.url}"
-					/>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-ie-driver">
 		<sequential>
 			<if>
@@ -1736,6 +1734,38 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 					</if>
 				</else>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-patching-tool" >
+		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
+
+		<sequential>
+			<local name="patching.tool.name" />
+			<local name="patching.tool.version" />
+
+			<mirrors-get dest="${basedir}" src="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}" />
+
+			<loadfile property="patching.tool.version" srcFile="${patching.tool.latest.txt}" />
+
+			<property name="patching.tool.name" value="patching-tool-${patching.tool.version}.zip" />
+
+			<mirrors-get dest="${basedir}" src="${test.fix.pack.base.url}/patching-tool/${patching.tool.name}" />
+
+			<delete dir="@{patching.tool.dir}" />
+
+			<unzip dest="@{patching.tool.dir}/..">
+				<fileset dir="${basedir}" includes="patching-tool*" />
+			</unzip>
+
+			<chmod perm="a+x">
+				<fileset dir="@{patching.tool.dir}">
+					<include name="*.sh" />
+				</fileset>
+			</chmod>
+
+			<delete file="${basedir}/${patching.tool.latest.txt}" />
+			<delete file="${basedir}/${patching.tool.name}" />
 		</sequential>
 	</macrodef>
 
@@ -3688,6 +3718,40 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="uninstall-patches">
+		<attribute name="patching.tool.dir" />
+
+		<sequential>
+			<delete file="@{patching.tool.dir}/default.properties" />
+
+			<if>
+				<equals arg1="${app.server.type}" arg2="weblogic" />
+				<then>
+					<echo file="@{patching.tool.dir}/default.properties">global.lib.path=${app.server.weblogic.lib.global.dir}
+liferay.home=${liferay.home}
+patching.mode=binary
+war.path=${app.server.weblogic.portal.dir}/</echo>
+
+					<execute dir="@{patching.tool.dir}" failonerror="true">
+						patching-tool${file.suffix.bat} revert -force
+						patching-tool${file.suffix.bat} update-plugins
+					</execute>
+				</then>
+				<else>
+					<execute dir="@{patching.tool.dir}" failonerror="true">
+						patching-tool${file.suffix.bat} auto-discovery
+						patching-tool${file.suffix.bat} revert -force
+						patching-tool${file.suffix.bat} update-plugins
+					</execute>
+				</else>
+			</if>
+
+			<delete dir="@{patching.tool.dir}/patches" />
+
+			<mkdir dir="@{patching.tool.dir}/patches" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="wait-for-app-server">
 		<attribute name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />
@@ -5600,6 +5664,12 @@ go]]></replacevalue>
 		/>
 	</target>
 
+	<target name="install-patch">
+		<fail message="Please set the property ${patch.file.zip.url}." unless="patch.file.zip.url" />
+
+		<install-patch patching.tool.dir="${app.server.parent.dir}/patching-tool" patch.file.zip.url="${patch.file.zip.url}" />
+	</target>
+
 	<target name="kill-spi">
 		<if>
 			<os family="unix" />
@@ -6054,6 +6124,10 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		</if>
 
 		<prepare-elasticsearch-configuration />
+	</target>
+
+	<target name="prepare-patching-tool">
+		<prepare-patching-tool patching.tool.dir="${app.server.parent.dir}/patching-tool" />
 	</target>
 
 	<target name="prepare-portal-ext-properties">
@@ -8041,7 +8115,17 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			</else>
 		</if>
 
-		<prepare-fix-pack-bundle />
+
+		<if>
+			<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
+			<then>
+				<antcall target="prepare-patching-tool" />
+
+				<antcall target="install-patch">
+					<param name="patch.file.zip.url" value="${test.build.fix.pack.zip.url}" />
+				</antcall>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-virtual-host-name-properties">
@@ -9623,6 +9707,10 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<ant dir="portal-impl" inheritAll="false" target="test-unit" />
 
 		<ant dir="util-java" inheritAll="false" target="test-unit" />
+	</target>
+
+	<target name="uninstall-patches">
+		<uninstall-patches patching.tool.dir="${app.server.parent.dir}/patching-tool" />
 	</target>
 
 	<target name="upgrade-legacy-database">

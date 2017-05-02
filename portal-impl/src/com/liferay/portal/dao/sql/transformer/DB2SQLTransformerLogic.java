@@ -32,12 +32,21 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 			getBooleanFunction(), getCastClobTextFunction(),
 			getCastLongFunction(), getCastTextFunction(),
 			getIntegerDivisionFunction(), getNullDateFunction(),
-			_getLikeFunction());
+			_getAlterColumnTypeFunction(), _getLikeFunction());
 	}
 
 	@Override
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
+	}
+
+	private Function<String, String> _getAlterColumnTypeFunction() {
+		return (String sql) -> {
+			Matcher matcher = _alterColumnTypePattern.matcher(sql);
+
+			return matcher.replaceAll(
+				"ALTER TABLE $1 ALTER COLUMN $2 SET DATA TYPE $3");
+		};
 	}
 
 	private Function<String, String> _getLikeFunction() {
@@ -49,6 +58,9 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 		};
 	}
 
+	private static final Pattern _alterColumnTypePattern = Pattern.compile(
+		"ALTER_COLUMN_TYPE\\s+(\\S+)\\s+(\\S+)\\s+(\\S+)",
+		Pattern.CASE_INSENSITIVE);
 	private static final Pattern _likePattern = Pattern.compile(
 		"LIKE \\?", Pattern.CASE_INSENSITIVE);
 

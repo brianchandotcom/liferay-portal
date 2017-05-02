@@ -25,6 +25,9 @@ public class CPActionKeys {
 	public static final String ADD_COMMERCE_PRODUCT_INSTANCE =
 		"ADD_COMMERCE_PRODUCT_INSTANCE";
 
+	public static final String ADD_COMMERCE_PRODUCT_MEDIA_TYPE =
+		"ADD_COMMERCE_PRODUCT_MEDIA_TYPE";
+
 	public static final String ADD_COMMERCE_PRODUCT_OPTION =
 		"ADD_COMMERCE_PRODUCT_OPTION";
 

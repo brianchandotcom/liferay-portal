@@ -244,6 +244,24 @@ public class ActionHelper {
 		return cpInstance;
 	}
 
+	public List<CPInstance> getCPInstances(ResourceRequest resourceRequest)
+		throws PortalException {
+
+		List<CPInstance> cpInstances = new ArrayList<>();
+
+		long[] cpInstanceIds = ParamUtil.getLongValues(
+			resourceRequest, "rowIds");
+
+		for (long cpInstanceId : cpInstanceIds) {
+			CPInstance cpInstance = _cpInstanceService.getCPInstance(
+				cpInstanceId);
+
+			cpInstances.add(cpInstance);
+		}
+
+		return cpInstances;
+	}
+
 	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
 			long cpDefinitionId)
 		throws PortalException {

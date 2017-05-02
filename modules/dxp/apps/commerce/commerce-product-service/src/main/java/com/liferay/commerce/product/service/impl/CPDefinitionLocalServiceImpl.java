@@ -239,6 +239,29 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public Map<Locale, String> getCPDefinitionDescriptionMap(
+		long cpDefinitionPK) {
+
+		Map<Locale, String> cpDefinitionLocalizationDescriptionMap =
+			new HashMap<>();
+
+		List<CPDefinitionLocalization> cpDefinitionLocalizationList =
+			cpDefinitionLocalizationPersistence.findByCPDefinitionPK(
+				cpDefinitionPK);
+
+		for (CPDefinitionLocalization cpDefinitionLocalization :
+				cpDefinitionLocalizationList) {
+
+			cpDefinitionLocalizationDescriptionMap.put(
+				LocaleUtil.fromLanguageId(
+					cpDefinitionLocalization.getLanguageId()),
+				cpDefinitionLocalization.getDescription());
+		}
+
+		return cpDefinitionLocalizationDescriptionMap;
+	}
+
+	@Override
 	public List<String> getCPDefinitionLocalizationLanguageIds(
 		long cpDefinitionId) {
 
@@ -256,6 +279,26 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return availableLanguageIds;
+	}
+
+	@Override
+	public Map<Locale, String> getCPDefinitionTitleMap(long cpDefinitionPK) {
+		Map<Locale, String> cpDefinitionLocalizationTitleMap = new HashMap<>();
+
+		List<CPDefinitionLocalization> cpDefinitionLocalizationList =
+			cpDefinitionLocalizationPersistence.findByCPDefinitionPK(
+				cpDefinitionPK);
+
+		for (CPDefinitionLocalization cpDefinitionLocalization :
+				cpDefinitionLocalizationList) {
+
+			cpDefinitionLocalizationTitleMap.put(
+				LocaleUtil.fromLanguageId(
+					cpDefinitionLocalization.getLanguageId()),
+				cpDefinitionLocalization.getTitle());
+		}
+
+		return cpDefinitionLocalizationTitleMap;
 	}
 
 	@Override

@@ -754,6 +754,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UNPUBLISH</td>
+	<td>//button[contains(@id,'publish') and contains(.,'Unpublish')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UPDATE</td>
 	<td>//button[contains(.,'Update')]</td>
 	<td></td>

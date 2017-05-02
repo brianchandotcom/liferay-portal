@@ -309,6 +309,16 @@
 		<execute function="AssertClick" locator1="Form#PAGE_CONTROLS_SWITCH_PAGINATION_MODE" value1="Switch Pagination Mode" />
 	</command>
 
+	<command name="unpublishForm">
+		<execute function="AssertElementPresent" locator1="Form#NAME_FIELD" />
+
+		<execute function="Click" locator1="Button#UNPUBLISH" />
+
+		<var name="key_uniqueSuccess" value="The form was unpublished successfully!" />
+
+		<execute function="AssertElementPresent" locator1="Message#UNIQUE_SUCCESS" value1="The form was unpublished successfully!" />
+	</command>
+
 	<command name="viewAltPagePagination">
 		<var name="key_page" value="${page}" />
 

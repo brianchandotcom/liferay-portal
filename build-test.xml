@@ -624,6 +624,37 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-patch-requirements">
+		<attribute name="patch.file.zip.url" />
+
+		<sequential>
+			<var name="patch.requirements" unset="true" />
+
+			<local name="tstamp.value" />
+
+			<tstamp>
+				<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
+			</tstamp>
+
+			<mirrors-get dest="${tstamp.value}.zip" src="@{patch.file.zip.url}" />
+
+			<mkdir dir="${tstamp.value}-dir" />
+
+			<unzip dest="${tstamp.value}-dir" src="${tstamp.value}.zip" />
+
+			<xmlproperty file="${tstamp.value}-dir/fixpack_documentation.xml" />
+
+			<antelope:stringutil property="patch.requirements" string="${patch.requirements}">
+				<antelope:replace regex="!" replacement="" />
+				<antelope:replace regex="&gt;=" replacement="-" />
+				<antelope:replace regex="=" replacement="-" />
+			</antelope:stringutil>
+
+			<delete dir="${tstamp.value}-dir" />
+			<delete file="${tstamp.value}.zip" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-poshi-class-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />
@@ -1282,6 +1313,82 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			</if>
 
 			<property name="testray.testcase.warnings" value="" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="install-patch">
+		<attribute name="patch.file.zip.url" />
+		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
+
+		<sequential>
+			<local name="patch.file.name" />
+
+			<basename file="@{patch.file.zip.url}" property="patch.file.name" />
+
+			<mirrors-get dest="@{patching.tool.dir}/patches/${patch.file.name}" src="@{patch.file.zip.url}" />
+
+			<if>
+				<contains string="${patch.file.name}" substring="hotfix" />
+				<then>
+					<install-patch-dependencies hotfix.file.zip.url="@{patch.file.zip.url}" />
+				</then>
+			</if>
+
+			<delete file="@{patching.tool.dir}/default.properties" />
+
+			<if>
+				<equals arg1="${app.server.type}" arg2="weblogic" />
+				<then>
+					<echo file="@{patching.tool.dir}/default.properties">global.lib.path=${app.server.weblogic.lib.global.dir}
+liferay.home=${liferay.home}
+patching.mode=binary
+war.path=${app.server.weblogic.portal.dir}/</echo>
+
+					<execute dir="@{patching.tool.dir}" failonerror="true">
+						patching-tool${file.suffix.bat} install -force
+						patching-tool${file.suffix.bat} update-plugins
+					</execute>
+				</then>
+				<else>
+					<execute dir="@{patching.tool.dir}" failonerror="true">
+						patching-tool${file.suffix.bat} auto-discovery
+						patching-tool${file.suffix.bat} install -force
+						patching-tool${file.suffix.bat} update-plugins
+					</execute>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="install-patch-dependencies">
+		<attribute name="hotfix.file.zip.url" />
+		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
+
+		<sequential>
+			<local name="hotfix.build.version" />
+			<local name="hotfix.portal.version" />
+			<local name="patch.requirements" />
+
+			<get-patch-requirements patch.file.zip.url="@{hotfix.file.zip.url}" />
+
+			<propertyregex
+				input="@{hotfix.file.zip.url}"
+				property="hotfix.build.version"
+				regexp=".+/hotfix/liferay-hotfix-\d+-(\d)(\d)(\d\d).zip"
+				replace="\1\2\3"
+			/>
+
+			<propertyregex
+				input="@{hotfix.file.zip.url}"
+				property="hotfix.portal.version"
+				regexp=".+/hotfix/liferay-hotfix-\d+-(\d)(\d)(\d\d).zip"
+				replace="\1.\2.\3"
+			/>
+
+			<mirrors-get
+				dest="@{patching.tool.dir}/patches"
+				src="http://files.liferay.com/private/ee/fix-packs/${hotfix.portal.version}/de/liferay-fix-pack-${patch.requirements}-${hotfix.build.version}.zip"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -5630,6 +5737,12 @@ go]]></replacevalue>
 			file="${changelog.dir}/git-build-log.html"
 			todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
 		/>
+	</target>
+
+	<target name="install-patch">
+		<fail message="Please set the property ${patch.file.zip.url}." unless="patch.file.zip.url" />
+
+		<install-patch patching.tool.dir="${app.server.parent.dir}/patching-tool" patch.file.zip.url="${patch.file.zip.url}" />
 	</target>
 
 	<target name="kill-spi">

@@ -1739,6 +1739,38 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-patching-tool" >
+		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
+
+		<sequential>
+			<local name="patching.tool.name" />
+			<local name="patching.tool.version" />
+
+			<mirrors-get dest="${basedir}" src="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}" />
+
+			<loadfile property="patching.tool.version" srcFile="${patching.tool.latest.txt}" />
+
+			<property name="patching.tool.name" value="patching-tool-${patching.tool.version}.zip" />
+
+			<mirrors-get dest="${basedir}" src="${test.fix.pack.base.url}/patching-tool/${patching.tool.name}" />
+
+			<delete dir="@{patching.tool.dir}" />
+
+			<unzip dest="@{patching.tool.dir}/..">
+				<fileset dir="${basedir}" includes="patching-tool*" />
+			</unzip>
+
+			<chmod perm="a+x">
+				<fileset dir="@{patching.tool.dir}">
+					<include name="*.sh" />
+				</fileset>
+			</chmod>
+
+			<delete file="${basedir}/${patching.tool.latest.txt}" />
+			<delete file="${basedir}/${patching.tool.name}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-portal-legacy-properties">
 		<attribute default="portal-impl/src/portal-ext.properties" name="portal.ext.properties.file.path" />
 		<attribute name="portal.major.version" />
@@ -6054,6 +6086,10 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		</if>
 
 		<prepare-elasticsearch-configuration />
+	</target>
+
+	<target name="prepare-patching-tool">
+		<prepare-patching-tool patching.tool.dir="${app.server.parent.dir}/patching-tool" />
 	</target>
 
 	<target name="prepare-portal-ext-properties">

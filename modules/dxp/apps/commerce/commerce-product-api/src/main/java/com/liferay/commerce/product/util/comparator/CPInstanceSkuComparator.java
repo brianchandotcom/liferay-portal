@@ -12,36 +12,37 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.util.comparator;
+package com.liferay.commerce.product.util.comparator;
 
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPDefinitionCreateDateComparator
-	extends OrderByComparator<CPDefinition> {
+public class CPInstanceSkuComparator extends OrderByComparator<CPInstance> {
 
-	public static final String ORDER_BY_ASC = "createDate ASC";
+	public static final String ORDER_BY_ASC = "CPInstance.sku ASC";
 
-	public static final String ORDER_BY_DESC = "createDate DESC";
+	public static final String ORDER_BY_DESC = "CPInstance.sku DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"createDate"};
+	public static final String[] ORDER_BY_FIELDS = {"sku"};
 
-	public CPDefinitionCreateDateComparator() {
+	public CPInstanceSkuComparator() {
 		this(false);
 	}
 
-	public CPDefinitionCreateDateComparator(boolean ascending) {
+	public CPInstanceSkuComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
-	public int compare(CPDefinition cpDefinition1, CPDefinition cpDefinition2) {
-		int value = DateUtil.compareTo(
-			cpDefinition1.getCreateDate(), cpDefinition2.getCreateDate());
+	public int compare(CPInstance cpInstance1, CPInstance cpInstance2) {
+		String sku1 = StringUtil.toLowerCase(cpInstance1.getSku());
+		String sku2 = StringUtil.toLowerCase(cpInstance2.getSku());
+
+		int value = sku1.compareTo(sku2);
 
 		if (_ascending) {
 			return value;

@@ -12,37 +12,40 @@
  * details.
  */
 
-package com.liferay.commerce.product.item.selector.web.internal.util.comparator;
+package com.liferay.commerce.product.util.comparator;
 
-import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPOptionNameComparator extends OrderByComparator<CPOption> {
+public class CPDefinitionOptionRelCreateDateComparator
+	extends OrderByComparator<CPDefinitionOptionRel> {
 
-	public static final String ORDER_BY_ASC = "CPOption.name ASC";
+	public static final String ORDER_BY_ASC = "createDate ASC";
 
-	public static final String ORDER_BY_DESC = "CPOption.name DESC";
+	public static final String ORDER_BY_DESC = "createDate DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"name"};
+	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public CPOptionNameComparator() {
+	public CPDefinitionOptionRelCreateDateComparator() {
 		this(false);
 	}
 
-	public CPOptionNameComparator(boolean ascending) {
+	public CPDefinitionOptionRelCreateDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
-	public int compare(CPOption cpOption1, CPOption cpOption2) {
-		String name1 = StringUtil.toLowerCase(cpOption1.getName());
-		String name2 = StringUtil.toLowerCase(cpOption2.getName());
+	public int compare(
+		CPDefinitionOptionRel cpDefinitionOptionRel1,
+		CPDefinitionOptionRel cpDefinitionOptionRel2) {
 
-		int value = name1.compareTo(name2);
+		int value = DateUtil.compareTo(
+			cpDefinitionOptionRel1.getCreateDate(),
+			cpDefinitionOptionRel2.getCreateDate());
 
 		if (_ascending) {
 			return value;

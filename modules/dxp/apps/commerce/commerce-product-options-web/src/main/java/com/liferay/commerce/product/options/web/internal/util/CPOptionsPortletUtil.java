@@ -16,9 +16,9 @@ package com.liferay.commerce.product.options.web.internal.util;
 
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
-import com.liferay.commerce.product.options.web.internal.util.comparator.CPOptionNameComparator;
-import com.liferay.commerce.product.options.web.internal.util.comparator.CPOptionValuePriorityComparator;
-import com.liferay.commerce.product.options.web.internal.util.comparator.CPOptionValueTitleComparator;
+import com.liferay.commerce.product.util.comparator.CPOptionNameComparator;
+import com.liferay.commerce.product.util.comparator.CPOptionValuePriorityComparator;
+import com.liferay.commerce.product.util.comparator.CPOptionValueTitleComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**

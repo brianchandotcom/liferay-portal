@@ -12,36 +12,37 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.util.comparator;
+package com.liferay.commerce.product.util.comparator;
 
-import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPInstanceCreateDateComparator
-	extends OrderByComparator<CPInstance> {
+public class CPOptionValuePriorityComparator
+	extends OrderByComparator<CPOptionValue> {
 
-	public static final String ORDER_BY_ASC = "createDate ASC";
+	public static final String ORDER_BY_ASC = "CPOptionValue.priority ASC";
 
-	public static final String ORDER_BY_DESC = "createDate DESC";
+	public static final String ORDER_BY_DESC = "CPOptionValue.priority DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"createDate"};
+	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
-	public CPInstanceCreateDateComparator() {
+	public CPOptionValuePriorityComparator() {
 		this(false);
 	}
 
-	public CPInstanceCreateDateComparator(boolean ascending) {
+	public CPOptionValuePriorityComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
-	public int compare(CPInstance cpInstance1, CPInstance cpInstance2) {
-		int value = DateUtil.compareTo(
-			cpInstance1.getCreateDate(), cpInstance2.getCreateDate());
+	public int compare(
+		CPOptionValue cpOptionValue1, CPOptionValue cpOptionValue2) {
+
+		int value = Integer.compare(
+			cpOptionValue1.getPriority(), cpOptionValue2.getPriority());
 
 		if (_ascending) {
 			return value;

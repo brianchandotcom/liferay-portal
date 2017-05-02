@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.util.comparator;
+package com.liferay.commerce.product.util.comparator;
 
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.util.DateUtil;

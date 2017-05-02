@@ -12,39 +12,37 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.util.comparator;
+package com.liferay.commerce.product.util.comparator;
 
-import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPDefinitionOptionRelPriorityComparator
-	extends OrderByComparator<CPDefinitionOptionRel> {
+public class CPOptionNameComparator extends OrderByComparator<CPOption> {
 
-	public static final String ORDER_BY_ASC = "CPOptionValue.priority ASC";
+	public static final String ORDER_BY_ASC = "CPOption.name ASC";
 
-	public static final String ORDER_BY_DESC = "CPOptionValue.priority DESC";
+	public static final String ORDER_BY_DESC = "CPOption.name DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"priority"};
+	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CPDefinitionOptionRelPriorityComparator() {
+	public CPOptionNameComparator() {
 		this(false);
 	}
 
-	public CPDefinitionOptionRelPriorityComparator(boolean ascending) {
+	public CPOptionNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
-	public int compare(
-		CPDefinitionOptionRel cpDefinitionOptionRel1,
-		CPDefinitionOptionRel cpDefinitionOptionRel2) {
+	public int compare(CPOption cpOption1, CPOption cpOption2) {
+		String name1 = StringUtil.toLowerCase(cpOption1.getName());
+		String name2 = StringUtil.toLowerCase(cpOption2.getName());
 
-		int value = Integer.compare(
-			cpDefinitionOptionRel1.getPriority(),
-			cpDefinitionOptionRel2.getPriority());
+		int value = name1.compareTo(name2);
 
 		if (_ascending) {
 			return value;

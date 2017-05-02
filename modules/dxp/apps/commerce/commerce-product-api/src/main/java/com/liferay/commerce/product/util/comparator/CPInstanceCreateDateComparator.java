@@ -12,42 +12,36 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.util.comparator;
+package com.liferay.commerce.product.util.comparator;
 
-import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPDefinitionOptionRelNameComparator
-	extends OrderByComparator<CPDefinitionOptionRel> {
+public class CPInstanceCreateDateComparator
+	extends OrderByComparator<CPInstance> {
 
-	public static final String ORDER_BY_ASC = "CPDefinitionOptionRel.name ASC";
+	public static final String ORDER_BY_ASC = "createDate ASC";
 
-	public static final String ORDER_BY_DESC =
-		"CPDefinitionOptionRel.name DESC";
+	public static final String ORDER_BY_DESC = "createDate DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"name"};
+	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public CPDefinitionOptionRelNameComparator() {
+	public CPInstanceCreateDateComparator() {
 		this(false);
 	}
 
-	public CPDefinitionOptionRelNameComparator(boolean ascending) {
+	public CPInstanceCreateDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
-	public int compare(
-		CPDefinitionOptionRel cpDefinitionOptionRel1,
-		CPDefinitionOptionRel cpDefinitionOptionRel2) {
-
-		String name1 = StringUtil.toLowerCase(cpDefinitionOptionRel1.getName());
-		String name2 = StringUtil.toLowerCase(cpDefinitionOptionRel2.getName());
-
-		int value = name1.compareTo(name2);
+	public int compare(CPInstance cpInstance1, CPInstance cpInstance2) {
+		int value = DateUtil.compareTo(
+			cpInstance1.getCreateDate(), cpInstance2.getCreateDate());
 
 		if (_ascending) {
 			return value;

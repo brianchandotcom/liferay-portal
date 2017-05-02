@@ -12,29 +12,28 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.util.comparator;
+package com.liferay.commerce.product.util.comparator;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPDefinitionOptionRelCreateDateComparator
+public class CPDefinitionOptionRelPriorityComparator
 	extends OrderByComparator<CPDefinitionOptionRel> {
 
-	public static final String ORDER_BY_ASC = "createDate ASC";
+	public static final String ORDER_BY_ASC = "CPOptionValue.priority ASC";
 
-	public static final String ORDER_BY_DESC = "createDate DESC";
+	public static final String ORDER_BY_DESC = "CPOptionValue.priority DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"createDate"};
+	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
-	public CPDefinitionOptionRelCreateDateComparator() {
+	public CPDefinitionOptionRelPriorityComparator() {
 		this(false);
 	}
 
-	public CPDefinitionOptionRelCreateDateComparator(boolean ascending) {
+	public CPDefinitionOptionRelPriorityComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
@@ -43,9 +42,9 @@ public class CPDefinitionOptionRelCreateDateComparator
 		CPDefinitionOptionRel cpDefinitionOptionRel1,
 		CPDefinitionOptionRel cpDefinitionOptionRel2) {
 
-		int value = DateUtil.compareTo(
-			cpDefinitionOptionRel1.getCreateDate(),
-			cpDefinitionOptionRel2.getCreateDate());
+		int value = Integer.compare(
+			cpDefinitionOptionRel1.getPriority(),
+			cpDefinitionOptionRel2.getPriority());
 
 		if (_ascending) {
 			return value;

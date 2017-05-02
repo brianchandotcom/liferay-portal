@@ -12,39 +12,40 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.util.comparator;
+package com.liferay.commerce.product.util.comparator;
 
-import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPDefinitionOptionValueRelPriorityComparator
-	extends OrderByComparator<CPDefinitionOptionValueRel> {
+public class CPOptionValueTitleComparator
+	extends OrderByComparator<CPOptionValue> {
 
-	public static final String ORDER_BY_ASC = "CPOptionValue.priority ASC";
+	public static final String ORDER_BY_ASC = "CPOptionValue.title ASC";
 
-	public static final String ORDER_BY_DESC = "CPOptionValue.priority DESC";
+	public static final String ORDER_BY_DESC = "CPOptionValue.title DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"priority"};
+	public static final String[] ORDER_BY_FIELDS = {"title"};
 
-	public CPDefinitionOptionValueRelPriorityComparator() {
+	public CPOptionValueTitleComparator() {
 		this(false);
 	}
 
-	public CPDefinitionOptionValueRelPriorityComparator(boolean ascending) {
+	public CPOptionValueTitleComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel1,
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel2) {
+		CPOptionValue cpOptionValue1, CPOptionValue cpOptionValue2) {
 
-		int value = Integer.compare(
-			cpDefinitionOptionValueRel1.getPriority(),
-			cpDefinitionOptionValueRel2.getPriority());
+		String title1 = StringUtil.toLowerCase(cpOptionValue1.getTitle());
+		String title2 = StringUtil.toLowerCase(cpOptionValue2.getTitle());
+
+		int value = title1.compareTo(title2);
 
 		if (_ascending) {
 			return value;

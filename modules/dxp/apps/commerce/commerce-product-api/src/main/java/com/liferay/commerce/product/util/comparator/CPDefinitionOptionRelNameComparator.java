@@ -12,43 +12,42 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.util.comparator;
+package com.liferay.commerce.product.util.comparator;
 
-import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
-public class CPDefinitionOptionValueRelTitleComparator
-	extends OrderByComparator<CPDefinitionOptionValueRel> {
+public class CPDefinitionOptionRelNameComparator
+	extends OrderByComparator<CPDefinitionOptionRel> {
 
-	public static final String ORDER_BY_ASC = "title ASC";
+	public static final String ORDER_BY_ASC = "CPDefinitionOptionRel.name ASC";
 
-	public static final String ORDER_BY_DESC = "title DESC";
+	public static final String ORDER_BY_DESC =
+		"CPDefinitionOptionRel.name DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"title"};
+	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CPDefinitionOptionValueRelTitleComparator() {
+	public CPDefinitionOptionRelNameComparator() {
 		this(false);
 	}
 
-	public CPDefinitionOptionValueRelTitleComparator(boolean ascending) {
+	public CPDefinitionOptionRelNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel1,
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel2) {
+		CPDefinitionOptionRel cpDefinitionOptionRel1,
+		CPDefinitionOptionRel cpDefinitionOptionRel2) {
 
-		String title1 = StringUtil.toLowerCase(
-			cpDefinitionOptionValueRel1.getTitle());
-		String title2 = StringUtil.toLowerCase(
-			cpDefinitionOptionValueRel1.getTitle());
+		String name1 = StringUtil.toLowerCase(cpDefinitionOptionRel1.getName());
+		String name2 = StringUtil.toLowerCase(cpDefinitionOptionRel2.getName());
 
-		int value = title1.compareTo(title2);
+		int value = name1.compareTo(name2);
 
 		if (_ascending) {
 			return value;

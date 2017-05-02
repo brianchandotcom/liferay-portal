@@ -32,6 +32,62 @@ public class CPMediaTypeServiceWrapper implements CPMediaTypeService,
 		_cpMediaTypeService = cpMediaTypeService;
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPMediaType addCPMediaType(
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpMediaTypeService.addCPMediaType(titleMap, descriptionMap,
+			priority, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPMediaType deleteCPMediaType(
+		com.liferay.commerce.product.model.CPMediaType cpMediaType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpMediaTypeService.deleteCPMediaType(cpMediaType);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPMediaType deleteCPMediaType(
+		long cpMediaTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpMediaTypeService.deleteCPMediaType(cpMediaTypeId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPMediaType fetchCPMediaType(
+		long cpMediaTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpMediaTypeService.fetchCPMediaType(cpMediaTypeId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPMediaType getCPMediaType(
+		long cpMediaTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpMediaTypeService.getCPMediaType(cpMediaTypeId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPMediaType updateCPMediaType(
+		long cpMediaTypeId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpMediaTypeService.updateCPMediaType(cpMediaTypeId, titleMap,
+			descriptionMap, priority, serviceContext);
+	}
+
+	@Override
+	public int getCPMediaTypesCount(long groupId) {
+		return _cpMediaTypeService.getCPMediaTypesCount(groupId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -40,6 +96,20 @@ public class CPMediaTypeServiceWrapper implements CPMediaTypeService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _cpMediaTypeService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPMediaType> getCPMediaTypes(
+		long groupId, int start, int end) {
+		return _cpMediaTypeService.getCPMediaTypes(groupId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPMediaType> getCPMediaTypes(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPMediaType> orderByComparator) {
+		return _cpMediaTypeService.getCPMediaTypes(groupId, start, end,
+			orderByComparator);
 	}
 
 	@Override

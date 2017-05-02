@@ -110,8 +110,8 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 
 	public static final String TABLE_SQL_CREATE = "create table CPMediaType (uuid_ VARCHAR(75) null,CPMediaTypeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CPMediaType";
-	public static final String ORDER_BY_JPQL = " ORDER BY cpMediaType.CPMediaTypeId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CPMediaType.CPMediaTypeId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY cpMediaType.priority ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CPMediaType.priority ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -127,7 +127,7 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long CPMEDIATYPEID_COLUMN_BITMASK = 8L;
+	public static final long PRIORITY_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -666,6 +666,8 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 
 	@Override
 	public void setPriority(int priority) {
+		_columnBitmask = -1L;
+
 		_priority = priority;
 	}
 
@@ -807,17 +809,23 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 
 	@Override
 	public int compareTo(CPMediaType cpMediaType) {
-		long primaryKey = cpMediaType.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getPriority() < cpMediaType.getPriority()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getPriority() > cpMediaType.getPriority()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override

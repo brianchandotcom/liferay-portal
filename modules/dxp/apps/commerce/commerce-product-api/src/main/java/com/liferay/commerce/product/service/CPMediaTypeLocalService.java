@@ -28,10 +28,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -40,6 +43,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for CPMediaType. Methods of this
@@ -73,6 +78,10 @@ public interface CPMediaTypeLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPMediaType addCPMediaType(CPMediaType cpMediaType);
 
+	public CPMediaType addCPMediaType(Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, int priority,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new cp media type with the primary key. Does not add the cp media type to the database.
 	*
@@ -86,9 +95,12 @@ public interface CPMediaTypeLocalService extends BaseLocalService,
 	*
 	* @param cpMediaType the cp media type
 	* @return the cp media type that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public CPMediaType deleteCPMediaType(CPMediaType cpMediaType);
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CPMediaType deleteCPMediaType(CPMediaType cpMediaType)
+		throws PortalException;
 
 	/**
 	* Deletes the cp media type with the primary key from the database. Also notifies the appropriate model listeners.
@@ -147,6 +159,11 @@ public interface CPMediaTypeLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPMediaType updateCPMediaType(CPMediaType cpMediaType);
 
+	public CPMediaType updateCPMediaType(long cpMediaTypeId,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, int priority,
+		ServiceContext serviceContext) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -178,6 +195,9 @@ public interface CPMediaTypeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPMediaTypesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPMediaTypesCount(long groupId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -238,6 +258,13 @@ public interface CPMediaTypeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPMediaType> getCPMediaTypes(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPMediaType> getCPMediaTypes(long groupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPMediaType> getCPMediaTypes(long groupId, int start, int end,
+		OrderByComparator<CPMediaType> orderByComparator);
 
 	/**
 	* Returns all the cp media types matching the UUID and company.

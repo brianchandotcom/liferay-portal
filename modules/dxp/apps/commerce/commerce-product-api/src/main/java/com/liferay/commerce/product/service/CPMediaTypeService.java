@@ -16,14 +16,23 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.model.CPMediaType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for CPMediaType. Methods of this
@@ -49,6 +58,31 @@ public interface CPMediaTypeService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPMediaTypeServiceUtil} to access the cp media type remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPMediaTypeServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CPMediaType addCPMediaType(Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, int priority,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CPMediaType deleteCPMediaType(CPMediaType cpMediaType)
+		throws PortalException;
+
+	public CPMediaType deleteCPMediaType(long cpMediaTypeId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMediaType fetchCPMediaType(long cpMediaTypeId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMediaType getCPMediaType(long cpMediaTypeId)
+		throws PortalException;
+
+	public CPMediaType updateCPMediaType(long cpMediaTypeId,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, int priority,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPMediaTypesCount(long groupId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +90,11 @@ public interface CPMediaTypeService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPMediaType> getCPMediaTypes(long groupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPMediaType> getCPMediaTypes(long groupId, int start, int end,
+		OrderByComparator<CPMediaType> orderByComparator);
 }

@@ -26,6 +26,8 @@ create index IX_C1F8242 on CPInstance (groupId);
 create index IX_8A7A3F5C on CPInstance (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_F902ECDE on CPInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_4BD890F1 on CPMediaType (companyId);
+create index IX_5B829FB3 on CPMediaType (groupId);
 create index IX_B2B10B on CPMediaType (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_80B9FE4D on CPMediaType (uuid_[$COLUMN_LENGTH:75$], groupId);
 

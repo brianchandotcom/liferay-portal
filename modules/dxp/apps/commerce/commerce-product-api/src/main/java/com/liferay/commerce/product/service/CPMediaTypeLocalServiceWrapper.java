@@ -45,6 +45,17 @@ public class CPMediaTypeLocalServiceWrapper implements CPMediaTypeLocalService,
 		return _cpMediaTypeLocalService.addCPMediaType(cpMediaType);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPMediaType addCPMediaType(
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpMediaTypeLocalService.addCPMediaType(titleMap,
+			descriptionMap, priority, serviceContext);
+	}
+
 	/**
 	* Creates a new cp media type with the primary key. Does not add the cp media type to the database.
 	*
@@ -62,10 +73,12 @@ public class CPMediaTypeLocalServiceWrapper implements CPMediaTypeLocalService,
 	*
 	* @param cpMediaType the cp media type
 	* @return the cp media type that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPMediaType deleteCPMediaType(
-		com.liferay.commerce.product.model.CPMediaType cpMediaType) {
+		com.liferay.commerce.product.model.CPMediaType cpMediaType)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpMediaTypeLocalService.deleteCPMediaType(cpMediaType);
 	}
 
@@ -146,6 +159,18 @@ public class CPMediaTypeLocalServiceWrapper implements CPMediaTypeLocalService,
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPMediaType updateCPMediaType(
+		long cpMediaTypeId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		int priority,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpMediaTypeLocalService.updateCPMediaType(cpMediaTypeId,
+			titleMap, descriptionMap, priority, serviceContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _cpMediaTypeLocalService.getActionableDynamicQuery();
 	}
@@ -191,6 +216,11 @@ public class CPMediaTypeLocalServiceWrapper implements CPMediaTypeLocalService,
 	@Override
 	public int getCPMediaTypesCount() {
 		return _cpMediaTypeLocalService.getCPMediaTypesCount();
+	}
+
+	@Override
+	public int getCPMediaTypesCount(long groupId) {
+		return _cpMediaTypeLocalService.getCPMediaTypesCount(groupId);
 	}
 
 	/**
@@ -271,6 +301,20 @@ public class CPMediaTypeLocalServiceWrapper implements CPMediaTypeLocalService,
 	public java.util.List<com.liferay.commerce.product.model.CPMediaType> getCPMediaTypes(
 		int start, int end) {
 		return _cpMediaTypeLocalService.getCPMediaTypes(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPMediaType> getCPMediaTypes(
+		long groupId, int start, int end) {
+		return _cpMediaTypeLocalService.getCPMediaTypes(groupId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPMediaType> getCPMediaTypes(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPMediaType> orderByComparator) {
+		return _cpMediaTypeLocalService.getCPMediaTypes(groupId, start, end,
+			orderByComparator);
 	}
 
 	/**

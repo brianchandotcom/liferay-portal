@@ -123,8 +123,7 @@ public class CPOptionItemSelectorView
 		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(
-				"/option_item_selector.jsp");
+			servletContext.getRequestDispatcher("/option_item_selector.jsp");
 
 		requestDispatcher.include(request, response);
 	}

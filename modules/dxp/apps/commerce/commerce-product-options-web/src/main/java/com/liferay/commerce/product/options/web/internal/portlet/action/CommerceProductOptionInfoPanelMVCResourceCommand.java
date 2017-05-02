@@ -52,9 +52,7 @@ public class CommerceProductOptionInfoPanelMVCResourceCommand
 		resourceRequest.setAttribute(
 			CPWebKeys.COMMERCE_PRODUCT_OPTIONS, cpOptions);
 
-		include(
-			resourceRequest, resourceResponse,
-			"/option_info_panel.jsp");
+		include(resourceRequest, resourceResponse, "/option_info_panel.jsp");
 	}
 
 	@Reference

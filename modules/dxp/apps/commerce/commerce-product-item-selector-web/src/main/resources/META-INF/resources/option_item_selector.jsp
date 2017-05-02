@@ -72,13 +72,13 @@ SearchContainer searchContainer = new SearchContainer(renderRequest, PortletURLU
 		<liferay-ui:search-container-row
 			className="com.liferay.commerce.product.model.CPOption"
 			cssClass="commerce-product-option-row"
-            keyProperty="CPOptionId"
+			keyProperty="CPOptionId"
 			modelVar="cpOption"
 		>
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="name"
-            >
+			>
 				<div class="commerce-product-option-name"
 					data-id="<%= cpOption.getCPOptionId() %>">
 
@@ -105,21 +105,20 @@ SearchContainer searchContainer = new SearchContainer(renderRequest, PortletURLU
 	</liferay-ui:search-container>
 </div>
 
-
 <aui:script use="liferay-search-container">
-    var cpOptionSelectorWrapper = A.one("#<portlet:namespace />cpOptionSelectorWrapper");
+	var cpOptionSelectorWrapper = A.one("#<portlet:namespace />cpOptionSelectorWrapper");
 
-    var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />cpOptions');
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />cpOptions');
 
-    searchContainer.on(
-        'rowToggled',
-        function(event) {
-            Liferay.Util.getOpener().Liferay.fire(
-                '<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
-                {
-                    data: Liferay.Util.listCheckedExcept(cpOptionSelectorWrapper, '<portlet:namespace />allRowIds')
-                }
-            );
-        }
-    );
+	searchContainer.on(
+		'rowToggled',
+		function(event) {
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
+				{
+					data: Liferay.Util.listCheckedExcept(cpOptionSelectorWrapper, '<portlet:namespace />allRowIds')
+				}
+			);
+		}
+	);
 </aui:script>

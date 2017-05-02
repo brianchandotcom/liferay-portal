@@ -54,8 +54,7 @@ public class CommerceProductOptionValueInfoPanelMVCResourceCommand
 			CPWebKeys.COMMERCE_PRODUCT_OPTION_VALUES, cpOptionValues);
 
 		include(
-			resourceRequest, resourceResponse,
-			"/option_value_info_panel.jsp");
+			resourceRequest, resourceResponse, "/option_value_info_panel.jsp");
 	}
 
 	@Reference

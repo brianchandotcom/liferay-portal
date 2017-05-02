@@ -54,8 +54,7 @@ public class CPDefinitionInfoPanelMVCResourceCommand
 			CPWebKeys.COMMERCE_PRODUCT_DEFINITIONS, cpDefinitions);
 
 		include(
-			resourceRequest, resourceResponse,
-			"/definition_info_panel.jsp");
+			resourceRequest, resourceResponse, "/definition_info_panel.jsp");
 	}
 
 	@Reference

@@ -49,6 +49,14 @@ public class CPInstanceDisplayContext
 		_cpInstanceService = cpInstanceService;
 	}
 
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+			long cpDefinitionOptionValueRelId)
+		throws PortalException {
+
+		return actionHelper.getCPDefinitionOptionValueRels(
+			cpDefinitionOptionValueRelId);
+	}
+
 	public CPInstance getCPInstance() throws PortalException {
 		if (_cpInstance != null) {
 			return _cpInstance;
@@ -116,13 +124,6 @@ public class CPInstanceDisplayContext
 		this.searchContainer = searchContainer;
 
 		return this.searchContainer;
-	}
-
-	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(long cpDefinitionOptionValueRelId)
-		throws PortalException {
-
-		return actionHelper.getCPDefinitionOptionValueRels(
-			cpDefinitionOptionValueRelId);
 	}
 
 	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels()

@@ -49,33 +49,27 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCPDefinitionOptionRelMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void addCPDefinitionOptionRels(
-		ActionRequest actionRequest)
+	protected void addCPDefinitionOptionRels(ActionRequest actionRequest)
 		throws Exception {
 
 		long[] addCPOptionIds = null;
 
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
-		long cpOptionId = ParamUtil.getLong(
-			actionRequest, "cpOptionId");
+		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
 
 		if (cpOptionId > 0) {
-			addCPOptionIds =
-				new long[] {cpOptionId};
+			addCPOptionIds = new long[] {cpOptionId};
 		}
 		else {
 			addCPOptionIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "cpOptionIds"),
-				0L);
+				ParamUtil.getString(actionRequest, "cpOptionIds"), 0L);
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionOptionRel.class.getName(), actionRequest);
 
-		for (long addCPOptionId :
-			addCPOptionIds) {
+		for (long addCPOptionId : addCPOptionIds) {
 
 			// Add commerce product definition option rel
 
@@ -117,7 +111,6 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
 
 		if (cmd.equals(Constants.ADD) || cmd.equals(Constants.ADD_MULTIPLE)) {
 			addCPDefinitionOptionRels(actionRequest);
@@ -161,9 +154,9 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 
 		cpDefinitionOptionRel =
 			_cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
-				cpDefinitionOptionRelId, cpOptionId, nameMap,
-				descriptionMap, ddmFormFieldTypeName, priority, facetable,
-				skuContributor, serviceContext);
+				cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
+				ddmFormFieldTypeName, priority, facetable, skuContributor,
+				serviceContext);
 
 		return cpDefinitionOptionRel;
 	}

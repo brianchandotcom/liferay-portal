@@ -118,6 +118,8 @@ public interface Build {
 
 	public void reinvoke();
 
+	public void reinvoke(ReinvokeRule reinvokeRule);
+
 	public String replaceBuildURL(String text);
 
 	public void update();

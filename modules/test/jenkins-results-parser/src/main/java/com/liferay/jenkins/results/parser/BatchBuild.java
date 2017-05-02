@@ -199,7 +199,7 @@ public class BatchBuild extends BaseBuild {
 		}
 
 		for (Build downstreamBuild : getDownstreamBuilds("completed")) {
-			for (ReinvokeRule reinvockeRule : reinvokeRules) {
+			for (ReinvokeRule reinvokeRule : reinvokeRules) {
 				String downstreamBuildResult = downstreamBuild.getResult();
 
 				if ((downstreamBuildResult == null) ||
@@ -208,31 +208,11 @@ public class BatchBuild extends BaseBuild {
 					continue;
 				}
 
-				if (!reinvockeRule.matches(downstreamBuild)) {
+				if (!reinvokeRule.matches(downstreamBuild)) {
 					continue;
 				}
 
-				String message = JenkinsResultsParserUtil.combine(
-					reinvockeRule.getName(), " failure detected at ",
-					getBuildURL(), ". This build will be reinvoked.\n",
-					reinvockeRule.toString());
-
-				System.out.println(message);
-
-				String notificationList = reinvockeRule.getNotificationList();
-
-				if ((notificationList != null) && !notificationList.isEmpty()) {
-					try {
-						JenkinsResultsParserUtil.sendEmail(
-							message, "root", "Build reinvoked",
-							reinvockeRule.notificationList);
-					}
-					catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-				}
-
-				reinvoke();
+				reinvoke(reinvokeRule);
 			}
 		}
 	}

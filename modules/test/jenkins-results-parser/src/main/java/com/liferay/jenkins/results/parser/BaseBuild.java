@@ -798,6 +798,33 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void reinvoke() {
+		reinvoke(null);
+	}
+
+	@Override
+	public void reinvoke(ReinvokeRule reinvokeRule) {
+		if (reinvokeRule != null) {
+			String message = JenkinsResultsParserUtil.combine(
+				reinvokeRule.getName(), " failure detected at ", getBuildURL(),
+				". This build will be reinvoked.\n", reinvokeRule.toString());
+
+			System.out.println(message);
+
+			String notificationList = reinvokeRule.getNotificationList();
+
+			if ((notificationList != null) && notificationList.isEmpty()) {
+				try {
+					JenkinsResultsParserUtil.sendEmail(
+						message, "jenkins", "Build reinvoked",
+						reinvokeRule.notificationList);
+				}
+				catch (Exception e) {
+					throw new RuntimeException(
+						"Unable to send reinvoke notification", e);
+				}
+			}
+		}
+
 		String hostName = JenkinsResultsParserUtil.getHostName("");
 
 		Build parentBuild = getParentBuild();
@@ -957,26 +984,7 @@ public abstract class BaseBuild implements Build {
 								continue;
 							}
 
-							String message = JenkinsResultsParserUtil.combine(
-								reinvokeRule.getName(), " failure detected at ",
-								getBuildURL(),
-								". This build will be reinvoked.\n",
-								reinvokeRule.toString());
-
-							System.out.println(message);
-
-							String notificationList =
-								reinvokeRule.getNotificationList();
-
-							if ((notificationList != null) &&
-								notificationList.isEmpty()) {
-
-								JenkinsResultsParserUtil.sendEmail(
-									message, "root", "Build reinvoked",
-									reinvokeRule.notificationList);
-							}
-
-							reinvoke();
+							reinvoke(reinvokeRule);
 						}
 					}
 				}

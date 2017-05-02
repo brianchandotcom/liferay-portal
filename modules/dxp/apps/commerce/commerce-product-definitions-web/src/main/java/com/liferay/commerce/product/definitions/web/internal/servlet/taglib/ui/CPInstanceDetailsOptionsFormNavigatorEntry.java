@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {"form.navigator.entry.order:Integer=90"},
 	service = FormNavigatorEntry.class
 )
-public class CPInstanceDetailsProductOptionsFormNavigatorEntry
+public class CPInstanceDetailsOptionsFormNavigatorEntry
 	extends BaseJSPFormNavigatorEntry<CPInstance>
 	implements FormNavigatorEntry<CPInstance> {
 
@@ -48,17 +48,17 @@ public class CPInstanceDetailsProductOptionsFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "product-options";
+		return "options";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "product-options");
+		return LanguageUtil.get(locale, "options");
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/product_instance/product_options.jsp";
+		return "/product_instance/options.jsp";
 	}
 
 }

@@ -32,6 +32,7 @@ import com.liferay.source.formatter.checks.configuration.SourceCheckConfiguratio
 import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
+import com.liferay.source.formatter.parser.ParseException;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -412,10 +413,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					 (this instanceof JavaSourceProcessor)) {
 
 				if (javaClass == null) {
-					anonymousClasses = JavaClassParser.parseAnonymousClasses(
-						content);
-					javaClass = JavaClassParser.parseJavaClass(
-						fileName, content);
+					try {
+						anonymousClasses =
+							JavaClassParser.parseAnonymousClasses(content);
+						javaClass = JavaClassParser.parseJavaClass(
+							fileName, content);
+					}
+					catch (ParseException pe) {
+						processMessage(
+							fileName,
+							new SourceFormatterMessage(
+								fileName, pe.getMessage(), null, -1));
+
+						continue;
+					}
 				}
 
 				newContent = _processJavaTermCheck(

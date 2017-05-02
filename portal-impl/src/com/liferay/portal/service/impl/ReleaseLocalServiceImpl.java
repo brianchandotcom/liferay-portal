@@ -94,7 +94,6 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 
 			release = releasePersistence.create(ReleaseConstants.DEFAULT_ID);
 		}
-
 		else {
 			long releaseId = counterLocalService.increment();
 

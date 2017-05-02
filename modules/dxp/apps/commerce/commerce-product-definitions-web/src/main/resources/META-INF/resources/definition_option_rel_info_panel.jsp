@@ -59,7 +59,7 @@ if (ListUtil.isEmpty(cpDefinitionOptionRels)) {
 				<%= HtmlUtil.escape(String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId())) %>
 			</p>
 		</div>
-	</c:when
+	</c:when>
 	<c:otherwise>
 		<aui:nav-bar>
 			<aui:nav cssClass="navbar-nav">

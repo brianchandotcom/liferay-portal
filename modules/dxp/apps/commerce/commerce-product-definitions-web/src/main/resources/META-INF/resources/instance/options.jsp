@@ -43,7 +43,7 @@ if (cpInstance == null) {
 			    long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId();
 			%>
 
-				<aui:option label="<%= cpDefinitionOptionValueRel.getTitle(languageId) %>" value="<%= String.valueOf(cpDefinitionOptionValueRelId) %>"
+				<aui:option label="<%= cpDefinitionOptionValueRel.getTitle(languageId) %>" value="<%= String.valueOf(cpDefinitionOptionValueRelId) %>" />
 
 			<%
 			}

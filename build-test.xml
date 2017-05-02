@@ -1709,115 +1709,6 @@ logExceptionsOnly=&quot;false&quot;</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-fix-pack">
-		<attribute default="${app.server.parent.dir}" name="bundles.dir" />
-		<attribute name="fix.pack.zip.url" />
-		<attribute name="patching.tool.zip.url" />
-
-		<sequential>
-			<mirrors-get
-				dest="${basedir}"
-				src="@{patching.tool.zip.url}"
-			/>
-
-			<unzip dest="@{bundles.dir}">
-				<fileset
-					dir="${basedir}"
-					includes="patching-tool*"
-				/>
-			</unzip>
-
-			<chmod perm="a+x">
-				<fileset dir="@{bundles.dir}/patching-tool">
-					<include name="*.sh" />
-				</fileset>
-			</chmod>
-
-			<mirrors-get
-				dest="@{bundles.dir}/patching-tool/patches"
-				src="@{fix.pack.zip.url}"
-			/>
-
-			<local name="fix.pack.file.name" />
-
-			<basename file="@{fix.pack.zip.url}" property="fix.pack.file.name" />
-
-			<check-fix-pack-requirements
-				fix.pack.dir="@{bundles.dir}/patching-tool/patches"
-				fix.pack.file.name="${fix.pack.file.name}"
-			/>
-
-			<delete file="@{bundles.dir}/patching-tool/default.properties" />
-
-			<if>
-				<equals arg1="${app.server.type}" arg2="weblogic" />
-				<then>
-					<echo file="@{bundles.dir}/patching-tool/default.properties">global.lib.path=${app.server.weblogic.lib.global.dir}
-liferay.home=${liferay.home}
-patching.mode=binary
-war.path=${app.server.weblogic.portal.dir}/</echo>
-
-					<execute dir="@{bundles.dir}/patching-tool">
-						patching-tool${file.suffix.bat} install -force
-						patching-tool${file.suffix.bat} update-plugins
-					</execute>
-				</then>
-				<else>
-					<execute dir="@{bundles.dir}/patching-tool">
-						patching-tool${file.suffix.bat} auto-discovery
-						patching-tool${file.suffix.bat} install -force
-						patching-tool${file.suffix.bat} update-plugins
-					</execute>
-				</else>
-			</if>
-
-			<local name="patching.tool.file.name" />
-
-			<basename file="@{patching.tool.zip.url}" property="patching.tool.file.name" />
-
-			<delete file="${basedir}/${patching.tool.file.name}" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-fix-pack-bundle" >
-		<sequential>
-			<if>
-				<and>
-					<isset property="test.fix.pack.base.url" />
-					<isset property="test.fix.pack.zip.name" />
-				</and>
-				<then>
-					<property name="test.build.fix.pack.zip.url" value="${test.fix.pack.base.url}/${test.fix.pack.zip.name}" />
-				</then>
-			</if>
-
-			<if>
-				<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
-				<then>
-					<mirrors-get
-						dest="${basedir}"
-						src="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}"
-					/>
-
-					<loadfile
-						property="patching.tool.version"
-						srcFile="${patching.tool.latest.txt}"
-					/>
-
-					<delete file="${basedir}/${patching.tool.latest.txt}" />
-
-					<property name="test.build.patching.tool.zip.url" value="${test.fix.pack.base.url}/patching-tool/patching-tool-${patching.tool.version}.zip" />
-
-					<prepare-fix-pack
-						bundles.dir="${app.server.parent.dir}"
-						fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-						patching.tool.zip.url="${test.build.patching.tool.zip.url}"
-					/>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-ie-driver">
 		<sequential>
 			<if>
@@ -8190,7 +8081,17 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			</else>
 		</if>
 
-		<prepare-fix-pack-bundle />
+
+		<if>
+			<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
+			<then>
+				<antcall target="prepare-patching-tool" />
+
+				<antcall target="install-patch">
+					<param name="patch.file.zip.url" value="${test.build.fix.pack.zip.url}" />
+				</antcall>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-virtual-host-name-properties">

@@ -28,9 +28,11 @@ import java.util.regex.Pattern;
 public class ReinvokeRule {
 
 	public static List<ReinvokeRule> getReinvokeRules() {
-		Properties buildProperties = null;
+		if (_reinvokeRules != null) {
+			return _reinvokeRules;
+		}
 
-		List<ReinvokeRule> reinvokeRules = new ArrayList<>();
+		Properties buildProperties = null;
 
 		try {
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
@@ -39,6 +41,8 @@ public class ReinvokeRule {
 			throw new RuntimeException("Unable to load reinvoke rules", ioe);
 		}
 
+		_reinvokeRules = new ArrayList<>();
+
 		for (Object propertyNameObject : buildProperties.keySet()) {
 			String propertyName = propertyNameObject.toString();
 
@@ -46,13 +50,13 @@ public class ReinvokeRule {
 				String ruleName = propertyName.substring(
 					"reinvoke.rule[".length(), propertyName.lastIndexOf("]"));
 
-				reinvokeRules.add(
+				_reinvokeRules.add(
 					new ReinvokeRule(
 						buildProperties.getProperty(propertyName), ruleName));
 			}
 		}
 
-		return reinvokeRules;
+		return _reinvokeRules;
 	}
 
 	public String getName() {
@@ -169,14 +173,21 @@ public class ReinvokeRule {
 			int x = configuration.indexOf("=");
 
 			String name = configuration.substring(0, x);
+			String value = configuration.substring(x + 1);
+
+			value = value.trim();
+
+			if (value.isEmpty())  {
+				continue;
+			}
 
 			if (name.equals("notificationList")) {
-				notificationList = configuration.substring(x + 1);
+				notificationList = value;
 
 				continue;
 			}
 
-			Pattern pattern = Pattern.compile(configuration.substring(x + 1));
+			Pattern pattern = Pattern.compile(value);
 
 			if (name.equals("axisVariable")) {
 				axisVariablePattern = pattern;
@@ -203,5 +214,7 @@ public class ReinvokeRule {
 			}
 		}
 	}
+
+	private static List<ReinvokeRule> _reinvokeRules;
 
 }

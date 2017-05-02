@@ -798,6 +798,33 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void reinvoke() {
+		reinvoke(null);
+	}
+
+	@Override
+	public void reinvoke(ReinvokeRule reinvokeRule) {
+		if (reinvokeRule != null) {
+			String message = JenkinsResultsParserUtil.combine(
+				reinvokeRule.getName(), " failure detected at ", getBuildURL(),
+				". This build will be reinvoked.\n", reinvokeRule.toString());
+
+			System.out.println(message);
+
+			String notificationList = reinvokeRule.getNotificationList();
+
+			if ((notificationList != null) && notificationList.isEmpty()) {
+				try {
+					JenkinsResultsParserUtil.sendEmail(
+						message, "jenkins", "Build reinvoked",
+						reinvokeRule.notificationList);
+				}
+				catch (Exception e) {
+					throw new RuntimeException(
+						"Unable to send reinvoke notification", e);
+				}
+			}
+		}
+
 		String hostName = JenkinsResultsParserUtil.getHostName("");
 
 		Build parentBuild = getParentBuild();
@@ -937,13 +964,34 @@ public abstract class BaseBuild implements Build {
 
 						setStatus("completed");
 					}
+
+					findDownstreamBuilds();
+
+					if (this instanceof AxisBuild ||
+						this instanceof BatchBuild ||
+						this instanceof TopLevelBuild) {
+
+						return;
+					}
+
+					if (result.equals("FAILURE") || result.equals("ABORTED")) {
+						for (ReinvokeRule reinvokeRule : reinvokeRules) {
+							if (!badBuildNumbers.isEmpty()) {
+								break;
+							}
+
+							if (!reinvokeRule.matches(this)) {
+								continue;
+							}
+
+							reinvoke(reinvokeRule);
+						}
+					}
 				}
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-
-			findDownstreamBuilds();
 		}
 	}
 
@@ -1814,6 +1862,8 @@ public abstract class BaseBuild implements Build {
 	protected boolean fromArchive;
 	protected String jobName;
 	protected String master;
+	protected List<ReinvokeRule> reinvokeRules =
+		ReinvokeRule.getReinvokeRules();
 	protected String repositoryName;
 	protected String result;
 	protected long statusModifiedTime;

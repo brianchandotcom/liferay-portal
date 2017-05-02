@@ -184,6 +184,39 @@ public class BatchBuild extends BaseBuild {
 		return testResults;
 	}
 
+	@Override
+	public void update() {
+		super.update();
+
+		String status = getStatus();
+
+		if (!badBuildNumbers.isEmpty()) {
+			return;
+		}
+
+		if (status.equals("completed") && result.equals("SUCCESS")) {
+			return;
+		}
+
+		for (Build downstreamBuild : getDownstreamBuilds("completed")) {
+			for (ReinvokeRule reinvokeRule : reinvokeRules) {
+				String downstreamBuildResult = downstreamBuild.getResult();
+
+				if ((downstreamBuildResult == null) ||
+					downstreamBuildResult.equals("SUCCESS")) {
+
+					continue;
+				}
+
+				if (!reinvokeRule.matches(downstreamBuild)) {
+					continue;
+				}
+
+				reinvoke(reinvokeRule);
+			}
+		}
+	}
+
 	protected BatchBuild(String url) {
 		this(url, null);
 	}

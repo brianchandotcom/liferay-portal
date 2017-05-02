@@ -40,10 +40,17 @@ import java.util.Map;
 import org.apache.commons.lang.time.StopWatch;
 
 import org.elasticsearch.client.Client;
+import org.elasticsearch.common.inject.Injector;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.discovery.DiscoveryService;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
+import org.elasticsearch.search.SearchService;
+import org.elasticsearch.search.action.SearchServiceTransportAction;
+import org.elasticsearch.search.fetch.QueryFetchSearchResult;
+import org.elasticsearch.search.internal.ShardSearchTransportRequest;
+import org.elasticsearch.threadpool.ThreadPool;
+import org.elasticsearch.transport.TransportService;
 
 import org.jboss.netty.util.internal.ByteBufferUtil;
 
@@ -309,7 +316,32 @@ public class EmbeddedElasticsearchConnection
 
 			nodeBuilder.local(true);
 
-			return nodeBuilder.build();
+			Node node = nodeBuilder.build();
+
+			if (elasticsearchConfiguration.syncSearch()) {
+				Injector injector = node.injector();
+
+				TransportService transportService = injector.getInstance(
+					TransportService.class);
+
+				transportService.removeHandler(
+					SearchServiceTransportAction.QUERY_FETCH_ACTION_NAME);
+
+				SearchService searchService = injector.getInstance(
+					SearchService.class);
+
+				transportService.registerRequestHandler(
+					SearchServiceTransportAction.QUERY_FETCH_ACTION_NAME,
+					ShardSearchTransportRequest.class, ThreadPool.Names.SAME,
+					(request, channel) -> {
+						QueryFetchSearchResult queryFetchSearchResult =
+							searchService.executeFetchPhase(request);
+
+						channel.sendResponse(queryFetchSearchResult);
+					});
+			}
+
+			return node;
 		}
 		finally {
 			thread.setContextClassLoader(contextClassLoader);

@@ -92,7 +92,8 @@ public class LayoutImportBackgroundTaskExecutor
 			catch (IOException ioe) {
 				StringBundler sb = new StringBundler(3);
 
-				sb.append("Unable to process LAR file ");
+				sb.append("Unable to process LAR file while executing ");
+				sb.append("LayoutImportBackgroundTaskExecutor: ");
 
 				if (!Objects.isNull(attachmentsFileEntry) &&
 					Validator.isNotNull(attachmentsFileEntry.getFileName())) {
@@ -100,11 +101,8 @@ public class LayoutImportBackgroundTaskExecutor
 					sb.append(attachmentsFileEntry.getFileName());
 				}
 				else {
-					sb.append("(unknown file name)");
+					sb.append("unknown file name");
 				}
-
-				sb.append(
-					" while executing LayoutImportBackgroundTaskExecutor");
 
 				throw new SystemException(sb.toString(), ioe);
 			}

@@ -61,7 +61,7 @@
 
 		<execute function="AssertVisible" locator1="Message#SUCCESS" />
 
-		<execute function="Pause" locator1="10000" />
+		<execute function="Pause" locator1="5000" />
 
 		<execute macro="Alert#_closeMessage">
 			<var name="messageType" value="SUCCESS" />

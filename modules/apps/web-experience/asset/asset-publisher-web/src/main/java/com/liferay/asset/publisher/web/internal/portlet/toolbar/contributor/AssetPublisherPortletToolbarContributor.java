@@ -14,8 +14,6 @@
 
 package com.liferay.asset.publisher.web.internal.portlet.toolbar.contributor;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
@@ -131,8 +129,7 @@ public class AssetPublisherPortletToolbarContributor
 			for (AssetPortletAddURL assetPortletAddURL : assetPortletAddURLs) {
 				URLMenuItem urlMenuItem = _getPortletTitleAddAssetEntryMenuItem(
 					themeDisplay, assetPublisherDisplayContext, groupId,
-					assetPortletAddURL.getName(),
-					assetPortletAddURL.getAddPortletURL());
+					assetPortletAddURL);
 
 				menuItems.add(urlMenuItem);
 			}
@@ -200,7 +197,7 @@ public class AssetPublisherPortletToolbarContributor
 	private URLMenuItem _getPortletTitleAddAssetEntryMenuItem(
 		ThemeDisplay themeDisplay,
 		AssetPublisherDisplayContext assetPublisherDisplayContext, long groupId,
-		String className, PortletURL portletURL) {
+		AssetPortletAddURL assetPortletAddURL) {
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
@@ -211,8 +208,7 @@ public class AssetPublisherPortletToolbarContributor
 		data.put(
 			"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
 
-		String message = AssetUtil.getClassNameMessage(
-			className, themeDisplay.getLocale());
+		String message = assetPortletAddURL.getModelResource();
 
 		String title = LanguageUtil.format(
 			themeDisplay.getLocale(), "new-x", message, false);
@@ -227,11 +223,7 @@ public class AssetPublisherPortletToolbarContributor
 
 		Group group = _groupLocalService.fetchGroup(groupId);
 
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				AssetUtil.getClassName(className));
-
-		if (!group.isStagedPortlet(assetRendererFactory.getPortletId()) &&
+		if (!group.isStagedPortlet(assetPortletAddURL.getPortletId()) &&
 			!group.isStagedRemotely()) {
 
 			curGroupId = group.getLiveGroupId();
@@ -242,8 +234,9 @@ public class AssetPublisherPortletToolbarContributor
 			assetPublisherDisplayContext.getPortletResource());
 
 		String url = AssetUtil.getAddURLPopUp(
-			curGroupId, themeDisplay.getPlid(), portletURL,
-			addDisplayPageParameter, themeDisplay.getLayout());
+			curGroupId, themeDisplay.getPlid(),
+			assetPortletAddURL.getAddPortletURL(), addDisplayPageParameter,
+			themeDisplay.getLayout());
 
 		urlMenuItem.setURL(url);
 

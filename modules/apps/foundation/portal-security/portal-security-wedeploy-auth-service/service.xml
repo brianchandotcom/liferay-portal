@@ -23,5 +23,40 @@
 		<column name="name" type="String" />
 		<column name="clientId" type="String" />
 		<column name="clientSecret" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="CI_CS" return-type="WeDeployAuthApp">
+			<finder-column name="clientId" />
+			<finder-column name="clientSecret" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="WeDeployAuthToken" remote-service="true" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="weDeployAuthTokenId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="clientId" type="String" />
+		<column name="token" type="String" />
+		<column name="type" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="CI_T_T" return-type="WeDeployAuthToken">
+			<finder-column name="clientId" />
+			<finder-column name="token" />
+			<finder-column name="type" />
+		</finder>
 	</entity>
 </service-builder>

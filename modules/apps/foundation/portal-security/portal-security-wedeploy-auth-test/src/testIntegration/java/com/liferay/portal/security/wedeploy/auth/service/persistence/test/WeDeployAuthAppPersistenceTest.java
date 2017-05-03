@@ -22,12 +22,14 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.security.wedeploy.auth.exception.NoSuchAppException;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
@@ -54,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -161,6 +164,15 @@ public class WeDeployAuthAppPersistenceTest {
 			newWeDeployAuthApp.getClientId());
 		Assert.assertEquals(existingWeDeployAuthApp.getClientSecret(),
 			newWeDeployAuthApp.getClientSecret());
+	}
+
+	@Test
+	public void testCountByCI_CS() throws Exception {
+		_persistence.countByCI_CS(StringPool.BLANK, StringPool.BLANK);
+
+		_persistence.countByCI_CS(StringPool.NULL, StringPool.NULL);
+
+		_persistence.countByCI_CS((String)null, (String)null);
 	}
 
 	@Test
@@ -384,6 +396,24 @@ public class WeDeployAuthAppPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		WeDeployAuthApp newWeDeployAuthApp = addWeDeployAuthApp();
+
+		_persistence.clearCache();
+
+		WeDeployAuthApp existingWeDeployAuthApp = _persistence.findByPrimaryKey(newWeDeployAuthApp.getPrimaryKey());
+
+		Assert.assertTrue(Objects.equals(
+				existingWeDeployAuthApp.getClientId(),
+				ReflectionTestUtil.invoke(existingWeDeployAuthApp,
+					"getOriginalClientId", new Class<?>[0])));
+		Assert.assertTrue(Objects.equals(
+				existingWeDeployAuthApp.getClientSecret(),
+				ReflectionTestUtil.invoke(existingWeDeployAuthApp,
+					"getOriginalClientSecret", new Class<?>[0])));
 	}
 
 	protected WeDeployAuthApp addWeDeployAuthApp() throws Exception {

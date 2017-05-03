@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 
@@ -64,6 +66,7 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 	protected void doDelete(CPOption cpOption) throws Exception {
 		deleteDocument(cpOption.getCompanyId(), cpOption.getCPOptionId());
 	}
+
 
 	@Override
 	protected Document doGetDocument(CPOption cpOption) throws Exception {

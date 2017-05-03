@@ -15,17 +15,19 @@
 package com.liferay.commerce.product.media.types.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPWebKeys;
-import com.liferay.commerce.product.model.*;
-import com.liferay.commerce.product.service.*;
+import com.liferay.commerce.product.model.CPMediaType;
+import com.liferay.commerce.product.service.CPMediaTypeService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.ResourceRequest;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -62,10 +64,10 @@ public class ActionHelper {
 
 		List<CPMediaType> cpMediaTypes = new ArrayList<>();
 
-		long[] cpMediaTypeIds = ParamUtil.getLongValues(resourceRequest, "rowIds");
+		long[] cpMediaTypeIds = ParamUtil.getLongValues(
+			resourceRequest, "rowIds");
 
 		for (long cpMediaTypeId : cpMediaTypeIds) {
-
 			CPMediaType cpMediaType = _cpMediaTypeService.getCPMediaType(
 				cpMediaTypeId);
 

@@ -803,12 +803,21 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void reinvoke(ReinvokeRule reinvokeRule) {
-		if (reinvokeRule != null) {
+		if ((reinvokeRule != null) && !fromArchive) {
 			String message = JenkinsResultsParserUtil.combine(
 				reinvokeRule.getName(), " failure detected at ", getBuildURL(),
-				". This build will be reinvoked.\n", reinvokeRule.toString());
+				". This build will be reinvoked.\n\n", reinvokeRule.toString(),
+				"\n\n");
 
 			System.out.println(message);
+
+			TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+			if (topLevelBuild != null) {
+				message = JenkinsResultsParserUtil.combine(
+					message, "Top Level Build URL: ",
+					topLevelBuild.getBuildURL());
+			}
 
 			String notificationList = reinvokeRule.getNotificationList();
 
@@ -969,7 +978,7 @@ public abstract class BaseBuild implements Build {
 
 					if (this instanceof AxisBuild ||
 						this instanceof BatchBuild ||
-						this instanceof TopLevelBuild) {
+						this instanceof TopLevelBuild || fromArchive) {
 
 						return;
 					}

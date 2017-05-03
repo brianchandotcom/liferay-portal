@@ -194,7 +194,9 @@ public class BatchBuild extends BaseBuild {
 			return;
 		}
 
-		if (status.equals("completed") && result.equals("SUCCESS")) {
+		if ((status.equals("completed") && result.equals("SUCCESS")) ||
+			fromArchive) {
+
 			return;
 		}
 

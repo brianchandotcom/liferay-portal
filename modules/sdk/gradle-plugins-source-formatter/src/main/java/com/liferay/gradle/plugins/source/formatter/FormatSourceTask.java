@@ -42,7 +42,7 @@ public class FormatSourceTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		setArgs(getCompleteArgs());
+		setArgs(_getCompleteArgs());
 
 		super.exec();
 	}
@@ -173,7 +173,7 @@ public class FormatSourceTask extends JavaExec {
 		_sourceFormatterArgs.setThrowException(throwException);
 	}
 
-	protected List<String> getCompleteArgs() {
+	private List<String> _getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
 		args.add("format.current.branch=" + isFormatCurrentBranch());

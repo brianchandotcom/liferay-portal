@@ -41,15 +41,15 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 		Configuration sourceFormatterConfiguration =
-			addConfigurationSourceFormatter(project);
+			_addConfigurationSourceFormatter(project);
 
-		addTaskCheckSourceFormatting(project);
-		addTaskFormatSource(project);
+		_addTaskCheckSourceFormatting(project);
+		_addTaskFormatSource(project);
 
-		configureTasksFormatSource(project, sourceFormatterConfiguration);
+		_configureTasksFormatSource(project, sourceFormatterConfiguration);
 	}
 
-	protected Configuration addConfigurationSourceFormatter(
+	private Configuration _addConfigurationSourceFormatter(
 		final Project project) {
 
 		Configuration configuration = GradleUtil.addConfiguration(
@@ -65,7 +65,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Configuration configuration) {
-					addDependenciesSourceFormatter(project);
+					_addDependenciesSourceFormatter(project);
 				}
 
 			});
@@ -73,13 +73,13 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected void addDependenciesSourceFormatter(Project project) {
+	private void _addDependenciesSourceFormatter(Project project) {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.source.formatter", "latest.release");
 	}
 
-	protected FormatSourceTask addTaskCheckSourceFormatting(Project project) {
+	private FormatSourceTask _addTaskCheckSourceFormatting(Project project) {
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
 			project, CHECK_SOURCE_FORMATTING_TASK_NAME, FormatSourceTask.class);
 
@@ -93,7 +93,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		return formatSourceTask;
 	}
 
-	protected FormatSourceTask addTaskFormatSource(Project project) {
+	private FormatSourceTask _addTaskFormatSource(Project project) {
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
 			project, FORMAT_SOURCE_TASK_NAME, FormatSourceTask.class);
 
@@ -104,7 +104,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		return formatSourceTask;
 	}
 
-	protected void configureTaskFormatSource(
+	private void _configureTaskFormatSource(
 		FormatSourceTask formatSourceTask, FileCollection classpath) {
 
 		formatSourceTask.setClasspath(classpath);
@@ -134,7 +134,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureTasksFormatSource(
+	private void _configureTasksFormatSource(
 		Project project, final FileCollection classpath) {
 
 		TaskContainer taskContainer = project.getTasks();
@@ -145,7 +145,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(FormatSourceTask formatSourceTask) {
-					configureTaskFormatSource(formatSourceTask, classpath);
+					_configureTaskFormatSource(formatSourceTask, classpath);
 				}
 
 			});

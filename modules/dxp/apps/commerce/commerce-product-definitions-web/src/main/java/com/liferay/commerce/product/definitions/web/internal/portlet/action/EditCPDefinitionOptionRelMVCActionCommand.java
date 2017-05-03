@@ -130,9 +130,6 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		long cpDefinitionOptionRelId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionOptionRelId");
 
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-
 		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");

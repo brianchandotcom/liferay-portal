@@ -23,7 +23,7 @@ contextUseForAllTitle.put("checked", portletConfigurationCSSPortletDisplayContex
 contextUseForAllTitle.put("disableOnChecked", false);
 contextUseForAllTitle.put("label", LanguageUtil.get(request, "use-custom-title"));
 contextUseForAllTitle.put("name", renderResponse.getNamespace() + "useCustomTitle");
-contextUseForAllTitle.put("inputSelector", ".custom-title");
+contextUseForAllTitle.put("inputSelector", ".custom-title input");
 %>
 
 <soy:template-renderer
@@ -32,8 +32,8 @@ contextUseForAllTitle.put("inputSelector", ".custom-title");
 	templateNamespace="ToggleDisableInputs.render"
 />
 
-<aui:field-wrapper cssClass="lfr-input-text-container">
-	<liferay-ui:input-localized cssClass="custom-title" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" disabled="<%= !portletConfigurationCSSPortletDisplayContext.isUseCustomTitle() %>" name="customTitle" xml="<%= portletConfigurationCSSPortletDisplayContext.getCustomTitleXML() %>" />
+<aui:field-wrapper cssClass="lfr-input-text-container custom-title">
+	<liferay-ui:input-localized defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" disabled="<%= !portletConfigurationCSSPortletDisplayContext.isUseCustomTitle() %>" name="customTitle" xml="<%= portletConfigurationCSSPortletDisplayContext.getCustomTitleXML() %>" />
 </aui:field-wrapper>
 
 <aui:select label="link-portlet-urls-to-page" name="linkToLayoutUuid">

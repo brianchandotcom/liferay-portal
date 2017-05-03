@@ -104,7 +104,7 @@ public class LayoutImportBackgroundTaskExecutor
 				}
 
 				sb.append(
-					" during executing LayoutImportBackgroundTaskExecutor");
+					" while executing LayoutImportBackgroundTaskExecutor");
 
 				throw new SystemException(sb.toString(), ioe);
 			}

@@ -12,19 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect.internal.service.preaction;
+package com.liferay.portal.security.sso.openid.connect.internal.service.filter;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.TryFinallyFilter;
+import com.liferay.portal.kernel.servlet.BaseFilter;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
+import com.liferay.portal.security.sso.openid.connect.OpenIdConnectFlowState;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandler;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
-import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import javax.servlet.Filter;
+import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -39,21 +42,25 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"servlet-context-name=",
-		"servlet-filter-name=Open Id Connect Session Validation Filter",
+		"servlet-filter-name=OpenId Connect Session Validation Filter",
 		"url-pattern=/*"
 	},
 	service = Filter.class
 )
-public class OpenIdConnectSessionValidationFilter
-	extends BasePortalFilter implements TryFinallyFilter {
+public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 
 	@Override
-	public void doFilterFinally(
-			HttpServletRequest request, HttpServletResponse response,
-			Object object)
-		throws Exception {
+	public boolean isFilterEnabled(
+		HttpServletRequest request, HttpServletResponse response) {
 
-		boolean endSession = false;
+		long companyId = _portal.getCompanyId(request);
+
+		return _openIdConnect.isEnabled(companyId);
+	}
+
+	protected void checkEndSession(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
 
 		HttpSession httpSession = request.getSession(false);
 
@@ -65,40 +72,63 @@ public class OpenIdConnectSessionValidationFilter
 			(OpenIdConnectSession)httpSession.getAttribute(
 				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION);
 
-		if (Validator.isNotNull(openIdConnectSession) &&
-			Validator.isNotNull(openIdConnectSession.getAccessToken())) {
+		if (Validator.isNotNull(openIdConnectSession)) {
+			OpenIdConnectFlowState openIdConnectFlowState =
+				openIdConnectSession.getOpenIdConnectFlowState();
 
-			try {
-				if (!_openIdConnectServiceHandler.hasValidOpenIdConnectSession(
-						httpSession)) {
+			if (OpenIdConnectFlowState.AUTH_COMPLETE.equals(
+					openIdConnectFlowState)) {
+
+				boolean endSession = false;
+
+				try {
+					if (!_openIdConnectServiceHandler.
+							hasValidOpenIdConnectSession(httpSession)) {
+
+						endSession = true;
+					}
+				}
+				catch (PortalException pe) {
+					_log.error("Unable to validate OpenId session", pe);
 
 					endSession = true;
 				}
-			}
-			catch (PortalException pe) {
-				_log.error("Unable to validate OpenId session", pe);
 
-				endSession = true;
+				if (endSession) {
+					httpSession.invalidate();
+				}
 			}
-		}
-
-		if (endSession) {
-			httpSession.invalidate();
 		}
 	}
 
 	@Override
-	public Object doFilterTry(
-			HttpServletRequest request, HttpServletResponse response)
+	protected Log getLog() {
+		return _log;
+	}
+
+	@Override
+	protected void processFilter(
+			HttpServletRequest request, HttpServletResponse response,
+			FilterChain filterChain)
 		throws Exception {
 
-		return null;
+		checkEndSession(request, response);
+
+		processFilter(
+			OpenIdConnectSessionValidationFilter.class.getName(), request,
+			response, filterChain);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdConnectSessionValidationFilter.class);
 
 	@Reference
+	private OpenIdConnect _openIdConnect;
+
+	@Reference
 	private OpenIdConnectServiceHandler _openIdConnectServiceHandler;
+
+	@Reference
+	private Portal _portal;
 
 }

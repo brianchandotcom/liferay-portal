@@ -617,14 +617,10 @@ public class AssetUtil {
 						allAssetTagNames, redirect);
 
 					if (addPortletURL != null) {
-						String message =
-							className + CLASSNAME_SEPARATOR +
-								classType.getName();
-
 						addPortletURLs.add(
 							new AssetPortletAddURL(
-								portlet.getPortletId(), message, resourceBundle,
-								locale, addPortletURL));
+								portlet.getPortletId(), classType.getName(),
+								resourceBundle, locale, addPortletURL));
 					}
 				}
 			}
@@ -649,6 +645,10 @@ public class AssetUtil {
 		return className;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static String getClassNameMessage(String className, Locale locale) {
 		String message = null;
 

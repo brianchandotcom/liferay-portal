@@ -127,6 +127,15 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteCPOptions(long groupId) throws PortalException {
+		List<CPOption> cpOptions = cpOptionPersistence.findByGroupId(groupId);
+
+		for (CPOption cpOption : cpOptions) {
+			cpOptionLocalService.deleteCPOption(cpOption);
+		}
+	}
+
+	@Override
 	public List<CPOption> getCPOptions(long groupId, int start, int end) {
 		return cpOptionPersistence.findByGroupId(groupId, start, end);
 	}

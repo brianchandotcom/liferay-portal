@@ -1,0 +1,9 @@
+<definition>
+	<command name="installPatch" summary="Install the following patch onto Liferay Portal. ${patchFileZipURL}">
+		<execute function="AntCommand" locator1="build-test.xml" value1="install-patch -Dpatch.file.zip.url=${patchFileZipURL}" />
+	</command>
+
+	<command name="uninstallPatches" summary="Uninstall all patches from Liferay Portal.">
+		<execute function="AntCommand" locator1="build-test.xml" value1="uninstall-patches" />
+	</command>
+</definition>

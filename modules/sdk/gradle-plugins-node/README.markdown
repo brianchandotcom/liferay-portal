@@ -209,6 +209,9 @@ when your package is installed. Tasks of type `NpmShrinkwrapTask` extend
 The generated `npm-shrinkwrap.json` file is automatically sorted and formatted,
 so it's easier to see the changes with the previous version.
 
+`NpmShrinkwrapTask` instances are automatically disabled if the `package.json`
+file does not exist.
+
 #### Task Properties
 
 Property Name | Type | Default Value | Description

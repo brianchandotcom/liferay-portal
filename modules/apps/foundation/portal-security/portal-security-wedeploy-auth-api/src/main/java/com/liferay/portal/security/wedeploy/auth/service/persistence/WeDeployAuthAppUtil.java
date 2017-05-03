@@ -111,6 +111,71 @@ public class WeDeployAuthAppUtil {
 	}
 
 	/**
+	* Returns the we deploy auth app where clientId = &#63; and clientSecret = &#63; or throws a {@link NoSuchAppException} if it could not be found.
+	*
+	* @param clientId the client ID
+	* @param clientSecret the client secret
+	* @return the matching we deploy auth app
+	* @throws NoSuchAppException if a matching we deploy auth app could not be found
+	*/
+	public static WeDeployAuthApp findByCI_CS(java.lang.String clientId,
+		java.lang.String clientSecret)
+		throws com.liferay.portal.security.wedeploy.auth.exception.NoSuchAppException {
+		return getPersistence().findByCI_CS(clientId, clientSecret);
+	}
+
+	/**
+	* Returns the we deploy auth app where clientId = &#63; and clientSecret = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param clientId the client ID
+	* @param clientSecret the client secret
+	* @return the matching we deploy auth app, or <code>null</code> if a matching we deploy auth app could not be found
+	*/
+	public static WeDeployAuthApp fetchByCI_CS(java.lang.String clientId,
+		java.lang.String clientSecret) {
+		return getPersistence().fetchByCI_CS(clientId, clientSecret);
+	}
+
+	/**
+	* Returns the we deploy auth app where clientId = &#63; and clientSecret = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param clientId the client ID
+	* @param clientSecret the client secret
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching we deploy auth app, or <code>null</code> if a matching we deploy auth app could not be found
+	*/
+	public static WeDeployAuthApp fetchByCI_CS(java.lang.String clientId,
+		java.lang.String clientSecret, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByCI_CS(clientId, clientSecret, retrieveFromCache);
+	}
+
+	/**
+	* Removes the we deploy auth app where clientId = &#63; and clientSecret = &#63; from the database.
+	*
+	* @param clientId the client ID
+	* @param clientSecret the client secret
+	* @return the we deploy auth app that was removed
+	*/
+	public static WeDeployAuthApp removeByCI_CS(java.lang.String clientId,
+		java.lang.String clientSecret)
+		throws com.liferay.portal.security.wedeploy.auth.exception.NoSuchAppException {
+		return getPersistence().removeByCI_CS(clientId, clientSecret);
+	}
+
+	/**
+	* Returns the number of we deploy auth apps where clientId = &#63; and clientSecret = &#63;.
+	*
+	* @param clientId the client ID
+	* @param clientSecret the client secret
+	* @return the number of matching we deploy auth apps
+	*/
+	public static int countByCI_CS(java.lang.String clientId,
+		java.lang.String clientSecret) {
+		return getPersistence().countByCI_CS(clientId, clientSecret);
+	}
+
+	/**
 	* Caches the we deploy auth app in the entity cache if it is enabled.
 	*
 	* @param weDeployAuthApp the we deploy auth app

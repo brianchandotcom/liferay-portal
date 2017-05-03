@@ -166,13 +166,8 @@
 
 		<execute macro="Form#publishForm" />
 
-		<execute macro="Form#getPublishedFormPublicURL">
-			<return from="publicURL" name="publicURL" />
-			<var name="publicURL" value="${publicURL}" />
-		</execute>
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${publicURL}" />
+		<execute macro="FormsAdminNavigator#openPublishURL">
+			<var name="publishFormURL" value="${publishedFormPublicURL}" />
 		</execute>
 
 		<for list="1,2,3" param="option">

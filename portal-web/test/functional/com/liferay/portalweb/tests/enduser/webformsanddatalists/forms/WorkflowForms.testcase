@@ -80,7 +80,9 @@
 
 		<execute macro="Form#publishForm" />
 
-		<execute macro="FormsAdminNavigator#openPublishURL" />
+		<execute macro="FormsAdminNavigator#openPublishURL">
+			<var name="publishFormURL" value="${publishedFormPublicURL}" />
+		</execute>
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="TextField" />

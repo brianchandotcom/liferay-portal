@@ -2116,9 +2116,8 @@
 
 		<execute macro="Form#publishForm" />
 
-		<execute macro="Form#getPublishedFormPublicURL">
-			<return from="publicURL" name="publishedFormPublicURL" />
-			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
+		<execute macro="FormsAdminNavigator#openPublishURL">
+			<var name="publishFormURL" value="${publishedFormPublicURL}" />
 		</execute>
 
 		<execute macro="Form#save" />

@@ -200,6 +200,12 @@
 			<finder-column name="recordId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="U_R_R_S" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="recordSetId" />
+			<finder-column name="recordSetVersion" />
+			<finder-column name="status" type="int" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>RecordGroupId</exception>

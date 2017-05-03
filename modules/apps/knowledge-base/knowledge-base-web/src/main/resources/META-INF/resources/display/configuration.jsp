@@ -44,7 +44,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 			refresh="<%= false %>"
 			type="tabs nav-tabs-default"
 		>
-			<c:if test="<%= tabsNames.contains("general") %>">
+			<c:if test='<%= tabsNames.contains("general") %>'>
 				<liferay-ui:section>
 					<div class="container-fluid-1280">
 						<aui:fieldset-group markupView="lexicon">
@@ -150,7 +150,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 							<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
 							<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbDisplayPortletInstanceConfiguration.resourcePrimKey()) %>" />
 							<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(kbDisplayPortletInstanceConfiguration.resourcePrimKey()) %>" />
-							<portlet:param name="eventName" value="<%= liferayPortletResponse.getNamespace() + "selectKBObject" %>" />
+							<portlet:param name="eventName" value='<%= liferayPortletResponse.getNamespace() + "selectKBObject" %>' />
 						</liferay-portlet:renderURL>
 
 						uri: '<%= selectKBObjectURL %>'

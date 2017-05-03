@@ -70,7 +70,7 @@
 	</command>
 
 	<command name="gotoPreviewForm">
-		<execute function="AssertClick" locator1="Message#INFO_LINK" value1="Click here to preview the form in a new window." />
+		<execute function="AssertClick" locator1="Button#PREVIEW" value1="Preview Form" />
 	</command>
 
 	<command name="gotoRules">

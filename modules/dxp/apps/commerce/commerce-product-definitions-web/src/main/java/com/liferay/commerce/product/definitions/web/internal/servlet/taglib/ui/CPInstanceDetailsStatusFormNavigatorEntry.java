@@ -58,7 +58,7 @@ public class CPInstanceDetailsStatusFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/product_instance/status.jsp";
+		return "/instance/status.jsp";
 	}
 
 }

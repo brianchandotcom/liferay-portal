@@ -58,7 +58,7 @@ public class CPOptionValueDetailsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/product_option_value/details.jsp";
+		return "/option_value/details.jsp";
 	}
 
 }

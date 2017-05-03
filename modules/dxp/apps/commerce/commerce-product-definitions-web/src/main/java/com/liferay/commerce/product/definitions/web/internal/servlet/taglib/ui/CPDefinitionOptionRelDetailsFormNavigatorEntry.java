@@ -58,7 +58,7 @@ public class CPDefinitionOptionRelDetailsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/product_definition_option_rel/details.jsp";
+		return "/definition_option_rel/details.jsp";
 	}
 
 }

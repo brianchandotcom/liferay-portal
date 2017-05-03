@@ -58,7 +58,7 @@ public class CPDefinitionOptionRelDetailsBaseInfoFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/product_definition_option_rel/base_information.jsp";
+		return "/definition_option_rel/base_information.jsp";
 	}
 
 }

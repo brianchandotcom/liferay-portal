@@ -58,7 +58,7 @@ public class CPInstanceDetailsOptionsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/product_instance/options.jsp";
+		return "/instance/options.jsp";
 	}
 
 }

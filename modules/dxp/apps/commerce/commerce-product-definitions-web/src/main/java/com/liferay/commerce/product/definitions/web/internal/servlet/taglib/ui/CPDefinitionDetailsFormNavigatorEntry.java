@@ -59,7 +59,7 @@ public class CPDefinitionDetailsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/product_definition/details.jsp";
+		return "/definition/details.jsp";
 	}
 
 }

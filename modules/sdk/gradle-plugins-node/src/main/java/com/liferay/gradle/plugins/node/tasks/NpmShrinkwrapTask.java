@@ -30,6 +30,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.gradle.api.Task;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
 import org.gradle.util.GUtil;
 
@@ -37,6 +39,21 @@ import org.gradle.util.GUtil;
  * @author Andrea Di Giorgi
  */
 public class NpmShrinkwrapTask extends ExecuteNpmTask {
+
+	public NpmShrinkwrapTask() {
+		onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					File packageJsonFile = new File(
+						getWorkingDir(), "package.json");
+
+					return packageJsonFile.exists();
+				}
+
+			});
+	}
 
 	public NpmShrinkwrapTask excludeDependencies(
 		Iterable<?> excludedDependencies) {

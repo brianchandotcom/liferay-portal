@@ -44,6 +44,15 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = Indexer.class)
 public class CPOptionIndexer extends BaseIndexer<CPOption> {
 
+	public CPOptionIndexer() {
+		setDefaultSelectedFieldNames(
+			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
+			Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
+			Field.SCOPE_GROUP_ID, Field.NAME, Field.UID);
+		setFilterSearch(true);
+		setPermissionAware(true);
+	}
+
 	public static final String CLASS_NAME = CPOption.class.getName();
 
 	@Override
@@ -64,7 +73,7 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, cpOption);
 
-		String articleDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(
+		String cpOptionDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(
 			cpOption.getName());
 
 		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
@@ -74,7 +83,7 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 			String description = cpOption.getDescription(languageId);
 			String name = cpOption.getName(languageId);
 
-			if (languageId.equals(articleDefaultLanguageId)) {
+			if (languageId.equals(cpOptionDefaultLanguageId)) {
 				document.addText(Field.DESCRIPTION, description);
 				document.addText(Field.NAME, name);
 				document.addText("defaultLanguageId", languageId);

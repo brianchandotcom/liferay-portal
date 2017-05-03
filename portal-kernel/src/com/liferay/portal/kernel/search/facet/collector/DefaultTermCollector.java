@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search.facet.collector;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
  * @author Michael C. Han
  */
@@ -32,6 +34,11 @@ public class DefaultTermCollector implements TermCollector {
 	@Override
 	public String getTerm() {
 		return _term;
+	}
+
+	@Override
+	public String toString() {
+		return _term + StringPool.EQUAL + _frequency;
 	}
 
 	private final int _frequency;

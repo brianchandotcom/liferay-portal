@@ -910,6 +910,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public String getExportImportProcessId() {
+		return _exportImportProcessId;
+	}
+
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -1870,6 +1875,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public void setExportImportProcessId(String exportImportProcessId) {
+		_exportImportProcessId = exportImportProcessId;
+	}
+
+	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 	}
@@ -2749,6 +2759,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private final Map<String, List<ExpandoColumn>> _expandoColumnsMap =
 		new HashMap<>();
 	private transient Element _exportDataRootElement;
+	private String _exportImportProcessId;
 	private long _groupId;
 	private transient Element _importDataRootElement;
 	private transient long[] _layoutIds;

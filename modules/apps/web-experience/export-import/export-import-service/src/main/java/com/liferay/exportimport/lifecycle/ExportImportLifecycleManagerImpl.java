@@ -48,24 +48,31 @@ import org.osgi.service.component.annotations.Reference;
 public class ExportImportLifecycleManagerImpl
 	implements ExportImportLifecycleManager {
 
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
 	@Override
 	public void fireExportImportLifecycleEvent(
 		int code, int processFlag, Serializable... arguments) {
-
-		Message message = new Message();
 
 		ExportImportLifecycleEvent exportImportLifecycleEvent =
 			_exportImportLifecycleEventFactory.create(
 				code, processFlag, arguments);
 
-		message.put("exportImportLifecycleEvent", exportImportLifecycleEvent);
+		fireExportImportLifecycleEvent(exportImportLifecycleEvent);
+	}
 
-		_messageBus.sendMessage(
-			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_ASYNC,
-			message.clone());
-		_messageBus.sendMessage(
-			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_SYNC,
-			message.clone());
+	@Override
+	public void fireExportImportLifecycleEvent(
+		int code, int processFlag, String processId,
+		Serializable... arguments) {
+
+		ExportImportLifecycleEvent exportImportLifecycleEvent =
+			_exportImportLifecycleEventFactory.create(
+				code, processFlag, processId, arguments);
+
+		fireExportImportLifecycleEvent(exportImportLifecycleEvent);
 	}
 
 	@Activate
@@ -95,6 +102,21 @@ public class ExportImportLifecycleManagerImpl
 		}
 
 		_bundleContext = null;
+	}
+
+	protected void fireExportImportLifecycleEvent(
+		ExportImportLifecycleEvent exportImportLifecycleEvent) {
+
+		Message message = new Message();
+
+		message.put("exportImportLifecycleEvent", exportImportLifecycleEvent);
+
+		_messageBus.sendMessage(
+			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_ASYNC,
+			message.clone());
+		_messageBus.sendMessage(
+			DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_SYNC,
+			message.clone());
 	}
 
 	protected ServiceRegistration<Destination> registerDestination(

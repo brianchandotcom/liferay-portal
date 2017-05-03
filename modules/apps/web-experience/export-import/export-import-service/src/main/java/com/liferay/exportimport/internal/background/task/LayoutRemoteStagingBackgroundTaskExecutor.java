@@ -104,6 +104,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED,
 				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
 
 			Map<String, Serializable> settingsMap =
@@ -146,6 +148,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED,
 				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
 		}
 		catch (Throwable t) {
@@ -154,6 +158,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED,
 				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
 
 			if (_log.isDebugEnabled()) {

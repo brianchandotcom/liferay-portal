@@ -14,6 +14,10 @@
 
 package com.liferay.portal.lar.test;
 
+import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_STARTED;
+import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED;
+import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
+
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
@@ -25,6 +29,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
@@ -48,7 +53,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 
@@ -405,10 +409,17 @@ public abstract class BasePortletExportImportTestCase
 			ExportImportConfigurationLocalServiceUtil.
 				addDraftExportImportConfiguration(
 					user.getUserId(),
-					ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
+					ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET,
 					settingsMap);
 
 		ExportImportThreadLocal.setPortletStagingInProcess(true);
+
+		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
+			EVENT_PUBLICATION_PORTLET_LOCAL_STARTED,
+			PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS,
+			String.valueOf(
+				exportImportConfiguration.getExportImportConfigurationId()),
+			exportImportConfiguration);
 
 		try {
 			larFile = ExportImportLocalServiceUtil.exportPortletInfoAsFile(
@@ -427,18 +438,31 @@ public abstract class BasePortletExportImportTestCase
 
 			exportImportConfiguration =
 				ExportImportConfigurationLocalServiceUtil.
-					addExportImportConfiguration(
-						user.getUserId(), importedGroup.getGroupId(),
-						StringPool.BLANK, StringPool.BLANK,
-						ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
-						settingsMap, WorkflowConstants.STATUS_DRAFT,
+					updateExportImportConfiguration(
+						user.getUserId(),
+						exportImportConfiguration.
+							getExportImportConfigurationId(),
+						StringPool.BLANK, StringPool.BLANK, settingsMap,
 						new ServiceContext());
+
+			exportImportConfiguration.setGroupId(importedGroup.getGroupId());
+
+			exportImportConfiguration =
+				ExportImportConfigurationLocalServiceUtil.
+					updateExportImportConfiguration(exportImportConfiguration);
 
 			ExportImportLocalServiceUtil.importPortletDataDeletions(
 				exportImportConfiguration, larFile);
 
 			ExportImportLocalServiceUtil.importPortletInfo(
 				exportImportConfiguration, larFile);
+
+			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
+				EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED,
+				PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS,
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
+				exportImportConfiguration);
 		}
 		finally {
 			ExportImportThreadLocal.setPortletStagingInProcess(false);

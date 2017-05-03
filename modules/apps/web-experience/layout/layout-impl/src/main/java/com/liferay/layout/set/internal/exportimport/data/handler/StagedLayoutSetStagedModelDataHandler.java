@@ -218,6 +218,7 @@ public class StagedLayoutSetStagedModelDataHandler
 			updateLastPublishDate) {
 
 			ExportImportProcessCallbackRegistryUtil.registerCallback(
+				portletDataContext.getExportImportProcessId(),
 				new UpdateLayoutSetLastPublishDateCallable(
 					portletDataContext.getDateRange(),
 					portletDataContext.getGroupId(),

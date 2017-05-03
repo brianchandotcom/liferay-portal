@@ -14,10 +14,6 @@
 
 package com.liferay.exportimport.kernel.lifecycle;
 
-import java.io.Serializable;
-
-import java.util.List;
-
 /**
  * @author Daniel Kocsis
  */
@@ -30,12 +26,16 @@ public interface ProcessAwareExportImportLifecycleListener
 		throws Exception {
 	}
 
-	public void onProcessFailed(List<Serializable> attributes) throws Exception;
-
-	public void onProcessStarted(List<Serializable> attributes)
+	public void onProcessFailed(
+			ExportImportLifecycleEvent exportImportLifecycleEvent)
 		throws Exception;
 
-	public void onProcessSucceeded(List<Serializable> attributes)
+	public void onProcessStarted(
+			ExportImportLifecycleEvent exportImportLifecycleEvent)
+		throws Exception;
+
+	public void onProcessSucceeded(
+			ExportImportLifecycleEvent exportImportLifecycleEvent)
 		throws Exception;
 
 }

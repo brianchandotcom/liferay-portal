@@ -89,6 +89,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			(stagedModel instanceof StagedGroupedModel)) {
 
 			ExportImportProcessCallbackRegistryUtil.registerCallback(
+				portletDataContext.getExportImportProcessId(),
 				new UpdateStagedModelLastPublishDateCallable(
 					stagedModel, portletDataContext.getDateRange()));
 		}

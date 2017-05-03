@@ -26,8 +26,19 @@ import java.util.concurrent.Callable;
 @ProviderType
 public class ExportImportProcessCallbackRegistryUtil {
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public static void registerCallback(Callable<?> callable) {
 		_exportImportProcessCommitCallbackRegistry.registerCallback(callable);
+	}
+
+	public static void registerCallback(
+		String processId, Callable<?> callable) {
+
+		_exportImportProcessCommitCallbackRegistry.registerCallback(
+			processId, callable);
 	}
 
 	private static volatile ExportImportProcessCallbackRegistry

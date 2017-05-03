@@ -48,10 +48,6 @@ import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.lifecycle.ProcessAwareExportImportLifecycleListener;
 
-import java.io.Serializable;
-
-import java.util.List;
-
 /**
  * @author Daniel Kocsis
  */
@@ -90,94 +86,97 @@ public class DefaultProcessAwareExportImportLifecycleListener
 
 		if (processFlag == PROCESS_FLAG_LAYOUT_EXPORT_IN_PROCESS) {
 			if (code == EVENT_LAYOUT_EXPORT_FAILED) {
-				onProcessFailed(exportImportLifecycleEvent.getAttributes());
+				onProcessFailed(exportImportLifecycleEvent);
 			}
 			else if (code == EVENT_LAYOUT_EXPORT_STARTED) {
-				onProcessStarted(exportImportLifecycleEvent.getAttributes());
+				onProcessStarted(exportImportLifecycleEvent);
 			}
 			else if (code == EVENT_LAYOUT_EXPORT_SUCCEEDED) {
-				onProcessSucceeded(exportImportLifecycleEvent.getAttributes());
+				onProcessSucceeded(exportImportLifecycleEvent);
 			}
 		}
 		else if (processFlag == PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS) {
 			if (code == EVENT_LAYOUT_IMPORT_FAILED) {
-				onProcessFailed(exportImportLifecycleEvent.getAttributes());
+				onProcessFailed(exportImportLifecycleEvent);
 			}
 			else if (code == EVENT_LAYOUT_IMPORT_STARTED) {
-				onProcessStarted(exportImportLifecycleEvent.getAttributes());
+				onProcessStarted(exportImportLifecycleEvent);
 			}
 			else if (code == EVENT_LAYOUT_IMPORT_SUCCEEDED) {
-				onProcessSucceeded(exportImportLifecycleEvent.getAttributes());
+				onProcessSucceeded(exportImportLifecycleEvent);
 			}
 		}
 		else if (processFlag == PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS) {
 			if ((code == EVENT_PUBLICATION_LAYOUT_LOCAL_FAILED) ||
 				(code == EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED)) {
 
-				onProcessFailed(exportImportLifecycleEvent.getAttributes());
+				onProcessFailed(exportImportLifecycleEvent);
 			}
 			else if ((code == EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED) ||
 					 (code == EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED)) {
 
-				onProcessStarted(exportImportLifecycleEvent.getAttributes());
+				onProcessStarted(exportImportLifecycleEvent);
 			}
 			else if ((code == EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED) ||
 					 (code == EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED)) {
 
-				onProcessSucceeded(exportImportLifecycleEvent.getAttributes());
+				onProcessSucceeded(exportImportLifecycleEvent);
 			}
 		}
 		else if (processFlag == PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS) {
 			if (code == EVENT_PORTLET_EXPORT_FAILED) {
-				onProcessFailed(exportImportLifecycleEvent.getAttributes());
+				onProcessFailed(exportImportLifecycleEvent);
 			}
 			else if (code == EVENT_PORTLET_EXPORT_STARTED) {
-				onProcessStarted(exportImportLifecycleEvent.getAttributes());
+				onProcessStarted(exportImportLifecycleEvent);
 			}
 			else if (code == EVENT_PORTLET_EXPORT_SUCCEEDED) {
-				onProcessSucceeded(exportImportLifecycleEvent.getAttributes());
+				onProcessSucceeded(exportImportLifecycleEvent);
 			}
 		}
 		else if (processFlag == PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS) {
 			if (code == EVENT_PORTLET_IMPORT_FAILED) {
-				onProcessFailed(exportImportLifecycleEvent.getAttributes());
+				onProcessFailed(exportImportLifecycleEvent);
 			}
 			else if (code == EVENT_PORTLET_IMPORT_STARTED) {
-				onProcessStarted(exportImportLifecycleEvent.getAttributes());
+				onProcessStarted(exportImportLifecycleEvent);
 			}
 			else if (code == EVENT_PORTLET_IMPORT_SUCCEEDED) {
-				onProcessSucceeded(exportImportLifecycleEvent.getAttributes());
+				onProcessSucceeded(exportImportLifecycleEvent);
 			}
 		}
 		else if (processFlag == PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS) {
 			if (code == EVENT_PUBLICATION_PORTLET_LOCAL_FAILED) {
-				onProcessFailed(exportImportLifecycleEvent.getAttributes());
+				onProcessFailed(exportImportLifecycleEvent);
 			}
 			else if (code == EVENT_PUBLICATION_PORTLET_LOCAL_STARTED) {
-				onProcessStarted(exportImportLifecycleEvent.getAttributes());
+				onProcessStarted(exportImportLifecycleEvent);
 			}
 			else if (code == EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED) {
-				onProcessSucceeded(exportImportLifecycleEvent.getAttributes());
+				onProcessSucceeded(exportImportLifecycleEvent);
 			}
 		}
 	}
 
-	protected void onProcessFailed(List<Serializable> attributes)
+	protected void onProcessFailed(
+			ExportImportLifecycleEvent exportImportLifecycleEvent)
 		throws Exception {
 
-		_lifecycleListener.onProcessFailed(attributes);
+		_lifecycleListener.onProcessFailed(exportImportLifecycleEvent);
 	}
 
-	protected void onProcessStarted(List<Serializable> attributes)
+	protected void onProcessStarted(
+			ExportImportLifecycleEvent exportImportLifecycleEvent)
 		throws Exception {
 
-		_lifecycleListener.onProcessStarted(attributes);
+		_lifecycleListener.onProcessStarted(exportImportLifecycleEvent);
 	}
 
-	protected void onProcessSucceeded(List<Serializable> attributes)
+	protected void onProcessSucceeded(
+			ExportImportLifecycleEvent exportImportLifecycleEvent)
 		throws Exception {
 
-		_lifecycleListener.onProcessSucceeded(attributes);
+		_lifecycleListener.onProcessSucceeded(exportImportLifecycleEvent);
 	}
 
 	private final ProcessAwareExportImportLifecycleListener _lifecycleListener;

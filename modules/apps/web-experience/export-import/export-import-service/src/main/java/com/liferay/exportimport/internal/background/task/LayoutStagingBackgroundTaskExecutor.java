@@ -123,6 +123,8 @@ public class LayoutStagingBackgroundTaskExecutor
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED,
 				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
 
 			boolean privateLayout = MapUtil.getBoolean(
@@ -149,6 +151,8 @@ public class LayoutStagingBackgroundTaskExecutor
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED,
 				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
 		}
 		catch (Throwable t) {
@@ -158,6 +162,8 @@ public class LayoutStagingBackgroundTaskExecutor
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_LAYOUT_LOCAL_FAILED,
 				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration, t);
 
 			if (_log.isDebugEnabled()) {

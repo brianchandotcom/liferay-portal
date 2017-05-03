@@ -15,6 +15,7 @@
 package com.liferay.exportimport.internal.lifecycle;
 
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.lifecycle.ProcessAwareExportImportLifecycleListener;
 import com.liferay.portal.background.task.model.BackgroundTask;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,19 +49,22 @@ public class NotificationExportImportLifecycleListener
 	}
 
 	@Override
-	public void onProcessFailed(List<Serializable> attributes)
+	public void onProcessFailed(
+			ExportImportLifecycleEvent exportImportLifecycleEvent)
 		throws Exception {
 
 		sendNotification(BackgroundTaskConstants.STATUS_FAILED);
 	}
 
 	@Override
-	public void onProcessStarted(List<Serializable> attributes)
+	public void onProcessStarted(
+			ExportImportLifecycleEvent exportImportLifecycleEvent)
 		throws Exception {
 	}
 
 	@Override
-	public void onProcessSucceeded(List<Serializable> attributes)
+	public void onProcessSucceeded(
+			ExportImportLifecycleEvent exportImportLifecycleEvent)
 		throws Exception {
 
 		sendNotification(BackgroundTaskConstants.STATUS_SUCCESSFUL);

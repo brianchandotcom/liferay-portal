@@ -16,12 +16,16 @@ package com.liferay.exportimport.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Daniel Kocsis
@@ -29,29 +33,68 @@ import java.util.concurrent.Callable;
 @ProviderType
 public class ExportImportProcessCallbackUtil {
 
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
 	public static List<Callable<?>> popCallbackList() {
-		List<List<Callable<?>>> callbackListList =
-			_callbackListListThreadLocal.get();
+		return Collections.<Callable<?>>emptyList();
+	}
+
+	public static List<Callable<?>> popCallbackList(String processId) {
+		List<List<Callable<?>>> callbackListList = _callbackListListMap.get(
+			processId);
+
+		if (callbackListList == null) {
+			return Collections.<Callable<?>>emptyList();
+		}
 
 		return callbackListList.remove(callbackListList.size() - 1);
 	}
 
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
 	public static void pushCallbackList() {
-		List<List<Callable<?>>> callbackListList =
-			_callbackListListThreadLocal.get();
+	}
+
+	public static void pushCallbackList(String processId) {
+		List<List<Callable<?>>> callbackListList = _callbackListListMap.get(
+			processId);
+
+		if (callbackListList == null) {
+			callbackListList = new ArrayList<>();
+
+			_callbackListListMap.put(processId, callbackListList);
+		}
 
 		callbackListList.add(Collections.<Callable<?>>emptyList());
 	}
 
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
 	public static void registerCallback(Callable<?> callable) {
-		List<List<Callable<?>>> callbackListList =
-			_callbackListListThreadLocal.get();
+	}
 
-		if (callbackListList.isEmpty()) {
+	public static void registerCallback(
+		String processId, Callable<?> callable) {
 
-			// Not within a transaction boundary and should only happen during
-			// an upgrade or verify process. See
-			// DBUpgrader#_disableTransactions.
+		List<List<Callable<?>>> callbackListList = _callbackListListMap.get(
+			processId);
+
+		if (ListUtil.isEmpty(callbackListList)) {
+
+			// Not within a process boundary, ignore the callback
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Calling export import process callback immediately, " +
+						"because there is no active process with ID " +
+							processId);
+			}
 
 			try {
 				callable.call();
@@ -59,33 +102,27 @@ public class ExportImportProcessCallbackUtil {
 			catch (Exception e) {
 				throw new RuntimeException(e);
 			}
+
+			return;
 		}
-		else {
-			int index = callbackListList.size() - 1;
 
-			List<Callable<?>> callableList = callbackListList.get(index);
+		int index = callbackListList.size() - 1;
 
-			if (callableList == Collections.<Callable<?>>emptyList()) {
-				callableList = new ArrayList<>();
+		List<Callable<?>> callableList = callbackListList.get(index);
 
-				callbackListList.set(index, callableList);
-			}
+		if (callableList == Collections.<Callable<?>>emptyList()) {
+			callableList = new ArrayList<>();
 
-			callableList.add(callable);
+			callbackListList.set(index, callableList);
 		}
+
+		callableList.add(callable);
 	}
 
-	private static final ThreadLocal<List<List<Callable<?>>>>
-		_callbackListListThreadLocal =
-			new AutoResetThreadLocal<List<List<Callable<?>>>>(
-				ExportImportProcessCallbackUtil.class +
-					"._callbackListListThreadLocal") {
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExportImportProcessCallbackUtil.class);
 
-				@Override
-				protected List<List<Callable<?>>> initialValue() {
-					return new ArrayList<>();
-				}
-
-			};
+	private static final Map<String, List<List<Callable<?>>>>
+		_callbackListListMap = new ConcurrentHashMap();
 
 }

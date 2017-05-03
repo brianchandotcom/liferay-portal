@@ -83,6 +83,8 @@ public class PortletStagingBackgroundTaskExecutor
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_PORTLET_LOCAL_STARTED,
 				PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS,
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
 
 			file = ExportImportLocalServiceUtil.exportPortletInfoAsFile(
@@ -102,6 +104,8 @@ public class PortletStagingBackgroundTaskExecutor
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED,
 				PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS,
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
 		}
 		catch (Throwable t) {
@@ -110,6 +114,8 @@ public class PortletStagingBackgroundTaskExecutor
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_PORTLET_LOCAL_FAILED,
 				PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS,
+				String.valueOf(
+					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
 
 			if (_log.isDebugEnabled()) {

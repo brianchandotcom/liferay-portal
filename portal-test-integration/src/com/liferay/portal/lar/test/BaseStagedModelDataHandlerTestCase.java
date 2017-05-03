@@ -581,6 +581,9 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 				stagingGroup.getCompanyId(), stagingGroup.getGroupId(),
 				getParameterMap(), getStartDate(), getEndDate(), zipWriter);
 
+		portletDataContext.setExportImportProcessId(
+			BaseStagedModelDataHandlerTestCase.class.getName());
+
 		rootElement = SAXReaderUtil.createElement("root");
 
 		portletDataContext.setExportDataRootElement(rootElement);
@@ -615,6 +618,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 				liveGroup.getCompanyId(), liveGroup.getGroupId(),
 				getParameterMap(), userIdStrategy, zipReader);
 
+		portletDataContext.setExportImportProcessId(
+			BaseStagedModelDataHandlerTestCase.class.getName());
 		portletDataContext.setImportDataRootElement(rootElement);
 
 		Element missingReferencesElement = rootElement.element(

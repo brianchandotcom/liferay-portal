@@ -24,7 +24,15 @@ import java.io.Serializable;
 @ProviderType
 public interface ExportImportLifecycleEventFactory {
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public ExportImportLifecycleEvent create(
 		int code, int processFlag, Serializable... attributes);
+
+	public ExportImportLifecycleEvent create(
+		int code, int processFlag, String processId,
+		Serializable... attributes);
 
 }

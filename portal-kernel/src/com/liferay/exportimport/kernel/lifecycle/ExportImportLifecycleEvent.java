@@ -32,10 +32,14 @@ public interface ExportImportLifecycleEvent extends Serializable {
 
 	public int getProcessFlag();
 
+	public String getProcessId();
+
 	public void setAttributes(Serializable... attributes);
 
 	public void setCode(int eventCode);
 
 	public void setProcessFlag(int processFlag);
+
+	public void setProcessId(String processId);
 
 }

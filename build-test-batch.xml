@@ -622,6 +622,8 @@ app.server.type=@{app.server.type}]]></echo>
 				</test-action>
 
 				<test-set-up>
+					<antcall target="record-test-generated-properties" />
+
 					<if>
 						<and>
 							<or>
@@ -641,6 +643,7 @@ app.server.type=@{app.server.type}]]></echo>
 								<param name="test.build.portal.dependencies.zip.url" value="@{test.portal.bundle.dependencies.zip.url}" />
 								<param name="test.build.portal.osgi.zip.url" value="@{test.portal.bundle.osgi.zip.url}" />
 								<param name="test.build.portal.war.url" value="@{test.portal.bundle.war.url}" />
+								<param name="test.class" value="${test.class}" />
 								<param name="test.fix.pack.base.url" value="@{test.fix.pack.base.url}" />
 							</antcall>
 
@@ -733,8 +736,6 @@ app.server.type=@{app.server.type}]]></echo>
 							/>
 						</then>
 					</if>
-
-					<antcall target="record-test-generated-properties" />
 
 					<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
 				</test-set-up>

@@ -8120,9 +8120,18 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			<then>
 				<antcall target="prepare-patching-tool" />
 
-				<antcall target="install-patch">
-					<param name="patch.file.zip.url" value="${test.build.fix.pack.zip.url}" />
-				</antcall>
+				<get-testcase-property property.name="skip.install-patch" />
+
+				<if>
+					<not>
+						<equals arg1="${skip.install-patch}" arg2="true" />
+					</not>
+					<then>
+						<antcall target="install-patch">
+							<param name="patch.file.zip.url" value="${test.build.fix.pack.zip.url}" />
+						</antcall>
+					</then>
+				</if>
 			</then>
 		</if>
 	</target>

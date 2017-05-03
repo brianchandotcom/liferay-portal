@@ -70,9 +70,6 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 			CPDefinitionOptionRel.class.getName(), actionRequest);
 
 		for (long addCPOptionId : addCPOptionIds) {
-
-			// Add commerce product definition option rel
-
 			_cpDefinitionOptionRelService.addCPDefinitionOptionRel(
 				cpDefinitionId, addCPOptionId, serviceContext);
 		}
@@ -145,11 +142,7 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionOptionRel.class.getName(), actionRequest);
 
-		CPDefinitionOptionRel cpDefinitionOptionRel = null;
-
-		// Update commerce product definition option rel
-
-		cpDefinitionOptionRel =
+		CPDefinitionOptionRel cpDefinitionOptionRel =
 			_cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
 				cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
 				ddmFormFieldTypeName, priority, facetable, skuContributor,

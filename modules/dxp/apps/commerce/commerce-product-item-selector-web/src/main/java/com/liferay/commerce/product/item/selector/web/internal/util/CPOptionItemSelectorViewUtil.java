@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.product.item.selector.web.internal.util;
 
-import com.liferay.commerce.product.util.comparator.CPOptionNameComparator;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.util.comparator.CPOptionNameComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**

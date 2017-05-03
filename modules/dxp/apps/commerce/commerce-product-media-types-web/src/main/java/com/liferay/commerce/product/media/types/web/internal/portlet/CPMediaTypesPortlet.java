@@ -15,7 +15,13 @@
 package com.liferay.commerce.product.media.types.web.internal.portlet;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.media.types.web.internal.display.context.CPMediaTypeDisplayContext;
+import com.liferay.commerce.product.media.types.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.product.service.CPMediaTypeService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -24,7 +30,10 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -60,7 +69,32 @@ public class CPMediaTypesPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		try {
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
+
+			CPMediaTypeDisplayContext cpMediaTypeDisplayContext =
+				new CPMediaTypeDisplayContext(
+					_actionHelper, httpServletRequest, _cpMediaTypeService,
+					"CPMediaTypes");
+
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT, cpMediaTypeDisplayContext);
+		}
+		catch (Exception e) {
+			SessionErrors.add(renderRequest, e.getClass());
+		}
+
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Reference
+	private ActionHelper _actionHelper;
+
+	@Reference
+	private CPMediaTypeService _cpMediaTypeService;
+
+	@Reference
+	private Portal _portal;
 
 }

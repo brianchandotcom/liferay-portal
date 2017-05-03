@@ -109,7 +109,8 @@ public class CPMediaTypePersistenceImpl extends BasePersistenceImpl<CPMediaType>
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] { String.class.getName() },
 			CPMediaTypeModelImpl.UUID_COLUMN_BITMASK |
-			CPMediaTypeModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPMediaTypeModelImpl.PRIORITY_COLUMN_BITMASK |
+			CPMediaTypeModelImpl.TITLE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CPMediaTypeModelImpl.ENTITY_CACHE_ENABLED,
 			CPMediaTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
@@ -909,7 +910,8 @@ public class CPMediaTypePersistenceImpl extends BasePersistenceImpl<CPMediaType>
 			new String[] { String.class.getName(), Long.class.getName() },
 			CPMediaTypeModelImpl.UUID_COLUMN_BITMASK |
 			CPMediaTypeModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPMediaTypeModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPMediaTypeModelImpl.PRIORITY_COLUMN_BITMASK |
+			CPMediaTypeModelImpl.TITLE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CPMediaTypeModelImpl.ENTITY_CACHE_ENABLED,
 			CPMediaTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
@@ -1495,7 +1497,8 @@ public class CPMediaTypePersistenceImpl extends BasePersistenceImpl<CPMediaType>
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] { Long.class.getName() },
 			CPMediaTypeModelImpl.GROUPID_COLUMN_BITMASK |
-			CPMediaTypeModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPMediaTypeModelImpl.PRIORITY_COLUMN_BITMASK |
+			CPMediaTypeModelImpl.TITLE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(CPMediaTypeModelImpl.ENTITY_CACHE_ENABLED,
 			CPMediaTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
@@ -2356,7 +2359,8 @@ public class CPMediaTypePersistenceImpl extends BasePersistenceImpl<CPMediaType>
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] { Long.class.getName() },
 			CPMediaTypeModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPMediaTypeModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPMediaTypeModelImpl.PRIORITY_COLUMN_BITMASK |
+			CPMediaTypeModelImpl.TITLE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(CPMediaTypeModelImpl.ENTITY_CACHE_ENABLED,
 			CPMediaTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",

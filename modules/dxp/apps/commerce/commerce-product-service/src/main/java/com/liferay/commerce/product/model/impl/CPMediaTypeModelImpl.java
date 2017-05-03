@@ -110,8 +110,8 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 
 	public static final String TABLE_SQL_CREATE = "create table CPMediaType (uuid_ VARCHAR(75) null,CPMediaTypeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CPMediaType";
-	public static final String ORDER_BY_JPQL = " ORDER BY cpMediaType.priority ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CPMediaType.priority ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY cpMediaType.priority ASC, cpMediaType.title ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CPMediaType.priority ASC, CPMediaType.title ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -128,6 +128,7 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long UUID_COLUMN_BITMASK = 4L;
 	public static final long PRIORITY_COLUMN_BITMASK = 8L;
+	public static final long TITLE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -512,6 +513,8 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 
 	@Override
 	public void setTitle(String title) {
+		_columnBitmask = -1L;
+
 		_title = title;
 	}
 
@@ -820,6 +823,12 @@ public class CPMediaTypeModelImpl extends BaseModelImpl<CPMediaType>
 		else {
 			value = 0;
 		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		value = getTitle().compareTo(cpMediaType.getTitle());
 
 		if (value != 0) {
 			return value;

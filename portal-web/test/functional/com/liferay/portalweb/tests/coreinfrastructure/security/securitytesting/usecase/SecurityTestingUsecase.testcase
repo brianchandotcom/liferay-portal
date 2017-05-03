@@ -79,6 +79,8 @@
 	<command name="ValidateCannotStealAdminAccount" priority="4">
 		<property name="test.name.skip.portal.instance" value="SecurityTestingUsecase#ValidateCannotStealAdminAccount" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>

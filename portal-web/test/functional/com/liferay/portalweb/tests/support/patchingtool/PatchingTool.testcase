@@ -1,0 +1,46 @@
+<definition component-name="support-qa">
+	<property name="portal.fixpack.release" value="true" />
+	<property name="testray.main.component.name" value="Patching Tool" />
+
+	<var method="TestPropsUtil#get('test.build.fix.pack.zip.url')" name="testBuildFixPackZipURL" />
+	<var method="TestPropsUtil#get('test.build.fix.pack.zip.url.previous')" name="testBuildFixPackZipURLPrevious" />
+
+	<set-up>
+		<execute macro="SignIn#signInTestSetup" />
+	</set-up>
+
+	<command description="Ensures that a fix pack can be reverted." name="RevertFixPack" priority="5">
+		<property name="skip.install-patch" value="true" />
+		<property name="test.assert.warning.exceptions" value="true" />
+
+		<execute macro="SignOut#signOut" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="PatchingTool#installPatch">
+			<var name="patchFileZipURL" value="${testBuildFixPackZipURL}" />
+		</execute>
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="SignIn#signIn" />
+
+		<execute macro="SignOut#signOut" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="PatchingTool#uninstallPatches" />
+
+		<execute macro="PatchingTool#installPatch">
+			<var name="patchFileZipURL" value="${testBuildFixPackZipURLPrevious}" />
+		</execute>
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="SignIn#signIn" />
+	</command>
+</definition>

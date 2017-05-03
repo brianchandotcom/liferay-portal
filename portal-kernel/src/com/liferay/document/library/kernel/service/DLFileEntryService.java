@@ -195,9 +195,11 @@ public interface DLFileEntryService extends BaseService {
 		long rootFolderId, java.lang.String[] mimeTypes, int status)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public InputStream getFileAsStream(long fileEntryId,
 		java.lang.String version) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public InputStream getFileAsStream(long fileEntryId,
 		java.lang.String version, boolean incrementCounter)
 		throws PortalException;

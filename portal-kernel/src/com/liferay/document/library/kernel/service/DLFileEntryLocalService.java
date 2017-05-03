@@ -400,13 +400,16 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		java.lang.String version, boolean incrementCounter, int increment)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public InputStream getFileAsStream(long fileEntryId,
 		java.lang.String version) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public InputStream getFileAsStream(long fileEntryId,
 		java.lang.String version, boolean incrementCounter)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public InputStream getFileAsStream(long fileEntryId,
 		java.lang.String version, boolean incrementCounter, int increment)
 		throws PortalException;
@@ -416,6 +419,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	String)}
 	*/
 	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public InputStream getFileAsStream(long userId, long fileEntryId,
 		java.lang.String version) throws PortalException;
 
@@ -424,6 +428,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	String, boolean)}
 	*/
 	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public InputStream getFileAsStream(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter)
 		throws PortalException;
@@ -433,6 +438,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	String, boolean, int)}
 	*/
 	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public InputStream getFileAsStream(long userId, long fileEntryId,
 		java.lang.String version, boolean incrementCounter, int increment)
 		throws PortalException;

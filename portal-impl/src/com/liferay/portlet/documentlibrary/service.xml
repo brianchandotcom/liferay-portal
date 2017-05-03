@@ -14,10 +14,6 @@
 		<reference entity="DLFileRank" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
-
-		<!-- Transactions -->
-
-		<tx-required>getFileAsStream</tx-required>
 	</entity>
 	<entity local-service="true" name="DLAppHelper" remote-service="false">
 
@@ -238,10 +234,6 @@
 		<reference entity="ExpandoTable" package-path="com.liferay.portlet.expando" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
-
-		<!-- Transactions -->
-
-		<tx-required>getFileAsStream</tx-required>
 	</entity>
 	<entity human-name="document library file entry metadata" local-service="true" name="DLFileEntryMetadata" remote-service="false" uuid="true">
 

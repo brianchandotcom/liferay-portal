@@ -293,10 +293,6 @@
 		<reference entity="TrashVersion" package-path="com.liferay.portlet.trash" />
 		<reference entity="WikiNode" package-path="com.liferay.wiki" />
 		<reference entity="WikiPageResource" package-path="com.liferay.wiki" />
-
-		<!-- Transactions -->
-
-		<tx-required>getPage</tx-required>
 	</entity>
 	<entity local-service="true" name="WikiPageResource" remote-service="false" uuid="true">
 

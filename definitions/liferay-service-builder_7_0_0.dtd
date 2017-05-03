@@ -484,6 +484,9 @@ delete*, set*, and update* require propagation of transactions. All other
 methods support transactions but are assumed to be read only. If you want
 additional methods to fall under transactions, add the method name to this
 element.
+
+The tx-required attribute is deprecated, please add a Transactional annotation
+to the service impl method instead and re-run the service builder.
 -->
 <!ELEMENT tx-required (#PCDATA)>
 

@@ -1621,8 +1621,6 @@
 
 		<execute macro="FormsAdminNavigator#gotoEditFormByName" />
 
-		<execute macro="Form#publishForm" />
-
 		<execute macro="Form#submitFormPublish">
 			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldName" value="TextField" />
@@ -1649,8 +1647,6 @@
 		</execute>
 
 		<execute macro="FormsAdminNavigator#gotoEditFormByName" />
-
-		<execute macro="Form#publishForm" />
 
 		<execute macro="Form#viewFormNotPublished" />
 	</command>

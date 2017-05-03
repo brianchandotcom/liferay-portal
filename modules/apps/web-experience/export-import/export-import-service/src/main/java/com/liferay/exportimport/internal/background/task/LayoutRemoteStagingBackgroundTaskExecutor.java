@@ -176,7 +176,10 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 						httpPrincipal, stagingRequestId);
 				}
 				catch (PortalException pe) {
-					_log.warn("Unable to clean up the remote live site", pe);
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to clean up the remote live site", pe);
+					}
 				}
 			}
 		}

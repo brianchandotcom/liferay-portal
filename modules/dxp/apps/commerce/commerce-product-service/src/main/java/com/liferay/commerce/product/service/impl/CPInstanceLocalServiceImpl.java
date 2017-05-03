@@ -80,7 +80,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		throws PortalException {
 
 		Calendar displayDateCalendar = CalendarFactoryUtil.getCalendar(
-			displayDate.getTime());
+			displayDate.getTime(), serviceContext.getTimeZone());
 
 		int displayDateMonth = displayDateCalendar.get(Calendar.MONTH);
 		int displayDateDay = displayDateCalendar.get(Calendar.DAY_OF_MONTH);
@@ -96,7 +96,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		if (!neverExpire) {
 			Calendar expirationDateCalendar = CalendarFactoryUtil.getCalendar(
-				expirationDate.getTime());
+				expirationDate.getTime(), serviceContext.getTimeZone());
 
 			expirationDateMonth = expirationDateCalendar.get(Calendar.MONTH);
 			expirationDateDay = expirationDateCalendar.get(

@@ -229,6 +229,17 @@ public class DDLRecordVersionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByU_R_R_S() throws Exception {
+		_persistence.countByU_R_R_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), StringPool.BLANK,
+			RandomTestUtil.nextInt());
+
+		_persistence.countByU_R_R_S(0L, 0L, StringPool.NULL, 0);
+
+		_persistence.countByU_R_R_S(0L, 0L, (String)null, 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DDLRecordVersion newDDLRecordVersion = addDDLRecordVersion();
 

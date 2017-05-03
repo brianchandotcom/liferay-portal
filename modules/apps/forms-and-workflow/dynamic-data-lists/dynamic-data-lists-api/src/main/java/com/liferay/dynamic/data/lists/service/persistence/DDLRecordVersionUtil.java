@@ -697,6 +697,223 @@ public class DDLRecordVersionUtil {
 	}
 
 	/**
+	* Returns all the ddl record versions where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
+	*
+	* @param userId the user ID
+	* @param recordSetId the record set ID
+	* @param recordSetVersion the record set version
+	* @param status the status
+	* @return the matching ddl record versions
+	*/
+	public static List<DDLRecordVersion> findByU_R_R_S(long userId,
+		long recordSetId, java.lang.String recordSetVersion, int status) {
+		return getPersistence()
+				   .findByU_R_R_S(userId, recordSetId, recordSetVersion, status);
+	}
+
+	/**
+	* Returns a range of all the ddl record versions where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param recordSetId the record set ID
+	* @param recordSetVersion the record set version
+	* @param status the status
+	* @param start the lower bound of the range of ddl record versions
+	* @param end the upper bound of the range of ddl record versions (not inclusive)
+	* @return the range of matching ddl record versions
+	*/
+	public static List<DDLRecordVersion> findByU_R_R_S(long userId,
+		long recordSetId, java.lang.String recordSetVersion, int status,
+		int start, int end) {
+		return getPersistence()
+				   .findByU_R_R_S(userId, recordSetId, recordSetVersion,
+			status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the ddl record versions where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param recordSetId the record set ID
+	* @param recordSetVersion the record set version
+	* @param status the status
+	* @param start the lower bound of the range of ddl record versions
+	* @param end the upper bound of the range of ddl record versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching ddl record versions
+	*/
+	public static List<DDLRecordVersion> findByU_R_R_S(long userId,
+		long recordSetId, java.lang.String recordSetVersion, int status,
+		int start, int end,
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
+		return getPersistence()
+				   .findByU_R_R_S(userId, recordSetId, recordSetVersion,
+			status, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the ddl record versions where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param recordSetId the record set ID
+	* @param recordSetVersion the record set version
+	* @param status the status
+	* @param start the lower bound of the range of ddl record versions
+	* @param end the upper bound of the range of ddl record versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching ddl record versions
+	*/
+	public static List<DDLRecordVersion> findByU_R_R_S(long userId,
+		long recordSetId, java.lang.String recordSetVersion, int status,
+		int start, int end,
+		OrderByComparator<DDLRecordVersion> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByU_R_R_S(userId, recordSetId, recordSetVersion,
+			status, start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first ddl record version in the ordered set where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
+	*
+	* @param userId the user ID
+	* @param recordSetId the record set ID
+	* @param recordSetVersion the record set version
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching ddl record version
+	* @throws NoSuchRecordVersionException if a matching ddl record version could not be found
+	*/
+	public static DDLRecordVersion findByU_R_R_S_First(long userId,
+		long recordSetId, java.lang.String recordSetVersion, int status,
+		OrderByComparator<DDLRecordVersion> orderByComparator)
+		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException {
+		return getPersistence()
+				   .findByU_R_R_S_First(userId, recordSetId, recordSetVersion,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns the first ddl record version in the ordered set where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
+	*
+	* @param userId the user ID
+	* @param recordSetId the record set ID
+	* @param recordSetVersion the record set version
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching ddl record version, or <code>null</code> if a matching ddl record version could not be found
+	*/
+	public static DDLRecordVersion fetchByU_R_R_S_First(long userId,
+		long recordSetId, java.lang.String recordSetVersion, int status,
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
+		return getPersistence()
+				   .fetchByU_R_R_S_First(userId, recordSetId, recordSetVersion,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns the last ddl record version in the ordered set where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
+	*
+	* @param userId the user ID
+	* @param recordSetId the record set ID
+	* @param recordSetVersion the record set version
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching ddl record version
+	* @throws NoSuchRecordVersionException if a matching ddl record version could not be found
+	*/
+	public static DDLRecordVersion findByU_R_R_S_Last(long userId,
+		long recordSetId, java.lang.String recordSetVersion, int status,
+		OrderByComparator<DDLRecordVersion> orderByComparator)
+		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException {
+		return getPersistence()
+				   .findByU_R_R_S_Last(userId, recordSetId, recordSetVersion,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns the last ddl record version in the ordered set where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
+	*
+	* @param userId the user ID
+	* @param recordSetId the record set ID
+	* @param recordSetVersion the record set version
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching ddl record version, or <code>null</code> if a matching ddl record version could not be found
+	*/
+	public static DDLRecordVersion fetchByU_R_R_S_Last(long userId,
+		long recordSetId, java.lang.String recordSetVersion, int status,
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
+		return getPersistence()
+				   .fetchByU_R_R_S_Last(userId, recordSetId, recordSetVersion,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns the ddl record versions before and after the current ddl record version in the ordered set where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
+	*
+	* @param recordVersionId the primary key of the current ddl record version
+	* @param userId the user ID
+	* @param recordSetId the record set ID
+	* @param recordSetVersion the record set version
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next ddl record version
+	* @throws NoSuchRecordVersionException if a ddl record version with the primary key could not be found
+	*/
+	public static DDLRecordVersion[] findByU_R_R_S_PrevAndNext(
+		long recordVersionId, long userId, long recordSetId,
+		java.lang.String recordSetVersion, int status,
+		OrderByComparator<DDLRecordVersion> orderByComparator)
+		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException {
+		return getPersistence()
+				   .findByU_R_R_S_PrevAndNext(recordVersionId, userId,
+			recordSetId, recordSetVersion, status, orderByComparator);
+	}
+
+	/**
+	* Removes all the ddl record versions where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63; from the database.
+	*
+	* @param userId the user ID
+	* @param recordSetId the record set ID
+	* @param recordSetVersion the record set version
+	* @param status the status
+	*/
+	public static void removeByU_R_R_S(long userId, long recordSetId,
+		java.lang.String recordSetVersion, int status) {
+		getPersistence()
+			.removeByU_R_R_S(userId, recordSetId, recordSetVersion, status);
+	}
+
+	/**
+	* Returns the number of ddl record versions where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
+	*
+	* @param userId the user ID
+	* @param recordSetId the record set ID
+	* @param recordSetVersion the record set version
+	* @param status the status
+	* @return the number of matching ddl record versions
+	*/
+	public static int countByU_R_R_S(long userId, long recordSetId,
+		java.lang.String recordSetVersion, int status) {
+		return getPersistence()
+				   .countByU_R_R_S(userId, recordSetId, recordSetVersion, status);
+	}
+
+	/**
 	* Caches the ddl record version in the entity cache if it is enabled.
 	*
 	* @param ddlRecordVersion the ddl record version

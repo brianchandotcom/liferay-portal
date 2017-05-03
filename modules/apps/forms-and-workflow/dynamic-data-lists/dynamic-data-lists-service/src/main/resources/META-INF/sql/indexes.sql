@@ -14,3 +14,4 @@ create unique index IX_94FC5485 on DDLRecordSetVersion (recordSetId, version[$CO
 create index IX_762ADC7 on DDLRecordVersion (recordId, status);
 create unique index IX_C79E347 on DDLRecordVersion (recordId, version[$COLUMN_LENGTH:75$]);
 create index IX_19AD75F6 on DDLRecordVersion (recordSetId, recordSetVersion[$COLUMN_LENGTH:75$]);
+create index IX_28202A62 on DDLRecordVersion (userId, recordSetId, recordSetVersion[$COLUMN_LENGTH:75$], status);

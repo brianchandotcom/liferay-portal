@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -26,18 +27,17 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.soy.utils.SoyContext;
 import com.liferay.portal.template.soy.utils.SoyJavaScriptRenderer;
-import com.liferay.portal.template.soy.utils.SoyTemplateResourcesCollector;
+import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
+import com.liferay.taglib.aui.ScriptTag;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Bruno Basto
@@ -73,8 +73,6 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 	@Override
 	public int doStartTag() {
-		_bundle = FrameworkUtil.getBundle(getClass());
-
 		try {
 			_template = _getTemplate();
 		}
@@ -180,7 +178,9 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		String componentJavaScript = javaScriptComponentRenderer.getJavaScript(
 			context, getComponentId(), SetUtil.fromString(getModule()));
 
-		jspWriter.write(componentJavaScript);
+		ScriptTag.doTag(
+			null, null, null, componentJavaScript, getBodyContent(),
+			pageContext);
 	}
 
 	protected void renderTemplate(
@@ -209,15 +209,13 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	private Template _getTemplate() throws TemplateException {
-		SoyTemplateResourcesCollector soyTemplateResourcesCollector =
-			new SoyTemplateResourcesCollector(_bundle, StringPool.SLASH);
-
 		return TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_SOY,
-			soyTemplateResourcesCollector.getAllTemplateResources(), false);
+			TemplateConstants.LANG_TYPE_SOY, _templateResources, false);
 	}
 
-	private Bundle _bundle;
+	private static final List<TemplateResource> _templateResources =
+		SoyTemplateResourcesProvider.getAllTemplateResources();
+
 	private String _componentId;
 	private Map<String, Object> _context;
 	private String _module;

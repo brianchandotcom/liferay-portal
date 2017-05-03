@@ -20,19 +20,22 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portlet.bridge.soy.internal.SoyPortletHelper;
-import com.liferay.portal.template.soy.utils.SoyTemplateResourcesCollector;
+import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
 
 import java.io.IOException;
 import java.io.Writer;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -65,8 +68,9 @@ public class SoyPortlet extends MVCPortlet {
 
 		try {
 			_soyPortletHelper = new SoyPortletHelper(_bundle);
-
-			template = _getTemplate();
+			_templateResources =
+				SoyTemplateResourcesProvider.getBundleTemplateResources(
+					_bundle, templatePath);
 		}
 		catch (Exception e) {
 			throw new PortletException(e);
@@ -78,13 +82,48 @@ public class SoyPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		renderRequest.setAttribute(WebKeys.TEMPLATE, template);
-
 		super.render(renderRequest, renderResponse);
 	}
 
 	protected Set<String> getJavaScriptRequiredModules(String path) {
 		return Collections.emptySet();
+	}
+
+	protected Writer getResponseWriter(PortletResponse portletResponse)
+		throws IOException {
+
+		Writer writer = null;
+
+		if (portletResponse instanceof MimeResponse) {
+			MimeResponse mimeResponse = (MimeResponse)portletResponse;
+
+			writer = UnsyncPrintWriterPool.borrow(mimeResponse.getWriter());
+		}
+		else {
+			writer = new UnsyncStringWriter();
+		}
+
+		return writer;
+	}
+
+	protected Template getTemplate(PortletRequest portletRequest)
+		throws PortletException {
+
+		Template template = (Template)portletRequest.getAttribute(
+			WebKeys.TEMPLATE);
+
+		if (template == null) {
+			try {
+				template = _createTemplate();
+			}
+			catch (TemplateException te) {
+				throw new PortletException("Unable to create template", te);
+			}
+
+			portletRequest.setAttribute(WebKeys.TEMPLATE, template);
+		}
+
+		return template;
 	}
 
 	@Override
@@ -100,6 +139,8 @@ public class SoyPortlet extends MVCPortlet {
 				path = namespace;
 			}
 
+			Template template = getTemplate(portletRequest);
+
 			template.put(
 				TemplateConstants.NAMESPACE,
 				_soyPortletHelper.getTemplateNamespace(path));
@@ -108,16 +149,7 @@ public class SoyPortlet extends MVCPortlet {
 				propagateRequestParameters(portletRequest);
 			}
 
-			Writer writer = null;
-
-			if (portletResponse instanceof MimeResponse) {
-				MimeResponse mimeResponse = (MimeResponse)portletResponse;
-
-				writer = UnsyncPrintWriterPool.borrow(mimeResponse.getWriter());
-			}
-			else {
-				writer = new UnsyncStringWriter();
-			}
+			Writer writer = getResponseWriter(portletResponse);
 
 			populateJavaScriptTemplateContext(
 				template, portletResponse.getNamespace());
@@ -129,11 +161,8 @@ public class SoyPortlet extends MVCPortlet {
 
 			template.processTemplate(writer);
 
-			String portletJavaScript = _soyPortletHelper.getPortletJavaScript(
-				template, path, portletResponse.getNamespace(),
-				getJavaScriptRequiredModules(path));
-
-			writer.write(portletJavaScript);
+			_writePortletJavaScript(
+				portletRequest, portletResponse, path, writer);
 		}
 		catch (Exception e) {
 			throw new PortletException(e);
@@ -155,8 +184,12 @@ public class SoyPortlet extends MVCPortlet {
 		template.put("id", portletComponentId);
 	}
 
-	protected void propagateRequestParameters(PortletRequest portletRequest) {
+	protected void propagateRequestParameters(PortletRequest portletRequest)
+		throws PortletException {
+
 		Map<String, String[]> parametersMap = portletRequest.getParameterMap();
+
+		Template template = getTemplate(portletRequest);
 
 		for (Map.Entry<String, String[]> entry : parametersMap.entrySet()) {
 			String parameterName = entry.getKey();
@@ -172,18 +205,51 @@ public class SoyPortlet extends MVCPortlet {
 	}
 
 	protected boolean propagateRequestParameters;
+
+	/**
+	 * @deprecated As of 3.1.0, use {@link SoyPortlet#getTemplate(
+	 * PortletRequest)}} instead
+	 */
+	@Deprecated
 	protected Template template;
 
-	private Template _getTemplate() throws TemplateException {
-		SoyTemplateResourcesCollector soyTemplateResourcesCollector =
-			new SoyTemplateResourcesCollector(_bundle, templatePath);
+	private Template _createTemplate() throws TemplateException {
+		List<TemplateResource> templateResources = _getTemplateResources();
 
 		return TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_SOY,
-			soyTemplateResourcesCollector.getTemplateResources(), false);
+			TemplateConstants.LANG_TYPE_SOY, templateResources, false);
+	}
+
+	private List<TemplateResource> _getTemplateResources()
+		throws TemplateException {
+
+		return _templateResources;
+	}
+
+	private void _writePortletJavaScript(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			String path, Writer writer)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("<script>");
+
+		Template template = getTemplate(portletRequest);
+
+		String portletJavaScript = _soyPortletHelper.getPortletJavaScript(
+			template, path, portletResponse.getNamespace(),
+			getJavaScriptRequiredModules(path));
+
+		sb.append(portletJavaScript);
+
+		sb.append("</script>");
+
+		writer.write(sb.toString());
 	}
 
 	private Bundle _bundle;
 	private SoyPortletHelper _soyPortletHelper;
+	private List<TemplateResource> _templateResources;
 
 }

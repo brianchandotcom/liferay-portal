@@ -72,48 +72,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public static final String[] SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
-	@Override
-	public CPInstance addCPInstance(
-			long cpDefinitionId, String sku, String ddmContent,
-			Date displayDate, Date expirationDate, boolean neverExpire,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		Calendar displayDateCalendar = CalendarFactoryUtil.getCalendar(
-			displayDate.getTime(), serviceContext.getTimeZone());
-
-		int displayDateMonth = displayDateCalendar.get(Calendar.MONTH);
-		int displayDateDay = displayDateCalendar.get(Calendar.DAY_OF_MONTH);
-		int displayDateYear = displayDateCalendar.get(Calendar.YEAR);
-		int displayDateHour = displayDateCalendar.get(Calendar.HOUR);
-		int displayDateMinute = displayDateCalendar.get(Calendar.MINUTE);
-
-		int expirationDateMonth = 0;
-		int expirationDateDay = 0;
-		int expirationDateYear = 0;
-		int expirationDateHour = 0;
-		int expirationDateMinute = 0;
-
-		if (!neverExpire) {
-			Calendar expirationDateCalendar = CalendarFactoryUtil.getCalendar(
-				expirationDate.getTime(), serviceContext.getTimeZone());
-
-			expirationDateMonth = expirationDateCalendar.get(Calendar.MONTH);
-			expirationDateDay = expirationDateCalendar.get(
-				Calendar.DAY_OF_MONTH);
-			expirationDateYear = expirationDateCalendar.get(Calendar.YEAR);
-			expirationDateHour = expirationDateCalendar.get(Calendar.HOUR);
-			expirationDateMinute = expirationDateCalendar.get(Calendar.MINUTE);
-		}
-
-		return cpInstanceLocalService.addCPInstance(
-			cpDefinitionId, sku, ddmContent, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPInstance addCPInstance(
@@ -256,7 +214,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				jsonArray.put(jsonObject);
 			}
 
-			cpInstanceLocalService.addCPInstance(
+			addCPInstance(
 				cpDefinitionId, sku.toString(), jsonArray.toString(),
 				cpDefinition.getDisplayDate(), cpDefinition.getExpirationDate(),
 				neverExpire, serviceContext);
@@ -474,6 +432,47 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstancePersistence.update(cpInstance);
 
 		return cpInstance;
+	}
+
+	protected CPInstance addCPInstance(
+			long cpDefinitionId, String sku, String ddmContent,
+			Date displayDate, Date expirationDate, boolean neverExpire,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Calendar displayDateCalendar = CalendarFactoryUtil.getCalendar(
+			displayDate.getTime(), serviceContext.getTimeZone());
+
+		int displayDateMonth = displayDateCalendar.get(Calendar.MONTH);
+		int displayDateDay = displayDateCalendar.get(Calendar.DAY_OF_MONTH);
+		int displayDateYear = displayDateCalendar.get(Calendar.YEAR);
+		int displayDateHour = displayDateCalendar.get(Calendar.HOUR);
+		int displayDateMinute = displayDateCalendar.get(Calendar.MINUTE);
+
+		int expirationDateMonth = 0;
+		int expirationDateDay = 0;
+		int expirationDateYear = 0;
+		int expirationDateHour = 0;
+		int expirationDateMinute = 0;
+
+		if (!neverExpire) {
+			Calendar expirationDateCalendar = CalendarFactoryUtil.getCalendar(
+				expirationDate.getTime(), serviceContext.getTimeZone());
+
+			expirationDateMonth = expirationDateCalendar.get(Calendar.MONTH);
+			expirationDateDay = expirationDateCalendar.get(
+				Calendar.DAY_OF_MONTH);
+			expirationDateYear = expirationDateCalendar.get(Calendar.YEAR);
+			expirationDateHour = expirationDateCalendar.get(Calendar.HOUR);
+			expirationDateMinute = expirationDateCalendar.get(Calendar.MINUTE);
+		}
+
+		return cpInstanceLocalService.addCPInstance(
+			cpDefinitionId, sku, ddmContent, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	protected SearchContext buildSearchContext(

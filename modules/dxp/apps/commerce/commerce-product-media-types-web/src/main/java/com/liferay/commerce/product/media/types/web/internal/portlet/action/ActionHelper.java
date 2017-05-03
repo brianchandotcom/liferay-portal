@@ -59,7 +59,7 @@ public class ActionHelper {
 		return cpMediaType;
 	}
 
-	public List<CPMediaType> getCPMediaType(ResourceRequest resourceRequest)
+	public List<CPMediaType> getCPMediaTypes(ResourceRequest resourceRequest)
 		throws PortalException {
 
 		List<CPMediaType> cpMediaTypes = new ArrayList<>();

@@ -73,6 +73,19 @@
 		<execute function="AssertClick" locator1="Button#PREVIEW" value1="Preview Form" />
 	</command>
 
+	<command name="gotoPublishCopyURLLink">
+		<var name="key_alertMessage" value="The form was published successfully! Access it with this URL" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="Form#PUBLISH_UNPUBLISH_ICON_CLOSE" />
+			<then>
+				<execute function="Click" locator1="Form#PUBLISH_UNPUBLISH_ICON_CLOSE" />
+			</then>
+		</if>
+
+		<execute function="Click" locator1="Form#PUBLISH_ICON" />
+	</command>
+
 	<command name="gotoRules">
 		<var name="key_assetTitle" value="Rules" />
 
@@ -120,7 +133,7 @@
 	</command>
 
 	<command name="openPublishURL">
-		<execute function="Click" locator1="Form#PUBLISH_ICON" />
+		<execute macro="FormsAdminNavigator#gotoPublishCopyURLLink" />
 
 		<var locator="Form#PUBLISH_FORM_PUBLIC_URL" name="publishFormURL" />
 

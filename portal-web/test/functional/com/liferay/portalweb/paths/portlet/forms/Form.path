@@ -195,6 +195,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISH_UNPUBLISH_ICON_CLOSE</td>
+	<td>//div[contains(@class,'alert-dismissable')]//div[contains(.,'${key_alertMessage}')]/preceding-sibling::button[@class='close']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

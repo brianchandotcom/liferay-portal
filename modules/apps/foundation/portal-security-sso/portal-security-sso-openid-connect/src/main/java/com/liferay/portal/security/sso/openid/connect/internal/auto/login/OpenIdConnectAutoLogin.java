@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
+import com.liferay.portal.security.sso.openid.connect.OpenIdConnectFlowState;
+import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,26 +48,44 @@ public class OpenIdConnectAutoLogin extends BaseAutoLogin {
 			return null;
 		}
 
-		HttpSession session = request.getSession();
+		HttpSession httpSession = request.getSession(false);
 
-		Long userId = (Long)session.getAttribute(
-			OpenIdConnectWebKeys.OPEN_ID_CONNECT_LOGIN);
-
-		if (userId == null) {
+		if (httpSession == null) {
 			return null;
 		}
 
-		session.removeAttribute(OpenIdConnectWebKeys.OPEN_ID_CONNECT_LOGIN);
+		OpenIdConnectSession openIdConnectSession =
+			(OpenIdConnectSession)httpSession.getAttribute(
+				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION);
 
-		User user = _userLocalService.getUserById(userId);
+		if (openIdConnectSession == null) {
+			return null;
+		}
 
-		String[] credentials = new String[3];
+		OpenIdConnectFlowState openIdConnectFlowState =
+			openIdConnectSession.getOpenIdConnectFlowState();
 
-		credentials[0] = String.valueOf(user.getUserId());
-		credentials[1] = user.getPassword();
-		credentials[2] = Boolean.TRUE.toString();
+		if (OpenIdConnectFlowState.AUTH_COMPLETE.equals(
+				openIdConnectFlowState)) {
 
-		return credentials;
+			long userId = openIdConnectSession.getLoginUserId();
+
+			User user = _userLocalService.getUserById(userId);
+
+			String[] credentials = new String[3];
+
+			credentials[0] = String.valueOf(user.getUserId());
+			credentials[1] = user.getPassword();
+			credentials[2] = Boolean.TRUE.toString();
+
+			openIdConnectSession.setOpenIdConnectFlowState(
+				OpenIdConnectFlowState.PORTAL_AUTH_COMPLETE);
+
+			return credentials;
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Reference

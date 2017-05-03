@@ -15,11 +15,14 @@
 package com.liferay.portal.security.sso.openid.connect;
 
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
+import com.nimbusds.openid.connect.sdk.rp.OIDCClientMetadata;
 
 /**
  * @author Edward C. Han
  */
-public interface OpenIdConnectProviderMetadataFactory {
+public interface OpenIdConnectMetadataFactory {
+
+	public OIDCClientMetadata getOIDCClientMetadata();
 
 	public OIDCProviderMetadata getOIDCProviderMetadata()
 		throws OpenIdConnectServiceException.ProviderException;

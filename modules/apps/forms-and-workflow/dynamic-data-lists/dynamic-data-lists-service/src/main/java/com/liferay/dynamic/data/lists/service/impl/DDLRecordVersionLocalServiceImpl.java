@@ -35,6 +35,24 @@ public class DDLRecordVersionLocalServiceImpl
 	extends DDLRecordVersionLocalServiceBaseImpl {
 
 	/**
+	 * Returns the record version matching the user, the record set, the record
+	 * set version and workflow status.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  recordSetId the primary key of the record
+	 * @param  recordSetVersion the record set version
+	 * @param  status the workflow status
+	 * @return the record version or null
+	 */
+	@Override
+	public DDLRecordVersion fetchRecordVersion(
+		long userId, long recordSetId, String recordSetVersion, int status) {
+
+		return ddlRecordVersionPersistence.fetchByU_R_R_S_First(
+			userId, recordSetId, recordSetVersion, status, null);
+	}
+
+	/**
 	 * Returns the record's latest record version.
 	 *
 	 * @param  recordId the primary key of the record

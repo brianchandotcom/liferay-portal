@@ -31,11 +31,29 @@ public class UnusedParameterCheck extends AbstractCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF};
+		return new int[] {TokenTypes.CLASS_DEF};
 	}
 
 	@Override
 	public void visitToken(DetailAST detailAST) {
+		DetailAST parentAST = detailAST.getParent();
+
+		if (parentAST != null) {
+			return;
+		}
+
+		List<DetailAST> constructorsAndMethodsASTList =
+			DetailASTUtil.getAllChildTokens(
+				detailAST, true, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF);
+
+		for (DetailAST constructorOrMethodAST : constructorsAndMethodsASTList) {
+			_checkUnusedParameters(detailAST, constructorOrMethodAST);
+		}
+	}
+
+	private void _checkUnusedParameters(
+		DetailAST classAST, DetailAST detailAST) {
+
 		DetailAST modifiersAST = detailAST.findFirstToken(TokenTypes.MODIFIERS);
 
 		if (!modifiersAST.branchContains(TokenTypes.LITERAL_PRIVATE)) {
@@ -72,8 +90,39 @@ public class UnusedParameterCheck extends AbstractCheck {
 				}
 			}
 
-			log(detailAST.getLineNo(), MSG_UNUSED_PARAMETER, parameterName);
+			if (!_isReferencedMethod(classAST, detailAST)) {
+				log(detailAST.getLineNo(), MSG_UNUSED_PARAMETER, parameterName);
+			}
 		}
+	}
+
+	private boolean _isReferencedMethod(
+		DetailAST classAST, DetailAST detailAST) {
+
+		List<DetailAST> methodReferenceASTList =
+			DetailASTUtil.getAllChildTokens(
+				classAST, true, TokenTypes.METHOD_REF);
+
+		if (methodReferenceASTList.isEmpty()) {
+			return false;
+		}
+
+		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
+
+		String name = nameAST.getText();
+
+		for (DetailAST methodReferenceAST : methodReferenceASTList) {
+			for (DetailAST identAST :
+					DetailASTUtil.getAllChildTokens(
+						methodReferenceAST, true, TokenTypes.IDENT)) {
+
+				if (name.equals(identAST.getText())) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 }

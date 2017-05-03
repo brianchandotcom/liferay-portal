@@ -129,8 +129,9 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	public static final long RECORDSETID_COLUMN_BITMASK = 2L;
 	public static final long RECORDSETVERSION_COLUMN_BITMASK = 4L;
 	public static final long STATUS_COLUMN_BITMASK = 8L;
-	public static final long VERSION_COLUMN_BITMASK = 16L;
-	public static final long RECORDVERSIONID_COLUMN_BITMASK = 32L;
+	public static final long USERID_COLUMN_BITMASK = 16L;
+	public static final long VERSION_COLUMN_BITMASK = 32L;
+	public static final long RECORDVERSIONID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -389,6 +390,14 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	@Override
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -406,6 +415,10 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 	@Override
 	public void setUserUuid(String userUuid) {
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -821,6 +834,10 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	public void resetOriginalValues() {
 		DDLRecordVersionModelImpl ddlRecordVersionModelImpl = this;
 
+		ddlRecordVersionModelImpl._originalUserId = ddlRecordVersionModelImpl._userId;
+
+		ddlRecordVersionModelImpl._setOriginalUserId = false;
+
 		ddlRecordVersionModelImpl._originalRecordSetId = ddlRecordVersionModelImpl._recordSetId;
 
 		ddlRecordVersionModelImpl._setOriginalRecordSetId = false;
@@ -1044,6 +1061,8 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private long _DDMStorageId;

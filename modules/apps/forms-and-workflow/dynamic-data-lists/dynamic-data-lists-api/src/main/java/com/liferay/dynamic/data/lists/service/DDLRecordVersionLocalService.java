@@ -104,6 +104,20 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	public DDLRecordVersion fetchDDLRecordVersion(long recordVersionId);
 
 	/**
+	* Returns the latest record version matching the user, the record set, the
+	* record set version and workflow status.
+	*
+	* @param userId the primary key of the user
+	* @param recordSetId the primary key of the record set
+	* @param recordSetVersion the version of the record set
+	* @param status the workflow status
+	* @return the latest matching record version or <code>null</code>
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordVersion fetchLatestRecordVersion(long userId,
+		long recordSetId, java.lang.String recordSetVersion, int status);
+
+	/**
 	* Returns the ddl record version with the primary key.
 	*
 	* @param recordVersionId the primary key of the ddl record version

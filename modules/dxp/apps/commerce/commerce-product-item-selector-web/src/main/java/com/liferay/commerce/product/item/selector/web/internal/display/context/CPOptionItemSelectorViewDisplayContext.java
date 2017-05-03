@@ -246,6 +246,6 @@ public class CPOptionItemSelectorViewDisplayContext {
 	private final String _portalPreferenceNamespace;
 	private final PortletURL _portletURL;
 	private RowChecker _rowChecker;
-	private SearchContainer _searchContainer;
+	private SearchContainer<CPOption> _searchContainer;
 
 }

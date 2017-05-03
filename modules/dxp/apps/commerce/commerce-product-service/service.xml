@@ -282,6 +282,7 @@
 
 		<order by="asc">
 			<order-column name="priority" />
+			<order-column name="title" />
 		</order>
 
 		<!-- Finder methods -->

@@ -432,18 +432,19 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public DLFileEntry checkOutFileEntry(
-			long userId, long fileEntryId, ServiceContext serviceContext)
+			long userId, long fileEntryId, long fileEntryTypeId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return checkOutFileEntry(
-			userId, fileEntryId, StringPool.BLANK,
+			userId, fileEntryId, fileEntryTypeId, StringPool.BLANK,
 			DLFileEntryImpl.LOCK_EXPIRATION_TIME, serviceContext);
 	}
 
 	@Override
 	public DLFileEntry checkOutFileEntry(
-			long userId, long fileEntryId, String owner, long expirationTime,
-			ServiceContext serviceContext)
+			long userId, long fileEntryId, long fileEntryTypeId, String owner,
+			long expirationTime, ServiceContext serviceContext)
 		throws PortalException {
 
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
@@ -470,7 +471,9 @@ public class DLFileEntryLocalServiceImpl
 		DLFileVersion dlFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
-		long dlFileVersionId = dlFileVersion.getFileVersionId();
+		DLFileVersion oldDLFileVersion = dlFileVersion;
+
+		long oldDLFileVersionId = dlFileVersion.getFileVersionId();
 
 		serviceContext.setUserId(userId);
 
@@ -510,17 +513,16 @@ public class DLFileEntryLocalServiceImpl
 					serviceContext.getModifiedDate(null), serviceContext);
 			}
 			else {
-				long oldDLFileVersionId = dlFileVersion.getFileVersionId();
-
 				dlFileVersion = addFileVersion(
-					user, dlFileEntry, dlFileVersion.getFileName(),
-					dlFileVersion.getExtension(), dlFileVersion.getMimeType(),
-					dlFileVersion.getTitle(), dlFileVersion.getDescription(),
-					dlFileVersion.getChangeLog(),
-					dlFileVersion.getExtraSettings(),
-					dlFileVersion.getFileEntryTypeId(), null,
+					user, dlFileEntry, oldDLFileVersion.getFileName(),
+					oldDLFileVersion.getExtension(),
+					oldDLFileVersion.getMimeType(), oldDLFileVersion.getTitle(),
+					oldDLFileVersion.getDescription(),
+					oldDLFileVersion.getChangeLog(),
+					oldDLFileVersion.getExtraSettings(),
+					oldDLFileVersion.getFileEntryTypeId(), null,
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
-					dlFileVersion.getSize(), WorkflowConstants.STATUS_DRAFT,
+					oldDLFileVersion.getSize(), WorkflowConstants.STATUS_DRAFT,
 					serviceContext);
 
 				copyExpandoRowModifiedDate(
@@ -546,15 +548,41 @@ public class DLFileEntryLocalServiceImpl
 
 			serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
 
-			copyFileEntryMetadata(
-				dlFileEntry.getCompanyId(), dlFileVersion.getFileEntryTypeId(),
-				fileEntryId, dlFileVersionId, dlFileVersion.getFileVersionId(),
-				serviceContext);
+			if (fileEntryTypeId == oldDLFileVersion.getFileEntryTypeId()) {
+				copyFileEntryMetadata(
+					dlFileEntry.getCompanyId(), fileEntryTypeId, fileEntryId,
+					oldDLFileVersionId, dlFileVersion.getFileVersionId(),
+					serviceContext);
+			}
 
 			serviceContext.setAttribute("validateDDMFormValues", Boolean.TRUE);
 		}
 
 		return dlFileEntry;
+	}
+
+	@Override
+	public DLFileEntry checkOutFileEntry(
+			long userId, long fileEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		return checkOutFileEntry(
+			userId, fileEntryId, StringPool.BLANK,
+			DLFileEntryImpl.LOCK_EXPIRATION_TIME, serviceContext);
+	}
+
+	@Override
+	public DLFileEntry checkOutFileEntry(
+			long userId, long fileEntryId, String owner, long expirationTime,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
+			fileEntryId);
+
+		return checkOutFileEntry(
+			userId, fileEntryId, dlFileEntry.getFileEntryTypeId(), owner,
+			expirationTime, serviceContext);
 	}
 
 	@Override
@@ -2552,7 +2580,7 @@ public class DLFileEntryLocalServiceImpl
 
 		if (autoCheckIn) {
 			dlFileEntry = checkOutFileEntry(
-				userId, fileEntryId, serviceContext);
+				userId, fileEntryId, fileEntryTypeId, serviceContext);
 		}
 		else if (!checkedOut) {
 			lockFileEntry(userId, fileEntryId);

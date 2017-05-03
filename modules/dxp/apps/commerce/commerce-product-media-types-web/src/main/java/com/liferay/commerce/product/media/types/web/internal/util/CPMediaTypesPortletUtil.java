@@ -16,6 +16,7 @@ package com.liferay.commerce.product.media.types.web.internal.util;
 
 import com.liferay.commerce.product.model.CPMediaType;
 import com.liferay.commerce.product.util.comparator.CPMediaTypePriorityComparator;
+import com.liferay.commerce.product.util.comparator.CPMediaTypeTitleComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
@@ -36,6 +37,9 @@ public class CPMediaTypesPortletUtil {
 
 		if (orderByCol.equals("priority")) {
 			orderByComparator = new CPMediaTypePriorityComparator(orderByAsc);
+		}
+		else if (orderByCol.equals("title")) {
+			orderByComparator = new CPMediaTypeTitleComparator(orderByAsc);
 		}
 
 		return orderByComparator;

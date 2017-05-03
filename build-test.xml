@@ -6665,6 +6665,24 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<isset property="test.build.fix.pack.zip.url" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.build.fix.pack.zip.url=${test.build.fix.pack.zip.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="test.build.fix.pack.zip.url.previous" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.build.fix.pack.zip.url.previous=${test.build.fix.pack.zip.url.previous}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="test.case.required.property.names" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">

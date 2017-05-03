@@ -61,8 +61,7 @@ public class FormatSourceTask extends JavaExec {
 	 */
 	@Deprecated
 	public File getCopyrightFile() {
-		return GradleUtil.toFile(
-			getProject(), _sourceFormatterArgs.getCopyrightFileName());
+		return null;
 	}
 
 	/**
@@ -70,7 +69,7 @@ public class FormatSourceTask extends JavaExec {
 	 */
 	@Deprecated
 	public String getCopyrightFileName() {
-		return _sourceFormatterArgs.getCopyrightFileName();
+		return null;
 	}
 
 	public List<String> getFileNames() {
@@ -154,7 +153,6 @@ public class FormatSourceTask extends JavaExec {
 	 */
 	@Deprecated
 	public void setCopyrightFileName(String copyrightFileName) {
-		_sourceFormatterArgs.setCopyrightFileName(copyrightFileName);
 	}
 
 	public void setFileNames(Iterable<String> fileNames) {

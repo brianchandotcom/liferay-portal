@@ -21,6 +21,9 @@ import java.util.Collection;
  */
 public interface OpenIdConnectProviderRegistry {
 
+	public OpenIdConnectProvider findOpenIdConnectProvider(String name)
+		throws OpenIdConnectServiceException.ProviderException;
+
 	public OpenIdConnectProvider getOpenIdConnectProvider(String name);
 
 	public Collection<String> getOpenIdConnectProviderNames();

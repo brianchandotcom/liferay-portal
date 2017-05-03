@@ -334,7 +334,15 @@
 	</command>
 
 	<command name="viewFormNotPublished">
-		<execute macro="FormsAdminNavigator#openPublishURL" />
+		<execute function="Click" locator1="Form#PUBLISH_ICON" />
+
+		<var locator="Form#PUBLISH_FORM_PUBLIC_URL" name="publishFormURL" />
+
+		<execute macro="Form#unpublishForm" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${publishFormURL}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_3_ALT" value1="This form is not available or it was not published." />
 	</command>

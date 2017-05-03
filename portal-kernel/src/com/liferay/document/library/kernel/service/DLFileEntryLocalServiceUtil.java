@@ -130,6 +130,25 @@ public class DLFileEntryLocalServiceUtil {
 			expirationTime, serviceContext);
 	}
 
+	public static com.liferay.document.library.kernel.model.DLFileEntry checkOutFileEntry(
+		long userId, long fileEntryId, long fileEntryTypeId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .checkOutFileEntry(userId, fileEntryId, fileEntryTypeId,
+			serviceContext);
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileEntry checkOutFileEntry(
+		long userId, long fileEntryId, long fileEntryTypeId,
+		java.lang.String owner, long expirationTime,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .checkOutFileEntry(userId, fileEntryId, fileEntryTypeId,
+			owner, expirationTime, serviceContext);
+	}
+
 	public static com.liferay.document.library.kernel.model.DLFileEntry copyFileEntry(
 		long userId, long groupId, long repositoryId, long fileEntryId,
 		long destFolderId,

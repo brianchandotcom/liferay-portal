@@ -136,6 +136,25 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
+	public com.liferay.document.library.kernel.model.DLFileEntry checkOutFileEntry(
+		long userId, long fileEntryId, long fileEntryTypeId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryLocalService.checkOutFileEntry(userId, fileEntryId,
+			fileEntryTypeId, serviceContext);
+	}
+
+	@Override
+	public com.liferay.document.library.kernel.model.DLFileEntry checkOutFileEntry(
+		long userId, long fileEntryId, long fileEntryTypeId,
+		java.lang.String owner, long expirationTime,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryLocalService.checkOutFileEntry(userId, fileEntryId,
+			fileEntryTypeId, owner, expirationTime, serviceContext);
+	}
+
+	@Override
 	public com.liferay.document.library.kernel.model.DLFileEntry copyFileEntry(
 		long userId, long groupId, long repositoryId, long fileEntryId,
 		long destFolderId,

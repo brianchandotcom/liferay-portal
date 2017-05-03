@@ -133,6 +133,14 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		java.lang.String owner, long expirationTime,
 		ServiceContext serviceContext) throws PortalException;
 
+	public DLFileEntry checkOutFileEntry(long userId, long fileEntryId,
+		long fileEntryTypeId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public DLFileEntry checkOutFileEntry(long userId, long fileEntryId,
+		long fileEntryTypeId, java.lang.String owner, long expirationTime,
+		ServiceContext serviceContext) throws PortalException;
+
 	public DLFileEntry copyFileEntry(long userId, long groupId,
 		long repositoryId, long fileEntryId, long destFolderId,
 		ServiceContext serviceContext) throws PortalException;

@@ -14,9 +14,12 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.display.context;
 
+import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
+import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
+import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
@@ -47,6 +50,7 @@ import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -63,6 +67,7 @@ public class DDLFormDisplayContext {
 	public DDLFormDisplayContext(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			DDLRecordSetService ddlRecordSetService,
+			DDLRecordVersionLocalService ddlRecordVersionLocalService,
 			DDMFormRenderer ddmFormRenderer,
 			DDMFormValuesFactory ddmFormValuesFactory,
 			WorkflowDefinitionLinkLocalService
@@ -72,6 +77,7 @@ public class DDLFormDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_ddlRecordSetService = ddlRecordSetService;
+		_ddlRecordVersionLocalService = ddlRecordVersionLocalService;
 		_ddmFormRenderer = ddmFormRenderer;
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_workflowDefinitionLinkLocalService =
@@ -108,6 +114,16 @@ public class DDLFormDisplayContext {
 			createDDMFormRenderingContext(ddmForm);
 
 		ddmFormRenderingContext.setGroupId(recordSet.getGroupId());
+
+		DDLRecordVersion ddlRecordVersion =
+			_ddlRecordVersionLocalService.fetchRecordVersion(
+				getUserId(), getRecordSetId(), getRecordSetVersion(),
+				WorkflowConstants.STATUS_DRAFT);
+
+		if (ddlRecordVersion != null) {
+			ddmFormRenderingContext.setDDMFormValues(
+				ddlRecordVersion.getDDMFormValues());
+		}
 
 		boolean showSubmitButton = isShowSubmitButton();
 
@@ -345,6 +361,16 @@ public class DDLFormDisplayContext {
 		return GetterUtil.getLong(portletSession.getAttribute("recordSetId"));
 	}
 
+	protected String getRecordSetVersion() {
+		DDLRecordSet ddlRecordSet = getRecordSet();
+
+		if (ddlRecordSet == null) {
+			return DDLRecordConstants.VERSION_DEFAULT;
+		}
+
+		return ddlRecordSet.getVersion();
+	}
+
 	protected String getSubmitLabel(DDLRecordSet recordSet) {
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
@@ -364,6 +390,12 @@ public class DDLFormDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		return themeDisplay;
+	}
+
+	protected long getUserId() {
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		return themeDisplay.getUserId();
 	}
 
 	protected boolean hasViewPermission() throws PortalException {
@@ -446,6 +478,7 @@ public class DDLFormDisplayContext {
 		DDLFormDisplayContext.class);
 
 	private final DDLRecordSetService _ddlRecordSetService;
+	private final DDLRecordVersionLocalService _ddlRecordVersionLocalService;
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private Boolean _hasViewPermission;

@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.lists.form.web.internal.display.context;
 
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
+import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
@@ -81,8 +82,9 @@ public class DDLFormDisplayContextTest extends PowerMockito {
 	protected void setUpDDLFormDisplayContext() throws PortalException {
 		_ddlFormDisplayContext = new DDLFormDisplayContext(
 			mockRenderRequest(), new MockRenderResponse(),
-			mock(DDLRecordSetService.class), mock(DDMFormRenderer.class),
-			mock(DDMFormValuesFactory.class),
+			mock(DDLRecordSetService.class),
+			mock(DDLRecordVersionLocalService.class),
+			mock(DDMFormRenderer.class), mock(DDMFormValuesFactory.class),
 			mock(WorkflowDefinitionLinkLocalService.class));
 	}
 

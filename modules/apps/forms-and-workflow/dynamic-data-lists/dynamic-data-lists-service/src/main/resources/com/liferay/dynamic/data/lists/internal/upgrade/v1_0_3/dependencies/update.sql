@@ -28,6 +28,7 @@ create table DDLRecordSetVersion (
 create index IX_F12C61D4 on DDLRecord (recordSetId, recordSetVersion[$COLUMN_LENGTH:75$]);
 
 create index IX_19AD75F6 on DDLRecordVersion (recordSetId, recordSetVersion[$COLUMN_LENGTH:75$]);
+create index IX_28202A62 on DDLRecordVersion (userId, recordSetId, recordSetVersion[$COLUMN_LENGTH:75$], status);
 
 create index IX_1C4E1CC9 on DDLRecordSetVersion (recordSetId, status);
 create unique index IX_94FC5485 on DDLRecordSetVersion (recordSetId, version[$COLUMN_LENGTH:75$]);

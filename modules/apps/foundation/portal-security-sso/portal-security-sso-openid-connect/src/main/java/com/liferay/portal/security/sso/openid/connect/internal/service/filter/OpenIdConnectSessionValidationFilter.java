@@ -58,15 +58,10 @@ public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 		return _openIdConnect.isEnabled(companyId);
 	}
 
-	protected void checkEndSession(
-			HttpServletRequest request, HttpServletResponse response)
+	protected boolean checkEndSession(HttpSession httpSession)
 		throws Exception {
 
-		HttpSession httpSession = request.getSession(false);
-
-		if (httpSession == null) {
-			return;
-		}
+		boolean endSession = false;
 
 		OpenIdConnectSession openIdConnectSession =
 			(OpenIdConnectSession)httpSession.getAttribute(
@@ -77,9 +72,9 @@ public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 				openIdConnectSession.getOpenIdConnectFlowState();
 
 			if (OpenIdConnectFlowState.AUTH_COMPLETE.equals(
+					openIdConnectFlowState) ||
+				OpenIdConnectFlowState.PORTAL_AUTH_COMPLETE.equals(
 					openIdConnectFlowState)) {
-
-				boolean endSession = false;
 
 				try {
 					if (!_openIdConnectServiceHandler.
@@ -93,12 +88,10 @@ public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 
 					endSession = true;
 				}
-
-				if (endSession) {
-					httpSession.invalidate();
-				}
 			}
 		}
+
+		return endSession;
 	}
 
 	@Override
@@ -112,7 +105,17 @@ public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 			FilterChain filterChain)
 		throws Exception {
 
-		checkEndSession(request, response);
+		HttpSession httpSession = request.getSession(false);
+
+		if (httpSession != null) {
+			if (checkEndSession(httpSession)) {
+				httpSession.invalidate();
+
+				response.sendRedirect(_portal.getHomeURL(request));
+
+				return;
+			}
+		}
 
 		processFilter(
 			OpenIdConnectSessionValidationFilter.class.getName(), request,

@@ -411,9 +411,48 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 	protected void updateResourceAction(String oldName, String newName)
 		throws Exception {
 
-		runSQL(
-			"update ResourceAction set name = '" + newName +
-				"' where name = '" + oldName + "'");
+		List<String> actionIds = new ArrayList<>();
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select actionId from ResourceAction where name = '" + oldName +
+					"'");
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				actionIds.add(rs.getString("actionId"));
+			}
+		}
+
+		if (actionIds.isEmpty()) {
+			runSQL(
+				"update ResourceAction set name = '" + newName +
+					"' where name = '" + oldName + "'");
+		}
+		else {
+			StringBundler sb = new StringBundler(5 + 3 * actionIds.size());
+
+			sb.append("update ResourceAction set name = '");
+			sb.append(newName);
+			sb.append("' where name = '");
+			sb.append(oldName);
+			sb.append("' and actionId not in (");
+
+			for (int i = 0; i < actionIds.size(); i++) {
+				sb.append("'");
+				sb.append(actionIds.get(i));
+
+				if (i == (actionIds.size() - 1)) {
+					sb.append("')");
+				}
+				else {
+					sb.append("', ");
+				}
+			}
+
+			runSQL(sb.toString());
+
+			runSQL("delete from ResourceAction where name = '" + oldName + "'");
+		}
 	}
 
 	protected void updateResourcePermission(

@@ -445,7 +445,6 @@ public class LocalGitSyncUtil {
 					"Deleted ", remoteBranchName, " from ",
 					GitWorkingDirectory.getRemoteURL(remoteConfig)));
 		}
-
 		else {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(

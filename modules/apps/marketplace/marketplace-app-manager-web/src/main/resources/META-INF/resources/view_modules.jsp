@@ -59,7 +59,6 @@ if (Validator.isNotNull(moduleGroup)) {
 	backURL.setParameter("mvcPath", "/view_module_groups.jsp");
 	backURL.setParameter("app", app);
 }
-
 else {
 	backURL.setParameter("mvcPath", "/view.jsp");
 }

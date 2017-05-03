@@ -339,8 +339,15 @@ public class JavaClassParser {
 				String javaTermContent = classContent.substring(
 					javaTermStartPos, nextLineStartPos);
 
-				javaClass.addChildJavaTerm(
-					_getJavaTerm(javaTermContent, indent));
+				JavaTerm javaTerm = _getJavaTerm(javaTermContent, indent);
+
+				if (javaTerm == null) {
+					throw new ParseException(
+						"Parsing error at line '" + StringUtil.trim(line) +
+							"'");
+				}
+
+				javaClass.addChildJavaTerm(javaTerm);
 
 				insideJavaTerm = false;
 

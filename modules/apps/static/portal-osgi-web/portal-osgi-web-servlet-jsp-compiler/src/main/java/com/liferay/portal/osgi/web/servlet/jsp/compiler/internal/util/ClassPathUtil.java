@@ -92,7 +92,6 @@ public class ClassPathUtil {
 
 			fileName = url.getFile();
 		}
-
 		else {
 
 			// Ignore files that we do not know how to handle

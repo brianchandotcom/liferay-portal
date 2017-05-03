@@ -32,6 +32,7 @@ import com.liferay.source.formatter.checks.configuration.SourceCheckConfiguratio
 import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
+import com.liferay.source.formatter.parser.ParseException;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -386,6 +387,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
 	}
 
+	protected void processMessage(String fileName, String message) {
+		processMessage(
+			fileName, new SourceFormatterMessage(fileName, message, null, -1));
+	}
+
 	protected String processSourceChecks(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
@@ -412,10 +418,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					 (this instanceof JavaSourceProcessor)) {
 
 				if (javaClass == null) {
-					anonymousClasses = JavaClassParser.parseAnonymousClasses(
-						content);
-					javaClass = JavaClassParser.parseJavaClass(
-						fileName, content);
+					try {
+						anonymousClasses =
+							JavaClassParser.parseAnonymousClasses(content);
+						javaClass = JavaClassParser.parseJavaClass(
+							fileName, content);
+					}
+					catch (ParseException pe) {
+						processMessage(fileName, pe.getMessage());
+
+						continue;
+					}
 				}
 
 				newContent = _processJavaTermCheck(
@@ -449,9 +462,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			charsetDecoder.decode(ByteBuffer.wrap(bytes));
 		}
 		catch (Exception e) {
-			processMessage(
-				fileName,
-				new SourceFormatterMessage(fileName, "UTF-8", null, -1));
+			processMessage(fileName, "UTF-8");
 		}
 	}
 

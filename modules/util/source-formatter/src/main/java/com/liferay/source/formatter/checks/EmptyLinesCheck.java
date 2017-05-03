@@ -498,7 +498,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 	private final Pattern _redundantEmptyLinePattern4 = Pattern.compile(
 		"\\{\n\n\t*\\}");
 	private final Pattern _redundantEmptyLinePattern5 = Pattern.compile(
-		"\\}\n\n\t*(catch|else (if)?|finally) [\\(\\{]");
+		"\\}\n\n\t*(catch|else( if)?|finally) [\\(\\{]");
 	private final Pattern _setVariablePattern = Pattern.compile(
 		"\t[A-Z]\\w+ (\\w+) =\\s+((?!\\{\n).)*?;\n", Pattern.DOTALL);
 

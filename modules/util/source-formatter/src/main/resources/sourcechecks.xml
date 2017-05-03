@@ -6,13 +6,6 @@
 		<check name="ReturnCharacterCheck" />
 	</source-processor>
 	<source-processor name="BNDSourceProcessor" >
-
-		<!-- Checks that should come first -->
-
-		<check name="BNDWhitespaceCheck" />
-
-		<!-- Other checks -->
-
 		<check name="BNDCapabilityCheck" />
 		<check name="BNDDefinitionKeysCheck" />
 		<check name="BNDImportsCheck" />
@@ -20,6 +13,7 @@
 		<check name="BNDRangeCheck" />
 		<check name="BNDSchemaVersionCheck" />
 		<check name="BNDStylingCheck" />
+		<check name="BNDWhitespaceCheck" />
 
 		<!-- Module checks -->
 
@@ -33,42 +27,23 @@
 		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="FTLSourceProcessor">
-
-		<!-- Checks that should come first -->
-
-		<check name="FTLWhitespaceCheck" />
-
-		<!-- Other checks -->
-
 		<check name="FTLEmptyLinesCheck" />
 		<check name="FTLIfStatementCheck" />
 		<check name="FTLImportsCheck" />
 		<check name="FTLLiferayVariableOrderCheck" />
 		<check name="FTLStringRelationalOperatorCheck" />
 		<check name="FTLTagCheck" />
+		<check name="FTLWhitespaceCheck" />
 	</source-processor>
 	<source-processor name="GradleSourceProcessor">
-
-		<!-- Checks that should come first -->
-
-		<check name="WhitespaceCheck" />
-
-		<!-- Other checks -->
-
 		<check name="GradleDependenciesCheck" />
 		<check name="GradleVersionCheck" />
+		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="GroovySourceProcessor">
 		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="JavaSourceProcessor">
-
-		<!-- Checks that should come first -->
-
-		<check name="JavaWhitespaceCheck" />
-
-		<!-- Other checks -->
-
 		<check name="CopyrightCheck">
 			<property name="copyrightFileName" value="copyright.txt" />
 		</check>
@@ -78,8 +53,11 @@
 		<check name="Java2HTMLCheck" />
 		<check name="JavaAnnotationsCheck" />
 		<check name="JavaAssertEqualsCheck" />
+		<check name="JavaBooleanStatementCheck" />
 		<check name="JavaBooleanUsageCheck" />
 		<check name="JavaCombineLinesCheck" />
+		<check name="JavaConstructorParameterOrder" />
+		<check name="JavaConstructorSuperCallCheck" />
 		<check name="JavaDataAccessConnectionCheck" />
 		<check name="JavaDeprecatedJavadocCheck" />
 		<check name="JavaDiamondOperatorCheck" />
@@ -90,19 +68,30 @@
 		<check name="JavaIfStatementCheck" />
 		<check name="JavaIllegalImportsCheck" />
 		<check name="JavaImportsCheck" />
+		<check name="JavaIndexableCheck" />
 		<check name="JavaInterfaceCheck" />
 		<check name="JavaIOExceptionCheck" />
 		<check name="JavaLineBreakCheck" />
+		<check name="JavaLocalSensitiveComparisonCheck" />
 		<check name="JavaLogClassNameCheck" />
 		<check name="JavaLogLevelCheck" />
 		<check name="JavaLongLinesCheck" />
 		<check name="JavaPackagePathCheck" />
 		<check name="JavaProcessCallableCheck" />
+		<check name="JavaRedundantConstructorCheck" />
 		<check name="JavaResultSetCheck" />
+		<check name="JavaReturnStatementCheck" />
 		<check name="JavaSeeAnnotationCheck" />
+		<check name="JavaServiceImplCheck" />
+		<check name="JavaSignatureStylingCheck" />
+		<check name="JavaStaticBlockCheck" />
 		<check name="JavaStopWatchCheck" />
 		<check name="JavaStylingCheck" />
 		<check name="JavaSystemExceptionCheck" />
+		<check name="JavaTermDividersCheck" />
+		<check name="JavaTermOrderCheck" />
+		<check name="JavaTermStylingCheck" />
+		<check name="JavaWhitespaceCheck" />
 		<check name="MethodCallsOrderCheck" />
 		<check name="PrimitiveWrapperInstantiationCheck" />
 		<check name="PrincipalExceptionCheck" />
@@ -129,62 +118,27 @@
 
 		<!-- Portal checks -->
 
+		<check name="JavaCleanUpMethodVariablesCheck" />
 		<check name="JavaFinderCacheCheck" />
 		<check name="JavaServiceUtilCheck" />
 		<check name="JavaSystemEventAnnotationCheck" />
+		<check name="JavaTestMethodAnnotationsCheck" />
 		<check name="JavaUpgradeClassCheck" />
+		<check name="JavaVariableTypeCheck" />
 		<check name="JavaVerifyUpgradeConnectionCheck" />
 		<check name="JavaXMLSecurityCheck" />
 		<check name="LanguageKeysCheck" />
 		<check name="ResourceBundleCheck" />
 		<check name="StringMethodsCheck" />
-
-		<!-- Javaterm checks that need to go first -->
-
-		<check name="JavaTermOrderCheck" />
-		<check name="JavaTermDividersCheck" />
-		<check name="JavaStaticBlockCheck" />
-
-		<!-- Javaterm other javaterm -->
-
-		<check name="JavaBooleanStatementCheck" />
-		<check name="JavaConstructorParameterOrder" />
-		<check name="JavaConstructorSuperCallCheck" />
-		<check name="JavaIndexableCheck" />
-		<check name="JavaLocalSensitiveComparisonCheck" />
-		<check name="JavaRedundantConstructorCheck" />
-		<check name="JavaReturnStatementCheck" />
-		<check name="JavaServiceImplCheck" />
-		<check name="JavaSignatureStylingCheck" />
-		<check name="JavaTermStylingCheck" />
-
-		<!-- Javaterm portal checks -->
-
-		<check name="JavaCleanUpMethodVariablesCheck" />
-		<check name="JavaTestMethodAnnotationsCheck" />
-		<check name="JavaVariableTypeCheck" />
 	</source-processor>
 	<source-processor name="JSONSourceProcessor">
-
-		<!-- Checks that should come first -->
-
+		<check name="JSONIndentationCheck" />
+		<check name="JSONPropertyOrderCheck" />
 		<check name="JSONWhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />
 		</check>
-
-		<!-- Other checks -->
-
-		<check name="JSONIndentationCheck" />
-		<check name="JSONPropertyOrderCheck" />
 	</source-processor>
 	<source-processor name="JSPSourceProcessor">
-
-		<!-- Checks that should come first -->
-
-		<check name="JSPWhitespaceCheck" />
-
-		<!-- Other checks -->
-
 		<check name="CopyrightCheck">
 			<property name="copyrightFileName" value="copyright.txt" />
 		</check>
@@ -210,6 +164,7 @@
 		<check name="JSPTagAttributesCheck" />
 		<check name="JSPTaglibVariableCheck" />
 		<check name="JSPUnusedTermsCheck" />
+		<check name="JSPWhitespaceCheck" />
 		<check name="JSPXSSVulnerabilitiesCheck" />
 		<check name="MethodCallsOrderCheck" />
 		<check name="PrimitiveWrapperInstantiationCheck" />
@@ -233,14 +188,8 @@
 		<check name="ResourceBundleCheck" />
 	</source-processor>
 	<source-processor name="JSSourceProcessor">
-
-		<!-- Checks that should come first -->
-
-		<check name="JSWhitespaceCheck" />
-
-		<!-- Other checks -->
-
 		<check name="JSStylingCheck" />
+		<check name="JSWhitespaceCheck" />
 
 		<!-- Portal checks -->
 
@@ -252,15 +201,6 @@
 		</check>
 	</source-processor>
 	<source-processor name="PropertiesSourceProcessor">
-
-		<!-- Checks that should come first -->
-
-		<check name="PropertiesWhitespaceCheck">
-			<property name="allowLeadingSpaces" value="true" />
-		</check>
-
-		<!-- Other checks -->
-
 		<check name="PropertiesDefinitionKeysCheck" />
 		<check name="PropertiesDependenciesFileCheck" />
 		<check name="PropertiesLiferayPluginPackageFileCheck" />
@@ -268,31 +208,22 @@
 		<check name="PropertiesPortalFileCheck" />
 		<check name="PropertiesPortletFileCheck" />
 		<check name="PropertiesSourceFormatterFileCheck" />
+		<check name="PropertiesWhitespaceCheck">
+			<property name="allowLeadingSpaces" value="true" />
+		</check>
 	</source-processor>
 	<source-processor name="SoySourceProcessor">
 		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="SQLSourceProcessor">
-
-		<!-- Checks that should come first -->
-
-		<check name="WhitespaceCheck" />
-
-		<!-- Other checks -->
-
 		<check name="SQLEmptyLinesCheck" />
 		<check name="SQLStylingCheck" />
+		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="TLDSourceProcessor">
-
-		<!-- Checks that should come first -->
-
-		<check name="WhitespaceCheck" />
-
-		<!-- Other checks -->
-
 		<check name="TLDElementOrderCheck" />
 		<check name="TLDTypeCheck" />
+		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="XMLSourceProcessor">
 		<check name="XMLBuildFileCheck" />
@@ -310,7 +241,9 @@
 		<check name="XMLServiceFileCheck" />
 		<check name="XMLSolrSchemaFileCheck" />
 		<check name="XMLSpringFileCheck" />
+		<check name="XMLTagAttributesCheck" />
 		<check name="XMLToggleFileCheck" />
+		<check name="XMLWhitespaceCheck" />
 
 		<!-- Portal checks -->
 
@@ -319,10 +252,5 @@
 		<check name="XMLTestIgnorableErrorLinesFileCheck" />
 		<check name="XMLTilesDefsFileCheck" />
 		<check name="XMLWebFileCheck" />
-
-		<!-- Checks that should come first -->
-
-		<check name="XMLWhitespaceCheck" />
-		<check name="XMLTagAttributesCheck" />
 	</source-processor>
 </source-formatter>

@@ -63,6 +63,7 @@ public class ChainingCheck extends AbstractCheck {
 		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_CALL);
 
+		outerLoop:
 		for (DetailAST methodCallAST : methodCallASTList) {
 			DetailAST dotAST = methodCallAST.findFirstToken(TokenTypes.DOT);
 
@@ -107,7 +108,7 @@ public class ChainingCheck extends AbstractCheck {
 
 			for (String allowedMethodName : _allowedMethodNames) {
 				if (chainedMethodNames.contains(allowedMethodName)) {
-					continue;
+					continue outerLoop;
 				}
 			}
 

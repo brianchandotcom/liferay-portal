@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.item.selector.web.internal.display.context;
 
-import com.liferay.commerce.product.item.selector.web.internal.display.context.util.CPRequestHelper;
+import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.item.selector.web.internal.util.CPOptionItemSelectorViewUtil;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionService;

@@ -20,6 +20,8 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -76,6 +78,13 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 				getCPDefinitionId());
 
 		return _descriptionMap;
+	}
+
+	@Override
+	public String getTitleCurrentValue() {
+		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+
+		return getTitle(LocaleUtil.toLanguageId(locale), true);
 	}
 
 	@Override

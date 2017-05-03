@@ -53,13 +53,7 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 		return "/document_library/view.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLPortletToolbarContributor(
-		DLPortletToolbarContributor dlPortletToolbarContributor) {
-
-		_dlPortletToolbarContributor = dlPortletToolbarContributor;
-	}
-
+	@Reference
 	private DLPortletToolbarContributor _dlPortletToolbarContributor;
 
 	@Reference

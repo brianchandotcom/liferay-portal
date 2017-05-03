@@ -8,4 +8,5 @@ Export-Package:\
 	com.liferay.commerce.product.renderer,\
 	com.liferay.commerce.product.service,\
 	com.liferay.commerce.product.service.persistence,\
-	com.liferay.commerce.product.type
+	com.liferay.commerce.product.type,\
+	com.liferay.commerce.product.util.comparator

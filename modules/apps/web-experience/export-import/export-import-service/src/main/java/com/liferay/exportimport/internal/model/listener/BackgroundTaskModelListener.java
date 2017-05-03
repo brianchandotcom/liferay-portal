@@ -68,7 +68,11 @@ public class BackgroundTaskModelListener
 			}
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			throw new ModelListenerException(
+				"An error occured when deleting the process configuration " +
+					"for background task " +
+						backgroundTask.getBackgroundTaskId(),
+				e);
 		}
 	}
 

@@ -1,5 +1,5 @@
 <definition>
-	<command name="signOut">
+	<command name="signOut" summary="Sign out of Liferay Portal">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="UserBar#signOut" />

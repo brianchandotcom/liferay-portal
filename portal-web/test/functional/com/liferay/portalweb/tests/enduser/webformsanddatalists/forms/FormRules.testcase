@@ -816,6 +816,8 @@
 
 		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
 
+		<execute macro="Form#save" />
+
 		<execute macro="Form#publishForm" />
 
 		<execute macro="FormsAdminNavigator#openPublishURL">

@@ -79,7 +79,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Sergio González
  * @author Julio Camarero
+ * @deprecated As of 7.0.0
  */
+@Deprecated
 @DoPrivileged
 public class TrashImpl implements Trash {
 

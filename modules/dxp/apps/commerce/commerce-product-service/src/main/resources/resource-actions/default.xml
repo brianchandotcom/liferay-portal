@@ -87,7 +87,7 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.product.model.CPMediaType</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPMediaTypesPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_product_media_types_web_internal_portlet_CPMediaTypesPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

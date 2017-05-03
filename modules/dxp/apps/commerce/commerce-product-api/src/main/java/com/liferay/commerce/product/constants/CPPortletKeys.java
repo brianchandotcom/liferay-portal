@@ -24,7 +24,7 @@ public class CPPortletKeys {
 			"CPDefinitionsPortlet";
 
 	public static final String COMMERCE_PRODUCT_MEDIA_TYPES =
-		"com_liferay_commerce_product_definitions_web_internal_portlet_" +
+		"com_liferay_commerce_product_media_types_web_internal_portlet_" +
 			"CPMediaTypesPortlet";
 
 	public static final String COMMERCE_PRODUCT_OPTIONS =

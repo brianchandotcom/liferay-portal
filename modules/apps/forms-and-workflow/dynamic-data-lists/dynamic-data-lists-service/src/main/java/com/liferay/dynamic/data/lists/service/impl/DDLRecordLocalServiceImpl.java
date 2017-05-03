@@ -145,9 +145,13 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Record version
 
+		int status = GetterUtil.getInteger(
+			serviceContext.getAttribute("status"),
+			WorkflowConstants.STATUS_APPROVED);
+
 		DDLRecordVersion recordVersion = addRecordVersion(
 			user, record, ddmStorageId, DDLRecordConstants.VERSION_DEFAULT,
-			displayIndex, WorkflowConstants.STATUS_DRAFT);
+			displayIndex, status);
 
 		// Asset
 

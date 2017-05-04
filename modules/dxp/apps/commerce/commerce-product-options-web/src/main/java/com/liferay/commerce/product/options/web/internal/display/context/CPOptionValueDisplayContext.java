@@ -14,15 +14,21 @@
 
 package com.liferay.commerce.product.options.web.internal.display.context;
 
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.options.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.product.options.web.internal.util.CPOptionsPortletUtil;
 import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -65,6 +71,11 @@ public class CPOptionValueDisplayContext
 			return searchContainer;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+
 		SearchContainer<CPOptionValue> searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
@@ -79,16 +90,52 @@ public class CPOptionValueDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total = _cpOptionValueService.getCPOptionValuesCount(
-			getCPOptionId());
+		if(isSearch()) {
 
-		searchContainer.setTotal(total);
+			boolean orderByAsc = false;
 
-		List<CPOptionValue> results = _cpOptionValueService.getCPOptionValues(
-			getCPOptionId(), searchContainer.getStart(),
-			searchContainer.getEnd(), orderByComparator);
+			if (Objects.equals(getOrderByType(), "asc")) {
+				orderByAsc = true;
+			}
 
-		searchContainer.setResults(results);
+			Sort sort = null;
+
+			if (Objects.equals(getOrderByCol(), "title")) {
+				sort = new Sort("title", Sort.STRING_TYPE, orderByAsc);
+			}
+			else if (Objects.equals(getOrderByCol(), "priority")) {
+				sort = new Sort("priority", Sort.INT_TYPE, orderByAsc);
+			}
+
+			BaseModelSearchResult<CPOptionValue>
+				cpOptionValueBaseModelSearchResult =
+					_cpOptionValueService.searchCPOptionValues(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId(),
+						 getCPOptionId() ,getKeywords(),
+						searchContainer.getStart(), searchContainer.getEnd(),
+						sort);
+
+			searchContainer.setTotal(
+				cpOptionValueBaseModelSearchResult.getLength());
+			searchContainer.setResults(
+				cpOptionValueBaseModelSearchResult.getBaseModels());
+
+		}
+		else {
+
+			int total = _cpOptionValueService.getCPOptionValuesCount(
+				getCPOptionId());
+
+			searchContainer.setTotal(total);
+
+			List<CPOptionValue> results = _cpOptionValueService.
+				getCPOptionValues(getCPOptionId(), searchContainer.getStart(),
+					searchContainer.getEnd(), orderByComparator);
+
+			searchContainer.setResults(results);
+
+		}
 
 		this.searchContainer = searchContainer;
 

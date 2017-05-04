@@ -14,6 +14,7 @@
 
 package com.liferay.hello.soy.web.internal.portlet;
 
+import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.portlet.bridge.soy.SoyPortlet;
 
@@ -62,6 +63,8 @@ public class HelloSoyPortlet extends SoyPortlet {
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+
+		Template template = getTemplate(renderRequest);
 
 		PortletURL navigationURL = renderResponse.createRenderURL();
 

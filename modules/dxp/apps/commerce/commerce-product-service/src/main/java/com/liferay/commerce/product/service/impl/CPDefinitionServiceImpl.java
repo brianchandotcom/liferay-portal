@@ -21,6 +21,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.base.CPDefinitionServiceBaseImpl;
 import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
 import com.liferay.commerce.product.service.permission.CPPermission;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
@@ -29,9 +30,11 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -120,11 +123,46 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Override
 	public List<CPDefinition> getCPDefinitions(
-		long groupId, int start, int end,
+		long groupId, int status, int max,
 		OrderByComparator<CPDefinition> orderByComparator) {
 
-		return cpDefinitionLocalService.getCPDefinitions(
-			groupId, start, end, orderByComparator);
+		List<CPDefinition> cpDefinitions = new ArrayList<>();
+
+		boolean listNotExhausted = true;
+
+		QueryDefinition<CPDefinition> queryDefinition = new QueryDefinition<>(
+			status, false, 0, 0, orderByComparator);
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+		}
+
+		while ((cpDefinitions.size() < max) && listNotExhausted) {
+			queryDefinition.setEnd(queryDefinition.getStart() + max);
+
+			List<CPDefinition> cpDefinitionList =
+				cpDefinitionLocalService.getCPDefinitions(
+					groupId, queryDefinition);
+
+			queryDefinition.setStart(queryDefinition.getStart() + max);
+
+			listNotExhausted = cpDefinitionList.size() == max;
+
+			for (CPDefinition cpDefinition : cpDefinitionList) {
+				if (cpDefinitions.size() >= max) {
+					break;
+				}
+
+				if (CPDefinitionPermission.contains(
+						getPermissionChecker(), cpDefinition,
+						ActionKeys.VIEW)) {
+
+					cpDefinitions.add(cpDefinition);
+				}
+			}
+		}
+
+		return cpDefinitions;
 	}
 
 	@Override
@@ -133,18 +171,14 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
-	public Hits search(SearchContext searchContext) {
-		return cpDefinitionLocalService.search(searchContext);
-	}
-
-	@Override
-	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
-			long companyId, long groupId, String keywords, int start, int end,
-			Sort sort)
-		throws PortalException {
-
-		return cpDefinitionLocalService.searchCPDefinitions(
-			companyId, groupId, keywords, start, end, sort);
+	public int getCPDefinitionsCount(long groupId, int status) {
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return cpDefinitionPersistence.filterCountByG_NotS(
+				groupId, WorkflowConstants.STATUS_IN_TRASH);
+		}
+		else {
+			return cpDefinitionPersistence.filterCountByG_S(groupId, status);
+		}
 	}
 
 	@Override
@@ -167,6 +201,21 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		cpDefinitionLocalService.restoreCPDefinitionFromTrash(
 			getUserId(), cpDefinitionId);
+	}
+
+	@Override
+	public Hits search(SearchContext searchContext) {
+		return cpDefinitionLocalService.search(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
+			long companyId, long groupId, String keywords, int start, int end,
+			Sort sort)
+		throws PortalException {
+
+		return cpDefinitionLocalService.searchCPDefinitions(
+			companyId, groupId, keywords, start, end, sort);
 	}
 
 	@Override

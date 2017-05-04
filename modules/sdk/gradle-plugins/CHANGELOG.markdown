@@ -1599,6 +1599,8 @@ to version 2.0.2.
 ## 3.3.11 - 2017-05-11
 
 ### Changed
+- [LPS-72365]: Update the [Liferay Gradle Plugins Test Integration] dependency
+to version 1.2.0.
 - [LPS-72514]: Update the [Liferay Portal Tools DB Support] dependency to
 version 1.0.3.
 
@@ -1747,5 +1749,6 @@ version 1.0.3.
 [LPS-72252]: https://issues.liferay.com/browse/LPS-72252
 [LPS-72326]: https://issues.liferay.com/browse/LPS-72326
 [LPS-72340]: https://issues.liferay.com/browse/LPS-72340
+[LPS-72365]: https://issues.liferay.com/browse/LPS-72365
 [LPS-72514]: https://issues.liferay.com/browse/LPS-72514
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

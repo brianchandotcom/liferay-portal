@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.base.PasswordPolicyServiceBaseImpl;
+
+import java.util.List;
 
 /**
  * @author Scott Lee
@@ -74,6 +77,20 @@ public class PasswordPolicyServiceImpl extends PasswordPolicyServiceBaseImpl {
 		}
 
 		return passwordPolicy;
+	}
+
+	@Override
+	public List<PasswordPolicy> search(
+		long companyId, String name, int start, int end,
+		OrderByComparator<PasswordPolicy> obc) {
+
+		return passwordPolicyFinder.filterFindByC_N(
+			companyId, name, start, end, obc);
+	}
+
+	@Override
+	public int searchCount(long companyId, String name) {
+		return passwordPolicyFinder.filterCountByC_N(companyId, name);
 	}
 
 	@Override

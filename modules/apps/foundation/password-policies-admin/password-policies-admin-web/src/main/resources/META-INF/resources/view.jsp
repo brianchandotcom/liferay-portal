@@ -122,11 +122,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 			<%
 			PasswordPolicyDisplayTerms searchTerms = (PasswordPolicyDisplayTerms)passwordPolicySearchContainer.getSearchTerms();
 
-			total = PasswordPolicyLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords());
+			total = PasswordPolicyServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords());
 
 			passwordPolicySearchContainer.setTotal(total);
 
-			List results = PasswordPolicyLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), passwordPolicySearchContainer.getStart(), passwordPolicySearchContainer.getEnd(), passwordPolicySearchContainer.getOrderByComparator());
+			List results = PasswordPolicyServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), passwordPolicySearchContainer.getStart(), passwordPolicySearchContainer.getEnd(), passwordPolicySearchContainer.getOrderByComparator());
 
 			passwordPolicySearchContainer.setResults(results);
 

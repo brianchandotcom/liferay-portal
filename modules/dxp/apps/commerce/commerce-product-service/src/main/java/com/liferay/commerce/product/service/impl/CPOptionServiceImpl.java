@@ -20,10 +20,18 @@ import com.liferay.commerce.product.service.base.CPOptionServiceBaseImpl;
 import com.liferay.commerce.product.service.permission.CPOptionPermission;
 import com.liferay.commerce.product.service.permission.CPPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -119,5 +127,22 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 			cpOptionId, nameMap, descriptionMap, ddmFormFieldTypeName,
 			facetable, skuContributor, serviceContext);
 	}
+
+	@Override
+	public Hits search(SearchContext searchContext) {
+
+		return cpOptionLocalService.search(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<CPOption> searchCPOptions(
+		long companyId, long groupId, String keywords,
+		LinkedHashMap<String, Object> params, int start, int end, Sort sort)
+		throws PortalException {
+
+		return  cpOptionLocalService.searchCPOptions(
+			companyId,groupId,keywords,params,start,end,sort);
+	}
+
 
 }

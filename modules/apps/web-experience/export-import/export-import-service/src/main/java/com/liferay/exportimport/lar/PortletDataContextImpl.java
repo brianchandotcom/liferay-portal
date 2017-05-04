@@ -540,7 +540,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 			zipWriter.addEntry(path, bytes);
 		}
 		catch (IOException ioe) {
-			throw new SystemException(ioe);
+			throw new SystemException(
+				"Unable to add data with path " + path + " to the LAR file",
+				ioe);
 		}
 	}
 
@@ -556,7 +558,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 			zipWriter.addEntry(path, is);
 		}
 		catch (IOException ioe) {
-			throw new SystemException(ioe);
+			throw new SystemException(
+				"Unable to add data with path " + path + " to the LAR file",
+				ioe);
 		}
 	}
 
@@ -577,7 +581,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 			zipWriter.addEntry(path, s);
 		}
 		catch (IOException ioe) {
-			throw new SystemException(ioe);
+			throw new SystemException(
+				"Unable to add data with path " + path + " to the LAR file",
+				ioe);
 		}
 	}
 
@@ -2381,7 +2387,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	protected Element getExportDataGroupElement(String name) {
 		if (_exportDataRootElement == null) {
 			throw new IllegalStateException(
-				"Root data element not initialized");
+				"Unable to return the export data group element for " + name +
+					" because the root data element is not initialized");
 		}
 
 		Element groupElement = _exportDataRootElement.element(name);
@@ -2396,7 +2403,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	protected Element getImportDataGroupElement(String name) {
 		if (_importDataRootElement == null) {
 			throw new IllegalStateException(
-				"Root data element not initialized");
+				"Unable to return the import data group element for " + name +
+					" because the root data element not initialized");
 		}
 
 		if (Validator.isNull(name)) {

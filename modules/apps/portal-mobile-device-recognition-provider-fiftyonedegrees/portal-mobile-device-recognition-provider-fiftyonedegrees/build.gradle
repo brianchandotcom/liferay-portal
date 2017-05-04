@@ -1,7 +1,7 @@
 import com.liferay.gradle.util.FileUtil
 
 dependencies {
-	compileInclude group: "com.51degrees", name: "device-detection-core", version: "3.2.13.9"
+	compileInclude group: "com.51degrees", name: "device-detection-core", version: "3.2.14.2"
 	compileInclude group: "commons-io", name: "commons-io", version: "1.4"
 
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"

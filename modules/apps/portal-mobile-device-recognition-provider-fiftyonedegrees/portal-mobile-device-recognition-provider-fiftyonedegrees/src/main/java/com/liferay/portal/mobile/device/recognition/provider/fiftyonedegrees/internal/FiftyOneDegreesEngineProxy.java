@@ -14,6 +14,7 @@
 
 package com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.internal;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
@@ -22,12 +23,16 @@ import com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.con
 import com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.data.DataFileProvider;
 
 import fiftyone.mobile.detection.Dataset;
+import fiftyone.mobile.detection.DatasetBuilder;
 import fiftyone.mobile.detection.Match;
 import fiftyone.mobile.detection.Provider;
-import fiftyone.mobile.detection.factories.StreamFactory;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -74,14 +79,33 @@ public class FiftyOneDegreesEngineProxy {
 
 	@Activate
 	@Modified
-	protected void activate() {
+	protected void activate(Map<String, Object> properties) {
+		_fiftyOneDegreesConfiguration = ConfigurableUtil.createConfigurable(
+			FiftyOneDegreesConfiguration.class, properties);
+
 		try (InputStream inputStream =
 				_dataFileProvider.getDataFileInputStream()) {
 
-			Dataset dataset = StreamFactory.create(
-				IOUtils.toByteArray(inputStream));
+			File tempFile = File.createTempFile(
+				"51degrees", String.valueOf(System.currentTimeMillis()));
 
-			_provider = new Provider(dataset);
+			try (OutputStream outputStream = new FileOutputStream(tempFile)) {
+				IOUtils.copy(inputStream, outputStream);
+
+				outputStream.flush();
+			}
+
+			DatasetBuilder.BuildFromFile buildFromFile = DatasetBuilder.file();
+
+			buildFromFile.configureCachesFromCacheSet(
+				DatasetBuilder.CacheTemplate.Default);
+
+			buildFromFile.setTempFile();
+
+			Dataset dataset = buildFromFile.build(tempFile.getAbsolutePath());
+
+			_provider = new Provider(
+				dataset, _fiftyOneDegreesConfiguration.cacheSize());
 		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {

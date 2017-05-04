@@ -118,8 +118,7 @@ public class CPOptionDisplayContext
 			BaseModelSearchResult<CPOption> cpOptionBaseModelSearchResult =
 				_cpOptionService.searchCPOptions(themeDisplay.getCompanyId(),
 					themeDisplay.getScopeGroupId(), getKeywords(),
-					new LinkedHashMap<>(), searchContainer.getStart(),
-					searchContainer.getEnd(), sort);
+					searchContainer.getStart(), searchContainer.getEnd(), sort);
 
 			searchContainer.setTotal(cpOptionBaseModelSearchResult.getLength());
 			searchContainer.setResults(

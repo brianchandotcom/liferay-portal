@@ -1,0 +1,178 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.commerce.product.definitions.web.asset;
+
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
+import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.Portal;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
+
+import javax.servlet.ServletContext;
+
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Alessio Antonio Rendina
+ */
+@Component(
+    immediate = true,
+    property = {"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS},
+    service = AssetRendererFactory.class
+)
+public class CPDefinitionAssetRendererFactory
+    extends BaseAssetRendererFactory<CPDefinition> {
+
+    public static final String TYPE = "product";
+
+    public CPDefinitionAssetRendererFactory() {
+        setClassName(CPDefinition.class.getName());
+        setLinkable(true);
+        setPortletId(CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS);
+        setSearchable(true);
+    }
+
+    @Override
+    public AssetRenderer<CPDefinition> getAssetRenderer(
+            long classPK, int type)
+        throws PortalException {
+
+        CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(classPK);
+
+        CPDefinitionAssetRenderer cpDefinitionAssetRenderer =
+            new CPDefinitionAssetRenderer(cpDefinition, _resourceBundleLoader);
+
+        cpDefinitionAssetRenderer.setAssetRendererType(type);
+        cpDefinitionAssetRenderer.setServletContext(_servletContext);
+
+        return cpDefinitionAssetRenderer;
+    }
+
+    @Override
+    public String getClassName() {
+        return CPDefinition.class.getName();
+    }
+
+    @Override
+    public String getIconCssClass() {
+        return "product";
+    }
+
+    @Override
+    public String getType() {
+        return TYPE;
+    }
+
+    @Override
+    public PortletURL getURLAdd(
+        LiferayPortletRequest liferayPortletRequest,
+        LiferayPortletResponse liferayPortletResponse, long classTypeId) {
+
+        PortletURL portletURL = _portal.getControlPanelPortletURL(
+            liferayPortletRequest, getGroup(liferayPortletRequest),
+            CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, 0, 0, PortletRequest.RENDER_PHASE);
+
+        portletURL.setParameter(
+            "mvcRenderCommandName", "editProductDefinition");
+
+        return portletURL;
+    }
+
+    @Override
+    public PortletURL getURLView(
+        LiferayPortletResponse liferayPortletResponse,
+        WindowState windowState) {
+
+        LiferayPortletURL liferayPortletURL =
+            liferayPortletResponse.createLiferayPortletURL(
+                CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, PortletRequest.RENDER_PHASE);
+
+        try {
+            liferayPortletURL.setWindowState(windowState);
+        }
+        catch (WindowStateException wse) {
+        }
+
+        return liferayPortletURL;
+    }
+
+    @Override
+    public boolean hasAddPermission(
+            PermissionChecker permissionChecker, long groupId, long classTypeId)
+        throws Exception {
+
+        return CPDefinitionPermission.contains(
+            permissionChecker, groupId, CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
+    }
+
+    @Override
+    public boolean hasPermission(
+            PermissionChecker permissionChecker, long classPK, String actionId)
+        throws Exception {
+
+        return CPDefinitionPermission.contains(
+            permissionChecker, classPK, actionId);
+    }
+
+    @Reference(
+        target = "(bundle.symbolic.name=com.liferay.commerce.product.definitions.web)",
+        unbind = "-"
+    )
+    public void setResourceBundleLoader(
+        ResourceBundleLoader resourceBundleLoader) {
+
+        _resourceBundleLoader = resourceBundleLoader;
+    }
+
+    @Reference(
+        target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)",
+        unbind = "-"
+    )
+    public void setServletContext(ServletContext servletContext) {
+        _servletContext = servletContext;
+    }
+
+    @Reference(unbind = "-")
+    protected void setCPDefinitionLocalService(
+        CPDefinitionLocalService cpDefinitionLocalService) {
+
+        _cpDefinitionLocalService = cpDefinitionLocalService;
+    }
+
+    private CPDefinitionLocalService _cpDefinitionLocalService;
+
+    @Reference
+    private Portal _portal;
+
+    private ResourceBundleLoader _resourceBundleLoader;
+    private ServletContext _servletContext;
+
+}

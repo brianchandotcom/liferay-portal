@@ -99,6 +99,9 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 				LocalizationUtil.getLocalizedName(
 					Field.DESCRIPTION, languageId),
 				description);
+
+			document.addText(Field.CONTENT, name);
+
 		}
 
 		if (_log.isDebugEnabled()) {

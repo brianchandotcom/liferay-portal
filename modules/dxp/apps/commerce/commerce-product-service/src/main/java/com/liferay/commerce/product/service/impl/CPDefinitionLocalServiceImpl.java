@@ -345,7 +345,8 @@ public class CPDefinitionLocalServiceImpl
 		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
 			cpDefinitionId);
 
-		return cpDefinition.moveCPDefinitionToTrash(userId, cpDefinition);
+		return cpDefinitionLocalService.moveCPDefinitionToTrash(
+			userId, cpDefinition);
 	}
 
 	/**

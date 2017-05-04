@@ -100,10 +100,10 @@ public class CPDefinitionsDisplayContext
 				sort = new Sort("name", Sort.STRING_TYPE, orderByAsc);
 			}
 			else if (Objects.equals(getOrderByCol(), "create-date")) {
-				sort = new Sort(Field.MODIFIED_DATE, true);
+				sort = new Sort(Field.CREATE_DATE, orderByAsc);
 			}
-			else if (Objects.equals(getOrderByCol(), "priority")) {
-				sort = new Sort("name", Sort.INT_TYPE, orderByAsc);
+			else if (Objects.equals(getOrderByCol(), "display-date")) {
+				sort = new Sort("display-date",orderByAsc);
 			}
 
 			BaseModelSearchResult<CPDefinition> cpOptionBaseModelSearchResult =

@@ -263,6 +263,11 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 		return _cpInstanceLocalService.getOSGiServiceIdentifier();
 	}
 
+	@Override
+	public java.lang.String[] getSKUs(long cpDefinitionId) {
+		return _cpInstanceLocalService.getSKUs(cpDefinitionId);
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

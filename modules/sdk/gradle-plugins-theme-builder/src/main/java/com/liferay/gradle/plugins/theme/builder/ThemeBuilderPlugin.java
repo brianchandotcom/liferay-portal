@@ -305,12 +305,21 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 		throws IOException {
 
 		for (File file : files) {
-			try (ZipFile zipFile = new ZipFile(file)) {
-				ZipEntry zipEntry = zipFile.getEntry(
-					"META-INF/resources/" + name + "/");
+			String fileName = file.getName();
 
-				if (zipEntry != null) {
+			if (fileName.endsWith(".war")) {
+				if (fileName.startsWith(name + "-theme-")) {
 					return file;
+				}
+			}
+			else {
+				try (ZipFile zipFile = new ZipFile(file)) {
+					ZipEntry zipEntry = zipFile.getEntry(
+						"META-INF/resources/" + name + "/");
+
+					if (zipEntry != null) {
+						return file;
+					}
 				}
 			}
 		}

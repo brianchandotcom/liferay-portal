@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal.data;
+package com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal.lite;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.mobile.device.detection.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration;

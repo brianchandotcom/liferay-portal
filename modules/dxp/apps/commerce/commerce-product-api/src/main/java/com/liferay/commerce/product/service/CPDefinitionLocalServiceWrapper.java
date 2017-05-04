@@ -156,6 +156,52 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 	}
 
 	/**
+	* Moves the commerce product definition to the recycle bin.
+	*
+	* @param userId the primary key of the user moving the commerce product definition
+	* @param cpDefinition the commerce product definition to be moved
+	* @return the moved commerce product definition
+	*/
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition moveCPDefinitionToTrash(
+		long userId,
+		com.liferay.commerce.product.model.CPDefinition cpDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLocalService.moveCPDefinitionToTrash(userId,
+			cpDefinition);
+	}
+
+	/**
+	* Moves the commerce product definition with the ID to the recycle bin.
+	*
+	* @param userId the primary key of the user moving the blogs entry
+	* @param cpDefinitionId the primary key of the commerce product definition to be moved
+	* @return the moved commerce product definition
+	*/
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition moveCPDefinitionToTrash(
+		long userId, long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLocalService.moveCPDefinitionToTrash(userId,
+			cpDefinitionId);
+	}
+
+	/**
+	* Restores the commerce product definition with the ID from the recycle bin.
+	*
+	* @param userId the primary key of the user restoring the blogs entry
+	* @param cpDefinitionId the primary key of the commerce product definition to be restored
+	* @return the restored commerce product definition from the recycle bin
+	*/
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition restoreCPDefinitionFromTrash(
+		long userId, long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLocalService.restoreCPDefinitionFromTrash(userId,
+			cpDefinitionId);
+	}
+
+	/**
 	* Updates the cp definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param cpDefinition the cp definition
@@ -195,6 +241,20 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.updateStatus(userId, cpDefinitionId,
 			status, serviceContext, workflowContext);
+	}
+
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link #updateStatus(long, long,
+	int, ServiceContext, Map)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition updateStatus(
+		long userId, long entryId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLocalService.updateStatus(userId, entryId, status,
+			serviceContext);
 	}
 
 	@Override
@@ -443,6 +503,12 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _cpDefinitionLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void moveCPDefinitionsToTrash(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpDefinitionLocalService.moveCPDefinitionsToTrash(groupId, userId);
 	}
 
 	@Override

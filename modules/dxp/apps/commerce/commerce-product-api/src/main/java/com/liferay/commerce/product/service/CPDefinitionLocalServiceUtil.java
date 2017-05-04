@@ -155,6 +155,46 @@ public class CPDefinitionLocalServiceUtil {
 	}
 
 	/**
+	* Moves the commerce product definition to the recycle bin.
+	*
+	* @param userId the primary key of the user moving the commerce product definition
+	* @param cpDefinition the commerce product definition to be moved
+	* @return the moved commerce product definition
+	*/
+	public static com.liferay.commerce.product.model.CPDefinition moveCPDefinitionToTrash(
+		long userId,
+		com.liferay.commerce.product.model.CPDefinition cpDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveCPDefinitionToTrash(userId, cpDefinition);
+	}
+
+	/**
+	* Moves the commerce product definition with the ID to the recycle bin.
+	*
+	* @param userId the primary key of the user moving the blogs entry
+	* @param cpDefinitionId the primary key of the commerce product definition to be moved
+	* @return the moved commerce product definition
+	*/
+	public static com.liferay.commerce.product.model.CPDefinition moveCPDefinitionToTrash(
+		long userId, long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveCPDefinitionToTrash(userId, cpDefinitionId);
+	}
+
+	/**
+	* Restores the commerce product definition with the ID from the recycle bin.
+	*
+	* @param userId the primary key of the user restoring the blogs entry
+	* @param cpDefinitionId the primary key of the commerce product definition to be restored
+	* @return the restored commerce product definition from the recycle bin
+	*/
+	public static com.liferay.commerce.product.model.CPDefinition restoreCPDefinitionFromTrash(
+		long userId, long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().restoreCPDefinitionFromTrash(userId, cpDefinitionId);
+	}
+
+	/**
 	* Updates the cp definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param cpDefinition the cp definition
@@ -193,6 +233,18 @@ public class CPDefinitionLocalServiceUtil {
 		return getService()
 				   .updateStatus(userId, cpDefinitionId, status,
 			serviceContext, workflowContext);
+	}
+
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link #updateStatus(long, long,
+	int, ServiceContext, Map)}
+	*/
+	@Deprecated
+	public static com.liferay.commerce.product.model.CPDefinition updateStatus(
+		long userId, long entryId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateStatus(userId, entryId, status, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionLocalization fetchCPDefinitionLocalization(
@@ -417,6 +469,11 @@ public class CPDefinitionLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void moveCPDefinitionsToTrash(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().moveCPDefinitionsToTrash(groupId, userId);
 	}
 
 	public static void updateAsset(long userId,

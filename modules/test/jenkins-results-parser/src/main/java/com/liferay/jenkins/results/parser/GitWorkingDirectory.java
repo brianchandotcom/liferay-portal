@@ -144,7 +144,7 @@ public class GitWorkingDirectory {
 
 		try {
 			process = JenkinsResultsParserUtil.executeBashCommands(
-				true, _workingDirectory,
+				true, _workingDirectory, 1000 * 10,
 				JenkinsResultsParserUtil.combine(
 					"git remote add ", remoteName, " ", remoteURL));
 		}
@@ -235,7 +235,7 @@ public class GitWorkingDirectory {
 
 		try {
 			process = JenkinsResultsParserUtil.executeBashCommands(
-				true, _workingDirectory, sb.toString());
+				true, _workingDirectory, 1000 * 60 * 10, sb.toString());
 		}
 		catch (InterruptedException | IOException e) {
 			throw new RuntimeException(
@@ -513,7 +513,7 @@ public class GitWorkingDirectory {
 
 		try {
 			Process process = JenkinsResultsParserUtil.executeBashCommands(
-				true, getWorkingDirectory(), command);
+				true, getWorkingDirectory(), 1000 * 60 * 2, command);
 
 			String output = JenkinsResultsParserUtil.readInputStream(
 				process.getInputStream());
@@ -564,7 +564,7 @@ public class GitWorkingDirectory {
 
 		try {
 			Process process = JenkinsResultsParserUtil.executeBashCommands(
-				true, getWorkingDirectory(), command);
+				true, getWorkingDirectory(), 1000 * 60 * 2, command);
 
 			String output = JenkinsResultsParserUtil.readInputStream(
 				process.getInputStream());
@@ -853,7 +853,7 @@ public class GitWorkingDirectory {
 
 		try {
 			Process process = JenkinsResultsParserUtil.executeBashCommands(
-				true, getWorkingDirectory(), rebaseCommand);
+				true, getWorkingDirectory(), 1000 * 60 * 10, rebaseCommand);
 
 			if ((process != null) && (process.exitValue() != 0)) {
 				try {
@@ -938,10 +938,7 @@ public class GitWorkingDirectory {
 	public void removeRemote(RemoteConfig remoteConfig) {
 		try {
 			if (!remoteExists(remoteConfig.getName())) {
-				throw new RuntimeException(
-					JenkinsResultsParserUtil.combine(
-						"Unable to remove remote ", remoteConfig.getName(),
-						" because it does not exist"));
+				return;
 			}
 
 			System.out.println("Removing remote " + remoteConfig.getName());
@@ -950,10 +947,10 @@ public class GitWorkingDirectory {
 
 			try {
 				process = JenkinsResultsParserUtil.executeBashCommands(
-					true, _workingDirectory,
+					true, _workingDirectory, 1000 * 60,
 					"git remote remove " + remoteConfig.getName());
 			}
-			catch (InterruptedException | IOException e) {
+			catch (InterruptedException | IOException | RuntimeException e) {
 				throw new RuntimeException(
 					"Unable to remove remote " + remoteConfig.getName(), e);
 			}

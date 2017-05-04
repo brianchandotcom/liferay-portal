@@ -1683,71 +1683,76 @@ public class ProjectTemplatesTest {
 		Map<String, ZipArchiveEntry> added = differences.getAdded();
 		Map<String, ZipArchiveEntry[]> changed = differences.getChanged();
 		Map<String, ZipArchiveEntry> removed = differences.getRemoved();
-		ZipFile warZipFile1 = new ZipFile(warFile1);
-		ZipFile warZipFile2 = new ZipFile(warFile2);
 
 		if (added.isEmpty() && !changed.isEmpty() && removed.isEmpty()) {
 			realChange = false;
 
-			for (String change : changed.keySet()) {
-				ZipArchiveEntry[] zipArchiveEntries = changed.get(change);
+			ZipFile zipFile1 = null;
+			ZipFile zipFile2 = null;
 
-				ZipArchiveEntry zipArchiveEntry1 = zipArchiveEntries[0];
-				ZipArchiveEntry zipArchiveEntry2 = zipArchiveEntries[0];
+			try {
+				zipFile1 = new ZipFile(warFile1);
+				zipFile2 = new ZipFile(warFile2);
 
-				if (zipArchiveEntry1.isDirectory() &&
-					zipArchiveEntry2.isDirectory() &&
-					(zipArchiveEntry1.getSize() ==
-						zipArchiveEntry2.getSize()) &&
-					(zipArchiveEntry1.getCompressedSize() <= 2) &&
-					(zipArchiveEntry2.getCompressedSize() <= 2)) {
+				for (String change : changed.keySet()) {
+					ZipArchiveEntry[] zipArchiveEntries = changed.get(change);
 
-					// Skip zipdiff bug
+					ZipArchiveEntry zipArchiveEntry1 = zipArchiveEntries[0];
+					ZipArchiveEntry zipArchiveEntry2 = zipArchiveEntries[0];
 
-					continue;
-				}
+					if (zipArchiveEntry1.isDirectory() &&
+						zipArchiveEntry2.isDirectory() &&
+						(zipArchiveEntry1.getSize() ==
+							zipArchiveEntry2.getSize()) &&
+						(zipArchiveEntry1.getCompressedSize() <= 2) &&
+						(zipArchiveEntry2.getCompressedSize() <= 2)) {
 
-				ZipArchiveEntry entry1 = warZipFile1.getEntry(
-					zipArchiveEntry1.getName());
-				ZipArchiveEntry entry2 = warZipFile2.getEntry(
-					zipArchiveEntry2.getName());
+						// Skip zipdiff bug
 
-				try (InputStream inputStream1 = warZipFile1.getInputStream(
-						entry1);
-					InputStream inputStream2 = warZipFile2.getInputStream(
-						entry2)) {
-
-					List<String> lines1 = StringTestUtil.readLines(
-						inputStream1);
-					List<String> lines2 = StringTestUtil.readLines(
-						inputStream2);
-
-					message.append(System.lineSeparator());
-
-					message.append("--- ");
-					message.append(zipArchiveEntry1.getName());
-					message.append(System.lineSeparator());
-
-					message.append("+++ ");
-					message.append(zipArchiveEntry2.getName());
-					message.append(System.lineSeparator());
-
-					Patch<String> diff = DiffUtils.diff(lines1, lines2);
-
-					for (Delta<String> delta : diff.getDeltas()) {
-						message.append('\t');
-						message.append(delta.getOriginal());
-						message.append(System.lineSeparator());
-
-						message.append('\t');
-						message.append(delta.getRevised());
-						message.append(System.lineSeparator());
+						continue;
 					}
+
+					try (InputStream inputStream1 = zipFile1.getInputStream(
+							zipFile1.getEntry(zipArchiveEntry1.getName()));
+						InputStream inputStream2 = zipFile2.getInputStream(
+							zipFile2.getEntry(zipArchiveEntry2.getName()))) {
+
+						List<String> lines1 = StringTestUtil.readLines(
+							inputStream1);
+						List<String> lines2 = StringTestUtil.readLines(
+							inputStream2);
+
+						message.append(System.lineSeparator());
+
+						message.append("--- ");
+						message.append(zipArchiveEntry1.getName());
+						message.append(System.lineSeparator());
+
+						message.append("+++ ");
+						message.append(zipArchiveEntry2.getName());
+						message.append(System.lineSeparator());
+
+						Patch<String> diff = DiffUtils.diff(lines1, lines2);
+
+						for (Delta<String> delta : diff.getDeltas()) {
+							message.append('\t');
+							message.append(delta.getOriginal());
+							message.append(System.lineSeparator());
+
+							message.append('\t');
+							message.append(delta.getRevised());
+							message.append(System.lineSeparator());
+						}
+					}
+
+					realChange = true;
+
+					break;
 				}
-
-				realChange = true;
-
-				break;
+			}
+			finally {
+				ZipFile.closeQuietly(zipFile1);
+				ZipFile.closeQuietly(zipFile2);
 			}
 		}
 		else {

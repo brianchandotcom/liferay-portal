@@ -217,6 +217,10 @@
 	</command>
 
 	<command name="configureCustomTitleViaLookandfeelPG">
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="General" />
+		</execute>
+
 		<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#USE_CUSTOM_TITLE" />
 
 		<execute function="Type" locator1="TextInput#CUSTOM_TITLE" value1="${portletName} Custom" />

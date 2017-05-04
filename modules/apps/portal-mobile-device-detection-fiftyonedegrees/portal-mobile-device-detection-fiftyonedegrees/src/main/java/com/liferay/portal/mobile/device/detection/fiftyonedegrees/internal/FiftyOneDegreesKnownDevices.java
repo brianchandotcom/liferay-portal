@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.internal;
+package com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.mobile.device.NoKnownDevices;
 import com.liferay.portal.kernel.mobile.device.VersionableName;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.internal.constants.FiftyOneDegreesPropertyNames;
+import com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal.constants.FiftyOneDegreesPropertyNames;
 
 import fiftyone.mobile.detection.Dataset;
 import fiftyone.mobile.detection.entities.Profile;

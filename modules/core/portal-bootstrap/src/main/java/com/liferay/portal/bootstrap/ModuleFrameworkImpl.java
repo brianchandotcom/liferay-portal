@@ -680,11 +680,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		properties.put(
 			Constants.FRAMEWORK_BUNDLE_PARENT,
 			Constants.FRAMEWORK_BUNDLE_PARENT_APP);
-
-		String moduleFrameworkStateDir = URLCodec.encodeURL(
-			PropsValues.MODULE_FRAMEWORK_STATE_DIR, StringPool.UTF8, true);
-
-		properties.put(Constants.FRAMEWORK_STORAGE, moduleFrameworkStateDir);
+		properties.put(
+			Constants.FRAMEWORK_STORAGE,
+			_encodeURL(PropsValues.MODULE_FRAMEWORK_STATE_DIR));
 
 		properties.put("eclipse.security", null);
 		properties.put("java.security.manager", null);
@@ -753,6 +751,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		if (!permissionChecker.isOmniadmin()) {
 			throw new PrincipalException.MustBeOmniadmin(permissionChecker);
 		}
+	}
+
+	private String _encodeURL(String url) {
+		String path = StringUtil.replace(
+			url, CharPool.BACK_SLASH, CharPool.SLASH);
+
+		if (!path.startsWith(StringPool.SLASH)) {
+			path = StringPool.SLASH + path;
+		}
+
+		return URLCodec.encodeURL(path, StringPool.UTF8, true);
 	}
 
 	private String _getFelixFileInstallDir() {

@@ -3,3 +3,9 @@ Bundle-SymbolicName: com.liferay.wiki.editor.link.browse.web
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
+Provide-Capability:\
+	alloyeditor.link.browse;\
+		alloyeditor.link.browse:String="wiki-attachment-link"
+Require-Capability:\
+	alloyeditor.link.browse;\
+		filter:="(alloyeditor.link.browse=default)"

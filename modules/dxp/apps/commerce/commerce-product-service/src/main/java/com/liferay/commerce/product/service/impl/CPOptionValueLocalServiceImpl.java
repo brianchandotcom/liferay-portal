@@ -71,6 +71,7 @@ public class CPOptionValueLocalServiceImpl
 		CPOptionValue cpOptionValue = cpOptionValuePersistence.create(
 			cpOptionValueId);
 
+		cpOptionValue.setUuid(serviceContext.getUuid());
 		cpOptionValue.setGroupId(groupId);
 		cpOptionValue.setCompanyId(user.getCompanyId());
 		cpOptionValue.setUserId(user.getUserId());

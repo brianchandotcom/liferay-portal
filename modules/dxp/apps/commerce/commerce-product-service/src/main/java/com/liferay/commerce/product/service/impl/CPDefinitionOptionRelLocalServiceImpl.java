@@ -100,6 +100,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionRelPersistence.create(cpDefinitionOptionRelId);
 
+		cpDefinitionOptionRel.setUuid(serviceContext.getUuid());
 		cpDefinitionOptionRel.setGroupId(groupId);
 		cpDefinitionOptionRel.setCompanyId(user.getCompanyId());
 		cpDefinitionOptionRel.setUserId(user.getUserId());

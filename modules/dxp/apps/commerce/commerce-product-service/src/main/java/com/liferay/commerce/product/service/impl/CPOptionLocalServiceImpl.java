@@ -71,6 +71,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		CPOption cpOption = cpOptionPersistence.create(cpOptionId);
 
+		cpOption.setUuid(serviceContext.getUuid());
 		cpOption.setGroupId(groupId);
 		cpOption.setCompanyId(user.getCompanyId());
 		cpOption.setUserId(user.getUserId());

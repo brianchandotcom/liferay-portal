@@ -225,103 +225,6 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public void moveCPDefinitionsToTrash(long groupId, long userId)
-		throws PortalException {
-
-		List<CPDefinition> cpDefinitions = cpDefinitionPersistence.findByGroupId(groupId);
-
-		for (CPDefinition cpDefinition : cpDefinitions) {
-			cpDefinitionLocalService.moveCPDefinitionToTrash(userId, cpDefinition);
-		}
-	}
-
-	/**
-	 * Moves the commerce product definition to the recycle bin.
-	 *
-	 * @param  userId the primary key of the user moving the commerce product definition
-	 * @param  cpDefinition the commerce product definition to be moved
-	 * @return the moved commerce product definition
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CPDefinition moveCPDefinitionToTrash(long userId, CPDefinition cpDefinition)
-		throws PortalException {
-
-		// Commerce product definition
-
-		if (cpDefinition.isInTrash()) {
-			throw new TrashEntryException();
-		}
-
-		int oldStatus = cpDefinition.getStatus();
-
-		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
-			cpDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-			cpDefinitionPersistence.update(cpDefinition);
-		}
-
-		cpDefinition = updateStatus(
-			userId, cpDefinition.getCPDefinitionId(), WorkflowConstants.STATUS_IN_TRASH, new ServiceContext());
-
-		// Workflow
-
-		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
-			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-				cpDefinition.getCompanyId(), cpDefinition.getGroupId(),
-				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
-		}
-
-		return cpDefinition;
-	}
-
-	/**
-	 * Moves the commerce product definition with the ID to the recycle bin.
-	 *
-	 * @param  userId the primary key of the user moving the commerce product definition
-	 * @param  cpDefinitionId the primary key of the commerce product definition to be moved
-	 * @return the moved commerce product definition
-	 */
-	@Override
-	public CPDefinition moveCPDefinitionToTrash(long userId, long cpDefinitionId)
-		throws PortalException {
-
-		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(cpDefinitionId);
-
-		return cpDefinition.moveCPDefinitionToTrash(userId, cpDefinition);
-	}
-
-	/**
-	 * Restores the commerce product definition with the ID from the recycle bin.
-	 *
-	 * @param  userId the primary key of the user restoring the commerce product definition
-	 * @param  cpDefinitionId the primary key of the commerce product definition to be restored
-	 * @return the restored commerce product definition from the recycle bin
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CPDefinition restoreCPDefinitionFromTrash(long userId, long cpDefinitionId)
-			throws PortalException {
-
-		// Entry
-
-		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(cpDefinitionId);
-
-		if (!cpDefinition.isInTrash()) {
-			throw new RestoreEntryException(
-				RestoreEntryException.INVALID_STATUS);
-		}
-
-		TrashEntry trashEntry = trashEntryLocalService.getEntry(
-			CPDefinition.class.getName(), cpDefinitionId);
-
-		cpDefinition = updateStatus(
-			userId, cpDefinitionId, trashEntry.getStatus(), new ServiceContext());
-
-		return cpDefinition;
-	}
-
-	@Override
 	public CPDefinition deleteCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
@@ -370,6 +273,112 @@ public class CPDefinitionLocalServiceImpl
 	@Override
 	public int getCPDefinitionsCount(long groupId) {
 		return cpDefinitionPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public void moveCPDefinitionsToTrash(long groupId, long userId)
+		throws PortalException {
+
+		List<CPDefinition> cpDefinitions =
+			cpDefinitionPersistence.findByGroupId(groupId);
+
+		for (CPDefinition cpDefinition : cpDefinitions) {
+			cpDefinitionLocalService.moveCPDefinitionToTrash(
+				userId, cpDefinition);
+		}
+	}
+
+	/**
+	 * Moves the commerce product definition to the recycle bin.
+	 *
+	 * @param  userId the primary key of the user moving the commerce product definition
+	 * @param  cpDefinition the commerce product definition to be moved
+	 * @return the moved commerce product definition
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CPDefinition moveCPDefinitionToTrash(
+			long userId, CPDefinition cpDefinition)
+		throws PortalException {
+
+		// Commerce product definition
+
+		if (cpDefinition.isInTrash()) {
+			throw new TrashEntryException();
+		}
+
+		int oldStatus = cpDefinition.getStatus();
+
+		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+			cpDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+			cpDefinitionPersistence.update(cpDefinition);
+		}
+
+		cpDefinition = updateStatus(
+			userId, cpDefinition.getCPDefinitionId(),
+			WorkflowConstants.STATUS_IN_TRASH, new ServiceContext());
+
+		// Workflow
+
+		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+				cpDefinition.getCompanyId(), cpDefinition.getGroupId(),
+				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+		}
+
+		return cpDefinition;
+	}
+
+	/**
+	 * Moves the commerce product definition with the ID to the recycle bin.
+	 *
+	 * @param  userId the primary key of the user moving the commerce product definition
+	 * @param  cpDefinitionId the primary key of the commerce product definition to be moved
+	 * @return the moved commerce product definition
+	 */
+	@Override
+	public CPDefinition moveCPDefinitionToTrash(
+			long userId, long cpDefinitionId)
+		throws PortalException {
+
+		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
+			cpDefinitionId);
+
+		return cpDefinition.moveCPDefinitionToTrash(userId, cpDefinition);
+	}
+
+	/**
+	 * Restores the commerce product definition with the ID from the recycle bin.
+	 *
+	 * @param  userId the primary key of the user restoring the commerce product definition
+	 * @param  cpDefinitionId the primary key of the commerce product definition to be restored
+	 * @return the restored commerce product definition from the recycle bin
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CPDefinition restoreCPDefinitionFromTrash(
+			long userId, long cpDefinitionId)
+		throws PortalException {
+
+		// Entry
+
+		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
+			cpDefinitionId);
+
+		if (!cpDefinition.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
+		TrashEntry trashEntry = trashEntryLocalService.getEntry(
+			CPDefinition.class.getName(), cpDefinitionId);
+
+		cpDefinition = updateStatus(
+			userId, cpDefinitionId, trashEntry.getStatus(),
+			new ServiceContext());
+
+		return cpDefinition;
 	}
 
 	@Override
@@ -497,7 +506,7 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link #updateStatus(long, long,
+	 * @deprecated As of 1.0.0, replaced by {@link #updateStatus(long, long,
 	 *             int, ServiceContext, Map)}
 	 */
 	@Deprecated
@@ -572,7 +581,6 @@ public class CPDefinitionLocalServiceImpl
 			// Trash
 
 			if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
-
 				trashEntryLocalService.deleteEntry(
 					CPDefinition.class.getName(), cpDefinitionId);
 			}
@@ -587,14 +595,13 @@ public class CPDefinitionLocalServiceImpl
 			// Trash
 
 			if (status == WorkflowConstants.STATUS_IN_TRASH) {
-
 				trashEntryLocalService.addTrashEntry(
-					userId, cpDefinition.getGroupId(), CPDefinition.class.getName(),
-					cpDefinition.getCPDefinitionId(), cpDefinition.getUuid(), null, oldStatus, null,
-					null);
+					userId, cpDefinition.getGroupId(),
+					CPDefinition.class.getName(),
+					cpDefinition.getCPDefinitionId(), cpDefinition.getUuid(),
+					null, oldStatus, null, null);
 			}
 			else if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
-
 				trashEntryLocalService.deleteEntry(
 					CPDefinition.class.getName(), cpDefinitionId);
 			}

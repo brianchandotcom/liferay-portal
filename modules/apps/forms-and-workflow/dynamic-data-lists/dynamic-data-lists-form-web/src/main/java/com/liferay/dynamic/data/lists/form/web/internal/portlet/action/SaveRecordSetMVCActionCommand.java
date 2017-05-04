@@ -70,12 +70,6 @@ public class SaveRecordSetMVCActionCommand
 
 		portletURL.setParameter("redirect", redirect);
 
-		boolean saveAndPublish = ParamUtil.getBoolean(
-			actionRequest, "saveAndPublish");
-
-		portletURL.setParameter(
-			"showPublishModal", String.valueOf(saveAndPublish));
-
 		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
 	}
 

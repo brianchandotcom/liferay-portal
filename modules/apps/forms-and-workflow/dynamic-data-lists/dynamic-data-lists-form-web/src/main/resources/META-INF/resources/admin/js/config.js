@@ -201,6 +201,12 @@
 								'aui-pagination'
 							]
 						},
+						'liferay-ddl-form-builder-copy-publish-form-url-popover': {
+							path: 'form_builder_copy_publish_form_url_popover.js',
+							requires: [
+								'aui-popover'
+							]
+						},
 						'liferay-ddl-form-builder-render-rule': {
 							path: 'form_builder_render_rule.js',
 							requires: ['liferay-ddl-form-builder-action-factory', 'liferay-ddl-form-builder-rule-template', 'liferay-ddl-form-builder-rule-validator', 'liferay-ddm-form-renderer-field']

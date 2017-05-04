@@ -254,6 +254,16 @@
 		<execute function="AssertElementNotPresent" locator1="Button#SUBMIT" value1="Submit" />
 	</command>
 
+	<command name="publishForm">
+		<execute function="AssertElementPresent" locator1="Form#NAME_FIELD" />
+
+		<execute function="Click" locator1="Button#PUBLISH" />
+
+		<var name="key_uniqueSuccess" value="The form was published successfully! Access it with this URL" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#UNIQUE_SUCCESS" value1="The form was published successfully! Access it with this URL" />
+	</command>
+
 	<command name="save">
 		<execute function="AssertClick" locator1="Form#SAVE_FORM_BUTTON" value1="Save Form" />
 
@@ -299,6 +309,16 @@
 		<execute function="AssertClick" locator1="Form#PAGE_CONTROLS_SWITCH_PAGINATION_MODE" value1="Switch Pagination Mode" />
 	</command>
 
+	<command name="unpublishForm">
+		<execute function="AssertElementPresent" locator1="Form#NAME_FIELD" />
+
+		<execute function="Click" locator1="Button#UNPUBLISH" />
+
+		<var name="key_uniqueSuccess" value="The form was unpublished successfully!" />
+
+		<execute function="AssertElementPresent" locator1="Message#UNIQUE_SUCCESS" value1="The form was unpublished successfully!" />
+	</command>
+
 	<command name="viewAltPagePagination">
 		<var name="key_page" value="${page}" />
 
@@ -314,7 +334,15 @@
 	</command>
 
 	<command name="viewFormNotPublished">
-		<execute macro="FormsAdminNavigator#openPublishURL" />
+		<execute function="Click" locator1="Form#PUBLISH_ICON" />
+
+		<var locator="Form#PUBLISH_FORM_PUBLIC_URL" name="publishFormURL" />
+
+		<execute macro="Form#unpublishForm" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${publishFormURL}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_3_ALT" value1="This form is not available or it was not published." />
 	</command>

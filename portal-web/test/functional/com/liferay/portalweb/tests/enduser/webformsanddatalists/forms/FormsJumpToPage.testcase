@@ -164,19 +164,10 @@
 		<description message="This is a use case for LPS-69372." />
 		<property name="portal.acceptance" value="pending" />
 
-		<execute macro="FormsAdminNavigator#gotoPublish" />
+		<execute macro="Form#publishForm" />
 
-		<execute macro="Form#clickPublishSwitcher" />
-
-		<execute macro="Form#getPublishedFormPublicURL">
-			<return from="publicURL" name="publicURL" />
-			<var name="publicURL" value="${publicURL}" />
-		</execute>
-
-		<execute macro="Button#clickConfirm" />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${publicURL}" />
+		<execute macro="FormsAdminNavigator#openPublishURL">
+			<var name="publishFormURL" value="${publishedFormPublicURL}" />
 		</execute>
 
 		<for list="1,2,3" param="option">

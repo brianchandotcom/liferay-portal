@@ -816,19 +816,12 @@
 
 		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
 
-		<execute macro="FormsAdminNavigator#gotoPublish" />
+		<execute macro="Form#save" />
 
-		<execute macro="Form#clickPublishSwitcher" />
+		<execute macro="Form#publishForm" />
 
-		<execute macro="Form#getPublishedFormPublicURL">
-			<return from="publicURL" name="publishedFormPublicURL" />
-			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
-		</execute>
-
-		<execute macro="Button#clickConfirm" />
-
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${publishedFormPublicURL}" />
+		<execute macro="FormsAdminNavigator#openPublishURL">
+			<var name="publishFormURL" value="${publishedFormPublicURL}" />
 		</execute>
 
 		<execute macro="FormFields#viewDateFieldNotPresent">

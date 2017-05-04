@@ -113,4 +113,39 @@ portletURL.setParameter("displayStyle", displayStyle);
 
 <%@ include file="/admin/export_record_set.jspf" %>
 
-<aui:script use="liferay-ddl-portlet"></aui:script>
+<%@ include file="/admin/copy_form_publish_url.jspf" %>
+
+<aui:script use="liferay-ddl-form-builder-copy-publish-form-url-popover">
+	var A = AUI();
+
+	var copyPublishFormURLPopover = new Liferay.DDL.FormBuilderCopyPublishFormURLPopover(
+		{
+			portletNamespace: '<portlet:namespace />'
+		}
+	);
+
+	Liferay.on(
+		'<portlet:namespace />copyFormURL',
+		function(event) {
+
+			if (copyPublishFormURLPopover.isVisible()) {
+				copyPublishFormURLPopover.hide();
+			}
+
+			copyPublishFormURLPopover.set('publishURL', event.url);
+
+			copyPublishFormURLPopover.setAlign(
+				{
+					node: Liferay.Menu._INSTANCE._activeTrigger,
+					points: [A.WidgetPositionAlign.TR, A.WidgetPositionAlign.TR]
+				}
+			);
+
+			copyPublishFormURLPopover.show();
+		}
+	);
+
+	Liferay.on('destroyPortlet', function() {
+		copyPublishFormURLPopover.destroy();
+	});
+</aui:script>

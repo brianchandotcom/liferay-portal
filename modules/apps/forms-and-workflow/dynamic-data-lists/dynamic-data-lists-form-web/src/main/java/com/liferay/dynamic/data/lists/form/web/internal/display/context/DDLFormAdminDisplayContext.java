@@ -246,8 +246,10 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	public String getFormURL() throws PortalException {
-		DDLRecordSet recordSet = getRecordSet();
+		return getFormURL(getRecordSet());
+	}
 
+	public String getFormURL(DDLRecordSet recordSet) throws PortalException {
 		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsModel();
 
 		String formURL = null;
@@ -260,6 +262,19 @@ public class DDLFormAdminDisplayContext {
 		}
 
 		return formURL;
+	}
+
+	public String getLexiconIconsPath() {
+		ThemeDisplay themeDisplay =
+			_ddlFormAdminRequestHelper.getThemeDisplay();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(themeDisplay.getPathThemeImages());
+		sb.append("/lexicon/icons.svg");
+		sb.append(StringPool.POUND);
+
+		return sb.toString();
 	}
 
 	public String getOrderByCol() {
@@ -292,13 +307,19 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	public String getPublishedFormURL() throws PortalException {
-		if (_recordSet == null) {
+		return getPublishedFormURL(_recordSet);
+	}
+
+	public String getPublishedFormURL(DDLRecordSet recordSet)
+		throws PortalException {
+
+		if (recordSet == null) {
 			return StringPool.BLANK;
 		}
 
-		String formURL = getFormURL();
+		String formURL = getFormURL(recordSet);
 
-		return formURL.concat(String.valueOf(_recordSet.getRecordSetId()));
+		return formURL.concat(String.valueOf(recordSet.getRecordSetId()));
 	}
 
 	public DDLRecordSet getRecordSet() throws PortalException {
@@ -476,7 +497,11 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	public boolean isFormPublished() throws PortalException {
-		DDLRecordSet recordSet = getRecordSet();
+		return isFormPublished(getRecordSet());
+	}
+
+	public boolean isFormPublished(DDLRecordSet recordSet)
+		throws PortalException {
 
 		if (recordSet == null) {
 			return false;
@@ -496,6 +521,12 @@ public class DDLFormAdminDisplayContext {
 
 	public boolean isShowCopyRecordSetButton() {
 		return isShowAddRecordSetButton();
+	}
+
+	public boolean isShowCopyURLRecordSetIcon(DDLRecordSet recordSet) {
+		return DDLRecordSetPermission.contains(
+			_ddlFormAdminRequestHelper.getPermissionChecker(), recordSet,
+			ActionKeys.VIEW);
 	}
 
 	public boolean isShowDeleteRecordSetIcon(DDLRecordSet recordSet) {

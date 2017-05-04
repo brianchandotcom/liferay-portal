@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_TITLE</td>
+	<td>//input[contains(@id,'customTitle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DATA_DEFINITION</td>
 	<td>//div[label[contains(.,'Data Definition')]]/input[@type='text']</td>
 	<td></td>

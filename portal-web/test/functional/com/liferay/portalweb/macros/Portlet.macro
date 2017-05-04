@@ -223,7 +223,7 @@
 	<command name="configureCustomTitleViaLookandfeelPG">
 		<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#USE_CUSTOM_TITLE" />
 
-		<execute function="Type" locator1="Portlet#CONFIGURATION_CUSTOM_TITLE_FIELD" value1="${portletName} Custom" />
+		<execute function="Type" locator1="TextInput#CUSTOM_TITLE" value1="${portletName} Custom" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 

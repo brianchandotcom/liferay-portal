@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIGURATION_CUSTOM_TITLE_FIELD</td>
-	<td>//div/input[contains(@id,'custom-title')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LAYOUT_2_COLUMNS</td>
 	<td>//input[contains(@id,'layoutTemplateId_1')]</td>
 	<td></td>

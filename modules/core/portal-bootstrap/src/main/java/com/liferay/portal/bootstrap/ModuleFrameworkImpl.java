@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.module.framework.ModuleFramework;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
@@ -679,9 +680,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		properties.put(
 			Constants.FRAMEWORK_BUNDLE_PARENT,
 			Constants.FRAMEWORK_BUNDLE_PARENT_APP);
-		properties.put(
-			Constants.FRAMEWORK_STORAGE,
-			PropsValues.MODULE_FRAMEWORK_STATE_DIR);
+
+		String moduleFrameworkStateDir = URLCodec.encodeURL(
+			PropsValues.MODULE_FRAMEWORK_STATE_DIR, StringPool.UTF8, true);
+
+		properties.put(Constants.FRAMEWORK_STORAGE, moduleFrameworkStateDir);
 
 		properties.put("eclipse.security", null);
 		properties.put("java.security.manager", null);

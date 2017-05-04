@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.poshi.runner</artifactId>
-  <version>1.0.54</version>
+  <version>1.0.55</version>
   <description>Liferay Poshi Runner</description>
   <licenses>
     <license>

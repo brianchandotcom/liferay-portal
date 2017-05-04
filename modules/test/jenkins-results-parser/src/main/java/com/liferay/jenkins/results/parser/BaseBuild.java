@@ -1842,7 +1842,7 @@ public abstract class BaseBuild implements Build {
 				JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE.substring(
 					"file:".length()),
 				"/", path),
-			replaceBuildURL(content));
+			JenkinsResultsParserUtil.redact(replaceBuildURL(content)));
 	}
 
 	protected static final int MAX_REINVOCATIONS = 1;

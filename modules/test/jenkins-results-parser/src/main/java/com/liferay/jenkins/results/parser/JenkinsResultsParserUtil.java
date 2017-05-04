@@ -214,7 +214,8 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static Process executeBashCommands(
-			boolean exitOnFirstFail, File basedir, String... commands)
+			boolean exitOnFirstFail, File basedir, long timeout,
+			String... commands)
 		throws InterruptedException, IOException {
 
 		System.out.print("Executing commands: ");
@@ -263,7 +264,37 @@ public class JenkinsResultsParserUtil {
 			inputStream.reset();
 		}
 
-		int returnCode = process.waitFor();
+		int returnCode = -1;
+
+		if (timeout > 0) {
+			long duration = 0;
+			long start = System.currentTimeMillis();
+
+			while ((returnCode == -1) && (duration < timeout)) {
+				try {
+					returnCode = process.exitValue();
+				}
+				catch (IllegalThreadStateException itse) {
+					returnCode = -1;
+				}
+
+				sleep(1000);
+
+				duration = System.currentTimeMillis() - start;
+			}
+
+			if (returnCode == -1) {
+				process.destroy();
+
+				throw new RuntimeException(
+					combine(
+						"Timeout occurred while executing bash commands \"",
+						bashCommands[2], "\""));
+			}
+		}
+		else {
+			returnCode = process.waitFor();
+		}
 
 		if (debug && (returnCode != 0)) {
 			InputStream inputStream = process.getErrorStream();
@@ -282,13 +313,13 @@ public class JenkinsResultsParserUtil {
 			boolean exitOnFirstFail, String... commands)
 		throws InterruptedException, IOException {
 
-		return executeBashCommands(exitOnFirstFail, new File("."), commands);
+		return executeBashCommands(exitOnFirstFail, new File("."), 0, commands);
 	}
 
 	public static Process executeBashCommands(String... commands)
 		throws InterruptedException, IOException {
 
-		return executeBashCommands(true, new File("."), commands);
+		return executeBashCommands(true, new File("."), 0, commands);
 	}
 
 	public static String expandSlaveRange(String value) {

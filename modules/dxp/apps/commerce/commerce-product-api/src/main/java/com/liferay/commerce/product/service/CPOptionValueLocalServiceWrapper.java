@@ -208,6 +208,22 @@ public class CPOptionValueLocalServiceWrapper
 		return _cpOptionValueLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOptionValue> searchCPOptionValues(
+		long companyId, long groupId, long cpOptionId,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionValueLocalService.searchCPOptionValues(companyId,
+			groupId, cpOptionId, keywords, start, end, sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return _cpOptionValueLocalService.search(searchContext);
+	}
+
 	/**
 	* Returns the number of cp option values.
 	*

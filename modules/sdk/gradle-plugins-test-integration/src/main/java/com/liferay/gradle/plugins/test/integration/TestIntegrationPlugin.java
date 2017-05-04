@@ -45,6 +45,8 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
@@ -77,6 +79,8 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 	public static final String STOP_TESTABLE_TOMCAT_TASK_NAME =
 		"stopTestableTomcat";
 
+	public static final String TEST_MODULES_CONFIGURATION_NAME = "testModules";
+
 	@Override
 	public void apply(final Project project) {
 		GradleUtil.applyPlugin(project, TestIntegrationBasePlugin.class);
@@ -92,9 +96,14 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				project, PLUGIN_NAME + "Tomcat",
 				TestIntegrationTomcatExtension.class);
 
+		Configuration testModulesConfiguration = _addConfigurationTestModules(
+			project);
+
 		SetUpTestableTomcatTask setUpTestableTomcatTask =
 			_addTaskSetUpTestableTomcat(
-				project, testIntegrationTomcatExtension);
+				project, testModulesConfiguration,
+				testIntegrationTomcatExtension);
+
 		StopTestableTomcatTask stopTestableTomcatTask =
 			_addTaskStopTestableTomcat(
 				project, testIntegrationTask, testIntegrationTomcatExtension);
@@ -150,6 +159,34 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		return originalCounter;
 	}
 
+	private Configuration _addConfigurationTestModules(final Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, TEST_MODULES_CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					_addDependenciesTestModules(project);
+				}
+
+			});
+
+		configuration.setDescription(
+			"Configures additional OSGi modules to deploy during integration " +
+				"testing.");
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
+	private void _addDependenciesTestModules(Project project) {
+		GradleUtil.addDependency(
+			project, TEST_MODULES_CONFIGURATION_NAME, "org.apache.aries.jmx",
+			"org.apache.aries.jmx.core", "1.1.7");
+	}
+
 	private SetUpArquillianTask _addTaskSetUpArquillian(
 		final Project project, final SourceSet testIntegrationSourceSet,
 		TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
@@ -180,7 +217,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 	}
 
 	private SetUpTestableTomcatTask _addTaskSetUpTestableTomcat(
-		Project project,
+		Project project, Configuration osgiModulesConfiguration,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
 		final SetUpTestableTomcatTask setUpTestableTomcatTask =
@@ -224,6 +261,9 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		setUpTestableTomcatTask.setOSGiModulesConfiguration(
+			osgiModulesConfiguration);
 
 		_configureJmxRemotePortSpec(
 			setUpTestableTomcatTask, testIntegrationTomcatExtension);

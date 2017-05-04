@@ -212,7 +212,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to index commerce product option " +
+								"Unable to index commerce product definition " +
 									cpDefinition.getCPDefinitionId(),
 								pe);
 						}

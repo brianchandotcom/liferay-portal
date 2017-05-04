@@ -42,6 +42,7 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -69,6 +70,20 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	@Override
+	public void postProcessContextBooleanFilter(
+		BooleanFilter contextBooleanFilter, SearchContext searchContext)
+		throws Exception {
+
+		int status = GetterUtil.getInteger(
+			searchContext.getAttribute(Field.STATUS),
+			WorkflowConstants.STATUS_APPROVED);
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			contextBooleanFilter.addRequiredTerm(Field.STATUS, status);
+		}
 	}
 
 	@Override

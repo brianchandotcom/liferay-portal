@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 
@@ -35,6 +37,7 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -44,15 +47,30 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = Indexer.class)
 public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 
+
+	public static final String FIELD_CP_OPTION_ID = "CPOptionId";
 	public static final String CLASS_NAME = CPOptionValue.class.getName();
 
 	public CPOptionValueIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
-			Field.NAME, Field.UID, "CPOptionId");
+			Field.NAME, Field.UID, FIELD_CP_OPTION_ID);
 		setFilterSearch(true);
 		setPermissionAware(true);
+	}
+
+	@Override
+	public void postProcessContextBooleanFilter(
+		BooleanFilter contextBooleanFilter, SearchContext searchContext)
+		throws Exception {
+
+		long cpOptionId = GetterUtil.getLong(
+			searchContext.getAttribute(FIELD_CP_OPTION_ID));
+
+		if (cpOptionId > 0) {
+			contextBooleanFilter.addRequiredTerm(FIELD_CP_OPTION_ID, cpOptionId);
+		}
 	}
 
 	@Override
@@ -93,9 +111,9 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 			document.addText(
 				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
 				title);
-			document.addNumber("priority", cpOptionValue.getPriority());
+			document.addNumber(Field.PRIORITY, cpOptionValue.getPriority());
 			document.addText(Field.CONTENT, title);
-			document.addNumber("CPOptionId", cpOptionValue.getCPOptionId());
+			document.addNumber(FIELD_CP_OPTION_ID, cpOptionValue.getCPOptionId());
 		}
 
 		if (_log.isDebugEnabled()) {

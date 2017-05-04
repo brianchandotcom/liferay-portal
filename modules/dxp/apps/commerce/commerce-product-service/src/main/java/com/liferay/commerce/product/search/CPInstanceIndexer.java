@@ -39,6 +39,7 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -50,6 +51,7 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 
 	public static final String CLASS_NAME = CPInstance.class.getName();
 
+	public static final String FIELD_CP_DEFINITION_ID = "CPDefinitionId";
 	public static final String FIELD_SKU = "sku";
 
 	public CPInstanceIndexer() {
@@ -59,6 +61,26 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 			FIELD_SKU, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
+	}
+	@Override
+	public void postProcessContextBooleanFilter(
+		BooleanFilter contextBooleanFilter, SearchContext searchContext)
+		throws Exception {
+
+		int status = GetterUtil.getInteger(
+			searchContext.getAttribute(Field.STATUS),
+			WorkflowConstants.STATUS_APPROVED);
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			contextBooleanFilter.addRequiredTerm(Field.STATUS, status);
+		}
+
+		long cpDefinitionId = GetterUtil.getLong(
+			searchContext.getAttribute(FIELD_CP_DEFINITION_ID));
+
+		if (cpDefinitionId > 0) {
+			contextBooleanFilter.addRequiredTerm(FIELD_CP_DEFINITION_ID, cpDefinitionId);
+		}
 	}
 
 	@Override
@@ -107,6 +129,9 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		document.addText(Field.CONTENT, cpInstance.getSku());
 
 		document.addText(FIELD_SKU, cpInstance.getSku());
+		document.addKeyword(
+			FIELD_CP_DEFINITION_ID,
+			cpInstance.getCPDefinitionId());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + cpInstance + " indexed successfully");

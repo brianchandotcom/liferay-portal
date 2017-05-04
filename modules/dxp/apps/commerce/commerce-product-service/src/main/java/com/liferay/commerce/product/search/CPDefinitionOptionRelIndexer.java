@@ -70,6 +70,19 @@ public class CPDefinitionOptionRelIndexer
 	}
 
 	@Override
+	public void postProcessContextBooleanFilter(
+		BooleanFilter contextBooleanFilter, SearchContext searchContext)
+		throws Exception {
+
+		long cpDefinitionId = GetterUtil.getLong(
+			searchContext.getAttribute(FIELD_CP_DEFINITION_ID));
+
+		if (cpDefinitionId > 0) {
+			contextBooleanFilter.addRequiredTerm(FIELD_CP_DEFINITION_ID, cpDefinitionId);
+		}
+	}
+
+	@Override
 	public void postProcessSearchQuery(
 			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
 			SearchContext searchContext)

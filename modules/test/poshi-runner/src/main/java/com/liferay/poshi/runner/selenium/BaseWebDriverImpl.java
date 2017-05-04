@@ -994,6 +994,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			String confirmation = alert.getText();
 
+			if (Validator.isNotNull(value)) {
+				alert.sendKeys(value);
+			}
+
 			alert.accept();
 
 			return confirmation;

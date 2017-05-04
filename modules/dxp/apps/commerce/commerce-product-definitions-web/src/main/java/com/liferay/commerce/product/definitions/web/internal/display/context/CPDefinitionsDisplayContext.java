@@ -17,14 +17,22 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 import com.liferay.commerce.product.definitions.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelCreateDateComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelNameComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelPriorityComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -71,16 +79,49 @@ public class CPDefinitionsDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total = _cpDefinitionService.getCPDefinitionsCount(
-			getScopeGroupId());
+		if(isSearch()){
 
-		searchContainer.setTotal(total);
+			boolean orderByAsc = false;
 
-		List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
-			getScopeGroupId(), searchContainer.getStart(),
-			searchContainer.getEnd(), orderByComparator);
+			if (Objects.equals(getOrderByType(), "asc")) {
+				orderByAsc = true;
+			}
 
-		searchContainer.setResults(results);
+			Sort sort = null;
+
+			if (Objects.equals(getOrderByCol(), "name")) {
+				sort = new Sort("name", Sort.STRING_TYPE, orderByAsc);
+			}
+			else if (Objects.equals(getOrderByCol(), "create-date")) {
+				sort = new Sort(Field.MODIFIED_DATE, true);
+			}
+			else if (Objects.equals(getOrderByCol(), "priority")) {
+				sort = new Sort("name", Sort.INT_TYPE, orderByAsc);
+			}
+
+			BaseModelSearchResult<CPOption> cpOptionBaseModelSearchResult =
+				_cpOptionService.searchCPOptions(themeDisplay.getCompanyId(),
+					themeDisplay.getScopeGroupId(), getKeywords(),
+					searchContainer.getStart(), searchContainer.getEnd(), sort);
+
+			searchContainer.setTotal(cpOptionBaseModelSearchResult.getLength());
+			searchContainer.setResults(
+				cpOptionBaseModelSearchResult.getBaseModels());
+
+		}
+		else {
+
+			int total = _cpDefinitionService.getCPDefinitionsCount(
+				getScopeGroupId());
+
+			searchContainer.setTotal(total);
+
+			List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
+				getScopeGroupId(), searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
+
+			searchContainer.setResults(results);
+		}
 
 		this.searchContainer = searchContainer;
 

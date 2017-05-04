@@ -115,6 +115,20 @@ public class CPDefinitionServiceUtil {
 			serviceContext, workflowContext);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinition> searchCPDefinitions(
+		long companyId, long groupId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCPDefinitions(companyId, groupId, keywords, start,
+			end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().search(searchContext);
+	}
+
 	public static int getCPDefinitionsCount(long groupId) {
 		return getService().getCPDefinitionsCount(groupId);
 	}

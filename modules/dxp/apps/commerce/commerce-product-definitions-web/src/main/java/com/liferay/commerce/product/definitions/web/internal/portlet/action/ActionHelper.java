@@ -187,7 +187,7 @@ public class ActionHelper {
 			new ArrayList<>();
 
 		long[] cpDefinitionOptionValueRelIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIdsCPDefinitionOptionValueRel");
+			resourceRequest, "rowIds");
 
 		for (long cpDefinitionOptionValueRelId :
 				cpDefinitionOptionValueRelIds) {

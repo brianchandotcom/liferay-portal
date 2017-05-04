@@ -16,8 +16,6 @@ package com.liferay.project.templates;
 
 import aQute.bnd.main.bnd;
 
-import aQute.lib.io.IO;
-
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
@@ -28,7 +26,6 @@ import com.liferay.project.templates.util.StringTestUtil;
 import difflib.DiffUtils;
 import difflib.Patch;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -1515,22 +1512,6 @@ public class ProjectTemplatesTest {
 		Assert.assertEquals(result.output, 0, result.exitCode);
 	}
 
-	private static List<String> _readLines(InputStream inputStream)
-		throws IOException {
-
-		List<String> lines = new ArrayList<>();
-
-		BufferedReader bufferedReader = IO.reader(inputStream);
-
-		String line = null;
-
-		while ((line = bufferedReader.readLine()) != null) {
-			lines.add(line);
-		}
-
-		return lines;
-	}
-
 	private static void _testBundlesDiff(File bundleFile1, File bundleFile2)
 		throws Exception {
 
@@ -1727,8 +1708,10 @@ public class ProjectTemplatesTest {
 					InputStream inputStream2 = warZipFile2.getInputStream(
 						entry2)) {
 
-					List<String> lines1 = _readLines(inputStream1);
-					List<String> lines2 = _readLines(inputStream2);
+					List<String> lines1 = StringTestUtil.readLines(
+						inputStream1);
+					List<String> lines2 = StringTestUtil.readLines(
+						inputStream2);
 
 					diffs.append("--- " + zipArchiveEntry1.getName() + "\n");
 					diffs.append("+++ " + zipArchiveEntry2.getName() + "\n");

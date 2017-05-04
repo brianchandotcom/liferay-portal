@@ -14,8 +14,18 @@
 
 package com.liferay.project.templates.util;
 
+import aQute.lib.io.IO;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Andrea Di Giorgi
+ * @author Gregory Amerson
  */
 public class StringTestUtil {
 
@@ -35,6 +45,22 @@ public class StringTestUtil {
 		}
 
 		return sb.toString();
+	}
+
+	public static List<String> readLines(InputStream inputStream)
+		throws IOException {
+
+		List<String> lines = new ArrayList<>();
+
+		BufferedReader bufferedReader = IO.reader(inputStream);
+
+		String line = null;
+
+		while ((line = bufferedReader.readLine()) != null) {
+			lines.add(line);
+		}
+
+		return lines;
 	}
 
 }

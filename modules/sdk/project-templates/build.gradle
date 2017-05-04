@@ -59,6 +59,7 @@ dependencies {
 
 	testCompile gradleTestKit()
 	testCompile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.2.0"
+	testCompile group: "com.googlecode.java-diff-utils", name: "diffutils", version: "1.3.0"
 	testCompile group: "junit", name: "junit", version: "4.12"
 	testCompile group: "net.diibadaaba.zipdiff", name: "zipdiff", version: "1.0"
 	testCompile project(":test:maven-executor")
@@ -71,6 +72,9 @@ liferayOSGi {
 processResources {
 	from configurations.projectTemplates
 }
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
 test {
 	dependsOn projectTemplateProjects.collect {

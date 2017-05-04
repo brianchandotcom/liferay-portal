@@ -16,6 +16,8 @@ package com.liferay.project.templates;
 
 import aQute.bnd.main.bnd;
 
+import aQute.lib.io.IO;
+
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
@@ -23,11 +25,16 @@ import com.liferay.project.templates.internal.util.WorkspaceUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 import com.liferay.project.templates.util.StringTestUtil;
 
+import difflib.DiffUtils;
+import difflib.Patch;
+
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 
 import java.net.URI;
@@ -56,6 +63,7 @@ import net.diibadaaba.zipdiff.DifferenceCalculator;
 import net.diibadaaba.zipdiff.Differences;
 
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.BuildTask;
@@ -1507,6 +1515,22 @@ public class ProjectTemplatesTest {
 		Assert.assertEquals(result.output, 0, result.exitCode);
 	}
 
+	private static List<String> _readLines(InputStream inputStream)
+		throws IOException {
+
+		List<String> lines = new ArrayList<>();
+
+		BufferedReader bufferedReader = IO.reader(inputStream);
+
+		String line = null;
+
+		while ((line = bufferedReader.readLine()) != null) {
+			lines.add(line);
+		}
+
+		return lines;
+	}
+
 	private static void _testBundlesDiff(File bundleFile1, File bundleFile2)
 		throws Exception {
 
@@ -1668,6 +1692,9 @@ public class ProjectTemplatesTest {
 		Map<String, ZipArchiveEntry> added = differences.getAdded();
 		Map<String, ZipArchiveEntry[]> changed = differences.getChanged();
 		Map<String, ZipArchiveEntry> removed = differences.getRemoved();
+		StringBuilder diffs = new StringBuilder();
+		ZipFile warZipFile1 = new ZipFile(warFile1);
+		ZipFile warZipFile2 = new ZipFile(warFile2);
 
 		if (added.isEmpty() && !changed.isEmpty() && removed.isEmpty()) {
 			realChange = false;
@@ -1690,6 +1717,33 @@ public class ProjectTemplatesTest {
 					continue;
 				}
 
+				ZipArchiveEntry entry1 = warZipFile1.getEntry(
+					zipArchiveEntry1.getName());
+				ZipArchiveEntry entry2 = warZipFile2.getEntry(
+					zipArchiveEntry2.getName());
+
+				try (InputStream inputStream1 = warZipFile1.getInputStream(
+						entry1);
+					InputStream inputStream2 = warZipFile2.getInputStream(
+						entry2)) {
+
+					List<String> lines1 = _readLines(inputStream1);
+					List<String> lines2 = _readLines(inputStream2);
+
+					diffs.append("--- " + zipArchiveEntry1.getName() + "\n");
+					diffs.append("+++ " + zipArchiveEntry2.getName() + "\n");
+
+					Patch<String> diff = DiffUtils.diff(lines1, lines2);
+
+					diff.getDeltas().stream().forEach(delta -> {
+						diffs.append("\t" + delta.getOriginal() + "\n");
+						diffs.append("\t" + delta.getRevised() + "\n");
+						diffs.append("\n");
+					});
+
+					diffs.append("\n");
+				}
+
 				realChange = true;
 
 				break;
@@ -1701,7 +1755,7 @@ public class ProjectTemplatesTest {
 
 		Assert.assertFalse(
 			"WAR " + warFile1 + " and " + warFile2 + " do not match:\n" +
-				differences,
+				differences + "\n" + diffs.toString(),
 			realChange);
 	}
 

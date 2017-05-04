@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -82,6 +83,7 @@ public class DDLFormDisplayContext {
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
+		_containerId = StringUtil.randomString();
 
 		if (Validator.isNotNull(getPortletResource())) {
 			return;
@@ -93,6 +95,10 @@ public class DDLFormDisplayContext {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
+	}
+
+	public String getContainerId() {
+		return _containerId;
 	}
 
 	public String getDDMFormHTML() throws PortalException {
@@ -259,6 +265,7 @@ public class DDLFormDisplayContext {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
+		ddmFormRenderingContext.setContainerId(_containerId);
 		ddmFormRenderingContext.setDDMFormValues(
 			_ddmFormValuesFactory.create(_renderRequest, ddmForm));
 		ddmFormRenderingContext.setHttpServletRequest(
@@ -477,6 +484,7 @@ public class DDLFormDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLFormDisplayContext.class);
 
+	private final String _containerId;
 	private final DDLRecordSetService _ddlRecordSetService;
 	private final DDLRecordVersionLocalService _ddlRecordVersionLocalService;
 	private final DDMFormRenderer _ddmFormRenderer;

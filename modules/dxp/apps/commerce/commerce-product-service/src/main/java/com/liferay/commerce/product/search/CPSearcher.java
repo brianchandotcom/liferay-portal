@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.search;
 
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
@@ -25,7 +26,7 @@ import com.liferay.portal.kernel.search.Indexer;
 public class CPSearcher extends BaseSearcher {
 
 	public static final String[] CLASS_NAMES = {
-		CPOption.class.getName()
+		CPOption.class.getName(), CPOptionValue.class.getName()
 	};
 
 	public static Indexer<?> getInstance() {

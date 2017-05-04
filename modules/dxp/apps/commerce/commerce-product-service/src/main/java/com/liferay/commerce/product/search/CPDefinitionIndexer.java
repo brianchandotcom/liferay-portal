@@ -23,18 +23,24 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Validator;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -43,16 +49,51 @@ import java.util.Locale;
 @Component(immediate = true, service = Indexer.class)
 public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
+	public static final String FIELD_BASE_SKU = "baseSKU";
+	public static final String FIELD_SKUS = "skus";
+
 	public CPDefinitionIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 			Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
-			Field.SCOPE_GROUP_ID, Field.NAME, Field.UID);
+			Field.SCOPE_GROUP_ID, Field.TITLE, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
 
 	public static final String CLASS_NAME = CPDefinition.class.getName();
+
+	@Override
+	public void postProcessSearchQuery(
+		BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+		SearchContext searchContext)
+		throws Exception {
+
+		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, Field.CONTENT, false);
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, Field.DESCRIPTION, false);
+
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
+		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
+
+		LinkedHashMap<String, Object> params =
+			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
+
+		if (params != null) {
+			String expandoAttributes = (String)params.get("expandoAttributes");
+
+			if (Validator.isNotNull(expandoAttributes)) {
+				addSearchExpando(searchQuery, searchContext, expandoAttributes);
+			}
+		}
+
+		addSearchTerm(searchQuery, searchContext, FIELD_BASE_SKU, false);
+		addSearchTerm(searchQuery, searchContext, FIELD_SKUS, false);
+
+	}
+
 
 	@Override
 	public String getClassName() {
@@ -77,8 +118,9 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		String cpDefinitionDefaultLanguageId = LocalizationUtil.
 			getDefaultLanguageId(cpDefinition.getTitle());
 
-		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
-			cpDefinition.getTitle());
+		List<String> languageIds = _cpDefinitionLocalService.
+			getCPDefinitionLocalizationLanguageIds(
+				cpDefinition.getCPDefinitionId());
 
 		for (String languageId : languageIds) {
 			String description = cpDefinition.getDescription(languageId);
@@ -101,12 +143,12 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			document.addText(Field.CONTENT, description);
 		}
 
-		document.addKeyword("baseSKU", cpDefinition.getBaseSKU());
+		document.addText(FIELD_BASE_SKU, cpDefinition.getBaseSKU());
 
 		String[] skus =  _cpInstanceLocalService.getSKUs(
 			cpDefinition.getCPDefinitionId());
 
-		document.addKeyword("skus", skus);
+		document.addText(FIELD_SKUS, skus);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + cpDefinition + " indexed successfully");

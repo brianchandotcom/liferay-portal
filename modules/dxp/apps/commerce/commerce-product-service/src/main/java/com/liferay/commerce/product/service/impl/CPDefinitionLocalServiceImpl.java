@@ -598,8 +598,6 @@ public class CPDefinitionLocalServiceImpl
 		attributes.put(Field.TITLE, keywords);
 		attributes.put(Field.DESCRIPTION, keywords);
 		attributes.put(Field.CONTENT, keywords);
-		attributes.put("baseSku", keywords);
-		attributes.put("skus", keywords);
 		attributes.put("params", params);
 
 		searchContext.setAttributes(attributes);

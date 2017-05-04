@@ -53,13 +53,13 @@ if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TY
 
 	<portlet:actionURL name="editPublishConfiguration" var="deletePublishConfigurationURL">
 		<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(groupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(groupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= deleteRedirectURL %>" />
 		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete
-		trash="<%= TrashUtil.isTrashEnabled(groupId) %>"
+		trash="<%= trashHelper.isTrashEnabled(groupId) %>"
 		url="<%= deletePublishConfigurationURL %>"
 	/>
 </liferay-ui:icon-menu>

@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.trash.TrashHelper;
+import com.liferay.trash.util.TrashWebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -35,6 +37,9 @@ public abstract class GetGroupMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			ActionUtil.getGroup(renderRequest);
+
+			renderRequest.setAttribute(
+				TrashWebKeys.TRASH_HELPER, getTrashHelper());
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchGroupException ||
@@ -53,5 +58,7 @@ public abstract class GetGroupMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	protected abstract String getPath();
+
+	protected abstract TrashHelper getTrashHelper();
 
 }

@@ -209,13 +209,13 @@ if (portletTitleBasedNavigation) {
 					</portlet:renderURL>
 
 					<portlet:actionURL name="/message_boards/delete_thread" var="deleteURL">
-						<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId()) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 						<portlet:param name="redirect" value="<%= parentCategoryURL %>" />
 						<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
 					</portlet:actionURL>
 
 					<liferay-ui:icon-delete
-						trash="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>"
+						trash="<%= trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId()) %>"
 						url="<%= deleteURL %>"
 					/>
 				</c:if>

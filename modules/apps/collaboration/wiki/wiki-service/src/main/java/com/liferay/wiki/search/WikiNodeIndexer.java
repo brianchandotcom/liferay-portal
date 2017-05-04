@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
@@ -92,7 +92,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 		String title = wikiNode.getName();
 
 		if (wikiNode.isInTrash()) {
-			title = TrashUtil.getOriginalTitle(title);
+			title = _trashHelper.getOriginalTitle(title);
 		}
 
 		document.addText(Field.TITLE, title);
@@ -194,6 +194,9 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 	private WikiNodeLocalService _wikiNodeLocalService;
 

@@ -241,7 +241,7 @@ if (portletTitleBasedNavigation) {
 
 								String taglibDeleteAttachment = "javascript:" + renderResponse.getNamespace() + "trashAttachment(" + (i + 1) + ", '" + Constants.MOVE_TO_TRASH + "');";
 
-								if (!TrashUtil.isTrashEnabled(scopeGroupId)) {
+								if (!trashHelper.isTrashEnabled(scopeGroupId)) {
 									taglibDeleteAttachment = "javascript:" + renderResponse.getNamespace() + "deleteAttachment(" + (i + 1) + ");";
 								}
 							%>
@@ -269,13 +269,13 @@ if (portletTitleBasedNavigation) {
 									<liferay-ui:icon-delete
 										id='<%= "removeExisting" + (i + 1) %>'
 										label="<%= true %>"
-										message='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "remove" : "delete" %>'
+										message='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "remove" : "delete" %>'
 										method="get"
-										trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
+										trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
 										url="<%= taglibDeleteAttachment %>"
 									/>
 
-									<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
+									<c:if test="<%= trashHelper.isTrashEnabled(scopeGroupId) %>">
 
 										<%
 										StringBundler sb = new StringBundler(7);
@@ -487,7 +487,7 @@ if (portletTitleBasedNavigation) {
 
 <aui:script>
 	<c:choose>
-		<c:when test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
+		<c:when test="<%= trashHelper.isTrashEnabled(scopeGroupId) %>">
 			function <portlet:namespace />trashAttachment(index, action) {
 				var $ = AUI.$;
 

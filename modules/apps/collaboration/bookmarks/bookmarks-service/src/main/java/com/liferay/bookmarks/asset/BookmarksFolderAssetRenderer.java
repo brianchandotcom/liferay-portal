@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 
 import java.util.Date;
 import java.util.Locale;
@@ -51,8 +51,20 @@ public class BookmarksFolderAssetRenderer
 
 	public static final String TYPE = "bookmarks_folder";
 
+	/**
+	 * @deprecated As of 1.1.0, replaced by {@link #BookmarksFolderAssetRenderer(
+	 *             BookmarksFolder, TrashHelper)}
+	 */
+	@Deprecated
 	public BookmarksFolderAssetRenderer(BookmarksFolder folder) {
+		this(folder, null);
+	}
+
+	public BookmarksFolderAssetRenderer(
+		BookmarksFolder folder, TrashHelper trashHelper) {
+
 		_folder = folder;
+		_trashHelper = trashHelper;
 	}
 
 	@Override
@@ -116,7 +128,11 @@ public class BookmarksFolderAssetRenderer
 
 	@Override
 	public String getTitle(Locale locale) {
-		return TrashUtil.getOriginalTitle(_folder.getName());
+		if (_trashHelper == null) {
+			return _folder.getName();
+		}
+
+		return _trashHelper.getOriginalTitle(_folder.getName());
 	}
 
 	@Override
@@ -219,5 +235,6 @@ public class BookmarksFolderAssetRenderer
 	}
 
 	private final BookmarksFolder _folder;
+	private final TrashHelper _trashHelper;
 
 }

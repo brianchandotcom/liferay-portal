@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.trash.TrashHelper;
+import com.liferay.trash.util.TrashWebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -41,6 +43,9 @@ public abstract class BaseViewMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(
 				WebKeys.MESSAGE_BOARDS_CATEGORY, category);
+
+			renderRequest.setAttribute(
+				TrashWebKeys.TRASH_HELPER, getTrashHelper());
 		}
 		catch (BannedUserException | NoSuchCategoryException |
 			   PrincipalException e) {
@@ -62,6 +67,8 @@ public abstract class BaseViewMVCRenderCommand implements MVCRenderCommand {
 	protected BaseViewMVCRenderCommand(String jspPath) {
 		_jspPath = jspPath;
 	}
+
+	protected abstract TrashHelper getTrashHelper();
 
 	private final String _jspPath;
 

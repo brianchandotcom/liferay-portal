@@ -37,7 +37,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Julio Camarero
+ * @deprecated As of 7.0.0
  */
+@Deprecated
 @ProviderType
 public class TrashUtil {
 

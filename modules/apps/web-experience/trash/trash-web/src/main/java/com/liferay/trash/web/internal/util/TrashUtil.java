@@ -23,8 +23,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.trash.TrashHelper;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,12 +35,16 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = TrashUtil.class)
 public class TrashUtil {
 
-	public static void addBaseModelBreadcrumbEntries(
+	public void addBaseModelBreadcrumbEntries(
 			HttpServletRequest request,
 			LiferayPortletResponse liferayPortletResponse, String className,
 			long classPK, PortletURL containerModelURL)
@@ -50,7 +55,7 @@ public class TrashUtil {
 			containerModelURL, true);
 	}
 
-	public static void addContainerModelBreadcrumbEntries(
+	public void addContainerModelBreadcrumbEntries(
 			HttpServletRequest request,
 			LiferayPortletResponse liferayPortletResponse, String className,
 			long classPK, PortletURL containerModelURL)
@@ -66,7 +71,7 @@ public class TrashUtil {
 			themeDisplay.getLocale(), trashHandler.getRootContainerModelName());
 
 		if (classPK == 0) {
-			PortalUtil.addPortletBreadcrumbEntry(
+			_portal.addPortletBreadcrumbEntry(
 				request, rootContainerModelTitle, null);
 
 			return;
@@ -74,7 +79,7 @@ public class TrashUtil {
 
 		containerModelURL.setParameter("containerModelId", "0");
 
-		PortalUtil.addPortletBreadcrumbEntry(
+		_portal.addPortletBreadcrumbEntry(
 			request, rootContainerModelTitle, containerModelURL.toString());
 
 		addBreadcrumbEntries(
@@ -82,7 +87,7 @@ public class TrashUtil {
 			"containerModelId", containerModelURL, false);
 	}
 
-	protected static void addBreadcrumbEntries(
+	protected void addBreadcrumbEntries(
 			HttpServletRequest request,
 			LiferayPortletResponse liferayPortletResponse, String className,
 			long classPK, String paramName, PortletURL containerModelURL,
@@ -124,18 +129,23 @@ public class TrashUtil {
 			if (containerModelTrashHandler.isInTrash(
 					containerModel.getContainerModelId())) {
 
-				name = com.liferay.trash.kernel.util.TrashUtil.getOriginalTitle(
-					name);
+				name = _trashHelper.getOriginalTitle(name);
 			}
 
-			PortalUtil.addPortletBreadcrumbEntry(
+			_portal.addPortletBreadcrumbEntry(
 				request, name, portletURL.toString());
 		}
 
 		TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
 
-		PortalUtil.addPortletBreadcrumbEntry(
+		_portal.addPortletBreadcrumbEntry(
 			request, trashRenderer.getTitle(themeDisplay.getLocale()), null);
 	}
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

@@ -128,13 +128,13 @@ else {
 		</portlet:renderURL>
 
 		<portlet:actionURL name="/bookmarks/edit_entry" var="deleteURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= view ? redirectURL : currentURL %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
+			trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
 			url="<%= deleteURL %>"
 		/>
 	</c:if>

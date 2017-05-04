@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.exception.WikiFormatException;
 import com.liferay.wiki.model.WikiNode;
@@ -214,7 +214,7 @@ public class WikiPageIndexer
 		String title = wikiPage.getTitle();
 
 		if (wikiPage.isInTrash()) {
-			title = TrashUtil.getOriginalTitle(title);
+			title = _trashHelper.getOriginalTitle(title);
 		}
 
 		document.addText(Field.TITLE, title);
@@ -390,6 +390,10 @@ public class WikiPageIndexer
 
 	private final RelatedEntryIndexer _relatedEntryIndexer =
 		new BaseRelatedEntryIndexer();
+
+	@Reference
+	private TrashHelper _trashHelper;
+
 	private WikiEngineRenderer _wikiEngineRenderer;
 	private WikiNodeLocalService _wikiNodeLocalService;
 	private WikiNodeService _wikiNodeService;

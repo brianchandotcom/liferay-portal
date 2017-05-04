@@ -113,13 +113,13 @@ if (row == null) {
 		</portlet:renderURL>
 
 		<portlet:actionURL name="/bookmarks/edit_folder" var="deleteURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= view ? redirectURL : currentURL %>" />
 			<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
+			trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
 			url="<%= deleteURL %>"
 		/>
 	</c:if>

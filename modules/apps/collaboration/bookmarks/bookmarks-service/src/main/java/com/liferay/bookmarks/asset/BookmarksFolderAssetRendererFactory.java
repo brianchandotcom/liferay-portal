@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.trash.TrashHelper;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -65,7 +66,7 @@ public class BookmarksFolderAssetRendererFactory
 			classPK);
 
 		BookmarksFolderAssetRenderer bookmarksFolderAssetRenderer =
-			new BookmarksFolderAssetRenderer(folder);
+			new BookmarksFolderAssetRenderer(folder, _trashHelper);
 
 		bookmarksFolderAssetRenderer.setAssetRendererType(type);
 		bookmarksFolderAssetRenderer.setServletContext(_servletContext);
@@ -135,5 +136,8 @@ public class BookmarksFolderAssetRendererFactory
 
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 	private ServletContext _servletContext;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

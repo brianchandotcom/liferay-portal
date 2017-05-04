@@ -120,16 +120,20 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 		long classPK = dlFileEntry.getClassPK();
 
 		if (Validator.isNotNull(className) && (classPK > 0)) {
-			boolean hasResourcePermission = GetterUtil.getBoolean(
+			Boolean hasResourcePermission =
 				ResourcePermissionCheckerUtil.containsResourcePermission(
-					permissionChecker, className, classPK, actionId));
+					permissionChecker, className, classPK, actionId);
 
-			boolean hasBaseModelPermission = GetterUtil.getBoolean(
+			if ((hasResourcePermission != null) && !hasResourcePermission) {
+				return false;
+			}
+
+			Boolean hasBaseModelPermission =
 				BaseModelPermissionCheckerUtil.containsBaseModelPermission(
 					permissionChecker, dlFileEntry.getGroupId(), className,
-					classPK, actionId));
+					classPK, actionId);
 
-			if (!hasBaseModelPermission && !hasResourcePermission) {
+			if ((hasBaseModelPermission != null) && !hasBaseModelPermission) {
 				return false;
 			}
 		}

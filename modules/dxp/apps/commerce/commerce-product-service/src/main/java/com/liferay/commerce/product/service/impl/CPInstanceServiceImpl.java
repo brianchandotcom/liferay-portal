@@ -21,6 +21,13 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.base.CPInstanceServiceBaseImpl;
 import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -157,5 +164,20 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		return cpInstanceLocalService.updateStatus(
 			userId, cpInstanceId, status, serviceContext, workflowContext);
 	}
+
+	@Override
+	public Hits search(SearchContext searchContext) {
+		return cpInstanceLocalService.search(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<CPInstance> searchCPOptions(
+		long companyId, long groupId,long cpDefinitionId, String keywords, int start, int end,
+		Sort sort)
+		throws PortalException {
+
+			return cpInstanceLocalService.searchCPOptions(companyId, groupId, cpDefinitionId, keywords, start, end, sort);
+	}
+
 
 }

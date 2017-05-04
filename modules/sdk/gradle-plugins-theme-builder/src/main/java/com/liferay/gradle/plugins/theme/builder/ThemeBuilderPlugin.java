@@ -130,6 +130,9 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, PARENT_THEMES_CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.frontend.theme.unstyled", "latest.release");
+		GradleUtil.addDependency(
+			project, PARENT_THEMES_CONFIGURATION_NAME, "com.liferay.plugins",
+			"classic-theme", "latest.release");
 	}
 
 	private void _addDependenciesThemeBuilder(Project project) {

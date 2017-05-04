@@ -71,7 +71,7 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 	@Override
 	protected Document doGetDocument(CPOption cpOption) throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing folder " + cpOption);
+			_log.debug("Indexing option " + cpOption);
 		}
 
 		Document document = getBaseModelDocument(CLASS_NAME, cpOption);

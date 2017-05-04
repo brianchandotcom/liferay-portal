@@ -70,7 +70,7 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 	protected Document doGetDocument(CPOptionValue cpOptionValue)
 		throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing folder " + cpOptionValue);
+			_log.debug("Indexing option value " + cpOptionValue);
 		}
 
 		Document document = getBaseModelDocument(CLASS_NAME, cpOptionValue);

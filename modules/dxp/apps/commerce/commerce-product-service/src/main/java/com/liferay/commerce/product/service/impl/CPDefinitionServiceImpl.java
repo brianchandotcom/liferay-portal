@@ -148,6 +148,22 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
+	public CPDefinition moveCPDefinitonToTrash(long cpDefinitionId) throws PortalException {
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.DELETE);
+
+		return cpDefinitionLocalService.moveCPDefinitionToTrash(getUserId(), cpDefinitionId);
+	}
+
+	@Override
+	public void restoreCPDefinitionFromTrash(long cpDefinitionId) throws PortalException {
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.DELETE);
+
+		cpDefinitionLocalService.restoreCPDefinitionFromTrash(getUserId(), cpDefinitionId);
+	}
+
+	@Override
 	public CPDefinition updateCPDefinition(
 			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String productTypeName,

@@ -316,6 +316,10 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
+		<execute macro="Portlet#configureApplicationDecoratorViaLookandfeelPG">
+			<var name="applicationDecorator" value="Decorate" />
+		</execute>
+
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#gotoPage">

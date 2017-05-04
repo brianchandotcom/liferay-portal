@@ -24,6 +24,9 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for PasswordPolicy. Methods of this
@@ -73,12 +76,19 @@ public interface PasswordPolicyService extends BaseService {
 		long resetFailureCount, long resetTicketMaxAge,
 		ServiceContext serviceContext) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, java.lang.String name);
+
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<PasswordPolicy> search(long companyId, java.lang.String name,
+		int start, int end, OrderByComparator<PasswordPolicy> obc);
 
 	public void deletePasswordPolicy(long passwordPolicyId)
 		throws PortalException;

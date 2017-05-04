@@ -120,6 +120,39 @@ public class PasswordPolicyServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.PasswordPolicySoap[] search(
+		long companyId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.PasswordPolicy> obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.kernel.model.PasswordPolicy> returnValue =
+				PasswordPolicyServiceUtil.search(companyId, name, start, end,
+					obc);
+
+			return com.liferay.portal.kernel.model.PasswordPolicySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int searchCount(long companyId, java.lang.String name)
+		throws RemoteException {
+		try {
+			int returnValue = PasswordPolicyServiceUtil.searchCount(companyId,
+					name);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.PasswordPolicySoap updatePasswordPolicy(
 		long passwordPolicyId, java.lang.String name,
 		java.lang.String description, boolean changeable,

@@ -978,22 +978,21 @@ public abstract class BaseBuild implements Build {
 
 					if (this instanceof AxisBuild ||
 						this instanceof BatchBuild ||
-						this instanceof TopLevelBuild || fromArchive) {
+						this instanceof TopLevelBuild || fromArchive ||
+						(badBuildNumbers.size() >= MAX_REINVOCATIONS)) {
 
 						return;
 					}
 
 					if ((result != null) && !result.equals("SUCCESS")) {
 						for (ReinvokeRule reinvokeRule : reinvokeRules) {
-							if (badBuildNumbers.size() >= MAX_REINVOCATIONS) {
-								break;
-							}
-
 							if (!reinvokeRule.matches(this)) {
 								continue;
 							}
 
 							reinvoke(reinvokeRule);
+
+							break;
 						}
 					}
 				}

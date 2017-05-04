@@ -26,7 +26,7 @@ long cpOptionId = ParamUtil.getLong(request, "cpOptionId");
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle((cpOptionValue == null) ? LanguageUtil.get(request, "add-product-option-value") : cpOptionValue.getTitle(locale));
+renderResponse.setTitle((cpOptionValue == null) ? LanguageUtil.get(request, "add-option-value") : cpOptionValue.getTitle(locale));
 %>
 
 <portlet:actionURL name="editProductOptionValue" var="editProductOptionValueActionURL" />

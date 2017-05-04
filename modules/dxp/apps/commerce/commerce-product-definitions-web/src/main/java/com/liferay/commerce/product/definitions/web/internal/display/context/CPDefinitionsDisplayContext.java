@@ -29,7 +29,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Objects;
@@ -67,6 +69,11 @@ public class CPDefinitionsDisplayContext
 			return searchContainer;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+
 		SearchContainer<CPDefinition> searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
@@ -99,10 +106,11 @@ public class CPDefinitionsDisplayContext
 				sort = new Sort("name", Sort.INT_TYPE, orderByAsc);
 			}
 
-			BaseModelSearchResult<CPOption> cpOptionBaseModelSearchResult =
-				_cpOptionService.searchCPOptions(themeDisplay.getCompanyId(),
-					themeDisplay.getScopeGroupId(), getKeywords(),
-					searchContainer.getStart(), searchContainer.getEnd(), sort);
+			BaseModelSearchResult<CPDefinition> cpOptionBaseModelSearchResult =
+				_cpDefinitionService.searchCPDefinitions (
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					getKeywords(), searchContainer.getStart(),
+					searchContainer.getEnd(), sort);
 
 			searchContainer.setTotal(cpOptionBaseModelSearchResult.getLength());
 			searchContainer.setResults(

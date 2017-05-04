@@ -22,9 +22,15 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -97,6 +103,11 @@ public class CPInstanceDisplayContext
 			return searchContainer;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+
 		SearchContainer<CPInstance> searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
@@ -111,15 +122,50 @@ public class CPInstanceDisplayContext
 
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total = _cpInstanceService.getCPInstancesCount(getCPDefinitionId());
+		if(isSearch()){
+			boolean orderByAsc = false;
 
-		searchContainer.setTotal(total);
+			if (Objects.equals(getOrderByType(), "asc")) {
+				orderByAsc = true;
+			}
 
-		List<CPInstance> results = _cpInstanceService.getCPInstances(
-			getCPDefinitionId(), searchContainer.getStart(),
-			searchContainer.getEnd(), orderByComparator);
+			Sort sort = null;
 
-		searchContainer.setResults(results);
+			if (Objects.equals(getOrderByCol(), "sku")) {
+				sort = new Sort("sku", Sort.STRING_TYPE, orderByAsc);
+			}
+			else if (Objects.equals(getOrderByCol(), "create-date")) {
+				sort = new Sort(Field.MODIFIED_DATE, true);
+			}
+			else if (Objects.equals(getOrderByCol(), "display-date")) {
+				sort = new Sort("display-date", true);
+			}
+
+			BaseModelSearchResult<CPInstance>
+				cpInstanceBaseModelSearchResult =
+					_cpInstanceService.searchCPOptions(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId(),getCPDefinitionId(),
+						getKeywords(), searchContainer.getStart(),
+						searchContainer.getEnd(), sort);
+
+			searchContainer.setTotal(
+				cpInstanceBaseModelSearchResult.getLength());
+			searchContainer.setResults(
+				cpInstanceBaseModelSearchResult.getBaseModels());
+
+		}
+		else {
+			int total = _cpInstanceService.getCPInstancesCount(getCPDefinitionId());
+
+			searchContainer.setTotal(total);
+
+			List<CPInstance> results = _cpInstanceService.getCPInstances(
+				getCPDefinitionId(), searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
+
+			searchContainer.setResults(results);
+		}
 
 		this.searchContainer = searchContainer;
 

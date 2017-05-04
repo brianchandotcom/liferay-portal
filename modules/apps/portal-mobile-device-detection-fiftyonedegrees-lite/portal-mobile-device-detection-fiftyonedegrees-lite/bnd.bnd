@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Mobile Device Recognition Provider FiftyOneDegrees
-Bundle-SymbolicName: com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees
+Bundle-SymbolicName: com.liferay.portal.mobile.device.detection.fiftyonedegrees.lite
 Bundle-Version: 1.0.2
-Export-Package: com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.data
+Export-Package: com.liferay.portal.mobile.device.detection.fiftyonedegrees.data
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Mobile Device Recognition Provider FiftyOneDegrees

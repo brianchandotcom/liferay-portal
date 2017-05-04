@@ -26,10 +26,10 @@ String backURL = (String)row.getParameter("backURL");
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/designer/edit_kaleo_draft_definition.jsp" />
+		<portlet:param name="mvcPath" value="/designer/edit_kaleo_definition_version.jsp" />
 		<portlet:param name="closeRedirect" value="<%= backURL %>" />
 		<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
-		<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
+		<portlet:param name="draftVersion" value="<%= String.valueOf(workflowDefinition.getVersion()) + StringPool.PERIOD + '0' %>" />
 	</liferay-portlet:renderURL>
 
 	<liferay-ui:icon

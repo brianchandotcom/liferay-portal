@@ -26,39 +26,31 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
-page import="com.liferay.portal.kernel.service.ServiceContext" %><%@
-page import="com.liferay.portal.kernel.service.ServiceContextFactory" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
-page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
 page import="com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.constants.KaleoDesignerActionKeys" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.constants.KaleoDesignerWebKeys" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.exception.DuplicateKaleoDraftDefinitionNameException" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.exception.KaleoDraftDefinitionNameException" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalServiceUtil" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionServiceUtil" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.service.permission.KaleoDesignerPermission" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.service.permission.KaleoDraftDefinitionPermission" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.util.KaleoDesignerUtil" %><%@
+page import="com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerActionKeys" %><%@
+page import="com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys" %><%@
+page import="com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission" %><%@
+page import="com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission" %><%@
 page import="com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.KaleoDesignerDisplayContext" %><%@
+page import="com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion" %><%@
+page import="com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServiceUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
-
-<%@ page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

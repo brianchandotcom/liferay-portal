@@ -32,48 +32,43 @@ iteratorURL.setParameter("mvcPath", "/designer/view.jsp");
 			<liferay-ui:search-container
 				emptyResultsMessage="no-workflow-definitions-are-defined"
 				iteratorURL="<%= iteratorURL %>"
-				orderByComparator="<%= kaleoDesignerDisplayContext.getKaleoDraftDefinitionOrderByComparator() %>"
+				orderByComparator="<%= kaleoDesignerDisplayContext.getKaleoDefinitionVersionOrderByComparator() %>"
 				searchTerms="<%= new DisplayTerms(renderRequest) %>"
 			>
 				<liferay-ui:search-container-results>
-					<%@ include file="/designer/kaleo_draft_definitions_search_results.jspf" %>
+					<%@ include file="/designer/kaleo_definition_versions_search_results.jspf" %>
 				</liferay-ui:search-container-results>
 
 				<liferay-ui:search-container-row
-					className="com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition"
+					className="com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion"
 					escapedModel="<%= false %>"
-					keyProperty="kaleoDraftDefinitionId"
-					modelVar="kaleoDraftDefinition"
+					keyProperty="kaleoDefinitionVersionId"
+					modelVar="kaleoDefinitionVersion"
 				>
 					<liferay-ui:search-container-column-text
 						name="name"
-						value="<%= HtmlUtil.escape(kaleoDraftDefinition.getName()) %>"
+						value="<%= HtmlUtil.escape(kaleoDefinitionVersion.getName()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
 						name="title"
-						value="<%= HtmlUtil.escape(kaleoDraftDefinition.getTitle(themeDisplay.getLanguageId())) %>"
+						value="<%= HtmlUtil.escape(kaleoDefinitionVersion.getTitle(themeDisplay.getLanguageId())) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
 						name="version"
-						value="<%= String.valueOf(kaleoDraftDefinition.getVersion()) %>"
+						value="<%= kaleoDefinitionVersion.getVersion() %>"
 					/>
 
-					<liferay-ui:search-container-column-text
-						name="draft-version"
-						value="<%= String.valueOf(kaleoDraftDefinition.getDraftVersion()) %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						name="published"
-						value='<%= (kaleoDraftDefinition.getVersion() > 0) ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
+					<liferay-ui:search-container-column-status
+						name="status"
+						status="<%= kaleoDefinitionVersion.getStatus() %>"
 					/>
 
 					<liferay-ui:search-container-column-jsp
 						align="right"
 						cssClass="entry-action"
-						path="/designer/kaleo_draft_definition_action.jsp"
+						path="/designer/kaleo_definition_version_action.jsp"
 					/>
 				</liferay-ui:search-container-row>
 
@@ -82,13 +77,13 @@ iteratorURL.setParameter("mvcPath", "/designer/view.jsp");
 		</div>
 
 		<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT) %>">
-			<portlet:renderURL var="editKaleoDraftDefinitionURL">
-				<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_draft_definition.jsp" %>' />
-				<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:renderURL var="editKaleoDefinitionVersionURL">
+				<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 
 			<liferay-frontend:add-menu>
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-new-x", "definition") %>' url="<%= editKaleoDraftDefinitionURL.toString() %>" />
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-new-x", "definition") %>' url="<%= editKaleoDefinitionVersionURL.toString() %>" />
 			</liferay-frontend:add-menu>
 		</c:if>
 	</c:when>

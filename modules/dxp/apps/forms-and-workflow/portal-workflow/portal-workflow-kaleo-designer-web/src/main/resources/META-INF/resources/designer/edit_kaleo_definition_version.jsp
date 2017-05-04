@@ -20,66 +20,54 @@
 	<c:when test="<%= WorkflowEngineManagerUtil.isDeployed() %>">
 
 		<%
-		String mvcPath = ParamUtil.getString(request, "mvcPath", "/designer/edit_kaleo_draft_definition.jsp");
+		String mvcPath = ParamUtil.getString(request, "mvcPath", "/designer/edit_kaleo_definition_version.jsp");
 
-		String backURL = ParamUtil.getString(request, "backURL");
 		String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(request);
+		String redirect = ParamUtil.getString(request, "redirect");
 
-		KaleoDraftDefinition kaleoDraftDefinition = KaleoDesignerUtil.getKaleoDraftDefinition(request);
+		KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)request.getAttribute(KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 
-		String content = (String)request.getAttribute(KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION_CONTENT);
+		String name = BeanParamUtil.getString(kaleoDefinitionVersion, request, "name");
+		String draftVersion = BeanParamUtil.getString(kaleoDefinitionVersion, request, "version");
+		String content = BeanParamUtil.getString(kaleoDefinitionVersion, request, "content");
+
+		String latestDraftVersion = StringPool.BLANK;
+		int version = 0;
+
+		KaleoDefinitionVersion latestKaleoDefinitionVersion = null;
 
 		WorkflowDefinition workflowDefinition = null;
 
-		KaleoDraftDefinition latestKaleoDraftDefinition = null;
+		if (kaleoDefinitionVersion != null) {
+			latestKaleoDefinitionVersion = KaleoDefinitionVersionLocalServiceUtil.getLatestKaleoDefinitionVersion(themeDisplay.getCompanyId(), name);
+			latestDraftVersion = latestKaleoDefinitionVersion.getVersion();
 
-		if (kaleoDraftDefinition != null) {
-			try {
-				latestKaleoDraftDefinition = KaleoDraftDefinitionLocalServiceUtil.getLatestKaleoDraftDefinition(kaleoDraftDefinition.getName(), kaleoDraftDefinition.getVersion(), serviceContext);
+			if (kaleoDefinitionVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+				workflowDefinition = WorkflowDefinitionManagerUtil.getLatestKaleoDefinition(themeDisplay.getCompanyId(), name);
 
-				if (kaleoDraftDefinition.getVersion() > 0) {
-					workflowDefinition = WorkflowDefinitionManagerUtil.getWorkflowDefinition(themeDisplay.getCompanyId(), kaleoDraftDefinition.getName(), kaleoDraftDefinition.getVersion());
-				}
-			}
-			catch (Exception e) {
-			}
-
-			if (Validator.isNull(content)) {
-				content = kaleoDraftDefinition.getContent();
+				version = workflowDefinition.getVersion();
 			}
 		}
 
 		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(backURL);
+		portletDisplay.setURLBack(redirect);
 
-		String title = null;
-
-		if (kaleoDraftDefinition == null) {
-			title = LanguageUtil.get(kaleoDesignerDisplayContext.getResourceBundle(locale), "new-workflow-definition-draft");
-		}
-		else {
-			title = kaleoDraftDefinition.getName();
-		}
-
-		renderResponse.setTitle(title);
+		renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, (kaleoDefinitionVersion == null) ? "new-definition" : name) : name);
 		%>
 
 		<aui:form cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault();">
-			<aui:model-context bean="<%= kaleoDraftDefinition %>" model="<%= KaleoDraftDefinition.class %>" />
+			<aui:model-context bean="<%= kaleoDefinitionVersion %>" model="<%= KaleoDefinitionVersion.class %>" />
 
 			<aui:input name="mvcPath" type="hidden" value="<%= mvcPath %>" />
-			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
-			<aui:input name="kaleoDraftDefinitionId" type="hidden" />
-			<aui:input name="name" type="hidden" />
+			<aui:input name="name" type="hidden" value="<%= name %>" />
 			<aui:input name="content" type="hidden" value="<%= content %>" />
-			<aui:input name="version" type="hidden" />
-			<aui:input name="draftVersion" type="hidden" />
-			<aui:input name="latestDraftVersion" type="hidden" value="<%= (latestKaleoDraftDefinition == null) ? 1 : latestKaleoDraftDefinition.getDraftVersion() %>" />
+			<aui:input name="version" type="hidden" value="<%= String.valueOf(version) %>" />
+			<aui:input name="draftVersion" type="hidden" value="<%= draftVersion %>" />
+			<aui:input name="latestDraftVersion" type="hidden" value="<%= latestDraftVersion %>" />
 
-			<liferay-ui:error exception="<%= DuplicateKaleoDraftDefinitionNameException.class %>" message="please-enter-a-unique-name" />
 			<liferay-ui:error exception="<%= KaleoDefinitionValidationException.class %>" message="please-enter-valid-content" />
 
 			<liferay-ui:error exception="<%= KaleoDefinitionValidationException.MultipleInitialStateNodes.class %>">
@@ -196,15 +184,14 @@
 
 			<liferay-ui:error exception="<%= KaleoDefinitionValidationException.UnbalancedForkAndJoinNodes.class %>" message="each-fork-node-requires-a-join-node-make-sure-all-forks-and-joins-are-properly-paired" />
 
-			<liferay-ui:error exception="<%= KaleoDraftDefinitionNameException.class %>" message="please-enter-a-valid-name" />
 			<liferay-ui:error exception="<%= WorkflowException.class %>" message="an-error-occurred-in-the-workflow-engine" />
 
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
-					<aui:input name="title" />
+					<liferay-ui:input-localized name="title" xml='<%= BeanPropertiesUtil.getString(kaleoDefinitionVersion, "title") %>' />
 				</aui:fieldset>
 
-				<c:if test="<%= kaleoDraftDefinition != null %>">
+				<c:if test="<%= kaleoDefinitionVersion != null %>">
 					<liferay-ui:panel-container extended="<%= false %>" id="kaleoDesignerDetailsPanelContainer" persistState="<%= true %>">
 						<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-portlet-workflowdesigner-panel" extended="<%= false %>" id="kaleoDesignerSectionPanel" markupView="lexicon" persistState="<%= true %>" title='<%= LanguageUtil.get(request, "details") %>'>
 							<div class="lfr-portlet-workflowdesigner-details-view">
@@ -222,10 +209,10 @@
 									</aui:field-wrapper>
 								</c:if>
 
-								<c:if test="<%= kaleoDraftDefinition != null %>">
+								<c:if test="<%= kaleoDefinitionVersion != null %>">
 									<aui:field-wrapper label="draft-version">
-										<div class="lfr-portlet-workflowdesigner-draft-version" id="<portlet:namespace />draftVersionLabel">
-											<%= kaleoDraftDefinition.getDraftVersion() %>
+										<div id="<portlet:namespace />draftVersionLabel">
+											<%= draftVersion %>
 										</div>
 									</aui:field-wrapper>
 
@@ -322,17 +309,17 @@
 
 						Liferay.provide(
 							window,
-							'<portlet:namespace />getKaleoDraftDefinition',
-							function(name, version, draftVersion, callback) {
+							'<portlet:namespace />getKaleoDefinitionVersion',
+							function(name, draftVersion, position, callback) {
 								var A = AUI();
 
 								var contentURL = Liferay.PortletURL.createResourceURL();
 
 								contentURL.setParameter('name', name);
-								contentURL.setParameter('version', version);
 								contentURL.setParameter('draftVersion', draftVersion);
+								contentURL.setParameter('position', position);
 								contentURL.setPortletId('<%= portletDisplay.getId() %>');
-								contentURL.setResourceId('kaleoDraftDefinitions');
+								contentURL.setResourceId('kaleoDefinitionVersions');
 
 								A.io.request(
 									contentURL.toString(),
@@ -349,14 +336,14 @@
 
 						Liferay.provide(
 							window,
-							'<portlet:namespace />getLatestKaleoDraftDefinition',
+							'<portlet:namespace />getLatestKaleoDefinitionVersion',
 							function(event, button) {
 								var A = AUI();
 
 								var button = event.target;
 
 								if (!button.get('disabled')) {
-									<portlet:namespace />navigateKaleoDraftDefinition(Infinity);
+									<portlet:namespace />navigateKaleoDefinitionVersion('latest');
 								}
 							},
 							['aui-base']
@@ -364,7 +351,7 @@
 
 						Liferay.provide(
 							window,
-							'<portlet:namespace />initKaleoDraftDefinitionToolbar',
+							'<portlet:namespace />initKaleoDefinitionVersionToolbar',
 							function() {
 								var A = AUI();
 
@@ -378,7 +365,7 @@
 												id: '<portlet:namespace />undoButton',
 												label: '<liferay-ui:message key="undo" />',
 												on: {
-													click: <portlet:namespace />undoKaleoDraftDefinition
+													click: <portlet:namespace />undoKaleoDefinitionVersion
 												}
 											},
 											{
@@ -386,7 +373,7 @@
 												id: '<portlet:namespace />redoButton',
 												label: '<liferay-ui:message key="redo" />',
 												on: {
-													click: <portlet:namespace />redoKaleoDraftDefinition
+													click: <portlet:namespace />redoKaleoDefinitionVersion
 												}
 											},
 											{
@@ -394,7 +381,7 @@
 												id: '<portlet:namespace />latestButton',
 												label: '<liferay-ui:message key="latest-version" />',
 												on: {
-													click: <portlet:namespace />getLatestKaleoDraftDefinition
+													click: <portlet:namespace />getLatestKaleoDefinitionVersion
 												}
 											}
 										]
@@ -408,35 +395,27 @@
 
 						Liferay.provide(
 							window,
-							'<portlet:namespace />navigateKaleoDraftDefinition',
-							function(direction) {
+							'<portlet:namespace />navigateKaleoDefinitionVersion',
+							function(position) {
 								var A = AUI();
 
 								var draftVersion = A.one('#<portlet:namespace />draftVersion');
 								var draftVersionLabel = A.one('#<portlet:namespace />draftVersionLabel');
-								var latestDraftVersion = A.one('#<portlet:namespace />latestDraftVersion');
 
 								var name = A.one('#<portlet:namespace />name');
-								var title = A.one('#<portlet:namespace />title_<%= LocaleUtil.toLanguageId(locale) %>');
-								var versionNode = A.one('#<portlet:namespace />version');
-
-								var draftVersionVal = Liferay.Util.toNumber(draftVersion.val()) + direction;
-
-								var latestDraftVersionVal = Liferay.Util.toNumber(latestDraftVersion.val());
-								var versionVal = Liferay.Util.toNumber(versionNode.val());
-
-								var currentDraftVersion = Liferay.Util.clamp(draftVersionVal, 1, latestDraftVersionVal);
+								var title = Liferay.component('<portlet:namespace />title');
 
 								A.one('#<portlet:namespace />toolbarMessage').setContent('<liferay-ui:message key="loading-workflow-definition" />&hellip;');
 
-								<portlet:namespace />getKaleoDraftDefinition(
+								<portlet:namespace />getKaleoDefinitionVersion(
 									name.val(),
-									versionVal,
-									currentDraftVersion,
+									draftVersion.val(),
+									position,
 									function() {
 										var responseData = this.get('responseData');
 
 										if (responseData) {
+
 											var kaleoDesigner = <portlet:namespace />kaleoDesigner;
 
 											var content = responseData.content;
@@ -445,14 +424,27 @@
 
 											draftVersionLabel.setContent(responseData.draftVersion);
 
-											title.val(responseData.title);
+											var locales = A.merge(
+												A.Object.keys(responseData.title),
+												title.get('translatedLanguages').values()
+											);
+
+											A.Object.keys(locales).forEach(
+												function(item, index) {
+													var locale = locales[index];
+
+													title.updateInputLanguage(responseData.title[locale] || "", locale);
+												}
+											);
+
+											title.selectFlag();
 
 											<portlet:namespace />updateToolbarButtons();
 
 											kaleoDesigner.set('definition', content);
 
 											if (kaleoDesigner.editor) {
-												kaleoDesigner.editor.set('value', kaleoDesigner.toFormattedXML());
+												kaleoDesigner.editor.set('value', content);
 											}
 
 											A.one('#<portlet:namespace />toolbarMessage').setContent('');
@@ -466,13 +458,13 @@
 						<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.PUBLISH) %>">
 							Liferay.provide(
 								window,
-								'<portlet:namespace />publishKaleoDraftDefinition',
+								'<portlet:namespace />publishKaleoDefinitionVersion',
 								function() {
 									var A = AUI();
 
 									<portlet:namespace />updateContent();
 
-									<portlet:namespace />updateAction('<portlet:actionURL name="publishKaleoDraftDefinition" />');
+									<portlet:namespace />updateAction('<portlet:actionURL name="publishKaleoDefinitionVersion" />');
 
 									submitForm(document.<portlet:namespace />fm);
 								},
@@ -482,29 +474,29 @@
 
 						Liferay.provide(
 							window,
-							'<portlet:namespace />redoKaleoDraftDefinition',
+							'<portlet:namespace />redoKaleoDefinitionVersion',
 							function(event) {
 								var A = AUI();
 
 								var button = event.target;
 
 								if (!button.get('disabled')) {
-									<portlet:namespace />navigateKaleoDraftDefinition(1);
+									<portlet:namespace />navigateKaleoDefinitionVersion('next');
 								}
 							},
 							['aui-base']
 						);
 
-						<c:if test="<%= ((kaleoDraftDefinition == null) && KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT)) || ((kaleoDraftDefinition != null) && KaleoDraftDefinitionPermission.contains(permissionChecker, kaleoDraftDefinition, ActionKeys.UPDATE)) %>">
+						<c:if test="<%= ((kaleoDefinitionVersion == null) && KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT)) || ((kaleoDefinitionVersion != null) && KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE)) %>">
 							Liferay.provide(
 								window,
-								'<portlet:namespace />updateKaleoDraftDefinition',
+								'<portlet:namespace />addKaleoDefinitionVersion',
 								function() {
 									var A = AUI();
 
 									<portlet:namespace />updateContent();
 
-									<portlet:namespace />updateAction('<portlet:actionURL name="updateKaleoDraftDefinition" />');
+									<portlet:namespace />updateAction('<portlet:actionURL name="addKaleoDefinitionVersion" />');
 
 									submitForm(document.<portlet:namespace />fm);
 								},
@@ -514,14 +506,14 @@
 
 						Liferay.provide(
 							window,
-							'<portlet:namespace />undoKaleoDraftDefinition',
+							'<portlet:namespace />undoKaleoDefinitionVersion',
 							function(event) {
 								var A = AUI();
 
 								var button = event.target;
 
 								if (!button.get('disabled')) {
-									<portlet:namespace />navigateKaleoDraftDefinition(-1);
+									<portlet:namespace />navigateKaleoDefinitionVersion('prev');
 								}
 							},
 							['aui-base']
@@ -579,8 +571,8 @@
 							function() {
 								var A = AUI();
 
-								var draftVersion = Liferay.Util.toNumber(A.one('#<portlet:namespace />draftVersion').val());
-								var latestDraftVersion = Liferay.Util.toNumber(A.one('#<portlet:namespace />latestDraftVersion').val());
+								var draftVersion = A.one('#<portlet:namespace />draftVersion').val();
+								var latestDraftVersion = A.one('#<portlet:namespace />latestDraftVersion').val();
 
 								var latestButton = <portlet:namespace />kaleoDesignerToolbar.item(2);
 								var redoButton = <portlet:namespace />kaleoDesignerToolbar.item(1);
@@ -590,7 +582,7 @@
 
 								redoButton.set('disabled', (draftVersion === latestDraftVersion));
 
-								undoButton.set('disabled', (draftVersion === 1));
+								undoButton.set('disabled', (draftVersion === '1.0'));
 							},
 							['aui-base']
 						);
@@ -599,8 +591,8 @@
 						String saveCallback = ParamUtil.getString(request, "saveCallback");
 						%>
 
-						<c:if test="<%= (kaleoDraftDefinition != null) && Validator.isNotNull(saveCallback) %>">
-							Liferay.Util.getOpener()['<%= HtmlUtil.escapeJS(saveCallback) %>']('<%= HtmlUtil.escapeJS(kaleoDraftDefinition.getName()) %>', <%= kaleoDraftDefinition.getVersion() %>, <%= kaleoDraftDefinition.getDraftVersion() %>);
+						<c:if test="<%= (kaleoDefinitionVersion != null) && Validator.isNotNull(saveCallback) %>">
+							Liferay.Util.getOpener()['<%= HtmlUtil.escapeJS(saveCallback) %>']('<%= HtmlUtil.escapeJS(name) %>', version, <%= draftVersion %>);
 						</c:if>
 					</aui:script>
 
@@ -774,7 +766,7 @@
 						);
 
 						<c:choose>
-							<c:when test="<%= kaleoDraftDefinition == null %>">
+							<c:when test="<%= kaleoDefinitionVersion == null %>">
 								var titleComponent = Liferay.component('<portlet:namespace />title');
 
 								var titlePlaceholderInput = titleComponent.get('inputPlaceholder');
@@ -789,7 +781,7 @@
 								}
 							</c:when>
 							<c:otherwise>
-								<portlet:namespace />initKaleoDraftDefinitionToolbar();
+								<portlet:namespace />initKaleoDefinitionVersionToolbar();
 							</c:otherwise>
 						</c:choose>
 
@@ -805,7 +797,7 @@
 												if (confirm('<liferay-ui:message key="do-you-want-to-publish-this-draft" />')) {
 													event.halt();
 
-													<portlet:namespace />publishKaleoDraftDefinition();
+													<portlet:namespace />publishKaleoDefinitionVersion();
 												}
 											</c:when>
 											<c:otherwise>
@@ -841,19 +833,19 @@
 			</aui:fieldset-group>
 
 			<aui:button-row>
-				<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT) || ((kaleoDraftDefinition != null) && KaleoDraftDefinitionPermission.contains(permissionChecker, kaleoDraftDefinition, ActionKeys.UPDATE)) %>">
-					<aui:button onClick='<%= renderResponse.getNamespace() + "updateKaleoDraftDefinition();" %>' value="save-as-draft" />
+				<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT) || ((kaleoDefinitionVersion != null) && KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE)) %>">
+					<aui:button onClick='<%= renderResponse.getNamespace() + "addKaleoDefinitionVersion();" %>' value="save-as-draft" />
 				</c:if>
 
 				<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.PUBLISH) %>">
-					<aui:button onClick='<%= renderResponse.getNamespace() + "publishKaleoDraftDefinition();" %>' primary="<%= true %>" value="publish" />
+					<aui:button onClick='<%= renderResponse.getNamespace() + "publishKaleoDefinitionVersion();" %>' primary="<%= true %>" value="publish" />
 				</c:if>
 
-				<c:if test="<%= Validator.isNotNull(backURL) %>">
-					<aui:button href="<%= backURL %>" value="cancel" />
+				<c:if test="<%= Validator.isNotNull(redirect) %>">
+					<aui:button href="<%= redirect %>" value="cancel" />
 				</c:if>
 
-				<c:if test="<%= Validator.isNull(backURL) %>">
+				<c:if test="<%= Validator.isNull(redirect) %>">
 					<aui:button onClick='<%= renderResponse.getNamespace() + "closeKaleoDialog();" %>' value="cancel" />
 				</c:if>
 

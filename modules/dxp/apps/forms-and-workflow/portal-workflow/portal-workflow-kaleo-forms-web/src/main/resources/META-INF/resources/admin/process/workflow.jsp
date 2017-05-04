@@ -41,6 +41,12 @@ if (Validator.isNotNull(workflowDefinition)) {
 		workflowDefinition = StringPool.BLANK;
 	}
 }
+
+Integer status = WorkflowConstants.STATUS_DRAFT;
+
+if (tabs1.equals("published")) {
+	status = WorkflowConstants.STATUS_APPROVED;
+}
 %>
 
 <h3 class="kaleo-process-header"><liferay-ui:message key="workflow" /></h3>
@@ -83,10 +89,9 @@ if (Validator.isNotNull(workflowDefinition)) {
 <liferay-ui:search-container
 	emptyResultsMessage='<%= tabs1.equals("published") ? "there-are-no-published-definitions" : "there-are-no-unpublished-definitions" %>'
 	iteratorURL="<%= iteratorURL %>"
-	total='<%= tabs1.equals("published") ? WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitionCount(company.getCompanyId()) : 0 %>'
 >
 	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="addURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/designer/edit_kaleo_draft_definition.jsp" />
+		<portlet:param name="mvcPath" value="/designer/edit_kaleo_definition_version.jsp" />
 		<portlet:param name="closeRedirect" value="<%= backURL %>" />
 	</liferay-portlet:renderURL>
 
@@ -136,6 +141,11 @@ if (Validator.isNotNull(workflowDefinition)) {
 
 	<c:choose>
 		<c:when test='<%= tabs1.equals("published") %>'>
+
+			<%
+			searchContainer.setTotal(WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitionCount(company.getCompanyId()));
+			%>
+
 			<liferay-ui:search-container-results
 				results="<%= WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd(), null) %>"
 			/>
@@ -176,23 +186,17 @@ if (Validator.isNotNull(workflowDefinition)) {
 		<c:otherwise>
 
 			<%
-			List<KaleoDraftDefinition> latestKaleoDraftDefinitions = KaleoDraftDefinitionServiceUtil.getLatestKaleoDraftDefinitions(company.getCompanyId(), 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			searchContainer.setTotal(latestKaleoDraftDefinitions.size());
+			searchContainer.setTotal(KaleoDefinitionVersionLocalServiceUtil.getLatestKaleoDefinitionVersionsCount(company.getCompanyId(), null, status));
 			%>
 
 			<liferay-ui:search-container-results
-				results="<%= ListUtil.subList(latestKaleoDraftDefinitions, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
-
-			<liferay-ui:search-container-results
-				results="<%= KaleoDraftDefinitionServiceUtil.getLatestKaleoDraftDefinitions(company.getCompanyId(), 0, searchContainer.getStart(), searchContainer.getEnd(), null) %>"
+				results="<%= KaleoDefinitionVersionLocalServiceUtil.getLatestKaleoDefinitionVersions(company.getCompanyId(), null, status, searchContainer.getStart(), searchContainer.getEnd(), null) %>"
 			/>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition"
-				keyProperty="kaleoDraftDefinitionId"
-				modelVar="kaleoDraftDefinition"
+				className="com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion"
+				keyProperty="kaleoDefinitionVersionId"
+				modelVar="kaleoDefinitionVersion"
 			>
 				<liferay-ui:search-container-row-parameter
 					name="backURL"
@@ -208,27 +212,17 @@ if (Validator.isNotNull(workflowDefinition)) {
 
 				<liferay-ui:search-container-row-parameter
 					name="name"
-					value="<%= kaleoDraftDefinition.getName() %>"
-				/>
-
-				<liferay-ui:search-container-row-parameter
-					name="version"
-					value="<%= kaleoDraftDefinition.getVersion() %>"
-				/>
-
-				<liferay-ui:search-container-row-parameter
-					name="draftVersion"
-					value="<%= kaleoDraftDefinition.getDraftVersion() %>"
+					value="<%= kaleoDefinitionVersion.getName() %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					name="title"
-					value="<%= HtmlUtil.escape(kaleoDraftDefinition.getTitle(themeDisplay.getLanguageId())) %>"
+					value="<%= HtmlUtil.escape(kaleoDefinitionVersion.getTitle(themeDisplay.getLanguageId())) %>"
 				/>
 
-				<liferay-ui:search-container-column-text
-					name="draft-version"
-					value="<%= String.valueOf(kaleoDraftDefinition.getDraftVersion()) %>"
+				<liferay-ui:search-container-row-parameter
+					name="version"
+					value="<%= kaleoDefinitionVersion.getVersion() %>"
 				/>
 
 				<liferay-ui:search-container-column-jsp

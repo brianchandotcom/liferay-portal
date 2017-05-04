@@ -19,17 +19,16 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-KaleoDraftDefinition kaleoDraftDefinition = (KaleoDraftDefinition)row.getObject();
+KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= KaleoDraftDefinitionPermission.contains(permissionChecker, kaleoDraftDefinition, ActionKeys.UPDATE) %>">
+	<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_draft_definition.jsp" %>' />
-			<portlet:param name="name" value="<%= kaleoDraftDefinition.getName() %>" />
-			<portlet:param name="version" value="<%= String.valueOf(kaleoDraftDefinition.getVersion()) %>" />
-			<portlet:param name="draftVersion" value="<%= String.valueOf(kaleoDraftDefinition.getDraftVersion()) %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />
+			<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+			<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -39,11 +38,11 @@ KaleoDraftDefinition kaleoDraftDefinition = (KaleoDraftDefinition)row.getObject(
 		/>
 	</c:if>
 
-	<c:if test="<%= KaleoDraftDefinitionPermission.contains(permissionChecker, kaleoDraftDefinition, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
-			modelResource="<%= KaleoDraftDefinition.class.getName() %>"
-			modelResourceDescription="<%= kaleoDraftDefinition.getName() %>"
-			resourcePrimKey="<%= String.valueOf(kaleoDraftDefinition.getKaleoDraftDefinitionId()) %>"
+			modelResource="<%= KaleoDefinitionVersion.class.getName() %>"
+			modelResourceDescription="<%= kaleoDefinitionVersion.getName() %>"
+			resourcePrimKey="<%= String.valueOf(kaleoDefinitionVersion.getKaleoDefinitionVersionId()) %>"
 			var="permissionsURL"
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
@@ -56,11 +55,11 @@ KaleoDraftDefinition kaleoDraftDefinition = (KaleoDraftDefinition)row.getObject(
 		/>
 	</c:if>
 
-	<c:if test="<%= (kaleoDraftDefinition.getVersion() == 0) && KaleoDraftDefinitionPermission.contains(permissionChecker, kaleoDraftDefinition, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="deleteKaleoDraftDefinition" var="deleteURL">
+	<c:if test="<%= (kaleoDefinitionVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) && KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.DELETE) %>">
+		<portlet:actionURL name="deleteKaleoDefinitionVersion" var="deleteURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="name" value="<%= kaleoDraftDefinition.getName() %>" />
-			<portlet:param name="version" value="<%= String.valueOf(kaleoDraftDefinition.getVersion()) %>" />
+			<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+			<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

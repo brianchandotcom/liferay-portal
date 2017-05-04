@@ -15,13 +15,11 @@
 --%>
 
 <%
-List<KaleoDraftDefinition> latestKaleoDraftDefinitions = KaleoDraftDefinitionServiceUtil.getLatestKaleoDraftDefinitions(company.getCompanyId(), searchContainer.getSearchTerms().getKeywords(), -1, QueryUtil.ALL_POS, QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
-
-total = latestKaleoDraftDefinitions.size();
+total = KaleoDefinitionVersionLocalServiceUtil.getLatestKaleoDefinitionVersionsCount(company.getCompanyId(), searchContainer.getSearchTerms().getKeywords(), WorkflowConstants.STATUS_ANY);
 
 searchContainer.setTotal(total);
 
-results = ListUtil.subList(latestKaleoDraftDefinitions, searchContainer.getStart(), searchContainer.getEnd());
+results = KaleoDefinitionVersionLocalServiceUtil.getLatestKaleoDefinitionVersions(company.getCompanyId(), searchContainer.getSearchTerms().getKeywords(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 searchContainer.setResults(results);
 %>

@@ -19,18 +19,17 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-KaleoDraftDefinition kaleoDraftDefinition = (KaleoDraftDefinition)row.getObject();
+KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getObject();
 
 String backURL = (String)row.getParameter("backURL");
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/designer/edit_kaleo_draft_definition.jsp" />
+		<portlet:param name="mvcPath" value="/designer/edit_kaleo_definition_version.jsp" />
 		<portlet:param name="closeRedirect" value="<%= backURL %>" />
-		<portlet:param name="name" value="<%= kaleoDraftDefinition.getName() %>" />
-		<portlet:param name="version" value="<%= String.valueOf(kaleoDraftDefinition.getVersion()) %>" />
-		<portlet:param name="draftVersion" value="<%= String.valueOf(kaleoDraftDefinition.getDraftVersion()) %>" />
+		<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+		<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
 	</liferay-portlet:renderURL>
 
 	<liferay-ui:icon
@@ -41,8 +40,8 @@ String backURL = (String)row.getParameter("backURL");
 
 	<portlet:actionURL name="deleteKaleoDraftDefinition" var="deleteURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="name" value="<%= kaleoDraftDefinition.getName() %>" />
-		<portlet:param name="version" value="<%= String.valueOf(kaleoDraftDefinition.getVersion()) %>" />
+		<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+		<portlet:param name="version" value="<%= kaleoDefinitionVersion.getVersion() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete

@@ -163,6 +163,38 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		long groupId) throws PortalException;
 
 	/**
+	* Moves the commerce product definition to the recycle bin.
+	*
+	* @param userId the primary key of the user moving the commerce product definition
+	* @param cpDefinition the commerce product definition to be moved
+	* @return the moved commerce product definition
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CPDefinition moveCPDefinitionToTrash(long userId,
+		CPDefinition cpDefinition) throws PortalException;
+
+	/**
+	* Moves the commerce product definition with the ID to the recycle bin.
+	*
+	* @param userId the primary key of the user moving the blogs entry
+	* @param cpDefinitionId the primary key of the commerce product definition to be moved
+	* @return the moved commerce product definition
+	*/
+	public CPDefinition moveCPDefinitionToTrash(long userId, long cpDefinitionId)
+		throws PortalException;
+
+	/**
+	* Restores the commerce product definition with the ID from the recycle bin.
+	*
+	* @param userId the primary key of the user restoring the blogs entry
+	* @param cpDefinitionId the primary key of the commerce product definition to be restored
+	* @return the restored commerce product definition from the recycle bin
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CPDefinition restoreCPDefinitionFromTrash(long userId,
+		long cpDefinitionId) throws PortalException;
+
+	/**
 	* Updates the cp definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param cpDefinition the cp definition
@@ -187,6 +219,14 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		int status, ServiceContext serviceContext,
 		Map<java.lang.String, Serializable> workflowContext)
 		throws PortalException;
+
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link #updateStatus(long, long,
+	int, ServiceContext, Map)}
+	*/
+	@java.lang.Deprecated
+	public CPDefinition updateStatus(long userId, long entryId, int status,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionLocalization fetchCPDefinitionLocalization(
@@ -358,6 +398,9 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void moveCPDefinitionsToTrash(long groupId, long userId)
+		throws PortalException;
 
 	public void updateAsset(long userId, CPDefinition cpDefinition,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,

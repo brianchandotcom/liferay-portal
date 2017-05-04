@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.data;
+package com.liferay.portal.mobile.device.detection.fiftyonedegrees.data;
 
 import java.io.IOException;
 import java.io.InputStream;

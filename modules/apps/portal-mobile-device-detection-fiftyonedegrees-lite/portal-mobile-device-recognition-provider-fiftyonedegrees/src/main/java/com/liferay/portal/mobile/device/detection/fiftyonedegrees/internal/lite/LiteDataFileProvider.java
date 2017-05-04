@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.internal.data;
+package com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal.data;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration;
-import com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.data.DataFileProvider;
+import com.liferay.portal.mobile.device.detection.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration;
+import com.liferay.portal.mobile.device.detection.fiftyonedegrees.data.DataFileProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,11 +38,11 @@ import org.osgi.service.component.annotations.Modified;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration",
+	configurationPid = "com.liferay.portal.mobile.device.detection.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration",
 	immediate = true, property = {"service.ranking:Integer=1"},
 	service = DataFileProvider.class
 )
-public class EmbeddedDataFileProvider implements DataFileProvider {
+public class LiteDataFileProvider implements DataFileProvider {
 
 	@Override
 	public InputStream getDataFileInputStream() throws IOException {

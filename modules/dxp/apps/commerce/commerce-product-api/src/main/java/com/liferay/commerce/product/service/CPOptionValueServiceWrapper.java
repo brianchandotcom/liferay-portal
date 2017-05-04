@@ -84,6 +84,22 @@ public class CPOptionValueServiceWrapper implements CPOptionValueService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOptionValue> searchCPOptionValues(
+		long companyId, long groupId, long cpOptionId,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionValueService.searchCPOptionValues(companyId, groupId,
+			cpOptionId, keywords, start, end, sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return _cpOptionValueService.search(searchContext);
+	}
+
+	@Override
 	public int getCPOptionValuesCount(long cpOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionValueService.getCPOptionValuesCount(cpOptionId);

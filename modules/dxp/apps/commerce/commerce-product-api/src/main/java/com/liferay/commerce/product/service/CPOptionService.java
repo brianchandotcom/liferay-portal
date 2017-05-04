@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -88,9 +87,8 @@ public interface CPOptionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPOption> searchCPOptions(long companyId,
-		long groupId, java.lang.String keywords,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, Sort sort) throws PortalException;
+		long groupId, java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(SearchContext searchContext);

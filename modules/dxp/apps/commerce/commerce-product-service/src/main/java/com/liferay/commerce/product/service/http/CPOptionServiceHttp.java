@@ -370,16 +370,15 @@ public class CPOptionServiceHttp {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOption> searchCPOptions(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
 					"searchCPOptions", _searchCPOptionsParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupId, keywords, params, start, end, sort);
+					companyId, groupId, keywords, start, end, sort);
 
 			Object returnObj = null;
 
@@ -440,8 +439,7 @@ public class CPOptionServiceHttp {
 			com.liferay.portal.kernel.search.SearchContext.class
 		};
 	private static final Class<?>[] _searchCPOptionsParameterTypes10 = new Class[] {
-			long.class, long.class, java.lang.String.class,
-			java.util.LinkedHashMap.class, int.class, int.class,
+			long.class, long.class, java.lang.String.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
 }

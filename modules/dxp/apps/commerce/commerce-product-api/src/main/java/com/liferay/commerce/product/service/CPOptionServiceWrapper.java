@@ -88,12 +88,11 @@ public class CPOptionServiceWrapper implements CPOptionService,
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOption> searchCPOptions(
-		long companyId, long groupId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionService.searchCPOptions(companyId, groupId, keywords,
-			params, start, end, sort);
+			start, end, sort);
 	}
 
 	@Override

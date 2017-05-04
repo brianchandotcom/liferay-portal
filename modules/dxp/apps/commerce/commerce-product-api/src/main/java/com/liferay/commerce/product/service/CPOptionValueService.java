@@ -21,6 +21,10 @@ import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -79,6 +83,15 @@ public interface CPOptionValueService extends BaseService {
 	public CPOptionValue updateCPOptionValue(long cpOptionValueId,
 		Map<Locale, java.lang.String> titleMap, int priority,
 		ServiceContext serviceContext) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
+		long companyId, long groupId, long cpOptionId,
+		java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPOptionValuesCount(long cpOptionId)

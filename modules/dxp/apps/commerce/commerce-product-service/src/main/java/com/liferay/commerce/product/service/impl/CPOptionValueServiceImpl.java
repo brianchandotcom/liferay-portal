@@ -129,6 +129,23 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 	}
 
 	@Override
+	public Hits search(SearchContext searchContext) {
+		return cpOptionValueLocalService.search(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
+			long companyId, long groupId, long groupId, long groupId,
+			long groupId, long groupId, long groupId, long groupId,
+			long groupId, long cpOptionId, String keywords, int start, int end,
+			Sort sort)
+		throws PortalException {
+
+		return cpOptionValueLocalService.searchCPOptionValues(
+			companyId, groupId, cpOptionId, keywords, start, end, sort);
+	}
+
+	@Override
 	public CPOptionValue updateCPOptionValue(
 			long cpOptionValueId, Map<Locale, String> titleMap, int priority,
 			ServiceContext serviceContext)
@@ -142,19 +159,4 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 			cpOptionValueId, titleMap, priority, serviceContext);
 	}
 
-	@Override
-	public Hits search(SearchContext searchContext) {
-
-		return cpOptionValueLocalService.search(searchContext);
-	}
-
-	@Override
-	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
-		long companyId, long groupId,long cpOptionId, String keywords, int start, int end,
-		Sort sort)
-		throws PortalException {
-
-		return  cpOptionValueLocalService.searchCPOptionValues(
-			companyId,groupId,cpOptionId,keywords,start,end,sort);
-	}
 }

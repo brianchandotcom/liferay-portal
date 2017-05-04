@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -50,6 +51,9 @@ import java.util.Map;
  */
 public class CPOptionValueLocalServiceImpl
 	extends CPOptionValueLocalServiceBaseImpl {
+
+	public static final String[] SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 	@Override
 	public CPOptionValue addCPOptionValue(
@@ -141,6 +145,31 @@ public class CPOptionValueLocalServiceImpl
 	}
 
 	@Override
+	public Hits search(SearchContext searchContext) {
+		try {
+			Indexer<CPOptionValue> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(CPOptionValue.class);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	@Override
+	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
+			long companyId, long groupId, long cpOptionId, String keywords,
+			int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupId, cpOptionId, keywords, start, end, sort);
+
+		return searchCPOptions(searchContext);
+	}
+
+	@Override
 	public CPOptionValue updateCPOptionValue(
 			long cpOptionValueId, Map<Locale, String> titleMap, int priority,
 			ServiceContext serviceContext)
@@ -160,38 +189,11 @@ public class CPOptionValueLocalServiceImpl
 		return cpOptionValue;
 	}
 
-	@Override
-	public Hits search(SearchContext searchContext) {
-
-		try {
-			Indexer<CPOptionValue> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(CPOptionValue.class);
-
-			return indexer.search(searchContext);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-	}
-
-	@Override
-	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
-		long companyId, long groupId, long cpOptionId,String keywords,
-		 int start, int end, Sort sort)
-		throws PortalException {
-
-		SearchContext searchContext = buildSearchContext(
-			companyId,groupId,cpOptionId ,keywords,start,end,sort);
-
-		return searchCPOptions(searchContext);
-	}
-
 	protected SearchContext buildSearchContext(
-		long companyId, long groupId, long cpOptionId,
-		String keywords, int start, int end, Sort sort) {
+		long companyId, long groupId, long cpOptionId, String keywords,
+		int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
-
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 		params.put("keywords", keywords);
@@ -229,43 +231,36 @@ public class CPOptionValueLocalServiceImpl
 	}
 
 	protected BaseModelSearchResult<CPOptionValue> searchCPOptions(
-		SearchContext searchContext)
+			SearchContext searchContext)
 		throws PortalException {
 
-		Indexer<CPOptionValue> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CPOptionValue.class);
+		Indexer<CPOptionValue> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPOptionValue.class);
 
 		List<CPOptionValue> cpOptionValues = new ArrayList<>();
 
-
 		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(
-				searchContext, SELECTED_FIELD_NAMES);
+			Hits hits = indexer.search(searchContext, SELECTED_FIELD_NAMES);
 
 			Document[] documents = hits.getDocs();
 
 			for (Document document : documents) {
-
 				long classPK = GetterUtil.getLong(
 					document.get(Field.ENTRY_CLASS_PK));
 
-				CPOptionValue cpOptionValue =
-					getCPOptionValue(classPK);
+				CPOptionValue cpOptionValue = getCPOptionValue(classPK);
 
 				cpOptionValues.add(cpOptionValue);
 			}
 
 			if (cpOptionValues != null) {
-				return new BaseModelSearchResult<>(cpOptionValues, hits.getLength());
+				return new BaseModelSearchResult<>(
+					cpOptionValues, hits.getLength());
 			}
 		}
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
 	}
-
-	public static final String[] SELECTED_FIELD_NAMES =
-		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
-
 
 }

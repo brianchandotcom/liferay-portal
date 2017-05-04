@@ -58,24 +58,6 @@ import java.util.Map;
 @ProviderType
 public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
-	public String[] getSKUs(long cpDefinitionId){
-
-		List<CPInstance> cpInstances = getCPInstances(
-			cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		String[] skusArray = new String[cpInstances.size()];
-
-		List<String> skus = new ArrayList<>();
-
-		for(CPInstance cpInstance : cpInstances){
-			skus.add(cpInstance.getSku());
-		}
-
-		skusArray = skus.toArray(skusArray);
-
-		return skusArray;
-	}
-
 	@Override
 	public CPInstance addCPInstance(
 			long cpDefinitionId, String sku, String ddmContent,
@@ -330,6 +312,23 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Override
 	public int getCPInstancesCount(long cpDefinitionId) {
 		return cpInstancePersistence.countByCPDefinitionId(cpDefinitionId);
+	}
+
+	public String[] getSKUs(long cpDefinitionId) {
+		List<CPInstance> cpInstances = getCPInstances(
+			cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		String[] skusArray = new String[cpInstances.size()];
+
+		List<String> skus = new ArrayList<>();
+
+		for (CPInstance cpInstance : cpInstances) {
+			skus.add(cpInstance.getSku());
+		}
+
+		skusArray = skus.toArray(skusArray);
+
+		return skusArray;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

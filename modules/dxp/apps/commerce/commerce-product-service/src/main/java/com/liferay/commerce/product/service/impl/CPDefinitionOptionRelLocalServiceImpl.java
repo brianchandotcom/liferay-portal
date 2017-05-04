@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -51,6 +52,9 @@ import java.util.Map;
  */
 public class CPDefinitionOptionRelLocalServiceImpl
 	extends CPDefinitionOptionRelLocalServiceBaseImpl {
+
+	public static final String[] SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 	@Override
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(
@@ -200,6 +204,32 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	@Override
+	public Hits search(SearchContext searchContext) {
+		try {
+			Indexer<CPDefinitionOptionRel> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(
+					CPDefinitionOptionRel.class);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	@Override
+	public BaseModelSearchResult<CPDefinitionOptionRel> searchCPDefinitionOptionRels(
+			long companyId, long groupId, long cpDefinitionId, String keywords,
+			int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupId, cpDefinitionId, keywords, start, end, sort);
+
+		return searchCPOptions(searchContext);
+	}
+
+	@Override
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
 			long cpDefinitionOptionRelId, long cpOptionId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
@@ -227,38 +257,11 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		return cpDefinitionOptionRel;
 	}
 
-	@Override
-	public Hits search(SearchContext searchContext) {
-
-		try {
-			Indexer<CPDefinitionOptionRel> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(CPDefinitionOptionRel.class);
-
-			return indexer.search(searchContext);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-	}
-
-	@Override
-	public BaseModelSearchResult<CPDefinitionOptionRel> searchCPDefinitionOptionRels(
-		long companyId, long groupId, long cpDefinitionId,String keywords,
-		int start, int end, Sort sort)
-		throws PortalException {
-
-		SearchContext searchContext = buildSearchContext(
-			companyId,groupId,cpDefinitionId ,keywords,start,end,sort);
-
-		return searchCPOptions(searchContext);
-	}
-
 	protected SearchContext buildSearchContext(
-		long companyId, long groupId, long cpDefinitionId,
-		String keywords, int start, int end, Sort sort) {
+		long companyId, long groupId, long cpDefinitionId, String keywords,
+		int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
-
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 		params.put("keywords", keywords);
@@ -296,7 +299,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	protected BaseModelSearchResult<CPDefinitionOptionRel> searchCPOptions(
-		SearchContext searchContext)
+			SearchContext searchContext)
 		throws PortalException {
 
 		Indexer<CPDefinitionOptionRel> indexer =
@@ -304,15 +307,12 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
 
-
 		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(
-				searchContext, SELECTED_FIELD_NAMES);
+			Hits hits = indexer.search(searchContext, SELECTED_FIELD_NAMES);
 
 			Document[] documents = hits.getDocs();
 
 			for (Document document : documents) {
-
 				long classPK = GetterUtil.getLong(
 					document.get(Field.ENTRY_CLASS_PK));
 
@@ -323,15 +323,13 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			}
 
 			if (cpDefinitionOptionRels != null) {
-				return new BaseModelSearchResult<>(cpDefinitionOptionRels, hits.getLength());
+				return new BaseModelSearchResult<>(
+					cpDefinitionOptionRels, hits.getLength());
 			}
 		}
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
 	}
-
-	public static final String[] SELECTED_FIELD_NAMES =
-		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 }

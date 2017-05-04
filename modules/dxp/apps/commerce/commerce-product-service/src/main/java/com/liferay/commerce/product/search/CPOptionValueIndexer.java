@@ -29,12 +29,14 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -42,16 +44,16 @@ import java.util.Locale;
 @Component(immediate = true, service = Indexer.class)
 public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 
+	public static final String CLASS_NAME = CPOptionValue.class.getName();
+
 	public CPOptionValueIndexer() {
 		setDefaultSelectedFieldNames(
-			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
-			Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
-			Field.SCOPE_GROUP_ID, Field.NAME, Field.UID, "CPOptionId");
+			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
+			Field.NAME, Field.UID, "CPOptionId");
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
-
-	public static final String CLASS_NAME = CPOptionValue.class.getName();
 
 	@Override
 	public String getClassName() {
@@ -59,16 +61,15 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 	}
 
 	@Override
-	protected void doDelete(CPOptionValue cpOptionValue)
-		throws Exception {
+	protected void doDelete(CPOptionValue cpOptionValue) throws Exception {
 		deleteDocument(cpOptionValue.getCompanyId(),
 			cpOptionValue.getCPOptionValueId());
 	}
 
-
 	@Override
 	protected Document doGetDocument(CPOptionValue cpOptionValue)
 		throws Exception {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Indexing option value " + cpOptionValue);
 		}
@@ -82,7 +83,6 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 			cpOptionValue.getTitle());
 
 		for (String languageId : languageIds) {
-
 			String title = cpOptionValue.getTitle(languageId);
 
 			if (languageId.equals(cpOptionValueDefaultLanguageId)) {
@@ -93,9 +93,9 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 			document.addText(
 				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
 				title);
-			document.addNumber("priority",cpOptionValue.getPriority());
+			document.addNumber("priority", cpOptionValue.getPriority());
 			document.addText(Field.CONTENT, title);
-			document.addNumber("CPOptionId",cpOptionValue.getCPOptionId());
+			document.addNumber("CPOptionId", cpOptionValue.getCPOptionId());
 		}
 
 		if (_log.isDebugEnabled()) {

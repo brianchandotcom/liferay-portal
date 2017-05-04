@@ -74,6 +74,9 @@ import java.util.Set;
 public class CPDefinitionLocalServiceImpl
 	extends CPDefinitionLocalServiceBaseImpl {
 
+	public static final String[] SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition addCPDefinition(
@@ -270,6 +273,31 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public Hits search(SearchContext searchContext) {
+		try {
+			Indexer<CPDefinition> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	@Override
+	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
+			long companyId, long groupId, String keywords, int start, int end,
+			Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupId, keywords, start, end, sort);
+
+		return searchCPDefinitions(searchContext);
+	}
+
+	@Override
 	public void updateAsset(
 			long userId, CPDefinition cpDefinition, long[] assetCategoryIds,
 			String[] assetTagNames, long[] assetLinkEntryIds, Double priority)
@@ -427,6 +455,80 @@ public class CPDefinitionLocalServiceImpl
 		return cpDefinition;
 	}
 
+	protected SearchContext buildSearchContext(
+		long companyId, long groupId, String keywords, int start, int end,
+		Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+		params.put("keywords", keywords);
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put(Field.ENTRY_CLASS_PK, keywords);
+		attributes.put(Field.TITLE, keywords);
+		attributes.put(Field.DESCRIPTION, keywords);
+		attributes.put(Field.CONTENT, keywords);
+		attributes.put("params", params);
+
+		searchContext.setAttributes(attributes);
+		searchContext.setCompanyId(companyId);
+		searchContext.setStart(start);
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {groupId});
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		return searchContext;
+	}
+
+	protected BaseModelSearchResult<CPDefinition> searchCPDefinitions(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPDefinition.class);
+
+		List<CPDefinition> cpDefinitions = new ArrayList<>();
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, SELECTED_FIELD_NAMES);
+
+			Document[] documents = hits.getDocs();
+
+			for (Document document : documents) {
+				long classPK = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
+				CPDefinition cpDefinition = getCPDefinition(classPK);
+
+				cpDefinitions.add(cpDefinition);
+			}
+
+			if (cpDefinitions != null) {
+				return new BaseModelSearchResult<>(
+					cpDefinitions, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
+	}
+
 	protected CPDefinition startWorkflowInstance(
 			long userId, CPDefinition cpDefinition,
 			ServiceContext serviceContext)
@@ -555,113 +657,5 @@ public class CPDefinitionLocalServiceImpl
 
 		return newCPDefinitionLocalizations;
 	}
-
-	@Override
-	public Hits search(SearchContext searchContext) {
-
-		try {
-			Indexer<CPDefinition> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
-
-			return indexer.search(searchContext);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-	}
-
-	@Override
-	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
-		long companyId, long groupId, String keywords, int start, int end,
-		Sort sort)
-		throws PortalException {
-
-		SearchContext searchContext = buildSearchContext(
-			companyId,groupId,keywords,start,end,sort);
-
-		return searchCPDefinitions(searchContext);
-	}
-
-	protected SearchContext buildSearchContext(
-		long companyId, long groupId,
-		String keywords, int start, int end, Sort sort) {
-
-		SearchContext searchContext = new SearchContext();
-
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-		params.put("keywords", keywords);
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(Field.ENTRY_CLASS_PK, keywords);
-		attributes.put(Field.TITLE, keywords);
-		attributes.put(Field.DESCRIPTION, keywords);
-		attributes.put(Field.CONTENT, keywords);
-		attributes.put("params", params);
-
-		searchContext.setAttributes(attributes);
-		searchContext.setCompanyId(companyId);
-		searchContext.setStart(start);
-		searchContext.setEnd(end);
-		searchContext.setGroupIds(new long[] {groupId});
-
-		if (Validator.isNotNull(keywords)) {
-			searchContext.setKeywords(keywords);
-		}
-
-		QueryConfig queryConfig = new QueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
-
-		if (sort != null) {
-			searchContext.setSorts(sort);
-		}
-
-		return searchContext;
-	}
-
-	protected BaseModelSearchResult<CPDefinition> searchCPDefinitions(
-		SearchContext searchContext)
-		throws PortalException {
-
-		Indexer<CPDefinition> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
-
-		List<CPDefinition> cpDefinitions = new ArrayList<>();
-
-		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(
-				searchContext, SELECTED_FIELD_NAMES);
-
-			Document[] documents = hits.getDocs();
-
-			for (Document document : documents) {
-
-				long classPK = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
-
-				CPDefinition cpDefinition =
-					getCPDefinition(classPK);
-
-				cpDefinitions.add(cpDefinition);
-			}
-
-			if (cpDefinitions != null) {
-				return new BaseModelSearchResult<>(
-					cpDefinitions, hits.getLength());
-			}
-		}
-
-		throw new SearchException(
-			"Unable to fix the search index after 10 attempts");
-	}
-
-	public static final String[] SELECTED_FIELD_NAMES =
-		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
-
 
 }

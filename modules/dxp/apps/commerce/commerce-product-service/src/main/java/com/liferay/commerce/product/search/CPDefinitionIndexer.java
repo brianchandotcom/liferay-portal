@@ -34,14 +34,16 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -49,24 +51,30 @@ import java.util.Locale;
 @Component(immediate = true, service = Indexer.class)
 public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
+	public static final String CLASS_NAME = CPDefinition.class.getName();
+
 	public static final String FIELD_BASE_SKU = "baseSKU";
+
 	public static final String FIELD_SKUS = "skus";
 
 	public CPDefinitionIndexer() {
 		setDefaultSelectedFieldNames(
-			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
-			Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
-			Field.SCOPE_GROUP_ID, Field.TITLE, Field.UID);
+			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
+			Field.TITLE, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
 
-	public static final String CLASS_NAME = CPDefinition.class.getName();
+	@Override
+	public String getClassName() {
+		return CLASS_NAME;
+	}
 
 	@Override
 	public void postProcessSearchQuery(
-		BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
-		SearchContext searchContext)
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			SearchContext searchContext)
 		throws Exception {
 
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
@@ -91,24 +99,18 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 		addSearchTerm(searchQuery, searchContext, FIELD_BASE_SKU, false);
 		addSearchTerm(searchQuery, searchContext, FIELD_SKUS, false);
-
-	}
-
-
-	@Override
-	public String getClassName() {
-		return CLASS_NAME;
 	}
 
 	@Override
 	protected void doDelete(CPDefinition cpDefinition) throws Exception {
-		deleteDocument(cpDefinition.getCompanyId(), cpDefinition.getCPDefinitionId());
+		deleteDocument(
+			cpDefinition.getCompanyId(), cpDefinition.getCPDefinitionId());
 	}
-
 
 	@Override
 	protected Document doGetDocument(CPDefinition cpDefinition)
 		throws Exception {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Indexing definition " + cpDefinition);
 		}
@@ -145,7 +147,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 		document.addText(FIELD_BASE_SKU, cpDefinition.getBaseSKU());
 
-		String[] skus =  _cpInstanceLocalService.getSKUs(
+		String[] skus = _cpInstanceLocalService.getSKUs(
 			cpDefinition.getCPDefinitionId());
 
 		document.addText(FIELD_SKUS, skus);
@@ -181,8 +183,8 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		CPDefinition cpDefinition =
-			_cpDefinitionLocalService.getCPDefinition(classPK);
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			classPK);
 
 		doReindex(cpDefinition);
 	}

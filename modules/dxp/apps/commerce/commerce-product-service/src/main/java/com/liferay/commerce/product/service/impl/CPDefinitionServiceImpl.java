@@ -22,11 +22,8 @@ import com.liferay.commerce.product.service.base.CPDefinitionServiceBaseImpl;
 import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
 import com.liferay.commerce.product.service.permission.CPPermission;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -136,6 +133,21 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
+	public Hits search(SearchContext searchContext) {
+		return cpDefinitionLocalService.search(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
+			long companyId, long groupId, String keywords, int start, int end,
+			Sort sort)
+		throws PortalException {
+
+		return cpDefinitionLocalService.searchCPDefinitions(
+			companyId, groupId, keywords, start, end, sort);
+	}
+
+	@Override
 	public CPDefinition updateCPDefinition(
 			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String productTypeName,
@@ -170,22 +182,6 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.updateStatus(
 			userId, cpDefinitionId, status, serviceContext, workflowContext);
-	}
-
-	@Override
-	public Hits search(SearchContext searchContext) {
-
-		return cpDefinitionLocalService.search(searchContext);
-	}
-
-	@Override
-	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
-		long companyId, long groupId, String keywords, int start, int end,
-		Sort sort)
-		throws PortalException {
-
-		return cpDefinitionLocalService.searchCPDefinitions(
-			companyId, groupId,keywords, start,end, sort);
 	}
 
 }

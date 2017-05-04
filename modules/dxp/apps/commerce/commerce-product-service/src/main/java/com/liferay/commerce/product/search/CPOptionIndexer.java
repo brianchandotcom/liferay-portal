@@ -26,9 +26,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 
@@ -46,16 +44,16 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = Indexer.class)
 public class CPOptionIndexer extends BaseIndexer<CPOption> {
 
+	public static final String CLASS_NAME = CPOption.class.getName();
+
 	public CPOptionIndexer() {
 		setDefaultSelectedFieldNames(
-			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
-			Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
-			Field.SCOPE_GROUP_ID, Field.NAME, Field.UID);
+			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
+			Field.NAME, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
-
-	public static final String CLASS_NAME = CPOption.class.getName();
 
 	@Override
 	public String getClassName() {
@@ -67,7 +65,6 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 		deleteDocument(cpOption.getCompanyId(), cpOption.getCPOptionId());
 	}
 
-
 	@Override
 	protected Document doGetDocument(CPOption cpOption) throws Exception {
 		if (_log.isDebugEnabled()) {
@@ -76,8 +73,8 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, cpOption);
 
-		String cpOptionDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-			cpOption.getName());
+		String cpOptionDefaultLanguageId =
+			LocalizationUtil.getDefaultLanguageId(cpOption.getName());
 
 		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
 			cpOption.getName());
@@ -101,7 +98,6 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 				description);
 
 			document.addText(Field.CONTENT, name);
-
 		}
 
 		if (_log.isDebugEnabled()) {

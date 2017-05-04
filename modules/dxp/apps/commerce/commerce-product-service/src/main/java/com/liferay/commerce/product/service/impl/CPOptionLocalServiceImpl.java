@@ -36,9 +36,9 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -50,6 +50,9 @@ import java.util.Map;
  * @author Marco Leo
  */
 public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
+
+	public static final String[] SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 	@Override
 	public CPOption addCPOption(
@@ -140,6 +143,31 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 	}
 
 	@Override
+	public Hits search(SearchContext searchContext) {
+		try {
+			Indexer<CPOption> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				CPOption.class);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	@Override
+	public BaseModelSearchResult<CPOption> searchCPOptions(
+			long companyId, long groupId, String keywords, int start, int end,
+			Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupId, keywords, start, end, sort);
+
+		return searchCPOptions(searchContext);
+	}
+
+	@Override
 	public CPOption updateCPOption(
 			long cpOptionId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
@@ -163,38 +191,11 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		return cpOption;
 	}
 
-	@Override
-	public Hits search(SearchContext searchContext) {
-
-		try {
-			Indexer<CPOption> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(CPOption.class);
-
-			return indexer.search(searchContext);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-	}
-
-	@Override
-	public BaseModelSearchResult<CPOption> searchCPOptions(
-		long companyId, long groupId, String keywords, int start, int end,
-		Sort sort)
-		throws PortalException {
-
-		SearchContext searchContext = buildSearchContext(
-			companyId,groupId,keywords,start,end,sort);
-
-		return searchCPOptions(searchContext);
-	}
-
 	protected SearchContext buildSearchContext(
-		long companyId, long groupId,
-		String keywords, int start, int end, Sort sort) {
+		long companyId, long groupId, String keywords, int start, int end,
+		Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
-
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 		params.put("keywords", keywords);
@@ -232,28 +233,24 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 	}
 
 	protected BaseModelSearchResult<CPOption> searchCPOptions(
-		SearchContext searchContext)
+			SearchContext searchContext)
 		throws PortalException {
 
-		Indexer<CPOption> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CPOption.class);
+		Indexer<CPOption> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPOption.class);
 
 		List<CPOption> cpOptions = new ArrayList<>();
 
-
 		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(
-				searchContext, SELECTED_FIELD_NAMES);
+			Hits hits = indexer.search(searchContext, SELECTED_FIELD_NAMES);
 
 			Document[] documents = hits.getDocs();
 
 			for (Document document : documents) {
-
 				long classPK = GetterUtil.getLong(
 					document.get(Field.ENTRY_CLASS_PK));
 
-				CPOption cpOption =
-					getCPOption(classPK);
+				CPOption cpOption = getCPOption(classPK);
 
 				cpOptions.add(cpOption);
 			}
@@ -266,8 +263,5 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
 	}
-
-	public static final String[] SELECTED_FIELD_NAMES =
-		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 }

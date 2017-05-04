@@ -16,7 +16,6 @@ package com.liferay.commerce.product.search;
 
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,16 +31,16 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.LinkedHashMap;
+import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -49,22 +48,28 @@ import java.util.Locale;
 @Component(immediate = true, service = Indexer.class)
 public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 
+	public static final String CLASS_NAME = CPInstance.class.getName();
+
+	public static final String FIELD_SKU = "sku";
+
 	public CPInstanceIndexer() {
 		setDefaultSelectedFieldNames(
-			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
-			Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
-			Field.SCOPE_GROUP_ID, FIELD_SKU, Field.UID);
+			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
+			FIELD_SKU, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
 
-	public static final String FIELD_SKU = "sku";
-	public static final String CLASS_NAME = CPInstance.class.getName();
+	@Override
+	public String getClassName() {
+		return CLASS_NAME;
+	}
 
 	@Override
 	public void postProcessSearchQuery(
-		BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
-		SearchContext searchContext)
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			SearchContext searchContext)
 		throws Exception {
 
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
@@ -84,13 +89,6 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		}
 
 		addSearchTerm(searchQuery, searchContext, FIELD_SKU, false);
-
-	}
-
-
-	@Override
-	public String getClassName() {
-		return CLASS_NAME;
 	}
 
 	@Override
@@ -98,10 +96,8 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		deleteDocument(cpInstance.getCompanyId(), cpInstance.getCPInstanceId());
 	}
 
-
 	@Override
-	protected Document doGetDocument(CPInstance cpInstance)
-		throws Exception {
+	protected Document doGetDocument(CPInstance cpInstance) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Indexing definition " + cpInstance);
 		}
@@ -124,8 +120,7 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Summary summary = createSummary(
-			document, FIELD_SKU, Field.CONTENT);
+		Summary summary = createSummary(document, FIELD_SKU, Field.CONTENT);
 
 		summary.setMaxContentLength(200);
 
@@ -143,8 +138,7 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		CPInstance cpInstance =
-			_cpInstanceLocalService.getCPInstance(classPK);
+		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(classPK);
 
 		doReindex(cpInstance);
 	}

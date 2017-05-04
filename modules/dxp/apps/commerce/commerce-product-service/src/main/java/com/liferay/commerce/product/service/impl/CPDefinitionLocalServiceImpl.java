@@ -26,6 +26,7 @@ import com.liferay.commerce.product.service.base.CPDefinitionLocalServiceBaseImp
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -271,8 +272,40 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public List<CPDefinition> getCPDefinitions(
+		long groupId, QueryDefinition<CPDefinition> queryDefinition) {
+
+		if (queryDefinition.isExcludeStatus()) {
+			return cpDefinitionPersistence.findByG_NotS(
+				groupId, queryDefinition.getStatus(),
+				queryDefinition.getStart(), queryDefinition.getEnd(),
+				queryDefinition.getOrderByComparator());
+		}
+		else {
+			return cpDefinitionPersistence.findByG_S(
+				groupId, queryDefinition.getStatus(),
+				queryDefinition.getStart(), queryDefinition.getEnd(),
+				queryDefinition.getOrderByComparator());
+		}
+	}
+
+	@Override
 	public int getCPDefinitionsCount(long groupId) {
 		return cpDefinitionPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public int getCPDefinitionsCount(
+		long groupId, QueryDefinition<CPDefinition> queryDefinition) {
+
+		if (queryDefinition.isExcludeStatus()) {
+			return cpDefinitionPersistence.countByG_NotS(
+				groupId, queryDefinition.getStatus());
+		}
+		else {
+			return cpDefinitionPersistence.countByG_S(
+				groupId, queryDefinition.getStatus());
+		}
 	}
 
 	@Override

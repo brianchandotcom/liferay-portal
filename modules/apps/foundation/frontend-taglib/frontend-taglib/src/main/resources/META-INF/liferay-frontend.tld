@@ -904,6 +904,21 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>screen-navigation</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>key</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>portletURL</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates a lexicon-based sidebar panel component.</description>
 		<name>sidebar-panel</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.SidebarPanelTag</tag-class>

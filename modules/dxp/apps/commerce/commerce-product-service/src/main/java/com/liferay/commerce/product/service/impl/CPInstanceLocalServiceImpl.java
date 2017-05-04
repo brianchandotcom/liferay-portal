@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -56,6 +57,24 @@ import java.util.Map;
  */
 @ProviderType
 public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
+
+	public String[] getSKUs(long cpDefinitionId){
+
+		List<CPInstance> cpInstances = getCPInstances(
+			cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		String[] skusArray = new String[cpInstances.size()];
+
+		List<String> skus = new ArrayList<>();
+
+		for(CPInstance cpInstance : cpInstances){
+			skus.add(cpInstance.getSku());
+		}
+
+		skusArray = skus.toArray(skusArray);
+
+		return skusArray;
+	}
 
 	@Override
 	public CPInstance addCPInstance(

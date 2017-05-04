@@ -29,6 +29,16 @@ public class PasswordPolicyFinderUtil {
 		return getFinder().countByC_N(companyId, name);
 	}
 
+	public static int filterCountByC_N(long companyId, java.lang.String name) {
+		return getFinder().filterCountByC_N(companyId, name);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.PasswordPolicy> filterFindByC_N(
+		long companyId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.PasswordPolicy> obc) {
+		return getFinder().filterFindByC_N(companyId, name, start, end, obc);
+	}
+
 	public static java.util.List<com.liferay.portal.kernel.model.PasswordPolicy> findByC_N(
 		long companyId, java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.PasswordPolicy> obc) {

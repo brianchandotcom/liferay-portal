@@ -200,6 +200,14 @@
 		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_${displayStyle}_ACTIVE" />
 	</command>
 
+	<command name="configureApplicationDecoratorViaLookandfeelPG">
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="General" />
+		</execute>
+
+		<execute function="Select" locator1="Portlet#APPLICATION_DECORATOR_SELECT" value1="${applicationDecorator}" />
+	</command>
+
 	<command name="configureCustomStylesViaLookandfeelPG">
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="Text Styles" />

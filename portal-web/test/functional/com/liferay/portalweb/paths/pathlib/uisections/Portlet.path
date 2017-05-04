@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>APPLICATION_DECORATOR_SELECT</td>
+	<td>//select[contains(@id,'portletDecorator')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY</td>
 	<td>//div[@id='main-content']//section[contains(.,'${key_portletName}')]//div[@class='portlet-body']</td>
 	<td></td>

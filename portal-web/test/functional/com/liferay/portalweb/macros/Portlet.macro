@@ -201,8 +201,6 @@
 	</command>
 
 	<command name="configureCustomStylesViaLookandfeelPG">
-		<execute macro="IFrame#selectConfigurationFrame" />
-
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="Text Styles" />
 		</execute>
@@ -216,18 +214,12 @@
 		</execute>
 
 		<execute function="Type" locator1="Portlet#BORDER_WIDTH_TOP_INPUT" value1="20" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="configureCustomTitleViaLookandfeelPG">
 		<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#USE_CUSTOM_TITLE" />
 
 		<execute function="Type" locator1="TextInput#CUSTOM_TITLE" value1="${portletName} Custom" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request processed successfully." />
 	</command>
 
 	<command name="deletePG">

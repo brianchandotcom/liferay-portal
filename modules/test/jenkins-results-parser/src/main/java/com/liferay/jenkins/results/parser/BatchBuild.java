@@ -190,7 +190,7 @@ public class BatchBuild extends BaseBuild {
 
 		String status = getStatus();
 
-		if (!badBuildNumbers.isEmpty()) {
+		if (badBuildNumbers.size() >= MAX_REINVOCATIONS) {
 			return;
 		}
 

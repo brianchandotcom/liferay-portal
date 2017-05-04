@@ -985,7 +985,7 @@ public abstract class BaseBuild implements Build {
 
 					if ((result != null) && !result.equals("SUCCESS")) {
 						for (ReinvokeRule reinvokeRule : reinvokeRules) {
-							if (!badBuildNumbers.isEmpty()) {
+							if (badBuildNumbers.size() >= MAX_REINVOCATIONS) {
 								break;
 							}
 
@@ -1845,6 +1845,8 @@ public abstract class BaseBuild implements Build {
 				"/", path),
 			replaceBuildURL(content));
 	}
+
+	protected static final int MAX_REINVOCATIONS = 1;
 
 	protected static final Pattern archiveBuildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(

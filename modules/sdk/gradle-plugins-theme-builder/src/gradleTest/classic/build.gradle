@@ -1,0 +1,61 @@
+import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
+
+apply plugin: "com.liferay.portal.tools.theme.builder"
+
+task runGradleTest
+
+buildTheme {
+	parentName = "classic"
+}
+
+repositories {
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn war
+
+	doLast {
+		ZipFile zipFile = new ZipFile(war.archivePath)
+
+		String[] expectedFileNames = [
+			"WEB-INF/liferay-look-and-feel.xml",
+			"css/aui.css",
+			"css/aui_rtl.css",
+			"css/main.css",
+			"css/main_rtl.css",
+			"fonts/opensans-regular-webfont.woff",
+			"fonts/opensans-regular-webfont.woff2",
+			"images/screenshot.png",
+			"images/thumbnail.png",
+			"js/main.js",
+			"templates/init.ftl"
+		]
+
+		String[] unexpectedFileNames = [
+			"css/_custom.scss",
+			"templates/init.vm"
+		]
+
+		zipFile.withCloseable {
+			for (String fileName in expectedFileNames) {
+				assert zipFile.getEntry(fileName) != null
+			}
+
+			for (String fileName in unexpectedFileNames) {
+				assert zipFile.getEntry(fileName) == null
+			}
+
+			ZipEntry zipEntry = zipFile.getEntry("WEB-INF/liferay-look-and-feel.xml")
+
+			InputStream inputStream = zipFile.getInputStream(zipEntry)
+
+			inputStream.withStream {
+				assert it.text.contains('<theme id="classic" name="Classic">')
+			}
+		}
+	}
+}

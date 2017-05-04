@@ -238,7 +238,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		Indexer<CPOption> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(CPOption.class);
 
-		List<CPOption> options = new ArrayList<>();
+		List<CPOption> cpOptions = new ArrayList<>();
 
 
 		for (int i = 0; i < 10; i++) {
@@ -255,11 +255,11 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 				CPOption cpOption =
 					getCPOption(classPK);
 
-				options.add(cpOption);
+				cpOptions.add(cpOption);
 			}
 
-			if (options != null) {
-				return new BaseModelSearchResult<>(options, hits.getLength());
+			if (cpOptions != null) {
+				return new BaseModelSearchResult<>(cpOptions, hits.getLength());
 			}
 		}
 

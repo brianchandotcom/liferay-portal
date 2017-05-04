@@ -14,11 +14,12 @@
 
 package com.liferay.project.templates.util;
 
-import aQute.lib.io.IO;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,12 +53,14 @@ public class StringTestUtil {
 
 		List<String> lines = new ArrayList<>();
 
-		BufferedReader bufferedReader = IO.reader(inputStream);
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
 
-		String line = null;
+			String line = null;
 
-		while ((line = bufferedReader.readLine()) != null) {
-			lines.add(line);
+			while ((line = bufferedReader.readLine()) != null) {
+				lines.add(line);
+			}
 		}
 
 		return lines;

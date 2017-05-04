@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.internal.constants;
+package com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal.constants;
 
 /**
  * @author Brian Greenwald

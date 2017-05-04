@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.internal;
+package com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
-import com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration;
-import com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.data.DataFileProvider;
+import com.liferay.portal.mobile.device.detection.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration;
+import com.liferay.portal.mobile.device.detection.fiftyonedegrees.data.DataFileProvider;
 
 import fiftyone.mobile.detection.Dataset;
 import fiftyone.mobile.detection.DatasetBuilder;
@@ -32,6 +32,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +51,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Prathima Shreenath
  */
 @Component(
-	configurationPid = "com.liferay.portal.mobile.device.recognition.provider.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration",
+	configurationPid = "com.liferay.portal.mobile.device.detection.fiftyonedegrees.configuration.FiftyOneDegreesConfiguration",
 	immediate = true, service = FiftyOneDegreesEngineProxy.class
 )
 public class FiftyOneDegreesEngineProxy {

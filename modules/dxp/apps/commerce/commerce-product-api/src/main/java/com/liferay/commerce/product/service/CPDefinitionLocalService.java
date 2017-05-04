@@ -176,7 +176,7 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	/**
 	* Moves the commerce product definition with the ID to the recycle bin.
 	*
-	* @param userId the primary key of the user moving the blogs entry
+	* @param userId the primary key of the user moving the commerce product definition
 	* @param cpDefinitionId the primary key of the commerce product definition to be moved
 	* @return the moved commerce product definition
 	*/
@@ -186,7 +186,7 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	/**
 	* Restores the commerce product definition with the ID from the recycle bin.
 	*
-	* @param userId the primary key of the user restoring the blogs entry
+	* @param userId the primary key of the user restoring the commerce product definition
 	* @param cpDefinitionId the primary key of the commerce product definition to be restored
 	* @return the restored commerce product definition from the recycle bin
 	*/

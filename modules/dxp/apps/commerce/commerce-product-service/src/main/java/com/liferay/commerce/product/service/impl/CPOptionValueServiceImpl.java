@@ -136,8 +136,7 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 	@Override
 	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
 			long companyId, long groupId, long cpOptionId, String keywords,
-			int start, int end,
-			Sort sort)
+			int start, int end, Sort sort)
 		throws PortalException {
 
 		return cpOptionValueLocalService.searchCPOptionValues(

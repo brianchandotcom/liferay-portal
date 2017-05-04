@@ -73,7 +73,6 @@ public class CPDefinitionsDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-
 		SearchContainer<CPDefinition> searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 

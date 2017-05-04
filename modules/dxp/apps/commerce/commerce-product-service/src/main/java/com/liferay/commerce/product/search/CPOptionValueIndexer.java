@@ -37,7 +37,6 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -47,9 +46,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = Indexer.class)
 public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 
+	public static final String CLASS_NAME = CPOptionValue.class.getName();
 
 	public static final String FIELD_CP_OPTION_ID = "CPOptionId";
-	public static final String CLASS_NAME = CPOptionValue.class.getName();
 
 	public CPOptionValueIndexer() {
 		setDefaultSelectedFieldNames(
@@ -61,21 +60,22 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 	}
 
 	@Override
+	public String getClassName() {
+		return CLASS_NAME;
+	}
+
+	@Override
 	public void postProcessContextBooleanFilter(
-		BooleanFilter contextBooleanFilter, SearchContext searchContext)
+			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
 		long cpOptionId = GetterUtil.getLong(
 			searchContext.getAttribute(FIELD_CP_OPTION_ID));
 
 		if (cpOptionId > 0) {
-			contextBooleanFilter.addRequiredTerm(FIELD_CP_OPTION_ID, cpOptionId);
+			contextBooleanFilter.addRequiredTerm(
+				FIELD_CP_OPTION_ID, cpOptionId);
 		}
-	}
-
-	@Override
-	public String getClassName() {
-		return CLASS_NAME;
 	}
 
 	@Override
@@ -113,7 +113,8 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 				title);
 			document.addNumber(Field.PRIORITY, cpOptionValue.getPriority());
 			document.addText(Field.CONTENT, title);
-			document.addNumber(FIELD_CP_OPTION_ID, cpOptionValue.getCPOptionId());
+			document.addNumber(
+				FIELD_CP_OPTION_ID, cpOptionValue.getCPOptionId());
 		}
 
 		if (_log.isDebugEnabled()) {

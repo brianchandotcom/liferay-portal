@@ -24,7 +24,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.base.CPInstanceLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -75,7 +74,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	public static final String[] SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
-
 
 	@Override
 	public CPInstance addCPInstance(
@@ -350,6 +348,33 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return skusArray;
 	}
 
+	@Override
+	public Hits search(SearchContext searchContext) {
+		try {
+			Indexer<CPInstance> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(CPInstance.class);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	@Override
+	public BaseModelSearchResult<CPInstance> searchCPOptions(
+			long companyId, long groupId, long groupId, long groupId,
+			long groupId, long groupId, long groupId, long groupId,
+			long groupId, long cpDefinitionId, String keywords, int start,
+			int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupId, cpDefinitionId, keywords, start, end, sort);
+
+		return searchCPInstances(searchContext);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPInstance updateCPInstance(
@@ -455,46 +480,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstance;
 	}
 
-	protected CPInstance startWorkflowInstance(
-			long userId, CPInstance cpInstance, ServiceContext serviceContext)
-		throws PortalException {
-
-		Map<String, Serializable> workflowContext = new HashMap<>();
-
-		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			cpInstance.getCompanyId(), cpInstance.getGroupId(), userId,
-			CPInstance.class.getName(), cpInstance.getCPInstanceId(),
-			cpInstance, serviceContext, workflowContext);
-	}
-
-	@Override
-	public Hits search(SearchContext searchContext) {
-		try {
-			Indexer<CPInstance> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				CPInstance.class);
-
-			return indexer.search(searchContext);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-	}
-
-	@Override
-	public BaseModelSearchResult<CPInstance> searchCPOptions(
-		long companyId, long groupId,long cpDefinitionId, String keywords, int start, int end,
-		Sort sort)
-		throws PortalException {
-
-		SearchContext searchContext = buildSearchContext(
-			companyId, groupId, cpDefinitionId, keywords, start, end, sort);
-
-		return searchCPInstances(searchContext);
-	}
-
 	protected SearchContext buildSearchContext(
-		long companyId, long groupId, long cpDefinitionId, String keywords, int start, int end,
-		Sort sort) {
+		long companyId, long groupId, long cpDefinitionId, String keywords,
+		int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -505,8 +493,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put(Field.CONTENT, keywords);
-		attributes.put("params", params);
 		attributes.put("cpDefinitionId", cpDefinitionId);
+		attributes.put("params", params);
 		searchContext.setAttributes(attributes);
 
 		searchContext.setCompanyId(companyId);
@@ -533,7 +521,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	protected BaseModelSearchResult<CPInstance> searchCPInstances(
-		SearchContext searchContext)
+			SearchContext searchContext)
 		throws PortalException {
 
 		Indexer<CPInstance> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -556,12 +544,25 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			}
 
 			if (cpInstances != null) {
-				return new BaseModelSearchResult<>(cpInstances, hits.getLength());
+				return new BaseModelSearchResult<>(
+					cpInstances, hits.getLength());
 			}
 		}
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
+	}
+
+	protected CPInstance startWorkflowInstance(
+			long userId, CPInstance cpInstance, ServiceContext serviceContext)
+		throws PortalException {
+
+		Map<String, Serializable> workflowContext = new HashMap<>();
+
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			cpInstance.getCompanyId(), cpInstance.getGroupId(), userId,
+			CPInstance.class.getName(), cpInstance.getCPInstanceId(),
+			cpInstance, serviceContext, workflowContext);
 	}
 
 }

@@ -73,9 +73,6 @@ processResources {
 	from configurations.projectTemplates
 }
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
-
 test {
 	dependsOn projectTemplateProjects.collect {
 		"${it.path}:install"

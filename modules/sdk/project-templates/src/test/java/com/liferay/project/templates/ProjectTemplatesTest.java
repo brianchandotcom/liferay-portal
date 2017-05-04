@@ -23,6 +23,7 @@ import com.liferay.project.templates.internal.util.WorkspaceUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 import com.liferay.project.templates.util.StringTestUtil;
 
+import difflib.Delta;
 import difflib.DiffUtils;
 import difflib.Patch;
 
@@ -1668,12 +1669,20 @@ public class ProjectTemplatesTest {
 			return;
 		}
 
+		StringBuilder message = new StringBuilder();
+
+		message.append("WAR ");
+		message.append(warFile1);
+		message.append(" and ");
+		message.append(warFile2);
+		message.append(" do not match:");
+		message.append(System.lineSeparator());
+
 		boolean realChange;
 
 		Map<String, ZipArchiveEntry> added = differences.getAdded();
 		Map<String, ZipArchiveEntry[]> changed = differences.getChanged();
 		Map<String, ZipArchiveEntry> removed = differences.getRemoved();
-		StringBuilder diffs = new StringBuilder();
 		ZipFile warZipFile1 = new ZipFile(warFile1);
 		ZipFile warZipFile2 = new ZipFile(warFile2);
 
@@ -1713,18 +1722,27 @@ public class ProjectTemplatesTest {
 					List<String> lines2 = StringTestUtil.readLines(
 						inputStream2);
 
-					diffs.append("--- " + zipArchiveEntry1.getName() + "\n");
-					diffs.append("+++ " + zipArchiveEntry2.getName() + "\n");
+					message.append(System.lineSeparator());
+
+					message.append("--- ");
+					message.append(zipArchiveEntry1.getName());
+					message.append(System.lineSeparator());
+
+					message.append("+++ ");
+					message.append(zipArchiveEntry2.getName());
+					message.append(System.lineSeparator());
 
 					Patch<String> diff = DiffUtils.diff(lines1, lines2);
 
-					diff.getDeltas().stream().forEach(delta -> {
-						diffs.append("\t" + delta.getOriginal() + "\n");
-						diffs.append("\t" + delta.getRevised() + "\n");
-						diffs.append("\n");
-					});
+					for (Delta<String> delta : diff.getDeltas()) {
+						message.append('\t');
+						message.append(delta.getOriginal());
+						message.append(System.lineSeparator());
 
-					diffs.append("\n");
+						message.append('\t');
+						message.append(delta.getRevised());
+						message.append(System.lineSeparator());
+					}
 				}
 
 				realChange = true;
@@ -1736,10 +1754,7 @@ public class ProjectTemplatesTest {
 			realChange = true;
 		}
 
-		Assert.assertFalse(
-			"WAR " + warFile1 + " and " + warFile2 + " do not match:\n" +
-				differences + "\n" + diffs.toString(),
-			realChange);
+		Assert.assertFalse(message.toString(), realChange);
 	}
 
 	private static void _writeServiceClass(File projectDir) throws IOException {

@@ -223,6 +223,22 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 		return _cpDefinitionOptionRelLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionRel> searchCPDefinitionOptionRels(
+		long companyId, long groupId, long cpDefinitionId,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionRelLocalService.searchCPDefinitionOptionRels(companyId,
+			groupId, cpDefinitionId, keywords, start, end, sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return _cpDefinitionOptionRelLocalService.search(searchContext);
+	}
+
 	/**
 	* Returns the number of cp definition option rels.
 	*

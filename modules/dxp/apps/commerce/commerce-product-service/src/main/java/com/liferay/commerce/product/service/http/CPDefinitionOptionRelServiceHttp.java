@@ -428,53 +428,12 @@ public class CPDefinitionOptionRelServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRel updateCPDefinitionOptionRel(
-		HttpPrincipal httpPrincipal, long cpDefinitionOptionRelId,
-		long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
-		boolean skuContributor,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
-					"updateCPDefinitionOptionRel",
-					_updateCPDefinitionOptionRelParameterTypes11);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionOptionRelId, cpOptionId, nameMap,
-					descriptionMap, ddmFormFieldTypeName, priority, facetable,
-					skuContributor, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.commerce.product.model.CPDefinitionOptionRel)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static com.liferay.portal.kernel.search.Hits search(
 		HttpPrincipal httpPrincipal,
 		com.liferay.portal.kernel.search.SearchContext searchContext) {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
-					"search", _searchParameterTypes12);
+					"search", _searchParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					searchContext);
@@ -505,7 +464,7 @@ public class CPDefinitionOptionRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
 					"searchCPDefinitionOptionRels",
-					_searchCPDefinitionOptionRelsParameterTypes13);
+					_searchCPDefinitionOptionRelsParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupId, cpDefinitionId, keywords, start, end,
@@ -525,6 +484,47 @@ public class CPDefinitionOptionRelServiceHttp {
 			}
 
 			return (com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionRel>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionOptionRel updateCPDefinitionOptionRel(
+		HttpPrincipal httpPrincipal, long cpDefinitionOptionRelId,
+		long cpOptionId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
+		boolean skuContributor,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
+					"updateCPDefinitionOptionRel",
+					_updateCPDefinitionOptionRelParameterTypes13);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpDefinitionOptionRelId, cpOptionId, nameMap,
+					descriptionMap, ddmFormFieldTypeName, priority, facetable,
+					skuContributor, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPDefinitionOptionRel)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -568,18 +568,18 @@ public class CPDefinitionOptionRelServiceHttp {
 		new Class[] { long.class };
 	private static final Class<?>[] _getSkuContributorCPDefinitionOptionRelsParameterTypes10 =
 		new Class[] { long.class };
-	private static final Class<?>[] _updateCPDefinitionOptionRelParameterTypes11 =
+	private static final Class<?>[] _searchParameterTypes11 = new Class[] {
+			com.liferay.portal.kernel.search.SearchContext.class
+		};
+	private static final Class<?>[] _searchCPDefinitionOptionRelsParameterTypes12 =
+		new Class[] {
+			long.class, long.class, long.class, java.lang.String.class,
+			int.class, int.class, com.liferay.portal.kernel.search.Sort.class
+		};
+	private static final Class<?>[] _updateCPDefinitionOptionRelParameterTypes13 =
 		new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class, int.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _searchParameterTypes12 = new Class[] {
-			com.liferay.portal.kernel.search.SearchContext.class
-		};
-	private static final Class<?>[] _searchCPDefinitionOptionRelsParameterTypes13 =
-		new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			int.class, int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 }

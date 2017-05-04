@@ -33,58 +33,6 @@
 		</if>
 	</tear-down>
 
-	<command name="AssertURLParametersChange" priority="4">
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Blogs" />
-		</execute>
-
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Page#add">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<for list="Search Bar,Search Results,Type Facet" param="portletName">
-			<execute macro="Navigator#gotoPage">
-				<var name="pageName" value="Search Page" />
-			</execute>
-			
-			<execute macro="Portlet#addPG">
-				<var name="portletName" value="${portletName}" />
-			</execute>
-		</for>
-
-		<execute macro="SearchBarPortlet#searchPG">
-			<var name="searchTerm" value="Blogs Entry Title" />
-		</execute>
-
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?q=Blogs%20Entry%20Title&amp;scope=" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
-		</execute>
-
-		<execute macro="SearchBarPortlet#configureParameterNamesPG">
-			<var name="keywordsParameterName" value="keywordparameter" />
-			<var name="scopeParameterName" value="scopeparameter" />
-		</execute>
-
-		<execute macro="SearchBarPortlet#searchPG">
-			<var name="searchTerm" value="Blogs Entry Title" />
-		</execute>
-
-		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Blogs%20Entry%20Title&amp;scopeparameter=" />
-
-		<execute function="Click" locator1="TypeFacet#BLOGS_ENTRY" />
-
-		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Blogs%20Entry%20Title&amp;scopeparameter=&amp;type=com.liferay.blogs.model.BlogsEntry" />
-	</command>
-
 	<command name="SearchAssetsScopeEverythingAcrossMultipleSites" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -1064,6 +1012,58 @@
 			<var name="searchAssetType" value="Message Boards Message" />
 			<var name="searchAssetSummary"><![CDATA[<script>alert("Liferay Alert")</script>]]></var>
 		</execute>
+	</command>
+
+	<command name="ViewURLChangesWithUpdatedSearchAndFacetParameters" priority="4">
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Search Page" />
+		</execute>
+
+		<for list="Search Bar,Search Results,Type Facet" param="portletName">
+			<execute macro="Navigator#gotoPage">
+				<var name="pageName" value="Search Page" />
+			</execute>
+
+			<execute macro="Portlet#addPG">
+				<var name="portletName" value="${portletName}" />
+			</execute>
+		</for>
+
+		<execute macro="SearchBarPortlet#searchPG">
+			<var name="searchTerm" value="Blogs Entry Title" />
+		</execute>
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?q=Blogs%20Entry%20Title&amp;scope=" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Search Page" />
+		</execute>
+
+		<execute macro="SearchBarPortlet#configureParameterNamesPG">
+			<var name="keywordsParameterName" value="keywordparameter" />
+			<var name="scopeParameterName" value="scopeparameter" />
+		</execute>
+
+		<execute macro="SearchBarPortlet#searchPG">
+			<var name="searchTerm" value="Blogs Entry Title" />
+		</execute>
+
+		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Blogs%20Entry%20Title&amp;scopeparameter=" />
+
+		<execute function="Click" locator1="TypeFacet#BLOGS_ENTRY" />
+
+		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Blogs%20Entry%20Title&amp;scopeparameter=&amp;type=com.liferay.blogs.model.BlogsEntry" />
 	</command>
 
 	<command name="ViewUserSearchResult" priority="4">

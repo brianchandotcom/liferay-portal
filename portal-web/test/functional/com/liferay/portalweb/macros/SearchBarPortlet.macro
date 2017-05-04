@@ -10,14 +10,14 @@
 		<if>
 			<isset var="keywordsParameterName" />
 			<then>
-				<execute function="Type" locator1="SearchBar#KEYWORDS_PARAMETER_NAME" value1="${keywordsParameterName}" />
+				<execute function="Type" locator1="SearchBarConfiguration#KEYWORDS_PARAMETER_NAME" value1="${keywordsParameterName}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="scopeParameterName" />
 			<then>
-				<execute function="Type" locator1="SearchBar#SCOPE_PARAMETER_NAME" value1="${scopeParameterName}" />
+				<execute function="Type" locator1="SearchBarConfiguration#SCOPE_PARAMETER_NAME" value1="${scopeParameterName}" />
 			</then>
 		</if>
 

@@ -270,6 +270,8 @@ public class JenkinsResultsParserUtil {
 			long duration = 0;
 			long start = System.currentTimeMillis();
 
+			sleep(25);
+
 			while ((returnCode == -1) && (duration < timeout)) {
 				try {
 					returnCode = process.exitValue();
@@ -278,7 +280,7 @@ public class JenkinsResultsParserUtil {
 					returnCode = -1;
 				}
 
-				sleep(1000);
+				sleep(100);
 
 				duration = System.currentTimeMillis() - start;
 			}

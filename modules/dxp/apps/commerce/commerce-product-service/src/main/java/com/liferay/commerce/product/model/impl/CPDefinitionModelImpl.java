@@ -147,9 +147,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long DISPLAYDATE_COLUMN_BITMASK = 8L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
+	public static final long STATUS_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long DISPLAYDATE_COLUMN_BITMASK = 16L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -826,7 +827,19 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@Override
 	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@JSON
@@ -1250,6 +1263,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		cpDefinitionModelImpl._setModifiedDate = false;
 
+		cpDefinitionModelImpl._originalStatus = cpDefinitionModelImpl._status;
+
+		cpDefinitionModelImpl._setOriginalStatus = false;
+
 		cpDefinitionModelImpl._columnBitmask = 0;
 	}
 
@@ -1553,6 +1570,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	private Date _expirationDate;
 	private Date _lastPublishDate;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;

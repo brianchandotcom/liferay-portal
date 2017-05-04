@@ -136,12 +136,12 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 
 	@Override
 	public BaseModelSearchResult<CPOption> searchCPOptions(
-		long companyId, long groupId, String keywords,
-		LinkedHashMap<String, Object> params, int start, int end, Sort sort)
+		long companyId, long groupId, String keywords, int start, int end,
+		Sort sort)
 		throws PortalException {
 
 		return  cpOptionLocalService.searchCPOptions(
-			companyId,groupId,keywords,params,start,end,sort);
+			companyId,groupId,keywords,start,end,sort);
 	}
 
 

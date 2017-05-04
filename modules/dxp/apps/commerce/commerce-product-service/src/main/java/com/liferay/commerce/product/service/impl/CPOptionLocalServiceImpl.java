@@ -179,8 +179,8 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 	@Override
 	public BaseModelSearchResult<CPOption> searchCPOptions(
-		long companyId, long groupId, String keywords,
-		LinkedHashMap<String, Object> params, int start, int end, Sort sort)
+		long companyId, long groupId, String keywords, int start, int end,
+		Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(

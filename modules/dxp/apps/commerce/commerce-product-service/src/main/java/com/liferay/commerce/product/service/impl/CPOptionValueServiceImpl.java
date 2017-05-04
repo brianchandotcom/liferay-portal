@@ -19,6 +19,10 @@ import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.base.CPOptionValueServiceBaseImpl;
 import com.liferay.commerce.product.service.permission.CPOptionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -138,4 +142,19 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 			cpOptionValueId, titleMap, priority, serviceContext);
 	}
 
+	@Override
+	public Hits search(SearchContext searchContext) {
+
+		return cpOptionValueLocalService.search(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
+		long companyId, long groupId,long cpOptionId, String keywords, int start, int end,
+		Sort sort)
+		throws PortalException {
+
+		return  cpOptionValueLocalService.searchCPOptionValues(
+			companyId,groupId,cpOptionId,keywords,start,end,sort);
+	}
 }

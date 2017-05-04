@@ -62,8 +62,8 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 
 	@Override
 	protected void doDelete(CPOptionValue cpOptionValue) throws Exception {
-		deleteDocument(cpOptionValue.getCompanyId(),
-			cpOptionValue.getCPOptionValueId());
+		deleteDocument(
+			cpOptionValue.getCompanyId(), cpOptionValue.getCPOptionValueId());
 	}
 
 	@Override

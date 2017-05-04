@@ -196,6 +196,7 @@ public class CPOptionValueLocalServiceImpl
 		SearchContext searchContext = new SearchContext();
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
 		params.put("keywords", keywords);
 
 		Map<String, Serializable> attributes = new HashMap<>();
@@ -205,8 +206,8 @@ public class CPOptionValueLocalServiceImpl
 		attributes.put(Field.CONTENT, keywords);
 		attributes.put("CPOptionId", cpOptionId);
 		attributes.put("params", params);
-
 		searchContext.setAttributes(attributes);
+
 		searchContext.setCompanyId(companyId);
 		searchContext.setStart(start);
 		searchContext.setEnd(end);

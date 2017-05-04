@@ -117,11 +117,11 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, cpDefinition);
 
-		String cpDefinitionDefaultLanguageId = LocalizationUtil.
-			getDefaultLanguageId(cpDefinition.getTitle());
+		String cpDefinitionDefaultLanguageId =
+			LocalizationUtil.getDefaultLanguageId(cpDefinition.getTitle());
 
-		List<String> languageIds = _cpDefinitionLocalService.
-			getCPDefinitionLocalizationLanguageIds(
+		List<String> languageIds =
+			_cpDefinitionLocalService.getCPDefinitionLocalizationLanguageIds(
 				cpDefinition.getCPDefinitionId());
 
 		for (String languageId : languageIds) {

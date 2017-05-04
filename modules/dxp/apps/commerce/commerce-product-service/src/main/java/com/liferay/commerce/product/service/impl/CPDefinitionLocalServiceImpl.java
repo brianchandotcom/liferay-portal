@@ -462,6 +462,7 @@ public class CPDefinitionLocalServiceImpl
 		SearchContext searchContext = new SearchContext();
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
 		params.put("keywords", keywords);
 
 		Map<String, Serializable> attributes = new HashMap<>();
@@ -471,8 +472,8 @@ public class CPDefinitionLocalServiceImpl
 		attributes.put(Field.DESCRIPTION, keywords);
 		attributes.put(Field.CONTENT, keywords);
 		attributes.put("params", params);
-
 		searchContext.setAttributes(attributes);
+
 		searchContext.setCompanyId(companyId);
 		searchContext.setStart(start);
 		searchContext.setEnd(end);

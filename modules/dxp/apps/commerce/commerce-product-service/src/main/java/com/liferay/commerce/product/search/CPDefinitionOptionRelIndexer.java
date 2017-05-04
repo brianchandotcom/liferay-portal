@@ -118,8 +118,9 @@ public class CPDefinitionOptionRelIndexer
 		Document document = getBaseModelDocument(
 			CLASS_NAME, cpDefinitionOptionRel);
 
-		String cpDefinitionOptionRelDefaultLanguageId = LocalizationUtil.
-			getDefaultLanguageId(cpDefinitionOptionRel.getName());
+		String cpDefinitionOptionRelDefaultLanguageId =
+			LocalizationUtil.getDefaultLanguageId(
+				cpDefinitionOptionRel.getName());
 
 		String cpOptionDefaultLanguageId =
 			LocalizationUtil.getDefaultLanguageId(
@@ -149,7 +150,8 @@ public class CPDefinitionOptionRelIndexer
 
 			document.addText(Field.CONTENT, name);
 
-			document.addKeyword(FIELD_CP_DEFINITION_ID,
+			document.addKeyword(
+				FIELD_CP_DEFINITION_ID,
 				cpDefinitionOptionRel.getCPDefinitionId());
 		}
 
@@ -205,12 +207,13 @@ public class CPDefinitionOptionRelIndexer
 		throws PortalException {
 
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_cpDefinitionOptionRelLocalService.getIndexableActionableDynamicQuery();
+			_cpDefinitionOptionRelLocalService.
+				getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.
-			PerformActionMethod<CPDefinitionOptionRel>() {
+				PerformActionMethod<CPDefinitionOptionRel>() {
 
 				@Override
 				public void performAction(
@@ -224,8 +227,9 @@ public class CPDefinitionOptionRelIndexer
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to index commerce product definition option rel " +
-									cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+								"Unable to index definition option rel " +
+									cpDefinitionOptionRel.
+										getCPDefinitionOptionRelId(),
 								pe);
 						}
 					}

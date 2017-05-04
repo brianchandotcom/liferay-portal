@@ -218,9 +218,10 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	@Override
-	public BaseModelSearchResult<CPDefinitionOptionRel> searchCPDefinitionOptionRels(
-			long companyId, long groupId, long cpDefinitionId, String keywords,
-			int start, int end, Sort sort)
+	public BaseModelSearchResult<CPDefinitionOptionRel>
+			searchCPDefinitionOptionRels(
+				long companyId, long groupId, long cpDefinitionId,
+				String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
@@ -264,6 +265,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		SearchContext searchContext = new SearchContext();
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
 		params.put("keywords", keywords);
 
 		Map<String, Serializable> attributes = new HashMap<>();
@@ -273,8 +275,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		attributes.put(Field.CONTENT, keywords);
 		attributes.put("CPDefinitionId", cpDefinitionId);
 		attributes.put("params", params);
-
 		searchContext.setAttributes(attributes);
+
 		searchContext.setCompanyId(companyId);
 		searchContext.setStart(start);
 		searchContext.setEnd(end);

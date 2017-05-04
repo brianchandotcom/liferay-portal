@@ -184,9 +184,9 @@ public class CPDefinitionOptionRelServiceImpl
 
 	@Override
 	public BaseModelSearchResult<CPDefinitionOptionRel>
-		searchCPDefinitionOptionRels(
-			long companyId, long groupId, long cpDefinitionId, String keywords,
-			int start, int end, Sort sort)
+			searchCPDefinitionOptionRels(
+				long companyId, long groupId, long cpDefinitionId,
+				String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		return cpDefinitionOptionRelLocalService.searchCPDefinitionOptionRels(

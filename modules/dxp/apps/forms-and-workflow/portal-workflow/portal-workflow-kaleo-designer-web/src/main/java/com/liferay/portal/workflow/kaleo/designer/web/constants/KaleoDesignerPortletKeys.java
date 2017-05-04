@@ -29,12 +29,4 @@ public class KaleoDesignerPortletKeys {
 		"com_liferay_portal_workflow_kaleo_designer_web_portlet_" +
 			"KaleoDesignerPortlet";
 
-	/**
-	 * {@value #KALEO_DESIGNER_LOADER} is the portlet ID for the Kaleo Designer
-	 * Loader portlet.
-	 */
-	public static final String KALEO_DESIGNER_LOADER =
-		"com_liferay_portal_workflow_kaleo_designer_web_portlet_" +
-			"KaleoDesignerLoaderPortlet";
-
 }

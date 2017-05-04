@@ -147,7 +147,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		int status = GetterUtil.getInteger(
 			serviceContext.getAttribute("status"),
-			WorkflowConstants.STATUS_APPROVED);
+			WorkflowConstants.STATUS_DRAFT);
 
 		DDLRecordVersion recordVersion = addRecordVersion(
 			user, record, ddmStorageId, DDLRecordConstants.VERSION_DEFAULT,
@@ -161,6 +161,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			userId, record, recordVersion, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(), locale,
 			serviceContext.getAssetPriority());
+
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) {
+
+			return record;
+		}
 
 		// Workflow
 
@@ -903,6 +909,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			// Dynamic data mapping storage
 
 			storageEngine.deleteByClass(recordVersion.getDDMStorageId());
+
+			return record;
+		}
+
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) {
 
 			return record;
 		}

@@ -44,6 +44,33 @@ public class PasswordPolicyFinderImpl
 
 	@Override
 	public int countByC_N(long companyId, String name) {
+		return doCountByC_N(companyId, name, false);
+	}
+
+	@Override
+	public int filterCountByC_N(long companyId, String name) {
+		return doCountByC_N(companyId, name, true);
+	}
+
+	@Override
+	public List<PasswordPolicy> filterFindByC_N(
+		long companyId, String name, int start, int end,
+		OrderByComparator<PasswordPolicy> obc) {
+
+		return doFindByC_N(companyId, name, start, end, obc, true);
+	}
+
+	@Override
+	public List<PasswordPolicy> findByC_N(
+		long companyId, String name, int start, int end,
+		OrderByComparator<PasswordPolicy> obc) {
+
+		return doFindByC_N(companyId, name, start, end, obc, false);
+	}
+
+	protected int doCountByC_N(
+		long companyId, String name, boolean inlineSQLHelper) {
+
 		name = CustomSQLUtil.keywords(name)[0];
 
 		Session session = null;
@@ -52,6 +79,15 @@ public class PasswordPolicyFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(COUNT_BY_C_N);
+
+			if (inlineSQLHelper &&
+				InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, PasswordPolicy.class.getName(),
+					"PasswordPolicy.passwordPolicyId", null, null,
+					new long[] {0}, null);
+			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -81,22 +117,6 @@ public class PasswordPolicyFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	@Override
-	public List<PasswordPolicy> filterFindByC_N(
-		long companyId, String name, int start, int end,
-		OrderByComparator<PasswordPolicy> obc) {
-
-		return doFindByC_N(companyId, name, start, end, obc, true);
-	}
-
-	@Override
-	public List<PasswordPolicy> findByC_N(
-		long companyId, String name, int start, int end,
-		OrderByComparator<PasswordPolicy> obc) {
-
-		return doFindByC_N(companyId, name, start, end, obc, false);
 	}
 
 	protected List<PasswordPolicy> doFindByC_N(

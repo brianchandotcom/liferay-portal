@@ -177,12 +177,12 @@ public class CPDefinitionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionSoap[] getCPDefinitions(
-		long groupId, int start, int end,
+		long groupId, int status, int max,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.product.model.CPDefinition> returnValue =
-				CPDefinitionServiceUtil.getCPDefinitions(groupId, start, end,
+				CPDefinitionServiceUtil.getCPDefinitions(groupId, status, max,
 					orderByComparator);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModels(returnValue);
@@ -200,6 +200,47 @@ public class CPDefinitionServiceSoap {
 			int returnValue = CPDefinitionServiceUtil.getCPDefinitionsCount(groupId);
 
 			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCPDefinitionsCount(long groupId, int status)
+		throws RemoteException {
+		try {
+			int returnValue = CPDefinitionServiceUtil.getCPDefinitionsCount(groupId,
+					status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionSoap moveCPDefinitionToTrash(
+		long cpDefinitionId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.moveCPDefinitionToTrash(cpDefinitionId);
+
+			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void restoreCPDefinitionFromTrash(long cpDefinitionId)
+		throws RemoteException {
+		try {
+			CPDefinitionServiceUtil.restoreCPDefinitionFromTrash(cpDefinitionId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -88,6 +88,9 @@ public interface CPDefinitionService extends BaseService {
 	public CPDefinition getCPDefinition(long cpDefinitionId)
 		throws PortalException;
 
+	public CPDefinition moveCPDefinitionToTrash(long cpDefinitionId)
+		throws PortalException;
+
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
 		java.lang.String baseSKU, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
@@ -114,6 +117,9 @@ public interface CPDefinitionService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionsCount(long groupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionsCount(long groupId, int status);
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -125,6 +131,10 @@ public interface CPDefinitionService extends BaseService {
 	public List<CPDefinition> getCPDefinitions(long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinition> getCPDefinitions(long groupId, int start,
-		int end, OrderByComparator<CPDefinition> orderByComparator);
+	public List<CPDefinition> getCPDefinitions(long groupId, int status,
+		int max, OrderByComparator<CPDefinition> orderByComparator)
+		throws PortalException;
+
+	public void restoreCPDefinitionFromTrash(long cpDefinitionId)
+		throws PortalException;
 }

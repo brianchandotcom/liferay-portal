@@ -85,6 +85,12 @@ public class CPDefinitionServiceUtil {
 		return getService().getCPDefinition(cpDefinitionId);
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinition moveCPDefinitionToTrash(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveCPDefinitionToTrash(cpDefinitionId);
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinition(
 		long cpDefinitionId, java.lang.String baseSKU,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -133,6 +139,10 @@ public class CPDefinitionServiceUtil {
 		return getService().getCPDefinitionsCount(groupId);
 	}
 
+	public static int getCPDefinitionsCount(long groupId, int status) {
+		return getService().getCPDefinitionsCount(groupId, status);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -148,10 +158,16 @@ public class CPDefinitionServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator) {
+		long groupId, int status, int max,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCPDefinitions(groupId, start, end, orderByComparator);
+				   .getCPDefinitions(groupId, status, max, orderByComparator);
+	}
+
+	public static void restoreCPDefinitionFromTrash(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().restoreCPDefinitionFromTrash(cpDefinitionId);
 	}
 
 	public static CPDefinitionService getService() {

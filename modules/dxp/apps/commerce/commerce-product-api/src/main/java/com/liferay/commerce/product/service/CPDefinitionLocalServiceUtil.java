@@ -236,7 +236,7 @@ public class CPDefinitionLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link #updateStatus(long, long,
+	* @deprecated As of 1.0.0, replaced by {@link #updateStatus(long, long,
 	int, ServiceContext, Map)}
 	*/
 	@Deprecated
@@ -317,6 +317,11 @@ public class CPDefinitionLocalServiceUtil {
 
 	public static int getCPDefinitionsCount(long groupId) {
 		return getService().getCPDefinitionsCount(groupId);
+	}
+
+	public static int getCPDefinitionsCount(long groupId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition) {
+		return getService().getCPDefinitionsCount(groupId, queryDefinition);
 	}
 
 	/**
@@ -403,6 +408,12 @@ public class CPDefinitionLocalServiceUtil {
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
 		int start, int end) {
 		return getService().getCPDefinitions(start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
+		long groupId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition) {
+		return getService().getCPDefinitions(groupId, queryDefinition);
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(

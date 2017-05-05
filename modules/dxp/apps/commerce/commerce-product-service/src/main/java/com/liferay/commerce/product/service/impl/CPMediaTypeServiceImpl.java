@@ -95,7 +95,7 @@ public class CPMediaTypeServiceImpl extends CPMediaTypeServiceBaseImpl {
 
 	@Override
 	public List<CPMediaType> getCPMediaTypes(long groupId, int start, int end) {
-		return cpMediaTypeLocalService.getCPMediaTypes(groupId, start, end);
+		return cpMediaTypePersistence.filterFindByGroupId(groupId, start, end);
 	}
 
 	@Override
@@ -103,13 +103,13 @@ public class CPMediaTypeServiceImpl extends CPMediaTypeServiceBaseImpl {
 		long groupId, int start, int end,
 		OrderByComparator<CPMediaType> orderByComparator) {
 
-		return cpMediaTypeLocalService.getCPMediaTypes(
+		return cpMediaTypePersistence.filterFindByGroupId(
 			groupId, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getCPMediaTypesCount(long groupId) {
-		return cpMediaTypeLocalService.getCPMediaTypesCount(groupId);
+		return cpMediaTypePersistence.filterCountByGroupId(groupId);
 	}
 
 	@Override

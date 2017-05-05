@@ -89,7 +89,7 @@ public abstract class BaseJSONWebServiceClientHandler {
 		return doGet(url, parameters, Collections.<String, String>emptyMap());
 	}
 
-	protected <T> List<T> doGetToList(
+	protected <V, T> List<V> doGetToList(
 			Class<T> clazz, String url, Map<String, String> parameters,
 			Map<String, String> headers)
 		throws JSONWebServiceInvocationException {
@@ -103,8 +103,10 @@ public abstract class BaseJSONWebServiceClientHandler {
 		try {
 			TypeFactory typeFactory = objectMapper.getTypeFactory();
 
+			List<V> list = Collections.emptyList();
+
 			JavaType javaType = typeFactory.constructCollectionType(
-				List.class, clazz);
+				list.getClass(), clazz);
 
 			return objectMapper.readValue(json, javaType);
 		}
@@ -113,7 +115,7 @@ public abstract class BaseJSONWebServiceClientHandler {
 		}
 	}
 
-	protected <T> List<T> doGetToList(
+	protected <V, T> List<V> doGetToList(
 			Class<T> clazz, String url, String... parametersArray)
 		throws JSONWebServiceInvocationException {
 

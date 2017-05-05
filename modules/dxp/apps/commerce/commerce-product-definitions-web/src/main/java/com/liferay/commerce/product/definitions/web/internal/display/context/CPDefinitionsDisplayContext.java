@@ -17,13 +17,9 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 import com.liferay.commerce.product.definitions.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
-import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelCreateDateComparator;
-import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelNameComparator;
-import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelPriorityComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -85,8 +81,7 @@ public class CPDefinitionsDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		if(isSearch()){
-
+		if (isSearch()) {
 			boolean orderByAsc = false;
 
 			if (Objects.equals(getOrderByType(), "asc")) {
@@ -102,7 +97,7 @@ public class CPDefinitionsDisplayContext
 				sort = new Sort(Field.CREATE_DATE, orderByAsc);
 			}
 			else if (Objects.equals(getOrderByCol(), "display-date")) {
-				sort = new Sort("display-date",orderByAsc);
+				sort = new Sort("display-date", orderByAsc);
 			}
 
 			BaseModelSearchResult<CPDefinition> cpOptionBaseModelSearchResult =
@@ -114,10 +109,8 @@ public class CPDefinitionsDisplayContext
 			searchContainer.setTotal(cpOptionBaseModelSearchResult.getLength());
 			searchContainer.setResults(
 				cpOptionBaseModelSearchResult.getBaseModels());
-
 		}
 		else {
-
 			int total = _cpDefinitionService.getCPDefinitionsCount(
 				getScopeGroupId());
 

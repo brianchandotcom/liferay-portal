@@ -33,13 +33,15 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.LinkedHashMap;
+import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import java.util.LinkedHashMap;
-import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -51,7 +53,8 @@ public class CPDefinitionOptionValueRelIndexer
 	public static final String CLASS_NAME =
 		CPDefinitionOptionValueRel.class.getName();
 
-	public static final String FIELD_CP_DEFINITION_OPTION_REL_ID = "CPDefinitionOptionRelId";
+	public static final String FIELD_CP_DEFINITION_OPTION_REL_ID =
+		"CPDefinitionOptionRelId";
 
 	public CPDefinitionOptionValueRelIndexer() {
 		setDefaultSelectedFieldNames(
@@ -105,7 +108,8 @@ public class CPDefinitionOptionValueRelIndexer
 	}
 
 	@Override
-	protected void doDelete(CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
+	protected void doDelete(
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
 		throws Exception {
 
 		deleteDocument(
@@ -134,10 +138,11 @@ public class CPDefinitionOptionValueRelIndexer
 			cpDefinitionOptionValueRel.getTitle());
 
 		for (String languageId : languageIds) {
-
 			String title = cpDefinitionOptionValueRel.getTitle(languageId);
 
-			if (languageId.equals(cpDefinitionOptionValueRelDefaultLanguageId)) {
+			if (languageId.equals(
+					cpDefinitionOptionValueRelDefaultLanguageId)) {
+
 				document.addText(Field.TITLE, title);
 				document.addText("defaultLanguageId", languageId);
 			}
@@ -155,7 +160,8 @@ public class CPDefinitionOptionValueRelIndexer
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Document " + cpDefinitionOptionValueRel + " indexed successfully");
+				"Document " + cpDefinitionOptionValueRel +
+					" indexed successfully");
 		}
 
 		return document;
@@ -166,8 +172,7 @@ public class CPDefinitionOptionValueRelIndexer
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Summary summary = createSummary(
-			document, Field.TITLE, Field.TITLE);
+		Summary summary = createSummary(document, Field.TITLE, Field.TITLE);
 
 		summary.setMaxContentLength(200);
 
@@ -175,21 +180,22 @@ public class CPDefinitionOptionValueRelIndexer
 	}
 
 	@Override
-	protected void doReindex(CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
+	protected void doReindex(
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
 		throws Exception {
 
 		Document document = getDocument(cpDefinitionOptionValueRel);
 
 		_indexWriterHelper.updateDocument(
-			getSearchEngineId(), cpDefinitionOptionValueRel.getCompanyId(), document,
-			isCommitImmediately());
+			getSearchEngineId(), cpDefinitionOptionValueRel.getCompanyId(),
+			document, isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			_cpDefinitionOptionValueRelLocalService.getCPDefinitionOptionValueRel(
-				classPK);
+			_cpDefinitionOptionValueRelLocalService.
+				getCPDefinitionOptionValueRel(classPK);
 
 		doReindex(cpDefinitionOptionValueRel);
 	}
@@ -218,7 +224,8 @@ public class CPDefinitionOptionValueRelIndexer
 					CPDefinitionOptionValueRel cpDefinitionOptionValueRel) {
 
 					try {
-						Document document = getDocument(cpDefinitionOptionValueRel);
+						Document document = getDocument(
+							cpDefinitionOptionValueRel);
 
 						indexableActionableDynamicQuery.addDocuments(document);
 					}

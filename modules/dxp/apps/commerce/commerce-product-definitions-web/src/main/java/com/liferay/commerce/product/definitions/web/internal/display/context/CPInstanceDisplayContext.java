@@ -107,7 +107,6 @@ public class CPInstanceDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-
 		SearchContainer<CPInstance> searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
@@ -122,7 +121,7 @@ public class CPInstanceDisplayContext
 
 		searchContainer.setRowChecker(getRowChecker());
 
-		if(isSearch()){
+		if (isSearch()) {
 			boolean orderByAsc = false;
 
 			if (Objects.equals(getOrderByType(), "asc")) {
@@ -141,11 +140,10 @@ public class CPInstanceDisplayContext
 				sort = new Sort("display-date", true);
 			}
 
-			BaseModelSearchResult<CPInstance>
-				cpInstanceBaseModelSearchResult =
+			BaseModelSearchResult<CPInstance> cpInstanceBaseModelSearchResult =
 					_cpInstanceService.searchCPOptions(
 						themeDisplay.getCompanyId(),
-						themeDisplay.getScopeGroupId(),getCPDefinitionId(),
+						themeDisplay.getScopeGroupId(), getCPDefinitionId(),
 						getKeywords(), searchContainer.getStart(),
 						searchContainer.getEnd(), sort);
 
@@ -153,10 +151,10 @@ public class CPInstanceDisplayContext
 				cpInstanceBaseModelSearchResult.getLength());
 			searchContainer.setResults(
 				cpInstanceBaseModelSearchResult.getBaseModels());
-
 		}
 		else {
-			int total = _cpInstanceService.getCPInstancesCount(getCPDefinitionId());
+			int total = _cpInstanceService.getCPInstancesCount(
+				getCPDefinitionId());
 
 			searchContainer.setTotal(total);
 

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -100,9 +99,7 @@ public class CPOptionDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-
-		if(isSearch()) {
-
+		if (isSearch()) {
 			boolean orderByAsc = false;
 
 			if (Objects.equals(getOrderByType(), "asc")) {
@@ -123,7 +120,6 @@ public class CPOptionDisplayContext
 			searchContainer.setTotal(cpOptionBaseModelSearchResult.getLength());
 			searchContainer.setResults(
 				cpOptionBaseModelSearchResult.getBaseModels());
-
 		}
 		else {
 			int total = _cpOptionService.getCPOptionsCount(getScopeGroupId());
@@ -136,6 +132,7 @@ public class CPOptionDisplayContext
 
 			searchContainer.setResults(results);
 		}
+
 		this.searchContainer = searchContainer;
 
 		return this.searchContainer;

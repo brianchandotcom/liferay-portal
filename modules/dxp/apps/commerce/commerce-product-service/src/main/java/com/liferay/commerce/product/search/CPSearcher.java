@@ -31,9 +31,8 @@ public class CPSearcher extends BaseSearcher {
 
 	public static final String[] CLASS_NAMES = {
 		CPDefinition.class.getName(), CPDefinitionOptionRel.class.getName(),
-		CPDefinitionOptionValueRel.class.getName(),
-		CPInstance.class.getName(), CPOption.class.getName(),
-		CPOptionValue.class.getName()
+		CPDefinitionOptionValueRel.class.getName(), CPInstance.class.getName(),
+		CPOption.class.getName(), CPOptionValue.class.getName()
 	};
 
 	public static Indexer<?> getInstance() {

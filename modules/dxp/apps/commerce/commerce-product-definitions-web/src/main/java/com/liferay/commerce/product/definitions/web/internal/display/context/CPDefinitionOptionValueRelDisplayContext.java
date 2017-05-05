@@ -21,9 +21,14 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -117,6 +122,10 @@ public class CPDefinitionOptionValueRelDisplayContext
 			return searchContainer;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		SearchContainer<CPDefinitionOptionValueRel> searchContainer =
 			new SearchContainer<>(
 				liferayPortletRequest, getPortletURL(), null, null);
@@ -132,19 +141,52 @@ public class CPDefinitionOptionValueRelDisplayContext
 		searchContainer.setEmptyResultsMessage("no-option-values-were-found");
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total =
-			_cpDefinitionOptionValueRelService.
-				getCPDefinitionOptionValueRelsCount(
-					getCPDefinitionOptionRelId());
+		if (isSearch()) {
+			boolean orderByAsc = false;
 
-		searchContainer.setTotal(total);
+			if (Objects.equals(getOrderByType(), "asc")) {
+				orderByAsc = true;
+			}
 
-		List<CPDefinitionOptionValueRel> results =
-			_cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRels(
-				getCPDefinitionOptionRelId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
+			Sort sort = null;
 
-		searchContainer.setResults(results);
+			if (Objects.equals(getOrderByCol(), "title")) {
+				sort = new Sort("title", Sort.STRING_TYPE, orderByAsc);
+			}
+			else if (Objects.equals(getOrderByCol(), "priority")) {
+				sort = new Sort("priority", Sort.INT_TYPE, orderByAsc);
+			}
+
+			BaseModelSearchResult<CPDefinitionOptionValueRel>
+				cpDefinitionOptionValueRelBaseModelSearchResult =
+				_cpDefinitionOptionValueRelService.
+					searchCPDefinitionOptionValueRels(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId(), getCPDefinitionId(),
+						getKeywords(), searchContainer.getStart(),
+						searchContainer.getEnd(), sort);
+
+			searchContainer.setTotal(
+				cpDefinitionOptionValueRelBaseModelSearchResult.getLength());
+			searchContainer.setResults(
+				cpDefinitionOptionValueRelBaseModelSearchResult.
+					getBaseModels());
+		}
+		else {
+			int total =
+				_cpDefinitionOptionValueRelService.
+					getCPDefinitionOptionValueRelsCount(
+						getCPDefinitionOptionRelId());
+
+			searchContainer.setTotal(total);
+
+			List<CPDefinitionOptionValueRel> results =
+				_cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRels(
+					getCPDefinitionOptionRelId(), searchContainer.getStart(),
+					searchContainer.getEnd(), orderByComparator);
+
+			searchContainer.setResults(results);
+		}
 
 		this.searchContainer = searchContainer;
 

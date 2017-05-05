@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.options.web.internal.display.context;
 
-import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.options.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.product.options.web.internal.util.CPOptionsPortletUtil;
@@ -75,7 +74,6 @@ public class CPOptionValueDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-
 		SearchContainer<CPOptionValue> searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
@@ -90,8 +88,7 @@ public class CPOptionValueDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		if(isSearch()) {
-
+		if (isSearch()) {
 			boolean orderByAsc = false;
 
 			if (Objects.equals(getOrderByType(), "asc")) {
@@ -111,8 +108,8 @@ public class CPOptionValueDisplayContext
 				cpOptionValueBaseModelSearchResult =
 					_cpOptionValueService.searchCPOptionValues(
 						themeDisplay.getCompanyId(),
-						themeDisplay.getScopeGroupId(),
-						 getCPOptionId() ,getKeywords(),
+						themeDisplay.getScopeGroupId(), getCPOptionId(),
+						getCPOptionId(), getKeywords(),
 						searchContainer.getStart(), searchContainer.getEnd(),
 						sort);
 
@@ -120,10 +117,8 @@ public class CPOptionValueDisplayContext
 				cpOptionValueBaseModelSearchResult.getLength());
 			searchContainer.setResults(
 				cpOptionValueBaseModelSearchResult.getBaseModels());
-
 		}
 		else {
-
 			int total = _cpOptionValueService.getCPOptionValuesCount(
 				getCPOptionId());
 
@@ -134,7 +129,6 @@ public class CPOptionValueDisplayContext
 					searchContainer.getEnd(), orderByComparator);
 
 			searchContainer.setResults(results);
-
 		}
 
 		this.searchContainer = searchContainer;

@@ -17,7 +17,6 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 import com.liferay.commerce.product.definitions.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.item.selector.criterion.CPOptionItemSelectorCriterion;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
@@ -171,9 +170,7 @@ public class CPDefinitionOptionRelDisplayContext
 		searchContainer.setEmptyResultsMessage("no-options-were-found");
 		searchContainer.setRowChecker(getRowChecker());
 
-
-		if(isSearch()){
-
+		if (isSearch()) {
 			boolean orderByAsc = false;
 
 			if (Objects.equals(getOrderByType(), "asc")) {
@@ -186,17 +183,17 @@ public class CPDefinitionOptionRelDisplayContext
 				sort = new Sort("name", Sort.STRING_TYPE, orderByAsc);
 			}
 			else if (Objects.equals(getOrderByCol(), "create-date")) {
-				sort = new Sort(Field.MODIFIED_DATE, true);
+				sort = new Sort(Field.CREATE_DATE, true);
 			}
 			else if (Objects.equals(getOrderByCol(), "priority")) {
-				sort = new Sort("name", Sort.INT_TYPE, orderByAsc);
+				sort = new Sort("priority", Sort.INT_TYPE, orderByAsc);
 			}
 
 			BaseModelSearchResult<CPDefinitionOptionRel>
 				cpDefinitionOptionRelBaseModelSearchResult =
 					_cpDefinitionOptionRelService.searchCPDefinitionOptionRels(
 						themeDisplay.getCompanyId(),
-						themeDisplay.getScopeGroupId(),getCPDefinitionId(),
+						themeDisplay.getScopeGroupId(), getCPDefinitionId(),
 						getKeywords(), searchContainer.getStart(),
 						searchContainer.getEnd(), sort);
 
@@ -204,10 +201,8 @@ public class CPDefinitionOptionRelDisplayContext
 				cpDefinitionOptionRelBaseModelSearchResult.getLength());
 			searchContainer.setResults(
 				cpDefinitionOptionRelBaseModelSearchResult.getBaseModels());
-
 		}
 		else {
-
 			int total =
 				_cpDefinitionOptionRelService.getCPDefinitionOptionRelsCount(
 					getCPDefinitionId());

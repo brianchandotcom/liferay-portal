@@ -46,7 +46,7 @@
 	</aui:nav>
 
 	<%
-	if (toolbarItem.equals("view-product-definition-options") || toolbarItem.equals("view-product-definition-instances")) {
+	if (toolbarItem.equals("view-commerce-product-definition-option-value-rels")) {
 	%>
 
 		<aui:form action="<%= portletURL.toString() %>" name="searchFm">

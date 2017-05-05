@@ -116,60 +116,21 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Override
 	public List<CPDefinition> getCPDefinitions(
-		long groupId, int start, int end) {
-
-		return cpDefinitionLocalService.getCPDefinitions(groupId, start, end);
-	}
-
-	@Override
-	public List<CPDefinition> getCPDefinitions(
-			long groupId, int status, int max,
+			long groupId, int status, int start, int end,
 			OrderByComparator<CPDefinition> orderByComparator)
 		throws PortalException {
 
-		List<CPDefinition> cpDefinitions = new ArrayList<>();
-
-		boolean listNotExhausted = true;
-
-		QueryDefinition<CPDefinition> queryDefinition = new QueryDefinition<>(
-			status, false, 0, 0, orderByComparator);
-
 		if (status == WorkflowConstants.STATUS_ANY) {
-			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+			return cpDefinitionPersistence.filterFindByG_NotS(
+				groupId, WorkflowConstants.STATUS_IN_TRASH, start, end,
+				orderByComparator);
 		}
 
-		while ((cpDefinitions.size() < max) && listNotExhausted) {
-			queryDefinition.setEnd(queryDefinition.getStart() + max);
-
-			List<CPDefinition> cpDefinitionList =
-				cpDefinitionLocalService.getCPDefinitions(
-					groupId, queryDefinition);
-
-			queryDefinition.setStart(queryDefinition.getStart() + max);
-
-			listNotExhausted = cpDefinitionList.size() == max;
-
-			for (CPDefinition cpDefinition : cpDefinitionList) {
-				if (cpDefinitions.size() >= max) {
-					break;
-				}
-
-				if (CPDefinitionPermission.contains(
-						getPermissionChecker(), cpDefinition,
-						ActionKeys.VIEW)) {
-
-					cpDefinitions.add(cpDefinition);
-				}
-			}
-		}
-
-		return cpDefinitions;
+		return cpDefinitionPersistence.filterFindByG_S(
+			groupId, WorkflowConstants.STATUS_ANY, start, end,
+			orderByComparator);
 	}
 
-	@Override
-	public int getCPDefinitionsCount(long groupId) {
-		return cpDefinitionLocalService.getCPDefinitionsCount(groupId);
-	}
 
 	@Override
 	public int getCPDefinitionsCount(long groupId, int status) {
@@ -177,9 +138,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			return cpDefinitionPersistence.filterCountByG_NotS(
 				groupId, WorkflowConstants.STATUS_IN_TRASH);
 		}
-		else {
-			return cpDefinitionPersistence.filterCountByG_S(groupId, status);
-		}
+
+		return cpDefinitionPersistence.filterCountByG_S(groupId, status);
 	}
 
 	@Override

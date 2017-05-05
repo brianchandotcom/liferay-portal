@@ -96,18 +96,23 @@ public interface WikiPageService extends BaseService {
 	public WikiPage getDraftPage(long nodeId, java.lang.String title)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getPage(long groupId, long nodeId, java.lang.String title)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getPage(long nodeId, java.lang.String title)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getPage(long nodeId, java.lang.String title, double version)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getPage(long nodeId, java.lang.String title,
 		java.lang.Boolean head) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getPage(long pageId) throws PortalException;
 
 	public WikiPage movePageToTrash(long nodeId, java.lang.String title)

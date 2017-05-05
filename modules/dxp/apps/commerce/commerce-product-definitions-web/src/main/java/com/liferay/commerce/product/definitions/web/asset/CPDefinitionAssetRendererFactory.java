@@ -23,11 +23,13 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -36,7 +38,6 @@ import javax.portlet.WindowStateException;
 
 import javax.servlet.ServletContext;
 
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -44,135 +45,146 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-    immediate = true,
-    property = {"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS},
-    service = AssetRendererFactory.class
+	immediate = true,
+	property = {"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS},
+	service = AssetRendererFactory.class
 )
 public class CPDefinitionAssetRendererFactory
-    extends BaseAssetRendererFactory<CPDefinition> {
+	extends BaseAssetRendererFactory<CPDefinition> {
 
-    public static final String TYPE = "product";
+	public static final String ASSET_RENDERER_FACTORY_GROUP =
+		"ASSET_RENDERER_FACTORY_GROUP";
 
-    public CPDefinitionAssetRendererFactory() {
-        setClassName(CPDefinition.class.getName());
-        setLinkable(true);
-        setPortletId(CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS);
-        setSearchable(true);
-    }
+	public static final String TYPE = "product";
 
-    @Override
-    public AssetRenderer<CPDefinition> getAssetRenderer(
-            long classPK, int type)
-        throws PortalException {
+	public CPDefinitionAssetRendererFactory() {
+		setClassName(CPDefinition.class.getName());
+		setLinkable(true);
+		setPortletId(CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS);
+		setSearchable(true);
+	}
 
-        CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(classPK);
+	@Override
+	public AssetRenderer<CPDefinition> getAssetRenderer(long classPK, int type)
+		throws PortalException {
 
-        CPDefinitionAssetRenderer cpDefinitionAssetRenderer =
-            new CPDefinitionAssetRenderer(cpDefinition, _resourceBundleLoader);
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			classPK);
 
-        cpDefinitionAssetRenderer.setAssetRendererType(type);
-        cpDefinitionAssetRenderer.setServletContext(_servletContext);
+		CPDefinitionAssetRenderer cpDefinitionAssetRenderer =
+			new CPDefinitionAssetRenderer(cpDefinition, _resourceBundleLoader);
 
-        return cpDefinitionAssetRenderer;
-    }
+		cpDefinitionAssetRenderer.setAssetRendererType(type);
+		cpDefinitionAssetRenderer.setServletContext(_servletContext);
 
-    @Override
-    public String getClassName() {
-        return CPDefinition.class.getName();
-    }
+		return cpDefinitionAssetRenderer;
+	}
 
-    @Override
-    public String getIconCssClass() {
-        return "product";
-    }
+	@Override
+	public String getClassName() {
+		return CPDefinition.class.getName();
+	}
 
-    @Override
-    public String getType() {
-        return TYPE;
-    }
+	@Override
+	public String getIconCssClass() {
+		return "product";
+	}
 
-    @Override
-    public PortletURL getURLAdd(
-        LiferayPortletRequest liferayPortletRequest,
-        LiferayPortletResponse liferayPortletResponse, long classTypeId) {
+	@Override
+	public String getType() {
+		return TYPE;
+	}
 
-        PortletURL portletURL = _portal.getControlPanelPortletURL(
-            liferayPortletRequest, getGroup(liferayPortletRequest),
-            CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, 0, 0, PortletRequest.RENDER_PHASE);
+	@Override
+	public PortletURL getURLAdd(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
-        portletURL.setParameter(
-            "mvcRenderCommandName", "editProductDefinition");
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			liferayPortletRequest, getGroup(liferayPortletRequest),
+			CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, 0, 0,
+			PortletRequest.RENDER_PHASE);
 
-        return portletURL;
-    }
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editProductDefinition");
 
-    @Override
-    public PortletURL getURLView(
-        LiferayPortletResponse liferayPortletResponse,
-        WindowState windowState) {
+		return portletURL;
+	}
 
-        LiferayPortletURL liferayPortletURL =
-            liferayPortletResponse.createLiferayPortletURL(
-                CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, PortletRequest.RENDER_PHASE);
+	@Override
+	public PortletURL getURLView(
+		LiferayPortletResponse liferayPortletResponse,
+		WindowState windowState) {
 
-        try {
-            liferayPortletURL.setWindowState(windowState);
-        }
-        catch (WindowStateException wse) {
-        }
+		LiferayPortletURL liferayPortletURL =
+			liferayPortletResponse.createLiferayPortletURL(
+				CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
+				PortletRequest.RENDER_PHASE);
 
-        return liferayPortletURL;
-    }
+		try {
+			liferayPortletURL.setWindowState(windowState);
+		}
+		catch (WindowStateException wse) {
+		}
 
-    @Override
-    public boolean hasAddPermission(
-            PermissionChecker permissionChecker, long groupId, long classTypeId)
-        throws Exception {
+		return liferayPortletURL;
+	}
 
-        return CPDefinitionPermission.contains(
-            permissionChecker, groupId, CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
-    }
+	@Override
+	public boolean hasAddPermission(
+			PermissionChecker permissionChecker, long groupId, long classTypeId)
+		throws Exception {
 
-    @Override
-    public boolean hasPermission(
-            PermissionChecker permissionChecker, long classPK, String actionId)
-        throws Exception {
+		return CPDefinitionPermission.contains(
+			permissionChecker, groupId,
+			CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
+	}
 
-        return CPDefinitionPermission.contains(
-            permissionChecker, classPK, actionId);
-    }
+	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws Exception {
 
-    @Reference(
-        target = "(bundle.symbolic.name=com.liferay.commerce.product.definitions.web)",
-        unbind = "-"
-    )
-    public void setResourceBundleLoader(
-        ResourceBundleLoader resourceBundleLoader) {
+		return CPDefinitionPermission.contains(
+			permissionChecker, classPK, actionId);
+	}
 
-        _resourceBundleLoader = resourceBundleLoader;
-    }
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.commerce.product.definitions.web)",
+		unbind = "-"
+	)
+	public void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
 
-    @Reference(
-        target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)",
-        unbind = "-"
-    )
-    public void setServletContext(ServletContext servletContext) {
-        _servletContext = servletContext;
-    }
+		_resourceBundleLoader = resourceBundleLoader;
+	}
 
-    @Reference(unbind = "-")
-    protected void setCPDefinitionLocalService(
-        CPDefinitionLocalService cpDefinitionLocalService) {
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
 
-        _cpDefinitionLocalService = cpDefinitionLocalService;
-    }
+	protected Group getGroup(LiferayPortletRequest liferayPortletRequest) {
+		return (Group)liferayPortletRequest.getAttribute(
+			ASSET_RENDERER_FACTORY_GROUP);
+	}
 
-    private CPDefinitionLocalService _cpDefinitionLocalService;
+	@Reference(unbind = "-")
+	protected void setCPDefinitionLocalService(
+		CPDefinitionLocalService cpDefinitionLocalService) {
 
-    @Reference
-    private Portal _portal;
+		_cpDefinitionLocalService = cpDefinitionLocalService;
+	}
 
-    private ResourceBundleLoader _resourceBundleLoader;
-    private ServletContext _servletContext;
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private Portal _portal;
+
+	private ResourceBundleLoader _resourceBundleLoader;
+	private ServletContext _servletContext;
 
 }

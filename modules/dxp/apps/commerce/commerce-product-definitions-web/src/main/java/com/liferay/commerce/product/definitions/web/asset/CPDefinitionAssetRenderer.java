@@ -18,10 +18,10 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
-import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -29,14 +29,21 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
@@ -47,157 +54,213 @@ import javax.servlet.http.HttpServletResponse;
  * @author Alessio Antonio Rendina
  */
 public class CPDefinitionAssetRenderer
-    extends BaseJSPAssetRenderer<CPDefinition> implements TrashRenderer {
+	extends BaseJSPAssetRenderer<CPDefinition> implements TrashRenderer {
 
-    public CPDefinitionAssetRenderer(
-        CPDefinition cpDefinition, ResourceBundleLoader resourceBundleLoader) {
+	public CPDefinitionAssetRenderer(
+		CPDefinition cpDefinition, ResourceBundleLoader resourceBundleLoader) {
 
-        _cpDefinition = cpDefinition;
-        _resourceBundleLoader = resourceBundleLoader;
-    }
+		_cpDefinition = cpDefinition;
+		_resourceBundleLoader = resourceBundleLoader;
+	}
 
-    @Override
-    public CPDefinition getAssetObject() {
-        return _cpDefinition;
-    }
+	@Override
+	public CPDefinition getAssetObject() {
+		return _cpDefinition;
+	}
 
-    @Override
-    public String getClassName() {
-        return CPDefinition.class.getName();
-    }
+	@Override
+	public String getClassName() {
+		return CPDefinition.class.getName();
+	}
 
-    @Override
-    public long getClassPK() {
-        return _cpDefinition.getCPDefinitionId();
-    }
+	@Override
+	public long getClassPK() {
+		return _cpDefinition.getCPDefinitionId();
+	}
 
-    @Override
-    public Date getDisplayDate() {
-        return _cpDefinition.getDisplayDate();
-    }
+	@Override
+	public Date getDisplayDate() {
+		return _cpDefinition.getDisplayDate();
+	}
 
-    @Override
-    public long getGroupId() {
-        return _cpDefinition.getGroupId();
-    }
+	@Override
+	public long getGroupId() {
+		return _cpDefinition.getGroupId();
+	}
 
-    @Override
-    public String getPortletId() {
-        AssetRendererFactory<CPDefinition> assetRendererFactory =
-            getAssetRendererFactory();
+	@Override
+	public String getJspPath(HttpServletRequest request, String template) {
+		if (template.equals(TEMPLATE_ABSTRACT) ||
+			template.equals(TEMPLATE_FULL_CONTENT)) {
 
-        return assetRendererFactory.getPortletId();
-    }
+			return "/asset/" + template + ".jsp";
+		}
+		else {
+			return null;
+		}
+	}
 
-    @Override
-    public int getStatus() {
-        return _cpDefinition.getStatus();
-    }
+	@Override
+	public String getPortletId() {
+		AssetRendererFactory<CPDefinition> assetRendererFactory =
+			getAssetRendererFactory();
 
-    @Override
-    public String getTitle(Locale locale) {
-        ResourceBundle resourceBundle =
-            _resourceBundleLoader.loadResourceBundle(locale);
+		return assetRendererFactory.getPortletId();
+	}
 
-        return CPDefinitionUtil.getDisplayTitle(resourceBundle, _cpDefinition);
-    }
+	@Override
+	public int getStatus() {
+		return _cpDefinition.getStatus();
+	}
 
-    @Override
-    public String getType() {
-        return CPDefinitionAssetRendererFactory.TYPE;
-    }
+	@Override
+	public String getSummary(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-    @Override
-    public PortletURL getURLEdit(
-            LiferayPortletRequest liferayPortletRequest,
-            LiferayPortletResponse liferayPortletResponse)
-        throws Exception {
+		int abstractLength = AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH;
 
-        Group group = GroupLocalServiceUtil.fetchGroup(_cpDefinition.getGroupId());
+		if (portletRequest != null) {
+			abstractLength = GetterUtil.getInteger(
+				portletRequest.getAttribute(
+					WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH),
+				AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH);
+		}
 
-        PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-            liferayPortletRequest, group, CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, 0, 0,
-            PortletRequest.RENDER_PHASE);
+		String summary = _cpDefinition.getDescription();
 
-        portletURL.setParameter("mvcRenderCommandName", "/editProductDefinition");
-        portletURL.setParameter("cpDefinitionId", String.valueOf(_cpDefinition.getCPDefinitionId()));
+		if (Validator.isNull(summary)) {
+			summary = HtmlUtil.stripHtml(
+				StringUtil.shorten(
+					_cpDefinition.getDescriptionMapAsXML(), abstractLength));
+		}
 
-        return portletURL;
-    }
+		return summary;
+	}
 
-    @Override
-    public String getUrlTitle() {
-        return _cpDefinition.getUrlTitle();
-    }
+	@Override
+	public String getTitle(Locale locale) {
+		String languageId = LanguageUtil.getLanguageId(locale);
 
-    @Override
-    public String getURLView(
-            LiferayPortletResponse liferayPortletResponse,
-            WindowState windowState)
-        throws Exception {
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(languageId);
 
-        AssetRendererFactory<CPDefinition> assetRendererFactory =
-            getAssetRendererFactory();
+		if (Validator.isNull(_cpDefinition.getTitle(languageId))) {
+			return LanguageUtil.get(resourceBundle, "untitled-entry");
+		}
 
-        PortletURL portletURL = assetRendererFactory.getURLView(
-            liferayPortletResponse, windowState);
+		return _cpDefinition.getTitle(languageId);
+	}
 
-        portletURL.setParameter("mvcPath", "/view.jsp");
-        portletURL.setParameter("cpDefinitionId", String.valueOf(_cpDefinition.getCPDefinitionId()));
-        portletURL.setWindowState(windowState);
+	@Override
+	public String getType() {
+		return CPDefinitionAssetRendererFactory.TYPE;
+	}
 
-        return portletURL.toString();
-    }
+	@Override
+	public PortletURL getURLEdit(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
 
-    @Override
-    public long getUserId() {
-        return _cpDefinition.getUserId();
-    }
+		Group group = GroupLocalServiceUtil.fetchGroup(
+			_cpDefinition.getGroupId());
 
-    @Override
-    public String getUserName() {
-        return _cpDefinition.getUserName();
-    }
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, group,
+			CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS, 0, 0,
+			PortletRequest.RENDER_PHASE);
 
-    @Override
-    public String getUuid() {
-        return _cpDefinition.getUuid();
-    }
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/editProductDefinition");
+		portletURL.setParameter(
+			"cpDefinitionId",
+			String.valueOf(_cpDefinition.getCPDefinitionId()));
 
-    public boolean hasDeletePermission(PermissionChecker permissionChecker) throws PortalException {
-        return CPDefinitionPermission.contains(
-            permissionChecker, _cpDefinition, ActionKeys.DELETE);
-    }
+		return portletURL;
+	}
 
-    @Override
-    public boolean hasEditPermission(PermissionChecker permissionChecker) throws PortalException {
-        return CPDefinitionPermission.contains(
-            permissionChecker, _cpDefinition, ActionKeys.UPDATE);
-    }
+	@Override
+	public String getUrlTitle() {
+		return _cpDefinition.getUrlTitle();
+	}
 
-    @Override
-    public boolean hasViewPermission(PermissionChecker permissionChecker) throws PortalException {
-        return CPDefinitionPermission.contains(
-            permissionChecker, _cpDefinition, ActionKeys.VIEW);
-    }
+	@Override
+	public String getURLView(
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
+		throws Exception {
 
-    @Override
-    public boolean include(
-            HttpServletRequest request, HttpServletResponse response,
-            String template)
-        throws Exception {
+		AssetRendererFactory<CPDefinition> assetRendererFactory =
+			getAssetRendererFactory();
 
-        request.setAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITION, _cpDefinition);
+		PortletURL portletURL = assetRendererFactory.getURLView(
+			liferayPortletResponse, windowState);
 
-        return super.include(request, response, template);
-    }
+		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setParameter(
+			"cpDefinitionId",
+			String.valueOf(_cpDefinition.getCPDefinitionId()));
+		portletURL.setWindowState(windowState);
 
-    @Override
-    public boolean isPrintable() {
-        return true;
-    }
+		return portletURL.toString();
+	}
 
-    private final CPDefinition _cpDefinition;
-    private final ResourceBundleLoader _resourceBundleLoader;
+	@Override
+	public long getUserId() {
+		return _cpDefinition.getUserId();
+	}
+
+	@Override
+	public String getUserName() {
+		return _cpDefinition.getUserName();
+	}
+
+	@Override
+	public String getUuid() {
+		return _cpDefinition.getUuid();
+	}
+
+	public boolean hasDeletePermission(PermissionChecker permissionChecker)
+		throws PortalException {
+
+		return CPDefinitionPermission.contains(
+			permissionChecker, _cpDefinition, ActionKeys.DELETE);
+	}
+
+	@Override
+	public boolean hasEditPermission(PermissionChecker permissionChecker)
+		throws PortalException {
+
+		return CPDefinitionPermission.contains(
+			permissionChecker, _cpDefinition, ActionKeys.UPDATE);
+	}
+
+	@Override
+	public boolean hasViewPermission(PermissionChecker permissionChecker)
+		throws PortalException {
+
+		return CPDefinitionPermission.contains(
+			permissionChecker, _cpDefinition, ActionKeys.VIEW);
+	}
+
+	@Override
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
+			String template)
+		throws Exception {
+
+		request.setAttribute(
+			CPWebKeys.COMMERCE_PRODUCT_DEFINITION, _cpDefinition);
+
+		return super.include(request, response, template);
+	}
+
+	@Override
+	public boolean isPrintable() {
+		return true;
+	}
+
+	private final CPDefinition _cpDefinition;
+	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

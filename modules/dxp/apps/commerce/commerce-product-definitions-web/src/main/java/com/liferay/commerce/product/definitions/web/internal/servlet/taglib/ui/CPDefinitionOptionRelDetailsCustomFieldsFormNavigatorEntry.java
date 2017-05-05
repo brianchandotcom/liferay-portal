@@ -58,14 +58,16 @@ public class CPDefinitionOptionRelDetailsCustomFieldsFormNavigatorEntry
 	}
 
 	@Override
-	public boolean isVisible(User user, CPDefinitionOptionRel formModelBean) {
+	public boolean isVisible(
+		User user, CPDefinitionOptionRel cpDefinitionOptionRel) {
+
 		boolean hasCustomAttributesAvailable = false;
 
 		try {
 			long classPK = 0;
 
-			if (formModelBean != null) {
-				classPK = formModelBean.getCPDefinitionOptionRelId();
+			if (cpDefinitionOptionRel != null) {
+				classPK = cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 			}
 
 			hasCustomAttributesAvailable =

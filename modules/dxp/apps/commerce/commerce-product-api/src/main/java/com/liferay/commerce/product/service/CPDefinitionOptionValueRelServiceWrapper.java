@@ -85,6 +85,22 @@ public class CPDefinitionOptionValueRelServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(
+		long companyId, long groupId, long cpDefinitionOptionRelId,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionValueRelService.searchCPDefinitionOptionValueRels(companyId,
+			groupId, cpDefinitionOptionRelId, keywords, start, end, sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return _cpDefinitionOptionValueRelService.search(searchContext);
+	}
+
+	@Override
 	public int getCPDefinitionOptionValueRelsCount(long cpDefinitionOptionRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRelsCount(cpDefinitionOptionRelId);

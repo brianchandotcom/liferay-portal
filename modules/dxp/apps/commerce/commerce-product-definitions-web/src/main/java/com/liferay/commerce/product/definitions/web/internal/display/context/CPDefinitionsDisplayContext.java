@@ -119,7 +119,8 @@ public class CPDefinitionsDisplayContext
 
 			List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
 				getScopeGroupId(), WorkflowConstants.STATUS_ANY,
-				searchContainer.getStart(), orderByComparator);
+				searchContainer.getStart(),searchContainer.getEnd(),
+				orderByComparator);
 
 			searchContainer.setResults(results);
 		}

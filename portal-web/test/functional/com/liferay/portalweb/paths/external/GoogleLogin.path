@@ -31,17 +31,17 @@
 <!--LOGIN-->
 <tr>
 	<td>LOGIN_EMAIL_FIELD</td>
-	<td>//input[contains(@id,'Email')]</td>
+	<td>//input[contains(@type,'email')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LOGIN_PASSWORD_FIELD</td>
-	<td>//input[contains(@id,'Passwd')]</td>
+	<td>//input[contains(@type,'password')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LOGIN_NEXT_BUTTON</td>
-	<td>//input[@id='next']</td>
+	<td>//input[@id='next'] | //div[contains(@id,'Next')]</td>
 	<td></td>
 </tr>
 <tr>

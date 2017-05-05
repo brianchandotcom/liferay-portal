@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Objects;
@@ -112,13 +113,13 @@ public class CPDefinitionsDisplayContext
 		}
 		else {
 			int total = _cpDefinitionService.getCPDefinitionsCount(
-				getScopeGroupId());
+				getScopeGroupId(), WorkflowConstants.STATUS_ANY);
 
 			searchContainer.setTotal(total);
 
 			List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
-				getScopeGroupId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
+				getScopeGroupId(), WorkflowConstants.STATUS_ANY,
+				searchContainer.getStart(), orderByComparator);
 
 			searchContainer.setResults(results);
 		}

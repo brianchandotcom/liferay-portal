@@ -645,6 +645,7 @@ public class CPDefinitionLocalServiceImpl
 		attributes.put(Field.TITLE, keywords);
 		attributes.put(Field.DESCRIPTION, keywords);
 		attributes.put(Field.CONTENT, keywords);
+		attributes.put(Field.STATUS, WorkflowConstants.STATUS_ANY);
 		attributes.put("params", params);
 
 		searchContext.setAttributes(attributes);

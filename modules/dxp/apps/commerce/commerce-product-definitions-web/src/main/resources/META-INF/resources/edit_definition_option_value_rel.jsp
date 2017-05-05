@@ -62,7 +62,7 @@ renderResponse.setTitle(title);
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
 			backURL="<%= backURL %>"
-			formModelBean="<%= cpDefinitionOptionRel %>"
+			formModelBean="<%= cpDefinitionOptionValueRel %>"
 			id="<%= CPDefinitionOptionValueRelFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL %>"
 			markupView="lexicon"
 		/>

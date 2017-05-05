@@ -948,7 +948,7 @@ public class GitWorkingDirectory {
 			try {
 				process = JenkinsResultsParserUtil.executeBashCommands(
 					true, _workingDirectory, 1000 * 60,
-					"git remote remove " + remoteConfig.getName());
+					"git remote rm " + remoteConfig.getName());
 			}
 			catch (InterruptedException | IOException | RuntimeException e) {
 				throw new RuntimeException(

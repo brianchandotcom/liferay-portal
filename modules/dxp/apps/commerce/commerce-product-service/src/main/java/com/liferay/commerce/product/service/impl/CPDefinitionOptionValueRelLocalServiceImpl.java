@@ -272,7 +272,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		attributes.put(Field.ENTRY_CLASS_PK, keywords);
 		attributes.put(Field.TITLE, keywords);
 		attributes.put(Field.CONTENT, keywords);
-		attributes.put("cpDefinitionOptionRelId", cpDefinitionOptionRelId);
+		attributes.put("CPDefinitionOptionRelId", cpDefinitionOptionRelId);
 		attributes.put("params", params);
 		searchContext.setAttributes(attributes);
 

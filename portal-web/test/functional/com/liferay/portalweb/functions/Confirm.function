@@ -27,6 +27,16 @@
 		<execute function="WaitForSPARefresh" />
 	</command>
 
+	<command name="assertPrompt" summary="Assert that the confirmation window equals the value '${locator1}' and enter '${value1}' for input">
+		<execute selenium="assertPrompt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+
+		<execute function="WaitForSPARefresh" />
+	</command>
+
 	<command name="waitForConfirmation">
 		<execute selenium="waitForConfirmation" />
 

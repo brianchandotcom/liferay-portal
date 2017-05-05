@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.commerce.product.service.workflow;
+package com.liferay.commerce.product.service.internal.workflow;
 
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -36,15 +36,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	property = {"model.class.name=com.liferay.commerce.product.model.CPDefinition"},
+	property = {"model.class.name=com.liferay.commerce.product.model.CPInstance"},
 	service = WorkflowHandler.class
 )
-public class CPDefinitionWorkflowHandler
-	extends BaseWorkflowHandler<CPDefinition> {
+public class CPInstanceWorkflowHandler extends BaseWorkflowHandler<CPInstance> {
 
 	@Override
 	public String getClassName() {
-		return CPDefinition.class.getName();
+		return CPInstance.class.getName();
 	}
 
 	@Override
@@ -53,7 +52,7 @@ public class CPDefinitionWorkflowHandler
 	}
 
 	@Override
-	public CPDefinition updateStatus(
+	public CPInstance updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {
 
@@ -66,18 +65,11 @@ public class CPDefinitionWorkflowHandler
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
-		return _cpDefinitionLocalService.updateStatus(
+		return _cpInstanceLocalService.updateStatus(
 			userId, classPK, status, serviceContext, workflowContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCPDefinitionLocalService(
-		CPDefinitionLocalService
-			cpDefinitionLocalService) {
-
-		_cpDefinitionLocalService = cpDefinitionLocalService;
-	}
-
-	private CPDefinitionLocalService _cpDefinitionLocalService;
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 }

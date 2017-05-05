@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.commerce.product.service.workflow;
+package com.liferay.commerce.product.service.internal.workflow;
 
-import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -36,14 +36,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	property = {"model.class.name=com.liferay.commerce.product.model.CPInstance"},
+	property = {"model.class.name=com.liferay.commerce.product.model.CPDefinition"},
 	service = WorkflowHandler.class
 )
-public class CPInstanceWorkflowHandler extends BaseWorkflowHandler<CPInstance> {
+public class CPDefinitionWorkflowHandler
+	extends BaseWorkflowHandler<CPDefinition> {
 
 	@Override
 	public String getClassName() {
-		return CPInstance.class.getName();
+		return CPDefinition.class.getName();
 	}
 
 	@Override
@@ -52,7 +53,7 @@ public class CPInstanceWorkflowHandler extends BaseWorkflowHandler<CPInstance> {
 	}
 
 	@Override
-	public CPInstance updateStatus(
+	public CPDefinition updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {
 
@@ -65,11 +66,18 @@ public class CPInstanceWorkflowHandler extends BaseWorkflowHandler<CPInstance> {
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
-		return _cpInstanceLocalService.updateStatus(
+		return _cpDefinitionLocalService.updateStatus(
 			userId, classPK, status, serviceContext, workflowContext);
 	}
 
-	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
+	@Reference(unbind = "-")
+	protected void setCPDefinitionLocalService(
+		CPDefinitionLocalService
+			cpDefinitionLocalService) {
+
+		_cpDefinitionLocalService = cpDefinitionLocalService;
+	}
+
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 }

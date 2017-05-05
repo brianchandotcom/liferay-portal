@@ -396,8 +396,6 @@ public class CPDefinitionLocalServiceImpl
 			long userId, long cpDefinitionId)
 		throws PortalException {
 
-		// Entry
-
 		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
 			cpDefinitionId);
 

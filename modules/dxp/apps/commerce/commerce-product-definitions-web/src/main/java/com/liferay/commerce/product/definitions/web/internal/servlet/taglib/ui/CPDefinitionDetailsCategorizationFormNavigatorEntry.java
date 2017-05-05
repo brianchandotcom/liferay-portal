@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = {"form.navigator.entry.order:Integer=20"},
+	property = {"form.navigator.entry.order:Integer=30"},
 	service = FormNavigatorEntry.class
 )
 public class CPDefinitionDetailsCategorizationFormNavigatorEntry

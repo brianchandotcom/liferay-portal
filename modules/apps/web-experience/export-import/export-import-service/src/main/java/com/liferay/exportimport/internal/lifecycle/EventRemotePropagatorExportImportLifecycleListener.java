@@ -145,7 +145,7 @@ public class EventRemotePropagatorExportImportLifecycleListener
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to generate HttpPrincipal to user " +
+					"Unable to generate HttpPrincipal for user " +
 						user.getFullName(),
 					pe);
 			}

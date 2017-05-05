@@ -162,9 +162,10 @@ public class CPDefinitionOptionValueRelDisplayContext
 				_cpDefinitionOptionValueRelService.
 					searchCPDefinitionOptionValueRels(
 						themeDisplay.getCompanyId(),
-						themeDisplay.getScopeGroupId(), getCPDefinitionId(),
-						getKeywords(), searchContainer.getStart(),
-						searchContainer.getEnd(), sort);
+						themeDisplay.getScopeGroupId(),
+						getCPDefinitionOptionRelId(), getKeywords(),
+						searchContainer.getStart(), searchContainer.getEnd(),
+						sort);
 
 			searchContainer.setTotal(
 				cpDefinitionOptionValueRelBaseModelSearchResult.getLength());

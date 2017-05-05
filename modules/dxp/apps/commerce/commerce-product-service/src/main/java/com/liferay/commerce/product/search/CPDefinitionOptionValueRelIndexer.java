@@ -92,7 +92,7 @@ public class CPDefinitionOptionValueRelIndexer
 
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
 		LinkedHashMap<String, Object> params =
@@ -152,11 +152,13 @@ public class CPDefinitionOptionValueRelIndexer
 				title);
 
 			document.addText(Field.CONTENT, title);
-
-			document.addKeyword(
-				FIELD_CP_DEFINITION_OPTION_REL_ID,
-				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
 		}
+
+		document.addNumber(
+			Field.PRIORITY,cpDefinitionOptionValueRel.getPriority());
+		document.addKeyword(
+			FIELD_CP_DEFINITION_OPTION_REL_ID,
+			cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

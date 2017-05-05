@@ -19,8 +19,6 @@ import com.jcraft.jsch.Session;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 
 import java.net.URISyntaxException;
 
@@ -37,7 +35,6 @@ import org.eclipse.jgit.api.CleanCommand;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.DeleteBranchCommand;
-import org.eclipse.jgit.api.FetchCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ListBranchCommand;
 import org.eclipse.jgit.api.ListBranchCommand.ListMode;
@@ -46,13 +43,11 @@ import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.lib.StoredConfig;
-import org.eclipse.jgit.lib.TextProgressMonitor;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.JschConfigSessionFactory;
 import org.eclipse.jgit.transport.OpenSshConfig.Host;
@@ -432,67 +427,82 @@ public class GitWorkingDirectory {
 	public void fetch(RefSpec refSpec, RemoteConfig remoteConfig)
 		throws GitAPIException {
 
-		FetchCommand fetchCommand = _git.fetch();
+		String fetchCommand = JenkinsResultsParserUtil.combine(
+			"git fetch --progress -v -f ", getRemoteURL(remoteConfig));
 
-		if (refSpec != null) {
-			fetchCommand.setRefSpecs(refSpec);
+		if (refSpec == null) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Fetching from ", getRemoteURL(remoteConfig)));
+
+			List<RefSpec> fetchRefSpecs = remoteConfig.getFetchRefSpecs();
+
+			for (RefSpec fetchRefSpec : fetchRefSpecs) {
+				fetchCommand += " " + fetchRefSpec.toString();
+			}
 		}
 		else {
-			fetchCommand.setRefSpecs(remoteConfig.getFetchRefSpecs());
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Fetching from ", getRemoteURL(remoteConfig), " ",
+					refSpec.toString()));
+
+			fetchCommand += " " + refSpec.toString();
 		}
 
-		Writer consoleWriter = new OutputStreamWriter(System.out);
-
-		fetchCommand.setProgressMonitor(new TextProgressMonitor(consoleWriter));
-
-		fetchCommand.setRemote(getRemoteURL(remoteConfig));
-		fetchCommand.setTimeout(360);
-
 		int retries = 0;
-		long start = 0;
+		long start = System.currentTimeMillis();
 
 		while (true) {
 			try {
-				if (refSpec == null) {
-					System.out.println(
-						JenkinsResultsParserUtil.combine(
-							"Fetching from ", getRemoteURL(remoteConfig)));
-				}
-				else {
-					System.out.println(
-						JenkinsResultsParserUtil.combine(
-							"Fetching from  ", getRemoteURL(remoteConfig), " ",
-							refSpec.toString()));
+				Process process = JenkinsResultsParserUtil.executeBashCommands(
+					true, getWorkingDirectory(), 1000 * 60 * 30, fetchCommand);
+
+				if ((process != null) && (process.exitValue() != 0)) {
+					try {
+						System.out.println(
+							JenkinsResultsParserUtil.readInputStream(
+								process.getErrorStream()));
+					}
+					catch (IOException ioe) {
+						ioe.printStackTrace();
+					}
+
+					throw new RuntimeException("Unable to fetch");
 				}
 
-				start = System.currentTimeMillis();
-
-				fetchCommand.call();
+				if (process == null) {
+					throw new RuntimeException("Process failed to run");
+				}
 
 				System.out.println(
-					"Fetch completed in " +
-						JenkinsResultsParserUtil.toDurationString(
-							System.currentTimeMillis() - start));
-
-				return;
+					JenkinsResultsParserUtil.readInputStream(
+						process.getInputStream()));
 			}
-			catch (TransportException te) {
+			catch (Exception e) {
 				if (retries < 3) {
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
 							"Fetch attempt ", Integer.toString(retries),
-							" failed with a transport exception. ",
-							te.getMessage(), "\nRetrying."));
+							" failed with an exception. ", e.getMessage(),
+							"\nRetrying."));
 
 					retries++;
 
 					JenkinsResultsParserUtil.sleep(30000);
 				}
 				else {
-					throw te;
+					throw new RuntimeException(e);
 				}
 			}
+
+			break;
 		}
+
+		System.out.println(
+			"Fetch completed in " +
+				JenkinsResultsParserUtil.toDurationString(
+					System.currentTimeMillis() - start));
 	}
 
 	public void fetch(

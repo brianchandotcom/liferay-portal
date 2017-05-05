@@ -243,20 +243,6 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 			status, serviceContext, workflowContext);
 	}
 
-	/**
-	* @deprecated As of 1.0.0, replaced by {@link #updateStatus(long, long,
-	int, ServiceContext, Map)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.commerce.product.model.CPDefinition updateStatus(
-		long userId, long entryId, int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLocalService.updateStatus(userId, entryId, status,
-			serviceContext);
-	}
-
 	@Override
 	public com.liferay.commerce.product.model.CPDefinitionLocalization fetchCPDefinitionLocalization(
 		long CPDefinitionId, java.lang.String languageId) {

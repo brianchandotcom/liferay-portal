@@ -133,11 +133,6 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 	}
 
 	@Override
-	public int getCPDefinitionsCount(long groupId) {
-		return _cpDefinitionService.getCPDefinitionsCount(groupId);
-	}
-
-	@Override
 	public int getCPDefinitionsCount(long groupId, int status) {
 		return _cpDefinitionService.getCPDefinitionsCount(groupId, status);
 	}
@@ -154,17 +149,11 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
-		long groupId, int start, int end) {
-		return _cpDefinitionService.getCPDefinitions(groupId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
-		long groupId, int status, int max,
+		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionService.getCPDefinitions(groupId, status, max,
-			orderByComparator);
+		return _cpDefinitionService.getCPDefinitions(groupId, status, start,
+			end, orderByComparator);
 	}
 
 	@Override

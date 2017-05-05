@@ -135,10 +135,6 @@ public class CPDefinitionServiceUtil {
 		return getService().search(searchContext);
 	}
 
-	public static int getCPDefinitionsCount(long groupId) {
-		return getService().getCPDefinitionsCount(groupId);
-	}
-
 	public static int getCPDefinitionsCount(long groupId, int status) {
 		return getService().getCPDefinitionsCount(groupId, status);
 	}
@@ -153,16 +149,12 @@ public class CPDefinitionServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
-		long groupId, int start, int end) {
-		return getService().getCPDefinitions(groupId, start, end);
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
-		long groupId, int status, int max,
+		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCPDefinitions(groupId, status, max, orderByComparator);
+				   .getCPDefinitions(groupId, status, start, end,
+			orderByComparator);
 	}
 
 	public static void restoreCPDefinitionFromTrash(long cpDefinitionId)

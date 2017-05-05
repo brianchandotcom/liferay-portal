@@ -221,14 +221,6 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		Map<java.lang.String, Serializable> workflowContext)
 		throws PortalException;
 
-	/**
-	* @deprecated As of 1.0.0, replaced by {@link #updateStatus(long, long,
-	int, ServiceContext, Map)}
-	*/
-	@java.lang.Deprecated
-	public CPDefinition updateStatus(long userId, long entryId, int status,
-		ServiceContext serviceContext) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionLocalization fetchCPDefinitionLocalization(
 		long CPDefinitionId, java.lang.String languageId);

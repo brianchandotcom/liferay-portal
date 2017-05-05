@@ -90,7 +90,7 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.announcements.web", "1.0.1", "1.0.2",
-			new UpgradePermission());
+			new UpgradePermission(true));
 
 		// See LPS-69656
 

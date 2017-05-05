@@ -155,7 +155,7 @@ public class CPDefinitionOptionValueRelIndexer
 		}
 
 		document.addNumber(
-			Field.PRIORITY,cpDefinitionOptionValueRel.getPriority());
+			Field.PRIORITY, cpDefinitionOptionValueRel.getPriority());
 		document.addKeyword(
 			FIELD_CP_DEFINITION_OPTION_REL_ID,
 			cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());

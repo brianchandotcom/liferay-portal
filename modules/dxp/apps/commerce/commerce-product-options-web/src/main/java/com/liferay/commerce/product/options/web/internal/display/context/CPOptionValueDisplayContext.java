@@ -123,8 +123,9 @@ public class CPOptionValueDisplayContext
 
 			searchContainer.setTotal(total);
 
-			List<CPOptionValue> results = _cpOptionValueService.
-				getCPOptionValues(getCPOptionId(), searchContainer.getStart(),
+			List<CPOptionValue> results =
+				_cpOptionValueService.getCPOptionValues(
+					getCPOptionId(), searchContainer.getStart(),
 					searchContainer.getEnd(), orderByComparator);
 
 			searchContainer.setResults(results);

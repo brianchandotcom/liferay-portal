@@ -159,13 +159,13 @@ public class CPDefinitionOptionValueRelDisplayContext
 
 			BaseModelSearchResult<CPDefinitionOptionValueRel>
 				cpDefinitionOptionValueRelBaseModelSearchResult =
-				_cpDefinitionOptionValueRelService.
-					searchCPDefinitionOptionValueRels(
-						themeDisplay.getCompanyId(),
-						themeDisplay.getScopeGroupId(),
-						getCPDefinitionOptionRelId(), getKeywords(),
-						searchContainer.getStart(), searchContainer.getEnd(),
-						sort);
+					_cpDefinitionOptionValueRelService.
+						searchCPDefinitionOptionValueRels(
+							themeDisplay.getCompanyId(),
+							themeDisplay.getScopeGroupId(),
+							getCPDefinitionOptionRelId(), getKeywords(),
+							searchContainer.getStart(),
+							searchContainer.getEnd(), sort);
 
 			searchContainer.setTotal(
 				cpDefinitionOptionValueRelBaseModelSearchResult.getLength());
@@ -182,9 +182,11 @@ public class CPDefinitionOptionValueRelDisplayContext
 			searchContainer.setTotal(total);
 
 			List<CPDefinitionOptionValueRel> results =
-				_cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRels(
-					getCPDefinitionOptionRelId(), searchContainer.getStart(),
-					searchContainer.getEnd(), orderByComparator);
+				_cpDefinitionOptionValueRelService.
+					getCPDefinitionOptionValueRels(
+						getCPDefinitionOptionRelId(),
+						searchContainer.getStart(), searchContainer.getEnd(),
+						orderByComparator);
 
 			searchContainer.setResults(results);
 		}

@@ -101,7 +101,7 @@ public class CPDefinitionsDisplayContext
 			}
 
 			BaseModelSearchResult<CPDefinition> cpOptionBaseModelSearchResult =
-				_cpDefinitionService.searchCPDefinitions (
+				_cpDefinitionService.searchCPDefinitions(
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					getKeywords(), searchContainer.getStart(),
 					searchContainer.getEnd(), sort);

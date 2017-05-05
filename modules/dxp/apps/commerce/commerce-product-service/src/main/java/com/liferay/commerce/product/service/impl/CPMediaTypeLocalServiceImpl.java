@@ -50,6 +50,7 @@ public class CPMediaTypeLocalServiceImpl
 
 		CPMediaType cpMediaType = cpMediaTypePersistence.create(cpMediaTypeId);
 
+		cpMediaType.setUuid(serviceContext.getUuid());
 		cpMediaType.setGroupId(groupId);
 		cpMediaType.setCompanyId(user.getCompanyId());
 		cpMediaType.setUserId(user.getUserId());

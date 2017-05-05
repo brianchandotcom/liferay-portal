@@ -363,9 +363,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@Override
 	public BaseModelSearchResult<CPInstance> searchCPOptions(
-			long companyId, long groupId, long groupId, long groupId,
-			long groupId, long groupId, long groupId, long groupId,
-			long groupId, long cpDefinitionId, String keywords, int start,
+			long companyId, long groupId, long cpDefinitionId, String keywords, int start,
 			int end, Sort sort)
 		throws PortalException {
 

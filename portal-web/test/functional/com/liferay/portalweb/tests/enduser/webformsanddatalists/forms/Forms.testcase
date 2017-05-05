@@ -1988,6 +1988,7 @@
 	</command>
 
 	<command name="SubmitFormAndViewEmailNotification" priority="4">
+		<property name="test.name.skip.portal.instance" value="Forms#SubmitFormAndViewEmailNotification" />
 		<property name="test.smtp.server.enabled" value="true" />
 
 		<execute macro="Navigator#openURL" />

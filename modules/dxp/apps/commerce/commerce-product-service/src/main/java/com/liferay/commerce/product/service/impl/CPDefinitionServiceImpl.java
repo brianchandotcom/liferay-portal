@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.base.CPDefinitionServiceBaseImpl;
 import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
 import com.liferay.commerce.product.service.permission.CPPermission;
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -130,7 +128,6 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			groupId, WorkflowConstants.STATUS_ANY, start, end,
 			orderByComparator);
 	}
-
 
 	@Override
 	public int getCPDefinitionsCount(long groupId, int status) {

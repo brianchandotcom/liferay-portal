@@ -109,9 +109,8 @@ public class CPOptionValueDisplayContext
 					_cpOptionValueService.searchCPOptionValues(
 						themeDisplay.getCompanyId(),
 						themeDisplay.getScopeGroupId(), getCPOptionId(),
-						getCPOptionId(), getKeywords(),
-						searchContainer.getStart(), searchContainer.getEnd(),
-						sort);
+						getKeywords(), searchContainer.getStart(),
+						searchContainer.getEnd(), sort);
 
 			searchContainer.setTotal(
 				cpOptionValueBaseModelSearchResult.getLength());

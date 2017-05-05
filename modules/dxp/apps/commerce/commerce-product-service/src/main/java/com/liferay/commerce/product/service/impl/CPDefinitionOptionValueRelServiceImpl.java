@@ -18,6 +18,10 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionValueRelServiceBaseImpl;
 import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -138,6 +142,24 @@ public class CPDefinitionOptionValueRelServiceImpl
 
 		return cpDefinitionOptionValueRelLocalService.
 			getCPDefinitionOptionValueRelsCount(cpDefinitionOptionRelId);
+	}
+
+	@Override
+	public Hits search(SearchContext searchContext) {
+		return cpDefinitionOptionValueRelLocalService.search(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<CPDefinitionOptionValueRel>
+			searchCPDefinitionOptionValueRels(
+				long companyId, long groupId, long cpDefinitionOptionRelId,
+				String keywords, int start, int end, Sort sort)
+		throws PortalException {
+
+		return cpDefinitionOptionValueRelLocalService.
+			searchCPDefinitionOptionValueRels(
+				companyId, groupId, cpDefinitionOptionRelId, keywords, start,
+				end, sort);
 	}
 
 	@Override

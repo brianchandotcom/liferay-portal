@@ -21,12 +21,30 @@ import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionValueRelLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -36,6 +54,9 @@ import java.util.Map;
  */
 public class CPDefinitionOptionValueRelLocalServiceImpl
 	extends CPDefinitionOptionValueRelLocalServiceBaseImpl {
+
+	public static final String[] SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 	@Override
 	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
@@ -187,6 +208,34 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	}
 
 	@Override
+	public Hits search(SearchContext searchContext) {
+		try {
+			Indexer<CPDefinitionOptionValueRel> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(
+					CPDefinitionOptionValueRel.class);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	@Override
+	public BaseModelSearchResult<CPDefinitionOptionValueRel>
+			searchCPDefinitionOptionValueRels(
+				long companyId, long groupId, long cpDefinitionOptionRelId,
+				String keywords, int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupId, cpDefinitionOptionRelId, keywords, start, end,
+			sort);
+
+		return searchCPOptions(searchContext);
+	}
+
+	@Override
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 			long cpDefinitionOptionValueRelId, Map<Locale, String> titleMap,
 			int priority, ServiceContext serviceContext)
@@ -206,6 +255,84 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			cpDefinitionOptionValueRel);
 
 		return cpDefinitionOptionValueRel;
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long groupId, long cpDefinitionOptionRelId,
+		String keywords, int start, int end, Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("keywords", keywords);
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put(Field.ENTRY_CLASS_PK, keywords);
+		attributes.put(Field.TITLE, keywords);
+		attributes.put(Field.CONTENT, keywords);
+		attributes.put("cpDefinitionOptionRelId", cpDefinitionOptionRelId);
+		attributes.put("params", params);
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setStart(start);
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {groupId});
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		return searchContext;
+	}
+
+	protected BaseModelSearchResult<CPDefinitionOptionValueRel> searchCPOptions(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CPDefinitionOptionValueRel> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(
+				CPDefinitionOptionValueRel.class);
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			new ArrayList<>();
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, SELECTED_FIELD_NAMES);
+
+			Document[] documents = hits.getDocs();
+
+			for (Document document : documents) {
+				long classPK = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
+				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+					getCPDefinitionOptionValueRel(classPK);
+
+				cpDefinitionOptionValueRels.add(cpDefinitionOptionValueRel);
+			}
+
+			if (cpDefinitionOptionValueRels != null) {
+				return new BaseModelSearchResult<>(
+					cpDefinitionOptionValueRels, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 }

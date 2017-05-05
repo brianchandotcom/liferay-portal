@@ -127,8 +127,6 @@ public class CPMediaTypeLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		// Commerce product media type
-
 		CPMediaType cpMediaType = cpMediaTypePersistence.findByPrimaryKey(
 			cpMediaTypeId);
 

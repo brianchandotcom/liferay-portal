@@ -335,6 +335,6 @@ public class CPMediaTypeDisplayContext {
 	private final String _portalPreferenceNamespace;
 	private final PortalPreferences _portalPreferences;
 	private RowChecker _rowChecker;
-	private SearchContainer _searchContainer;
+	private SearchContainer<CPMediaType> _searchContainer;
 
 }

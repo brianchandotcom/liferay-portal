@@ -275,6 +275,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		attributes.put(Field.CONTENT, keywords);
 		attributes.put("CPDefinitionId", cpDefinitionId);
 		attributes.put("params", params);
+
 		searchContext.setAttributes(attributes);
 
 		searchContext.setCompanyId(companyId);

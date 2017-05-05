@@ -206,6 +206,7 @@ public class CPOptionValueLocalServiceImpl
 		attributes.put(Field.CONTENT, keywords);
 		attributes.put("CPOptionId", cpOptionId);
 		attributes.put("params", params);
+
 		searchContext.setAttributes(attributes);
 
 		searchContext.setCompanyId(companyId);

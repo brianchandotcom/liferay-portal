@@ -493,6 +493,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		attributes.put(Field.CONTENT, keywords);
 		attributes.put("cpDefinitionId", cpDefinitionId);
 		attributes.put("params", params);
+
 		searchContext.setAttributes(attributes);
 
 		searchContext.setCompanyId(companyId);

@@ -472,6 +472,7 @@ public class CPDefinitionLocalServiceImpl
 		attributes.put(Field.DESCRIPTION, keywords);
 		attributes.put(Field.CONTENT, keywords);
 		attributes.put("params", params);
+
 		searchContext.setAttributes(attributes);
 
 		searchContext.setCompanyId(companyId);

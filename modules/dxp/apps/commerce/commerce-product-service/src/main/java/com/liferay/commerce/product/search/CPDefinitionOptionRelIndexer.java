@@ -136,10 +136,6 @@ public class CPDefinitionOptionRelIndexer
 			LocalizationUtil.getDefaultLanguageId(
 				cpDefinitionOptionRel.getName());
 
-		String cpOptionDefaultLanguageId =
-			LocalizationUtil.getDefaultLanguageId(
-				cpDefinitionOptionRel.getName());
-
 		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
 			cpDefinitionOptionRel.getName());
 
@@ -148,7 +144,7 @@ public class CPDefinitionOptionRelIndexer
 				languageId);
 			String name = cpDefinitionOptionRel.getName(languageId);
 
-			if (languageId.equals(cpOptionDefaultLanguageId)) {
+			if (languageId.equals(cpDefinitionOptionRelDefaultLanguageId)) {
 				document.addText(Field.DESCRIPTION, description);
 				document.addText(Field.NAME, name);
 				document.addText("defaultLanguageId", languageId);

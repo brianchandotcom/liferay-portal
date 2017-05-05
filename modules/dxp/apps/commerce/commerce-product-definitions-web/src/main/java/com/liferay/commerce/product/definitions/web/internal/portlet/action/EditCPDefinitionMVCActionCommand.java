@@ -201,11 +201,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setTrashEntryService(TrashEntryService trashEntryService) {
-		_trashEntryService = trashEntryService;
-	}
-
 	protected CPDefinition updateCPDefinition(ActionRequest actionRequest)
 		throws Exception {
 
@@ -296,6 +291,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private TrashEntryService _trashEntryService;
 
 }

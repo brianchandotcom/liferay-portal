@@ -31,8 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	service = FormNavigatorEntry.class
 )
 public class CPDefinitionOptionValueRelDetailsFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry<CPDefinitionOptionValueRel>
-	implements FormNavigatorEntry<CPDefinitionOptionValueRel> {
+	extends BaseJSPFormNavigatorEntry<CPDefinitionOptionValueRel> {
 
 	@Override
 	public String getCategoryKey() {

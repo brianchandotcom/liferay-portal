@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Component;
 	service = FormNavigatorEntry.class
 )
 public class CPInstanceDetailsCustomFieldsFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry<CPInstance>
-	implements FormNavigatorEntry<CPInstance> {
+	extends BaseJSPFormNavigatorEntry<CPInstance> {
 
 	@Override
 	public String getCategoryKey() {

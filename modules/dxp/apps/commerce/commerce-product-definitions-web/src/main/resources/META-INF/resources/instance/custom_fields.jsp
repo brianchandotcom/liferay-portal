@@ -18,8 +18,6 @@
 
 <%
 CPInstance cpInstance = (CPInstance)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_INSTANCE);
-
-long cpInstanceId = cpInstance.getCPInstanceId();
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="custom-fields" />
@@ -28,7 +26,7 @@ long cpInstanceId = cpInstance.getCPInstanceId();
 
 <liferay-expando:custom-attribute-list
 	className="<%= CPInstance.class.getName() %>"
-	classPK="<%= cpInstanceId %>"
+	classPK="<%= (cpInstance != null) ? cpInstance.getCPInstanceId() : 0 %>"
 	editable="<%= true %>"
 	label="<%= true %>"
 />

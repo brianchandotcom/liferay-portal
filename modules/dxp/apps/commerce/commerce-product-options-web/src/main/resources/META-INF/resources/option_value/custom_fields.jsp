@@ -18,8 +18,6 @@
 
 <%
 CPOptionValue cpOptionValue = (CPOptionValue)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_OPTION_VALUE);
-
-long cpOptionValueId = cpOptionValue.getCPOptionValueId();
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="custom-fields" />
@@ -28,7 +26,7 @@ long cpOptionValueId = cpOptionValue.getCPOptionValueId();
 
 <liferay-expando:custom-attribute-list
 	className="<%= CPOptionValue.class.getName() %>"
-	classPK="<%= cpOptionValueId %>"
+	classPK="<%= (cpOptionValue != null) ? cpOptionValue.getCPOptionValueId() : 0 %>"
 	editable="<%= true %>"
 	label="<%= true %>"
 />

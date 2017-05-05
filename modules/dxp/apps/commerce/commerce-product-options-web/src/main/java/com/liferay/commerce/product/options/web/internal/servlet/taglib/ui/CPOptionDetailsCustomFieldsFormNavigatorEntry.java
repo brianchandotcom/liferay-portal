@@ -15,11 +15,11 @@
 package com.liferay.commerce.product.options.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.product.model.CPOption;
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.util.Locale;
 
@@ -59,17 +59,24 @@ public class CPOptionDetailsCustomFieldsFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, CPOption formModelBean) {
-		if (formModelBean == null) {
-			return false;
+		boolean hasCustomAttributesAvailable = false;
+
+		try {
+			long classPK = 0;
+
+			if (formModelBean != null) {
+				classPK = formModelBean.getCPOptionId();
+			}
+
+			hasCustomAttributesAvailable =
+				CustomAttributesUtil.hasCustomAttributes(
+					user.getCompanyId(), CPOption.class.getName(), classPK,
+					null);
+		}
+		catch (Exception e) {
 		}
 
-		ExpandoBridge expandoBridge = formModelBean.getExpandoBridge();
-
-		if (expandoBridge.getAttributes().isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return hasCustomAttributesAvailable;
 	}
 
 	@Override

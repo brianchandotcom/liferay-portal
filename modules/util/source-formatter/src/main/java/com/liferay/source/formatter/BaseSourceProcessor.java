@@ -718,7 +718,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		int x = baseDirAbsolutePath.length();
 
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < _SUBREPOSITORY_MAX_DIR_LEVEL; i++) {
 			x = baseDirAbsolutePath.lastIndexOf(CharPool.FORWARD_SLASH, x - 1);
 
 			if (x == -1) {
@@ -796,6 +796,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private static final String _DOCUMENTATION_URL =
 		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
 			"/source-formatter/documentation/";
+
+	private static final int _SUBREPOSITORY_MAX_DIR_LEVEL = 3;
 
 	private List<String> _allFileNames;
 	private boolean _browserStarted;

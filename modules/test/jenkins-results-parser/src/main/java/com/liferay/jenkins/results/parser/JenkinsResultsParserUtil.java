@@ -262,8 +262,6 @@ public class JenkinsResultsParserUtil {
 		while ((returnCode == -1) && (duration < timeout)) {
 			duration = System.currentTimeMillis() - start;
 
-			System.out.println("Duration: " + duration);
-
 			try {
 				returnCode = process.exitValue();
 			}

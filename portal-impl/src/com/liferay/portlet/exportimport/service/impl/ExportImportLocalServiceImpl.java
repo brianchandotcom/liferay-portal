@@ -221,7 +221,7 @@ public class ExportImportLocalServiceImpl
 		}
 		catch (IOException ioe) {
 			throw new SystemException(
-				"Unable to process LAR file for layoiut import due to a file " +
+				"Unable to process LAR file for layout import due to a file " +
 					"system error",
 				ioe);
 		}

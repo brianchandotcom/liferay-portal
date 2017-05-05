@@ -518,6 +518,8 @@
 			<var name="pageName" value="Calendar" />
 		</execute>
 
+		<execute macro="ProductMenuHelper#closeProductMenu" />
+
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
@@ -538,6 +540,8 @@
 			<var name="pageName" value="Calendar" />
 		</execute>
 
+		<execute macro="ProductMenuHelper#closeProductMenu" />
+
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="Calendar Event Title Edited" />
 		</execute>
@@ -557,6 +561,8 @@
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />
 		</execute>
+
+		<execute macro="ProductMenuHelper#closeProductMenu" />
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="Post Upgrade Calendar Event" />

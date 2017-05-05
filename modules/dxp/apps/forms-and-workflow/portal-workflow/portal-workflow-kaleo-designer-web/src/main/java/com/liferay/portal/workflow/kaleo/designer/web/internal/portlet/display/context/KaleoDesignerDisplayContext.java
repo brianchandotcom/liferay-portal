@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
-import com.liferay.portal.workflow.kaleo.designer.util.comparator.KaleoDraftDefinitionCreateDateComparator;
-import com.liferay.portal.workflow.kaleo.designer.util.comparator.KaleoDraftDefinitionTitleComparator;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionNameComparator;
+import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionTitleComparator;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -55,16 +55,8 @@ public class KaleoDesignerDisplayContext {
 		return portletURL;
 	}
 
-	public String getKaleoDraftDefinitionDisplayStyle() {
-		return _DISPLAY_VIEWS[0];
-	}
-
-	public String[] getKaleoDraftDefinitionDisplayViews() {
-		return _DISPLAY_VIEWS;
-	}
-
-	public OrderByComparator<KaleoDraftDefinition>
-		getKaleoDraftDefinitionOrderByComparator() {
+	public OrderByComparator<KaleoDefinitionVersion>
+		getKaleoDefinitionVersionOrderByComparator() {
 
 		boolean orderByAsc = false;
 		String orderByCol = getOrderByCol();
@@ -74,22 +66,30 @@ public class KaleoDesignerDisplayContext {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<KaleoDraftDefinition> orderByComparator = null;
+		OrderByComparator<KaleoDefinitionVersion> orderByComparator = null;
 
-		if (orderByCol.equals("create-date")) {
-			orderByComparator = new KaleoDraftDefinitionCreateDateComparator(
+		if (orderByCol.equals("name")) {
+			orderByComparator = new KaleoDefinitionVersionNameComparator(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("title")) {
-			orderByComparator = new KaleoDraftDefinitionTitleComparator(
+			orderByComparator = new KaleoDefinitionVersionTitleComparator(
 				orderByAsc);
 		}
 
 		return orderByComparator;
 	}
 
+	public String getKaleoDraftDefinitionDisplayStyle() {
+		return _DISPLAY_VIEWS[0];
+	}
+
+	public String[] getKaleoDraftDefinitionDisplayViews() {
+		return _DISPLAY_VIEWS;
+	}
+
 	public String getOrderByCol() {
-		return ParamUtil.getString(_renderRequest, "orderByCol", "create-date");
+		return ParamUtil.getString(_renderRequest, "orderByCol", "name");
 	}
 
 	public String getOrderByType() {
@@ -109,7 +109,7 @@ public class KaleoDesignerDisplayContext {
 
 	private static final String[] _DISPLAY_VIEWS = {"list"};
 
-	private static final String[] _ORDER_COLUMNS = {"create-date", "title"};
+	private static final String[] _ORDER_COLUMNS = {"name", "title"};
 
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

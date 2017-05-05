@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.constants;
+package com.liferay.portal.workflow.kaleo.designer.web.internal.constants;
 
 /**
  * Provides the Kaleo Designer request attribute keys.

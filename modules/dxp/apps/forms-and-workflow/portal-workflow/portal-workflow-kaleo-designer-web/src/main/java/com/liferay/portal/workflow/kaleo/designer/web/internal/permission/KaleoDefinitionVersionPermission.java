@@ -12,68 +12,68 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.service.permission;
+package com.liferay.portal.workflow.kaleo.designer.web.internal.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
-import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionLocalServiceUtil;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 /**
  * @author Marcellus Tavares
  */
-public class KaleoDraftDefinitionPermission {
+public class KaleoDefinitionVersionPermission {
 
 	public static void check(
 			PermissionChecker permissionChecker,
-			KaleoDraftDefinition kaleoDraftDefinition, String actionId)
+			KaleoDefinitionVersion kaleoDefinitionVersion, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, kaleoDraftDefinition, actionId)) {
+		if (!contains(permissionChecker, kaleoDefinitionVersion, actionId)) {
 			throw new PrincipalException();
 		}
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker, long kaleoDraftDefinitionId,
+			PermissionChecker permissionChecker, long kaleoDefinitionVersionId,
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, kaleoDraftDefinitionId, actionId)) {
+		if (!contains(permissionChecker, kaleoDefinitionVersionId, actionId)) {
 			throw new PrincipalException();
 		}
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker,
-		KaleoDraftDefinition kaleoDraftDefinition, String actionId) {
+		KaleoDefinitionVersion kaleoDefinitionVersion, String actionId) {
 
 		if (permissionChecker.hasOwnerPermission(
-				kaleoDraftDefinition.getCompanyId(),
-				KaleoDraftDefinition.class.getName(),
-				kaleoDraftDefinition.getKaleoDraftDefinitionId(),
-				kaleoDraftDefinition.getUserId(), actionId)) {
+				kaleoDefinitionVersion.getCompanyId(),
+				KaleoDefinitionVersion.class.getName(),
+				kaleoDefinitionVersion.getKaleoDefinitionVersionId(),
+				kaleoDefinitionVersion.getUserId(), actionId)) {
 
 			return true;
 		}
 
 		return permissionChecker.hasPermission(
-			kaleoDraftDefinition.getGroupId(),
-			KaleoDraftDefinition.class.getName(),
-			kaleoDraftDefinition.getKaleoDraftDefinitionId(), actionId);
+			kaleoDefinitionVersion.getGroupId(),
+			KaleoDefinitionVersion.class.getName(),
+			kaleoDefinitionVersion.getKaleoDefinitionVersionId(), actionId);
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long kaleoDraftDefinitionId,
+			PermissionChecker permissionChecker, long kaleoDefinitionVersionId,
 			String actionId)
 		throws PortalException {
 
-		KaleoDraftDefinition kaleoDraftDefinition =
-			KaleoDraftDefinitionLocalServiceUtil.getKaleoDraftDefinition(
-				kaleoDraftDefinitionId);
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			KaleoDefinitionVersionLocalServiceUtil.getKaleoDefinitionVersion(
+				kaleoDefinitionVersionId);
 
-		return contains(permissionChecker, kaleoDraftDefinition, actionId);
+		return contains(permissionChecker, kaleoDefinitionVersion, actionId);
 	}
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.service.permission;
+package com.liferay.portal.workflow.kaleo.designer.web.internal.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -26,6 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  */
 @Component(
+	immediate = true,
 	property = {"resource.name=" + KaleoDesignerPermission.RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.constants;
+package com.liferay.portal.workflow.kaleo.designer.web.internal.constants;
 
 /**
  * Provides action key constants used in the Kaleo Designer permission system.

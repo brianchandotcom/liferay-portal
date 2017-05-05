@@ -350,7 +350,8 @@ public class CPDefinitionLocalServiceImpl
 
 		cpDefinition = updateStatus(
 			userId, cpDefinition.getCPDefinitionId(),
-			WorkflowConstants.STATUS_IN_TRASH, new ServiceContext());
+			WorkflowConstants.STATUS_IN_TRASH, new ServiceContext(),
+			new HashMap<>());
 
 		// Workflow
 
@@ -410,7 +411,7 @@ public class CPDefinitionLocalServiceImpl
 
 		cpDefinition = updateStatus(
 			userId, cpDefinitionId, trashEntry.getStatus(),
-			new ServiceContext());
+			new ServiceContext(), new HashMap<String, Serializable>());
 
 		return cpDefinition;
 	}
@@ -537,22 +538,6 @@ public class CPDefinitionLocalServiceImpl
 
 		return startWorkflowInstance(
 			user.getUserId(), cpDefinition, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of 1.0.0, replaced by {@link #updateStatus(long, long,
-	 *             int, ServiceContext, Map)}
-	 */
-	@Deprecated
-	@Override
-	public CPDefinition updateStatus(
-			long userId, long entryId, int status,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return updateStatus(
-			userId, entryId, status, serviceContext,
-			new HashMap<String, Serializable>());
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

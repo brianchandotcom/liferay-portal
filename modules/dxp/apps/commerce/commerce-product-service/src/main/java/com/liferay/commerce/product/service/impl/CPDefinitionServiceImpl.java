@@ -123,8 +123,9 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Override
 	public List<CPDefinition> getCPDefinitions(
-		long groupId, int status, int max,
-		OrderByComparator<CPDefinition> orderByComparator) {
+			long groupId, int status, int max,
+			OrderByComparator<CPDefinition> orderByComparator)
+		throws PortalException {
 
 		List<CPDefinition> cpDefinitions = new ArrayList<>();
 

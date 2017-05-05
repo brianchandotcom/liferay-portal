@@ -53,18 +53,18 @@ public class CPMediaTypeDisplayContext {
 		CPMediaTypeService cpMediaTypeService,
 		String portalPreferenceNamespace) {
 
-		this.actionHelper = actionHelper;
-		this.httpServletRequest = httpServletRequest;
+		_actionHelper = actionHelper;
+		_httpServletRequest = httpServletRequest;
 		_cpMediaTypeService = cpMediaTypeService;
 		_portalPreferenceNamespace = portalPreferenceNamespace;
 
-		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			this.httpServletRequest);
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			_httpServletRequest);
 
-		cpRequestHelper = new CPRequestHelper(httpServletRequest);
+		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
-		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
-		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
+		_liferayPortletRequest = _cpRequestHelper.getLiferayPortletRequest();
+		_liferayPortletResponse = _cpRequestHelper.getLiferayPortletResponse();
 	}
 
 	public List<Locale> getAvailableLocales() throws PortalException {
@@ -88,8 +88,8 @@ public class CPMediaTypeDisplayContext {
 			return _cpMediaType;
 		}
 
-		_cpMediaType = actionHelper.getCPMediaType(
-			cpRequestHelper.getRenderRequest());
+		_cpMediaType = _actionHelper.getCPMediaType(
+			_cpRequestHelper.getRenderRequest());
 
 		return _cpMediaType;
 	}
@@ -107,7 +107,7 @@ public class CPMediaTypeDisplayContext {
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
 			_displayStyle = getDisplayStyle(
-				httpServletRequest, portalPreferences);
+				_httpServletRequest, _portalPreferences);
 		}
 
 		return _displayStyle;
@@ -118,7 +118,7 @@ public class CPMediaTypeDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(httpServletRequest, "keywords");
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -128,18 +128,18 @@ public class CPMediaTypeDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(httpServletRequest, "orderByCol");
+		_orderByCol = ParamUtil.getString(_httpServletRequest, "orderByCol");
 
 		if (Validator.isNull(_orderByCol)) {
-			_orderByCol = portalPreferences.getValue(
+			_orderByCol = _portalPreferences.getValue(
 				_portalPreferenceNamespace, "order-by-col", "priority");
 		}
 		else {
 			boolean saveOrderBy = ParamUtil.getBoolean(
-				httpServletRequest, "saveOrderBy");
+				_httpServletRequest, "saveOrderBy");
 
 			if (saveOrderBy) {
-				portalPreferences.setValue(
+				_portalPreferences.setValue(
 					_portalPreferenceNamespace, "order-by-col", _orderByCol);
 			}
 		}
@@ -152,18 +152,18 @@ public class CPMediaTypeDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(httpServletRequest, "orderByType");
+		_orderByType = ParamUtil.getString(_httpServletRequest, "orderByType");
 
 		if (Validator.isNull(_orderByType)) {
-			_orderByType = portalPreferences.getValue(
+			_orderByType = _portalPreferences.getValue(
 				_portalPreferenceNamespace, "order-by-type", "asc");
 		}
 		else {
 			boolean saveOrderBy = ParamUtil.getBoolean(
-				httpServletRequest, "saveOrderBy");
+				_httpServletRequest, "saveOrderBy");
 
 			if (saveOrderBy) {
-				portalPreferences.setValue(
+				_portalPreferences.setValue(
 					_portalPreferenceNamespace, "order-by-type", _orderByType);
 			}
 		}
@@ -172,35 +172,35 @@ public class CPMediaTypeDisplayContext {
 	}
 
 	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
-		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
+		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		if (Validator.isNotNull(redirect)) {
 			portletURL.setParameter("redirect", redirect);
 		}
 
-		String delta = ParamUtil.getString(httpServletRequest, "delta");
+		String delta = ParamUtil.getString(_httpServletRequest, "delta");
 
 		if (Validator.isNotNull(delta)) {
 			portletURL.setParameter("delta", delta);
 		}
 
 		String deltaEntry = ParamUtil.getString(
-			httpServletRequest, "deltaEntry");
+			_httpServletRequest, "deltaEntry");
 
 		if (Validator.isNotNull(deltaEntry)) {
 			portletURL.setParameter("deltaEntry", deltaEntry);
 		}
 
 		String displayStyle = ParamUtil.getString(
-			httpServletRequest, "displayStyle");
+			_httpServletRequest, "displayStyle");
 
 		if (Validator.isNotNull(displayStyle)) {
 			portletURL.setParameter("displayStyle", getDisplayStyle());
 		}
 
-		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
@@ -234,7 +234,7 @@ public class CPMediaTypeDisplayContext {
 		}
 
 		RowChecker rowChecker = new EmptyOnClickRowChecker(
-			liferayPortletResponse);
+			_liferayPortletResponse);
 
 		_rowChecker = rowChecker;
 
@@ -243,7 +243,7 @@ public class CPMediaTypeDisplayContext {
 
 	public long getScopeGroupId() {
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
+			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getScopeGroupId();
@@ -257,7 +257,7 @@ public class CPMediaTypeDisplayContext {
 		}
 
 		SearchContainer<CPMediaType> searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null, null);
+			_liferayPortletRequest, getPortletURL(), null, null);
 
 		searchContainer.setEmptyResultsMessage("no-media-types-were-found");
 
@@ -321,20 +321,19 @@ public class CPMediaTypeDisplayContext {
 		return displayStyle;
 	}
 
-	protected final ActionHelper actionHelper;
-	protected final CPRequestHelper cpRequestHelper;
-	protected final HttpServletRequest httpServletRequest;
-	protected final LiferayPortletRequest liferayPortletRequest;
-	protected final LiferayPortletResponse liferayPortletResponse;
-	protected final PortalPreferences portalPreferences;
-
+	private final ActionHelper _actionHelper;
 	private CPMediaType _cpMediaType;
 	private final CPMediaTypeService _cpMediaTypeService;
+	private final CPRequestHelper _cpRequestHelper;
 	private String _displayStyle;
+	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
 	private final String _portalPreferenceNamespace;
+	private final PortalPreferences _portalPreferences;
 	private RowChecker _rowChecker;
 	private SearchContainer _searchContainer;
 

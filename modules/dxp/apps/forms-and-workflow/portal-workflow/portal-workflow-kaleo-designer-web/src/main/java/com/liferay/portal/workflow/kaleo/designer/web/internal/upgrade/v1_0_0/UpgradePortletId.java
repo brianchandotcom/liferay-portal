@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.designer.web.internal.upgrade.v0_0_2;
+package com.liferay.portal.workflow.kaleo.designer.web.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 

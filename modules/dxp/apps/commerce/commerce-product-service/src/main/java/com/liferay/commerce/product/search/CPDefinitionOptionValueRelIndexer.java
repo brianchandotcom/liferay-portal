@@ -75,12 +75,12 @@ public class CPDefinitionOptionValueRelIndexer
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		long cpDefinitionId = GetterUtil.getLong(
+		long cpDefinitionOptionRelId = GetterUtil.getLong(
 			searchContext.getAttribute(FIELD_CP_DEFINITION_OPTION_REL_ID));
 
-		if (cpDefinitionId > 0) {
+		if (cpDefinitionOptionRelId > 0) {
 			contextBooleanFilter.addRequiredTerm(
-				FIELD_CP_DEFINITION_OPTION_REL_ID, cpDefinitionId);
+				FIELD_CP_DEFINITION_OPTION_REL_ID, cpDefinitionOptionRelId);
 		}
 	}
 

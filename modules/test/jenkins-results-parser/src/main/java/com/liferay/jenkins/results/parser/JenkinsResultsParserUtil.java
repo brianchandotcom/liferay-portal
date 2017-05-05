@@ -253,24 +253,17 @@ public class JenkinsResultsParserUtil {
 
 		Process process = processBuilder.start();
 
-		if (debug) {
-			InputStream inputStream = process.getInputStream();
-
-			inputStream.mark(inputStream.available());
-
-			System.out.println(
-				"Output stream: " + readInputStream(inputStream));
-
-			inputStream.reset();
-		}
-
 		long duration = 0;
-		int returnCode = -1;
 		long start = System.currentTimeMillis();
+		int returnCode = -1;
 
 		sleep(25);
 
 		while ((returnCode == -1) && (duration < timeout)) {
+			duration = System.currentTimeMillis() - start;
+
+			System.out.println("duration: " + duration);
+
 			try {
 				returnCode = process.exitValue();
 			}
@@ -279,8 +272,6 @@ public class JenkinsResultsParserUtil {
 			}
 
 			sleep(100);
-
-			duration = System.currentTimeMillis() - start;
 		}
 
 		if (returnCode == -1) {
@@ -290,6 +281,17 @@ public class JenkinsResultsParserUtil {
 				combine(
 					"Timeout occurred while executing bash commands \"",
 					bashCommands[2], "\""));
+		}
+
+		if (debug) {
+			InputStream inputStream = process.getInputStream();
+
+			inputStream.mark(inputStream.available());
+
+			System.out.println(
+				"Output stream: " + readInputStream(inputStream));
+
+			inputStream.reset();
 		}
 
 		if (debug && (returnCode != 0)) {

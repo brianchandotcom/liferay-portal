@@ -63,9 +63,24 @@
 
 				<execute function="Type" locator1="Gmail#LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
 
-				<execute function="Check" locator1="Gmail#LOGIN_STAY_SIGNED_IN_CHECKBOX" />
+				<if>
+					<condition function="IsElementPresent" locator1="Gmail#LOGIN_SIGN_IN_BUTTON" />
+					<then>
+						<execute function="Check" locator1="Gmail#LOGIN_STAY_SIGNED_IN_CHECKBOX" />
 
-				<execute function="Click" locator1="Gmail#LOGIN_SIGN_IN_BUTTON" />
+						<execute function="Click" locator1="Gmail#LOGIN_SIGN_IN_BUTTON" />
+					</then>
+					<else>
+						<execute function="Click" locator1="Gmail#LOGIN_NEXT_BUTTON" />
+					</else>
+				</if>
+
+				<if>
+					<condition function="IsElementPresent" locator1="Gmail#MAIL_NAVIGATION" />
+					<then>
+						<execute function="Click" locator1="Gmail#MAIL_NAVIGATION" />
+					</then>
+				</if>
 
 				<execute function="Pause" locator1="5000" />
 			</then>
@@ -93,14 +108,14 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Gmail#SIGN_IN_WITH_DIFFERENT_ACCOUNT" />
 			<then>
-				<execute function="AssertClick" locator1="Gmail#SIGN_IN_WITH_DIFFERENT_ACCOUNT" value1="Sign in with a different account" />
+				<execute function="Click" locator1="Gmail#SIGN_IN_WITH_DIFFERENT_ACCOUNT" />
 
-				<execute function="AssertClick" locator1="Gmail#ADD_ACCOUNT_BUTTON" value1="Add account" />
+				<execute function="Click" locator1="Gmail#ADD_ACCOUNT_BUTTON"  />
 			</then>
 			<elseif>
 				<condition function="IsElementPresent" locator1="Gmail#ADD_ACCOUNT_BUTTON" />
 				<then>
-					<execute function="AssertClick" locator1="Gmail#ADD_ACCOUNT_BUTTON" value1="Add account" />
+					<execute function="Click" locator1="Gmail#ADD_ACCOUNT_BUTTON" />
 				</then>
 			</elseif>
 		</if>
@@ -111,9 +126,24 @@
 
 		<execute function="Type" locator1="Gmail#LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
 
-		<execute function="Check" locator1="Gmail#LOGIN_STAY_SIGNED_IN_CHECKBOX" />
+		<if>
+			<condition function="IsElementPresent" locator1="Gmail#LOGIN_SIGN_IN_BUTTON" />
+			<then>
+				<execute function="Check" locator1="Gmail#LOGIN_STAY_SIGNED_IN_CHECKBOX" />
 
-		<execute function="Click" locator1="Gmail#LOGIN_SIGN_IN_BUTTON" />
+				<execute function="Click" locator1="Gmail#LOGIN_SIGN_IN_BUTTON" />
+			</then>
+			<else>
+				<execute function="Click" locator1="Gmail#LOGIN_NEXT_BUTTON" />
+			</else>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="Gmail#MAIL_NAVIGATION" />
+			<then>
+				<execute function="Click" locator1="Gmail#MAIL_NAVIGATION" />
+			</then>
+		</if>
 
 		<execute function="Pause" locator1="5000" />
 	</command>

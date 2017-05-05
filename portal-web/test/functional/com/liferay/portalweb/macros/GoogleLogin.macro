@@ -39,6 +39,14 @@
 
 		<execute function="Type" locator1="GoogleLogin#LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
 
-		<execute function="Click" locator1="GoogleLogin#LOGIN_SIGN_IN_BUTTON" />
+		<if>
+			<condition function="IsElementPresent" locator1="GoogleLogin#LOGIN_SIGN_IN_BUTTON" />
+			<then>
+				<execute function="Click" locator1="GoogleLogin#LOGIN_SIGN_IN_BUTTON" />
+			</then>
+			<else>
+				<execute function="Click" locator1="GoogleLogin#LOGIN_NEXT_BUTTON" />
+			</else>
+		</if>
 	</command>
 </definition>

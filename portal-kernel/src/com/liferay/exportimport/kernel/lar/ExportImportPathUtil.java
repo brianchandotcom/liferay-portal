@@ -100,13 +100,16 @@ public class ExportImportPathUtil {
 	public static String getExpandoPath(String path) {
 		if (!Validator.isFilePath(path, false)) {
 			throw new IllegalArgumentException(
-				path + " is located outside of the LAR");
+				"Unable to retrieve expando path " + path +
+					" because it is located outside of the LAR");
 		}
 
 		int pos = path.lastIndexOf(_FILE_EXTENSION_XML);
 
 		if (pos == -1) {
-			throw new IllegalArgumentException(path + " is not an XML file");
+			throw new IllegalArgumentException(
+				"Unable to retrieve expando path " + path +
+					" because it is not an XML file");
 		}
 
 		return path.substring(0, pos).concat("-expando").concat(

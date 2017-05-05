@@ -92,7 +92,7 @@ public class CPDefinitionTrashHandler extends BaseTrashHandler {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return themeDisplay.translate("products");
+		return themeDisplay.translate("catalog");
 	}
 
 	@Override

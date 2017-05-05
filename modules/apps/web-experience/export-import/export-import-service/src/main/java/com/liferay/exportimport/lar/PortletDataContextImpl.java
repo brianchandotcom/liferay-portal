@@ -2387,8 +2387,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	protected Element getExportDataGroupElement(String name) {
 		if (_exportDataRootElement == null) {
 			throw new IllegalStateException(
-				"Unable to return the export data group element for " + name +
-					" because the root data element is not initialized");
+				"Unable to return the export data group element for group " +
+					name + " because the root data element is not initialized");
 		}
 
 		Element groupElement = _exportDataRootElement.element(name);
@@ -2403,8 +2403,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	protected Element getImportDataGroupElement(String name) {
 		if (_importDataRootElement == null) {
 			throw new IllegalStateException(
-				"Unable to return the import data group element for " + name +
-					" because the root data element not initialized");
+				"Unable to return the import data group element for group " +
+					name + " because the root data element not initialized");
 		}
 
 		if (Validator.isNull(name)) {

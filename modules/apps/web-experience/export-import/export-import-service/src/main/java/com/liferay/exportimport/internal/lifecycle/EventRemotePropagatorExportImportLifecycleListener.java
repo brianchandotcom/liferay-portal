@@ -66,8 +66,8 @@ public class EventRemotePropagatorExportImportLifecycleListener
 			ExportImportLifecycleEvent exportImportLifecycleEvent)
 		throws Exception {
 
-		if (eventNeedsToBePropagated(exportImportLifecycleEvent)) {
-			propagateEvent(exportImportLifecycleEvent);
+		if (_eventNeedsToBePropagated(exportImportLifecycleEvent)) {
+			_propagateEvent(exportImportLifecycleEvent);
 		}
 	}
 
@@ -78,7 +78,7 @@ public class EventRemotePropagatorExportImportLifecycleListener
 		_propagatedEventTypes.add(EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED);
 	}
 
-	protected boolean eventNeedsToBePropagated(
+	private boolean _eventNeedsToBePropagated(
 		ExportImportLifecycleEvent exportImportLifecycleEvent) {
 
 		if (!_propagatedEventTypes.contains(
@@ -127,7 +127,7 @@ public class EventRemotePropagatorExportImportLifecycleListener
 		return true;
 	}
 
-	protected Optional<HttpPrincipal> getHttpPrincipal(
+	private Optional<HttpPrincipal> _getHttpPrincipal(
 		ExportImportLifecycleEvent exportImportLifecycleEvent) {
 
 		PermissionChecker permissionChecker =
@@ -139,7 +139,7 @@ public class EventRemotePropagatorExportImportLifecycleListener
 
 		try {
 			httpPrincipal = new HttpPrincipal(
-				getRemoteURL(exportImportLifecycleEvent), user.getLogin(),
+				_getRemoteURL(exportImportLifecycleEvent), user.getLogin(),
 				user.getPassword(), user.getPasswordEncrypted());
 		}
 		catch (PortalException pe) {
@@ -154,7 +154,7 @@ public class EventRemotePropagatorExportImportLifecycleListener
 		return Optional.ofNullable(httpPrincipal);
 	}
 
-	protected String getRemoteURL(
+	private String _getRemoteURL(
 		ExportImportLifecycleEvent exportImportLifecycleEvent) {
 
 		List<Serializable> attributes =
@@ -166,10 +166,10 @@ public class EventRemotePropagatorExportImportLifecycleListener
 		return StagingUtil.buildRemoteURL(exportImportConfiguration);
 	}
 
-	protected void propagateEvent(
+	private void _propagateEvent(
 		ExportImportLifecycleEvent exportImportLifecycleEvent) {
 
-		getHttpPrincipal(exportImportLifecycleEvent).ifPresent(
+		_getHttpPrincipal(exportImportLifecycleEvent).ifPresent(
 			httpPrincipal -> {
 				try {
 					StagingServiceHttp.propagateExportImportLifecycleEvent(

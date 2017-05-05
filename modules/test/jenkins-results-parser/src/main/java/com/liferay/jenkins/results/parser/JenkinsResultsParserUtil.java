@@ -264,38 +264,32 @@ public class JenkinsResultsParserUtil {
 			inputStream.reset();
 		}
 
+		long duration = 0;
 		int returnCode = -1;
+		long start = System.currentTimeMillis();
 
-		if (timeout > 0) {
-			long duration = 0;
-			long start = System.currentTimeMillis();
+		sleep(25);
 
-			sleep(25);
-
-			while ((returnCode == -1) && (duration < timeout)) {
-				try {
-					returnCode = process.exitValue();
-				}
-				catch (IllegalThreadStateException itse) {
-					returnCode = -1;
-				}
-
-				sleep(100);
-
-				duration = System.currentTimeMillis() - start;
+		while ((returnCode == -1) && (duration < timeout)) {
+			try {
+				returnCode = process.exitValue();
+			}
+			catch (IllegalThreadStateException itse) {
+				returnCode = -1;
 			}
 
-			if (returnCode == -1) {
-				process.destroy();
+			sleep(100);
 
-				throw new RuntimeException(
-					combine(
-						"Timeout occurred while executing bash commands \"",
-						bashCommands[2], "\""));
-			}
+			duration = System.currentTimeMillis() - start;
 		}
-		else {
-			returnCode = process.waitFor();
+
+		if (returnCode == -1) {
+			process.destroy();
+
+			throw new RuntimeException(
+				combine(
+					"Timeout occurred while executing bash commands \"",
+					bashCommands[2], "\""));
 		}
 
 		if (debug && (returnCode != 0)) {
@@ -315,13 +309,16 @@ public class JenkinsResultsParserUtil {
 			boolean exitOnFirstFail, String... commands)
 		throws InterruptedException, IOException {
 
-		return executeBashCommands(exitOnFirstFail, new File("."), 0, commands);
+		return executeBashCommands(
+			exitOnFirstFail, new File("."), _BASH_COMMAND_TIMEOUT_DEFAULT,
+			commands);
 	}
 
 	public static Process executeBashCommands(String... commands)
 		throws InterruptedException, IOException {
 
-		return executeBashCommands(true, new File("."), 0, commands);
+		return executeBashCommands(
+			true, new File("."), _BASH_COMMAND_TIMEOUT_DEFAULT, commands);
 	}
 
 	public static String expandSlaveRange(String value) {
@@ -1223,6 +1220,8 @@ public class JenkinsResultsParserUtil {
 	private static String _getRedactTokenKey(int index) {
 		return "github.message.redact.token[" + index + "]";
 	}
+
+	private static final long _BASH_COMMAND_TIMEOUT_DEFAULT = 1000 * 60 * 60;
 
 	private static final int _MAX_RETRIES_DEFAULT = 3;
 

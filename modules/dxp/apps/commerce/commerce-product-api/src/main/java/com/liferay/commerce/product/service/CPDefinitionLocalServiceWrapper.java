@@ -321,18 +321,6 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		return _cpDefinitionLocalService.getCPDefinitionsCount();
 	}
 
-	@Override
-	public int getCPDefinitionsCount(long groupId) {
-		return _cpDefinitionLocalService.getCPDefinitionsCount(groupId);
-	}
-
-	@Override
-	public int getCPDefinitionsCount(long groupId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition) {
-		return _cpDefinitionLocalService.getCPDefinitionsCount(groupId,
-			queryDefinition);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -423,28 +411,6 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 	public java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
 		int start, int end) {
 		return _cpDefinitionLocalService.getCPDefinitions(start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
-		long groupId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition) {
-		return _cpDefinitionLocalService.getCPDefinitions(groupId,
-			queryDefinition);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
-		long groupId, int start, int end) {
-		return _cpDefinitionLocalService.getCPDefinitions(groupId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator) {
-		return _cpDefinitionLocalService.getCPDefinitions(groupId, start, end,
-			orderByComparator);
 	}
 
 	/**

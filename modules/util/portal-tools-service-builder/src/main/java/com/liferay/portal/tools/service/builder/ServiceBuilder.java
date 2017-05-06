@@ -5486,8 +5486,8 @@ public class ServiceBuilder {
 
 		if (!txRequiredElements.isEmpty()) {
 			System.err.println(
-				"The tx-required attribute is deprecated in favor " +
-					"annotating the service impl method with " +
+				"The tx-required attribute is deprecated in favor annotating " +
+					"the service impl method with " +
 						"com.liferay.portal.kernel.transaction.Transactional");
 
 			for (Element txRequiredEl : txRequiredElements) {

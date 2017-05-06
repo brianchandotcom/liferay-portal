@@ -66,7 +66,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -98,6 +98,8 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(expirationDate);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -194,6 +196,13 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 			cpDefinitionImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		if (name == null) {
+			cpDefinitionImpl.setName(StringPool.BLANK);
+		}
+		else {
+			cpDefinitionImpl.setName(name);
+		}
+
 		cpDefinitionImpl.setStatus(status);
 		cpDefinitionImpl.setStatusByUserId(statusByUserId);
 
@@ -245,6 +254,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
+		name = objectInput.readUTF();
 
 		status = objectInput.readInt();
 
@@ -309,6 +319,13 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(lastPublishDate);
 
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
 		objectOutput.writeInt(status);
 
 		objectOutput.writeLong(statusByUserId);
@@ -345,6 +362,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public long displayDate;
 	public long expirationDate;
 	public long lastPublishDate;
+	public String name;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

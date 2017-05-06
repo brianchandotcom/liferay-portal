@@ -67,7 +67,7 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -85,10 +85,12 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", CPDefinitionOptionRelId=");
-		sb.append(CPDefinitionOptionRelId);
 		sb.append(", title=");
 		sb.append(title);
+		sb.append(", CPDefinitionOptionRelId=");
+		sb.append(CPDefinitionOptionRelId);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", priority=");
 		sb.append(priority);
 		sb.append("}");
@@ -134,13 +136,20 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 					modifiedDate));
 		}
 
-		cpDefinitionOptionValueRelImpl.setCPDefinitionOptionRelId(CPDefinitionOptionRelId);
-
 		if (title == null) {
 			cpDefinitionOptionValueRelImpl.setTitle(StringPool.BLANK);
 		}
 		else {
 			cpDefinitionOptionValueRelImpl.setTitle(title);
+		}
+
+		cpDefinitionOptionValueRelImpl.setCPDefinitionOptionRelId(CPDefinitionOptionRelId);
+
+		if (name == null) {
+			cpDefinitionOptionValueRelImpl.setName(StringPool.BLANK);
+		}
+		else {
+			cpDefinitionOptionValueRelImpl.setName(name);
 		}
 
 		cpDefinitionOptionValueRelImpl.setPriority(priority);
@@ -164,9 +173,10 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		title = objectInput.readUTF();
 
 		CPDefinitionOptionRelId = objectInput.readLong();
-		title = objectInput.readUTF();
+		name = objectInput.readUTF();
 
 		priority = objectInput.readInt();
 	}
@@ -199,13 +209,20 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(CPDefinitionOptionRelId);
-
 		if (title == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(title);
+		}
+
+		objectOutput.writeLong(CPDefinitionOptionRelId);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
 		}
 
 		objectOutput.writeInt(priority);
@@ -219,7 +236,8 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long CPDefinitionOptionRelId;
 	public String title;
+	public long CPDefinitionOptionRelId;
+	public String name;
 	public int priority;
 }

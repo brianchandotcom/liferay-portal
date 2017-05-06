@@ -153,6 +153,8 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newCPDefinition.setName(RandomTestUtil.randomString());
+
 		newCPDefinition.setStatus(RandomTestUtil.nextInt());
 
 		newCPDefinition.setStatusByUserId(RandomTestUtil.nextLong());
@@ -202,6 +204,8 @@ public class CPDefinitionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPDefinition.getLastPublishDate()),
 			Time.getShortTimestamp(newCPDefinition.getLastPublishDate()));
+		Assert.assertEquals(existingCPDefinition.getName(),
+			newCPDefinition.getName());
 		Assert.assertEquals(existingCPDefinition.getStatus(),
 			newCPDefinition.getStatus());
 		Assert.assertEquals(existingCPDefinition.getStatusByUserId(),
@@ -307,9 +311,9 @@ public class CPDefinitionPersistenceTest {
 			"modifiedDate", true, "productTypeName", true,
 			"availableIndividually", true, "DDMStructureKey", true, "baseSKU",
 			true, "displayDate", true, "expirationDate", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true, "defaultLanguageId",
-			true);
+			"lastPublishDate", true, "name", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true, "defaultLanguageId", true);
 	}
 
 	@Test
@@ -554,6 +558,8 @@ public class CPDefinitionPersistenceTest {
 		cpDefinition.setExpirationDate(RandomTestUtil.nextDate());
 
 		cpDefinition.setLastPublishDate(RandomTestUtil.nextDate());
+
+		cpDefinition.setName(RandomTestUtil.randomString());
 
 		cpDefinition.setStatus(RandomTestUtil.nextInt());
 

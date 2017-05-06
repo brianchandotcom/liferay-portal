@@ -42,9 +42,10 @@ public class CPOptionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setName(model.getName());
+		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDDMFormFieldTypeName(model.getDDMFormFieldTypeName());
+		soapModel.setName(model.getName());
 		soapModel.setFacetable(model.getFacetable());
 		soapModel.setSkuContributor(model.getSkuContributor());
 
@@ -163,12 +164,12 @@ public class CPOptionSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getName() {
-		return _name;
+	public String getTitle() {
+		return _title;
 	}
 
-	public void setName(String name) {
-		_name = name;
+	public void setTitle(String title) {
+		_title = title;
 	}
 
 	public String getDescription() {
@@ -185,6 +186,14 @@ public class CPOptionSoap implements Serializable {
 
 	public void setDDMFormFieldTypeName(String DDMFormFieldTypeName) {
 		_DDMFormFieldTypeName = DDMFormFieldTypeName;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public boolean getFacetable() {
@@ -219,9 +228,10 @@ public class CPOptionSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _name;
+	private String _title;
 	private String _description;
 	private String _DDMFormFieldTypeName;
+	private String _name;
 	private boolean _facetable;
 	private boolean _skuContributor;
 }

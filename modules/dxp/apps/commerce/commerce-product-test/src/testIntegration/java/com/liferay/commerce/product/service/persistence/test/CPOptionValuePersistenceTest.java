@@ -139,9 +139,11 @@ public class CPOptionValuePersistenceTest {
 
 		newCPOptionValue.setModifiedDate(RandomTestUtil.nextDate());
 
+		newCPOptionValue.setTitle(RandomTestUtil.randomString());
+
 		newCPOptionValue.setCPOptionId(RandomTestUtil.nextLong());
 
-		newCPOptionValue.setTitle(RandomTestUtil.randomString());
+		newCPOptionValue.setName(RandomTestUtil.randomString());
 
 		newCPOptionValue.setPriority(RandomTestUtil.nextInt());
 
@@ -167,10 +169,12 @@ public class CPOptionValuePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPOptionValue.getModifiedDate()),
 			Time.getShortTimestamp(newCPOptionValue.getModifiedDate()));
-		Assert.assertEquals(existingCPOptionValue.getCPOptionId(),
-			newCPOptionValue.getCPOptionId());
 		Assert.assertEquals(existingCPOptionValue.getTitle(),
 			newCPOptionValue.getTitle());
+		Assert.assertEquals(existingCPOptionValue.getCPOptionId(),
+			newCPOptionValue.getCPOptionId());
+		Assert.assertEquals(existingCPOptionValue.getName(),
+			newCPOptionValue.getName());
 		Assert.assertEquals(existingCPOptionValue.getPriority(),
 			newCPOptionValue.getPriority());
 	}
@@ -249,8 +253,8 @@ public class CPOptionValuePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CPOptionValue", "uuid",
 			true, "CPOptionValueId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "CPOptionId", true, "title", true,
-			"priority", true);
+			"modifiedDate", true, "title", true, "CPOptionId", true, "name",
+			true, "priority", true);
 	}
 
 	@Test
@@ -482,9 +486,11 @@ public class CPOptionValuePersistenceTest {
 
 		cpOptionValue.setModifiedDate(RandomTestUtil.nextDate());
 
+		cpOptionValue.setTitle(RandomTestUtil.randomString());
+
 		cpOptionValue.setCPOptionId(RandomTestUtil.nextLong());
 
-		cpOptionValue.setTitle(RandomTestUtil.randomString());
+		cpOptionValue.setName(RandomTestUtil.randomString());
 
 		cpOptionValue.setPriority(RandomTestUtil.nextInt());
 

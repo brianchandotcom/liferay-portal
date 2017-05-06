@@ -5157,6 +5157,7 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 		cpDefinitionImpl.setDisplayDate(cpDefinition.getDisplayDate());
 		cpDefinitionImpl.setExpirationDate(cpDefinition.getExpirationDate());
 		cpDefinitionImpl.setLastPublishDate(cpDefinition.getLastPublishDate());
+		cpDefinitionImpl.setName(cpDefinition.getName());
 		cpDefinitionImpl.setStatus(cpDefinition.getStatus());
 		cpDefinitionImpl.setStatusByUserId(cpDefinition.getStatusByUserId());
 		cpDefinitionImpl.setStatusByUserName(cpDefinition.getStatusByUserName());

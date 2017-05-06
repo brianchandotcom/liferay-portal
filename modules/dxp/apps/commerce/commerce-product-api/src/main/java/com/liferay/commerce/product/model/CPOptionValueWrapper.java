@@ -68,8 +68,9 @@ public class CPOptionValueWrapper implements CPOptionValue,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("CPOptionId", getCPOptionId());
 		attributes.put("title", getTitle());
+		attributes.put("CPOptionId", getCPOptionId());
+		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
 
 		return attributes;
@@ -125,16 +126,22 @@ public class CPOptionValueWrapper implements CPOptionValue,
 			setModifiedDate(modifiedDate);
 		}
 
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
+		}
+
 		Long CPOptionId = (Long)attributes.get("CPOptionId");
 
 		if (CPOptionId != null) {
 			setCPOptionId(CPOptionId);
 		}
 
-		String title = (String)attributes.get("title");
+		String name = (String)attributes.get("name");
 
-		if (title != null) {
-			setTitle(title);
+		if (name != null) {
+			setName(name);
 		}
 
 		Integer priority = (Integer)attributes.get("priority");
@@ -212,6 +219,16 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	@Override
 	public java.lang.String getDefaultLanguageId() {
 		return _cpOptionValue.getDefaultLanguageId();
+	}
+
+	/**
+	* Returns the name of this cp option value.
+	*
+	* @return the name of this cp option value
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _cpOptionValue.getName();
 	}
 
 	/**
@@ -513,6 +530,16 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_cpOptionValue.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the name of this cp option value.
+	*
+	* @param name the name of this cp option value
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_cpOptionValue.setName(name);
 	}
 
 	@Override

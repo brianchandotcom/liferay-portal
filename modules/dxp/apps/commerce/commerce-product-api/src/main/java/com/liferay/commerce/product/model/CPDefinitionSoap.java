@@ -49,6 +49,7 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setName(model.getName());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -230,6 +231,14 @@ public class CPDefinitionSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -285,6 +294,7 @@ public class CPDefinitionSoap implements Serializable {
 	private Date _displayDate;
 	private Date _expirationDate;
 	private Date _lastPublishDate;
+	private String _name;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

@@ -71,8 +71,9 @@ public class CPDefinitionOptionValueRelWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("CPDefinitionOptionRelId", getCPDefinitionOptionRelId());
 		attributes.put("title", getTitle());
+		attributes.put("CPDefinitionOptionRelId", getCPDefinitionOptionRelId());
+		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
 
 		return attributes;
@@ -129,6 +130,12 @@ public class CPDefinitionOptionValueRelWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
+		}
+
 		Long CPDefinitionOptionRelId = (Long)attributes.get(
 				"CPDefinitionOptionRelId");
 
@@ -136,10 +143,10 @@ public class CPDefinitionOptionValueRelWrapper
 			setCPDefinitionOptionRelId(CPDefinitionOptionRelId);
 		}
 
-		String title = (String)attributes.get("title");
+		String name = (String)attributes.get("name");
 
-		if (title != null) {
-			setTitle(title);
+		if (name != null) {
+			setName(name);
 		}
 
 		Integer priority = (Integer)attributes.get("priority");
@@ -217,6 +224,16 @@ public class CPDefinitionOptionValueRelWrapper
 	@Override
 	public java.lang.String getDefaultLanguageId() {
 		return _cpDefinitionOptionValueRel.getDefaultLanguageId();
+	}
+
+	/**
+	* Returns the name of this cp definition option value rel.
+	*
+	* @return the name of this cp definition option value rel
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _cpDefinitionOptionValueRel.getName();
 	}
 
 	/**
@@ -519,6 +536,16 @@ public class CPDefinitionOptionValueRelWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_cpDefinitionOptionValueRel.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the name of this cp definition option value rel.
+	*
+	* @param name the name of this cp definition option value rel
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_cpDefinitionOptionValueRel.setName(name);
 	}
 
 	@Override

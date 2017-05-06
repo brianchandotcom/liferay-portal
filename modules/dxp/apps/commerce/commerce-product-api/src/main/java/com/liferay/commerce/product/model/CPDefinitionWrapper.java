@@ -75,6 +75,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("name", getName());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -175,6 +176,12 @@ public class CPDefinitionWrapper implements CPDefinition,
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -475,6 +482,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public java.lang.String getDescriptionMapAsXML() {
 		return _cpDefinition.getDescriptionMapAsXML();
+	}
+
+	/**
+	* Returns the name of this cp definition.
+	*
+	* @return the name of this cp definition
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _cpDefinition.getName();
 	}
 
 	/**
@@ -883,6 +900,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_cpDefinition.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the name of this cp definition.
+	*
+	* @param name the name of this cp definition
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_cpDefinition.setName(name);
 	}
 
 	@Override

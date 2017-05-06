@@ -43,11 +43,12 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setTitle(model.getTitle());
+		soapModel.setDescription(model.getDescription());
 		soapModel.setCPDefinitionId(model.getCPDefinitionId());
 		soapModel.setCPOptionId(model.getCPOptionId());
-		soapModel.setName(model.getName());
-		soapModel.setDescription(model.getDescription());
 		soapModel.setDDMFormFieldTypeName(model.getDDMFormFieldTypeName());
+		soapModel.setName(model.getName());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setFacetable(model.getFacetable());
 		soapModel.setSkuContributor(model.getSkuContributor());
@@ -170,6 +171,22 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getTitle() {
+		return _title;
+	}
+
+	public void setTitle(String title) {
+		_title = title;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
 	public long getCPDefinitionId() {
 		return _CPDefinitionId;
 	}
@@ -186,28 +203,20 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 		_CPOptionId = CPOptionId;
 	}
 
-	public String getName() {
-		return _name;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public String getDescription() {
-		return _description;
-	}
-
-	public void setDescription(String description) {
-		_description = description;
-	}
-
 	public String getDDMFormFieldTypeName() {
 		return _DDMFormFieldTypeName;
 	}
 
 	public void setDDMFormFieldTypeName(String DDMFormFieldTypeName) {
 		_DDMFormFieldTypeName = DDMFormFieldTypeName;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public int getPriority() {
@@ -250,11 +259,12 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _title;
+	private String _description;
 	private long _CPDefinitionId;
 	private long _CPOptionId;
-	private String _name;
-	private String _description;
 	private String _DDMFormFieldTypeName;
+	private String _name;
 	private int _priority;
 	private boolean _facetable;
 	private boolean _skuContributor;

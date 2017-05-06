@@ -14,6 +14,7 @@ create table CPDefinition (
 	displayDate DATE null,
 	expirationDate DATE null,
 	lastPublishDate DATE null,
+	name VARCHAR(75) null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
@@ -57,11 +58,12 @@ create table CPDefinitionOptionRel (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	title STRING null,
+	description STRING null,
 	CPDefinitionId LONG,
 	CPOptionId LONG,
-	name STRING null,
-	description STRING null,
 	DDMFormFieldTypeName VARCHAR(75) null,
+	name VARCHAR(75) null,
 	priority INTEGER,
 	facetable BOOLEAN,
 	skuContributor BOOLEAN
@@ -76,8 +78,9 @@ create table CPDefinitionOptionValueRel (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	CPDefinitionOptionRelId LONG,
 	title STRING null,
+	CPDefinitionOptionRelId LONG,
+	name VARCHAR(75) null,
 	priority INTEGER
 );
 
@@ -125,9 +128,10 @@ create table CPOption (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	name STRING null,
+	title STRING null,
 	description STRING null,
 	DDMFormFieldTypeName VARCHAR(75) null,
+	name VARCHAR(75) null,
 	facetable BOOLEAN,
 	skuContributor BOOLEAN
 );
@@ -141,7 +145,8 @@ create table CPOptionValue (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	CPOptionId LONG,
 	title STRING null,
+	CPOptionId LONG,
+	name VARCHAR(75) null,
 	priority INTEGER
 );

@@ -88,9 +88,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "name", Types.VARCHAR },
+			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "DDMFormFieldTypeName", Types.VARCHAR },
+			{ "name", Types.VARCHAR },
 			{ "facetable", Types.BOOLEAN },
 			{ "skuContributor", Types.BOOLEAN }
 		};
@@ -105,17 +106,18 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMFormFieldTypeName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("facetable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("skuContributor", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPOption (uuid_ VARCHAR(75) null,CPOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,facetable BOOLEAN,skuContributor BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CPOption (uuid_ VARCHAR(75) null,CPOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,name VARCHAR(75) null,facetable BOOLEAN,skuContributor BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CPOption";
-	public static final String ORDER_BY_JPQL = " ORDER BY cpOption.name DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY CPOption.name DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY cpOption.title DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY CPOption.title DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -131,7 +133,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long TITLE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -154,9 +156,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setName(soapModel.getName());
+		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
 		model.setDDMFormFieldTypeName(soapModel.getDDMFormFieldTypeName());
+		model.setName(soapModel.getName());
 		model.setFacetable(soapModel.getFacetable());
 		model.setSkuContributor(soapModel.getSkuContributor());
 
@@ -231,9 +234,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
+		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
+		attributes.put("name", getName());
 		attributes.put("facetable", getFacetable());
 		attributes.put("skuContributor", getSkuContributor());
 
@@ -293,10 +297,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			setModifiedDate(modifiedDate);
 		}
 
-		String name = (String)attributes.get("name");
+		String title = (String)attributes.get("title");
 
-		if (name != null) {
-			setName(name);
+		if (title != null) {
+			setTitle(title);
 		}
 
 		String description = (String)attributes.get("description");
@@ -310,6 +314,12 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 		if (DDMFormFieldTypeName != null) {
 			setDDMFormFieldTypeName(DDMFormFieldTypeName);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 
 		Boolean facetable = (Boolean)attributes.get("facetable");
@@ -479,103 +489,103 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 	@JSON
 	@Override
-	public String getName() {
-		if (_name == null) {
+	public String getTitle() {
+		if (_title == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _name;
+			return _title;
 		}
 	}
 
 	@Override
-	public String getName(Locale locale) {
+	public String getTitle(Locale locale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 
-		return getName(languageId);
+		return getTitle(languageId);
 	}
 
 	@Override
-	public String getName(Locale locale, boolean useDefault) {
+	public String getTitle(Locale locale, boolean useDefault) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 
-		return getName(languageId, useDefault);
+		return getTitle(languageId, useDefault);
 	}
 
 	@Override
-	public String getName(String languageId) {
-		return LocalizationUtil.getLocalization(getName(), languageId);
+	public String getTitle(String languageId) {
+		return LocalizationUtil.getLocalization(getTitle(), languageId);
 	}
 
 	@Override
-	public String getName(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(getName(), languageId,
+	public String getTitle(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(getTitle(), languageId,
 			useDefault);
 	}
 
 	@Override
-	public String getNameCurrentLanguageId() {
-		return _nameCurrentLanguageId;
+	public String getTitleCurrentLanguageId() {
+		return _titleCurrentLanguageId;
 	}
 
 	@JSON
 	@Override
-	public String getNameCurrentValue() {
-		Locale locale = getLocale(_nameCurrentLanguageId);
+	public String getTitleCurrentValue() {
+		Locale locale = getLocale(_titleCurrentLanguageId);
 
-		return getName(locale);
+		return getTitle(locale);
 	}
 
 	@Override
-	public Map<Locale, String> getNameMap() {
-		return LocalizationUtil.getLocalizationMap(getName());
+	public Map<Locale, String> getTitleMap() {
+		return LocalizationUtil.getLocalizationMap(getTitle());
 	}
 
 	@Override
-	public void setName(String name) {
+	public void setTitle(String title) {
 		_columnBitmask = -1L;
 
-		_name = name;
+		_title = title;
 	}
 
 	@Override
-	public void setName(String name, Locale locale) {
-		setName(name, locale, LocaleUtil.getSiteDefault());
+	public void setTitle(String title, Locale locale) {
+		setTitle(title, locale, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
-	public void setName(String name, Locale locale, Locale defaultLocale) {
+	public void setTitle(String title, Locale locale, Locale defaultLocale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
-		if (Validator.isNotNull(name)) {
-			setName(LocalizationUtil.updateLocalization(getName(), "Name",
-					name, languageId, defaultLanguageId));
+		if (Validator.isNotNull(title)) {
+			setTitle(LocalizationUtil.updateLocalization(getTitle(), "Title",
+					title, languageId, defaultLanguageId));
 		}
 		else {
-			setName(LocalizationUtil.removeLocalization(getName(), "Name",
+			setTitle(LocalizationUtil.removeLocalization(getTitle(), "Title",
 					languageId));
 		}
 	}
 
 	@Override
-	public void setNameCurrentLanguageId(String languageId) {
-		_nameCurrentLanguageId = languageId;
+	public void setTitleCurrentLanguageId(String languageId) {
+		_titleCurrentLanguageId = languageId;
 	}
 
 	@Override
-	public void setNameMap(Map<Locale, String> nameMap) {
-		setNameMap(nameMap, LocaleUtil.getSiteDefault());
+	public void setTitleMap(Map<Locale, String> titleMap) {
+		setTitleMap(titleMap, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
-	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale) {
-		if (nameMap == null) {
+	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale) {
+		if (titleMap == null) {
 			return;
 		}
 
-		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
-				LocaleUtil.toLanguageId(defaultLocale)));
+		setTitle(LocalizationUtil.updateLocalization(titleMap, getTitle(),
+				"Title", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -699,6 +709,22 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 	@JSON
 	@Override
+	public String getName() {
+		if (_name == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		_name = name;
+	}
+
+	@JSON
+	@Override
 	public boolean getFacetable() {
 		return _facetable;
 	}
@@ -758,9 +784,9 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	public String[] getAvailableLanguageIds() {
 		Set<String> availableLanguageIds = new TreeSet<String>();
 
-		Map<Locale, String> nameMap = getNameMap();
+		Map<Locale, String> titleMap = getTitleMap();
 
-		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
 			Locale locale = entry.getKey();
 			String value = entry.getValue();
 
@@ -785,7 +811,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 	@Override
 	public String getDefaultLanguageId() {
-		String xml = getName();
+		String xml = getTitle();
 
 		if (xml == null) {
 			return StringPool.BLANK;
@@ -816,13 +842,13 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
 
-		String name = getName(defaultLocale);
+		String title = getTitle(defaultLocale);
 
-		if (Validator.isNull(name)) {
-			setName(getName(modelDefaultLanguageId), defaultLocale);
+		if (Validator.isNull(title)) {
+			setTitle(getTitle(modelDefaultLanguageId), defaultLocale);
 		}
 		else {
-			setName(getName(defaultLocale), defaultLocale, defaultLocale);
+			setTitle(getTitle(defaultLocale), defaultLocale, defaultLocale);
 		}
 
 		String description = getDescription(defaultLocale);
@@ -858,9 +884,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		cpOptionImpl.setUserName(getUserName());
 		cpOptionImpl.setCreateDate(getCreateDate());
 		cpOptionImpl.setModifiedDate(getModifiedDate());
-		cpOptionImpl.setName(getName());
+		cpOptionImpl.setTitle(getTitle());
 		cpOptionImpl.setDescription(getDescription());
 		cpOptionImpl.setDDMFormFieldTypeName(getDDMFormFieldTypeName());
+		cpOptionImpl.setName(getName());
 		cpOptionImpl.setFacetable(getFacetable());
 		cpOptionImpl.setSkuContributor(getSkuContributor());
 
@@ -873,7 +900,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	public int compareTo(CPOption cpOption) {
 		int value = 0;
 
-		value = getName().compareTo(cpOption.getName());
+		value = getTitle().compareTo(cpOption.getTitle());
 
 		value = value * -1;
 
@@ -986,12 +1013,12 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			cpOptionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		cpOptionCacheModel.name = getName();
+		cpOptionCacheModel.title = getTitle();
 
-		String name = cpOptionCacheModel.name;
+		String title = cpOptionCacheModel.title;
 
-		if ((name != null) && (name.length() == 0)) {
-			cpOptionCacheModel.name = null;
+		if ((title != null) && (title.length() == 0)) {
+			cpOptionCacheModel.title = null;
 		}
 
 		cpOptionCacheModel.description = getDescription();
@@ -1011,6 +1038,14 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			cpOptionCacheModel.DDMFormFieldTypeName = null;
 		}
 
+		cpOptionCacheModel.name = getName();
+
+		String name = cpOptionCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			cpOptionCacheModel.name = null;
+		}
+
 		cpOptionCacheModel.facetable = getFacetable();
 
 		cpOptionCacheModel.skuContributor = getSkuContributor();
@@ -1020,7 +1055,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1038,12 +1073,14 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
+		sb.append(", title=");
+		sb.append(getTitle());
 		sb.append(", description=");
 		sb.append(getDescription());
 		sb.append(", DDMFormFieldTypeName=");
 		sb.append(getDDMFormFieldTypeName());
+		sb.append(", name=");
+		sb.append(getName());
 		sb.append(", facetable=");
 		sb.append(getFacetable());
 		sb.append(", skuContributor=");
@@ -1055,7 +1092,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPOption");
@@ -1094,8 +1131,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
+			"<column><column-name>title</column-name><column-value><![CDATA[");
+		sb.append(getTitle());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>description</column-name><column-value><![CDATA[");
@@ -1104,6 +1141,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(
 			"<column><column-name>DDMFormFieldTypeName</column-name><column-value><![CDATA[");
 		sb.append(getDDMFormFieldTypeName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>facetable</column-name><column-value><![CDATA[");
@@ -1137,11 +1178,12 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _name;
-	private String _nameCurrentLanguageId;
+	private String _title;
+	private String _titleCurrentLanguageId;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private String _DDMFormFieldTypeName;
+	private String _name;
 	private boolean _facetable;
 	private boolean _skuContributor;
 	private long _columnBitmask;

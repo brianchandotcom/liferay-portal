@@ -139,9 +139,11 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 
 		newCPDefinitionOptionValueRel.setModifiedDate(RandomTestUtil.nextDate());
 
+		newCPDefinitionOptionValueRel.setTitle(RandomTestUtil.randomString());
+
 		newCPDefinitionOptionValueRel.setCPDefinitionOptionRelId(RandomTestUtil.nextLong());
 
-		newCPDefinitionOptionValueRel.setTitle(RandomTestUtil.randomString());
+		newCPDefinitionOptionValueRel.setName(RandomTestUtil.randomString());
 
 		newCPDefinitionOptionValueRel.setPriority(RandomTestUtil.nextInt());
 
@@ -170,10 +172,12 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 				existingCPDefinitionOptionValueRel.getModifiedDate()),
 			Time.getShortTimestamp(
 				newCPDefinitionOptionValueRel.getModifiedDate()));
-		Assert.assertEquals(existingCPDefinitionOptionValueRel.getCPDefinitionOptionRelId(),
-			newCPDefinitionOptionValueRel.getCPDefinitionOptionRelId());
 		Assert.assertEquals(existingCPDefinitionOptionValueRel.getTitle(),
 			newCPDefinitionOptionValueRel.getTitle());
+		Assert.assertEquals(existingCPDefinitionOptionValueRel.getCPDefinitionOptionRelId(),
+			newCPDefinitionOptionValueRel.getCPDefinitionOptionRelId());
+		Assert.assertEquals(existingCPDefinitionOptionValueRel.getName(),
+			newCPDefinitionOptionValueRel.getName());
 		Assert.assertEquals(existingCPDefinitionOptionValueRel.getPriority(),
 			newCPDefinitionOptionValueRel.getPriority());
 	}
@@ -253,8 +257,8 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CPDefinitionOptionValueRel",
 			"uuid", true, "CPDefinitionOptionValueRelId", true, "groupId",
 			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true,
-			"CPDefinitionOptionRelId", true, "title", true, "priority", true);
+			"createDate", true, "modifiedDate", true, "title", true,
+			"CPDefinitionOptionRelId", true, "name", true, "priority", true);
 	}
 
 	@Test
@@ -506,9 +510,11 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 
 		cpDefinitionOptionValueRel.setModifiedDate(RandomTestUtil.nextDate());
 
+		cpDefinitionOptionValueRel.setTitle(RandomTestUtil.randomString());
+
 		cpDefinitionOptionValueRel.setCPDefinitionOptionRelId(RandomTestUtil.nextLong());
 
-		cpDefinitionOptionValueRel.setTitle(RandomTestUtil.randomString());
+		cpDefinitionOptionValueRel.setName(RandomTestUtil.randomString());
 
 		cpDefinitionOptionValueRel.setPriority(RandomTestUtil.nextInt());
 

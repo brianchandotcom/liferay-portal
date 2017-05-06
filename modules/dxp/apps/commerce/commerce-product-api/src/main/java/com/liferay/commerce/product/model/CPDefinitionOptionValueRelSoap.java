@@ -43,8 +43,9 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setCPDefinitionOptionRelId(model.getCPDefinitionOptionRelId());
 		soapModel.setTitle(model.getTitle());
+		soapModel.setCPDefinitionOptionRelId(model.getCPDefinitionOptionRelId());
+		soapModel.setName(model.getName());
 		soapModel.setPriority(model.getPriority());
 
 		return soapModel;
@@ -166,6 +167,14 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getTitle() {
+		return _title;
+	}
+
+	public void setTitle(String title) {
+		_title = title;
+	}
+
 	public long getCPDefinitionOptionRelId() {
 		return _CPDefinitionOptionRelId;
 	}
@@ -174,12 +183,12 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 		_CPDefinitionOptionRelId = CPDefinitionOptionRelId;
 	}
 
-	public String getTitle() {
-		return _title;
+	public String getName() {
+		return _name;
 	}
 
-	public void setTitle(String title) {
-		_title = title;
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public int getPriority() {
@@ -198,7 +207,8 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _CPDefinitionOptionRelId;
 	private String _title;
+	private long _CPDefinitionOptionRelId;
+	private String _name;
 	private int _priority;
 }

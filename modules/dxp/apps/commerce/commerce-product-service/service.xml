@@ -34,6 +34,7 @@
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
+		<column name="name" type="String" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -119,11 +120,12 @@
 
 		<!-- Other fields -->
 
+		<column localized="true" name="title" type="String" />
+		<column localized="true" name="description" type="String" />
 		<column name="CPDefinitionId" type="long" />
 		<column name="CPOptionId" type="long" />
-		<column localized="true" name="name" type="String" />
-		<column localized="true" name="description" type="String" />
 		<column name="DDMFormFieldTypeName" type="String" />
+		<column name="name" type="String" />
 		<column name="priority" type="int" />
 		<column name="facetable" type="boolean" />
 		<column name="skuContributor" type="boolean" />
@@ -174,8 +176,9 @@
 
 		<!-- Other fields -->
 
-		<column name="CPDefinitionOptionRelId"  type="long" />
 		<column localized="true" name="title" type="String" />
+		<column name="CPDefinitionOptionRelId"  type="long" />
+		<column name="name" type="String" />
 		<column name="priority" type="int" />
 
 		<!-- Order -->
@@ -326,16 +329,17 @@
 
 		<!-- Other fields -->
 
-		<column localized="true" name="name" type="String" />
+		<column localized="true" name="title" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="DDMFormFieldTypeName" type="String" />
+		<column name="name" type="String" />
 		<column name="facetable" type="boolean" />
 		<column name="skuContributor" type="boolean" />
 
 		<!-- Order -->
 
 		<order by="desc">
-			<order-column name="name" />
+			<order-column name="title" />
 		</order>
 
 		<!-- Finder methods -->
@@ -371,8 +375,9 @@
 
 		<!-- Other fields -->
 
-		<column name="CPOptionId"  type="long" />
 		<column localized="true" name="title" type="String" />
+		<column name="CPOptionId" type="long" />
+		<column name="name" type="String" />
 		<column name="priority" type="int" />
 
 		<!-- Order -->

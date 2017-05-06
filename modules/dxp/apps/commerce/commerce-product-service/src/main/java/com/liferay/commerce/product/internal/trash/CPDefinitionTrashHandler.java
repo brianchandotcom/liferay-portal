@@ -155,13 +155,7 @@ public class CPDefinitionTrashHandler extends BaseTrashHandler {
 			permissionChecker, cpDefinitionId, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCPDefinitionLocalService(
-		CPDefinitionLocalService cpDefinitionLocalService) {
-
-		_cpDefinitionLocalService = cpDefinitionLocalService;
-	}
-
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference

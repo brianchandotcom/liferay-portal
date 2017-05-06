@@ -149,42 +149,25 @@ public class CPDefinitionAssetRendererFactory
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.commerce.product.definitions.web)",
-		unbind = "-"
-	)
-	public void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = resourceBundleLoader;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	protected Group getGroup(LiferayPortletRequest liferayPortletRequest) {
 		return (Group)liferayPortletRequest.getAttribute(
 			ASSET_RENDERER_FACTORY_GROUP);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCPDefinitionLocalService(
-		CPDefinitionLocalService cpDefinitionLocalService) {
-
-		_cpDefinitionLocalService = cpDefinitionLocalService;
-	}
-
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.commerce.product.definitions.web)"
+	)
 	private ResourceBundleLoader _resourceBundleLoader;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"
+	)
 	private ServletContext _servletContext;
 
 }

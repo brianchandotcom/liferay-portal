@@ -57,8 +57,8 @@ public class CPOptionValueLocalServiceImpl
 
 	@Override
 	public CPOptionValue addCPOptionValue(
-			long cpOptionId, Map<Locale, String> titleMap, int priority,
-			ServiceContext serviceContext)
+			long cpOptionId, String name, Map<Locale, String> titleMap,
+			int priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product option value
@@ -76,6 +76,7 @@ public class CPOptionValueLocalServiceImpl
 		cpOptionValue.setUserId(user.getUserId());
 		cpOptionValue.setUserName(user.getFullName());
 		cpOptionValue.setCPOptionId(cpOptionId);
+		cpOptionValue.setName(name);
 		cpOptionValue.setTitleMap(titleMap);
 		cpOptionValue.setPriority(priority);
 		cpOptionValue.setExpandoBridgeAttributes(serviceContext);
@@ -171,8 +172,8 @@ public class CPOptionValueLocalServiceImpl
 
 	@Override
 	public CPOptionValue updateCPOptionValue(
-			long cpOptionValueId, Map<Locale, String> titleMap, int priority,
-			ServiceContext serviceContext)
+			long cpOptionValueId, String name, Map<Locale, String> titleMap,
+			int priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product option value
@@ -180,6 +181,7 @@ public class CPOptionValueLocalServiceImpl
 		CPOptionValue cpOptionValue = cpOptionValuePersistence.findByPrimaryKey(
 			cpOptionValueId);
 
+		cpOptionValue.setName(name);
 		cpOptionValue.setTitleMap(titleMap);
 		cpOptionValue.setPriority(priority);
 		cpOptionValue.setExpandoBridgeAttributes(serviceContext);

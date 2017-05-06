@@ -82,7 +82,7 @@ public class CPDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition addCPDefinition(
-			String baseSKU, Map<Locale, String> titleMap,
+			String baseSKU, String name, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String productTypeName,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -126,6 +126,7 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setUserId(user.getUserId());
 		cpDefinition.setUserName(user.getFullName());
 		cpDefinition.setBaseSKU(baseSKU);
+		cpDefinition.setName(name);
 		cpDefinition.setProductTypeName(productTypeName);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
 		cpDefinition.setDisplayDate(displayDate);
@@ -408,14 +409,14 @@ public class CPDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition updateCPDefinition(
-			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String productTypeName,
-			String ddmStructureKey, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			long cpDefinitionId, String baseSKU, String name,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String productTypeName, String ddmStructureKey,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -444,6 +445,7 @@ public class CPDefinitionLocalServiceImpl
 		validateReferences(groupId, ddmStructureKey);
 
 		cpDefinition.setBaseSKU(baseSKU);
+		cpDefinition.setName(name);
 		cpDefinition.setProductTypeName(productTypeName);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
 		cpDefinition.setDisplayDate(displayDate);

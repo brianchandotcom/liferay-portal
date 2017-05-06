@@ -38,23 +38,6 @@ public class CPDefinitionOptionRelServiceImpl
 
 	@Override
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(
-			long cpDefinitionId, long cpOptionId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
-			int priority, boolean facetable, boolean skuContributor,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
-
-		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
-			cpDefinitionId, cpOptionId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, priority, facetable, skuContributor,
-			serviceContext);
-	}
-
-	@Override
-	public CPDefinitionOptionRel addCPDefinitionOptionRel(
 			long cpDefinitionId, long cpOptionId, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -63,6 +46,23 @@ public class CPDefinitionOptionRelServiceImpl
 
 		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
 			cpDefinitionId, cpOptionId, serviceContext);
+	}
+
+	@Override
+	public CPDefinitionOptionRel addCPDefinitionOptionRel(
+			long cpDefinitionId, long cpOptionId, String name,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String ddmFormFieldTypeName, int priority, boolean facetable,
+			boolean skuContributor, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
+
+		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
+			cpDefinitionId, cpOptionId, name, titleMap, descriptionMap,
+			ddmFormFieldTypeName, priority, facetable, skuContributor,
+			serviceContext);
 	}
 
 	@Override
@@ -195,8 +195,8 @@ public class CPDefinitionOptionRelServiceImpl
 
 	@Override
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
-			long cpDefinitionOptionRelId, long cpOptionId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			long cpDefinitionOptionRelId, long cpOptionId, String name,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String ddmFormFieldTypeName, int priority, boolean facetable,
 			boolean skuContributor, ServiceContext serviceContext)
 		throws PortalException {
@@ -205,7 +205,7 @@ public class CPDefinitionOptionRelServiceImpl
 			getPermissionChecker(), cpDefinitionOptionRelId, ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
-			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
+			cpDefinitionOptionRelId, cpOptionId, name, titleMap, descriptionMap,
 			ddmFormFieldTypeName, priority, facetable, skuContributor,
 			serviceContext);
 	}

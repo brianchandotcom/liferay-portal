@@ -66,14 +66,15 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		return cpDefinitionOptionValueRelLocalService.
 			addCPDefinitionOptionValueRel(
-				cpDefinitionOptionRelId, cpOptionValue.getTitleMap(),
+				cpDefinitionOptionRelId, cpOptionValue.getName(), cpOptionValue.getTitleMap(),
 				cpOptionValue.getPriority(), serviceContext);
 	}
 
 	@Override
 	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
-			long cpDefinitionOptionRelId, Map<Locale, String> titleMap,
-			int priority, ServiceContext serviceContext)
+			long cpDefinitionOptionRelId, String name,
+			Map<Locale, String> titleMap, int priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition option value rel
@@ -93,6 +94,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		cpDefinitionOptionValueRel.setUserName(user.getFullName());
 		cpDefinitionOptionValueRel.setCPDefinitionOptionRelId(
 			cpDefinitionOptionRelId);
+		cpDefinitionOptionValueRel.setName(name);
 		cpDefinitionOptionValueRel.setPriority(priority);
 		cpDefinitionOptionValueRel.setTitleMap(titleMap);
 		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
@@ -237,8 +239,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 	@Override
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-			long cpDefinitionOptionValueRelId, Map<Locale, String> titleMap,
-			int priority, ServiceContext serviceContext)
+			long cpDefinitionOptionValueRelId, String name,
+			Map<Locale, String> titleMap, int priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition option value rel
@@ -247,6 +250,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			cpDefinitionOptionValueRelPersistence.findByPrimaryKey(
 				cpDefinitionOptionValueRelId);
 
+		cpDefinitionOptionValueRel.setName(name);
 		cpDefinitionOptionValueRel.setTitleMap(titleMap);
 		cpDefinitionOptionValueRel.setPriority(priority);
 		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);

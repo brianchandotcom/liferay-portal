@@ -39,9 +39,10 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 
 	@Override
 	public CPOption addCPOption(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, boolean facetable,
-			boolean skuContributor, ServiceContext serviceContext)
+			String name, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+			boolean facetable, boolean skuContributor,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPPermission.check(
@@ -49,7 +50,7 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 			CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION);
 
 		return cpOptionLocalService.addCPOption(
-			nameMap, descriptionMap, ddmFormFieldTypeName, facetable,
+			name, titleMap, descriptionMap, ddmFormFieldTypeName, facetable,
 			skuContributor, serviceContext);
 	}
 
@@ -125,7 +126,7 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 
 	@Override
 	public CPOption updateCPOption(
-			long cpOptionId, Map<Locale, String> nameMap,
+			long cpOptionId, String name, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
 			boolean facetable, boolean skuContributor,
 			ServiceContext serviceContext)
@@ -135,7 +136,7 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 			getPermissionChecker(), cpOptionId, ActionKeys.UPDATE);
 
 		return cpOptionLocalService.updateCPOption(
-			cpOptionId, nameMap, descriptionMap, ddmFormFieldTypeName,
+			cpOptionId, name, titleMap, descriptionMap, ddmFormFieldTypeName,
 			facetable, skuContributor, serviceContext);
 	}
 

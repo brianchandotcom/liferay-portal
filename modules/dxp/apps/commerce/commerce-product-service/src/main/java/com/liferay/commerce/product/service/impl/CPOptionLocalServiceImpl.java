@@ -56,9 +56,10 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 	@Override
 	public CPOption addCPOption(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, boolean facetable,
-			boolean skuContributor, ServiceContext serviceContext)
+			String name, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+			boolean facetable, boolean skuContributor,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product option
@@ -74,7 +75,8 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		cpOption.setCompanyId(user.getCompanyId());
 		cpOption.setUserId(user.getUserId());
 		cpOption.setUserName(user.getFullName());
-		cpOption.setNameMap(nameMap);
+		cpOption.setName(name);
+		cpOption.setTitleMap(titleMap);
 		cpOption.setDescriptionMap(descriptionMap);
 		cpOption.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 		cpOption.setFacetable(facetable);
@@ -169,7 +171,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 	@Override
 	public CPOption updateCPOption(
-			long cpOptionId, Map<Locale, String> nameMap,
+			long cpOptionId, String name, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
 			boolean facetable, boolean skuContributor,
 			ServiceContext serviceContext)
@@ -179,7 +181,8 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		CPOption cpOption = cpOptionPersistence.findByPrimaryKey(cpOptionId);
 
-		cpOption.setNameMap(nameMap);
+		cpOption.setName(name);
+		cpOption.setTitleMap(titleMap);
 		cpOption.setDescriptionMap(descriptionMap);
 		cpOption.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 		cpOption.setFacetable(facetable);

@@ -22,6 +22,7 @@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
@@ -54,7 +55,6 @@ page import="com.liferay.portal.kernel.util.Time" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portlet.trash.model.impl.TrashEntryImpl" %><%@
-page import="com.liferay.trash.TrashHelper" %><%@
 page import="com.liferay.trash.kernel.exception.RestoreEntryException" %><%@
 page import="com.liferay.trash.kernel.exception.TrashEntryException" %><%@
 page import="com.liferay.trash.kernel.model.TrashEntry" %><%@
@@ -83,12 +83,12 @@ page import="javax.portlet.WindowState" %>
 
 <liferay-theme:defineObjects />
 
+<liferay-trash:defineObjects />
+
 <portlet:defineObjects />
 
 <%
 TrashDisplayContext trashDisplayContext = new TrashDisplayContext(request, liferayPortletResponse);
-
-TrashHelper trashHelper = (TrashHelper)request.getAttribute(TrashWebKeys.TRASH_HELPER);
 
 TrashUtil trashUtil = (TrashUtil)request.getAttribute(TrashWebKeys.TRASH_UTIL);
 

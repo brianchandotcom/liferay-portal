@@ -96,9 +96,7 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
-page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%@
-page import="com.liferay.trash.TrashHelper" %><%@
-page import="com.liferay.trash.util.TrashWebKeys" %>
+page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %>
 
 <%@ page import="java.text.Format" %>
 
@@ -117,8 +115,6 @@ page import="javax.portlet.WindowState" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
+<liferay-trash:defineObjects />
 
-<%
-TrashHelper trashHelper = (TrashHelper)request.getAttribute(TrashWebKeys.TRASH_HELPER);
-%>
+<portlet:defineObjects />

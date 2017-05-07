@@ -14,7 +14,6 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.trash.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.upload.api", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -28,4 +27,5 @@ dependencies {
 	provided project(":apps:collaboration:subscription:subscription-api")
 	provided project(":apps:foundation:captcha:captcha-api")
 	provided project(":apps:web-experience:trash:trash-api")
+	provided project(":apps:web-experience:trash:trash-taglib")
 }

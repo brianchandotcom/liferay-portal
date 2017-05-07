@@ -50,7 +50,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId", "cp
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= cpOptionDisplayContext.getOrderByCol() %>"
 			orderByType="<%= cpOptionDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name"} %>'
+			orderColumns='<%= new String[] {"title"} %>'
 			portletURL="<%= cpOptionDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>

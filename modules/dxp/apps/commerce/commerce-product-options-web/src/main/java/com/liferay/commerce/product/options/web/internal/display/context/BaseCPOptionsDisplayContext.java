@@ -61,7 +61,7 @@ public abstract class BaseCPOptionsDisplayContext<T> {
 		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
 		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
 
-		_defaultOrderByCol = "name";
+		_defaultOrderByCol = "title";
 		_defaultOrderByType = "asc";
 	}
 

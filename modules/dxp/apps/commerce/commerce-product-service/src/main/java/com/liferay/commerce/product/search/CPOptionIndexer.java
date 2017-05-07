@@ -74,30 +74,31 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 		Document document = getBaseModelDocument(CLASS_NAME, cpOption);
 
 		String cpOptionDefaultLanguageId =
-			LocalizationUtil.getDefaultLanguageId(cpOption.getName());
+			LocalizationUtil.getDefaultLanguageId(cpOption.getTitle());
 
 		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
-			cpOption.getName());
+			cpOption.getTitle());
 
 		for (String languageId : languageIds) {
 			String description = cpOption.getDescription(languageId);
-			String name = cpOption.getName(languageId);
+			String title = cpOption.getTitle(languageId);
 
 			if (languageId.equals(cpOptionDefaultLanguageId)) {
 				document.addText(Field.DESCRIPTION, description);
-				document.addText(Field.NAME, name);
+				document.addText(Field.TITLE, title);
 				document.addText("defaultLanguageId", languageId);
 			}
 
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
-				name);
+				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
+				title);
 			document.addText(
 				LocalizationUtil.getLocalizedName(
 					Field.DESCRIPTION, languageId),
 				description);
 
-			document.addText(Field.CONTENT, name);
+			document.addText(Field.NAME, cpOption.getName());
+			document.addText(Field.CONTENT, title);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -113,7 +114,7 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		Summary summary = createSummary(
-			document, Field.NAME, Field.DESCRIPTION);
+			document, Field.TITLE, Field.DESCRIPTION);
 
 		summary.setMaxContentLength(200);
 

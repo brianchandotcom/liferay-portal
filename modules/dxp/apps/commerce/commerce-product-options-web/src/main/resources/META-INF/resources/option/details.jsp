@@ -29,8 +29,9 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpOptionDisplayContext.getDDMFormFiel
 <aui:model-context bean="<%= cpOption %>" model="<%= CPOption.class %>" />
 
 <aui:fieldset>
-	<aui:input label="name" name="name" />
-	<aui:input label="description" name="description" />
+	<aui:input name="name" />
+	<aui:input name="title" />
+	<aui:input name="description" />
 
 	<aui:select
 		label="option-field-type"

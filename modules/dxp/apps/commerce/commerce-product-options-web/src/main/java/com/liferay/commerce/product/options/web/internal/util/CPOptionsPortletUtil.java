@@ -16,7 +16,7 @@ package com.liferay.commerce.product.options.web.internal.util;
 
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
-import com.liferay.commerce.product.util.comparator.CPOptionNameComparator;
+import com.liferay.commerce.product.util.comparator.CPOptionTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionValuePriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionValueTitleComparator;
 import com.liferay.portal.kernel.search.Sort;
@@ -40,8 +40,8 @@ public class CPOptionsPortletUtil {
 
 		OrderByComparator<CPOption> orderByComparator = null;
 
-		if (orderByCol.equals("name")) {
-			orderByComparator = new CPOptionNameComparator(orderByAsc);
+		if (orderByCol.equals("title")) {
+			orderByComparator = new CPOptionTitleComparator(orderByAsc);
 		}
 
 		return orderByComparator;

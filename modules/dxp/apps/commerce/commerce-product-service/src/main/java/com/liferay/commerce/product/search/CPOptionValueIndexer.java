@@ -112,6 +112,7 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
 				title);
 			document.addNumber(Field.PRIORITY, cpOptionValue.getPriority());
+			document.addText(Field.NAME, cpOptionValue.getName());
 			document.addText(Field.CONTENT, title);
 			document.addNumber(
 				FIELD_CP_OPTION_ID, cpOptionValue.getCPOptionId());

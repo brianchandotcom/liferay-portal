@@ -17,7 +17,9 @@
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />
-		<field name="name" type="String" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
@@ -63,7 +65,9 @@
 		<field name="CPDefinitionId" type="long" />
 		<field name="CPOptionId" type="long" />
 		<field name="DDMFormFieldTypeName" type="String" />
-		<field name="name" type="String" />		
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
 		<field name="priority" type="int">
 			<validator name="number" />
 		</field>
@@ -81,7 +85,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field localized="true" name="title" type="String" />
 		<field name="CPDefinitionOptionRelId" type="long" />
-		<field name="name" type="String" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
 		<field name="priority" type="int">
 			<validator name="number" />
 		</field>
@@ -152,7 +158,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field localized="true" name="title" type="String" />
 		<field name="CPOptionId" type="long" />
-		<field name="name" type="String" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
 		<field name="priority" type="int">
 			<validator name="number" />
 		</field>

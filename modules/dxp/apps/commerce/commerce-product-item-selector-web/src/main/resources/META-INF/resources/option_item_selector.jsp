@@ -44,7 +44,7 @@ PortletURL portletURL = cpOptionItemSelectorViewDisplayContext.getPortletURL();
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= cpOptionItemSelectorViewDisplayContext.getOrderByCol() %>"
 			orderByType="<%= cpOptionItemSelectorViewDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name"} %>'
+			orderColumns='<%= new String[] {"title"} %>'
 			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
@@ -63,12 +63,12 @@ PortletURL portletURL = cpOptionItemSelectorViewDisplayContext.getPortletURL();
 		>
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				name="name"
+				name="title"
 			>
 				<div class="commerce-product-option-name"
 					data-id="<%= cpOption.getCPOptionId() %>">
 
-					<%= HtmlUtil.escape(cpOption.getName(themeDisplay.getLanguageId())) %>
+					<%= HtmlUtil.escape(cpOption.getTitle(themeDisplay.getLanguageId())) %>
 				</div>
 			</liferay-ui:search-container-column-text>
 

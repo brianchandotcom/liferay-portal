@@ -95,7 +95,7 @@ public class CPOptionItemSelectorViewDisplayContext {
 
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = portalPreferences.getValue(
-				_portalPreferenceNamespace, "order-by-col", "name");
+				_portalPreferenceNamespace, "order-by-col", "title");
 		}
 		else {
 			boolean saveOrderBy = ParamUtil.getBoolean(

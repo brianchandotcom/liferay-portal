@@ -16,7 +16,6 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portlet.display.template", version: "2.1.0"
 	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.trash.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.upload.api", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -36,6 +35,7 @@ dependencies {
 	provided project(":apps:web-experience:asset:asset-taglib")
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:trash:trash-api")
+	provided project(":apps:web-experience:trash:trash-taglib")
 	provided project(":core:portal-compat:blogs:portal-impl-blogs-compat")
 	provided project(":core:portal-compat:blogs:portal-kernel-blogs-compat")
 }

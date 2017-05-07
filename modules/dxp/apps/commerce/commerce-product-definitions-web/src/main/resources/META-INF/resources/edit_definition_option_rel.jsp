@@ -34,7 +34,7 @@ portletURL.setParameter("mvcRenderCommandName", "editProductDefinitionOptionRel"
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
-renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getName(locale));
+renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getTitle(languageId));
 %>
 
 <%@ include file="/definition_option_rel_navbar.jspf" %>

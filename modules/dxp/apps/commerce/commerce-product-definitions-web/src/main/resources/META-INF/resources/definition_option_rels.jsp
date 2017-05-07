@@ -75,7 +75,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= cpDefinitionOptionRelDisplayContext.getOrderByCol() %>"
 			orderByType="<%= cpDefinitionOptionRelDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"priority", "create-date", "name"} %>'
+			orderColumns='<%= new String[] {"priority", "create-date", "title"} %>'
 			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
@@ -139,8 +139,8 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
 								href="<%= rowURL %>"
-								name="name"
-								value="<%= HtmlUtil.escape(cpDefinitionOptionRel.getName(locale)) %>"
+								name="title"
+								value="<%= HtmlUtil.escape(cpDefinitionOptionRel.getTitle(languageId)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

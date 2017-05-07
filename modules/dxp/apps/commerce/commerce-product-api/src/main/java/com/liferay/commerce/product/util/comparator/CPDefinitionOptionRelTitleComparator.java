@@ -21,21 +21,22 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPDefinitionOptionRelNameComparator
+public class CPDefinitionOptionRelTitleComparator
 	extends OrderByComparator<CPDefinitionOptionRel> {
 
-	public static final String ORDER_BY_ASC = "CPDefinitionOptionRel.name ASC";
+	public static final String ORDER_BY_ASC =
+		"CPDefinitionOptionRel.title ASC";
 
 	public static final String ORDER_BY_DESC =
-		"CPDefinitionOptionRel.name DESC";
+		"CPDefinitionOptionRel.title DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"name"};
+	public static final String[] ORDER_BY_FIELDS = {"title"};
 
-	public CPDefinitionOptionRelNameComparator() {
+	public CPDefinitionOptionRelTitleComparator() {
 		this(false);
 	}
 
-	public CPDefinitionOptionRelNameComparator(boolean ascending) {
+	public CPDefinitionOptionRelTitleComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
@@ -44,10 +45,10 @@ public class CPDefinitionOptionRelNameComparator
 		CPDefinitionOptionRel cpDefinitionOptionRel1,
 		CPDefinitionOptionRel cpDefinitionOptionRel2) {
 
-		String name1 = StringUtil.toLowerCase(cpDefinitionOptionRel1.getName());
-		String name2 = StringUtil.toLowerCase(cpDefinitionOptionRel2.getName());
+		String title1 = StringUtil.toLowerCase(cpDefinitionOptionRel1.getTitle());
+		String title2 = StringUtil.toLowerCase(cpDefinitionOptionRel2.getTitle());
 
-		int value = name1.compareTo(name2);
+		int value = title1.compareTo(title2);
 
 		if (_ascending) {
 			return value;

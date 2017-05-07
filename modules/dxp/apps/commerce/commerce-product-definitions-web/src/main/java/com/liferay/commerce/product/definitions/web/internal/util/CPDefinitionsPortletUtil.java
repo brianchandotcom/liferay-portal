@@ -56,8 +56,8 @@ public class CPDefinitionsPortletUtil {
 			orderByComparator = new CPDefinitionOptionRelCreateDateComparator(
 				orderByAsc);
 		}
-		else if (orderByCol.equals("name")) {
-			orderByComparator = new CPDefinitionOptionRelNameComparator(
+		else if (orderByCol.equals("title")) {
+			orderByComparator = new CPDefinitionOptionRelTitleComparator(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("priority")) {
@@ -149,8 +149,8 @@ public class CPDefinitionsPortletUtil {
 
 		OrderByComparator<CPDefinition> orderByComparator = null;
 
-		if (orderByCol.equals("create-date")) {
-			orderByComparator = new CPDefinitionCreateDateComparator(
+		if (orderByCol.equals("modified-date")) {
+			orderByComparator = new CPDefinitionModifiedDateComparator(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("display-date")) {

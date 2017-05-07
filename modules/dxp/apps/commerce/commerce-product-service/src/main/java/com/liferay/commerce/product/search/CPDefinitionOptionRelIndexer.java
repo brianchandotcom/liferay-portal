@@ -94,8 +94,9 @@ public class CPDefinitionOptionRelIndexer
 			searchQuery, searchContext, Field.CONTENT, false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, false);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
 
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
+		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
 		LinkedHashMap<String, Object> params =
@@ -134,31 +135,32 @@ public class CPDefinitionOptionRelIndexer
 
 		String cpDefinitionOptionRelDefaultLanguageId =
 			LocalizationUtil.getDefaultLanguageId(
-				cpDefinitionOptionRel.getName());
+				cpDefinitionOptionRel.getTitle());
 
 		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
-			cpDefinitionOptionRel.getName());
+			cpDefinitionOptionRel.getTitle());
 
 		for (String languageId : languageIds) {
 			String description = cpDefinitionOptionRel.getDescription(
 				languageId);
-			String name = cpDefinitionOptionRel.getName(languageId);
+			String title = cpDefinitionOptionRel.getTitle(languageId);
 
 			if (languageId.equals(cpDefinitionOptionRelDefaultLanguageId)) {
 				document.addText(Field.DESCRIPTION, description);
-				document.addText(Field.NAME, name);
+				document.addText(Field.TITLE, title);
 				document.addText("defaultLanguageId", languageId);
 			}
 
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
-				name);
+				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
+				title);
 			document.addText(
 				LocalizationUtil.getLocalizedName(
 					Field.DESCRIPTION, languageId),
 				description);
 
-			document.addText(Field.CONTENT, name);
+			document.addText(Field.NAME, cpDefinitionOptionRel.getName());
+			document.addText(Field.CONTENT, title);
 
 			document.addKeyword(
 				FIELD_CP_DEFINITION_ID,
@@ -179,7 +181,7 @@ public class CPDefinitionOptionRelIndexer
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		Summary summary = createSummary(
-			document, Field.NAME, Field.DESCRIPTION);
+			document, Field.TITLE, Field.DESCRIPTION);
 
 		summary.setMaxContentLength(200);
 

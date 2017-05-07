@@ -30,7 +30,7 @@ create table CPDefinitionLocalization (
 	languageId VARCHAR(75) null,
 	title VARCHAR(75) null,
 	urlTitle VARCHAR(75) null,
-	description VARCHAR(75) null
+	description TEXT null
 );
 
 create table CPDefinitionMedia (

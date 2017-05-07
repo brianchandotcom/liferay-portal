@@ -62,7 +62,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
-			Field.TITLE, Field.UID);
+			Field.NAME, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
@@ -97,8 +97,9 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			searchQuery, searchContext, Field.CONTENT, false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, false);
-
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
+
+		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
 		LinkedHashMap<String, Object> params =
@@ -160,6 +161,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			document.addText(Field.CONTENT, description);
 		}
 
+		document.addText(Field.NAME, cpDefinition.getName());
 		document.addText(FIELD_BASE_SKU, cpDefinition.getBaseSKU());
 
 		String[] skus = _cpInstanceLocalService.getSKUs(

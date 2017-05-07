@@ -31,10 +31,25 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERC
 		<aui:validator name="required" />
 	</aui:input>
 
-	<aui:input autoFocus="<%= true %>" label="description" localized="<%= true %>" name="descriptionMapAsXML" type="text" wrapperCssClass="commerce-product-definition-description" />
+    <%
+        String descriptionMapAsXML = StringPool.BLANK;
+
+        if (cpDefinition != null) {
+            descriptionMapAsXML = cpDefinition.getDescriptionMapAsXML();
+        }
+    %>
+
+
+    <aui:field-wrapper label="description" cssClass="commerce-product-definition-description">
+        <div class="entry-content form-group">
+            <liferay-ui:input-localized type="editor" editorName='alloyeditor' cssClass="form-control" name="descriptionMapAsXML" xml="<%= descriptionMapAsXML %>"  />
+        </div>
+    </aui:field-wrapper>
+
 </aui:fieldset>
 
 <aui:script use="aui-base">
+
 	function afterDeletingAvailableLocale(event) {
 		var descriptionInputLocalized = Liferay.component('<portlet:namespace />descriptionMapAsXML');
 

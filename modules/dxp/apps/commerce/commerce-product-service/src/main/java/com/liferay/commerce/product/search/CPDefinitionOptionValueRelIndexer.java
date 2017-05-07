@@ -60,7 +60,7 @@ public class CPDefinitionOptionValueRelIndexer
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
-			Field.TITLE, Field.UID);
+			Field.NAME, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
@@ -93,6 +93,8 @@ public class CPDefinitionOptionValueRelIndexer
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
+
+		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
 		LinkedHashMap<String, Object> params =
@@ -151,6 +153,7 @@ public class CPDefinitionOptionValueRelIndexer
 				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
 				title);
 
+			document.addText(Field.NAME, cpDefinitionOptionValueRel.getName());
 			document.addText(Field.CONTENT, title);
 		}
 

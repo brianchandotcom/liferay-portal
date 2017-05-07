@@ -38,7 +38,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getName(locale));
+renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getTitle(languageId));
 %>
 
 <%@ include file="/definition_option_rel_navbar.jspf" %>
@@ -136,7 +136,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition
 								cssClass="table-cell-content"
 								href="<%= rowURL %>"
 								name="title"
-								value="<%= HtmlUtil.escape(cpDefinitionOptionValueRel.getTitle(locale)) %>"
+								value="<%= HtmlUtil.escape(cpDefinitionOptionValueRel.getTitle(languageId)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

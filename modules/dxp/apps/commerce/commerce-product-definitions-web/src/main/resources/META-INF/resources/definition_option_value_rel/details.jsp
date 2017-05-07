@@ -25,6 +25,7 @@ CPDefinitionOptionValueRel cpDefinitionOptionValueRel = (CPDefinitionOptionValue
 <aui:model-context bean="<%= cpDefinitionOptionValueRel %>" model="<%= CPDefinitionOptionValueRel.class %>" />
 
 <aui:fieldset>
+	<aui:input name="name" />
 	<aui:input name="title" />
 	<aui:input name="priority" />
 </aui:fieldset>

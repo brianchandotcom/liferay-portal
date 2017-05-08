@@ -62,7 +62,7 @@ public abstract class BaseCPDefinitionsDisplayContext<T> {
 		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
 		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
 
-		_defaultOrderByCol = "create-date";
+		_defaultOrderByCol = "modified-date";
 		_defaultOrderByType = "asc";
 	}
 

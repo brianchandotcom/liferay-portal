@@ -18,16 +18,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.util.comparator.CPDefinitionCreateDateComparator;
-import com.liferay.commerce.product.util.comparator.CPDefinitionDisplayDateComparator;
-import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelCreateDateComparator;
-import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelNameComparator;
-import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelPriorityComparator;
-import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelPriorityComparator;
-import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelTitleComparator;
-import com.liferay.commerce.product.util.comparator.CPInstanceCreateDateComparator;
-import com.liferay.commerce.product.util.comparator.CPInstanceDisplayDateComparator;
-import com.liferay.commerce.product.util.comparator.CPInstanceSkuComparator;
+import com.liferay.commerce.product.util.comparator.*;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
@@ -100,12 +91,16 @@ public class CPDefinitionsPortletUtil {
 
 		OrderByComparator<CPDefinition> orderByComparator = null;
 
-		if (orderByCol.equals("create-date")) {
-			orderByComparator = new CPDefinitionCreateDateComparator(
+		if (orderByCol.equals("modified-date")) {
+			orderByComparator = new CPDefinitionModifiedDateComparator(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("display-date")) {
 			orderByComparator = new CPDefinitionDisplayDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("title")) {
+			orderByComparator = new CPDefinitionTitleComparator(
 				orderByAsc);
 		}
 

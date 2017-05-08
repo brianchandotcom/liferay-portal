@@ -50,6 +50,8 @@ public class CPDefinitionsDisplayContext
 
 		super(actionHelper, httpServletRequest, "CPDefinition");
 
+		setDefaultOrderByType("desc");
+
 		_cpDefinitionService = cpDefinitionService;
 		_cpTypeServicesTracker = cpTypeServicesTracker;
 	}
@@ -98,8 +100,8 @@ public class CPDefinitionsDisplayContext
 			if (Objects.equals(getOrderByCol(), "name")) {
 				sort = new Sort("name", Sort.STRING_TYPE, orderByAsc);
 			}
-			else if (Objects.equals(getOrderByCol(), "create-date")) {
-				sort = new Sort(Field.CREATE_DATE, orderByAsc);
+			else if (Objects.equals(getOrderByCol(), "modified-date")) {
+				sort = new Sort(Field.MODIFIED_DATE, orderByAsc);
 			}
 			else if (Objects.equals(getOrderByCol(), "display-date")) {
 				sort = new Sort("display-date", orderByAsc);

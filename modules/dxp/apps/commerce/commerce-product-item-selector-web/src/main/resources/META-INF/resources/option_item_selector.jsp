@@ -74,6 +74,12 @@ PortletURL portletURL = cpOptionItemSelectorViewDisplayContext.getPortletURL();
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
+				name="author"
+				property="userName"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="facetable"
 				property="facetable"
 			/>
@@ -82,6 +88,18 @@ PortletURL portletURL = cpOptionItemSelectorViewDisplayContext.getPortletURL();
 				cssClass="table-cell-content"
 				name="sku-contributor"
 				property="skuContributor"
+			/>
+
+			<liferay-ui:search-container-column-date
+				cssClass="table-cell-content"
+				name="create-date"
+				property="createDate"
+			/>
+
+			<liferay-ui:search-container-column-date
+				cssClass="table-cell-content"
+				name="modified-date"
+				property="modifiedDate"
 			/>
 		</liferay-ui:search-container-row>
 

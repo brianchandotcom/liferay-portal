@@ -145,6 +145,12 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
+								name="author"
+								property="userName"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
 								name="facetable"
 								property="facetable"
 							/>
@@ -165,6 +171,12 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 								cssClass="table-cell-content"
 								name="create-date"
 								property="createDate"
+							/>
+
+							<liferay-ui:search-container-column-date
+								cssClass="table-cell-content"
+								name="modified-date"
+								property="modifiedDate"
 							/>
 
 							<liferay-ui:search-container-column-jsp

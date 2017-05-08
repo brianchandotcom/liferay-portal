@@ -18,7 +18,17 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.util.comparator.*;
+import com.liferay.commerce.product.util.comparator.CPDefinitionDisplayDateComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionModifiedDateComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelCreateDateComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelNameComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelPriorityComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelPriorityComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelTitleComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionTitleComparator;
+import com.liferay.commerce.product.util.comparator.CPInstanceCreateDateComparator;
+import com.liferay.commerce.product.util.comparator.CPInstanceDisplayDateComparator;
+import com.liferay.commerce.product.util.comparator.CPInstanceSkuComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**

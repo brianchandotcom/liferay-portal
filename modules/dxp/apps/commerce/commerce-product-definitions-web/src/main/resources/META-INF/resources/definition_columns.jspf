@@ -16,6 +16,12 @@
 
 <liferay-ui:search-container-column-text
 	cssClass="table-cell-content"
+	name="id"
+	value="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>"
+/>
+
+<liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
 	href="<%= rowURL %>"
 	name="product-name"
 	value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
@@ -29,6 +35,12 @@
 
 <liferay-ui:search-container-column-text
 	cssClass="table-cell-content"
+	name="author"
+	property="userName"
+/>
+
+<liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
 	name="SKU"
 	property="baseSKU"
 />
@@ -37,6 +49,12 @@
 	cssClass="table-cell-content"
 	name="status"
 	status="<%= cpDefinition.getStatus() %>"
+/>
+
+<liferay-ui:search-container-column-date
+	cssClass="table-cell-content"
+	name="create-date"
+	property="createDate"
 />
 
 <liferay-ui:search-container-column-date

@@ -1146,7 +1146,15 @@ public class DefaultTextExportImportContentProcessor
 				FileEntry fileEntry = getFileEntry(dlReferenceParameters);
 
 				if (fileEntry == null) {
-					throw new NoSuchFileEntryException();
+					StringBundler sb = new StringBundler(4);
+
+					sb.append("Validation failed for a referenced file entry ");
+					sb.append(
+						"because file entry could not be found with the ");
+					sb.append("following parameters: ");
+					sb.append(dlReferenceParameters);
+
+					throw new NoSuchFileEntryException(sb.toString());
 				}
 
 				endPos = beginPos - 1;
@@ -1319,7 +1327,9 @@ public class DefaultTextExportImportContentProcessor
 				group.getCompanyId(), groupFriendlyURL);
 
 			if (urlGroup == null) {
-				throw new NoSuchLayoutException();
+				throw new NoSuchLayoutException(
+					"Unable validate referenced page because it cannot be " +
+						"found with url: " + url);
 			}
 
 			if (pos == -1) {
@@ -1332,7 +1342,9 @@ public class DefaultTextExportImportContentProcessor
 				urlGroup.getGroupId(), privateLayout, url);
 
 			if (layout == null) {
-				throw new NoSuchLayoutException();
+				throw new NoSuchLayoutException(
+					"Unable to validate referenced page because the page " +
+						"group cannot be found: " + groupId);
 			}
 		}
 	}
@@ -1355,7 +1367,17 @@ public class DefaultTextExportImportContentProcessor
 				groupId, privateLayout, layoutId);
 
 			if (layout == null) {
-				throw new NoSuchLayoutException();
+				StringBundler exceptionMessage = new StringBundler(5);
+
+				exceptionMessage.append(
+					"Unable to validate referenced page because it cannot be");
+				exceptionMessage.append(
+					"found with the following parameters: ");
+				exceptionMessage.append("groupId " + groupId);
+				exceptionMessage.append(", layoutId " + layoutId);
+				exceptionMessage.append(", privateLayout " + privateLayout);
+
+				throw new NoSuchLayoutException(exceptionMessage.toString());
 			}
 		}
 	}

@@ -119,4 +119,7 @@ public interface CPInstanceService extends BaseService {
 	public List<CPInstance> getCPInstances(long cpDefinitionId, int start,
 		int end, OrderByComparator<CPInstance> orderByComparator)
 		throws PortalException;
+
+	public void buildCPInstances(long cpDefinitionId,
+		ServiceContext serviceContext) throws PortalException;
 }

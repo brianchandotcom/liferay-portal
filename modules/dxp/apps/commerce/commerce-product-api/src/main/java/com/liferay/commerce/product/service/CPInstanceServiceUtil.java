@@ -144,6 +144,12 @@ public class CPInstanceServiceUtil {
 				   .getCPInstances(cpDefinitionId, start, end, orderByComparator);
 	}
 
+	public static void buildCPInstances(long cpDefinitionId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().buildCPInstances(cpDefinitionId, serviceContext);
+	}
+
 	public static CPInstanceService getService() {
 		return _serviceTracker.getService();
 	}

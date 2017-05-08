@@ -90,6 +90,20 @@ public class CPInstanceServiceSoap {
 		}
 	}
 
+	public static void buildCPInstances(long cpDefinitionId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			CPInstanceServiceUtil.buildCPInstances(cpDefinitionId,
+				serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPInstanceSoap deleteCPInstance(
 		com.liferay.commerce.product.model.CPInstanceSoap cpInstance)
 		throws RemoteException {

@@ -144,6 +144,13 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 	}
 
 	@Override
+	public void buildCPInstances(long cpDefinitionId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpInstanceService.buildCPInstances(cpDefinitionId, serviceContext);
+	}
+
+	@Override
 	public CPInstanceService getWrappedService() {
 		return _cpInstanceService;
 	}

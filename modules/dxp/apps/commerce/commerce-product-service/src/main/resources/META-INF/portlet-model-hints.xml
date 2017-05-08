@@ -144,6 +144,8 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="CPOptionId" type="long" />
 		<field localized="true" name="title" type="String" />
-		<field name="priority" type="int" />
+		<field name="priority" type="int">
+			<validator name="number" />
+		</field>
 	</model>
 </model-hints>

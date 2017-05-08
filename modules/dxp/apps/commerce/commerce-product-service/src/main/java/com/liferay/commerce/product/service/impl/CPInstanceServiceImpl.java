@@ -63,6 +63,18 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	}
 
 	@Override
+	public void buildCPInstances(
+			long cpDefinitionId, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId,
+			CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE);
+
+		cpInstanceLocalService.buildCPInstances(cpDefinitionId, serviceContext);
+	}
+
+	@Override
 	public CPInstance deleteCPInstance(CPInstance cpInstance)
 		throws PortalException {
 

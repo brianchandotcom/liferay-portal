@@ -21,27 +21,27 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPDefinitionCreateDateComparator
+public class CPDefinitionModifiedDateComparator
 	extends OrderByComparator<CPDefinition> {
 
-	public static final String ORDER_BY_ASC = "createDate ASC";
+	public static final String ORDER_BY_ASC = "modifiedDate ASC";
 
-	public static final String ORDER_BY_DESC = "createDate DESC";
+	public static final String ORDER_BY_DESC = "modifiedDate DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"createDate"};
+	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public CPDefinitionCreateDateComparator() {
+	public CPDefinitionModifiedDateComparator() {
 		this(false);
 	}
 
-	public CPDefinitionCreateDateComparator(boolean ascending) {
+	public CPDefinitionModifiedDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(CPDefinition cpDefinition1, CPDefinition cpDefinition2) {
 		int value = DateUtil.compareTo(
-			cpDefinition1.getCreateDate(), cpDefinition2.getCreateDate());
+			cpDefinition1.getModifiedDate(), cpDefinition2.getModifiedDate());
 
 		if (_ascending) {
 			return value;

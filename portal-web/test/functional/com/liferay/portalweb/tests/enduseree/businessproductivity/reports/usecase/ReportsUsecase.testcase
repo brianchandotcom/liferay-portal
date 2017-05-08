@@ -129,6 +129,7 @@
 
 	<command name="ViewReportEmailNewConfiguration" priority="4">
 		<description message="This is a use case for LPS-51009." />
+		<property name="test.name.skip.portal.instance" value="ReportsUsecase#ViewReportEmailNewConfiguration" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 

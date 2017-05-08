@@ -124,6 +124,7 @@
 	</command>
 
 	<command name="SolrSmokeTest" priority="4">
+		<property name="test.name.skip.portal.instance" value="SolrEE#SolrSmokeTest" />
 
 		<!-- <description message="This smoke test is to ensure that Liferay is successfully running on a remote Solr by asserting the Solr administration dashboard and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal." />
 

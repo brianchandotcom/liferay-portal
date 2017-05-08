@@ -223,6 +223,8 @@
 	</command>
 
 	<command name="CKEditorSmoke" priority="5">
+		<property name="test.name.skip.portal.instance" value="CPWiki#CKEditorSmoke" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="System Settings" />
 		</execute>

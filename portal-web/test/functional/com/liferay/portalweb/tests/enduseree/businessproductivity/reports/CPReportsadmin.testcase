@@ -582,6 +582,7 @@
 
 	<command name="ViewEmailNotificationDelivery" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
+		<property name="test.name.skip.portal.instance" value="CPReportsadmin#ViewEmailNotificationDelivery" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
@@ -665,6 +666,8 @@
 	</command>
 
 	<command ignore="true" name="ViewEmailRecipientDelivery" priority="4">
+		<property name="test.name.skip.portal.instance" value="CPReportsadmin#ViewEmailRecipientDelivery" />
+
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<property name="test.assert.javascript.errors" value="false" />

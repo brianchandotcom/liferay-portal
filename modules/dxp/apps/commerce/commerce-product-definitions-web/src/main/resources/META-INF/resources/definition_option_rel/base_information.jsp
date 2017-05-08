@@ -52,6 +52,8 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.g
 	</aui:select>
 
 	<aui:input name="facetable" />
+
 	<aui:input name="skuContributor" />
+
 	<aui:input name="priority" />
 </aui:fieldset>

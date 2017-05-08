@@ -26,6 +26,8 @@ CPMediaType cpMediaType = (CPMediaType)request.getAttribute(CPWebKeys.COMMERCE_P
 
 <aui:fieldset>
 	<aui:input name="title" />
+
 	<aui:input name="description" />
+
 	<aui:input name="priority" />
 </aui:fieldset>

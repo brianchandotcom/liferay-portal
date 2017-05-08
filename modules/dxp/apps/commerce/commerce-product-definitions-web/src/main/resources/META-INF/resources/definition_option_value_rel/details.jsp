@@ -26,6 +26,8 @@ CPDefinitionOptionValueRel cpDefinitionOptionValueRel = (CPDefinitionOptionValue
 
 <aui:fieldset>
 	<aui:input name="name" />
+
 	<aui:input name="title" />
+
 	<aui:input name="priority" />
 </aui:fieldset>

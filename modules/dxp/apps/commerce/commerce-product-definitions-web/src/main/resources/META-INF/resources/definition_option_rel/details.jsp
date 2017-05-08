@@ -26,6 +26,8 @@ CPDefinitionOptionRel cpDefinitionOptionRel = (CPDefinitionOptionRel)request.get
 
 <aui:fieldset>
 	<aui:input name="name" />
+
 	<aui:input name="title" />
+
 	<aui:input name="description" />
 </aui:fieldset>

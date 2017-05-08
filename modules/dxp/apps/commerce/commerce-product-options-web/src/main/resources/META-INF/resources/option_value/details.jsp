@@ -26,6 +26,8 @@ CPOptionValue cpOptionValue = (CPOptionValue)request.getAttribute(CPWebKeys.COMM
 
 <aui:fieldset>
 	<aui:input name="name" />
+
 	<aui:input name="title" />
+
 	<aui:input name="priority" />
 </aui:fieldset>

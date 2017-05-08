@@ -40,6 +40,12 @@ public class LayoutLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean hasLayout(java.lang.String uuid, long groupId,
+		boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().hasLayout(uuid, groupId, privateLayout);
+	}
+
 	public static boolean hasLayoutSetPrototypeLayout(
 		java.lang.String layoutSetPrototypeUuid, long companyId,
 		java.lang.String layoutUuid)

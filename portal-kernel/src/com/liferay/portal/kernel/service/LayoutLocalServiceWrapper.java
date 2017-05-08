@@ -31,6 +31,13 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	@Override
+	public boolean hasLayout(java.lang.String uuid, long groupId,
+		boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutLocalService.hasLayout(uuid, groupId, privateLayout);
+	}
+
+	@Override
 	public boolean hasLayoutSetPrototypeLayout(
 		java.lang.String layoutSetPrototypeUuid, long companyId,
 		java.lang.String layoutUuid)

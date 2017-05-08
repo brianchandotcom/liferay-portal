@@ -55,4 +55,6 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 		};
 
 	public java.lang.String[] getAvailableLanguageIds();
+
+	public java.util.List<CPDefinitionOptionRel> getCPDefinitionOptionRels();
 }

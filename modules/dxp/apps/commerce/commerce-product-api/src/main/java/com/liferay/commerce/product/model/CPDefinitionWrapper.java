@@ -672,6 +672,11 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
+	public java.util.List<CPDefinitionOptionRel> getCPDefinitionOptionRels() {
+		return _cpDefinition.getCPDefinitionOptionRels();
+	}
+
+	@Override
 	public Map<java.lang.String, java.lang.String> getLanguageIdToDescriptionMap() {
 		return _cpDefinition.getLanguageIdToDescriptionMap();
 	}

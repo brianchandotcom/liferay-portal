@@ -108,6 +108,7 @@ public class JavaRedundantConstructorCheck extends BaseJavaTermCheck {
 		return constructorContent;
 	}
 
+	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CONSTRUCTOR};
 	}

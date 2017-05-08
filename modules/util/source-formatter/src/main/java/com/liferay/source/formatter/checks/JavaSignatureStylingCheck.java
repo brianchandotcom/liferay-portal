@@ -65,6 +65,7 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 			nextLine);
 	}
 
+	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CONSTRUCTOR, JAVA_METHOD};
 	}

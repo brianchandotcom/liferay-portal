@@ -36,6 +36,7 @@ public class JavaBooleanStatementCheck extends BaseJavaTermCheck {
 		return _formatBooleanStatements(javaTerm);
 	}
 
+	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CONSTRUCTOR, JAVA_METHOD};
 	}

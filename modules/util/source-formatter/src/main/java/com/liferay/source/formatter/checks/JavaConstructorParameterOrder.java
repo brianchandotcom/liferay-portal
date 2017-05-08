@@ -44,6 +44,7 @@ public class JavaConstructorParameterOrder extends BaseJavaTermCheck {
 		return javaTerm.getContent();
 	}
 
+	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CONSTRUCTOR};
 	}

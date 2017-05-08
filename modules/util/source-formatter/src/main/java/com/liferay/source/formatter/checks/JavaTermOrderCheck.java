@@ -64,6 +64,7 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 			fileName, absolutePath, (JavaClass)javaTerm, customSQLContent);
 	}
 
+	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CLASS};
 	}

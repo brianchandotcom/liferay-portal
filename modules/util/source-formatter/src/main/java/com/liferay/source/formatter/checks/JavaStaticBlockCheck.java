@@ -48,6 +48,7 @@ public class JavaStaticBlockCheck extends BaseJavaTermCheck {
 		return classContent;
 	}
 
+	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CLASS};
 	}

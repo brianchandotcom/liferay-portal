@@ -36,6 +36,7 @@ public class JavaReturnStatementCheck extends BaseJavaTermCheck {
 		return _formatReturnStatements(javaTerm);
 	}
 
+	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CONSTRUCTOR, JAVA_METHOD};
 	}

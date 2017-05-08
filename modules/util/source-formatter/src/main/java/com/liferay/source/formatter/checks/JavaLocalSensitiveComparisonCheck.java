@@ -33,6 +33,7 @@ public class JavaLocalSensitiveComparisonCheck extends BaseJavaTermCheck {
 		return javaTerm.getContent();
 	}
 
+	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_METHOD};
 	}

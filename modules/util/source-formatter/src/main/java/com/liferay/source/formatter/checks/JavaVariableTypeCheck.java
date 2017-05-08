@@ -74,6 +74,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		return classContent;
 	}
 
+	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CLASS};
 	}

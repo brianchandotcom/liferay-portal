@@ -38,6 +38,7 @@ public class JavaConstructorSuperCallCheck extends BaseJavaTermCheck {
 		return constructorContent;
 	}
 
+	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CONSTRUCTOR};
 	}

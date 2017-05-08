@@ -20,8 +20,8 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -35,9 +35,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
-
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -62,6 +62,20 @@ public class CPInstanceDisplayContext
 		_cpInstanceHelper = cpInstanceHelper;
 		_cpInstanceService = cpInstanceService;
 		_httpServletResponse = httpServletResponse;
+	}
+
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels()
+		throws PortalException {
+
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
+
+		CPDefinition cpDefinition = getCPDefinition();
+
+		if (cpDefinition != null) {
+			cpDefinitionOptionRels = cpDefinition.getCPDefinitionOptionRels();
+		}
+
+		return cpDefinitionOptionRels;
 	}
 
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
@@ -170,38 +184,23 @@ public class CPInstanceDisplayContext
 			getCPDefinitionId());
 	}
 
-	public String renderOptions(
-			RenderRequest renderRequest,RenderResponse renderResponse )
-		throws PortalException {
-
-		return _cpInstanceHelper.
-			render(getCPDefinitionId(),renderRequest,renderResponse);
-	}
-
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			parseCPInstanceDDMContent(long cpInstanceId)
 		throws PortalException {
 
+		return _cpInstanceHelper.parseCPInstanceDDMContent(cpInstanceId);
+	}
+
+	public String renderOptions(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException {
+
 		return _cpInstanceHelper.
-			parseCPInstanceDDMContent(cpInstanceId);
+			render(getCPDefinitionId(), renderRequest, renderResponse);
 	}
 
-	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels()
-		throws PortalException{
-
-		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
-
-		CPDefinition cpDefinition = getCPDefinition();
-
-		if(cpDefinition != null){
-			cpDefinitionOptionRels = cpDefinition.getCPDefinitionOptionRels();
-		}
-
-		return cpDefinitionOptionRels;
-	}
-
-	private final CPInstanceHelper _cpInstanceHelper;
 	private CPInstance _cpInstance;
+	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPInstanceService _cpInstanceService;
 	private final HttpServletResponse _httpServletResponse;
 

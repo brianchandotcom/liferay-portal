@@ -22,13 +22,12 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Marco Leo
@@ -36,24 +35,21 @@ import java.util.Map;
 @ProviderType
 public interface CPInstanceHelper {
 
-	public String render(
-		long cpDefinitionId,RenderRequest renderRequest,
-		RenderResponse renderResponse)
-		throws PortalException;
-
-	public DDMForm getDDMForm(
-		long cpDefinitionId, Locale locale)
-		throws PortalException;
-
 	public String getDDMContent(
-		long cpDefinitionId, Locale locale,
-		String serializedDDMFormValues);
+		long cpDefinitionId, Locale locale, String serializedDDMFormValues);
+
+	public DDMForm getDDMForm(long cpDefinitionId, Locale locale)
+		throws PortalException;
 
 	public DDMFormValues getDDMFormValues(
 		long cpDefinitionId, Locale locale, String serializedDDMFormValues);
 
-	public Map<CPDefinitionOptionRel,List<CPDefinitionOptionValueRel>>
-	parseCPInstanceDDMContent(long cpInstanceId)
+	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+	parseCPInstanceDDMContent(long cpInstanceId) throws PortalException;
+
+	public String render(
+			long cpDefinitionId, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws PortalException;
 
 }

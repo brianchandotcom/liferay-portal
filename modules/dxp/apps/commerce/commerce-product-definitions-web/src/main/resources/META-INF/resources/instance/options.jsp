@@ -24,7 +24,6 @@ CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)re
 List<CPDefinitionOptionRel> cpDefinitionOptionRels = cpInstanceDisplayContext.getCPDefinitionOptionRels();
 
 Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionRelListMap = cpInstanceDisplayContext.parseCPInstanceDDMContent(cpInstanceDisplayContext.getCPInstanceId());
-
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
@@ -32,34 +31,30 @@ Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionR
 <aui:model-context bean="<%= cpInstance %>" model="<%= CPInstance.class %>" />
 
 <aui:fieldset>
+	<c:choose>
+		<c:when test="<%= cpInstance != null %>">
+			<% for(CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 
-    <c:choose>
-        <c:when test="<%= cpInstance != null %>">
+				List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
+				StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
+			%>
 
-            <% for(CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels){
+			<h6 class="text-default">
+				<strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getTitle(languageId)) %></strong>
+				<% for(CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
 
-                List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
-                StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
-            %>
-            <h6 class="text-default">
-                <strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getTitle(languageId)) %></strong>
-                <% for(CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels){
+					stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
 
-                    stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+				} %>
 
-                } %>
+				<%= HtmlUtil.escape(stringJoiner.toString()) %>
+			</h6>
+			<%} %>
+		</c:when>
+		<c:otherwise>
+			<%= cpInstanceDisplayContext.renderOptions(renderRequest, renderResponse) %>
 
-                <%= HtmlUtil.escape(stringJoiner.toString()) %>
-
-            </h6>
-            <%}%>
-
-        </c:when>
-        <c:otherwise>
-            <%= cpInstanceDisplayContext.renderOptions(renderRequest,renderResponse) %>
-
-            <aui:input name="ddmFormValues" type="hidden"/>
-        </c:otherwise>
-    </c:choose>
-
+			<aui:input name="ddmFormValues" type="hidden" />
+		</c:otherwise>
+	</c:choose>
 </aui:fieldset>

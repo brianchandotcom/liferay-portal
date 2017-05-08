@@ -48,14 +48,9 @@ page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionOptionRel" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionOptionValueRel" %><%@
 page import="com.liferay.commerce.product.model.CPInstance" %><%@
-page import="com.liferay.commerce.product.service.CPDefinitionOptionRelServiceUtil" %><%@
-page import="com.liferay.commerce.product.service.CPDefinitionOptionValueRelServiceUtil" %><%@
 page import="com.liferay.commerce.product.type.CPType" %><%@
 page import="com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-page import="com.liferay.portal.kernel.json.JSONArray" %><%@
-page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
@@ -70,15 +65,16 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.trash.kernel.util.TrashUtil" %><%@
-page import="java.util.Map" %>
+page import="com.liferay.trash.kernel.util.TrashUtil" %>
 
 <%@ page import="java.util.Collections" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.HashSet" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
-page import="java.util.Set" %><%@ page import="java.util.StringJoiner" %>
+page import="java.util.Map" %><%@
+page import="java.util.Set" %><%@
+page import="java.util.StringJoiner" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

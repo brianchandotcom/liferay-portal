@@ -17,8 +17,8 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceDisplayContext;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
-import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -62,7 +62,7 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 
 			CPInstanceDisplayContext cpInstanceDisplayContext =
 				new CPInstanceDisplayContext(
-					_actionHelper, httpServletRequest,httpServletResponse,
+					_actionHelper, httpServletRequest, httpServletResponse,
 					_cpInstanceService, _cpInstanceHelper);
 
 			renderRequest.setAttribute(
@@ -88,10 +88,10 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 	private ActionHelper _actionHelper;
 
 	@Reference
-	private CPInstanceService _cpInstanceService;
+	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
-	private CPInstanceHelper _cpInstanceHelper;
+	private CPInstanceService _cpInstanceService;
 
 	@Reference
 	private Portal _portal;

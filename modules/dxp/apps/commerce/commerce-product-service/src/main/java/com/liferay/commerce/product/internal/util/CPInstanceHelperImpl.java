@@ -17,10 +17,10 @@ package com.liferay.commerce.product.internal.util;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,10 +48,10 @@ import java.util.Map;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.liferay.portal.kernel.util.Validator;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -58,81 +59,24 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(immediate = true)
-public class CPInstanceHelperImpl
-	implements CPInstanceHelper {
-
-	public final String DDM_CONTAINER_ID = "cpDefinitionOptionsRender";
-
-	@Override
-	public String render(
-			long cpDefinitionId,RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws PortalException {
-
-		HttpServletRequest httpServletRequest =
-			_portal.getHttpServletRequest(renderRequest);
-
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(renderResponse);
-
-		Locale locale = _portal.getLocale(httpServletRequest);
-
-		DDMForm ddmForm = getDDMForm(cpDefinitionId,locale);
-
-		DDMFormRenderingContext ddmFormRenderingContext =
-			new DDMFormRenderingContext();
-
-
-		ddmFormRenderingContext.setContainerId(DDM_CONTAINER_ID);
-		ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
-		ddmFormRenderingContext.setHttpServletResponse(httpServletResponse);
-		ddmFormRenderingContext.setLocale(locale);
-		ddmFormRenderingContext.setPortletNamespace(
-			renderResponse.getNamespace());
-
-		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
-	}
-
-	@Override
-	public DDMFormValues getDDMFormValues(
-			long cpDefinitionId, Locale locale,
-			String serializedDDMFormValues) {
-
-		if (Validator.isNotNull(serializedDDMFormValues)) {
-			try {
-				DDMForm ddmForm = getDDMForm(cpDefinitionId,locale);
-
-				return DDMUtil.getDDMFormValues(
-					ddmForm, serializedDDMFormValues);
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
-			}
-		}
-
-		return null;
-	}
+public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Override
 	public String getDDMContent(
-		long cpDefinitionId, Locale locale,
-		String serializedDDMFormValues) {
+		long cpDefinitionId, Locale locale, String serializedDDMFormValues) {
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
-			cpDefinitionId,locale,serializedDDMFormValues);
+			cpDefinitionId, locale, serializedDDMFormValues);
 
-		Map<String,List<DDMFormFieldValue>> ddmFormFieldValueMap =
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValueMap =
 			ddmFormValues.getDDMFormFieldValuesMap();
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (Map.Entry<String,List<DDMFormFieldValue>> entry :
+		for (Map.Entry<String, List<DDMFormFieldValue>> entry :
 				ddmFormFieldValueMap.entrySet())
 		{
-			for(DDMFormFieldValue ddmFormFieldValue: entry.getValue()){
-
+			for (DDMFormFieldValue ddmFormFieldValue : entry.getValue()) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 				jsonObject.put("cpDefinitionOptionRelId", entry.getKey());
@@ -140,8 +84,7 @@ public class CPInstanceHelperImpl
 				Value value = ddmFormFieldValue.getValue();
 
 				jsonObject.put(
-					"cpDefinitionOptionValueRelId",
-					value.getString(locale));
+					"cpDefinitionOptionValueRelId", value.getString(locale));
 
 				jsonArray.put(jsonObject);
 			}
@@ -151,8 +94,7 @@ public class CPInstanceHelperImpl
 	}
 
 	@Override
-	public DDMForm getDDMForm(
-			long cpDefinitionId, Locale locale)
+	public DDMForm getDDMForm(long cpDefinitionId, Locale locale)
 		throws PortalException {
 
 		DDMForm ddmForm = new DDMForm();
@@ -204,6 +146,27 @@ public class CPInstanceHelperImpl
 	}
 
 	@Override
+	public DDMFormValues getDDMFormValues(
+		long cpDefinitionId, Locale locale, String serializedDDMFormValues) {
+
+		if (Validator.isNotNull(serializedDDMFormValues)) {
+			try {
+				DDMForm ddmForm = getDDMForm(cpDefinitionId, locale);
+
+				return DDMUtil.getDDMFormValues(
+					ddmForm, serializedDDMFormValues);
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+			}
+		}
+
+		return null;
+	}
+
+	@Override
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			parseCPInstanceDDMContent(long cpInstanceId)
 		throws PortalException {
@@ -216,7 +179,7 @@ public class CPInstanceHelperImpl
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			cpInstance.getDDMContent());
 
-		for(int i = 0; i < jsonArray.length(); i++)
+		for (int i = 0; i < jsonArray.length(); i++)
 		{
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
@@ -237,18 +200,51 @@ public class CPInstanceHelperImpl
 			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 				cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
 
-			if(cpDefinitionOptionValueRels == null){
+			if (cpDefinitionOptionValueRels == null) {
 				cpDefinitionOptionValueRels = new ArrayList<>();
 				cpDefinitionOptionRelListMap.put(
 					cpDefinitionOptionRel, cpDefinitionOptionValueRels);
 			}
 
 			cpDefinitionOptionValueRels.add(cpDefinitionOptionValueRel);
-
 		}
 
 		return cpDefinitionOptionRelListMap;
 	}
+
+	@Override
+	public String render(
+			long cpDefinitionId, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws PortalException {
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(renderResponse);
+
+		Locale locale = _portal.getLocale(httpServletRequest);
+
+		DDMForm ddmForm = getDDMForm(cpDefinitionId, locale);
+
+		DDMFormRenderingContext ddmFormRenderingContext =
+			new DDMFormRenderingContext();
+
+		ddmFormRenderingContext.setContainerId(DDM_CONTAINER_ID);
+		ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
+		ddmFormRenderingContext.setHttpServletResponse(httpServletResponse);
+		ddmFormRenderingContext.setLocale(locale);
+		ddmFormRenderingContext.setPortletNamespace(
+			renderResponse.getNamespace());
+
+		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
+	}
+
+	public final String DDM_CONTAINER_ID = "cpDefinitionOptionsRender";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPInstanceHelperImpl.class);
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
@@ -263,11 +259,7 @@ public class CPInstanceHelperImpl
 	@Reference
 	private DDMFormRenderer _ddmFormRenderer;
 
-
 	@Reference
 	private Portal _portal;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPInstanceHelperImpl.class);
 
 }

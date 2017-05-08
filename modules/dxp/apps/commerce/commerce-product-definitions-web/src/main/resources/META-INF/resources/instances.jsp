@@ -135,8 +135,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 						>
 
 							<%
-
-                            Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionRelListMap = cpInstanceDisplayContext.parseCPInstanceDDMContent(cpInstance.getCPInstanceId());
+							Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionRelListMap = cpInstanceDisplayContext.parseCPInstanceDDMContent(cpInstance.getCPInstanceId());
 
 							PortletURL rowURL = renderResponse.createRenderURL();
 

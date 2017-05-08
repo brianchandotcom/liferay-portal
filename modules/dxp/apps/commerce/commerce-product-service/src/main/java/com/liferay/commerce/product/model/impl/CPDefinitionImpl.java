@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
-import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
-import com.liferay.commerce.product.service.CPDefinitionOptionRelServiceUtil;
-import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 
 import java.util.List;
@@ -50,9 +47,9 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
-	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(){
-
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels() {
 		return CPDefinitionOptionRelLocalServiceUtil.getCPDefinitionOptionRels(
-			getCPDefinitionId(), QueryUtil.ALL_POS,QueryUtil.ALL_POS);
+			getCPDefinitionId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
+
 }

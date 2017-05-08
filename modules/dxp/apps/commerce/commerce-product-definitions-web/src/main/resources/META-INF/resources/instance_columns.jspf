@@ -21,41 +21,40 @@
 	property="sku"
 />
 
-<% for(CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels){%>
+<% for(CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels){ %>
 
 <liferay-ui:search-container-column-text
-        cssClass="table-cell-content"
-        name="<%= cpDefinitionOptionRel.getTitle(languageId) %>"
+cssClass="table-cell-content"
+		name="<%= cpDefinitionOptionRel.getTitle(languageId) %>"
 >
-    <%
-        List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
 
-        StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
-    %>
+	<%
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
 
-    <% for(CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels){
+		StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
+	%>
 
-        stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+	<% for(CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
 
-    } %>
+		stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
 
-    <%= stringJoiner.toString() %>
+	} %>
 
+	<%= stringJoiner.toString() %>
 </liferay-ui:search-container-column-text>
 
-<%}%>
-
+<%} %>
 
 <liferay-ui:search-container-column-status
-        cssClass="table-cell-content"
-        name="status"
-        status="<%= cpInstance.getStatus() %>"
+cssClass="table-cell-content"
+		name="status"
+		status="<%= cpInstance.getStatus() %>"
 />
 
 <liferay-ui:search-container-column-date
-        cssClass="table-cell-content"
-        name="modified-date"
-        property="modifiedDate"
+cssClass="table-cell-content"
+		name="modified-date"
+		property="modifiedDate"
 />
 
 <liferay-ui:search-container-column-jsp

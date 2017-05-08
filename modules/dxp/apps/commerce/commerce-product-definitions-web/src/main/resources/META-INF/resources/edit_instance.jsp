@@ -50,13 +50,13 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 </aui:form>
 
 <aui:script>
-    function <portlet:namespace />saveInstance(forceDisable) {
-        var $ = AUI.$;
+	function <portlet:namespace />saveInstance(forceDisable) {
+		var $ = AUI.$;
 
-        var form = $(document.<portlet:namespace />fm);
+		var form = $(document.<portlet:namespace />fm);
 
-        form.fm('ddmFormValues').val(JSON.stringify(Liferay.component("cpDefinitionOptionsRenderDDMForm").toJSON()));
+		form.fm('ddmFormValues').val(JSON.stringify(Liferay.component("cpDefinitionOptionsRenderDDMForm").toJSON()));
 
-        submitForm(form);
-    }
+		submitForm(form);
+	}
 </aui:script>

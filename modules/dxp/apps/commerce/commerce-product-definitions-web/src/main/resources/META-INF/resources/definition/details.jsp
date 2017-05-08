@@ -31,21 +31,19 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERC
 		<aui:validator name="required" />
 	</aui:input>
 
-    <%
-        String descriptionMapAsXML = StringPool.BLANK;
+	<%
+	String descriptionMapAsXML = StringPool.BLANK;
 
-        if (cpDefinition != null) {
-            descriptionMapAsXML = cpDefinition.getDescriptionMapAsXML();
-        }
-    %>
+	if (cpDefinition != null) {
+		descriptionMapAsXML = cpDefinition.getDescriptionMapAsXML();
+	}
+	%>
 
-
-    <aui:field-wrapper label="description" cssClass="commerce-product-definition-description">
-        <div class="entry-content form-group">
-            <liferay-ui:input-localized type="editor" editorName='alloyeditor' cssClass="form-control" name="descriptionMapAsXML" xml="<%= descriptionMapAsXML %>"  />
-        </div>
-    </aui:field-wrapper>
-
+	<aui:field-wrapper cssClass="commerce-product-definition-description" label="description">
+		<div class="entry-content form-group">
+			<liferay-ui:input-localized cssClass="form-control" editorName="alloyeditor" name="descriptionMapAsXML" type="editor" xml="<%= descriptionMapAsXML %>" />
+		</div>
+	</aui:field-wrapper>
 </aui:fieldset>
 
 <aui:script use="aui-base">

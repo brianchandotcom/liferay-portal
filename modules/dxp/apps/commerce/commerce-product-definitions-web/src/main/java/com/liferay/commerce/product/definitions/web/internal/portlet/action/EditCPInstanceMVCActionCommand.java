@@ -17,8 +17,8 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -172,8 +172,6 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPInstance.class.getName(), actionRequest);
 
-
-
 		if (cpInstanceId > 0) {
 			_cpInstanceService.updateCPInstance(
 				cpInstanceId, sku, displayDateMonth, displayDateDay,
@@ -183,11 +181,10 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				serviceContext);
 		}
 		else {
-
 			String ddmFormValues = ParamUtil.getString(
-				actionRequest,"ddmFormValues");
+				actionRequest, "ddmFormValues");
 			String ddmContent = _cpInstanceHelper.getDDMContent(
-				cpDefinitionId,locale,ddmFormValues);
+				cpDefinitionId, locale, ddmFormValues);
 
 			_cpInstanceService.addCPInstance(
 				cpDefinitionId, sku, ddmContent, displayDateMonth,
@@ -199,11 +196,9 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private CPInstanceLocalService _cpInstanceService;
-
-
-	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
 
+	@Reference
+	private CPInstanceLocalService _cpInstanceService;
 
 }

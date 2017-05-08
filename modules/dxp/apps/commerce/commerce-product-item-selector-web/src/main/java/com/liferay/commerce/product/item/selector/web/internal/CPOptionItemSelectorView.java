@@ -99,7 +99,7 @@ public class CPOptionItemSelectorView
 			cpOptionItemSelectorViewDisplayContext =
 				new CPOptionItemSelectorViewDisplayContext(
 					httpServletRequest, portletURL, itemSelectedEventName,
-					_cpOptionService, "cpOptionItemSelectorView");
+					_cpOptionService);
 
 		request.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,

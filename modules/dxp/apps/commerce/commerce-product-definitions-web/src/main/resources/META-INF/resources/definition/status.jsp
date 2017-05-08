@@ -21,8 +21,10 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERC
 
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 
-if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
-	neverExpire = false;
+if (cpDefinition != null) {
+	if (cpDefinition.getExpirationDate() != null) {
+		neverExpire = false;
+	}
 }
 %>
 
@@ -30,10 +32,12 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 
 <aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
+<liferay-ui:error exception="<%= CPDefinitionExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
+
 <aui:fieldset>
 	<aui:input name="published" type="checkbox" />
 
-	<aui:input formName="fm1" name="displayDate" />
+	<aui:input formName="fm" name="displayDate" />
 
-	<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm1" name="expirationDate" />
+	<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
 </aui:fieldset>

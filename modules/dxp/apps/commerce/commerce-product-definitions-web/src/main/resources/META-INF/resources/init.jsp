@@ -38,6 +38,7 @@ page import="com.liferay.commerce.product.definitions.web.internal.servlet.tagli
 page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionOptionRelFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionOptionValueRelFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPInstanceFormNavigatorConstants" %><%@
+page import="com.liferay.commerce.product.exception.CPDefinitionExpirationDateException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionRelException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException" %><%@

@@ -135,8 +135,7 @@ public class CPDefinitionsPortletUtil {
 			sort = SortFactoryUtil.create(
 				"priority", Sort.INT_TYPE, orderByAsc);
 		}
-
-		if (orderByCol.equals("title")) {
+		else if (orderByCol.equals("title")) {
 			sort = SortFactoryUtil.create(
 				"title", Sort.STRING_TYPE, orderByAsc);
 		}

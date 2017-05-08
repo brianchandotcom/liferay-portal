@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -190,7 +190,7 @@ public class CPInstanceDisplayContext
 		throws PortalException {
 
 		if (cpInstanceId <= 0) {
-			return new HashMap<>();
+			return Collections.emptyMap();
 		}
 
 		return _cpInstanceHelper.parseCPInstanceDDMContent(cpInstanceId);

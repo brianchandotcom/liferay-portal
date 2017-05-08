@@ -71,24 +71,50 @@ public class WikiContentAlloyEditorLinkBrowseConfigContributor
 				String documentBrowseLinkUrl = jsonObject.getString(
 					"documentBrowseLinkUrl");
 
-				List<ItemSelectorCriterion> itemSelectorCriteria =
-					_itemSelector.getItemSelectorCriteria(
-						documentBrowseLinkUrl);
+				PortletURL itemSelectorURL = null;
 
-				String itemSelectedEventName =
-					_itemSelector.getItemSelectedEventName(
-						documentBrowseLinkUrl);
+				if (documentBrowseLinkUrl == null) {
+					String name = GetterUtil.getString(
+						inputEditorTaglibAttributes.get(
+							"liferay-ui:input-editor:name"));
 
-				itemSelectorCriteria.add(
-					0,
-					getWikiAttachmentItemSelectorCriterion(
-						wikiPageResourcePrimKey));
+					boolean inlineEdit = GetterUtil.getBoolean(
+						inputEditorTaglibAttributes.get(
+							"liferay-ui:input-editor:inlineEdit"));
 
-				PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-					requestBackedPortletURLFactory, itemSelectedEventName,
-					itemSelectorCriteria.toArray(
-						new ItemSelectorCriterion[
-							itemSelectorCriteria.size()]));
+					if (!inlineEdit) {
+						String namespace = GetterUtil.getString(
+							inputEditorTaglibAttributes.get(
+								"liferay-ui:input-editor:namespace"));
+
+						name = namespace + name;
+					}
+
+					itemSelectorURL = _itemSelector.getItemSelectorURL(
+						requestBackedPortletURLFactory, name + "selectItem",
+						getWikiAttachmentItemSelectorCriterion(
+							wikiPageResourcePrimKey));
+				}
+				else {
+					List<ItemSelectorCriterion> itemSelectorCriteria =
+						_itemSelector.getItemSelectorCriteria(
+							documentBrowseLinkUrl);
+
+					String itemSelectedEventName =
+						_itemSelector.getItemSelectedEventName(
+							documentBrowseLinkUrl);
+
+					itemSelectorCriteria.add(
+						0,
+						getWikiAttachmentItemSelectorCriterion(
+							wikiPageResourcePrimKey));
+
+					itemSelectorURL = _itemSelector.getItemSelectorURL(
+						requestBackedPortletURLFactory, itemSelectedEventName,
+						itemSelectorCriteria.toArray(
+							new ItemSelectorCriterion[
+								itemSelectorCriteria.size()]));
+				}
 
 				jsonObject.put(
 					"documentBrowseLinkUrl", itemSelectorURL.toString());

@@ -21,10 +21,8 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERC
 
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 
-if (cpDefinition != null) {
-	if (cpDefinition.getExpirationDate() != null) {
-		neverExpire = false;
-	}
+if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
+	neverExpire = false;
 }
 %>
 

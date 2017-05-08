@@ -20,6 +20,7 @@ import com.liferay.commerce.product.util.comparator.CPOptionTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionValuePriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionValueTitleComparator;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.Objects;
@@ -57,7 +58,8 @@ public class CPOptionsPortletUtil {
 		Sort sort = null;
 
 		if (Objects.equals(orderByCol, "title")) {
-			sort = new Sort("title", Sort.STRING_TYPE, orderByAsc);
+			sort = SortFactoryUtil.create(
+				"title", Sort.STRING_TYPE, orderByAsc);
 		}
 
 		return sort;
@@ -97,10 +99,12 @@ public class CPOptionsPortletUtil {
 		Sort sort = null;
 
 		if (Objects.equals(orderByCol, "title")) {
-			sort = new Sort("title", Sort.STRING_TYPE, orderByAsc);
+			sort = SortFactoryUtil.create(
+				"title", Sort.STRING_TYPE, orderByAsc);
 		}
 		else if (Objects.equals(orderByCol, "priority")) {
-			sort = new Sort("priority", Sort.INT_TYPE, orderByAsc);
+			sort = SortFactoryUtil.create(
+				"priority", Sort.INT_TYPE, orderByAsc);
 		}
 
 		return sort;

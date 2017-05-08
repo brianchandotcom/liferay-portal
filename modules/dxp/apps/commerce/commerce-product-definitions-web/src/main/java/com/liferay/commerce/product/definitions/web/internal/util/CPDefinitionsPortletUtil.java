@@ -31,6 +31,7 @@ import com.liferay.commerce.product.util.comparator.CPInstanceDisplayDateCompara
 import com.liferay.commerce.product.util.comparator.CPInstanceSkuComparator;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.Objects;
@@ -81,13 +82,15 @@ public class CPDefinitionsPortletUtil {
 		Sort sort = null;
 
 		if (Objects.equals(orderByCol, "title")) {
-			sort = new Sort("title", Sort.STRING_TYPE, orderByAsc);
+			sort = SortFactoryUtil.create(
+				"title", Sort.STRING_TYPE, orderByAsc);
 		}
 		else if (Objects.equals(orderByCol, "create-date")) {
-			sort = new Sort(Field.CREATE_DATE, true);
+			sort = SortFactoryUtil.create(Field.CREATE_DATE, true);
 		}
 		else if (Objects.equals(orderByCol, "priority")) {
-			sort = new Sort("priority", Sort.INT_TYPE, orderByAsc);
+			sort = SortFactoryUtil.create(
+				"priority", Sort.INT_TYPE, orderByAsc);
 		}
 
 		return sort;
@@ -129,10 +132,12 @@ public class CPDefinitionsPortletUtil {
 		Sort sort = null;
 
 		if (Objects.equals(orderByCol, "title")) {
-			sort = new Sort("title", Sort.STRING_TYPE, orderByAsc);
+			sort = SortFactoryUtil.create(
+				"title", Sort.STRING_TYPE, orderByAsc);
 		}
 		else if (Objects.equals(orderByCol, "priority")) {
-			sort = new Sort("priority", Sort.INT_TYPE, orderByAsc);
+			sort = SortFactoryUtil.create(
+				"priority", Sort.INT_TYPE, orderByAsc);
 		}
 
 		return sort;
@@ -177,13 +182,14 @@ public class CPDefinitionsPortletUtil {
 		Sort sort = null;
 
 		if (Objects.equals(orderByCol, "title")) {
-			sort = new Sort("title", Sort.STRING_TYPE, orderByAsc);
+			sort = SortFactoryUtil.create(
+				"title", Sort.STRING_TYPE, orderByAsc);
 		}
 		else if (Objects.equals(orderByCol, "modified-date")) {
-			sort = new Sort(Field.MODIFIED_DATE, orderByAsc);
+			sort = SortFactoryUtil.create(Field.MODIFIED_DATE, orderByAsc);
 		}
 		else if (Objects.equals(orderByCol, "display-date")) {
-			sort = new Sort("display-date", orderByAsc);
+			sort = SortFactoryUtil.create("display-date", orderByAsc);
 		}
 
 		return sort;
@@ -225,13 +231,13 @@ public class CPDefinitionsPortletUtil {
 		Sort sort = null;
 
 		if (Objects.equals(orderByCol, "sku")) {
-			sort = new Sort("sku", Sort.STRING_TYPE, orderByAsc);
+			sort = SortFactoryUtil.create("sku", Sort.STRING_TYPE, orderByAsc);
 		}
 		else if (Objects.equals(orderByCol, "create-date")) {
-			sort = new Sort(Field.MODIFIED_DATE, true);
+			sort = SortFactoryUtil.create(Field.MODIFIED_DATE, true);
 		}
 		else if (Objects.equals(orderByCol, "display-date")) {
-			sort = new Sort("display-date", true);
+			sort = SortFactoryUtil.create("display-date", true);
 		}
 
 		return sort;

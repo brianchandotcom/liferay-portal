@@ -85,7 +85,7 @@ public class DefaultLayoutPrototypesUtil {
 		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
 			String curName = layoutPrototype.getName(LocaleUtil.getDefault());
 
-			if (name.equals(curName)) {
+			if ((name == null) || name.equals(curName)) {
 				return null;
 			}
 		}

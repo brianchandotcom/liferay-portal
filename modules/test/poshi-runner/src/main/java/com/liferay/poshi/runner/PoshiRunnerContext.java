@@ -403,26 +403,33 @@ public class PoshiRunnerContext {
 		return classCommandName;
 	}
 
-	private static List<String> _getFilePaths(String basedir, String[] includes)
+	private static List<String> _getFilePaths(
+			String[] includes, String... basedirs)
 		throws Exception {
 
 		List<String> filePaths = new ArrayList<>();
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(basedir);
-		directoryScanner.setIncludes(includes);
-
-		directoryScanner.scan();
-
-		for (String filePath : directoryScanner.getIncludedFiles()) {
-			filePath = basedir + "/" + filePath;
-
-			if (OSDetector.isWindows()) {
-				filePath = filePath.replace("/", "\\");
+		for (String basedir : basedirs) {
+			if (Validator.isNull(basedir)) {
+				continue;
 			}
 
-			filePaths.add(filePath);
+			DirectoryScanner directoryScanner = new DirectoryScanner();
+
+			directoryScanner.setBasedir(basedir);
+			directoryScanner.setIncludes(includes);
+
+			directoryScanner.scan();
+
+			for (String filePath : directoryScanner.getIncludedFiles()) {
+				filePath = basedir + "/" + filePath;
+
+				if (OSDetector.isWindows()) {
+					filePath = filePath.replace("/", "\\");
+				}
+
+				filePaths.add(filePath);
+			}
 		}
 
 		return filePaths;
@@ -997,24 +1004,23 @@ public class PoshiRunnerContext {
 		};
 
 		List<String> testBaseDirFilePaths = _getFilePaths(
-			_TEST_BASE_DIR_NAME, poshiFileNames);
+			poshiFileNames, _TEST_BASE_DIR_NAME);
 
 		_filePathsList.addAll(testBaseDirFilePaths);
 
-		String[] testIncludeDirNames = _combine(
-			PropsValues.TEST_INCLUDE_DIR_NAMES, PropsValues.TEST_SUBREPO_DIRS);
+		if (Validator.isNotNull(PropsValues.TEST_INCLUDE_DIR_NAMES)) {
+			_filePathsList.addAll(
+				_getFilePaths(
+					new String[] {
+						"**\\*.action", "**\\*.function", "**\\*.macro",
+						"**\\*.path"
+					},
+					PropsValues.TEST_INCLUDE_DIR_NAMES));
+		}
 
-		if (Validator.isNotNull(testIncludeDirNames)) {
-			for (String testIncludeDirName : testIncludeDirNames) {
-				if (Validator.isNull(testIncludeDirName)) {
-					continue;
-				}
-
-				List<String> testIncludeDirFilePaths = _getFilePaths(
-					testIncludeDirName, poshiFileNames);
-
-				_filePathsList.addAll(testIncludeDirFilePaths);
-			}
+		if (Validator.isNotNull(PropsValues.TEST_SUBREPO_DIRS)) {
+			_filePathsList.addAll(
+				_getFilePaths(poshiFileNames, PropsValues.TEST_SUBREPO_DIRS));
 		}
 
 		for (String filePath : _filePathsList) {

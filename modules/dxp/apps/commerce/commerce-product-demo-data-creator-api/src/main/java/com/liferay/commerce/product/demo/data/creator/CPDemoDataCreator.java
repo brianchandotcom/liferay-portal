@@ -16,12 +16,9 @@ package com.liferay.commerce.product.demo.data.creator;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.IOException;
-
-import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
@@ -29,8 +26,7 @@ import java.util.List;
 @ProviderType
 public interface CPDemoDataCreator {
 
-	public List<CPDefinition> create(
-			long userId, long groupId, boolean buildSkus)
+	public void create(long userId, long groupId, boolean buildSkus)
 		throws IOException, PortalException;
 
 	public void delete() throws PortalException;

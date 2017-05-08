@@ -1,0 +1,118 @@
+[
+	{
+		"baseSKU": "TNTERS",
+		"categories": [{"title": "Jewellery"}],
+		"description": "Boldly shaped triple hoop in gold-pleated brass. It is a smaller version of the Tentacle earring of WOMEN AW16 Show, they suit a perfect size.",
+		"name": "Tentacle Earring S",
+		"options": [
+			{"ddmFormFieldType": "select", "facetable": true, "name": "Color", "skuContributor": true, "title": "Color", "values": [{"name": "Gold", "title": "Gold", "priority": 1}, {"name": "Rose Gold", "title": "Rose Gold", "priority": 2}]}
+		],
+		"title": "Tentacle Earring S",
+		"type": "simple"
+	},
+	{
+		"baseSKU": "LHLMCC",
+		"categories": [{"title": "Shoes"}],
+		"description": "Slip on loafer in yellow patent calfskin & brown grained deerskin leather with contrasting white low heel.",
+		"name": "Low Heeled Moccasin",
+		"options": [
+			{"ddmFormFieldType": "select", "facetable": true, "name": "Size", "skuContributor": true, "title": "Size", "values": [{"name": "35", "title": "35", "priority": 1}, {"name": "36", "title": "36", "priority": 2}, {"name": "37", "title": "37", "priority": 3}, {"name": "38", "title": "38", "priority": 4}, {"name": "39", "title": "39", "priority": 5}, {"name": "40", "title": "40", "priority": 6}]},
+			{"ddmFormFieldType": "select", "facetable": true, "name": "Color", "skuContributor": false, "title": "Color", "values": [{"name": "Yellow", "title": "Yellow", "priority": 1}]}
+		],
+		"type": "simple",
+		{"ddmFormFieldType": "select", "facetable": true, "name": "Size", "skuContributor": true, "title": "Size", "values": [{"name": "35", "title": "35", "priority": 1}, {"name": "36", "title": "36", "priority": 2}, {"name": "37", "title": "37", "priority": 3}, {"name": "38", "title": "38", "priority": 4}, {"name": "39", "title": "39", "priority": 5}, {"name": "40", "title": "40", "priority": 6}]}
+	},
+	{
+		"baseSKU": "DRSSJP",
+		"categories": [{"title": "Paula's Ibiza"}],
+		"description": "Long halter neck dress in Paula's Ibiza print viscose with contrasting knitwear top.",
+		"name": "Dress Julia Paula Khaki",
+		"options": [
+			{"ddmFormFieldType": "select", "facetable": true, "name": "Size", "skuContributor": true, "title": "Size", "values": [{"name": "XXS", "title": "XXS", "priority": 1}, {"name": "XS", "title": "XS", "priority": 2}, {"name": "S", "title": "S", "priority": 3}, {"name": "M", "title": "M", "priority": 4}, {"name": "L", "title": "L", "priority": 5}, {"name": "XL", "title": "XL", "priority": 6}, {"name": "XXL", "title": "XXL", "priority": 7}]},
+			{"ddmFormFieldType": "select", "facetable": true, "name": "Color", "skuContributor": false, "title": "Color", "values": [{"name": "Khaki Green/Yellow", "title": "Khaki Green/Yellow", "priority": 1}]}
+		],
+		"title": "Dress Julia Paula",
+		"type": "simple"
+	},
+	{
+		"baseSKU": "SKRTCS",
+		"categories": [{"title": "Stitches"}],
+		"description": "Mini skirt in washed navy napa lambskin leather with off white contrast crochet stitching.",
+		"name": "Skirt Crochet Stitching",
+		"options": [
+			{"ddmFormFieldType": "select", "facetable": true, "name": "Size", "skuContributor": true, "title": "Size", "values": [{"name": "32", "title": "32", "priority": 1}, {"name": "34", "title": "34", "priority": 2}, {"name": "36", "title": "36", "priority": 3}, {"name": "38", "title": "38", "priority": 4}, {"name": "40", "title": "40", "priority": 5}, {"name": "42", "title": "42", "priority": 6}]},
+			{"ddmFormFieldType": "select", "facetable": true, "name": "Color", "skuContributor": false, "title": "Color", "values": [{"name": "Navy Blue", "title": "Navy Blue", "priority": 1}]}
+		],
+		"title": "Skirt Crochet Stitching",
+		"type": "simple"
+	},
+	{
+		"baseSKU": "ESPDRCS",
+		"categories": [{"title": "Stitches"}],
+		"description": "Espadrille in nappa calfskin leather with contrast top stitching, rubber sole & embossed Anagram.",
+		"name": "Espadrille Contrast Stitching",
+		"options": [
+			{"ddmFormFieldType": "select", "facetable": true, "name": "Size", "skuContributor": true, "title": "Size", "values": [{"name": "38", "title": "38", "priority": 1}, {"name": "39", "title": "39", "priority": 2}, {"name": "40", "title": "40", "priority": 3}, {"name": "41", "title": "41", "priority": 4}, {"name": "42", "title": "42", "priority": 5}, {"name": "43", "title": "43", "priority": 6}]},
+			{"ddmFormFieldType": "select", "facetable": true, "name": "Color", "skuContributor": false, "title": "Color", "values": [{"name": "Tan", "title": "Tan", "priority": 1}]}
+		],
+		"title": "Espadrille Contrast Stitching",
+		"type": "simple"
+	},
+	{
+		"baseSKU": "ESPDERPF",
+		"categories": [{"title": "Paula's Ibiza"}],
+		"description": "Espadrilles in Paula's Ibiza print canvas & contrasting tan napa calfskin leather.",
+		"name": "Espadrille Paula Flowers",
+		"options": [
+			{"ddmFormFieldType": "select", "facetable": true, "name": "Size", "skuContributor": true, "title": "Size", "values": [{"name": "34", "title": "34", "priority": 1}, {"name": "35", "title": "35", "priority": 2}, {"name": "36", "title": "36", "priority": 3}, {"name": "37", "title": "37", "priority": 4}, {"name": "38", "title": "38", "priority": 5}, {"name": "39", "title": "39", "priority": 6}, {"name": "40", "title": "40", "priority": 7}, {"name": "41", "title": "41", "priority": 8}, {"name": "42", "title": "42", "priority": 9}]},
+			{"ddmFormFieldType": "select", "facetable": true, "name": "Color", "skuContributor": false, "title": "Color", "values": [{"name": "Blue/Multicolour", "title": "Blue/Multicolour", "priority": 1}]}
+		],
+		"title": "Espadrille Paula Flowers",
+		"type": "simple"
+	},
+	{
+		"baseSKU": "MNGBNG",
+		"categories": [{"title": "Jewellery"}],
+		"description": "Monogram bangle made of brass with gold or palladium plate. Size S: 5,5cm diameter Size M: 6,5cm diameter.",
+		"name": "Monogram Bangle",
+		"options": [
+			{"ddmFormFieldType": "select", "facetable": true, "name": "Size", "skuContributor": true, "title": "Size", "values": [{"name": "S", "title": "S", "priority": 1}, {"name": "M", "title": "M", "priority": 2}]},
+			{"ddmFormFieldType": "select", "facetable": true, "name": "Color", "skuContributor": true, "title": "Color", "values": [{"name": "Gold", "title": "Gold", "priority": 1}, {"name": "Palladium", "title": "Palladium", "priority": 2}]}
+		],
+		"title": "Monogram Bangle",
+		"type": "simple"
+	},
+	{
+		"baseSKU": "PBZSCRF",
+		"categories": [{"title": "Scarves & Shawls"}],
+		"description": "90X90 100% silk scarf featuring a colorful design and contrasting edges. The Paula´s Ibiza Collection will be available at the beginning of May.",
+		"name": "90X90 Paulas Ibiza Scarf",
+		"options": [
+			{"ddmFormFieldType": "select", "facetable": true, "name": "Color", "skuContributor": true, "title": "Color", "values": [{"name": "Orange", "title": "Orange", "priority": 1}, {"name": "Black", "title": "Black", "priority": 2}]}
+		],
+		"title": "90X90 Paulas Ibiza Scarf",
+		"type": "simple"
+	},
+	{
+		"baseSKU": "FMKTBG",
+		"categories": [{"title": "Bags"}],
+		"description": "The Flamenco Knot Bag is a softly structured shoulder bag where volume is created through precise cutting. It has a detailed drawstring to cinch the top and keep your belongings secure. Its spacious interior is lined in durable canvas and sized to hold daily essentials. Key characteristics: Soft, two-fold construction with T-bar profile and hand-painted edges; notched silhouette; interior with two flat pockets. Adjustable strap for the most comfortable length.",
+		"name": "Flamenco Knot Bag",
+		"options": [
+			{"ddmFormFieldType": "select", "facetable": true, "name": "Color", "skuContributor": true, "title": "Color", "values": [{"name": "Black", "title": "Black", "priority": 1}, {"name": "Primary Red", "title": "Primary Red", "priority": 2}, {"name": "Tan", "title": "Tan", "priority": 3}, {"name": "Marine", "title": "Marine", "priority": 4}, {"name": "Stone Blue", "title": "Stone Blue", "priority": 5}, {"name": "Soft Pink", "title": "Soft Pink", "priority": 6}]}
+		],
+		"title": "Flamenco Knot Bag",
+		"type": "simple"
+	},
+	{
+		"baseSKU": "TRNSGL",
+		"categories": [{"title": "Accessories"}],
+		"description": "Gold metal inlaid along the frame and temples, adorn this ultrachic pair of sunglasses with a squared cat-eye silhouette.",
+		"name": "Torrenova Sunglasses",
+		"options": [
+			{"ddmFormFieldType": "select", "facetable": true, "name": "", "skuContributor": true, "title": "", "values": [{"name": "Havana", "title": "Havana", "priority": 1}, {"name": "Havana/Gold", "title": "Havana/Gold", "priority": 2}, {"name": "Black", "title": "Black", "priority": 3}]}
+		],
+		"title": "Torrenova Sunglasses",
+		"type": "simple"
+	}
+]

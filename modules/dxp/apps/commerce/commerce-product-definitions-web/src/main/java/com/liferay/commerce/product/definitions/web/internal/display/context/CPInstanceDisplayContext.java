@@ -23,14 +23,12 @@ import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -122,23 +120,8 @@ public class CPInstanceDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (isSearch()) {
-			boolean orderByAsc = false;
-
-			if (Objects.equals(getOrderByType(), "asc")) {
-				orderByAsc = true;
-			}
-
-			Sort sort = null;
-
-			if (Objects.equals(getOrderByCol(), "sku")) {
-				sort = new Sort("sku", Sort.STRING_TYPE, orderByAsc);
-			}
-			else if (Objects.equals(getOrderByCol(), "create-date")) {
-				sort = new Sort(Field.MODIFIED_DATE, true);
-			}
-			else if (Objects.equals(getOrderByCol(), "display-date")) {
-				sort = new Sort("display-date", true);
-			}
+			Sort sort = CPDefinitionsPortletUtil.getCPInstanceSort(
+				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CPInstance> cpInstanceBaseModelSearchResult =
 				_cpInstanceService.searchCPOptions(

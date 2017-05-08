@@ -18,18 +18,21 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.util.comparator.CPDefinitionCreateDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionDisplayDateComparator;
-import com.liferay.commerce.product.util.comparator.CPDefinitionModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelCreateDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelNameComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelPriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelPriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelTitleComparator;
-import com.liferay.commerce.product.util.comparator.CPDefinitionTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceCreateDateComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceSkuComparator;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.Objects;
 
 /**
  * @author Alessio Antonio Rendina
@@ -65,6 +68,30 @@ public class CPDefinitionsPortletUtil {
 		return orderByComparator;
 	}
 
+	public static Sort getCPDefinitionOptionRelSort(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(orderByType, "asc")) {
+			orderByAsc = true;
+		}
+
+		Sort sort = null;
+
+		if (Objects.equals(orderByCol, "title")) {
+			sort = new Sort("title", Sort.STRING_TYPE, orderByAsc);
+		}
+		else if (Objects.equals(orderByCol, "create-date")) {
+			sort = new Sort(Field.CREATE_DATE, true);
+		}
+		else if (Objects.equals(orderByCol, "priority")) {
+			sort = new Sort("priority", Sort.INT_TYPE, orderByAsc);
+		}
+
+		return sort;
+	}
+
 	public static OrderByComparator<CPDefinitionOptionValueRel>
 		getCPDefinitionOptionValueRelOrderByComparator(
 			String orderByCol, String orderByType) {
@@ -89,6 +116,27 @@ public class CPDefinitionsPortletUtil {
 		return orderByComparator;
 	}
 
+	public static Sort getCPDefinitionOptionValueRelSort(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(orderByType, "asc")) {
+			orderByAsc = true;
+		}
+
+		Sort sort = null;
+
+		if (Objects.equals(orderByCol, "title")) {
+			sort = new Sort("title", Sort.STRING_TYPE, orderByAsc);
+		}
+		else if (Objects.equals(orderByCol, "priority")) {
+			sort = new Sort("priority", Sort.INT_TYPE, orderByAsc);
+		}
+
+		return sort;
+	}
+
 	public static OrderByComparator<CPDefinition>
 		getCPDefinitionOrderByComparator(
 			String orderByCol, String orderByType) {
@@ -101,8 +149,8 @@ public class CPDefinitionsPortletUtil {
 
 		OrderByComparator<CPDefinition> orderByComparator = null;
 
-		if (orderByCol.equals("modified-date")) {
-			orderByComparator = new CPDefinitionModifiedDateComparator(
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new CPDefinitionCreateDateComparator(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("display-date")) {
@@ -110,10 +158,35 @@ public class CPDefinitionsPortletUtil {
 				orderByAsc);
 		}
 		else if (orderByCol.equals("title")) {
-			orderByComparator = new CPDefinitionTitleComparator(orderByAsc);
+			orderByComparator = new CPDefinitionTitleComparator(
+				orderByAsc);
 		}
 
 		return orderByComparator;
+	}
+
+	public static Sort getCPDefinitionSort(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(orderByType, "asc")) {
+			orderByAsc = true;
+		}
+
+		Sort sort = null;
+
+		if (Objects.equals(orderByCol, "title")) {
+			sort = new Sort("title", Sort.STRING_TYPE, orderByAsc);
+		}
+		else if (Objects.equals(orderByCol, "modified-date")) {
+			sort = new Sort(Field.MODIFIED_DATE, orderByAsc);
+		}
+		else if (Objects.equals(orderByCol, "display-date")) {
+			sort = new Sort("display-date", orderByAsc);
+		}
+
+		return sort;
 	}
 
 	public static OrderByComparator<CPInstance> getCPInstanceOrderByComparator(
@@ -138,6 +211,30 @@ public class CPDefinitionsPortletUtil {
 		}
 
 		return orderByComparator;
+	}
+
+	public static Sort getCPInstanceSort(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(orderByType, "asc")) {
+			orderByAsc = true;
+		}
+
+		Sort sort = null;
+
+		if (Objects.equals(orderByCol, "sku")) {
+			sort = new Sort("sku", Sort.STRING_TYPE, orderByAsc);
+		}
+		else if (Objects.equals(orderByCol, "create-date")) {
+			sort = new Sort(Field.MODIFIED_DATE, true);
+		}
+		else if (Objects.equals(orderByCol, "display-date")) {
+			sort = new Sort("display-date", true);
+		}
+
+		return sort;
 	}
 
 }

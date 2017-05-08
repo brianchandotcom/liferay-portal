@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -89,20 +88,8 @@ public class CPOptionValueDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (isSearch()) {
-			boolean orderByAsc = false;
-
-			if (Objects.equals(getOrderByType(), "asc")) {
-				orderByAsc = true;
-			}
-
-			Sort sort = null;
-
-			if (Objects.equals(getOrderByCol(), "title")) {
-				sort = new Sort("title", Sort.STRING_TYPE, orderByAsc);
-			}
-			else if (Objects.equals(getOrderByCol(), "priority")) {
-				sort = new Sort("priority", Sort.INT_TYPE, orderByAsc);
-			}
+			Sort sort = CPOptionsPortletUtil.getCPOptionValueSort(
+				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CPOptionValue>
 				cpOptionValueBaseModelSearchResult =

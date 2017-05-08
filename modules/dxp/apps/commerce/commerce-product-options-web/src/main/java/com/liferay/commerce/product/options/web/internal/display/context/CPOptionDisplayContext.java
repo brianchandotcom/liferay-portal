@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -100,17 +99,8 @@ public class CPOptionDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (isSearch()) {
-			boolean orderByAsc = false;
-
-			if (Objects.equals(getOrderByType(), "asc")) {
-				orderByAsc = true;
-			}
-
-			Sort sort = null;
-
-			if (Objects.equals(getOrderByCol(), "name")) {
-				sort = new Sort("name", Sort.STRING_TYPE, orderByAsc);
-			}
+			Sort sort = CPOptionsPortletUtil.getCPOptionSort(
+				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CPOption> cpOptionBaseModelSearchResult =
 				_cpOptionService.searchCPOptions(

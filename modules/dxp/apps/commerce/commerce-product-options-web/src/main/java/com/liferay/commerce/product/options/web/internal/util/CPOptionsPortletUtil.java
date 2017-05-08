@@ -19,7 +19,10 @@ import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.util.comparator.CPOptionNameComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionValuePriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionValueTitleComparator;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.Objects;
 
 /**
  * @author Alessio Antonio Rendina
@@ -44,6 +47,22 @@ public class CPOptionsPortletUtil {
 		return orderByComparator;
 	}
 
+	public static Sort getCPOptionSort(String orderByCol, String orderByType) {
+		boolean orderByAsc = false;
+
+		if (Objects.equals(orderByType, "asc")) {
+			orderByAsc = true;
+		}
+
+		Sort sort = null;
+
+		if (Objects.equals(orderByCol, "title")) {
+			sort = new Sort("title", Sort.STRING_TYPE, orderByAsc);
+		}
+
+		return sort;
+	}
+
 	public static OrderByComparator<CPOptionValue>
 		getCPOptionValueOrderByComparator(
 			String orderByCol, String orderByType) {
@@ -64,6 +83,27 @@ public class CPOptionsPortletUtil {
 		}
 
 		return orderByComparator;
+	}
+
+	public static Sort getCPOptionValueSort(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(orderByType, "asc")) {
+			orderByAsc = true;
+		}
+
+		Sort sort = null;
+
+		if (Objects.equals(orderByCol, "title")) {
+			sort = new Sort("title", Sort.STRING_TYPE, orderByAsc);
+		}
+		else if (Objects.equals(orderByCol, "priority")) {
+			sort = new Sort("priority", Sort.INT_TYPE, orderByAsc);
+		}
+
+		return sort;
 	}
 
 }

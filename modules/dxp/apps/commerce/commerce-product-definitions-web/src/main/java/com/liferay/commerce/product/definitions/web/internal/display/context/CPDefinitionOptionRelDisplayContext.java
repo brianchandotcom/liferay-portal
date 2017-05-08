@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -171,23 +169,8 @@ public class CPDefinitionOptionRelDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (isSearch()) {
-			boolean orderByAsc = false;
-
-			if (Objects.equals(getOrderByType(), "asc")) {
-				orderByAsc = true;
-			}
-
-			Sort sort = null;
-
-			if (Objects.equals(getOrderByCol(), "name")) {
-				sort = new Sort("name", Sort.STRING_TYPE, orderByAsc);
-			}
-			else if (Objects.equals(getOrderByCol(), "create-date")) {
-				sort = new Sort(Field.CREATE_DATE, true);
-			}
-			else if (Objects.equals(getOrderByCol(), "priority")) {
-				sort = new Sort("priority", Sort.INT_TYPE, orderByAsc);
-			}
+			Sort sort = CPDefinitionsPortletUtil.getCPDefinitionOptionRelSort(
+				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CPDefinitionOptionRel>
 				cpDefinitionOptionRelBaseModelSearchResult =

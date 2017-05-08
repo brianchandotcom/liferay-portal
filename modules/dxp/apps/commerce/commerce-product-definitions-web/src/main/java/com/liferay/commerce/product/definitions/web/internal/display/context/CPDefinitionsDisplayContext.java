@@ -23,7 +23,6 @@ import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -89,23 +87,8 @@ public class CPDefinitionsDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (isSearch()) {
-			boolean orderByAsc = false;
-
-			if (Objects.equals(getOrderByType(), "asc")) {
-				orderByAsc = true;
-			}
-
-			Sort sort = null;
-
-			if (Objects.equals(getOrderByCol(), "name")) {
-				sort = new Sort("name", Sort.STRING_TYPE, orderByAsc);
-			}
-			else if (Objects.equals(getOrderByCol(), "modified-date")) {
-				sort = new Sort(Field.MODIFIED_DATE, orderByAsc);
-			}
-			else if (Objects.equals(getOrderByCol(), "display-date")) {
-				sort = new Sort("display-date", orderByAsc);
-			}
+			Sort sort = CPDefinitionsPortletUtil.getCPDefinitionSort(
+				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CPDefinition> cpOptionBaseModelSearchResult =
 				_cpDefinitionService.searchCPDefinitions(

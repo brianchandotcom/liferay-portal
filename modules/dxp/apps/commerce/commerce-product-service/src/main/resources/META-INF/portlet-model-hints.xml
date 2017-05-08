@@ -79,7 +79,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="CPDefinitionOptionRelId" type="long" />
 		<field localized="true" name="title" type="String" />
-		<field name="priority" type="int" />
+		<field name="priority" type="int">
+			<validator name="number" />
+		</field>
 	</model>
 	<model name="com.liferay.commerce.product.model.CPInstance">
 		<field name="uuid" type="String" />

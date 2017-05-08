@@ -189,7 +189,7 @@ public class CPInstanceDisplayContext
 			parseCPInstanceDDMContent(long cpInstanceId)
 		throws PortalException {
 
-		if(cpInstanceId <= 0){
+		if (cpInstanceId <= 0) {
 			return new HashMap<>();
 		}
 

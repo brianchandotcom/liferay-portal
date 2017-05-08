@@ -996,6 +996,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	@Async
+	@Override
 	public void updateDisplayGroupNames(long companyId) throws PortalException {
 		User user = userLocalService.getDefaultUser(companyId);
 

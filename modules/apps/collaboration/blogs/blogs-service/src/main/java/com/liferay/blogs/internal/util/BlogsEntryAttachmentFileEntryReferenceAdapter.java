@@ -34,10 +34,12 @@ public class BlogsEntryAttachmentFileEntryReferenceAdapter
 		_blogsEntryAttachmentFileEntry = blogsEntryAttachmentFileEntry;
 	}
 
+	@Override
 	public FileEntry getBlogsEntryAttachmentFileEntry() {
 		return _blogsEntryAttachmentFileEntry;
 	}
 
+	@Override
 	public long getTempBlogsEntryAttachmentFileEntryId() {
 		return _tempBlogsEntryAttachmentFileEntryId;
 	}

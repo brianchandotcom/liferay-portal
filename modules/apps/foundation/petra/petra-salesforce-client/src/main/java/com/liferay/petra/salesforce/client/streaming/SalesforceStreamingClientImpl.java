@@ -123,6 +123,7 @@ public class SalesforceStreamingClientImpl
 		_transportTimeout = transportTimeout;
 	}
 
+	@Override
 	protected void afterPropertiesSet() {
 		super.afterPropertiesSet();
 

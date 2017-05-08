@@ -56,6 +56,7 @@ public class TwitterUpgradeServiceModuleRelease
 		}
 	}
 
+	@Override
 	protected String getNamespace() {
 		return "Twitter";
 	}

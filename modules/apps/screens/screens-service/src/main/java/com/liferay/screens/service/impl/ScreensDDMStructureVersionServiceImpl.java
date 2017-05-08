@@ -30,6 +30,7 @@ import com.liferay.screens.service.base.ScreensDDMStructureVersionServiceBaseImp
 public class ScreensDDMStructureVersionServiceImpl
 	extends ScreensDDMStructureVersionServiceBaseImpl {
 
+	@Override
 	public JSONObject getDDMStructureVersion(long structureId)
 		throws PortalException {
 

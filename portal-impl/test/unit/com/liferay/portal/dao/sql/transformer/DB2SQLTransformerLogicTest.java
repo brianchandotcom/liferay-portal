@@ -59,6 +59,7 @@ public class DB2SQLTransformerLogicTest
 		return "select * from Foo where foo = FALSE and bar = TRUE";
 	}
 
+	@Override
 	protected String getCastClobTextTransformedSQL() {
 		return "select CAST(foo AS VARCHAR(254)) from Foo";
 	}

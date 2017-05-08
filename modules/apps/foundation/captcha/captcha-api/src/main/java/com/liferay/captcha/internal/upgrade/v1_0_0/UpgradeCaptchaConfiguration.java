@@ -41,6 +41,7 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 		_prefsProps = prefsProps;
 	}
 
+	@Override
 	protected void doUpgrade() throws Exception {
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			CaptchaConfiguration.class.getName(), StringPool.QUESTION);

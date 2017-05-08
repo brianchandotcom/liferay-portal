@@ -41,6 +41,7 @@ public class UpgradeOpenOfficeConfiguration extends UpgradeProcess {
 		_prefsProps = prefsProps;
 	}
 
+	@Override
 	protected void doUpgrade() throws Exception {
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			OpenOfficeConfiguration.class.getName(), StringPool.QUESTION);

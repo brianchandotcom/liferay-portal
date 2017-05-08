@@ -41,6 +41,7 @@ import org.osgi.service.component.annotations.Component;
 public class CaptchaConfigurationModelListener
 	implements ConfigurationModelListener {
 
+	@Override
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
 

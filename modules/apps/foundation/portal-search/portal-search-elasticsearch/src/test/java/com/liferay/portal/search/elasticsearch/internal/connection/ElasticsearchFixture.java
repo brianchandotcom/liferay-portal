@@ -116,6 +116,10 @@ public class ElasticsearchFixture implements IndicesAdminClientSupplier {
 		return health.actionGet();
 	}
 
+	public Map<String, Object> getElasticsearchConfigurationProperties() {
+		return _elasticsearchConfigurationProperties;
+	}
+
 	public EmbeddedElasticsearchConnection
 		getEmbeddedElasticsearchConnection() {
 

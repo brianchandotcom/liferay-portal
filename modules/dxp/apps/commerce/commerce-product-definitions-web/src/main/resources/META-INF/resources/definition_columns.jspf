@@ -14,6 +14,10 @@
  */
 --%>
 
+<%
+CPType cpType = cpDefinitionsDisplayContext.getCPType(cpDefinition.getProductTypeName());
+%>
+
 <liferay-ui:search-container-column-text
 	cssClass="table-cell-content"
 	name="id"
@@ -30,8 +34,9 @@
 <liferay-ui:search-container-column-text
 	cssClass="table-cell-content"
 	name="type"
-	property="productTypeName"
-/>
+>
+	<%= cpType.getLabel(locale) %>
+</liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
 	cssClass="table-cell-content"

@@ -108,6 +108,30 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 								value="<%= HtmlUtil.escape(cpOption.getName(locale)) %>"
 							/>
 
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								name="author"
+								property="userName"
+							/>
+
+							<liferay-ui:search-container-column-text
+									cssClass="table-cell-content"
+									name="facetable"
+									property="facetable"
+							/>
+
+							<liferay-ui:search-container-column-text
+									cssClass="table-cell-content"
+									name="sku-contributor"
+									property="skuContributor"
+							/>
+
+							<liferay-ui:search-container-column-date
+								cssClass="table-cell-content"
+								name="create-date"
+								property="createDate"
+							/>
+
 							<liferay-ui:search-container-column-date
 								cssClass="table-cell-content"
 								name="modified-date"

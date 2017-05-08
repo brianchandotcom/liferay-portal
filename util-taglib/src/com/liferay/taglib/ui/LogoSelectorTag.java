@@ -17,8 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -99,8 +98,8 @@ public class LogoSelectorTag extends IncludeTag {
 
 		if (_maxFileSize == 0) {
 			try {
-				_maxFileSize = PrefsPropsUtil.getLong(
-					PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+				_maxFileSize =
+					UploadServletRequestConfigurationHelperUtil.getMaxSize();
 			}
 			catch (SystemException se) {
 

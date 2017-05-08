@@ -81,11 +81,11 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.workflow.kaleo.designer.exception.DuplicateKaleoDraftDefinitionNameException;
-import com.liferay.portal.workflow.kaleo.designer.exception.KaleoDraftDefinitionNameException;
-import com.liferay.portal.workflow.kaleo.designer.exception.NoSuchKaleoDraftDefinitionException;
-import com.liferay.portal.workflow.kaleo.designer.model.KaleoDraftDefinition;
-import com.liferay.portal.workflow.kaleo.designer.service.KaleoDraftDefinitionService;
+import com.liferay.portal.workflow.kaleo.exception.DuplicateKaleoDefinitionNameException;
+import com.liferay.portal.workflow.kaleo.exception.KaleoDefinitionContentException;
+import com.liferay.portal.workflow.kaleo.exception.KaleoDefinitionNameException;
+import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException;
+import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionVersionException;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsWebKeys;
@@ -97,6 +97,8 @@ import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessService;
 import com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
 import com.liferay.portal.workflow.kaleo.forms.web.configuration.KaleoFormsWebConfiguration;
 import com.liferay.portal.workflow.kaleo.forms.web.internal.display.context.KaleoFormsAdminDisplayContext;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.io.IOException;
 
@@ -273,13 +275,13 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		throws Exception {
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		int version = ParamUtil.getInteger(actionRequest, "version");
+		String version = ParamUtil.getString(actionRequest, "version");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		_kaleoDraftDefinitionService.deleteKaleoDraftDefinitions(
-			name, version, serviceContext);
+		_kaleoDefinitionVersionLocalService.deleteKaleoDefinitionVersion(
+			serviceContext.getCompanyId(), name, version);
 	}
 
 	/**
@@ -635,10 +637,12 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
-		if (cause instanceof DuplicateKaleoDraftDefinitionNameException ||
-			cause instanceof KaleoDraftDefinitionNameException ||
+		if (cause instanceof DuplicateKaleoDefinitionNameException ||
+			cause instanceof KaleoDefinitionContentException ||
+			cause instanceof KaleoDefinitionNameException ||
 			cause instanceof KaleoProcessDDMTemplateIdException ||
-			cause instanceof NoSuchKaleoDraftDefinitionException ||
+			cause instanceof NoSuchDefinitionException ||
+			cause instanceof NoSuchDefinitionVersionException ||
 			cause instanceof RecordSetDDMStructureIdException ||
 			cause instanceof RecordSetNameException ||
 			cause instanceof RequiredStructureException ||
@@ -714,14 +718,14 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	 */
 	protected void saveInPortletSession(
 		ActionRequest actionRequest,
-		KaleoDraftDefinition kaleoDraftDefinition) {
+		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
 		PortletSession portletSession = actionRequest.getPortletSession();
 
 		portletSession.setAttribute(
 			"workflowDefinition",
-			kaleoDraftDefinition.getName() + StringPool.AT +
-				kaleoDraftDefinition.getVersion());
+			kaleoDefinitionVersion.getName() + StringPool.AT +
+				kaleoDefinitionVersion.getVersion());
 	}
 
 	/**
@@ -769,28 +773,24 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		String name = ParamUtil.getString(resourceRequest, "name");
-		int version = ParamUtil.getInteger(resourceRequest, "version");
-		int draftVersion = ParamUtil.getInteger(
-			resourceRequest, "draftVersion");
+		String version = ParamUtil.getString(resourceRequest, "version");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			resourceRequest);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (Validator.isNotNull(name) && (draftVersion > 0)) {
-			KaleoDraftDefinition kaleoDraftDefinition =
-				_kaleoDraftDefinitionService.getKaleoDraftDefinition(
-					name, version, draftVersion, serviceContext);
+		if (Validator.isNotNull(name) && Validator.isNotNull(version)) {
+			KaleoDefinitionVersion kaleoDefinitionVersion =
+				_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
+					serviceContext.getCompanyId(), name, version);
 
-			jsonObject.put("content", kaleoDraftDefinition.getContent());
-			jsonObject.put(
-				"draftVersion", kaleoDraftDefinition.getDraftVersion());
-			jsonObject.put("name", kaleoDraftDefinition.getName());
+			jsonObject.put("content", kaleoDefinitionVersion.getContent());
+			jsonObject.put("name", kaleoDefinitionVersion.getName());
 			jsonObject.put(
 				"title",
-				kaleoDraftDefinition.getTitle(themeDisplay.getLocale()));
-			jsonObject.put("version", kaleoDraftDefinition.getVersion());
+				kaleoDefinitionVersion.getTitle(themeDisplay.getLocale()));
+			jsonObject.put("version", kaleoDefinitionVersion.getVersion());
 		}
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
@@ -921,10 +921,11 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setKaleoDraftDefinitionService(
-		KaleoDraftDefinitionService kaleoDraftDefinitionService) {
+	protected void setKaleoDefinitionVersionLocalService(
+		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService) {
 
-		_kaleoDraftDefinitionService = kaleoDraftDefinitionService;
+		_kaleoDefinitionVersionLocalService =
+			kaleoDefinitionVersionLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -1071,7 +1072,8 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	private DDMDisplayRegistry _ddmDisplayRegistry;
 	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 	private DDMFormValuesMerger _ddmFormValuesMerger;
-	private KaleoDraftDefinitionService _kaleoDraftDefinitionService;
+	private KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
 	private volatile KaleoFormsWebConfiguration _kaleoFormsWebConfiguration;
 	private KaleoProcessService _kaleoProcessService;
 

@@ -3,6 +3,10 @@ targetCompatibility = "1.8"
 
 dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.7"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.0.0"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.api", version: "2.0.0"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.service", version: "3.10.0"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.search", version: "3.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

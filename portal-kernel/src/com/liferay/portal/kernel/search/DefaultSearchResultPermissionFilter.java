@@ -16,15 +16,19 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.FacetPostProcessor;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Tina Tian
@@ -42,7 +46,7 @@ public class DefaultSearchResultPermissionFilter
 	@Override
 	protected void filterHits(Hits hits, SearchContext searchContext) {
 		List<Document> docs = new ArrayList<>();
-		int excludeDocsSize = 0;
+		List<Document> excludeDocs = new ArrayList<>();
 		List<Float> scores = new ArrayList<>();
 
 		boolean companyAdmin = _permissionChecker.isCompanyAdmin(
@@ -62,7 +66,19 @@ public class DefaultSearchResultPermissionFilter
 				scores.add(hits.score(i));
 			}
 			else {
-				excludeDocsSize++;
+				excludeDocs.add(documents[i]);
+			}
+		}
+
+		if (!excludeDocs.isEmpty()) {
+			FacetPostProcessor facetPostProcessor = _facetPostProcessor;
+
+			if (facetPostProcessor != null) {
+				Map<String, Facet> facetsMap = searchContext.getFacets();
+
+				for (Facet facet : facetsMap.values()) {
+					facetPostProcessor.exclude(excludeDocs, facet);
+				}
 			}
 		}
 
@@ -71,7 +87,7 @@ public class DefaultSearchResultPermissionFilter
 		hits.setSearchTime(
 			(float)(System.currentTimeMillis() - hits.getStart()) /
 				Time.SECOND);
-		hits.setLength(hits.getLength() - excludeDocsSize);
+		hits.setLength(hits.getLength() - excludeDocs.size());
 	}
 
 	@Override
@@ -144,6 +160,11 @@ public class DefaultSearchResultPermissionFilter
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultSearchResultPermissionFilter.class);
+
+	private static volatile FacetPostProcessor _facetPostProcessor =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			FacetPostProcessor.class, DefaultSearchResultPermissionFilter.class,
+			"_facetPostProcessor", false, true);
 
 	private final BaseIndexer<?> _baseIndexer;
 	private final PermissionChecker _permissionChecker;

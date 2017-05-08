@@ -12,21 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.security.wedeploy.auth.web.internal.constants;
+package com.liferay.portal.security.wedeploy.auth.web.constants;
 
 /**
  * @author Supritha Sundaram
  */
 public class WeDeployAuthPortletKeys {
 
-	public static final String WEDEPLOY_AUTH =
-		"com_liferay_portal_security_wedeploy_auth_web_portlet_" +
-			"WeDeployAuthPortlet";
-
 	public static final String WEDEPLOY_AUTH_ADMIN =
 		"com_liferay_portal_security_wedeploy_auth_web_portlet_" +
 			"WeDeployAuthAdminPortlet";
-
-	public static final String WEDEPLOY_VIEW = "WeDeploy";
 
 }

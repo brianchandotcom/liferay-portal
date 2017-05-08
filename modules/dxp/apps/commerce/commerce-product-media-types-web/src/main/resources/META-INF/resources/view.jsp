@@ -103,6 +103,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
+								name="id"
+								value="<%= String.valueOf(cpMediaType.getCPMediaTypeId()) %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
 								href="<%= rowURL %>"
 								name="title"
 								value="<%= HtmlUtil.escape(cpMediaType.getTitle(locale)) %>"
@@ -112,6 +118,18 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 								cssClass="table-cell-content"
 								name="priority"
 								property="priority"
+							/>
+
+							<liferay-ui:search-container-column-date
+								cssClass="table-cell-content"
+								name="create-date"
+								property="createDate"
+							/>
+
+							<liferay-ui:search-container-column-date
+								cssClass="table-cell-content"
+								name="modified-date"
+								property="modifiedDate"
 							/>
 
 							<liferay-ui:search-container-column-jsp

@@ -42,7 +42,7 @@ Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionR
                 StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
             %>
             <h6 class="text-default">
-                <strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getName(languageId)) %></strong>
+                <strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getTitle(languageId)) %></strong>
                 <% for(CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels){
 
                     stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));

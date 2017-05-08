@@ -25,7 +25,7 @@
 
 <liferay-ui:search-container-column-text
         cssClass="table-cell-content"
-        name="<%= cpDefinitionOptionRel.getName(languageId) %>"
+        name="<%= cpDefinitionOptionRel.getTitle(languageId) %>"
 >
     <%
         List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);

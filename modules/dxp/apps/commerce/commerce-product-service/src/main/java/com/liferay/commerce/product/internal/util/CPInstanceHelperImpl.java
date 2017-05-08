@@ -191,7 +191,7 @@ public class CPInstanceHelperImpl
 			LocalizedValue localizedValue = new LocalizedValue(locale);
 
 			localizedValue.addString(
-				locale, cpDefinitionOptionRel.getName(locale));
+				locale, cpDefinitionOptionRel.getTitle(locale));
 
 			ddmFormField.setLabel(localizedValue);
 

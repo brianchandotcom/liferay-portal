@@ -115,15 +115,15 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							/>
 
 							<liferay-ui:search-container-column-text
-									cssClass="table-cell-content"
-									name="facetable"
-									property="facetable"
+								cssClass="table-cell-content"
+								name="facetable"
+								property="facetable"
 							/>
 
 							<liferay-ui:search-container-column-text
-									cssClass="table-cell-content"
-									name="sku-contributor"
-									property="skuContributor"
+								cssClass="table-cell-content"
+								name="sku-contributor"
+								property="skuContributor"
 							/>
 
 							<liferay-ui:search-container-column-date

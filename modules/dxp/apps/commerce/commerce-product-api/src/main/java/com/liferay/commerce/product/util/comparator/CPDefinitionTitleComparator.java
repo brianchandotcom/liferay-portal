@@ -15,14 +15,14 @@
 package com.liferay.commerce.product.util.comparator;
 
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPMediaType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPDefinitionTitleComparator extends OrderByComparator<CPDefinition> {
+public class CPDefinitionTitleComparator
+	extends OrderByComparator<CPDefinition> {
 
 	public static final String ORDER_BY_ASC = "CPDefinition.title ASC";
 

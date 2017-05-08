@@ -17,27 +17,6 @@ package com.liferay.document.library.item.selector.criteria;
 import com.liferay.item.selector.ItemSelectorReturnType;
 
 /**
- * This return type should return the following information of a file entry as a
- * JSON object:
- *
- * <ul>
- * <li>
- * <code>fileEntryId</code>: The ID of the selected file entry
- * </li>
- * <li>
- * <code>groupId</code>: The group ID of the selected file entry
- * </li>
- * <li>
- * <code>title</code>: The title of the selected file entry
- * </li>
- * <li>
- * <code>url</code>: The URL of the selected file entry
- * </li>
- * <li>
- * <code>uuid</code>: The UUID of the selected file entry
- * </li>
- * </ul>
- *
  * @author Roberto Díaz
  */
 public class PortletFileEntryItemSelectorReturnType

@@ -129,6 +129,10 @@ public class Field implements Serializable {
 
 	public static final String PUBLISH_DATE = "publishDate";
 
+	/**
+	 * @deprecated As of 7.1.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String RATINGS = "ratings";
 
 	public static final String RELATED_ENTRY = "relatedEntry";
@@ -181,6 +185,10 @@ public class Field implements Serializable {
 
 	public static final String VIEW_ACTION_ID = "viewActionId";
 
+	/**
+	 * @deprecated As of 7.1.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String VIEW_COUNT = "viewCount";
 
 	public static boolean validateFieldName(String name) {

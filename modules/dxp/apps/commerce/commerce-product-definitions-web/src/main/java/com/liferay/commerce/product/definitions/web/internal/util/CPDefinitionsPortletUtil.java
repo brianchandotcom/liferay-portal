@@ -81,14 +81,14 @@ public class CPDefinitionsPortletUtil {
 
 		Sort sort = null;
 
-		if (Objects.equals(orderByCol, "create-date")) {
+		if (orderByCol.equals("create-date")) {
 			sort = SortFactoryUtil.create(Field.CREATE_DATE, true);
 		}
-		else if (Objects.equals(orderByCol, "title")) {
+		else if (orderByCol.equals("title")) {
 			sort = SortFactoryUtil.create(
 				"title", Sort.STRING_TYPE, orderByAsc);
 		}
-		else if (Objects.equals(orderByCol, "priority")) {
+		else if (orderByCol.equals("priority")) {
 			sort = SortFactoryUtil.create(
 				"priority", Sort.INT_TYPE, orderByAsc);
 		}
@@ -131,12 +131,12 @@ public class CPDefinitionsPortletUtil {
 
 		Sort sort = null;
 
-		if (Objects.equals(orderByCol, "priority")) {
+		if (orderByCol.equals("priority")) {
 			sort = SortFactoryUtil.create(
 				"priority", Sort.INT_TYPE, orderByAsc);
 		}
 
-		if (Objects.equals(orderByCol, "title")) {
+		if (orderByCol.equals("title")) {
 			sort = SortFactoryUtil.create(
 				"title", Sort.STRING_TYPE, orderByAsc);
 		}
@@ -182,13 +182,13 @@ public class CPDefinitionsPortletUtil {
 
 		Sort sort = null;
 
-		if (Objects.equals(orderByCol, "display-date")) {
+		if (orderByCol.equals("display-date")) {
 			sort = SortFactoryUtil.create("display-date", orderByAsc);
 		}
-		else if (Objects.equals(orderByCol, "modified-date")) {
+		else if (orderByCol.equals("modified-date")) {
 			sort = SortFactoryUtil.create(Field.MODIFIED_DATE, orderByAsc);
 		}
-		else if (Objects.equals(orderByCol, "title")) {
+		else if (orderByCol.equals("title")) {
 			sort = SortFactoryUtil.create(
 				"title", Sort.STRING_TYPE, orderByAsc);
 		}
@@ -231,13 +231,13 @@ public class CPDefinitionsPortletUtil {
 
 		Sort sort = null;
 
-		if (Objects.equals(orderByCol, "create-date")) {
+		if (orderByCol.equals("create-date")) {
 			sort = SortFactoryUtil.create(Field.MODIFIED_DATE, true);
 		}
-		else if (Objects.equals(orderByCol, "display-date")) {
+		else if (orderByCol.equals("display-date")) {
 			sort = SortFactoryUtil.create("display-date", true);
 		}
-		else if (Objects.equals(orderByCol, "sku")) {
+		else if (orderByCol.equals("sku")) {
 			sort = SortFactoryUtil.create("sku", Sort.STRING_TYPE, orderByAsc);
 		}
 

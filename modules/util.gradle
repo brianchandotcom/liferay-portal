@@ -17,6 +17,7 @@ task printDependencyPath
 task setUpLibs
 task setUpPortalTools
 task wrapper(type: Wrapper)
+task wrapperSubrepo(type: Wrapper)
 
 FileTree libDependenciesFileTree = fileTree(dir: "../lib", include: "*/dependencies.properties")
 
@@ -111,6 +112,7 @@ wrapper {
 	File wrapperDir = projectDir.parentFile
 
 	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-1-bin.zip"
+	dependsOn wrapperSubrepo
 
 	doLast {
 		File gradlewFile = new File(wrapperDir, "gradlew")
@@ -149,6 +151,13 @@ set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% "-Dgradle.user.home=%APP_HOME%\\.gradle"
 			value: 'org.gradle.wrapper.GradleWrapperMain "--init-script=%APP_HOME%\\modules\\init.gradle" %CMD_LINE_ARGS%'
 		)
 	}
+
+	jarFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.jar")
+	scriptFile = new File(wrapperDir, "gradlew")
+}
+
+wrapperSubrepo {
+	File wrapperDir = new File(projectDir.parentFile, "tools/subrepo")
 
 	jarFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.jar")
 	scriptFile = new File(wrapperDir, "gradlew")

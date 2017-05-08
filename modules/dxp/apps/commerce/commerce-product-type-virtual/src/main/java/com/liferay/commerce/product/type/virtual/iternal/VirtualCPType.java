@@ -15,6 +15,9 @@
 package com.liferay.commerce.product.type.virtual.iternal;
 
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.portal.kernel.language.LanguageUtil;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,6 +33,11 @@ import org.osgi.service.component.annotations.Component;
 	service = CPType.class
 )
 public class VirtualCPType implements CPType {
+
+	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "virtual");
+	}
 
 	@Override
 	public String getName() {

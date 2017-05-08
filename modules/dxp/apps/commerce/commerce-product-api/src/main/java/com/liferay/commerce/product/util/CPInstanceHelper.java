@@ -45,7 +45,7 @@ public interface CPInstanceHelper {
 		long cpDefinitionId, Locale locale, String serializedDDMFormValues);
 
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-	parseCPInstanceDDMContent(long cpInstanceId) throws PortalException;
+		parseCPInstanceDDMContent(long cpInstanceId) throws PortalException;
 
 	public String render(
 			long cpDefinitionId, RenderRequest renderRequest,

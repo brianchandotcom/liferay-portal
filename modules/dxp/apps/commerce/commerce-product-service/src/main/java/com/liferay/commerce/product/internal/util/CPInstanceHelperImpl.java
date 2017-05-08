@@ -104,7 +104,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 				getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
 
 		for (CPDefinitionOptionRel cpDefinitionOptionRel :
-			cpDefinitionOptionRels) {
+				cpDefinitionOptionRels) {
 
 			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 				cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
@@ -119,7 +119,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 					new DDMFormFieldOptions();
 
 				for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-					cpDefinitionOptionValueRels) {
+						cpDefinitionOptionValueRels) {
 
 					ddmFormFieldOptions.addOptionLabel(
 						String.valueOf(cpDefinitionOptionValueRel.
@@ -202,6 +202,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 			if (cpDefinitionOptionValueRels == null) {
 				cpDefinitionOptionValueRels = new ArrayList<>();
+
 				cpDefinitionOptionRelListMap.put(
 					cpDefinitionOptionRel, cpDefinitionOptionValueRels);
 			}
@@ -231,7 +232,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
-		ddmFormRenderingContext.setContainerId(DDM_CONTAINER_ID);
+		ddmFormRenderingContext.setContainerId(_DDM_CONTAINER_ID);
 		ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
 		ddmFormRenderingContext.setHttpServletResponse(httpServletResponse);
 		ddmFormRenderingContext.setLocale(locale);
@@ -241,7 +242,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
 	}
 
-	public final String DDM_CONTAINER_ID = "cpDefinitionOptionsRender";
+	private static final String _DDM_CONTAINER_ID = "cpDefinitionOptionsRender";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPInstanceHelperImpl.class);

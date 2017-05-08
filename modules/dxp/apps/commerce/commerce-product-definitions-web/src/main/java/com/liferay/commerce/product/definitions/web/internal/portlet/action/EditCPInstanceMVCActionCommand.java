@@ -183,6 +183,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		else {
 			String ddmFormValues = ParamUtil.getString(
 				actionRequest, "ddmFormValues");
+
 			String ddmContent = _cpInstanceHelper.getDDMContent(
 				cpDefinitionId, locale, ddmFormValues);
 

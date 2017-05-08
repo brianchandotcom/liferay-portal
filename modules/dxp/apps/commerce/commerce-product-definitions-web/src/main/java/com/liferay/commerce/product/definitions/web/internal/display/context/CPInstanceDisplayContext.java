@@ -59,9 +59,9 @@ public class CPInstanceDisplayContext
 
 		setDefaultOrderByCol("sku");
 
-		_cpInstanceHelper = cpInstanceHelper;
-		_cpInstanceService = cpInstanceService;
 		_httpServletResponse = httpServletResponse;
+		_cpInstanceService = cpInstanceService;
+		_cpInstanceHelper = cpInstanceHelper;
 	}
 
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels()
@@ -195,8 +195,8 @@ public class CPInstanceDisplayContext
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
-		return _cpInstanceHelper.
-			render(getCPDefinitionId(), renderRequest, renderResponse);
+		return _cpInstanceHelper.render(
+			getCPDefinitionId(), renderRequest, renderResponse);
 	}
 
 	private CPInstance _cpInstance;

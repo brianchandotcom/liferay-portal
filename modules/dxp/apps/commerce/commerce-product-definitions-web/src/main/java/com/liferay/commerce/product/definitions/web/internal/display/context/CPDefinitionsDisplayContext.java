@@ -54,6 +54,10 @@ public class CPDefinitionsDisplayContext
 		_cpTypeServicesTracker = cpTypeServicesTracker;
 	}
 
+	public CPType getCPType(String name) {
+		return _cpTypeServicesTracker.getCPType(name);
+	}
+
 	public List<CPType> getCPTypes() {
 		return _cpTypeServicesTracker.getCPTypes();
 	}

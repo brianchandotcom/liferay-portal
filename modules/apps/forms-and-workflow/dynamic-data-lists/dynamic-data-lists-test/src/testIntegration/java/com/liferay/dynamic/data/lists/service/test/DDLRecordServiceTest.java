@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -112,6 +113,55 @@ public class DDLRecordServiceTest {
 		_ddmStructureTestHelper = new DDMStructureTestHelper(
 			PortalUtil.getClassNameId(DDLRecordSet.class), _group);
 		_recordSetTestHelper = new DDLRecordSetTestHelper(_group);
+	}
+
+	@Test
+	public void testAddDraftVersion() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		ddmForm.addDDMFormField(createTextDDMFormField("Name", false, false));
+
+		DDMFormValues expectedDDMFormValues = createDDMFormValues(ddmForm);
+
+		DDMFormFieldValue expectedDDMFormFieldValue =
+			createUnlocalizedDDMFormFieldValue("Name", "Sample Name");
+
+		expectedDDMFormValues.addDDMFormFieldValue(expectedDDMFormFieldValue);
+
+		DDLRecordSet recordSet = addRecordSet(ddmForm);
+
+		ServiceContext serviceContext = DDLRecordTestUtil.getServiceContext(
+			WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		serviceContext.setAttribute("status", WorkflowConstants.STATUS_DRAFT);
+		serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
+
+		DDLRecordLocalServiceUtil.addRecord(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			recordSet.getRecordSetId(),
+			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, expectedDDMFormValues,
+			serviceContext);
+
+		DDLRecordVersion recordVersion =
+			DDLRecordVersionLocalServiceUtil.fetchRecordVersion(
+				TestPropsValues.getUserId(), recordSet.getRecordSetId(),
+				recordSet.getVersion(), WorkflowConstants.STATUS_DRAFT);
+
+		Assert.assertNotNull(recordVersion);
+
+		DDMFormValues ddmFormValues = recordVersion.getDDMFormValues();
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap();
+
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			"Name");
+
+		DDMFormFieldValue ddmFormFieldValue0 = ddmFormFieldValues.get(0);
+
+		Value value = ddmFormFieldValue0.getValue();
+
+		Assert.assertEquals("Sample Name", value.getString(_defaultLocale));
 	}
 
 	@Test

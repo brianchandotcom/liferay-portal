@@ -251,5 +251,4 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 			itemSelectorDialog.open();
 		}
 	);
-
 </aui:script>

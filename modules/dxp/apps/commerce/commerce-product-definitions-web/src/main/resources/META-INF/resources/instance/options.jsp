@@ -33,23 +33,29 @@ Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionR
 <aui:fieldset>
 	<c:choose>
 		<c:when test="<%= cpInstance != null %>">
-			<% for(CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 
+			<%
+			for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 				List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
 				StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 			%>
 
-			<h6 class="text-default">
-				<strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getTitle(languageId)) %></strong>
-				<% for(CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
+				<h6 class="text-default">
+					<strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getTitle(languageId)) %></strong>
 
-					stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+					<%
+					for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
+						stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+					}
+					%>
 
-				} %>
+					<%= HtmlUtil.escape(stringJoiner.toString()) %>
+				</h6>
 
-				<%= HtmlUtil.escape(stringJoiner.toString()) %>
-			</h6>
-			<%} %>
+			<%
+			}
+			%>
+
 		</c:when>
 		<c:otherwise>
 			<%= cpInstanceDisplayContext.renderOptions(renderRequest, renderResponse) %>

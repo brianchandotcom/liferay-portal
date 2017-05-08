@@ -74,8 +74,8 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (Map.Entry<String, List<DDMFormFieldValue>> entry :
-				ddmFormFieldValueMap.entrySet())
-		{
+				ddmFormFieldValueMap.entrySet()) {
+
 			for (DDMFormFieldValue ddmFormFieldValue : entry.getValue()) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -179,20 +179,17 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			cpInstance.getDDMContent());
 
-		for (int i = 0; i < jsonArray.length(); i++)
-		{
+		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			long cpDefinitionOptionRelId = jsonObject.getLong(
 				"cpDefinitionOptionRelId");
-
 			long cpDefinitionOptionValueRelId = jsonObject.getLong(
 				"cpDefinitionOptionValueRelId");
 
 			CPDefinitionOptionRel cpDefinitionOptionRel =
 				_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
 					cpDefinitionOptionRelId);
-
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 				_cpDefinitionOptionValueRelService.
 					getCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);

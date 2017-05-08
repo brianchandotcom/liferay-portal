@@ -127,6 +127,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		Locale locale = actionRequest.getLocale();
 
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
+
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 

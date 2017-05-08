@@ -47,7 +47,6 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERC
 </aui:fieldset>
 
 <aui:script use="aui-base">
-
 	function afterDeletingAvailableLocale(event) {
 		var descriptionInputLocalized = Liferay.component('<portlet:namespace />descriptionMapAsXML');
 
@@ -82,5 +81,4 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERC
 
 	translationManager.on('deleteAvailableLocale', afterDeletingAvailableLocale)
 	translationManager.on('editingLocaleChange', afterEditingLocaleChange)
-
 </aui:script>

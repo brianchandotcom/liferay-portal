@@ -16,10 +16,10 @@ package com.liferay.portal.search.web.internal.search.bar.portlet.action;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -47,11 +47,13 @@ public class SearchBarRedirectMVCActionCommandTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		setUpHttpUtil();
 		setUpPortalUtil();
 
 		searchBarRedirectMVCActionCommand =
 			createSearchBarRedirectMVCActionCommand();
+
+		ReflectionTestUtil.setFieldValue(
+			searchBarRedirectMVCActionCommand, "_http", http);
 	}
 
 	@Test
@@ -133,12 +135,6 @@ public class SearchBarRedirectMVCActionCommandTest {
 
 		searchBarRedirectMVCActionCommand.doProcessAction(
 			actionRequest, actionResponse);
-	}
-
-	protected void setUpHttpUtil() {
-		HttpUtil httpUtil = new HttpUtil();
-
-		httpUtil.setHttp(http);
 	}
 
 	protected void setUpPortalUtil() {

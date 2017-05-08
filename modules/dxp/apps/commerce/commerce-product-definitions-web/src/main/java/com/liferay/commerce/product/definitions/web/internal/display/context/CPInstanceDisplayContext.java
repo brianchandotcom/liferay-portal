@@ -40,7 +40,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Alessio Antonio Rendina
@@ -51,7 +50,6 @@ public class CPInstanceDisplayContext
 
 	public CPInstanceDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
 			CPInstanceService cpInstanceService,
 			CPInstanceHelper cpInstanceHelper)
 		throws PortalException {
@@ -60,7 +58,6 @@ public class CPInstanceDisplayContext
 
 		setDefaultOrderByCol("sku");
 
-		_httpServletResponse = httpServletResponse;
 		_cpInstanceService = cpInstanceService;
 		_cpInstanceHelper = cpInstanceHelper;
 	}
@@ -207,6 +204,5 @@ public class CPInstanceDisplayContext
 	private CPInstance _cpInstance;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPInstanceService _cpInstanceService;
-	private final HttpServletResponse _httpServletResponse;
 
 }

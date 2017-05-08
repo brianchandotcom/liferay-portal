@@ -14,10 +14,14 @@
 
 package com.liferay.commerce.product.type;
 
+import java.util.Locale;
+
 /**
  * @author Marco Leo
  */
 public interface CPType {
+
+	public String getLabel(Locale locale);
 
 	public String getName();
 

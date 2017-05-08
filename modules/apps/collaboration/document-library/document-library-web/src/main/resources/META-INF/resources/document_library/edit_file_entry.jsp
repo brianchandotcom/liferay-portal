@@ -124,23 +124,14 @@ String defaultLanguageId = themeDisplay.getLanguageId();
 Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
 
 if (fileEntryTypeId > 0) {
-	for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
-		try {
-			DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
+	DLFileEntryType fileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
 
-			com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+	defaultLanguageId = fileEntryType.getDefaultLanguageId();
 
-			if (ddmFormValues != null) {
-				Set<Locale> availableLocalesSet = ddmFormValues.getAvailableLocales();
+	String[] availableLanguageIds = fileEntryType.getAvailableLanguageIds();
 
-				availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
-
-				break;
-			}
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-		}
+	for (String availableLanguageId : availableLanguageIds) {
+		availableLocales = ArrayUtil.append(availableLocales, LocaleUtil.fromLanguageId(availableLanguageId));
 	}
 }
 

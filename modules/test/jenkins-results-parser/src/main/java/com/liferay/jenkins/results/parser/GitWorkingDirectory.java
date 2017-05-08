@@ -427,8 +427,10 @@ public class GitWorkingDirectory {
 	public void fetch(RefSpec refSpec, RemoteConfig remoteConfig)
 		throws GitAPIException {
 
-		String fetchCommand = JenkinsResultsParserUtil.combine(
-			"git fetch --progress -v -f ", getRemoteURL(remoteConfig));
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("git fetch --progress -v -f ");
+		sb.append(getRemoteURL(remoteConfig));
 
 		if (refSpec == null) {
 			System.out.println(
@@ -438,7 +440,8 @@ public class GitWorkingDirectory {
 			List<RefSpec> fetchRefSpecs = remoteConfig.getFetchRefSpecs();
 
 			for (RefSpec fetchRefSpec : fetchRefSpecs) {
-				fetchCommand += " " + fetchRefSpec.toString();
+				sb.append(" ");
+				sb.append(fetchRefSpec.toString());
 			}
 		}
 		else {
@@ -447,7 +450,8 @@ public class GitWorkingDirectory {
 					"Fetching from ", getRemoteURL(remoteConfig), " ",
 					refSpec.toString()));
 
-			fetchCommand += " " + refSpec.toString();
+			sb.append(" ");
+			sb.append(refSpec.toString());
 		}
 
 		int retries = 0;
@@ -456,7 +460,7 @@ public class GitWorkingDirectory {
 		while (true) {
 			try {
 				Process process = JenkinsResultsParserUtil.executeBashCommands(
-					true, getWorkingDirectory(), 1000 * 60 * 30, fetchCommand);
+					true, getWorkingDirectory(), 1000 * 60 * 30, sb.toString());
 
 				if ((process != null) && (process.exitValue() != 0)) {
 					try {

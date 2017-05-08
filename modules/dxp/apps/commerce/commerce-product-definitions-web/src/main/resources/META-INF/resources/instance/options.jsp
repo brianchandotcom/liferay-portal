@@ -34,7 +34,7 @@ if (cpInstance == null) {
 		long cpDefinitionOptionRelId = cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 %>
 
-		<aui:select label="<%= cpDefinitionOptionRel.getName(languageId) %>" name="<%= String.valueOf(cpDefinitionOptionRelId) %>">
+		<aui:select label="<%= cpDefinitionOptionRel.getTitle(languageId) %>" name="<%= String.valueOf(cpDefinitionOptionRelId) %>">
 
 			<%
 			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpInstanceDisplayContext.getCPDefinitionOptionValueRels(cpDefinitionOptionRelId);
@@ -67,7 +67,7 @@ else {
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel = CPDefinitionOptionValueRelServiceUtil.fetchCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
 %>
 
-		<%= cpDefinitionOptionRel.getName(languageId) + " - " + cpDefinitionOptionValueRel.getTitle(languageId) %>
+		<%= cpDefinitionOptionRel.getTitle(languageId) + " - " + cpDefinitionOptionValueRel.getTitle(languageId) %>
 
 <%
 	}

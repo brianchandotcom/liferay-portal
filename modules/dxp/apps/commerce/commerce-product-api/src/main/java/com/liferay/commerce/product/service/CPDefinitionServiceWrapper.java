@@ -34,7 +34,7 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition addCPDefinition(
-		java.lang.String baseSKU,
+		java.lang.String baseSKU, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
@@ -44,7 +44,7 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionService.addCPDefinition(baseSKU, titleMap,
+		return _cpDefinitionService.addCPDefinition(baseSKU, name, titleMap,
 			descriptionMap, productTypeName, ddmStructureKey, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -89,7 +89,7 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition updateCPDefinition(
-		long cpDefinitionId, java.lang.String baseSKU,
+		long cpDefinitionId, java.lang.String baseSKU, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
@@ -100,7 +100,7 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionService.updateCPDefinition(cpDefinitionId, baseSKU,
-			titleMap, descriptionMap, productTypeName, ddmStructureKey,
+			name, titleMap, descriptionMap, productTypeName, ddmStructureKey,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,

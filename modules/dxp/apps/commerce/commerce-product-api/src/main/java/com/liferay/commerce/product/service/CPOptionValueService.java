@@ -63,8 +63,8 @@ public interface CPOptionValueService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CPOptionValueServiceUtil} to access the cp option value remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPOptionValueServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CPOptionValue addCPOptionValue(long cpOptionId,
-		Map<Locale, java.lang.String> titleMap, int priority,
-		ServiceContext serviceContext) throws PortalException;
+		java.lang.String name, Map<Locale, java.lang.String> titleMap,
+		int priority, ServiceContext serviceContext) throws PortalException;
 
 	public CPOptionValue deleteCPOptionValue(CPOptionValue cpOptionValue)
 		throws PortalException;
@@ -81,8 +81,8 @@ public interface CPOptionValueService extends BaseService {
 		throws PortalException;
 
 	public CPOptionValue updateCPOptionValue(long cpOptionValueId,
-		Map<Locale, java.lang.String> titleMap, int priority,
-		ServiceContext serviceContext) throws PortalException;
+		java.lang.String name, Map<Locale, java.lang.String> titleMap,
+		int priority, ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(

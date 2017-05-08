@@ -88,7 +88,8 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(long cpDefinitionId,
-		long cpOptionId, Map<Locale, java.lang.String> nameMap,
+		long cpOptionId, java.lang.String name,
+		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
 		boolean skuContributor, ServiceContext serviceContext)
@@ -175,8 +176,8 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 		CPDefinitionOptionRel cpDefinitionOptionRel);
 
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
-		long cpDefinitionOptionRelId, long cpOptionId,
-		Map<Locale, java.lang.String> nameMap,
+		long cpDefinitionOptionRelId, long cpOptionId, java.lang.String name,
+		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
 		boolean skuContributor, ServiceContext serviceContext)

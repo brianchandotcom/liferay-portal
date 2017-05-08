@@ -65,7 +65,7 @@ public interface CPDefinitionService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionServiceUtil} to access the cp definition remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CPDefinition addCPDefinition(java.lang.String baseSKU,
-		Map<Locale, java.lang.String> titleMap,
+		java.lang.String name, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -92,7 +92,8 @@ public interface CPDefinitionService extends BaseService {
 		throws PortalException;
 
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
-		java.lang.String baseSKU, Map<Locale, java.lang.String> titleMap,
+		java.lang.String baseSKU, java.lang.String name,
+		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,

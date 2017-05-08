@@ -42,14 +42,14 @@ public class CPDefinitionOptionValueRelServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionOptionValueRelServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
-		long cpDefinitionOptionRelId,
+		long cpDefinitionOptionRelId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		int priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCPDefinitionOptionValueRel(cpDefinitionOptionRelId,
-			titleMap, priority, serviceContext);
+			name, titleMap, priority, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel deleteCPDefinitionOptionValueRel(
@@ -81,14 +81,14 @@ public class CPDefinitionOptionValueRelServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-		long cpDefinitionOptionValueRelId,
+		long cpDefinitionOptionValueRelId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		int priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId,
-			titleMap, priority, serviceContext);
+			name, titleMap, priority, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(

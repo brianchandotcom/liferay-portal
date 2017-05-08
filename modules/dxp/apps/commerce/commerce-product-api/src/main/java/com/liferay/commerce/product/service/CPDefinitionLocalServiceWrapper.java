@@ -47,7 +47,7 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition addCPDefinition(
-		java.lang.String baseSKU,
+		java.lang.String baseSKU, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
@@ -57,9 +57,9 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLocalService.addCPDefinition(baseSKU, titleMap,
-			descriptionMap, productTypeName, ddmStructureKey, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
+		return _cpDefinitionLocalService.addCPDefinition(baseSKU, name,
+			titleMap, descriptionMap, productTypeName, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, serviceContext);
@@ -215,7 +215,7 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition updateCPDefinition(
-		long cpDefinitionId, java.lang.String baseSKU,
+		long cpDefinitionId, java.lang.String baseSKU, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
@@ -226,7 +226,7 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.updateCPDefinition(cpDefinitionId,
-			baseSKU, titleMap, descriptionMap, productTypeName,
+			baseSKU, name, titleMap, descriptionMap, productTypeName,
 			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,

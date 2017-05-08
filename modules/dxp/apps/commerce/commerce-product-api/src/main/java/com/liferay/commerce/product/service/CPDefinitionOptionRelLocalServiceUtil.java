@@ -63,17 +63,17 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel addCPDefinitionOptionRel(
-		long cpDefinitionId, long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		long cpDefinitionId, long cpOptionId, java.lang.String name,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
 		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCPDefinitionOptionRel(cpDefinitionId, cpOptionId,
-			nameMap, descriptionMap, ddmFormFieldTypeName, priority, facetable,
-			skuContributor, serviceContext);
+				   .addCPDefinitionOptionRel(cpDefinitionId, cpOptionId, name,
+			titleMap, descriptionMap, ddmFormFieldTypeName, priority,
+			facetable, skuContributor, serviceContext);
 	}
 
 	/**
@@ -171,8 +171,8 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel updateCPDefinitionOptionRel(
-		long cpDefinitionOptionRelId, long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		long cpDefinitionOptionRelId, long cpOptionId, java.lang.String name,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
 		boolean skuContributor,
@@ -180,7 +180,7 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCPDefinitionOptionRel(cpDefinitionOptionRelId,
-			cpOptionId, nameMap, descriptionMap, ddmFormFieldTypeName,
+			cpOptionId, name, titleMap, descriptionMap, ddmFormFieldTypeName,
 			priority, facetable, skuContributor, serviceContext);
 	}
 

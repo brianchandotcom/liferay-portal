@@ -70,7 +70,8 @@ import java.util.Map;
 @ProviderType
 public class CPOptionValueServiceSoap {
 	public static com.liferay.commerce.product.model.CPOptionValueSoap addCPOptionValue(
-		long cpOptionId, java.lang.String[] titleMapLanguageIds,
+		long cpOptionId, java.lang.String name,
+		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues, int priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -79,7 +80,7 @@ public class CPOptionValueServiceSoap {
 					titleMapValues);
 
 			com.liferay.commerce.product.model.CPOptionValue returnValue = CPOptionValueServiceUtil.addCPOptionValue(cpOptionId,
-					titleMap, priority, serviceContext);
+					name, titleMap, priority, serviceContext);
 
 			return com.liferay.commerce.product.model.CPOptionValueSoap.toSoapModel(returnValue);
 		}
@@ -197,7 +198,8 @@ public class CPOptionValueServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionValueSoap updateCPOptionValue(
-		long cpOptionValueId, java.lang.String[] titleMapLanguageIds,
+		long cpOptionValueId, java.lang.String name,
+		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues, int priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -206,7 +208,7 @@ public class CPOptionValueServiceSoap {
 					titleMapValues);
 
 			com.liferay.commerce.product.model.CPOptionValue returnValue = CPOptionValueServiceUtil.updateCPOptionValue(cpOptionValueId,
-					titleMap, priority, serviceContext);
+					name, titleMap, priority, serviceContext);
 
 			return com.liferay.commerce.product.model.CPOptionValueSoap.toSoapModel(returnValue);
 		}

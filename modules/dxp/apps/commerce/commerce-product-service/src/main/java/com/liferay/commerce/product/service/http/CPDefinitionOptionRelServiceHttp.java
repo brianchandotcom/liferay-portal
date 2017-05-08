@@ -57,10 +57,6 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CPDefinitionOptionRelServiceHttp {
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel addCPDefinitionOptionRel(
 		HttpPrincipal httpPrincipal, long cpDefinitionId, long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
-		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -69,9 +65,7 @@ public class CPDefinitionOptionRelServiceHttp {
 					_addCPDefinitionOptionRelParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId, cpOptionId, nameMap, descriptionMap,
-					ddmFormFieldTypeName, priority, facetable, skuContributor,
-					serviceContext);
+					cpDefinitionId, cpOptionId, serviceContext);
 
 			Object returnObj = null;
 
@@ -97,6 +91,11 @@ public class CPDefinitionOptionRelServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel addCPDefinitionOptionRel(
 		HttpPrincipal httpPrincipal, long cpDefinitionId, long cpOptionId,
+		java.lang.String name,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
+		boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -105,7 +104,9 @@ public class CPDefinitionOptionRelServiceHttp {
 					_addCPDefinitionOptionRelParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId, cpOptionId, serviceContext);
+					cpDefinitionId, cpOptionId, name, titleMap, descriptionMap,
+					ddmFormFieldTypeName, priority, facetable, skuContributor,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -494,8 +495,8 @@ public class CPDefinitionOptionRelServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel updateCPDefinitionOptionRel(
 		HttpPrincipal httpPrincipal, long cpDefinitionOptionRelId,
-		long cpOptionId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		long cpOptionId, java.lang.String name,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
 		boolean skuContributor,
@@ -507,7 +508,7 @@ public class CPDefinitionOptionRelServiceHttp {
 					_updateCPDefinitionOptionRelParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionOptionRelId, cpOptionId, nameMap,
+					cpDefinitionOptionRelId, cpOptionId, name, titleMap,
 					descriptionMap, ddmFormFieldTypeName, priority, facetable,
 					skuContributor, serviceContext);
 
@@ -535,12 +536,13 @@ public class CPDefinitionOptionRelServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CPDefinitionOptionRelServiceHttp.class);
 	private static final Class<?>[] _addCPDefinitionOptionRelParameterTypes0 = new Class[] {
-			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class, int.class, boolean.class, boolean.class,
+			long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCPDefinitionOptionRelParameterTypes1 = new Class[] {
-			long.class, long.class,
+			long.class, long.class, java.lang.String.class, java.util.Map.class,
+			java.util.Map.class, java.lang.String.class, int.class,
+			boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPDefinitionOptionRelParameterTypes2 = new Class[] {
@@ -578,8 +580,9 @@ public class CPDefinitionOptionRelServiceHttp {
 		};
 	private static final Class<?>[] _updateCPDefinitionOptionRelParameterTypes13 =
 		new Class[] {
-			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class, int.class, boolean.class, boolean.class,
+			long.class, long.class, java.lang.String.class, java.util.Map.class,
+			java.util.Map.class, java.lang.String.class, int.class,
+			boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

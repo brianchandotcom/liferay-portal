@@ -70,7 +70,8 @@ import java.util.Map;
 @ProviderType
 public class CPDefinitionOptionValueRelServiceSoap {
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap addCPDefinitionOptionValueRel(
-		long cpDefinitionOptionRelId, java.lang.String[] titleMapLanguageIds,
+		long cpDefinitionOptionRelId, java.lang.String name,
+		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues, int priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -80,7 +81,7 @@ public class CPDefinitionOptionValueRelServiceSoap {
 
 			com.liferay.commerce.product.model.CPDefinitionOptionValueRel returnValue =
 				CPDefinitionOptionValueRelServiceUtil.addCPDefinitionOptionValueRel(cpDefinitionOptionRelId,
-					titleMap, priority, serviceContext);
+					name, titleMap, priority, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
 		}
@@ -203,7 +204,7 @@ public class CPDefinitionOptionValueRelServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap updateCPDefinitionOptionValueRel(
-		long cpDefinitionOptionValueRelId,
+		long cpDefinitionOptionValueRelId, java.lang.String name,
 		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues, int priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -214,7 +215,7 @@ public class CPDefinitionOptionValueRelServiceSoap {
 
 			com.liferay.commerce.product.model.CPDefinitionOptionValueRel returnValue =
 				CPDefinitionOptionValueRelServiceUtil.updateCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId,
-					titleMap, priority, serviceContext);
+					name, titleMap, priority, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
 		}

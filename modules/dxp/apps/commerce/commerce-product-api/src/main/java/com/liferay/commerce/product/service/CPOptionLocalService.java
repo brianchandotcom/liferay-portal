@@ -82,7 +82,8 @@ public interface CPOptionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPOption addCPOption(CPOption cpOption);
 
-	public CPOption addCPOption(Map<Locale, java.lang.String> nameMap,
+	public CPOption addCPOption(java.lang.String name,
+		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, boolean facetable,
 		boolean skuContributor, ServiceContext serviceContext)
@@ -162,8 +163,8 @@ public interface CPOptionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPOption updateCPOption(CPOption cpOption);
 
-	public CPOption updateCPOption(long cpOptionId,
-		Map<Locale, java.lang.String> nameMap,
+	public CPOption updateCPOption(long cpOptionId, java.lang.String name,
+		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, boolean facetable,
 		boolean skuContributor, ServiceContext serviceContext)

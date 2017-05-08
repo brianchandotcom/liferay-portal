@@ -85,7 +85,7 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition addCPDefinition(java.lang.String baseSKU,
-		Map<Locale, java.lang.String> titleMap,
+		java.lang.String name, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -205,7 +205,8 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
-		java.lang.String baseSKU, Map<Locale, java.lang.String> titleMap,
+		java.lang.String baseSKU, java.lang.String name,
+		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,

@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CPDefinitionServiceHttp {
 	public static com.liferay.commerce.product.model.CPDefinition addCPDefinition(
 		HttpPrincipal httpPrincipal, java.lang.String baseSKU,
+		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
@@ -71,11 +72,12 @@ public class CPDefinitionServiceHttp {
 					"addCPDefinition", _addCPDefinitionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, baseSKU,
-					titleMap, descriptionMap, productTypeName, ddmStructureKey,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
+					name, titleMap, descriptionMap, productTypeName,
+					ddmStructureKey, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -416,7 +418,7 @@ public class CPDefinitionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinition(
 		HttpPrincipal httpPrincipal, long cpDefinitionId,
-		java.lang.String baseSKU,
+		java.lang.String baseSKU, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
@@ -431,7 +433,7 @@ public class CPDefinitionServiceHttp {
 					"updateCPDefinition", _updateCPDefinitionParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId, baseSKU, titleMap, descriptionMap,
+					cpDefinitionId, baseSKU, name, titleMap, descriptionMap,
 					productTypeName, ddmStructureKey, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -497,10 +499,10 @@ public class CPDefinitionServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CPDefinitionServiceHttp.class);
 	private static final Class<?>[] _addCPDefinitionParameterTypes0 = new Class[] {
-			java.lang.String.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class, java.lang.String.class, int.class, int.class,
+			java.lang.String.class, java.lang.String.class, java.util.Map.class,
+			java.util.Map.class, java.lang.String.class, java.lang.String.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, boolean.class,
+			int.class, int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPDefinitionParameterTypes1 = new Class[] {
@@ -535,10 +537,11 @@ public class CPDefinitionServiceHttp {
 			com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateCPDefinitionParameterTypes11 = new Class[] {
-			long.class, java.lang.String.class, java.util.Map.class,
-			java.util.Map.class, java.lang.String.class, java.lang.String.class,
+			long.class, java.lang.String.class, java.lang.String.class,
+			java.util.Map.class, java.util.Map.class, java.lang.String.class,
+			java.lang.String.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, boolean.class,
+			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateStatusParameterTypes12 = new Class[] {

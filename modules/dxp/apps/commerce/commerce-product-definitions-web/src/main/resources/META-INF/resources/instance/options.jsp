@@ -20,56 +20,46 @@
 CPInstance cpInstance = (CPInstance)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_INSTANCE);
 
 CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+List<CPDefinitionOptionRel> cpDefinitionOptionRels = cpInstanceDisplayContext.getCPDefinitionOptionRels();
+
+Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionRelListMap = cpInstanceDisplayContext.parseCPInstanceDDMContent(cpInstanceDisplayContext.getCPInstanceId());
+
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
 
 <aui:model-context bean="<%= cpInstance %>" model="<%= CPInstance.class %>" />
 
-<%
-if (cpInstance == null) {
-	List<CPDefinitionOptionRel> cpDefinitionOptionRels = cpInstanceDisplayContext.getSkuContributorCPDefinitionOptionRels();
+<aui:fieldset>
 
-	for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
-		long cpDefinitionOptionRelId = cpDefinitionOptionRel.getCPDefinitionOptionRelId();
-%>
+    <c:choose>
+        <c:when test="<%= cpInstance != null %>">
 
-		<aui:select label="<%= cpDefinitionOptionRel.getTitle(languageId) %>" name="<%= String.valueOf(cpDefinitionOptionRelId) %>">
+            <% for(CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels){
 
-			<%
-			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpInstanceDisplayContext.getCPDefinitionOptionValueRels(cpDefinitionOptionRelId);
+                List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
+                StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
+            %>
+            <h6 class="text-default">
+                <strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getName(languageId)) %></strong>
+                <% for(CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels){
 
-			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
-				long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId();
-			%>
+                    stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
 
-				<aui:option label="<%= cpDefinitionOptionValueRel.getTitle(languageId) %>" value="<%= String.valueOf(cpDefinitionOptionValueRelId) %>" />
+                } %>
 
-			<%
-			}
-			%>
+                <%= HtmlUtil.escape(stringJoiner.toString()) %>
 
-		</aui:select>
+            </h6>
+            <%}%>
 
-<%
-	}
-}
-else {
-	JSONArray ddmContents = JSONFactoryUtil.createJSONArray(cpInstance.getDDMContent());
+        </c:when>
+        <c:otherwise>
+            <%= cpInstanceDisplayContext.renderOptions(renderRequest,renderResponse) %>
 
-	for (int i = 0; i < ddmContents.length(); i++) {
-		JSONObject ddmContent = ddmContents.getJSONObject(i);
+            <aui:input name="ddmFormValues" type="hidden"/>
+        </c:otherwise>
+    </c:choose>
 
-		long cpDefinitionOptionRelId = ddmContent.getLong("cpDefinitionOptionRelId");
-		long cpDefinitionOptionValueRelId = ddmContent.getLong("cpDefinitionOptionValueRelId");
-
-		CPDefinitionOptionRel cpDefinitionOptionRel = CPDefinitionOptionRelServiceUtil.fetchCPDefinitionOptionRel(cpDefinitionOptionRelId);
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel = CPDefinitionOptionValueRelServiceUtil.fetchCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
-%>
-
-		<%= cpDefinitionOptionRel.getTitle(languageId) + " - " + cpDefinitionOptionValueRel.getTitle(languageId) %>
-
-<%
-	}
-}
-%>
+</aui:fieldset>

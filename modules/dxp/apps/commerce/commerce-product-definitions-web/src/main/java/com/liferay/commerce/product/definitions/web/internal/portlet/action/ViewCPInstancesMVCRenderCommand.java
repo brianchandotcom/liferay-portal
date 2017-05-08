@@ -16,6 +16,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceDisplayContext;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -28,6 +29,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,9 +57,14 @@ public class ViewCPInstancesMVCRenderCommand implements MVCRenderCommand {
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 
+			HttpServletResponse httpServletResponse =
+				_portal.getHttpServletResponse(renderResponse);
+
 			CPInstanceDisplayContext cpInstanceDisplayContext =
 				new CPInstanceDisplayContext(
-					_actionHelper, httpServletRequest, _cpInstanceService);
+					_actionHelper, httpServletRequest,httpServletResponse,
+					_cpInstanceService, _cpInstanceHelper);
+
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpInstanceDisplayContext);
@@ -74,6 +81,9 @@ public class ViewCPInstancesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
+
+	@Reference
+	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
 	private Portal _portal;

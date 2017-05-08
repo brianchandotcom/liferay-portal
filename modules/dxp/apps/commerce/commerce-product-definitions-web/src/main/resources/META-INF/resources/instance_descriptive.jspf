@@ -41,6 +41,24 @@
 		</a>
 	</h5>
 
+    <% for(CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels){
+
+    	List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
+        StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
+    %>
+    <h6 class="text-default">
+        <strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getName(languageId)) %></strong>
+        <% for(CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels){
+
+            stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+
+        } %>
+
+        <%= HtmlUtil.escape(stringJoiner.toString()) %>
+
+    </h6>
+    <%}%>
+
 	<h6 class="text-default">
 		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpInstance.getStatus() %>" />
 	</h6>

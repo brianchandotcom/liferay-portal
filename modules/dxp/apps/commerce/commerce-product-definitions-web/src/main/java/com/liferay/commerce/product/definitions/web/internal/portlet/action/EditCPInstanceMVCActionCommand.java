@@ -16,9 +16,8 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -30,6 +29,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -124,18 +124,13 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 	protected void updateCPInstance(ActionRequest actionRequest)
 		throws Exception {
 
+		Locale locale = actionRequest.getLocale();
+
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 
-		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
-			cpDefinitionId);
-
-		String baseSku = cpDefinition.getBaseSKU();
-
-		String sku = baseSku + ParamUtil.getString(actionRequest, "sku");
-
-		String ddmContent = "";
+		String sku = ParamUtil.getString(actionRequest, "sku");
 
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
@@ -177,6 +172,8 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPInstance.class.getName(), actionRequest);
 
+
+
 		if (cpInstanceId > 0) {
 			_cpInstanceService.updateCPInstance(
 				cpInstanceId, sku, displayDateMonth, displayDateDay,
@@ -186,6 +183,12 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				serviceContext);
 		}
 		else {
+
+			String ddmFormValues = ParamUtil.getString(
+				actionRequest,"ddmFormValues");
+			String ddmContent = _cpInstanceHelper.getDDMContent(
+				cpDefinitionId,locale,ddmFormValues);
+
 			_cpInstanceService.addCPInstance(
 				cpDefinitionId, sku, ddmContent, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
@@ -196,9 +199,11 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private CPDefinitionService _cpDefinitionService;
+	private CPInstanceLocalService _cpInstanceService;
+
 
 	@Reference
-	private CPInstanceLocalService _cpInstanceService;
+	private CPInstanceHelper _cpInstanceHelper;
+
 
 }

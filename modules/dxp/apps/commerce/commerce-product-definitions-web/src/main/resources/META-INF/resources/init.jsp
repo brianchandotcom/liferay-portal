@@ -70,14 +70,15 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.trash.kernel.util.TrashUtil" %>
+page import="com.liferay.trash.kernel.util.TrashUtil" %><%@
+page import="java.util.Map" %>
 
 <%@ page import="java.util.Collections" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.HashSet" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
-page import="java.util.Set" %>
+page import="java.util.Set" %><%@ page import="java.util.StringJoiner" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

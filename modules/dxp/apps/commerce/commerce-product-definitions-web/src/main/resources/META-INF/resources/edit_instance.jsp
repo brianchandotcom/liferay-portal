@@ -32,9 +32,9 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 
 <portlet:actionURL name="editProductInstance" var="editProductInstanceActionURL" />
 
-<aui:form action="<%= editProductInstanceActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editProductInstanceActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveInstance();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpInstance == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
 	<aui:input name="cpInstanceId" type="hidden" value="<%= String.valueOf(cpInstanceId) %>" />
@@ -48,3 +48,15 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 		/>
 	</div>
 </aui:form>
+
+<aui:script>
+    function <portlet:namespace />saveInstance(forceDisable) {
+        var $ = AUI.$;
+
+        var form = $(document.<portlet:namespace />fm);
+
+        form.fm('ddmFormValues').val(JSON.stringify(Liferay.component("cpDefinitionOptionsRenderDDMForm").toJSON()));
+
+        submitForm(form);
+    }
+</aui:script>

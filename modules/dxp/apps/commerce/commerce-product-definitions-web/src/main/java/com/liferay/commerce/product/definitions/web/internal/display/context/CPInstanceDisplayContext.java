@@ -16,9 +16,11 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 
 import com.liferay.commerce.product.definitions.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,11 +30,16 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Alessio Antonio Rendina
@@ -43,14 +50,18 @@ public class CPInstanceDisplayContext
 
 	public CPInstanceDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CPInstanceService cpInstanceService)
+			HttpServletResponse httpServletResponse,
+			CPInstanceService cpInstanceService,
+			CPInstanceHelper cpInstanceHelper)
 		throws PortalException {
 
 		super(actionHelper, httpServletRequest, "CPInstance");
 
 		setDefaultOrderByCol("sku");
 
+		_cpInstanceHelper = cpInstanceHelper;
 		_cpInstanceService = cpInstanceService;
+		_httpServletResponse = httpServletResponse;
 	}
 
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
@@ -159,7 +170,39 @@ public class CPInstanceDisplayContext
 			getCPDefinitionId());
 	}
 
+	public String renderOptions(
+			RenderRequest renderRequest,RenderResponse renderResponse )
+		throws PortalException {
+
+		return _cpInstanceHelper.
+			render(getCPDefinitionId(),renderRequest,renderResponse);
+	}
+
+	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+			parseCPInstanceDDMContent(long cpInstanceId)
+		throws PortalException {
+
+		return _cpInstanceHelper.
+			parseCPInstanceDDMContent(cpInstanceId);
+	}
+
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels()
+		throws PortalException{
+
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
+
+		CPDefinition cpDefinition = getCPDefinition();
+
+		if(cpDefinition != null){
+			cpDefinitionOptionRels = cpDefinition.getCPDefinitionOptionRels();
+		}
+
+		return cpDefinitionOptionRels;
+	}
+
+	private final CPInstanceHelper _cpInstanceHelper;
 	private CPInstance _cpInstance;
 	private final CPInstanceService _cpInstanceService;
+	private final HttpServletResponse _httpServletResponse;
 
 }

@@ -18,6 +18,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.util.comparator.CPDefinitionDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelCreateDateComparator;
@@ -86,11 +87,11 @@ public class CPDefinitionsPortletUtil {
 		}
 		else if (orderByCol.equals("title")) {
 			sort = SortFactoryUtil.create(
-				"title", Sort.STRING_TYPE, orderByAsc);
+				Field.TYPE, Sort.STRING_TYPE, orderByAsc);
 		}
 		else if (orderByCol.equals("priority")) {
 			sort = SortFactoryUtil.create(
-				"priority", Sort.INT_TYPE, orderByAsc);
+				Field.PRIORITY, Sort.INT_TYPE, orderByAsc);
 		}
 
 		return sort;
@@ -133,11 +134,11 @@ public class CPDefinitionsPortletUtil {
 
 		if (orderByCol.equals("priority")) {
 			sort = SortFactoryUtil.create(
-				"priority", Sort.INT_TYPE, orderByAsc);
+				Field.PRIORITY, Sort.INT_TYPE, orderByAsc);
 		}
 		else if (orderByCol.equals("title")) {
 			sort = SortFactoryUtil.create(
-				"title", Sort.STRING_TYPE, orderByAsc);
+				Field.TITLE, Sort.STRING_TYPE, orderByAsc);
 		}
 
 		return sort;
@@ -189,7 +190,7 @@ public class CPDefinitionsPortletUtil {
 		}
 		else if (orderByCol.equals("title")) {
 			sort = SortFactoryUtil.create(
-				"title", Sort.STRING_TYPE, orderByAsc);
+				Field.TITLE, Sort.STRING_TYPE, orderByAsc);
 		}
 
 		return sort;
@@ -237,7 +238,8 @@ public class CPDefinitionsPortletUtil {
 			sort = SortFactoryUtil.create("display-date", true);
 		}
 		else if (orderByCol.equals("sku")) {
-			sort = SortFactoryUtil.create("sku", Sort.STRING_TYPE, orderByAsc);
+			sort = SortFactoryUtil.create(
+				CPInstanceIndexer.FIELD_SKU, Sort.STRING_TYPE, orderByAsc);
 		}
 
 		return sort;

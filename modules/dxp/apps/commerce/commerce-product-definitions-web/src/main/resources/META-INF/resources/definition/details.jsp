@@ -26,6 +26,7 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERC
 
 <aui:fieldset>
 	<aui:input name="name" />
+
 	<aui:input autoFocus="<%= true %>" label="title" localized="<%= true %>" name="titleMapAsXML" type="text" wrapperCssClass="commerce-product-definition-title">
 		<aui:validator name="required" />
 	</aui:input>

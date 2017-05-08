@@ -64,10 +64,10 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		CPOption cpOption = cpOptionLocalService.getCPOption(cpOptionId);
 
 		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
-			cpDefinitionId, cpOptionId, cpOption.getName(), cpOption.getTitleMap(),
-			cpOption.getDescriptionMap(), cpOption.getDDMFormFieldTypeName(), 0,
-			cpOption.getFacetable(), cpOption.getSkuContributor(),
-			serviceContext);
+			cpDefinitionId, cpOptionId, cpOption.getName(),
+			cpOption.getTitleMap(), cpOption.getDescriptionMap(),
+			cpOption.getDDMFormFieldTypeName(), 0, cpOption.getFacetable(),
+			cpOption.getSkuContributor(), serviceContext);
 	}
 
 	@Override

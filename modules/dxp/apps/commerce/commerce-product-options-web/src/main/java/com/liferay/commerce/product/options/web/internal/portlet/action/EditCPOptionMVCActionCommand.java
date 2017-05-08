@@ -136,8 +136,9 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 			// Update commerce product option
 
 			cpOption = _cpOptionService.updateCPOption(
-				cpOptionId, name, titleMap, descriptionMap, ddmFormFieldTypeName,
-				facetable, skuContributor, serviceContext);
+				cpOptionId, name, titleMap, descriptionMap,
+				ddmFormFieldTypeName, facetable, skuContributor,
+				serviceContext);
 		}
 
 		return cpOption;

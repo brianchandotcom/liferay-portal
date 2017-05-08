@@ -24,8 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class CPDefinitionOptionRelTitleComparator
 	extends OrderByComparator<CPDefinitionOptionRel> {
 
-	public static final String ORDER_BY_ASC =
-		"CPDefinitionOptionRel.title ASC";
+	public static final String ORDER_BY_ASC = "CPDefinitionOptionRel.title ASC";
 
 	public static final String ORDER_BY_DESC =
 		"CPDefinitionOptionRel.title DESC";
@@ -45,8 +44,10 @@ public class CPDefinitionOptionRelTitleComparator
 		CPDefinitionOptionRel cpDefinitionOptionRel1,
 		CPDefinitionOptionRel cpDefinitionOptionRel2) {
 
-		String title1 = StringUtil.toLowerCase(cpDefinitionOptionRel1.getTitle());
-		String title2 = StringUtil.toLowerCase(cpDefinitionOptionRel2.getTitle());
+		String title1 = StringUtil.toLowerCase(
+			cpDefinitionOptionRel1.getTitle());
+		String title2 = StringUtil.toLowerCase(
+			cpDefinitionOptionRel2.getTitle());
 
 		int value = title1.compareTo(title2);
 

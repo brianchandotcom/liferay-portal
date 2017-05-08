@@ -145,9 +145,9 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			_cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
-				cpDefinitionOptionRelId, cpOptionId, name, titleMap, descriptionMap,
-				ddmFormFieldTypeName, priority, facetable, skuContributor,
-				serviceContext);
+				cpDefinitionOptionRelId, cpOptionId, name, titleMap,
+				descriptionMap, ddmFormFieldTypeName, priority, facetable,
+				skuContributor, serviceContext);
 
 		return cpDefinitionOptionRel;
 	}

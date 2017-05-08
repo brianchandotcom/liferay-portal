@@ -17,7 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -201,6 +201,6 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
-	private CPInstanceLocalService _cpInstanceService;
+	private CPInstanceService _cpInstanceService;
 
 }

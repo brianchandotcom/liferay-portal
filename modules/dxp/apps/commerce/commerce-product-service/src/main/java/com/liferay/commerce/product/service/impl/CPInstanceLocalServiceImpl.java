@@ -331,6 +331,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstancePersistence.countByCPDefinitionId(cpDefinitionId);
 	}
 
+	@Override
 	public String[] getSKUs(long cpDefinitionId) {
 		List<CPInstance> cpInstances = getCPInstances(
 			cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);

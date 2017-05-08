@@ -78,8 +78,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.ratings.kernel.model.RatingsStats;
-import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.io.Serializable;
@@ -771,18 +769,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		else {
 			document.addDate(Field.PUBLISH_DATE, new Date(0));
 		}
-
-		RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.fetchStats(
-			className, classPK);
-
-		if (ratingsStats != null) {
-			document.addNumber(Field.RATINGS, ratingsStats.getAverageScore());
-		}
-		else {
-			document.addNumber(Field.RATINGS, 0.0F);
-		}
-
-		document.addNumber(Field.VIEW_COUNT, assetEntry.getViewCount());
 
 		document.addLocalizedKeyword(
 			"localized_title",

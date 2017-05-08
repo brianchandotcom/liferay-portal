@@ -17,7 +17,7 @@ package com.liferay.wiki.editor.configuration.internal;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.PortletFileEntryItemSelectorReturnType;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -57,7 +57,7 @@ public class WikiAttachmentImageHTMLEditorConfigContributor
 			new ArrayList<>();
 
 		desiredItemSelectorReturnTypes.add(
-			new FileEntryItemSelectorReturnType());
+			new PortletFileEntryItemSelectorReturnType());
 
 		ItemSelectorCriterion imageItemSelectorCriterion =
 			getImageItemSelectorCriterion(desiredItemSelectorReturnTypes);

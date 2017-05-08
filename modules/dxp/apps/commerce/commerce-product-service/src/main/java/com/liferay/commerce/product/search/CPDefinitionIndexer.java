@@ -92,14 +92,15 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			SearchContext searchContext)
 		throws Exception {
 
-		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
+		addSearchTerm(searchQuery, searchContext, FIELD_BASE_SKU, false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.CONTENT, false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, false);
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
-
+		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
+		addSearchTerm(searchQuery, searchContext, FIELD_SKUS, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
 		LinkedHashMap<String, Object> params =
@@ -112,9 +113,6 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 				addSearchExpando(searchQuery, searchContext, expandoAttributes);
 			}
 		}
-
-		addSearchTerm(searchQuery, searchContext, FIELD_BASE_SKU, false);
-		addSearchTerm(searchQuery, searchContext, FIELD_SKUS, false);
 	}
 
 	@Override

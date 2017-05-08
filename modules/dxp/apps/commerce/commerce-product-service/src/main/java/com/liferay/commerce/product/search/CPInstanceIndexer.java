@@ -97,9 +97,10 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 			SearchContext searchContext)
 		throws Exception {
 
-		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.CONTENT, false);
+		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
+		addSearchTerm(searchQuery, searchContext, FIELD_SKU, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
 		LinkedHashMap<String, Object> params =
@@ -112,8 +113,6 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 				addSearchExpando(searchQuery, searchContext, expandoAttributes);
 			}
 		}
-
-		addSearchTerm(searchQuery, searchContext, FIELD_SKU, false);
 	}
 
 	@Override

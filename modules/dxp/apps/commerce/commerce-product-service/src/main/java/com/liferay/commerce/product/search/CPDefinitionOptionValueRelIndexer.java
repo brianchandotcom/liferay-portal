@@ -91,10 +91,8 @@ public class CPDefinitionOptionValueRelIndexer
 		throws Exception {
 
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
-
 		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
 		LinkedHashMap<String, Object> params =

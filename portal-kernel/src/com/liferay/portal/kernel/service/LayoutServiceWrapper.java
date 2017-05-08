@@ -31,6 +31,21 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
+	* Returns true if the layout matching the UUID, group, and privacy.
+	*
+	* @param uuid the layout's UUID
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @return true if the layout is found
+	*/
+	@Override
+	public boolean hasLayout(java.lang.String uuid, long groupId,
+		boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutService.hasLayout(uuid, groupId, privateLayout);
+	}
+
+	/**
 	* Exports all layouts that match the criteria as a byte array.
 	*
 	* @param groupId the primary key of the group

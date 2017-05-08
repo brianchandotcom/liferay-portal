@@ -159,7 +159,8 @@ public class CPDefinitionsPortletUtil {
 				orderByAsc);
 		}
 		else if (orderByCol.equals("title")) {
-			orderByComparator = new CPDefinitionTitleComparator(orderByAsc);
+			orderByComparator = new CPDefinitionTitleComparator(
+				orderByAsc);
 		}
 
 		return orderByComparator;

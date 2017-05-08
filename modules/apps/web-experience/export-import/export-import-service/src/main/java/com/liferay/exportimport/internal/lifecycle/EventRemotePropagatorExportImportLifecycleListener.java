@@ -26,11 +26,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -87,16 +88,18 @@ public class EventRemotePropagatorExportImportLifecycleListener
 			return false;
 		}
 
-		List<Serializable> attributes =
-			exportImportLifecycleEvent.getAttributes();
+		Optional<ExportImportConfiguration> exportImportConfigurationOptional =
+			_getExportImportConfiguration(exportImportLifecycleEvent);
 
-		ExportImportConfiguration exportImportConfiguration =
-			(ExportImportConfiguration)attributes.get(0);
+		Optional<Map<String, Serializable>> settingsMapOptional =
+			exportImportConfigurationOptional.map(
+				exportImportConfiguration ->
+					exportImportConfiguration.getSettingsMap());
 
-		Map<String, Serializable> settingsMap =
-			exportImportConfiguration.getSettingsMap();
-
-		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
+		long sourceGroupId = GetterUtil.getLong(
+			settingsMapOptional.map(
+				settingsMap -> settingsMap.get("sourceGroupId")).orElse(
+				GroupConstants.ANY_PARENT_GROUP_ID));
 
 		Group sourceGroup = _groupLocalService.fetchGroup(sourceGroupId);
 
@@ -104,7 +107,10 @@ public class EventRemotePropagatorExportImportLifecycleListener
 			return false;
 		}
 
-		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+		long targetGroupId = GetterUtil.getLong(
+			settingsMapOptional.map(
+				settingsMap -> settingsMap.get("targetGroupId")).orElse(
+				GroupConstants.ANY_PARENT_GROUP_ID));
 
 		Group targetGroup = _groupLocalService.fetchGroup(targetGroupId);
 
@@ -127,20 +133,40 @@ public class EventRemotePropagatorExportImportLifecycleListener
 		return true;
 	}
 
+	private Optional<ExportImportConfiguration> _getExportImportConfiguration(
+		ExportImportLifecycleEvent exportImportLifecycleEvent) {
+
+		List<Serializable> attributes =
+			exportImportLifecycleEvent.getAttributes();
+
+		return Optional.ofNullable(
+			(ExportImportConfiguration)attributes.get(0));
+	}
+
 	private Optional<HttpPrincipal> _getHttpPrincipal(
 		ExportImportLifecycleEvent exportImportLifecycleEvent) {
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		Optional<ExportImportConfiguration> exportImportConfigurationOptional =
+			_getExportImportConfiguration(exportImportLifecycleEvent);
 
-		User user = permissionChecker.getUser();
+		return exportImportConfigurationOptional.map(
+			exportImportConfiguration ->
+				exportImportConfiguration.getSettingsMap()).map(
+				settingsMap -> MapUtil.getLong(settingsMap, "userId")).map(
+				userId -> _userLocalService.fetchUser(userId)).flatMap(
+				user -> _getHttpPrincipal(
+					user, _getRemoteURL(exportImportLifecycleEvent)));
+	}
+
+	private Optional<HttpPrincipal> _getHttpPrincipal(
+		User user, String remoteURL) {
 
 		HttpPrincipal httpPrincipal = null;
 
 		try {
 			httpPrincipal = new HttpPrincipal(
-				_getRemoteURL(exportImportLifecycleEvent), user.getLogin(),
-				user.getPassword(), user.getPasswordEncrypted());
+				remoteURL, user.getLogin(), user.getPassword(),
+				user.getPasswordEncrypted());
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
@@ -194,5 +220,8 @@ public class EventRemotePropagatorExportImportLifecycleListener
 	private GroupLocalService _groupLocalService;
 
 	private final Set<Integer> _propagatedEventTypes = new HashSet<>();
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

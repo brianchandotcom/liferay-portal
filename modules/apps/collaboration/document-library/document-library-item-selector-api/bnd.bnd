@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Document Library Item Selector API
+Bundle-SymbolicName: com.liferay.document.library.item.selector.api
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Document Library

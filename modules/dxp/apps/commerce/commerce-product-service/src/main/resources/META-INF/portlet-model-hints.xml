@@ -62,7 +62,9 @@
 		<field localized="true" name="name" type="String" />
 		<field localized="true" name="description" type="String" />
 		<field name="DDMFormFieldTypeName" type="String" />
-		<field name="priority" type="int" />
+		<field name="priority" type="int">
+			<validator name="number" />
+		</field>
 		<field name="facetable" type="boolean" />
 		<field name="skuContributor" type="boolean" />
 	</model>

@@ -25,7 +25,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	protected List<String> doGetFileNames() throws Exception {
 		return getFileNames(
 			new String[] {
-				"**/portal-web/docroot/dtd/**", "**/web.xml.properties"
+				"**/portal-web/docroot/dtd/**", "**/null*.properties",
+				"**/web.xml.properties"
 			},
 			getIncludes());
 	}

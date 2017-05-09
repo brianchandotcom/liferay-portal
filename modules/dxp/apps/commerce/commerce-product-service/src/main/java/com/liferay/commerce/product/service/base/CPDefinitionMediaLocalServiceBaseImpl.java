@@ -133,11 +133,12 @@ public abstract class CPDefinitionMediaLocalServiceBaseImpl
 	 *
 	 * @param cpDefinitionMedia the cp definition media
 	 * @return the cp definition media that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CPDefinitionMedia deleteCPDefinitionMedia(
-		CPDefinitionMedia cpDefinitionMedia) {
+		CPDefinitionMedia cpDefinitionMedia) throws PortalException {
 		return cpDefinitionMediaPersistence.remove(cpDefinitionMedia);
 	}
 

@@ -211,6 +211,13 @@ public class CPDefinitionMediaPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCPDefinitionId() throws Exception {
+		_persistence.countByCPDefinitionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCPDefinitionId(0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CPDefinitionMedia newCPDefinitionMedia = addCPDefinitionMedia();
 

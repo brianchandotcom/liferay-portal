@@ -112,8 +112,8 @@ public class CPDefinitionMediaModelImpl extends BaseModelImpl<CPDefinitionMedia>
 
 	public static final String TABLE_SQL_CREATE = "create table CPDefinitionMedia (uuid_ VARCHAR(75) null,CPDefinitionMediaId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,fileEntryId LONG,DDMContent VARCHAR(75) null,priority INTEGER,CPMediaTypeId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionMedia";
-	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionMedia.CPDefinitionMediaId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionMedia.CPDefinitionMediaId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionMedia.priority DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionMedia.priority DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -126,10 +126,11 @@ public class CPDefinitionMediaModelImpl extends BaseModelImpl<CPDefinitionMedia>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.product.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CPDefinitionMedia"),
 			true);
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long CPDEFINITIONMEDIAID_COLUMN_BITMASK = 8L;
+	public static final long CPDEFINITIONID_COLUMN_BITMASK = 1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long PRIORITY_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -483,7 +484,19 @@ public class CPDefinitionMediaModelImpl extends BaseModelImpl<CPDefinitionMedia>
 
 	@Override
 	public void setCPDefinitionId(long CPDefinitionId) {
+		_columnBitmask |= CPDEFINITIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalCPDefinitionId) {
+			_setOriginalCPDefinitionId = true;
+
+			_originalCPDefinitionId = _CPDefinitionId;
+		}
+
 		_CPDefinitionId = CPDefinitionId;
+	}
+
+	public long getOriginalCPDefinitionId() {
+		return _originalCPDefinitionId;
 	}
 
 	@JSON
@@ -521,6 +534,8 @@ public class CPDefinitionMediaModelImpl extends BaseModelImpl<CPDefinitionMedia>
 
 	@Override
 	public void setPriority(int priority) {
+		_columnBitmask = -1L;
+
 		_priority = priority;
 	}
 
@@ -729,17 +744,25 @@ public class CPDefinitionMediaModelImpl extends BaseModelImpl<CPDefinitionMedia>
 
 	@Override
 	public int compareTo(CPDefinitionMedia cpDefinitionMedia) {
-		long primaryKey = cpDefinitionMedia.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getPriority() < cpDefinitionMedia.getPriority()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getPriority() > cpDefinitionMedia.getPriority()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override
@@ -794,6 +817,10 @@ public class CPDefinitionMediaModelImpl extends BaseModelImpl<CPDefinitionMedia>
 		cpDefinitionMediaModelImpl._setOriginalCompanyId = false;
 
 		cpDefinitionMediaModelImpl._setModifiedDate = false;
+
+		cpDefinitionMediaModelImpl._originalCPDefinitionId = cpDefinitionMediaModelImpl._CPDefinitionId;
+
+		cpDefinitionMediaModelImpl._setOriginalCPDefinitionId = false;
 
 		cpDefinitionMediaModelImpl._columnBitmask = 0;
 	}
@@ -983,6 +1010,8 @@ public class CPDefinitionMediaModelImpl extends BaseModelImpl<CPDefinitionMedia>
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _CPDefinitionId;
+	private long _originalCPDefinitionId;
+	private boolean _setOriginalCPDefinitionId;
 	private long _fileEntryId;
 	private String _DDMContent;
 	private int _priority;

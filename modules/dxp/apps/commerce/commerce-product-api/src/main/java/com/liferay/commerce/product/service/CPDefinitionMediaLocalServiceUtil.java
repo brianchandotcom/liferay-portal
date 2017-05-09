@@ -53,6 +53,16 @@ public class CPDefinitionMediaLocalServiceUtil {
 		return getService().addCPDefinitionMedia(cpDefinitionMedia);
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinitionMedia addCPDefinitionMedia(
+		long cpDefinitionId, long fileEntryId, java.lang.String ddmContent,
+		int priority, long CPMediaTypeId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCPDefinitionMedia(cpDefinitionId, fileEntryId,
+			ddmContent, priority, CPMediaTypeId, serviceContext);
+	}
+
 	/**
 	* Creates a new cp definition media with the primary key. Does not add the cp definition media to the database.
 	*
@@ -69,9 +79,11 @@ public class CPDefinitionMediaLocalServiceUtil {
 	*
 	* @param cpDefinitionMedia the cp definition media
 	* @return the cp definition media that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.product.model.CPDefinitionMedia deleteCPDefinitionMedia(
-		com.liferay.commerce.product.model.CPDefinitionMedia cpDefinitionMedia) {
+		com.liferay.commerce.product.model.CPDefinitionMedia cpDefinitionMedia)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCPDefinitionMedia(cpDefinitionMedia);
 	}
 
@@ -141,6 +153,22 @@ public class CPDefinitionMediaLocalServiceUtil {
 	public static com.liferay.commerce.product.model.CPDefinitionMedia updateCPDefinitionMedia(
 		com.liferay.commerce.product.model.CPDefinitionMedia cpDefinitionMedia) {
 		return getService().updateCPDefinitionMedia(cpDefinitionMedia);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionMedia updateCPDefinitionMedia(
+		long cpDefinitionMediaId, java.lang.String ddmContent, int priority,
+		long CPMediaTypeId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCPDefinitionMedia(cpDefinitionMediaId, ddmContent,
+			priority, CPMediaTypeId, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CPMediaType deleteCPMediaType(
+		long cpMediaTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteCPMediaType(cpMediaTypeId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

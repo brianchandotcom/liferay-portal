@@ -5,6 +5,7 @@ create unique index IX_BA9BADC on CPDefinition (uuid_[$COLUMN_LENGTH:75$], group
 
 create unique index IX_9D876175 on CPDefinitionLocalization (cpDefinitionPK, languageId[$COLUMN_LENGTH:75$]);
 
+create index IX_B6E11279 on CPDefinitionMedia (CPDefinitionId);
 create index IX_7C92B45E on CPDefinitionMedia (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_A958BA60 on CPDefinitionMedia (uuid_[$COLUMN_LENGTH:75$], groupId);
 

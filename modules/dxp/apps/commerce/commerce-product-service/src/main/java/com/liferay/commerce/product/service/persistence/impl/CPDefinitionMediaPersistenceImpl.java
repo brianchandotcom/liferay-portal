@@ -110,7 +110,8 @@ public class CPDefinitionMediaPersistenceImpl extends BasePersistenceImpl<CPDefi
 			CPDefinitionMediaImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] { String.class.getName() },
-			CPDefinitionMediaModelImpl.UUID_COLUMN_BITMASK);
+			CPDefinitionMediaModelImpl.UUID_COLUMN_BITMASK |
+			CPDefinitionMediaModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CPDefinitionMediaModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionMediaModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
@@ -915,7 +916,8 @@ public class CPDefinitionMediaPersistenceImpl extends BasePersistenceImpl<CPDefi
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] { String.class.getName(), Long.class.getName() },
 			CPDefinitionMediaModelImpl.UUID_COLUMN_BITMASK |
-			CPDefinitionMediaModelImpl.COMPANYID_COLUMN_BITMASK);
+			CPDefinitionMediaModelImpl.COMPANYID_COLUMN_BITMASK |
+			CPDefinitionMediaModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CPDefinitionMediaModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionMediaModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
@@ -1488,6 +1490,524 @@ public class CPDefinitionMediaPersistenceImpl extends BasePersistenceImpl<CPDefi
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "cpDefinitionMedia.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(cpDefinitionMedia.uuid IS NULL OR cpDefinitionMedia.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "cpDefinitionMedia.companyId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CPDEFINITIONID =
+		new FinderPath(CPDefinitionMediaModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionMediaModelImpl.FINDER_CACHE_ENABLED,
+			CPDefinitionMediaImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPDefinitionId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONID =
+		new FinderPath(CPDefinitionMediaModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionMediaModelImpl.FINDER_CACHE_ENABLED,
+			CPDefinitionMediaImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPDefinitionId",
+			new String[] { Long.class.getName() },
+			CPDefinitionMediaModelImpl.CPDEFINITIONID_COLUMN_BITMASK |
+			CPDefinitionMediaModelImpl.PRIORITY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CPDEFINITIONID = new FinderPath(CPDefinitionMediaModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionMediaModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDefinitionId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the cp definition medias where CPDefinitionId = &#63;.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @return the matching cp definition medias
+	 */
+	@Override
+	public List<CPDefinitionMedia> findByCPDefinitionId(long CPDefinitionId) {
+		return findByCPDefinitionId(CPDefinitionId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the cp definition medias where CPDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionMediaModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param start the lower bound of the range of cp definition medias
+	 * @param end the upper bound of the range of cp definition medias (not inclusive)
+	 * @return the range of matching cp definition medias
+	 */
+	@Override
+	public List<CPDefinitionMedia> findByCPDefinitionId(long CPDefinitionId,
+		int start, int end) {
+		return findByCPDefinitionId(CPDefinitionId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp definition medias where CPDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionMediaModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param start the lower bound of the range of cp definition medias
+	 * @param end the upper bound of the range of cp definition medias (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp definition medias
+	 */
+	@Override
+	public List<CPDefinitionMedia> findByCPDefinitionId(long CPDefinitionId,
+		int start, int end,
+		OrderByComparator<CPDefinitionMedia> orderByComparator) {
+		return findByCPDefinitionId(CPDefinitionId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp definition medias where CPDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionMediaModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param start the lower bound of the range of cp definition medias
+	 * @param end the upper bound of the range of cp definition medias (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching cp definition medias
+	 */
+	@Override
+	public List<CPDefinitionMedia> findByCPDefinitionId(long CPDefinitionId,
+		int start, int end,
+		OrderByComparator<CPDefinitionMedia> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONID;
+			finderArgs = new Object[] { CPDefinitionId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CPDEFINITIONID;
+			finderArgs = new Object[] {
+					CPDefinitionId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CPDefinitionMedia> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CPDefinitionMedia>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CPDefinitionMedia cpDefinitionMedia : list) {
+					if ((CPDefinitionId != cpDefinitionMedia.getCPDefinitionId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CPDEFINITIONMEDIA_WHERE);
+
+			query.append(_FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CPDefinitionMediaModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(CPDefinitionId);
+
+				if (!pagination) {
+					list = (List<CPDefinitionMedia>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CPDefinitionMedia>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first cp definition media in the ordered set where CPDefinitionId = &#63;.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp definition media
+	 * @throws NoSuchCPDefinitionMediaException if a matching cp definition media could not be found
+	 */
+	@Override
+	public CPDefinitionMedia findByCPDefinitionId_First(long CPDefinitionId,
+		OrderByComparator<CPDefinitionMedia> orderByComparator)
+		throws NoSuchCPDefinitionMediaException {
+		CPDefinitionMedia cpDefinitionMedia = fetchByCPDefinitionId_First(CPDefinitionId,
+				orderByComparator);
+
+		if (cpDefinitionMedia != null) {
+			return cpDefinitionMedia;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("CPDefinitionId=");
+		msg.append(CPDefinitionId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCPDefinitionMediaException(msg.toString());
+	}
+
+	/**
+	 * Returns the first cp definition media in the ordered set where CPDefinitionId = &#63;.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp definition media, or <code>null</code> if a matching cp definition media could not be found
+	 */
+	@Override
+	public CPDefinitionMedia fetchByCPDefinitionId_First(long CPDefinitionId,
+		OrderByComparator<CPDefinitionMedia> orderByComparator) {
+		List<CPDefinitionMedia> list = findByCPDefinitionId(CPDefinitionId, 0,
+				1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last cp definition media in the ordered set where CPDefinitionId = &#63;.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp definition media
+	 * @throws NoSuchCPDefinitionMediaException if a matching cp definition media could not be found
+	 */
+	@Override
+	public CPDefinitionMedia findByCPDefinitionId_Last(long CPDefinitionId,
+		OrderByComparator<CPDefinitionMedia> orderByComparator)
+		throws NoSuchCPDefinitionMediaException {
+		CPDefinitionMedia cpDefinitionMedia = fetchByCPDefinitionId_Last(CPDefinitionId,
+				orderByComparator);
+
+		if (cpDefinitionMedia != null) {
+			return cpDefinitionMedia;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("CPDefinitionId=");
+		msg.append(CPDefinitionId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCPDefinitionMediaException(msg.toString());
+	}
+
+	/**
+	 * Returns the last cp definition media in the ordered set where CPDefinitionId = &#63;.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp definition media, or <code>null</code> if a matching cp definition media could not be found
+	 */
+	@Override
+	public CPDefinitionMedia fetchByCPDefinitionId_Last(long CPDefinitionId,
+		OrderByComparator<CPDefinitionMedia> orderByComparator) {
+		int count = countByCPDefinitionId(CPDefinitionId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CPDefinitionMedia> list = findByCPDefinitionId(CPDefinitionId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the cp definition medias before and after the current cp definition media in the ordered set where CPDefinitionId = &#63;.
+	 *
+	 * @param CPDefinitionMediaId the primary key of the current cp definition media
+	 * @param CPDefinitionId the cp definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp definition media
+	 * @throws NoSuchCPDefinitionMediaException if a cp definition media with the primary key could not be found
+	 */
+	@Override
+	public CPDefinitionMedia[] findByCPDefinitionId_PrevAndNext(
+		long CPDefinitionMediaId, long CPDefinitionId,
+		OrderByComparator<CPDefinitionMedia> orderByComparator)
+		throws NoSuchCPDefinitionMediaException {
+		CPDefinitionMedia cpDefinitionMedia = findByPrimaryKey(CPDefinitionMediaId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CPDefinitionMedia[] array = new CPDefinitionMediaImpl[3];
+
+			array[0] = getByCPDefinitionId_PrevAndNext(session,
+					cpDefinitionMedia, CPDefinitionId, orderByComparator, true);
+
+			array[1] = cpDefinitionMedia;
+
+			array[2] = getByCPDefinitionId_PrevAndNext(session,
+					cpDefinitionMedia, CPDefinitionId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CPDefinitionMedia getByCPDefinitionId_PrevAndNext(
+		Session session, CPDefinitionMedia cpDefinitionMedia,
+		long CPDefinitionId,
+		OrderByComparator<CPDefinitionMedia> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CPDEFINITIONMEDIA_WHERE);
+
+		query.append(_FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CPDefinitionMediaModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(CPDefinitionId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(cpDefinitionMedia);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CPDefinitionMedia> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the cp definition medias where CPDefinitionId = &#63; from the database.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 */
+	@Override
+	public void removeByCPDefinitionId(long CPDefinitionId) {
+		for (CPDefinitionMedia cpDefinitionMedia : findByCPDefinitionId(
+				CPDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(cpDefinitionMedia);
+		}
+	}
+
+	/**
+	 * Returns the number of cp definition medias where CPDefinitionId = &#63;.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @return the number of matching cp definition medias
+	 */
+	@Override
+	public int countByCPDefinitionId(long CPDefinitionId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CPDEFINITIONID;
+
+		Object[] finderArgs = new Object[] { CPDefinitionId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CPDEFINITIONMEDIA_WHERE);
+
+			query.append(_FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(CPDefinitionId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2 = "cpDefinitionMedia.CPDefinitionId = ?";
 
 	public CPDefinitionMediaPersistenceImpl() {
 		setModelClass(CPDefinitionMedia.class);
@@ -1823,6 +2343,12 @@ public class CPDefinitionMediaPersistenceImpl extends BasePersistenceImpl<CPDefi
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 				args);
 
+			args = new Object[] { cpDefinitionMediaModelImpl.getCPDefinitionId() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_CPDEFINITIONID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONID,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
@@ -1864,6 +2390,27 @@ public class CPDefinitionMediaPersistenceImpl extends BasePersistenceImpl<CPDefi
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+					args);
+			}
+
+			if ((cpDefinitionMediaModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						cpDefinitionMediaModelImpl.getOriginalCPDefinitionId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CPDEFINITIONID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONID,
+					args);
+
+				args = new Object[] {
+						cpDefinitionMediaModelImpl.getCPDefinitionId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CPDEFINITIONID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONID,
 					args);
 			}
 		}

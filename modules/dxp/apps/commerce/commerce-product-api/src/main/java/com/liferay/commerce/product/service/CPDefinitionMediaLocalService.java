@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPDefinitionMedia;
+import com.liferay.commerce.product.model.CPMediaType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
@@ -28,10 +29,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -74,6 +78,11 @@ public interface CPDefinitionMediaLocalService extends BaseLocalService,
 	public CPDefinitionMedia addCPDefinitionMedia(
 		CPDefinitionMedia cpDefinitionMedia);
 
+	public CPDefinitionMedia addCPDefinitionMedia(long cpDefinitionId,
+		long fileEntryId, java.lang.String ddmContent, int priority,
+		long CPMediaTypeId, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new cp definition media with the primary key. Does not add the cp definition media to the database.
 	*
@@ -87,10 +96,12 @@ public interface CPDefinitionMediaLocalService extends BaseLocalService,
 	*
 	* @param cpDefinitionMedia the cp definition media
 	* @return the cp definition media that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPDefinitionMedia deleteCPDefinitionMedia(
-		CPDefinitionMedia cpDefinitionMedia);
+		CPDefinitionMedia cpDefinitionMedia) throws PortalException;
 
 	/**
 	* Deletes the cp definition media with the primary key from the database. Also notifies the appropriate model listeners.
@@ -149,6 +160,13 @@ public interface CPDefinitionMediaLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionMedia updateCPDefinitionMedia(
 		CPDefinitionMedia cpDefinitionMedia);
+
+	public CPDefinitionMedia updateCPDefinitionMedia(long cpDefinitionMediaId,
+		java.lang.String ddmContent, int priority, long CPMediaTypeId,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CPMediaType deleteCPMediaType(long cpMediaTypeId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

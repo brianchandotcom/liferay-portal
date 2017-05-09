@@ -12,10 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.product.constants;/**
+package com.liferay.commerce.product.constants;
+
+/**
  * @author Marco Leo
  */
 public class CPConstants {
 
 	public static final String SERVICE_NAME = "com.liferay.commerce.product";
+
 }

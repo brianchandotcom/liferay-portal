@@ -21,16 +21,12 @@ import com.liferay.commerce.product.service.base.CPDefinitionMediaLocalServiceBa
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Marco Leo
@@ -40,8 +36,8 @@ public class CPDefinitionMediaLocalServiceImpl
 
 	@Override
 	public CPDefinitionMedia addCPDefinitionMedia(
-			long cpDefinitionId,long fileEntryId,String ddmContent,
-			int priority, long CPMediaTypeId, ServiceContext serviceContext)
+			long cpDefinitionId, long fileEntryId, String ddmContent,
+			int priority, long cpMediaTypeId, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition media
@@ -63,40 +59,22 @@ public class CPDefinitionMediaLocalServiceImpl
 		cpDefinitionMedia.setFileEntryId(fileEntryId);
 		cpDefinitionMedia.setDDMContent(ddmContent);
 		cpDefinitionMedia.setPriority(priority);
-		cpDefinitionMedia.setCPMediaTypeId(CPMediaTypeId);
+		cpDefinitionMedia.setCPMediaTypeId(cpMediaTypeId);
 
 		cpDefinitionMediaPersistence.update(cpDefinitionMedia);
 
 		// Resources
 
-		resourceLocalService.addModelResources(cpDefinitionMedia, serviceContext);
-
-		return cpDefinitionMedia;
-	}
-
-	@Override
-	public CPDefinitionMedia updateCPDefinitionMedia(
-			long cpDefinitionMediaId,String ddmContent, int priority,
-			long CPMediaTypeId, ServiceContext serviceContext)
-		throws PortalException {
-
-		// Commerce product definition media
-
-		CPDefinitionMedia cpDefinitionMedia =
-			cpDefinitionMediaPersistence.findByPrimaryKey(cpDefinitionMediaId);
-
-		cpDefinitionMedia.setDDMContent(ddmContent);
-		cpDefinitionMedia.setPriority(priority);
-		cpDefinitionMedia.setCPMediaTypeId(CPMediaTypeId);
-
-		cpDefinitionMediaPersistence.update(cpDefinitionMedia);
+		resourceLocalService.addModelResources(
+			cpDefinitionMedia, serviceContext);
 
 		return cpDefinitionMedia;
 	}
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public CPDefinitionMedia deleteCPDefinitionMedia(CPDefinitionMedia cpMediaType)
+	public CPDefinitionMedia deleteCPDefinitionMedia(
+			CPDefinitionMedia cpMediaType)
 		throws PortalException {
 
 		// Commerce product definition media
@@ -108,8 +86,7 @@ public class CPDefinitionMediaLocalServiceImpl
 		long fileEntryId = cpMediaType.getFileEntryId();
 
 		if (fileEntryId != 0) {
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				fileEntryId);
+			PortletFileRepositoryUtil.deletePortletFileEntry(fileEntryId);
 		}
 
 		return cpMediaType;
@@ -123,6 +100,26 @@ public class CPDefinitionMediaLocalServiceImpl
 			cpMediaTypeId);
 
 		return cpMediaTypeLocalService.deleteCPMediaType(cpMediaType);
+	}
+
+	@Override
+	public CPDefinitionMedia updateCPDefinitionMedia(
+			long cpDefinitionMediaId, String ddmContent, int priority,
+			long cpMediaTypeId, ServiceContext serviceContext)
+		throws PortalException {
+
+		// Commerce product definition media
+
+		CPDefinitionMedia cpDefinitionMedia =
+			cpDefinitionMediaPersistence.findByPrimaryKey(cpDefinitionMediaId);
+
+		cpDefinitionMedia.setDDMContent(ddmContent);
+		cpDefinitionMedia.setPriority(priority);
+		cpDefinitionMedia.setCPMediaTypeId(cpMediaTypeId);
+
+		cpDefinitionMediaPersistence.update(cpDefinitionMedia);
+
+		return cpDefinitionMedia;
 	}
 
 	protected Folder doAddFolder(long userId, long groupId, String folderName)
@@ -143,4 +140,5 @@ public class CPDefinitionMediaLocalServiceImpl
 
 		return folder;
 	}
+
 }

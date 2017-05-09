@@ -99,6 +99,18 @@
 		<column name="DDMContent" type="String" />
 		<column name="priority" type="int" />
 		<column name="CPMediaTypeId" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CPDefinitionId" return-type="Collection">
+			<finder-column name="CPDefinitionId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="CPDefinitionOptionRel" remote-service="true"  uuid="true">
 

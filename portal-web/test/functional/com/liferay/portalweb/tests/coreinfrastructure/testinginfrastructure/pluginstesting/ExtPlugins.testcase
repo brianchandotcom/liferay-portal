@@ -5,23 +5,6 @@
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Test Plugins" />
 
-	<set-up>
-
-		<execute macro="Portlet#shutdownServer" />
-
-		<execute macro="Portlet#assertServerShutdown" />
-
-		<execute macro="Portlet#startServer">
-			<var name="deleteLiferayHome" value="false" />
-		</execute>
-
-		<execute macro="Portlet#assertServerStartup" />
-
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
 	<tear-down>
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
@@ -41,9 +24,21 @@
 	</tear-down>
 
 	<command name="ViewSampleExtPluginValidationViaDeploy" priority="5">
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#assertServerShutdown" />
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="Portlet#assertServerStartup" />
+
 		<execute function="AssertConsoleTextPresent" value1="EXT_ATOM_SERVLET_INSTALLED" />
 
 		<execute function="AssertConsoleTextPresent" value1="EXT_WEB_SERVLET_INSTALLED" />
+
+		<execute macro="User#firstLoginPG" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="ext_portal_impl_installed_" />
 
@@ -65,6 +60,8 @@
 		<execute function="AssertConsoleTextPresent" value1="EXT_ATOM_SERVLET_INSTALLED" />
 
 		<execute function="AssertConsoleTextPresent" value1="EXT_WEB_SERVLET_INSTALLED" />
+
+		<execute macro="User#firstLoginPG" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="ext_portal_impl_installed_" />
 

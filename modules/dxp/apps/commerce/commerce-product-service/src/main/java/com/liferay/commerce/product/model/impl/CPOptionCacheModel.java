@@ -65,7 +65,7 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -97,6 +97,8 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		sb.append(required);
 		sb.append(", skuContributor=");
 		sb.append(skuContributor);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -171,6 +173,13 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		cpOptionImpl.setRequired(required);
 		cpOptionImpl.setSkuContributor(skuContributor);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			cpOptionImpl.setLastPublishDate(null);
+		}
+		else {
+			cpOptionImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		cpOptionImpl.resetOriginalValues();
 
 		return cpOptionImpl;
@@ -200,6 +209,7 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		required = objectInput.readBoolean();
 
 		skuContributor = objectInput.readBoolean();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -263,6 +273,7 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		objectOutput.writeBoolean(required);
 
 		objectOutput.writeBoolean(skuContributor);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -280,4 +291,5 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 	public boolean facetable;
 	public boolean required;
 	public boolean skuContributor;
+	public long lastPublishDate;
 }

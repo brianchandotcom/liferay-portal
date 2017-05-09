@@ -66,7 +66,7 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -92,6 +92,8 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		sb.append(title);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -152,6 +154,13 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 
 		cpOptionValueImpl.setPriority(priority);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			cpOptionValueImpl.setLastPublishDate(null);
+		}
+		else {
+			cpOptionValueImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		cpOptionValueImpl.resetOriginalValues();
 
 		return cpOptionValueImpl;
@@ -177,6 +186,7 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		title = objectInput.readUTF();
 
 		priority = objectInput.readInt();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -224,6 +234,7 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		}
 
 		objectOutput.writeInt(priority);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -238,4 +249,5 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 	public String name;
 	public String title;
 	public int priority;
+	public long lastPublishDate;
 }

@@ -562,6 +562,11 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
+	public java.lang.String getTitleCurrentValue() {
+		return _cpDefinition.getTitleCurrentValue();
+	}
+
+	@Override
 	public java.lang.String getTitleMapAsXML() {
 		return _cpDefinition.getTitleMapAsXML();
 	}
@@ -698,6 +703,11 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _cpDefinition.getDescriptionMap();
+	}
+
+	@Override
 	public Map<java.lang.String, java.lang.String> getLanguageIdToDescriptionMap() {
 		return _cpDefinition.getLanguageIdToDescriptionMap();
 	}
@@ -715,6 +725,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap() {
 		return _cpDefinition.getLanguageIdToUrlTitleMap();
+	}
+
+	@Override
+	public Map<java.util.Locale, java.lang.String> getShortDescriptionMap() {
+		return _cpDefinition.getShortDescriptionMap();
+	}
+
+	@Override
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _cpDefinition.getTitleMap();
 	}
 
 	/**
@@ -867,6 +887,12 @@ public class CPDefinitionWrapper implements CPDefinition,
 		_cpDefinition.setDefaultLanguageId(defaultLanguageId);
 	}
 
+	@Override
+	public void setDescriptionMap(
+		Map<java.util.Locale, java.lang.String> descriptionMap) {
+		_cpDefinition.setDescriptionMap(descriptionMap);
+	}
+
 	/**
 	* Sets the display date of this cp definition.
 	*
@@ -973,6 +999,12 @@ public class CPDefinitionWrapper implements CPDefinition,
 		_cpDefinition.setProductTypeName(productTypeName);
 	}
 
+	@Override
+	public void setShortDescriptionMap(
+		Map<java.util.Locale, java.lang.String> shortDescriptionMap) {
+		_cpDefinition.setShortDescriptionMap(shortDescriptionMap);
+	}
+
 	/**
 	* Sets the status of this cp definition.
 	*
@@ -1021,6 +1053,11 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setStatusDate(Date statusDate) {
 		_cpDefinition.setStatusDate(statusDate);
+	}
+
+	@Override
+	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
+		_cpDefinition.setTitleMap(titleMap);
 	}
 
 	/**

@@ -61,17 +61,6 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
-	@Override
-	public com.liferay.commerce.product.model.CPInstance addCPInstance(
-		long cpDefinitionId, java.lang.String sku, java.lang.String ddmContent,
-		java.util.Date displayDate, java.util.Date expirationDate,
-		boolean neverExpire,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpInstanceLocalService.addCPInstance(cpDefinitionId, sku,
-			ddmContent, displayDate, expirationDate, neverExpire, serviceContext);
-	}
-
 	/**
 	* Creates a new cp instance with the primary key. Does not add the cp instance to the database.
 	*

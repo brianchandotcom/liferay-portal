@@ -193,6 +193,12 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	}
 
 	@Override
+	public CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpInstance.getCPDefinition();
+	}
+
+	@Override
 	public CPInstance toEscapedModel() {
 		return new CPInstanceWrapper(_cpInstance.toEscapedModel());
 	}

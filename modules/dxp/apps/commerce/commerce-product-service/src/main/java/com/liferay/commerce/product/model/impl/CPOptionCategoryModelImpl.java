@@ -91,7 +91,8 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "priority", Types.INTEGER }
+			{ "priority", Types.INTEGER },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -108,9 +109,10 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPOptionCategory (uuid_ VARCHAR(75) null,CPOptionCategoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CPOptionCategory (uuid_ VARCHAR(75) null,CPOptionCategoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,priority INTEGER,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPOptionCategory";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpOptionCategory.title ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPOptionCategory.title ASC";
@@ -156,6 +158,7 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
 		model.setPriority(soapModel.getPriority());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -233,6 +236,7 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("priority", getPriority());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -312,6 +316,12 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -698,6 +708,17 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 		_priority = priority;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -829,6 +850,7 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 		cpOptionCategoryImpl.setTitle(getTitle());
 		cpOptionCategoryImpl.setDescription(getDescription());
 		cpOptionCategoryImpl.setPriority(getPriority());
+		cpOptionCategoryImpl.setLastPublishDate(getLastPublishDate());
 
 		cpOptionCategoryImpl.resetOriginalValues();
 
@@ -976,12 +998,21 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 
 		cpOptionCategoryCacheModel.priority = getPriority();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			cpOptionCategoryCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			cpOptionCategoryCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return cpOptionCategoryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1007,6 +1038,8 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 		sb.append(getDescription());
 		sb.append(", priority=");
 		sb.append(getPriority());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1014,7 +1047,7 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPOptionCategory");
@@ -1068,6 +1101,10 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
 		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1098,6 +1135,7 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private int _priority;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CPOptionCategory _escapedModel;
 }

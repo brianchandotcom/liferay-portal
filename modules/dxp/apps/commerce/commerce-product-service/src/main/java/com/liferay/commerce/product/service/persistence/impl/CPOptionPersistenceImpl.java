@@ -3283,6 +3283,7 @@ public class CPOptionPersistenceImpl extends BasePersistenceImpl<CPOption>
 		cpOptionImpl.setFacetable(cpOption.isFacetable());
 		cpOptionImpl.setRequired(cpOption.isRequired());
 		cpOptionImpl.setSkuContributor(cpOption.isSkuContributor());
+		cpOptionImpl.setLastPublishDate(cpOption.getLastPublishDate());
 
 		return cpOptionImpl;
 	}

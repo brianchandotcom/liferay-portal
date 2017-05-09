@@ -46,6 +46,7 @@ public class CPOptionCategorySoap implements Serializable {
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setPriority(model.getPriority());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -196,6 +197,14 @@ public class CPOptionCategorySoap implements Serializable {
 		_priority = priority;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _CPOptionCategoryId;
 	private long _groupId;
@@ -208,4 +217,5 @@ public class CPOptionCategorySoap implements Serializable {
 	private String _title;
 	private String _description;
 	private int _priority;
+	private Date _lastPublishDate;
 }

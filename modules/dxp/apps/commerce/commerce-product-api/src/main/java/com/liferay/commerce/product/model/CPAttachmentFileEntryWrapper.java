@@ -224,6 +224,12 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpAttachmentFileEntry.getFileEntry();
+	}
+
+	@Override
 	public int compareTo(CPAttachmentFileEntry cpAttachmentFileEntry) {
 		return _cpAttachmentFileEntry.compareTo(cpAttachmentFileEntry);
 	}

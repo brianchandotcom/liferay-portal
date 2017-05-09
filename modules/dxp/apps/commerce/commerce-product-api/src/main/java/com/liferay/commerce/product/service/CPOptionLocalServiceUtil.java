@@ -372,6 +372,11 @@ public class CPOptionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static void deleteCPOptions(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCPOptions(groupId);
+	}
+
 	public static CPOptionLocalService getService() {
 		return _serviceTracker.getService();
 	}

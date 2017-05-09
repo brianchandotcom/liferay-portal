@@ -323,6 +323,8 @@ public abstract class CPOptionLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
+		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
+
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CPOption>() {
 				@Override
 				public void performAction(CPOption cpOption)

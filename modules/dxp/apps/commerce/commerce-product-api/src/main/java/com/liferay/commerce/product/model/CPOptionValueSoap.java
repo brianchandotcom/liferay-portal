@@ -46,6 +46,7 @@ public class CPOptionValueSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setPriority(model.getPriority());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -194,6 +195,14 @@ public class CPOptionValueSoap implements Serializable {
 		_priority = priority;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _CPOptionValueId;
 	private long _groupId;
@@ -206,4 +215,5 @@ public class CPOptionValueSoap implements Serializable {
 	private String _name;
 	private String _title;
 	private int _priority;
+	private Date _lastPublishDate;
 }

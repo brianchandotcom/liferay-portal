@@ -147,6 +147,8 @@ public class CPOptionValuePersistenceTest {
 
 		newCPOptionValue.setPriority(RandomTestUtil.nextInt());
 
+		newCPOptionValue.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_cpOptionValues.add(_persistence.update(newCPOptionValue));
 
 		CPOptionValue existingCPOptionValue = _persistence.findByPrimaryKey(newCPOptionValue.getPrimaryKey());
@@ -177,6 +179,9 @@ public class CPOptionValuePersistenceTest {
 			newCPOptionValue.getTitle());
 		Assert.assertEquals(existingCPOptionValue.getPriority(),
 			newCPOptionValue.getPriority());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCPOptionValue.getLastPublishDate()),
+			Time.getShortTimestamp(newCPOptionValue.getLastPublishDate()));
 	}
 
 	@Test
@@ -254,7 +259,7 @@ public class CPOptionValuePersistenceTest {
 			true, "CPOptionValueId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "CPOptionId", true, "name", true, "title",
-			true, "priority", true);
+			true, "priority", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -493,6 +498,8 @@ public class CPOptionValuePersistenceTest {
 		cpOptionValue.setTitle(RandomTestUtil.randomString());
 
 		cpOptionValue.setPriority(RandomTestUtil.nextInt());
+
+		cpOptionValue.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_cpOptionValues.add(_persistence.update(cpOptionValue));
 

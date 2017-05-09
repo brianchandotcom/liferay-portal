@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -89,11 +88,6 @@ public interface CPInstanceLocalService extends BaseLocalService,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
-
-	public CPInstance addCPInstance(long cpDefinitionId, java.lang.String sku,
-		java.lang.String ddmContent, Date displayDate, Date expirationDate,
-		boolean neverExpire, ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	* Creates a new cp instance with the primary key. Does not add the cp instance to the database.

@@ -74,6 +74,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 		attributes.put("facetable", getFacetable());
 		attributes.put("required", getRequired());
 		attributes.put("skuContributor", getSkuContributor());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -169,6 +170,12 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 
 		if (skuContributor != null) {
 			setSkuContributor(skuContributor);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -503,6 +510,16 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	}
 
 	/**
+	* Returns the last publish date of this cp option.
+	*
+	* @return the last publish date of this cp option
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _cpOption.getLastPublishDate();
+	}
+
+	/**
 	* Returns the modified date of this cp option.
 	*
 	* @return the modified date of this cp option
@@ -743,6 +760,16 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	@Override
 	public void setGroupId(long groupId) {
 		_cpOption.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this cp option.
+	*
+	* @param lastPublishDate the last publish date of this cp option
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_cpOption.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

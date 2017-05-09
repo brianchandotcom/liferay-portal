@@ -56,4 +56,7 @@ public interface CPDefinitionOptionValueRel
 				return CPDefinitionOptionValueRel.class;
 			}
 		};
+
+	public CPDefinitionOptionRel getCPDefinitionOptionRel()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

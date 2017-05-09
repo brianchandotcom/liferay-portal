@@ -56,5 +56,11 @@ public interface CPDefinitionOptionRel extends CPDefinitionOptionRelModel,
 			}
 		};
 
+	public CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public java.util.List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels();
+
+	public CPOption getCPOption()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

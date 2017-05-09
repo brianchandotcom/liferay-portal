@@ -3328,6 +3328,7 @@ public class CPOptionCategoryPersistenceImpl extends BasePersistenceImpl<CPOptio
 		cpOptionCategoryImpl.setTitle(cpOptionCategory.getTitle());
 		cpOptionCategoryImpl.setDescription(cpOptionCategory.getDescription());
 		cpOptionCategoryImpl.setPriority(cpOptionCategory.getPriority());
+		cpOptionCategoryImpl.setLastPublishDate(cpOptionCategory.getLastPublishDate());
 
 		return cpOptionCategoryImpl;
 	}

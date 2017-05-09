@@ -72,6 +72,7 @@ public class CPOptionValueWrapper implements CPOptionValue,
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("priority", getPriority());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -149,6 +150,18 @@ public class CPOptionValueWrapper implements CPOptionValue,
 		if (priority != null) {
 			setPriority(priority);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
+	}
+
+	@Override
+	public CPOption getCPOption()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionValue.getCPOption();
 	}
 
 	@Override
@@ -354,6 +367,16 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	}
 
 	/**
+	* Returns the last publish date of this cp option value.
+	*
+	* @return the last publish date of this cp option value
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _cpOptionValue.getLastPublishDate();
+	}
+
+	/**
 	* Returns the modified date of this cp option value.
 	*
 	* @return the modified date of this cp option value
@@ -520,6 +543,16 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	@Override
 	public void setGroupId(long groupId) {
 		_cpOptionValue.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this cp option value.
+	*
+	* @param lastPublishDate the last publish date of this cp option value
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_cpOptionValue.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

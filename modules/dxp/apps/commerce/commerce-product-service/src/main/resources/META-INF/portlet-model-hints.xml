@@ -144,6 +144,7 @@
 		<field name="facetable" type="boolean" />
 		<field name="required" type="boolean" />
 		<field name="skuContributor" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPOptionCategory">
 		<field name="uuid" type="String" />
@@ -160,6 +161,7 @@
 		<field name="priority" type="int">
 			<validator name="number" />
 		</field>
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPOptionValue">
 		<field name="uuid" type="String" />
@@ -178,5 +180,6 @@
 		<field name="priority" type="int">
 			<validator name="number" />
 		</field>
+		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

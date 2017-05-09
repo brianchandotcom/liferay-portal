@@ -94,7 +94,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			{ "DDMFormFieldTypeName", Types.VARCHAR },
 			{ "facetable", Types.BOOLEAN },
 			{ "required", Types.BOOLEAN },
-			{ "skuContributor", Types.BOOLEAN }
+			{ "skuContributor", Types.BOOLEAN },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -114,9 +115,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		TABLE_COLUMNS_MAP.put("facetable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("required", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("skuContributor", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPOption (uuid_ VARCHAR(75) null,CPOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CPOption (uuid_ VARCHAR(75) null,CPOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPOption";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpOption.title ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPOption.title ASC";
@@ -165,6 +167,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		model.setFacetable(soapModel.getFacetable());
 		model.setRequired(soapModel.getRequired());
 		model.setSkuContributor(soapModel.getSkuContributor());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -244,6 +247,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		attributes.put("facetable", getFacetable());
 		attributes.put("required", getRequired());
 		attributes.put("skuContributor", getSkuContributor());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -342,6 +346,12 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 		if (skuContributor != null) {
 			setSkuContributor(skuContributor);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -784,6 +794,17 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		_skuContributor = skuContributor;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -918,6 +939,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		cpOptionImpl.setFacetable(getFacetable());
 		cpOptionImpl.setRequired(getRequired());
 		cpOptionImpl.setSkuContributor(getSkuContributor());
+		cpOptionImpl.setLastPublishDate(getLastPublishDate());
 
 		cpOptionImpl.resetOriginalValues();
 
@@ -1078,12 +1100,21 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 		cpOptionCacheModel.skuContributor = getSkuContributor();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			cpOptionCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			cpOptionCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return cpOptionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1115,6 +1146,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(getRequired());
 		sb.append(", skuContributor=");
 		sb.append(getSkuContributor());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1122,7 +1155,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPOption");
@@ -1188,6 +1221,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			"<column><column-name>skuContributor</column-name><column-value><![CDATA[");
 		sb.append(getSkuContributor());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1221,6 +1258,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	private boolean _facetable;
 	private boolean _required;
 	private boolean _skuContributor;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CPOption _escapedModel;
 }

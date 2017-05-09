@@ -157,6 +157,12 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	@Override
+	public CPDefinitionOptionRel getCPDefinitionOptionRel()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionValueRel.getCPDefinitionOptionRel();
+	}
+
+	@Override
 	public CPDefinitionOptionValueRel toEscapedModel() {
 		return new CPDefinitionOptionValueRelWrapper(_cpDefinitionOptionValueRel.toEscapedModel());
 	}

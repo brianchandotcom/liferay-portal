@@ -49,6 +49,7 @@ public class CPOptionSoap implements Serializable {
 		soapModel.setFacetable(model.getFacetable());
 		soapModel.setRequired(model.getRequired());
 		soapModel.setSkuContributor(model.getSkuContributor());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -233,6 +234,14 @@ public class CPOptionSoap implements Serializable {
 		_skuContributor = skuContributor;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _CPOptionId;
 	private long _groupId;
@@ -248,4 +257,5 @@ public class CPOptionSoap implements Serializable {
 	private boolean _facetable;
 	private boolean _required;
 	private boolean _skuContributor;
+	private Date _lastPublishDate;
 }

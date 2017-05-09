@@ -22,10 +22,9 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -48,8 +47,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface CPOptionModel extends BaseModel<CPOption>, GroupedModel,
-	LocalizedModel, ShardedModel, StagedAuditedModel {
+public interface CPOptionModel extends BaseModel<CPOption>, LocalizedModel,
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -506,6 +505,22 @@ public interface CPOptionModel extends BaseModel<CPOption>, GroupedModel,
 	 * @param skuContributor the sku contributor of this cp option
 	 */
 	public void setSkuContributor(boolean skuContributor);
+
+	/**
+	 * Returns the last publish date of this cp option.
+	 *
+	 * @return the last publish date of this cp option
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this cp option.
+	 *
+	 * @param lastPublishDate the last publish date of this cp option
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override
 	public boolean isNew();

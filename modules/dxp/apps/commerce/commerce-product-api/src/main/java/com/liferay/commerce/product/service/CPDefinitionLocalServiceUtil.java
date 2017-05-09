@@ -421,6 +421,21 @@ public class CPDefinitionLocalServiceUtil {
 			end, orderByComparator);
 	}
 
+	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionDescriptionMap(
+		long cpDefinitionPK) {
+		return getService().getCPDefinitionDescriptionMap(cpDefinitionPK);
+	}
+
+	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionShortDescriptionMap(
+		long cpDefinitionPK) {
+		return getService().getCPDefinitionShortDescriptionMap(cpDefinitionPK);
+	}
+
+	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionTitleMap(
+		long cpDefinitionPK) {
+		return getService().getCPDefinitionTitleMap(cpDefinitionPK);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -443,6 +458,11 @@ public class CPDefinitionLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteCPDefinitions(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCPDefinitions(groupId);
 	}
 
 	public static void moveCPDefinitionsToTrash(long groupId, long userId)

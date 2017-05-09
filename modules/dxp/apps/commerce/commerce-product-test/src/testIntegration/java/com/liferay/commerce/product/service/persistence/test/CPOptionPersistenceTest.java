@@ -153,6 +153,8 @@ public class CPOptionPersistenceTest {
 
 		newCPOption.setSkuContributor(RandomTestUtil.randomBoolean());
 
+		newCPOption.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_cpOptions.add(_persistence.update(newCPOption));
 
 		CPOption existingCPOption = _persistence.findByPrimaryKey(newCPOption.getPrimaryKey());
@@ -186,6 +188,9 @@ public class CPOptionPersistenceTest {
 			newCPOption.getRequired());
 		Assert.assertEquals(existingCPOption.getSkuContributor(),
 			newCPOption.getSkuContributor());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCPOption.getLastPublishDate()),
+			Time.getShortTimestamp(newCPOption.getLastPublishDate()));
 	}
 
 	@Test
@@ -263,7 +268,7 @@ public class CPOptionPersistenceTest {
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"name", true, "title", true, "description", true,
 			"DDMFormFieldTypeName", true, "facetable", true, "required", true,
-			"skuContributor", true);
+			"skuContributor", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -506,6 +511,8 @@ public class CPOptionPersistenceTest {
 		cpOption.setRequired(RandomTestUtil.randomBoolean());
 
 		cpOption.setSkuContributor(RandomTestUtil.randomBoolean());
+
+		cpOption.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_cpOptions.add(_persistence.update(cpOption));
 

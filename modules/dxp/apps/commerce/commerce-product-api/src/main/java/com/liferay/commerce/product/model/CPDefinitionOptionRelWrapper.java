@@ -197,6 +197,12 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 	}
 
 	@Override
+	public CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionRel.getCPDefinition();
+	}
+
+	@Override
 	public CPDefinitionOptionRel toEscapedModel() {
 		return new CPDefinitionOptionRelWrapper(_cpDefinitionOptionRel.toEscapedModel());
 	}
@@ -204,6 +210,12 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 	@Override
 	public CPDefinitionOptionRel toUnescapedModel() {
 		return new CPDefinitionOptionRelWrapper(_cpDefinitionOptionRel.toUnescapedModel());
+	}
+
+	@Override
+	public CPOption getCPOption()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionRel.getCPOption();
 	}
 
 	/**

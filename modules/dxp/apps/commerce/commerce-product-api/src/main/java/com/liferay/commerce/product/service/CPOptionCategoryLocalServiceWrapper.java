@@ -381,6 +381,12 @@ public class CPOptionCategoryLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteCPOptionCategories(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpOptionCategoryLocalService.deleteCPOptionCategories(groupId);
+	}
+
+	@Override
 	public CPOptionCategoryLocalService getWrappedService() {
 		return _cpOptionCategoryLocalService;
 	}

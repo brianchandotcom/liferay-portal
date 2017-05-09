@@ -57,4 +57,21 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 	public java.lang.String[] getAvailableLanguageIds();
 
 	public java.util.List<CPDefinitionOptionRel> getCPDefinitionOptionRels();
+
+	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap();
+
+	public java.util.Map<java.util.Locale, java.lang.String> getShortDescriptionMap();
+
+	public java.lang.String getTitleCurrentValue();
+
+	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap();
+
+	public void setDescriptionMap(
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap);
+
+	public void setShortDescriptionMap(
+		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap);
+
+	public void setTitleMap(
+		java.util.Map<java.util.Locale, java.lang.String> titleMap);
 }

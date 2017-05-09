@@ -147,6 +147,8 @@ public class CPOptionCategoryPersistenceTest {
 
 		newCPOptionCategory.setPriority(RandomTestUtil.nextInt());
 
+		newCPOptionCategory.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_cpOptionCategories.add(_persistence.update(newCPOptionCategory));
 
 		CPOptionCategory existingCPOptionCategory = _persistence.findByPrimaryKey(newCPOptionCategory.getPrimaryKey());
@@ -177,6 +179,9 @@ public class CPOptionCategoryPersistenceTest {
 			newCPOptionCategory.getDescription());
 		Assert.assertEquals(existingCPOptionCategory.getPriority(),
 			newCPOptionCategory.getPriority());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCPOptionCategory.getLastPublishDate()),
+			Time.getShortTimestamp(newCPOptionCategory.getLastPublishDate()));
 	}
 
 	@Test
@@ -253,7 +258,7 @@ public class CPOptionCategoryPersistenceTest {
 			true, "CPOptionCategoryId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "title", true, "description",
-			true, "priority", true);
+			true, "priority", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -492,6 +497,8 @@ public class CPOptionCategoryPersistenceTest {
 		cpOptionCategory.setDescription(RandomTestUtil.randomString());
 
 		cpOptionCategory.setPriority(RandomTestUtil.nextInt());
+
+		cpOptionCategory.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_cpOptionCategories.add(_persistence.update(cpOptionCategory));
 

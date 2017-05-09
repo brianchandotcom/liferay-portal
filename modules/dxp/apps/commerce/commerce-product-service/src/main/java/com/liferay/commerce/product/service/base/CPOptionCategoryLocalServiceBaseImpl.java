@@ -329,6 +329,8 @@ public abstract class CPOptionCategoryLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
+		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
+
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CPOptionCategory>() {
 				@Override
 				public void performAction(CPOptionCategory cpOptionCategory)

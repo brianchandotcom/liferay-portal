@@ -72,6 +72,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("priority", getPriority());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -148,6 +149,12 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -422,6 +429,16 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	}
 
 	/**
+	* Returns the last publish date of this cp option category.
+	*
+	* @return the last publish date of this cp option category
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _cpOptionCategory.getLastPublishDate();
+	}
+
+	/**
 	* Returns the modified date of this cp option category.
 	*
 	* @return the modified date of this cp option category
@@ -642,6 +659,16 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	@Override
 	public void setGroupId(long groupId) {
 		_cpOptionCategory.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this cp option category.
+	*
+	* @param lastPublishDate the last publish date of this cp option category
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_cpOptionCategory.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

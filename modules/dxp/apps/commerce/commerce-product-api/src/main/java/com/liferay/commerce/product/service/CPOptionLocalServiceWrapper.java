@@ -394,6 +394,12 @@ public class CPOptionLocalServiceWrapper implements CPOptionLocalService,
 	}
 
 	@Override
+	public void deleteCPOptions(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpOptionLocalService.deleteCPOptions(groupId);
+	}
+
+	@Override
 	public CPOptionLocalService getWrappedService() {
 		return _cpOptionLocalService;
 	}

@@ -126,7 +126,8 @@ create table CPOption (
 	DDMFormFieldTypeName VARCHAR(75) null,
 	facetable BOOLEAN,
 	required BOOLEAN,
-	skuContributor BOOLEAN
+	skuContributor BOOLEAN,
+	lastPublishDate DATE null
 );
 
 create table CPOptionCategory (
@@ -141,7 +142,8 @@ create table CPOptionCategory (
 	name VARCHAR(75) null,
 	title STRING null,
 	description STRING null,
-	priority INTEGER
+	priority INTEGER,
+	lastPublishDate DATE null
 );
 
 create table CPOptionValue (
@@ -156,5 +158,6 @@ create table CPOptionValue (
 	CPOptionId LONG,
 	name VARCHAR(75) null,
 	title STRING null,
-	priority INTEGER
+	priority INTEGER,
+	lastPublishDate DATE null
 );

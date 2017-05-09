@@ -366,6 +366,18 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<CPDefinition> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Locale, java.lang.String> getCPDefinitionDescriptionMap(
+		long cpDefinitionPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Locale, java.lang.String> getCPDefinitionShortDescriptionMap(
+		long cpDefinitionPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Locale, java.lang.String> getCPDefinitionTitleMap(
+		long cpDefinitionPK);
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -383,6 +395,8 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteCPDefinitions(long groupId) throws PortalException;
 
 	public void moveCPDefinitionsToTrash(long groupId, long userId)
 		throws PortalException;

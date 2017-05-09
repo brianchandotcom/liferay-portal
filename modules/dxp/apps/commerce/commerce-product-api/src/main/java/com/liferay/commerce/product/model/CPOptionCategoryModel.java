@@ -22,10 +22,9 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -49,7 +48,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface CPOptionCategoryModel extends BaseModel<CPOptionCategory>,
-	GroupedModel, LocalizedModel, ShardedModel, StagedAuditedModel {
+	LocalizedModel, ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -442,6 +441,22 @@ public interface CPOptionCategoryModel extends BaseModel<CPOptionCategory>,
 	 * @param priority the priority of this cp option category
 	 */
 	public void setPriority(int priority);
+
+	/**
+	 * Returns the last publish date of this cp option category.
+	 *
+	 * @return the last publish date of this cp option category
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this cp option category.
+	 *
+	 * @param lastPublishDate the last publish date of this cp option category
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override
 	public boolean isNew();

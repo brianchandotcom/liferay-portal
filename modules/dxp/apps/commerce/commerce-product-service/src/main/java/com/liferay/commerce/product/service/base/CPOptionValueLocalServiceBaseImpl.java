@@ -330,6 +330,8 @@ public abstract class CPOptionValueLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
+		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
+
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CPOptionValue>() {
 				@Override
 				public void performAction(CPOptionValue cpOptionValue)

@@ -54,4 +54,7 @@ public interface CPOptionValue extends CPOptionValueModel, PersistedModel {
 				return CPOptionValue.class;
 			}
 		};
+
+	public CPOption getCPOption()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

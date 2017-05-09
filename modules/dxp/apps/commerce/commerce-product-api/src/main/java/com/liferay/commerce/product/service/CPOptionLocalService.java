@@ -323,4 +323,6 @@ public interface CPOptionLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteCPOptions(long groupId) throws PortalException;
 }

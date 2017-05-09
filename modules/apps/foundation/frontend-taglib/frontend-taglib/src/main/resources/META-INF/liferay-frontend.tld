@@ -335,6 +335,30 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description><![CDATA[Creates a UI component for managing icon.]]></description>
+		<name>icon</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.soy.IconTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description><![CDATA[CSS classes for styling the icon container and also define icons that was not defined as SVG.]]></description>
+			<name>elementClasses</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[An ID for the component container instance.]]></description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Defines which SVG icon will be rendered.]]></description>
+			<name>symbol</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates a lexicon-based card component.</description>
 		<name>icon-vertical-card</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.IconVerticalCardTag</tag-class>

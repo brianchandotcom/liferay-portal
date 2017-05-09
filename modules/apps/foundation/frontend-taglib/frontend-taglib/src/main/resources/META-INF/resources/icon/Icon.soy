@@ -1,0 +1,30 @@
+{namespace Icon}
+
+/**
+ * Icon Component
+ **/
+{template .render}
+	{@param id: string}
+	{@param spritemap: string}
+	{@param? elementClasses: string}
+	{@param? symbol: string}
+
+	{let $classes kind="text"}
+		{if $symbol}
+			lexicon-icon
+			{sp}modifier-class
+			{sp}lexicon-icon-{$symbol}
+		{/if}
+		{if $elementClasses}
+			{sp}{$elementClasses}
+		{/if}
+	{/let}
+
+	{if isNonnull($symbol)}
+		<svg aria-hidden="true" class="{$classes}" id="{$id}">
+			<use xlink:href="{$spritemap}#{$symbol}" />
+		</svg>
+	{elseif $elementClasses}
+		<span id="{$id}" aria-hidden="true" class="{$classes}"></span>
+	{/if}
+{/template}

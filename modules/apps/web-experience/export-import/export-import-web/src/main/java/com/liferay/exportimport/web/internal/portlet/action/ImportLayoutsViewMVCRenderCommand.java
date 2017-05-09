@@ -16,8 +16,10 @@ package com.liferay.exportimport.web.internal.portlet.action;
 
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.trash.TrashHelper;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -37,5 +39,13 @@ public class ImportLayoutsViewMVCRenderCommand
 	protected String getPath() {
 		return "/import/view.jsp";
 	}
+
+	@Override
+	protected TrashHelper getTrashHelper() {
+		return _trashHelper;
+	}
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

@@ -16,8 +16,10 @@ package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.trash.TrashHelper;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -37,5 +39,13 @@ public class MBAdminViewMVCRenderCommand extends BaseViewMVCRenderCommand {
 	public MBAdminViewMVCRenderCommand() {
 		super("/message_boards_admin/view.jsp");
 	}
+
+	@Override
+	protected TrashHelper getTrashHelper() {
+		return _trashHelper;
+	}
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

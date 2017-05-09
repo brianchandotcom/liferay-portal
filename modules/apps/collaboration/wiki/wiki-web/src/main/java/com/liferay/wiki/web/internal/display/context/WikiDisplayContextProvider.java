@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.internal.display.context;
 
+import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.display.context.WikiDisplayContextFactory;
 import com.liferay.wiki.display.context.WikiEditPageDisplayContext;
 import com.liferay.wiki.display.context.WikiListPagesDisplayContext;
@@ -65,7 +66,8 @@ public class WikiDisplayContextProvider {
 		WikiNode wikiNode) {
 
 		WikiListPagesDisplayContext wikiListPagesDisplayContext =
-			new DefaultWikiListPagesDisplayContext(request, response, wikiNode);
+			new DefaultWikiListPagesDisplayContext(
+				request, response, wikiNode, _trashHelper);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
 				_wikiDisplayContextFactories) {
@@ -147,6 +149,9 @@ public class WikiDisplayContextProvider {
 
 		_wikiDisplayContextFactories.remove(wikiDisplayContextFactory);
 	}
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 	private final List<WikiDisplayContextFactory> _wikiDisplayContextFactories =
 		new CopyOnWriteArrayList<>();

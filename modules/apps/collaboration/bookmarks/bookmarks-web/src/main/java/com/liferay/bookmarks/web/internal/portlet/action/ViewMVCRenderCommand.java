@@ -22,6 +22,8 @@ import com.liferay.bookmarks.web.internal.portlet.toolbar.contributor.BookmarksP
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.trash.TrashHelper;
+import com.liferay.trash.util.TrashWebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -59,6 +61,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				BookmarksWebKeys.BOOKMARKS_PORTLET_TOOLBAR_CONTRIBUTOR,
 				_bookmarksPortletToolbarContributor);
+
+			renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFolderException ||
@@ -86,5 +90,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	private BookmarksPortletToolbarContributor
 		_bookmarksPortletToolbarContributor;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

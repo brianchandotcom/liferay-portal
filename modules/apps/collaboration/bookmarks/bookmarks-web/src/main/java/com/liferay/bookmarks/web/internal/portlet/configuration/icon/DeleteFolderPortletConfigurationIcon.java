@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -157,7 +157,7 @@ public class DeleteFolderPortletConfigurationIcon
 
 	protected boolean isTrashEnabled(long groupId) {
 		try {
-			if (TrashUtil.isTrashEnabled(groupId)) {
+			if (_trashHelper.isTrashEnabled(groupId)) {
 				return true;
 			}
 		}
@@ -169,5 +169,8 @@ public class DeleteFolderPortletConfigurationIcon
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

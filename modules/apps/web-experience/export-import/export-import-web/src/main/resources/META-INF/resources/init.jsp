@@ -145,7 +145,8 @@ page import="com.liferay.portal.kernel.util.comparator.PortletTitleComparator" %
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.trash.kernel.util.TrashUtil" %>
+page import="com.liferay.trash.TrashHelper" %><%@
+page import="com.liferay.trash.util.TrashWebKeys" %>
 
 <%@ page import="java.io.Serializable" %>
 
@@ -186,6 +187,8 @@ Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
 int timeZoneOffset = timeZone.getOffset(calendar.getTimeInMillis());
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+
+TrashHelper trashHelper = (TrashHelper)request.getAttribute(TrashWebKeys.TRASH_HELPER);
 %>
 
 <%@ include file="/init-ext.jsp" %>

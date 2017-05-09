@@ -19,7 +19,7 @@
 <%
 TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashContainerModelDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
-TrashUtil.addContainerModelBreadcrumbEntries(request, liferayPortletResponse, trashContainerModelDisplayContext.getContainerModelClassName(), trashContainerModelDisplayContext.getContainerModelId(), trashContainerModelDisplayContext.getContainerURL());
+trashUtil.addContainerModelBreadcrumbEntries(request, liferayPortletResponse, trashContainerModelDisplayContext.getContainerModelClassName(), trashContainerModelDisplayContext.getContainerModelId(), trashContainerModelDisplayContext.getContainerURL());
 
 portletDisplay.setShowBackIcon(trashContainerModelDisplayContext.isShowBackIcon());
 portletDisplay.setURLBack(trashContainerModelDisplayContext.getBackURL());

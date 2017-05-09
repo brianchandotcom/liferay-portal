@@ -101,7 +101,8 @@ page import="com.liferay.staging.processes.web.internal.search.PublishConfigurat
 page import="com.liferay.staging.processes.web.internal.search.PublishConfigurationSearchTerms" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %><%@
-page import="com.liferay.trash.kernel.util.TrashUtil" %>
+page import="com.liferay.trash.TrashHelper" %><%@
+page import="com.liferay.trash.util.TrashWebKeys" %>
 
 <%@ page import="java.io.Serializable" %>
 
@@ -131,6 +132,8 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
 int timeZoneOffset = timeZone.getOffset(calendar.getTimeInMillis());
+
+TrashHelper trashHelper = (TrashHelper)request.getAttribute(TrashWebKeys.TRASH_HELPER);
 %>
 
 <%@ include file="/init-ext.jsp" %>

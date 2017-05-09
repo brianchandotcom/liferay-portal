@@ -84,12 +84,12 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", title=");
-		sb.append(title);
 		sb.append(", CPOptionId=");
 		sb.append(CPOptionId);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", title=");
+		sb.append(title);
 		sb.append(", priority=");
 		sb.append(priority);
 		sb.append("}");
@@ -134,13 +134,6 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 			cpOptionValueImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (title == null) {
-			cpOptionValueImpl.setTitle(StringPool.BLANK);
-		}
-		else {
-			cpOptionValueImpl.setTitle(title);
-		}
-
 		cpOptionValueImpl.setCPOptionId(CPOptionId);
 
 		if (name == null) {
@@ -148,6 +141,13 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		}
 		else {
 			cpOptionValueImpl.setName(name);
+		}
+
+		if (title == null) {
+			cpOptionValueImpl.setTitle(StringPool.BLANK);
+		}
+		else {
+			cpOptionValueImpl.setTitle(title);
 		}
 
 		cpOptionValueImpl.setPriority(priority);
@@ -171,10 +171,10 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		title = objectInput.readUTF();
 
 		CPOptionId = objectInput.readLong();
 		name = objectInput.readUTF();
+		title = objectInput.readUTF();
 
 		priority = objectInput.readInt();
 	}
@@ -207,13 +207,6 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (title == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(title);
-		}
-
 		objectOutput.writeLong(CPOptionId);
 
 		if (name == null) {
@@ -221,6 +214,13 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		}
 		else {
 			objectOutput.writeUTF(name);
+		}
+
+		if (title == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(title);
 		}
 
 		objectOutput.writeInt(priority);
@@ -234,8 +234,8 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String title;
 	public long CPOptionId;
 	public String name;
+	public String title;
 	public int priority;
 }

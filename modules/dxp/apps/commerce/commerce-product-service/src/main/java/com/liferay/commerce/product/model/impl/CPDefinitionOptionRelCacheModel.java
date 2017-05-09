@@ -84,18 +84,18 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", title=");
-		sb.append(title);
-		sb.append(", description=");
-		sb.append(description);
 		sb.append(", CPDefinitionId=");
 		sb.append(CPDefinitionId);
 		sb.append(", CPOptionId=");
 		sb.append(CPOptionId);
-		sb.append(", DDMFormFieldTypeName=");
-		sb.append(DDMFormFieldTypeName);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", title=");
+		sb.append(title);
+		sb.append(", description=");
+		sb.append(description);
+		sb.append(", DDMFormFieldTypeName=");
+		sb.append(DDMFormFieldTypeName);
 		sb.append(", priority=");
 		sb.append(priority);
 		sb.append(", facetable=");
@@ -146,6 +146,16 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 			cpDefinitionOptionRelImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		cpDefinitionOptionRelImpl.setCPDefinitionId(CPDefinitionId);
+		cpDefinitionOptionRelImpl.setCPOptionId(CPOptionId);
+
+		if (name == null) {
+			cpDefinitionOptionRelImpl.setName(StringPool.BLANK);
+		}
+		else {
+			cpDefinitionOptionRelImpl.setName(name);
+		}
+
 		if (title == null) {
 			cpDefinitionOptionRelImpl.setTitle(StringPool.BLANK);
 		}
@@ -160,21 +170,11 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 			cpDefinitionOptionRelImpl.setDescription(description);
 		}
 
-		cpDefinitionOptionRelImpl.setCPDefinitionId(CPDefinitionId);
-		cpDefinitionOptionRelImpl.setCPOptionId(CPOptionId);
-
 		if (DDMFormFieldTypeName == null) {
 			cpDefinitionOptionRelImpl.setDDMFormFieldTypeName(StringPool.BLANK);
 		}
 		else {
 			cpDefinitionOptionRelImpl.setDDMFormFieldTypeName(DDMFormFieldTypeName);
-		}
-
-		if (name == null) {
-			cpDefinitionOptionRelImpl.setName(StringPool.BLANK);
-		}
-		else {
-			cpDefinitionOptionRelImpl.setName(name);
 		}
 
 		cpDefinitionOptionRelImpl.setPriority(priority);
@@ -201,14 +201,14 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		title = objectInput.readUTF();
-		description = objectInput.readUTF();
 
 		CPDefinitionId = objectInput.readLong();
 
 		CPOptionId = objectInput.readLong();
-		DDMFormFieldTypeName = objectInput.readUTF();
 		name = objectInput.readUTF();
+		title = objectInput.readUTF();
+		description = objectInput.readUTF();
+		DDMFormFieldTypeName = objectInput.readUTF();
 
 		priority = objectInput.readInt();
 
@@ -247,6 +247,17 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(CPDefinitionId);
+
+		objectOutput.writeLong(CPOptionId);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
 		if (title == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -261,22 +272,11 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 			objectOutput.writeUTF(description);
 		}
 
-		objectOutput.writeLong(CPDefinitionId);
-
-		objectOutput.writeLong(CPOptionId);
-
 		if (DDMFormFieldTypeName == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(DDMFormFieldTypeName);
-		}
-
-		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(name);
 		}
 
 		objectOutput.writeInt(priority);
@@ -296,12 +296,12 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String title;
-	public String description;
 	public long CPDefinitionId;
 	public long CPOptionId;
-	public String DDMFormFieldTypeName;
 	public String name;
+	public String title;
+	public String description;
+	public String DDMFormFieldTypeName;
 	public int priority;
 	public boolean facetable;
 	public boolean required;

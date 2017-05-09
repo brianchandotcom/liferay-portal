@@ -88,9 +88,9 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "title", Types.VARCHAR },
 			{ "CPOptionId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
+			{ "title", Types.VARCHAR },
 			{ "priority", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -104,13 +104,13 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPOptionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPOptionValue (uuid_ VARCHAR(75) null,CPOptionValueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,CPOptionId LONG,name VARCHAR(75) null,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CPOptionValue (uuid_ VARCHAR(75) null,CPOptionValueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPOptionId LONG,name VARCHAR(75) null,title STRING null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CPOptionValue";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpOptionValue.title DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPOptionValue.title DESC";
@@ -153,9 +153,9 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setTitle(soapModel.getTitle());
 		model.setCPOptionId(soapModel.getCPOptionId());
 		model.setName(soapModel.getName());
+		model.setTitle(soapModel.getTitle());
 		model.setPriority(soapModel.getPriority());
 
 		return model;
@@ -229,9 +229,9 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("title", getTitle());
 		attributes.put("CPOptionId", getCPOptionId());
 		attributes.put("name", getName());
+		attributes.put("title", getTitle());
 		attributes.put("priority", getPriority());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -290,12 +290,6 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 			setModifiedDate(modifiedDate);
 		}
 
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
 		Long CPOptionId = (Long)attributes.get("CPOptionId");
 
 		if (CPOptionId != null) {
@@ -306,6 +300,12 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
 		}
 
 		Integer priority = (Integer)attributes.get("priority");
@@ -469,6 +469,45 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 
 	@JSON
 	@Override
+	public long getCPOptionId() {
+		return _CPOptionId;
+	}
+
+	@Override
+	public void setCPOptionId(long CPOptionId) {
+		_columnBitmask |= CPOPTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalCPOptionId) {
+			_setOriginalCPOptionId = true;
+
+			_originalCPOptionId = _CPOptionId;
+		}
+
+		_CPOptionId = CPOptionId;
+	}
+
+	public long getOriginalCPOptionId() {
+		return _originalCPOptionId;
+	}
+
+	@JSON
+	@Override
+	public String getName() {
+		if (_name == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		_name = name;
+	}
+
+	@JSON
+	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -566,45 +605,6 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 
 		setTitle(LocalizationUtil.updateLocalization(titleMap, getTitle(),
 				"Title", LocaleUtil.toLanguageId(defaultLocale)));
-	}
-
-	@JSON
-	@Override
-	public long getCPOptionId() {
-		return _CPOptionId;
-	}
-
-	@Override
-	public void setCPOptionId(long CPOptionId) {
-		_columnBitmask |= CPOPTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCPOptionId) {
-			_setOriginalCPOptionId = true;
-
-			_originalCPOptionId = _CPOptionId;
-		}
-
-		_CPOptionId = CPOptionId;
-	}
-
-	public long getOriginalCPOptionId() {
-		return _originalCPOptionId;
-	}
-
-	@JSON
-	@Override
-	public String getName() {
-		if (_name == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _name;
-		}
-	}
-
-	@Override
-	public void setName(String name) {
-		_name = name;
 	}
 
 	@JSON
@@ -724,9 +724,9 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 		cpOptionValueImpl.setUserName(getUserName());
 		cpOptionValueImpl.setCreateDate(getCreateDate());
 		cpOptionValueImpl.setModifiedDate(getModifiedDate());
-		cpOptionValueImpl.setTitle(getTitle());
 		cpOptionValueImpl.setCPOptionId(getCPOptionId());
 		cpOptionValueImpl.setName(getName());
+		cpOptionValueImpl.setTitle(getTitle());
 		cpOptionValueImpl.setPriority(getPriority());
 
 		cpOptionValueImpl.resetOriginalValues();
@@ -855,14 +855,6 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 			cpOptionValueCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		cpOptionValueCacheModel.title = getTitle();
-
-		String title = cpOptionValueCacheModel.title;
-
-		if ((title != null) && (title.length() == 0)) {
-			cpOptionValueCacheModel.title = null;
-		}
-
 		cpOptionValueCacheModel.CPOptionId = getCPOptionId();
 
 		cpOptionValueCacheModel.name = getName();
@@ -871,6 +863,14 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 
 		if ((name != null) && (name.length() == 0)) {
 			cpOptionValueCacheModel.name = null;
+		}
+
+		cpOptionValueCacheModel.title = getTitle();
+
+		String title = cpOptionValueCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			cpOptionValueCacheModel.title = null;
 		}
 
 		cpOptionValueCacheModel.priority = getPriority();
@@ -898,12 +898,12 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", title=");
-		sb.append(getTitle());
 		sb.append(", CPOptionId=");
 		sb.append(getCPOptionId());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", title=");
+		sb.append(getTitle());
 		sb.append(", priority=");
 		sb.append(getPriority());
 		sb.append("}");
@@ -952,16 +952,16 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>CPOptionId</column-name><column-value><![CDATA[");
 		sb.append(getCPOptionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>title</column-name><column-value><![CDATA[");
+		sb.append(getTitle());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
@@ -991,12 +991,12 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _title;
-	private String _titleCurrentLanguageId;
 	private long _CPOptionId;
 	private long _originalCPOptionId;
 	private boolean _setOriginalCPOptionId;
 	private String _name;
+	private String _title;
+	private String _titleCurrentLanguageId;
 	private int _priority;
 	private long _columnBitmask;
 	private CPOptionValue _escapedModel;

@@ -139,13 +139,13 @@ public class CPOptionPersistenceTest {
 
 		newCPOption.setModifiedDate(RandomTestUtil.nextDate());
 
+		newCPOption.setName(RandomTestUtil.randomString());
+
 		newCPOption.setTitle(RandomTestUtil.randomString());
 
 		newCPOption.setDescription(RandomTestUtil.randomString());
 
 		newCPOption.setDDMFormFieldTypeName(RandomTestUtil.randomString());
-
-		newCPOption.setName(RandomTestUtil.randomString());
 
 		newCPOption.setFacetable(RandomTestUtil.randomBoolean());
 
@@ -174,12 +174,12 @@ public class CPOptionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPOption.getModifiedDate()),
 			Time.getShortTimestamp(newCPOption.getModifiedDate()));
+		Assert.assertEquals(existingCPOption.getName(), newCPOption.getName());
 		Assert.assertEquals(existingCPOption.getTitle(), newCPOption.getTitle());
 		Assert.assertEquals(existingCPOption.getDescription(),
 			newCPOption.getDescription());
 		Assert.assertEquals(existingCPOption.getDDMFormFieldTypeName(),
 			newCPOption.getDDMFormFieldTypeName());
-		Assert.assertEquals(existingCPOption.getName(), newCPOption.getName());
 		Assert.assertEquals(existingCPOption.getFacetable(),
 			newCPOption.getFacetable());
 		Assert.assertEquals(existingCPOption.getRequired(),
@@ -261,8 +261,8 @@ public class CPOptionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CPOption", "uuid", true,
 			"CPOptionId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"title", true, "description", true, "DDMFormFieldTypeName", true,
-			"name", true, "facetable", true, "required", true,
+			"name", true, "title", true, "description", true,
+			"DDMFormFieldTypeName", true, "facetable", true, "required", true,
 			"skuContributor", true);
 	}
 
@@ -493,13 +493,13 @@ public class CPOptionPersistenceTest {
 
 		cpOption.setModifiedDate(RandomTestUtil.nextDate());
 
+		cpOption.setName(RandomTestUtil.randomString());
+
 		cpOption.setTitle(RandomTestUtil.randomString());
 
 		cpOption.setDescription(RandomTestUtil.randomString());
 
 		cpOption.setDDMFormFieldTypeName(RandomTestUtil.randomString());
-
-		cpOption.setName(RandomTestUtil.randomString());
 
 		cpOption.setFacetable(RandomTestUtil.randomBoolean());
 

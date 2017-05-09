@@ -69,12 +69,12 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("title", getTitle());
-		attributes.put("description", getDescription());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("CPOptionId", getCPOptionId());
-		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
 		attributes.put("name", getName());
+		attributes.put("title", getTitle());
+		attributes.put("description", getDescription());
+		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
 		attributes.put("priority", getPriority());
 		attributes.put("facetable", getFacetable());
 		attributes.put("required", getRequired());
@@ -134,18 +134,6 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 			setModifiedDate(modifiedDate);
 		}
 
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
 		Long CPDefinitionId = (Long)attributes.get("CPDefinitionId");
 
 		if (CPDefinitionId != null) {
@@ -158,17 +146,29 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 			setCPOptionId(CPOptionId);
 		}
 
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
 		String DDMFormFieldTypeName = (String)attributes.get(
 				"DDMFormFieldTypeName");
 
 		if (DDMFormFieldTypeName != null) {
 			setDDMFormFieldTypeName(DDMFormFieldTypeName);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
 		}
 
 		Integer priority = (Integer)attributes.get("priority");

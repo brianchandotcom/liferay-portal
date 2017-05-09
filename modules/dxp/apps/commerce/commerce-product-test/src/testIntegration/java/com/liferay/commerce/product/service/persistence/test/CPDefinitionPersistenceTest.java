@@ -139,21 +139,21 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
+		newCPDefinition.setBaseSKU(RandomTestUtil.randomString());
+
+		newCPDefinition.setName(RandomTestUtil.randomString());
+
 		newCPDefinition.setProductTypeName(RandomTestUtil.randomString());
 
 		newCPDefinition.setAvailableIndividually(RandomTestUtil.randomBoolean());
 
 		newCPDefinition.setDDMStructureKey(RandomTestUtil.randomString());
 
-		newCPDefinition.setBaseSKU(RandomTestUtil.randomString());
-
 		newCPDefinition.setDisplayDate(RandomTestUtil.nextDate());
 
 		newCPDefinition.setExpirationDate(RandomTestUtil.nextDate());
 
 		newCPDefinition.setLastPublishDate(RandomTestUtil.nextDate());
-
-		newCPDefinition.setName(RandomTestUtil.randomString());
 
 		newCPDefinition.setStatus(RandomTestUtil.nextInt());
 
@@ -187,14 +187,16 @@ public class CPDefinitionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPDefinition.getModifiedDate()),
 			Time.getShortTimestamp(newCPDefinition.getModifiedDate()));
+		Assert.assertEquals(existingCPDefinition.getBaseSKU(),
+			newCPDefinition.getBaseSKU());
+		Assert.assertEquals(existingCPDefinition.getName(),
+			newCPDefinition.getName());
 		Assert.assertEquals(existingCPDefinition.getProductTypeName(),
 			newCPDefinition.getProductTypeName());
 		Assert.assertEquals(existingCPDefinition.getAvailableIndividually(),
 			newCPDefinition.getAvailableIndividually());
 		Assert.assertEquals(existingCPDefinition.getDDMStructureKey(),
 			newCPDefinition.getDDMStructureKey());
-		Assert.assertEquals(existingCPDefinition.getBaseSKU(),
-			newCPDefinition.getBaseSKU());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPDefinition.getDisplayDate()),
 			Time.getShortTimestamp(newCPDefinition.getDisplayDate()));
@@ -204,8 +206,6 @@ public class CPDefinitionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPDefinition.getLastPublishDate()),
 			Time.getShortTimestamp(newCPDefinition.getLastPublishDate()));
-		Assert.assertEquals(existingCPDefinition.getName(),
-			newCPDefinition.getName());
 		Assert.assertEquals(existingCPDefinition.getStatus(),
 			newCPDefinition.getStatus());
 		Assert.assertEquals(existingCPDefinition.getStatusByUserId(),
@@ -308,12 +308,12 @@ public class CPDefinitionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CPDefinition", "uuid",
 			true, "CPDefinitionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "productTypeName", true,
-			"availableIndividually", true, "DDMStructureKey", true, "baseSKU",
-			true, "displayDate", true, "expirationDate", true,
-			"lastPublishDate", true, "name", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true, "defaultLanguageId", true);
+			"modifiedDate", true, "baseSKU", true, "name", true,
+			"productTypeName", true, "availableIndividually", true,
+			"DDMStructureKey", true, "displayDate", true, "expirationDate",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true,
+			"defaultLanguageId", true);
 	}
 
 	@Test
@@ -545,21 +545,21 @@ public class CPDefinitionPersistenceTest {
 
 		cpDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
+		cpDefinition.setBaseSKU(RandomTestUtil.randomString());
+
+		cpDefinition.setName(RandomTestUtil.randomString());
+
 		cpDefinition.setProductTypeName(RandomTestUtil.randomString());
 
 		cpDefinition.setAvailableIndividually(RandomTestUtil.randomBoolean());
 
 		cpDefinition.setDDMStructureKey(RandomTestUtil.randomString());
 
-		cpDefinition.setBaseSKU(RandomTestUtil.randomString());
-
 		cpDefinition.setDisplayDate(RandomTestUtil.nextDate());
 
 		cpDefinition.setExpirationDate(RandomTestUtil.nextDate());
 
 		cpDefinition.setLastPublishDate(RandomTestUtil.nextDate());
-
-		cpDefinition.setName(RandomTestUtil.randomString());
 
 		cpDefinition.setStatus(RandomTestUtil.nextInt());
 

@@ -68,14 +68,14 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("baseSKU", getBaseSKU());
+		attributes.put("name", getName());
 		attributes.put("productTypeName", getProductTypeName());
 		attributes.put("availableIndividually", getAvailableIndividually());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
-		attributes.put("baseSKU", getBaseSKU());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("name", getName());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -135,6 +135,18 @@ public class CPDefinitionWrapper implements CPDefinition,
 			setModifiedDate(modifiedDate);
 		}
 
+		String baseSKU = (String)attributes.get("baseSKU");
+
+		if (baseSKU != null) {
+			setBaseSKU(baseSKU);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
 		String productTypeName = (String)attributes.get("productTypeName");
 
 		if (productTypeName != null) {
@@ -154,12 +166,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 			setDDMStructureKey(DDMStructureKey);
 		}
 
-		String baseSKU = (String)attributes.get("baseSKU");
-
-		if (baseSKU != null) {
-			setBaseSKU(baseSKU);
-		}
-
 		Date displayDate = (Date)attributes.get("displayDate");
 
 		if (displayDate != null) {
@@ -176,12 +182,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
 		}
 
 		Integer status = (Integer)attributes.get("status");

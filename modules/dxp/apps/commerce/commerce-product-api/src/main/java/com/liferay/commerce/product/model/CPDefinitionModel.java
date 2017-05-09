@@ -214,6 +214,36 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the base sku of this cp definition.
+	 *
+	 * @return the base sku of this cp definition
+	 */
+	@AutoEscape
+	public String getBaseSKU();
+
+	/**
+	 * Sets the base sku of this cp definition.
+	 *
+	 * @param baseSKU the base sku of this cp definition
+	 */
+	public void setBaseSKU(String baseSKU);
+
+	/**
+	 * Returns the name of this cp definition.
+	 *
+	 * @return the name of this cp definition
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this cp definition.
+	 *
+	 * @param name the name of this cp definition
+	 */
+	public void setName(String name);
+
+	/**
 	 * Returns the product type name of this cp definition.
 	 *
 	 * @return the product type name of this cp definition
@@ -265,21 +295,6 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setDDMStructureKey(String DDMStructureKey);
 
 	/**
-	 * Returns the base sku of this cp definition.
-	 *
-	 * @return the base sku of this cp definition
-	 */
-	@AutoEscape
-	public String getBaseSKU();
-
-	/**
-	 * Sets the base sku of this cp definition.
-	 *
-	 * @param baseSKU the base sku of this cp definition
-	 */
-	public void setBaseSKU(String baseSKU);
-
-	/**
 	 * Returns the display date of this cp definition.
 	 *
 	 * @return the display date of this cp definition
@@ -322,21 +337,6 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
-	/**
-	 * Returns the name of this cp definition.
-	 *
-	 * @return the name of this cp definition
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this cp definition.
-	 *
-	 * @param name the name of this cp definition
-	 */
-	public void setName(String name);
 
 	/**
 	 * Returns the status of this cp definition.

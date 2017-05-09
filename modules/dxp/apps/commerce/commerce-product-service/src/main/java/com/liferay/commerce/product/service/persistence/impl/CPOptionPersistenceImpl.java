@@ -3276,10 +3276,10 @@ public class CPOptionPersistenceImpl extends BasePersistenceImpl<CPOption>
 		cpOptionImpl.setUserName(cpOption.getUserName());
 		cpOptionImpl.setCreateDate(cpOption.getCreateDate());
 		cpOptionImpl.setModifiedDate(cpOption.getModifiedDate());
+		cpOptionImpl.setName(cpOption.getName());
 		cpOptionImpl.setTitle(cpOption.getTitle());
 		cpOptionImpl.setDescription(cpOption.getDescription());
 		cpOptionImpl.setDDMFormFieldTypeName(cpOption.getDDMFormFieldTypeName());
-		cpOptionImpl.setName(cpOption.getName());
 		cpOptionImpl.setFacetable(cpOption.isFacetable());
 		cpOptionImpl.setRequired(cpOption.isRequired());
 		cpOptionImpl.setSkuContributor(cpOption.isSkuContributor());

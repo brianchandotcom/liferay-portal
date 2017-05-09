@@ -215,6 +215,35 @@ public interface CPOptionValueModel extends BaseModel<CPOptionValue>,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the cp option ID of this cp option value.
+	 *
+	 * @return the cp option ID of this cp option value
+	 */
+	public long getCPOptionId();
+
+	/**
+	 * Sets the cp option ID of this cp option value.
+	 *
+	 * @param CPOptionId the cp option ID of this cp option value
+	 */
+	public void setCPOptionId(long CPOptionId);
+
+	/**
+	 * Returns the name of this cp option value.
+	 *
+	 * @return the name of this cp option value
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this cp option value.
+	 *
+	 * @param name the name of this cp option value
+	 */
+	public void setName(String name);
+
+	/**
 	 * Returns the title of this cp option value.
 	 *
 	 * @return the title of this cp option value
@@ -312,35 +341,6 @@ public interface CPOptionValueModel extends BaseModel<CPOptionValue>,
 	 * @param defaultLocale the default locale
 	 */
 	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale);
-
-	/**
-	 * Returns the cp option ID of this cp option value.
-	 *
-	 * @return the cp option ID of this cp option value
-	 */
-	public long getCPOptionId();
-
-	/**
-	 * Sets the cp option ID of this cp option value.
-	 *
-	 * @param CPOptionId the cp option ID of this cp option value
-	 */
-	public void setCPOptionId(long CPOptionId);
-
-	/**
-	 * Returns the name of this cp option value.
-	 *
-	 * @return the name of this cp option value
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this cp option value.
-	 *
-	 * @param name the name of this cp option value
-	 */
-	public void setName(String name);
 
 	/**
 	 * Returns the priority of this cp option value.

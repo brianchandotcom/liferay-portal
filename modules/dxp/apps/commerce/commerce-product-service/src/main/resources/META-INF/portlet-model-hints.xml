@@ -10,16 +10,16 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="productTypeName" type="String" />
-		<field name="availableIndividually" type="boolean" />
-		<field name="DDMStructureKey" type="String" />
 		<field name="baseSKU" type="String" />
-		<field name="displayDate" type="Date" />
-		<field name="expirationDate" type="Date" />
-		<field name="lastPublishDate" type="Date" />
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
+		<field name="productTypeName" type="String" />
+		<field name="availableIndividually" type="boolean" />
+		<field name="DDMStructureKey" type="String" />
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
@@ -62,14 +62,14 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="title" type="String" />
-		<field localized="true" name="description" type="String" />
 		<field name="CPDefinitionId" type="long" />
 		<field name="CPOptionId" type="long" />
-		<field name="DDMFormFieldTypeName" type="String" />
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
+		<field localized="true" name="title" type="String" />
+		<field localized="true" name="description" type="String" />
+		<field name="DDMFormFieldTypeName" type="String" />
 		<field name="priority" type="int">
 			<validator name="number" />
 		</field>
@@ -86,11 +86,11 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="title" type="String" />
 		<field name="CPDefinitionOptionRelId" type="long" />
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
+		<field localized="true" name="title" type="String" />
 		<field name="priority" type="int">
 			<validator name="number" />
 		</field>
@@ -139,14 +139,14 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
 		<field localized="true" name="title" type="String" />
 		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="DDMFormFieldTypeName" type="String" />
-		<field name="name" type="String">
-			<validator name="required" />
-		</field>
 		<field name="facetable" type="boolean" />
 		<field name="required" type="boolean" />
 		<field name="skuContributor" type="boolean" />
@@ -160,11 +160,11 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="title" type="String" />
 		<field name="CPOptionId" type="long" />
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
+		<field localized="true" name="title" type="String" />
 		<field name="priority" type="int">
 			<validator name="number" />
 		</field>

@@ -4128,12 +4128,12 @@ public class CPDefinitionOptionRelPersistenceImpl extends BasePersistenceImpl<CP
 		cpDefinitionOptionRelImpl.setUserName(cpDefinitionOptionRel.getUserName());
 		cpDefinitionOptionRelImpl.setCreateDate(cpDefinitionOptionRel.getCreateDate());
 		cpDefinitionOptionRelImpl.setModifiedDate(cpDefinitionOptionRel.getModifiedDate());
-		cpDefinitionOptionRelImpl.setTitle(cpDefinitionOptionRel.getTitle());
-		cpDefinitionOptionRelImpl.setDescription(cpDefinitionOptionRel.getDescription());
 		cpDefinitionOptionRelImpl.setCPDefinitionId(cpDefinitionOptionRel.getCPDefinitionId());
 		cpDefinitionOptionRelImpl.setCPOptionId(cpDefinitionOptionRel.getCPOptionId());
-		cpDefinitionOptionRelImpl.setDDMFormFieldTypeName(cpDefinitionOptionRel.getDDMFormFieldTypeName());
 		cpDefinitionOptionRelImpl.setName(cpDefinitionOptionRel.getName());
+		cpDefinitionOptionRelImpl.setTitle(cpDefinitionOptionRel.getTitle());
+		cpDefinitionOptionRelImpl.setDescription(cpDefinitionOptionRel.getDescription());
+		cpDefinitionOptionRelImpl.setDDMFormFieldTypeName(cpDefinitionOptionRel.getDDMFormFieldTypeName());
 		cpDefinitionOptionRelImpl.setPriority(cpDefinitionOptionRel.getPriority());
 		cpDefinitionOptionRelImpl.setFacetable(cpDefinitionOptionRel.isFacetable());
 		cpDefinitionOptionRelImpl.setRequired(cpDefinitionOptionRel.isRequired());

@@ -216,6 +216,35 @@ public interface CPDefinitionOptionValueRelModel extends BaseModel<CPDefinitionO
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the cp definition option rel ID of this cp definition option value rel.
+	 *
+	 * @return the cp definition option rel ID of this cp definition option value rel
+	 */
+	public long getCPDefinitionOptionRelId();
+
+	/**
+	 * Sets the cp definition option rel ID of this cp definition option value rel.
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID of this cp definition option value rel
+	 */
+	public void setCPDefinitionOptionRelId(long CPDefinitionOptionRelId);
+
+	/**
+	 * Returns the name of this cp definition option value rel.
+	 *
+	 * @return the name of this cp definition option value rel
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this cp definition option value rel.
+	 *
+	 * @param name the name of this cp definition option value rel
+	 */
+	public void setName(String name);
+
+	/**
 	 * Returns the title of this cp definition option value rel.
 	 *
 	 * @return the title of this cp definition option value rel
@@ -313,35 +342,6 @@ public interface CPDefinitionOptionValueRelModel extends BaseModel<CPDefinitionO
 	 * @param defaultLocale the default locale
 	 */
 	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale);
-
-	/**
-	 * Returns the cp definition option rel ID of this cp definition option value rel.
-	 *
-	 * @return the cp definition option rel ID of this cp definition option value rel
-	 */
-	public long getCPDefinitionOptionRelId();
-
-	/**
-	 * Sets the cp definition option rel ID of this cp definition option value rel.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID of this cp definition option value rel
-	 */
-	public void setCPDefinitionOptionRelId(long CPDefinitionOptionRelId);
-
-	/**
-	 * Returns the name of this cp definition option value rel.
-	 *
-	 * @return the name of this cp definition option value rel
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this cp definition option value rel.
-	 *
-	 * @param name the name of this cp definition option value rel
-	 */
-	public void setName(String name);
 
 	/**
 	 * Returns the priority of this cp definition option value rel.

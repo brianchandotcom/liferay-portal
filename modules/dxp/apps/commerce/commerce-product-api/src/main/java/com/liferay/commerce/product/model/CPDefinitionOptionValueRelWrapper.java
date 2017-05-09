@@ -71,9 +71,9 @@ public class CPDefinitionOptionValueRelWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("title", getTitle());
 		attributes.put("CPDefinitionOptionRelId", getCPDefinitionOptionRelId());
 		attributes.put("name", getName());
+		attributes.put("title", getTitle());
 		attributes.put("priority", getPriority());
 
 		return attributes;
@@ -130,12 +130,6 @@ public class CPDefinitionOptionValueRelWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
 		Long CPDefinitionOptionRelId = (Long)attributes.get(
 				"CPDefinitionOptionRelId");
 
@@ -147,6 +141,12 @@ public class CPDefinitionOptionValueRelWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
 		}
 
 		Integer priority = (Integer)attributes.get("priority");

@@ -88,10 +88,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
+			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "DDMFormFieldTypeName", Types.VARCHAR },
-			{ "name", Types.VARCHAR },
 			{ "facetable", Types.BOOLEAN },
 			{ "required", Types.BOOLEAN },
 			{ "skuContributor", Types.BOOLEAN }
@@ -107,16 +107,16 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMFormFieldTypeName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("facetable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("required", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("skuContributor", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPOption (uuid_ VARCHAR(75) null,CPOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,name VARCHAR(75) null,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CPOption (uuid_ VARCHAR(75) null,CPOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CPOption";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpOption.title DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPOption.title DESC";
@@ -158,10 +158,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setName(soapModel.getName());
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
 		model.setDDMFormFieldTypeName(soapModel.getDDMFormFieldTypeName());
-		model.setName(soapModel.getName());
 		model.setFacetable(soapModel.getFacetable());
 		model.setRequired(soapModel.getRequired());
 		model.setSkuContributor(soapModel.getSkuContributor());
@@ -237,10 +237,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
-		attributes.put("name", getName());
 		attributes.put("facetable", getFacetable());
 		attributes.put("required", getRequired());
 		attributes.put("skuContributor", getSkuContributor());
@@ -301,6 +301,12 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			setModifiedDate(modifiedDate);
 		}
 
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
 		String title = (String)attributes.get("title");
 
 		if (title != null) {
@@ -318,12 +324,6 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 		if (DDMFormFieldTypeName != null) {
 			setDDMFormFieldTypeName(DDMFormFieldTypeName);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
 		}
 
 		Boolean facetable = (Boolean)attributes.get("facetable");
@@ -495,6 +495,22 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public String getName() {
+		if (_name == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		_name = name;
 	}
 
 	@JSON
@@ -719,22 +735,6 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 	@JSON
 	@Override
-	public String getName() {
-		if (_name == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _name;
-		}
-	}
-
-	@Override
-	public void setName(String name) {
-		_name = name;
-	}
-
-	@JSON
-	@Override
 	public boolean getFacetable() {
 		return _facetable;
 	}
@@ -911,10 +911,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		cpOptionImpl.setUserName(getUserName());
 		cpOptionImpl.setCreateDate(getCreateDate());
 		cpOptionImpl.setModifiedDate(getModifiedDate());
+		cpOptionImpl.setName(getName());
 		cpOptionImpl.setTitle(getTitle());
 		cpOptionImpl.setDescription(getDescription());
 		cpOptionImpl.setDDMFormFieldTypeName(getDDMFormFieldTypeName());
-		cpOptionImpl.setName(getName());
 		cpOptionImpl.setFacetable(getFacetable());
 		cpOptionImpl.setRequired(getRequired());
 		cpOptionImpl.setSkuContributor(getSkuContributor());
@@ -1041,6 +1041,14 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			cpOptionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		cpOptionCacheModel.name = getName();
+
+		String name = cpOptionCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			cpOptionCacheModel.name = null;
+		}
+
 		cpOptionCacheModel.title = getTitle();
 
 		String title = cpOptionCacheModel.title;
@@ -1064,14 +1072,6 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		if ((DDMFormFieldTypeName != null) &&
 				(DDMFormFieldTypeName.length() == 0)) {
 			cpOptionCacheModel.DDMFormFieldTypeName = null;
-		}
-
-		cpOptionCacheModel.name = getName();
-
-		String name = cpOptionCacheModel.name;
-
-		if ((name != null) && (name.length() == 0)) {
-			cpOptionCacheModel.name = null;
 		}
 
 		cpOptionCacheModel.facetable = getFacetable();
@@ -1103,14 +1103,14 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", name=");
+		sb.append(getName());
 		sb.append(", title=");
 		sb.append(getTitle());
 		sb.append(", description=");
 		sb.append(getDescription());
 		sb.append(", DDMFormFieldTypeName=");
 		sb.append(getDDMFormFieldTypeName());
-		sb.append(", name=");
-		sb.append(getName());
 		sb.append(", facetable=");
 		sb.append(getFacetable());
 		sb.append(", required=");
@@ -1163,6 +1163,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>title</column-name><column-value><![CDATA[");
 		sb.append(getTitle());
 		sb.append("]]></column-value></column>");
@@ -1173,10 +1177,6 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(
 			"<column><column-name>DDMFormFieldTypeName</column-name><column-value><![CDATA[");
 		sb.append(getDDMFormFieldTypeName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>facetable</column-name><column-value><![CDATA[");
@@ -1214,12 +1214,12 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _name;
 	private String _title;
 	private String _titleCurrentLanguageId;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private String _DDMFormFieldTypeName;
-	private String _name;
 	private boolean _facetable;
 	private boolean _required;
 	private boolean _skuContributor;

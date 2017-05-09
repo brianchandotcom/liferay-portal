@@ -91,14 +91,14 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
+			{ "baseSKU", Types.VARCHAR },
+			{ "name", Types.VARCHAR },
 			{ "productTypeName", Types.VARCHAR },
 			{ "availableIndividually", Types.BOOLEAN },
 			{ "DDMStructureKey", Types.VARCHAR },
-			{ "baseSKU", Types.VARCHAR },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
 			{ "lastPublishDate", Types.TIMESTAMP },
-			{ "name", Types.VARCHAR },
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
@@ -116,14 +116,14 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("baseSKU", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productTypeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("availableIndividually", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("DDMStructureKey", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("baseSKU", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
@@ -131,7 +131,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,DDMStructureKey VARCHAR(75) null,baseSKU VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,name VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,baseSKU VARCHAR(75) null,name VARCHAR(75) null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,DDMStructureKey VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinition";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinition.displayDate DESC, cpDefinition.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinition.displayDate DESC, CPDefinition.createDate DESC";
@@ -175,14 +175,14 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setBaseSKU(soapModel.getBaseSKU());
+		model.setName(soapModel.getName());
 		model.setProductTypeName(soapModel.getProductTypeName());
 		model.setAvailableIndividually(soapModel.getAvailableIndividually());
 		model.setDDMStructureKey(soapModel.getDDMStructureKey());
-		model.setBaseSKU(soapModel.getBaseSKU());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
-		model.setName(soapModel.getName());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
@@ -260,14 +260,14 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("baseSKU", getBaseSKU());
+		attributes.put("name", getName());
 		attributes.put("productTypeName", getProductTypeName());
 		attributes.put("availableIndividually", getAvailableIndividually());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
-		attributes.put("baseSKU", getBaseSKU());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("name", getName());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -330,6 +330,18 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			setModifiedDate(modifiedDate);
 		}
 
+		String baseSKU = (String)attributes.get("baseSKU");
+
+		if (baseSKU != null) {
+			setBaseSKU(baseSKU);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
 		String productTypeName = (String)attributes.get("productTypeName");
 
 		if (productTypeName != null) {
@@ -349,12 +361,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			setDDMStructureKey(DDMStructureKey);
 		}
 
-		String baseSKU = (String)attributes.get("baseSKU");
-
-		if (baseSKU != null) {
-			setBaseSKU(baseSKU);
-		}
-
 		Date displayDate = (Date)attributes.get("displayDate");
 
 		if (displayDate != null) {
@@ -371,12 +377,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -731,6 +731,38 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@JSON
 	@Override
+	public String getBaseSKU() {
+		if (_baseSKU == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _baseSKU;
+		}
+	}
+
+	@Override
+	public void setBaseSKU(String baseSKU) {
+		_baseSKU = baseSKU;
+	}
+
+	@JSON
+	@Override
+	public String getName() {
+		if (_name == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		_name = name;
+	}
+
+	@JSON
+	@Override
 	public String getProductTypeName() {
 		if (_productTypeName == null) {
 			return StringPool.BLANK;
@@ -780,22 +812,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@JSON
 	@Override
-	public String getBaseSKU() {
-		if (_baseSKU == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _baseSKU;
-		}
-	}
-
-	@Override
-	public void setBaseSKU(String baseSKU) {
-		_baseSKU = baseSKU;
-	}
-
-	@JSON
-	@Override
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -827,22 +843,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		_lastPublishDate = lastPublishDate;
-	}
-
-	@JSON
-	@Override
-	public String getName() {
-		if (_name == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _name;
-		}
-	}
-
-	@Override
-	public void setName(String name) {
-		_name = name;
 	}
 
 	@JSON
@@ -1194,14 +1194,14 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		cpDefinitionImpl.setUserName(getUserName());
 		cpDefinitionImpl.setCreateDate(getCreateDate());
 		cpDefinitionImpl.setModifiedDate(getModifiedDate());
+		cpDefinitionImpl.setBaseSKU(getBaseSKU());
+		cpDefinitionImpl.setName(getName());
 		cpDefinitionImpl.setProductTypeName(getProductTypeName());
 		cpDefinitionImpl.setAvailableIndividually(getAvailableIndividually());
 		cpDefinitionImpl.setDDMStructureKey(getDDMStructureKey());
-		cpDefinitionImpl.setBaseSKU(getBaseSKU());
 		cpDefinitionImpl.setDisplayDate(getDisplayDate());
 		cpDefinitionImpl.setExpirationDate(getExpirationDate());
 		cpDefinitionImpl.setLastPublishDate(getLastPublishDate());
-		cpDefinitionImpl.setName(getName());
 		cpDefinitionImpl.setStatus(getStatus());
 		cpDefinitionImpl.setStatusByUserId(getStatusByUserId());
 		cpDefinitionImpl.setStatusByUserName(getStatusByUserName());
@@ -1343,6 +1343,22 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			cpDefinitionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		cpDefinitionCacheModel.baseSKU = getBaseSKU();
+
+		String baseSKU = cpDefinitionCacheModel.baseSKU;
+
+		if ((baseSKU != null) && (baseSKU.length() == 0)) {
+			cpDefinitionCacheModel.baseSKU = null;
+		}
+
+		cpDefinitionCacheModel.name = getName();
+
+		String name = cpDefinitionCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			cpDefinitionCacheModel.name = null;
+		}
+
 		cpDefinitionCacheModel.productTypeName = getProductTypeName();
 
 		String productTypeName = cpDefinitionCacheModel.productTypeName;
@@ -1359,14 +1375,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		if ((DDMStructureKey != null) && (DDMStructureKey.length() == 0)) {
 			cpDefinitionCacheModel.DDMStructureKey = null;
-		}
-
-		cpDefinitionCacheModel.baseSKU = getBaseSKU();
-
-		String baseSKU = cpDefinitionCacheModel.baseSKU;
-
-		if ((baseSKU != null) && (baseSKU.length() == 0)) {
-			cpDefinitionCacheModel.baseSKU = null;
 		}
 
 		Date displayDate = getDisplayDate();
@@ -1394,14 +1402,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		}
 		else {
 			cpDefinitionCacheModel.lastPublishDate = Long.MIN_VALUE;
-		}
-
-		cpDefinitionCacheModel.name = getName();
-
-		String name = cpDefinitionCacheModel.name;
-
-		if ((name != null) && (name.length() == 0)) {
-			cpDefinitionCacheModel.name = null;
 		}
 
 		cpDefinitionCacheModel.status = getStatus();
@@ -1456,22 +1456,22 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", baseSKU=");
+		sb.append(getBaseSKU());
+		sb.append(", name=");
+		sb.append(getName());
 		sb.append(", productTypeName=");
 		sb.append(getProductTypeName());
 		sb.append(", availableIndividually=");
 		sb.append(getAvailableIndividually());
 		sb.append(", DDMStructureKey=");
 		sb.append(getDDMStructureKey());
-		sb.append(", baseSKU=");
-		sb.append(getBaseSKU());
 		sb.append(", displayDate=");
 		sb.append(getDisplayDate());
 		sb.append(", expirationDate=");
 		sb.append(getExpirationDate());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
-		sb.append(", name=");
-		sb.append(getName());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append(", statusByUserId=");
@@ -1528,6 +1528,14 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>baseSKU</column-name><column-value><![CDATA[");
+		sb.append(getBaseSKU());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>productTypeName</column-name><column-value><![CDATA[");
 		sb.append(getProductTypeName());
 		sb.append("]]></column-value></column>");
@@ -1540,10 +1548,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(getDDMStructureKey());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>baseSKU</column-name><column-value><![CDATA[");
-		sb.append(getBaseSKU());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>displayDate</column-name><column-value><![CDATA[");
 		sb.append(getDisplayDate());
 		sb.append("]]></column-value></column>");
@@ -1554,10 +1558,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
@@ -1603,14 +1603,14 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _baseSKU;
+	private String _name;
 	private String _productTypeName;
 	private boolean _availableIndividually;
 	private String _DDMStructureKey;
-	private String _baseSKU;
 	private Date _displayDate;
 	private Date _expirationDate;
 	private Date _lastPublishDate;
-	private String _name;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

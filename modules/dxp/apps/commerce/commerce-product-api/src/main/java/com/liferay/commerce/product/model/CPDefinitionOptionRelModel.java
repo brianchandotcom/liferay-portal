@@ -215,6 +215,49 @@ public interface CPDefinitionOptionRelModel extends BaseModel<CPDefinitionOption
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the cp definition ID of this cp definition option rel.
+	 *
+	 * @return the cp definition ID of this cp definition option rel
+	 */
+	public long getCPDefinitionId();
+
+	/**
+	 * Sets the cp definition ID of this cp definition option rel.
+	 *
+	 * @param CPDefinitionId the cp definition ID of this cp definition option rel
+	 */
+	public void setCPDefinitionId(long CPDefinitionId);
+
+	/**
+	 * Returns the cp option ID of this cp definition option rel.
+	 *
+	 * @return the cp option ID of this cp definition option rel
+	 */
+	public long getCPOptionId();
+
+	/**
+	 * Sets the cp option ID of this cp definition option rel.
+	 *
+	 * @param CPOptionId the cp option ID of this cp definition option rel
+	 */
+	public void setCPOptionId(long CPOptionId);
+
+	/**
+	 * Returns the name of this cp definition option rel.
+	 *
+	 * @return the name of this cp definition option rel
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this cp definition option rel.
+	 *
+	 * @param name the name of this cp definition option rel
+	 */
+	public void setName(String name);
+
+	/**
 	 * Returns the title of this cp definition option rel.
 	 *
 	 * @return the title of this cp definition option rel
@@ -415,34 +458,6 @@ public interface CPDefinitionOptionRelModel extends BaseModel<CPDefinitionOption
 		Locale defaultLocale);
 
 	/**
-	 * Returns the cp definition ID of this cp definition option rel.
-	 *
-	 * @return the cp definition ID of this cp definition option rel
-	 */
-	public long getCPDefinitionId();
-
-	/**
-	 * Sets the cp definition ID of this cp definition option rel.
-	 *
-	 * @param CPDefinitionId the cp definition ID of this cp definition option rel
-	 */
-	public void setCPDefinitionId(long CPDefinitionId);
-
-	/**
-	 * Returns the cp option ID of this cp definition option rel.
-	 *
-	 * @return the cp option ID of this cp definition option rel
-	 */
-	public long getCPOptionId();
-
-	/**
-	 * Sets the cp option ID of this cp definition option rel.
-	 *
-	 * @param CPOptionId the cp option ID of this cp definition option rel
-	 */
-	public void setCPOptionId(long CPOptionId);
-
-	/**
 	 * Returns the ddm form field type name of this cp definition option rel.
 	 *
 	 * @return the ddm form field type name of this cp definition option rel
@@ -456,21 +471,6 @@ public interface CPDefinitionOptionRelModel extends BaseModel<CPDefinitionOption
 	 * @param DDMFormFieldTypeName the ddm form field type name of this cp definition option rel
 	 */
 	public void setDDMFormFieldTypeName(String DDMFormFieldTypeName);
-
-	/**
-	 * Returns the name of this cp definition option rel.
-	 *
-	 * @return the name of this cp definition option rel
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this cp definition option rel.
-	 *
-	 * @param name the name of this cp definition option rel
-	 */
-	public void setName(String name);
 
 	/**
 	 * Returns the priority of this cp definition option rel.

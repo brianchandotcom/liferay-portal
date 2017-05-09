@@ -68,9 +68,9 @@ public class CPOptionValueWrapper implements CPOptionValue,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("title", getTitle());
 		attributes.put("CPOptionId", getCPOptionId());
 		attributes.put("name", getName());
+		attributes.put("title", getTitle());
 		attributes.put("priority", getPriority());
 
 		return attributes;
@@ -126,12 +126,6 @@ public class CPOptionValueWrapper implements CPOptionValue,
 			setModifiedDate(modifiedDate);
 		}
 
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
 		Long CPOptionId = (Long)attributes.get("CPOptionId");
 
 		if (CPOptionId != null) {
@@ -142,6 +136,12 @@ public class CPOptionValueWrapper implements CPOptionValue,
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
 		}
 
 		Integer priority = (Integer)attributes.get("priority");

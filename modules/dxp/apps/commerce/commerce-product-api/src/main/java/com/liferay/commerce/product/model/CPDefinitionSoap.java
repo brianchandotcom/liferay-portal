@@ -42,14 +42,14 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setBaseSKU(model.getBaseSKU());
+		soapModel.setName(model.getName());
 		soapModel.setProductTypeName(model.getProductTypeName());
 		soapModel.setAvailableIndividually(model.getAvailableIndividually());
 		soapModel.setDDMStructureKey(model.getDDMStructureKey());
-		soapModel.setBaseSKU(model.getBaseSKU());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
-		soapModel.setName(model.getName());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -171,6 +171,22 @@ public class CPDefinitionSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getBaseSKU() {
+		return _baseSKU;
+	}
+
+	public void setBaseSKU(String baseSKU) {
+		_baseSKU = baseSKU;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
 	public String getProductTypeName() {
 		return _productTypeName;
 	}
@@ -199,14 +215,6 @@ public class CPDefinitionSoap implements Serializable {
 		_DDMStructureKey = DDMStructureKey;
 	}
 
-	public String getBaseSKU() {
-		return _baseSKU;
-	}
-
-	public void setBaseSKU(String baseSKU) {
-		_baseSKU = baseSKU;
-	}
-
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -229,14 +237,6 @@ public class CPDefinitionSoap implements Serializable {
 
 	public void setLastPublishDate(Date lastPublishDate) {
 		_lastPublishDate = lastPublishDate;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public void setName(String name) {
-		_name = name;
 	}
 
 	public int getStatus() {
@@ -287,14 +287,14 @@ public class CPDefinitionSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _baseSKU;
+	private String _name;
 	private String _productTypeName;
 	private boolean _availableIndividually;
 	private String _DDMStructureKey;
-	private String _baseSKU;
 	private Date _displayDate;
 	private Date _expirationDate;
 	private Date _lastPublishDate;
-	private String _name;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

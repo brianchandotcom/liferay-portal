@@ -3477,9 +3477,9 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 		cpOptionValueImpl.setUserName(cpOptionValue.getUserName());
 		cpOptionValueImpl.setCreateDate(cpOptionValue.getCreateDate());
 		cpOptionValueImpl.setModifiedDate(cpOptionValue.getModifiedDate());
-		cpOptionValueImpl.setTitle(cpOptionValue.getTitle());
 		cpOptionValueImpl.setCPOptionId(cpOptionValue.getCPOptionId());
 		cpOptionValueImpl.setName(cpOptionValue.getName());
+		cpOptionValueImpl.setTitle(cpOptionValue.getTitle());
 		cpOptionValueImpl.setPriority(cpOptionValue.getPriority());
 
 		return cpOptionValueImpl;

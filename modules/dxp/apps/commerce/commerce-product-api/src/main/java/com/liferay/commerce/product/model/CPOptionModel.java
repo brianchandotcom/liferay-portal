@@ -215,6 +215,21 @@ public interface CPOptionModel extends BaseModel<CPOption>, GroupedModel,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the name of this cp option.
+	 *
+	 * @return the name of this cp option
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this cp option.
+	 *
+	 * @param name the name of this cp option
+	 */
+	public void setName(String name);
+
+	/**
 	 * Returns the title of this cp option.
 	 *
 	 * @return the title of this cp option
@@ -428,21 +443,6 @@ public interface CPOptionModel extends BaseModel<CPOption>, GroupedModel,
 	 * @param DDMFormFieldTypeName the ddm form field type name of this cp option
 	 */
 	public void setDDMFormFieldTypeName(String DDMFormFieldTypeName);
-
-	/**
-	 * Returns the name of this cp option.
-	 *
-	 * @return the name of this cp option
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this cp option.
-	 *
-	 * @param name the name of this cp option
-	 */
-	public void setName(String name);
 
 	/**
 	 * Returns the facetable of this cp option.

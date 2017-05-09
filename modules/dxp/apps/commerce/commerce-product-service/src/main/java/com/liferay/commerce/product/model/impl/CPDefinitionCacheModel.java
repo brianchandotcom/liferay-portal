@@ -84,22 +84,22 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", baseSKU=");
+		sb.append(baseSKU);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", productTypeName=");
 		sb.append(productTypeName);
 		sb.append(", availableIndividually=");
 		sb.append(availableIndividually);
 		sb.append(", DDMStructureKey=");
 		sb.append(DDMStructureKey);
-		sb.append(", baseSKU=");
-		sb.append(baseSKU);
 		sb.append(", displayDate=");
 		sb.append(displayDate);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -152,6 +152,20 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 			cpDefinitionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (baseSKU == null) {
+			cpDefinitionImpl.setBaseSKU(StringPool.BLANK);
+		}
+		else {
+			cpDefinitionImpl.setBaseSKU(baseSKU);
+		}
+
+		if (name == null) {
+			cpDefinitionImpl.setName(StringPool.BLANK);
+		}
+		else {
+			cpDefinitionImpl.setName(name);
+		}
+
 		if (productTypeName == null) {
 			cpDefinitionImpl.setProductTypeName(StringPool.BLANK);
 		}
@@ -166,13 +180,6 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 		else {
 			cpDefinitionImpl.setDDMStructureKey(DDMStructureKey);
-		}
-
-		if (baseSKU == null) {
-			cpDefinitionImpl.setBaseSKU(StringPool.BLANK);
-		}
-		else {
-			cpDefinitionImpl.setBaseSKU(baseSKU);
 		}
 
 		if (displayDate == Long.MIN_VALUE) {
@@ -194,13 +201,6 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 		else {
 			cpDefinitionImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		if (name == null) {
-			cpDefinitionImpl.setName(StringPool.BLANK);
-		}
-		else {
-			cpDefinitionImpl.setName(name);
 		}
 
 		cpDefinitionImpl.setStatus(status);
@@ -246,15 +246,15 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		baseSKU = objectInput.readUTF();
+		name = objectInput.readUTF();
 		productTypeName = objectInput.readUTF();
 
 		availableIndividually = objectInput.readBoolean();
 		DDMStructureKey = objectInput.readUTF();
-		baseSKU = objectInput.readUTF();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
-		name = objectInput.readUTF();
 
 		status = objectInput.readInt();
 
@@ -292,6 +292,20 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (baseSKU == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(baseSKU);
+		}
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
 		if (productTypeName == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -308,23 +322,9 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 			objectOutput.writeUTF(DDMStructureKey);
 		}
 
-		if (baseSKU == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(baseSKU);
-		}
-
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(lastPublishDate);
-
-		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
 
 		objectOutput.writeInt(status);
 
@@ -355,14 +355,14 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String baseSKU;
+	public String name;
 	public String productTypeName;
 	public boolean availableIndividually;
 	public String DDMStructureKey;
-	public String baseSKU;
 	public long displayDate;
 	public long expirationDate;
 	public long lastPublishDate;
-	public String name;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

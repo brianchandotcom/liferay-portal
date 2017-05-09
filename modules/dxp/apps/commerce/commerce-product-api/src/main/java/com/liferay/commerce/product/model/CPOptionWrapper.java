@@ -67,10 +67,10 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
-		attributes.put("name", getName());
 		attributes.put("facetable", getFacetable());
 		attributes.put("required", getRequired());
 		attributes.put("skuContributor", getSkuContributor());
@@ -128,6 +128,12 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 			setModifiedDate(modifiedDate);
 		}
 
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
 		String title = (String)attributes.get("title");
 
 		if (title != null) {
@@ -145,12 +151,6 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 
 		if (DDMFormFieldTypeName != null) {
 			setDDMFormFieldTypeName(DDMFormFieldTypeName);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
 		}
 
 		Boolean facetable = (Boolean)attributes.get("facetable");

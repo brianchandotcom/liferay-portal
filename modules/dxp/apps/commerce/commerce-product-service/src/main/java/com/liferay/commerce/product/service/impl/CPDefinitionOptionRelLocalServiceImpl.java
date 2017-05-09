@@ -67,7 +67,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionId, cpOptionId, cpOption.getName(),
 			cpOption.getTitleMap(), cpOption.getDescriptionMap(),
 			cpOption.getDDMFormFieldTypeName(), 0, cpOption.getFacetable(),
-			cpOption.getSkuContributor(), serviceContext);
+			cpOption.getRequired(), cpOption.getSkuContributor(), serviceContext);
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			long cpDefinitionId, long cpOptionId, String name,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String ddmFormFieldTypeName, int priority, boolean facetable,
-			boolean skuContributor, ServiceContext serviceContext)
+			boolean required, boolean skuContributor, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition option rel
@@ -100,6 +100,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		cpDefinitionOptionRel.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 		cpDefinitionOptionRel.setPriority(priority);
 		cpDefinitionOptionRel.setFacetable(facetable);
+		cpDefinitionOptionRel.setRequired(required);
 		cpDefinitionOptionRel.setSkuContributor(skuContributor);
 		cpDefinitionOptionRel.setExpandoBridgeAttributes(serviceContext);
 
@@ -236,7 +237,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			long cpDefinitionOptionRelId, long cpOptionId, String name,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String ddmFormFieldTypeName, int priority, boolean facetable,
-			boolean skuContributor, ServiceContext serviceContext)
+			boolean required, boolean skuContributor, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition option rel
@@ -252,6 +253,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		cpDefinitionOptionRel.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 		cpDefinitionOptionRel.setPriority(priority);
 		cpDefinitionOptionRel.setFacetable(facetable);
+		cpDefinitionOptionRel.setRequired(required);
 		cpDefinitionOptionRel.setSkuContributor(skuContributor);
 		cpDefinitionOptionRel.setExpandoBridgeAttributes(serviceContext);
 

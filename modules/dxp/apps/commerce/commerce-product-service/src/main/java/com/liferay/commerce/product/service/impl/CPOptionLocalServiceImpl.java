@@ -58,7 +58,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 	public CPOption addCPOption(
 			String name, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
-			boolean facetable, boolean skuContributor,
+			boolean facetable, boolean required, boolean skuContributor,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -80,6 +80,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		cpOption.setDescriptionMap(descriptionMap);
 		cpOption.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 		cpOption.setFacetable(facetable);
+		cpOption.setRequired(required);
 		cpOption.setSkuContributor(skuContributor);
 		cpOption.setExpandoBridgeAttributes(serviceContext);
 
@@ -173,7 +174,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 	public CPOption updateCPOption(
 			long cpOptionId, String name, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
-			boolean facetable, boolean skuContributor,
+			boolean facetable, boolean required, boolean skuContributor,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -186,6 +187,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		cpOption.setDescriptionMap(descriptionMap);
 		cpOption.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 		cpOption.setFacetable(facetable);
+		cpOption.setRequired(required);
 		cpOption.setSkuContributor(skuContributor);
 		cpOption.setExpandoBridgeAttributes(serviceContext);
 

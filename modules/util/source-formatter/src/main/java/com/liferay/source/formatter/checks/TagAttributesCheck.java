@@ -165,7 +165,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 
 			String currentAttributeAndValue = sb.toString();
 
-			if (!tagName.contains(StringPool.COLON)) {
+			if (!tagName.equals("liferay-ui:tabs")) {
 				String newLine = sortHTMLTagAttributes(
 					line, value, currentAttributeAndValue);
 

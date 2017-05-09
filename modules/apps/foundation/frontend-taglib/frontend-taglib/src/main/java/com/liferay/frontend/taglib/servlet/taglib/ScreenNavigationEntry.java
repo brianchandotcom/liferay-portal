@@ -36,7 +36,9 @@ public interface ScreenNavigationEntry<T> {
 
 	public String getScreenNavigationKey();
 
-	public boolean isVisible(User user, T screenModelBean);
+	public default boolean isVisible(User user, T screenModelBean) {
+		return true;
+	}
 
 	public void render(HttpServletRequest request, HttpServletResponse response)
 		throws IOException;

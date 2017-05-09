@@ -73,11 +73,6 @@ public class UserNotificationDefinition {
 		return _portletId;
 	}
 
-	protected ResourceBundle getResourceBundle(Locale locale) {
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-	}
-
 	public UserNotificationDeliveryType getUserNotificationDeliveryType(
 		int deliveryType) {
 
@@ -88,6 +83,11 @@ public class UserNotificationDefinition {
 		getUserNotificationDeliveryTypes() {
 
 		return _userNotificationDeliveryTypes;
+	}
+
+	protected ResourceBundle getResourceBundle(Locale locale) {
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
 	}
 
 	private final long _classNameId;

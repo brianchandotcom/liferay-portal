@@ -14,4 +14,25 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
+	name="id"
+	value="<%= String.valueOf(cpDefinitionMedia.getCPDefinitionMediaId()) %>"
+/>
+
+<liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
+	name="author"
+	property="userName"
+/>
+
+<liferay-ui:search-container-column-date
+	cssClass="table-cell-content"
+	name="modified-date"
+	property="modifiedDate"
+/>
+
+<liferay-ui:search-container-column-jsp
+	cssClass="entry-action-column"
+	path="/definition_media_action.jsp"
+/>

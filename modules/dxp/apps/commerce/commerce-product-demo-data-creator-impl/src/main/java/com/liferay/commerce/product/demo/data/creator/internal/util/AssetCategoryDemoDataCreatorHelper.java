@@ -51,6 +51,10 @@ public class AssetCategoryDemoDataCreatorHelper
 		return assetCategory;
 	}
 
+	public long[] getAllAssetCategoryIds(long[]... assetCategoryIds) {
+		return ArrayUtil.append(assetCategoryIds);
+	}
+
 	public AssetCategory getAssetCategory(
 			long userId, long groupId, long vocabularyId, JSONObject category)
 		throws PortalException {

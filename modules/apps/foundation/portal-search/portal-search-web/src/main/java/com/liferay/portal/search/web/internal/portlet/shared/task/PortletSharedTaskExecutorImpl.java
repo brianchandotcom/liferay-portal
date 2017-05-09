@@ -70,7 +70,7 @@ public class PortletSharedTaskExecutorImpl
 		try {
 			return futureTask.get();
 		}
-		catch (InterruptedException | ExecutionException e) {
+		catch (ExecutionException | InterruptedException e) {
 			throw new RuntimeException(e);
 		}
 	}

@@ -559,7 +559,7 @@ public class GitWorkingDirectory {
 
 			return branchNamesList;
 		}
-		catch (IOException | InterruptedException e) {
+		catch (InterruptedException | IOException e) {
 			throw new RuntimeException(
 				"Unable to find branches with SHA " + sha, e);
 		}
@@ -587,7 +587,7 @@ public class GitWorkingDirectory {
 
 			return firstLine.trim();
 		}
-		catch (IOException | InterruptedException e) {
+		catch (InterruptedException | IOException e) {
 			throw new RuntimeException(
 				"Unable to get SHA of branch " + branchName);
 		}

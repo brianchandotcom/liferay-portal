@@ -87,8 +87,8 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 			return configurationInvocationHandler.createProxy();
 		}
-		catch (NoSuchMethodException | InvocationTargetException |
-			   InstantiationException | IllegalAccessException |
+		catch (IllegalAccessException | InstantiationException |
+			   InvocationTargetException | NoSuchMethodException |
 			   SettingsException e) {
 
 			throw new ConfigurationException(

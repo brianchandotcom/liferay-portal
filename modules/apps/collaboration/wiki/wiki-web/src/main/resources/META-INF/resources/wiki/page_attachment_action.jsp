@@ -61,7 +61,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 		<c:otherwise>
 			<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage.getNodeId(), wikiPage.getTitle(), ActionKeys.DELETE) %>">
 				<portlet:actionURL name="/wiki/edit_page_attachment" var="deleteURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
 					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
@@ -69,7 +69,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 				</portlet:actionURL>
 
 				<liferay-ui:icon-delete
-					trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
+					trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
 					url="<%= deleteURL %>"
 				/>
 			</c:if>

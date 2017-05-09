@@ -144,8 +144,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.util.comparator.PortletTitleComparator" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper" %><%@
-page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.trash.kernel.util.TrashUtil" %>
+page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.io.Serializable" %>
 
@@ -171,6 +170,8 @@ page import="javax.portlet.PortletURL" %>
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<liferay-trash:defineObjects />
 
 <portlet:defineObjects />
 

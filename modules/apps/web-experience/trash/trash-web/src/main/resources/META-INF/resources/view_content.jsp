@@ -34,7 +34,7 @@ String trashHandlerContainerModelClassName = trashHandler.getContainerModelClass
 containerModelURL.setParameter("mvcPath", "/view_content.jsp");
 containerModelURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(trashHandlerContainerModelClassName)));
 
-TrashUtil.addBaseModelBreadcrumbEntries(request, liferayPortletResponse, trashDisplayContext.getClassName(), classPK, containerModelURL);
+trashUtil.addBaseModelBreadcrumbEntries(request, liferayPortletResponse, trashDisplayContext.getClassName(), classPK, containerModelURL);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

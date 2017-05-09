@@ -340,7 +340,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 
 						deletePageURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/edit_page");
 
-						if (TrashUtil.isTrashEnabled(scopeGroupId)) {
+						if (trashHelper.isTrashEnabled(scopeGroupId)) {
 							deletePageURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
 						}
 						else {
@@ -350,7 +350,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 						deletePageURL.setParameter("redirect", frontPageURL.toString());
 						%>
 
-						<liferay-ui:icon-delete label="<%= true %>" trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>" url="<%= deletePageURL.toString() %>" />
+						<liferay-ui:icon-delete label="<%= true %>" trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>" url="<%= deletePageURL.toString() %>" />
 					</c:if>
 				</liferay-ui:icon-list>
 			</td>

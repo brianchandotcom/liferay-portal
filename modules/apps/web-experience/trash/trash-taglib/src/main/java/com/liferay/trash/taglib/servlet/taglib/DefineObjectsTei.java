@@ -12,24 +12,28 @@
  * details.
  */
 
-package com.liferay.trash.web.internal.constants;
+package com.liferay.trash.taglib.servlet.taglib;
+
+import com.liferay.trash.TrashHelper;
+
+import javax.servlet.jsp.tagext.TagData;
+import javax.servlet.jsp.tagext.TagExtraInfo;
+import javax.servlet.jsp.tagext.VariableInfo;
 
 /**
- * Provides attribute names for the implementation of the {@link
- * com.liferay.trash.web.internal.portlet.TrashPortlet}.
- *
- * @author Jürgen Kappler
+ * @author Eudaldo Alonso
  */
-public class TrashWebKeys extends com.liferay.trash.util.TrashWebKeys {
+public class DefineObjectsTei extends TagExtraInfo {
 
-	public static final String TRASH_CONTAINER_MODEL = "TRASH_CONTAINER_MODEL";
+	@Override
+	public VariableInfo[] getVariableInfo(TagData data) {
+		return _variableInfo;
+	}
 
-	public static final String TRASH_ENTRIES = "TRASH_ENTRIES";
-
-	public static final String TRASH_ENTRY = "TRASH_ENTRY";
-
-	public static final String TRASH_RENDERER = "TRASH_RENDERER";
-
-	public static final String TRASH_UTIL = "TRASH_UTIL";
+	private static final VariableInfo[] _variableInfo = new VariableInfo[] {
+		new VariableInfo(
+			"trashHelper", TrashHelper.class.getName(), true,
+			VariableInfo.AT_END)
+	};
 
 }

@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 
 import java.util.Date;
 import java.util.Locale;
@@ -53,8 +53,17 @@ public class DLFolderAssetRenderer
 
 	public static final String TYPE = "folder";
 
+	/**
+	 * @deprecated As of 1.4.0
+	 */
+	@Deprecated
 	public DLFolderAssetRenderer(Folder folder) {
+		this(folder, null);
+	}
+
+	public DLFolderAssetRenderer(Folder folder, TrashHelper trashHelper) {
 		_folder = folder;
+		_trashHelper = trashHelper;
 	}
 
 	@Override
@@ -115,7 +124,7 @@ public class DLFolderAssetRenderer
 
 	@Override
 	public String getTitle(Locale locale) {
-		return TrashUtil.getOriginalTitle(_folder.getName());
+		return _trashHelper.getOriginalTitle(_folder.getName());
 	}
 
 	@Override
@@ -230,5 +239,6 @@ public class DLFolderAssetRenderer
 		DLFolderAssetRenderer.class);
 
 	private final Folder _folder;
+	private final TrashHelper _trashHelper;
 
 }

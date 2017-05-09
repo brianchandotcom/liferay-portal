@@ -150,13 +150,13 @@ else {
 
 	<c:if test="<%= !defaultParentCategory && MBCategoryPermission.contains(permissionChecker, category, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/message_boards/edit_category" var="deleteURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
+			trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
 			url="<%= deleteURL %>"
 		/>
 	</c:if>

@@ -140,8 +140,7 @@ page import="com.liferay.portal.upload.LiferayFileItem" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%@
-page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.trash.kernel.util.TrashUtil" %>
+page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.text.Format" %>
 
@@ -157,6 +156,8 @@ page import="javax.portlet.WindowState" %>
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<liferay-trash:defineObjects />
 
 <portlet:defineObjects />
 

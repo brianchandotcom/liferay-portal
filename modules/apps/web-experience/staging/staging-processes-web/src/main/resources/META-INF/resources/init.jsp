@@ -100,8 +100,7 @@ page import="com.liferay.staging.processes.web.internal.dao.search.PublishResult
 page import="com.liferay.staging.processes.web.internal.search.PublishConfigurationDisplayTerms" %><%@
 page import="com.liferay.staging.processes.web.internal.search.PublishConfigurationSearchTerms" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %><%@
-page import="com.liferay.trash.kernel.util.TrashUtil" %>
+page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %>
 
 <%@ page import="java.io.Serializable" %>
 
@@ -122,6 +121,8 @@ page import="javax.portlet.PortletURL" %>
 <liferay-staging:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<liferay-trash:defineObjects />
 
 <portlet:defineObjects />
 

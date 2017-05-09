@@ -108,8 +108,8 @@ public class CPOptionCategoryPermission implements BaseModelPermissionChecker {
 	}
 
 	@Reference(unbind = "-")
-	protected void setCPOptionCategoryLocalService(
-		CPOptionCategoryLocalService cpOptionCategoryLocalService) {
+(??)	protected void setCPOptionLocalService(
+(??)		CPMediaTypeLocalService cpOptionLocalService) {
 
 		_cpOptionCategoryLocalService = cpOptionCategoryLocalService;
 	}

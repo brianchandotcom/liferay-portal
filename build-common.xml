@@ -590,6 +590,7 @@ information.
 				<args />
 				<arg value="--no-daemon" />
 				<arg value="--project-cache-dir=${project.dir}/.gradle" />
+				<arg value="--quiet" />
 				<arg value="--stacktrace" />
 				<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 				<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />

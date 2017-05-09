@@ -73,7 +73,7 @@ public class UserNotificationDefinition {
 		return _portletId;
 	}
 
-	public ResourceBundle getResourceBundle(Locale locale) {
+	protected ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 	}

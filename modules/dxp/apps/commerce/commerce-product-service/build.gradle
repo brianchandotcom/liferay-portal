@@ -8,8 +8,8 @@ buildService {
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.6.0-20170308.203023-12"
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.renderer", version: "2.2.0-20161227.165132-2"
+	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.5.0"
+	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.renderer", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"

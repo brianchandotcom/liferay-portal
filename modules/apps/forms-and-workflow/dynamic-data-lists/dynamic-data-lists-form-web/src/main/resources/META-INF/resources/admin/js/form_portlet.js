@@ -73,15 +73,7 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance.definitionSerializer = new DefinitionSerializer(
-							{
-								availableLanguageIds: instance.get('availableLanguageIds'),
-								defaultLanguageId: instance.get('defaultLanguageId'),
-								fieldTypesDefinitions: instance.get('fieldTypesDefinitions')
-							}
-						);
-
-						instance.layoutSerializer = new LayoutSerializer(
+						instance.layoutVisitor = new LayoutSerializer(
 							{
 								builder: instance.get('formBuilder'),
 								defaultLanguageId: instance.get('defaultLanguageId')
@@ -89,7 +81,6 @@ AUI.add(
 						);
 
 						instance.renderUI();
-
 						instance.bindUI();
 
 						instance.savedState = instance.getState();
@@ -117,6 +108,11 @@ AUI.add(
 						var instance = this;
 
 						var formBuilder = instance.get('formBuilder');
+
+						var translationManager = instance.get(STR_TRANSLATION_MANAGER);
+
+						var descriptionEditor = CKEDITOR.instances[instance.ns('descriptionEditor')];
+						var nameEditor = CKEDITOR.instances[instance.ns('nameEditor')];
 
 						instance._eventHandlers = [
 							instance.after('autosave', instance._afterAutosave),

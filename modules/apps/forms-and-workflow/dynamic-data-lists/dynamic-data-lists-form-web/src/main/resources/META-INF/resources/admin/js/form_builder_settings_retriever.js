@@ -12,19 +12,32 @@ AUI.add(
 				NAME: 'liferay-ddl-form-builder-settings-retriever',
 
 				prototype: {
-					getSettingsContext: function(type, callback) {
+					getSettingsContext: function(field, callback) {
 						var instance = this;
 
 						return new A.Promise(
 							function(resolve, reject) {
 								var resolveJSON = function(json) {
-									resolve(JSON.parse(json));
+									var parsed = JSON.parse(json);
+
+									resolve(parsed);
+
+									return parsed;
 								};
+
+								var type = field.get('type');
+
+								var settingsContext = field.get('context.settingsContext');
 
 								var cachedContextJSON = CACHE[type];
 
-								if (cachedContextJSON) {
-									resolveJSON(cachedContextJSON);
+								if (settingsContext) {
+									resolve(settingsContext);
+								}
+								else if (cachedContextJSON) {
+									settingsContext = resolveJSON(cachedContextJSON);
+
+									field.set('context.settingsContext', settingsContext);
 								}
 								else {
 									var payload = {
@@ -46,7 +59,9 @@ AUI.add(
 
 													CACHE[type] = contextJSON;
 
-													resolveJSON(contextJSON);
+													settingsContext = resolveJSON(contextJSON);
+
+													field.set('context.settingsContext', settingsContext);
 												}
 											}
 										}

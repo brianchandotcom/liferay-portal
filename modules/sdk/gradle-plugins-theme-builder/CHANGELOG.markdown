@@ -26,7 +26,7 @@ the WAR file.
 - [LPS-69223]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
 version 2.0.0.
 
-## 2.0.2 - 2017-05-04
+## 2.0.2 - 2017-05-09
 
 ### Added
 - [LPS-72367]: Automatically add the latest release of the

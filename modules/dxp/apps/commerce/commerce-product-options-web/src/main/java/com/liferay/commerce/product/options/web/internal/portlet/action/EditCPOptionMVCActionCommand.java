@@ -115,6 +115,7 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 		String ddmFormFieldTypeName = ParamUtil.getString(
 			actionRequest, "ddmFormFieldTypeName");
 		boolean facetable = ParamUtil.getBoolean(actionRequest, "facetable");
+		boolean required = ParamUtil.getBoolean(actionRequest, "required");
 		boolean skuContributor = ParamUtil.getBoolean(
 			actionRequest, "skuContributor");
 
@@ -129,7 +130,7 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpOption = _cpOptionService.addCPOption(
 				name, titleMap, descriptionMap, ddmFormFieldTypeName, facetable,
-				skuContributor, serviceContext);
+				required, skuContributor, serviceContext);
 		}
 		else {
 
@@ -137,7 +138,7 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpOption = _cpOptionService.updateCPOption(
 				cpOptionId, name, titleMap, descriptionMap,
-				ddmFormFieldTypeName, facetable, skuContributor,
+				ddmFormFieldTypeName, facetable, required, skuContributor,
 				serviceContext);
 		}
 

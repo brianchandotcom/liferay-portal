@@ -120,8 +120,6 @@ else {
 
 						<%
 						KBFolder kbFolder = (KBFolder)kbObject;
-
-						kbFolder = kbFolder.toEscapedModel();
 						%>
 
 						<liferay-portlet:renderURL var="rowURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -148,11 +146,11 @@ else {
 							<c:choose>
 								<c:when test="<%= Validator.isNotNull(rowURL) %>">
 									<aui:a href="<%= rowURL %>">
-										<%= kbFolder.getName() %>
+										<%= HtmlUtil.escape(kbFolder.getName()) %>
 									</aui:a>
 								</c:when>
 								<c:otherwise>
-									<%= kbFolder.getName() %>
+									<%= HtmlUtil.escape(kbFolder.getName()) %>
 								</c:otherwise>
 							</c:choose>
 						</liferay-ui:search-container-column-text>
@@ -194,8 +192,6 @@ else {
 
 						<%
 						KBArticle kbArticle = (KBArticle)kbObject;
-
-						kbArticle = kbArticle.toEscapedModel();
 						%>
 
 						<liferay-portlet:renderURL var="rowURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -223,11 +219,11 @@ else {
 							<c:choose>
 								<c:when test="<%= Validator.isNotNull(rowURL) %>">
 									<aui:a href="<%= rowURL %>">
-										<%= kbArticle.getTitle() %>
+										<%= HtmlUtil.escape(kbArticle.getTitle()) %>
 									</aui:a>
 								</c:when>
 								<c:otherwise>
-									<%= kbArticle.getTitle() %>
+									<%= HtmlUtil.escape(kbArticle.getTitle()) %>
 								</c:otherwise>
 							</c:choose>
 						</liferay-ui:search-container-column-text>

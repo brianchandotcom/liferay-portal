@@ -136,7 +136,7 @@ if (portletTitleBasedNavigation) {
 						<portlet:param name="targetStatus" value="<%= String.valueOf(targetStatus) %>" />
 					</liferay-portlet:renderURL>
 
-					uri: '<%= selectKBObjectURL %>'
+					uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>'
 				},
 				function(event) {
 					document.<portlet:namespace />fm.<portlet:namespace />parentPriority.value = event.priority;

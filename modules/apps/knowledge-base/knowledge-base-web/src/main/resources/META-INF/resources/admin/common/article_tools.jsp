@@ -24,9 +24,9 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 
 <div class="kb-article-tools">
 	<c:if test="<%= kbGroupServiceConfiguration.sourceURLEnabled() && Validator.isUrl(kbArticle.getSourceURL()) %>">
-		<a href="<%= kbArticle.getSourceURL() %>" target="_blank">
+		<a href="<%= HtmlUtil.escapeAttribute(kbArticle.getSourceURL()) %>" target="_blank">
 			<span class="kb-article-source-url label label-success">
-				<liferay-ui:message key="<%= kbGroupServiceConfiguration.sourceURLEditMessageKey() %>" />
+				<liferay-ui:message key="<%= HtmlUtil.escape(kbGroupServiceConfiguration.sourceURLEditMessageKey()) %>" />
 			</span>
 		</a>
 	</c:if>

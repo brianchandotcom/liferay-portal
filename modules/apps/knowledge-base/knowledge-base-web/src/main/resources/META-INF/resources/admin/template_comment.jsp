@@ -49,7 +49,7 @@ KBComment kbComment = (KBComment)request.getAttribute("template_comment.jsp-kb_c
 				<br />
 
 				<div>
-					<%= kbComment.getContent() %>
+					<%= HtmlUtil.escape(kbComment.getContent()) %>
 				</div>
 
 				<br />

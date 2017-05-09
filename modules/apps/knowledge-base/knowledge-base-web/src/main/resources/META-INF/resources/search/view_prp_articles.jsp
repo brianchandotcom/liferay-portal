@@ -129,31 +129,27 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 					<%
 					AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(assetCategoryId);
 
-					assetCategory = assetCategory.toEscapedModel();
-
 					AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
-
-					assetVocabulary = assetVocabulary.toEscapedModel();
 					%>
 
 					<c:choose>
 						<c:when test="<%= Validator.isNotNull(assetTagName) %>">
 							<c:choose>
 								<c:when test="<%= total > 0 %>">
-									<%= LanguageUtil.format(request, "articles-with-x-x-and-tag-x", new String[] {assetVocabulary.getTitle(locale), assetCategory.getTitle(locale), assetTagName}, false) %>
+									<%= LanguageUtil.format(request, "articles-with-x-x-and-tag-x", new String[] {HtmlUtil.escape(assetVocabulary.getTitle(locale)), HtmlUtil.escape(assetCategory.getTitle(locale)), HtmlUtil.escape(assetTagName)}, false) %>
 								</c:when>
 								<c:otherwise>
-									<%= LanguageUtil.format(request, "there-are-no-articles-with-x-x-and-tag-x", new String[] {assetVocabulary.getTitle(locale), assetCategory.getTitle(locale), assetTagName}, false) %>
+									<%= LanguageUtil.format(request, "there-are-no-articles-with-x-x-and-tag-x", new String[] {HtmlUtil.escape(assetVocabulary.getTitle(locale)), HtmlUtil.escape(assetCategory.getTitle(locale)), HtmlUtil.escape(assetTagName)}, false) %>
 								</c:otherwise>
 							</c:choose>
 						</c:when>
 						<c:otherwise>
 							<c:choose>
 								<c:when test="<%= total > 0 %>">
-									<%= LanguageUtil.format(request, "articles-with-x-x", new String[] {assetVocabulary.getTitle(locale), assetCategory.getTitle(locale)}, false) %>
+									<%= LanguageUtil.format(request, "articles-with-x-x", new String[] {HtmlUtil.escape(assetVocabulary.getTitle(locale)), HtmlUtil.escape(assetCategory.getTitle(locale))}, false) %>
 								</c:when>
 								<c:otherwise>
-									<%= LanguageUtil.format(request, "there-are-no-articles-with-x-x", new String[] {assetVocabulary.getTitle(locale), assetCategory.getTitle(locale)}, false) %>
+									<%= LanguageUtil.format(request, "there-are-no-articles-with-x-x", new String[] {HtmlUtil.escape(assetVocabulary.getTitle(locale)), HtmlUtil.escape(assetCategory.getTitle(locale))}, false) %>
 								</c:otherwise>
 							</c:choose>
 						</c:otherwise>
@@ -162,10 +158,10 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 				<c:otherwise>
 					<c:choose>
 						<c:when test="<%= total > 0 %>">
-							<%= LanguageUtil.format(request, "articles-with-tag-x", assetTagName, false) %>
+							<%= LanguageUtil.format(request, "articles-with-tag-x", HtmlUtil.escape(assetTagName), false) %>
 						</c:when>
 						<c:otherwise>
-							<%= LanguageUtil.format(request, "there-are-no-articles-with-tag-x", assetTagName, false) %>
+							<%= LanguageUtil.format(request, "there-are-no-articles-with-tag-x", HtmlUtil.escape(assetTagName), false) %>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>

@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -78,7 +79,8 @@ public class HeaderTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:header:backLabel", _backLabel);
 
-		String redirect = ParamUtil.getString(request, "redirect");
+		String redirect = PortalUtil.escapeRedirect(
+			ParamUtil.getString(request, "redirect"));
 
 		if (Validator.isNull(_backURL) && Validator.isNotNull(redirect)) {
 			request.setAttribute("liferay-ui:header:backURL", redirect);

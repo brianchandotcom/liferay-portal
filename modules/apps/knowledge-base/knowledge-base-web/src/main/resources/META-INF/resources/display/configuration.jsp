@@ -56,7 +56,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 										String title = StringPool.BLANK;
 
 										if (resourceClassNameId != kbFolderClassNameId) {
-											KBArticle kbArticle = KBArticleLocalServiceUtil.fetchLatestKBArticle(kbDisplayPortletInstanceConfiguration.resourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
+											KBArticle kbArticle = KBArticleServiceUtil.fetchLatestKBArticle(kbDisplayPortletInstanceConfiguration.resourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
 
 											if (kbArticle != null) {
 												title = kbArticle.getTitle();
@@ -66,7 +66,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 											title = LanguageUtil.get(resourceBundle, "home");
 										}
 										else {
-											KBFolder kbFolder = KBFolderLocalServiceUtil.fetchKBFolder(kbDisplayPortletInstanceConfiguration.resourcePrimKey());
+											KBFolder kbFolder = KBFolderServiceUtil.fetchKBFolder(kbDisplayPortletInstanceConfiguration.resourcePrimKey());
 
 											if (kbFolder != null) {
 												title = kbFolder.getName();
@@ -153,7 +153,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 							<portlet:param name="eventName" value='<%= liferayPortletResponse.getNamespace() + "selectKBObject" %>' />
 						</liferay-portlet:renderURL>
 
-						uri: '<%= selectKBObjectURL %>'
+						uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>'
 					},
 					function(event) {
 						document.<portlet:namespace />fm.<portlet:namespace />resourceClassNameId.value = event.resourceclassnameid;

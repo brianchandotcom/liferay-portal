@@ -197,7 +197,7 @@ if (portletTitleBasedNavigation) {
 					<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 				</portlet:renderURL>
 
-				var uri = '<%= compareVersionURL %>';
+				var uri = '<%= HtmlUtil.escapeJS(compareVersionURL) %>';
 
 				uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + rowIds.eq(1).val(), uri);
 				uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + rowIds.eq(0).val(), uri);

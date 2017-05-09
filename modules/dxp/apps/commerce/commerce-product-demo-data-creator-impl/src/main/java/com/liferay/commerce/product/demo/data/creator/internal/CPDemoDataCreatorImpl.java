@@ -16,6 +16,7 @@ package com.liferay.commerce.product.demo.data.creator.internal;
 
 import com.liferay.commerce.product.demo.data.creator.CPDemoDataCreator;
 import com.liferay.commerce.product.demo.data.creator.internal.util.CPDefinitionDemoDataCreatorHelper;
+import com.liferay.commerce.product.demo.data.creator.internal.util.CPInstanceDemoDataCreatorHelper;
 import com.liferay.commerce.product.demo.data.creator.internal.util.CPOptionDemoDataCreatorHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -69,6 +70,11 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 
 			_cpOptionDemoDataCreatorHelper.addCPOptions(
 				Locale.US, userId, groupId, cpDefinitionId, options);
+
+			if (buildSkus) {
+				_cpInstanceDemoDataCreatorHelper.createCPInstance(
+					userId, groupId, cpDefinitionId);
+			}
 		}
 	}
 
@@ -81,6 +87,9 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 	@Reference
 	private CPDefinitionDemoDataCreatorHelper
 		_cpDefinitionDemoDataCreatorHelper;
+
+	@Reference
+	private CPInstanceDemoDataCreatorHelper _cpInstanceDemoDataCreatorHelper;
 
 	@Reference
 	private CPOptionDemoDataCreatorHelper _cpOptionDemoDataCreatorHelper;

@@ -33,7 +33,8 @@ public class CPInstanceDemoDataCreatorHelper
 
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
-		_cpInstanceLocalService.buildCPInstances(cpDefinitionId, serviceContext);
+		_cpInstanceLocalService.buildCPInstances(
+			cpDefinitionId, serviceContext);
 	}
 
 	@Reference

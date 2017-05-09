@@ -16,7 +16,6 @@ package com.liferay.commerce.product.demo.data.creator.internal.util;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
-import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -52,6 +51,7 @@ public class CPDefinitionOptionRelDemoDataCreatorHelper
 	}
 
 	@Reference
-	private CPDefinitionOptionRelLocalService _cpDefinitionOptionRelLocalService;
+	private CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
 
 }

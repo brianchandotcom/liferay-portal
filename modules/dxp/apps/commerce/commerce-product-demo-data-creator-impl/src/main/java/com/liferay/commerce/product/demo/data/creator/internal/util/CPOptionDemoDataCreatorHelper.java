@@ -18,7 +18,6 @@ import com.liferay.commerce.product.exception.NoSuchCPOptionException;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionLocalService;
-import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -162,10 +161,11 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 		_cpDefinitionOptionRelDemoDataCreatorHelper;
 
 	private final List<Long> _cpOptionIds = new CopyOnWriteArrayList<>();
-	private final Map<String, CPOption> _cpOptions = new HashMap<>();
 
 	@Reference
 	private CPOptionLocalService _cpOptionLocalService;
+
+	private final Map<String, CPOption> _cpOptions = new HashMap<>();
 
 	@Reference
 	private CPOptionValueDemoDataCreatorHelper

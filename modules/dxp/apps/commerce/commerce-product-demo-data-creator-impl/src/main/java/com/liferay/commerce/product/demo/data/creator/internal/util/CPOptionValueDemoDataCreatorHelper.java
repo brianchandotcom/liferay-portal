@@ -16,7 +16,6 @@ package com.liferay.commerce.product.demo.data.creator.internal.util;
 
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionValueLocalService;
-import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -69,8 +68,9 @@ public class CPOptionValueDemoDataCreatorHelper
 
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
-		CPOptionValue cpOptionValue = _cpOptionValueLocalService.addCPOptionValue(
-			cpOptionId, name, titleMap, priority, serviceContext);
+		CPOptionValue cpOptionValue =
+			_cpOptionValueLocalService.addCPOptionValue(
+				cpOptionId, name, titleMap, priority, serviceContext);
 
 		return cpOptionValue;
 	}
@@ -109,9 +109,9 @@ public class CPOptionValueDemoDataCreatorHelper
 	private CPDefinitionOptionValueRelDemoDataCreatorHelper
 		_cpDefinitionOptionValueRelDemoDataCreatorHelper;
 
-	private final Map<String, CPOptionValue> _cpOptionValues = new HashMap<>();
-
 	@Reference
 	private CPOptionValueLocalService _cpOptionValueLocalService;
+
+	private final Map<String, CPOptionValue> _cpOptionValues = new HashMap<>();
 
 }

@@ -1044,7 +1044,7 @@
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
-		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?q=Blogs%20Entry%20Title&amp;scope=" />
+		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?q=Blogs%20Entry%20Title" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Search Page" />
@@ -1059,11 +1059,11 @@
 			<var name="searchTerm" value="Blogs Entry Title" />
 		</execute>
 
-		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Blogs%20Entry%20Title&amp;scopeparameter=" />
+		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Blogs%20Entry%20Title" />
 
 		<execute function="Click" locator1="TypeFacet#BLOGS_ENTRY" />
 
-		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Blogs%20Entry%20Title&amp;scopeparameter=&amp;type=com.liferay.blogs.model.BlogsEntry" />
+		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Blogs%20Entry%20Title&amp;type=com.liferay.blogs.model.BlogsEntry" />
 	</command>
 
 	<command name="ViewUserSearchResult" priority="4">

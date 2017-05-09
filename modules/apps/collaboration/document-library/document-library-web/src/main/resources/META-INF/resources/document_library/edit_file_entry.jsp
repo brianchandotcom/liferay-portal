@@ -130,8 +130,12 @@ if (fileEntryTypeId > 0) {
 
 	String[] availableLanguageIds = fileEntryType.getAvailableLanguageIds();
 
-	for (String availableLanguageId : availableLanguageIds) {
-		availableLocales = ArrayUtil.append(availableLocales, LocaleUtil.fromLanguageId(availableLanguageId));
+	if (availableLanguageIds.length > 0) {
+		availableLocales = new Locale[availableLanguageIds.length];
+
+		for (int i = 0; i < availableLanguageIds.length; i++) {
+			availableLocales[i] = LocaleUtil.fromLanguageId(availableLanguageIds[i]);
+		}
 	}
 }
 

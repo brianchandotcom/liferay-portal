@@ -141,6 +141,7 @@
 		<column name="priority" type="int" />
 		<column name="facetable" type="boolean" />
 		<column name="skuContributor" type="boolean" />
+		<column name="required" type="boolean" />
 
 		<!-- Order -->
 
@@ -347,6 +348,7 @@
 		<column name="name" type="String" />
 		<column name="facetable" type="boolean" />
 		<column name="skuContributor" type="boolean" />
+		<column name="required" type="boolean" />
 
 		<!-- Order -->
 

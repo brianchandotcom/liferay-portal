@@ -91,7 +91,7 @@ public class AssetCategoryDemoDataCreatorHelper
 		return ArrayUtil.toLongArray(assetCategoryIds);
 	}
 
-	private Map<String, AssetCategory> _assetCategories = new HashMap<>();
+	private final Map<String, AssetCategory> _assetCategories = new HashMap<>();
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

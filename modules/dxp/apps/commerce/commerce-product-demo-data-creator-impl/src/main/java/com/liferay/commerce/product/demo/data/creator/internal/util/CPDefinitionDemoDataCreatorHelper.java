@@ -18,11 +18,15 @@ import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -32,6 +36,7 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -124,6 +129,21 @@ public class CPDefinitionDemoDataCreatorHelper
 		ThreadLocalRandom current = ThreadLocalRandom.current();
 
 		return new Date(current.nextLong(start, end));
+	}
+
+	public JSONArray getCatalog() throws IOException, JSONException {
+		Class<?> clazz = getClass();
+
+		String catalogPath =
+			"com/liferay/commerce/product/demo/data/creator/internal" +
+				"/dependencies/products.json";
+
+		String catalogFile = StringUtil.read(
+			clazz.getClassLoader(), catalogPath, false);
+
+		JSONArray catalog = JSONFactoryUtil.createJSONArray(catalogFile);
+
+		return catalog;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

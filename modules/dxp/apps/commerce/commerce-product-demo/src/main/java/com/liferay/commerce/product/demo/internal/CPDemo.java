@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.users.admin.demo.data.creator.OmniAdminUserDemoDataCreator;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
@@ -44,7 +45,12 @@ public class CPDemo extends BasePortalInstanceLifecycleListener {
 			company.getCompanyId(), "alessio.rendina@liferay.com");
 
 		_cpDemoDataCreator.create(
-	        user.getUserId(), guestGroup.getGroupId(), true);
+			user.getUserId(), guestGroup.getGroupId(), true);
+	}
+
+	@Activate
+	protected void activate() throws PortalException {
+		_cpDemoDataCreator.init();
 	}
 
 	@Deactivate

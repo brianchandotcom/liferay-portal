@@ -27,7 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -91,7 +93,21 @@ public class AssetCategoryDemoDataCreatorHelper
 		return ArrayUtil.toLongArray(assetCategoryIds);
 	}
 
-	private final Map<String, AssetCategory> _assetCategories = new HashMap<>();
+	public void init() {
+		_assetCategories = new HashMap<>();
+	}
+
+	@Activate
+	protected void activate() throws PortalException {
+		init();
+	}
+
+	@Deactivate
+	protected void deactivate() throws PortalException {
+		_assetCategories = null;
+	}
+
+	private Map<String, AssetCategory> _assetCategories;
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

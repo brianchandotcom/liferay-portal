@@ -27,21 +27,6 @@ import java.io.IOException;
  */
 public class BaseCPDemoDataCreatorHelper {
 
-	public JSONArray getCatalog() throws IOException, JSONException {
-		Class<?> clazz = getClass();
-
-		String catalogPath =
-			"com/liferay/commerce/product/demo/data/creator/internal" +
-				"/dependencies/products.json";
-
-		String catalogFile = StringUtil.read(
-			clazz.getClassLoader(), catalogPath, false);
-
-		JSONArray catalog = JSONFactoryUtil.createJSONArray(catalogFile);
-
-		return catalog;
-	}
-
 	public ServiceContext getServiceContext(long userId, long groupId) {
 		ServiceContext serviceContext = new ServiceContext();
 

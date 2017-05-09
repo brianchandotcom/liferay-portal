@@ -31,7 +31,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -79,8 +81,8 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 
 			JSONArray values = option.getJSONArray("values");
 
-			_cpOptionValueDemoDataCreatorHelper.addCPOptionValues(
-				locale, userId, groupId, cpOptionId, cpDefinitionOptionRelId,
+			_cpDefinitionOptionValueRelDemoDataCreatorHelper.addCPDefinitionOptionValueRels(
+				locale, userId, groupId, cpDefinitionOptionRelId,
 				values);
 		}
 	}
@@ -153,6 +155,20 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 		return cpOption;
 	}
 
+	public void init() {
+		_cpOptions = new HashMap<>();
+	}
+
+	@Activate
+	protected void activate() throws PortalException {
+		init();
+	}
+
+	@Deactivate
+	protected void deactivate() throws PortalException {
+		_cpOptions = null;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPOptionDemoDataCreatorHelper.class);
 
@@ -160,15 +176,15 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 	private CPDefinitionOptionRelDemoDataCreatorHelper
 		_cpDefinitionOptionRelDemoDataCreatorHelper;
 
+	@Reference
+	private CPDefinitionOptionValueRelDemoDataCreatorHelper
+		_cpDefinitionOptionValueRelDemoDataCreatorHelper;
+
 	private final List<Long> _cpOptionIds = new CopyOnWriteArrayList<>();
 
 	@Reference
 	private CPOptionLocalService _cpOptionLocalService;
 
-	private final Map<String, CPOption> _cpOptions = new HashMap<>();
-
-	@Reference
-	private CPOptionValueDemoDataCreatorHelper
-		_cpOptionValueDemoDataCreatorHelper;
+	private Map<String, CPOption> _cpOptions;
 
 }

@@ -45,7 +45,7 @@ public class CPDefinitionOptionRelDemoDataCreatorHelper
 			_cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
 				cpDefinitionId, cpOptionId, name, titleMap, descriptionMap,
 				ddmFormFieldTypeName, priority, facetable, skuContributor,
-				serviceContext);
+				false, serviceContext);
 
 		return cpDefinitionOptionRel;
 	}

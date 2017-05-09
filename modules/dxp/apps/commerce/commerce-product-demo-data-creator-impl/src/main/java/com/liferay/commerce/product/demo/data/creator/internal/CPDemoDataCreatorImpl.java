@@ -100,6 +100,12 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 		_assetVocabularyDemoDataCreatorHelper.deleteVocabularies();
 	}
 
+	@Override
+	public void init() {
+		_assetCategoryDemoDataCreatorHelper.init();
+		_cpOptionDemoDataCreatorHelper.init();
+	}
+
 	@Reference
 	private AssetCategoryDemoDataCreatorHelper
 		_assetCategoryDemoDataCreatorHelper;

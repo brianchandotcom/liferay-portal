@@ -14,10 +14,14 @@
 
 package com.liferay.commerce.product.demo.data.creator.internal.util;
 
+import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -30,6 +34,28 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = CPDefinitionOptionValueRelDemoDataCreatorHelper.class)
 public class CPDefinitionOptionValueRelDemoDataCreatorHelper
 	extends BaseCPDemoDataCreatorHelper {
+
+	public void addCPDefinitionOptionValueRels(
+			Locale locale, long userId, long groupId,
+			long cpDefinitionOptionRelId, JSONArray values)
+		throws PortalException {
+
+		for (int i = 0; i < values.length(); i++) {
+			JSONObject value = values.getJSONObject(i);
+
+			String name = value.getString("name");
+			String title = value.getString("title");
+			int priority = value.getInt("priority");
+
+			Map<Locale, String> titleMap = new HashMap<>();
+
+			titleMap.put(locale, title);
+
+			createCPDefinitionOptionValueRel(
+				userId, groupId, cpDefinitionOptionRelId, name, titleMap,
+				priority);
+		}
+	}
 
 	public void createCPDefinitionOptionValueRel(
 			long userId, long groupId, long cpDefinitionOptionRelId,

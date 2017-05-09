@@ -31,4 +31,6 @@ public interface CPDemoDataCreator {
 
 	public void delete() throws PortalException;
 
+	public void init();
+
 }

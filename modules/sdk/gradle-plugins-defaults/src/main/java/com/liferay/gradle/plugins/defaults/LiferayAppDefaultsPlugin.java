@@ -21,6 +21,7 @@ import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.tlddoc.builder.AppTLDDocBuilderExtension;
 import com.liferay.gradle.plugins.tlddoc.builder.AppTLDDocBuilderPlugin;
+import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
 import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
@@ -97,10 +98,14 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 
 		LiferayOSGiDefaultsPlugin.configureRepositories(project);
 
+		File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
+
 		_configureAppJavadocBuilder(project, privateProject);
 		_configureAppTLDDocBuilder(project, privateProject);
 		_configureProject(project, appDescription, appVersion);
 		_configureTaskAppJavadoc(project, appTitle, appVersion);
+		_configureTaskAppTlddoc(project, portalRootDir);
 
 		if (privateProject != null) {
 			Gradle gradle = project.getGradle();
@@ -226,6 +231,19 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 
 			javadoc.setTitle(title);
 		}
+	}
+
+	private void _configureTaskAppTlddoc(Project project, File portalRootDir) {
+		if (portalRootDir == null) {
+			return;
+		}
+
+		TLDDocTask tlddocTask = (TLDDocTask)GradleUtil.getTask(
+			project, AppTLDDocBuilderPlugin.APP_TLDDOC_TASK_NAME);
+
+		File xsltDir = new File(portalRootDir, "tools/styles/taglibs");
+
+		tlddocTask.setXsltDir(xsltDir);
 	}
 
 	private void _forceProjectHierarchyEvaluation(Project project) {

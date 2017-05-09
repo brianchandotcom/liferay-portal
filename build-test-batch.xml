@@ -434,7 +434,7 @@ app.server.type=@{app.server.type}]]></echo>
 						<![CDATA[
 							git add -A
 
-							git diff --cached --name-only | grep -v -E '^\.gitignore|bundles/|^modules/\.gitignore' | xargs -n 1000 zip -v liferay-portal-source.zip
+							git diff --cached --name-only -z | grep -E -v -z '^\.gitignore|bundles/|^modules/\.gitignore' | xargs -0 -n 1000 zip -v liferay-portal-source.zip
 						]]>
 					</execute>
 				</then>

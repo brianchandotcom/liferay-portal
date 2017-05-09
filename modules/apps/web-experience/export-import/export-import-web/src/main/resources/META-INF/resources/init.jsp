@@ -117,6 +117,7 @@ page import="com.liferay.portal.kernel.service.TicketLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.GroupPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
+page import="com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil" %><%@
 page import="com.liferay.portal.kernel.util.AggregateResourceBundle" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@

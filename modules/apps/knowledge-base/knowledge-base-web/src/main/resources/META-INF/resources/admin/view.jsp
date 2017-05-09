@@ -183,7 +183,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 					<c:otherwise>
 						<div class="alert alert-warning">
 							<liferay-ui:message
-								arguments="<%= StringUtil.merge(kbGroupServiceConfiguration.markdownImporterArticleExtensions(), StringPool.COMMA_AND_SPACE) %>"
+								arguments="<%= HtmlUtil.escape(StringUtil.merge(kbGroupServiceConfiguration.markdownImporterArticleExtensions(), StringPool.COMMA_AND_SPACE)) %>"
 								key="nothing-was-imported-no-articles-were-found-with-one-of-the-supported-extensions-x"
 							/>
 						</div>
@@ -204,8 +204,6 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 							<%
 							KBFolder kbFolder = (KBFolder)kbObject;
-
-							kbFolder = kbFolder.toEscapedModel();
 
 							Date modifiedDate = kbFolder.getModifiedDate();
 
@@ -228,12 +226,12 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 								<h5 class="text-default">
-									<liferay-ui:message arguments="<%= new String[] {kbFolder.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+									<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbFolder.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 								</h5>
 
 								<h4>
 									<aui:a href="<%= rowURL.toString() %>">
-										<%= kbFolder.getName() %>
+										<%= HtmlUtil.escape(kbFolder.getName()) %>
 									</aui:a>
 								</h4>
 
@@ -256,8 +254,6 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 							<%
 							KBArticle kbArticle = (KBArticle)kbObject;
 
-							kbArticle = kbArticle.toEscapedModel();
-
 							Date modifiedDate = kbArticle.getModifiedDate();
 
 							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
@@ -277,12 +273,12 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 							<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 								<h5 class="text-default">
-									<liferay-ui:message arguments="<%= new String[] {kbArticle.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+									<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 								</h5>
 
 								<h4>
 									<aui:a href="<%= viewURL.toString() %>">
-										<%= kbArticle.getTitle() %>
+										<%= HtmlUtil.escape(kbArticle.getTitle()) %>
 									</aui:a>
 								</h4>
 

@@ -44,7 +44,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 			KBArticleImportException kbaie = (KBArticleImportException)errorException;
 			%>
 
-			<%= LanguageUtil.format(request, "an-unexpected-error-occurred-while-importing-articles-x", kbaie.getLocalizedMessage()) %>
+			<%= LanguageUtil.format(request, "an-unexpected-error-occurred-while-importing-articles-x", HtmlUtil.escape(kbaie.getLocalizedMessage())) %>
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= UploadRequestSizeException.class %>">
@@ -56,7 +56,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 				<aui:field-wrapper>
 					<div class="alert alert-info">
 						<liferay-ui:message
-							arguments="<%= StringUtil.merge(kbGroupServiceConfiguration.markdownImporterArticleExtensions(), StringPool.COMMA_AND_SPACE) %>"
+							arguments="<%= HtmlUtil.escape(StringUtil.merge(kbGroupServiceConfiguration.markdownImporterArticleExtensions(), StringPool.COMMA_AND_SPACE)) %>"
 							key="upload-your-zip-file-help"
 						/>
 					</div>

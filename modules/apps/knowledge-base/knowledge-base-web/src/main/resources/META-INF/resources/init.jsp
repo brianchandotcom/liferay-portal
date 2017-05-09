@@ -208,7 +208,7 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-String redirect = ParamUtil.getString(request, "redirect", currentURL);
+String redirect = PortalUtil.escapeRedirect(ParamUtil.getString(request, "redirect", currentURL));
 
 String rootPortletId = portletDisplay.getRootPortletId();
 

@@ -165,7 +165,6 @@ if (ratingsType == null) {
 
 					<liferay-ui:search-container-row
 						className="com.liferay.knowledge.base.model.KBComment"
-						escapedModel="<%= true %>"
 						modelVar="kbComment"
 					>
 						<liferay-ui:search-container-column-text
@@ -173,7 +172,7 @@ if (ratingsType == null) {
 							name="comment"
 							orderable="<%= true %>"
 						>
-							<%= kbComment.getContent() %>
+							<%= HtmlUtil.escape(kbComment.getContent()) %>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-date

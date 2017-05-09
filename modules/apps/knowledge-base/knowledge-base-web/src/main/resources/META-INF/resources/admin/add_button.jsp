@@ -77,7 +77,7 @@ else {
 					<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
 				</liferay-portlet:renderURL>
 
-				<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(resourceBundle, HtmlUtil.escape(kbTemplate.getTitle())) %>" url="<%= addKBArticleURL.toString() %>" />
+				<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(resourceBundle, kbTemplate.getTitle()) %>" url="<%= addKBArticleURL.toString() %>" />
 
 			<%
 			}

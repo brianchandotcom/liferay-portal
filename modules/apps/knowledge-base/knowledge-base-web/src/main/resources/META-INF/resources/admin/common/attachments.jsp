@@ -64,7 +64,7 @@ if (kbArticle != null) {
 						data="<%= data %>"
 						iconCssClass="icon-paper-clip"
 						label="<%= true %>"
-						message='<%= fileEntry.getTitle() + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
+						message='<%= HtmlUtil.escape(fileEntry.getTitle()) + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
 						method="get"
 						url="<%= rowURL %>"
 					/>

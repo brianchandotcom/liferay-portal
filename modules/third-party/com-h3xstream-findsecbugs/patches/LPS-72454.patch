@@ -1,0 +1,75 @@
+diff --git a/com/h3xstream/findsecbugs/taintanalysis/TaintFrameModelingVisitor.java b/com/h3xstream/findsecbugs/taintanalysis/TaintFrameModelingVisitor.java
+index 60d1537..9dd8f7f 100644
+--- a/com/h3xstream/findsecbugs/taintanalysis/TaintFrameModelingVisitor.java
++++ b/com/h3xstream/findsecbugs/taintanalysis/TaintFrameModelingVisitor.java
+@@ -25,6 +25,9 @@ import edu.umd.cs.findbugs.ba.InvalidBytecodeException;
+ import edu.umd.cs.findbugs.ba.generic.GenericSignatureParser;
+ import edu.umd.cs.findbugs.classfile.MethodDescriptor;
+ import edu.umd.cs.findbugs.util.ClassName;
++
++import java.io.ByteArrayInputStream;
++import java.io.IOException;
+ import java.util.ArrayList;
+ import java.util.Collection;
+ import java.util.HashMap;
+@@ -298,9 +301,54 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
+
+     @Override
+     public void visitINVOKEVIRTUAL(INVOKEVIRTUAL obj) {
++        prepopulatePageContextTaint(obj);
++
+         visitInvoke(obj);
+     }
+
++    private void prepopulatePageContextTaint(InvokeInstruction obj) {
++        String methodName = obj.getMethodName(cpg);
++
++        if (!methodName.equals("setVar") && !methodName.equals("setVarImpl")) {
++            return;
++        }
++
++        String className = getInstanceClassName(obj);
++
++        if (!className.equals("com/liferay/taglib/portlet/ActionURLTag") &&
++                !className.equals("com/liferay/taglib/portlet/RenderURLTag") &&
++                !className.equals("com/liferay/taglib/portlet/ResourceURLTag") &&
++                !className.equals("com/liferay/taglib/core/ConditionalTagSupport") &&
++                !className.equals("com/liferay/taglib/core/IfTag") &&
++                !className.equals("com/liferay/taglib/core/OtherwiseTag") &&
++                !className.equals("com/liferay/taglib/core/WhenTag") &&
++                !className.equals("com/liferay/taglib/security/DoAsURLTag") &&
++                !className.equals("com/liferay/taglib/security/PermissionsURLTag") &&
++                !className.equals("com/liferay/taglib/ui/SearchContainerTag") &&
++                !className.equals("com/liferay/taglib/util/BufferTag") &&
++                !className.equals("com/liferay/taglib/util/GetUrlTag")) {
++
++            return;
++        }
++
++        try {
++            assert getFrame().getStackDepth() > 0;
++            Taint taint = getFrame().getStackValue(0);
++            String value = taint.getConstantValue();
++            assert value != null;
++
++            String taintMethodConfigWithArgumentsAndLocationConfig =
++                    "javax/servlet/jsp/PageContext.findAttribute(\"" + value + "\"):SAFE@" + methodDescriptor.getSlashedClassName();
++
++            taintConfig.load(new ByteArrayInputStream(taintMethodConfigWithArgumentsAndLocationConfig.getBytes()), false);
++
++        } catch (DataflowAnalysisException ex) {
++            throw new InvalidBytecodeException("Not enough values on the stack", ex);
++        } catch (IOException ex) {
++            throw new RuntimeException(ex);
++        }
++    }
++
+     @Override
+     public void visitANEWARRAY(ANEWARRAY obj) {
+         try {
+@@ -701,3 +749,4 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
+         }
+     }
+ }
++/* @generated */
+\ No newline at end of file

@@ -86,6 +86,12 @@ PortletURL portletURL = cpOptionItemSelectorViewDisplayContext.getPortletURL();
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
+				name="required"
+				property="required"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="sku-contributor"
 				property="skuContributor"
 			/>

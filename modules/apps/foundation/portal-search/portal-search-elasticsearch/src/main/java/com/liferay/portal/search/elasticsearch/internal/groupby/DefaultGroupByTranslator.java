@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.elasticsearch.groupby.GroupByTranslator;
+import com.liferay.portal.search.elasticsearch.internal.pagination.Pagination;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -181,21 +183,33 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 		TopHitsBuilder topHitsBuilder = AggregationBuilders.topHits(
 			TOP_HITS_AGGREGATION_NAME);
 
-		int groupyByStart = groupBy.getStart();
+		Pagination pagination = new Pagination(start, end);
 
-		if (groupyByStart == 0) {
-			groupyByStart = start;
+		Optional<Integer> fromOptional;
+
+		int groupByStart = groupBy.getStart();
+
+		if (groupByStart != 0) {
+			fromOptional = Optional.of(groupByStart);
+		}
+		else {
+			fromOptional = pagination.getFrom();
 		}
 
-		topHitsBuilder.setFrom(groupyByStart);
+		fromOptional.ifPresent(topHitsBuilder::setFrom);
+
+		Optional<Integer> sizeOptional;
 
 		int groupBySize = groupBy.getSize();
 
-		if (groupBySize == 0) {
-			groupBySize = end - start + 1;
+		if (groupBySize != 0) {
+			sizeOptional = Optional.of(groupBySize);
+		}
+		else {
+			sizeOptional = pagination.getSize();
 		}
 
-		topHitsBuilder.setSize(groupBySize);
+		sizeOptional.ifPresent(topHitsBuilder::setSize);
 
 		addHighlights(topHitsBuilder, searchContext.getQueryConfig());
 		addSorts(topHitsBuilder, searchContext.getSorts());

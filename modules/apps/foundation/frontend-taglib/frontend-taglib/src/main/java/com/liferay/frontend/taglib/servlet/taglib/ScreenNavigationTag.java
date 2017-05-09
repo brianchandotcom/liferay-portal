@@ -15,17 +15,56 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
  */
 public class ScreenNavigationTag extends IncludeTag {
+
+	@Override
+	public int doEndTag() throws JspException {
+		if (ListUtil.isEmpty(_screenNavigationCategories)) {
+			return SKIP_PAGE;
+		}
+
+		return super.doEndTag();
+	}
+
+	@Override
+	public int doStartTag() throws JspException {
+		ScreenNavigationRegistry screenNavigationHelper =
+			ServletContextUtil.getScreenNavigationHelper();
+
+		_screenNavigationCategories = ListUtil.filter(
+			screenNavigationHelper.getScreenNavigationCategories(_key),
+			new PredicateFilter<ScreenNavigationCategory>() {
+
+				@Override
+				public boolean filter(
+					ScreenNavigationCategory screenNavigationCategory) {
+
+					List<ScreenNavigationEntry> screenNavigationEntries =
+						screenNavigationHelper.getScreenNavigationEntries(
+							screenNavigationCategory);
+
+					return ListUtil.isNotEmpty(screenNavigationEntries);
+				}
+
+			});
+
+		return super.doStartTag();
+	}
 
 	public void setKey(String key) {
 		_key = key;
@@ -61,6 +100,9 @@ public class ScreenNavigationTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
 			"liferay-frontend:screen-navigation:portletURL", _portletURL);
+		request.setAttribute(
+			"liferay-frontend:screen-navigation:screenNavigationCategories",
+			_screenNavigationCategories);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
@@ -69,5 +111,6 @@ public class ScreenNavigationTag extends IncludeTag {
 
 	private String _key;
 	private PortletURL _portletURL;
+	private List<ScreenNavigationCategory> _screenNavigationCategories;
 
 }

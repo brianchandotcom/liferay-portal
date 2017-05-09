@@ -3,4 +3,7 @@ Bundle-SymbolicName: com.liferay.frontend.editor.alloyeditor.link.browse.web
 Bundle-Version: 1.0.3
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Rich Text Editors
+Provide-Capability:\
+	alloyeditor.link.browse;\
+		alloyeditor.link.browse:String="default"
 Web-ContextPath: /frontend-editor-alloyeditor-link-browse-web

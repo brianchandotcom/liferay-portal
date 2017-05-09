@@ -193,13 +193,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 		_template.prepare(request);
 
-		jspWriter.append("<div id=\"");
-		jspWriter.append(HtmlUtil.escapeAttribute(getComponentId()));
-		jspWriter.append("\">");
-
 		_template.processTemplate(jspWriter);
-
-		jspWriter.append("</div>");
 	}
 
 	private SoyJavaScriptRenderer _getJavaScriptComponentRenderer()

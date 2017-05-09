@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Set;
-import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,23 +67,24 @@ public class HighlightUtil {
 	public static String highlight(
 		String s, String[] queryTerms, String highlight1, String highlight2) {
 
-		if (Validator.isNull(s) || ArrayUtil.isEmpty(queryTerms)) {
+		if (Validator.isBlank(s) || ArrayUtil.isEmpty(queryTerms)) {
 			return s;
 		}
 
-		StringBundler sb = new StringBundler(2 * queryTerms.length - 1);
+		StringBundler sb = new StringBundler(3 * queryTerms.length - 1);
 
 		for (int i = 0; i < queryTerms.length; i++) {
-			sb.append(Pattern.quote(queryTerms[i].trim()));
-
-			if ((i + 1) < queryTerms.length) {
+			if (i != 0) {
 				sb.append(StringPool.PIPE);
 			}
+
+			sb.append(Pattern.quote(queryTerms[i].trim()));
+
+			sb.append(_PATTERN_WORD_BOUNDARY);
 		}
 
-		int flags = Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE;
-
-		Pattern pattern = Pattern.compile(sb.toString(), flags);
+		Pattern pattern = Pattern.compile(
+			sb.toString(), Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 
 		return _highlight(s, pattern, highlight1, highlight2);
 	}
@@ -92,47 +92,26 @@ public class HighlightUtil {
 	private static String _highlight(
 		String s, Pattern pattern, String highlight1, String highlight2) {
 
-		StringTokenizer st = new StringTokenizer(s);
+		Matcher matcher = pattern.matcher(s);
 
-		if (st.countTokens() == 0) {
-			return StringPool.BLANK;
+		if (!matcher.find()) {
+			return s;
 		}
 
-		StringBundler sb = new StringBundler(2 * st.countTokens() - 1);
+		StringBuffer sb = new StringBuffer();
 
-		while (st.hasMoreTokens()) {
-			String token = st.nextToken();
-
-			Matcher matcher = pattern.matcher(token);
-
-			if (matcher.find()) {
-				StringBuffer hightlighted = new StringBuffer();
-
-				while (true) {
-					matcher.appendReplacement(
-						hightlighted,
-						highlight1 + matcher.group() + highlight2);
-
-					if (!matcher.find()) {
-						break;
-					}
-				}
-
-				matcher.appendTail(hightlighted);
-
-				sb.append(hightlighted);
-			}
-			else {
-				sb.append(token);
-			}
-
-			if (st.hasMoreTokens()) {
-				sb.append(StringPool.SPACE);
-			}
+		do {
+			matcher.appendReplacement(
+				sb, highlight1 + matcher.group() + highlight2);
 		}
+		while (matcher.find());
+
+		matcher.appendTail(sb);
 
 		return sb.toString();
 	}
+
+	private static final String _PATTERN_WORD_BOUNDARY = "\\b";
 
 	private static final Pattern _pattern = Pattern.compile(
 		HIGHLIGHT_TAG_OPEN + "(.*?)" + HIGHLIGHT_TAG_CLOSE);

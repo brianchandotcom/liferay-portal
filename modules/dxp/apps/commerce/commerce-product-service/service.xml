@@ -24,17 +24,17 @@
 
 		<!-- Other fields -->
 
+		<column name="baseSKU" type="String" />
+		<column name="name" type="String" />
 		<column localized="extra-table" name="title" type="String"  />
 		<column localized="extra-table" name="urlTitle" type="String"  />
 		<column localized="extra-table" name="description" type="String" />
 		<column name="productTypeName" type="String" />
 		<column name="availableIndividually" type="boolean" />
 		<column name="DDMStructureKey" type="String" />
-		<column name="baseSKU" type="String" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
-		<column name="name" type="String" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -132,12 +132,12 @@
 
 		<!-- Other fields -->
 
-		<column localized="true" name="title" type="String" />
-		<column localized="true" name="description" type="String" />
 		<column name="CPDefinitionId" type="long" />
 		<column name="CPOptionId" type="long" />
-		<column name="DDMFormFieldTypeName" type="String" />
 		<column name="name" type="String" />
+		<column localized="true" name="title" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column name="DDMFormFieldTypeName" type="String" />
 		<column name="priority" type="int" />
 		<column name="facetable" type="boolean" />
 		<column name="required" type="boolean" />
@@ -189,9 +189,9 @@
 
 		<!-- Other fields -->
 
-		<column localized="true" name="title" type="String" />
 		<column name="CPDefinitionOptionRelId"  type="long" />
 		<column name="name" type="String" />
+		<column localized="true" name="title" type="String" />
 		<column name="priority" type="int" />
 
 		<!-- Order -->
@@ -342,10 +342,10 @@
 
 		<!-- Other fields -->
 
+		<column name="name" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="DDMFormFieldTypeName" type="String" />
-		<column name="name" type="String" />
 		<column name="facetable" type="boolean" />
 		<column name="required" type="boolean" />
 		<column name="skuContributor" type="boolean" />
@@ -389,9 +389,9 @@
 
 		<!-- Other fields -->
 
-		<column localized="true" name="title" type="String" />
 		<column name="CPOptionId" type="long" />
 		<column name="name" type="String" />
+		<column localized="true" name="title" type="String" />
 		<column name="priority" type="int" />
 
 		<!-- Order -->

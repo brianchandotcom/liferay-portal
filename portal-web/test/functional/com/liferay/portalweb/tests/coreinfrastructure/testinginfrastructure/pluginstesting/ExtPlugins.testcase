@@ -56,6 +56,7 @@
 
 	<command name="ViewSampleExtPluginValidationViaDirectDeploy" priority="5">
 		<property name="direct.deploy.enabled" value="true" />
+		<property name="portal.acceptance" value="test" />
 
 		<execute function="AssertConsoleTextPresent" value1="EXT_ATOM_SERVLET_INSTALLED" />
 

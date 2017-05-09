@@ -15,11 +15,14 @@
 package com.liferay.commerce.product.definitions.web.internal.util;
 
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionMedia;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.util.comparator.CPDefinitionDisplayDateComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionMediaCreateDateComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionMediaPriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelCreateDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelPriorityComparator;
@@ -42,6 +45,52 @@ import java.util.Objects;
  * @author Marco Leo
  */
 public class CPDefinitionsPortletUtil {
+
+	public static OrderByComparator<CPDefinitionMedia>
+		getCPDefinitionMediaOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CPDefinitionMedia> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new CPDefinitionMediaCreateDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("priority")) {
+			orderByComparator = new CPDefinitionMediaPriorityComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	public static Sort getCPDefinitionMediaSort(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(orderByType, "asc")) {
+			orderByAsc = true;
+		}
+
+		Sort sort = null;
+
+		if (orderByCol.equals("create-date")) {
+			sort = SortFactoryUtil.create(Field.CREATE_DATE, true);
+		}
+		else if (orderByCol.equals("priority")) {
+			sort = SortFactoryUtil.create(
+				Field.PRIORITY, Sort.STRING_TYPE, orderByAsc);
+		}
+
+		return sort;
+	}
 
 	public static OrderByComparator<CPDefinitionOptionRel>
 		getCPDefinitionOptionRelOrderByComparator(

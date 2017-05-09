@@ -466,27 +466,6 @@ public interface CPOptionModel extends BaseModel<CPOption>, GroupedModel,
 	public void setFacetable(boolean facetable);
 
 	/**
-	 * Returns the sku contributor of this cp option.
-	 *
-	 * @return the sku contributor of this cp option
-	 */
-	public boolean getSkuContributor();
-
-	/**
-	 * Returns <code>true</code> if this cp option is sku contributor.
-	 *
-	 * @return <code>true</code> if this cp option is sku contributor; <code>false</code> otherwise
-	 */
-	public boolean isSkuContributor();
-
-	/**
-	 * Sets whether this cp option is sku contributor.
-	 *
-	 * @param skuContributor the sku contributor of this cp option
-	 */
-	public void setSkuContributor(boolean skuContributor);
-
-	/**
 	 * Returns the required of this cp option.
 	 *
 	 * @return the required of this cp option
@@ -506,6 +485,27 @@ public interface CPOptionModel extends BaseModel<CPOption>, GroupedModel,
 	 * @param required the required of this cp option
 	 */
 	public void setRequired(boolean required);
+
+	/**
+	 * Returns the sku contributor of this cp option.
+	 *
+	 * @return the sku contributor of this cp option
+	 */
+	public boolean getSkuContributor();
+
+	/**
+	 * Returns <code>true</code> if this cp option is sku contributor.
+	 *
+	 * @return <code>true</code> if this cp option is sku contributor; <code>false</code> otherwise
+	 */
+	public boolean isSkuContributor();
+
+	/**
+	 * Sets whether this cp option is sku contributor.
+	 *
+	 * @param skuContributor the sku contributor of this cp option
+	 */
+	public void setSkuContributor(boolean skuContributor);
 
 	@Override
 	public boolean isNew();

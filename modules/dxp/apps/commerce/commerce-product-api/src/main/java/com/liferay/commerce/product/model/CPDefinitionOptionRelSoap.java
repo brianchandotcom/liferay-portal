@@ -51,8 +51,8 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setFacetable(model.getFacetable());
-		soapModel.setSkuContributor(model.getSkuContributor());
 		soapModel.setRequired(model.getRequired());
+		soapModel.setSkuContributor(model.getSkuContributor());
 
 		return soapModel;
 	}
@@ -240,18 +240,6 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 		_facetable = facetable;
 	}
 
-	public boolean getSkuContributor() {
-		return _skuContributor;
-	}
-
-	public boolean isSkuContributor() {
-		return _skuContributor;
-	}
-
-	public void setSkuContributor(boolean skuContributor) {
-		_skuContributor = skuContributor;
-	}
-
 	public boolean getRequired() {
 		return _required;
 	}
@@ -262,6 +250,18 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 
 	public void setRequired(boolean required) {
 		_required = required;
+	}
+
+	public boolean getSkuContributor() {
+		return _skuContributor;
+	}
+
+	public boolean isSkuContributor() {
+		return _skuContributor;
+	}
+
+	public void setSkuContributor(boolean skuContributor) {
+		_skuContributor = skuContributor;
 	}
 
 	private String _uuid;
@@ -280,6 +280,6 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 	private String _name;
 	private int _priority;
 	private boolean _facetable;
-	private boolean _skuContributor;
 	private boolean _required;
+	private boolean _skuContributor;
 }

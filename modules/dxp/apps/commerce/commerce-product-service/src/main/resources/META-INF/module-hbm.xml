@@ -84,8 +84,8 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="facetable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="skuContributor" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="required" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="skuContributor" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.commerce.product.model.impl.CPDefinitionOptionValueRelImpl" table="CPDefinitionOptionValueRel">
 		<id name="CPDefinitionOptionValueRelId" type="long">
@@ -156,8 +156,8 @@
 		<property name="DDMFormFieldTypeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="facetable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="skuContributor" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="required" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="skuContributor" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.commerce.product.model.impl.CPOptionValueImpl" table="CPOptionValue">
 		<id name="CPOptionValueId" type="long">

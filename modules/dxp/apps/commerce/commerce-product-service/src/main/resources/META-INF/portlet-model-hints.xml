@@ -74,8 +74,8 @@
 			<validator name="number" />
 		</field>
 		<field name="facetable" type="boolean" />
-		<field name="skuContributor" type="boolean" />
 		<field name="required" type="boolean" />
+		<field name="skuContributor" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionOptionValueRel">
 		<field name="uuid" type="String" />
@@ -148,8 +148,8 @@
 			<validator name="required" />
 		</field>
 		<field name="facetable" type="boolean" />
-		<field name="skuContributor" type="boolean" />
 		<field name="required" type="boolean" />
+		<field name="skuContributor" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPOptionValue">
 		<field name="uuid" type="String" />

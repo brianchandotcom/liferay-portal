@@ -93,8 +93,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			{ "DDMFormFieldTypeName", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "facetable", Types.BOOLEAN },
-			{ "skuContributor", Types.BOOLEAN },
-			{ "required", Types.BOOLEAN }
+			{ "required", Types.BOOLEAN },
+			{ "skuContributor", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -112,11 +112,11 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		TABLE_COLUMNS_MAP.put("DDMFormFieldTypeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("facetable", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("skuContributor", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("required", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("skuContributor", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPOption (uuid_ VARCHAR(75) null,CPOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,name VARCHAR(75) null,facetable BOOLEAN,skuContributor BOOLEAN,required BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CPOption (uuid_ VARCHAR(75) null,CPOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,name VARCHAR(75) null,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CPOption";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpOption.title DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPOption.title DESC";
@@ -163,8 +163,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		model.setDDMFormFieldTypeName(soapModel.getDDMFormFieldTypeName());
 		model.setName(soapModel.getName());
 		model.setFacetable(soapModel.getFacetable());
-		model.setSkuContributor(soapModel.getSkuContributor());
 		model.setRequired(soapModel.getRequired());
+		model.setSkuContributor(soapModel.getSkuContributor());
 
 		return model;
 	}
@@ -242,8 +242,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
 		attributes.put("name", getName());
 		attributes.put("facetable", getFacetable());
-		attributes.put("skuContributor", getSkuContributor());
 		attributes.put("required", getRequired());
+		attributes.put("skuContributor", getSkuContributor());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -332,16 +332,16 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			setFacetable(facetable);
 		}
 
-		Boolean skuContributor = (Boolean)attributes.get("skuContributor");
-
-		if (skuContributor != null) {
-			setSkuContributor(skuContributor);
-		}
-
 		Boolean required = (Boolean)attributes.get("required");
 
 		if (required != null) {
 			setRequired(required);
+		}
+
+		Boolean skuContributor = (Boolean)attributes.get("skuContributor");
+
+		if (skuContributor != null) {
+			setSkuContributor(skuContributor);
 		}
 	}
 
@@ -752,23 +752,6 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 	@JSON
 	@Override
-	public boolean getSkuContributor() {
-		return _skuContributor;
-	}
-
-	@JSON
-	@Override
-	public boolean isSkuContributor() {
-		return _skuContributor;
-	}
-
-	@Override
-	public void setSkuContributor(boolean skuContributor) {
-		_skuContributor = skuContributor;
-	}
-
-	@JSON
-	@Override
 	public boolean getRequired() {
 		return _required;
 	}
@@ -782,6 +765,23 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	@Override
 	public void setRequired(boolean required) {
 		_required = required;
+	}
+
+	@JSON
+	@Override
+	public boolean getSkuContributor() {
+		return _skuContributor;
+	}
+
+	@JSON
+	@Override
+	public boolean isSkuContributor() {
+		return _skuContributor;
+	}
+
+	@Override
+	public void setSkuContributor(boolean skuContributor) {
+		_skuContributor = skuContributor;
 	}
 
 	@Override
@@ -916,8 +916,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		cpOptionImpl.setDDMFormFieldTypeName(getDDMFormFieldTypeName());
 		cpOptionImpl.setName(getName());
 		cpOptionImpl.setFacetable(getFacetable());
-		cpOptionImpl.setSkuContributor(getSkuContributor());
 		cpOptionImpl.setRequired(getRequired());
+		cpOptionImpl.setSkuContributor(getSkuContributor());
 
 		cpOptionImpl.resetOriginalValues();
 
@@ -1076,9 +1076,9 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 		cpOptionCacheModel.facetable = getFacetable();
 
-		cpOptionCacheModel.skuContributor = getSkuContributor();
-
 		cpOptionCacheModel.required = getRequired();
+
+		cpOptionCacheModel.skuContributor = getSkuContributor();
 
 		return cpOptionCacheModel;
 	}
@@ -1113,10 +1113,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(getName());
 		sb.append(", facetable=");
 		sb.append(getFacetable());
-		sb.append(", skuContributor=");
-		sb.append(getSkuContributor());
 		sb.append(", required=");
 		sb.append(getRequired());
+		sb.append(", skuContributor=");
+		sb.append(getSkuContributor());
 		sb.append("}");
 
 		return sb.toString();
@@ -1183,12 +1183,12 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(getFacetable());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>skuContributor</column-name><column-value><![CDATA[");
-		sb.append(getSkuContributor());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>required</column-name><column-value><![CDATA[");
 		sb.append(getRequired());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>skuContributor</column-name><column-value><![CDATA[");
+		sb.append(getSkuContributor());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -1221,8 +1221,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	private String _DDMFormFieldTypeName;
 	private String _name;
 	private boolean _facetable;
-	private boolean _skuContributor;
 	private boolean _required;
+	private boolean _skuContributor;
 	private long _columnBitmask;
 	private CPOption _escapedModel;
 }

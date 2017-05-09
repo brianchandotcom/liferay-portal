@@ -3281,8 +3281,8 @@ public class CPOptionPersistenceImpl extends BasePersistenceImpl<CPOption>
 		cpOptionImpl.setDDMFormFieldTypeName(cpOption.getDDMFormFieldTypeName());
 		cpOptionImpl.setName(cpOption.getName());
 		cpOptionImpl.setFacetable(cpOption.isFacetable());
-		cpOptionImpl.setSkuContributor(cpOption.isSkuContributor());
 		cpOptionImpl.setRequired(cpOption.isRequired());
+		cpOptionImpl.setSkuContributor(cpOption.isSkuContributor());
 
 		return cpOptionImpl;
 	}

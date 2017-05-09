@@ -155,9 +155,9 @@ public class CPDefinitionOptionRelPersistenceTest {
 
 		newCPDefinitionOptionRel.setFacetable(RandomTestUtil.randomBoolean());
 
-		newCPDefinitionOptionRel.setSkuContributor(RandomTestUtil.randomBoolean());
-
 		newCPDefinitionOptionRel.setRequired(RandomTestUtil.randomBoolean());
+
+		newCPDefinitionOptionRel.setSkuContributor(RandomTestUtil.randomBoolean());
 
 		_cpDefinitionOptionRels.add(_persistence.update(
 				newCPDefinitionOptionRel));
@@ -198,10 +198,10 @@ public class CPDefinitionOptionRelPersistenceTest {
 			newCPDefinitionOptionRel.getPriority());
 		Assert.assertEquals(existingCPDefinitionOptionRel.getFacetable(),
 			newCPDefinitionOptionRel.getFacetable());
-		Assert.assertEquals(existingCPDefinitionOptionRel.getSkuContributor(),
-			newCPDefinitionOptionRel.getSkuContributor());
 		Assert.assertEquals(existingCPDefinitionOptionRel.getRequired(),
 			newCPDefinitionOptionRel.getRequired());
+		Assert.assertEquals(existingCPDefinitionOptionRel.getSkuContributor(),
+			newCPDefinitionOptionRel.getSkuContributor());
 	}
 
 	@Test
@@ -290,7 +290,7 @@ public class CPDefinitionOptionRelPersistenceTest {
 			true, "modifiedDate", true, "title", true, "description", true,
 			"CPDefinitionId", true, "CPOptionId", true, "DDMFormFieldTypeName",
 			true, "name", true, "priority", true, "facetable", true,
-			"skuContributor", true, "required", true);
+			"required", true, "skuContributor", true);
 	}
 
 	@Test
@@ -547,9 +547,9 @@ public class CPDefinitionOptionRelPersistenceTest {
 
 		cpDefinitionOptionRel.setFacetable(RandomTestUtil.randomBoolean());
 
-		cpDefinitionOptionRel.setSkuContributor(RandomTestUtil.randomBoolean());
-
 		cpDefinitionOptionRel.setRequired(RandomTestUtil.randomBoolean());
+
+		cpDefinitionOptionRel.setSkuContributor(RandomTestUtil.randomBoolean());
 
 		_cpDefinitionOptionRels.add(_persistence.update(cpDefinitionOptionRel));
 

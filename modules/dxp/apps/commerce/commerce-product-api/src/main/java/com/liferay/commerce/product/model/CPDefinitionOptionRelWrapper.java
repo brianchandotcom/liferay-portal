@@ -77,8 +77,8 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
 		attributes.put("facetable", getFacetable());
-		attributes.put("skuContributor", getSkuContributor());
 		attributes.put("required", getRequired());
+		attributes.put("skuContributor", getSkuContributor());
 
 		return attributes;
 	}
@@ -183,16 +183,16 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 			setFacetable(facetable);
 		}
 
-		Boolean skuContributor = (Boolean)attributes.get("skuContributor");
-
-		if (skuContributor != null) {
-			setSkuContributor(skuContributor);
-		}
-
 		Boolean required = (Boolean)attributes.get("required");
 
 		if (required != null) {
 			setRequired(required);
+		}
+
+		Boolean skuContributor = (Boolean)attributes.get("skuContributor");
+
+		if (skuContributor != null) {
+			setSkuContributor(skuContributor);
 		}
 	}
 

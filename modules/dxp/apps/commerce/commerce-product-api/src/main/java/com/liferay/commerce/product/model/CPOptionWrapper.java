@@ -72,8 +72,8 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
 		attributes.put("name", getName());
 		attributes.put("facetable", getFacetable());
-		attributes.put("skuContributor", getSkuContributor());
 		attributes.put("required", getRequired());
+		attributes.put("skuContributor", getSkuContributor());
 
 		return attributes;
 	}
@@ -159,16 +159,16 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 			setFacetable(facetable);
 		}
 
-		Boolean skuContributor = (Boolean)attributes.get("skuContributor");
-
-		if (skuContributor != null) {
-			setSkuContributor(skuContributor);
-		}
-
 		Boolean required = (Boolean)attributes.get("required");
 
 		if (required != null) {
 			setRequired(required);
+		}
+
+		Boolean skuContributor = (Boolean)attributes.get("skuContributor");
+
+		if (skuContributor != null) {
+			setSkuContributor(skuContributor);
 		}
 	}
 

@@ -508,27 +508,6 @@ public interface CPDefinitionOptionRelModel extends BaseModel<CPDefinitionOption
 	public void setFacetable(boolean facetable);
 
 	/**
-	 * Returns the sku contributor of this cp definition option rel.
-	 *
-	 * @return the sku contributor of this cp definition option rel
-	 */
-	public boolean getSkuContributor();
-
-	/**
-	 * Returns <code>true</code> if this cp definition option rel is sku contributor.
-	 *
-	 * @return <code>true</code> if this cp definition option rel is sku contributor; <code>false</code> otherwise
-	 */
-	public boolean isSkuContributor();
-
-	/**
-	 * Sets whether this cp definition option rel is sku contributor.
-	 *
-	 * @param skuContributor the sku contributor of this cp definition option rel
-	 */
-	public void setSkuContributor(boolean skuContributor);
-
-	/**
 	 * Returns the required of this cp definition option rel.
 	 *
 	 * @return the required of this cp definition option rel
@@ -548,6 +527,27 @@ public interface CPDefinitionOptionRelModel extends BaseModel<CPDefinitionOption
 	 * @param required the required of this cp definition option rel
 	 */
 	public void setRequired(boolean required);
+
+	/**
+	 * Returns the sku contributor of this cp definition option rel.
+	 *
+	 * @return the sku contributor of this cp definition option rel
+	 */
+	public boolean getSkuContributor();
+
+	/**
+	 * Returns <code>true</code> if this cp definition option rel is sku contributor.
+	 *
+	 * @return <code>true</code> if this cp definition option rel is sku contributor; <code>false</code> otherwise
+	 */
+	public boolean isSkuContributor();
+
+	/**
+	 * Sets whether this cp definition option rel is sku contributor.
+	 *
+	 * @param skuContributor the sku contributor of this cp definition option rel
+	 */
+	public void setSkuContributor(boolean skuContributor);
 
 	@Override
 	public boolean isNew();

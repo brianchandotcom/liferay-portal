@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.app.order:Integer=100",
+		"panel.app.order:Integer=600",
 		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION
 	},
 	service = PanelApp.class
@@ -43,8 +43,7 @@ public class WeDeployAuthAdminPanel extends BasePanelApp {
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" +
-			WeDeployAuthPortletKeys.WEDEPLOY_AUTH_ADMIN + ")",
+		target = "(javax.portlet.name=" + WeDeployAuthPortletKeys.WEDEPLOY_AUTH_ADMIN + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

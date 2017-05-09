@@ -26,21 +26,21 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"com.liferay.portlet.css-class-wrapper=portal-security-application-auth-portlet",
-		"com.liferay.portlet.display-category=category.cms",
+		"com.liferay.portlet.css-class-wrapper=portlet-portal-security-wedeploy-application-auth-admin",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=false",
-		"javax.portlet.display-name=WeDeploy Authorize Admin",
+		"javax.portlet.display-name=WeDeploy Auth Admin",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.info.keywords=WeDeploy Authorize Admin",
-		"javax.portlet.info.short-title=WeDeploy Authorize Admin",
-		"javax.portlet.info.title=WeDeploy Authorize Admin",
+		"javax.portlet.info.keywords=WeDeploy Auth Admin",
+		"javax.portlet.info.short-title=WeDeploy Auth Admin",
+		"javax.portlet.info.title=WeDeploy Auth Admin",
 		"javax.portlet.init-param.clear-request-parameters=true",
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/wedeploy_auth_admin/view.jsp",
 		"javax.portlet.name=" + WeDeployAuthPortletKeys.WEDEPLOY_AUTH_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=guest,power-user,user",
+		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class

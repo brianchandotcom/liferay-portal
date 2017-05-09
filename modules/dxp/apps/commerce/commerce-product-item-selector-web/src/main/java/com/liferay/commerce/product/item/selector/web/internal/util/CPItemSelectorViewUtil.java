@@ -19,7 +19,7 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.util.comparator.CPDefinitionDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionTitleComparator;
-import com.liferay.commerce.product.util.comparator.CPOptionNameComparator;
+import com.liferay.commerce.product.util.comparator.CPOptionTitleComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
@@ -65,8 +65,8 @@ public class CPItemSelectorViewUtil {
 
 		OrderByComparator<CPOption> orderByComparator = null;
 
-		if (orderByCol.equals("name")) {
-			orderByComparator = new CPOptionNameComparator(orderByAsc);
+		if (orderByCol.equals("title")) {
+			orderByComparator = new CPOptionTitleComparator(orderByAsc);
 		}
 
 		return orderByComparator;

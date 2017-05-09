@@ -68,7 +68,7 @@ PortletURL portletURL = cpOptionItemSelectorViewDisplayContext.getPortletURL();
 				<div class="commerce-product-option-name"
 					data-id="<%= cpOption.getCPOptionId() %>">
 
-					<%= HtmlUtil.escape(cpOption.getName(themeDisplay.getLanguageId())) %>
+					<%= HtmlUtil.escape(cpOption.getTitle(themeDisplay.getLanguageId())) %>
 				</div>
 			</liferay-ui:search-container-column-text>
 

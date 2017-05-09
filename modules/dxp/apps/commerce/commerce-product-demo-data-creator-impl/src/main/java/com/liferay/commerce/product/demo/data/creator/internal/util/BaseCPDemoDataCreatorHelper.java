@@ -14,13 +14,7 @@
 
 package com.liferay.commerce.product.demo.data.creator.internal.util;
 
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.io.IOException;
 
 /**
  * @author Alessio Antonio Rendina

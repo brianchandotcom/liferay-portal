@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.demo.data.creator.internal.util;
 
-import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;

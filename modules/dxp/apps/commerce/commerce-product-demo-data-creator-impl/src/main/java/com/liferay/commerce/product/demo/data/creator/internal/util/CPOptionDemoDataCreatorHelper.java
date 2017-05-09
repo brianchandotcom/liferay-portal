@@ -81,9 +81,9 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 
 			JSONArray values = option.getJSONArray("values");
 
-			_cpDefinitionOptionValueRelDemoDataCreatorHelper.addCPDefinitionOptionValueRels(
-				locale, userId, groupId, cpDefinitionOptionRelId,
-				values);
+			_cpDefinitionOptionValueRelDemoDataCreatorHelper.
+				addCPDefinitionOptionValueRels(
+					locale, userId, groupId, cpDefinitionOptionRelId, values);
 		}
 	}
 

@@ -3,22 +3,10 @@ AUI.add(
 	function(A) {
 		var CACHE = {};
 
-		var Lang = A.Lang;
+		var Settings = Liferay.DDL.Settings;
 
 		var FormBuilderSettingsRetriever = A.Component.create(
 			{
-				ATTRS: {
-					getFieldTypeSettingFormContextURL: {
-						validator: Lang.isString,
-						value: ''
-					},
-
-					portletNamespace: {
-						validator: Lang.isString,
-						value: ''
-					}
-				},
-
 				EXTENDS: A.Base,
 
 				NAME: 'liferay-ddl-form-builder-settings-retriever',
@@ -43,12 +31,10 @@ AUI.add(
 										type: type
 									};
 
-									var portletNamespace = instance.get('portletNamespace');
-
 									A.io.request(
-										instance.get('getFieldTypeSettingFormContextURL'),
+										Settings.getFieldTypeSettingFormContextURL,
 										{
-											data: Liferay.Util.ns(portletNamespace, payload),
+											data: Liferay.Util.ns(Settings.portletNamespace, payload),
 											dataType: 'JSON',
 											method: 'GET',
 											on: {

@@ -1,9 +1,9 @@
 AUI.add(
 	'liferay-ddl-portlet',
 	function(A) {
-		var DefinitionSerializer = Liferay.DDL.DefinitionSerializer;
-
 		var LayoutSerializer = Liferay.DDL.LayoutSerializer;
+
+		var Settings = Liferay.DDL.Settings;
 
 		var EMPTY_FN = A.Lang.emptyFn;
 
@@ -18,75 +18,30 @@ AUI.add(
 						valueFn: '_valueAlert'
 					},
 
-					autosaveInterval: {
-					},
-
-					autosaveURL: {
-					},
-
-					availableLanguageIds: {
-						value: [
-							themeDisplay.getDefaultLanguageId()
-						]
+					context: {
 					},
 
 					defaultLanguageId: {
 						value: themeDisplay.getDefaultLanguageId()
 					},
 
-					definition: {
-					},
-
-					description: {
-						getter: '_getDescription',
-						value: ''
-					},
-
 					editForm: {
 					},
 
-					evaluatorURL: {
-					},
-
-					fieldTypesDefinitions: {
-						value: {}
+					editingLanguageId: {
+						value: themeDisplay.getDefaultLanguageId()
 					},
 
 					formBuilder: {
 						valueFn: '_valueFormBuilder'
 					},
 
-					functionsMetadata: {
-						value: []
+					localizedDescription: {
+						value: {}
 					},
 
-					getDataProviderInstancesURL: {
-						value: ''
-					},
-
-					getDataProviderParametersSettingsURL: {
-						value: ''
-					},
-
-					getFieldTypeSettingFormContextURL: {
-						value: ''
-					},
-
-					getFunctionsURL: {
-						value: ''
-					},
-
-					getRolesURL: {
-						value: ''
-					},
-
-					layout: {
-					},
-
-					name: {
-						getter: '_getName',
-						setter: '_setName',
-						value: ''
+					localizedName: {
+						value: {}
 					},
 
 					published: {
@@ -95,25 +50,16 @@ AUI.add(
 						value: false
 					},
 
-					publishRecordSetURL: {
-					},
-
 					recordSetId: {
+						getter: '_getRecordSetId',
 						value: 0
-					},
-
-					restrictedFormURL: {
 					},
 
 					ruleBuilder: {
 						valueFn: '_valueRuleBuilder'
 					},
 
-					rules: {
-						value: []
-					},
-
-					sharedFormURL: {
+					translationManager: {
 					}
 				},
 
@@ -296,29 +242,23 @@ AUI.add(
 						var instance = this;
 
 						var formBuilder = instance.get('formBuilder');
-
 						var ruleBuilder = instance.get('ruleBuilder');
 
-						var pages = formBuilder.get('layouts');
+						var pageManager = formBuilder.get('pageManager');
 
-						instance.definitionSerializer.set('pages', pages);
+						instance.layoutVisitor.set('pages', formBuilder.get('layouts'));
 
-						instance.definitionSerializer.set('successPage', formBuilder.getSuccessPageDefinition());
-
-						var definition = JSON.parse(instance.definitionSerializer.serialize());
-
-						var rules = JSON.stringify(ruleBuilder.get('rules'));
-
-						instance.layoutSerializer.set('pages', pages);
-
-						var layout = JSON.parse(instance.layoutSerializer.serialize());
+						var translationManager = instance.get('translationManager');
 
 						return {
-							definition: definition,
-							description: instance.get('description').trim(),
-							layout: layout,
-							name: instance.get('name').trim(),
-							rules: rules
+							availableLanguageIds: translationManager.get('availableLocales'),
+							defaultLanguageId: translationManager.get('defaultLocale'),
+							description: instance.get('localizedDescription'),
+							name: instance._getLocalizedName(),
+							pages: instance.layoutVisitor.getPages(),
+							paginationMode: pageManager.get('mode'),
+							rules: ruleBuilder.get('rules'),
+							successPageSettings: pageManager.get('successPageSettings')
 						};
 					},
 
@@ -792,17 +732,11 @@ AUI.add(
 					_valueFormBuilder: function() {
 						var instance = this;
 
-						var layout = instance.get('layout');
-
 						return new Liferay.DDL.FormBuilder(
 							{
+								context: instance.get('context'),
 								defaultLanguageId: instance.get('defaultLanguageId'),
-								definition: instance.get('definition'),
-								evaluatorURL: instance.get('evaluatorURL'),
-								getFieldTypeSettingFormContextURL: instance.get('getFieldTypeSettingFormContextURL'),
-								pagesJSON: layout.pages,
-								portletNamespace: instance.get('namespace'),
-								recordSetId: instance.get('recordSetId')
+								editingLanguageId: instance.get('editingLanguageId')
 							}
 						);
 					},
@@ -813,13 +747,7 @@ AUI.add(
 						return new Liferay.DDL.FormBuilderRuleBuilder(
 							{
 								formBuilder: instance.get('formBuilder'),
-								functionsMetadata: instance.get('functionsMetadata'),
-								getDataProviderInstancesURL: instance.get('getDataProviderInstancesURL'),
-								getDataProviderParametersSettingsURL: instance.get('getDataProviderParametersSettingsURL'),
-								getFunctionsURL: instance.get('getFunctionsURL'),
-								getRolesURL: instance.get('getRolesURL'),
-								portletNamespace: instance.get('namespace'),
-								rules: instance.get('rules'),
+								rules: Settings.rules,
 								visible: false
 							}
 						);

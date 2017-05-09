@@ -118,6 +118,7 @@ AUI.add(
 						// the DOM in order to hide the controls, but keep the references
 						// inside items NodeList in order to handle the items index the same
 						// way when they are visible.
+
 						if (!instance.get('showControls')) {
 							items.first().remove();
 							items.last().remove();

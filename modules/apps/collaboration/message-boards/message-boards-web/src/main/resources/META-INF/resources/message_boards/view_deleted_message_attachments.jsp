@@ -51,7 +51,7 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 </portlet:actionURL>
 
 <%
-String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, TrashUtil.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
+String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, trashHelper.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
 %>
 
 <liferay-trash:empty
@@ -97,7 +97,7 @@ String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(local
 				icon="<%= assetRenderer.getIconCssClass() %>"
 				label="<%= true %>"
 				markupView="lexicon"
-				message="<%= TrashUtil.getOriginalTitle(fileEntry.getTitle()) %>"
+				message="<%= trashHelper.getOriginalTitle(fileEntry.getTitle()) %>"
 			/>
 		</liferay-ui:search-container-column-text>
 

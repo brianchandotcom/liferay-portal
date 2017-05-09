@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
@@ -90,14 +89,6 @@ public class WikiPageTrashHandlerTestUtil {
 		WikiPage page = (WikiPage)classedModel;
 
 		return page.getResourcePrimKey();
-	}
-
-	public static String getUniqueTitle(BaseModel<?> baseModel) {
-		WikiPage page = (WikiPage)baseModel;
-
-		String title = page.getTitle();
-
-		return TrashUtil.getOriginalTitle(title);
 	}
 
 	public static void moveBaseModelToTrash(long primaryKey) throws Exception {

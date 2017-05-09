@@ -47,13 +47,13 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 
 	<portlet:actionURL name="editExportConfiguration" var="deleteExportConfigurationURL">
 		<portlet:param name="mvcRenderCommandName" value="editExportConfiguration" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(liveGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(liveGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= deleteRedirectURL %>" />
 		<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete
-		trash="<%= TrashUtil.isTrashEnabled(liveGroupId) %>"
+		trash="<%= trashHelper.isTrashEnabled(liveGroupId) %>"
 		url="<%= deleteExportConfigurationURL %>"
 	/>
 </liferay-ui:icon-menu>

@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>SAVE_NOTIFICATION</td>
-	<td>//div[contains(@class,'autosave-bar')]/span</td>
+	<td>//div[contains(@class,'autosave-bar')]//span</td>
 	<td></td>
 </tr>
 <tr>

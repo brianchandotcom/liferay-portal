@@ -57,12 +57,6 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 		Assert.assertEquals(Arrays.toString(docs), docsCount, docs.length);
 	}
 
-	protected void assertGroup(
-		String key, int count, Map<String, Hits> groupedHitsMap) {
-
-		assertGroup(key, count, count, groupedHitsMap);
-	}
-
 	protected Map<String, Hits> searchGroups(SearchContext searchContext)
 		throws Exception {
 
@@ -77,6 +71,7 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 
 	protected void testGroupBy() throws Exception {
 		addDocuments("sixteen", 16);
+		addDocuments("four", 4);
 		addDocuments("three", 3);
 		addDocuments("two", 2);
 
@@ -93,12 +88,17 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 					Map<String, Hits> groupedHitsMap = searchGroups(
 						searchContext);
 
-					Assert.assertEquals(
-						groupedHitsMap.toString(), 3, groupedHitsMap.size());
+					assertGroup(
+						"sixteen", 16, DEFAULT_SEARCH_ENGINE_HITS_PER_BUCKET,
+						groupedHitsMap);
+					assertGroup(
+						"four", 4, DEFAULT_SEARCH_ENGINE_HITS_PER_BUCKET,
+						groupedHitsMap);
+					assertGroup("three", 3, 3, groupedHitsMap);
+					assertGroup("two", 2, 2, groupedHitsMap);
 
-					assertGroup("sixteen", 16, groupedHitsMap);
-					assertGroup("three", 3, groupedHitsMap);
-					assertGroup("two", 2, groupedHitsMap);
+					Assert.assertEquals(
+						groupedHitsMap.toString(), 4, groupedHitsMap.size());
 
 					return null;
 				}
@@ -124,7 +124,7 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 					Map<String, Hits> groupedHitsMap = searchGroups(
 						searchContext);
 
-					assertGroup("sixteen", 16, 6, groupedHitsMap);
+					assertGroup("sixteen", 16, 5, groupedHitsMap);
 
 					return null;
 				}
@@ -160,6 +160,8 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 
 			});
 	}
+
+	protected static final int DEFAULT_SEARCH_ENGINE_HITS_PER_BUCKET = 3;
 
 	protected static final String GROUP_FIELD = Field.USER_NAME;
 

@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * @author Marco Leo
@@ -100,6 +103,29 @@ public class CPDefinitionMediaLocalServiceImpl
 			cpMediaTypeId);
 
 		return cpMediaTypeLocalService.deleteCPMediaType(cpMediaType);
+	}
+
+	@Override
+	public List<CPDefinitionMedia> getDefinitionMedias(
+		long cpDefinitionId, int start, int end) {
+
+		return cpDefinitionMediaPersistence.findByCPDefinitionId(
+			cpDefinitionId, start, end);
+	}
+
+	@Override
+	public List<CPDefinitionMedia> getDefinitionMedias(
+		long cpDefinitionId, int start, int end,
+		OrderByComparator<CPDefinitionMedia> orderByComparator) {
+
+		return cpDefinitionMediaPersistence.findByCPDefinitionId(
+			cpDefinitionId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getDefinitionMediasCount(long cpDefinitionId) {
+		return cpDefinitionMediaPersistence.countByCPDefinitionId(
+			cpDefinitionId);
 	}
 
 	@Override

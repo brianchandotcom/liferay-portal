@@ -31,7 +31,8 @@ public class JavaExceptionCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		content = _renameVariableNames(content);
-		content = _sortExceptions(content);
+		content = _sortExceptions(
+			content, _throwsExceptionsPattern, StringPool.COMMA_AND_SPACE);
 
 		return content;
 	}
@@ -96,8 +97,10 @@ public class JavaExceptionCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _sortExceptions(String content) {
-		Matcher matcher = _throwsExceptionsPattern.matcher(content);
+	private String _sortExceptions(
+		String content, Pattern pattern, String delimeter) {
+
+		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
 			String match = matcher.group();
@@ -110,9 +113,7 @@ public class JavaExceptionCheck extends BaseFileCheck {
 
 			String previousException = StringPool.BLANK;
 
-			for (String exception :
-					StringUtil.split(exceptions, StringPool.COMMA_AND_SPACE)) {
-
+			for (String exception : StringUtil.split(exceptions, delimeter)) {
 				exception = StringUtil.trim(exception);
 
 				if (Validator.isNotNull(previousException) &&
@@ -127,7 +128,8 @@ public class JavaExceptionCheck extends BaseFileCheck {
 						"$1" + exception + "$2");
 
 					return _sortExceptions(
-						StringUtil.replace(content, match, replacement));
+						StringUtil.replace(content, match, replacement),
+						pattern, delimeter);
 				}
 
 				previousException = exception;

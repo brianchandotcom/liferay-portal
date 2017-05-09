@@ -803,6 +803,18 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void reinvoke(ReinvokeRule reinvokeRule) {
+		String hostName = JenkinsResultsParserUtil.getHostName("");
+
+		Build parentBuild = getParentBuild();
+
+		String parentBuildStatus = parentBuild.getStatus();
+
+		if (!parentBuildStatus.equals("running") ||
+			!hostName.startsWith("cloud-10-0")) {
+
+			return;
+		}
+
 		if ((reinvokeRule != null) && !fromArchive) {
 			String message = JenkinsResultsParserUtil.combine(
 				reinvokeRule.getName(), " failure detected at ", getBuildURL(),
@@ -832,26 +844,6 @@ public abstract class BaseBuild implements Build {
 						"Unable to send reinvoke notification", e);
 				}
 			}
-		}
-
-		String hostName = JenkinsResultsParserUtil.getHostName("");
-
-		Build parentBuild = getParentBuild();
-
-		String parentBuildStatus = parentBuild.getStatus();
-
-		if (!parentBuildStatus.equals("running")) {
-			System.out.println(
-				"Parent build is no longer running. Reinvocation has been " +
-					"aborted.");
-
-			return;
-		}
-
-		if (!hostName.startsWith("cloud-10-0")) {
-			System.out.println("A build may not be reinvoked by " + hostName);
-
-			return;
 		}
 
 		String invocationURL = getInvocationURL();

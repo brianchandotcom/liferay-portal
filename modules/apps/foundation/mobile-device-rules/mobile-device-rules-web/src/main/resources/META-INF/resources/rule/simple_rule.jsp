@@ -89,7 +89,7 @@ if (rule != null) {
 			<h5><liferay-ui:message key="minimum" /></h5>
 
 			<aui:input
-				cssClass="physical-screen-size-field aui-field-digits"
+				cssClass="aui-field-digits physical-screen-size-field"
 				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_WIDTH_MIN %>"
 				inlineField="<%= true %>"
 				label="width"
@@ -99,7 +99,7 @@ if (rule != null) {
 			/>
 
 			<aui:input
-				cssClass="physical-screen-size-field-field aui-field-digits"
+				cssClass="aui-field-digits physical-screen-size-field-field"
 				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_HEIGHT_MIN %>"
 				inlineField="<%= true %>"
 				label="height"
@@ -113,7 +113,7 @@ if (rule != null) {
 			<h5><liferay-ui:message key="maximum" /></h5>
 
 			<aui:input
-				cssClass="physical-physical-screen-size-field-field aui-field-digits"
+				cssClass="aui-field-digits physical-physical-screen-size-field-field"
 				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_WIDTH_MAX %>"
 				inlineField="<%= true %>"
 				label="width"
@@ -123,7 +123,7 @@ if (rule != null) {
 			/>
 
 			<aui:input
-				cssClass="screen-physical-size-field-field aui-field-digits"
+				cssClass="aui-field-digits screen-physical-size-field-field"
 				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_HEIGHT_MAX %>"
 				inlineField="<%= true %>"
 				label="height"
@@ -141,7 +141,7 @@ if (rule != null) {
 			<h5><liferay-ui:message key="minimum" /></h5>
 
 			<aui:input
-				cssClass="screen-resolution-field aui-field-digits"
+				cssClass="aui-field-digits screen-resolution-field"
 				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_WIDTH_MIN %>"
 				inlineField="<%= true %>"
 				label="width"
@@ -151,7 +151,7 @@ if (rule != null) {
 			/>
 
 			<aui:input
-				cssClass="screen-resolution-field aui-field-digits"
+				cssClass="aui-field-digits screen-resolution-field"
 				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_HEIGHT_MIN %>"
 				inlineField="<%= true %>"
 				label="height"
@@ -165,7 +165,7 @@ if (rule != null) {
 			<h5><liferay-ui:message key="maximum" /></h5>
 
 			<aui:input
-				cssClass="screen-resolution-field aui-field-digits"
+				cssClass="aui-field-digits screen-resolution-field"
 				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_WIDTH_MAX %>"
 				inlineField="<%= true %>"
 				label="width"
@@ -175,7 +175,7 @@ if (rule != null) {
 			/>
 
 			<aui:input
-				cssClass="screen-resolution-field aui-field-digits"
+				cssClass="aui-field-digits screen-resolution-field"
 				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_HEIGHT_MAX %>"
 				inlineField="<%= true %>"
 				label="height"

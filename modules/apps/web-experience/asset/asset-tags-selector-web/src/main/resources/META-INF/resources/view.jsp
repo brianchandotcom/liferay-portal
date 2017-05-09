@@ -73,7 +73,7 @@
 			modelVar="tag"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="content-column title-column name-column"
+				cssClass="content-column name-column title-column"
 				name="name"
 				truncate="<%= true %>"
 				value="<%= tag.getName() %>"

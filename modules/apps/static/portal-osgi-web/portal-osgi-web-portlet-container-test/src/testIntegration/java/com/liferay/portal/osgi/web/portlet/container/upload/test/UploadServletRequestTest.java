@@ -18,16 +18,16 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.servlet.ServletInputStreamAdapter;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.LiferayInputStream;
 import com.liferay.portal.upload.LiferayServletRequest;
 import com.liferay.portal.upload.UploadServletRequestImpl;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
 
 import java.io.File;
@@ -1294,10 +1294,14 @@ public class UploadServletRequestTest {
 		public void shouldReturnPreferencesValue() {
 			File tempDir = UploadServletRequestImpl.getTempDir();
 
-			File expectedTempDir = new File(
-				PrefsPropsUtil.getString(
-					PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_TEMP_DIR,
-					SystemProperties.get(SystemProperties.TMP_DIR)));
+			String tempDirString =
+				UploadServletRequestConfigurationHelperUtil.getTempDir();
+
+			if (Validator.isNull(tempDirString)) {
+				tempDirString = SystemProperties.get(SystemProperties.TMP_DIR);
+			}
+
+			File expectedTempDir = new File(tempDirString);
 
 			Assert.assertEquals(expectedTempDir, tempDir);
 		}

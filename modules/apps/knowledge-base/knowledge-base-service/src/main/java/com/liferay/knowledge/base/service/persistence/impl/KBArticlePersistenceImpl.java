@@ -30,8 +30,13 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -40,6 +45,8 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -32156,6 +32163,30 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 			}
 			else {
 				kbArticle.setModifiedDate(serviceContext.getModifiedDate(now));
+			}
+		}
+
+		long userId = GetterUtil.getLong(PrincipalThreadLocal.getName());
+
+		if (userId > 0) {
+			long companyId = kbArticle.getCompanyId();
+
+			long groupId = kbArticle.getGroupId();
+
+			long kbArticleId = 0;
+
+			if (!isNew) {
+				kbArticleId = kbArticle.getPrimaryKey();
+			}
+
+			try {
+				kbArticle.setContent(SanitizerUtil.sanitize(companyId, groupId,
+						userId, KBArticle.class.getName(), kbArticleId,
+						ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+						kbArticle.getContent(), null));
+			}
+			catch (SanitizerException se) {
+				throw new SystemException(se);
 			}
 		}
 

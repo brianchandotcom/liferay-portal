@@ -95,7 +95,7 @@ public class CPDefinitionMediaDisplayContext
 
 			BaseModelSearchResult<CPDefinitionMedia>
 				cpInstanceBaseModelSearchResult =
-				_cpDefinitionMediaService.searchCPDefinitionMedias(
+					_cpDefinitionMediaService.searchCPDefinitionMedias(
 						themeDisplay.getCompanyId(),
 						themeDisplay.getScopeGroupId(), getCPDefinitionId(),
 						getKeywords(), searchContainer.getStart(),
@@ -112,8 +112,8 @@ public class CPDefinitionMediaDisplayContext
 
 			searchContainer.setTotal(total);
 
-			List<CPDefinitionMedia> results = _cpDefinitionMediaService.
-				getDefinitionMedias(
+			List<CPDefinitionMedia> results =
+				_cpDefinitionMediaService.getDefinitionMedias(
 					getCPDefinitionId(), searchContainer.getStart(),
 					searchContainer.getEnd(), orderByComparator);
 

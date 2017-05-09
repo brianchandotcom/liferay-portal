@@ -33,6 +33,7 @@ public class JavaExceptionCheck extends BaseFileCheck {
 		content = _renameVariableNames(content);
 		content = _sortExceptions(
 			content, _throwsExceptionsPattern, StringPool.COMMA_AND_SPACE);
+		content = _sortExceptions(content, _catchExceptionsPattern, " |");
 
 		return content;
 	}
@@ -141,6 +142,9 @@ public class JavaExceptionCheck extends BaseFileCheck {
 
 	private final Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((final )?(.+Exception) (.+)\\) \\{\n");
+	private final Pattern _catchExceptionsPattern = Pattern.compile(
+		"\n\t+catch \\((?:final )?((\\w+Exception \\|\\s+)+" +
+			"(\\w+Exception\\s+))\\w+\\)");
 	private final Pattern _lowerCaseNumberOrPeriodPattern = Pattern.compile(
 		"[a-z0-9.]");
 	private final Pattern _throwsExceptionsPattern = Pattern.compile(

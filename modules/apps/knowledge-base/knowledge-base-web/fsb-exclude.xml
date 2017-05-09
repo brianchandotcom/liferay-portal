@@ -1,0 +1,16 @@
+<FindBugsFilter>
+	<Match>
+		<Class name="org.apache.jsp.admin.common.error_jsp" />
+		<Bug pattern="SERVLET_HEADER_REFERER" />
+	</Match>
+	<Match>
+		<Or>
+			<Class name="org.apache.jsp.admin.configuration_jsp" />
+			<Class name="org.apache.jsp.article.configuration_jsp" />
+			<Class name="org.apache.jsp.display.configuration_jsp" />
+			<Class name="org.apache.jsp.search.configuration_jsp" />
+			<Class name="org.apache.jsp.section.configuration_jsp" />
+		</Or>
+		<Bug pattern="SERVLET_PARAMETER" />
+	</Match>
+</FindBugsFilter>

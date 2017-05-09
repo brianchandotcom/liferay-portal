@@ -21,8 +21,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PropsValues;
 
 import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
-import com.yahoo.platform.yui.mozilla.javascript.ErrorReporter;
-import com.yahoo.platform.yui.mozilla.javascript.EvaluatorException;
+
+import org.mozilla.javascript.ErrorReporter;
+import org.mozilla.javascript.EvaluatorException;
 
 /**
  * @author Carlos Sierra Andrés

@@ -1342,7 +1342,7 @@ public abstract class BaseBuild implements Build {
 				}
 
 				sb.append(getBuildURL());
-				sb.append(".");
+				sb.append(".\n");
 
 				return sb.toString();
 			}

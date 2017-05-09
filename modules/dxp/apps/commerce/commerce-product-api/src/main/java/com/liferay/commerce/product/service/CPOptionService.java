@@ -66,7 +66,7 @@ public interface CPOptionService extends BaseService {
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean skuContributor, ServiceContext serviceContext)
+		boolean required, boolean skuContributor, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPOption deleteCPOption(CPOption cpOption) throws PortalException;
@@ -83,7 +83,7 @@ public interface CPOptionService extends BaseService {
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean skuContributor, ServiceContext serviceContext)
+		boolean required, boolean skuContributor, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

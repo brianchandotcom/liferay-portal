@@ -94,7 +94,7 @@ public class CPDefinitionOptionRelServiceSoap {
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
 		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
-		boolean skuContributor,
+		boolean required, boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -106,8 +106,8 @@ public class CPDefinitionOptionRelServiceSoap {
 			com.liferay.commerce.product.model.CPDefinitionOptionRel returnValue =
 				CPDefinitionOptionRelServiceUtil.addCPDefinitionOptionRel(cpDefinitionId,
 					cpOptionId, name, titleMap, descriptionMap,
-					ddmFormFieldTypeName, priority, facetable, skuContributor,
-					serviceContext);
+					ddmFormFieldTypeName, priority, facetable, required,
+					skuContributor, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionOptionRelSoap.toSoapModel(returnValue);
 		}
@@ -264,7 +264,7 @@ public class CPDefinitionOptionRelServiceSoap {
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
 		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
-		boolean skuContributor,
+		boolean required, boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -276,8 +276,8 @@ public class CPDefinitionOptionRelServiceSoap {
 			com.liferay.commerce.product.model.CPDefinitionOptionRel returnValue =
 				CPDefinitionOptionRelServiceUtil.updateCPDefinitionOptionRel(cpDefinitionOptionRelId,
 					cpOptionId, name, titleMap, descriptionMap,
-					ddmFormFieldTypeName, priority, facetable, skuContributor,
-					serviceContext);
+					ddmFormFieldTypeName, priority, facetable, required,
+					skuContributor, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionOptionRelSoap.toSoapModel(returnValue);
 		}

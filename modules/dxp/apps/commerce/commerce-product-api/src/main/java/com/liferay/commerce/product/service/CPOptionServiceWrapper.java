@@ -38,11 +38,12 @@ public class CPOptionServiceWrapper implements CPOptionService,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean skuContributor,
+		boolean required, boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionService.addCPOption(name, titleMap, descriptionMap,
-			ddmFormFieldTypeName, facetable, skuContributor, serviceContext);
+			ddmFormFieldTypeName, facetable, required, skuContributor,
+			serviceContext);
 	}
 
 	@Override
@@ -79,12 +80,12 @@ public class CPOptionServiceWrapper implements CPOptionService,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, boolean facetable,
-		boolean skuContributor,
+		boolean required, boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionService.updateCPOption(cpOptionId, name, titleMap,
-			descriptionMap, ddmFormFieldTypeName, facetable, skuContributor,
-			serviceContext);
+			descriptionMap, ddmFormFieldTypeName, facetable, required,
+			skuContributor, serviceContext);
 	}
 
 	@Override

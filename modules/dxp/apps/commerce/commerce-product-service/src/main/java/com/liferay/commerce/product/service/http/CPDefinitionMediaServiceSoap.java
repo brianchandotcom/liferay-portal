@@ -16,9 +16,16 @@ package com.liferay.commerce.product.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.service.CPDefinitionMediaServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.product.service.CPDefinitionMediaServiceUtil} service utility. The
+ * {@link CPDefinitionMediaServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,109 @@ import aQute.bnd.annotation.ProviderType;
  * @author Marco Leo
  * @see CPDefinitionMediaServiceHttp
  * @see com.liferay.commerce.product.model.CPDefinitionMediaSoap
- * @see com.liferay.commerce.product.service.CPDefinitionMediaServiceUtil
+ * @see CPDefinitionMediaServiceUtil
  * @generated
  */
 @ProviderType
 public class CPDefinitionMediaServiceSoap {
+	public static com.liferay.commerce.product.model.CPDefinitionMediaSoap addCPDefinitionMedia(
+		long cpDefinitionId, long fileEntryId, java.lang.String ddmContent,
+		int priority, long cpMediaTypeId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPDefinitionMedia returnValue = CPDefinitionMediaServiceUtil.addCPDefinitionMedia(cpDefinitionId,
+					fileEntryId, ddmContent, priority, cpMediaTypeId,
+					serviceContext);
+
+			return com.liferay.commerce.product.model.CPDefinitionMediaSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPMediaTypeSoap deleteCPMediaType(
+		long cpMediaTypeId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPMediaType returnValue = CPDefinitionMediaServiceUtil.deleteCPMediaType(cpMediaTypeId);
+
+			return com.liferay.commerce.product.model.CPMediaTypeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionMediaSoap[] getDefinitionMedias(
+		long cpDefinitionId, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CPDefinitionMedia> returnValue =
+				CPDefinitionMediaServiceUtil.getDefinitionMedias(cpDefinitionId,
+					start, end);
+
+			return com.liferay.commerce.product.model.CPDefinitionMediaSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionMediaSoap[] getDefinitionMedias(
+		long cpDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionMedia> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CPDefinitionMedia> returnValue =
+				CPDefinitionMediaServiceUtil.getDefinitionMedias(cpDefinitionId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.product.model.CPDefinitionMediaSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getDefinitionMediasCount(long cpDefinitionId)
+		throws RemoteException {
+		try {
+			int returnValue = CPDefinitionMediaServiceUtil.getDefinitionMediasCount(cpDefinitionId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionMediaSoap updateCPDefinitionMedia(
+		long cpDefinitionMediaId, java.lang.String ddmContent, int priority,
+		long cpMediaTypeId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPDefinitionMedia returnValue = CPDefinitionMediaServiceUtil.updateCPDefinitionMedia(cpDefinitionMediaId,
+					ddmContent, priority, cpMediaTypeId, serviceContext);
+
+			return com.liferay.commerce.product.model.CPDefinitionMediaSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CPDefinitionMediaServiceSoap.class);
 }

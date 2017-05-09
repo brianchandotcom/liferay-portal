@@ -66,7 +66,8 @@ create table CPDefinitionOptionRel (
 	name VARCHAR(75) null,
 	priority INTEGER,
 	facetable BOOLEAN,
-	skuContributor BOOLEAN
+	skuContributor BOOLEAN,
+	required BOOLEAN
 );
 
 create table CPDefinitionOptionValueRel (
@@ -133,7 +134,8 @@ create table CPOption (
 	DDMFormFieldTypeName VARCHAR(75) null,
 	name VARCHAR(75) null,
 	facetable BOOLEAN,
-	skuContributor BOOLEAN
+	skuContributor BOOLEAN,
+	required BOOLEAN
 );
 
 create table CPOptionValue (

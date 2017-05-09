@@ -73,6 +73,7 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 		attributes.put("name", getName());
 		attributes.put("facetable", getFacetable());
 		attributes.put("skuContributor", getSkuContributor());
+		attributes.put("required", getRequired());
 
 		return attributes;
 	}
@@ -163,6 +164,12 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 		if (skuContributor != null) {
 			setSkuContributor(skuContributor);
 		}
+
+		Boolean required = (Boolean)attributes.get("required");
+
+		if (required != null) {
+			setRequired(required);
+		}
 	}
 
 	@Override
@@ -183,6 +190,16 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	@Override
 	public boolean getFacetable() {
 		return _cpOption.getFacetable();
+	}
+
+	/**
+	* Returns the required of this cp option.
+	*
+	* @return the required of this cp option
+	*/
+	@Override
+	public boolean getRequired() {
+		return _cpOption.getRequired();
 	}
 
 	/**
@@ -218,6 +235,16 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	@Override
 	public boolean isNew() {
 		return _cpOption.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp option is required.
+	*
+	* @return <code>true</code> if this cp option is required; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isRequired() {
+		return _cpOption.isRequired();
 	}
 
 	/**
@@ -756,6 +783,16 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_cpOption.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets whether this cp option is required.
+	*
+	* @param required the required of this cp option
+	*/
+	@Override
+	public void setRequired(boolean required) {
+		_cpOption.setRequired(required);
 	}
 
 	/**

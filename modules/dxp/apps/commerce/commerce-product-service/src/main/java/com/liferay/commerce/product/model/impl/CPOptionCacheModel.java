@@ -65,7 +65,7 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -95,6 +95,8 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		sb.append(facetable);
 		sb.append(", skuContributor=");
 		sb.append(skuContributor);
+		sb.append(", required=");
+		sb.append(required);
 		sb.append("}");
 
 		return sb.toString();
@@ -167,6 +169,7 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 
 		cpOptionImpl.setFacetable(facetable);
 		cpOptionImpl.setSkuContributor(skuContributor);
+		cpOptionImpl.setRequired(required);
 
 		cpOptionImpl.resetOriginalValues();
 
@@ -195,6 +198,8 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		facetable = objectInput.readBoolean();
 
 		skuContributor = objectInput.readBoolean();
+
+		required = objectInput.readBoolean();
 	}
 
 	@Override
@@ -256,6 +261,8 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		objectOutput.writeBoolean(facetable);
 
 		objectOutput.writeBoolean(skuContributor);
+
+		objectOutput.writeBoolean(required);
 	}
 
 	public String uuid;
@@ -272,4 +279,5 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 	public String name;
 	public boolean facetable;
 	public boolean skuContributor;
+	public boolean required;
 }

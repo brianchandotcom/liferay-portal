@@ -4137,6 +4137,7 @@ public class CPDefinitionOptionRelPersistenceImpl extends BasePersistenceImpl<CP
 		cpDefinitionOptionRelImpl.setPriority(cpDefinitionOptionRel.getPriority());
 		cpDefinitionOptionRelImpl.setFacetable(cpDefinitionOptionRel.isFacetable());
 		cpDefinitionOptionRelImpl.setSkuContributor(cpDefinitionOptionRel.isSkuContributor());
+		cpDefinitionOptionRelImpl.setRequired(cpDefinitionOptionRel.isRequired());
 
 		return cpDefinitionOptionRelImpl;
 	}

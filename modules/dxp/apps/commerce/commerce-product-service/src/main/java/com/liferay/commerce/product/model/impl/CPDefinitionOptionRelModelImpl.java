@@ -96,7 +96,8 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 			{ "name", Types.VARCHAR },
 			{ "priority", Types.INTEGER },
 			{ "facetable", Types.BOOLEAN },
-			{ "skuContributor", Types.BOOLEAN }
+			{ "skuContributor", Types.BOOLEAN },
+			{ "required", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -118,9 +119,10 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("facetable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("skuContributor", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("required", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionOptionRel (uuid_ VARCHAR(75) null,CPDefinitionOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,CPDefinitionId LONG,CPOptionId LONG,DDMFormFieldTypeName VARCHAR(75) null,name VARCHAR(75) null,priority INTEGER,facetable BOOLEAN,skuContributor BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionOptionRel (uuid_ VARCHAR(75) null,CPDefinitionOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,CPDefinitionId LONG,CPOptionId LONG,DDMFormFieldTypeName VARCHAR(75) null,name VARCHAR(75) null,priority INTEGER,facetable BOOLEAN,skuContributor BOOLEAN,required BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionOptionRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionOptionRel.priority DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionOptionRel.priority DESC";
@@ -174,6 +176,7 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		model.setPriority(soapModel.getPriority());
 		model.setFacetable(soapModel.getFacetable());
 		model.setSkuContributor(soapModel.getSkuContributor());
+		model.setRequired(soapModel.getRequired());
 
 		return model;
 	}
@@ -256,6 +259,7 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		attributes.put("priority", getPriority());
 		attributes.put("facetable", getFacetable());
 		attributes.put("skuContributor", getSkuContributor());
+		attributes.put("required", getRequired());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -367,6 +371,12 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 
 		if (skuContributor != null) {
 			setSkuContributor(skuContributor);
+		}
+
+		Boolean required = (Boolean)attributes.get("required");
+
+		if (required != null) {
+			setRequired(required);
 		}
 	}
 
@@ -849,6 +859,23 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		return _originalSkuContributor;
 	}
 
+	@JSON
+	@Override
+	public boolean getRequired() {
+		return _required;
+	}
+
+	@JSON
+	@Override
+	public boolean isRequired() {
+		return _required;
+	}
+
+	@Override
+	public void setRequired(boolean required) {
+		_required = required;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -985,6 +1012,7 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		cpDefinitionOptionRelImpl.setPriority(getPriority());
 		cpDefinitionOptionRelImpl.setFacetable(getFacetable());
 		cpDefinitionOptionRelImpl.setSkuContributor(getSkuContributor());
+		cpDefinitionOptionRelImpl.setRequired(getRequired());
 
 		cpDefinitionOptionRelImpl.resetOriginalValues();
 
@@ -1167,12 +1195,14 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 
 		cpDefinitionOptionRelCacheModel.skuContributor = getSkuContributor();
 
+		cpDefinitionOptionRelCacheModel.required = getRequired();
+
 		return cpDefinitionOptionRelCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1208,6 +1238,8 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 		sb.append(getFacetable());
 		sb.append(", skuContributor=");
 		sb.append(getSkuContributor());
+		sb.append(", required=");
+		sb.append(getRequired());
 		sb.append("}");
 
 		return sb.toString();
@@ -1215,7 +1247,7 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPDefinitionOptionRel");
@@ -1289,6 +1321,10 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 			"<column><column-name>skuContributor</column-name><column-value><![CDATA[");
 		sb.append(getSkuContributor());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>required</column-name><column-value><![CDATA[");
+		sb.append(getRequired());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1328,6 +1364,7 @@ public class CPDefinitionOptionRelModelImpl extends BaseModelImpl<CPDefinitionOp
 	private boolean _skuContributor;
 	private boolean _originalSkuContributor;
 	private boolean _setOriginalSkuContributor;
+	private boolean _required;
 	private long _columnBitmask;
 	private CPDefinitionOptionRel _escapedModel;
 }

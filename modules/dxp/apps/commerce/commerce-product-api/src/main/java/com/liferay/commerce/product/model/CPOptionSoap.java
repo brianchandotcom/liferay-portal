@@ -48,6 +48,7 @@ public class CPOptionSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setFacetable(model.getFacetable());
 		soapModel.setSkuContributor(model.getSkuContributor());
+		soapModel.setRequired(model.getRequired());
 
 		return soapModel;
 	}
@@ -220,6 +221,18 @@ public class CPOptionSoap implements Serializable {
 		_skuContributor = skuContributor;
 	}
 
+	public boolean getRequired() {
+		return _required;
+	}
+
+	public boolean isRequired() {
+		return _required;
+	}
+
+	public void setRequired(boolean required) {
+		_required = required;
+	}
+
 	private String _uuid;
 	private long _CPOptionId;
 	private long _groupId;
@@ -234,4 +247,5 @@ public class CPOptionSoap implements Serializable {
 	private String _name;
 	private boolean _facetable;
 	private boolean _skuContributor;
+	private boolean _required;
 }

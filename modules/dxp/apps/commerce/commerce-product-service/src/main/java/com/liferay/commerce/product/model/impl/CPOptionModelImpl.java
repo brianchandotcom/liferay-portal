@@ -93,7 +93,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			{ "DDMFormFieldTypeName", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "facetable", Types.BOOLEAN },
-			{ "skuContributor", Types.BOOLEAN }
+			{ "skuContributor", Types.BOOLEAN },
+			{ "required", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -112,9 +113,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("facetable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("skuContributor", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("required", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPOption (uuid_ VARCHAR(75) null,CPOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,name VARCHAR(75) null,facetable BOOLEAN,skuContributor BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CPOption (uuid_ VARCHAR(75) null,CPOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,name VARCHAR(75) null,facetable BOOLEAN,skuContributor BOOLEAN,required BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CPOption";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpOption.title DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPOption.title DESC";
@@ -162,6 +164,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		model.setName(soapModel.getName());
 		model.setFacetable(soapModel.getFacetable());
 		model.setSkuContributor(soapModel.getSkuContributor());
+		model.setRequired(soapModel.getRequired());
 
 		return model;
 	}
@@ -240,6 +243,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		attributes.put("name", getName());
 		attributes.put("facetable", getFacetable());
 		attributes.put("skuContributor", getSkuContributor());
+		attributes.put("required", getRequired());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -332,6 +336,12 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 		if (skuContributor != null) {
 			setSkuContributor(skuContributor);
+		}
+
+		Boolean required = (Boolean)attributes.get("required");
+
+		if (required != null) {
+			setRequired(required);
 		}
 	}
 
@@ -757,6 +767,23 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		_skuContributor = skuContributor;
 	}
 
+	@JSON
+	@Override
+	public boolean getRequired() {
+		return _required;
+	}
+
+	@JSON
+	@Override
+	public boolean isRequired() {
+		return _required;
+	}
+
+	@Override
+	public void setRequired(boolean required) {
+		_required = required;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -890,6 +917,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		cpOptionImpl.setName(getName());
 		cpOptionImpl.setFacetable(getFacetable());
 		cpOptionImpl.setSkuContributor(getSkuContributor());
+		cpOptionImpl.setRequired(getRequired());
 
 		cpOptionImpl.resetOriginalValues();
 
@@ -1050,12 +1078,14 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 		cpOptionCacheModel.skuContributor = getSkuContributor();
 
+		cpOptionCacheModel.required = getRequired();
+
 		return cpOptionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1085,6 +1115,8 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 		sb.append(getFacetable());
 		sb.append(", skuContributor=");
 		sb.append(getSkuContributor());
+		sb.append(", required=");
+		sb.append(getRequired());
 		sb.append("}");
 
 		return sb.toString();
@@ -1092,7 +1124,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPOption");
@@ -1154,6 +1186,10 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 			"<column><column-name>skuContributor</column-name><column-value><![CDATA[");
 		sb.append(getSkuContributor());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>required</column-name><column-value><![CDATA[");
+		sb.append(getRequired());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1186,6 +1222,7 @@ public class CPOptionModelImpl extends BaseModelImpl<CPOption>
 	private String _name;
 	private boolean _facetable;
 	private boolean _skuContributor;
+	private boolean _required;
 	private long _columnBitmask;
 	private CPOption _escapedModel;
 }

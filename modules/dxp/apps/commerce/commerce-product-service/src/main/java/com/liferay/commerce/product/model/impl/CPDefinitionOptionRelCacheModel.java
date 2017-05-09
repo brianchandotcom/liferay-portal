@@ -66,7 +66,7 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -102,6 +102,8 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		sb.append(facetable);
 		sb.append(", skuContributor=");
 		sb.append(skuContributor);
+		sb.append(", required=");
+		sb.append(required);
 		sb.append("}");
 
 		return sb.toString();
@@ -178,6 +180,7 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		cpDefinitionOptionRelImpl.setPriority(priority);
 		cpDefinitionOptionRelImpl.setFacetable(facetable);
 		cpDefinitionOptionRelImpl.setSkuContributor(skuContributor);
+		cpDefinitionOptionRelImpl.setRequired(required);
 
 		cpDefinitionOptionRelImpl.resetOriginalValues();
 
@@ -212,6 +215,8 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		facetable = objectInput.readBoolean();
 
 		skuContributor = objectInput.readBoolean();
+
+		required = objectInput.readBoolean();
 	}
 
 	@Override
@@ -279,6 +284,8 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		objectOutput.writeBoolean(facetable);
 
 		objectOutput.writeBoolean(skuContributor);
+
+		objectOutput.writeBoolean(required);
 	}
 
 	public String uuid;
@@ -298,4 +305,5 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 	public int priority;
 	public boolean facetable;
 	public boolean skuContributor;
+	public boolean required;
 }

@@ -486,6 +486,27 @@ public interface CPOptionModel extends BaseModel<CPOption>, GroupedModel,
 	 */
 	public void setSkuContributor(boolean skuContributor);
 
+	/**
+	 * Returns the required of this cp option.
+	 *
+	 * @return the required of this cp option
+	 */
+	public boolean getRequired();
+
+	/**
+	 * Returns <code>true</code> if this cp option is required.
+	 *
+	 * @return <code>true</code> if this cp option is required; <code>false</code> otherwise
+	 */
+	public boolean isRequired();
+
+	/**
+	 * Sets whether this cp option is required.
+	 *
+	 * @param required the required of this cp option
+	 */
+	public void setRequired(boolean required);
+
 	@Override
 	public boolean isNew();
 

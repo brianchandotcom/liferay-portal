@@ -528,6 +528,27 @@ public interface CPDefinitionOptionRelModel extends BaseModel<CPDefinitionOption
 	 */
 	public void setSkuContributor(boolean skuContributor);
 
+	/**
+	 * Returns the required of this cp definition option rel.
+	 *
+	 * @return the required of this cp definition option rel
+	 */
+	public boolean getRequired();
+
+	/**
+	 * Returns <code>true</code> if this cp definition option rel is required.
+	 *
+	 * @return <code>true</code> if this cp definition option rel is required; <code>false</code> otherwise
+	 */
+	public boolean isRequired();
+
+	/**
+	 * Sets whether this cp definition option rel is required.
+	 *
+	 * @param required the required of this cp definition option rel
+	 */
+	public void setRequired(boolean required);
+
 	@Override
 	public boolean isNew();
 

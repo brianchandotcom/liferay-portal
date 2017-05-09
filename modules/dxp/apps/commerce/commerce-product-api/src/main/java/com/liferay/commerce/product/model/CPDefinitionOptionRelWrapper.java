@@ -78,6 +78,7 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 		attributes.put("priority", getPriority());
 		attributes.put("facetable", getFacetable());
 		attributes.put("skuContributor", getSkuContributor());
+		attributes.put("required", getRequired());
 
 		return attributes;
 	}
@@ -187,6 +188,12 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 		if (skuContributor != null) {
 			setSkuContributor(skuContributor);
 		}
+
+		Boolean required = (Boolean)attributes.get("required");
+
+		if (required != null) {
+			setRequired(required);
+		}
 	}
 
 	@Override
@@ -207,6 +214,16 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 	@Override
 	public boolean getFacetable() {
 		return _cpDefinitionOptionRel.getFacetable();
+	}
+
+	/**
+	* Returns the required of this cp definition option rel.
+	*
+	* @return the required of this cp definition option rel
+	*/
+	@Override
+	public boolean getRequired() {
+		return _cpDefinitionOptionRel.getRequired();
 	}
 
 	/**
@@ -242,6 +259,16 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 	@Override
 	public boolean isNew() {
 		return _cpDefinitionOptionRel.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp definition option rel is required.
+	*
+	* @return <code>true</code> if this cp definition option rel is required; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isRequired() {
+		return _cpDefinitionOptionRel.isRequired();
 	}
 
 	/**
@@ -845,6 +872,16 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 	@Override
 	public void setPriority(int priority) {
 		_cpDefinitionOptionRel.setPriority(priority);
+	}
+
+	/**
+	* Sets whether this cp definition option rel is required.
+	*
+	* @param required the required of this cp definition option rel
+	*/
+	@Override
+	public void setRequired(boolean required) {
+		_cpDefinitionOptionRel.setRequired(required);
 	}
 
 	/**

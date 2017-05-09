@@ -52,6 +52,7 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 		soapModel.setPriority(model.getPriority());
 		soapModel.setFacetable(model.getFacetable());
 		soapModel.setSkuContributor(model.getSkuContributor());
+		soapModel.setRequired(model.getRequired());
 
 		return soapModel;
 	}
@@ -251,6 +252,18 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 		_skuContributor = skuContributor;
 	}
 
+	public boolean getRequired() {
+		return _required;
+	}
+
+	public boolean isRequired() {
+		return _required;
+	}
+
+	public void setRequired(boolean required) {
+		_required = required;
+	}
+
 	private String _uuid;
 	private long _CPDefinitionOptionRelId;
 	private long _groupId;
@@ -268,4 +281,5 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 	private int _priority;
 	private boolean _facetable;
 	private boolean _skuContributor;
+	private boolean _required;
 }

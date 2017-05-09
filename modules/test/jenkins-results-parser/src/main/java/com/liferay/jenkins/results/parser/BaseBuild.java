@@ -1233,7 +1233,7 @@ public abstract class BaseBuild implements Build {
 				String url = downstreamBuildURLMatcher.group("url");
 
 				Pattern reinvocationPattern = Pattern.compile(
-					Pattern.quote(url) + " restarted at (?<url>[^\\n]*)\\.\\n");
+					Pattern.quote(url) + " restarted at (?<url>[^\\s]*)\\.");
 
 				Matcher reinvocationMatcher = reinvocationPattern.matcher(
 					consoleText);

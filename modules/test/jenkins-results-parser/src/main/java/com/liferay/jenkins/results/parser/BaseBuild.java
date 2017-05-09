@@ -809,8 +809,12 @@ public abstract class BaseBuild implements Build {
 
 		String parentBuildStatus = parentBuild.getStatus();
 
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
 		if (!parentBuildStatus.equals("running") ||
-			!hostName.startsWith("cloud-10-0")) {
+			!hostName.startsWith("cloud-10-0") ||
+			((topLevelBuild != null) &&
+			 (topLevelBuild.getParentBuild() != null))) {
 
 			return;
 		}
@@ -822,8 +826,6 @@ public abstract class BaseBuild implements Build {
 				"\n\n");
 
 			System.out.println(message);
-
-			TopLevelBuild topLevelBuild = getTopLevelBuild();
 
 			if (topLevelBuild != null) {
 				message = JenkinsResultsParserUtil.combine(

@@ -104,7 +104,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		_configureAppJavadocBuilder(project, privateProject);
 		_configureAppTLDDocBuilder(project, privateProject);
 		_configureProject(project, appDescription, appVersion);
-		_configureTaskAppJavadoc(project, appTitle, appVersion);
+		_configureTaskAppJavadoc(project, portalRootDir, appTitle, appVersion);
 		_configureTaskAppTlddoc(project, portalRootDir);
 
 		if (privateProject != null) {
@@ -206,13 +206,11 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskAppJavadoc(
-		Project project, String appTitle, String appVersion) {
+		Project project, File portalRootDir, String appTitle,
+		String appVersion) {
 
 		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
 			project, AppJavadocBuilderPlugin.APP_JAVADOC_TASK_NAME);
-
-		File portalRootDir = GradleUtil.getRootDir(
-			project.getRootProject(), "portal-impl");
 
 		if (portalRootDir != null) {
 			File stylesheetFile = new File(

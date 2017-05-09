@@ -14,7 +14,10 @@
 
 package com.liferay.commerce.product.demo.data.creator.internal;
 
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.commerce.product.demo.data.creator.CPDemoDataCreator;
+import com.liferay.commerce.product.demo.data.creator.internal.util.AssetCategoryDemoDataCreatorHelper;
+import com.liferay.commerce.product.demo.data.creator.internal.util.AssetVocabularyDemoDataCreatorHelper;
 import com.liferay.commerce.product.demo.data.creator.internal.util.CPDefinitionDemoDataCreatorHelper;
 import com.liferay.commerce.product.demo.data.creator.internal.util.CPInstanceDemoDataCreatorHelper;
 import com.liferay.commerce.product.demo.data.creator.internal.util.CPOptionDemoDataCreatorHelper;
@@ -42,6 +45,12 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 	public void create(long userId, long groupId, boolean buildSkus)
 		throws IOException, PortalException {
 
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyDemoDataCreatorHelper.createAssetVocabulary(
+				userId, groupId, "Commerce");
+
+		long vocabularyId = assetVocabulary.getVocabularyId();
+
 		JSONArray catalog = _cpDefinitionDemoDataCreatorHelper.getCatalog();
 
 		for (int i = 0; i < catalog.length(); i++) {
@@ -59,10 +68,16 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 			titleMap.put(Locale.US, title);
 			descriptionMap.put(Locale.US, description);
 
+			JSONArray categories = product.getJSONArray("categories");
+
+			long[] assetCategoryIds =
+				_assetCategoryDemoDataCreatorHelper.getAssetCategoryIds(
+					userId, groupId, vocabularyId, categories);
+
 			CPDefinition cpDefinition =
 				_cpDefinitionDemoDataCreatorHelper.createCPDefinition(
 					userId, groupId, baseSKU, name, titleMap, descriptionMap,
-					productTypeName);
+					productTypeName, assetCategoryIds);
 
 			long cpDefinitionId = cpDefinition.getCPDefinitionId();
 
@@ -82,7 +97,16 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 	public void delete() throws PortalException {
 		_cpDefinitionDemoDataCreatorHelper.deleteCPDefinitions();
 		_cpOptionDemoDataCreatorHelper.deleteCPOptions();
+		_assetVocabularyDemoDataCreatorHelper.deleteVocabularies();
 	}
+
+	@Reference
+	private AssetCategoryDemoDataCreatorHelper
+		_assetCategoryDemoDataCreatorHelper;
+
+	@Reference
+	private AssetVocabularyDemoDataCreatorHelper
+		_assetVocabularyDemoDataCreatorHelper;
 
 	@Reference
 	private CPDefinitionDemoDataCreatorHelper

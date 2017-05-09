@@ -45,10 +45,12 @@ public class CPDefinitionDemoDataCreatorHelper
 	public CPDefinition createCPDefinition(
 			long userId, long groupId, String baseSKU, String name,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String productTypeName)
+			String productTypeName, long[] assetCategoryIds)
 		throws PortalException {
 
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
+
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
 
 		Date displayDate = _getRandomDate();
 		Date expirationDate = _getRandomDate();

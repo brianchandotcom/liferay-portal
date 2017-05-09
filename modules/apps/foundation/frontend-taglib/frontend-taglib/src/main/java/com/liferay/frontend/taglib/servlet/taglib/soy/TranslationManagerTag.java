@@ -103,10 +103,6 @@ public class TranslationManagerTag extends TemplateRendererTag {
 		putValue("editingLanguageId", editingLanguageId);
 	}
 
-	public void setId(java.lang.String id) {
-		putValue("id", id);
-	}
-
 	public void setInitialize(boolean initialize) {
 		putValue("initialize", initialize);
 	}

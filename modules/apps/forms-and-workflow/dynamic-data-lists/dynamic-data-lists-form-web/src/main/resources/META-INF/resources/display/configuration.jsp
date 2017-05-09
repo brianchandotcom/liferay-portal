@@ -83,7 +83,7 @@ DDLRecordSet selRecordSet = DDLRecordSetServiceUtil.fetchRecordSet(recordSetId);
 							href="<%= rowURL %>"
 							name="name"
 							orderable="<%= false %>"
-							property="name"
+							value="<%= recordSet.getName(locale) %>"
 						/>
 
 						<liferay-ui:search-container-column-text

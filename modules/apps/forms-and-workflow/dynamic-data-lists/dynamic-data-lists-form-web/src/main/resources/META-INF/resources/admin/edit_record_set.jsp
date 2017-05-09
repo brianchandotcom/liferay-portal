@@ -24,9 +24,11 @@ DDLRecordSet recordSet = ddlFormAdminDisplayContext.getRecordSet();
 long recordSetId = BeanParamUtil.getLong(recordSet, request, "recordSetId");
 long groupId = BeanParamUtil.getLong(recordSet, request, "groupId", scopeGroupId);
 long ddmStructureId = BeanParamUtil.getLong(recordSet, request, "DDMStructureId");
-String name = BeanParamUtil.getString(recordSet, request, "name");
-String description = BeanParamUtil.getString(recordSet, request, "description");
 boolean showPublishModal = ParamUtil.getBoolean(request, "showPublishModal");
+
+String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+
+Locale[] availableLocales = ddlFormAdminDisplayContext.getAvailableLocales();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -41,6 +43,13 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 </portlet:actionURL>
 
 <div class="hide portlet-forms" id="<portlet:namespace />formContainer">
+	<aui:translation-manager
+		availableLocales="<%= availableLocales %>"
+		changeableDefaultLanguage="<%= false %>"
+		defaultLanguageId="<%= defaultLanguageId %>"
+		id="translationManager"
+	/>
+
 	<aui:nav-bar cssClass="collapse-basic-search" id="toolbar" markupView="lexicon">
 		<aui:nav cssClass="navbar-nav">
 			<aui:nav-item id="showForm" label="Builder" selected="<%= true %>" />
@@ -74,7 +83,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 		<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
-		<aui:input name="serializedSettingsDDMFormValues" type="hidden" value="" />
+		<aui:input name="serializedSettingsContext" type="hidden" value="" />
 
 		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
 
@@ -139,7 +148,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 				<h1>
 					<liferay-ui:input-editor
 						autoCreate="<%= false %>"
-						contents="<%= HtmlUtil.escape(LocalizationUtil.getLocalization(name, themeDisplay.getLanguageId())) %>"
+						contents="<%= HtmlUtil.escape(ddlFormAdminDisplayContext.getFormName()) %>"
 						cssClass="ddl-form-name"
 						editorName="alloyeditor"
 						name="nameEditor"
@@ -153,7 +162,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 				<h5>
 					<liferay-ui:input-editor
 						autoCreate="<%= false %>"
-						contents="<%= HtmlUtil.escape(LocalizationUtil.getLocalization(description, themeDisplay.getLanguageId())) %>"
+						contents="<%= HtmlUtil.escape(ddlFormAdminDisplayContext.getFormDescription()) %>"
 						cssClass="ddl-form-description h5"
 						editorName="alloyeditor"
 						name="descriptionEditor"

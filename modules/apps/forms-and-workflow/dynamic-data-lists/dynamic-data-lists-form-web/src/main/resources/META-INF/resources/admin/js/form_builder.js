@@ -110,8 +110,9 @@ AUI.add(
 						instance._createFieldSettingsPanel();
 
 						instance._eventHandlers = [
-							boundingBox.delegate('click', instance._onClickPaginationItem, '.pagination li a'),
 							boundingBox.delegate('click', A.bind('_afterFieldClick', instance), '.' + CSS_FIELD, instance),
+							boundingBox.delegate('click', instance._onClickPaginationItem, '.pagination li a'),
+							instance.after('editingLanguageIdChange', instance._afterEditingLanguageIdChange),
 							instance.after('liferay-ddl-form-builder-field-list:fieldsChange', instance._afterFieldListChange, instance),
 							instance.after('render', instance._afterFormBuilderRender, instance),
 							instance.after(instance._afterRemoveField, instance, 'removeField')
@@ -192,10 +193,7 @@ AUI.add(
 								fieldType.get('defaultConfig'),
 								{
 									builder: instance,
-									defaultLanguageId: instance.get('defaultLanguageId'),
 									evaluatorURL: instance.get('evaluatorURL'),
-									getFieldTypeSettingFormContextURL: instance.get('getFieldTypeSettingFormContextURL'),
-									portletNamespace: instance.get('portletNamespace'),
 									readOnly: true
 								},
 								config
@@ -301,6 +299,14 @@ AUI.add(
 						return pageManager.getSuccessPageDefinition();
 					},
 
+					isEditMode: function() {
+						var instance = this;
+
+						var translating = instance.get('defaultLanguageId') !== instance.get('editingLanguageId');
+
+						return instance.get('recordSetId') > 0 || translating;
+					},
+
 					openConfirmCancelFieldChangesDiolog: function(confirmFn) {
 						var instance = this;
 
@@ -362,6 +368,22 @@ AUI.add(
 							instance._syncRequiredFieldsWarning();
 							instance._syncRowsLastColumnUI();
 						}
+					},
+
+					_afterEditingLanguageIdChange: function(event) {
+						var instance = this;
+
+						instance.eachFields(
+							function(field) {
+								field.set('locale', event.newVal);
+
+								field.saveSettings();
+							}
+						);
+
+						var pageManager = instance.get('pageManager');
+
+						pageManager.set('editingLanguageId', event.newVal);
 					},
 
 					_afterFieldClick: function(event) {

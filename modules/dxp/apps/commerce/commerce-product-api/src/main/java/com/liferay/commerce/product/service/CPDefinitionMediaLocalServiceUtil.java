@@ -55,12 +55,12 @@ public class CPDefinitionMediaLocalServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPDefinitionMedia addCPDefinitionMedia(
 		long cpDefinitionId, long fileEntryId, java.lang.String ddmContent,
-		int priority, long CPMediaTypeId,
+		int priority, long cpMediaTypeId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCPDefinitionMedia(cpDefinitionId, fileEntryId,
-			ddmContent, priority, CPMediaTypeId, serviceContext);
+			ddmContent, priority, cpMediaTypeId, serviceContext);
 	}
 
 	/**
@@ -157,12 +157,12 @@ public class CPDefinitionMediaLocalServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPDefinitionMedia updateCPDefinitionMedia(
 		long cpDefinitionMediaId, java.lang.String ddmContent, int priority,
-		long CPMediaTypeId,
+		long cpMediaTypeId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCPDefinitionMedia(cpDefinitionMediaId, ddmContent,
-			priority, CPMediaTypeId, serviceContext);
+			priority, cpMediaTypeId, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPMediaType deleteCPMediaType(
@@ -210,6 +210,10 @@ public class CPDefinitionMediaLocalServiceUtil {
 	*/
 	public static int getCPDefinitionMediasCount() {
 		return getService().getCPDefinitionMediasCount();
+	}
+
+	public static int getDefinitionMediasCount(long cpDefinitionId) {
+		return getService().getDefinitionMediasCount(cpDefinitionId);
 	}
 
 	/**
@@ -316,6 +320,19 @@ public class CPDefinitionMediaLocalServiceUtil {
 		return getService()
 				   .getCPDefinitionMediasByUuidAndCompanyId(uuid, companyId,
 			start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionMedia> getDefinitionMedias(
+		long cpDefinitionId, int start, int end) {
+		return getService().getDefinitionMedias(cpDefinitionId, start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionMedia> getDefinitionMedias(
+		long cpDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionMedia> orderByComparator) {
+		return getService()
+				   .getDefinitionMedias(cpDefinitionId, start, end,
+			orderByComparator);
 	}
 
 	/**

@@ -80,7 +80,7 @@ public interface CPDefinitionMediaLocalService extends BaseLocalService,
 
 	public CPDefinitionMedia addCPDefinitionMedia(long cpDefinitionId,
 		long fileEntryId, java.lang.String ddmContent, int priority,
-		long CPMediaTypeId, ServiceContext serviceContext)
+		long cpMediaTypeId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -162,7 +162,7 @@ public interface CPDefinitionMediaLocalService extends BaseLocalService,
 		CPDefinitionMedia cpDefinitionMedia);
 
 	public CPDefinitionMedia updateCPDefinitionMedia(long cpDefinitionMediaId,
-		java.lang.String ddmContent, int priority, long CPMediaTypeId,
+		java.lang.String ddmContent, int priority, long cpMediaTypeId,
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPMediaType deleteCPMediaType(long cpMediaTypeId)
@@ -199,6 +199,9 @@ public interface CPDefinitionMediaLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionMediasCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDefinitionMediasCount(long cpDefinitionId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -284,6 +287,15 @@ public interface CPDefinitionMediaLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionMedia> getCPDefinitionMediasByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
+		OrderByComparator<CPDefinitionMedia> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionMedia> getDefinitionMedias(long cpDefinitionId,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionMedia> getDefinitionMedias(long cpDefinitionId,
+		int start, int end,
 		OrderByComparator<CPDefinitionMedia> orderByComparator);
 
 	/**

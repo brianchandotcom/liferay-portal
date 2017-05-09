@@ -49,11 +49,11 @@ public class CPDefinitionMediaLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPDefinitionMedia addCPDefinitionMedia(
 		long cpDefinitionId, long fileEntryId, java.lang.String ddmContent,
-		int priority, long CPMediaTypeId,
+		int priority, long cpMediaTypeId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionMediaLocalService.addCPDefinitionMedia(cpDefinitionId,
-			fileEntryId, ddmContent, priority, CPMediaTypeId, serviceContext);
+			fileEntryId, ddmContent, priority, cpMediaTypeId, serviceContext);
 	}
 
 	/**
@@ -161,11 +161,11 @@ public class CPDefinitionMediaLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPDefinitionMedia updateCPDefinitionMedia(
 		long cpDefinitionMediaId, java.lang.String ddmContent, int priority,
-		long CPMediaTypeId,
+		long cpMediaTypeId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionMediaLocalService.updateCPDefinitionMedia(cpDefinitionMediaId,
-			ddmContent, priority, CPMediaTypeId, serviceContext);
+			ddmContent, priority, cpMediaTypeId, serviceContext);
 	}
 
 	@Override
@@ -221,6 +221,11 @@ public class CPDefinitionMediaLocalServiceWrapper
 	@Override
 	public int getCPDefinitionMediasCount() {
 		return _cpDefinitionMediaLocalService.getCPDefinitionMediasCount();
+	}
+
+	@Override
+	public int getDefinitionMediasCount(long cpDefinitionId) {
+		return _cpDefinitionMediaLocalService.getDefinitionMediasCount(cpDefinitionId);
 	}
 
 	/**
@@ -334,6 +339,21 @@ public class CPDefinitionMediaLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionMedia> orderByComparator) {
 		return _cpDefinitionMediaLocalService.getCPDefinitionMediasByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionMedia> getDefinitionMedias(
+		long cpDefinitionId, int start, int end) {
+		return _cpDefinitionMediaLocalService.getDefinitionMedias(cpDefinitionId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionMedia> getDefinitionMedias(
+		long cpDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionMedia> orderByComparator) {
+		return _cpDefinitionMediaLocalService.getDefinitionMedias(cpDefinitionId,
+			start, end, orderByComparator);
 	}
 
 	/**

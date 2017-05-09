@@ -53,7 +53,8 @@ public class CPDefinitionOptionRelServiceImpl
 			long cpDefinitionId, long cpOptionId, String name,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String ddmFormFieldTypeName, int priority, boolean facetable,
-			boolean required, boolean skuContributor, ServiceContext serviceContext)
+			boolean required, boolean skuContributor,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
@@ -198,7 +199,8 @@ public class CPDefinitionOptionRelServiceImpl
 			long cpDefinitionOptionRelId, long cpOptionId, String name,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String ddmFormFieldTypeName, int priority, boolean facetable,
-			boolean required, boolean skuContributor, ServiceContext serviceContext)
+			boolean required, boolean skuContributor,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.checkCPDefinitionOptionRel(

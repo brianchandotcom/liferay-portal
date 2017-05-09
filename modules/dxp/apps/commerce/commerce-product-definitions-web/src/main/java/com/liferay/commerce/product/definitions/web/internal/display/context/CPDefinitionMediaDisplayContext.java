@@ -84,8 +84,7 @@ public class CPDefinitionMediaDisplayContext
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setEmptyResultsMessage(
-			"no-medias-were-found");
+		searchContainer.setEmptyResultsMessage("no-medias-were-found");
 
 		searchContainer.setRowChecker(getRowChecker());
 

@@ -24,7 +24,10 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		return getFileNames(
-			new String[] {"**/web.xml.properties"}, getIncludes());
+			new String[] {
+				"**/portal-web/docroot/dtd/**", "**/web.xml.properties"
+			},
+			getIncludes());
 	}
 
 	@Override

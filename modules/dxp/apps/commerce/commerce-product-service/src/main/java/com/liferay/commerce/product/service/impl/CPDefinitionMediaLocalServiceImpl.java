@@ -20,22 +20,44 @@ import com.liferay.commerce.product.model.CPMediaType;
 import com.liferay.commerce.product.service.base.CPDefinitionMediaLocalServiceBaseImpl;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Marco Leo
  */
 public class CPDefinitionMediaLocalServiceImpl
 	extends CPDefinitionMediaLocalServiceBaseImpl {
+
+	public static final String[] SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 	@Override
 	public CPDefinitionMedia addCPDefinitionMedia(
@@ -129,6 +151,31 @@ public class CPDefinitionMediaLocalServiceImpl
 	}
 
 	@Override
+	public Hits search(SearchContext searchContext) {
+		try {
+			Indexer<CPDefinitionMedia> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(CPDefinitionMedia.class);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	@Override
+	public BaseModelSearchResult<CPDefinitionMedia> searchCPDefinitionMedias(
+			long companyId, long groupId, long cpDefinitionId, String keywords,
+			int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupId, cpDefinitionId, keywords, start, end, sort);
+
+		return searchCPDefinitionMedia(searchContext);
+	}
+
+	@Override
 	public CPDefinitionMedia updateCPDefinitionMedia(
 			long cpDefinitionMediaId, String ddmContent, int priority,
 			long cpMediaTypeId, ServiceContext serviceContext)
@@ -148,6 +195,48 @@ public class CPDefinitionMediaLocalServiceImpl
 		return cpDefinitionMedia;
 	}
 
+	protected SearchContext buildSearchContext(
+		long companyId, long groupId, long cpDefinitionId, String keywords,
+		int start, int end, Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("keywords", keywords);
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put(Field.ENTRY_CLASS_PK, keywords);
+		attributes.put(Field.TITLE, keywords);
+		attributes.put("cpDefinitionId", cpDefinitionId);
+		attributes.put("params", params);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setStart(start);
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {groupId});
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		return searchContext;
+	}
+
 	protected Folder doAddFolder(long userId, long groupId, String folderName)
 		throws PortalException {
 
@@ -165,6 +254,40 @@ public class CPDefinitionMediaLocalServiceImpl
 			serviceContext);
 
 		return folder;
+	}
+
+	protected BaseModelSearchResult<CPDefinitionMedia> searchCPDefinitionMedia(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CPDefinitionMedia> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CPDefinitionMedia.class);
+
+		List<CPDefinitionMedia> cpDefinitionMedias = new ArrayList<>();
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, SELECTED_FIELD_NAMES);
+
+			Document[] documents = hits.getDocs();
+
+			for (Document document : documents) {
+				long classPK = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
+				CPDefinitionMedia cpDefinitionMedia = getCPDefinitionMedia(
+					classPK);
+
+				cpDefinitionMedias.add(cpDefinitionMedia);
+			}
+
+			if (cpDefinitionMedias != null) {
+				return new BaseModelSearchResult<>(
+					cpDefinitionMedias, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 }

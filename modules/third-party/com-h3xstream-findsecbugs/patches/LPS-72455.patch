@@ -1,0 +1,73 @@
+diff --git a/com/h3xstream/findsecbugs/taintanalysis/TaintClassConfig.java b/com/h3xstream/findsecbugs/taintanalysis/TaintClassConfig.java
+index 3237093..00dabc3 100644
+--- a/com/h3xstream/findsecbugs/taintanalysis/TaintClassConfig.java
++++ b/com/h3xstream/findsecbugs/taintanalysis/TaintClassConfig.java
+@@ -37,7 +37,8 @@ public class TaintClassConfig implements TaintTypeConfig {
+     private static final Pattern taintConfigPattern;
+ 
+     static {
+-        String classWithPackageRegex = "([a-z][a-z0-9]*\\/)*(package|[A-Z])[a-zA-Z0-9\\$]*";
++        String javaIdentifierRegex = "\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*";
++        String classWithPackageRegex = javaIdentifierRegex+"(\\/"+javaIdentifierRegex+")*";
+         String typeRegex = "(\\[)*((L" + classWithPackageRegex + ";)|B|C|D|F|I|J|S|Z)";
+         typePattern = Pattern.compile(typeRegex);
+ 
+@@ -124,3 +125,4 @@ public class TaintClassConfig implements TaintTypeConfig {
+         return taintState;
+     }
+ }
++/* @generated */
+diff --git a/com/h3xstream/findsecbugs/taintanalysis/TaintMethodConfig.java b/com/h3xstream/findsecbugs/taintanalysis/TaintMethodConfig.java
+index 813a63a..2413e3e 100644
+--- a/com/h3xstream/findsecbugs/taintanalysis/TaintMethodConfig.java
++++ b/com/h3xstream/findsecbugs/taintanalysis/TaintMethodConfig.java
+@@ -44,10 +44,12 @@ public class TaintMethodConfig implements TaintTypeConfig {
+         SAFE_CONFIG = new TaintMethodConfig(false);
+         SAFE_CONFIG.outputTaint = new Taint(Taint.State.SAFE);
+ 
+-        String classWithPackageRegex = "([a-z][a-z0-9]*\\/)*(package|[A-Z])[a-zA-Z0-9\\$]*";
++        String javaIdentifierRegex = "\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*";
++        String classWithPackageRegex = javaIdentifierRegex+"(\\/"+javaIdentifierRegex+")*";
++
+         String typeRegex = "(\\[)*((L" + classWithPackageRegex + ";)|B|C|D|F|I|J|S|Z)";
+         String returnRegex = "(V|(" + typeRegex + "))";
+-        String methodRegex = "(([a-zA-Z][a-zA-Z0-9]*(\\$extension)?)|(<init>))";
++        String methodRegex = "(("+javaIdentifierRegex+"(\\$extension)?)|(<init>))";
+         String signatureRegex = "\\((" + typeRegex + ")*\\)" + returnRegex;
+         String fullMathodNameRegex = classWithPackageRegex + "\\." + methodRegex + signatureRegex;
+         fullMethodPattern = Pattern.compile(fullMathodNameRegex);
+@@ -447,3 +449,4 @@ public class TaintMethodConfig implements TaintTypeConfig {
+         return false;
+     }
+ }
++/* @generated */
+diff --git a/com/h3xstream/findsecbugs/taintanalysis/TaintMethodConfigWithArgumentsAndLocation.java b/com/h3xstream/findsecbugs/taintanalysis/TaintMethodConfigWithArgumentsAndLocation.java
+index 5d8c22e..a882bbb 100644
+--- a/com/h3xstream/findsecbugs/taintanalysis/TaintMethodConfigWithArgumentsAndLocation.java
++++ b/com/h3xstream/findsecbugs/taintanalysis/TaintMethodConfigWithArgumentsAndLocation.java
+@@ -36,15 +36,16 @@ public class TaintMethodConfigWithArgumentsAndLocation extends TaintMethodConfig
+     private String location;
+ 
+     static {
+-        String classWithPackageRegex = "([a-z][a-z0-9]*\\/)*(package|[A-Z])[a-zA-Z0-9\\$]*";
+-        String methodRegex = "(([a-zA-Z][a-zA-Z0-9]*(\\$extension)?)|(<init>))";
++        String javaIdentifierRegex = "\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*";
++        String classNameRegex = javaIdentifierRegex+"(\\/"+javaIdentifierRegex+")*";
++        String methodRegex = "(("+javaIdentifierRegex+"(\\$extension)?)|(<init>))";
+ 
+         // javax/servlet/http/HttpServletRequest.getAttribute("applicationConstant"):SAFE@org/apache/jsp/edit_jsp
+         // javax/servlet/http/HttpServletRequest.getAttribute(UNKNOWN):SAFE@org/apache/jsp/constants_jsp
+         String stringConstantRegex = "\"[^\"]*\"";
+         String enumNameRegex = "[A-Z_]+";
+         String methodArguments = "(" + stringConstantRegex + ",?|" + enumNameRegex + ",?)*";
+-        String methodWithStringConstantOrEnumRegex = classWithPackageRegex + "\\." + methodRegex + "\\(" + methodArguments + "\\)";
++        String methodWithStringConstantOrEnumRegex = classNameRegex + "\\." + methodRegex + "\\(" + methodArguments + "\\)";
+         methodWithStringConstantOrEnumPattern = Pattern.compile(methodWithStringConstantOrEnumRegex);
+     }
+ 
+@@ -103,3 +104,4 @@ public class TaintMethodConfigWithArgumentsAndLocation extends TaintMethodConfig
+         return location;
+     }
+ }
++/* @generated */
+\ No newline at end of file

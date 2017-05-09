@@ -18,6 +18,9 @@ patch {
 		autoClean = false
 	}
 
+	fileNames "**/com/h3xstream/findsecbugs/taintanalysis/TaintClassConfig.java"
+	fileNames "**/com/h3xstream/findsecbugs/taintanalysis/TaintMethodConfig.java"
+	fileNames "**/com/h3xstream/findsecbugs/taintanalysis/TaintMethodConfigWithArgumentsAndLocation.java"
 	fileNames "**/com/h3xstream/findsecbugs/taintanalysis/TaintFrameModelingVisitor.java"
 
 	originalLibModuleName = "findsecbugs-plugin"

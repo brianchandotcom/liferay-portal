@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.gradle.plugins.defaults</artifactId>
-  <version>3.6.12</version>
+  <version>3.6.13</version>
   <description>Liferay Gradle Plugins Defaults</description>
   <licenses>
     <license>

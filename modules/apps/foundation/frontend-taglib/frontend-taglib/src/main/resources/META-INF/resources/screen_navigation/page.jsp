@@ -16,4 +16,69 @@
 
 <%@ include file="/screen_navigation/init.jsp" %>
 
-<p>Screen Navigation</p>
+<%
+PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:screen-navigation:portletURL");
+ScreenNavigationCategory selectedScreenNavigationCategory = (ScreenNavigationCategory)request.getAttribute("liferay-frontend:screen-navigation:selectedScreenNavigationCategory");
+ScreenNavigationEntry selectedScreenNavigationEntry = (ScreenNavigationEntry)request.getAttribute("liferay-frontend:screen-navigation:selectedScreenNavigationEntry");
+List<ScreenNavigationCategory> screenNavigationCategories = (List<ScreenNavigationCategory>)request.getAttribute("liferay-frontend:screen-navigation:screenNavigationCategories");
+List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntry>)request.getAttribute("liferay-frontend:screen-navigation:screenNavigationEntries");
+%>
+
+<c:if test="<%= (screenNavigationCategories.size() > 1) || (screenNavigationEntries.size() > 1) %>">
+	<aui:nav-bar markupView="lexicon">
+		<aui:nav cssClass="navbar-nav">
+
+			<%
+			for (ScreenNavigationCategory screenNavigationCategory : screenNavigationCategories) {
+				PortletURL screenNavigationCategoryURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+
+				screenNavigationCategoryURL.setParameter("screenNavigationCategoryKey", screenNavigationCategory.getCategoryKey());
+			%>
+
+				<aui:nav-item href="<%= screenNavigationCategoryURL.toString() %>" label="<%= screenNavigationCategory.getLabel(themeDisplay.getLocale()) %>" selected="<%= Objects.equals(selectedScreenNavigationCategory.getCategoryKey(), screenNavigationCategory.getCategoryKey()) %>" />
+
+			<%
+			}
+			%>
+
+		</aui:nav>
+	</aui:nav-bar>
+</c:if>
+
+<div class="container-fluid-1280">
+	<c:if test="<%= screenNavigationEntries.size() > 1 %>">
+		<div class="col-md-3">
+			<ul class="nav nav-pills nav-stacked">
+
+				<%
+				for (ScreenNavigationEntry screenNavigationEntry : screenNavigationEntries) {
+					PortletURL screenNavigationEntryURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+
+					screenNavigationEntryURL.setParameter("screenNavigationCategoryKey", screenNavigationEntry.getCategoryKey());
+					screenNavigationEntryURL.setParameter("screenNavigationEntryKey", screenNavigationEntry.getEntryKey());
+				%>
+
+					<li class="<%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "active" : StringPool.BLANK %>">
+						<a href="<%= screenNavigationEntryURL %>"><%= screenNavigationEntry.getLabel(themeDisplay.getLocale()) %></a>
+					</li>
+
+				<%
+				}
+				%>
+
+			</ul>
+		</div>
+	</c:if>
+
+	<div class="<%= (screenNavigationEntries.size() > 1) ? "col-md-9" : "center-block" %>">
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+
+				<%
+				selectedScreenNavigationEntry.render(request, response);
+				%>
+
+			</aui:fieldset>
+		</aui:fieldset-group>
+	</div>
+</div>

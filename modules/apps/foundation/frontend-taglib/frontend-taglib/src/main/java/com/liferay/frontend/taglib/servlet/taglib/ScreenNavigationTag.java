@@ -16,10 +16,12 @@ package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -103,6 +105,85 @@ public class ScreenNavigationTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-frontend:screen-navigation:screenNavigationCategories",
 			_screenNavigationCategories);
+		request.setAttribute(
+			"liferay-frontend:screen-navigation:screenNavigationEntries",
+			_getScreenNavigationEntries());
+		request.setAttribute(
+			"liferay-frontend:screen-navigation:" +
+				"selectedScreenNavigationCategory",
+			_getSelectedScreenNavigationCategory());
+		request.setAttribute(
+			"liferay-frontend:screen-navigation:selectedScreenNavigationEntry",
+			_getSelectedScreenNavigationEntry());
+	}
+
+	private String _getDefaultScreenNavigationCategoryKey() {
+		ScreenNavigationCategory screenNavigationCategory =
+			_screenNavigationCategories.get(0);
+
+		return screenNavigationCategory.getCategoryKey();
+	}
+
+	private String _getDefaultScreenNavigationEntryKey() {
+		List<ScreenNavigationEntry> screenNavigationEntries =
+			_getScreenNavigationEntries();
+
+		ScreenNavigationEntry screenNavigationEntry =
+			screenNavigationEntries.get(0);
+
+		return screenNavigationEntry.getEntryKey();
+	}
+
+	private List<ScreenNavigationEntry> _getScreenNavigationEntries() {
+		ScreenNavigationRegistry screenNavigationHelper =
+			ServletContextUtil.getScreenNavigationHelper();
+
+		ScreenNavigationCategory selectedScreenNavigationCategory =
+			_getSelectedScreenNavigationCategory();
+
+		return screenNavigationHelper.getScreenNavigationEntries(
+			selectedScreenNavigationCategory);
+	}
+
+	private ScreenNavigationCategory _getSelectedScreenNavigationCategory() {
+		String screenNavigationCategoryKey = ParamUtil.getString(
+			request, "screenNavigationCategoryKey",
+			_getDefaultScreenNavigationCategoryKey());
+
+		for (ScreenNavigationCategory screenNavigationCategory :
+				_screenNavigationCategories) {
+
+			if (Objects.equals(
+					screenNavigationCategory.getCategoryKey(),
+					screenNavigationCategoryKey)) {
+
+				return screenNavigationCategory;
+			}
+		}
+
+		return null;
+	}
+
+	private ScreenNavigationEntry _getSelectedScreenNavigationEntry() {
+		String screenNavigationEntryKey = ParamUtil.getString(
+			request, "screenNavigationEntryKey",
+			_getDefaultScreenNavigationEntryKey());
+
+		List<ScreenNavigationEntry> screenNavigationEntries =
+			_getScreenNavigationEntries();
+
+		for (ScreenNavigationEntry screenNavigationEntry :
+				screenNavigationEntries) {
+
+			if (Objects.equals(
+					screenNavigationEntry.getEntryKey(),
+					screenNavigationEntryKey)) {
+
+				return screenNavigationEntry;
+			}
+		}
+
+		return null;
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

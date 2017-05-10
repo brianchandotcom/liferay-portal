@@ -73,6 +73,17 @@ public class CPOptionCategoryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteCPOptionCategories(long groupId) throws PortalException {
+		List<CPOptionCategory> cpOptionCategories =
+			cpOptionCategoryPersistence.findByGroupId(groupId);
+
+		for (CPOptionCategory cpOptionCategory : cpOptionCategories) {
+			cpOptionCategoryLocalService.deleteCPOptionCategory(
+				cpOptionCategory);
+		}
+	}
+
+	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPOptionCategory deleteCPOptionCategory(
 			CPOptionCategory cpOptionCategory)

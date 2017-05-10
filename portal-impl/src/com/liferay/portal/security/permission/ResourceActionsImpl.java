@@ -281,7 +281,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		String value = LanguageUtil.get(locale, key, null);
 
-		if ((value == null) || value.equals(key)) {
+		if (value == null) {
 			value = _getResourceBundlesString(locale, key);
 		}
 

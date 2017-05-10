@@ -116,13 +116,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								name="facetable"
 								property="facetable"
 							/>
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								name="required"
 								property="required"
 							/>
 

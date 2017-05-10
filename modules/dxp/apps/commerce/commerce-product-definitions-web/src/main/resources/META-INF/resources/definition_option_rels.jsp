@@ -151,13 +151,11 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								name="facetable"
 								property="facetable"
 							/>
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								name="required"
 								property="required"
 							/>
 
@@ -169,7 +167,6 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								name="priority"
 								property="priority"
 							/>
 

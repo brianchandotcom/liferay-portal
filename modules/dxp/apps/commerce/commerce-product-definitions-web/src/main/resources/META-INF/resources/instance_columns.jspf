@@ -17,7 +17,6 @@
 <liferay-ui:search-container-column-text
 	cssClass="table-cell-content"
 	href="<%= rowURL %>"
-	name="sku"
 	property="sku"
 />
 

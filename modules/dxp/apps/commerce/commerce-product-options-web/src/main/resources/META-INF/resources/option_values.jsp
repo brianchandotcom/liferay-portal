@@ -145,7 +145,6 @@ renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-prod
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								name="priority"
 								property="priority"
 							/>
 

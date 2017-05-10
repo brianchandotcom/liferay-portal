@@ -141,7 +141,6 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								name="priority"
 								property="priority"
 							/>
 

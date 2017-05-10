@@ -58,17 +58,10 @@ public class SiteAdminUserDemoDataCreatorImpl
 		return userLocalService.getUser(user.getUserId());
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRoleLocalService(RoleLocalService roleLocalService) {
-		_roleLocalService = roleLocalService;
-	}
-
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private RoleLocalService _roleLocalService;
 
 	@Reference

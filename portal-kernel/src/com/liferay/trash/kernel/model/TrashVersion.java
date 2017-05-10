@@ -27,8 +27,11 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see TrashVersionModel
  * @see com.liferay.portlet.trash.model.impl.TrashVersionImpl
  * @see com.liferay.portlet.trash.model.impl.TrashVersionModelImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.trash.model.impl.TrashVersionImpl}
  * @generated
  */
+@Deprecated
 @ImplementationClassName("com.liferay.portlet.trash.model.impl.TrashVersionImpl")
 @ProviderType
 public interface TrashVersion extends TrashVersionModel, PersistedModel {

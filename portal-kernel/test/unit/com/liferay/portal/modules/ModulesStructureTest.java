@@ -536,7 +536,6 @@ public class ModulesStructureTest {
 		return projectPathPrefix;
 	}
 
-	@SuppressWarnings("unused")
 	private boolean _isGitRepoReadOnly(Path dirPath) throws IOException {
 		Path gitRepoPath = dirPath.resolve(_GIT_REPO_FILE_NAME);
 
@@ -828,6 +827,10 @@ public class ModulesStructureTest {
 
 	private void _testGitRepoIgnoreFiles(Path dirPath, String gitIgnoreTemplate)
 		throws IOException {
+
+		if (_isGitRepoReadOnly(dirPath)) {
+			return;
+		}
 
 		if (_isInPrivateModulesDir(dirPath)) {
 			return;

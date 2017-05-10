@@ -15,8 +15,6 @@
 package com.liferay.portal.search.solr.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexSearcher;
@@ -57,6 +55,7 @@ import com.liferay.portal.search.solr.groupby.GroupByTranslator;
 import com.liferay.portal.search.solr.internal.facet.CompositeFacetProcessor;
 import com.liferay.portal.search.solr.internal.facet.SolrFacetFieldCollector;
 import com.liferay.portal.search.solr.internal.facet.SolrFacetQueryCollector;
+import com.liferay.portal.search.solr.internal.pagination.Pagination;
 import com.liferay.portal.search.solr.stats.StatsTranslator;
 
 import java.util.ArrayList;
@@ -65,6 +64,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -114,23 +114,29 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		stopWatch.start();
 
 		try {
-			int total = (int)searchCount(searchContext, query);
+			Pagination pagination = new Pagination(
+				searchContext.getStart(), searchContext.getEnd());
 
-			int start = searchContext.getStart();
-			int end = searchContext.getEnd();
+			Hits hits = null;
 
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
-				start = 0;
-				end = total;
+			while (true) {
+				hits = doSearchHits(searchContext, query, pagination);
+
+				Document[] documents = hits.getDocs();
+
+				if (documents.length != 0) {
+					break;
+				}
+
+				Optional<Pagination> paginationOptional =
+					pagination.repageToLast(hits.getLength());
+
+				if (!paginationOptional.isPresent()) {
+					break;
+				}
+
+				pagination = paginationOptional.get();
 			}
-
-			int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
-				start, end, total);
-
-			start = startAndEnd[0];
-			end = startAndEnd[1];
-
-			Hits hits = doSearchHits(searchContext, query, start, end);
 
 			hits.setStart(stopWatch.getStartTime());
 
@@ -236,7 +242,8 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected void addGroupBy(
-		SolrQuery solrQuery, SearchContext searchContext, int start, int end) {
+		SolrQuery solrQuery, SearchContext searchContext,
+		Pagination pagination) {
 
 		GroupBy groupBy = searchContext.getGroupBy();
 
@@ -244,7 +251,9 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			return;
 		}
 
-		_groupByTranslator.translate(solrQuery, searchContext, start, end);
+		_groupByTranslator.translate(
+			solrQuery, searchContext, pagination.getStart(),
+			pagination.getEnd());
 	}
 
 	protected void addHighlightedField(
@@ -278,7 +287,8 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected void addPagination(
-		SolrQuery solrQuery, SearchContext searchContext, int start, int end) {
+		SolrQuery solrQuery, SearchContext searchContext,
+		Pagination pagination) {
 
 		GroupBy groupBy = searchContext.getGroupBy();
 
@@ -286,8 +296,13 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			return;
 		}
 
-		solrQuery.setRows(end - start);
-		solrQuery.setStart(start);
+		Optional<Integer> fromOptional = pagination.getFrom();
+
+		fromOptional.ifPresent(solrQuery::setStart);
+
+		Optional<Integer> sizeOptional = pagination.getSize();
+
+		sizeOptional.ifPresent(solrQuery::setRows);
 	}
 
 	protected void addSelectedFields(
@@ -405,7 +420,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected QueryResponse doSearch(
-			SearchContext searchContext, Query query, int start, int end,
+			SearchContext searchContext, Query query, Pagination pagination,
 			boolean count)
 		throws Exception {
 
@@ -417,9 +432,9 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 		if (!count) {
 			addFacets(solrQuery, searchContext);
-			addGroupBy(solrQuery, searchContext, start, end);
+			addGroupBy(solrQuery, searchContext, pagination);
 			addHighlights(solrQuery, queryConfig);
-			addPagination(solrQuery, searchContext, start, end);
+			addPagination(solrQuery, searchContext, pagination);
 			addSelectedFields(solrQuery, queryConfig);
 			addSort(solrQuery, searchContext.getSorts());
 
@@ -469,8 +484,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		throws Exception {
 
 		QueryResponse queryResponse = doSearch(
-			searchContext, query, searchContext.getStart(),
-			searchContext.getEnd(), true);
+			searchContext, query, null, true);
 
 		SolrDocumentList solrDocumentList = queryResponse.getResults();
 
@@ -478,15 +492,13 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	}
 
 	protected Hits doSearchHits(
-			SearchContext searchContext, Query query, int start, int end)
+			SearchContext searchContext, Query query, Pagination pagination)
 		throws Exception {
 
 		QueryResponse queryResponse = doSearch(
-			searchContext, query, start, end, false);
+			searchContext, query, pagination, false);
 
-		Hits hits = processResponse(queryResponse, searchContext, query);
-
-		return hits;
+		return processResponse(queryResponse, searchContext, query);
 	}
 
 	protected QueryResponse executeSearchRequest(SolrQuery solrQuery)

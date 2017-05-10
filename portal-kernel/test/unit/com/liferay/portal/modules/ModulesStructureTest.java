@@ -812,6 +812,10 @@ public class ModulesStructureTest {
 	private void _testGitRepoIgnoreFiles(Path dirPath, String gitIgnoreTemplate)
 		throws IOException {
 
+		if (_isInPrivateModulesDir(dirPath)) {
+			return;
+		}
+
 		Path gitIgnorePath = dirPath.resolve(".gitignore");
 
 		String gitIgnore = _read(gitIgnorePath);

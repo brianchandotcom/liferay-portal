@@ -88,7 +88,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			long cpDefinitionId, long cpOptionId, String name,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String ddmFormFieldTypeName, int priority, boolean facetable,
-			boolean required, boolean skuContributor,boolean importOptionValue,
+			boolean required, boolean skuContributor, boolean importOptionValue,
 			ServiceContext serviceContext)
 		throws PortalException {
 

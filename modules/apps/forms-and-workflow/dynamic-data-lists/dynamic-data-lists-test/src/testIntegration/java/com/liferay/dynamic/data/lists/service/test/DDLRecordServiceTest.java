@@ -143,7 +143,7 @@ public class DDLRecordServiceTest {
 			serviceContext);
 
 		DDLRecordVersion recordVersion =
-			DDLRecordVersionLocalServiceUtil.fetchRecordVersion(
+			DDLRecordVersionLocalServiceUtil.fetchLatestRecordVersion(
 				TestPropsValues.getUserId(), recordSet.getRecordSetId(),
 				recordSet.getVersion(), WorkflowConstants.STATUS_DRAFT);
 

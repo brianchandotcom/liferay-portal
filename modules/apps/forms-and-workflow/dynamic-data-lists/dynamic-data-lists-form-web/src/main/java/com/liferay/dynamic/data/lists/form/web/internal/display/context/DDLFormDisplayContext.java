@@ -122,7 +122,7 @@ public class DDLFormDisplayContext {
 		ddmFormRenderingContext.setGroupId(recordSet.getGroupId());
 
 		DDLRecordVersion ddlRecordVersion =
-			_ddlRecordVersionLocalService.fetchRecordVersion(
+			_ddlRecordVersionLocalService.fetchLatestRecordVersion(
 				getUserId(), getRecordSetId(), getRecordSetVersion(),
 				WorkflowConstants.STATUS_DRAFT);
 

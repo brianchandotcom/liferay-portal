@@ -194,7 +194,7 @@ public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		DDLRecordVersion recordVersion =
-			_ddlRecordVersionLocalService.fetchRecordVersion(
+			_ddlRecordVersionLocalService.fetchLatestRecordVersion(
 				themeDisplay.getUserId(), recordSetId, recordSet.getVersion(),
 				WorkflowConstants.STATUS_DRAFT);
 

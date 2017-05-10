@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.asset.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -30,7 +28,6 @@ import javax.portlet.PortletURL;
 /**
  * @author Preston Crary
  */
-@ProviderType
 public class AssetPortletAddURL implements Comparable<AssetPortletAddURL> {
 
 	public AssetPortletAddURL(

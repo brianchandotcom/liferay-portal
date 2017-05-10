@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.solr.groupby.GroupByTranslator;
+import com.liferay.portal.search.solr.internal.pagination.Pagination;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.solr.client.solrj.SolrQuery;
@@ -123,21 +125,33 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 		solrQuery.set(GROUP_FORMAT, "grouped");
 		solrQuery.set(GROUP_TOTAL_COUNT, true);
 
+		Pagination pagination = new Pagination(start, end);
+
+		Optional<Integer> fromOptional;
+
 		int groupByStart = groupBy.getStart();
 
-		if (groupByStart == 0) {
-			groupByStart = start;
+		if (groupByStart != 0) {
+			fromOptional = Optional.of(groupByStart);
+		}
+		else {
+			fromOptional = pagination.getFrom();
 		}
 
-		solrQuery.set(GROUP_OFFSET, groupByStart);
+		fromOptional.ifPresent(from -> solrQuery.set(GROUP_OFFSET, from));
+
+		Optional<Integer> sizeOptional;
 
 		int groupBySize = groupBy.getSize();
 
-		if (groupBySize == 0) {
-			groupBySize = end - start + 1;
+		if (groupBySize != 0) {
+			sizeOptional = Optional.of(groupBySize);
+		}
+		else {
+			sizeOptional = pagination.getSize();
 		}
 
-		solrQuery.set(GROUP_LIMIT, groupBySize);
+		solrQuery.set(GROUP_LIMIT, sizeOptional.orElse(3));
 
 		addHighlights(solrQuery, searchContext.getQueryConfig());
 		addSorts(solrQuery, searchContext.getSorts());

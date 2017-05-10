@@ -116,7 +116,6 @@ public class CPOptionCategoryPermission implements BaseModelPermissionChecker {
 		_cpOptionCategoryLocalService = cpOptionCategoryLocalService;
 	}
 
-	private static CPOptionCategoryLocalService
-		_cpOptionCategoryLocalService;
+	private static CPOptionCategoryLocalService _cpOptionCategoryLocalService;
 
 }

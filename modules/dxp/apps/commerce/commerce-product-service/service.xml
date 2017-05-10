@@ -270,7 +270,7 @@
 
 		<!-- Order -->
 
-		<order by="desc">
+		<order by="asc">
 			<order-column name="title" />
 		</order>
 
@@ -314,7 +314,7 @@
 
 		<!-- Order -->
 
-		<order by="desc">
+		<order by="asc">
 			<order-column name="title" />
 		</order>
 
@@ -354,7 +354,7 @@
 
 		<!-- Order -->
 
-		<order by="desc">
+		<order by="asc">
 			<order-column name="title" />
 		</order>
 

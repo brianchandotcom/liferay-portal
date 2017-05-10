@@ -29,8 +29,11 @@ import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see TrashEntryImpl
  * @see TrashEntry
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.trash.model.impl.TrashEntryImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class TrashEntryBaseImpl extends TrashEntryModelImpl
 	implements TrashEntry {

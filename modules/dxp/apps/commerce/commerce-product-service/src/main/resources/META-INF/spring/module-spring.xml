@@ -17,6 +17,9 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionLocalServiceImpl" id="com.liferay.commerce.product.service.CPOptionLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionServiceImpl" id="com.liferay.commerce.product.service.CPOptionService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPOptionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPOptionCategoryLocalServiceImpl" id="com.liferay.commerce.product.service.CPOptionCategoryLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPOptionCategoryServiceImpl" id="com.liferay.commerce.product.service.CPOptionCategoryService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionCategoryPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPOptionCategoryPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionValueLocalServiceImpl" id="com.liferay.commerce.product.service.CPOptionValueLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionValueServiceImpl" id="com.liferay.commerce.product.service.CPOptionValueService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionValuePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPOptionValuePersistence" parent="basePersistence" />

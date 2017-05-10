@@ -108,6 +108,21 @@ create table CPOption (
 	skuContributor BOOLEAN
 );
 
+create table CPOptionCategory (
+	uuid_ VARCHAR(75) null,
+	CPOptionCategoryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	name VARCHAR(75) null,
+	title STRING null,
+	description STRING null,
+	priority INTEGER
+);
+
 create table CPOptionValue (
 	uuid_ VARCHAR(75) null,
 	CPOptionValueId LONG not null primary key,

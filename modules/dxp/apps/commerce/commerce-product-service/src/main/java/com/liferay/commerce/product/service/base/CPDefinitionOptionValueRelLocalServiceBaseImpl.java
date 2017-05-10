@@ -23,6 +23,7 @@ import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPer
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
+import com.liferay.commerce.product.service.persistence.CPOptionCategoryPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionValuePersistence;
 
@@ -660,6 +661,44 @@ public abstract class CPDefinitionOptionValueRelLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the cp option category local service.
+	 *
+	 * @return the cp option category local service
+	 */
+	public com.liferay.commerce.product.service.CPOptionCategoryLocalService getCPOptionCategoryLocalService() {
+		return cpOptionCategoryLocalService;
+	}
+
+	/**
+	 * Sets the cp option category local service.
+	 *
+	 * @param cpOptionCategoryLocalService the cp option category local service
+	 */
+	public void setCPOptionCategoryLocalService(
+		com.liferay.commerce.product.service.CPOptionCategoryLocalService cpOptionCategoryLocalService) {
+		this.cpOptionCategoryLocalService = cpOptionCategoryLocalService;
+	}
+
+	/**
+	 * Returns the cp option category persistence.
+	 *
+	 * @return the cp option category persistence
+	 */
+	public CPOptionCategoryPersistence getCPOptionCategoryPersistence() {
+		return cpOptionCategoryPersistence;
+	}
+
+	/**
+	 * Sets the cp option category persistence.
+	 *
+	 * @param cpOptionCategoryPersistence the cp option category persistence
+	 */
+	public void setCPOptionCategoryPersistence(
+		CPOptionCategoryPersistence cpOptionCategoryPersistence) {
+		this.cpOptionCategoryPersistence = cpOptionCategoryPersistence;
+	}
+
+	/**
 	 * Returns the cp option value local service.
 	 *
 	 * @return the cp option value local service
@@ -922,6 +961,10 @@ public abstract class CPDefinitionOptionValueRelLocalServiceBaseImpl
 	protected com.liferay.commerce.product.service.CPOptionLocalService cpOptionLocalService;
 	@BeanReference(type = CPOptionPersistence.class)
 	protected CPOptionPersistence cpOptionPersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CPOptionCategoryLocalService.class)
+	protected com.liferay.commerce.product.service.CPOptionCategoryLocalService cpOptionCategoryLocalService;
+	@BeanReference(type = CPOptionCategoryPersistence.class)
+	protected CPOptionCategoryPersistence cpOptionCategoryPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPOptionValueLocalService.class)
 	protected com.liferay.commerce.product.service.CPOptionValueLocalService cpOptionValueLocalService;
 	@BeanReference(type = CPOptionValuePersistence.class)

@@ -26,13 +26,18 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
+<%@ page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
+page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
+page import="com.liferay.commerce.product.exception.NoSuchCPOptionCategoryException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPOptionException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPOptionValueException" %><%@
 page import="com.liferay.commerce.product.model.CPOption" %><%@
+page import="com.liferay.commerce.product.model.CPOptionCategory" %><%@
 page import="com.liferay.commerce.product.model.CPOptionValue" %><%@
+page import="com.liferay.commerce.product.options.web.internal.display.context.CPOptionCategoryDisplayContext" %><%@
 page import="com.liferay.commerce.product.options.web.internal.display.context.CPOptionDisplayContext" %><%@
 page import="com.liferay.commerce.product.options.web.internal.display.context.CPOptionValueDisplayContext" %><%@
+page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CPOptionCategoryFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CPOptionFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.CPOptionValueFormNavigatorConstants" %><%@
 page import="com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType" %><%@

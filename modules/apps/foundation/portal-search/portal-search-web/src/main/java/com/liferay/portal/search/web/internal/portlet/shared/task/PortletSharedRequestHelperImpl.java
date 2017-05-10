@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.web.internal.portlet.shared.task;
 
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.web.internal.util.SearchArrayUtil;
 import com.liferay.portal.search.web.internal.util.SearchStringUtil;
@@ -45,11 +45,7 @@ public class PortletSharedRequestHelperImpl
 
 	@Override
 	public String getCompleteURL(RenderRequest renderRequest) {
-
-		// Must use HttpUtil instead of @Reference Http, otherwise, the
-		// component remains undeployed, with no stack trace
-
-		String urlString = HttpUtil.getCompleteURL(
+		String urlString = _http.getCompleteURL(
 			getSharedRequest(renderRequest));
 
 		return urlString;
@@ -100,5 +96,8 @@ public class PortletSharedRequestHelperImpl
 
 	@Reference
 	protected Portal portal;
+
+	@Reference
+	private Http _http;
 
 }

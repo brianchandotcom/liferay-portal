@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.poller.PollerResponse;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
@@ -144,7 +144,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 					displayURL = _portal.getLayoutSetDisplayURL(
 						layoutSet, false);
 
-					displayURL = HttpUtil.removeDomain(displayURL);
+					displayURL = _http.removeDomain(displayURL);
 				}
 			}
 			catch (NoSuchLayoutSetException nslse) {
@@ -307,6 +307,10 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 		ChatPollerProcessor.class);
 
 	private ChatGroupServiceConfiguration _chatGroupServiceConfiguration;
+
+	@Reference
+	private Http _http;
+
 	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference

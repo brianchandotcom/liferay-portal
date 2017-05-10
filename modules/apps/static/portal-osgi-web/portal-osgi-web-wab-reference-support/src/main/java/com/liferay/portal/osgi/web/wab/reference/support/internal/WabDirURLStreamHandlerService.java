@@ -17,7 +17,7 @@ package com.liferay.portal.osgi.web.wab.reference.support.internal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -65,7 +65,7 @@ public class WabDirURLStreamHandlerService
 	@Override
 	public URLConnection openConnection(URL url) {
 		try {
-			String contextName = HttpUtil.getParameter(
+			String contextName = _http.getParameter(
 				url.toExternalForm(), "Web-ContextPath");
 
 			URI uri = new URI(url.getPath());
@@ -174,6 +174,10 @@ public class WabDirURLStreamHandlerService
 		".*\\/(.*-(T|t)heme)\\/.*");
 
 	private ClassLoader _classLoader;
+
+	@Reference
+	private Http _http;
+
 	private WabGenerator _wabGenerator;
 
 }

@@ -16,7 +16,7 @@ package com.liferay.web.proxy.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.web.proxy.web.internal.constants.WebProxyPortletKeys;
 
@@ -58,7 +58,7 @@ public class WebProxyConfigurationAction extends DefaultConfigurationAction {
 			!StringUtil.startsWith(initUrl, "https://") &&
 			!StringUtil.startsWith(initUrl, "mhtml://")) {
 
-			initUrl = HttpUtil.getProtocol(actionRequest) + "://" + initUrl;
+			initUrl = _http.getProtocol(actionRequest) + "://" + initUrl;
 		}
 
 		setPreference(actionRequest, "initUrl", initUrl);
@@ -74,5 +74,8 @@ public class WebProxyConfigurationAction extends DefaultConfigurationAction {
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Reference
+	private Http _http;
 
 }

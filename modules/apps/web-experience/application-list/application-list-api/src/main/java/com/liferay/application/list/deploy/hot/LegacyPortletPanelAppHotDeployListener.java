@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -131,7 +131,7 @@ public class LegacyPortletPanelAppHotDeployListener
 
 		ServletContext servletContext = hotDeployEvent.getServletContext();
 
-		String xml = HttpUtil.URLtoString(
+		String xml = _http.URLtoString(
 			servletContext.getResource("/WEB-INF/liferay-portlet.xml"));
 
 		if (xml == null) {
@@ -188,6 +188,9 @@ public class LegacyPortletPanelAppHotDeployListener
 	}
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private Portal _portal;

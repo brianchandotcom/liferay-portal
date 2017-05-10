@@ -69,7 +69,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -558,16 +558,16 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 							if (cmd.equals(Constants.ADD) &&
 								(fileEntry != null)) {
 
-								String portletId = HttpUtil.getParameter(
+								String portletId = _http.getParameter(
 									redirect, "p_p_id", false);
 
 								String namespace = _portal.getPortletNamespace(
 									portletId);
 
-								redirect = HttpUtil.addParameter(
+								redirect = _http.addParameter(
 									redirect, namespace + "className",
 									DLFileEntry.class.getName());
-								redirect = HttpUtil.addParameter(
+								redirect = _http.addParameter(
 									redirect, namespace + "classPK",
 									fileEntry.getFileEntryId());
 							}
@@ -1037,6 +1037,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLValidator _dlValidator;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private Portal _portal;

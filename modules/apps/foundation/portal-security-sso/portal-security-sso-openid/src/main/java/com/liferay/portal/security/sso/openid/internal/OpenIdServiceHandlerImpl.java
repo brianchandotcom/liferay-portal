@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
@@ -258,13 +257,13 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 				String createAccountURL = _portal.getCreateAccountURL(
 					request, themeDisplay);
 
-				String portletId = HttpUtil.getParameter(
+				String portletId = _http.getParameter(
 					createAccountURL, "p_p_id", false);
 
 				String portletNamespace = _portal.getPortletNamespace(
 					portletId);
 
-				createAccountURL = HttpUtil.setParameter(
+				createAccountURL = _http.setParameter(
 					createAccountURL, portletNamespace + "openId", openId);
 
 				session.setAttribute(
@@ -519,6 +518,10 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 		OpenIdServiceHandlerImpl.class);
 
 	private ConsumerManager _consumerManager;
+
+	@Reference
+	private Http _http;
+
 	private OpenIdProviderRegistry _openIdProviderRegistry;
 
 	@Reference

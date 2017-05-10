@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -424,7 +423,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 			options.setLocation(url);
 			options.setPost(false);
 
-			byte[] bytes = HttpUtil.URLtoByteArray(options);
+			byte[] bytes = _http.URLtoByteArray(options);
 
 			Http.Response response = options.getResponse();
 
@@ -532,6 +531,10 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 	private static final String _DEPLOY_TO_PREFIX = "DEPLOY_TO__";
 
 	private AppService _appService;
+
+	@Reference
+	private Http _http;
+
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
 	private PluginSettingLocalService _pluginSettingLocalService;

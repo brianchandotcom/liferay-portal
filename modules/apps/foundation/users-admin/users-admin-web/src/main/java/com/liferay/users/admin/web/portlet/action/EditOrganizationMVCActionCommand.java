@@ -53,7 +53,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -120,7 +120,7 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (organization != null) {
-				redirect = HttpUtil.setParameter(
+				redirect = _http.setParameter(
 					redirect, actionResponse.getNamespace() + "organizationId",
 					organization.getOrganizationId());
 			}
@@ -177,7 +177,7 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 						actionRequest, "organizationId");
 
 					if (organizationId > 0) {
-						redirect = HttpUtil.setParameter(
+						redirect = _http.setParameter(
 							redirect,
 							actionResponse.getNamespace() + "organizationId",
 							organizationId);
@@ -316,6 +316,10 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private Http _http;
+
 	private OrganizationService _organizationService;
 
 	@Reference

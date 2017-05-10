@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -65,7 +65,7 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 			!StringUtil.startsWith(src, "https://") &&
 			!StringUtil.startsWith(src, "mhtml://")) {
 
-			src = HttpUtil.getProtocol(actionRequest) + "://" + src;
+			src = _http.getProtocol(actionRequest) + "://" + src;
 
 			setPreference(actionRequest, "src", src);
 		}
@@ -121,5 +121,8 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 			}
 		}
 	}
+
+	@Reference
+	private Http _http;
 
 }

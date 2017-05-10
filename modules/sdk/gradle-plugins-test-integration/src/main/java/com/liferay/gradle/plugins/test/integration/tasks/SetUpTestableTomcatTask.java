@@ -18,10 +18,7 @@ import com.liferay.gradle.plugins.test.integration.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.test.integration.internal.util.StringUtil;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
-import com.liferay.gradle.util.copy.RenameDependencyClosure;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
-
-import groovy.lang.Closure;
 
 import groovy.xml.DOMBuilder;
 import groovy.xml.XmlUtil;
@@ -52,13 +49,9 @@ import java.util.concurrent.Callable;
 import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.CopySpec;
-import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputFiles;
-import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.util.VersionNumber;
 
@@ -166,12 +159,6 @@ public class SetUpTestableTomcatTask
 		return GradleUtil.toFile(getProject(), _moduleFrameworkBaseDir);
 	}
 
-	@InputFiles
-	@Optional
-	public Configuration getOSGiModulesConfiguration() {
-		return _osgiModulesConfiguration;
-	}
-
 	@Input
 	public String getZipUrl() {
 		return GradleUtil.toString(_zipUrl);
@@ -239,12 +226,6 @@ public class SetUpTestableTomcatTask
 	@Override
 	public void setModuleFrameworkBaseDir(Object moduleFrameworkBaseDir) {
 		_moduleFrameworkBaseDir = moduleFrameworkBaseDir;
-	}
-
-	public void setOSGiModulesConfiguration(
-		Configuration osgiModulesConfiguration) {
-
-		_osgiModulesConfiguration = osgiModulesConfiguration;
 	}
 
 	public void setOverwriteTestModules(boolean overwriteTestModules) {
@@ -512,8 +493,7 @@ public class SetUpTestableTomcatTask
 	}
 
 	private void _setUpOsgiModules() {
-		final Configuration configuration = getOSGiModulesConfiguration();
-		final Project project = getProject();
+		Project project = getProject();
 
 		project.copy(
 			new Action<CopySpec>() {
@@ -530,26 +510,7 @@ public class SetUpTestableTomcatTask
 							new ExcludeExistingFileAction(modulesDir));
 					}
 
-					if (configuration != null) {
-						copySpec.from(
-							configuration,
-							new Closure<Void>(project) {
-
-								@SuppressWarnings("unused")
-								public void doCall(CopySpec copySpec) {
-									copySpec.rename(
-										new RenameDependencyClosure(
-											project, configuration.getName()));
-								}
-
-							});
-
-						copySpec.setDuplicatesStrategy(
-							DuplicatesStrategy.EXCLUDE);
-					}
-
 					copySpec.from(new File(moduleFrameworkBaseDir, "test"));
-
 					copySpec.into(modulesDir);
 				}
 
@@ -571,7 +532,6 @@ public class SetUpTestableTomcatTask
 	private Object _managerPassword;
 	private Object _managerUserName;
 	private Object _moduleFrameworkBaseDir;
-	private Configuration _osgiModulesConfiguration;
 	private boolean _overwriteTestModules;
 	private final DateFormat _timestampDateFormat = new SimpleDateFormat(
 		"yyyyMMddkkmmssSSS");

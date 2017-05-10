@@ -47,8 +47,11 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl
  * @see com.liferay.trash.kernel.service.TrashEntryServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.trash.service.impl.TrashEntryServiceImpl}
  * @generated
  */
+@Deprecated
 public abstract class TrashEntryServiceBaseImpl extends BaseServiceImpl
 	implements TrashEntryService, IdentifiableOSGiService {
 	/*

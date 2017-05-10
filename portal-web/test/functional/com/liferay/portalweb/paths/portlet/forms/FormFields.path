@@ -248,7 +248,7 @@
 <!--PARAGRAPH-->
 <tr>
 	<td>PARAGRAPH_BODY_TEXT_CONTENT</td>
-	<td>//div[contains(@class,'paragraph') and contains(@data-fieldname,'${key_fieldName}')]//p</td>
+	<td>//div[contains(@class,'paragraph') and contains(@data-fieldname,'${key_fieldName}')]//div</td>
 	<td></td>
 </tr>
 <tr>

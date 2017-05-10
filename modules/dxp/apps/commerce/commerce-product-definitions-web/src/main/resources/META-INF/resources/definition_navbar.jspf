@@ -32,7 +32,7 @@
 
 		<c:if test="<%= cpDefinition != null %>">
 			<liferay-portlet:renderURL varImpl="viewProductDefinitionImagesURL">
-				<portlet:param name="mvcRenderCommandName" value="viewDefinitionMedias" />
+				<portlet:param name="mvcRenderCommandName" value="viewDefinitionMedia" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 				<portlet:param name="toolbarItem" value="view-product-definition-images" />

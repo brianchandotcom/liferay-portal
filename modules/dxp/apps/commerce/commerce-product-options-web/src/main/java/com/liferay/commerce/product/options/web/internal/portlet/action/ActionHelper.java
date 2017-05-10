@@ -16,7 +16,9 @@ package com.liferay.commerce.product.options.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPOptionValue;
+import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -69,16 +71,35 @@ public class ActionHelper {
 		return cpOption;
 	}
 
+	public List<CPOptionCategory> getCPOptionCategories(
+			ResourceRequest resourceRequest)
+		throws PortalException {
+
+		List<CPOptionCategory> cpOptionCategories = new ArrayList<>();
+
+		long[] cpOptionCategoryIds = ParamUtil.getLongValues(
+			resourceRequest, "rowIds");
+
+		for (long cpOptionCategoryId : cpOptionCategoryIds) {
+			CPOptionCategory cpOptionCategory =
+				_cpOptionCategoryService.getCPOptionCategory(
+					cpOptionCategoryId);
+
+			cpOptionCategories.add(cpOptionCategory);
+		}
+
+		return cpOptionCategories;
+	}
+
 	public List<CPOption> getCPOptions(ResourceRequest resourceRequest)
 		throws PortalException {
 
 		List<CPOption> cpOptions = new ArrayList<>();
 
-		long[] cpOptionsIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIds");
+		long[] cpOptionIds = ParamUtil.getLongValues(resourceRequest, "rowIds");
 
-		for (long cpOptionsId : cpOptionsIds) {
-			CPOption cpOption = _cpOptionService.getCPOption(cpOptionsId);
+		for (long cpOptionId : cpOptionIds) {
+			CPOption cpOption = _cpOptionService.getCPOption(cpOptionId);
 
 			cpOptions.add(cpOption);
 		}
@@ -130,6 +151,9 @@ public class ActionHelper {
 
 		return cpOptionValues;
 	}
+
+	@Reference
+	private CPOptionCategoryService _cpOptionCategoryService;
 
 	@Reference
 	private CPOptionService _cpOptionService;

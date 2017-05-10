@@ -47,7 +47,7 @@ public class SiteAdminUserDemoDataCreatorImpl
 
 		User user = createUser(group.getCompanyId(), emailAddress);
 
-		userLocalService.setGroupUsers(groupId, new long[] {user.getUserId()});
+		userLocalService.addGroupUser(groupId, user.getUserId());
 
 		Role role = _roleLocalService.getRole(
 			group.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);

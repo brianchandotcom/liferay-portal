@@ -233,6 +233,26 @@ public class TopLevelBuild extends BaseBuild {
 		}
 	}
 
+	@Override
+	protected void findDownstreamBuilds() {
+		if (getParentBuild() != null) {
+			return;
+		}
+
+		super.findDownstreamBuilds();
+	}
+
+	@Override
+	protected List<String> findDownstreamBuildsInConsoleText(
+		String consoleText) {
+
+		if (getParentBuild() != null) {
+			return Collections.emptyList();
+		}
+
+		return super.findDownstreamBuildsInConsoleText(consoleText);
+	}
+
 	protected Element getBaseBranchDetailsElement() {
 		String baseBranchURL =
 			"https://github.com/liferay/" + getBaseRepositoryName() + "/tree/" +

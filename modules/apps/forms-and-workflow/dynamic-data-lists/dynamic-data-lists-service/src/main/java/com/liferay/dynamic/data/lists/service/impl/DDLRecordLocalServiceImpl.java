@@ -162,18 +162,17 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			serviceContext.getAssetTagNames(), locale,
 			serviceContext.getAssetPriority());
 
-		if (serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_SAVE_DRAFT) {
-
-			return record;
-		}
-
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), groupId, userId,
-			getWorkflowAssetClassName(recordSet),
-			recordVersion.getRecordVersionId(), recordVersion, serviceContext);
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_PUBLISH) {
+
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				user.getCompanyId(), groupId, userId,
+				getWorkflowAssetClassName(recordSet),
+				recordVersion.getRecordVersionId(), recordVersion,
+				serviceContext);
+		}
 
 		return record;
 	}
@@ -913,18 +912,16 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			return record;
 		}
 
-		if (serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_SAVE_DRAFT) {
-
-			return record;
-		}
-
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), record.getGroupId(), userId,
-			DDLRecord.class.getName(), recordVersion.getRecordVersionId(),
-			recordVersion, serviceContext);
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_PUBLISH) {
+
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				user.getCompanyId(), record.getGroupId(), userId,
+				DDLRecord.class.getName(), recordVersion.getRecordVersionId(),
+				recordVersion, serviceContext);
+		}
 
 		return record;
 	}

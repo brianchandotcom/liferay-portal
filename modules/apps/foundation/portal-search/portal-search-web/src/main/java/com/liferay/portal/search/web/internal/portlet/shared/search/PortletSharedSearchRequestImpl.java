@@ -153,8 +153,9 @@ public class PortletSharedSearchRequestImpl
 
 		Stream<Optional<SearchSettingsContributor>>
 			searchSettingsContributorOptionalsStream = portletsStream.map(
-				portlet -> getSearchSettingsContributor(
-					portlet, themeDisplay, renderRequest));
+				portlet ->
+					getSearchSettingsContributor(
+						portlet, themeDisplay, renderRequest));
 
 		searchSettingsContributorOptionalsStream.forEach(
 			searchSettingsContributorOptional ->
@@ -171,8 +172,8 @@ public class PortletSharedSearchRequestImpl
 			() -> buildSearchContext(themeDisplay);
 
 		SearchContainerBuilder searchContainerBuilder =
-			searchSettings -> buildSearchContainer(
-				searchSettings, renderRequest);
+			searchSettings ->
+				buildSearchContainer(searchSettings, renderRequest);
 
 		SearchRequest searchRequest = new SearchRequestImpl(
 			searchContextBuilder, searchContainerBuilder,
@@ -232,9 +233,10 @@ public class PortletSharedSearchRequestImpl
 
 		Optional<SearchSettingsContributor> searchSettingsContributorOptional =
 			portletSharedSearchContributorOptional.map(
-				portletSharedSearchContributor -> getSearchSettingsContributor(
-					portletSharedSearchContributor, portlet.getPortletId(),
-					themeDisplay, renderRequest));
+				portletSharedSearchContributor ->
+					getSearchSettingsContributor(
+						portletSharedSearchContributor, portlet.getPortletId(),
+						themeDisplay, renderRequest));
 
 		return searchSettingsContributorOptional;
 	}
@@ -247,10 +249,11 @@ public class PortletSharedSearchRequestImpl
 		Optional<PortletPreferences> portletPreferencesOptional =
 			getPortletPreferences(themeDisplay, portletId);
 
-		return searchSettings -> portletSharedSearchContributor.contribute(
-			new PortletSharedSearchSettingsImpl(
-				searchSettings, portletPreferencesOptional,
-				portletSharedRequestHelper, renderRequest));
+		return searchSettings ->
+			portletSharedSearchContributor.contribute(
+				new PortletSharedSearchSettingsImpl(
+					searchSettings, portletPreferencesOptional,
+					portletSharedRequestHelper, renderRequest));
 	}
 
 	protected ThemeDisplay getThemeDisplay(RenderRequest renderRequest) {

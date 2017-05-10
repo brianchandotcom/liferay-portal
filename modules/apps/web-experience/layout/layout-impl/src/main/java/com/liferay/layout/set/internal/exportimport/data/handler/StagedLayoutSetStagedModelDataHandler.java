@@ -69,6 +69,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -154,9 +155,12 @@ public class StagedLayoutSetStagedModelDataHandler
 			portletDataContext.getGroupId(),
 			portletDataContext.isPrivateLayout());
 
-		List<String> sourceLayoutUuids = layoutElements.stream().map(
-			(layoutElement) -> layoutElement.attributeValue("uuid")).collect(
-				Collectors.toList());
+		Stream<Element> layoutElementsStream = layoutElements.stream();
+
+		List<String> sourceLayoutUuids = layoutElementsStream.map(
+			(layoutElement) ->
+				layoutElement.attributeValue("uuid")).collect(
+					Collectors.toList());
 
 		if (_log.isDebugEnabled() && !sourceLayoutUuids.isEmpty()) {
 			_log.debug("Delete missing layouts");

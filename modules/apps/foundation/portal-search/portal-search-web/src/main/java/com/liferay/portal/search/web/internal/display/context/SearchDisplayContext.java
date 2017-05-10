@@ -454,8 +454,9 @@ public class SearchDisplayContext {
 		Stream<SearchFacet> searchFacetsStream = searchFacets.stream();
 
 		Stream<Optional<Facet>> facetOptionalsStream = searchFacetsStream.map(
-			searchFacet -> createFacet(
-				searchFacet, companyId, searchSettings.getSearchContext()));
+			searchFacet ->
+				createFacet(
+					searchFacet, companyId, searchSettings.getSearchContext()));
 
 		facetOptionalsStream.forEach(
 			facetOptional -> facetOptional.ifPresent(searchSettings::addFacet));

@@ -49,9 +49,10 @@ public class KnowledgeBaseOSGiCommands {
 			_resourcePermissionLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> dynamicQuery.add(
-				RestrictionsFactoryUtil.eq(
-					"name", AdminPermission.RESOURCE_NAME)));
+			dynamicQuery ->
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.eq(
+						"name", AdminPermission.RESOURCE_NAME)));
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(ResourcePermission resourcePermission) -> {

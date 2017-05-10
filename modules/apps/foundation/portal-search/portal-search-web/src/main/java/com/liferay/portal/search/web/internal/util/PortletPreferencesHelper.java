@@ -68,8 +68,9 @@ public class PortletPreferencesHelper {
 
 	protected Optional<String> getValue(String key) {
 		return _portletPreferencesOptional.flatMap(
-			portletPreferences -> SearchStringUtil.maybe(
-				portletPreferences.getValue(key, StringPool.BLANK)));
+			portletPreferences ->
+				SearchStringUtil.maybe(
+					portletPreferences.getValue(key, StringPool.BLANK)));
 	}
 
 	private final Optional<PortletPreferences> _portletPreferencesOptional;

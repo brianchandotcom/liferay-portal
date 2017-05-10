@@ -56,8 +56,8 @@ public class PostgreSQLTransformerLogic extends BaseSQLTransformerLogic {
 	}
 
 	private Function<String, String> _getNullDateFunction() {
-		return (String sql) -> StringUtil.replace(
-			sql, "[$NULL_DATE$]", "CAST(NULL AS TIMESTAMP)");
+		return (String sql) ->
+			StringUtil.replace(sql, "[$NULL_DATE$]", "CAST(NULL AS TIMESTAMP)");
 	}
 
 	private static final Pattern _negativeComparisonPattern = Pattern.compile(

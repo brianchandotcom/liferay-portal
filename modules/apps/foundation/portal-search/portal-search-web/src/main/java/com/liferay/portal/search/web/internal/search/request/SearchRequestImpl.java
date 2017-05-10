@@ -148,8 +148,8 @@ public class SearchRequestImpl implements SearchRequest {
 			searchContext);
 
 		_searchSettingsContributors.forEach(
-			searchContributor -> searchContributor.contribute(
-				searchSettingsImpl));
+			searchContributor ->
+				searchContributor.contribute(searchSettingsImpl));
 
 		return searchSettingsImpl;
 	}

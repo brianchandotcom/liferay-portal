@@ -1,7 +1,6 @@
 <definition component-name="portal-authentication-ee">
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
-	<property name="app.server.bundles.size" value="1" />
 	<property name="databases.size" value="1" />
 	<property name="portlet.plugins.includes" value="saml-portlet" />
 	<property name="test.run.environment" value="EE" />
@@ -14,13 +13,22 @@
 			<var name="rememberMeChecked" value="false" />
 		</execute>
 
-		<execute macro="SAML#configureLiferaySAMLAsIdPAndLiferaySAMLasSP" />
+		<execute macro="SAML#configureLiferaySAMLAsIdP">
+			<var name="samlEntityID" value="samlidp" />
+		</execute>
+
+		<execute macro="SAML#configureLiferaySAMLAsSP">
+			<var name="samlEntityID" value="samlsp" />
+			<var name="spURL" value="http://www.able.com:9080/" />
+		</execute>
 
 		<execute macro="User#logoutPG" />
 	</set-up>
 
 	<command name="ViewIdPInitiatedSSO" priority="4">
 		<description message="Sign into portal by executing a IdP initiated SSO login. After a successful login, the IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions." />
+
+		<property name="app.server.bundles.size" value="1" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
@@ -67,6 +75,8 @@
 	<command name="ViewIdPInitiatedSSOWithRememberMeChecked" priority="4">
 		<description message="LPS-50220 - IdP initiated SSO login should work regardless if 'Remember Me' is checked or not." />
 
+		<property name="app.server.bundles.size" value="1" />
+
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<!-- Verify SP is logged in -->
@@ -112,6 +122,7 @@
 	<command name="ViewSingleLogoutHTTPPostBindingInConsole" priority="4">
 		<description message="LPS-49666 - SAML Single Logout should support HTTP-POST binding." />
 
+		<property name="app.server.bundles.size" value="1" />
 		<property name="test.name.skip.portal.instance" value="CPSAML#ViewSingleLogoutHTTPPostBindingInConsole" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
@@ -148,6 +159,67 @@
 		</execute>
 
 		<execute function="AssertConsoleTextPresent" value1="Validation of protocol message signature succeeded, message type: {urn:oasis:names:tc:SAML:2.0:protocol}LogoutRequest" />
+	</command>
+
+	<command name="ViewSingleLogoutWithMultipleSPs" priority="4">
+		<property name="app.server.bundles.size" value="2" />
+
+		<execute macro="SAML#configureLiferaySAMLAsSP">
+			<var name="samlEntityID" value="samlsp2" />
+			<var name="spURL" value="http://www.baker.com:10080/" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="SAML#executeSPInitiatedSSO">
+			<var name="password" value="test" />
+			<var name="specificURL" value="http://www.able.com:9080" />
+			<var name="spURL" value="http://www.able.com:9080/" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="User#viewLoggedInPG">
+			<var name="userFirstName" value="Test" />
+			<var name="userLastName" value="Test" />
+		</execute>
+
+		<!-- Verify IdP is logged in -->
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="User#viewLoggedInPG">
+			<var name="userFirstName" value="Test" />
+			<var name="userLastName" value="Test" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://www.baker.com:10080" />
+		</execute>
+
+		<execute macro="Navigator#gotoLoginPage" />
+
+		<execute macro="User#viewLoggedInPG">
+			<var name="userFirstName" value="Test" />
+			<var name="userLastName" value="Test" />
+		</execute>
+
+		<execute macro="User#logoutPG">
+			<var name="specificURL" value="http://www.able.com:9080" />
+		</execute>
+
+		<execute macro="User#viewLoggedOutPG" />
+
+		<!-- Verify IdP is also logged out -->
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="User#viewLoggedOutPG" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://www.baker.com:10080" />
+		</execute>
+
+		<execute macro="User#viewLoggedOutPG" />
 	</command>
 
 	<command name="ViewSPInitiatedSSO" priority="4">

@@ -54,8 +54,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.trash.model.impl.TrashVersionImpl}
  * @generated
  */
+@Deprecated
 public class TrashVersionPersistenceTest {
 	@ClassRule
 	@Rule

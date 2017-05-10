@@ -315,6 +315,7 @@
 		<column name="facetable" type="boolean" />
 		<column name="required" type="boolean" />
 		<column name="skuContributor" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -359,6 +360,7 @@
 		<column localized="true" name="title" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="priority" type="int" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -399,6 +401,7 @@
 		<column name="name" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column name="priority" type="int" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 

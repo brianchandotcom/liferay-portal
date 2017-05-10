@@ -287,6 +287,46 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
+(??)	<entity local-service="true" name="CPOptionCategory" remote-service="true" uuid="true">
+(??)
+(??)		<!-- PK fields -->
+(??)
+(??)		<column name="CPOptionCategoryId" primary="true" type="long" />
+(??)
+(??)		<!-- Group instance -->
+(??)
+(??)		<column name="groupId" type="long" />
+(??)
+(??)		<!-- Audit fields -->
+(??)
+(??)		<column name="companyId" type="long" />
+(??)		<column name="userId" type="long" />
+(??)		<column name="userName" type="String" />
+(??)		<column name="createDate" type="Date" />
+(??)		<column name="modifiedDate" type="Date" />
+(??)
+(??)		<!-- Other fields -->
+(??)
+(??)		<column name="name" type="String" />
+(??)		<column localized="true" name="title" type="String" />
+(??)		<column localized="true" name="description" type="String" />
+(??)		<column name="priority" type="int" />
+(??)
+(??)		<!-- Order -->
+(??)
+(??)		<order by="desc">
+(??)			<order-column name="title" />
+(??)		</order>
+(??)
+(??)		<!-- Finder methods -->
+(??)
+(??)		<finder name="GroupId" return-type="Collection">
+(??)			<finder-column name="groupId" />
+(??)		</finder>
+(??)		<finder name="CompanyId" return-type="Collection">
+(??)			<finder-column name="companyId" />
+(??)		</finder>
+(??)	</entity>
 	<entity local-service="true" name="CPOptionValue" remote-service="true"  uuid="true">
 
 		<!-- PK fields -->

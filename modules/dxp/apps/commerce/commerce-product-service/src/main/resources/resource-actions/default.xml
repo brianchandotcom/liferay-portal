@@ -54,10 +54,10 @@
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>UPDATE_COMMERCE_PRODUCT_INSTANCE</action-key>
-(??)			</guest-unsupported>
-(??)		</permissions>
-(??)	</model-resource>
-(?	<model-resource>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
 		<model-name>com.liferay.commerce.product.model.CPOption</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionsPortlet</portlet-name>

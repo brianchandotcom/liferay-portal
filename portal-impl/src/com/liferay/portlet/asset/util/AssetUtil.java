@@ -23,6 +23,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.asset.kernel.model.NullClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetCategoryPropertyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
@@ -587,9 +588,13 @@ public class AssetUtil {
 			ClassTypeReader classTypeReader =
 				assetRendererFactory.getClassTypeReader();
 
-			List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
-				themeDisplay.getLocale());
+			List<ClassType> classTypes = Collections.emptyList();
+
+			if (!(classTypeReader instanceof NullClassTypeReader)) {
+				classTypes = classTypeReader.getAvailableClassTypes(
+					PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
+					themeDisplay.getLocale());
+			}
 
 			if (classTypes.isEmpty()) {
 				PortletURL addPortletURL = getAddPortletURL(

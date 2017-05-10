@@ -107,7 +107,7 @@
 
 		<!-- Order -->
 
-		<order by="desc">
+		<order by="asc">
 			<order-column name="priority" />
 		</order>
 
@@ -158,7 +158,7 @@
 
 		<!-- Order -->
 
-		<order by="desc">
+		<order by="asc">
 			<order-column name="priority" />
 		</order>
 

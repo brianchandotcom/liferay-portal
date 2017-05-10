@@ -58,6 +58,8 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpOptionDisplayContext.getDDMFormFiel
 	</aui:select>
 
 	<aui:input name="facetable" />
+
 	<aui:input name="required" />
+
 	<aui:input name="skuContributor" />
 </aui:fieldset>

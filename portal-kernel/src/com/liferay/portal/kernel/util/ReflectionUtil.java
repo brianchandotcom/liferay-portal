@@ -21,6 +21,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -201,7 +202,7 @@ public class ReflectionUtil {
 		Set<Method> visibleMethods = new HashSet<>(
 			Arrays.asList(clazz.getMethods()));
 
-		visibleMethods.addAll(Arrays.asList(clazz.getDeclaredMethods()));
+		Collections.addAll(visibleMethods, clazz.getDeclaredMethods());
 
 		while ((clazz = clazz.getSuperclass()) != null) {
 			for (Method method : clazz.getDeclaredMethods()) {

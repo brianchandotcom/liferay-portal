@@ -26,6 +26,7 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -136,7 +137,7 @@ public class SpringJSONWebServiceScannerStrategy
 				}
 			}
 			else {
-				queue.addAll(Arrays.asList(clazz.getInterfaces()));
+				Collections.addAll(queue, clazz.getInterfaces());
 
 				superClass = clazz.getSuperclass();
 

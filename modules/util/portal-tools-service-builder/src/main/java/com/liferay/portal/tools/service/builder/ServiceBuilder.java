@@ -3002,7 +3002,7 @@ public class ServiceBuilder {
 
 		JavaSource javaSource = javaClass.getSource();
 
-		imports.addAll(Arrays.asList(javaSource.getImports()));
+		Collections.addAll(imports, javaSource.getImports());
 
 		JavaMethod[] methods = _getMethods(javaClass);
 
@@ -3020,7 +3020,7 @@ public class ServiceBuilder {
 
 			JavaSource parentJavaSource = parentJavaClass.getSource();
 
-			imports.addAll(Arrays.asList(parentJavaSource.getImports()));
+			Collections.addAll(imports, parentJavaSource.getImports());
 
 			methods = _mergeMethods(
 				methods, parentJavaClass.getMethods(), true);

@@ -29,7 +29,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Path;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -161,7 +161,9 @@ public class UpgradeClient {
 
 		commands.add("-cp");
 		commands.add(_getClassPath());
-		commands.addAll(Arrays.asList(_jvmOpts.split(" ")));
+
+		Collections.addAll(commands, _jvmOpts.split(" "));
+
 		commands.add("-Dexternal-properties=portal-upgrade.properties");
 		commands.add(
 			"-Dserver.detector.server.id=" +

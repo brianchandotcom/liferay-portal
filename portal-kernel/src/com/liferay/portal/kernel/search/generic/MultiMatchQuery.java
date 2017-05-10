@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.search.BaseQueryImpl;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -48,7 +48,7 @@ public class MultiMatchQuery extends BaseQueryImpl {
 	}
 
 	public void addFields(String... fields) {
-		_fields.addAll(Arrays.asList(fields));
+		Collections.addAll(_fields, fields);
 	}
 
 	public String getAnalyzer() {

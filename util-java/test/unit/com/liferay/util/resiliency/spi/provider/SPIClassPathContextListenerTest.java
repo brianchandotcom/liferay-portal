@@ -45,7 +45,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -449,7 +449,8 @@ public class SPIClassPathContextListenerTest {
 					file.delete();
 				}
 				else {
-					fileQueue.addAll(Arrays.asList(files));
+					Collections.addAll(fileQueue, files);
+
 					fileQueue.add(file);
 				}
 			}

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -43,7 +42,8 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		_availableIndexes.addAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+		Collections.addAll(
+			_availableIndexes, new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
 
 		Collections.shuffle(_availableIndexes);
 	}

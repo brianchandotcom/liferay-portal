@@ -37,7 +37,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -381,12 +381,12 @@ public class LiferaySeleniumHelper {
 		baseDirNames.add(PropsValues.TEST_BASE_DIR_NAME);
 
 		if (Validator.isNotNull(PropsValues.TEST_INCLUDE_DIR_NAMES)) {
-			baseDirNames.addAll(
-				Arrays.asList(PropsValues.TEST_INCLUDE_DIR_NAMES));
+			Collections.addAll(
+				baseDirNames, PropsValues.TEST_INCLUDE_DIR_NAMES);
 		}
 
 		if (Validator.isNotNull(PropsValues.TEST_SUBREPO_DIRS)) {
-			baseDirNames.addAll(Arrays.asList(PropsValues.TEST_SUBREPO_DIRS));
+			Collections.addAll(baseDirNames, PropsValues.TEST_SUBREPO_DIRS);
 		}
 
 		for (String baseDirName : baseDirNames) {

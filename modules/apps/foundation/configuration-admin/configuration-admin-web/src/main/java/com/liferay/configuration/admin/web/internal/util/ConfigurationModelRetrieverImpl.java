@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -196,11 +195,11 @@ public class ConfigurationModelRetrieverImpl
 		List<String> pids = new ArrayList<>();
 
 		if (factory) {
-			pids.addAll(
-				Arrays.asList(extendedMetaTypeInformation.getFactoryPids()));
+			Collections.addAll(
+				pids, extendedMetaTypeInformation.getFactoryPids());
 		}
 		else {
-			pids.addAll(Arrays.asList(extendedMetaTypeInformation.getPids()));
+			Collections.addAll(pids, extendedMetaTypeInformation.getPids());
 		}
 
 		for (String pid : pids) {

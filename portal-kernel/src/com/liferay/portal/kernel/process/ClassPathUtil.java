@@ -42,6 +42,7 @@ import java.net.URLClassLoader;
 import java.net.URLConnection;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -78,7 +79,7 @@ public class ClassPathUtil {
 			if (classLoader instanceof URLClassLoader) {
 				URLClassLoader urlClassLoader = (URLClassLoader)classLoader;
 
-				urls.addAll(Arrays.asList(urlClassLoader.getURLs()));
+				Collections.addAll(urls, urlClassLoader.getURLs());
 			}
 
 			classLoader = classLoader.getParent();

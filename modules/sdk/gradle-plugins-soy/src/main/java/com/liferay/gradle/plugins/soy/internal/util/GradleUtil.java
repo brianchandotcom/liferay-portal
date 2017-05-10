@@ -21,7 +21,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -47,7 +47,7 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 			urls.add(uri.toURL());
 		}
 
-		urls.addAll(Arrays.asList(contextURLClassLoader.getURLs()));
+		Collections.addAll(urls, contextURLClassLoader.getURLs());
 
 		try (URLClassLoader urlClassLoader = new URLClassLoader(
 				urls.toArray(new URL[urls.size()]), null)) {

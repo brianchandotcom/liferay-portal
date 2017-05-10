@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -269,13 +270,13 @@ public class NodeExecutor {
 		String hosts = System.getProperty("http.nonProxyHosts");
 
 		if (Validator.isNotNull(hosts)) {
-			nonProxyHosts.addAll(Arrays.asList(hosts.split("\\|")));
+			Collections.addAll(nonProxyHosts, hosts.split("\\|"));
 		}
 
 		hosts = System.getProperty("https.nonProxyHosts");
 
 		if (Validator.isNotNull(hosts)) {
-			nonProxyHosts.addAll(Arrays.asList(hosts.split("\\|")));
+			Collections.addAll(nonProxyHosts, hosts.split("\\|"));
 		}
 
 		if (nonProxyHosts.isEmpty()) {

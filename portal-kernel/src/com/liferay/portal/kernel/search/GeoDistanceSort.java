@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class GeoDistanceSort extends Sort {
 	}
 
 	public void addGeoHash(String... geoHashes) {
-		_geoHashes.addAll(Arrays.asList(geoHashes));
+		Collections.addAll(_geoHashes, geoHashes);
 	}
 
 	public void addGeoLocationPoint(GeoLocationPoint geoLocationPoint) {
@@ -43,7 +42,7 @@ public class GeoDistanceSort extends Sort {
 	}
 
 	public void addGeoLocationPoints(GeoLocationPoint... geoLocationPoints) {
-		_geoLocationPoints.addAll(Arrays.asList(geoLocationPoints));
+		Collections.addAll(_geoLocationPoints, geoLocationPoints);
 	}
 
 	public List<String> getGeoHashes() {

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -69,7 +69,7 @@ public class Query implements Serializable {
 		}
 
 		if (ArrayUtil.isNotEmpty(arguments)) {
-			_arguments.addAll(Arrays.asList(arguments));
+			Collections.addAll(_arguments, arguments);
 		}
 	}
 

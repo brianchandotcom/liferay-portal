@@ -30,7 +30,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
@@ -509,7 +509,8 @@ public class ProcessUtilTest {
 		argumentsList.add("-cp");
 		argumentsList.add(_CLASS_PATH);
 		argumentsList.add(clazz.getName());
-		argumentsList.addAll(Arrays.asList(arguments));
+
+		Collections.addAll(argumentsList, arguments);
 
 		return argumentsList.toArray(new String[argumentsList.size()]);
 	}

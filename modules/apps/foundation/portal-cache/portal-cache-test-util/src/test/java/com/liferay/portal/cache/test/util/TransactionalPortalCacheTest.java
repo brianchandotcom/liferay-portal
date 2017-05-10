@@ -39,7 +39,7 @@ import com.liferay.registry.RegistryUtil;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +68,8 @@ public class TransactionalPortalCacheTest {
 					TransactionalPortalCacheHelper.class;
 
 				assertClasses.add(clazz);
-				assertClasses.addAll(Arrays.asList(clazz.getDeclaredClasses()));
+
+				Collections.addAll(assertClasses, clazz.getDeclaredClasses());
 
 				TransactionLifecycleListener transactionLifecycleListener =
 					TransactionalPortalCacheHelper.

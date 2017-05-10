@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Set;
@@ -41,7 +40,7 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 			throw new IllegalArgumentException("Bundles are empty");
 		}
 
-		_bundles.addAll(Arrays.asList(bundles));
+		Collections.addAll(_bundles, bundles);
 	}
 
 	public void addBundle(Bundle bundle) {

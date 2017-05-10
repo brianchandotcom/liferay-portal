@@ -171,7 +171,7 @@ public class CounterLocalServiceTest {
 		List<Long> ids = new ArrayList<>(total);
 
 		for (Future<Long[]> futures : futuresList) {
-			ids.addAll(Arrays.asList(futures.get()));
+			Collections.addAll(ids, futures.get());
 		}
 
 		Assert.assertEquals(ids.toString(), total, ids.size());

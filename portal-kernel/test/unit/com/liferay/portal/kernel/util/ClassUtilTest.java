@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import java.io.StringReader;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -84,7 +84,8 @@ public class ClassUtilTest {
 		Set<String> expectedClassNames = new HashSet<>();
 
 		expectedClassNames.add(expectedAnnotationClassName);
-		expectedClassNames.addAll(Arrays.asList(arrayParameterClassNames));
+
+		Collections.addAll(expectedClassNames, arrayParameterClassNames);
 
 		Assert.assertEquals(expectedClassNames, actualClassNames);
 	}

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.query.QueryVisitor;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -49,7 +48,7 @@ public class MoreLikeThisQuery extends BaseQueryImpl {
 	}
 
 	public void addDocumentUIDs(String... documentUIDs) {
-		_documentUIDs.addAll(Arrays.asList(documentUIDs));
+		Collections.addAll(_documentUIDs, documentUIDs);
 	}
 
 	public void addField(String field) {
@@ -61,7 +60,7 @@ public class MoreLikeThisQuery extends BaseQueryImpl {
 	}
 
 	public void addFields(String... fields) {
-		_fields.addAll(Arrays.asList(fields));
+		Collections.addAll(_fields, fields);
 	}
 
 	public void addStopWord(String stopWord) {
@@ -73,7 +72,7 @@ public class MoreLikeThisQuery extends BaseQueryImpl {
 	}
 
 	public void addStopWords(String... stopWords) {
-		_stopWords.addAll(Arrays.asList(stopWords));
+		Collections.addAll(_stopWords, stopWords);
 	}
 
 	public String getAnalyzer() {

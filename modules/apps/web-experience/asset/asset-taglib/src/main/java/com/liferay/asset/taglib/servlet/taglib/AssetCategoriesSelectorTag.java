@@ -87,6 +87,10 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		_showRequiredLabel = showRequiredLabel;
 	}
 
+	public void setSingleSelect(boolean singleSelect) {
+		_singleSelect = singleSelect;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_categoryIds = null;
@@ -97,6 +101,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		_hiddenInput = "assetCategoryIds";
 		_ignoreRequestValue = false;
 		_showRequiredLabel = true;
+		_singleSelect = false;
 	}
 
 	protected List<String[]> getCategoryIdsTitles() {
@@ -275,6 +280,9 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			"liferay-asset:asset-categories-selector:showRequiredLabel",
 			String.valueOf(_showRequiredLabel));
 		request.setAttribute(
+			"liferay-asset:asset-categories-selector:singleSelect",
+			String.valueOf(_singleSelect));
+		request.setAttribute(
 			"liferay-asset:asset-categories-selector:vocabularies",
 			getVocabularies());
 	}
@@ -289,5 +297,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	private String _hiddenInput = "assetCategoryIds";
 	private boolean _ignoreRequestValue;
 	private boolean _showRequiredLabel = true;
+	private boolean _singleSelect;
 
 }

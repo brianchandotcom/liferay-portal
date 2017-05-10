@@ -26,6 +26,7 @@ String eventName = (String)request.getAttribute("liferay-asset:asset-categories-
 String hiddenInput = (String)request.getAttribute("liferay-asset:asset-categories-selector:hiddenInput");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-categories-selector:portletURL");
 boolean showRequiredLabel = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-categories-selector:showRequiredLabel"), true);
+boolean singleSelect = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-categories-selector:singleSelect"));
 List<AssetVocabulary> vocabularies = (List<AssetVocabulary>)request.getAttribute("liferay-asset:asset-categories-selector:vocabularies");
 
 int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES));
@@ -125,6 +126,7 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 						portletURL: '<%= portletURL.toString() %>',
 					</c:if>
 
+					singleSelect: <%= singleSelect %>,
 					vocabularyIds: '<%= ListUtil.toString(vocabularies, "vocabularyId") %>'
 				}
 			).render();

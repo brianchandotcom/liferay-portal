@@ -114,11 +114,17 @@ AUI.add(
 
 						var translationManager = instance.get(STR_TRANSLATION_MANAGER);
 
+						translationManager.on('editingLocaleChange', instance._afterEditingLocaleChange.bind(instance));
+
 						var descriptionEditor = CKEDITOR.instances[instance.ns('descriptionEditor')];
+
+						descriptionEditor.on('change', A.bind('_onDescriptionEditorChange', instance));
+
 						var nameEditor = CKEDITOR.instances[instance.ns('nameEditor')];
 
+						nameEditor.on('change', A.bind('_onNameEditorChange', instance));
+
 						instance._eventHandlers = [
-							descriptionEditor.on('change', A.bind('_onDescriptionEditorChange', instance)),
 							formBuilder._layoutBuilder.after('layout-builder:moveEnd', A.bind(instance._afterFormBuilderLayoutBuilderMoveEnd, instance)),
 							formBuilder._layoutBuilder.after('layout-builder:moveStart', A.bind(instance._afterFormBuilderLayoutBuilderMoveStart, instance)),
 							instance.after('autosave', instance._afterAutosave),
@@ -129,9 +135,7 @@ AUI.add(
 							instance.one('#save').on('click', A.bind('_onSaveButtonClick', instance)),
 							instance.one('#showForm').on('click', A.bind('_onFormButtonClick', instance)),
 							instance.one('#showRules').on('click', A.bind('_onRulesButtonClick', instance)),
-							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance)),
-							nameEditor.on('change', A.bind('_onNameEditorChange', instance)),
-							translationManager.on('editingLocaleChange', instance._afterEditingLocaleChange.bind(instance))
+							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						];
 
 						var autosaveInterval = Settings.autosaveInterval;

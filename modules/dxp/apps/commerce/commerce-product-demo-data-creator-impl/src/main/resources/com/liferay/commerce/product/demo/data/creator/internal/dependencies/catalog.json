@@ -1,0 +1,632 @@
+[
+	{
+		"baseSKU": "TNTERS",
+		"categories": [
+			{
+				"title": "Jewellery"
+			}
+		],
+		"description": "Boldly shaped triple hoop in gold-pleated brass. It is a smaller version of the Tentacle earring of WOMEN AW16 Show, they suit a perfect size.",
+		"manufacturers": [
+			{
+				"title": "Cartier"
+			}
+		],
+		"name": "Tentacle Earring S",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 1,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Gold",
+						"priority": 1,
+						"title": "Gold"
+					},
+					{
+						"name": "Rose Gold",
+						"priority": 2,
+						"title": "Rose Gold"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"title": "Tentacle Earring S"
+	},
+	{
+		"baseSKU": "LHLMCC",
+		"categories": [
+			{
+				"title": "Shoes"
+			}
+		],
+		"description": "Slip on loafer in yellow patent calfskin & brown grained deerskin leather with contrasting white low heel.",
+		"manufacturers": [
+			{
+				"title": "LOEWE"
+			}
+		],
+		"name": "Low Heeled Moccasin",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Size",
+				"priority": 1,
+				"skuContributor": true,
+				"title": "Size",
+				"values": [
+					{
+						"name": "35",
+						"priority": 1,
+						"title": "35"
+					},
+					{
+						"name": "36",
+						"priority": 2,
+						"title": "36"
+					},
+					{
+						"name": "37",
+						"priority": 3,
+						"title": "37"
+					},
+					{
+						"name": "38",
+						"priority": 4,
+						"title": "38"
+					},
+					{
+						"name": "39",
+						"priority": 5,
+						"title": "39"
+					},
+					{
+						"name": "40",
+						"priority": 6,
+						"title": "40"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 2,
+				"skuContributor": false,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Yellow",
+						"priority": 1,
+						"title": "Yellow"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"title": "Low Heeled Moccasin"
+	},
+	{
+		"baseSKU": "DRSSJP",
+		"categories": [
+			{
+				"title": "Clothes"
+			}
+		],
+		"description": "Long halter neck dress in Paula's Ibiza print viscose with contrasting knitwear top.",
+		"manufacturers": [
+			{
+				"title": "Valentino"
+			}
+		],
+		"name": "Dress Julia Paula Khaki",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Size",
+				"priority": 1,
+				"skuContributor": true,
+				"title": "Size",
+				"values": [
+					{
+						"name": "XXS",
+						"priority": 1,
+						"title": "XXS"
+					},
+					{
+						"name": "XS",
+						"priority": 2,
+						"title": "XS"
+					},
+					{
+						"name": "S",
+						"priority": 3,
+						"title": "S"
+					},
+					{
+						"name": "M",
+						"priority": 4,
+						"title": "M"
+					},
+					{
+						"name": "L",
+						"priority": 5,
+						"title": "L"
+					},
+					{
+						"name": "XL",
+						"priority": 6,
+						"title": "XL"
+					},
+					{
+						"name": "XXL",
+						"priority": 7,
+						"title": "XXL"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 2,
+				"skuContributor": false,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Khaki Green/Yellow",
+						"priority": 1,
+						"title": "Khaki Green/Yellow"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"title": "Dress Julia Paula"
+	},
+	{
+		"baseSKU": "SKRTCS",
+		"categories": [
+			{
+				"title": "Stitches"
+			}
+		],
+		"description": "Mini skirt in washed navy napa lambskin leather with off white contrast crochet stitching.",
+		"manufacturers": [
+			{
+				"title": "Versace"
+			}
+		],
+		"name": "Skirt Crochet Stitching",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Size",
+				"priority": 1,
+				"skuContributor": true,
+				"title": "Size",
+				"values": [
+					{
+						"name": "32",
+						"priority": 1,
+						"title": "32"
+					},
+					{
+						"name": "34",
+						"priority": 2,
+						"title": "34"
+					},
+					{
+						"name": "36",
+						"priority": 3,
+						"title": "36"
+					},
+					{
+						"name": "38",
+						"priority": 4,
+						"title": "38"
+					},
+					{
+						"name": "40",
+						"priority": 5,
+						"title": "40"
+					},
+					{
+						"name": "42",
+						"priority": 6,
+						"title": "42"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 2,
+				"skuContributor": false,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Navy Blue",
+						"priority": 1,
+						"title": "Navy Blue"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"title": "Skirt Crochet Stitching"
+	},
+	{
+		"baseSKU": "ESPDRCS",
+		"categories": [
+			{
+				"title": "Stitches"
+			}
+		],
+		"description": "Espadrille in nappa calfskin leather with contrast top stitching, rubber sole & embossed Anagram.",
+		"manufacturers": [
+			{
+				"title": "Hogan"
+			}
+		],
+		"name": "Espadrille Contrast Stitching",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Size",
+				"priority": 1,
+				"skuContributor": true,
+				"title": "Size",
+				"values": [
+					{
+						"name": "38",
+						"priority": 1,
+						"title": "38"
+					},
+					{
+						"name": "39",
+						"priority": 2,
+						"title": "39"
+					},
+					{
+						"name": "40",
+						"priority": 3,
+						"title": "40"
+					},
+					{
+						"name": "41",
+						"priority": 4,
+						"title": "41"
+					},
+					{
+						"name": "42",
+						"priority": 5,
+						"title": "42"
+					},
+					{
+						"name": "43",
+						"priority": 6,
+						"title": "43"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 2,
+				"skuContributor": false,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Tan",
+						"priority": 1,
+						"title": "Tan"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"title": "Espadrille Contrast Stitching"
+	},
+	{
+		"baseSKU": "ESPDERPF",
+		"categories": [
+			{
+				"title": "Shoes"
+			}
+		],
+		"description": "Espadrilles in Paula's Ibiza print canvas & contrasting tan napa calfskin leather.",
+		"manufacturers": [
+			{
+				"title": "LOEWE"
+			}
+		],
+		"name": "Espadrille Paula Flowers",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Size",
+				"priority": 1,
+				"skuContributor": true,
+				"title": "Size",
+				"values": [
+					{
+						"name": "34",
+						"priority": 1,
+						"title": "34"
+					},
+					{
+						"name": "35",
+						"priority": 2,
+						"title": "35"
+					},
+					{
+						"name": "36",
+						"priority": 3,
+						"title": "36"
+					},
+					{
+						"name": "37",
+						"priority": 4,
+						"title": "37"
+					},
+					{
+						"name": "38",
+						"priority": 5,
+						"title": "38"
+					},
+					{
+						"name": "39",
+						"priority": 6,
+						"title": "39"
+					},
+					{
+						"name": "40",
+						"priority": 7,
+						"title": "40"
+					},
+					{
+						"name": "41",
+						"priority": 8,
+						"title": "41"
+					},
+					{
+						"name": "42",
+						"priority": 9,
+						"title": "42"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 2,
+				"skuContributor": false,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Blue/Multicolour",
+						"priority": 1,
+						"title": "Blue/Multicolour"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"title": "Espadrille Paula Flowers"
+	},
+	{
+		"baseSKU": "MNGBNG",
+		"categories": [
+			{
+				"title": "Jewellery"
+			}
+		],
+		"description": "Monogram bangle made of brass with gold or palladium plate. Size S: 5,5cm diameter Size M: 6,5cm diameter.",
+		"manufacturers": [
+			{
+				"title": "Tiffany"
+			}
+		],
+		"name": "Monogram Bangle",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Size",
+				"priority": 1,
+				"skuContributor": true,
+				"title": "Size",
+				"values": [
+					{
+						"name": "S",
+						"priority": 1,
+						"title": "S"
+					},
+					{
+						"name": "M",
+						"priority": 2,
+						"title": "M"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 2,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Gold",
+						"priority": 1,
+						"title": "Gold"
+					},
+					{
+						"name": "Palladium",
+						"priority": 2,
+						"title": "Palladium"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"title": "Monogram Bangle"
+	},
+	{
+		"baseSKU": "PBZSCRF",
+		"categories": [
+			{
+				"title": "Scarves & Shawls"
+			}
+		],
+		"description": "90X90 100% silk scarf featuring a colorful design and contrasting edges. The Paula´s Ibiza Collection will be available at the beginning of May.",
+		"manufacturers": [
+			{
+				"title": "D&G"
+			}
+		],
+		"name": "90X90 Paulas Ibiza Scarf",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 1,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Orange",
+						"priority": 1,
+						"title": "Orange"
+					},
+					{
+						"name": "Black",
+						"priority": 2,
+						"title": "Black"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"title": "90X90 Paulas Ibiza Scarf"
+	},
+	{
+		"baseSKU": "FMKTBG",
+		"categories": [
+			{
+				"title": "Bags"
+			}
+		],
+		"description": "The Flamenco Knot Bag is a softly structured shoulder bag where volume is created through precise cutting. It has a detailed drawstring to cinch the top and keep your belongings secure. Its spacious interior is lined in durable canvas and sized to hold daily essentials. Key characteristics: Soft, two-fold construction with T-bar profile and hand-painted edges; notched silhouette; interior with two flat pockets. Adjustable strap for the most comfortable length.",
+		"manufacturers": [
+			{
+				"title": "Michael Kors"
+			}
+		],
+		"name": "Flamenco Knot Bag",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 1,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Black",
+						"priority": 1,
+						"title": "Black"
+					},
+					{
+						"name": "Primary Red",
+						"priority": 2,
+						"title": "Primary Red"
+					},
+					{
+						"name": "Tan",
+						"priority": 3,
+						"title": "Tan"
+					},
+					{
+						"name": "Marine",
+						"priority": 4,
+						"title": "Marine"
+					},
+					{
+						"name": "Stone Blue",
+						"priority": 5,
+						"title": "Stone Blue"
+					},
+					{
+						"name": "Soft Pink",
+						"priority": 6,
+						"title": "Soft Pink"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"title": "Flamenco Knot Bag"
+	},
+	{
+		"baseSKU": "TRNSGL",
+		"categories": [
+			{
+				"title": "Accessories"
+			}
+		],
+		"description": "Gold metal inlaid along the frame and temples, adorn this ultrachic pair of sunglasses with a squared cat-eye silhouette.",
+		"manufacturers": [
+			{
+				"title": "Ray-Ban"
+			}
+		],
+		"name": "Torrenova Sunglasses",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 1,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Havana",
+						"priority": 1,
+						"title": "Havana"
+					},
+					{
+						"name": "Havana/Gold",
+						"priority": 2,
+						"title": "Havana/Gold"
+					},
+					{
+						"name": "Black",
+						"priority": 3,
+						"title": "Black"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"title": "Torrenova Sunglasses"
+	}
+]

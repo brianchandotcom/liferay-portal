@@ -17,6 +17,7 @@ package com.liferay.commerce.product.demo.data.creator.internal.util;
 import com.liferay.commerce.product.exception.NoSuchCPOptionException;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -25,11 +26,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -44,71 +46,63 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 
 	public void addCPOptions(
 			Locale locale, long userId, long groupId, long cpDefinitionId,
-			JSONArray options)
-		throws PortalException {
-
-		for (int i = 0; i < options.length(); i++) {
-			JSONObject option = options.getJSONObject(i);
-
-			String name = option.getString("name");
-			String title = option.getString("title");
-			String description = option.getString("description");
-			String ddmFormFieldTypeName = option.getString(
-				"ddmFormFieldTypeName");
-			int priority = option.getInt("priority");
-			boolean facetable = option.getBoolean("facetable");
-			boolean skuContributor = option.getBoolean("skuContributor");
-
-			Map<Locale, String> titleMap = new HashMap<>();
-			Map<Locale, String> descriptionMap = new HashMap<>();
-
-			titleMap.put(locale, title);
-			descriptionMap.put(locale, description);
-
-			CPOption cpOption = getCPOption(locale, userId, groupId, option);
-
-			long cpOptionId = cpOption.getCPOptionId();
-
-			CPDefinitionOptionRel cpDefinitionOptionRel =
-				_cpDefinitionOptionRelDemoDataCreatorHelper.
-					createCPDefinitionOptionRel(
-						userId, groupId, cpDefinitionId, cpOptionId, name,
-						titleMap, descriptionMap, ddmFormFieldTypeName,
-						priority, facetable, skuContributor);
-
-			long cpDefinitionOptionRelId =
-				cpDefinitionOptionRel.getCPDefinitionOptionRelId();
-
-			JSONArray values = option.getJSONArray("values");
-
-			_cpDefinitionOptionValueRelDemoDataCreatorHelper.
-				addCPDefinitionOptionValueRels(
-					locale, userId, groupId, cpDefinitionOptionRelId, values);
-		}
-	}
-
-	public CPOption createCPOption(
-			long userId, long groupId, String name,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, boolean facetable,
-			boolean skuContributor)
+			JSONArray cpOptionsJSONArray)
 		throws PortalException {
 
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
-		CPOption cpOption = _cpOptionLocalService.addCPOption(
-			name, titleMap, descriptionMap, ddmFormFieldTypeName, facetable,
-			false, skuContributor, serviceContext);
+		for (int i = 0; i < cpOptionsJSONArray.length(); i++) {
+			JSONObject cpOptionJSONObject = cpOptionsJSONArray.getJSONObject(i);
 
-		_cpOptionIds.add(cpOption.getCPOptionId());
+			String name = cpOptionJSONObject.getString("name");
+			String title = cpOptionJSONObject.getString("title");
+			String description = cpOptionJSONObject.getString("description");
+			String ddmFormFieldTypeName = cpOptionJSONObject.getString(
+				"ddmFormFieldTypeName");
+			int priority = cpOptionJSONObject.getInt("priority");
+			boolean facetable = cpOptionJSONObject.getBoolean("facetable");
+			boolean skuContributor = cpOptionJSONObject.getBoolean(
+				"skuContributor");
 
-		return cpOption;
+			Map<Locale, String> titleMap = Collections.singletonMap(
+				locale, title);
+			Map<Locale, String> descriptionMap = Collections.singletonMap(
+				locale, description);
+
+			CPOption cpOption = getCPOption(
+				locale, userId, groupId, cpOptionJSONObject);
+
+			long cpOptionId = cpOption.getCPOptionId();
+
+			CPDefinitionOptionRel cpDefinitionOptionRel =
+				_cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
+					cpDefinitionId, cpOptionId, name, titleMap, descriptionMap,
+					ddmFormFieldTypeName, priority, facetable, skuContributor,
+					false, false, serviceContext);
+
+			long cpDefinitionOptionRelId =
+				cpDefinitionOptionRel.getCPDefinitionOptionRelId();
+
+			JSONArray cpDefinitionOptionValueRelsJSONArray =
+				cpOptionJSONObject.getJSONArray("values");
+
+			_cpDefinitionOptionValueRelDemoDataCreatorHelper.
+				addCPDefinitionOptionValueRels(
+					locale, userId, groupId, cpDefinitionOptionRelId,
+					cpDefinitionOptionValueRelsJSONArray);
+		}
 	}
 
 	public void deleteCPOptions() throws PortalException {
-		for (long cpOptionId : _cpOptionIds) {
+		Set<Map.Entry<String, CPOption>> entrySet = _cpOptions.entrySet();
+
+		Iterator<Map.Entry<String, CPOption>> iterator = entrySet.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, CPOption> entry = iterator.next();
+
 			try {
-				_cpOptionLocalService.deleteCPOption(cpOptionId);
+				_cpOptionLocalService.deleteCPOption(entry.getValue());
 			}
 			catch (NoSuchCPOptionException nscpoe) {
 				if (_log.isWarnEnabled()) {
@@ -116,39 +110,40 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 				}
 			}
 
-			_cpOptionIds.remove(cpOptionId);
+			_cpOptions.remove(entry.getKey());
 		}
 	}
 
 	public CPOption getCPOption(
-			Locale locale, long userId, long groupId, JSONObject option)
+			Locale locale, long userId, long groupId,
+			JSONObject cpOptionJSONObject)
 		throws PortalException {
 
-		CPOption cpOption = null;
+		String name = cpOptionJSONObject.getString("name");
 
-		String name = option.getString("name");
-
-		cpOption = _cpOptions.get(name);
+		CPOption cpOption = _cpOptions.get(name);
 
 		if (cpOption != null) {
 			return cpOption;
 		}
 
-		String title = option.getString("title");
-		String description = option.getString("description");
-		String ddmFormFieldTypeName = option.getString("ddmFormFieldTypeName");
-		boolean facetable = option.getBoolean("facetable");
-		boolean skuContributor = option.getBoolean("skuContributor");
+		String title = cpOptionJSONObject.getString("title");
+		String description = cpOptionJSONObject.getString("description");
+		String ddmFormFieldTypeName = cpOptionJSONObject.getString(
+			"ddmFormFieldTypeName");
+		boolean facetable = cpOptionJSONObject.getBoolean("facetable");
+		boolean skuContributor = cpOptionJSONObject.getBoolean(
+			"skuContributor");
 
-		Map<Locale, String> titleMap = new HashMap<>();
-		Map<Locale, String> descriptionMap = new HashMap<>();
+		Map<Locale, String> titleMap = Collections.singletonMap(locale, title);
+		Map<Locale, String> descriptionMap = Collections.singletonMap(
+			locale, description);
 
-		titleMap.put(locale, title);
-		descriptionMap.put(locale, description);
+		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
-		cpOption = createCPOption(
-			userId, groupId, name, titleMap, descriptionMap,
-			ddmFormFieldTypeName, facetable, skuContributor);
+		cpOption = _cpOptionLocalService.addCPOption(
+			name, titleMap, descriptionMap, ddmFormFieldTypeName, facetable,
+			false, skuContributor, serviceContext);
 
 		_cpOptions.put(name, cpOption);
 
@@ -173,14 +168,12 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 		CPOptionDemoDataCreatorHelper.class);
 
 	@Reference
-	private CPDefinitionOptionRelDemoDataCreatorHelper
-		_cpDefinitionOptionRelDemoDataCreatorHelper;
+	private CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
 
 	@Reference
 	private CPDefinitionOptionValueRelDemoDataCreatorHelper
 		_cpDefinitionOptionValueRelDemoDataCreatorHelper;
-
-	private final List<Long> _cpOptionIds = new CopyOnWriteArrayList<>();
 
 	@Reference
 	private CPOptionLocalService _cpOptionLocalService;

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -36,35 +36,26 @@ public class CPDefinitionOptionValueRelDemoDataCreatorHelper
 
 	public void addCPDefinitionOptionValueRels(
 			Locale locale, long userId, long groupId,
-			long cpDefinitionOptionRelId, JSONArray values)
+			long cpDefinitionOptionRelId, JSONArray jsonArray)
 		throws PortalException {
 
-		for (int i = 0; i < values.length(); i++) {
-			JSONObject value = values.getJSONObject(i);
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			String name = value.getString("name");
-			String title = value.getString("title");
-			int priority = value.getInt("priority");
+			String name = jsonObject.getString("name");
+			String title = jsonObject.getString("title");
+			int priority = jsonObject.getInt("priority");
 
-			Map<Locale, String> titleMap = new HashMap<>();
+			Map<Locale, String> titleMap = Collections.singletonMap(
+				locale, title);
 
-			titleMap.put(locale, title);
+			ServiceContext serviceContext = getServiceContext(userId, groupId);
 
-			createCPDefinitionOptionValueRel(
-				userId, groupId, cpDefinitionOptionRelId, name, titleMap,
-				priority);
+			_cpDefinitionOptionValueRelLocalService.
+				addCPDefinitionOptionValueRel(
+					cpDefinitionOptionRelId, name, titleMap, priority,
+					serviceContext);
 		}
-	}
-
-	public void createCPDefinitionOptionValueRel(
-			long userId, long groupId, long cpDefinitionOptionRelId,
-			String name, Map<Locale, String> titleMap, int priority)
-		throws PortalException {
-
-		ServiceContext serviceContext = getServiceContext(userId, groupId);
-
-		_cpDefinitionOptionValueRelLocalService.addCPDefinitionOptionValueRel(
-			cpDefinitionOptionRelId, name, titleMap, priority, serviceContext);
 	}
 
 	@Reference

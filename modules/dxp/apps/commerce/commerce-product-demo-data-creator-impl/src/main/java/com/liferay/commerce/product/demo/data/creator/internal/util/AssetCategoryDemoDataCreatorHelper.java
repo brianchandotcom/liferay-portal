@@ -23,13 +23,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -51,19 +50,14 @@ public class AssetCategoryDemoDataCreatorHelper
 		return assetCategory;
 	}
 
-	public long[] getAllAssetCategoryIds(long[]... assetCategoryIds) {
-		return ArrayUtil.append(assetCategoryIds);
-	}
-
 	public AssetCategory getAssetCategory(
-			long userId, long groupId, long vocabularyId, JSONObject category)
+			long userId, long groupId, long vocabularyId,
+			JSONObject assetCategoryJSONObject)
 		throws PortalException {
 
-		AssetCategory assetCategory = null;
+		String title = assetCategoryJSONObject.getString("title");
 
-		String title = category.getString("title");
-
-		assetCategory = _assetCategories.get(title);
+		AssetCategory assetCategory = _assetCategories.get(title);
 
 		if (assetCategory != null) {
 			return assetCategory;
@@ -78,37 +72,32 @@ public class AssetCategoryDemoDataCreatorHelper
 	}
 
 	public long[] getAssetCategoryIds(
-			long userId, long groupId, long vocabularyId, JSONArray categories)
+			long userId, long groupId, long vocabularyId,
+			JSONArray assetCategoriesJSONArray)
 		throws PortalException {
 
 		List<Long> assetCategoryIds = new ArrayList<>();
 
-		for (int i = 0; i < categories.length(); i++) {
-			JSONObject category = categories.getJSONObject(i);
+		for (int i = 0; i < assetCategoriesJSONArray.length(); i++) {
+			JSONObject assetCategoryJSONObject =
+				assetCategoriesJSONArray.getJSONObject(i);
 
 			AssetCategory assetCategory = getAssetCategory(
-				userId, groupId, vocabularyId, category);
+				userId, groupId, vocabularyId, assetCategoryJSONObject);
 
-			long assetCategoryId = assetCategory.getCategoryId();
-
-			assetCategoryIds.add(i, assetCategoryId);
+			assetCategoryIds.add(i, assetCategory.getCategoryId());
 		}
 
 		return ArrayUtil.toLongArray(assetCategoryIds);
 	}
 
 	public void init() {
-		_assetCategories = new HashMap<>();
+		_assetCategories = new ConcurrentHashMap<>();
 	}
 
 	@Activate
 	protected void activate() throws PortalException {
 		init();
-	}
-
-	@Deactivate
-	protected void deactivate() throws PortalException {
-		_assetCategories = null;
 	}
 
 	private Map<String, AssetCategory> _assetCategories;

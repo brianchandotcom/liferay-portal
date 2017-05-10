@@ -14,22 +14,35 @@
 
 package com.liferay.commerce.product.demo.data.creator.internal.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class BaseCPDemoDataCreatorHelper {
+public abstract class BaseCPDemoDataCreatorHelper {
 
-	public ServiceContext getServiceContext(long userId, long groupId) {
+	public ServiceContext getServiceContext(long userId, long groupId)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setUserId(userId);
 		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setTimeZone(user.getTimeZone());
+		serviceContext.setUserId(user.getUserId());
 
 		return serviceContext;
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

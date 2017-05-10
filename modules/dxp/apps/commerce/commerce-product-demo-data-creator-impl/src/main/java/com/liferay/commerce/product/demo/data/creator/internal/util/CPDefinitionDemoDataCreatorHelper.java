@@ -18,28 +18,24 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.IOException;
-
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,7 +48,9 @@ public class CPDefinitionDemoDataCreatorHelper
 	extends BaseCPDemoDataCreatorHelper {
 
 	public void addCPDefinitions(long userId, long groupId, boolean buildSkus)
-		throws IOException, PortalException {
+		throws Exception {
+
+		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
 		AssetVocabulary commerceAssetVocabulary =
 			_assetVocabularyDemoDataCreatorHelper.createAssetVocabulary(
@@ -66,52 +64,54 @@ public class CPDefinitionDemoDataCreatorHelper
 		long manufacturersVocabularyId =
 			manufacturersAssetVocabulary.getVocabularyId();
 
-		JSONArray catalog = getCatalog();
+		JSONArray catalogJSONArray = getCatalogJSONArray();
 
-		for (int i = 0; i < catalog.length(); i++) {
-			JSONObject product = catalog.getJSONObject(i);
+		for (int i = 0; i < catalogJSONArray.length(); i++) {
+			JSONObject productJSONObject = catalogJSONArray.getJSONObject(i);
 
-			String baseSKU = product.getString("baseSKU");
-			String name = product.getString("name");
-			String title = product.getString("title");
-			String description = product.getString("description");
-			String productTypeName = product.getString("productTypeName");
+			String baseSKU = productJSONObject.getString("baseSKU");
+			String name = productJSONObject.getString("name");
+			String title = productJSONObject.getString("title");
+			String description = productJSONObject.getString("description");
+			String productTypeName = productJSONObject.getString(
+				"productTypeName");
 
-			Map<Locale, String> titleMap = new HashMap<>();
-			Map<Locale, String> descriptionMap = new HashMap<>();
+			Map<Locale, String> titleMap = Collections.singletonMap(
+				Locale.US, title);
+			Map<Locale, String> descriptionMap = Collections.singletonMap(
+				Locale.US, description);
 
-			titleMap.put(Locale.US, title);
-			descriptionMap.put(Locale.US, description);
-
-			JSONArray categories = product.getJSONArray("categories");
-			JSONArray manufacturers = product.getJSONArray("manufacturers");
+			JSONArray categoriesJSONArray = productJSONObject.getJSONArray(
+				"categories");
+			JSONArray manufacturersJSONArray = productJSONObject.getJSONArray(
+				"manufacturers");
 
 			long[] commerceAssetCategoryIds =
 				_assetCategoryDemoDataCreatorHelper.getAssetCategoryIds(
-					userId, groupId, commerceVocabularyId, categories);
+					userId, groupId, commerceVocabularyId, categoriesJSONArray);
 
 			long[] manufacturersAssetCategoryIds =
 				_assetCategoryDemoDataCreatorHelper.getAssetCategoryIds(
-					userId, groupId, manufacturersVocabularyId, manufacturers);
+					userId, groupId, manufacturersVocabularyId,
+					manufacturersJSONArray);
 
-			long[] assetCategoryIds =
-				_assetCategoryDemoDataCreatorHelper.getAllAssetCategoryIds(
-					commerceAssetCategoryIds, manufacturersAssetCategoryIds);
+			long[] assetCategoryIds = ArrayUtil.append(
+				commerceAssetCategoryIds, manufacturersAssetCategoryIds);
 
 			CPDefinition cpDefinition = createCPDefinition(
 				userId, groupId, baseSKU, name, titleMap, descriptionMap,
 				productTypeName, assetCategoryIds);
 
-			long cpDefinitionId = cpDefinition.getCPDefinitionId();
-
-			JSONArray options = product.getJSONArray("options");
+			JSONArray cpOptionsJSONArray = productJSONObject.getJSONArray(
+				"options");
 
 			_cpOptionDemoDataCreatorHelper.addCPOptions(
-				Locale.US, userId, groupId, cpDefinitionId, options);
+				Locale.US, userId, groupId, cpDefinition.getCPDefinitionId(),
+				cpOptionsJSONArray);
 
 			if (buildSkus) {
-				_cpInstanceDemoDataCreatorHelper.createCPInstance(
-					userId, groupId, cpDefinitionId);
+				_cpInstanceLocalService.buildCPInstances(
+					cpDefinition.getCPDefinitionId(), serviceContext);
 			}
 		}
 	}
@@ -126,32 +126,29 @@ public class CPDefinitionDemoDataCreatorHelper
 
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
 
-		Date displayDate = _getRandomDate();
-		Date expirationDate = _getRandomDate();
+		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
+			serviceContext.getTimeZone());
 
-		Calendar calendar = new GregorianCalendar();
-
-		calendar.setTime(displayDate);
-
-		int displayDateMonth = calendar.get(Calendar.MONTH);
-		int displayDateDay = calendar.get(Calendar.DAY_OF_MONTH);
-		int displayDateYear = calendar.get(Calendar.YEAR);
-		int displayDateHour = calendar.get(Calendar.HOUR);
-		int displayDateMinute = calendar.get(Calendar.MINUTE);
-		int displayDateAmPm = calendar.get(Calendar.AM_PM);
+		int displayDateMonth = displayCalendar.get(Calendar.MONTH);
+		int displayDateDay = displayCalendar.get(Calendar.DAY_OF_MONTH) - 1;
+		int displayDateYear = displayCalendar.get(Calendar.YEAR);
+		int displayDateHour = displayCalendar.get(Calendar.HOUR);
+		int displayDateMinute = displayCalendar.get(Calendar.MINUTE);
+		int displayDateAmPm = displayCalendar.get(Calendar.AM_PM);
 
 		if (displayDateAmPm == Calendar.PM) {
 			displayDateHour += 12;
 		}
 
-		calendar.setTime(expirationDate);
+		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
+			serviceContext.getTimeZone());
 
-		int expirationDateMonth = calendar.get(Calendar.MONTH);
-		int expirationDateDay = calendar.get(Calendar.DAY_OF_MONTH);
-		int expirationDateYear = calendar.get(Calendar.YEAR);
-		int expirationDateHour = calendar.get(Calendar.HOUR);
-		int expirationDateMinute = calendar.get(Calendar.MINUTE);
-		int expirationDateAmPm = calendar.get(Calendar.AM_PM);
+		int expirationDateMonth = expirationCalendar.get(Calendar.MONTH) + 1;
+		int expirationDateDay = expirationCalendar.get(Calendar.DAY_OF_MONTH);
+		int expirationDateYear = expirationCalendar.get(Calendar.YEAR);
+		int expirationDateHour = expirationCalendar.get(Calendar.HOUR);
+		int expirationDateMinute = expirationCalendar.get(Calendar.MINUTE);
+		int expirationDateAmPm = expirationCalendar.get(Calendar.AM_PM);
 
 		if (expirationDateAmPm == Calendar.PM) {
 			expirationDateHour += 12;
@@ -184,35 +181,20 @@ public class CPDefinitionDemoDataCreatorHelper
 		}
 	}
 
-	public JSONArray getCatalog() throws IOException, JSONException {
+	public JSONArray getCatalogJSONArray() throws Exception {
 		Class<?> clazz = getClass();
 
 		String catalogPath =
 			"com/liferay/commerce/product/demo/data/creator/internal" +
-				"/dependencies/products.json";
+				"/dependencies/catalog.json";
 
-		String catalogFile = StringUtil.read(
+		String catalogJSON = StringUtil.read(
 			clazz.getClassLoader(), catalogPath, false);
 
-		JSONArray catalog = JSONFactoryUtil.createJSONArray(catalogFile);
+		JSONArray catalogJSONArray = JSONFactoryUtil.createJSONArray(
+			catalogJSON);
 
-		return catalog;
-	}
-
-	private Date _getRandomDate() {
-		Calendar calendar = CalendarFactoryUtil.getCalendar();
-
-		calendar.set(2000, Calendar.JANUARY, 1);
-
-		long start = calendar.getTimeInMillis();
-
-		Date now = new Date();
-
-		long end = now.getTime();
-
-		ThreadLocalRandom current = ThreadLocalRandom.current();
-
-		return new Date(current.nextLong(start, end));
+		return catalogJSONArray;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -232,7 +214,7 @@ public class CPDefinitionDemoDataCreatorHelper
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
-	private CPInstanceDemoDataCreatorHelper _cpInstanceDemoDataCreatorHelper;
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private CPOptionDemoDataCreatorHelper _cpOptionDemoDataCreatorHelper;

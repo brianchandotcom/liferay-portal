@@ -33,26 +33,7 @@ portletURL.setParameter("searchContainerId", "cpOptions");
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<liferay-portlet:renderURL varImpl="viewProductOptionsURL">
-	<portlet:param name="toolbarItem" value="view-all-product-options" />
-	<portlet:param name="jspPage" value="/view.jsp" />
-</liferay-portlet:renderURL>
-
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item
-			href="<%= viewProductOptionsURL.toString() %>"
-			label="options"
-			selected='<%= toolbarItem.equals("view-all-product-options") %>'
-		/>
-	</aui:nav>
-
-	<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-		<aui:nav-bar-search>
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:nav-bar-search>
-	</aui:form>
-</aui:nav-bar>
+<%@ include file="/navbar.jspf" %>
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="searchContainerId" value="cpOptions" />
@@ -84,6 +65,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<div class="product-options-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
 						id="cpOptions"
+						iteratorURL="<%= portletURL %>"
 						searchContainer="<%= cpOptionSearchContainer %>"
 					>
 						<liferay-ui:search-container-row

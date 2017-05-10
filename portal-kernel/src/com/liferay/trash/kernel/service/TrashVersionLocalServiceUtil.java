@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @see TrashVersionLocalService
  * @see com.liferay.portlet.trash.service.base.TrashVersionLocalServiceBaseImpl
  * @see com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.trash.service.impl.TrashVersionLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class TrashVersionLocalServiceUtil {
 	/*

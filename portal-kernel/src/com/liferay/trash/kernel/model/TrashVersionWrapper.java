@@ -34,8 +34,11 @@ import java.util.Objects;
  *
  * @author Brian Wing Shun Chan
  * @see TrashVersion
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.trash.model.impl.TrashVersionImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class TrashVersionWrapper implements TrashVersion,
 	ModelWrapper<TrashVersion> {

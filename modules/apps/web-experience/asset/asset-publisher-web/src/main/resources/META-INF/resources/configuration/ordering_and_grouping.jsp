@@ -16,13 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
-<span class="field-row">
+<aui:col width="<%= 30 %>">
 
 	<%
 	String orderByColumn1 = assetPublisherDisplayContext.getOrderByColumn1();
 	%>
 
-	<aui:select inlineField="<%= true %>" inlineLabel="left" label="order-by" name="preferences--orderByColumn1--" value="<%= orderByColumn1 %>">
+	<aui:select label="order-by" name="preferences--orderByColumn1--" value="<%= orderByColumn1 %>" wrapperCssClass="field-inline w90">
 		<c:if test="<%= assetPublisherDisplayContext.isOrderingByTitleEnabled() %>">
 			<aui:option label="title" />
 		</c:if>
@@ -41,20 +41,40 @@
 
 	<%
 	String orderByType1 = assetPublisherDisplayContext.getOrderByType1();
+
+	String orderByType1OnClick = renderResponse.getNamespace() + "toggleOrderByType(1);";
+	String orderByType1AscIconCssClass = (StringUtil.equalsIgnoreCase(orderByType1, "ASC") ? "" : "text-muted") + " icon-long-arrow-up order-switch";
+	String orderByType1DescIconCssClass = (StringUtil.equalsIgnoreCase(orderByType1, "ASC") ? "text-muted" : "") + " icon-long-arrow-down order-switch";
 	%>
 
-	<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType1--" title="order-by-type" value="<%= orderByType1 %>">
-		<aui:option label="ascending" value="ASC" />
-		<aui:option label="descending" value="DESC" />
-	</aui:select>
-</span>
-<span class="field-row">
+	<aui:field-wrapper cssClass="field-label-inline">
+		<liferay-ui:icon
+			iconCssClass="<%= orderByType1AscIconCssClass %>"
+			id="orderByType1Asc"
+			markupView="lexicon"
+			onClick="<%= orderByType1OnClick %>"
+			url="javascript:;"
+		/>
+
+		<liferay-ui:icon
+			iconCssClass="<%= orderByType1DescIconCssClass %>"
+			id="orderByType1Desc"
+			markupView="lexicon"
+			onClick="<%= orderByType1OnClick %>"
+			url="javascript:;"
+		/>
+	</aui:field-wrapper>
+
+	<aui:input name="preferences--orderByType1--" type="hidden" value="<%= orderByType1 %>" />
+</aui:col>
+
+<aui:col width="<%= 30 %>">
 
 	<%
 	String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
 	%>
 
-	<aui:select inlineField="<%= true %>" inlineLabel="left" label="and-then-by" name="preferences--orderByColumn2--">
+	<aui:select label="and-then-by" name="preferences--orderByColumn2--" wrapperCssClass="field-inline w90">
 		<aui:option label="title" selected='<%= orderByColumn2.equals("title") %>' />
 		<aui:option label="create-date" selected='<%= orderByColumn2.equals("createDate") %>' value="createDate" />
 		<aui:option label="modified-date" selected='<%= orderByColumn2.equals("modifiedDate") %>' value="modifiedDate" />
@@ -70,20 +90,40 @@
 
 	<%
 	String orderByType2 = assetPublisherDisplayContext.getOrderByType2();
+
+	String orderByType2OnClick = renderResponse.getNamespace() + "toggleOrderByType(2);";
+	String orderByType2AscIconCssClass = (StringUtil.equalsIgnoreCase(orderByType2, "ASC") ? "" : "text-muted") + " icon-long-arrow-up order-switch";
+	String orderByType2DescIconCssClass = (StringUtil.equalsIgnoreCase(orderByType2, "ASC") ? "text-muted" : "") + " icon-long-arrow-down order-switch";
 	%>
 
-	<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType2--" title="order-by-type">
-		<aui:option label="ascending" selected='<%= orderByType2.equals("ASC") %>' value="ASC" />
-		<aui:option label="descending" selected='<%= orderByType2.equals("DESC") %>' value="DESC" />
-	</aui:select>
-</span>
-<span class="field-row">
+	<aui:field-wrapper cssClass="field-label-inline">
+		<liferay-ui:icon
+			iconCssClass="<%= orderByType2AscIconCssClass %>"
+			id="orderByType2Asc"
+			markupView="lexicon"
+			onClick="<%= orderByType2OnClick %>"
+			url="javascript:;"
+		/>
+
+		<liferay-ui:icon
+			iconCssClass="<%= orderByType2DescIconCssClass %>"
+			id="orderByType2Desc"
+			markupView="lexicon"
+			onClick="<%= orderByType2OnClick %>"
+			url="javascript:;"
+		/>
+	</aui:field-wrapper>
+
+	<aui:input name="preferences--orderByType2--" type="hidden" value="<%= orderByType2 %>" />
+</aui:col>
+
+<aui:col width="<%= 30 %>">
 
 	<%
 	long assetVocabularyId = GetterUtil.getLong(portletPreferences.getValue("assetVocabularyId", null));
 	%>
 
-	<aui:select inlineField="<%= true %>" inlineLabel="left" label="group-by" name="preferences--assetVocabularyId--">
+	<aui:select label="group-by" name="preferences--assetVocabularyId--">
 		<aui:option value="" />
 		<aui:option label="asset-types" selected="<%= assetVocabularyId == -1 %>" value="-1" />
 
@@ -142,4 +182,29 @@
 		%>
 
 	</aui:select>
-</span>
+</aui:col>
+
+<aui:script position="" use="aui-base">
+	<portlet:namespace/>toggleOrderByType = function(fieldNumber) {
+		var hiddenInput = A.one('#<portlet:namespace />orderByType' + fieldNumber);
+
+		var ascSwitch = A.one('#<portlet:namespace />orderByType' + fieldNumber + 'Asc .order-switch');
+		var descSwitch = A.one('#<portlet:namespace />orderByType' + fieldNumber + 'Desc .order-switch');
+
+		var newVal = hiddenInput.val() === 'ASC' ? 'DESC' : 'ASC';
+
+		switch (newVal) {
+			case 'ASC':
+				ascSwitch.removeClass('text-muted');
+				descSwitch.addClass('text-muted');
+			break;
+
+			case 'DESC':
+				ascSwitch.addClass('text-muted');
+				descSwitch.removeClass('text-muted');
+			break;
+		}
+
+		hiddenInput.val(newVal);
+	};
+</aui:script>

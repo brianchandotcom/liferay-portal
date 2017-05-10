@@ -25,7 +25,7 @@ SearchContainer<CPOptionCategory> cpOptionCategorySearchContainer = cpOptionCate
 
 String displayStyle = cpOptionCategoryDisplayContext.getDisplayStyle();
 
-PortletURL portletURL = renderResponse.createRenderURL();
+PortletURL portletURL = cpOptionCategoryDisplayContext.getPortletURL();
 
 portletURL.setParameter("toolbarItem", toolbarItem);
 portletURL.setParameter("searchContainerId", "cpOptionCategories");
@@ -63,7 +63,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= cpOptionCategoryDisplayContext.getOrderByCol() %>"
 			orderByType="<%= cpOptionCategoryDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"title"} %>'
+			orderColumns='<%= new String[] {"priority", "title"} %>'
 			portletURL="<%= cpOptionCategoryDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>

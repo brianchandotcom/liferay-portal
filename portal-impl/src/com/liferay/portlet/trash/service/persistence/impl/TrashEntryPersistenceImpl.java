@@ -65,8 +65,11 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @see TrashEntryPersistence
  * @see com.liferay.trash.kernel.service.persistence.TrashEntryUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.trash.model.impl.TrashEntryImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	implements TrashEntryPersistence {

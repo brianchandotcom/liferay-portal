@@ -40,17 +40,15 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -72,10 +70,8 @@ import org.osgi.service.component.annotations.Reference;
 public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
 
 	protected DDMFormFieldValue createDDMFormFieldValue(
-		DDMForm ddmForm, JSONObject jsonObject) {
-
-		Map<String, DDMFormField> ddmFormFields = ddmForm.getDDMFormFieldsMap(
-			Boolean.TRUE);
+		Map<String, DDMFormField> ddmFormFieldsMap, Locale siteDefaultLocale,
+		JSONObject jsonObject) {
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
@@ -86,13 +82,13 @@ public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
 
 		ddmFormFieldValue.setName(name);
 
-		DDMFormField ddmFormField = ddmFormFields.get(name);
+		DDMFormField ddmFormField = ddmFormFieldsMap.get(name);
 
 		Value value = null;
 
 		if (ddmFormField.isLocalizable()) {
 			value = createLocalizedValue(
-				ddmForm, jsonObject.getJSONObject("value"));
+				siteDefaultLocale, jsonObject.getJSONObject("value"));
 		}
 		else {
 			value = new UnlocalizedValue(
@@ -113,11 +109,14 @@ public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
 			return;
 		}
 
-		DDMForm ddmForm = ddmFormValues.getDDMForm();
+		Map<String, DDMFormField> ddmFormFieldsMap = getDDMFormFieldsMap(
+			ddmFormValues);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			ddmFormValues.addDDMFormFieldValue(
-				createDDMFormFieldValue(ddmForm, jsonArray.getJSONObject(i)));
+				createDDMFormFieldValue(
+					ddmFormFieldsMap, ddmFormValues.getDefaultLocale(),
+					jsonArray.getJSONObject(i)));
 		}
 	}
 
@@ -134,15 +133,14 @@ public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
 
 		DDMForm ddmForm = getDDMForm(recordSet);
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			serializedDDMFormValues);
-
-		setLocales(ddmForm, jsonObject);
-
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
-		ddmFormValues.setAvailableLocales(ddmForm.getAvailableLocales());
-		ddmFormValues.setDefaultLocale(ddmForm.getDefaultLocale());
+		setDDMFormValuesLocales(
+			_portal.getSiteDefaultLocale(recordSet.getGroupId()),
+			ddmFormValues);
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			serializedDDMFormValues);
 
 		createDDMFormFieldValues(ddmFormValues, jsonObject);
 
@@ -150,24 +148,30 @@ public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	protected Value createLocalizedValue(
-		DDMForm ddmForm, JSONObject jsonObject) {
+		Locale siteDefaultLocale, JSONObject jsonObject) {
 
-		Locale defaultLocale = ddmForm.getDefaultLocale();
+		Value value = new LocalizedValue(siteDefaultLocale);
 
-		Value value = new LocalizedValue(defaultLocale);
+		String valueString = jsonObject.getString(
+			LanguageUtil.getLanguageId(siteDefaultLocale), StringPool.BLANK);
 
-		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
-
-		for (Locale availableLocale : availableLocales) {
-			String languageId = LanguageUtil.getLanguageId(availableLocale);
-
-			String ddmFormFieldValue = jsonObject.getString(
-				languageId, StringPool.BLANK);
-
-			value.addString(availableLocale, ddmFormFieldValue);
-		}
+		value.addString(siteDefaultLocale, valueString);
 
 		return value;
+	}
+
+	protected ServiceContext createServiceContext(
+			ResourceRequest resourceRequest)
+		throws PortalException {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDLRecord.class.getName(), resourceRequest);
+
+		serviceContext.setAttribute("status", WorkflowConstants.STATUS_DRAFT);
+		serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		return serviceContext;
 	}
 
 	@Override
@@ -189,17 +193,12 @@ public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
 			return;
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecord.class.getName(), resourceRequest);
-
-		serviceContext.setAttribute("status", WorkflowConstants.STATUS_DRAFT);
-		serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
 		DDLRecordVersion recordVersion =
 			_ddlRecordVersionLocalService.fetchRecordVersion(
 				themeDisplay.getUserId(), recordSetId, recordSet.getVersion(),
 				WorkflowConstants.STATUS_DRAFT);
+
+		ServiceContext serviceContext = createServiceContext(resourceRequest);
 
 		if (recordVersion == null) {
 			_ddlRecordService.addRecord(
@@ -208,11 +207,10 @@ public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
 				serviceContext);
 		}
 		else {
-			long recordId = recordVersion.getRecordId();
-
 			_ddlRecordService.updateRecord(
-				recordId, false, DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
-				ddmFormValues, serviceContext);
+				recordVersion.getRecordId(), false,
+				DDLRecordConstants.DISPLAY_INDEX_DEFAULT, ddmFormValues,
+				serviceContext);
 		}
 	}
 
@@ -224,31 +222,19 @@ public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
 		return ddmStructure.getDDMForm();
 	}
 
-	protected void setLocales(DDMForm ddmForm, JSONObject jsonObject) {
-		if (!jsonObject.has("defaultLanguageId") ||
-			!jsonObject.has("availableLanguageIds")) {
+	protected Map<String, DDMFormField> getDDMFormFieldsMap(
+		DDMFormValues ddmFormValues) {
 
-			return;
-		}
+		DDMForm ddmForm = ddmFormValues.getDDMForm();
 
-		String defaultLanguageIdString = jsonObject.getString(
-			"defaultLanguageId");
+		return ddmForm.getDDMFormFieldsMap(true);
+	}
 
-		ddmForm.setDefaultLocale(
-			LocaleUtil.fromLanguageId(defaultLanguageIdString));
+	protected void setDDMFormValuesLocales(
+		Locale siteDefaultLocale, DDMFormValues ddmFormValues) {
 
-		JSONArray availableLanguageIdsJSONArray = jsonObject.getJSONArray(
-			"availableLanguageIds");
-
-		Set<Locale> availableLocales = new HashSet<>();
-
-		for (int i = 0; i < availableLanguageIdsJSONArray.length(); i++) {
-			availableLocales.add(
-				LocaleUtil.fromLanguageId(
-					availableLanguageIdsJSONArray.getString(i)));
-		}
-
-		ddmForm.setAvailableLocales(availableLocales);
+		ddmFormValues.addAvailableLocale(siteDefaultLocale);
+		ddmFormValues.setDefaultLocale(siteDefaultLocale);
 	}
 
 	@Reference
@@ -262,5 +248,8 @@ public class AddRecordMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Portal _portal;
 
 }

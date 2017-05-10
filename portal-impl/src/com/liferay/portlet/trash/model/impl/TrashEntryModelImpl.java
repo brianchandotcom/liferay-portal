@@ -60,8 +60,11 @@ import java.util.Map;
  * @see TrashEntryImpl
  * @see TrashEntry
  * @see TrashEntryModel
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.trash.model.impl.TrashEntryImpl}
  * @generated
  */
+@Deprecated
 @JSON(strict = true)
 @ProviderType
 public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>

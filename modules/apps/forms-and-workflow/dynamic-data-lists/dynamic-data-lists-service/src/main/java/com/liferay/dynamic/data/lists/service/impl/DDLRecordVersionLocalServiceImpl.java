@@ -45,10 +45,10 @@ public class DDLRecordVersionLocalServiceImpl
 	 * @return the record version or null
 	 */
 	@Override
-	public DDLRecordVersion fetchRecordVersion(
+	public DDLRecordVersion fetchLastestRecordVersion(
 		long userId, long recordSetId, String recordSetVersion, int status) {
 
-		return ddlRecordVersionPersistence.fetchByU_R_R_S_First(
+		return ddlRecordVersionPersistence.fetchByU_R_R_S_Last(
 			userId, recordSetId, recordSetVersion, status, null);
 	}
 

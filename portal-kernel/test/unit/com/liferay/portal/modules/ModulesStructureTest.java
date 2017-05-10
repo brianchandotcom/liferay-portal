@@ -536,6 +536,23 @@ public class ModulesStructureTest {
 		return projectPathPrefix;
 	}
 
+	@SuppressWarnings("unused")
+	private boolean _isGitRepoReadOnly(Path dirPath) throws IOException {
+		Path gitRepoPath = dirPath.resolve(_GIT_REPO_FILE_NAME);
+
+		if (Files.notExists(gitRepoPath)) {
+			return false;
+		}
+
+		String gitRepo = _read(gitRepoPath);
+
+		if (gitRepo.contains("mode = pull")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isInGitRepo(Path dirPath) {
 		while (dirPath != null) {
 			if (Files.exists(dirPath.resolve(_GIT_REPO_FILE_NAME))) {

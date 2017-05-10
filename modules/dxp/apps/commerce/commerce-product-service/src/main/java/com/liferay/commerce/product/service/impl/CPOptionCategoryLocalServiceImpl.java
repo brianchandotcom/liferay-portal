@@ -37,8 +37,9 @@ public class CPOptionCategoryLocalServiceImpl
 
 	@Override
 	public CPOptionCategory addCPOptionCategory(
-			String name, Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			int priority, ServiceContext serviceContext)
+			String name, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, int priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product option category
@@ -48,7 +49,8 @@ public class CPOptionCategoryLocalServiceImpl
 
 		long cpOptionCategoryId = counterLocalService.increment();
 
-		CPOptionCategory cpOptionCategory = cpOptionCategoryPersistence.create(cpOptionCategoryId);
+		CPOptionCategory cpOptionCategory = cpOptionCategoryPersistence.create(
+			cpOptionCategoryId);
 
 		cpOptionCategory.setUuid(serviceContext.getUuid());
 		cpOptionCategory.setGroupId(groupId);
@@ -64,14 +66,16 @@ public class CPOptionCategoryLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(cpOptionCategory, serviceContext);
+		resourceLocalService.addModelResources(
+			cpOptionCategory, serviceContext);
 
 		return cpOptionCategory;
 	}
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public CPOptionCategory deleteCPOptionCategory(CPOptionCategory cpOptionCategory)
+	public CPOptionCategory deleteCPOptionCategory(
+			CPOptionCategory cpOptionCategory)
 		throws PortalException {
 
 		// Commerce product option category
@@ -82,7 +86,8 @@ public class CPOptionCategoryLocalServiceImpl
 
 		resourceLocalService.deleteResource(
 			cpOptionCategory.getCompanyId(), CPOptionCategory.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL, cpOptionCategory.getCPOptionCategoryId());
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			cpOptionCategory.getCPOptionCategoryId());
 
 		return cpOptionCategory;
 	}
@@ -91,14 +96,17 @@ public class CPOptionCategoryLocalServiceImpl
 	public CPOptionCategory deleteCPOptionCategory(long cpOptionCategoryId)
 		throws PortalException {
 
-		CPOptionCategory cpOptionCategory = cpOptionCategoryPersistence.findByPrimaryKey(
-			cpOptionCategoryId);
+		CPOptionCategory cpOptionCategory =
+			cpOptionCategoryPersistence.findByPrimaryKey(cpOptionCategoryId);
 
-		return cpOptionCategoryLocalService.deleteCPOptionCategory(cpOptionCategory);
+		return cpOptionCategoryLocalService.deleteCPOptionCategory(
+			cpOptionCategory);
 	}
 
 	@Override
-	public List<CPOptionCategory> getCPOptionCategories(long groupId, int start, int end) {
+	public List<CPOptionCategory> getCPOptionCategories(
+		long groupId, int start, int end) {
+
 		return cpOptionCategoryPersistence.findByGroupId(groupId, start, end);
 	}
 
@@ -118,13 +126,13 @@ public class CPOptionCategoryLocalServiceImpl
 
 	@Override
 	public CPOptionCategory updateCPOptionCategory(
-			long cpOptionCategoryId, String name,  Map<Locale, String> titleMap,
+			long cpOptionCategoryId, String name, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, int priority,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPOptionCategory cpOptionCategory = cpOptionCategoryPersistence.findByPrimaryKey(
-			cpOptionCategoryId);
+		CPOptionCategory cpOptionCategory =
+			cpOptionCategoryPersistence.findByPrimaryKey(cpOptionCategoryId);
 
 		cpOptionCategory.setName(name);
 		cpOptionCategory.setTitleMap(titleMap);
@@ -135,4 +143,5 @@ public class CPOptionCategoryLocalServiceImpl
 
 		return cpOptionCategory;
 	}
+
 }

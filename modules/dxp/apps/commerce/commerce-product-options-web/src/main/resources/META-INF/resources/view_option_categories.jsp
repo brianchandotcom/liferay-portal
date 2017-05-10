@@ -81,101 +81,101 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 </liferay-frontend:management-bar>
 
 <div id="<portlet:namespace />productOptionCategoriesContainer">
-    <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-        <c:if test="<%= cpOptionCategoryDisplayContext.isShowInfoPanel() %>">
-            <liferay-portlet:resourceURL
-                copyCurrentRenderParameters="<%= false %>"
-                id="cpOptionCategoryInfoPanel"
-                var="sidebarPanelURL"
-            />
+	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+		<c:if test="<%= cpOptionCategoryDisplayContext.isShowInfoPanel() %>">
+			<liferay-portlet:resourceURL
+				copyCurrentRenderParameters="<%= false %>"
+				id="cpOptionCategoryInfoPanel"
+				var="sidebarPanelURL"
+			/>
 
-            <liferay-frontend:sidebar-panel
-                resourceURL="<%= sidebarPanelURL %>"
-                searchContainerId="cpOptionCategories"
-            >
-                <liferay-util:include page="/option_category_info_panel.jsp" servletContext="<%= application %>" />
-            </liferay-frontend:sidebar-panel>
-        </c:if>
+			<liferay-frontend:sidebar-panel
+				resourceURL="<%= sidebarPanelURL %>"
+				searchContainerId="cpOptionCategories"
+			>
+				<liferay-util:include page="/option_category_info_panel.jsp" servletContext="<%= application %>" />
+			</liferay-frontend:sidebar-panel>
+		</c:if>
 
-        <div class="sidenav-content">
-            <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-                <aui:input name="<%= Constants.CMD %>" type="hidden" />
-                <aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-                <aui:input name="deleteCPOptionCategoryIds" type="hidden" />
+		<div class="sidenav-content">
+			<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+				<aui:input name="<%= Constants.CMD %>" type="hidden" />
+				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+				<aui:input name="deleteCPOptionCategoryIds" type="hidden" />
 
-                <div class="product-option-categories-container" id="<portlet:namespace />entriesContainer">
-                    <liferay-ui:search-container
-                        id="cpOptionCategories"
-                        iteratorURL="<%= portletURL %>"
-                        searchContainer="<%= cpOptionCategorySearchContainer %>"
-                    >
-                        <liferay-ui:search-container-row
-                            className="com.liferay.commerce.product.model.CPOptionCategory"
-                            cssClass="entry-display-style"
-                            keyProperty="CPOptionCategoryId"
-                            modelVar="cpOptionCategory"
-                        >
+				<div class="product-option-categories-container" id="<portlet:namespace />entriesContainer">
+					<liferay-ui:search-container
+						id="cpOptionCategories"
+						iteratorURL="<%= portletURL %>"
+						searchContainer="<%= cpOptionCategorySearchContainer %>"
+					>
+						<liferay-ui:search-container-row
+							className="com.liferay.commerce.product.model.CPOptionCategory"
+							cssClass="entry-display-style"
+							keyProperty="CPOptionCategoryId"
+							modelVar="cpOptionCategory"
+						>
 
-                            <%
-                            PortletURL rowURL = renderResponse.createRenderURL();
+							<%
+							PortletURL rowURL = renderResponse.createRenderURL();
 
-                            rowURL.setParameter("mvcRenderCommandName", "editProductOptionCategory");
-                            rowURL.setParameter("redirect", currentURL);
-                            rowURL.setParameter("cpOptionCategoryId", String.valueOf(cpOptionCategory.getCPOptionCategoryId()));
-                            %>
+							rowURL.setParameter("mvcRenderCommandName", "editProductOptionCategory");
+							rowURL.setParameter("redirect", currentURL);
+							rowURL.setParameter("cpOptionCategoryId", String.valueOf(cpOptionCategory.getCPOptionCategoryId()));
+							%>
 
-                            <liferay-ui:search-container-column-text
-                                cssClass="table-cell-content"
-                                href="<%= rowURL %>"
-                                name="title"
-                                value="<%= HtmlUtil.escape(cpOptionCategory.getTitle(locale)) %>"
-                            />
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								href="<%= rowURL %>"
+								name="title"
+								value="<%= HtmlUtil.escape(cpOptionCategory.getTitle(locale)) %>"
+							/>
 
-                            <liferay-ui:search-container-column-text
-                                cssClass="table-cell-content"
-                                name="author"
-                                property="userName"
-                            />
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								name="author"
+								property="userName"
+							/>
 
-                            <liferay-ui:search-container-column-text
-                                cssClass="table-cell-content"
-                                name="priority"
-                                property="priority"
-                            />
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								name="priority"
+								property="priority"
+							/>
 
-                            <liferay-ui:search-container-column-date
-                                cssClass="table-cell-content"
-                                name="create-date"
-                                property="createDate"
-                            />
+							<liferay-ui:search-container-column-date
+								cssClass="table-cell-content"
+								name="create-date"
+								property="createDate"
+							/>
 
-                            <liferay-ui:search-container-column-date
-                                cssClass="table-cell-content"
-                                name="modified-date"
-                                property="modifiedDate"
-                            />
+							<liferay-ui:search-container-column-date
+								cssClass="table-cell-content"
+								name="modified-date"
+								property="modifiedDate"
+							/>
 
-                            <liferay-ui:search-container-column-jsp
-                                cssClass="entry-action-column"
-                                path="/option_category_action.jsp"
-                            />
-                        </liferay-ui:search-container-row>
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action-column"
+								path="/option_category_action.jsp"
+							/>
+						</liferay-ui:search-container-row>
 
-                        <liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= cpOptionCategorySearchContainer %>" />
-                    </liferay-ui:search-container>
-                </div>
-            </aui:form>
-        </div>
-    </div>
+						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= cpOptionCategorySearchContainer %>" />
+					</liferay-ui:search-container>
+				</div>
+			</aui:form>
+		</div>
+	</div>
 </div>
 
 <liferay-portlet:renderURL var="addProductOptionCategoryURL">
-    <portlet:param name="mvcRenderCommandName" value="editProductOptionCategory" />
-    <portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
+	<portlet:param name="mvcRenderCommandName" value="editProductOptionCategory" />
+	<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>
-    <liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-option-category") %>' url="<%= addProductOptionCategoryURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-option-category") %>' url="<%= addProductOptionCategoryURL.toString() %>" />
 </liferay-frontend:add-menu>
 
 <aui:script>

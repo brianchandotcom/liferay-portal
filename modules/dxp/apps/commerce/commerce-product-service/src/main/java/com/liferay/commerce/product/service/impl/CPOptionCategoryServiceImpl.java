@@ -32,95 +32,109 @@ import java.util.Map;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-public class CPOptionCategoryServiceImpl extends CPOptionCategoryServiceBaseImpl {
-    @Override
-    public CPOptionCategory addCPOptionCategory(
-            String name, Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-            int priority, ServiceContext serviceContext)
-        throws PortalException {
+public class CPOptionCategoryServiceImpl
+	extends CPOptionCategoryServiceBaseImpl {
 
-        CPPermission.check(
-            getPermissionChecker(), serviceContext.getScopeGroupId(),
-            CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION_CATEGORY);
+	@Override
+	public CPOptionCategory addCPOptionCategory(
+			String name, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, int priority,
+			ServiceContext serviceContext)
+		throws PortalException {
 
-        return cpOptionCategoryLocalService.addCPOptionCategory(
-            name, titleMap, descriptionMap, priority, serviceContext);
-    }
+		CPPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION_CATEGORY);
 
-    @Override
-    public CPOptionCategory deleteCPOptionCategory(CPOptionCategory cpOptionCategory)
-        throws PortalException {
+		return cpOptionCategoryLocalService.addCPOptionCategory(
+			name, titleMap, descriptionMap, priority, serviceContext);
+	}
 
-        CPOptionCategoryPermission.check(
-            getPermissionChecker(), cpOptionCategory, ActionKeys.DELETE);
+	@Override
+	public CPOptionCategory deleteCPOptionCategory(
+			CPOptionCategory cpOptionCategory)
+		throws PortalException {
 
-        return cpOptionCategoryLocalService.deleteCPOptionCategory(cpOptionCategory);
-    }
+		CPOptionCategoryPermission.check(
+			getPermissionChecker(), cpOptionCategory, ActionKeys.DELETE);
 
-    @Override
-    public CPOptionCategory deleteCPOptionCategory(long cpOptionCategoryId)
-        throws PortalException {
+		return cpOptionCategoryLocalService.deleteCPOptionCategory(
+			cpOptionCategory);
+	}
 
-        CPOptionCategoryPermission.check(
-            getPermissionChecker(), cpOptionCategoryId, ActionKeys.DELETE);
+	@Override
+	public CPOptionCategory deleteCPOptionCategory(long cpOptionCategoryId)
+		throws PortalException {
 
-        return cpOptionCategoryLocalService.deleteCPOptionCategory(cpOptionCategoryId);
-    }
+		CPOptionCategoryPermission.check(
+			getPermissionChecker(), cpOptionCategoryId, ActionKeys.DELETE);
 
-    @Override
-    public CPOptionCategory fetchCPOptionCategory(long cpOptionCategoryId)
-        throws PortalException {
+		return cpOptionCategoryLocalService.deleteCPOptionCategory(
+			cpOptionCategoryId);
+	}
 
-        CPOptionCategory cpOptionCategory = cpOptionCategoryLocalService.fetchCPOptionCategory(cpOptionCategoryId);
+	@Override
+	public CPOptionCategory fetchCPOptionCategory(long cpOptionCategoryId)
+		throws PortalException {
 
-        if (cpOptionCategory != null) {
-            CPOptionCategoryPermission.check(
-                getPermissionChecker(), cpOptionCategory, ActionKeys.VIEW);
-        }
+		CPOptionCategory cpOptionCategory =
+			cpOptionCategoryLocalService.fetchCPOptionCategory(
+				cpOptionCategoryId);
 
-        return cpOptionCategory;
-    }
+		if (cpOptionCategory != null) {
+			CPOptionCategoryPermission.check(
+				getPermissionChecker(), cpOptionCategory, ActionKeys.VIEW);
+		}
 
-    @Override
-    public CPOptionCategory getCPOptionCategory(long cpOptionCategoryId)
-        throws PortalException {
+		return cpOptionCategory;
+	}
 
-        CPOptionCategoryPermission.check(
-            getPermissionChecker(), cpOptionCategoryId, ActionKeys.VIEW);
+	@Override
+	public List<CPOptionCategory> getCPOptionCategories(
+		long groupId, int start, int end) {
 
-        return cpOptionCategoryLocalService.getCPOptionCategory(cpOptionCategoryId);
-    }
+		return cpOptionCategoryPersistence.filterFindByGroupId(
+			groupId, start, end);
+	}
 
-    @Override
-    public List<CPOptionCategory> getCPOptionCategories(long groupId, int start, int end) {
-        return cpOptionCategoryPersistence.filterFindByGroupId(groupId, start, end);
-    }
+	@Override
+	public List<CPOptionCategory> getCPOptionCategories(
+		long groupId, int start, int end,
+		OrderByComparator<CPOptionCategory> orderByComparator) {
 
-    @Override
-    public List<CPOptionCategory> getCPOptionCategories(
-        long groupId, int start, int end,
-        OrderByComparator<CPOptionCategory> orderByComparator) {
+		return cpOptionCategoryPersistence.filterFindByGroupId(
+			groupId, start, end, orderByComparator);
+	}
 
-        return cpOptionCategoryPersistence.filterFindByGroupId(
-            groupId, start, end, orderByComparator);
-    }
+	@Override
+	public int getCPOptionCategoriesCount(long groupId) {
+		return cpOptionCategoryPersistence.filterCountByGroupId(groupId);
+	}
 
-    @Override
-    public int getCPOptionCategoriesCount(long groupId) {
-        return cpOptionCategoryPersistence.filterCountByGroupId(groupId);
-    }
+	@Override
+	public CPOptionCategory getCPOptionCategory(long cpOptionCategoryId)
+		throws PortalException {
 
-    @Override
-    public CPOptionCategory updateCPOptionCategory(
-            long cpOptionCategoryId, String name,  Map<Locale, String> titleMap,
-            Map<Locale, String> descriptionMap, int priority,
-            ServiceContext serviceContext)
-        throws PortalException {
+		CPOptionCategoryPermission.check(
+			getPermissionChecker(), cpOptionCategoryId, ActionKeys.VIEW);
 
-        CPOptionCategoryPermission.check(
-            getPermissionChecker(), cpOptionCategoryId, ActionKeys.UPDATE);
+		return cpOptionCategoryLocalService.getCPOptionCategory(
+			cpOptionCategoryId);
+	}
 
-        return cpOptionCategoryLocalService.updateCPOptionCategory(
-            cpOptionCategoryId, name, titleMap, descriptionMap, priority, serviceContext);
-    }
+	@Override
+	public CPOptionCategory updateCPOptionCategory(
+			long cpOptionCategoryId, String name, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, int priority,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CPOptionCategoryPermission.check(
+			getPermissionChecker(), cpOptionCategoryId, ActionKeys.UPDATE);
+
+		return cpOptionCategoryLocalService.updateCPOptionCategory(
+			cpOptionCategoryId, name, titleMap, descriptionMap, priority,
+			serviceContext);
+	}
+
 }

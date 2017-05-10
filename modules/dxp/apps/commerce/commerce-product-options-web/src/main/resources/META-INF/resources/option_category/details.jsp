@@ -26,7 +26,10 @@ CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWeb
 
 <aui:fieldset>
 	<aui:input name="name" />
+
 	<aui:input name="title" />
+
 	<aui:input name="description" />
+
 	<aui:input name="priority" />
 </aui:fieldset>

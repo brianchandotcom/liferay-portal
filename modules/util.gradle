@@ -229,12 +229,6 @@ private void _createSetUpPortalToolTasks() {
 
 			String dependencyGroup = it.@org
 			String dependencyName = it.@name
-
-			if (dependencyName == "com.liferay.alloy.taglib") {
-				dependencyGroup = "com.liferay.alloy-taglibs"
-				dependencyName = "alloy-taglib"
-			}
-
 			String dependencyVersion = PortalTools.getVersion(project, dependencyName)
 
 			if (!dependencyVersion) {

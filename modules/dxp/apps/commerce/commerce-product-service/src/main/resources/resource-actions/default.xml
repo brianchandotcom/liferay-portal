@@ -6,7 +6,6 @@
 		<model-name>com.liferay.commerce.product</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet</portlet-name>
-			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPMediaTypesPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_product_options_web_internal_portlet_CPOptionsPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
@@ -14,7 +13,6 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_COMMERCE_PRODUCT_DEFINITION</action-key>
-				<action-key>ADD_COMMERCE_PRODUCT_MEDIA_TYPE</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</supports>
@@ -53,28 +51,6 @@
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>UPDATE_COMMERCE_PRODUCT_INSTANCE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.commerce.product.model.CPMediaType</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_commerce_product_media_types_web_internal_portlet_CPMediaTypesPortlet</portlet-name>
-		</portlet-ref>
-		<weight>2</weight>
-		<permissions>
-			<supports>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults />
-			<guest-defaults />
-			<guest-unsupported>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

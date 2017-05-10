@@ -5,10 +5,6 @@ create unique index IX_BA9BADC on CPDefinition (uuid_[$COLUMN_LENGTH:75$], group
 
 create unique index IX_9D876175 on CPDefinitionLocalization (cpDefinitionPK, languageId[$COLUMN_LENGTH:75$]);
 
-create index IX_B6E11279 on CPDefinitionMedia (CPDefinitionId);
-create index IX_7C92B45E on CPDefinitionMedia (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_A958BA60 on CPDefinitionMedia (uuid_[$COLUMN_LENGTH:75$], groupId);
-
 create index IX_749E99EB on CPDefinitionOptionRel (CPDefinitionId, skuContributor);
 create index IX_449BFCFE on CPDefinitionOptionRel (companyId);
 create index IX_A65BAB00 on CPDefinitionOptionRel (groupId);
@@ -26,11 +22,6 @@ create index IX_48C70BC0 on CPInstance (companyId);
 create index IX_C1F8242 on CPInstance (groupId);
 create index IX_8A7A3F5C on CPInstance (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_F902ECDE on CPInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
-
-create index IX_4BD890F1 on CPMediaType (companyId);
-create index IX_5B829FB3 on CPMediaType (groupId);
-create index IX_B2B10B on CPMediaType (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_80B9FE4D on CPMediaType (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_210EACA0 on CPOption (companyId);
 create index IX_5999DB22 on CPOption (groupId);

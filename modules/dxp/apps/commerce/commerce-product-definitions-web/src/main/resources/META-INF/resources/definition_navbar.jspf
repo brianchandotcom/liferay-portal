@@ -41,7 +41,7 @@
 			<aui:nav-item
 				href="<%= viewProductDefinitionImagesURL.toString() %>"
 				label='<%= LanguageUtil.get(request, "images") %>'
-				selected='<%= toolbarItem.equals("view-definition-medias") %>'
+				selected='<%= toolbarItem.equals("view-definition-media") %>'
 			/>
 
 			<liferay-portlet:renderURL varImpl="viewProductDefinitionOptionRelsURL">

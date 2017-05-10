@@ -46,12 +46,6 @@ public class CPWebKeys {
 	public static final String COMMERCE_PRODUCT_INSTANCES =
 		"COMMERCE_PRODUCT_INSTANCES";
 
-	public static final String COMMERCE_PRODUCT_MEDIA_TYPE =
-		"COMMERCE_PRODUCT_MEDIA_TYPE";
-
-	public static final String COMMERCE_PRODUCT_MEDIA_TYPES =
-		"COMMERCE_PRODUCT_MEDIA_TYPES";
-
 	public static final String COMMERCE_PRODUCT_OPTION =
 		"COMMERCE_PRODUCT_OPTION";
 

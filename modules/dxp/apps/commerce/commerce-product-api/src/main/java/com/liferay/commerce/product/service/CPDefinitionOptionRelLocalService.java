@@ -84,6 +84,10 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 		CPDefinitionOptionRel cpDefinitionOptionRel);
 
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(long cpDefinitionId,
+		long cpOptionId, boolean importOptionValue,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CPDefinitionOptionRel addCPDefinitionOptionRel(long cpDefinitionId,
 		long cpOptionId, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -92,8 +96,8 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
-		boolean required, boolean skuContributor, ServiceContext serviceContext)
-		throws PortalException;
+		boolean required, boolean skuContributor, boolean importOptionValue,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new cp definition option rel with the primary key. Does not add the cp definition option rel to the database.

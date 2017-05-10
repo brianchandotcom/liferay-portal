@@ -48,6 +48,15 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinitionOptionRel addCPDefinitionOptionRel(
+		long cpDefinitionId, long cpOptionId, boolean importOptionValue,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(cpDefinitionId,
+			cpOptionId, importOptionValue, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionOptionRel addCPDefinitionOptionRel(
 		long cpDefinitionId, long cpOptionId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -61,12 +70,13 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
-		boolean required, boolean skuContributor,
+		boolean required, boolean skuContributor, boolean importOptionValue,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(cpDefinitionId,
 			cpOptionId, name, titleMap, descriptionMap, ddmFormFieldTypeName,
-			priority, facetable, required, skuContributor, serviceContext);
+			priority, facetable, required, skuContributor, importOptionValue,
+			serviceContext);
 	}
 
 	/**

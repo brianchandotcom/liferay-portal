@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.service.permission;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.model.CPMediaType;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
@@ -43,7 +42,7 @@ public class CPOptionCategoryPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, cpOptionCategory, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, CPMediaType.class.getName(),
+				permissionChecker, CPOptionCategory.class.getName(),
 				cpOptionCategory.getCPOptionCategoryId(), actionId);
 		}
 	}
@@ -55,7 +54,7 @@ public class CPOptionCategoryPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, cpOptionCategoryId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, CPMediaType.class.getName(),
+				permissionChecker, CPOptionCategory.class.getName(),
 				cpOptionCategoryId, actionId);
 		}
 	}
@@ -111,8 +110,8 @@ public class CPOptionCategoryPermission implements BaseModelPermissionChecker {
 	}
 
 	@Reference(unbind = "-")
-(??)protected void setCPOptionLocalService(
-(??)CPMediaTypeLocalService cpOptionLocalService) {
+	protected void setCPOptionLocalService(
+		CPOptionCategoryLocalService cpOptionLocalService) {
 
 		_cpOptionCategoryLocalService = cpOptionCategoryLocalService;
 	}

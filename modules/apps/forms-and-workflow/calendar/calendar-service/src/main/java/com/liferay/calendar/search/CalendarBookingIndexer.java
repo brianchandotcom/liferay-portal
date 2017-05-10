@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 
 import java.util.Locale;
 
@@ -182,7 +182,8 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 			calendarBooking.getCalendarBookingId());
 
 		if (calendarBooking.isInTrash()) {
-			calendarBookingId = TrashUtil.getOriginalTitle(calendarBookingId);
+			calendarBookingId = _trashHelper.getOriginalTitle(
+				calendarBookingId);
 		}
 
 		document.addKeyword("calendarBookingId", calendarBookingId);
@@ -366,5 +367,8 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

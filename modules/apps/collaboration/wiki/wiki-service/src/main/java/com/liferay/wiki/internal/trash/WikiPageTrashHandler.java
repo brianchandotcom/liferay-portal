@@ -33,10 +33,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.model.TrashEntryConstants;
-import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.engine.impl.WikiEngineRenderer;
@@ -269,7 +269,8 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 		WikiPage page = _wikiPageLocalService.getLatestPage(
 			classPK, WorkflowConstants.STATUS_ANY, false);
 
-		return new WikiPageAssetRenderer(page, _wikiEngineRenderer);
+		return new WikiPageAssetRenderer(
+			page, _wikiEngineRenderer, _trashHelper);
 	}
 
 	@Override
@@ -397,7 +398,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 				checkRestorableEntry(
 					curPage.getResourcePrimKey(), 0, containerModelId,
 					curPage.getTitle(),
-					TrashUtil.getOriginalTitle(curPage.getTitle()));
+					_trashHelper.getOriginalTitle(curPage.getTitle()));
 			}
 		}
 	}
@@ -472,6 +473,9 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 	private WikiEngineRenderer _wikiEngineRenderer;
 	private WikiPageLocalService _wikiPageLocalService;

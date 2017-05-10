@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.trash.BaseTrashRenderer;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 
 import java.util.Locale;
 
@@ -37,8 +37,19 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 
+	/**
+	 * @deprecated As of 1.4.0
+	 */
+	@Deprecated
 	public DLFileShortcutTrashRenderer(DLFileShortcut dlFileShortcut) {
+		this(dlFileShortcut, null);
+	}
+
+	public DLFileShortcutTrashRenderer(
+		DLFileShortcut dlFileShortcut, TrashHelper trashHelper) {
+
 		_dlFileShortcut = dlFileShortcut;
+		_trashHelper = trashHelper;
 	}
 
 	@Override
@@ -65,7 +76,7 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 
 	@Override
 	public String getTitle(Locale locale) {
-		return TrashUtil.getOriginalTitle(_dlFileShortcut.getToTitle());
+		return _trashHelper.getOriginalTitle(_dlFileShortcut.getToTitle());
 	}
 
 	@Override
@@ -89,5 +100,6 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 	}
 
 	private final DLFileShortcut _dlFileShortcut;
+	private final TrashHelper _trashHelper;
 
 }

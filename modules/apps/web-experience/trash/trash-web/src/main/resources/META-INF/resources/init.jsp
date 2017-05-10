@@ -22,6 +22,7 @@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
@@ -82,14 +83,18 @@ page import="javax.portlet.WindowState" %>
 
 <liferay-theme:defineObjects />
 
+<liferay-trash:defineObjects />
+
 <portlet:defineObjects />
 
 <%
 TrashDisplayContext trashDisplayContext = new TrashDisplayContext(request, liferayPortletResponse);
 
+TrashUtil trashUtil = (TrashUtil)request.getAttribute(TrashWebKeys.TRASH_UTIL);
+
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
-String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, com.liferay.trash.kernel.util.TrashUtil.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
+String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, trashHelper.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
 
 String description = LanguageUtil.get(request, "javax.portlet.description.com_liferay_trash_web_portlet_TrashPortlet") + LanguageUtil.format(request, "entries-that-have-been-in-the-recycle-bin-for-more-than-x-are-automatically-deleted", StringUtil.toLowerCase(trashEntriesMaxAgeTimeDescription), false);
 

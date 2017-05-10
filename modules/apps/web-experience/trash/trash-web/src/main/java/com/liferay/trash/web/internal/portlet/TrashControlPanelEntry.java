@@ -19,10 +19,11 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -39,12 +40,15 @@ public class TrashControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		if (!TrashUtil.isTrashEnabled(group.getGroupId())) {
+		if (!_trashHelper.isTrashEnabled(group.getGroupId())) {
 			return true;
 		}
 
 		return super.hasAccessPermissionDenied(
 			permissionChecker, group, portlet);
 	}
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

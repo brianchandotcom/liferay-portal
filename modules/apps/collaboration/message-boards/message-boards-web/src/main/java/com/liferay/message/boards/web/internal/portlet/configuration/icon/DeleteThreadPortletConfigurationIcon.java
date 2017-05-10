@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -167,7 +167,7 @@ public class DeleteThreadPortletConfigurationIcon
 
 	protected boolean isTrashEnabled(long groupId) {
 		try {
-			if (TrashUtil.isTrashEnabled(groupId)) {
+			if (_trashHelper.isTrashEnabled(groupId)) {
 				return true;
 			}
 		}
@@ -179,5 +179,8 @@ public class DeleteThreadPortletConfigurationIcon
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

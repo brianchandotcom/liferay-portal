@@ -112,8 +112,8 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 
 	public static final String TABLE_SQL_CREATE = "create table CPOptionValue (uuid_ VARCHAR(75) null,CPOptionValueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPOptionId LONG,name VARCHAR(75) null,title STRING null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CPOptionValue";
-	public static final String ORDER_BY_JPQL = " ORDER BY cpOptionValue.title DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY CPOptionValue.title DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY cpOptionValue.title ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CPOptionValue.title ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -739,8 +739,6 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 		int value = 0;
 
 		value = getTitle().compareTo(cpOptionValue.getTitle());
-
-		value = value * -1;
 
 		if (value != 0) {
 			return value;

@@ -112,8 +112,8 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 
 	public static final String TABLE_SQL_CREATE = "create table CPDefinitionOptionValueRel (uuid_ VARCHAR(75) null,CPDefinitionOptionValueRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionOptionRelId LONG,name VARCHAR(75) null,title STRING null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionOptionValueRel";
-	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionOptionValueRel.priority DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionOptionValueRel.priority DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionOptionValueRel.priority ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionOptionValueRel.priority ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -753,8 +753,6 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 		else {
 			value = 0;
 		}
-
-		value = value * -1;
 
 		if (value != 0) {
 			return value;

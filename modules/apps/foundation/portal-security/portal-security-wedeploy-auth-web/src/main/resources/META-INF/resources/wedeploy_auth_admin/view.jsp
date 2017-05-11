@@ -19,14 +19,14 @@
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/view");
+portletURL.setParameter("mvcRenderCommandName", "/wedeploy_auth_admin/view");
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item
 			href="<%= portletURL.toString() %>"
-			label="wedeploy-auth"
+			label="wedeploy-app"
 			selected="<%= true %>"
 		/>
 	</aui:nav>
@@ -34,7 +34,7 @@ portletURL.setParameter("mvcRenderCommandName", "/view");
 
 <div class="container-fluid-1080 main-content-body">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-apps-were-found"
+		emptyResultsMessage="no-wedeploy-apps-were-found"
 		id="weDeployAuthApps"
 		iteratorURL="<%= portletURL %>"
 	>
@@ -42,8 +42,11 @@ portletURL.setParameter("mvcRenderCommandName", "/view");
 
 			<%
 			total = WeDeployAuthAppLocalServiceUtil.getWeDeployAuthAppsCount();
+
 			searchContainer.setTotal(total);
+
 			results = WeDeployAuthAppLocalServiceUtil.getWeDeployAuthApps(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
 			searchContainer.setResults(results);
 			%>
 
@@ -73,12 +76,6 @@ portletURL.setParameter("mvcRenderCommandName", "/view");
 			/>
 
 			<liferay-ui:search-container-column-date
-				name="create-date"
-				orderable="<%= false %>"
-				property="createDate"
-			/>
-
-			<liferay-ui:search-container-column-date
 				name="modified-date"
 				orderable="<%= false %>"
 				property="modifiedDate"
@@ -87,13 +84,4 @@ portletURL.setParameter("mvcRenderCommandName", "/view");
 
 		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 	</liferay-ui:search-container>
-
-	<portlet:renderURL var="addWeDeployAuthAppEntryURL">
-		<portlet:param name="mvcRenderCommandName" value="/wedeploy_auth_admin/edit" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title="Add" url="<%= addWeDeployAuthAppEntryURL %>" />
-	</liferay-frontend:add-menu>
 </div>

@@ -113,7 +113,21 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 		}
 	}
 
-	public CPOption getCPOption(
+	public void init() {
+		_cpOptions = new HashMap<>();
+	}
+
+	@Activate
+	protected void activate() {
+		init();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_cpOptions = null;
+	}
+
+	protected CPOption getCPOption(
 			Locale locale, long userId, long groupId, JSONObject jsonObject)
 		throws PortalException {
 
@@ -145,20 +159,6 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 		_cpOptions.put(name, cpOption);
 
 		return cpOption;
-	}
-
-	public void init() {
-		_cpOptions = new HashMap<>();
-	}
-
-	@Activate
-	protected void activate() {
-		init();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_cpOptions = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

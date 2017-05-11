@@ -38,28 +38,6 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetCategoryDemoDataCreatorHelper
 	extends BaseCPDemoDataCreatorHelper {
 
-	public AssetCategory getAssetCategory(
-			long userId, long groupId, long vocabularyId, JSONObject jsonObject)
-		throws PortalException {
-
-		String title = jsonObject.getString("title");
-
-		AssetCategory assetCategory = _assetCategories.get(title);
-
-		if (assetCategory != null) {
-			return assetCategory;
-		}
-
-		ServiceContext serviceContext = getServiceContext(userId, groupId);
-
-		assetCategory = _assetCategoryLocalService.addCategory(
-			userId, groupId, title, vocabularyId, serviceContext);
-
-		_assetCategories.put(title, assetCategory);
-
-		return assetCategory;
-	}
-
 	public long[] getAssetCategoryIds(
 			long userId, long groupId, long vocabularyId, JSONArray jsonArray)
 		throws PortalException {
@@ -85,6 +63,28 @@ public class AssetCategoryDemoDataCreatorHelper
 	@Activate
 	protected void activate() {
 		init();
+	}
+
+	protected AssetCategory getAssetCategory(
+			long userId, long groupId, long vocabularyId, JSONObject jsonObject)
+		throws PortalException {
+
+		String title = jsonObject.getString("title");
+
+		AssetCategory assetCategory = _assetCategories.get(title);
+
+		if (assetCategory != null) {
+			return assetCategory;
+		}
+
+		ServiceContext serviceContext = getServiceContext(userId, groupId);
+
+		assetCategory = _assetCategoryLocalService.addCategory(
+			userId, groupId, title, vocabularyId, serviceContext);
+
+		_assetCategories.put(title, assetCategory);
+
+		return assetCategory;
 	}
 
 	private Map<String, AssetCategory> _assetCategories;

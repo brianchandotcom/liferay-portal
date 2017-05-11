@@ -116,7 +116,22 @@ public class CPDefinitionDemoDataCreatorHelper
 		}
 	}
 
-	public CPDefinition createCPDefinition(
+	public void deleteCPDefinitions() throws PortalException {
+		for (long cpDefinitionId : _cpDefinitionIds) {
+			try {
+				_cpDefinitionLocalService.deleteCPDefinition(cpDefinitionId);
+			}
+			catch (NoSuchCPDefinitionException nscpde) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(nscpde);
+				}
+			}
+
+			_cpDefinitionIds.remove(cpDefinitionId);
+		}
+	}
+
+	protected CPDefinition createCPDefinition(
 			long userId, long groupId, String baseSKU, String name,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String productTypeName, long[] assetCategoryIds)
@@ -166,22 +181,7 @@ public class CPDefinitionDemoDataCreatorHelper
 		return cpDefinition;
 	}
 
-	public void deleteCPDefinitions() throws PortalException {
-		for (long cpDefinitionId : _cpDefinitionIds) {
-			try {
-				_cpDefinitionLocalService.deleteCPDefinition(cpDefinitionId);
-			}
-			catch (NoSuchCPDefinitionException nscpde) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(nscpde);
-				}
-			}
-
-			_cpDefinitionIds.remove(cpDefinitionId);
-		}
-	}
-
-	public JSONArray getCatalogJSONArray() throws Exception {
+	protected JSONArray getCatalogJSONArray() throws Exception {
 		Class<?> clazz = getClass();
 
 		String catalogPath =

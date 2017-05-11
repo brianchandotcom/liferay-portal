@@ -42,6 +42,7 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 	public void delete() throws PortalException {
 		_cpDefinitionDemoDataCreatorHelper.deleteCPDefinitions();
 		_cpOptionDemoDataCreatorHelper.deleteCPOptions();
+
 		_assetVocabularyDemoDataCreatorHelper.deleteVocabularies();
 	}
 

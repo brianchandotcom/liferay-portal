@@ -48,10 +48,6 @@
 					results="<%= SubscriptionLocalServiceUtil.getUserSubscriptions(user.getUserId(), searchContainer.getStart(), searchContainer.getEnd(), new SubscriptionClassNameIdComparator(true)) %>"
 				/>
 
-				<%
-				String subscriptionClassName = StringPool.BLANK;
-				%>
-
 				<liferay-ui:search-container-row
 					className="com.liferay.subscription.model.Subscription"
 					escapedModel="<%= true %>"

@@ -17,24 +17,8 @@ package com.liferay.commerce.product.type.virtual.service.impl;
 import com.liferay.commerce.product.type.virtual.service.base.CPDefinitionVirtualSettingLocalServiceBaseImpl;
 
 /**
- * The implementation of the cp definition virtual setting local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Marco Leo
- * @see CPDefinitionVirtualSettingLocalServiceBaseImpl
- * @see com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalServiceUtil
  */
 public class CPDefinitionVirtualSettingLocalServiceImpl
 	extends CPDefinitionVirtualSettingLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalServiceUtil} to access the cp definition virtual setting local service.
-	 */
 }

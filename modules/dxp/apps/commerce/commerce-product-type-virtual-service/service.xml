@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.product.type.virtual">
+	<author>Marco Leo</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CPDefinitionVirtualSetting" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPDefinitionVirtualSettingId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPDefinitionId" type="long" />
+		<column name="fileEntryId" type="long" />
+		<column name="url" type="String" />
+		<column name="activationStatus" type="String" />
+		<column name="duration" type="long" />
+		<column name="maxUsages" type="int" />
+		<column name="sampleFileEntryId" type="long" />
+		<column name="sampleUrl" type="String" />
+		<column name="termsOfUseRequired" type="boolean" />
+		<column localized="true" name="termsOfUseContent" type="String" />
+		<column name="termsOfUseJournalArticleId" type="long" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="CPDefinitionId" return-type="CPDefinitionVirtualSetting" unique="true">
+			<finder-column name="CPDefinitionId" />
+		</finder>
+	</entity>
+</service-builder>

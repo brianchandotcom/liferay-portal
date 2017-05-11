@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Commerce Product Type Virtual Service
+Bundle-SymbolicName: com.liferay.commerce.product.type.virtual.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

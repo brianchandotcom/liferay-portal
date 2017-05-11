@@ -96,7 +96,7 @@ public class AssetCategoryDemoDataCreatorHelper
 	}
 
 	@Activate
-	protected void activate() throws PortalException {
+	protected void activate() {
 		init();
 	}
 

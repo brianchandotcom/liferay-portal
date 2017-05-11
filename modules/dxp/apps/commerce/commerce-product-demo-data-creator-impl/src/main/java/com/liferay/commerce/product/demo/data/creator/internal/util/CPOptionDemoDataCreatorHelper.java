@@ -155,12 +155,12 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 	}
 
 	@Activate
-	protected void activate() throws PortalException {
+	protected void activate() {
 		init();
 	}
 
 	@Deactivate
-	protected void deactivate() throws PortalException {
+	protected void deactivate() {
 		_cpOptions = null;
 	}
 

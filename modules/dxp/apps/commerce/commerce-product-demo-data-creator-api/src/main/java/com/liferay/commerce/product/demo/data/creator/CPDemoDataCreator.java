@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.io.IOException;
-
 /**
  * @author Alessio Antonio Rendina
  */
@@ -27,7 +25,7 @@ import java.io.IOException;
 public interface CPDemoDataCreator {
 
 	public void create(long userId, long groupId, boolean buildSkus)
-		throws IOException, PortalException;
+		throws Exception;
 
 	public void delete() throws PortalException;
 

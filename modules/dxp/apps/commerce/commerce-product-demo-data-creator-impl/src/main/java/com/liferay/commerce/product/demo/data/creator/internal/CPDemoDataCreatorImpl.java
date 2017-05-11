@@ -21,8 +21,6 @@ import com.liferay.commerce.product.demo.data.creator.internal.util.CPDefinition
 import com.liferay.commerce.product.demo.data.creator.internal.util.CPOptionDemoDataCreatorHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.io.IOException;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -34,7 +32,7 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 
 	@Override
 	public void create(long userId, long groupId, boolean buildSkus)
-		throws IOException, PortalException {
+		throws Exception {
 
 		_cpDefinitionDemoDataCreatorHelper.addCPDefinitions(
 			userId, groupId, buildSkus);

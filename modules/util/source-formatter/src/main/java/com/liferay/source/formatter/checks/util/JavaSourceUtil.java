@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -28,6 +31,17 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class JavaSourceUtil extends SourceUtil {
+
+	public static String getAbsolutePath(String fileName) {
+		Path filePath = Paths.get(fileName);
+
+		filePath = filePath.toAbsolutePath();
+
+		filePath = filePath.normalize();
+
+		return StringUtil.replace(
+			filePath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
+	}
 
 	public static String getClassName(String fileName) {
 		int x = fileName.lastIndexOf(CharPool.SLASH);

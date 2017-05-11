@@ -53,6 +53,16 @@ public class TestIntegrationTomcatExtension {
 		return GradleUtil.toString(_managerUserName);
 	}
 
+	public File getModuleFrameworkBaseDir() {
+		File dir = getLiferayHome();
+
+		if (dir != null) {
+			dir = new File(dir, "osgi");
+		}
+
+		return dir;
+	}
+
 	public int getPortNumber() {
 		return GradleUtil.toInteger(_portNumber);
 	}

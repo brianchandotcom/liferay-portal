@@ -26,6 +26,7 @@ import com.liferay.gradle.plugins.test.integration.tasks.StartTestableTomcatTask
 import com.liferay.gradle.plugins.test.integration.tasks.StopTestableTomcatTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.OSDetector;
+import com.liferay.gradle.util.copy.RenameDependencyClosure;
 
 import groovy.lang.Closure;
 
@@ -45,7 +46,10 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.execution.TaskExecutionGraph;
+import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.invocation.Gradle;
@@ -54,6 +58,7 @@ import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.StopExecutionException;
 import org.gradle.api.tasks.testing.Test;
@@ -63,6 +68,8 @@ import org.gradle.process.JavaForkOptions;
  * @author Andrea Di Giorgi
  */
 public class TestIntegrationPlugin implements Plugin<Project> {
+
+	public static final String COPY_TEST_MODULES_TASK_NAME = "copyTestModules";
 
 	public static final String PLUGIN_NAME = "testIntegration";
 
@@ -76,6 +83,8 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 	public static final String STOP_TESTABLE_TOMCAT_TASK_NAME =
 		"stopTestableTomcat";
+
+	public static final String TEST_MODULES_CONFIGURATION_NAME = "testModules";
 
 	@Override
 	public void apply(final Project project) {
@@ -92,9 +101,16 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				project, PLUGIN_NAME + "Tomcat",
 				TestIntegrationTomcatExtension.class);
 
+		Configuration testModulesConfiguration = _addConfigurationTestModules(
+			project);
+
+		Copy copyTestModulesTask = _addTaskCopyTestModules(
+			project, testModulesConfiguration, testIntegrationTomcatExtension);
+
 		SetUpTestableTomcatTask setUpTestableTomcatTask =
 			_addTaskSetUpTestableTomcat(
-				project, testIntegrationTomcatExtension);
+				project, copyTestModulesTask, testIntegrationTomcatExtension);
+
 		StopTestableTomcatTask stopTestableTomcatTask =
 			_addTaskStopTestableTomcat(
 				project, testIntegrationTask, testIntegrationTomcatExtension);
@@ -150,6 +166,86 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		return originalCounter;
 	}
 
+	private Configuration _addConfigurationTestModules(final Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, TEST_MODULES_CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					_addDependenciesTestModules(project);
+				}
+
+			});
+
+		configuration.setDescription(
+			"Configures additional OSGi modules to deploy during integration " +
+				"testing.");
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
+	private void _addDependenciesTestModules(Project project) {
+		GradleUtil.addDependency(
+			project, TEST_MODULES_CONFIGURATION_NAME, "org.apache.aries.jmx",
+			"org.apache.aries.jmx.core", "1.1.7");
+	}
+
+	private Copy _addTaskCopyTestModules(
+		Project project, Configuration testModulesConfiguration,
+		final TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
+
+		final Copy copy = GradleUtil.addTask(
+			project, COPY_TEST_MODULES_TASK_NAME, Copy.class);
+
+		final RenameDependencyClosure renameDependencyClosure =
+			new RenameDependencyClosure(
+				project, testModulesConfiguration.getName());
+
+		copy.eachFile(
+			new Action<FileCopyDetails>() {
+
+				@Override
+				public void execute(FileCopyDetails fileCopyDetails) {
+					String fileName = renameDependencyClosure.call(
+						fileCopyDetails.getName());
+
+					File file = new File(copy.getDestinationDir(), fileName);
+
+					if (file.exists()) {
+						fileCopyDetails.exclude();
+					}
+				}
+
+			});
+
+		copy.from(testModulesConfiguration);
+
+		copy.into(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						testIntegrationTomcatExtension.
+							getModuleFrameworkBaseDir(),
+						"test");
+				}
+
+			});
+
+		copy.rename(renameDependencyClosure);
+
+		copy.setDescription(
+			"Copies additional OSGi modules to deploy during integration " +
+				"testing.");
+
+		return copy;
+	}
+
 	private SetUpArquillianTask _addTaskSetUpArquillian(
 		final Project project, final SourceSet testIntegrationSourceSet,
 		TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
@@ -180,13 +276,15 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 	}
 
 	private SetUpTestableTomcatTask _addTaskSetUpTestableTomcat(
-		Project project,
+		Project project, Copy copyTestModulesTask,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
 		final SetUpTestableTomcatTask setUpTestableTomcatTask =
 			GradleUtil.addTask(
 				project, SET_UP_TESTABLE_TOMCAT_TASK_NAME,
 				SetUpTestableTomcatTask.class);
+
+		setUpTestableTomcatTask.dependsOn(copyTestModulesTask);
 
 		setUpTestableTomcatTask.onlyIf(
 			new Spec<Task>() {
@@ -547,13 +645,8 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					File dir = testIntegrationTomcatExtension.getLiferayHome();
-
-					if (dir != null) {
-						dir = new File(dir, "osgi");
-					}
-
-					return dir;
+					return testIntegrationTomcatExtension.
+						getModuleFrameworkBaseDir();
 				}
 
 			});

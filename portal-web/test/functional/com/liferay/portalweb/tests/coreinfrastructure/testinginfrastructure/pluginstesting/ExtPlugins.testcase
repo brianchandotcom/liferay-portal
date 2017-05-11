@@ -24,6 +24,8 @@
 	</tear-down>
 
 	<command name="ViewSampleExtPluginValidationViaDeploy" priority="5">
+		<execute macro="Portlet#assertServerStartup" />
+
 		<execute macro="Portlet#shutdownServer" />
 
 		<execute macro="Portlet#assertServerShutdown" />

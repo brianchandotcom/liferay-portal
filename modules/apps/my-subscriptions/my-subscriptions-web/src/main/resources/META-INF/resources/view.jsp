@@ -41,7 +41,7 @@
 				deltaConfigurable="<%= true %>"
 				emptyResultsMessage="no-subscriptions-were-found"
 				iteratorURL="<%= iteratorURL %>"
-				rowChecker="<%= new RowChecker(renderResponse) %>"
+				rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 				total="<%= SubscriptionLocalServiceUtil.getUserSubscriptionsCount(user.getUserId()) %>"
 			>
 				<liferay-ui:search-container-results

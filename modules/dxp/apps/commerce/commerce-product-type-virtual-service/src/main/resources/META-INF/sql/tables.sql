@@ -1,0 +1,22 @@
+create table CPDefinitionVirtualSetting (
+	uuid_ VARCHAR(75) null,
+	CPDefinitionVirtualSettingId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	CPDefinitionId LONG,
+	fileEntryId LONG,
+	url VARCHAR(75) null,
+	activationStatus VARCHAR(75) null,
+	duration LONG,
+	maxUsages INTEGER,
+	sampleFileEntryId LONG,
+	sampleUrl VARCHAR(75) null,
+	termsOfUseRequired BOOLEAN,
+	termsOfUseContent STRING null,
+	termsOfUseJournalArticleId LONG,
+	lastPublishDate DATE null
+);

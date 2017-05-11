@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -31,6 +33,7 @@ public class PropertiesSettings extends BaseSettings {
 		this(locationVariableResolver, properties, null);
 	}
 
+	@SuppressWarnings("unchecked")
 	public PropertiesSettings(
 		LocationVariableResolver locationVariableResolver,
 		Properties properties, Settings parentSettings) {
@@ -38,7 +41,7 @@ public class PropertiesSettings extends BaseSettings {
 		super(parentSettings);
 
 		_locationVariableResolver = locationVariableResolver;
-		_properties = properties;
+		_properties = new HashMap<>((Map)properties);
 	}
 
 	@Override
@@ -56,7 +59,7 @@ public class PropertiesSettings extends BaseSettings {
 	}
 
 	protected String readProperty(String key) {
-		String value = _properties.getProperty(key);
+		String value = _properties.get(key);
 
 		if (_locationVariableResolver.isLocationVariable(value)) {
 			return _locationVariableResolver.resolve(value);
@@ -66,6 +69,6 @@ public class PropertiesSettings extends BaseSettings {
 	}
 
 	private final LocationVariableResolver _locationVariableResolver;
-	private final Properties _properties;
+	private final Map<String, String> _properties;
 
 }

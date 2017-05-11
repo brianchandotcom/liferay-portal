@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.settings;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+
+import java.util.Map;
 import java.util.Properties;
 
 import org.junit.Assert;
@@ -29,15 +32,18 @@ public class PropertiesSettingsTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		_properties = new Properties();
+		Properties properties = new Properties();
 
-		_properties.put(_SINGLE_KEY, _SINGLE_VALUE);
-		_properties.put(_MULTIPLE_KEY, _MULTIPLE_VALUES);
+		properties.put(_SINGLE_KEY, _SINGLE_VALUE);
+		properties.put(_MULTIPLE_KEY, _MULTIPLE_VALUES);
 
 		_mockLocationVariableResolver = mock(LocationVariableResolver.class);
 
 		_propertiesSettings = new PropertiesSettings(
-			_mockLocationVariableResolver, _properties);
+			_mockLocationVariableResolver, properties);
+
+		_properties = ReflectionTestUtil.getFieldValue(
+			_propertiesSettings, "_properties");
 	}
 
 	@Test
@@ -143,7 +149,7 @@ public class PropertiesSettingsTest extends PowerMockito {
 	private static final String _SINGLE_VALUE = "value";
 
 	private LocationVariableResolver _mockLocationVariableResolver;
-	private Properties _properties;
+	private Map<String, String> _properties;
 	private PropertiesSettings _propertiesSettings;
 
 }

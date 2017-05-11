@@ -9,10 +9,6 @@ dependencies {
 	provided group: "com.h3xstream.findsecbugs", name: "findsecbugs-plugin", version: "1.6.0"
 }
 
-updateFileVersions {
-	match(/private static final String _VERSION = "(\d.+)";/, "../../sdk/gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/internal/FindSecurityBugsPlugin.java")
-}
-
 patch {
 	ext {
 		autoClean = false
@@ -24,4 +20,8 @@ patch {
 	fileNames "**/com/h3xstream/findsecbugs/taintanalysis/TaintFrameModelingVisitor.java"
 
 	originalLibModuleName = "findsecbugs-plugin"
+}
+
+updateFileVersions {
+	match(/private static final String _VERSION = "(\d.+)";/, "../../sdk/gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/internal/FindSecurityBugsPlugin.java")
 }

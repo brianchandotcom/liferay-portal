@@ -53,20 +53,6 @@
 			>
 
 				<%
-				if (!subscriptionClassName.equals(subscription.getClassName())) {
-					subscriptionClassName = subscription.getClassName();
-
-					ResultRow resultRow = new ResultRow(null, 0, searchContainer.getCur());
-
-					resultRow.addText("left", "top", 4, ResourceActionsUtil.getModelResource(locale, subscription.getClassName()));
-					resultRow.setClassHoverName("asset-name");
-					resultRow.setClassName("asset-name");
-
-					List<ResultRow> resultRows = searchContainer.getResultRows();
-
-					resultRows.add(resultRow);
-				}
-
 				AssetRenderer assetRenderer = MySubscriptionsUtil.getAssetRenderer(subscription.getClassName(), subscription.getClassPK());
 
 				String rowURL = null;
@@ -104,7 +90,7 @@
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" />
+			<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new MySubscriptionsResultRowSplitter(locale) %>" />
 
 			<c:if test="<%= !results.isEmpty() %>">
 				<aui:button-row cssName="unsubscribe-button-row">

@@ -69,6 +69,14 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 
 		<script type="text/javascript">
 			Liferay.namespace('EDITORS')['<%= editorName %>'] = true;
+
+			var destroyGlobalEditor = function() {
+				window.tinyMCE = undefined;
+
+				Liferay.detach('beforeScreenFlip', destroyGlobalEditor);
+			};
+
+			Liferay.on('beforeScreenFlip', destroyGlobalEditor);
 		</script>
 	</liferay-util:html-top>
 </c:if>

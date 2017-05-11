@@ -38,18 +38,6 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetCategoryDemoDataCreatorHelper
 	extends BaseCPDemoDataCreatorHelper {
 
-	public AssetCategory createAssetCategory(
-			long userId, long groupId, long vocabularyId, String title)
-		throws PortalException {
-
-		ServiceContext serviceContext = getServiceContext(userId, groupId);
-
-		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			userId, groupId, title, vocabularyId, serviceContext);
-
-		return assetCategory;
-	}
-
 	public AssetCategory getAssetCategory(
 			long userId, long groupId, long vocabularyId,
 			JSONObject assetCategoryJSONObject)
@@ -63,8 +51,10 @@ public class AssetCategoryDemoDataCreatorHelper
 			return assetCategory;
 		}
 
-		assetCategory = createAssetCategory(
-			userId, groupId, vocabularyId, title);
+		ServiceContext serviceContext = getServiceContext(userId, groupId);
+
+		assetCategory = _assetCategoryLocalService.addCategory(
+			userId, groupId, title, vocabularyId, serviceContext);
 
 		_assetCategories.put(title, assetCategory);
 

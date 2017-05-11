@@ -104,7 +104,7 @@
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator />
+			<liferay-ui:search-iterator markupView="lexicon" />
 
 			<c:if test="<%= !results.isEmpty() %>">
 				<aui:button-row cssName="unsubscribe-button-row">

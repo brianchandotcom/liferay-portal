@@ -3506,10 +3506,20 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
 						</then>
 						<else>
+							<get-testcase-property property.name="ext.plugins.includes" />
+
 							<parallel>
-								<sequential>
-									<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
-								</sequential>
+								<if>
+									<not>
+										<isset property="ext.plugins.includes" />
+									</not>
+									<then>
+										<sequential>
+											<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
+										</sequential>
+									</then>
+								</if>
+
 								<daemons>
 									<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" resolveexecutable="true">
 										<arg line="${app.server.start.executable.arg.line}" />

@@ -107,11 +107,8 @@ AUI.add(
 				var selectId = options.selectId;
 				var selectNullable = options.selectNullable !== false;
 				var selectSort = options.selectSort;
-				var selectVal = options.selectVal;
 
-				if (!A.Lang.isArray(selectVal)) {
-					selectVal = [selectVal];
-				}
+				var selectVal = A.Array(options.selectVal);
 
 				var selectOptions = [];
 
@@ -142,10 +139,6 @@ AUI.add(
 
 				if (select) {
 					select.empty().append(selectOptions);
-
-					if (Liferay.Browser.isIe()) {
-						select.setStyle('width', 'auto');
-					}
 				}
 			}
 		};

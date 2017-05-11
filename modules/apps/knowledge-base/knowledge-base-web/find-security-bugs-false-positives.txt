@@ -1,0 +1,10 @@
+com/liferay/document/library/display/context/DLMimeTypeDisplayContext.getCssClassFileMimeType(Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/knowledge/base/model/KBArticleModel.getContent()Ljava/lang/String;:SAFE
+com/liferay/knowledge/base/model/KBTemplateModel.getContent()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/dao/search/SearchContainer.getEmptyResultsMessage():SAFE@org/apache/jsp/section/view_jsp
+com/liferay/portal/kernel/util/StringUtil.shorten(UNKNOWN,SAFE,""):SAFE@org/apache/jsp/admin/common/article_005fattachments_jsp
+com/liferay/portal/kernel/workflow/WorkflowConstants.getStatusLabel(I)Ljava/lang/String;:SAFE
+
+com/liferay/knowledge/base/web/internal/util/KBArticleAssetEntriesUtil.getURL(Ljavax/servlet/http/HttpServletRequest;Lcom/liferay/portal/kernel/theme/ThemeDisplay;Lcom/liferay/asset/kernel/model/AssetRendererFactory;Lcom/liferay/asset/kernel/model/AssetRenderer;)Ljava/lang/String;:SAFE
+
+org/apache/jsp/admin/common/edit_005farticle_jsp._getFriendlyURLPrefix(JJ)Ljava/lang/String;:SAFE

@@ -1,0 +1,20 @@
+<FindBugsFilter>
+	<Match>
+		<Class name="com.liferay.knowledge.base.service.persistence.impl.KBArticlePersistenceImpl" />
+		<Or>
+			<Method name="countByG_S_L" />
+			<Method name="countByG_S_M" />
+			<Method name="countByG_S_S" />
+			<Method name="filterCountByG_S_L" />
+			<Method name="filterCountByG_S_M" />
+			<Method name="filterCountByG_S_S" />
+			<Method name="filterFindByG_S_L" />
+			<Method name="filterFindByG_S_M" />
+			<Method name="filterFindByG_S_S" />
+			<Method name="findByG_S_L" />
+			<Method name="findByG_S_M" />
+			<Method name="findByG_S_S" />
+		</Or>
+		<Bug pattern="SQL_INJECTION_HIBERNATE" />
+	</Match>
+</FindBugsFilter>

@@ -245,6 +245,7 @@
 /lib/portal/poi.jar
 /lib/portal/portals-bridges.jar
 /lib/portal/rdffilter.jar
+/lib/portal/rhino.jar
 /lib/portal/rome.jar
 /lib/portal/rometools.jar
 /lib/portal/saaj-api.jar
@@ -301,6 +302,7 @@
 /lib/portal/xstream.jar
 /lib/portal/xuggle-xuggler-noarch.jar
 /lib/portal/xz.jar
+/lib/portal/yui-compressor.jar
 /nbproject/private
 /out
 /portal-client/*.ipr

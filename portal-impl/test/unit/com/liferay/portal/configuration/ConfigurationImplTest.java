@@ -88,6 +88,75 @@ public class ConfigurationImplTest {
 	}
 
 	@Test
+	public void testGetEnvironmentVariableNamePrependsLiferayPrefix()
+		throws Exception {
+
+		TestResourceClassLoader testResourceClassLoader =
+			new TestResourceClassLoader();
+
+		testResourceClassLoader.addPropertiesResource(
+			ConfigurationImplTest.class.getName(), StringPool.BLANK);
+
+		ConfigurationImpl configurationImpl = new ConfigurationImpl(
+			testResourceClassLoader, ConfigurationImplTest.class.getName(),
+			CompanyConstants.SYSTEM, null);
+
+		Assert.assertEquals(
+			"LIFERAY_FOO", configurationImpl.getEnvironmentVariableName("foo"));
+	}
+
+	@Test
+	public void testGetEnvironmentVariableNameWithInvalidCharsInKey()
+		throws Exception {
+
+		TestResourceClassLoader testResourceClassLoader =
+			new TestResourceClassLoader();
+
+		testResourceClassLoader.addPropertiesResource(
+			ConfigurationImplTest.class.getName(), StringPool.BLANK);
+
+		ConfigurationImpl configurationImpl = new ConfigurationImpl(
+			testResourceClassLoader, ConfigurationImplTest.class.getName(),
+			CompanyConstants.SYSTEM, null);
+
+		Assert.assertEquals(
+			"LIFERAY_FOO_BAR",
+			configurationImpl.getEnvironmentVariableName("foo.bar"));
+		Assert.assertEquals(
+			"LIFERAY_FOO_BAR",
+			configurationImpl.getEnvironmentVariableName("foo-bar"));
+		Assert.assertEquals(
+			"LIFERAY_FOO_BAR__HOME",
+			configurationImpl.getEnvironmentVariableName("foo.bar[/home]"));
+	}
+
+	@Test
+	public void testGetMultiValueKeyEnvironmentVariableName() throws Exception {
+		TestResourceClassLoader testResourceClassLoader =
+			new TestResourceClassLoader();
+
+		testResourceClassLoader.addPropertiesResource(
+			ConfigurationImplTest.class.getName(), StringPool.BLANK);
+
+		ConfigurationImpl configurationImpl = new ConfigurationImpl(
+			testResourceClassLoader, ConfigurationImplTest.class.getName(),
+			CompanyConstants.SYSTEM, null);
+
+		Assert.assertEquals(
+			"LIFERAY_FOO_BAR",
+			configurationImpl.getEnvironmentVariableName("foo[bar]"));
+		Assert.assertEquals(
+			"LIFERAY_FOO_BAR_BAZ",
+			configurationImpl.getEnvironmentVariableName("foo.bar[baz]"));
+		Assert.assertEquals(
+			"LIFERAY_FOO_BAR_BAZ_QUX",
+			configurationImpl.getEnvironmentVariableName("foo.bar[baz][qux]"));
+		Assert.assertEquals(
+			"LIFERAY_FOO_BAR_BAZ__QUX",
+			configurationImpl.getEnvironmentVariableName("foo.bar[baz][/qux]"));
+	}
+
+	@Test
 	public void testLoadEmptyProperties() throws Exception {
 		TestResourceClassLoader testResourceClassLoader =
 			new TestResourceClassLoader();

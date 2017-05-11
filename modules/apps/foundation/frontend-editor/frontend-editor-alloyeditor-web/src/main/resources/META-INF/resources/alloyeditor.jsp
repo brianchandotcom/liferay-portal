@@ -107,6 +107,15 @@ if (editorOptions != null) {
 			CKEDITOR.getNextZIndex = function() {
 				return CKEDITOR.dialog._.currentZIndex ? CKEDITOR.dialog._.currentZIndex + 10 : Liferay.zIndex.WINDOW + 10;
 			};
+
+			var destroyGlobalEditors = function() {
+				window.AlloyEditor = undefined;
+				window.CKEDITOR = undefined;
+
+				Liferay.detach('beforeScreenFlip', destroyGlobalEditors);
+			};
+
+			Liferay.on('beforeScreenFlip', destroyGlobalEditors);
 		</script>
 	</liferay-util:html-top>
 </c:if>

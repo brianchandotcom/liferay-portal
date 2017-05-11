@@ -145,9 +145,13 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Record version
 
+		int status = GetterUtil.getInteger(
+			serviceContext.getAttribute("status"),
+			WorkflowConstants.STATUS_DRAFT);
+
 		DDLRecordVersion recordVersion = addRecordVersion(
 			user, record, ddmStorageId, DDLRecordConstants.VERSION_DEFAULT,
-			displayIndex, WorkflowConstants.STATUS_DRAFT);
+			displayIndex, status);
 
 		// Asset
 
@@ -160,10 +164,15 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), groupId, userId,
-			getWorkflowAssetClassName(recordSet),
-			recordVersion.getRecordVersionId(), recordVersion, serviceContext);
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_PUBLISH) {
+
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				user.getCompanyId(), groupId, userId,
+				getWorkflowAssetClassName(recordSet),
+				recordVersion.getRecordVersionId(), recordVersion,
+				serviceContext);
+		}
 
 		return record;
 	}
@@ -905,10 +914,14 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), record.getGroupId(), userId,
-			DDLRecord.class.getName(), recordVersion.getRecordVersionId(),
-			recordVersion, serviceContext);
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_PUBLISH) {
+
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				user.getCompanyId(), record.getGroupId(), userId,
+				DDLRecord.class.getName(), recordVersion.getRecordVersionId(),
+				recordVersion, serviceContext);
+		}
 
 		return record;
 	}

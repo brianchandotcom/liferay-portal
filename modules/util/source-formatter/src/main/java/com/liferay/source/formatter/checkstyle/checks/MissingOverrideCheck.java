@@ -14,18 +14,18 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
-import com.puppycrawl.tools.checkstyle.api.FileText;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -39,15 +39,8 @@ import com.thoughtworks.qdox.model.JavaPackage;
 import com.thoughtworks.qdox.model.JavaParameter;
 import com.thoughtworks.qdox.model.Type;
 import com.thoughtworks.qdox.model.annotation.AnnotationValue;
-import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
-import java.io.FilenameFilter;
-
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,12 +65,16 @@ public class MissingOverrideCheck extends AbstractCheck {
 		String fileName = StringUtil.replace(
 			fileContents.getFileName(), '\\', '/');
 
-		JavaDocBuilder javaDocBuilder = _getJavaDocBuilder(fileName);
+		JavaDocBuilder javaDocBuilder = null;
 
 		try {
-			javaDocBuilder.addSource(new UnsyncStringReader(_getContent()));
+			javaDocBuilder = _getJavaDocBuilder(fileName);
 		}
-		catch (ParseException pe) {
+		catch (Exception e) {
+			return;
+		}
+
+		if (javaDocBuilder == null) {
 			return;
 		}
 
@@ -88,6 +85,10 @@ public class MissingOverrideCheck extends AbstractCheck {
 			javaClass, fileName, javaDocBuilder, new ArrayList<Tuple>());
 
 		for (JavaMethod javaMethod : javaClass.getMethods()) {
+			if (javaMethod.getLineNumber() == 0) {
+				continue;
+			}
+
 			if (!_hasAnnotation(javaMethod, "Override") &&
 				_isOverrideMethod(
 					javaClass, javaMethod, ancestorJavaClassTuples)) {
@@ -136,40 +137,6 @@ public class MissingOverrideCheck extends AbstractCheck {
 		return ancestorJavaClassTuples;
 	}
 
-	private URL[] _addJarFiles(URL[] urls, String dirName) {
-		File dirFile = new File(dirName);
-
-		if (!dirFile.exists()) {
-			return urls;
-		}
-
-		File[] files = dirFile.listFiles(
-			new FilenameFilter() {
-
-				@Override
-				public boolean accept(File dir, String name) {
-					if (name.endsWith(".jar")) {
-						return true;
-					}
-
-					return false;
-				}
-
-			});
-
-		for (File file : files) {
-			try {
-				URI uri = file.toURI();
-
-				urls = ArrayUtil.append(urls, uri.toURL());
-			}
-			catch (MalformedURLException murle) {
-			}
-		}
-
-		return urls;
-	}
-
 	private JavaClass _fixJavaClass(
 		JavaClass javaClass, String packageName, String fileName,
 		JavaDocBuilder javaDocBuilder) {
@@ -211,47 +178,52 @@ public class MissingOverrideCheck extends AbstractCheck {
 		return fileName.substring(pos + 1, fileName.length() - 5);
 	}
 
-	private String _getContent() {
-		FileContents fileContents = getFileContents();
-
-		FileText fileText = fileContents.getText();
-
-		return (String)fileText.getFullText();
-	}
-
-	private JavaDocBuilder _getJavaDocBuilder(String fileName) {
-		int pos = fileName.lastIndexOf("/modules/");
-
-		if (pos != -1) {
-			return _getModulesJavaDocBuilder(fileName.substring(0, pos));
-		}
+	private JavaDocBuilder _getJavaDocBuilder(String fileName)
+		throws Exception {
 
 		if (_javaDocBuilder != null) {
 			return _javaDocBuilder;
 		}
 
-		_javaDocBuilder = new JavaDocBuilder(
+		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(
 			new DefaultDocletTagFactory(), new ThreadSafeClassLibrary());
 
-		return _javaDocBuilder;
-	}
+		String absolutePath = JavaSourceUtil.getAbsolutePath(fileName);
 
-	private JavaDocBuilder _getModulesJavaDocBuilder(String rootDir) {
-		if (_modulesJavaDocBuilder != null) {
-			return _modulesJavaDocBuilder;
+		while (true) {
+			int x = absolutePath.lastIndexOf("/");
+
+			if (x == -1) {
+				return null;
+			}
+
+			absolutePath = absolutePath.substring(0, x);
+
+			File file = new File(absolutePath + "/portal-impl");
+
+			if (file.exists()) {
+				break;
+			}
 		}
 
-		ThreadSafeClassLibrary threadSafeClassLibrary =
-			new ThreadSafeClassLibrary();
+		List<String> fileNames = SourceFormatterUtil.scanForFiles(
+			absolutePath + "/", _EXCLUDES, new String[] {"**/*.java"}, true);
 
-		URL[] urls = _addJarFiles(new URL[0], rootDir + "/tools/sdk/dist");
+		for (String curFileName : fileNames) {
+			curFileName = StringUtil.replace(
+				curFileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
-		threadSafeClassLibrary.addClassLoader(new URLClassLoader(urls));
+			try {
+				javaDocBuilder.addSource(
+					new File(JavaSourceUtil.getAbsolutePath(curFileName)));
+			}
+			catch (Exception e) {
+			}
+		}
 
-		_modulesJavaDocBuilder = new JavaDocBuilder(
-			new DefaultDocletTagFactory(), threadSafeClassLibrary);
+		_javaDocBuilder = javaDocBuilder;
 
-		return _modulesJavaDocBuilder;
+		return _javaDocBuilder;
 	}
 
 	private String _getPackagePath(DetailAST packageDefAST) {
@@ -425,9 +397,15 @@ public class MissingOverrideCheck extends AbstractCheck {
 		return false;
 	}
 
+	private static final String[] _EXCLUDES = new String[] {
+		"**/.git/**", "**/.gradle/**", "**/bin/**", "**/build/**",
+		"**/classes/**", "**/node_modules/**", "**/npm-shrinkwrap.json",
+		"**/test-classes/**", "**/test-coverage/**", "**/test-results/**",
+		"**/tmp/**"
+	};
+
 	private static final double _LOWEST_SUPPORTED_JAVA_VERSION = 1.7;
 
 	private JavaDocBuilder _javaDocBuilder;
-	private JavaDocBuilder _modulesJavaDocBuilder;
 
 }

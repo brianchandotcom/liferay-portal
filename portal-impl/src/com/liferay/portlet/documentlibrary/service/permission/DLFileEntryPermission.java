@@ -92,6 +92,14 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 		String portletId = PortletProviderUtil.getPortletId(
 			FileEntry.class.getName(), PortletProvider.Action.EDIT);
 
+		if (permissionChecker.hasOwnerPermission(
+				dlFileEntry.getCompanyId(), DLFileEntry.class.getName(),
+				dlFileEntry.getFileEntryId(), dlFileEntry.getUserId(),
+				actionId)) {
+
+			return true;
+		}
+
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, dlFileEntry.getGroupId(),
 			DLFileEntry.class.getName(), dlFileEntry.getFileEntryId(),
@@ -112,6 +120,9 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 
 			if (hasPermission != null) {
 				return hasPermission.booleanValue();
+			}
+			else if (actionId.equals(ActionKeys.VIEW)) {
+				return false;
 			}
 		}
 
@@ -169,14 +180,6 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 					}
 				}
 			}
-		}
-
-		if (permissionChecker.hasOwnerPermission(
-				dlFileEntry.getCompanyId(), DLFileEntry.class.getName(),
-				dlFileEntry.getFileEntryId(), dlFileEntry.getUserId(),
-				actionId)) {
-
-			return true;
 		}
 
 		return permissionChecker.hasPermission(

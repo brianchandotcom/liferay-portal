@@ -46,23 +46,22 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 
 	public void addCPOptions(
 			Locale locale, long userId, long groupId, long cpDefinitionId,
-			JSONArray cpOptionsJSONArray)
+			JSONArray jsonArray)
 		throws PortalException {
 
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
-		for (int i = 0; i < cpOptionsJSONArray.length(); i++) {
-			JSONObject cpOptionJSONObject = cpOptionsJSONArray.getJSONObject(i);
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			String name = cpOptionJSONObject.getString("name");
-			String title = cpOptionJSONObject.getString("title");
-			String description = cpOptionJSONObject.getString("description");
-			String ddmFormFieldTypeName = cpOptionJSONObject.getString(
+			String name = jsonObject.getString("name");
+			String title = jsonObject.getString("title");
+			String description = jsonObject.getString("description");
+			String ddmFormFieldTypeName = jsonObject.getString(
 				"ddmFormFieldTypeName");
-			int priority = cpOptionJSONObject.getInt("priority");
-			boolean facetable = cpOptionJSONObject.getBoolean("facetable");
-			boolean skuContributor = cpOptionJSONObject.getBoolean(
-				"skuContributor");
+			int priority = jsonObject.getInt("priority");
+			boolean facetable = jsonObject.getBoolean("facetable");
+			boolean skuContributor = jsonObject.getBoolean("skuContributor");
 
 			Map<Locale, String> titleMap = Collections.singletonMap(
 				locale, title);
@@ -70,7 +69,7 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 				locale, description);
 
 			CPOption cpOption = getCPOption(
-				locale, userId, groupId, cpOptionJSONObject);
+				locale, userId, groupId, jsonObject);
 
 			long cpOptionId = cpOption.getCPOptionId();
 
@@ -84,7 +83,7 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 				cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 
 			JSONArray cpDefinitionOptionValueRelsJSONArray =
-				cpOptionJSONObject.getJSONArray("values");
+				jsonObject.getJSONArray("values");
 
 			_cpDefinitionOptionValueRelDemoDataCreatorHelper.
 				addCPDefinitionOptionValueRels(
@@ -115,11 +114,10 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 	}
 
 	public CPOption getCPOption(
-			Locale locale, long userId, long groupId,
-			JSONObject cpOptionJSONObject)
+			Locale locale, long userId, long groupId, JSONObject jsonObject)
 		throws PortalException {
 
-		String name = cpOptionJSONObject.getString("name");
+		String name = jsonObject.getString("name");
 
 		CPOption cpOption = _cpOptions.get(name);
 
@@ -127,13 +125,12 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 			return cpOption;
 		}
 
-		String title = cpOptionJSONObject.getString("title");
-		String description = cpOptionJSONObject.getString("description");
-		String ddmFormFieldTypeName = cpOptionJSONObject.getString(
+		String title = jsonObject.getString("title");
+		String description = jsonObject.getString("description");
+		String ddmFormFieldTypeName = jsonObject.getString(
 			"ddmFormFieldTypeName");
-		boolean facetable = cpOptionJSONObject.getBoolean("facetable");
-		boolean skuContributor = cpOptionJSONObject.getBoolean(
-			"skuContributor");
+		boolean facetable = jsonObject.getBoolean("facetable");
+		boolean skuContributor = jsonObject.getBoolean("skuContributor");
 
 		Map<Locale, String> titleMap = Collections.singletonMap(locale, title);
 		Map<Locale, String> descriptionMap = Collections.singletonMap(

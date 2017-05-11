@@ -39,11 +39,10 @@ public class AssetCategoryDemoDataCreatorHelper
 	extends BaseCPDemoDataCreatorHelper {
 
 	public AssetCategory getAssetCategory(
-			long userId, long groupId, long vocabularyId,
-			JSONObject assetCategoryJSONObject)
+			long userId, long groupId, long vocabularyId, JSONObject jsonObject)
 		throws PortalException {
 
-		String title = assetCategoryJSONObject.getString("title");
+		String title = jsonObject.getString("title");
 
 		AssetCategory assetCategory = _assetCategories.get(title);
 
@@ -62,18 +61,16 @@ public class AssetCategoryDemoDataCreatorHelper
 	}
 
 	public long[] getAssetCategoryIds(
-			long userId, long groupId, long vocabularyId,
-			JSONArray assetCategoriesJSONArray)
+			long userId, long groupId, long vocabularyId, JSONArray jsonArray)
 		throws PortalException {
 
 		List<Long> assetCategoryIds = new ArrayList<>();
 
-		for (int i = 0; i < assetCategoriesJSONArray.length(); i++) {
-			JSONObject assetCategoryJSONObject =
-				assetCategoriesJSONArray.getJSONObject(i);
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			AssetCategory assetCategory = getAssetCategory(
-				userId, groupId, vocabularyId, assetCategoryJSONObject);
+				userId, groupId, vocabularyId, jsonObject);
 
 			assetCategoryIds.add(i, assetCategory.getCategoryId());
 		}

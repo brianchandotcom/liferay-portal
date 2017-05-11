@@ -16,77 +16,122 @@
 
 <%@ include file="/init.jsp" %>
 
-<c:if test="<%= assetPublisherDisplayContext.isShowEnableAddContentButton() %>">
-	<aui:input helpMessage="show-add-content-button-help" name="preferences--showAddContentButton--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowAddContentButton() %>" />
-</c:if>
+<aui:row cssClass="panel-group">
+	<aui:col width="<%= 50 %>">
+		<liferay-ui:panel collapsible="<%= false %>" markupView="lexicon" title="show-and-set">
+			<c:if test="<%= assetPublisherDisplayContext.isShowEnableAddContentButton() %>">
+				<aui:input helpMessage="show-add-content-button-help" name="preferences--showAddContentButton--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowAddContentButton() %>" />
+			</c:if>
 
-<%
-String helpMessage1 = "<em>" + LanguageUtil.format(request, "content-related-to-x", StringPool.DOUBLE_PERIOD, false) + "</em>";
-String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x", StringPool.DOUBLE_PERIOD, false) + "</em>";
-%>
+			<%
+			String helpMessage1 = "<em>" + LanguageUtil.format(request, "content-related-to-x", StringPool.DOUBLE_PERIOD, false) + "</em>";
+			String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x", StringPool.DOUBLE_PERIOD, false) + "</em>";
+			%>
 
-<aui:input helpMessage='<%= LanguageUtil.format(request, "such-as-x-or-x", new Object[] {helpMessage1, helpMessage2}, false) %>' name="preferences--showMetadataDescriptions--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>" />
+			<aui:input helpMessage='<%= LanguageUtil.format(request, "such-as-x-or-x", new Object[] {helpMessage1, helpMessage2}, false) %>' name="preferences--showMetadataDescriptions--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>" />
 
-<aui:input name="preferences--showAvailableLocales--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowAvailableLocales() %>" />
+			<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowAvailableLocales() %>" />
 
-<c:if test="<%= assetPublisherDisplayContext.isEnableSetAsDefaultAssetPublisher() %>">
-	<aui:input helpMessage="set-as-the-default-asset-publisher-for-this-page-help" label="set-as-the-default-asset-publisher-for-this-page" name="defaultAssetPublisher" type="toggle-switch" value="<%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) %>" />
-</c:if>
+			<c:if test="<%= assetPublisherDisplayContext.isEnableSetAsDefaultAssetPublisher() %>">
+				<aui:input helpMessage="set-as-the-default-asset-publisher-for-this-page-help" label="set-as-the-default-asset-publisher-for-this-page" name="defaultAssetPublisher" type="checkbox" value="<%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) %>" />
+			</c:if>
+		</liferay-ui:panel>
+	</aui:col>
 
-<aui:field-wrapper helpMessage='<%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
-	<div class="field-row">
+	<aui:col width="<%= 50 %>">
+		<liferay-ui:panel collapsible="<%= false %>" extended="" markupView="lexicon" title="enable">
+			<aui:col width="<%= 50 %>">
+				<aui:input name="preferences--enablePrint--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnablePrint() %>" />
+
+				<aui:input name="preferences--enableFlags--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableFlags() %>" />
+
+				<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableRatings() %>" />
+
+				<c:choose>
+					<c:when test="<%= !assetPublisherDisplayContext.isShowEnableRelatedAssets() %>">
+						<aui:input name="preferences--enableRelatedAssets--" type="hidden" value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>" />
+					</c:when>
+					<c:otherwise>
+						<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>" />
+					</c:otherwise>
+				</c:choose>
+			</aui:col>
+
+			<aui:col width="<%= 50 %>">
+				<aui:input name="preferences--enableComments--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableComments() %>" />
+
+				<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableCommentRatings() %>" />
+
+				<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableViewCountIncrement() %>" />
+
+				<c:if test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
+					<aui:input helpMessage="enable-tag-based-navigation-help" label="enable-tag-based-navigation" name="preferences--enableTagBasedNavigation--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableTagBasedNavigation() %>" />
+				</c:if>
+
+				<c:choose>
+					<c:when test="<%= !assetPublisherDisplayContext.isShowEnablePermissions() %>">
+						<aui:input name="preferences--enablePermissions--" type="hidden" value="<%= assetPublisherDisplayContext.isEnablePermissions() %>" />
+					</c:when>
+					<c:otherwise>
+						<aui:input name="preferences--enablePermissions--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnablePermissions() %>" />
+					</c:otherwise>
+				</c:choose>
+			</aui:col>
+		</liferay-ui:panel>
+	</aui:col>
+</aui:row>
+
+<aui:row cssClass="panel-group">
+	<aui:col width="<%= 100 %>">
 
 		<%
 		String[] conversions = DocumentConversionUtil.getConversions("html");
 
-		for (String conversion : conversions) {
+		int half = conversions.length / 2;
 		%>
 
-			<aui:input checked="<%= ArrayUtil.contains(assetPublisherDisplayContext.getExtensions(), conversion) %>" disabled="<%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() %>" id='<%= "extensions" + conversion %>' inlineField="<%= true %>" label="<%= StringUtil.toUpperCase(conversion) %>" name="extensions" type="toggle-switch" value="<%= conversion %>" />
+		<liferay-ui:panel collapsible="<%= false %>" extended="" helpMessage='<%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' markupView="lexicon" title="enable-conversion-to">
+			<aui:col width="<%= 50 %>">
 
-		<%
-		}
-		%>
+				<%
+				for (int k = 0; k < half; k++) {
+					String conversion = conversions[k];
+				%>
 
-	</div>
-</aui:field-wrapper>
+					<aui:row>
+						<aui:input checked="<%= ArrayUtil.contains(assetPublisherDisplayContext.getExtensions(), conversion) %>" disabled="<%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() %>" id='<%= "extensions" + conversion %>' inlineField="<%= true %>" label="<%= StringUtil.toUpperCase(conversion) %>" name="extensions" type="checkbox" value="<%= conversion %>" />
+					</aui:row>
 
-<aui:input name="preferences--enablePrint--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnablePrint() %>" />
+				<%
+				}
+				%>
 
-<aui:input name="preferences--enableFlags--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnableFlags() %>" />
+			</aui:col>
 
-<c:choose>
-	<c:when test="<%= !assetPublisherDisplayContext.isShowEnablePermissions() %>">
-		<aui:input name="preferences--enablePermissions--" type="hidden" value="<%= assetPublisherDisplayContext.isEnablePermissions() %>" />
-	</c:when>
-	<c:otherwise>
-		<aui:input name="preferences--enablePermissions--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnablePermissions() %>" />
-	</c:otherwise>
-</c:choose>
+			<aui:col width="<%= 50 %>">
 
-<c:choose>
-	<c:when test="<%= !assetPublisherDisplayContext.isShowEnableRelatedAssets() %>">
-		<aui:input name="preferences--enableRelatedAssets--" type="hidden" value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>" />
-	</c:when>
-	<c:otherwise>
-		<aui:input name="preferences--enableRelatedAssets--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>" />
-	</c:otherwise>
-</c:choose>
+				<%
+				for (int k = half; k < conversions.length; k++) {
+					String conversion = conversions[k];
+				%>
 
-<aui:input name="preferences--enableRatings--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnableRatings() %>" />
+					<aui:row>
+						<aui:input checked="<%= ArrayUtil.contains(assetPublisherDisplayContext.getExtensions(), conversion) %>" disabled="<%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() %>" id='<%= "extensions" + conversion %>' inlineField="<%= true %>" label="<%= StringUtil.toUpperCase(conversion) %>" name="extensions" type="checkbox" value="<%= conversion %>" />
+					</aui:row>
 
-<aui:input name="preferences--enableComments--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnableComments() %>" />
+				<%
+				}
+				%>
 
-<aui:input name="preferences--enableCommentRatings--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnableCommentRatings() %>" />
+			</aui:col>
+		</liferay-ui:panel>
+	</aui:col>
+</aui:row>
 
-<liferay-ui:social-bookmarks-settings
-	displayPosition="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayPosition() %>"
-	displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
-	enabled="<%= assetPublisherDisplayContext.isEnableSocialBookmarks() %>"
-/>
-
-<c:if test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
-	<aui:input helpMessage="enable-tag-based-navigation-help" label="enable-tag-based-navigation" name="preferences--enableTagBasedNavigation--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnableTagBasedNavigation() %>" />
-</c:if>
-
-<aui:input name="preferences--enableViewCountIncrement--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnableViewCountIncrement() %>" />
+<aui:row cssClass="panel-group">
+	<liferay-ui:social-bookmarks-settings
+		displayPosition="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayPosition() %>"
+		displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
+		enabled="<%= assetPublisherDisplayContext.isEnableSocialBookmarks() %>"
+	/>
+</aui:row>

@@ -32,6 +32,7 @@ import java.util.Date;
 public class WeDeployAuthTokenLocalServiceImpl
 	extends WeDeployAuthTokenLocalServiceBaseImpl {
 
+	@Override
 	public WeDeployAuthToken addAccessWeDeployAuthToken(
 			long userId, String clientId, String clientSecret,
 			String authorizationToken, int type, ServiceContext serviceContext)
@@ -48,6 +49,7 @@ public class WeDeployAuthTokenLocalServiceImpl
 			new ServiceContext());
 	}
 
+	@Override
 	public WeDeployAuthToken addAuthorizationWeDeployAuthToken(
 			long userId, String clientId, ServiceContext serviceContext)
 		throws PortalException {
@@ -61,6 +63,7 @@ public class WeDeployAuthTokenLocalServiceImpl
 			new ServiceContext());
 	}
 
+	@Override
 	public WeDeployAuthToken addWeDeployAuthToken(
 			long userId, String clientId, String token, int type,
 			ServiceContext serviceContext)

@@ -64,6 +64,7 @@ import org.apache.shindig.gadgets.spec.ModulePrefs;
  */
 public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 
+	@Override
 	public Gadget addGadget(
 			long companyId, String url, String portletCategoryNames,
 			ServiceContext serviceContext)
@@ -156,6 +157,7 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 	}
 
 	@Clusterable
+	@Override
 	public void destroyGadget(String uuid, long companyId) {
 		try {
 			Portlet portlet = _portletsPool.remove(uuid);
@@ -175,6 +177,7 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void destroyGadgets() {
 		List<Gadget> gadgets = gadgetPersistence.findAll();
 
@@ -183,14 +186,17 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public Gadget fetchGadget(long companyId, String url) {
 		return gadgetPersistence.fetchByC_U(companyId, url);
 	}
 
+	@Override
 	public Gadget getGadget(long companyId, String url) throws PortalException {
 		return gadgetPersistence.findByC_U(companyId, url);
 	}
 
+	@Override
 	public Gadget getGadget(String uuid, long companyId)
 		throws PortalException {
 
@@ -204,15 +210,18 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 		return gadgets.get(0);
 	}
 
+	@Override
 	public List<Gadget> getGadgets(long companyId, int start, int end) {
 		return gadgetPersistence.findByCompanyId(companyId, start, end);
 	}
 
+	@Override
 	public int getGadgetsCount(long companyId) {
 		return gadgetPersistence.countByCompanyId(companyId);
 	}
 
 	@Clusterable
+	@Override
 	public void initGadget(
 			String uuid, long companyId, long gadgetId, String name,
 			String portletCategoryNames)
@@ -238,6 +247,7 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void initGadgets() throws PortalException {
 		List<Gadget> gadgets = gadgetPersistence.findAll();
 
@@ -248,6 +258,7 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public Gadget updateGadget(long gadgetId, String portletCategoryNames)
 		throws PortalException {
 

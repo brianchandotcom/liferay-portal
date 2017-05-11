@@ -59,6 +59,7 @@ public class AssetVocabularySearchTest extends BaseSearchTestCase {
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

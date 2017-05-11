@@ -27,6 +27,7 @@ import java.util.List;
  */
 public class OAuthTokenLocalServiceImpl extends OAuthTokenLocalServiceBaseImpl {
 
+	@Override
 	public OAuthToken addOAuthToken(
 			long userId, String gadgetKey, String serviceName, long moduleId,
 			String accessToken, String tokenName, String tokenSecret,
@@ -59,6 +60,7 @@ public class OAuthTokenLocalServiceImpl extends OAuthTokenLocalServiceBaseImpl {
 		return oAuthToken;
 	}
 
+	@Override
 	public void deleteOAuthToken(
 			long userId, String gadgetKey, String serviceName, long moduleId,
 			String tokenName)
@@ -68,10 +70,12 @@ public class OAuthTokenLocalServiceImpl extends OAuthTokenLocalServiceBaseImpl {
 			userId, gadgetKey, serviceName, moduleId, tokenName);
 	}
 
+	@Override
 	public void deleteOAuthTokens(String gadgetKey, String serviceName) {
 		oAuthTokenPersistence.removeByG_S(gadgetKey, serviceName);
 	}
 
+	@Override
 	public OAuthToken fetchOAuthToken(
 		long userId, String gadgetKey, String serviceName, long moduleId,
 		String tokenName) {
@@ -80,6 +84,7 @@ public class OAuthTokenLocalServiceImpl extends OAuthTokenLocalServiceBaseImpl {
 			userId, gadgetKey, serviceName, moduleId, tokenName);
 	}
 
+	@Override
 	public OAuthToken getOAuthToken(
 			long userId, String gadgetKey, String serviceName, long moduleId,
 			String tokenName)
@@ -89,6 +94,7 @@ public class OAuthTokenLocalServiceImpl extends OAuthTokenLocalServiceBaseImpl {
 			userId, gadgetKey, serviceName, moduleId, tokenName);
 	}
 
+	@Override
 	public List<OAuthToken> getOAuthTokens(
 		String gadgetKey, String serviceName) {
 

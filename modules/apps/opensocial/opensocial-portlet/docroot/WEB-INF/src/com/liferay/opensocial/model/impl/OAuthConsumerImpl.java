@@ -24,10 +24,12 @@ public class OAuthConsumerImpl extends OAuthConsumerBaseImpl {
 	public OAuthConsumerImpl() {
 	}
 
+	@Override
 	public String getKeyName() {
 		return GetterUtil.getString(_keyName);
 	}
 
+	@Override
 	public void setKeyName(String keyName) {
 		_keyName = keyName;
 	}

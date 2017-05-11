@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
  */
 public class GadgetServiceImpl extends GadgetServiceBaseImpl {
 
+	@Override
 	public Gadget addGadget(
 			long companyId, String url, String portletCategoryNames,
 			ServiceContext serviceContext)
@@ -40,6 +41,7 @@ public class GadgetServiceImpl extends GadgetServiceBaseImpl {
 			companyId, url, portletCategoryNames, serviceContext);
 	}
 
+	@Override
 	public void deleteGadget(long gadgetId, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -50,6 +52,7 @@ public class GadgetServiceImpl extends GadgetServiceBaseImpl {
 		gadgetLocalService.deleteGadget(gadgetId);
 	}
 
+	@Override
 	public void updateGadget(
 			long gadgetId, String portletCategoryNames,
 			ServiceContext serviceContext)

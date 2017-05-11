@@ -64,6 +64,7 @@ public class AssetCategorySearchTest extends BaseSearchTestCase {
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

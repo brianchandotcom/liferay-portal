@@ -74,6 +74,7 @@ public class WikiActivityInterpreterTest
 	}
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

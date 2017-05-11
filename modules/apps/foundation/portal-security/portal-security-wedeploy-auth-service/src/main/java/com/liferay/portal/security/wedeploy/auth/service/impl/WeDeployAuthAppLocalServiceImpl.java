@@ -32,6 +32,7 @@ import java.util.Date;
 public class WeDeployAuthAppLocalServiceImpl
 	extends WeDeployAuthAppLocalServiceBaseImpl {
 
+	@Override
 	public WeDeployAuthApp addWeDeployAuthApp(
 			long userId, String name, ServiceContext serviceContext)
 		throws PortalException {

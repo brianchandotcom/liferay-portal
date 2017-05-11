@@ -43,7 +43,7 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 		_cpDefinitionDemoDataCreatorHelper.deleteCPDefinitions();
 		_cpOptionDemoDataCreatorHelper.deleteCPOptions();
 
-		_assetVocabularyDemoDataCreatorHelper.deleteVocabularies();
+		_assetVocabularyDemoDataCreatorHelper.deleteAssetVocabularies();
 	}
 
 	@Override

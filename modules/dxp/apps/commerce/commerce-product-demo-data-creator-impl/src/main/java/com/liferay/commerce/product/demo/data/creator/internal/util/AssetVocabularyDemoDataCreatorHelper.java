@@ -50,7 +50,7 @@ public class AssetVocabularyDemoDataCreatorHelper
 		return assetVocabulary;
 	}
 
-	public void deleteVocabularies() throws PortalException {
+	public void deleteAssetVocabularies() throws PortalException {
 		for (long assetVocabularyId : _assetVocabularyIds) {
 			try {
 				_assetVocabularyLocalService.deleteVocabulary(

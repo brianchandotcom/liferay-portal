@@ -14,15 +14,24 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.base.CPAttachmentFileEntryServiceBaseImpl;
+import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
+import com.liferay.commerce.product.service.permission.CPPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -41,6 +50,9 @@ public class CPAttachmentFileEntryServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		checkCPAttachmentFileEntryPermissions(
+			serviceContext.getScopeGroupId(), classNameId, classPK, type);
+
 		return cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
 			classNameId, classPK, fileEntryId, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
@@ -54,6 +66,8 @@ public class CPAttachmentFileEntryServiceImpl
 			CPAttachmentFileEntry cpAttachmentFileEntry)
 		throws PortalException {
 
+		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntry);
+
 		return cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
 			cpAttachmentFileEntry);
 	}
@@ -62,6 +76,8 @@ public class CPAttachmentFileEntryServiceImpl
 	public CPAttachmentFileEntry deleteCPAttachmentFileEntry(
 			long cpAttachmentFileEntryId)
 		throws PortalException {
+
+		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
 
 		return cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
 			cpAttachmentFileEntryId);
@@ -87,9 +103,7 @@ public class CPAttachmentFileEntryServiceImpl
 	}
 
 	@Override
-	public int getCPAttachmentFileEntrysCount(
-		long classNameId, int classPK) {
-
+	public int getCPAttachmentFileEntrysCount(long classNameId, int classPK) {
 		return cpAttachmentFileEntryLocalService.getCPAttachmentFileEntrysCount(
 			classNameId, classPK);
 	}
@@ -106,6 +120,8 @@ public class CPAttachmentFileEntryServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
+
 		return cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
 			cpAttachmentFileEntryId, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
@@ -113,5 +129,55 @@ public class CPAttachmentFileEntryServiceImpl
 			expirationDateHour, expirationDateMinute, neverExpire, json,
 			priority, type, serviceContext);
 	}
+
+	protected void checkCPAttachmentFileEntryPermissions(
+			CPAttachmentFileEntry cpAttachmentFileEntry)
+		throws PortalException {
+
+		checkCPAttachmentFileEntryPermissions(
+			cpAttachmentFileEntry.getGroupId(),
+			cpAttachmentFileEntry.getClassNameId(),
+			cpAttachmentFileEntry.getClassPK(),
+			cpAttachmentFileEntry.getType());
+	}
+
+	protected void checkCPAttachmentFileEntryPermissions(
+			long cpAttachmentFileEntryId)
+		throws PortalException {
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntry(
+				cpAttachmentFileEntryId);
+
+		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntry);
+	}
+
+	protected void checkCPAttachmentFileEntryPermissions(
+			long scopeGroupId, long classNameId, long classPK, int type)
+		throws PortalException {
+
+		String actionKey = getActionKeyByCPAttachmentFileEntryType(type);
+
+		CPPermission.check(getPermissionChecker(), scopeGroupId, actionKey);
+
+		long cpDefinitionClassNameId = _portal.getClassNameId(
+			CPDefinition.class);
+
+		if (classNameId == cpDefinitionClassNameId) {
+			CPDefinitionPermission.check(
+				getPermissionChecker(), classPK, ActionKeys.UPDATE);
+		}
+	}
+
+	protected String getActionKeyByCPAttachmentFileEntryType(int type) {
+		if (type == CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_ATTACHMENTS) {
+			return CPActionKeys.MANAGE_COMMERCE_PRODUCT_ATTACHMENTS;
+		}
+
+		return CPActionKeys.MANAGE_COMMERCE_PRODUCT_IMAGES;
+	}
+
+	@Reference
+	private Portal _portal;
 
 }

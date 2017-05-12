@@ -22,17 +22,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * @author Peter Yoo
@@ -44,154 +38,116 @@ public class LoadBalancerUtil {
 
 		long start = System.currentTimeMillis();
 
-		int retryCount = 0;
+		int retries = 0;
 
 		while (true) {
-			String baseInvocationURL = properties.getProperty(
-				"base.invocation.url");
-
-			String masterPrefix = getMasterPrefix(baseInvocationURL);
-
-			if (masterPrefix.equals(baseInvocationURL)) {
-				return baseInvocationURL;
-			}
-
-			List<String> masters = JenkinsResultsParserUtil.getMasters(
-				properties, masterPrefix);
-
-			masters.removeAll(getBlacklist(properties));
-
-			if (masters.size() == 1) {
-				return "http://" + masterPrefix + "-1";
-			}
-
-			int maxAvailableSlaveCount = Integer.MIN_VALUE;
-			int x = -1;
-
 			try {
-				List<FutureTask<Integer>> futureTasks = new ArrayList<>(
-					masters.size());
+				String baseInvocationURL = properties.getProperty(
+					"base.invocation.url");
 
-				startParallelTasks(
-					futureTasks, masters, masterPrefix, properties);
+				String masterPrefix = getMasterPrefix(baseInvocationURL);
 
-				List<Integer> badIndices = new ArrayList<>(futureTasks.size());
-				List<Integer> maxIndices = new ArrayList<>(futureTasks.size());
+				if (masterPrefix.equals(baseInvocationURL)) {
+					return baseInvocationURL;
+				}
+
+				List<JenkinsMaster> jenkinsMasters = _getJenkinsMasters(
+					masterPrefix, properties);
+
+				ExecutorService executorService = Executors.newFixedThreadPool(
+					jenkinsMasters.size());
+
+				for (final JenkinsMaster jenkinsMaster : jenkinsMasters) {
+					executorService.execute(
+						new Runnable() {
+
+							@Override
+							public void run() {
+								jenkinsMaster.update();
+							}
+
+						});
+				}
+
+				executorService.shutdown();
+
+				try {
+					executorService.awaitTermination(10, TimeUnit.SECONDS);
+				}
+				catch (InterruptedException ie) {
+					throw new RuntimeException(ie);
+				}
+
+				List<JenkinsMaster> unavailableJenkinsMasters = new ArrayList<>(
+					jenkinsMasters.size());
+
+				for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
+					if (!jenkinsMaster.isAvailable()) {
+						unavailableJenkinsMasters.add(jenkinsMaster);
+					}
+				}
+
+				jenkinsMasters.removeAll(unavailableJenkinsMasters);
+
+				if (jenkinsMasters.isEmpty()) {
+					throw new RuntimeException(
+						"Unable to communicate with any jenkins masters.");
+				}
+
+				Collections.sort(jenkinsMasters);
+
+				JenkinsMaster mostAvailableJenkinsMaster = jenkinsMasters.get(
+					0);
 
 				StringBuilder sb = new StringBuilder();
 
-				for (int i = 0; i < futureTasks.size(); i++) {
-					Integer availableSlaveCount = null;
-
-					FutureTask<Integer> futureTask = futureTasks.get(i);
-
-					try {
-						availableSlaveCount = futureTask.get(
-							15, TimeUnit.SECONDS);
-					}
-					catch (TimeoutException te) {
-						System.out.println(
-							"Unable to assess master availability for " +
-								masters.get(i) + ".");
-
-						availableSlaveCount = null;
-					}
-
-					if (availableSlaveCount == null) {
-						badIndices.add(i);
-
-						continue;
-					}
-
-					sb.append(masters.get(i));
+				for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
+					sb.append(jenkinsMaster.getMasterName());
 					sb.append(" : ");
-					sb.append(availableSlaveCount);
+					sb.append(jenkinsMaster.getAvailableSlavesCount());
 					sb.append("\n");
-
-					if (availableSlaveCount > maxAvailableSlaveCount) {
-						maxAvailableSlaveCount = availableSlaveCount;
-
-						maxIndices.clear();
-					}
-
-					if (availableSlaveCount >= maxAvailableSlaveCount) {
-						maxIndices.add(i);
-					}
 				}
 
-				if (maxAvailableSlaveCount == Integer.MIN_VALUE) {
-					if (retryCount == 3) {
-						throw new RuntimeException(
-							"Retry limit exceeded. Unable to communicate " +
-								"with masters.");
-					}
+				System.out.print(sb);
 
-					retryCount++;
-
-					continue;
-				}
-
-				if (!maxIndices.isEmpty()) {
-					x = maxIndices.get(
-						JenkinsResultsParserUtil.getRandomValue(
-							0, maxIndices.size() - 1));
-				}
-				else {
-					while (true) {
-						x = JenkinsResultsParserUtil.getRandomValue(
-							0, masters.size() - 1);
-
-						if (badIndices.contains(x)) {
-							continue;
-						}
-
-						break;
-					}
-				}
+				sb = new StringBuilder();
 
 				sb.append("\nMost available master ");
-				sb.append(masters.get(x));
+				sb.append(mostAvailableJenkinsMaster.getMasterName());
 				sb.append(" has ");
-				sb.append(maxAvailableSlaveCount);
+				sb.append(mostAvailableJenkinsMaster.getAvailableSlavesCount());
 				sb.append(" available slaves.");
 
 				System.out.println(sb);
 
-				return "http://" + masters.get(x);
-			}
-			finally {
-				if (RECENT_BATCH_AGE > 0) {
-					List<BatchRecord> recentBatchSizeRecords =
-						_recentBatchRecordsMap.get(masters.get(x));
+				int invokedBatchSize = 0;
 
-					if (recentBatchSizeRecords == null) {
-						recentBatchSizeRecords = new ArrayList<>();
-
-						_recentBatchRecordsMap.put(
-							masters.get(x), recentBatchSizeRecords);
-					}
-
-					int invokedBatchSize = 0;
-
-					try {
-						invokedBatchSize = Integer.parseInt(
-							properties.getProperty("invoked.job.batch.size"));
-					}
-					catch (Exception e) {
-						invokedBatchSize = 1;
-					}
-
-					if (invokedBatchSize != 0) {
-						recentBatchSizeRecords.add(
-							new BatchRecord(
-								invokedBatchSize, System.currentTimeMillis()));
-					}
+				try {
+					invokedBatchSize = Integer.parseInt(
+						properties.getProperty("invoked.job.batch.size"));
+				}
+				catch (Exception e) {
+					invokedBatchSize = 1;
 				}
 
+				mostAvailableJenkinsMaster.addRecentBatch(invokedBatchSize);
+
+				return "http://" + mostAvailableJenkinsMaster.getMasterName();
+			}
+			catch (Exception e) {
+				if (retries < _MAX_RETRIES) {
+					retries++;
+
+					continue;
+				}
+
+				throw e;
+			}
+			finally {
 				System.out.println(
 					"Got most available master URL in " +
-						((System.currentTimeMillis() - start) / 1000F) +
-							" seconds.");
+						JenkinsResultsParserUtil.toDurationString(
+							System.currentTimeMillis() - start));
 			}
 		}
 	}
@@ -269,196 +225,56 @@ public class LoadBalancerUtil {
 		return matcher.group("masterPrefix");
 	}
 
-	protected static int getRecentBatchSizesTotal(String master)
-		throws Exception {
+	private static List<JenkinsMaster> _getJenkinsMasters(
+		String masterPrefix, Properties properties) {
 
-		List<BatchRecord> recentBatchRecords = _recentBatchRecordsMap.get(
-			master);
+		List<JenkinsMaster> allJenkinsMasters;
 
-		if ((recentBatchRecords == null) || recentBatchRecords.isEmpty()) {
-			return 0;
+		if (!_jenkinsMastersMap.containsKey(masterPrefix)) {
+			allJenkinsMasters = new ArrayList<>();
+
+			for (String masterName :
+					JenkinsResultsParserUtil.getMasters(
+						properties, masterPrefix)) {
+
+				allJenkinsMasters.add(
+					new JenkinsMaster(
+						masterName,
+						properties.getProperty(
+							JenkinsResultsParserUtil.combine(
+								"jenkins.local.url[", masterName, "]"))));
+			}
+
+			_jenkinsMastersMap.put(masterPrefix, allJenkinsMasters);
+		}
+		else {
+			allJenkinsMasters = _jenkinsMastersMap.get(masterPrefix);
 		}
 
-		int recentBatchSizesTotal = 0;
+		List<String> blacklist = getBlacklist(properties);
+		List<JenkinsMaster> filteredJenkinsMasters = new ArrayList<>(
+			allJenkinsMasters.size());
 
-		List<BatchRecord> oldBatchRecords = new ArrayList<>(
-			recentBatchRecords.size());
-
-		for (BatchRecord recentBatchRecord : recentBatchRecords) {
-			if ((recentBatchRecord.timestamp + RECENT_BATCH_AGE) >
-					System.currentTimeMillis()) {
-
-				recentBatchSizesTotal += recentBatchRecord.size;
-			}
-			else {
-				oldBatchRecords.add(recentBatchRecord);
-			}
+		if (blacklist.isEmpty()) {
+			return allJenkinsMasters;
 		}
 
-		recentBatchRecords.removeAll(oldBatchRecords);
+		for (JenkinsMaster jenkinsMaster : allJenkinsMasters) {
+			if (blacklist.contains(jenkinsMaster.getMasterName())) {
+				continue;
+			}
 
-		return recentBatchSizesTotal;
+			filteredJenkinsMasters.add(jenkinsMaster);
+		}
+
+		return filteredJenkinsMasters;
 	}
 
-	protected static void startParallelTasks(
-			List<FutureTask<Integer>> futureTasks, List<String> masters,
-			String masterPrefix, Properties properties)
-		throws Exception {
+	private static final int _MAX_RETRIES = 3;
 
-		ExecutorService executorService = Executors.newFixedThreadPool(
-			masters.size());
-
-		for (String targetMaster : masters) {
-			FutureTask<Integer> futureTask = new FutureTask<>(
-				new AvailableSlaveCallable(
-					getRecentBatchSizesTotal(targetMaster),
-					properties.getProperty(
-						"jenkins.local.url[" + targetMaster + "]")));
-
-			executorService.execute(futureTask);
-
-			futureTasks.add(futureTask);
-		}
-
-		executorService.shutdown();
-	}
-
-	protected static long RECENT_BATCH_AGE = 120 * 1000;
-
-	private static final Map<String, List<BatchRecord>> _recentBatchRecordsMap =
+	private static final Map<String, List<JenkinsMaster>> _jenkinsMastersMap =
 		new HashMap<>();
 	private static final Pattern _urlPattern = Pattern.compile(
 		"http://(?<masterPrefix>.+-\\d?).liferay.com");
-
-	private static class AvailableSlaveCallable implements Callable<Integer> {
-
-		@Override
-		public Integer call() throws Exception {
-			long start = System.currentTimeMillis();
-
-			JSONObject computerJSONObject = null;
-			JSONObject queueJSONObject = null;
-
-			try {
-				computerJSONObject = JenkinsResultsParserUtil.toJSONObject(
-					JenkinsResultsParserUtil.getLocalURL(
-						url + "/computer/api/json?tree=computer[displayName," +
-							"idle,offline]"),
-					false, 5000);
-				queueJSONObject = JenkinsResultsParserUtil.toJSONObject(
-					JenkinsResultsParserUtil.getLocalURL(
-						url + "/queue/api/json?tree=items[task[name],why]"),
-					false, 5000);
-			}
-			catch (Exception e) {
-				System.out.println("Unable to read " + url);
-
-				return null;
-			}
-
-			int idleCount = 0;
-
-			JSONArray computersJSONArray = computerJSONObject.getJSONArray(
-				"computer");
-
-			for (int i = 0; i < computersJSONArray.length(); i++) {
-				JSONObject curComputerJSONObject =
-					computersJSONArray.getJSONObject(i);
-
-				if (curComputerJSONObject.getBoolean("idle") &&
-					!curComputerJSONObject.getBoolean("offline")) {
-
-					String displayName = curComputerJSONObject.getString(
-						"displayName");
-
-					if (!displayName.equals("master")) {
-						idleCount++;
-					}
-				}
-			}
-
-			int queueCount = 0;
-
-			if (queueJSONObject.has("items")) {
-				JSONArray itemsJSONArray = queueJSONObject.getJSONArray(
-					"items");
-
-				for (int i = 0; i < itemsJSONArray.length(); i++) {
-					JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
-
-					if (itemJSONObject.has("why")) {
-						String why = itemJSONObject.getString("why");
-
-						if (why.endsWith("is offline")) {
-							continue;
-						}
-					}
-
-					if (itemJSONObject.has("task")) {
-						JSONObject taskJSONObject =
-							itemJSONObject.getJSONObject("task");
-
-						String taskName = taskJSONObject.getString("name");
-
-						if (taskName.equals("verification-node")) {
-							continue;
-						}
-					}
-
-					queueCount++;
-				}
-			}
-
-			int availableSlaveCount = idleCount - queueCount;
-
-			if (recentBatchSizesTotal != null) {
-				availableSlaveCount -= recentBatchSizesTotal;
-			}
-
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("{available=");
-			sb.append(availableSlaveCount);
-			sb.append(", duration=");
-			sb.append(System.currentTimeMillis() - start);
-			sb.append("ms, idle=");
-			sb.append(idleCount);
-			sb.append(", queue=");
-			sb.append(queueCount);
-			sb.append(", recentBatchSizesTotal=");
-			sb.append(recentBatchSizesTotal);
-			sb.append(", url=");
-			sb.append(url);
-			sb.append("}");
-
-			System.out.println(sb.toString());
-
-			return availableSlaveCount;
-		}
-
-		protected AvailableSlaveCallable(
-			Integer recentBatchSizesTotal, String url) {
-
-			this.recentBatchSizesTotal = recentBatchSizesTotal;
-
-			this.url = url;
-		}
-
-		protected Integer recentBatchSizesTotal;
-		protected String url;
-
-	}
-
-	private static class BatchRecord {
-
-		public int size;
-		public long timestamp;
-
-		private BatchRecord(int size, long timestamp) {
-			this.size = size;
-			this.timestamp = timestamp;
-		}
-
-	}
 
 }

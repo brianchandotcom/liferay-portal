@@ -67,7 +67,7 @@ command line is not supported. It can only be set via Gradle script, which can
 be done by adding the following code to the `build.gradle` file in the root of
 a project (e.g., Liferay Workspace):
 
-```gradle 
+```gradle
 allprojects {
 	plugins.withId("com.liferay.node") {
 		node.global = true

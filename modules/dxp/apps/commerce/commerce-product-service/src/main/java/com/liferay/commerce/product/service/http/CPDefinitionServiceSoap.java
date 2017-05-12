@@ -73,6 +73,8 @@ public class CPDefinitionServiceSoap {
 		java.lang.String baseSKU, java.lang.String name,
 		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
+		java.lang.String[] shortDescriptionMapLanguageIds,
+		java.lang.String[] shortDescriptionMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
@@ -85,16 +87,18 @@ public class CPDefinitionServiceSoap {
 		try {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
 					titleMapValues);
+			Map<Locale, String> shortDescriptionMap = LocalizationUtil.getLocalizationMap(shortDescriptionMapLanguageIds,
+					shortDescriptionMapValues);
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.addCPDefinition(baseSKU,
-					name, titleMap, descriptionMap, productTypeName,
-					ddmStructureKey, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					name, titleMap, shortDescriptionMap, descriptionMap,
+					productTypeName, ddmStructureKey, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}
@@ -226,6 +230,8 @@ public class CPDefinitionServiceSoap {
 		long cpDefinitionId, java.lang.String baseSKU, java.lang.String name,
 		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
+		java.lang.String[] shortDescriptionMapLanguageIds,
+		java.lang.String[] shortDescriptionMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
@@ -238,16 +244,18 @@ public class CPDefinitionServiceSoap {
 		try {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
 					titleMapValues);
+			Map<Locale, String> shortDescriptionMap = LocalizationUtil.getLocalizationMap(shortDescriptionMapLanguageIds,
+					shortDescriptionMapValues);
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinition(cpDefinitionId,
-					baseSKU, name, titleMap, descriptionMap, productTypeName,
-					ddmStructureKey, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					baseSKU, name, titleMap, shortDescriptionMap,
+					descriptionMap, productTypeName, ddmStructureKey,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}

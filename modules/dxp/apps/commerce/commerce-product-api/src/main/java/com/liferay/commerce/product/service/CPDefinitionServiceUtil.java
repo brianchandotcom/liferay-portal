@@ -44,6 +44,7 @@ public class CPDefinitionServiceUtil {
 	public static com.liferay.commerce.product.model.CPDefinition addCPDefinition(
 		java.lang.String baseSKU, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -53,12 +54,12 @@ public class CPDefinitionServiceUtil {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCPDefinition(baseSKU, name, titleMap, descriptionMap,
-			productTypeName, ddmStructureKey, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+				   .addCPDefinition(baseSKU, name, titleMap,
+			shortDescriptionMap, descriptionMap, productTypeName,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition deleteCPDefinition(
@@ -94,6 +95,7 @@ public class CPDefinitionServiceUtil {
 	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinition(
 		long cpDefinitionId, java.lang.String baseSKU, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -104,11 +106,11 @@ public class CPDefinitionServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCPDefinition(cpDefinitionId, baseSKU, name, titleMap,
-			descriptionMap, productTypeName, ddmStructureKey, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			shortDescriptionMap, descriptionMap, productTypeName,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateStatus(

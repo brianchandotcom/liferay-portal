@@ -53,8 +53,9 @@ public class ResourceActionsTest {
 			resourceActionsImpl, "portletLocalService",
 			ProxyUtil.newProxyInstance(
 				_classLoader, new Class<?>[] {PortletLocalService.class},
-				(proxy, method, args) -> new PortletImpl(
-					RandomTestUtil.randomLong(), (String)args[0])));
+				(proxy, method, args) ->
+					new PortletImpl(
+						RandomTestUtil.randomLong(), (String)args[0])));
 
 		resourceActionsImpl.afterPropertiesSet();
 

@@ -99,6 +99,44 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private void _checkLambdaLineBreaks(
+		String line, String fileName, int lineCount) {
+
+		int pos = line.indexOf("->");
+
+		if ((pos == -1) || ToolsUtil.isInsideQuotes(line, pos)) {
+			return;
+		}
+
+		if (line.endsWith("{")) {
+			if (getLevel(line) > 0) {
+				int x = 1;
+
+				while (true) {
+					String s = line.substring(0, x);
+
+					if (getLevel(s) > 0) {
+						addMessage(
+							fileName,
+							"There should be a line break after '" + s + "'",
+							lineCount);
+
+						return;
+					}
+
+					x++;
+				}
+			}
+
+			return;
+		}
+
+		if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+			addMessage(
+				fileName, "There should be a line break after '->'", lineCount);
+		}
+	}
+
 	private void _checkLineBreaks(
 		String line, String previousLine, String fileName, int lineCount) {
 
@@ -109,6 +147,8 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 
 			return;
 		}
+
+		_checkLambdaLineBreaks(trimmedLine, fileName, lineCount);
 
 		if (trimmedLine.startsWith("},") && !trimmedLine.equals("},")) {
 			addMessage(

@@ -52,8 +52,9 @@ public class FormNavigatorEntryConfigurationHelperImpl
 				formNavigatorId, categoryKey, context);
 
 		return optionalFormNavigatorEntryKeys.map(
-			formNavigatorEntryKeys -> _getFormNavigatorEntries(
-				formNavigatorId, formNavigatorEntryKeys));
+			formNavigatorEntryKeys ->
+				_getFormNavigatorEntries(
+					formNavigatorId, formNavigatorEntryKeys));
 	}
 
 	@Activate

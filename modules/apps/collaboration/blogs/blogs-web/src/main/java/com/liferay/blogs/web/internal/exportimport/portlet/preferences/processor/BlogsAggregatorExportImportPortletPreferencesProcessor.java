@@ -150,7 +150,6 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 
 			Function<String, String> exportPortletPreferencesNewValueFunction =
 				(primaryKey) -> {
-
 					long primaryKeyLong = GetterUtil.getLong(primaryKey);
 
 					Organization organization =
@@ -196,7 +195,6 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 
 		Function<String, Long> importPortletPreferencesNewValueFunction =
 			(portletPreferencesOldValue) -> {
-
 				if (Validator.isNumber(portletPreferencesOldValue)) {
 					long oldPrimaryKey = GetterUtil.getLong(
 						portletPreferencesOldValue);

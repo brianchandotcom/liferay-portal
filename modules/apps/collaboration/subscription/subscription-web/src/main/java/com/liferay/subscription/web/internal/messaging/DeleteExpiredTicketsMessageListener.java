@@ -87,12 +87,13 @@ public class DeleteExpiredTicketsMessageListener extends BaseMessageListener {
 			_ticketLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> dynamicQuery.add(
-				RestrictionsFactoryUtil.and(
-					RestrictionsFactoryUtil.eq(
-						"type", SubscriptionConstants.TICKET_TYPE),
-					RestrictionsFactoryUtil.eq(
-						"classNameId", subscriptionClassNameId))));
+			dynamicQuery ->
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.and(
+						RestrictionsFactoryUtil.eq(
+							"type", SubscriptionConstants.TICKET_TYPE),
+						RestrictionsFactoryUtil.eq(
+							"classNameId", subscriptionClassNameId))));
 		actionableDynamicQuery.setPerformActionMethod(
 			(Ticket ticket) -> {
 				if (ticket.isExpired()) {

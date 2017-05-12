@@ -72,9 +72,10 @@ public class CounterTransactionExecutorTest {
 		try {
 			_transactionExecutor.execute(
 				recordPlatformTransactionManager, transactionAttributeAdapter,
-				_newMethodInvocation(() -> {
-					throw appException;
-				}));
+				_newMethodInvocation(
+					() -> {
+						throw appException;
+					}));
 
 			Assert.fail();
 		}
@@ -106,9 +107,10 @@ public class CounterTransactionExecutorTest {
 		try {
 			_transactionExecutor.execute(
 				recordPlatformTransactionManager, transactionAttributeAdapter,
-				_newMethodInvocation(() -> {
-					throw appException;
-				}));
+				_newMethodInvocation(
+					() -> {
+						throw appException;
+					}));
 
 			Assert.fail();
 		}
@@ -167,9 +169,10 @@ public class CounterTransactionExecutorTest {
 		try {
 			_transactionExecutor.execute(
 				recordPlatformTransactionManager, transactionAttributeAdapter,
-				_newMethodInvocation(() -> {
-					throw appException;
-				}));
+				_newMethodInvocation(
+					() -> {
+						throw appException;
+					}));
 
 			Assert.fail();
 		}
@@ -201,9 +204,10 @@ public class CounterTransactionExecutorTest {
 		try {
 			_transactionExecutor.execute(
 				recordPlatformTransactionManager, transactionAttributeAdapter,
-				_newMethodInvocation(() -> {
-					throw appException;
-				}));
+				_newMethodInvocation(
+					() -> {
+						throw appException;
+					}));
 
 			Assert.fail();
 		}

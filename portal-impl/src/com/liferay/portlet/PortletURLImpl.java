@@ -840,14 +840,15 @@ public class PortletURLImpl
 		addPortalAuthToken(sb, key);
 		addPortletAuthToken(sb, key);
 
-		visitReservedParameters((name, value) -> {
-			if (!isParameterIncludedInPath(name)) {
-				sb.append(name);
-				sb.append(StringPool.EQUAL);
-				sb.append(processValue(key, value));
-				sb.append(StringPool.AMPERSAND);
-			}
-		});
+		visitReservedParameters(
+			(name, value) -> {
+				if (!isParameterIncludedInPath(name)) {
+					sb.append(name);
+					sb.append(StringPool.EQUAL);
+					sb.append(processValue(key, value));
+					sb.append(StringPool.AMPERSAND);
+				}
+			});
 
 		if (_doAsUserId > 0) {
 			try {

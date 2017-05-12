@@ -656,8 +656,9 @@ public class AnnouncementsEntryLocalServiceImpl
 		mailTemplateContextBuilder.put(
 			"[$PORTLET_NAME$]",
 			new EscapableLocalizableFunction(
-				locale -> LanguageUtil.get(
-					locale, entry.isAlert() ? "alert" : "announcement")));
+				locale ->
+					LanguageUtil.get(
+						locale, entry.isAlert() ? "alert" : "announcement")));
 
 		if (entry.getGroupId() > 0) {
 			Group group = groupLocalService.getGroup(entry.getGroupId());

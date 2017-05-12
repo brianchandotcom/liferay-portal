@@ -14,6 +14,11 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Hugo Huijser
  */
@@ -31,7 +36,23 @@ public class JavaEmptyLinesCheck extends EmptyLinesCheck {
 
 		content = fixMissingEmptyLineAfterSettingVariable(content);
 
+		content = _fixRedundantEmptyLineInLambdaExpression(content);
+
 		return content;
 	}
+
+	private String _fixRedundantEmptyLineInLambdaExpression(String content) {
+		Matcher matcher = _redundantEmptyLinePattern.matcher(content);
+
+		if (matcher.find()) {
+			return StringUtil.replaceFirst(
+				content, "\n\n", "\n", matcher.start());
+		}
+
+		return content;
+	}
+
+	private final Pattern _redundantEmptyLinePattern = Pattern.compile(
+		"-> \\{\n\n[\t ]*(?!// )\\S");
 
 }

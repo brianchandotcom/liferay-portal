@@ -83,6 +83,7 @@ public class CPDefinitionLocalServiceImpl
 	@Override
 	public CPDefinition addCPDefinition(
 			String baseSKU, String name, Map<Locale, String> titleMap,
+			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, String productTypeName,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -148,7 +149,8 @@ public class CPDefinitionLocalServiceImpl
 		// Commerce product definition localization
 
 		_addCPDefinitionLocalizedFields(
-			user.getCompanyId(), cpDefinitionId, titleMap, descriptionMap);
+			user.getCompanyId(), cpDefinitionId, titleMap, shortDescriptionMap,
+			descriptionMap);
 
 		// Resources
 
@@ -410,13 +412,15 @@ public class CPDefinitionLocalServiceImpl
 	@Override
 	public CPDefinition updateCPDefinition(
 			long cpDefinitionId, String baseSKU, String name,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String productTypeName, String ddmStructureKey,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			Map<Locale, String> titleMap,
+			Map<Locale, String> shortDescriptionMap,
+			Map<Locale, String> descriptionMap, String productTypeName,
+			String ddmStructureKey, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -468,7 +472,7 @@ public class CPDefinitionLocalServiceImpl
 
 		_updateCPDefinitionLocalizedFields(
 			cpDefinition.getCompanyId(), cpDefinition.getCPDefinitionId(),
-			titleMap, descriptionMap);
+			titleMap, shortDescriptionMap, descriptionMap);
 
 		// Asset
 
@@ -685,12 +689,17 @@ public class CPDefinitionLocalServiceImpl
 
 	private List<CPDefinitionLocalization> _addCPDefinitionLocalizedFields(
 			long companyId, long cpDefinitionId, Map<Locale, String> titleMap,
+			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap)
 		throws PortalException {
 
 		Set<Locale> localeSet = new HashSet<>();
 
 		localeSet.addAll(titleMap.keySet());
+
+		if (shortDescriptionMap != null) {
+			localeSet.addAll(shortDescriptionMap.keySet());
+		}
 
 		if (descriptionMap != null) {
 			localeSet.addAll(descriptionMap.keySet());
@@ -701,20 +710,27 @@ public class CPDefinitionLocalServiceImpl
 
 		for (Locale locale : localeSet) {
 			String title = titleMap.get(locale);
+			String shortDescription = null;
 			String description = null;
+
+			if (shortDescriptionMap != null) {
+				shortDescription = shortDescriptionMap.get(locale);
+			}
 
 			if (descriptionMap != null) {
 				description = descriptionMap.get(locale);
 			}
 
-			if (Validator.isNull(title) && Validator.isNull(description)) {
+			if (Validator.isNull(title) && Validator.isNull(shortDescription) &&
+				Validator.isNull(description)) {
+
 				continue;
 			}
 
 			CPDefinitionLocalization cpDefinitionLocalization =
 				_addCPDefinitionLocalizedFields(
-					companyId, cpDefinitionId, title, description,
-					LocaleUtil.toLanguageId(locale));
+					companyId, cpDefinitionId, title, shortDescription,
+					description, LocaleUtil.toLanguageId(locale));
 
 			cpDefinitionLocalizations.add(cpDefinitionLocalization);
 		}
@@ -724,7 +740,7 @@ public class CPDefinitionLocalServiceImpl
 
 	private CPDefinitionLocalization _addCPDefinitionLocalizedFields(
 			long companyId, long cpDefinitionId, String title,
-			String description, String languageId)
+			String shortDescription, String description, String languageId)
 		throws PortalException {
 
 		CPDefinitionLocalization cpDefinitionLocalization =
@@ -741,6 +757,7 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinitionLocalization.setCompanyId(companyId);
 			cpDefinitionLocalization.setCpDefinitionPK(cpDefinitionId);
 			cpDefinitionLocalization.setTitle(title);
+			cpDefinitionLocalization.setShortDescription(shortDescription);
 			cpDefinitionLocalization.setDescription(description);
 			cpDefinitionLocalization.setLanguageId(languageId);
 		}
@@ -755,6 +772,7 @@ public class CPDefinitionLocalServiceImpl
 
 	private List<CPDefinitionLocalization> _updateCPDefinitionLocalizedFields(
 			long companyId, long cpDefinitionId, Map<Locale, String> titleMap,
+			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap)
 		throws PortalException {
 
@@ -765,7 +783,8 @@ public class CPDefinitionLocalServiceImpl
 
 		List<CPDefinitionLocalization> newCPDefinitionLocalizations =
 			_addCPDefinitionLocalizedFields(
-				companyId, cpDefinitionId, titleMap, descriptionMap);
+				companyId, cpDefinitionId, titleMap, shortDescriptionMap,
+				descriptionMap);
 
 		oldCPDefinitionLocalizations.removeAll(newCPDefinitionLocalizations);
 

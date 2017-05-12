@@ -46,6 +46,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	@Override
 	public CPDefinition addCPDefinition(
 			String baseSKU, String name, Map<Locale, String> titleMap,
+			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, String productTypeName,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -60,11 +61,12 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
 
 		return cpDefinitionLocalService.addCPDefinition(
-			baseSKU, name, titleMap, descriptionMap, productTypeName,
-			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			baseSKU, name, titleMap, shortDescriptionMap, descriptionMap,
+			productTypeName, ddmStructureKey, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override
@@ -179,22 +181,24 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	@Override
 	public CPDefinition updateCPDefinition(
 			long cpDefinitionId, String baseSKU, String name,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String productTypeName, String ddmStructureKey,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			Map<Locale, String> titleMap,
+			Map<Locale, String> shortDescriptionMap,
+			Map<Locale, String> descriptionMap, String productTypeName,
+			String ddmStructureKey, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateCPDefinition(
-			cpDefinitionId, baseSKU, name, titleMap, descriptionMap,
-			productTypeName, ddmStructureKey, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
+			cpDefinitionId, baseSKU, name, titleMap, shortDescriptionMap,
+			descriptionMap, productTypeName, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);

@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"com.liferay.portlet.css-class-wrapper=portlet-portal-security-wedeploy-application-auth-admin",
+		"com.liferay.portlet.css-class-wrapper=portlet-portal-security-wedeploy-auth-admin",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=false",
 		"javax.portlet.display-name=WeDeploy Auth Admin",

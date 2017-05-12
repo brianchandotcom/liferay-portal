@@ -16,16 +16,17 @@ package com.liferay.portal.security.wedeploy.auth.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.security.wedeploy.auth.web.internal.constants.WeDeployAuthPortletKeys;
-import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.Portlet;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Supritha Sundaram
  */
 @Component(
 	property = {
-		"com.liferay.portlet.css-class-wrapper=portlet-portal-security-wedeploy-application-auth",
+		"com.liferay.portlet.css-class-wrapper=portlet-portal-security-wedeploy-auth",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=false",
 		"javax.portlet.display-name=WeDeploy Auth",
@@ -39,7 +40,7 @@ import javax.portlet.Portlet;
 		"javax.portlet.init-param.view-template=/wedeploy_auth/view.jsp",
 		"javax.portlet.name=" + WeDeployAuthPortletKeys.WEDEPLOY_AUTH,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=guest,power-user,user",
+		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class

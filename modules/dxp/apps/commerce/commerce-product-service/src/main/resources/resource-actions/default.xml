@@ -16,6 +16,8 @@
 				<action-key>ADD_COMMERCE_PRODUCT_DEFINITION</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_CATEGORY</action-key>
+				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
+				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</supports>
 			<site-member-defaults />
@@ -25,6 +27,8 @@
 				<action-key>ADD_COMMERCE_PRODUCT_MEDIA_TYPE</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_CATEGORY</action-key>
+				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
+				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</guest-unsupported>
 		</permissions>

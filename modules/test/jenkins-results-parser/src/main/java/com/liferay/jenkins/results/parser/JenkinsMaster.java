@@ -28,15 +28,15 @@ import org.json.JSONObject;
  */
 public class JenkinsMaster implements Comparable<JenkinsMaster> {
 
-	public JenkinsMaster(String masterName) {
+	public JenkinsMaster(String masterName, String masterURL) {
 		_masterName = masterName;
-		_masterURL = "http://" + masterName;
+		_masterURL = masterURL;
 		_recentBatchesMap = new TreeMap<>();
 	}
 
 	public void addRecentBatch(int batchSize) {
 		_recentBatchesMap.put(
-			System.currentTimeMillis() + _RECENT_BATCH_AGE, batchSize);
+			System.currentTimeMillis() + maxRecentBatchAge, batchSize);
 
 		getAvailableSlavesCount();
 	}
@@ -187,6 +187,8 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 		getAvailableSlavesCount();
 	}
 
+	protected static long maxRecentBatchAge = 120 * 1000;
+
 	private int _getTotalRecentBatcheSizes() {
 		long currentTimestamp = System.currentTimeMillis();
 		int totalRecentBatchesSize = 0;
@@ -210,8 +212,6 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 
 		return totalRecentBatchesSize;
 	}
-
-	private static final long _RECENT_BATCH_AGE = 120 * 1000;
 
 	private boolean _available;
 	private final String _masterName;

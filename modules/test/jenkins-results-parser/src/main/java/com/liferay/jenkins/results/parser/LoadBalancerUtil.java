@@ -54,44 +54,49 @@ public class LoadBalancerUtil {
 				List<JenkinsMaster> jenkinsMasters = _getJenkinsMasters(
 					masterPrefix, properties);
 
-				ExecutorService executorService = Executors.newFixedThreadPool(
-					jenkinsMasters.size());
+				if (nextUpdateTimestamp < System.currentTimeMillis()) {
+					ExecutorService executorService =
+						Executors.newFixedThreadPool(jenkinsMasters.size());
 
-				for (final JenkinsMaster jenkinsMaster : jenkinsMasters) {
-					executorService.execute(
-						new Runnable() {
+					for (final JenkinsMaster jenkinsMaster : jenkinsMasters) {
+						executorService.execute(
+							new Runnable() {
 
-							@Override
-							public void run() {
-								jenkinsMaster.update();
-							}
+								@Override
+								public void run() {
+									jenkinsMaster.update();
+								}
 
-						});
-				}
-
-				executorService.shutdown();
-
-				try {
-					executorService.awaitTermination(10, TimeUnit.SECONDS);
-				}
-				catch (InterruptedException ie) {
-					throw new RuntimeException(ie);
-				}
-
-				List<JenkinsMaster> unavailableJenkinsMasters = new ArrayList<>(
-					jenkinsMasters.size());
-
-				for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
-					if (!jenkinsMaster.isAvailable()) {
-						unavailableJenkinsMasters.add(jenkinsMaster);
+							});
 					}
-				}
 
-				jenkinsMasters.removeAll(unavailableJenkinsMasters);
+					executorService.shutdown();
 
-				if (jenkinsMasters.isEmpty()) {
-					throw new RuntimeException(
-						"Unable to communicate with any jenkins masters.");
+					try {
+						executorService.awaitTermination(10, TimeUnit.SECONDS);
+					}
+					catch (InterruptedException ie) {
+						throw new RuntimeException(ie);
+					}
+
+					List<JenkinsMaster> unavailableJenkinsMasters =
+						new ArrayList<>(jenkinsMasters.size());
+
+					for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
+						if (!jenkinsMaster.isAvailable()) {
+							unavailableJenkinsMasters.add(jenkinsMaster);
+						}
+					}
+
+					jenkinsMasters.removeAll(unavailableJenkinsMasters);
+
+					if (jenkinsMasters.isEmpty()) {
+						throw new RuntimeException(
+							"Unable to communicate with any jenkins masters.");
+					}
+
+					nextUpdateTimestamp =
+						System.currentTimeMillis() + _UPDATE_INTERVAL;
 				}
 
 				Collections.sort(jenkinsMasters);
@@ -272,9 +277,12 @@ public class LoadBalancerUtil {
 
 	private static final int _MAX_RETRIES = 3;
 
+	private static final long _UPDATE_INTERVAL = 1000 * 10;
+
 	private static final Map<String, List<JenkinsMaster>> _jenkinsMastersMap =
 		new HashMap<>();
 	private static final Pattern _urlPattern = Pattern.compile(
 		"http://(?<masterPrefix>.+-\\d?).liferay.com");
+	private static long nextUpdateTimestamp;
 
 }

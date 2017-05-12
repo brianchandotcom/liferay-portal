@@ -56,7 +56,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		Date displayDate = null;
 		Date expirationDate = null;
-		Date now = new Date();
 
 		displayDate = PortalUtil.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -167,14 +166,12 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		// Commerce product attachment file entry
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
-		long groupId = serviceContext.getScopeGroupId();
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			cpAttachmentFileEntryPersistence.findByPrimaryKey(
 				cpAttachmentFileEntryId);
 
 		Date displayDate = null;
 		Date expirationDate = null;
-		Date now = new Date();
 
 		displayDate = PortalUtil.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,

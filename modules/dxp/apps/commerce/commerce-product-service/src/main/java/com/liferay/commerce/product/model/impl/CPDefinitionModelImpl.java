@@ -521,6 +521,61 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	}
 
 	@Override
+	public String getShortDescription() {
+		return getShortDescription(getDefaultLanguageId(), false);
+	}
+
+	@Override
+	public String getShortDescription(String languageId) {
+		return getShortDescription(languageId, true);
+	}
+
+	@Override
+	public String getShortDescription(String languageId, boolean useDefault) {
+		if (useDefault) {
+			return LocalizationUtil.getLocalization(new Function<String, String>() {
+					@Override
+					public String apply(String languageId) {
+						return _getShortDescription(languageId);
+					}
+				}, languageId, getDefaultLanguageId());
+		}
+
+		return _getShortDescription(languageId);
+	}
+
+	@Override
+	public String getShortDescriptionMapAsXML() {
+		return LocalizationUtil.getXml(getLanguageIdToShortDescriptionMap(),
+			getDefaultLanguageId(), "ShortDescription");
+	}
+
+	@Override
+	public Map<String, String> getLanguageIdToShortDescriptionMap() {
+		Map<String, String> languageIdToShortDescriptionMap = new HashMap<String, String>();
+
+		List<CPDefinitionLocalization> cpDefinitionLocalizations = CPDefinitionLocalServiceUtil.getCPDefinitionLocalizations(getPrimaryKey());
+
+		for (CPDefinitionLocalization cpDefinitionLocalization : cpDefinitionLocalizations) {
+			languageIdToShortDescriptionMap.put(cpDefinitionLocalization.getLanguageId(),
+				cpDefinitionLocalization.getShortDescription());
+		}
+
+		return languageIdToShortDescriptionMap;
+	}
+
+	private String _getShortDescription(String languageId) {
+		CPDefinitionLocalization cpDefinitionLocalization = CPDefinitionLocalServiceUtil.fetchCPDefinitionLocalization(getPrimaryKey(),
+				languageId);
+
+		if (cpDefinitionLocalization == null) {
+			return StringPool.BLANK;
+		}
+
+		return cpDefinitionLocalization.getShortDescription();
+	}
+
+	@Override
 	public String getDescription() {
 		return getDescription(getDefaultLanguageId(), false);
 	}

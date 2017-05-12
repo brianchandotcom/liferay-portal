@@ -40,6 +40,7 @@ public class CPDefinitionLocalizationSoap implements Serializable {
 		soapModel.setLanguageId(model.getLanguageId());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setUrlTitle(model.getUrlTitle());
+		soapModel.setShortDescription(model.getShortDescription());
 		soapModel.setDescription(model.getDescription());
 
 		return soapModel;
@@ -152,6 +153,14 @@ public class CPDefinitionLocalizationSoap implements Serializable {
 		_urlTitle = urlTitle;
 	}
 
+	public String getShortDescription() {
+		return _shortDescription;
+	}
+
+	public void setShortDescription(String shortDescription) {
+		_shortDescription = shortDescription;
+	}
+
 	public String getDescription() {
 		return _description;
 	}
@@ -167,5 +176,6 @@ public class CPDefinitionLocalizationSoap implements Serializable {
 	private String _languageId;
 	private String _title;
 	private String _urlTitle;
+	private String _shortDescription;
 	private String _description;
 }

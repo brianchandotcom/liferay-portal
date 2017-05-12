@@ -66,6 +66,7 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 		attributes.put("languageId", getLanguageId());
 		attributes.put("title", getTitle());
 		attributes.put("urlTitle", getUrlTitle());
+		attributes.put("shortDescription", getShortDescription());
 		attributes.put("description", getDescription());
 
 		return attributes;
@@ -114,6 +115,12 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 
 		if (urlTitle != null) {
 			setUrlTitle(urlTitle);
+		}
+
+		String shortDescription = (String)attributes.get("shortDescription");
+
+		if (shortDescription != null) {
+			setShortDescription(shortDescription);
 		}
 
 		String description = (String)attributes.get("description");
@@ -196,6 +203,16 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	@Override
 	public java.lang.String getLanguageId() {
 		return _cpDefinitionLocalization.getLanguageId();
+	}
+
+	/**
+	* Returns the short description of this cp definition localization.
+	*
+	* @return the short description of this cp definition localization
+	*/
+	@Override
+	public java.lang.String getShortDescription() {
+		return _cpDefinitionLocalization.getShortDescription();
 	}
 
 	/**
@@ -377,6 +394,16 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_cpDefinitionLocalization.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the short description of this cp definition localization.
+	*
+	* @param shortDescription the short description of this cp definition localization
+	*/
+	@Override
+	public void setShortDescription(java.lang.String shortDescription) {
+		_cpDefinitionLocalization.setShortDescription(shortDescription);
 	}
 
 	/**

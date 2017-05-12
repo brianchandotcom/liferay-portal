@@ -454,6 +454,16 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 
 	public Map<String, String> getLanguageIdToUrlTitleMap();
 
+	public String getShortDescription();
+
+	public String getShortDescription(String languageId);
+
+	public String getShortDescription(String languageId, boolean useDefault);
+
+	public String getShortDescriptionMapAsXML();
+
+	public Map<String, String> getLanguageIdToShortDescriptionMap();
+
 	public String getDescription();
 
 	public String getDescription(String languageId);

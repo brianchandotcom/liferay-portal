@@ -504,6 +504,27 @@ public class CPDefinitionWrapper implements CPDefinition,
 		return _cpDefinition.getProductTypeName();
 	}
 
+	@Override
+	public java.lang.String getShortDescription() {
+		return _cpDefinition.getShortDescription();
+	}
+
+	@Override
+	public java.lang.String getShortDescription(java.lang.String languageId) {
+		return _cpDefinition.getShortDescription(languageId);
+	}
+
+	@Override
+	public java.lang.String getShortDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpDefinition.getShortDescription(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getShortDescriptionMapAsXML() {
+		return _cpDefinition.getShortDescriptionMapAsXML();
+	}
+
 	/**
 	* Returns the status by user name of this cp definition.
 	*
@@ -679,6 +700,11 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public Map<java.lang.String, java.lang.String> getLanguageIdToDescriptionMap() {
 		return _cpDefinition.getLanguageIdToDescriptionMap();
+	}
+
+	@Override
+	public Map<java.lang.String, java.lang.String> getLanguageIdToShortDescriptionMap() {
+		return _cpDefinition.getLanguageIdToShortDescriptionMap();
 	}
 
 	@Override

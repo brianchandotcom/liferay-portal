@@ -243,7 +243,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the checkbox input. This data is to stored via a map.</description>
+			<description>Data attributes to add to the checkbox input. This data is to be stored via a map.</description>
 			<name>checkboxData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -285,7 +285,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the link. This data is to stored via a map.</description>
+			<description>Data attributes to add to the link. This data is to be stored via a map.</description>
 			<name>linkData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -365,7 +365,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the checkbox input. This data is to stored via a map.</description>
+			<description>Data attributes to add to the checkbox input. This data is to be stored via a map.</description>
 			<name>checkboxData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1019,7 +1019,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the checkbox input. This data is to stored via a map.</description>
+			<description>Data attributes to add to the checkbox input. This data is to be stored via a map.</description>
 			<name>checkboxData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1137,7 +1137,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the checkbox input. This data is to stored via a map.</description>
+			<description>Data attributes to add to the checkbox input. This data is to be stored via a map.</description>
 			<name>checkboxData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

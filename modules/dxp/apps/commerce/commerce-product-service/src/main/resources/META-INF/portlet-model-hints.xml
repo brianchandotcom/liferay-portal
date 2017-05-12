@@ -53,7 +53,9 @@
 		<field name="languageId" type="String" />
 		<field name="title" type="String" />
 		<field name="urlTitle" type="String" />
-		<field name="shortDescription" type="String" />
+		<field name="shortDescription" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="description" type="String">
 			<hint-collection name="CLOB" />
 		</field>

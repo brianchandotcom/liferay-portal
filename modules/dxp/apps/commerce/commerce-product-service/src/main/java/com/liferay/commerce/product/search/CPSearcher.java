@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.search;
 
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
@@ -30,7 +31,8 @@ import com.liferay.portal.kernel.search.Indexer;
 public class CPSearcher extends BaseSearcher {
 
 	public static final String[] CLASS_NAMES = {
-		CPDefinition.class.getName(), CPDefinitionOptionRel.class.getName(),
+		CPAttachmentFileEntry.class.getName(), CPDefinition.class.getName(),
+		CPDefinitionOptionRel.class.getName(),
 		CPDefinitionOptionValueRel.class.getName(), CPInstance.class.getName(),
 		CPOption.class.getName(), CPOptionValue.class.getName()
 	};

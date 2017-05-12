@@ -353,9 +353,13 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 	}
 
 	public boolean isShowSiteSelector() throws PortalException {
-		List<Group> mySites = getMySites();
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			_portletRequest);
 
-		if (mySites.isEmpty()) {
+		List<Group> mySites = getMySites();
+		List<Group> recentSites = _recentGroupManager.getRecentGroups(request);
+
+		if (mySites.isEmpty() && recentSites.isEmpty()) {
 			return false;
 		}
 

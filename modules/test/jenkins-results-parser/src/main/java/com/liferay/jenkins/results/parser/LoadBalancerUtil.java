@@ -54,11 +54,15 @@ public class LoadBalancerUtil {
 				List<JenkinsMaster> jenkinsMasters = _getJenkinsMasters(
 					masterPrefix, properties);
 
+				long nextUpdateTimestamp = _getNextUpdateTimestamp(
+					masterPrefix);
+
 				if (nextUpdateTimestamp < System.currentTimeMillis()) {
 					_updateJenkinsMasters(jenkinsMasters);
 
-					nextUpdateTimestamp =
-						System.currentTimeMillis() + _updateInterval;
+					_setNextUpdateTimestamp(
+						masterPrefix,
+						System.currentTimeMillis() + _updateInterval);
 				}
 
 				Collections.sort(jenkinsMasters);
@@ -241,6 +245,20 @@ public class LoadBalancerUtil {
 		return matcher.group("masterPrefix");
 	}
 
+	private static long _getNextUpdateTimestamp(String masterPrefix) {
+		if (!_nextUpdateTimestampMap.containsKey(masterPrefix)) {
+			return 0;
+		}
+
+		else return _nextUpdateTimestampMap.get(masterPrefix);
+	}
+
+	private static void _setNextUpdateTimestamp(
+		String masterPrefix, long nextUpdateTimestamp) {
+
+		_nextUpdateTimestampMap.put(masterPrefix, nextUpdateTimestamp);
+	}
+
 	private static void _updateJenkinsMasters(
 		List<JenkinsMaster> jenkinsMasters) {
 
@@ -289,9 +307,10 @@ public class LoadBalancerUtil {
 
 	private static final Map<String, List<JenkinsMaster>> _jenkinsMastersMap =
 		new HashMap<>();
+	private static final Map<String, Long> _nextUpdateTimestampMap =
+		new HashMap<>();
 	private static long _updateInterval = 1000 * 10;
 	private static final Pattern _urlPattern = Pattern.compile(
 		"http://(?<masterPrefix>.+-\\d?).liferay.com");
-	private static long nextUpdateTimestamp;
 
 }

@@ -30,11 +30,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
-		"mvc.command.name=viewProductDefinitionImages"
+		"mvc.command.name=viewAttachmentFileEntries"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewCPDefinitionImagesMVCRenderCommand
+public class ViewCPAttachmentFileEntriesMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -42,7 +42,7 @@ public class ViewCPDefinitionImagesMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/definition_images.jsp";
+		return "/attachment_file_entries.jsp";
 	}
 
 }

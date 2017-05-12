@@ -32,16 +32,17 @@
 
 		<c:if test="<%= cpDefinition != null %>">
 			<liferay-portlet:renderURL varImpl="viewProductDefinitionImagesURL">
-				<portlet:param name="mvcRenderCommandName" value="viewDefinitionMedia" />
+				<portlet:param name="mvcRenderCommandName" value="viewAttachmentFileEntries" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
+				<portlet:param name="type" value="<%= String.valueOf(CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGES) %>" />
 				<portlet:param name="toolbarItem" value="view-product-definition-images" />
 			</liferay-portlet:renderURL>
 
 			<aui:nav-item
 				href="<%= viewProductDefinitionImagesURL.toString() %>"
 				label='<%= LanguageUtil.get(request, "images") %>'
-				selected='<%= toolbarItem.equals("view-definition-media") %>'
+				selected='<%= toolbarItem.equals("view-product-definition-images") %>'
 			/>
 
 			<liferay-portlet:renderURL varImpl="viewProductDefinitionOptionRelsURL">
@@ -68,6 +69,20 @@
 				href="<%= viewProductDefinitionInstancesURL.toString() %>"
 				label='<%= LanguageUtil.get(request, "skus") %>'
 				selected='<%= toolbarItem.equals("view-product-definition-instances") %>'
+			/>
+
+			<liferay-portlet:renderURL varImpl="viewProductDefinitionAttachmentsURL">
+				<portlet:param name="mvcRenderCommandName" value="viewAttachmentFileEntries" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
+				<portlet:param name="type" value="<%= String.valueOf(CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_ATTACHMENTS) %>" />
+				<portlet:param name="toolbarItem" value="view-product-definition-attachments" />
+			</liferay-portlet:renderURL>
+
+			<aui:nav-item
+				href="<%= viewProductDefinitionAttachmentsURL.toString() %>"
+				label='<%= LanguageUtil.get(request, "attachments") %>'
+				selected='<%= toolbarItem.equals("view-product-definition-attachments") %>'
 			/>
 		</c:if>
 	</aui:nav>

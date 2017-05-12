@@ -56,8 +56,8 @@ public class SearchBarRedirectMVCActionCommand extends BaseMVCActionCommand {
 			portletRequest.getParameter(parameterName));
 
 		Optional<String> urlOptional = parameterValueOptional.map(
-			parameterValue ->
-				HttpUtil.addParameter(url, parameterName, parameterValue));
+			parameterValue -> HttpUtil.addParameter(
+				url, parameterName, parameterValue));
 
 		return urlOptional.orElse(url);
 	}

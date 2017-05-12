@@ -65,10 +65,9 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 			"[$ARTICLE_ATTACHMENTS$]", _getEmailKBArticleAttachmentsFunction());
 		setLocalizedContextAttributeWithFunction(
 			"[$ARTICLE_VERSION$]",
-			(locale) ->
-				LanguageUtil.format(
-					locale, "version-x",
-					String.valueOf(_kbArticle.getVersion()), false));
+			(locale) -> LanguageUtil.format(
+				locale, "version-x", String.valueOf(_kbArticle.getVersion()),
+				false));
 		setLocalizedContextAttributeWithFunction(
 			"[$CATEGORY_TITLE$]",
 			(locale) -> LanguageUtil.get(locale, "category.kb"));

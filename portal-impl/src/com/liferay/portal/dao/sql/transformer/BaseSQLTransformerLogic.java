@@ -47,10 +47,9 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	}
 
 	protected Function<String, String> getBooleanFunction() {
-		return (String sql) ->
-			StringUtil.replace(
-				sql, new String[] {"[$FALSE$]", "[$TRUE$]"},
-				new String[] {_db.getTemplateFalse(), _db.getTemplateTrue()});
+		return (String sql) -> StringUtil.replace(
+			sql, new String[] {"[$FALSE$]", "[$TRUE$]"},
+			new String[] {_db.getTemplateFalse(), _db.getTemplateTrue()});
 	}
 
 	protected Function<String, String> getCastClobTextFunction() {

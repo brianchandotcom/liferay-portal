@@ -190,8 +190,8 @@ public class SubscriptionMBMessageLocalServiceWrapper
 				subscriptionSender.setLocalizedContextAttribute(
 					"[$CATEGORY_NAME$]",
 					new EscapableLocalizableFunction(
-						locale ->
-							_getLocalizedRootCategoryName(group, locale)));
+						locale -> _getLocalizedRootCategoryName(
+							group, locale)));
 			}
 			catch (PortalException pe) {
 				ReflectionUtil.throwException(pe);

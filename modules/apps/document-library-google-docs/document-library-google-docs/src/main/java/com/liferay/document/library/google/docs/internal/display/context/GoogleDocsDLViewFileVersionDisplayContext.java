@@ -89,8 +89,8 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		List<MenuItem> menuItems = menu.getMenuItems();
 
 		menuItems.removeIf(
-			menuItem ->
-				Objects.equals(menuItem.getKey(), "#edit-with-image-editor"));
+			menuItem -> Objects.equals(
+				menuItem.getKey(), "#edit-with-image-editor"));
 
 		_googleDocsUIItemsProcessor.processMenuItems(menuItems);
 

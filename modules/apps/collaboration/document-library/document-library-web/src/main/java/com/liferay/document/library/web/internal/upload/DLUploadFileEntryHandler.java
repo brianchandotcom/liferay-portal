@@ -74,9 +74,8 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 
 			String uniqueFileName = _uniqueFileNameProvider.provide(
 				fileName,
-				curFileName ->
-					_exists(
-						themeDisplay.getScopeGroupId(), folderId, curFileName));
+				curFileName -> _exists(
+					themeDisplay.getScopeGroupId(), folderId, curFileName));
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), uploadPortletRequest);

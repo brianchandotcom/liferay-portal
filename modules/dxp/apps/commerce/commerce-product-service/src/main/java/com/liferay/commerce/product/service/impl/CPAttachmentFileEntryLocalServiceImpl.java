@@ -163,8 +163,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		// Commerce product attachment file entry
-
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			cpAttachmentFileEntryPersistence.findByPrimaryKey(

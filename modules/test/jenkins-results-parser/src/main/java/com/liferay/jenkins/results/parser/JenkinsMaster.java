@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
@@ -189,14 +191,21 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 		long currentTimestamp = System.currentTimeMillis();
 		int totalRecentBatchesSize = 0;
 
+		List<Long> expiredTimestamps = new ArrayList<>(
+			_recentBatchesMap.size());
+
 		for (long expiryTimestamp : _recentBatchesMap.keySet()) {
 			if (expiryTimestamp < currentTimestamp) {
-				_recentBatchesMap.remove(expiryTimestamp);
+				expiredTimestamps.add(expiryTimestamp);
 
 				continue;
 			}
 
 			totalRecentBatchesSize += _recentBatchesMap.get(expiryTimestamp);
+		}
+
+		for (Long expiredTimestamp : expiredTimestamps) {
+			_recentBatchesMap.remove(expiredTimestamp);
 		}
 
 		return totalRecentBatchesSize;

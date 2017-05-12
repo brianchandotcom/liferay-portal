@@ -24,7 +24,7 @@ int status = GetterUtil.getInteger(request.getAttribute("view.jsp-status"));
 String usersListView = GetterUtil.getString(request.getAttribute("view.jsp-usersListView"));
 String viewUsersRedirect = GetterUtil.getString(request.getAttribute("view.jsp-viewUsersRedirect"));
 
-SearchContainer searchContainer = new UserSearch(renderRequest, "cur2", currentURLObj);
+SearchContainer searchContainer = new UserSearch(renderRequest, "cur2", portletURL);
 
 UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 

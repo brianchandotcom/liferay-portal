@@ -47,6 +47,8 @@ String portletURLString = portletURL.toString();
 portletURL.setParameter("keywords", keywords);
 
 pageContext.setAttribute("portletURL", portletURL);
+
+SearchContainer searchContainer = new RoleSearch(renderRequest, portletURL);
 %>
 
 <liferay-ui:error exception="<%= RequiredRoleException.class %>" message="you-cannot-delete-a-system-role" />
@@ -152,7 +154,8 @@ pageContext.setAttribute("portletURL", portletURL);
 	<liferay-ui:search-container
 		id="roleSearch"
 		rowChecker="<%= new RoleChecker(renderResponse) %>"
-		searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
+		searchContainer="<%= searchContainer %>"
+		var="roleSearchContainer"
 	>
 		<liferay-ui:search-container-results>
 

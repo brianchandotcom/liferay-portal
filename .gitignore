@@ -140,6 +140,7 @@
 /lib/portal/chemistry-opencmis-client-impl.jar
 /lib/portal/chemistry-opencmis-commons-api.jar
 /lib/portal/chemistry-opencmis-commons-impl.jar
+/lib/portal/closure-compiler.jar
 /lib/portal/commons-beanutils.jar
 /lib/portal/commons-chain.jar
 /lib/portal/commons-codec.jar
@@ -198,10 +199,12 @@
 /lib/portal/jcommon.jar
 /lib/portal/jdom.jar
 /lib/portal/jempbox.jar
+/lib/portal/jena.jar
 /lib/portal/jericho-html.jar
 /lib/portal/jfreechart.jar
 /lib/portal/jhighlight.jar
 /lib/portal/jhlabs-filters.jar
+/lib/portal/jmatio.jar
 /lib/portal/jna.jar
 /lib/portal/jodconverter.jar
 /lib/portal/jodd-bean.jar
@@ -242,6 +245,7 @@
 /lib/portal/poi.jar
 /lib/portal/portals-bridges.jar
 /lib/portal/rdffilter.jar
+/lib/portal/rome.jar
 /lib/portal/rometools.jar
 /lib/portal/saaj-api.jar
 /lib/portal/saaj-impl.jar

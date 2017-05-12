@@ -41,7 +41,7 @@ displayStyleURL.setParameter("mvcRenderCommandName", "/mysubscriptions/view");
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
 			navigationParam="entriesNavigation"
-			portletURL="<%= renderResponse.createRenderURL() %>"
+			portletURL="<%= displayStyleURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 

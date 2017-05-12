@@ -66,6 +66,15 @@ public class TunnelUtil {
 
 		Thread thread = Thread.currentThread();
 
+		int responseCode = httpURLConnection.getResponseCode();
+
+		if ((responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) ||
+			(responseCode == HttpURLConnection.HTTP_FORBIDDEN)) {
+
+			throw new PrincipalException.MustBeAuthenticated(
+				httpPrincipal.getLogin());
+		}
+
 		try (ObjectInputStream objectInputStream =
 				new ProtectedClassLoaderObjectInputStream(
 					httpURLConnection.getInputStream(),
@@ -76,19 +85,6 @@ public class TunnelUtil {
 		catch (EOFException eofe) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Unable to read object", eofe);
-			}
-		}
-		catch (IOException ioe) {
-			String ioeMessage = ioe.getMessage();
-
-			if ((ioeMessage != null) &&
-				ioeMessage.contains("HTTP response code: 401")) {
-
-				throw new PrincipalException.MustBeAuthenticated(
-					httpPrincipal.getLogin());
-			}
-			else {
-				throw ioe;
 			}
 		}
 

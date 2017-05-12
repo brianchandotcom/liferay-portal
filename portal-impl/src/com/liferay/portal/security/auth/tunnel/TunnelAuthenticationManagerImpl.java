@@ -130,7 +130,9 @@ public class TunnelAuthenticationManagerImpl
 
 			authException.setType(AuthException.INTERNAL_SERVER_ERROR);
 
-			throw authException;
+			if (_log.isWarnEnabled()) {
+				_log.warn(authException.getMessage());
+			}
 		}
 
 		return user.getUserId();

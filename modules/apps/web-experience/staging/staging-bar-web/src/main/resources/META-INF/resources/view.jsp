@@ -184,6 +184,18 @@ if (layout != null) {
 
 						<%
 						}
+						catch (PrincipalException pe) {
+							_log.error("User " + user.getScreenName() + " must be authenticated");
+						%>
+
+							<a class="control-menu-icon" value="go-to-remote-live">
+								<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
+							</a>
+
+							<liferay-ui:icon icon="exclamation-full" markupView="lexicon" message="an-unexpected-error-occurred" toolTip="<%= true %>" />
+
+						<%
+						}
 						catch (SystemException se) {
 							_log.error(se, se);
 						%>

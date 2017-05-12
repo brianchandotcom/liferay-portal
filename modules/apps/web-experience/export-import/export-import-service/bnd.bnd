@@ -14,6 +14,9 @@ Export-Package:\
 	com.liferay.exportimport.staged.model.repository.base,\
 	com.liferay.exportimport.staging,\
 	com.liferay.exportimport.xstream
+Import-Package:\
+	com.liferay.portal.kernel.security.auth,\
+	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
 Liferay-Require-SchemaVersion: 1.0.0

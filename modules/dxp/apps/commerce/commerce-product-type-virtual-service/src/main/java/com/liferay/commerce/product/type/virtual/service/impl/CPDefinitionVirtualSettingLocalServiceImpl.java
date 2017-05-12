@@ -42,7 +42,8 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			long sampleFileEntryId, String sampleUrl,
 			boolean termsOfUseRequired,
 			Map<Locale, String> termsOfUseContentMap,
-			long termsOfUseJournalArticleId, boolean useUrl, boolean useFileEntry, ServiceContext serviceContext)
+			long termsOfUseJournalArticleId, boolean useUrl,
+			boolean useFileEntry, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -123,7 +124,8 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			long sampleFileEntryId, String sampleUrl,
 			boolean termsOfUseRequired,
 			Map<Locale, String> termsOfUseContentMap,
-			long termsOfUseJournalArticleId, boolean useUrl, boolean useFileEntry, ServiceContext serviceContext)
+			long termsOfUseJournalArticleId, boolean useUrl,
+			boolean useFileEntry, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
@@ -158,17 +160,15 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 
 		if (useFileEntry) {
 			if (fileEntryId <= 0) {
-				throw new CPDefinitionVirtualSettingFileEntryIdException;
+				throw new CPDefinitionVirtualSettingFileEntryIdException();
 			}
 		}
 	}
 
-	protected void validate(boolean useUrl, String url)
-		throws PortalException {
-
+	protected void validate(boolean useUrl, String url) throws PortalException {
 		if (useUrl) {
 			if (Validator.isNull(url)) {
-				throw new CPDefinitionVirtualSettingUrlException;
+				throw new CPDefinitionVirtualSettingUrlException();
 			}
 		}
 	}

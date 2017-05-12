@@ -58,7 +58,7 @@ public class LoadBalancerUtil {
 					_updateJenkinsMasters(jenkinsMasters);
 
 					nextUpdateTimestamp =
-						System.currentTimeMillis() + _UPDATE_INTERVAL;
+						System.currentTimeMillis() + _updateInterval;
 				}
 
 				Collections.sort(jenkinsMasters);
@@ -161,6 +161,10 @@ public class LoadBalancerUtil {
 		}
 
 		return getMostAvailableMasterURL(properties);
+	}
+
+	public static void setUpdateInterval(long interval) {
+		_updateInterval = interval;
 	}
 
 	private static List<String> _getBlacklist(Properties properties) {
@@ -283,10 +287,9 @@ public class LoadBalancerUtil {
 
 	private static final int _MAX_RETRIES = 3;
 
-	private static final long _UPDATE_INTERVAL = 1000 * 10;
-
 	private static final Map<String, List<JenkinsMaster>> _jenkinsMastersMap =
 		new HashMap<>();
+	private static long _updateInterval = 1000 * 10;
 	private static final Pattern _urlPattern = Pattern.compile(
 		"http://(?<masterPrefix>.+-\\d?).liferay.com");
 	private static long nextUpdateTimestamp;

@@ -31,6 +31,8 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERC
 		<aui:validator name="required" />
 	</aui:input>
 
+	<aui:input label="short-description" localized="<%= true %>" name="shortDescriptionMapAsXML" type="textarea" wrapperCssClass="commerce-product-definition-description" />
+
 	<%
 	String descriptionMapAsXML = StringPool.BLANK;
 
@@ -50,17 +52,23 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERC
 	function afterDeletingAvailableLocale(event) {
 		var descriptionInputLocalized = Liferay.component('<portlet:namespace />descriptionMapAsXML');
 
+		var shortDescriptionInputLocalized = Liferay.component('<portlet:namespace />shortDescriptionMapAsXML');
+
 		var titleInputLocalized = Liferay.component('<portlet:namespace />titleMapAsXML');
 
 		var locale = event.locale;
 
 		descriptionInputLocalized.removeInputLanguage(locale);
 
+		shortDescriptionInputLocalized.removeInputLanguage(locale);
+
 		titleInputLocalized.removeInputLanguage(locale);
 	}
 
 	function afterEditingLocaleChange(event) {
 		var descriptionInputLocalized = Liferay.component('<portlet:namespace />descriptionMapAsXML');
+
+		var shortDescriptionInputLocalized = Liferay.component('<portlet:namespace />shortDescriptionMapAsXML');
 
 		var titleInputLocalized = Liferay.component('<portlet:namespace />titleMapAsXML');
 
@@ -69,6 +77,9 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERC
 		var editingLocale = event.newVal;
 
 		var selectedIndex = items.indexOf(editingLocale);
+
+		shortDescriptionInputLocalized.set('selected', selectedIndex);
+		shortDescriptionInputLocalized.selectFlag(editingLocale);
 
 		descriptionInputLocalized.set('selected', selectedIndex);
 		descriptionInputLocalized.selectFlag(editingLocale);

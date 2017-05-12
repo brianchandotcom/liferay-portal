@@ -26,6 +26,10 @@
 
 <%
 int subscriptionsCount = SubscriptionLocalServiceUtil.getUserSubscriptionsCount(user.getUserId());
+
+PortletURL displayStyleURL = renderResponse.createRenderURL();
+
+displayStyleURL.setParameter("mvcRenderCommandName", "/mysubscriptions/view");
 %>
 
 <liferay-frontend:management-bar
@@ -40,6 +44,14 @@ int subscriptionsCount = SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
 			portletURL="<%= renderResponse.createRenderURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= displayStyleURL %>"
+			selectedDisplayStyle="list"
+		/>
+	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">

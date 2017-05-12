@@ -43,6 +43,8 @@ page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%
 page import="com.liferay.subscription.util.comparator.SubscriptionClassNameIdComparator" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
+<%@ page import="javax.portlet.PortletURL" %>
+
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

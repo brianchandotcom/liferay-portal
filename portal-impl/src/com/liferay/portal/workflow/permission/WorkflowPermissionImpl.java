@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
@@ -61,12 +60,6 @@ public class WorkflowPermissionImpl implements WorkflowPermission {
 			permissionChecker.isGroupAdmin(groupId)) {
 
 			return Boolean.TRUE;
-		}
-
-		if (!WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
-				companyId, groupId, className)) {
-
-			return null;
 		}
 
 		if (WorkflowInstanceLinkLocalServiceUtil.hasWorkflowInstanceLink(

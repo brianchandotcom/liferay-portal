@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"liferay-amd-loader": "1.6.0",
+		"liferay-amd-loader": "2.0.0",
 		"svg4everybody": "^2.1.8"
 	},
 	"devDependencies": {

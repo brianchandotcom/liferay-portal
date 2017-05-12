@@ -16,14 +16,21 @@ package com.liferay.commerce.product.type.virtual.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for CPDefinitionVirtualSetting. Methods of this
@@ -49,6 +56,38 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionVirtualSettingServiceUtil} to access the cp definition virtual setting remote service. Add custom service methods to {@link com.liferay.commerce.product.type.virtual.service.impl.CPDefinitionVirtualSettingServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
+		long cpDefinitionId, long fileEntryId, java.lang.String url,
+		java.lang.String activationStatus, long duration, int maxUsages,
+		long sampleFileEntryId, java.lang.String sampleUrl,
+		boolean termsOfUseRequired,
+		Map<Locale, java.lang.String> termsOfUseContentMap,
+		long termsOfUseJournalArticleId, boolean useUrl, boolean useFileEntry,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting)
+		throws PortalException;
+
+	public CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
+		long cpDefinitionVirtualSettingId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
+		long cpDefinitionVirtualSettingId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionVirtualSetting getCPDefinitionVirtualSetting(
+		long cpDefinitionVirtualSettingId) throws PortalException;
+
+	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
+		long cpDefinitionVirtualSettingId, long fileEntryId,
+		java.lang.String url, java.lang.String activationStatus, long duration,
+		int maxUsages, long sampleFileEntryId, java.lang.String sampleUrl,
+		boolean termsOfUseRequired,
+		Map<Locale, java.lang.String> termsOfUseContentMap,
+		long termsOfUseJournalArticleId, boolean useUrl, boolean useFileEntry,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

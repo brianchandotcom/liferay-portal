@@ -39,9 +39,6 @@ public class MySubscriptionsResultRowSplitter implements ResultRowSplitter {
 
 	@Override
 	public List<ResultRowSplitterEntry> split(List<ResultRow> resultRows) {
-		List<ResultRowSplitterEntry> resultRowSplitterEntries =
-			new ArrayList<>();
-
 		Map<String, List<ResultRow>> rowMap = new HashMap<>();
 
 		for (ResultRow resultRow : resultRows) {
@@ -53,17 +50,16 @@ public class MySubscriptionsResultRowSplitter implements ResultRowSplitter {
 			list.add(resultRow);
 		}
 
-		Iterator<Map.Entry<String, List<ResultRow>>> iterator =
-			rowMap.entrySet().iterator();
+		List<ResultRowSplitterEntry> resultRowSplitterEntries =
+			new ArrayList<>(rowMap.size());
 
-		while (iterator.hasNext()) {
-			Map.Entry<String, List<ResultRow>> entry = iterator.next();
+		for (Map.Entry<String, List<ResultRow>> entry : rowMap.entrySet()) {
+			String subscriptionHeader = ResourceActionsUtil.getModelResource(
+				_locale, entry.getKey());
 
 			resultRowSplitterEntries.add(
 				new ResultRowSplitterEntry(
-					ResourceActionsUtil.getModelResource(
-						_locale, entry.getKey()),
-					entry.getValue()));
+					subscriptionHeader, entry.getValue()));
 		}
 
 		return resultRowSplitterEntries;

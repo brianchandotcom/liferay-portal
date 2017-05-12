@@ -109,14 +109,13 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 			return hasPermission.booleanValue();
 		}
 
-		DLFileVersion latestDLFileVersion = dlFileEntry.getLatestFileVersion(
-			true);
+		DLFileVersion currentDLFileVersion = dlFileEntry.getFileVersion();
 
-		if (latestDLFileVersion.isPending()) {
+		if (currentDLFileVersion.isPending()) {
 			hasPermission = WorkflowPermissionUtil.hasPermission(
 				permissionChecker, dlFileEntry.getGroupId(),
-				DLFileEntry.class.getName(), dlFileEntry.getFileEntryId(),
-				actionId);
+				DLFileEntry.class.getName(),
+				currentDLFileVersion.getFileVersionId(), actionId);
 
 			if (hasPermission != null) {
 				return hasPermission.booleanValue();

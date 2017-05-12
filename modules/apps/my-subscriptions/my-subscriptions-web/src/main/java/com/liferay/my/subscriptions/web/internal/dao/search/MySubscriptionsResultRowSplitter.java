@@ -18,12 +18,10 @@ import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.subscription.model.Subscription;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -50,8 +48,8 @@ public class MySubscriptionsResultRowSplitter implements ResultRowSplitter {
 			list.add(resultRow);
 		}
 
-		List<ResultRowSplitterEntry> resultRowSplitterEntries =
-			new ArrayList<>(rowMap.size());
+		List<ResultRowSplitterEntry> resultRowSplitterEntries = new ArrayList<>(
+			rowMap.size());
 
 		for (Map.Entry<String, List<ResultRow>> entry : rowMap.entrySet()) {
 			String subscriptionHeader = ResourceActionsUtil.getModelResource(

@@ -170,7 +170,7 @@ public class CPDefinitionDemoDataCreatorHelper
 		}
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.addCPDefinition(
-			baseSKU, name, titleMap, descriptionMap, productTypeName, null,
+			baseSKU, name, titleMap, null, descriptionMap, productTypeName, null,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute, true,

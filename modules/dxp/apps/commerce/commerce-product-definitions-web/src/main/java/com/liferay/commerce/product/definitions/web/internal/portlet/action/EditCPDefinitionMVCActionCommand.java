@@ -210,6 +210,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		String name = ParamUtil.getString(actionRequest, "name");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "titleMapAsXML");
+		Map<Locale, String> shortDescriptionMap =
+			LocalizationUtil.getLocalizationMap(
+				actionRequest, "shortDescriptionMapAsXML");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "descriptionMapAsXML");
@@ -264,23 +267,24 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			// Add commerce product definition
 
 			cpDefinition = _cpDefinitionService.addCPDefinition(
-				baseSKU, name, titleMap, descriptionMap, productTypeName, null,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				baseSKU, name, titleMap, shortDescriptionMap, descriptionMap,
+				productTypeName, null, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				serviceContext);
 		}
 		else {
 
 			// Update commerce product definition
 
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
-				cpDefinitionId, baseSKU, name, titleMap, descriptionMap,
-				productTypeName, null, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+				cpDefinitionId, baseSKU, name, titleMap, shortDescriptionMap,
+				descriptionMap, productTypeName, null, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 		}
 
 		return cpDefinition;

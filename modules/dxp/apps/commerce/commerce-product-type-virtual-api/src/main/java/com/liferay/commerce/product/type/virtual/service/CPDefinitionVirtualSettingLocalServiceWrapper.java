@@ -46,6 +46,23 @@ public class CPDefinitionVirtualSettingLocalServiceWrapper
 		return _cpDefinitionVirtualSettingLocalService.addCPDefinitionVirtualSetting(cpDefinitionVirtualSetting);
 	}
 
+	@Override
+	public com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
+		long cpDefinitionId, long fileEntryId, java.lang.String url,
+		java.lang.String activationStatus, long duration, int maxUsages,
+		long sampleFileEntryId, java.lang.String sampleUrl,
+		boolean termsOfUseRequired,
+		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
+		long termsOfUseJournalArticleId, boolean useUrl, boolean useFileEntry,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionVirtualSettingLocalService.addCPDefinitionVirtualSetting(cpDefinitionId,
+			fileEntryId, url, activationStatus, duration, maxUsages,
+			sampleFileEntryId, sampleUrl, termsOfUseRequired,
+			termsOfUseContentMap, termsOfUseJournalArticleId, useUrl,
+			useFileEntry, serviceContext);
+	}
+
 	/**
 	* Creates a new cp definition virtual setting with the primary key. Does not add the cp definition virtual setting to the database.
 	*
@@ -63,10 +80,12 @@ public class CPDefinitionVirtualSettingLocalServiceWrapper
 	*
 	* @param cpDefinitionVirtualSetting the cp definition virtual setting
 	* @return the cp definition virtual setting that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
-		com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
+		com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting cpDefinitionVirtualSetting)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionVirtualSettingLocalService.deleteCPDefinitionVirtualSetting(cpDefinitionVirtualSetting);
 	}
 
@@ -144,6 +163,23 @@ public class CPDefinitionVirtualSettingLocalServiceWrapper
 	public com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 		com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
 		return _cpDefinitionVirtualSettingLocalService.updateCPDefinitionVirtualSetting(cpDefinitionVirtualSetting);
+	}
+
+	@Override
+	public com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
+		long cpDefinitionVirtualSettingId, long fileEntryId,
+		java.lang.String url, java.lang.String activationStatus, long duration,
+		int maxUsages, long sampleFileEntryId, java.lang.String sampleUrl,
+		boolean termsOfUseRequired,
+		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
+		long termsOfUseJournalArticleId, boolean useUrl, boolean useFileEntry,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionVirtualSettingLocalService.updateCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId,
+			fileEntryId, url, activationStatus, duration, maxUsages,
+			sampleFileEntryId, sampleUrl, termsOfUseRequired,
+			termsOfUseContentMap, termsOfUseJournalArticleId, useUrl,
+			useFileEntry, serviceContext);
 	}
 
 	@Override

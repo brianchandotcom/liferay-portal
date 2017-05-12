@@ -126,11 +126,13 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 	 *
 	 * @param cpDefinitionVirtualSetting the cp definition virtual setting
 	 * @return the cp definition virtual setting that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting)
+		throws PortalException {
 		return cpDefinitionVirtualSettingPersistence.remove(cpDefinitionVirtualSetting);
 	}
 

@@ -17,24 +17,8 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.service.base.CPAttachmentFileEntryServiceBaseImpl;
 
 /**
- * The implementation of the cp attachment file entry remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.product.service.CPAttachmentFileEntryService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Marco Leo
- * @see CPAttachmentFileEntryServiceBaseImpl
- * @see com.liferay.commerce.product.service.CPAttachmentFileEntryServiceUtil
  */
 public class CPAttachmentFileEntryServiceImpl
 	extends CPAttachmentFileEntryServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.service.CPAttachmentFileEntryServiceUtil} to access the cp attachment file entry remote service.
-	 */
 }

@@ -17,24 +17,8 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.service.base.CPAttachmentFileEntryLocalServiceBaseImpl;
 
 /**
- * The implementation of the cp attachment file entry local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Marco Leo
- * @see CPAttachmentFileEntryLocalServiceBaseImpl
- * @see com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUtil
  */
 public class CPAttachmentFileEntryLocalServiceImpl
 	extends CPAttachmentFileEntryLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUtil} to access the cp attachment file entry local service.
-	 */
 }

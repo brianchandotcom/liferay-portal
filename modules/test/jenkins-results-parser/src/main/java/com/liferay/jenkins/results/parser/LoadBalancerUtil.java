@@ -182,16 +182,6 @@ public class LoadBalancerUtil {
 		return blacklist;
 	}
 
-	private static String _getMasterPrefix(String baseInvocationURL) {
-		Matcher matcher = _urlPattern.matcher(baseInvocationURL);
-
-		if (!matcher.find()) {
-			return baseInvocationURL;
-		}
-
-		return matcher.group("masterPrefix");
-	}
-
 	private static List<JenkinsMaster> _getJenkinsMasters(
 		String masterPrefix, Properties properties) {
 
@@ -235,6 +225,16 @@ public class LoadBalancerUtil {
 		}
 
 		return filteredJenkinsMasters;
+	}
+
+	private static String _getMasterPrefix(String baseInvocationURL) {
+		Matcher matcher = _urlPattern.matcher(baseInvocationURL);
+
+		if (!matcher.find()) {
+			return baseInvocationURL;
+		}
+
+		return matcher.group("masterPrefix");
 	}
 
 	private static void _updateJenkinsMasters(

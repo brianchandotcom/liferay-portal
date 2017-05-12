@@ -231,10 +231,9 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 	}
 
 	@Override
-	public int getCPAttachmentFileEntrysCount(long classNameId, int classPK,
-		long groupId, int status) {
+	public int getCPAttachmentFileEntrysCount(long classNameId, int classPK) {
 		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntrysCount(classNameId,
-			classPK, groupId, status);
+			classPK);
 	}
 
 	/**

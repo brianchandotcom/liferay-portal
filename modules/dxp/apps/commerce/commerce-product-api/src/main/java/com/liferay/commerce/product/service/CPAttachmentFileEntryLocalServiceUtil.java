@@ -222,10 +222,8 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 	}
 
 	public static int getCPAttachmentFileEntrysCount(long classNameId,
-		int classPK, long groupId, int status) {
-		return getService()
-				   .getCPAttachmentFileEntrysCount(classNameId, classPK,
-			groupId, status);
+		int classPK) {
+		return getService().getCPAttachmentFileEntrysCount(classNameId, classPK);
 	}
 
 	/**

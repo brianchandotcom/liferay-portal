@@ -16,9 +16,16 @@ package com.liferay.commerce.product.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.service.CPAttachmentFileEntryServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.product.service.CPAttachmentFileEntryServiceUtil} service utility. The
+ * {@link CPAttachmentFileEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,145 @@ import aQute.bnd.annotation.ProviderType;
  * @author Marco Leo
  * @see CPAttachmentFileEntryServiceHttp
  * @see com.liferay.commerce.product.model.CPAttachmentFileEntrySoap
- * @see com.liferay.commerce.product.service.CPAttachmentFileEntryServiceUtil
+ * @see CPAttachmentFileEntryServiceUtil
  * @generated
  */
 @ProviderType
 public class CPAttachmentFileEntryServiceSoap {
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap addCPAttachmentFileEntry(
+		long classNameId, long classPK, long fileEntryId, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, java.lang.String json,
+		int priority, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPAttachmentFileEntry returnValue =
+				CPAttachmentFileEntryServiceUtil.addCPAttachmentFileEntry(classNameId,
+					classPK, fileEntryId, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					json, priority, type, serviceContext);
+
+			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap deleteCPAttachmentFileEntry(
+		com.liferay.commerce.product.model.CPAttachmentFileEntrySoap cpAttachmentFileEntry)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPAttachmentFileEntry returnValue =
+				CPAttachmentFileEntryServiceUtil.deleteCPAttachmentFileEntry(com.liferay.commerce.product.model.impl.CPAttachmentFileEntryModelImpl.toModel(
+						cpAttachmentFileEntry));
+
+			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap deleteCPAttachmentFileEntry(
+		long cpAttachmentFileEntryId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPAttachmentFileEntry returnValue =
+				CPAttachmentFileEntryServiceUtil.deleteCPAttachmentFileEntry(cpAttachmentFileEntryId);
+
+			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap[] getCPAttachmentFileEntrys(
+		long classNameId, int classPK, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> returnValue =
+				CPAttachmentFileEntryServiceUtil.getCPAttachmentFileEntrys(classNameId,
+					classPK, start, end);
+
+			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap[] getCPAttachmentFileEntrys(
+		long classNameId, int classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPAttachmentFileEntry> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> returnValue =
+				CPAttachmentFileEntryServiceUtil.getCPAttachmentFileEntrys(classNameId,
+					classPK, start, end, orderByComparator);
+
+			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCPAttachmentFileEntrysCount(long classNameId,
+		int classPK) throws RemoteException {
+		try {
+			int returnValue = CPAttachmentFileEntryServiceUtil.getCPAttachmentFileEntrysCount(classNameId,
+					classPK);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap updateCPAttachmentFileEntry(
+		long cpAttachmentFileEntryId, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		java.lang.String json, int priority, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPAttachmentFileEntry returnValue =
+				CPAttachmentFileEntryServiceUtil.updateCPAttachmentFileEntry(cpAttachmentFileEntryId,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, json, priority, type,
+					serviceContext);
+
+			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CPAttachmentFileEntryServiceSoap.class);
 }

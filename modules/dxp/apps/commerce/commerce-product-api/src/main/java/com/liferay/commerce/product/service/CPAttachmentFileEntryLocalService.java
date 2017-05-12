@@ -209,8 +209,7 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	public int getCPAttachmentFileEntriesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPAttachmentFileEntrysCount(long classNameId, int classPK,
-		long groupId, int status);
+	public int getCPAttachmentFileEntrysCount(long classNameId, int classPK);
 
 	/**
 	* Returns the OSGi service identifier.

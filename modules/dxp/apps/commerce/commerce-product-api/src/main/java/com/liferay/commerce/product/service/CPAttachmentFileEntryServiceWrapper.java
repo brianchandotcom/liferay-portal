@@ -34,6 +34,60 @@ public class CPAttachmentFileEntryServiceWrapper
 		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry addCPAttachmentFileEntry(
+		long classNameId, long classPK, long fileEntryId, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, java.lang.String json,
+		int priority, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpAttachmentFileEntryService.addCPAttachmentFileEntry(classNameId,
+			classPK, fileEntryId, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, json,
+			priority, type, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry deleteCPAttachmentFileEntry(
+		com.liferay.commerce.product.model.CPAttachmentFileEntry cpAttachmentFileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpAttachmentFileEntryService.deleteCPAttachmentFileEntry(cpAttachmentFileEntry);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry deleteCPAttachmentFileEntry(
+		long cpAttachmentFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpAttachmentFileEntryService.deleteCPAttachmentFileEntry(cpAttachmentFileEntryId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry updateCPAttachmentFileEntry(
+		long cpAttachmentFileEntryId, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		java.lang.String json, int priority, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpAttachmentFileEntryService.updateCPAttachmentFileEntry(cpAttachmentFileEntryId,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, json, priority, type, serviceContext);
+	}
+
+	@Override
+	public int getCPAttachmentFileEntrysCount(long classNameId, int classPK) {
+		return _cpAttachmentFileEntryService.getCPAttachmentFileEntrysCount(classNameId,
+			classPK);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -42,6 +96,23 @@ public class CPAttachmentFileEntryServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _cpAttachmentFileEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntrys(
+		long classNameId, int classPK, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpAttachmentFileEntryService.getCPAttachmentFileEntrys(classNameId,
+			classPK, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntrys(
+		long classNameId, int classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPAttachmentFileEntry> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpAttachmentFileEntryService.getCPAttachmentFileEntrys(classNameId,
+			classPK, start, end, orderByComparator);
 	}
 
 	@Override

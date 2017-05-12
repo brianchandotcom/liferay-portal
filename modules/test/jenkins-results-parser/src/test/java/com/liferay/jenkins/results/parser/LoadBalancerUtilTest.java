@@ -35,6 +35,8 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 	public void setUp() throws Exception {
 		downloadSample("test-1", null);
 		downloadSample("test-2", null);
+
+		LoadBalancerUtil.setUpdateInterval(0);
 	}
 
 	@After

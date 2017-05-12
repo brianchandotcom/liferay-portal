@@ -45,7 +45,7 @@ public class LoadBalancerUtil {
 				String baseInvocationURL = properties.getProperty(
 					"base.invocation.url");
 
-				String masterPrefix = getMasterPrefix(baseInvocationURL);
+				String masterPrefix = _getMasterPrefix(baseInvocationURL);
 
 				if (masterPrefix.equals(baseInvocationURL)) {
 					return baseInvocationURL;
@@ -55,45 +55,7 @@ public class LoadBalancerUtil {
 					masterPrefix, properties);
 
 				if (nextUpdateTimestamp < System.currentTimeMillis()) {
-					ExecutorService executorService =
-						Executors.newFixedThreadPool(jenkinsMasters.size());
-
-					for (final JenkinsMaster jenkinsMaster : jenkinsMasters) {
-						executorService.execute(
-							new Runnable() {
-
-								@Override
-								public void run() {
-									jenkinsMaster.update();
-								}
-
-							});
-					}
-
-					executorService.shutdown();
-
-					try {
-						executorService.awaitTermination(10, TimeUnit.SECONDS);
-					}
-					catch (InterruptedException ie) {
-						throw new RuntimeException(ie);
-					}
-
-					List<JenkinsMaster> unavailableJenkinsMasters =
-						new ArrayList<>(jenkinsMasters.size());
-
-					for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
-						if (!jenkinsMaster.isAvailable()) {
-							unavailableJenkinsMasters.add(jenkinsMaster);
-						}
-					}
-
-					jenkinsMasters.removeAll(unavailableJenkinsMasters);
-
-					if (jenkinsMasters.isEmpty()) {
-						throw new RuntimeException(
-							"Unable to communicate with any jenkins masters.");
-					}
+					_updateJenkinsMasters(jenkinsMasters);
 
 					nextUpdateTimestamp =
 						System.currentTimeMillis() + _UPDATE_INTERVAL;
@@ -201,7 +163,7 @@ public class LoadBalancerUtil {
 		return getMostAvailableMasterURL(properties);
 	}
 
-	protected static List<String> getBlacklist(Properties properties) {
+	private static List<String> _getBlacklist(Properties properties) {
 		String blacklistString = properties.getProperty(
 			"jenkins.load.balancer.blacklist", "");
 
@@ -220,7 +182,7 @@ public class LoadBalancerUtil {
 		return blacklist;
 	}
 
-	protected static String getMasterPrefix(String baseInvocationURL) {
+	private static String _getMasterPrefix(String baseInvocationURL) {
 		Matcher matcher = _urlPattern.matcher(baseInvocationURL);
 
 		if (!matcher.find()) {
@@ -256,7 +218,7 @@ public class LoadBalancerUtil {
 			allJenkinsMasters = _jenkinsMastersMap.get(masterPrefix);
 		}
 
-		List<String> blacklist = getBlacklist(properties);
+		List<String> blacklist = _getBlacklist(properties);
 		List<JenkinsMaster> filteredJenkinsMasters = new ArrayList<>(
 			allJenkinsMasters.size());
 
@@ -273,6 +235,50 @@ public class LoadBalancerUtil {
 		}
 
 		return filteredJenkinsMasters;
+	}
+
+	private static void _updateJenkinsMasters(
+		List<JenkinsMaster> jenkinsMasters) {
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			jenkinsMasters.size());
+
+		for (final JenkinsMaster jenkinsMaster : jenkinsMasters) {
+			executorService.execute(
+				new Runnable() {
+
+					@Override
+					public void run() {
+						jenkinsMaster.update();
+					}
+
+				});
+		}
+
+		executorService.shutdown();
+
+		try {
+			executorService.awaitTermination(10, TimeUnit.SECONDS);
+		}
+		catch (InterruptedException ie) {
+			throw new RuntimeException(ie);
+		}
+
+		List<JenkinsMaster> unavailableJenkinsMasters = new ArrayList<>(
+			jenkinsMasters.size());
+
+		for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
+			if (!jenkinsMaster.isAvailable()) {
+				unavailableJenkinsMasters.add(jenkinsMaster);
+			}
+		}
+
+		jenkinsMasters.removeAll(unavailableJenkinsMasters);
+
+		if (jenkinsMasters.isEmpty()) {
+			throw new RuntimeException(
+				"Unable to communicate with any jenkins masters.");
+		}
 	}
 
 	private static final int _MAX_RETRIES = 3;

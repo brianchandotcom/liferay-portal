@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.trash.kernel.service.TrashEntryLocalService;
+import com.liferay.trash.service.TrashEntryLocalService;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

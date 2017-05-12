@@ -128,7 +128,8 @@ page import="java.util.HashSet" %><%@
 page import="java.util.Iterator" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
-page import="java.util.Set" %>
+page import="java.util.Set" %><%@
+page import="java.util.function.Supplier" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.PortletMode" %><%@

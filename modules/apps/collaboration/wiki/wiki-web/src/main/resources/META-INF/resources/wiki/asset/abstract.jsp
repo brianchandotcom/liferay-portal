@@ -19,7 +19,7 @@
 <%
 int abstractLength = GetterUtil.getInteger(request.getAttribute(WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH), AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH);
 
-WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
+final WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
 PortletURL viewPageURL = PortletURLFactoryUtil.create(request, WikiPortletKeys.WIKI, PortletRequest.ACTION_PHASE);
 
@@ -41,24 +41,30 @@ sb.append("&fileName=");
 
 final String redirectURL = currentURL;
 
+final HttpServletRequest httpServletRequest = request;
+
 WikiPageDisplay pageDisplay = WikiPageLocalServiceUtil.getPageDisplay(
 	wikiPage, viewPageURL,
-	() -> {
-		PortletURL editPageURL = PortletURLFactoryUtil.create(request, WikiPortletKeys.WIKI, PortletRequest.ACTION_PHASE);
+	new Supplier<PortletURL>() {
 
-		editPageURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/edit_page");
-		editPageURL.setParameter("redirect", redirectURL);
-		editPageURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
+		public PortletURL get() {
+			PortletURL editPageURL = PortletURLFactoryUtil.create(httpServletRequest, WikiPortletKeys.WIKI, PortletRequest.ACTION_PHASE);
 
-		try {
-			editPageURL.setPortletMode(PortletMode.VIEW);
-			editPageURL.setWindowState(WindowState.MAXIMIZED);
+			editPageURL.setParameter(ActionRequest.ACTION_NAME, "/wiki/edit_page");
+			editPageURL.setParameter("redirect", redirectURL);
+			editPageURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
+
+			try {
+				editPageURL.setPortletMode(PortletMode.VIEW);
+				editPageURL.setWindowState(WindowState.MAXIMIZED);
+			}
+			catch (Exception e) {
+				ReflectionUtil.throwException(e);
+			}
+
+			return editPageURL;
 		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
-		}
 
-		return editPageURL;
 	},
 	sb.toString(), ServiceContextFactory.getInstance(request));
 %>

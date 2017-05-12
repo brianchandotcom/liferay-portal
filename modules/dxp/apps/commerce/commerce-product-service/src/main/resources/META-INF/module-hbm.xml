@@ -2,6 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.commerce.product.model.CPAttachmentFileEntry" />
 	<import class="com.liferay.commerce.product.model.CPDefinition" />
 	<import class="com.liferay.commerce.product.model.CPDefinitionLocalization" />
 	<import class="com.liferay.commerce.product.model.CPDefinitionOptionRel" />
@@ -10,6 +11,27 @@
 	<import class="com.liferay.commerce.product.model.CPOption" />
 	<import class="com.liferay.commerce.product.model.CPOptionCategory" />
 	<import class="com.liferay.commerce.product.model.CPOptionValue" />
+	<class name="com.liferay.commerce.product.model.impl.CPAttachmentFileEntryImpl" table="CPAttachmentFileEntry">
+		<id name="CPAttachmentFileEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="displayDate" type="org.hibernate.type.TimestampType" />
+		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
+		<property name="json" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+	</class>
 	<class name="com.liferay.commerce.product.model.impl.CPDefinitionImpl" table="CPDefinition">
 		<id name="CPDefinitionId" type="long">
 			<generator class="assigned" />

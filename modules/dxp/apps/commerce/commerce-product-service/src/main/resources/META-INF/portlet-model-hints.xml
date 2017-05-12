@@ -1,6 +1,25 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.commerce.product.model.CPAttachmentFileEntry">
+		<field name="uuid" type="String" />
+		<field name="CPAttachmentFileEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="fileEntryId" type="long" />
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date" />
+		<field name="json" type="String" />
+		<field name="priority" type="int" />
+		<field name="type" type="int" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinition">
 		<field name="uuid" type="String" />
 		<field name="CPDefinitionId" type="long" />

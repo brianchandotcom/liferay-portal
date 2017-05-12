@@ -1,3 +1,23 @@
+create table CPAttachmentFileEntry (
+	uuid_ VARCHAR(75) null,
+	CPAttachmentFileEntryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	classNameId LONG,
+	classPK LONG,
+	fileEntryId LONG,
+	displayDate DATE null,
+	expirationDate DATE null,
+	json VARCHAR(75) null,
+	priority INTEGER,
+	type_ INTEGER,
+	lastPublishDate DATE null
+);
+
 create table CPDefinition (
 	uuid_ VARCHAR(75) null,
 	CPDefinitionId LONG not null primary key,

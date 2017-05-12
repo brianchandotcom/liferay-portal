@@ -1,0 +1,541 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.commerce.product.service.persistence.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException;
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUtil;
+import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
+import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryUtil;
+
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PersistenceTestRule;
+import com.liferay.portal.test.rule.TransactionalTestRule;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
+/**
+ * @generated
+ */
+@RunWith(Arquillian.class)
+public class CPAttachmentFileEntryPersistenceTest {
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
+			PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.commerce.product.service"));
+
+	@Before
+	public void setUp() {
+		_persistence = CPAttachmentFileEntryUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		Iterator<CPAttachmentFileEntry> iterator = _cpAttachmentFileEntries.iterator();
+
+		while (iterator.hasNext()) {
+			_persistence.remove(iterator.next());
+
+			iterator.remove();
+		}
+	}
+
+	@Test
+	public void testCreate() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		CPAttachmentFileEntry cpAttachmentFileEntry = _persistence.create(pk);
+
+		Assert.assertNotNull(cpAttachmentFileEntry);
+
+		Assert.assertEquals(cpAttachmentFileEntry.getPrimaryKey(), pk);
+	}
+
+	@Test
+	public void testRemove() throws Exception {
+		CPAttachmentFileEntry newCPAttachmentFileEntry = addCPAttachmentFileEntry();
+
+		_persistence.remove(newCPAttachmentFileEntry);
+
+		CPAttachmentFileEntry existingCPAttachmentFileEntry = _persistence.fetchByPrimaryKey(newCPAttachmentFileEntry.getPrimaryKey());
+
+		Assert.assertNull(existingCPAttachmentFileEntry);
+	}
+
+	@Test
+	public void testUpdateNew() throws Exception {
+		addCPAttachmentFileEntry();
+	}
+
+	@Test
+	public void testUpdateExisting() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		CPAttachmentFileEntry newCPAttachmentFileEntry = _persistence.create(pk);
+
+		newCPAttachmentFileEntry.setUuid(RandomTestUtil.randomString());
+
+		newCPAttachmentFileEntry.setGroupId(RandomTestUtil.nextLong());
+
+		newCPAttachmentFileEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		newCPAttachmentFileEntry.setUserId(RandomTestUtil.nextLong());
+
+		newCPAttachmentFileEntry.setUserName(RandomTestUtil.randomString());
+
+		newCPAttachmentFileEntry.setCreateDate(RandomTestUtil.nextDate());
+
+		newCPAttachmentFileEntry.setModifiedDate(RandomTestUtil.nextDate());
+
+		newCPAttachmentFileEntry.setClassNameId(RandomTestUtil.nextLong());
+
+		newCPAttachmentFileEntry.setClassPK(RandomTestUtil.nextLong());
+
+		newCPAttachmentFileEntry.setFileEntryId(RandomTestUtil.nextLong());
+
+		newCPAttachmentFileEntry.setDisplayDate(RandomTestUtil.nextDate());
+
+		newCPAttachmentFileEntry.setExpirationDate(RandomTestUtil.nextDate());
+
+		newCPAttachmentFileEntry.setJson(RandomTestUtil.randomString());
+
+		newCPAttachmentFileEntry.setPriority(RandomTestUtil.nextInt());
+
+		newCPAttachmentFileEntry.setType(RandomTestUtil.nextInt());
+
+		newCPAttachmentFileEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
+		_cpAttachmentFileEntries.add(_persistence.update(
+				newCPAttachmentFileEntry));
+
+		CPAttachmentFileEntry existingCPAttachmentFileEntry = _persistence.findByPrimaryKey(newCPAttachmentFileEntry.getPrimaryKey());
+
+		Assert.assertEquals(existingCPAttachmentFileEntry.getUuid(),
+			newCPAttachmentFileEntry.getUuid());
+		Assert.assertEquals(existingCPAttachmentFileEntry.getCPAttachmentFileEntryId(),
+			newCPAttachmentFileEntry.getCPAttachmentFileEntryId());
+		Assert.assertEquals(existingCPAttachmentFileEntry.getGroupId(),
+			newCPAttachmentFileEntry.getGroupId());
+		Assert.assertEquals(existingCPAttachmentFileEntry.getCompanyId(),
+			newCPAttachmentFileEntry.getCompanyId());
+		Assert.assertEquals(existingCPAttachmentFileEntry.getUserId(),
+			newCPAttachmentFileEntry.getUserId());
+		Assert.assertEquals(existingCPAttachmentFileEntry.getUserName(),
+			newCPAttachmentFileEntry.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCPAttachmentFileEntry.getCreateDate()),
+			Time.getShortTimestamp(newCPAttachmentFileEntry.getCreateDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCPAttachmentFileEntry.getModifiedDate()),
+			Time.getShortTimestamp(newCPAttachmentFileEntry.getModifiedDate()));
+		Assert.assertEquals(existingCPAttachmentFileEntry.getClassNameId(),
+			newCPAttachmentFileEntry.getClassNameId());
+		Assert.assertEquals(existingCPAttachmentFileEntry.getClassPK(),
+			newCPAttachmentFileEntry.getClassPK());
+		Assert.assertEquals(existingCPAttachmentFileEntry.getFileEntryId(),
+			newCPAttachmentFileEntry.getFileEntryId());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCPAttachmentFileEntry.getDisplayDate()),
+			Time.getShortTimestamp(newCPAttachmentFileEntry.getDisplayDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCPAttachmentFileEntry.getExpirationDate()),
+			Time.getShortTimestamp(newCPAttachmentFileEntry.getExpirationDate()));
+		Assert.assertEquals(existingCPAttachmentFileEntry.getJson(),
+			newCPAttachmentFileEntry.getJson());
+		Assert.assertEquals(existingCPAttachmentFileEntry.getPriority(),
+			newCPAttachmentFileEntry.getPriority());
+		Assert.assertEquals(existingCPAttachmentFileEntry.getType(),
+			newCPAttachmentFileEntry.getType());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCPAttachmentFileEntry.getLastPublishDate()),
+			Time.getShortTimestamp(
+				newCPAttachmentFileEntry.getLastPublishDate()));
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid(StringPool.BLANK);
+
+		_persistence.countByUuid(StringPool.NULL);
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G(StringPool.NULL, 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_C(0L, 0L);
+	}
+
+	@Test
+	public void testFindByPrimaryKeyExisting() throws Exception {
+		CPAttachmentFileEntry newCPAttachmentFileEntry = addCPAttachmentFileEntry();
+
+		CPAttachmentFileEntry existingCPAttachmentFileEntry = _persistence.findByPrimaryKey(newCPAttachmentFileEntry.getPrimaryKey());
+
+		Assert.assertEquals(existingCPAttachmentFileEntry,
+			newCPAttachmentFileEntry);
+	}
+
+	@Test(expected = NoSuchCPAttachmentFileEntryException.class)
+	public void testFindByPrimaryKeyMissing() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		_persistence.findByPrimaryKey(pk);
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
+	}
+
+	protected OrderByComparator<CPAttachmentFileEntry> getOrderByComparator() {
+		return OrderByComparatorFactoryUtil.create("CPAttachmentFileEntry",
+			"uuid", true, "CPAttachmentFileEntryId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true,
+			"fileEntryId", true, "displayDate", true, "expirationDate", true,
+			"json", true, "priority", true, "type", true, "lastPublishDate",
+			true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeyExisting() throws Exception {
+		CPAttachmentFileEntry newCPAttachmentFileEntry = addCPAttachmentFileEntry();
+
+		CPAttachmentFileEntry existingCPAttachmentFileEntry = _persistence.fetchByPrimaryKey(newCPAttachmentFileEntry.getPrimaryKey());
+
+		Assert.assertEquals(existingCPAttachmentFileEntry,
+			newCPAttachmentFileEntry);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeyMissing() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		CPAttachmentFileEntry missingCPAttachmentFileEntry = _persistence.fetchByPrimaryKey(pk);
+
+		Assert.assertNull(missingCPAttachmentFileEntry);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
+		throws Exception {
+		CPAttachmentFileEntry newCPAttachmentFileEntry1 = addCPAttachmentFileEntry();
+		CPAttachmentFileEntry newCPAttachmentFileEntry2 = addCPAttachmentFileEntry();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newCPAttachmentFileEntry1.getPrimaryKey());
+		primaryKeys.add(newCPAttachmentFileEntry2.getPrimaryKey());
+
+		Map<Serializable, CPAttachmentFileEntry> cpAttachmentFileEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(2, cpAttachmentFileEntries.size());
+		Assert.assertEquals(newCPAttachmentFileEntry1,
+			cpAttachmentFileEntries.get(
+				newCPAttachmentFileEntry1.getPrimaryKey()));
+		Assert.assertEquals(newCPAttachmentFileEntry2,
+			cpAttachmentFileEntries.get(
+				newCPAttachmentFileEntry2.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
+		throws Exception {
+		long pk1 = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk1);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, CPAttachmentFileEntry> cpAttachmentFileEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(cpAttachmentFileEntries.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
+		throws Exception {
+		CPAttachmentFileEntry newCPAttachmentFileEntry = addCPAttachmentFileEntry();
+
+		long pk = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newCPAttachmentFileEntry.getPrimaryKey());
+		primaryKeys.add(pk);
+
+		Map<Serializable, CPAttachmentFileEntry> cpAttachmentFileEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, cpAttachmentFileEntries.size());
+		Assert.assertEquals(newCPAttachmentFileEntry,
+			cpAttachmentFileEntries.get(
+				newCPAttachmentFileEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys()
+		throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, CPAttachmentFileEntry> cpAttachmentFileEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertTrue(cpAttachmentFileEntries.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysWithOnePrimaryKey()
+		throws Exception {
+		CPAttachmentFileEntry newCPAttachmentFileEntry = addCPAttachmentFileEntry();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newCPAttachmentFileEntry.getPrimaryKey());
+
+		Map<Serializable, CPAttachmentFileEntry> cpAttachmentFileEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+
+		Assert.assertEquals(1, cpAttachmentFileEntries.size());
+		Assert.assertEquals(newCPAttachmentFileEntry,
+			cpAttachmentFileEntries.get(
+				newCPAttachmentFileEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testActionableDynamicQuery() throws Exception {
+		final IntegerWrapper count = new IntegerWrapper();
+
+		ActionableDynamicQuery actionableDynamicQuery = CPAttachmentFileEntryLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CPAttachmentFileEntry>() {
+				@Override
+				public void performAction(
+					CPAttachmentFileEntry cpAttachmentFileEntry) {
+					Assert.assertNotNull(cpAttachmentFileEntry);
+
+					count.increment();
+				}
+			});
+
+		actionableDynamicQuery.performActions();
+
+		Assert.assertEquals(count.getValue(), _persistence.countAll());
+	}
+
+	@Test
+	public void testDynamicQueryByPrimaryKeyExisting()
+		throws Exception {
+		CPAttachmentFileEntry newCPAttachmentFileEntry = addCPAttachmentFileEntry();
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CPAttachmentFileEntry.class,
+				_dynamicQueryClassLoader);
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("CPAttachmentFileEntryId",
+				newCPAttachmentFileEntry.getCPAttachmentFileEntryId()));
+
+		List<CPAttachmentFileEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		Assert.assertEquals(1, result.size());
+
+		CPAttachmentFileEntry existingCPAttachmentFileEntry = result.get(0);
+
+		Assert.assertEquals(existingCPAttachmentFileEntry,
+			newCPAttachmentFileEntry);
+	}
+
+	@Test
+	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CPAttachmentFileEntry.class,
+				_dynamicQueryClassLoader);
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("CPAttachmentFileEntryId",
+				RandomTestUtil.nextLong()));
+
+		List<CPAttachmentFileEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testDynamicQueryByProjectionExisting()
+		throws Exception {
+		CPAttachmentFileEntry newCPAttachmentFileEntry = addCPAttachmentFileEntry();
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CPAttachmentFileEntry.class,
+				_dynamicQueryClassLoader);
+
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"CPAttachmentFileEntryId"));
+
+		Object newCPAttachmentFileEntryId = newCPAttachmentFileEntry.getCPAttachmentFileEntryId();
+
+		dynamicQuery.add(RestrictionsFactoryUtil.in("CPAttachmentFileEntryId",
+				new Object[] { newCPAttachmentFileEntryId }));
+
+		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		Assert.assertEquals(1, result.size());
+
+		Object existingCPAttachmentFileEntryId = result.get(0);
+
+		Assert.assertEquals(existingCPAttachmentFileEntryId,
+			newCPAttachmentFileEntryId);
+	}
+
+	@Test
+	public void testDynamicQueryByProjectionMissing() throws Exception {
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CPAttachmentFileEntry.class,
+				_dynamicQueryClassLoader);
+
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"CPAttachmentFileEntryId"));
+
+		dynamicQuery.add(RestrictionsFactoryUtil.in("CPAttachmentFileEntryId",
+				new Object[] { RandomTestUtil.nextLong() }));
+
+		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		CPAttachmentFileEntry newCPAttachmentFileEntry = addCPAttachmentFileEntry();
+
+		_persistence.clearCache();
+
+		CPAttachmentFileEntry existingCPAttachmentFileEntry = _persistence.findByPrimaryKey(newCPAttachmentFileEntry.getPrimaryKey());
+
+		Assert.assertTrue(Objects.equals(
+				existingCPAttachmentFileEntry.getUuid(),
+				ReflectionTestUtil.invoke(existingCPAttachmentFileEntry,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingCPAttachmentFileEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingCPAttachmentFileEntry,
+				"getOriginalGroupId", new Class<?>[0]));
+	}
+
+	protected CPAttachmentFileEntry addCPAttachmentFileEntry()
+		throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		CPAttachmentFileEntry cpAttachmentFileEntry = _persistence.create(pk);
+
+		cpAttachmentFileEntry.setUuid(RandomTestUtil.randomString());
+
+		cpAttachmentFileEntry.setGroupId(RandomTestUtil.nextLong());
+
+		cpAttachmentFileEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		cpAttachmentFileEntry.setUserId(RandomTestUtil.nextLong());
+
+		cpAttachmentFileEntry.setUserName(RandomTestUtil.randomString());
+
+		cpAttachmentFileEntry.setCreateDate(RandomTestUtil.nextDate());
+
+		cpAttachmentFileEntry.setModifiedDate(RandomTestUtil.nextDate());
+
+		cpAttachmentFileEntry.setClassNameId(RandomTestUtil.nextLong());
+
+		cpAttachmentFileEntry.setClassPK(RandomTestUtil.nextLong());
+
+		cpAttachmentFileEntry.setFileEntryId(RandomTestUtil.nextLong());
+
+		cpAttachmentFileEntry.setDisplayDate(RandomTestUtil.nextDate());
+
+		cpAttachmentFileEntry.setExpirationDate(RandomTestUtil.nextDate());
+
+		cpAttachmentFileEntry.setJson(RandomTestUtil.randomString());
+
+		cpAttachmentFileEntry.setPriority(RandomTestUtil.nextInt());
+
+		cpAttachmentFileEntry.setType(RandomTestUtil.nextInt());
+
+		cpAttachmentFileEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
+		_cpAttachmentFileEntries.add(_persistence.update(cpAttachmentFileEntry));
+
+		return cpAttachmentFileEntry;
+	}
+
+	private List<CPAttachmentFileEntry> _cpAttachmentFileEntries = new ArrayList<CPAttachmentFileEntry>();
+	private CPAttachmentFileEntryPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
+}

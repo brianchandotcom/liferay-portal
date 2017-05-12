@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.service.persistence.AssetLinkPersistence;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
@@ -69,6 +70,63 @@ public abstract class CPDefinitionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * Never modify or reference this class directly. Always use {@link com.liferay.commerce.product.service.CPDefinitionServiceUtil} to access the cp definition remote service.
 	 */
+
+	/**
+	 * Returns the cp attachment file entry local service.
+	 *
+	 * @return the cp attachment file entry local service
+	 */
+	public com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService getCPAttachmentFileEntryLocalService() {
+		return cpAttachmentFileEntryLocalService;
+	}
+
+	/**
+	 * Sets the cp attachment file entry local service.
+	 *
+	 * @param cpAttachmentFileEntryLocalService the cp attachment file entry local service
+	 */
+	public void setCPAttachmentFileEntryLocalService(
+		com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService cpAttachmentFileEntryLocalService) {
+		this.cpAttachmentFileEntryLocalService = cpAttachmentFileEntryLocalService;
+	}
+
+	/**
+	 * Returns the cp attachment file entry remote service.
+	 *
+	 * @return the cp attachment file entry remote service
+	 */
+	public com.liferay.commerce.product.service.CPAttachmentFileEntryService getCPAttachmentFileEntryService() {
+		return cpAttachmentFileEntryService;
+	}
+
+	/**
+	 * Sets the cp attachment file entry remote service.
+	 *
+	 * @param cpAttachmentFileEntryService the cp attachment file entry remote service
+	 */
+	public void setCPAttachmentFileEntryService(
+		com.liferay.commerce.product.service.CPAttachmentFileEntryService cpAttachmentFileEntryService) {
+		this.cpAttachmentFileEntryService = cpAttachmentFileEntryService;
+	}
+
+	/**
+	 * Returns the cp attachment file entry persistence.
+	 *
+	 * @return the cp attachment file entry persistence
+	 */
+	public CPAttachmentFileEntryPersistence getCPAttachmentFileEntryPersistence() {
+		return cpAttachmentFileEntryPersistence;
+	}
+
+	/**
+	 * Sets the cp attachment file entry persistence.
+	 *
+	 * @param cpAttachmentFileEntryPersistence the cp attachment file entry persistence
+	 */
+	public void setCPAttachmentFileEntryPersistence(
+		CPAttachmentFileEntryPersistence cpAttachmentFileEntryPersistence) {
+		this.cpAttachmentFileEntryPersistence = cpAttachmentFileEntryPersistence;
+	}
 
 	/**
 	 * Returns the cp definition local service.
@@ -1025,6 +1083,12 @@ public abstract class CPDefinitionServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
+	@BeanReference(type = com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService.class)
+	protected com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService cpAttachmentFileEntryLocalService;
+	@BeanReference(type = com.liferay.commerce.product.service.CPAttachmentFileEntryService.class)
+	protected com.liferay.commerce.product.service.CPAttachmentFileEntryService cpAttachmentFileEntryService;
+	@BeanReference(type = CPAttachmentFileEntryPersistence.class)
+	protected CPAttachmentFileEntryPersistence cpAttachmentFileEntryPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionLocalService.class)
 	protected com.liferay.commerce.product.service.CPDefinitionLocalService cpDefinitionLocalService;
 	@BeanReference(type = CPDefinitionService.class)

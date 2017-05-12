@@ -1,3 +1,7 @@
+create index IX_C132E061 on CPAttachmentFileEntry (classNameId, classPK);
+create index IX_C2C5D600 on CPAttachmentFileEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_BFCBDC82 on CPAttachmentFileEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 create index IX_217AF702 on CPDefinition (companyId);
 create index IX_419350EA on CPDefinition (groupId, status);
 create index IX_8EA585DA on CPDefinition (uuid_[$COLUMN_LENGTH:75$], companyId);

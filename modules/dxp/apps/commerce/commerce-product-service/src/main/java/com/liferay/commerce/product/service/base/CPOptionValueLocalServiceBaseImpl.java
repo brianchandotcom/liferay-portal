@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionValueLocalService;
+import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
@@ -439,6 +440,44 @@ public abstract class CPOptionValueLocalServiceBaseImpl
 	@Override
 	public CPOptionValue updateCPOptionValue(CPOptionValue cpOptionValue) {
 		return cpOptionValuePersistence.update(cpOptionValue);
+	}
+
+	/**
+	 * Returns the cp attachment file entry local service.
+	 *
+	 * @return the cp attachment file entry local service
+	 */
+	public com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService getCPAttachmentFileEntryLocalService() {
+		return cpAttachmentFileEntryLocalService;
+	}
+
+	/**
+	 * Sets the cp attachment file entry local service.
+	 *
+	 * @param cpAttachmentFileEntryLocalService the cp attachment file entry local service
+	 */
+	public void setCPAttachmentFileEntryLocalService(
+		com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService cpAttachmentFileEntryLocalService) {
+		this.cpAttachmentFileEntryLocalService = cpAttachmentFileEntryLocalService;
+	}
+
+	/**
+	 * Returns the cp attachment file entry persistence.
+	 *
+	 * @return the cp attachment file entry persistence
+	 */
+	public CPAttachmentFileEntryPersistence getCPAttachmentFileEntryPersistence() {
+		return cpAttachmentFileEntryPersistence;
+	}
+
+	/**
+	 * Sets the cp attachment file entry persistence.
+	 *
+	 * @param cpAttachmentFileEntryPersistence the cp attachment file entry persistence
+	 */
+	public void setCPAttachmentFileEntryPersistence(
+		CPAttachmentFileEntryPersistence cpAttachmentFileEntryPersistence) {
+		this.cpAttachmentFileEntryPersistence = cpAttachmentFileEntryPersistence;
 	}
 
 	/**
@@ -928,6 +967,10 @@ public abstract class CPOptionValueLocalServiceBaseImpl
 		}
 	}
 
+	@BeanReference(type = com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService.class)
+	protected com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService cpAttachmentFileEntryLocalService;
+	@BeanReference(type = CPAttachmentFileEntryPersistence.class)
+	protected CPAttachmentFileEntryPersistence cpAttachmentFileEntryPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionLocalService.class)
 	protected com.liferay.commerce.product.service.CPDefinitionLocalService cpDefinitionLocalService;
 	@BeanReference(type = CPDefinitionPersistence.class)

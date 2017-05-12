@@ -15,16 +15,26 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 @Component(
 	immediate = true,
@@ -42,7 +52,37 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		try {
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
+
+			CPAttachmentFileEntriesDisplayContext
+				cpAttachmentFileEntriesDisplayContext =
+					new CPAttachmentFileEntriesDisplayContext(
+						_actionHelper, httpServletRequest,
+						_cpAttachmentFileEntryService, _itemSelector);
+
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				cpAttachmentFileEntriesDisplayContext);
+		}
+		catch (PortalException pe) {
+			SessionErrors.add(renderRequest, pe.getClass());
+		}
+
 		return "/attachment_file_entries.jsp";
 	}
+
+	@Reference
+	private ActionHelper _actionHelper;
+
+	@Reference
+	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
+
+	@Reference
+	private ItemSelector _itemSelector;
+
+	@Reference
+	private Portal _portal;
 
 }

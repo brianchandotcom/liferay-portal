@@ -28,10 +28,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -74,6 +77,16 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	public CPAttachmentFileEntry addCPAttachmentFileEntry(
 		CPAttachmentFileEntry cpAttachmentFileEntry);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CPAttachmentFileEntry addCPAttachmentFileEntry(long classNameId,
+		long classPK, long fileEntryId, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, java.lang.String json,
+		int priority, int type, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new cp attachment file entry with the primary key. Does not add the cp attachment file entry to the database.
 	*
@@ -88,10 +101,12 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	*
 	* @param cpAttachmentFileEntry the cp attachment file entry
 	* @return the cp attachment file entry that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPAttachmentFileEntry deleteCPAttachmentFileEntry(
-		CPAttachmentFileEntry cpAttachmentFileEntry);
+		CPAttachmentFileEntry cpAttachmentFileEntry) throws PortalException;
 
 	/**
 	* Deletes the cp attachment file entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -152,6 +167,15 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
 		CPAttachmentFileEntry cpAttachmentFileEntry);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
+		long cpAttachmentFileEntryId, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		java.lang.String json, int priority, int type,
+		ServiceContext serviceContext) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -183,6 +207,10 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPAttachmentFileEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPAttachmentFileEntrysCount(long classNameId, int classPK,
+		long groupId, int status);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -270,6 +298,17 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntrys(
+		long classNameId, int classPK, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntrys(
+		long classNameId, int classPK, int start, int end,
+		OrderByComparator<CPAttachmentFileEntry> orderByComparator)
+		throws PortalException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.

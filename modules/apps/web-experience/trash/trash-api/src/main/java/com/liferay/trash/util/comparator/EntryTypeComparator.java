@@ -15,7 +15,7 @@
 package com.liferay.trash.util.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.model.TrashEntry;
 
 /**
  * @author Sergio González

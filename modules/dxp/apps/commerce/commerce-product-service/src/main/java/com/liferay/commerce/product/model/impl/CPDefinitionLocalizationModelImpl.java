@@ -85,7 +85,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionLocalization (mvccVersion LONG default 0 not null,cpDefinitionLocalizationId LONG not null primary key,companyId LONG,cpDefinitionPK LONG,languageId VARCHAR(75) null,title VARCHAR(75) null,urlTitle VARCHAR(75) null,shortDescription VARCHAR(75) null,description TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionLocalization (mvccVersion LONG default 0 not null,cpDefinitionLocalizationId LONG not null primary key,companyId LONG,cpDefinitionPK LONG,languageId VARCHAR(75) null,title VARCHAR(75) null,urlTitle VARCHAR(75) null,shortDescription STRING null,description TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionLocalization";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionLocalization.cpDefinitionLocalizationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionLocalization.cpDefinitionLocalizationId ASC";

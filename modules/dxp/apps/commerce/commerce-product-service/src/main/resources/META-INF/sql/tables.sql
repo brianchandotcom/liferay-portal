@@ -50,7 +50,7 @@ create table CPDefinitionLocalization (
 	languageId VARCHAR(75) null,
 	title VARCHAR(75) null,
 	urlTitle VARCHAR(75) null,
-	shortDescription VARCHAR(75) null,
+	shortDescription STRING null,
 	description TEXT null
 );
 

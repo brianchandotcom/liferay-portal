@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -103,13 +103,13 @@ public class GroupURLProvider {
 		String groupDisplayURL = group.getDisplayURL(themeDisplay, false);
 
 		if (Validator.isNotNull(groupDisplayURL)) {
-			return HttpUtil.removeParameter(groupDisplayURL, "p_p_id");
+			return _http.removeParameter(groupDisplayURL, "p_p_id");
 		}
 
 		groupDisplayURL = group.getDisplayURL(themeDisplay, true);
 
 		if (Validator.isNotNull(groupDisplayURL)) {
-			return HttpUtil.removeParameter(groupDisplayURL, "p_p_id");
+			return _http.removeParameter(groupDisplayURL, "p_p_id");
 		}
 
 		if (includeStagingGroup && group.hasStagingGroup()) {
@@ -146,6 +146,9 @@ public class GroupURLProvider {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupURLProvider.class);
+
+	@Reference
+	private Http _http;
 
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;

@@ -51,7 +51,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -217,7 +217,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-			redirect = HttpUtil.setParameter(
+			redirect = _http.setParameter(
 				redirect, actionResponse.getNamespace() + "roleId",
 				role.getRoleId());
 
@@ -713,6 +713,10 @@ public class RolesAdminPortlet extends MVCPortlet {
 	}
 
 	private GroupService _groupService;
+
+	@Reference
+	private Http _http;
+
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
 

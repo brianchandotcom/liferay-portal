@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.web.internal.display.context.PortletURLFactory;
 import com.liferay.portal.search.web.internal.display.context.PortletURLFactoryImpl;
@@ -356,9 +356,9 @@ public class SearchResultsPortlet
 		String urlString = portletSharedRequestHelper.getCompleteURL(
 			renderRequest);
 
-		urlString = HttpUtil.removeParameter(
+		urlString = _http.removeParameter(
 			urlString, paginationDeltaParameterName);
-		urlString = HttpUtil.removeParameter(
+		urlString = _http.removeParameter(
 			urlString, paginationStartParameterName);
 
 		return urlString;
@@ -432,6 +432,9 @@ public class SearchResultsPortlet
 
 	@Reference
 	protected ResourceActions resourceActions;
+
+	@Reference
+	private Http _http;
 
 	private final Set<SearchResultImageContributor>
 		_searchResultImageContributors = new HashSet<>();

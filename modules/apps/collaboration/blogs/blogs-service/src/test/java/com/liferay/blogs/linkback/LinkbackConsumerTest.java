@@ -53,12 +53,13 @@ public class LinkbackConsumerTest extends PowerMockito {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		setUpBlogsUtil();
-		setUpHttpUtil();
 
 		_linkbackConsumer = new LinkbackConsumer();
 
 		ReflectionTestUtil.setFieldValue(
 			_linkbackConsumer, "_commentManager", _commentManager);
+
+		ReflectionTestUtil.setFieldValue(_linkbackConsumer, "_http", _http);
 	}
 
 	@Test

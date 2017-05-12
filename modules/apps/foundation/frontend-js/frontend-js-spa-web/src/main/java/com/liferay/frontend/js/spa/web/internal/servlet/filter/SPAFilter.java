@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.TryFilter;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +47,7 @@ public class SPAFilter extends BaseFilter implements TryFilter {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		response.setHeader("X-Request-URL", HttpUtil.getCompleteURL(request));
+		response.setHeader("X-Request-URL", _http.getCompleteURL(request));
 
 		return null;
 	}
@@ -68,5 +68,8 @@ public class SPAFilter extends BaseFilter implements TryFilter {
 
 	@Reference
 	private BrowserSniffer _browserSniffer;
+
+	@Reference
+	private Http _http;
 
 }

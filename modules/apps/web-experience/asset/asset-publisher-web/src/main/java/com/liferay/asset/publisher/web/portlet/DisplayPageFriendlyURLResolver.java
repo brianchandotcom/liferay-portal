@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -137,7 +137,7 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			namespace + "urlTitle",
 			new String[] {journalArticle.getUrlTitle()});
 
-		String queryString = HttpUtil.parameterMapToString(actualParams, false);
+		String queryString = _http.parameterMapToString(actualParams, false);
 
 		if (layoutActualURL.contains(StringPool.QUESTION)) {
 			layoutActualURL =
@@ -219,6 +219,10 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 	}
 
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private Http _http;
+
 	private JournalArticleLocalService _journalArticleLocalService;
 	private LayoutLocalService _layoutLocalService;
 

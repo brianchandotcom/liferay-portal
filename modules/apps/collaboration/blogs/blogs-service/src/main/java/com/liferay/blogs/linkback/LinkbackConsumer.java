@@ -17,7 +17,7 @@ package com.liferay.blogs.linkback;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Tuple;
 
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public class LinkbackConsumer {
 
 	public void verifyTrackback(long commentId, String url, String entryURL) {
 		try {
-			String result = HttpUtil.URLtoString(url);
+			String result = _http.URLtoString(url);
 
 			if (result.contains(entryURL)) {
 				return;
@@ -78,6 +78,9 @@ public class LinkbackConsumer {
 
 	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
+	private Http _http;
 
 	private final List<Tuple> _trackbacks = Collections.synchronizedList(
 		new ArrayList<Tuple>());

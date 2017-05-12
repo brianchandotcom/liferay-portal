@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Shin
@@ -96,7 +97,7 @@ public class KBServicePreAction extends Action {
 		// A guest user that signs in will cause the original portlet
 		// authentication token to become stale. See SessionAuthToken.
 
-		String redirect = HttpUtil.setParameter(
+		String redirect = _http.setParameter(
 			themeDisplay.getURLCurrent(), "p_p_auth", actual_p_p_auth);
 
 		response.sendRedirect(redirect);
@@ -109,5 +110,8 @@ public class KBServicePreAction extends Action {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBServicePreAction.class);
+
+	@Reference
+	private Http _http;
 
 }

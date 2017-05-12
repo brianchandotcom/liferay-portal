@@ -375,9 +375,7 @@
 		<property name="html" ref="com.liferay.portal.util.HtmlImpl" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.util.HttpUtil" id="com.liferay.portal.kernel.util.HttpUtil">
-		<property name="http">
-			<bean class="com.liferay.portal.util.HttpImpl" />
-		</property>
+		<property name="http" ref="com.liferay.portal.util.HttpImpl" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.util.LocalizationUtil" id="com.liferay.portal.kernel.util.LocalizationUtil">
 		<property name="localization">
@@ -497,6 +495,7 @@
 	<bean class="com.liferay.portal.template.DDMTemplateResourceParser" id="com.liferay.portal.template.DDMTemplateResourceParser" />
 	<bean class="com.liferay.portal.template.ThemeResourceParser" id="com.liferay.portal.template.ThemeResourceParser" />
 	<bean class="com.liferay.portal.util.HtmlImpl" id="com.liferay.portal.util.HtmlImpl" />
+	<bean class="com.liferay.portal.util.HttpImpl" id="com.liferay.portal.util.HttpImpl" />
 	<bean class="com.liferay.portal.util.PortalImpl" id="com.liferay.portal.util.Portal" />
 	<bean class="com.liferay.portal.verify.model.AddressVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.AnnouncementsEntryVerifiableModel" />

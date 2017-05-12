@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -74,7 +74,7 @@ public class ItemSelectorImpl implements ItemSelector {
 		String namespace = _portal.getPortletNamespace(
 			ItemSelectorPortletKeys.ITEM_SELECTOR);
 
-		return HttpUtil.getParameter(
+		return _http.getParameter(
 			itemSelectorURL,
 			namespace.concat(PARAMETER_ITEM_SELECTED_EVENT_NAME), false);
 	}
@@ -108,7 +108,7 @@ public class ItemSelectorImpl implements ItemSelector {
 	public List<ItemSelectorCriterion> getItemSelectorCriteria(
 		String itemSelectorURL) {
 
-		Map<String, String[]> parameters = HttpUtil.getParameterMap(
+		Map<String, String[]> parameters = _http.getParameterMap(
 			itemSelectorURL);
 
 		Map<String, String[]> itemSelectorURLParameterMap = new HashMap<>();
@@ -392,6 +392,9 @@ public class ItemSelectorImpl implements ItemSelector {
 		_itemSelectionCriterionHandlers.remove(
 			itemSelectorCriterionClass.getName());
 	}
+
+	@Reference
+	private Http _http;
 
 	private final ConcurrentMap
 		<String, ItemSelectorCriterionHandler<ItemSelectorCriterion>>

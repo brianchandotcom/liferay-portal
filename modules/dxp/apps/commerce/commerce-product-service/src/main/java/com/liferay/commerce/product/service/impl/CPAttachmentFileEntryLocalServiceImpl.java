@@ -148,7 +148,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 	@Override
 	public int getCPAttachmentFileEntrysCount(
-		long classNameId, int classPK, long groupId, int status) {
+		long classNameId, int classPK) {
 
 		return cpAttachmentFileEntryPersistence.countByC_C(
 			classNameId, classPK);

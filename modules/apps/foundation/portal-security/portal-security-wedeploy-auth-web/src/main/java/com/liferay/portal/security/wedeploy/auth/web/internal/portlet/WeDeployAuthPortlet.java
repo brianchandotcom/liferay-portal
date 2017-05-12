@@ -25,7 +25,7 @@ import javax.portlet.Portlet;
  */
 @Component(
 	property = {
-		"com.liferay.portlet.css-class-wrapper=portlet-portal-security-wedeploy-application-auth",
+		"com.liferay.portlet.css-class-wrapper=portlet-portal-security-wedeploy-auth",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=false",
 		"javax.portlet.display-name=WeDeploy Auth",
@@ -39,7 +39,7 @@ import javax.portlet.Portlet;
 		"javax.portlet.init-param.view-template=/wedeploy_auth/view.jsp",
 		"javax.portlet.name=" + WeDeployAuthPortletKeys.WEDEPLOY_AUTH,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=guest,power-user,user",
+		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class

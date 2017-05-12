@@ -559,6 +559,21 @@ public class ConfigurationImpl
 			return hashCode;
 		}
 
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(_key);
+
+			for (String selector : _selectors) {
+				sb.append(CharPool.OPEN_BRACKET);
+				sb.append(selector);
+				sb.append(CharPool.CLOSE_BRACKET);
+			}
+
+			return sb.toString();
+		}
+
 		private FilterCacheKey(String key, Filter filter) {
 			_key = key;
 			_selectors = filter.getSelectors();

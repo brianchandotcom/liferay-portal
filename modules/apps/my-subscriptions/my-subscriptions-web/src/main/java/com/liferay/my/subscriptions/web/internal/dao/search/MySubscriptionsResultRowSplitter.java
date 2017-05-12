@@ -44,22 +44,11 @@ public class MySubscriptionsResultRowSplitter implements ResultRowSplitter {
 
 		Map<String, List<ResultRow>> rowMap = new HashMap<>();
 
-		String subscriptionClassName = StringPool.BLANK;
-		String subscriptionHeader = StringPool.BLANK;
-
 		for (ResultRow resultRow : resultRows) {
 			Subscription subscription = (Subscription)resultRow.getObject();
 
-			if (!subscriptionClassName.equals(subscription.getClassName())) {
-				subscriptionClassName = subscription.getClassName();
-
-				subscriptionHeader = ResourceActionsUtil.getModelResource(
-					_locale, subscriptionClassName);
-
-				rowMap.put(subscriptionHeader, new ArrayList<ResultRow>());
-			}
-
-			List<ResultRow> list = rowMap.get(subscriptionHeader);
+			List<ResultRow> list = rowMap.computeIfAbsent(
+				subscription.getClassName(), (className) -> new ArrayList<>());
 
 			list.add(resultRow);
 		}
@@ -71,7 +60,10 @@ public class MySubscriptionsResultRowSplitter implements ResultRowSplitter {
 			Map.Entry<String, List<ResultRow>> entry = iterator.next();
 
 			resultRowSplitterEntries.add(
-				new ResultRowSplitterEntry(entry.getKey(), entry.getValue()));
+				new ResultRowSplitterEntry(
+					ResourceActionsUtil.getModelResource(
+						_locale, entry.getKey()),
+					entry.getValue()));
 		}
 
 		return resultRowSplitterEntries;

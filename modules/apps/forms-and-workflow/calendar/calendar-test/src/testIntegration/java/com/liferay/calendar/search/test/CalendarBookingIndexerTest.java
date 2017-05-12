@@ -136,9 +136,10 @@ public class CalendarBookingIndexerTest {
 
 		Stream<String> searchTerms = Stream.of(word1, word2, prefix1, prefix2);
 
-		searchTerms.forEach(searchTerm -> {
-			assertSearchHitsLength(searchTerm, 1, LocaleUtil.JAPAN);
-		});
+		searchTerms.forEach(
+			searchTerm -> {
+				assertSearchHitsLength(searchTerm, 1, LocaleUtil.JAPAN);
+			});
 	}
 
 	@Test
@@ -151,23 +152,25 @@ public class CalendarBookingIndexerTest {
 
 		Stream<String> titles = Stream.of(full, partial1, partial2);
 
-		titles.forEach(title -> {
-			addCalendarBooking(
-				new LocalizedValuesMap() {
-					{
-						put(LocaleUtil.JAPAN, title);
-					}
-				});
-		});
+		titles.forEach(
+			title -> {
+				addCalendarBooking(
+					new LocalizedValuesMap() {
+						{
+							put(LocaleUtil.JAPAN, title);
+						}
+					});
+			});
 
 		String word1 = "新規";
 		String word2 = "作成";
 
 		Stream<String> searchTerms = Stream.of(word1, word2);
 
-		searchTerms.forEach(searchTerm -> {
-			assertSearchHitsLength(searchTerm, 1, LocaleUtil.JAPAN);
-		});
+		searchTerms.forEach(
+			searchTerm -> {
+				assertSearchHitsLength(searchTerm, 1, LocaleUtil.JAPAN);
+			});
 	}
 
 	@Test

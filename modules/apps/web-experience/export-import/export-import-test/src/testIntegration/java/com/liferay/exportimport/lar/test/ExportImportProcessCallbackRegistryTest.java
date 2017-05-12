@@ -129,24 +129,27 @@ public class ExportImportProcessCallbackRegistryTest {
 		final CountDownLatch registeredLatch = new CountDownLatch(1);
 		final CountDownLatch stoppedLatch = new CountDownLatch(1);
 
-		Thread starterThread = new Thread(() -> {
-			startProcess(_processId);
+		Thread starterThread = new Thread(
+			() -> {
+				startProcess(_processId);
 
-			startedLatch.countDown();
-		});
+				startedLatch.countDown();
+			});
 
-		Thread stopperThread = new Thread(() -> {
-			stopProcess(_processId);
+		Thread stopperThread = new Thread(
+			() -> {
+				stopProcess(_processId);
 
-			stoppedLatch.countDown();
-		});
+				stoppedLatch.countDown();
+			});
 
-		Thread registrationThread = new Thread(() -> {
-			ExportImportProcessCallbackRegistryUtil.registerCallback(
-				_processId, callable);
+		Thread registrationThread = new Thread(
+			() -> {
+				ExportImportProcessCallbackRegistryUtil.registerCallback(
+					_processId, callable);
 
-			registeredLatch.countDown();
-		});
+				registeredLatch.countDown();
+			});
 
 		starterThread.start();
 

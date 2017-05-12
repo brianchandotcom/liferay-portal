@@ -96,46 +96,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/closure-compiler.jar</file-name>
-				<version>v20131014</version>
-				<project-name>Closure Compiler</project-name>
-				<project-url>https://code.google.com/p/closure-compiler</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>
-					Removed META-INF/beans.xml to prevent CDI autowiring.
-				</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/jena.jar</file-name>
-				<version>1.4</version>
-				<project-name>Jena</project-name>
-				<project-url>http://jena.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-						<copyright-notice>Copyright (c) 2000-2008 Hewlett-Packard Company, LP</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jmatio.jar</file-name>
-				<version>1.0</version>
-				<project-name>JMatIO</project-name>
-				<project-url>http://sourceforge.net/projects/jmatio</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/json-schema-validator.jar</file-name>
 				<version>2.2.3</version>
 				<project-name>json-schema-validator</project-name>
@@ -167,22 +127,6 @@
 				</licenses>
 				<comments>
 					See LPS-3169, LPS-25202, and LPS-25836.
-				</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/rome.jar</file-name>
-				<version>1.0</version>
-				<project-name>ROME</project-name>
-				<project-url>http://java.net/projects/rome</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2004 Sun Microsystems, Inc.</copyright-notice>
-					</license>
-				</licenses>
-				<comments>
-					See LPS-25084.
 				</comments>
 			</library>
 		</libraries>

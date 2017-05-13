@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.test.util.indexing;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -74,7 +73,6 @@ public abstract class BaseIndexingTestCase {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(COMPANY_ID);
-		searchContext.setEnd(QueryUtil.ALL_POS);
 		searchContext.setGroupIds(new long[] {GROUP_ID});
 
 		QueryConfig queryConfig = new QueryConfig();

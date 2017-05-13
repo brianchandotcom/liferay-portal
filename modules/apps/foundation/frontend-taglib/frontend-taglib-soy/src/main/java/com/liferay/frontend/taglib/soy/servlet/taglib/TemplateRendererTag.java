@@ -83,7 +83,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	/**
-	* @deprecated As of 1.0.0, replaced by {@link #getId()}
+	* @deprecated As of 1.1.0, replaced by {@link #getId()}
 	*/
 	@java.lang.Deprecated
 	public String getComponentId() {
@@ -122,7 +122,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	/**
-	* @deprecated As of 1.0.0, replaced by {@link #setId(String)}
+	* @deprecated As of 1.1.0, replaced by {@link #setId(String)}
 	*/
 	@java.lang.Deprecated
 	public void setComponentId(String componentId) {

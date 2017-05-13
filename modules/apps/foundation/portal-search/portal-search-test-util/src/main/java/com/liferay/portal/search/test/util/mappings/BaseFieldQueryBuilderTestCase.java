@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
+import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -127,28 +128,11 @@ public abstract class BaseFieldQueryBuilderTestCase
 		return null;
 	}
 
-	private static List<String> _getValues(String field, Document... docs) {
-		ArrayList<String> values = new ArrayList<>(docs.length);
-
-		for (Document document : docs) {
-			values.add(document.get(field));
-		}
-
-		return values;
-	}
-
 	private void _assertCount(String keywords, int count) throws Exception {
 		Hits hits = doSearch(keywords);
 
-		Document[] docs = hits.getDocs();
-
-		if (docs.length == 0) {
-			return;
-		}
-
-		List<String> values = _getValues(getField(), docs);
-
-		Assert.assertEquals(keywords + "->" + values, count, docs.length);
+		DocumentsAssert.assertCount(
+			keywords, hits.getDocs(), getField(), count);
 	}
 
 	private void _assertDocument(String... values) throws Exception {
@@ -158,9 +142,9 @@ public abstract class BaseFieldQueryBuilderTestCase
 
 		Document[] documents = hits.getDocs();
 
-		List<String> expectedValues = Arrays.asList(values);
-
 		String field = getField();
+
+		List<String> expectedValues = Arrays.asList(values);
 
 		List<String> actualValues = new ArrayList<>();
 
@@ -189,13 +173,8 @@ public abstract class BaseFieldQueryBuilderTestCase
 
 		Hits hits = doSearch(keywords);
 
-		Document[] documents = hits.getDocs();
-
-		List<String> actualValues = _getValues(getField(), documents);
-
-		Assert.assertEquals(
-			keywords + "->" + actualValues, expectedValues.toString(),
-			actualValues.toString());
+		DocumentsAssert.assertValues(
+			keywords, hits.getDocs(), getField(), expectedValues);
 	}
 
 }

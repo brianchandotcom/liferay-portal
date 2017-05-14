@@ -50,6 +50,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 
 /**
@@ -267,12 +268,15 @@ public class UserIndexerTest {
 		Assert.assertEquals("open4life", user.getScreenName());
 	}
 
+	@Rule
+	public TestName testName = new TestName();
+
 	protected User addUser() throws Exception {
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 		String firstName = RandomTestUtil.randomString();
 		String lastName = RandomTestUtil.randomString();
 		String middleName = RandomTestUtil.randomString();
-		String screenName = RandomTestUtil.randomString();
+		String screenName = testName.getMethodName();
 
 		return addUser(
 			firstName, lastName, middleName, screenName, emailAddress);
@@ -321,7 +325,7 @@ public class UserIndexerTest {
 		String firstName = RandomTestUtil.randomString();
 		String lastName = RandomTestUtil.randomString();
 		String middleName = RandomTestUtil.randomString();
-		String screenName = RandomTestUtil.randomString();
+		String screenName = testName.getMethodName();
 
 		return addUser(
 			firstName, lastName, middleName, screenName, emailAddress);
@@ -331,7 +335,7 @@ public class UserIndexerTest {
 			String firstName, String lastName, String middleName)
 		throws Exception {
 
-		String screenName = RandomTestUtil.randomString();
+		String screenName = testName.getMethodName();
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 
 		return addUser(

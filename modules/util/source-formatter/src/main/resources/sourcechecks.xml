@@ -78,6 +78,7 @@
 		<check name="JavaLongLinesCheck" />
 		<check name="JavaPackagePathCheck" />
 		<check name="JavaProcessCallableCheck" />
+		<check name="JavaProviderTypeAnnotationCheck" />
 		<check name="JavaRedundantConstructorCheck" />
 		<check name="JavaResultSetCheck" />
 		<check name="JavaReturnStatementCheck" />

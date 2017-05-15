@@ -49,6 +49,10 @@ public class ChainingCheck extends AbstractCheck {
 		_allowedMethodNames = StringUtil.split(allowedMethodNames);
 	}
 
+	public void setAllowedVariableNames(String allowedVariableNames) {
+		_allowedVariableNames = StringUtil.split(allowedVariableNames);
+	}
+
 	@Override
 	public void visitToken(DetailAST detailAST) {
 		FileContents fileContents = getFileContents();
@@ -109,6 +113,18 @@ public class ChainingCheck extends AbstractCheck {
 			for (String allowedMethodName : _allowedMethodNames) {
 				if (chainedMethodNames.contains(allowedMethodName)) {
 					continue outerLoop;
+				}
+			}
+
+			if (dotAST != null) {
+				DetailAST nameAST = dotAST.findFirstToken(TokenTypes.IDENT);
+
+				String classOrVariableName = nameAST.getText();
+
+				for (String allowedVariableName : _allowedVariableNames) {
+					if (classOrVariableName.matches(allowedVariableName)) {
+						continue outerLoop;
+					}
 				}
 			}
 
@@ -178,5 +194,6 @@ public class ChainingCheck extends AbstractCheck {
 	}
 
 	private String[] _allowedMethodNames = new String[0];
+	private String[] _allowedVariableNames = new String[0];
 
 }

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
@@ -65,19 +66,25 @@ public class WeDeployAuthorizeUserMVCActionCommand
 
 		String redirectURI = ParamUtil.getString(actionRequest, "redirectURI");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		try {
 			if (cmd.equals("allow")) {
-				jsonObject.put(
-					"code", getWeDeployAuthToken(actionRequest, themeDisplay));
+				redirectURI = HttpUtil.addParameter(
+					redirectURI, "code",
+					getWeDeployAuthToken(actionRequest, themeDisplay));
 			}
 			else if (cmd.equals("deny")) {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
 				jsonObject.put("error", "access_denied");
+
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse, jsonObject);
 			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put(
 				"error_message",
@@ -85,10 +92,10 @@ public class WeDeployAuthorizeUserMVCActionCommand
 					themeDisplay.getLocale(),
 					"an-error-occurred-while-processing-the-requested-" +
 						"resource"));
-		}
 
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
+		}
 
 		sendRedirect(actionRequest, actionResponse, redirectURI);
 	}

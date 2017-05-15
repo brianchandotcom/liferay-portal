@@ -84,28 +84,29 @@ public class CPAttachmentFileEntryServiceImpl
 	}
 
 	@Override
-	public List<CPAttachmentFileEntry> getCPAttachmentFileEntrys(
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 			long classNameId, int classPK, int start, int end)
 		throws PortalException {
 
-		return cpAttachmentFileEntryLocalService.getCPAttachmentFileEntrys(
+		return cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
 			classNameId, classPK, start, end);
 	}
 
 	@Override
-	public List<CPAttachmentFileEntry> getCPAttachmentFileEntrys(
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 			long classNameId, int classPK, int start, int end,
 			OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws PortalException {
 
-		return cpAttachmentFileEntryLocalService.getCPAttachmentFileEntrys(
+		return cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
 			classNameId, classPK, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCPAttachmentFileEntrysCount(long classNameId, int classPK) {
-		return cpAttachmentFileEntryLocalService.getCPAttachmentFileEntrysCount(
-			classNameId, classPK);
+	public int getCPAttachmentFileEntriesCount(long classNameId, int classPK) {
+		return
+			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntriesCount(
+				classNameId, classPK);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

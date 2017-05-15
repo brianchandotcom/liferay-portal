@@ -144,7 +144,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<CPAttachmentFileEntry> getCPAttachmentFileEntrys(
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 			long classNameId, int classPK, int start, int end)
 		throws PortalException {
 
@@ -153,7 +153,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<CPAttachmentFileEntry> getCPAttachmentFileEntrys(
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 			long classNameId, int classPK, int start, int end,
 			OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws PortalException {
@@ -163,7 +163,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	}
 
 	@Override
-	public int getCPAttachmentFileEntrysCount(long classNameId, int classPK) {
+	public int getCPAttachmentFileEntriesCount(long classNameId, int classPK) {
 		return cpAttachmentFileEntryPersistence.countByC_C(
 			classNameId, classPK);
 	}

@@ -156,9 +156,13 @@ public class StagedLayoutSetStagedModelDataHandler
 			portletDataContext.getGroupId(),
 			portletDataContext.isPrivateLayout());
 
-		List<String> sourceLayoutUuids = layoutElements.stream().map(
-			(layoutElement) -> layoutElement.attributeValue("uuid")).collect(
-				Collectors.toList());
+		Stream<Element> layoutElementsStream = layoutElements.stream();
+
+		List<String> sourceLayoutUuids = layoutElementsStream.map(
+			(layoutElement) -> layoutElement.attributeValue("uuid")
+		).collect(
+			Collectors.toList()
+		);
 
 		if (_log.isDebugEnabled() && !sourceLayoutUuids.isEmpty()) {
 			_log.debug("Delete missing layouts");

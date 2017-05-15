@@ -618,8 +618,9 @@ public class LayoutImportController implements ImportController {
 
 		List<Node> nodes = xPath.selectNodes(layoutsElement);
 
-		nodes.stream().map(
-			(node) -> (Element)node).forEach(portletElements::add);
+		Stream<Node> nodesStream = nodes.stream();
+
+		nodesStream.map((node) -> (Element)node).forEach(portletElements::add);
 
 		return portletElements;
 	}

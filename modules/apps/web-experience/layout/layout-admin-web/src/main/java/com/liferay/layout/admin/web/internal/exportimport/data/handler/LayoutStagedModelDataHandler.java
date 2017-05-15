@@ -320,6 +320,15 @@ public class LayoutStagedModelDataHandler
 
 		exportTheme(portletDataContext, layout);
 
+		// Page Versioning
+
+		LayoutStagingHandler layoutStagingHandler =
+			LayoutStagingUtil.getLayoutStagingHandler(layout);
+
+		if (layoutStagingHandler != null) {
+			layout = layoutStagingHandler.getLayout();
+		}
+
 		portletDataContext.addClassedModel(
 			layoutElement, ExportImportPathUtil.getModelPath(layout), layout);
 	}

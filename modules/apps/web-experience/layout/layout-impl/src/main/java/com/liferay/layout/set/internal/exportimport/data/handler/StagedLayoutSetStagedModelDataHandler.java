@@ -38,7 +38,9 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -202,6 +204,10 @@ public class StagedLayoutSetStagedModelDataHandler
 			stagedLayoutSet.getSettingsProperties();
 
 		settingsProperties.remove("last-publish-date");
+
+		// Page Versioning
+
+		stagedLayoutSet = unwrapLayoutSetStagingHandler(stagedLayoutSet);
 
 		portletDataContext.addClassedModel(
 			stagedLayoutSetElement,
@@ -511,6 +517,24 @@ public class StagedLayoutSetStagedModelDataHandler
 					e);
 			}
 		}
+	}
+
+	protected StagedLayoutSet unwrapLayoutSetStagingHandler(
+		StagedLayoutSet stagedLayoutSet) {
+
+		LayoutSet layoutSet = ModelAdapterUtil.adapt(
+			stagedLayoutSet, StagedLayoutSet.class, LayoutSet.class);
+
+		LayoutSetStagingHandler layoutSetStagingHandler =
+			LayoutStagingUtil.getLayoutSetStagingHandler(layoutSet);
+
+		if (layoutSetStagingHandler == null) {
+			return stagedLayoutSet;
+		}
+
+		return ModelAdapterUtil.adapt(
+			layoutSetStagingHandler.getLayoutSet(), LayoutSet.class,
+			StagedLayoutSet.class);
 	}
 
 	protected void updateLastMergeTime(

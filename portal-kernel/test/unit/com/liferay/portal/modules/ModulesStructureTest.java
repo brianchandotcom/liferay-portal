@@ -330,10 +330,14 @@ public class ModulesStructureTest {
 	}
 
 	private String _getAntPluginLibGitIgnore(Path dirPath) throws IOException {
+		Path liferayLayoutTemplatesXmlPath = dirPath.resolve(
+			"docroot/WEB-INF/liferay-layout-templates.xml");
 		Path liferayPluginPackagePropertiesPath = dirPath.resolve(
 			"docroot/WEB-INF/liferay-plugin-package.properties");
 
-		if (Files.notExists(liferayPluginPackagePropertiesPath)) {
+		if (Files.exists(liferayLayoutTemplatesXmlPath) ||
+			Files.notExists(liferayPluginPackagePropertiesPath)) {
+
 			return null;
 		}
 

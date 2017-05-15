@@ -86,9 +86,9 @@ public class CPAttachmentFileEntryServiceUtil {
 			neverExpire, json, priority, type, serviceContext);
 	}
 
-	public static int getCPAttachmentFileEntrysCount(long classNameId,
+	public static int getCPAttachmentFileEntriesCount(long classNameId,
 		int classPK) {
-		return getService().getCPAttachmentFileEntrysCount(classNameId, classPK);
+		return getService().getCPAttachmentFileEntriesCount(classNameId, classPK);
 	}
 
 	/**
@@ -100,20 +100,20 @@ public class CPAttachmentFileEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntrys(
+	public static java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntries(
 		long classNameId, int classPK, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCPAttachmentFileEntrys(classNameId, classPK, start, end);
+				   .getCPAttachmentFileEntries(classNameId, classPK, start, end);
 	}
 
-	public static java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntrys(
+	public static java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntries(
 		long classNameId, int classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPAttachmentFileEntry> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCPAttachmentFileEntrys(classNameId, classPK, start, end,
-			orderByComparator);
+				   .getCPAttachmentFileEntries(classNameId, classPK, start,
+			end, orderByComparator);
 	}
 
 	public static CPAttachmentFileEntryService getService() {

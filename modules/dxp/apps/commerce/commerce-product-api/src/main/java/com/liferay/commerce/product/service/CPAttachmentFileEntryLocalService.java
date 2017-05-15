@@ -209,7 +209,7 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	public int getCPAttachmentFileEntriesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPAttachmentFileEntrysCount(long classNameId, int classPK);
+	public int getCPAttachmentFileEntriesCount(long classNameId, int classPK);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -272,6 +272,17 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(int start,
 		int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+		long classNameId, int classPK, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+		long classNameId, int classPK, int start, int end,
+		OrderByComparator<CPAttachmentFileEntry> orderByComparator)
+		throws PortalException;
+
 	/**
 	* Returns all the cp attachment file entries matching the UUID and company.
 	*
@@ -298,17 +309,6 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPAttachmentFileEntry> getCPAttachmentFileEntrys(
-		long classNameId, int classPK, int start, int end)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPAttachmentFileEntry> getCPAttachmentFileEntrys(
-		long classNameId, int classPK, int start, int end,
-		OrderByComparator<CPAttachmentFileEntry> orderByComparator)
-		throws PortalException;
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -326,4 +326,7 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteCPAttachmentFileEntries(java.lang.String className,
+		long classPK) throws PortalException;
 }

@@ -124,12 +124,12 @@ public class CPAttachmentFileEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap[] getCPAttachmentFileEntrys(
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap[] getCPAttachmentFileEntries(
 		long classNameId, int classPK, int start, int end)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> returnValue =
-				CPAttachmentFileEntryServiceUtil.getCPAttachmentFileEntrys(classNameId,
+				CPAttachmentFileEntryServiceUtil.getCPAttachmentFileEntries(classNameId,
 					classPK, start, end);
 
 			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModels(returnValue);
@@ -141,13 +141,13 @@ public class CPAttachmentFileEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap[] getCPAttachmentFileEntrys(
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap[] getCPAttachmentFileEntries(
 		long classNameId, int classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPAttachmentFileEntry> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> returnValue =
-				CPAttachmentFileEntryServiceUtil.getCPAttachmentFileEntrys(classNameId,
+				CPAttachmentFileEntryServiceUtil.getCPAttachmentFileEntries(classNameId,
 					classPK, start, end, orderByComparator);
 
 			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModels(returnValue);
@@ -159,10 +159,10 @@ public class CPAttachmentFileEntryServiceSoap {
 		}
 	}
 
-	public static int getCPAttachmentFileEntrysCount(long classNameId,
+	public static int getCPAttachmentFileEntriesCount(long classNameId,
 		int classPK) throws RemoteException {
 		try {
-			int returnValue = CPAttachmentFileEntryServiceUtil.getCPAttachmentFileEntrysCount(classNameId,
+			int returnValue = CPAttachmentFileEntryServiceUtil.getCPAttachmentFileEntriesCount(classNameId,
 					classPK);
 
 			return returnValue;

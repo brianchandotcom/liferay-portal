@@ -83,7 +83,7 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPAttachmentFileEntrysCount(long classNameId, int classPK);
+	public int getCPAttachmentFileEntriesCount(long classNameId, int classPK);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -93,12 +93,12 @@ public interface CPAttachmentFileEntryService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPAttachmentFileEntry> getCPAttachmentFileEntrys(
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 		long classNameId, int classPK, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPAttachmentFileEntry> getCPAttachmentFileEntrys(
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 		long classNameId, int classPK, int start, int end,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws PortalException;

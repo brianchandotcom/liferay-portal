@@ -43,9 +43,13 @@ public class LiferayModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		bind(String.class).annotatedWith(
-			Names.named("shindig.canonical.json.db")).toInstance(
-				"sampledata/canonicaldb.json");
+		bind(
+			String.class
+		).annotatedWith(
+			Names.named("shindig.canonical.json.db")
+		).toInstance(
+			"sampledata/canonicaldb.json"
+		);
 
 		bind(ActivityService.class).to(LiferayActivityService.class);
 		bind(AlbumService.class).to(LiferayAlbumService.class);

@@ -26,6 +26,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
@@ -169,10 +170,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			throw new CPDefinitionVirtualSettingSampleUrlException();
 		}
 
-		if (termsOfUseRequired &&
-			(Validator.isNull(termsOfUseContentMap) ||
-			 termsOfUseContentMap.isEmpty())) {
-
+		if (termsOfUseRequired && MapUtil.isEmpty(termsOfUseContentMap)) {
 			JournalArticle journalArticle =
 				journalArticleLocalService.fetchJournalArticle(
 					termsOfUseJournalArticleId);

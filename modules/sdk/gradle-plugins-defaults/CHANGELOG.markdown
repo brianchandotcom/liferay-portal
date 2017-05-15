@@ -1472,6 +1472,12 @@ task.
 ### Changed
 - [LPS-72514]: Update the [Liferay Gradle Plugins] dependency to version 3.3.11.
 
+## 3.6.15 - 2017-05-11
+
+### Changed
+- [LPS-72456]: Update the [Find Security Bugs] dependency to version
+1.6.0.LIFERAY-PATCHED-2.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1623,6 +1629,7 @@ task.
 [LPS-72152]: https://issues.liferay.com/browse/LPS-72152
 [LPS-72252]: https://issues.liferay.com/browse/LPS-72252
 [LPS-72340]: https://issues.liferay.com/browse/LPS-72340
+[LPS-72456]: https://issues.liferay.com/browse/LPS-72456
 [LPS-72514]: https://issues.liferay.com/browse/LPS-72514
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

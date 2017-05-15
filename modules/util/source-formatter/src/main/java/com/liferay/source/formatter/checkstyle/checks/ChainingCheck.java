@@ -65,14 +65,18 @@ public class ChainingCheck extends AbstractCheck {
 
 		outerLoop:
 		for (DetailAST methodCallAST : methodCallASTList) {
-			List<DetailAST> childMethodCallASTList =
-				DetailASTUtil.getAllChildTokens(
-					methodCallAST, true, TokenTypes.METHOD_CALL);
+			DetailAST dotAST = methodCallAST.findFirstToken(TokenTypes.DOT);
 
-			// Only check the method that is first in the chain
+			if (dotAST != null) {
+				List<DetailAST> childMethodCallASTList =
+					DetailASTUtil.getAllChildTokens(
+						dotAST, false, TokenTypes.METHOD_CALL);
 
-			if (!childMethodCallASTList.isEmpty()) {
-				continue;
+				// Only check the method that is first in the chain
+
+				if (!childMethodCallASTList.isEmpty()) {
+					continue;
+				}
 			}
 
 			List<String> chainedMethodNames = _getChainedMethodNames(

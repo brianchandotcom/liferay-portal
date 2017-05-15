@@ -528,6 +528,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 				 !line.endsWith(StringPool.OPEN_PARENTHESIS)) ||
 				((previousLine.endsWith(StringPool.OPEN_BRACKET) ||
 				  previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) &&
+				 !trimmedPreviousLine.startsWith(").") &&
 				 line.endsWith(StringPool.SEMICOLON))) {
 
 				return _getCombinedLinesContent(

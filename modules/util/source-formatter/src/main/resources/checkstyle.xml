@@ -105,6 +105,7 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.Indentation">
 			<message key="indentation.incorrect" value="Line starts with ''{0}'' tabs, but ''{1}'' tabs are expected" />
+			<message key="indentation.inside.chain.incorrect" value="Incorrect indentation inside chain. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/chaining.markdown" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.InstanceofOrder">
 			<message key="instanceof.order" value="''{0}'' should come before ''{1}''" />

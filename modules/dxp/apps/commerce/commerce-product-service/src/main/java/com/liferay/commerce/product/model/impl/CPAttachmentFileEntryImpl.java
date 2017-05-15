@@ -16,13 +16,23 @@ package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+
 /**
  * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
 @ProviderType
 public class CPAttachmentFileEntryImpl extends CPAttachmentFileEntryBaseImpl {
 
 	public CPAttachmentFileEntryImpl() {
+	}
+
+	@Override
+	public FileEntry getFileEntry() throws PortalException {
+		return DLAppLocalServiceUtil.getFileEntry(getFileEntryId());
 	}
 
 }

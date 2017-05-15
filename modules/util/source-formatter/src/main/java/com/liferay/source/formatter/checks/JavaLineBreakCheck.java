@@ -86,6 +86,8 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 			}
 		}
 
+		_checkIncorrectLineBreaksInsideChains(content, fileName);
+
 		content = _fixIncorrectLineBreaks(content, fileName);
 
 		content = _fixLineStartingWithCloseParenthesis(content, fileName);
@@ -97,6 +99,51 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 		content = _fixClassLineLineBreaks(content);
 
 		return content;
+	}
+
+	private void _checkIncorrectLineBreaksInsideChains(
+		String content, String fileName) {
+
+		Matcher matcher = _incorrectLineBreakInsideChainPattern.matcher(
+			content);
+
+		while (matcher.find()) {
+			int x = matcher.end();
+
+			while (true) {
+				x = content.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
+
+				if (x == -1) {
+					return;
+				}
+
+				if (ToolsUtil.isInsideQuotes(content, x)) {
+					continue;
+				}
+
+				String s = content.substring(matcher.end(), x);
+
+				if (getLevel(s) != 0) {
+					continue;
+				}
+
+				char c = content.charAt(x - 1);
+
+				if (c == CharPool.TAB) {
+					break;
+				}
+
+				int y = content.lastIndexOf(StringPool.TAB, x);
+
+				s = content.substring(y + 1, x);
+
+				addMessage(
+					fileName, "There should be a line break after '" + s + "'",
+					getLineCount(content, x));
+
+				break;
+			}
+		}
 	}
 
 	private void _checkLambdaLineBreaks(
@@ -696,6 +743,8 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 	private final Pattern _classPattern = Pattern.compile(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
 			"(class|enum|interface) ([\\s\\S]*?) \\{)\n(\\s*)(\\S)");
+	private final Pattern _incorrectLineBreakInsideChainPattern =
+		Pattern.compile("\t\\)\\..*\\(\n");
 	private final Pattern _incorrectLineBreakPattern1 = Pattern.compile(
 		"\n(\t*)(.*\\) \\{)([\t ]*\\}\n)");
 	private final Pattern _incorrectLineBreakPattern2 = Pattern.compile(

@@ -63,7 +63,7 @@ public class WeDeployAuthorizeUserMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String redirectURI = ParamUtil.getString(actionRequest, "redirect_uri");
+		String redirectURI = ParamUtil.getString(actionRequest, "redirectURI");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -97,7 +97,7 @@ public class WeDeployAuthorizeUserMVCActionCommand
 			ActionRequest actionRequest, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		String clientId = ParamUtil.getString(actionRequest, "client_id");
+		String clientId = ParamUtil.getString(actionRequest, "clientId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			WeDeployAuthApp.class.getName(), actionRequest);

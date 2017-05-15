@@ -63,8 +63,8 @@ public class WeDeployAuthorizeAction extends BaseStrutsAction {
 			request, WeDeployAuthPortletKeys.WEDEPLOY_AUTH,
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("client_id", clientId);
-		portletURL.setParameter("redirect_uri", redirectURI);
+		portletURL.setParameter("clientId", clientId);
+		portletURL.setParameter("redirectURI", redirectURI);
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 		portletURL.setPortletMode(PortletMode.VIEW);
 

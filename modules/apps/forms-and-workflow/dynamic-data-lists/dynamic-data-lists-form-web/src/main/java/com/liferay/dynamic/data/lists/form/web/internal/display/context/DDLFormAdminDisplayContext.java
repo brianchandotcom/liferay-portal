@@ -798,7 +798,7 @@ public class DDLFormAdminDisplayContext {
 		String serializedFormBuilderContext = ParamUtil.getString(
 			_renderRequest, "serializedFormBuilderContext");
 
-		if (Validator.isNotNull(serializedFormBuilderContext)) {
+		if (Validator.isNull(serializedFormBuilderContext)) {
 			return null;
 		}
 
@@ -828,7 +828,7 @@ public class DDLFormAdminDisplayContext {
 		String serializedFormBuilderContext = ParamUtil.getString(
 			_renderRequest, "serializedFormBuilderContext");
 
-		if (Validator.isNotNull(serializedFormBuilderContext)) {
+		if (Validator.isNull(serializedFormBuilderContext)) {
 			return null;
 		}
 

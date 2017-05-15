@@ -254,6 +254,8 @@ public class DDLFormBuilderContextToDDMForm {
 					setDDMFormFieldSettings(
 						jsonObject.getJSONObject("settingsContext"), ddmForm,
 						ddmFormField);
+
+					ddmForm.addDDMFormField(ddmFormField);
 				}
 
 			});

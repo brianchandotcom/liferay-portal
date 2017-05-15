@@ -369,7 +369,7 @@ AUI.add(
 						);
 
 						instance.one('#autosaveMessage').set('innerHTML', autosaveMessage);
-                        A.one('.publish-icon').removeClass('hide');
+						A.one('.publish-icon').removeClass('hide');
 					},
 
 					_afterEditingLocaleChange: function(event) {

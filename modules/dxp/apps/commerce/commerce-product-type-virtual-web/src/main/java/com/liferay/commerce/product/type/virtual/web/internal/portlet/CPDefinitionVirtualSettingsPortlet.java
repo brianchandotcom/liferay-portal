@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.scopeable=true",
 		"javax.portlet.display-name=Virtual Products",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.init-param.view-template=/edit_definition_virtual_setting.jsp",
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTINGS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",

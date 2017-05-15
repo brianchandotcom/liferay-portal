@@ -20,10 +20,11 @@ import com.liferay.portal.kernel.search.query.QueryVisitor;
 import com.liferay.portal.kernel.util.StringBundler;
 
 /**
- * Parses raw, human readable query syntax. No transformation is made on the
- * user input. <br><br> Note: proper query syntax and any further processing
- * are dependent on your search engine's implementation details. Consult your
- * search provider's documentation for more information.
+ * Provides support for parsing raw, human readable query syntax. No
+ * transformation is made on the user input. <br>
+ * <br> Note: actual query syntax and any further processing are dependent on your
+ * search engine's implementation details. Consult your search provider's
+ * documentation for more information.
  *
  * @author Bruno Farache
  */

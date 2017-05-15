@@ -26,6 +26,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
+import com.liferay.journal.service.persistence.JournalArticlePersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -126,13 +128,11 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 	 *
 	 * @param cpDefinitionVirtualSetting the cp definition virtual setting
 	 * @return the cp definition virtual setting that was removed
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting)
-		throws PortalException {
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
 		return cpDefinitionVirtualSettingPersistence.remove(cpDefinitionVirtualSetting);
 	}
 
@@ -503,6 +503,44 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the journal article local service.
+	 *
+	 * @return the journal article local service
+	 */
+	public com.liferay.journal.service.JournalArticleLocalService getJournalArticleLocalService() {
+		return journalArticleLocalService;
+	}
+
+	/**
+	 * Sets the journal article local service.
+	 *
+	 * @param journalArticleLocalService the journal article local service
+	 */
+	public void setJournalArticleLocalService(
+		com.liferay.journal.service.JournalArticleLocalService journalArticleLocalService) {
+		this.journalArticleLocalService = journalArticleLocalService;
+	}
+
+	/**
+	 * Returns the journal article persistence.
+	 *
+	 * @return the journal article persistence
+	 */
+	public JournalArticlePersistence getJournalArticlePersistence() {
+		return journalArticlePersistence;
+	}
+
+	/**
+	 * Sets the journal article persistence.
+	 *
+	 * @param journalArticlePersistence the journal article persistence
+	 */
+	public void setJournalArticlePersistence(
+		JournalArticlePersistence journalArticlePersistence) {
+		this.journalArticlePersistence = journalArticlePersistence;
+	}
+
+	/**
 	 * Returns the class name local service.
 	 *
 	 * @return the class name local service
@@ -596,6 +634,25 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 		this.userPersistence = userPersistence;
 	}
 
+	/**
+	 * Returns the dl app local service.
+	 *
+	 * @return the dl app local service
+	 */
+	public com.liferay.document.library.kernel.service.DLAppLocalService getDLAppLocalService() {
+		return dlAppLocalService;
+	}
+
+	/**
+	 * Sets the dl app local service.
+	 *
+	 * @param dlAppLocalService the dl app local service
+	 */
+	public void setDLAppLocalService(
+		com.liferay.document.library.kernel.service.DLAppLocalService dlAppLocalService) {
+		this.dlAppLocalService = dlAppLocalService;
+	}
+
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting",
 			cpDefinitionVirtualSettingLocalService);
@@ -654,6 +711,10 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 	protected CPDefinitionVirtualSettingPersistence cpDefinitionVirtualSettingPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.journal.service.JournalArticleLocalService.class)
+	protected com.liferay.journal.service.JournalArticleLocalService journalArticleLocalService;
+	@ServiceReference(type = JournalArticlePersistence.class)
+	protected JournalArticlePersistence journalArticlePersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = ClassNamePersistence.class)
@@ -664,6 +725,8 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	@ServiceReference(type = com.liferay.document.library.kernel.service.DLAppLocalService.class)
+	protected com.liferay.document.library.kernel.service.DLAppLocalService dlAppLocalService;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

@@ -57,37 +57,31 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionVirtualSettingServiceUtil} to access the cp definition virtual setting remote service. Add custom service methods to {@link com.liferay.commerce.product.type.virtual.service.impl.CPDefinitionVirtualSettingServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
-		long cpDefinitionId, long fileEntryId, java.lang.String url,
-		java.lang.String activationStatus, long duration, int maxUsages,
-		long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired,
+		long cpDefinitionId, boolean useFileEntry, long fileEntryId,
+		java.lang.String url, java.lang.String activationStatus, long duration,
+		int maxUsages, boolean useSampleFileEntry, long sampleFileEntryId,
+		java.lang.String sampleUrl, boolean termsOfUseRequired,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
-		long termsOfUseJournalArticleId, boolean useUrl, boolean useFileEntry,
-		ServiceContext serviceContext) throws PortalException;
+		long termsOfUseJournalArticleId, ServiceContext serviceContext)
+		throws PortalException;
 
 	public CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting)
 		throws PortalException;
 
-	public CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
 		long cpDefinitionVirtualSettingId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionVirtualSetting getCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId) throws PortalException;
-
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId, long fileEntryId,
-		java.lang.String url, java.lang.String activationStatus, long duration,
-		int maxUsages, long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired,
+		long cpDefinitionVirtualSettingId, boolean useFileEntry,
+		long fileEntryId, java.lang.String url,
+		java.lang.String activationStatus, long duration, int maxUsages,
+		boolean useSampleFileEntry, long sampleFileEntryId,
+		java.lang.String sampleUrl, boolean termsOfUseRequired,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
-		long termsOfUseJournalArticleId, boolean useUrl, boolean useFileEntry,
-		ServiceContext serviceContext) throws PortalException;
+		long termsOfUseJournalArticleId, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

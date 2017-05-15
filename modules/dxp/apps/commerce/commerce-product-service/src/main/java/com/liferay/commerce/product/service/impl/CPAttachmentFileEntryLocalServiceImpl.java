@@ -94,6 +94,23 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		return cpAttachmentFileEntry;
 	}
 
+	@Override
+	public void deleteCPAttachmentFileEntries(String className, long classPK)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			cpAttachmentFileEntryPersistence.findByC_C(classNameId, classPK);
+
+		for (CPAttachmentFileEntry cpAttachmentFileEntry :
+				cpAttachmentFileEntries) {
+
+			cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
+				cpAttachmentFileEntry);
+		}
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)

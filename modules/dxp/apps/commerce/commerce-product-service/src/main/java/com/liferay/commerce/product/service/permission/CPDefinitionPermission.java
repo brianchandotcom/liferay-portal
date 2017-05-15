@@ -23,8 +23,6 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
-import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
-import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -114,30 +112,6 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 
 		checkCPDefinitionOptionValueRel(
 			permissionChecker, cpDefinitionOptionValueRel, actionId);
-	}
-
-	public static void checkCPDefinitionVirtualSetting(
-			PermissionChecker permissionChecker,
-			CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
-			String actionId)
-		throws PortalException {
-
-		long cpDefinitionId = cpDefinitionVirtualSetting.getCPDefinitionId();
-
-		check(permissionChecker, cpDefinitionId, actionId);
-	}
-
-	public static void checkCPDefinitionVirtualSetting(
-			PermissionChecker permissionChecker,
-			long cpDefinitionVirtualSettingId, String actionId)
-		throws PortalException {
-
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-			_cpDefinitionVirtualSettingLocalService.getCPDefinitionVirtualSetting(
-				cpDefinitionVirtualSettingId);
-
-		checkCPDefinitionVirtualSetting(
-			permissionChecker, cpDefinitionVirtualSetting, actionId);
 	}
 
 	public static void checkCPInstance(
@@ -232,14 +206,6 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 	}
 
 	@Reference(unbind = "-")
-	protected void setCPDefinitionVirtualSettingLocalService(
-		CPDefinitionVirtualSettingLocalService cpDefinitionVirtualSettingLocalService) {
-
-		_cpDefinitionVirtualSettingLocalService =
-			cpDefinitionVirtualSettingLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setCPInstanceLocalService(
 		CPInstanceLocalService cpInstanceLocalService) {
 
@@ -251,8 +217,6 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 		_cpDefinitionOptionRelLocalService;
 	private static CPDefinitionOptionValueRelLocalService
 		_cpDefinitionOptionValueRelLocalService;
-	private static CPDefinitionVirtualSettingLocalService
-		_cpDefinitionVirtualSettingLocalService;
 	private static CPInstanceLocalService _cpInstanceLocalService;
 
 }

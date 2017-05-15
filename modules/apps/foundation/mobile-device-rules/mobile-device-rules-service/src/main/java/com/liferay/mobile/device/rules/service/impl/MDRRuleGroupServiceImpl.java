@@ -14,8 +14,6 @@
 
 package com.liferay.mobile.device.rules.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.service.base.MDRRuleGroupServiceBaseImpl;
 import com.liferay.mobile.device.rules.service.permission.MDRPermission;
@@ -32,7 +30,6 @@ import java.util.Map;
 /**
  * @author Edward C. Han
  */
-@ProviderType
 public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 
 	@Override

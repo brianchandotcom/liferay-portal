@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.lists.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordSetVersionServiceBaseImpl;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
@@ -31,7 +29,6 @@ import java.util.List;
  *
  * @author Leonardo Barros
  */
-@ProviderType
 public class DDLRecordSetVersionServiceImpl
 	extends DDLRecordSetVersionServiceBaseImpl {
 

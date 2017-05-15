@@ -14,8 +14,6 @@
 
 package com.liferay.friendly.url.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.base.FriendlyURLEntryLocalizationLocalServiceBaseImpl;
@@ -33,7 +31,6 @@ import java.util.Map;
 /**
  * @author Pavel Savinov
  */
-@ProviderType
 public class FriendlyURLEntryLocalizationLocalServiceImpl
 	extends FriendlyURLEntryLocalizationLocalServiceBaseImpl {
 

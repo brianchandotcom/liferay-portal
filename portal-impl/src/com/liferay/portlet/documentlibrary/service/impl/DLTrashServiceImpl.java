@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,7 +33,6 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission
 /**
  * @author Adolfo Pérez
  */
-@ProviderType
 public class DLTrashServiceImpl extends DLTrashServiceBaseImpl {
 
 	/**

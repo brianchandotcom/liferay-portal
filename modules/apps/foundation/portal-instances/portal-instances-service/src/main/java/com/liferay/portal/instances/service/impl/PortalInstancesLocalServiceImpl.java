@@ -14,8 +14,6 @@
 
 package com.liferay.portal.instances.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.instances.service.base.PortalInstancesLocalServiceBaseImpl;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.log.Log;
@@ -42,7 +40,6 @@ import javax.servlet.http.HttpServletRequest;
  * @see    PortalInstancesLocalServiceBaseImpl
  * @see    com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil
  */
-@ProviderType
 public class PortalInstancesLocalServiceImpl
 	extends PortalInstancesLocalServiceBaseImpl {
 

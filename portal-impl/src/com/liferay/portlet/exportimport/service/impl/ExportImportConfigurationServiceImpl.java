@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.exportimport.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -26,7 +24,6 @@ import com.liferay.portlet.exportimport.service.base.ExportImportConfigurationSe
  * @author Brian Wing Shun Chan
  * @author Levente Hudák
  */
-@ProviderType
 public class ExportImportConfigurationServiceImpl
 	extends ExportImportConfigurationServiceBaseImpl {
 

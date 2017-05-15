@@ -14,8 +14,6 @@
 
 package com.liferay.marketplace.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.marketplace.internal.service.permission.MarketplacePermission;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.base.AppServiceBaseImpl;
@@ -26,7 +24,6 @@ import java.io.File;
 /**
  * @author Ryan Park
  */
-@ProviderType
 public class AppServiceImpl extends AppServiceBaseImpl {
 
 	@Override

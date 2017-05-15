@@ -14,8 +14,6 @@
 
 package com.liferay.friendly.url.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException;
@@ -36,7 +34,6 @@ import java.util.List;
 /**
  * @author Adolfo Pérez
  */
-@ProviderType
 public class FriendlyURLEntryLocalServiceImpl
 	extends FriendlyURLEntryLocalServiceBaseImpl {
 

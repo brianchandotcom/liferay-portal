@@ -14,8 +14,6 @@
 
 package com.liferay.mobile.device.rules.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.mobile.device.rules.exception.DuplicateRuleGroupInstanceException;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.base.MDRRuleGroupInstanceLocalServiceBaseImpl;
@@ -34,7 +32,6 @@ import java.util.List;
 /**
  * @author Edward C. Han
  */
-@ProviderType
 public class MDRRuleGroupInstanceLocalServiceImpl
 	extends MDRRuleGroupInstanceLocalServiceBaseImpl {
 

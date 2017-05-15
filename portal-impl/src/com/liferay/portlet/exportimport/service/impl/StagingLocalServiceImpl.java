@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.exportimport.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -90,7 +88,6 @@ import javax.portlet.PortletRequest;
  * @author Mate Thurzo
  * @author Vilmos Papp
  */
-@ProviderType
 public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 	@Override

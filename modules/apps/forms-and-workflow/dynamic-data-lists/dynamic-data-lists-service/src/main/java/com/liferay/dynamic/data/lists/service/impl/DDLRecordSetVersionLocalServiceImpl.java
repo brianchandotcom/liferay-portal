@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.lists.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetVersionException;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordSetVersionLocalServiceBaseImpl;
@@ -33,7 +31,6 @@ import java.util.List;
  *
  * @author Leonardo Barros
  */
-@ProviderType
 public class DDLRecordSetVersionLocalServiceImpl
 	extends DDLRecordSetVersionLocalServiceBaseImpl {
 

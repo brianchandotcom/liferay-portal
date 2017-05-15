@@ -14,8 +14,6 @@
 
 package com.liferay.blogs.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.blogs.exception.NoSuchStatsUserException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsStatsUser;
@@ -36,7 +34,6 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Mate Thurzo
  */
-@ProviderType
 public class BlogsStatsUserLocalServiceImpl
 	extends BlogsStatsUserLocalServiceBaseImpl {
 

@@ -14,8 +14,6 @@
 
 package com.liferay.bookmarks.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.bookmarks.configuration.BookmarksGroupServiceOverriddenConfiguration;
@@ -87,7 +85,6 @@ import java.util.List;
  * @author Raymond Augé
  * @author Levente Hudák
  */
-@ProviderType
 public class BookmarksEntryLocalServiceImpl
 	extends BookmarksEntryLocalServiceBaseImpl {
 

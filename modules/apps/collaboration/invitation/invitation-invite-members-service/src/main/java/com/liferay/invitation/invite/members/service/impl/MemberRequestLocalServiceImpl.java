@@ -14,8 +14,6 @@
 
 package com.liferay.invitation.invite.members.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.invitation.invite.members.constants.InviteMembersConstants;
 import com.liferay.invitation.invite.members.exception.MemberRequestAlreadyUsedException;
 import com.liferay.invitation.invite.members.exception.MemberRequestInvalidUserException;
@@ -62,7 +60,6 @@ import javax.mail.internet.InternetAddress;
  * @author Ryan Park
  * @author Jonathan Lee
  */
-@ProviderType
 public class MemberRequestLocalServiceImpl
 	extends MemberRequestLocalServiceBaseImpl {
 

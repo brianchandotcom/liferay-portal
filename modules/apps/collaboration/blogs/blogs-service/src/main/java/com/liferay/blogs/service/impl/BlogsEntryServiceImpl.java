@@ -14,8 +14,6 @@
 
 package com.liferay.blogs.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.base.BlogsEntryServiceBaseImpl;
 import com.liferay.blogs.service.permission.BlogsEntryPermission;
@@ -71,7 +69,6 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Mate Thurzo
  */
-@ProviderType
 public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 	/**

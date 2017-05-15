@@ -14,8 +14,6 @@
 
 package com.liferay.push.notifications.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -33,7 +31,6 @@ import java.util.List;
  * @author Silvio Santos
  * @author Bruno Farache
  */
-@ProviderType
 public class PushNotificationsDeviceServiceImpl
 	extends PushNotificationsDeviceServiceBaseImpl {
 

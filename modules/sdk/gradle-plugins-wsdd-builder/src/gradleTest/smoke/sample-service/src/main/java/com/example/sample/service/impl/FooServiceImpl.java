@@ -14,8 +14,6 @@
 
 package com.example.sample.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.example.sample.service.base.FooServiceBaseImpl;
 
 /**
@@ -34,7 +32,6 @@ import com.example.sample.service.base.FooServiceBaseImpl;
  * @see    FooServiceBaseImpl
  * @see    com.example.sample.service.FooServiceUtil
  */
-@ProviderType
 public class FooServiceImpl extends FooServiceBaseImpl {
 
 	/**

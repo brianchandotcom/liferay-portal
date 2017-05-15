@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.service.access.policy.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -53,7 +51,6 @@ import java.util.TreeSet;
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 
 	@Override

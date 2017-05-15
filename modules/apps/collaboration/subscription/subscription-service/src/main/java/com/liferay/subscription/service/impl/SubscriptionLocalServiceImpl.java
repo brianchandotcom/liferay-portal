@@ -14,8 +14,6 @@
 
 package com.liferay.subscription.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -40,7 +38,6 @@ import java.util.List;
  * @author Charles May
  * @author Zsolt Berentey
  */
-@ProviderType
 public class SubscriptionLocalServiceImpl
 	extends SubscriptionLocalServiceBaseImpl {
 

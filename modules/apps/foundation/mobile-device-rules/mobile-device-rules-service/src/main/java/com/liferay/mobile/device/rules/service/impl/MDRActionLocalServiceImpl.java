@@ -14,8 +14,6 @@
 
 package com.liferay.mobile.device.rules.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.base.MDRActionLocalServiceBaseImpl;
@@ -35,7 +33,6 @@ import java.util.Map;
 /**
  * @author Edward C. Han
  */
-@ProviderType
 public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 
 	@Override

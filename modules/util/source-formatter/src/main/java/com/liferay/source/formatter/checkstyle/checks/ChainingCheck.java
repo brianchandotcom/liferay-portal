@@ -15,8 +15,6 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
@@ -25,6 +23,8 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -45,8 +45,8 @@ public class ChainingCheck extends AbstractCheck {
 		return new int[] {TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF};
 	}
 
-	public void setChainingAllowedFormat(String chainingAllowedFormat) {
-		_chainingAllowedFormat = chainingAllowedFormat;
+	public void setAllowedMethodNames(String allowedMethodNames) {
+		_allowedMethodNames = StringUtil.split(allowedMethodNames);
 	}
 
 	@Override
@@ -63,6 +63,7 @@ public class ChainingCheck extends AbstractCheck {
 		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_CALL);
 
+		outerLoop:
 		for (DetailAST methodCallAST : methodCallASTList) {
 			List<DetailAST> childMethodCallASTList =
 				DetailASTUtil.getAllChildTokens(
@@ -74,66 +75,77 @@ public class ChainingCheck extends AbstractCheck {
 				continue;
 			}
 
-			String chainedMethodNames = _getChainedMethodNames(methodCallAST);
+			List<String> chainedMethodNames = _getChainedMethodNames(
+				methodCallAST);
 
-			if (!chainedMethodNames.contains(StringPool.PERIOD)) {
+			if (chainedMethodNames.size() == 1) {
 				continue;
 			}
 
 			_checkMethodName(
 				chainedMethodNames, "getClass", methodCallAST, detailAST);
 
-			if (StringUtil.count(chainedMethodNames, StringPool.PERIOD) == 1) {
+			if (chainedMethodNames.size() == 2) {
 				continue;
 			}
 
-			if (chainedMethodNames.contains("concat.concat.concat")) {
+			int concatsCount = Collections.frequency(
+				chainedMethodNames, "concat");
+
+			if (concatsCount > 2) {
 				log(methodCallAST.getLineNo(), MSG_AVOID_TOO_MANY_CONCAT);
 
 				continue;
 			}
 
-			if (!chainedMethodNames.contains("concat.concat") &&
-				!chainedMethodNames.matches(_chainingAllowedFormat)) {
-
-				log(
-					methodCallAST.getLineNo(), MSG_AVOID_CHAINING_MULTIPLE,
-					DetailASTUtil.getMethodName(methodCallAST));
+			if ((chainedMethodNames.size() == 3) && (concatsCount == 2)) {
+				continue;
 			}
+
+			for (String allowedMethodName : _allowedMethodNames) {
+				if (chainedMethodNames.contains(allowedMethodName)) {
+					continue outerLoop;
+				}
+			}
+
+			log(
+				methodCallAST.getLineNo(), MSG_AVOID_CHAINING_MULTIPLE,
+				DetailASTUtil.getMethodName(methodCallAST));
 		}
 	}
 
 	private void _checkMethodName(
-		String chainedMethodNames, String methodName, DetailAST methodCallAST,
-		DetailAST detailAST) {
+		List<String> chainedMethodNames, String methodName,
+		DetailAST methodCallAST, DetailAST detailAST) {
 
-		if (chainedMethodNames.matches(methodName + "\\..*") &&
+		String firstMethodName = chainedMethodNames.get(0);
+
+		if (firstMethodName.equals(methodName) &&
 			!_isInsideConstructorThisCall(methodCallAST, detailAST)) {
 
 			log(methodCallAST.getLineNo(), MSG_AVOID_CHAINING, methodName);
 		}
 	}
 
-	private String _getChainedMethodNames(DetailAST methodCallAST) {
-		StringBundler sb = new StringBundler();
+	private List<String> _getChainedMethodNames(DetailAST methodCallAST) {
+		List<String> chainedMethodNames = new ArrayList<>();
 
-		sb.append(DetailASTUtil.getMethodName(methodCallAST));
+		chainedMethodNames.add(DetailASTUtil.getMethodName(methodCallAST));
 
 		while (true) {
 			DetailAST parentAST = methodCallAST.getParent();
 
 			if (parentAST.getType() != TokenTypes.DOT) {
-				return sb.toString();
+				return chainedMethodNames;
 			}
 
 			methodCallAST = parentAST.getParent();
 
 			if (methodCallAST.getType() != TokenTypes.METHOD_CALL) {
-				return sb.toString();
+				return chainedMethodNames;
 			}
 
-			sb.append(StringPool.PERIOD);
-			sb.append(DetailASTUtil.getMethodName(methodCallAST));
+			chainedMethodNames.add(DetailASTUtil.getMethodName(methodCallAST));
 		}
 	}
 
@@ -161,6 +173,6 @@ public class ChainingCheck extends AbstractCheck {
 		return false;
 	}
 
-	private String _chainingAllowedFormat;
+	private String[] _allowedMethodNames = new String[0];
 
 }

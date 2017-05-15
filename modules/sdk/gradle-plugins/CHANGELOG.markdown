@@ -1599,6 +1599,10 @@ to version 2.0.2.
 ## 3.3.11 - 2017-05-11
 
 ### Changed
+- [LPS-71164]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.0.3.
+- [LPS-71164]: Update the [Liferay Source Formatter] dependency to version
+1.0.393.
 - [LPS-72365]: Update the [Liferay Gradle Plugins Test Integration] dependency
 to version 1.2.0.
 - [LPS-72514]: Update the [Liferay Portal Tools DB Support] dependency to

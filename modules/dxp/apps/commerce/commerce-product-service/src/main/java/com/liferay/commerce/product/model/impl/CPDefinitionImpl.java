@@ -81,6 +81,19 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
+	public Map<Locale, String> getShortDescriptionMap() {
+		if (_shortDescriptionMap != null) {
+			return _shortDescriptionMap;
+		}
+
+		_shortDescriptionMap =
+			CPDefinitionLocalServiceUtil.getCPDefinitionShortDescriptionMap(
+				getCPDefinitionId());
+
+		return _shortDescriptionMap;
+	}
+
+	@Override
 	public String getTitleCurrentValue() {
 		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
@@ -105,11 +118,19 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
+	public void setShortDescriptionMap(
+		Map<Locale, String> shortDescriptionMap) {
+
+		_shortDescriptionMap = shortDescriptionMap;
+	}
+
+	@Override
 	public void setTitleMap(Map<Locale, String> titleMap) {
 		_titleMap = titleMap;
 	}
 
 	private Map<Locale, String> _descriptionMap;
+	private Map<Locale, String> _shortDescriptionMap;
 	private Map<Locale, String> _titleMap;
 
 }

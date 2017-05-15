@@ -292,6 +292,29 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public Map<Locale, String> getCPDefinitionShortDescriptionMap(
+		long cpDefinitionPK) {
+
+		Map<Locale, String> cpDefinitionLocalizationShortDescriptionMap =
+			new HashMap<>();
+
+		List<CPDefinitionLocalization> cpDefinitionLocalizationList =
+			cpDefinitionLocalizationPersistence.findByCPDefinitionPK(
+				cpDefinitionPK);
+
+		for (CPDefinitionLocalization cpDefinitionLocalization :
+				cpDefinitionLocalizationList) {
+
+			cpDefinitionLocalizationShortDescriptionMap.put(
+				LocaleUtil.fromLanguageId(
+					cpDefinitionLocalization.getLanguageId()),
+				cpDefinitionLocalization.getShortDescription());
+		}
+
+		return cpDefinitionLocalizationShortDescriptionMap;
+	}
+
+	@Override
 	public Map<Locale, String> getCPDefinitionTitleMap(long cpDefinitionPK) {
 		Map<Locale, String> cpDefinitionLocalizationTitleMap = new HashMap<>();
 

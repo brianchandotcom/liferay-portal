@@ -50,6 +50,9 @@
 	</entity>
 	<exceptions>
 		<exception>CPDefinitionVirtualSettingFileEntryId</exception>
+		<exception>CPDefinitionVirtualSettingSampleFileEntryId</exception>
+		<exception>CPDefinitionVirtualSettingSampleUrl</exception>
+		<exception>CPDefinitionVirtualSettingTermsOfUseRequired</exception>
 		<exception>CPDefinitionVirtualSettingUrl</exception>
 	</exceptions>
 </service-builder>

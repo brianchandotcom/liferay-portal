@@ -19,6 +19,7 @@
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
+				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
@@ -58,6 +59,7 @@
 				"facetable": true,
 				"name": "Size",
 				"priority": 1,
+				"required": true,
 				"skuContributor": true,
 				"title": "Size",
 				"values": [
@@ -98,6 +100,7 @@
 				"facetable": true,
 				"name": "Color",
 				"priority": 2,
+				"required": true,
 				"skuContributor": false,
 				"title": "Color",
 				"values": [
@@ -132,6 +135,7 @@
 				"facetable": true,
 				"name": "Size",
 				"priority": 1,
+				"required": true,
 				"skuContributor": true,
 				"title": "Size",
 				"values": [
@@ -177,6 +181,7 @@
 				"facetable": true,
 				"name": "Color",
 				"priority": 2,
+				"required": true,
 				"skuContributor": false,
 				"title": "Color",
 				"values": [
@@ -211,6 +216,7 @@
 				"facetable": true,
 				"name": "Size",
 				"priority": 1,
+				"required": true,
 				"skuContributor": true,
 				"title": "Size",
 				"values": [
@@ -251,6 +257,7 @@
 				"facetable": true,
 				"name": "Color",
 				"priority": 2,
+				"required": true,
 				"skuContributor": false,
 				"title": "Color",
 				"values": [
@@ -285,6 +292,7 @@
 				"facetable": true,
 				"name": "Size",
 				"priority": 1,
+				"required": true,
 				"skuContributor": true,
 				"title": "Size",
 				"values": [
@@ -325,6 +333,7 @@
 				"facetable": true,
 				"name": "Color",
 				"priority": 2,
+				"required": true,
 				"skuContributor": false,
 				"title": "Color",
 				"values": [
@@ -359,6 +368,7 @@
 				"facetable": true,
 				"name": "Size",
 				"priority": 1,
+				"required": true,
 				"skuContributor": true,
 				"title": "Size",
 				"values": [
@@ -414,6 +424,7 @@
 				"facetable": true,
 				"name": "Color",
 				"priority": 2,
+				"required": true,
 				"skuContributor": false,
 				"title": "Color",
 				"values": [
@@ -448,6 +459,7 @@
 				"facetable": true,
 				"name": "Size",
 				"priority": 1,
+				"required": true,
 				"skuContributor": true,
 				"title": "Size",
 				"values": [
@@ -468,6 +480,7 @@
 				"facetable": true,
 				"name": "Color",
 				"priority": 2,
+				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
@@ -507,6 +520,7 @@
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
+				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
@@ -546,6 +560,7 @@
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
+				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [
@@ -605,6 +620,7 @@
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
+				"required": true,
 				"skuContributor": true,
 				"title": "Color",
 				"values": [

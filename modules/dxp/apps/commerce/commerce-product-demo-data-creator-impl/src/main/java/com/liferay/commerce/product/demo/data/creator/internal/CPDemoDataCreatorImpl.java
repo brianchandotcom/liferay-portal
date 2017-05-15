@@ -40,10 +40,10 @@ public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 
 	@Override
 	public void delete() throws PortalException {
+		_assetVocabularyDemoDataCreatorHelper.deleteAssetVocabularies();
+
 		_cpDefinitionDemoDataCreatorHelper.deleteCPDefinitions();
 		_cpOptionDemoDataCreatorHelper.deleteCPOptions();
-
-		_assetVocabularyDemoDataCreatorHelper.deleteAssetVocabularies();
 	}
 
 	@Override

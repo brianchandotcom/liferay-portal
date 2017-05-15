@@ -61,6 +61,7 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 				"ddmFormFieldTypeName");
 			int priority = jsonObject.getInt("priority");
 			boolean facetable = jsonObject.getBoolean("facetable");
+			boolean required = jsonObject.getBoolean("required");
 			boolean skuContributor = jsonObject.getBoolean("skuContributor");
 
 			Map<Locale, String> titleMap = Collections.singletonMap(
@@ -76,8 +77,8 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 			CPDefinitionOptionRel cpDefinitionOptionRel =
 				_cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
 					cpDefinitionId, cpOptionId, name, titleMap, descriptionMap,
-					ddmFormFieldTypeName, priority, facetable, skuContributor,
-					false, false, serviceContext);
+					ddmFormFieldTypeName, priority, facetable, required,
+					skuContributor, false, serviceContext);
 
 			long cpDefinitionOptionRelId =
 				cpDefinitionOptionRel.getCPDefinitionOptionRelId();
@@ -109,7 +110,7 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 				}
 			}
 
-			_cpOptions.remove(entry.getKey());
+			iterator.remove();
 		}
 	}
 
@@ -144,6 +145,7 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 		String ddmFormFieldTypeName = jsonObject.getString(
 			"ddmFormFieldTypeName");
 		boolean facetable = jsonObject.getBoolean("facetable");
+		boolean required = jsonObject.getBoolean("required");
 		boolean skuContributor = jsonObject.getBoolean("skuContributor");
 
 		Map<Locale, String> titleMap = Collections.singletonMap(locale, title);
@@ -154,7 +156,7 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 
 		cpOption = _cpOptionLocalService.addCPOption(
 			name, titleMap, descriptionMap, ddmFormFieldTypeName, facetable,
-			false, skuContributor, serviceContext);
+			required, skuContributor, serviceContext);
 
 		_cpOptions.put(name, cpOption);
 

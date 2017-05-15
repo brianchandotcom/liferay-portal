@@ -29,7 +29,7 @@ public abstract class BaseCPDemoDataCreatorHelper {
 	public ServiceContext getServiceContext(long userId, long groupId)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
+		User user = userLocalService.getUser(userId);
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -43,6 +43,6 @@ public abstract class BaseCPDemoDataCreatorHelper {
 	}
 
 	@Reference
-	private UserLocalService _userLocalService;
+	protected UserLocalService userLocalService;
 
 }

@@ -42,6 +42,11 @@
 		<finder name="CPDefinitionId" return-type="CPDefinitionVirtualSetting" unique="true">
 			<finder-column name="CPDefinitionId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="JournalArticle" package-path="com.liferay.journal" />
+		<reference entity="DLApp" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
 	<exceptions>
 		<exception>CPDefinitionVirtualSettingFileEntryId</exception>

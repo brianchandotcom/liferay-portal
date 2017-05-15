@@ -1375,6 +1375,21 @@ public class PortalImpl implements Portal {
 			layout.getLayoutSet(), themeDisplay, true,
 			layout.isTypeControlPanel());
 
+		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
+			StringBundler sb = new StringBundler();
+
+			String defaultLocalePath = _buildI18NPath(
+				getSiteDefaultLocale(layout.getGroupId()).getLanguage(),
+				getSiteDefaultLocale(layout.getGroupId()));
+
+			sb.append(groupFriendlyURL);
+			sb.append(defaultLocalePath);
+			sb.append(canonicalLayoutFriendlyURL);
+			sb.append(parametersURL);
+
+			return sb.toString();
+		}
+
 		return groupFriendlyURL.concat(canonicalLayoutFriendlyURL).concat(
 			parametersURL);
 	}
@@ -8234,6 +8249,15 @@ public class PortalImpl implements Portal {
 
 		String canonicalURLPrefix = canonicalURL.substring(0, pos);
 		String canonicalURLSuffix = canonicalURL.substring(pos);
+
+		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
+			String defaultLocalePath = _buildI18NPath(
+				getSiteDefaultLocale(layout.getGroupId()).getLanguage(),
+				getSiteDefaultLocale(layout.getGroupId()));
+
+			canonicalURLSuffix = canonicalURL.substring(
+				pos + defaultLocalePath.length());
+		}
 
 		for (Locale locale : availableLocales) {
 			String languageId = LocaleUtil.toLanguageId(locale);

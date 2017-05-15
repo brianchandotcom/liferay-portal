@@ -196,6 +196,11 @@ public class CPDefinitionLocalServiceImpl
 		cpInstanceLocalService.deleteCPInstances(
 			cpDefinition.getCPDefinitionId());
 
+		// Commerce product definition attachment file entries
+
+		cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntries(
+			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+
 		// Resources
 
 		resourceLocalService.deleteResource(

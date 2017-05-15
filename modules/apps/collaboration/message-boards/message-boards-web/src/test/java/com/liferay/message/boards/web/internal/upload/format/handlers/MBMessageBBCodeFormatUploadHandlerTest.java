@@ -61,7 +61,8 @@ public class MBMessageBBCodeFormatUploadHandlerTest {
 			_portletFileRepository
 		).getPortletFileEntryURL(
 			Mockito.isNull(ThemeDisplay.class), Mockito.eq(fileEntry),
-			Mockito.eq(StringPool.BLANK));
+			Mockito.eq(StringPool.BLANK)
+		);
 
 		fileEntryReferences.add(
 			new MBAttachmentFileEntryReference(tempFileId, fileEntry));
@@ -93,7 +94,8 @@ public class MBMessageBBCodeFormatUploadHandlerTest {
 			_portletFileRepository
 		).getPortletFileEntryURL(
 			Mockito.isNull(ThemeDisplay.class), Mockito.eq(fileEntry),
-			Mockito.eq(StringPool.BLANK));
+			Mockito.eq(StringPool.BLANK)
+		);
 
 		fileEntryReferences.add(
 			new MBAttachmentFileEntryReference(tempFileId, fileEntry));
@@ -128,7 +130,8 @@ public class MBMessageBBCodeFormatUploadHandlerTest {
 				_portletFileRepository
 			).getPortletFileEntryURL(
 				Mockito.isNull(ThemeDisplay.class), Mockito.eq(fileEntry),
-				Mockito.eq(StringPool.BLANK));
+				Mockito.eq(StringPool.BLANK)
+			);
 
 			fileEntryReferences.add(
 				new MBAttachmentFileEntryReference(tempFileId, fileEntry));

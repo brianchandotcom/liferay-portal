@@ -116,7 +116,8 @@ public class MBCommentManagerImplTest extends Mockito {
 			_mbMessageLocalService
 		).addDiscussionMessage(
 			_USER_ID, _USER_NAME, _GROUP_ID, _CLASS_NAME, _ENTRY_ID,
-			WorkflowConstants.ACTION_PUBLISH);
+			WorkflowConstants.ACTION_PUBLISH
+		);
 	}
 
 	@Test(expected = DuplicateCommentException.class)

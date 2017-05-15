@@ -184,7 +184,8 @@ public class SearchResultUtilDLFileEntryTest
 		).getSummary(
 			(Document)Matchers.any(), Matchers.anyString(),
 			(PortletRequest)Matchers.isNull(),
-			(PortletResponse)Matchers.isNull());
+			(PortletResponse)Matchers.isNull()
+		);
 
 		SearchResult searchResult = assertOneSearchResult(
 			SearchTestUtil.createAttachmentDocument(_DL_FILE_ENTRY_CLASS_NAME));
@@ -284,7 +285,8 @@ public class SearchResultUtilDLFileEntryTest
 			_indexer
 		).getSummary(
 			(Document)Matchers.any(), Matchers.anyString(),
-			(PortletRequest)Matchers.any(), (PortletResponse)Matchers.any());
+			(PortletRequest)Matchers.any(), (PortletResponse)Matchers.any()
+		);
 
 		Mockito.when(
 			_indexerRegistry.getIndexer(Mockito.anyString())

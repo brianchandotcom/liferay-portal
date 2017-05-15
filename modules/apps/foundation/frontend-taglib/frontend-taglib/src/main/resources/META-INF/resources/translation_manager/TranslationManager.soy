@@ -19,7 +19,14 @@
 	{@param? elementClasses: string}
 	{@param? removeAvailableLocale: any}
 
-	<div class="lfr-translationmanager{$elementClasses ? ' ' + $elementClasses : ''}" id="{$id}">
+	{let $classes kind="text"}
+		lfr-translationmanager
+		{if $elementClasses}
+			{sp}{$elementClasses}
+		{/if}
+	{/let}
+
+	<div class="{$classes}" id="{$id}">
 		<ul class="nav nav-tabs nav-tabs-default">
 			{call .defaultLocale data="all" /}
 
@@ -112,7 +119,13 @@
 	{@param pathThemeImages: string}
 	{@param? editingLocale: string}
 
-	<li class="{$editingLocale == $locale.id ? 'active' : ''}">
+	{let $classes kind="text"}
+		{if $editingLocale == $locale.id}
+			active
+		{/if}
+	{/let}
+
+	<li class="{$classes}">
 		<a href="javascript:;">
 			<span data-locale-id="{$locale.id}" data-onclick="changeLocale">
 				<span class="icon-monospaced">
@@ -121,7 +134,7 @@
 					</svg>
 				</span>
 
-				<span class="">{$locale.code}</span>
+				<span>{$locale.code}</span>
 			</span>
 
 			{$optionIcon}

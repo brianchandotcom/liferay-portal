@@ -247,9 +247,10 @@ public class SitemapImpl implements Sitemap {
 
 				Element locationElement = sitemapElement.addElement("loc");
 
-				StringBundler sb = new StringBundler(7);
+				StringBundler sb = new StringBundler(8);
 
 				sb.append(portalURL);
+				sb.append(PortalUtil.getPathContext());
 				sb.append("/sitemap.xml?layoutUuid=");
 				sb.append(layout.getUuid());
 				sb.append("&groupId=");

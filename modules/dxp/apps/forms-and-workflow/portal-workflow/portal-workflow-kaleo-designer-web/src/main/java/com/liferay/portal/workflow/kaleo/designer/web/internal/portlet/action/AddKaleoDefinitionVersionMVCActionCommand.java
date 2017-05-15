@@ -106,8 +106,6 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 
 		Definition definition = workflowModelParser.parse(content);
 
-		_workflowValidator.validate(definition);
-
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.
 				fetchLatestKaleoDefinitionVersion(

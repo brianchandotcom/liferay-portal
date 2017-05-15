@@ -50,6 +50,20 @@ public class KaleoDesignerWebVerifyProcess extends VerifyProcess {
 		verifyKaleoDefinitionVersions();
 	}
 
+	protected ServiceContext getServiceContext() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+
+			serviceContext.setAddGuestPermissions(true);
+			serviceContext.setAddGroupPermissions(true);
+		}
+
+		return serviceContext;
+	}
+
 	protected void verifyKaleoDefinitionVersions() throws PortalException {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			ActionableDynamicQuery actionableDynamicQuery =
@@ -91,15 +105,7 @@ public class KaleoDesignerWebVerifyProcess extends VerifyProcess {
 				role.getRoleId());
 
 		if (resourcePermission == null) {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			if (serviceContext == null) {
-				serviceContext = new ServiceContext();
-
-				serviceContext.setAddGuestPermissions(true);
-				serviceContext.setAddGroupPermissions(true);
-			}
+			ServiceContext serviceContext = getServiceContext();
 
 			_resourceLocalService.addModelResources(
 				kaleoDefinitionVersion, serviceContext);

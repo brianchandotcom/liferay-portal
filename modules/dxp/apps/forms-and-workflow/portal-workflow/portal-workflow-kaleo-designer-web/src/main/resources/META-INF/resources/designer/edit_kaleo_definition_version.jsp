@@ -41,6 +41,7 @@
 
 		if (kaleoDefinitionVersion != null) {
 			latestKaleoDefinitionVersion = KaleoDefinitionVersionLocalServiceUtil.getLatestKaleoDefinitionVersion(themeDisplay.getCompanyId(), name);
+
 			latestDraftVersion = latestKaleoDefinitionVersion.getVersion();
 
 			if (kaleoDefinitionVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) {

@@ -39,15 +39,7 @@ public class KaleoDefinitionVersionModelListener
 		throws ModelListenerException {
 
 		try {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			if (serviceContext == null) {
-				serviceContext = new ServiceContext();
-
-				serviceContext.setAddGuestPermissions(true);
-				serviceContext.setAddGroupPermissions(true);
-			}
+			ServiceContext serviceContext = getServiceContext();
 
 			_resourceLocalService.addModelResources(
 				kaleoDefinitionVersion, serviceContext);
@@ -68,6 +60,20 @@ public class KaleoDefinitionVersionModelListener
 		catch (PortalException pe) {
 			throw new ModelListenerException(pe);
 		}
+	}
+
+	protected ServiceContext getServiceContext() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+
+			serviceContext.setAddGuestPermissions(true);
+			serviceContext.setAddGroupPermissions(true);
+		}
+
+		return serviceContext;
 	}
 
 	@Reference

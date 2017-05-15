@@ -118,7 +118,8 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 
 	public static void checkCPDefinitionVirtualSetting(
 			PermissionChecker permissionChecker,
-			CPDefinitionVirtualSetting cpDefinitionVirtualSetting, String actionId)
+			CPDefinitionVirtualSetting cpDefinitionVirtualSetting,
+			String actionId)
 		throws PortalException {
 
 		long cpDefinitionId = cpDefinitionVirtualSetting.getCPDefinitionId();
@@ -133,7 +134,7 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			_cpDefinitionVirtualSettingLocalService.getCPDefinitionVirtualSetting(
-					cpDefinitionVirtualSettingId);
+				cpDefinitionVirtualSettingId);
 
 		checkCPDefinitionVirtualSetting(
 			permissionChecker, cpDefinitionVirtualSetting, actionId);
@@ -234,7 +235,8 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 	protected void setCPDefinitionVirtualSettingLocalService(
 		CPDefinitionVirtualSettingLocalService cpDefinitionVirtualSettingLocalService) {
 
-		_cpDefinitionVirtualSettingLocalService = cpDefinitionVirtualSettingLocalService;
+		_cpDefinitionVirtualSettingLocalService =
+			cpDefinitionVirtualSettingLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -249,7 +251,8 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 		_cpDefinitionOptionRelLocalService;
 	private static CPDefinitionOptionValueRelLocalService
 		_cpDefinitionOptionValueRelLocalService;
-	private static CPDefinitionVirtualSettingLocalService _cpDefinitionVirtualSettingLocalService;
+	private static CPDefinitionVirtualSettingLocalService
+		_cpDefinitionVirtualSettingLocalService;
 	private static CPInstanceLocalService _cpInstanceLocalService;
 
 }

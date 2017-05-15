@@ -37,4 +37,5 @@ public class CPDefinitionVirtualSettingUrlException extends PortalException {
 	public CPDefinitionVirtualSettingUrlException(Throwable cause) {
 		super(cause);
 	}
+
 }

@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Marco Leo
  */
 @ProviderType
-public class CPDefinitionVirtualSettingFileEntryIdException extends PortalException {
+public class CPDefinitionVirtualSettingFileEntryIdException
+	extends PortalException {
 
 	public CPDefinitionVirtualSettingFileEntryIdException() {
 	}
@@ -30,7 +31,9 @@ public class CPDefinitionVirtualSettingFileEntryIdException extends PortalExcept
 		super(msg);
 	}
 
-	public CPDefinitionVirtualSettingFileEntryIdException(String msg, Throwable cause) {
+	public CPDefinitionVirtualSettingFileEntryIdException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

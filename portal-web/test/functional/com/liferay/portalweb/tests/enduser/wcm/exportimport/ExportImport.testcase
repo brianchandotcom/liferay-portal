@@ -437,7 +437,7 @@
 	</command>
 
 	<command name="ExportImportSampleLARPortlet" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 		<property name="portlet.plugins.includes" value="sample-lar-portlet" />
 
 		<execute macro="Page#add">

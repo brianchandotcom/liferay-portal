@@ -52,6 +52,33 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
+		if (useFileEntry) {
+			url = null;
+		}
+		else {
+			fileEntryId = 0;
+		}
+
+		if (useSampleFileEntry) {
+			sampleUrl = null;
+		}
+		else {
+			sampleFileEntryId = 0;
+		}
+
+		if (termsOfUseRequired) {
+			if (termsOfUseJournalArticleId > 0) {
+				termsOfUseContentMap = null;
+			}
+			else {
+				termsOfUseJournalArticleId = 0;
+			}
+		}
+		else {
+			termsOfUseContentMap = null;
+			termsOfUseJournalArticleId = 0;
+		}
+
 		validate(
 			useFileEntry, fileEntryId, url, useSampleFileEntry,
 			sampleFileEntryId, sampleUrl, termsOfUseRequired,
@@ -111,6 +138,33 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			cpDefinitionVirtualSettingPersistence.findByPrimaryKey(
 				cpDefinitionVirtualSettingId);
+
+		if (useFileEntry) {
+			url = null;
+		}
+		else {
+			fileEntryId = 0;
+		}
+
+		if (useSampleFileEntry) {
+			sampleUrl = null;
+		}
+		else {
+			sampleFileEntryId = 0;
+		}
+
+		if (termsOfUseRequired) {
+			if (termsOfUseJournalArticleId > 0) {
+				termsOfUseContentMap = null;
+			}
+			else {
+				termsOfUseJournalArticleId = 0;
+			}
+		}
+		else {
+			termsOfUseContentMap = null;
+			termsOfUseJournalArticleId = 0;
+		}
 
 		validate(
 			useFileEntry, fileEntryId, url, useSampleFileEntry,

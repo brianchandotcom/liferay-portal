@@ -89,8 +89,8 @@
 			<message key="assert.add.information" value="Add ''{0}'' as extra parameter at the beginning of the ''Assert.assertEquals'' call to provide more information to the test. See LPS-70411." />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.Chaining">
-			<property name="allowedMethodNames" value="bind,stream" />
-			<property name="allowedVariableNames" value=".*[Bb]uilder" />
+			<property name="allowedMethodNames" value="bind" />
+			<property name="allowedVariableNames" value=".*[Bb]uilder,.*[Ss]tream" />
 			<message key="chaining.avoid" value="Avoid chaining on method ''{0}''" />
 			<message key="chaining.avoid.multiple" value="Avoid multiple chaining on method ''{0}''" />
 			<message key="concat.avoid.too.many" value="Use StringBundler instead of chaining concat when there is more than 3 parts" />

@@ -21,6 +21,8 @@ import java.util.Locale;
  */
 public interface CPType {
 
+	public String getCPDefinitionEditUrl();
+
 	public String getLabel(Locale locale);
 
 	public String getName();

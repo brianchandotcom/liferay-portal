@@ -35,6 +35,11 @@ import org.osgi.service.component.annotations.Component;
 public class GroupCPType implements CPType {
 
 	@Override
+	public String getCPDefinitionEditUrl() {
+		return null;
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "group");
 	}

@@ -1243,11 +1243,11 @@ public class PoshiRunnerContext {
 	private static final Set<String> _testToggleNames = new HashSet<>();
 
 	static {
-		_componentNames.addAll(
-			Arrays.asList(StringUtil.split(PropsValues.COMPONENT_NAMES)));
+		Collections.addAll(
+			_componentNames, StringUtil.split(PropsValues.COMPONENT_NAMES));
 
-		_productNames.addAll(
-			Arrays.asList(StringUtil.split(PropsValues.PRODUCT_NAMES)));
+		Collections.addAll(
+			_productNames, StringUtil.split(PropsValues.PRODUCT_NAMES));
 
 		for (String productName : _productNames) {
 			_componentNames.add(productName);
@@ -1258,9 +1258,9 @@ public class PoshiRunnerContext {
 			PropsValues.TEST_CASE_AVAILABLE_PROPERTY_NAMES;
 
 		if (Validator.isNotNull(testCaseAvailablePropertyNames)) {
-			_testCaseAvailablePropertyNames.addAll(
-				Arrays.asList(
-					StringUtil.split(testCaseAvailablePropertyNames)));
+			Collections.addAll(
+				_testCaseAvailablePropertyNames,
+				StringUtil.split(testCaseAvailablePropertyNames));
 		}
 
 		_testCaseAvailablePropertyNames.add("known-issues");
@@ -1271,8 +1271,9 @@ public class PoshiRunnerContext {
 			PropsValues.TEST_CASE_REQUIRED_PROPERTY_NAMES;
 
 		if (Validator.isNotNull(testCaseRequiredPropertyNames)) {
-			_testCaseRequiredPropertyNames.addAll(
-				Arrays.asList(StringUtil.split(testCaseRequiredPropertyNames)));
+			Collections.addAll(
+				_testCaseRequiredPropertyNames,
+				StringUtil.split(testCaseRequiredPropertyNames));
 		}
 	}
 

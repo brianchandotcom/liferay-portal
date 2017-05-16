@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.lang.reflect.Field;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -180,8 +181,9 @@ public class SPAUtil {
 
 		_spaConfiguration = spaConfiguration;
 
-		_navigationExceptionSelectors.addAll(
-			Arrays.asList(_spaConfiguration.navigationExceptionSelectors()));
+		Collections.addAll(
+			_navigationExceptionSelectors,
+			_spaConfiguration.navigationExceptionSelectors());
 
 		_navigationExceptionSelectorsString = ListUtil.toString(
 			_navigationExceptionSelectors, (String)null, StringPool.BLANK);
@@ -211,8 +213,9 @@ public class SPAUtil {
 
 		_spaConfiguration = spaConfiguration;
 
-		_navigationExceptionSelectors.addAll(
-			Arrays.asList(_spaConfiguration.navigationExceptionSelectors()));
+		Collections.addAll(
+			_navigationExceptionSelectors,
+			_spaConfiguration.navigationExceptionSelectors());
 
 		_navigationExceptionSelectorsString = ListUtil.toString(
 			_navigationExceptionSelectors, (String)null, StringPool.BLANK);

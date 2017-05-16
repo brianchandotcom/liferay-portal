@@ -24,6 +24,7 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -1579,10 +1580,12 @@ public class PoshiRunnerValidation {
 
 		List<String> possibleAttributeNames = new ArrayList<>();
 
-		possibleAttributeNames.addAll(
-			Arrays.asList(
+		Collections.addAll(
+			possibleAttributeNames,
+			new String[] {
 				"attribute", "group", "input", "line-number", "locator",
-				"method", "name", "pattern", "property-value", "value"));
+				"method", "name", "pattern", "property-value", "value"
+			});
 
 		Element parentElement = element.getParent();
 

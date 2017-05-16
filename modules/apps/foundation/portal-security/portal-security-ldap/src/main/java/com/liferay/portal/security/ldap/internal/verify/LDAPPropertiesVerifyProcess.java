@@ -39,7 +39,7 @@ import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportCon
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.List;
@@ -288,8 +288,8 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 
 				Set<String> keys = new HashSet<>();
 
-				keys.addAll(
-					Arrays.asList(LegacyLDAPPropsKeys.NONPOSTFIXED_LDAP_KEYS));
+				Collections.addAll(
+					keys, LegacyLDAPPropsKeys.NONPOSTFIXED_LDAP_KEYS);
 
 				for (long ldapServerId : ldapServerIds) {
 					String postfix = _ldapSettings.getPropertyPostfix(

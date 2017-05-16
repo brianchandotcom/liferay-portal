@@ -40,7 +40,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -496,8 +496,8 @@ public class LiferayPortlet extends GenericPortlet {
 		validPaths.addAll(
 			getPaths(_PATH_META_INF_RESOURCES.concat(rootPath), extension));
 
-		validPaths.addAll(
-			Arrays.asList(StringUtil.split(getInitParameter("valid-paths"))));
+		Collections.addAll(
+			validPaths, StringUtil.split(getInitParameter("valid-paths")));
 	}
 
 	protected boolean isAddSuccessMessage(ActionRequest actionRequest) {

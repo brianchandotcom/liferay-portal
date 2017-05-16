@@ -26,7 +26,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.rules.TestRule;
@@ -173,8 +173,8 @@ public class CodeCoverageAssertor implements TestRule {
 			assertClasses.add(mainClass);
 
 			if (_includeInnerClasses) {
-				assertClasses.addAll(
-					Arrays.asList(mainClass.getDeclaredClasses()));
+				Collections.addAll(
+					assertClasses, mainClass.getDeclaredClasses());
 			}
 		}
 

@@ -39,6 +39,7 @@ import java.nio.charset.Charset;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -72,9 +73,9 @@ public class BaseIntrabandTest {
 				assertClasses.add(ChannelContext.class);
 				assertClasses.add(ClosedIntrabandException.class);
 				assertClasses.add(CompletionHandler.class);
-				assertClasses.addAll(
-					Arrays.asList(
-						CompletionHandler.class.getDeclaredClasses()));
+				Collections.addAll(
+					assertClasses,
+					CompletionHandler.class.getDeclaredClasses());
 				assertClasses.add(Datagram.class);
 				assertClasses.add(DatagramReceiveHandler.class);
 			}

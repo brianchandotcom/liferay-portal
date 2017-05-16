@@ -71,7 +71,7 @@ import java.net.URLClassLoader;
 import java.nio.channels.ServerSocketChannel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -109,12 +109,12 @@ public class LocalProcessExecutorTest {
 			@Override
 			public void appendAssertClasses(List<Class<?>> assertClasses) {
 				assertClasses.add(ProcessConfig.class);
-				assertClasses.addAll(
-					Arrays.asList(ProcessConfig.class.getDeclaredClasses()));
+				Collections.addAll(
+					assertClasses, ProcessConfig.class.getDeclaredClasses());
 				assertClasses.add(LocalProcessLauncher.class);
-				assertClasses.addAll(
-					Arrays.asList(
-						LocalProcessLauncher.class.getDeclaredClasses()));
+				Collections.addAll(
+					assertClasses,
+					LocalProcessLauncher.class.getDeclaredClasses());
 			}
 
 		};

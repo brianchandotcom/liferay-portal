@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.configuration.SearchEngineHelperConfiguration;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -279,9 +278,9 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 			ConfigurableUtil.createConfigurable(
 				SearchEngineHelperConfiguration.class, properties);
 
-		_excludedEntryClassNames.addAll(
-			Arrays.asList(
-				searchEngineHelperConfiguration.excludedEntryClassNames()));
+		Collections.addAll(
+			_excludedEntryClassNames,
+			searchEngineHelperConfiguration.excludedEntryClassNames());
 	}
 
 	@Reference(

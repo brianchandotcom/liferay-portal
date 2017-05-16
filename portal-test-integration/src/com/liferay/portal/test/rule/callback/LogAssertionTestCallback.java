@@ -35,7 +35,7 @@ import com.liferay.portal.test.rule.LogAssertionUncaughtExceptionHandler;
 import java.lang.Thread.UncaughtExceptionHandler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -182,8 +182,8 @@ public class LogAssertionTestCallback
 			}
 		}
 		else {
-			expectedLogsList.addAll(
-				Arrays.asList(expectedMultipleLogs.expectedMultipleLogs()));
+			Collections.addAll(
+				expectedLogsList, expectedMultipleLogs.expectedMultipleLogs());
 		}
 
 		endAssert(expectedLogsList, captureAppenders);
@@ -213,8 +213,8 @@ public class LogAssertionTestCallback
 			}
 		}
 		else {
-			expectedLogsList.addAll(
-				Arrays.asList(expectedMultipleLogs.expectedMultipleLogs()));
+			Collections.addAll(
+				expectedLogsList, expectedMultipleLogs.expectedMultipleLogs());
 		}
 
 		return startAssert(expectedLogsList);

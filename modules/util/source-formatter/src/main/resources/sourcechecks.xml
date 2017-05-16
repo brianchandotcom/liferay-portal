@@ -232,6 +232,7 @@
 		<check name="XMLCustomSQLFileCheck" />
 		<check name="XMLDDLStructuresFileCheck" />
 		<check name="XMLFriendlyURLRoutesFileCheck" />
+		<check name="XMLFSBExcludeFileCheck" />
 		<check name="XMLHBMFileCheck" />
 		<check name="XMLLog4jFileCheck" />
 		<check name="XMLLookAndFeelFileCheck" />

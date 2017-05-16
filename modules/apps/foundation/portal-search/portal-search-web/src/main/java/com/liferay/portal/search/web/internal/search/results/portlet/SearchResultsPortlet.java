@@ -47,6 +47,7 @@ import com.liferay.portal.search.web.search.result.SearchResultImageContributor;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -147,8 +148,14 @@ public class SearchResultsPortlet
 		SearchResultsPortletDisplayContext searchResultsPortletDisplayContext =
 			new SearchResultsPortletDisplayContext();
 
-		searchResultsPortletDisplayContext.setDocuments(
-			portletSharedSearchResponse.getDocuments());
+		SearchResultsSummariesHolder searchResultsSummariesHolder =
+			buildSummaries(
+				portletSharedSearchResponse, renderRequest, renderResponse);
+
+		List<Document> documents = new ArrayList<>(
+			searchResultsSummariesHolder.getDocuments());
+
+		searchResultsPortletDisplayContext.setDocuments(documents);
 
 		Optional<String> keywordsOptional =
 			portletSharedSearchResponse.getKeywords();
@@ -171,8 +178,7 @@ public class SearchResultsPortlet
 
 		searchResultsPortletDisplayContext.setSearchContainer(
 			buildSearchContainer(
-				portletSharedSearchResponse.getDocuments(),
-				portletSharedSearchResponse.getTotalHits(),
+				documents, portletSharedSearchResponse.getTotalHits(),
 				portletSharedSearchResponse.getPaginationStart(),
 				searchResultsPortletPreferences.
 					getPaginationStartParameterName(),
@@ -182,8 +188,8 @@ public class SearchResultsPortlet
 				renderRequest));
 
 		searchResultsPortletDisplayContext.setSearchResultsSummariesHolder(
-			buildSummaries(
-				portletSharedSearchResponse, renderRequest, renderResponse));
+			searchResultsSummariesHolder);
+
 		searchResultsPortletDisplayContext.setTotalHits(
 			portletSharedSearchResponse.getTotalHits());
 
@@ -275,8 +281,10 @@ public class SearchResultsPortlet
 					renderResponse, themeDisplay, portletURLFactory,
 					searchResultsPortletPreferences, searchResultPreferences);
 
-			searchResultsSummariesHolder.put(
-				document, searchResultSummaryDisplayContext);
+			if (searchResultSummaryDisplayContext != null) {
+				searchResultsSummariesHolder.put(
+					document, searchResultSummaryDisplayContext);
+			}
 		}
 
 		return searchResultsSummariesHolder;

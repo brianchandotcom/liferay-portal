@@ -36,7 +36,7 @@ List<CPType> cpTypes = cpDefinitionsDisplayContext.getCPTypes();
 		%>
 
 			<aui:option
-				label="<%= cpType.getName() %>"
+				label="<%= cpType.getLabel(locale) %>"
 				selected="<%= (cpDefinition != null) && cpDefinition.getProductTypeName().equals(cpType.getName()) %>"
 				value="<%= cpType.getName() %>"
 			/>

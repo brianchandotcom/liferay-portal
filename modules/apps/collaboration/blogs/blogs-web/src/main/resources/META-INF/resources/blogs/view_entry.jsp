@@ -31,11 +31,18 @@ AssetEntryServiceUtil.incrementViewCounter(BlogsEntry.class.getName(), entry.get
 
 AssetUtil.addLayoutTags(request, AssetTagLocalServiceUtil.getTags(BlogsEntry.class.getName(), entry.getEntryId()));
 
+RatingsEntry ratingsEntry = RatingsEntryLocalServiceUtil.fetchEntry(themeDisplay.getUserId(), BlogsEntry.class.getName(), entry.getEntryId());
+RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.fetchStats(BlogsEntry.class.getName(), entry.getEntryId());
+
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
 request.setAttribute("view_entry_content.jsp-entry", entry);
 
 request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
+
+request.setAttribute("view_entry_content.jsp-ratingsEntry", ratingsEntry);
+
+request.setAttribute("view_entry_content.jsp-ratingsStats", ratingsStats);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

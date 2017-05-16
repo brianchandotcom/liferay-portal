@@ -77,31 +77,33 @@ Map<String, Object> contextObjects = new HashMap<String, Object>();
 
 contextObjects.put("blogsPortletInstanceConfiguration", blogsPortletInstanceConfiguration);
 contextObjects.put("blogsPortletInstanceSettingsHelper", blogsPortletInstanceSettingsHelper);
+
+List<BlogsEntry> blogsEntries = _convertToBlogEntries(results);
+
+long[] classPKs = ListUtil.toLongArray(blogsEntries, BlogsEntry.ENTRY_ID_ACCESSOR);
+
+Map<Long, RatingsEntry> ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(themeDisplay.getUserId(), BlogsEntry.class.getName(), classPKs);
+Map<Long, RatingsStats> ratingsStats = RatingsStatsLocalServiceUtil.getStats(BlogsEntry.class.getName(), classPKs);
 %>
 
 <c:if test="<%= results.isEmpty() %>">
 	<liferay-ui:empty-result-message message="no-entries-were-found" />
 </c:if>
 
-<liferay-ddm:template-renderer className="<%= BlogsEntry.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= blogsPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= blogsPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= _convertToBlogEntries(results) %>">
+<liferay-ddm:template-renderer className="<%= BlogsEntry.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= blogsPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= blogsPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= blogsEntries %>">
 
 	<%
 	int index = 0;
 
 	for (Object result : results) {
-		BlogsEntry entry = null;
+		BlogsEntry entry = blogsEntries.get(index);
 
 		AssetEntry assetEntry = null;
 
 		if (result instanceof AssetEntry) {
 			assetEntry = (AssetEntry)result;
 
-			entry = BlogsEntryLocalServiceUtil.getEntry(assetEntry.getClassPK());
-
 			AssetUtil.addLayoutTags(request, assetEntry.getTags());
-		}
-		else {
-			entry = (BlogsEntry)result;
 		}
 
 		index++;
@@ -111,6 +113,10 @@ contextObjects.put("blogsPortletInstanceSettingsHelper", blogsPortletInstanceSet
 		request.setAttribute("view_entry_content.jsp-entry", entry);
 
 		request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
+
+		request.setAttribute("view_entry_content.jsp-ratingsEntry", ratingsEntries.get(entry.getEntryId()));
+
+		request.setAttribute("view_entry_content.jsp-ratingsStats", ratingsStats.get(entry.getEntryId()));
 	%>
 
 		<liferay-util:include page="/blogs/view_entry_content.jsp" servletContext="<%= application %>" />

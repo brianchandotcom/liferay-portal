@@ -11,9 +11,8 @@ LPS-30525.
 	css_main_file = ""
 	is_signed_in = false
 	js_main_file = ""
+	is_setup_complete = false
 />
-
-<#assign is_setup_complete = false />
 
 <#if user??>
 	<#assign is_setup_complete = user.isSetupComplete() />

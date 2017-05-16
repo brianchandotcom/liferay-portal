@@ -47,7 +47,7 @@ if (cpDefinition != null) {
 		/>
 
 		<c:if test="<%= cpDefinition != null %>">
-			<c:if test="<%= (cpType != null) && !Validator.isNull(cpType.getCPDefinitionEditUrl()) %>">
+			<c:if test="<%= (cpType != null) && Validator.isNotNull(cpType.getCPDefinitionEditUrl()) %>">
 				<aui:nav-item
 					href="<%= cpType.getCPDefinitionEditUrl() %>"
 					label="<%= cpType.getLabel(locale) %>"

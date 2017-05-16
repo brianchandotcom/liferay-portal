@@ -18,8 +18,6 @@ import com.liferay.commerce.product.definitions.web.internal.portlet.action.Acti
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -42,8 +40,7 @@ public class CPDefinitionsDisplayContext
 
 	public CPDefinitionsDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CPDefinitionService cpDefinitionService,
-			CPTypeServicesTracker cpTypeServicesTracker)
+			CPDefinitionService cpDefinitionService)
 		throws PortalException {
 
 		super(actionHelper, httpServletRequest, "CPDefinition");
@@ -51,15 +48,6 @@ public class CPDefinitionsDisplayContext
 		setDefaultOrderByType("desc");
 
 		_cpDefinitionService = cpDefinitionService;
-		_cpTypeServicesTracker = cpTypeServicesTracker;
-	}
-
-	public CPType getCPType(String name) {
-		return _cpTypeServicesTracker.getCPType(name);
-	}
-
-	public List<CPType> getCPTypes() {
-		return _cpTypeServicesTracker.getCPTypes();
 	}
 
 	@Override
@@ -120,6 +108,5 @@ public class CPDefinitionsDisplayContext
 	}
 
 	private final CPDefinitionService _cpDefinitionService;
-	private final CPTypeServicesTracker _cpTypeServicesTracker;
 
 }

@@ -23,6 +23,8 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -262,6 +264,14 @@ public class ActionHelper {
 		return cpInstances;
 	}
 
+	public CPType getCPType(String name) {
+		return _cpTypeServicesTracker.getCPType(name);
+	}
+
+	public List<CPType> getCPTypes() {
+		return _cpTypeServicesTracker.getCPTypes();
+	}
+
 	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
 			long cpDefinitionId)
 		throws PortalException {
@@ -282,5 +292,8 @@ public class ActionHelper {
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
+
+	@Reference
+	private CPTypeServicesTracker _cpTypeServicesTracker;
 
 }

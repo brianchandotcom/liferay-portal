@@ -17,6 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 import com.liferay.commerce.product.definitions.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.type.CPType;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -101,6 +102,24 @@ public abstract class BaseCPDefinitionsDisplayContext<T> {
 		}
 
 		return cpDefinition.getCPDefinitionId();
+	}
+
+	public CPType getCPType() throws PortalException {
+		CPDefinition cpDefinition = getCPDefinition();
+
+		if (cpDefinition == null) {
+			return null;
+		}
+
+		return actionHelper.getCPType(cpDefinition.getProductTypeName());
+	}
+
+	public CPType getCPType(String name) {
+		return actionHelper.getCPType(name);
+	}
+
+	public List<CPType> getCPTypes() {
+		return actionHelper.getCPTypes();
 	}
 
 	public String getDisplayStyle() {

@@ -1,0 +1,13 @@
+Liferay-Releng-App-Description: Layouts Templates allow you to choose how portlets will be arranged on a page. They are simple table or CSS-based containers into which portlets can be dropped and sit within the body of the page. Liferay Portal comes with several built-in layout templates, but if you require a more complex page layouts you may wish to use this custom layouts templates. A thumbnail is displayed when the end user clicks Layout Template from the Dock menu.<br /><br />These layouts will appear in your Page Layouts once installed.
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix}
+Liferay-Releng-Bundle: false
+Liferay-Releng-Category: Templates
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Deprecated: true
+Liferay-Releng-Labs: true
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Portal-Required: false
+Liferay-Releng-Public: ${liferay.releng.public}
+Liferay-Releng-Restart-Required: false
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: ${liferay.releng.supported}

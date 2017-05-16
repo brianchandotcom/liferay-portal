@@ -39,13 +39,14 @@ public class XMLCustomSQLFileCheck extends BaseFileCheck {
 		throws Exception {
 
 		if (fileName.contains("/custom-sql/")) {
-			_checkCustomSQLXML(fileName, content);
+			_checkCustomSQLXML(fileName, fileName, content);
 		}
 
 		return content;
 	}
 
-	private void _checkCustomSQLXML(String fileName, String content)
+	private void _checkCustomSQLXML(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		Document document = SourceUtil.readXML(content);
@@ -56,19 +57,34 @@ public class XMLCustomSQLFileCheck extends BaseFileCheck {
 
 		Matcher matcher = _whereNotInSQLPattern.matcher(content);
 
-		if (matcher.find()) {
+		while (matcher.find()) {
 			int x = content.lastIndexOf("<sql id=", matcher.start());
 
 			int y = content.indexOf(CharPool.QUOTE, x);
 
 			int z = content.indexOf(CharPool.QUOTE, y + 1);
 
-			addMessage(
-				fileName,
-				"Avoid using WHERE ... NOT IN: " + content.substring(y + 1, z) +
-					", see LPS-51315");
+			String id = content.substring(y + 1, z);
+
+			x = id.lastIndexOf(CharPool.PERIOD);
+
+			y = id.lastIndexOf(CharPool.PERIOD, x - 1);
+
+			String entityName = id.substring(y + 1, x);
+
+			if (!isExcludedPath(
+					_CUSTOM_FINDER_SCALABILITY_EXCLUDES, absolutePath,
+					entityName)) {
+
+				addMessage(
+					fileName,
+					"Avoid using WHERE ... NOT IN: " + id + ", see LPS-51315");
+			}
 		}
 	}
+
+	private static final String _CUSTOM_FINDER_SCALABILITY_EXCLUDES =
+		"custom.finder.scalability.excludes";
 
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");

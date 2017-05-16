@@ -17,7 +17,6 @@ package com.liferay.asset.publisher.web.configuration;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
 /**
  * @author Pavel Savinov
@@ -42,29 +41,6 @@ public interface AssetPublisherWebConfiguration {
 		required = false
 	)
 	public int checkInterval();
-
-	/**
-	 * Set the name of the display style which will be used by default.
-	 *
-	 * @return default display style.
-	 */
-	@Meta.AD(
-		deflt = "abstracts",
-		description = "default.display.style.key.description", required = false
-	)
-	public String defaultDisplayStyle();
-
-	/**
-	 * Input a list of comma delimited display styles that will be available in
-	 * the configuration screen of the Asset Publisher portlet.
-	 *
-	 * @return available display styles.
-	 */
-	@Meta.AD(
-		deflt = "table|title-list|abstracts|full-content",
-		description = "display.styles.key.description", required = false
-	)
-	public String[] displayStyles();
 
 	/**
 	 * Set this to true to enable exporting contents related to asset entries
@@ -103,27 +79,6 @@ public interface AssetPublisherWebConfiguration {
 	)
 	public int dynamicSubscriptionLimit();
 
-	@Meta.AD(
-		deflt = "${resource:com/liferay/asset/publisher/web/portlet/email/dependencies/email_asset_entry_added_body.tmpl}",
-		required = false
-	)
-	public LocalizedValuesMap emailAssetEntryAddedBody();
-
-	@Meta.AD(deflt = "true", required = false)
-	public boolean emailAssetEntryAddedEnabled();
-
-	@Meta.AD(
-		deflt = "${resource:com/liferay/asset/publisher/web/portlet/email/dependencies/email_asset_entry_added_subject.tmpl}",
-		required = false
-	)
-	public LocalizedValuesMap emailAssetEntryAddedSubject();
-
-	@Meta.AD(deflt = "", required = false)
-	public String emailFromAddress();
-
-	@Meta.AD(deflt = "", required = false)
-	public String emailFromName();
-
 	/**
 	 * Set this to true to enable exporting contents related to asset entries
 	 * for manual selection.
@@ -135,6 +90,18 @@ public interface AssetPublisherWebConfiguration {
 		required = false
 	)
 	public boolean manualExportEnabled();
+
+	/**
+	 * Set this to true to search assets in Asset Publisher from the index. Set
+	 * this to false to search assets in Asset Publisher from the database.
+	 *
+	 * @return <code>true</code> search with index is enabled.
+	 */
+	@Meta.AD(
+		deflt = "true", description = "search.with.index.key.description",
+		required = false
+	)
+	public boolean searchWithIndex();
 
 	/**
 	 * Set this to true to allow users to configure Asset Publisher, Most Viewed
@@ -150,17 +117,5 @@ public interface AssetPublisherWebConfiguration {
 		required = false
 	)
 	public boolean permissionCheckingConfigurable();
-
-	/**
-	 * Set this to true to search assets in Asset Publisher from the index. Set
-	 * this to false to search assets in Asset Publisher from the database.
-	 *
-	 * @return <code>true</code> search with index is enabled.
-	 */
-	@Meta.AD(
-		deflt = "true", description = "search.with.index.key.description",
-		required = false
-	)
-	public boolean searchWithIndex();
 
 }

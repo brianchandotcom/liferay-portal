@@ -1034,9 +1034,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestFailedToComplete" />
-
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid file." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Please enter a valid definition." />
 	</command>
 
 	<command name="ViewTaskCount" priority="3">

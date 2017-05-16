@@ -13,16 +13,20 @@ LPS-30525.
 	js_main_file = ""
 />
 
-<#if themeDisplay??>
-	<#assign css_main_file = htmlUtil.escape(portalUtil.getStaticResourceURL(request, "${themeDisplay.getPathThemeCss()}/main.css")) />
-	<#assign is_signed_in = themeDisplay.isSignedIn() />
-	<#assign js_main_file = htmlUtil.escape(portalUtil.getStaticResourceURL(request, "${themeDisplay.getPathThemeJavaScript()}/main.js")) />
-</#if>
-
 <#assign is_setup_complete = false />
 
 <#if user??>
 	<#assign is_setup_complete = user.isSetupComplete() />
+</#if>
+
+<#if themeDisplay??>
+	<#assign css_main_file = htmlUtil.escape(portalUtil.getStaticResourceURL(request, "${themeDisplay.getPathThemeCss()}/main.css")) />
+	<#assign is_signed_in = themeDisplay.isSignedIn() />
+	<#assign js_main_file = htmlUtil.escape(portalUtil.getStaticResourceURL(request, "${themeDisplay.getPathThemeJavaScript()}/main.js")) />
+
+	<#if !is_setup_complete>
+		<#assign is_setup_complete = themeDisplay.isImpersonated() />
+	</#if>
 </#if>
 
 <#function max x y>

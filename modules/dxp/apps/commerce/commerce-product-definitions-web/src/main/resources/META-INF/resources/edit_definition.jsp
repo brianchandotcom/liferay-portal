@@ -76,9 +76,8 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 		</liferay-frontend:info-bar>
 	</c:if>
 
-	<liferay-frontend:translation-manager
+	<aui:translation-manager
 		availableLocales="<%= availableLocales %>"
-		componentId='<%= renderResponse.getNamespace() + "translationManager" %>'
 		defaultLanguageId="<%= defaultLanguageId %>"
 		id="translationManager"
 	/>

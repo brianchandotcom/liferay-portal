@@ -35,8 +35,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-i
 
 portletURL.setParameter("toolbarItem", toolbarItem);
 
-request.setAttribute("view.jsp-portletURL", portletURL);
-
 PortletURL backUrl = liferayPortletResponse.createRenderURL();
 
 backUrl.setParameter("mvcPath", "/view.jsp");
@@ -47,9 +45,15 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURLString);
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
+
+request.setAttribute("view.jsp-cpDefinition", cpDefinition);
+request.setAttribute("view.jsp-cpType", cpInstanceDisplayContext.getCPType());
+request.setAttribute("view.jsp-portletURL", portletURL);
+request.setAttribute("view.jsp-showSearch", true);
+request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 %>
 
-<%@ include file="/definition_navbar.jspf" %>
+<liferay-util:include page="/definition_navbar.jsp" servletContext="<%= application %>" />
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

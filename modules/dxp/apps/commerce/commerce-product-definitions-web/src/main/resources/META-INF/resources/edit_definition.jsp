@@ -24,8 +24,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("toolbarItem", toolbarItem);
 portletURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 
-request.setAttribute("view.jsp-portletURL", portletURL);
-
 CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
@@ -51,9 +49,15 @@ availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
 availableLocalesSet.addAll(cpDefinitionsDisplayContext.getAvailableLocales());
 
 Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
+
+request.setAttribute("view.jsp-cpDefinition", cpDefinition);
+request.setAttribute("view.jsp-cpType", cpDefinitionsDisplayContext.getCPType());
+request.setAttribute("view.jsp-portletURL", portletURL);
+request.setAttribute("view.jsp-showSearch", false);
+request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 %>
 
-<%@ include file="/definition_navbar.jspf" %>
+<liferay-util:include page="/definition_navbar.jsp" servletContext="<%= application %>" />
 
 <portlet:actionURL name="editProductDefinition" var="editProductDefinitionActionURL" />
 

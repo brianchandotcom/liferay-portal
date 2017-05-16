@@ -14,6 +14,22 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
+<%
+CPDefinition cpDefinition = (CPDefinition)request.getAttribute("view.jsp-cpDefinition");
+CPType cpType = (CPType)request.getAttribute("view.jsp-cpType");
+PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
+boolean showSearch = GetterUtil.get(request.getAttribute("view.jsp-showSearch"), false);
+String toolbarItem = GetterUtil.getString(request.getAttribute("view.jsp-toolbarItem"), "");
+
+long cpDefinitionId = 0;
+
+if (cpDefinition != null) {
+	cpDefinitionId = cpDefinition.getCPDefinitionId();
+}
+%>
+
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<liferay-portlet:renderURL varImpl="viewProductDefinitionDetailsURL">
@@ -31,6 +47,14 @@
 		/>
 
 		<c:if test="<%= cpDefinition != null %>">
+			<c:if test="<%= (cpType != null) && !Validator.isNull(cpType.getCPDefinitionEditUrl()) %>">
+				<aui:nav-item
+					href="<%= cpType.getCPDefinitionEditUrl() %>"
+					label="<%= cpType.getLabel(locale) %>"
+					selected="<%= toolbarItem.equals(cpType.getName()) %>"
+				/>
+			</c:if>
+
 			<liferay-portlet:renderURL varImpl="viewProductDefinitionImagesURL">
 				<portlet:param name="mvcRenderCommandName" value="viewAttachmentFileEntries" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -87,7 +111,7 @@
 		</c:if>
 	</aui:nav>
 
-	<c:if test='<%= toolbarItem.equals("view-product-definition-options") || toolbarItem.equals("view-product-definition-instances") %>'>
+	<c:if test="<%= showSearch %>">
 		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
 			<aui:nav-bar-search>
 				<liferay-ui:input-search markupView="lexicon" />

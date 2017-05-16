@@ -79,6 +79,10 @@
 	/>
 </#if>
 
+<#if !is_setup_complete>
+	<#assign is_setup_complete = theme_display.isImpersonated() />
+</#if>
+
 <#-- ---------- URLs ---------- -->
 
 <#assign show_control_panel = theme_display.isShowControlPanelIcon() />

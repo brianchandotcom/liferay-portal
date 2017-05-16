@@ -29,6 +29,7 @@ import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.kernel.util.AssetEntryQueryProcessor;
+import com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.display.context.AssetEntryResult;
@@ -50,6 +51,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -861,7 +864,8 @@ public class AssetPublisherUtil {
 		PortletPreferences portletPreferences) {
 
 		LocalizedValuesMap emailAssetEntryAddedBodyMap =
-			_assetPublisherWebConfiguration.emailAssetEntryAddedBody();
+			_assetPublisherPortletInstanceConfiguration.
+				emailAssetEntryAddedBody();
 
 		return LocalizationUtil.getLocalizationMap(
 			portletPreferences, "emailAssetEntryAddedBody",
@@ -880,8 +884,8 @@ public class AssetPublisherUtil {
 			return GetterUtil.getBoolean(emailAssetEntryAddedEnabled);
 		}
 		else {
-			return
-				_assetPublisherWebConfiguration.emailAssetEntryAddedEnabled();
+			return _assetPublisherPortletInstanceConfiguration.
+				emailAssetEntryAddedEnabled();
 		}
 	}
 
@@ -889,7 +893,8 @@ public class AssetPublisherUtil {
 		PortletPreferences portletPreferences) {
 
 		LocalizedValuesMap emailAssetEntryAddedSubjectMap =
-			_assetPublisherWebConfiguration.emailAssetEntryAddedSubject();
+			_assetPublisherPortletInstanceConfiguration.
+				emailAssetEntryAddedSubject();
 
 		return LocalizationUtil.getLocalizationMap(
 			portletPreferences, "emailAssetEntryAddedSubject",
@@ -968,7 +973,7 @@ public class AssetPublisherUtil {
 
 		return PortalUtil.getEmailFromAddress(
 			portletPreferences, companyId,
-			_assetPublisherWebConfiguration.emailFromAddress());
+			_assetPublisherPortletInstanceConfiguration.emailFromAddress());
 	}
 
 	public static String getEmailFromName(
@@ -976,7 +981,7 @@ public class AssetPublisherUtil {
 
 		return PortalUtil.getEmailFromName(
 			portletPreferences, companyId,
-			_assetPublisherWebConfiguration.emailFromName());
+			_assetPublisherPortletInstanceConfiguration.emailFromName());
 	}
 
 	public static long getGroupIdFromScopeId(
@@ -1560,11 +1565,17 @@ public class AssetPublisherUtil {
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(Map<String, Object> properties)
+		throws ConfigurationException {
+
 		_instance = this;
 
 		_assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
 			AssetPublisherWebConfiguration.class, properties);
+
+		_assetPublisherPortletInstanceConfiguration =
+			ConfigurationProviderUtil.getSystemConfiguration(
+				AssetPublisherPortletInstanceConfiguration.class);
 	}
 
 	@Reference(unbind = "-")
@@ -1755,6 +1766,8 @@ public class AssetPublisherUtil {
 	private static AssetCategoryLocalService _assetCategoryLocalService;
 	private static AssetEntryLocalService _assetEntryLocalService;
 	private static AssetEntryService _assetEntryService;
+	private static AssetPublisherPortletInstanceConfiguration
+		_assetPublisherPortletInstanceConfiguration;
 	private static AssetPublisherWebConfiguration
 		_assetPublisherWebConfiguration;
 	private static AssetTagLocalService _assetTagLocalService;

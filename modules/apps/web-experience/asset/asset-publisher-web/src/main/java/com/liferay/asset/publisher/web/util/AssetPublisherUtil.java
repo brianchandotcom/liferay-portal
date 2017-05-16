@@ -128,7 +128,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Raymond Augé
  * @author Julio Camarero
  */
-@Component(immediate = true, service = AssetPublisherUtil.class)
+@Component(
+	configurationPid = "com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration",
+	immediate = true, service = AssetPublisherUtil.class
+)
 @ProviderType
 public class AssetPublisherUtil {
 

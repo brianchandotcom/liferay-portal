@@ -76,7 +76,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = AssetEntriesCheckerUtil.class)
+@Component(
+	configurationPid = "com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration",
+	immediate = true, service = AssetEntriesCheckerUtil.class
+)
 @ProviderType
 public class AssetEntriesCheckerUtil {
 

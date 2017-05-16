@@ -21,7 +21,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"auth.public.path=/portal/wedeploy/authorize"},
+	property = {
+		"auth.public.path=/portal/wedeploy/authorize",
+		"auth.public.path=/portal/wedeploy/access_token"
+	},
 	service = Object.class
 )
 public class AuthPublicPath {

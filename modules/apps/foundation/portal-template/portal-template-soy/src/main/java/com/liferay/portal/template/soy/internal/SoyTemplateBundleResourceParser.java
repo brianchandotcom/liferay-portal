@@ -30,7 +30,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {"lang.type=" + TemplateConstants.LANG_TYPE_SOY},
-	service = TemplateResourceParser.class
+	service = {
+		SoyTemplateBundleResourceParser.class, TemplateResourceParser.class
+	}
 )
 public class SoyTemplateBundleResourceParser extends URLResourceParser {
 
@@ -41,12 +43,14 @@ public class SoyTemplateBundleResourceParser extends URLResourceParser {
 		String templateName = templateId.substring(
 			pos + TemplateConstants.BUNDLE_SEPARATOR.length());
 
-		Bundle bundle = _soyTemplateContextHelper.getTemplateBundle(templateId);
+		Bundle bundle = _soyProviderCapabilityBundleRegister.getTemplateBundle(
+			templateId);
 
 		return bundle.getResource(templateName);
 	}
 
 	@Reference(unbind = "-")
-	private SoyTemplateContextHelper _soyTemplateContextHelper;
+	private SoyProviderCapabilityBundleRegister
+		_soyProviderCapabilityBundleRegister;
 
 }

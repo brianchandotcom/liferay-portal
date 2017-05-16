@@ -71,6 +71,20 @@ public class ExportImportConfigurationHelper {
 	}
 
 	public static String[] getExportImportConfigurationParameter(
+			ExportImportConfiguration exportImportConfiguration,
+			String parameterName)
+		throws PortalException {
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		Map<String, String[]> parameterMap =
+			(HashMap<String, String[]>)settingsMap.get("parameterMap");
+
+		return parameterMap.get(parameterName);
+	}
+
+	public static String[] getExportImportConfigurationParameter(
 			BackgroundTask backgroundTask, String parameterName)
 		throws PortalException {
 
@@ -83,13 +97,8 @@ public class ExportImportConfigurationHelper {
 					GetterUtil.getLong(
 						taskContextMap.get("exportImportConfigurationId")));
 
-		Map<String, Serializable> settingsMap =
-			exportImportConfiguration.getSettingsMap();
-
-		Map<String, String[]> parameterMap =
-			(HashMap<String, String[]>)settingsMap.get("parameterMap");
-
-		return parameterMap.get(parameterName);
+		return getExportImportConfigurationParameter(
+			exportImportConfiguration, parameterName);
 	}
 
 	public static ExportImportConfiguration

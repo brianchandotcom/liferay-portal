@@ -32,6 +32,7 @@ page import="com.liferay.dynamic.data.mapping.exception.StructureDuplicateStruct
 page import="com.liferay.exportimport.constants.ExportImportPortletKeys" %><%@
 page import="com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames" %><%@
 page import="com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants" %><%@
+page import="com.liferay.exportimport.kernel.configuration.ExportImportConfigurationHelper" %><%@
 page import="com.liferay.exportimport.kernel.exception.LARFileException" %><%@
 page import="com.liferay.exportimport.kernel.exception.LARFileNameException" %><%@
 page import="com.liferay.exportimport.kernel.exception.LARFileSizeException" %><%@

@@ -41,7 +41,7 @@ String contextTitle = cpDefinition.getTitle(languageId) + " - " + cpDefinitionOp
 String title;
 
 if (cpDefinitionOptionValueRel == null) {
-	title = LanguageUtil.get(request, "add-product-definition-option-value-rel-to-x", contextTitle);
+	title = LanguageUtil.get(request, "add-option-value-to-x", contextTitle);
 }
 else {
 	title = contextTitle + " - " + cpDefinitionOptionValueRel.getTitle(locale);

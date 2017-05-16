@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperU
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
-import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.LiferayInputStream;
 import com.liferay.portal.upload.LiferayServletRequest;
@@ -1294,14 +1292,8 @@ public class UploadServletRequestTest {
 		public void shouldReturnPreferencesValue() {
 			File tempDir = UploadServletRequestImpl.getTempDir();
 
-			String tempDirString =
-				UploadServletRequestConfigurationHelperUtil.getTempDir();
-
-			if (Validator.isNull(tempDirString)) {
-				tempDirString = SystemProperties.get(SystemProperties.TMP_DIR);
-			}
-
-			File expectedTempDir = new File(tempDirString);
+			File expectedTempDir = new File(
+				UploadServletRequestConfigurationHelperUtil.getTempDir());
 
 			Assert.assertEquals(expectedTempDir, tempDir);
 		}

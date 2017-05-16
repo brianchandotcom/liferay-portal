@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -65,10 +64,6 @@ public class UploadServletRequestImpl
 		if (_tempDir == null) {
 			String tempDir =
 				UploadServletRequestConfigurationHelperUtil.getTempDir();
-
-			if (Validator.isNull(tempDir)) {
-				tempDir = SystemProperties.get(SystemProperties.TMP_DIR);
-			}
 
 			_tempDir = new File(tempDir);
 		}

@@ -80,7 +80,7 @@ public interface WeDeployAuthTokenLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public WeDeployAuthToken addAccessWeDeployAuthToken(long userId,
+	public WeDeployAuthToken addAccessWeDeployAuthToken(
 		java.lang.String clientId, java.lang.String clientSecret,
 		java.lang.String authorizationToken, int type,
 		ServiceContext serviceContext) throws PortalException;

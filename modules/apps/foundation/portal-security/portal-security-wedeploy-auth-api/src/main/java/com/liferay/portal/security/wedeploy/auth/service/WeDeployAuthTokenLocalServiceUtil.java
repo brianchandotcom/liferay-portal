@@ -69,12 +69,12 @@ public class WeDeployAuthTokenLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken addAccessWeDeployAuthToken(
-		long userId, java.lang.String clientId, java.lang.String clientSecret,
+		java.lang.String clientId, java.lang.String clientSecret,
 		java.lang.String authorizationToken, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addAccessWeDeployAuthToken(userId, clientId, clientSecret,
+				   .addAccessWeDeployAuthToken(clientId, clientSecret,
 			authorizationToken, type, serviceContext);
 	}
 

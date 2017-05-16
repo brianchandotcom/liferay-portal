@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.product.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
@@ -72,7 +70,6 @@ import java.util.Set;
 /**
  * @author Marco Leo
  */
-@ProviderType
 public class CPDefinitionLocalServiceImpl
 	extends CPDefinitionLocalServiceBaseImpl {
 

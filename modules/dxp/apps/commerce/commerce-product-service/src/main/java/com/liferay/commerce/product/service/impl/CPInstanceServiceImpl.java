@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.product.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.base.CPInstanceServiceBaseImpl;
@@ -37,7 +35,6 @@ import java.util.Map;
 /**
  * @author Marco Leo
  */
-@ProviderType
 public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 	@Override

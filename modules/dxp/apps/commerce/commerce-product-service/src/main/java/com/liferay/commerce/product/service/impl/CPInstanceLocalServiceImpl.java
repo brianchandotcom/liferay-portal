@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.product.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
@@ -69,7 +67,6 @@ import java.util.Map;
 /**
  * @author Marco Leo
  */
-@ProviderType
 public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	public static final String[] SELECTED_FIELD_NAMES =

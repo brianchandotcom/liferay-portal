@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -72,7 +71,7 @@ public class CPDefinitionAssetRendererFactory
 			classPK);
 
 		CPDefinitionAssetRenderer cpDefinitionAssetRenderer =
-			new CPDefinitionAssetRenderer(cpDefinition, _resourceBundleLoader);
+			new CPDefinitionAssetRenderer(cpDefinition);
 
 		cpDefinitionAssetRenderer.setAssetRendererType(type);
 		cpDefinitionAssetRenderer.setServletContext(_servletContext);
@@ -159,11 +158,6 @@ public class CPDefinitionAssetRendererFactory
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.commerce.product.definitions.web)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"

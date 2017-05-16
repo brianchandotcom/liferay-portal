@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -40,7 +39,6 @@ import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.Date;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -56,11 +54,8 @@ import javax.servlet.http.HttpServletResponse;
 public class CPDefinitionAssetRenderer
 	extends BaseJSPAssetRenderer<CPDefinition> implements TrashRenderer {
 
-	public CPDefinitionAssetRenderer(
-		CPDefinition cpDefinition, ResourceBundleLoader resourceBundleLoader) {
-
+	public CPDefinitionAssetRenderer(CPDefinition cpDefinition) {
 		_cpDefinition = cpDefinition;
-		_resourceBundleLoader = resourceBundleLoader;
 	}
 
 	@Override
@@ -141,11 +136,8 @@ public class CPDefinitionAssetRenderer
 	public String getTitle(Locale locale) {
 		String languageId = LanguageUtil.getLanguageId(locale);
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(languageId);
-
 		if (Validator.isNull(_cpDefinition.getTitle(languageId))) {
-			return LanguageUtil.get(resourceBundle, "untitled-entry");
+			return _cpDefinition.getName();
 		}
 
 		return _cpDefinition.getTitle(languageId);
@@ -261,6 +253,5 @@ public class CPDefinitionAssetRenderer
 	}
 
 	private final CPDefinition _cpDefinition;
-	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

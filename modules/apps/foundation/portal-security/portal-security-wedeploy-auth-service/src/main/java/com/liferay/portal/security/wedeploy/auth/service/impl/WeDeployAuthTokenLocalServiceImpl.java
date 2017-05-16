@@ -34,19 +34,23 @@ public class WeDeployAuthTokenLocalServiceImpl
 
 	@Override
 	public WeDeployAuthToken addAccessWeDeployAuthToken(
-			long userId, String clientId, String clientSecret,
-			String authorizationToken, int type, ServiceContext serviceContext)
+			String clientId, String clientSecret, String authorizationToken,
+			int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		validate(clientId, clientSecret, authorizationToken, type);
+		validate(clientId, clientSecret);
+
+		WeDeployAuthToken weDeployAuthToken =
+			weDeployAuthTokenPersistence.removeByCI_T_T(
+				clientId, authorizationToken, type);
 
 		String token = DigesterUtil.digestHex(
 			Digester.MD5, clientId.concat(authorizationToken),
 			PwdGenerator.getPassword());
 
 		return addWeDeployAuthToken(
-			userId, clientId, token, WeDeployAuthTokenConstants.TYPE_ACCESS,
-			new ServiceContext());
+			weDeployAuthToken.getUserId(), clientId, token,
+			WeDeployAuthTokenConstants.TYPE_ACCESS, serviceContext);
 	}
 
 	@Override
@@ -98,15 +102,10 @@ public class WeDeployAuthTokenLocalServiceImpl
 		return weDeployAuthToken;
 	}
 
-	protected void validate(
-			String clientId, String clientSecret, String authorizationToken,
-			int type)
+	protected void validate(String clientId, String clientSecret)
 		throws PortalException {
 
 		weDeployAuthAppPersistence.findByCI_CS(clientId, clientSecret);
-
-		weDeployAuthTokenPersistence.findByCI_T_T(
-			clientId, authorizationToken, type);
 	}
 
 }

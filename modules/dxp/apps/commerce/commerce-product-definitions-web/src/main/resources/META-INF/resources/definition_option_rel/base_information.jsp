@@ -30,7 +30,7 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.g
 
 <aui:fieldset>
 	<aui:select
-		label="product-option-field-type"
+		label="field-type"
 		name="ddmFormFieldTypeName"
 		showEmptyOption="<%= true %>"
 	>

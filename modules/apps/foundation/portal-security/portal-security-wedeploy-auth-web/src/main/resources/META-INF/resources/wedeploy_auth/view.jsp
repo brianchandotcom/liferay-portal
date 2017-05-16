@@ -16,4 +16,28 @@
 
 <%@ include file="/init.jsp" %>
 
-<p>WeDeploy Auth View</p>
+<%
+String clientId = ParamUtil.getString(request, "clientId");
+
+String redirectURI = ParamUtil.getString(request, "redirectURI");
+%>
+
+<div class="container-fluid-1280">
+	<div class="button-holder">
+		<portlet:actionURL name="/wedeploy_auth/authorize_user" var="allowAuthorizeUserURL">
+			<portlet:param name="<%= Constants.CMD %>" value="allow" />
+			<portlet:param name="clientId" value="<%= clientId %>" />
+			<portlet:param name="redirectURI" value="<%= redirectURI %>" />
+		</portlet:actionURL>
+
+		<aui:button cssClass="btn btn-lg btn-primary" href="<%= allowAuthorizeUserURL %>" value='<%= LanguageUtil.get(request, "allow") %>' />
+
+		<portlet:actionURL name="/wedeploy_auth/authorize_user" var="denyAuthorizeUserURL">
+			<portlet:param name="<%= Constants.CMD %>" value="deny" />
+			<portlet:param name="clientId" value="<%= clientId %>" />
+			<portlet:param name="redirectURI" value="<%= redirectURI %>" />
+		</portlet:actionURL>
+
+		<aui:button cssClass="btn btn-danger btn-lg" href="<%= denyAuthorizeUserURL %>" value='<%= LanguageUtil.get(request, "deny") %>' />
+	</div>
+</div>

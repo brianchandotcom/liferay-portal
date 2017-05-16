@@ -16,6 +16,8 @@ package com.liferay.portal.upload.configuration.settings.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
+import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upload.configuration.UploadServletRequestConfiguration;
 
 import java.util.Map;
@@ -41,7 +43,13 @@ public class UploadServletRequestConfigurationHelperImpl
 
 	@Override
 	public String getTempDir() {
-		return _uploadServletRequestConfiguration.tempDir();
+		String tempDir = _uploadServletRequestConfiguration.tempDir();
+
+		if (Validator.isNull(tempDir)) {
+			tempDir = SystemProperties.get(SystemProperties.TMP_DIR);
+		}
+
+		return tempDir;
 	}
 
 	@Activate

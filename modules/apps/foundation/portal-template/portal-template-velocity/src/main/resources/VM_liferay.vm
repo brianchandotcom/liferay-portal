@@ -23,7 +23,7 @@
 #end
 
 #macro (control_menu)
-	#if ($themeDisplay.isImpersonated() || ($is_setup_complete && $is_signed_in))
+	#if ($is_setup_complete && $is_signed_in)
 		$theme.runtime("com.liferay.admin.kernel.util.PortalProductNavigationControlMenuApplicationType$ProductNavigationControlMenu", $portletProviderAction.VIEW)
 	#end
 #end
@@ -72,7 +72,7 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 #end
 
 #macro (user_personal_bar)
-	#if ($themeDisplay.isImpersonated() || $is_setup_complete || !$is_signed_in))
+	#if ($is_setup_complete || !$is_signed_in)
 		#set ($render_portlet_boundary = $request.getAttribute("RENDER_PORTLET_BOUNDARY"))
 
 		$request.setAttribute("RENDER_PORTLET_BOUNDARY", false)

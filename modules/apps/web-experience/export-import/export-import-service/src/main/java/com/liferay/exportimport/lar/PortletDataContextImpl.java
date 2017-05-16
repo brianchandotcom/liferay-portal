@@ -143,7 +143,17 @@ import jodd.bean.BeanUtil;
 public class PortletDataContextImpl implements PortletDataContext {
 
 	public PortletDataContextImpl(LockManager lockManager) {
-		initXStream();
+		this(lockManager, true);
+	}
+
+	public PortletDataContextImpl(
+		LockManager lockManager, boolean createXstream) {
+
+		if (createXstream) {
+			synchronized (PortletDataContextImpl.class) {
+				initXStream();
+			}
+		}
 
 		_lockManager = lockManager;
 	}
@@ -2646,19 +2656,23 @@ public class PortletDataContextImpl implements PortletDataContext {
 		Set<XStreamConfigurator> xStreamConfigurators =
 			XStreamConfiguratorRegistryUtil.getXStreamConfigurators();
 
+		ClassLoader classLoader =
+			XStreamConfiguratorRegistryUtil.getConfiguratorsClassLoader(
+				XStream.class.getClassLoader());
+
 		if ((_xStream != null) &&
-			xStreamConfigurators.equals(xStreamConfigurators)) {
+			xStreamConfigurators.equals(_xStreamConfigurators) &&
+			classLoader.equals(_classloader)) {
 
 			return;
 		}
 
 		_xStreamConfigurators = xStreamConfigurators;
 
+		_classloader = classLoader;
+
 		_xStream = new XStream(
-			null, new XppDriver(),
-			new ClassLoaderReference(
-				XStreamConfiguratorRegistryUtil.getConfiguratorsClassLoader(
-					XStream.class.getClassLoader())));
+			null, new XppDriver(), new ClassLoaderReference(classLoader));
 
 		_xStream.omitField(HashMap.class, "cache_bitmask");
 
@@ -2764,14 +2778,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletDataContextImpl.class);
 
+	private static ClassLoader _classloader;
 	private static transient XStream _xStream;
 	private static Set<XStreamConfigurator> _xStreamConfigurators;
 
 	private final Map<String, long[]> _assetCategoryIdsMap = new HashMap<>();
 	private final Set<Long> _assetLinkIds = new HashSet<>();
 	private final Map<String, String[]> _assetTagNamesMap = new HashMap<>();
-	private final Map<String, Set<Serializable>> _classedModelPrimaryKeyMap =
-		new HashMap<>();
 	private long _companyGroupId;
 	private long _companyId;
 	private String _dataStrategy;

@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class EmptyArrayCheck extends BaseFileCheck {
+public class ArrayCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

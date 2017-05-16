@@ -34,12 +34,6 @@ if (cpDefinition != null) {
 
 <liferay-ui:asset-tags-error />
 
-<div class="metadata">
-	<aui:field-wrapper>
-		<liferay-asset:asset-categories-selector className="<%= CPDefinition.class.getName() %>" classPK="<%= classPK %>" />
-	</aui:field-wrapper>
+<aui:input name="categories" type="assetCategories" />
 
-	<aui:field-wrapper label="tags">
-		<liferay-asset:asset-tags-selector className="<%= CPDefinition.class.getName() %>" classPK="<%= classPK %>" />
-	</aui:field-wrapper>
-</div>
+<aui:input name="tags" type="assetTags" />

@@ -128,6 +128,8 @@
 	</aui:col>
 </aui:row>
 
+<br />
+
 <aui:row cssClass="panel-group">
 	<liferay-ui:social-bookmarks-settings
 		displayPosition="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayPosition() %>"

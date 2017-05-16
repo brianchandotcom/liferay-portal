@@ -231,3 +231,41 @@ This change was made as part of the modularization efforts to ease portal
 configuration changes.
 
 ---------------------------------------
+
+### Standardize data attribute names passed into selectors
+- **Date:** 2016-Oct-26
+- **JIRA Ticket:** LPS-66646
+
+#### What changed?
+
+The data attributes passed into the event when someone uses a selector (asset selector, document selector, file selector, role selector, site selector, user group selector, etc) have been standardized from being selector specific (`groupid`, `groupdescriptivename`, `teamid`, `teamname`, etc) to being more generic (`entityid` and `entityname`).
+
+#### Who is affected?
+
+This affects anyone who is passing selector specific data attributes to a selector.
+
+#### How should I update my code?
+
+Instead of using selector specific data attributes, you should change your data attributes to use `entityid` and `entityname`.
+
+**Example**
+
+Old way:
+    <portlet:namespace />selectFileEntryType(event.fileentrytypeid, event.fileentrytypename);
+
+New way
+    <portlet:namespace />selectFileEntryType(event.entityid, event.entityname);
+
+Old way:
+    data.put("roleid", role.getRoleId());
+    data.put("roletitle", role.getTitle(locale));
+
+New way:
+    data.put("entityid", role.getRoleId());
+    data.put("entityname", role.getTitle(locale));
+
+#### Why was this change made?
+
+This change was made to standardize the data attribute names and allow the utility methods to accept standardized event parameters.
+
+---------------------------------------

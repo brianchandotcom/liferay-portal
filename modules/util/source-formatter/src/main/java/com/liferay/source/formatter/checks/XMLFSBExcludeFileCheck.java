@@ -18,6 +18,8 @@ import com.liferay.portal.tools.ImportPackage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
+import java.util.List;
+
 import org.dom4j.Document;
 import org.dom4j.Element;
 
@@ -48,9 +50,27 @@ public class XMLFSBExcludeFileCheck extends BaseFileCheck {
 		checkElementOrder(
 			fileName, rootElement, "Match", null,
 			new FSBExcludeMatchComparator());
+
+		for (Element matchElement :
+				(List<Element>)rootElement.elements("Match")) {
+
+			for (Element orElement :
+					(List<Element>)matchElement.elements("Or")) {
+
+				checkElementOrder(
+					fileName, orElement, "Bug", null,
+					new ElementComparator("pattern"));
+				checkElementOrder(
+					fileName, orElement, "Class", null,
+					new FSBExcludeClassComparator());
+				checkElementOrder(
+					fileName, orElement, "Method", null,
+					new ElementComparator());
+			}
+		}
 	}
 
-	private class FSBExcludeMatchComparator extends ElementComparator {
+	private class FSBExcludeClassComparator extends ElementComparator {
 
 		@Override
 		public int compare(Element element1, Element element2) {
@@ -68,6 +88,10 @@ public class XMLFSBExcludeFileCheck extends BaseFileCheck {
 
 			return importPackage1.compareTo(importPackage2);
 		}
+
+	}
+
+	private class FSBExcludeMatchComparator extends FSBExcludeClassComparator {
 
 		@Override
 		public String getElementName(Element element) {

@@ -22,8 +22,8 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 
 boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailAssetEntryAddedEnabled--", AssetPublisherUtil.getEmailAssetEntryAddedEnabled(portletPreferences));
 
-LocalizedValuesMap emailAssetEntryAddedBodyMap = assetPublisherWebConfiguration.emailAssetEntryAddedBody();
-LocalizedValuesMap emailAssetEntryAddedSubjectMap = assetPublisherWebConfiguration.emailAssetEntryAddedSubject();
+LocalizedValuesMap emailAssetEntryAddedBodyMap = assetPublisherPortletInstanceConfiguration.emailAssetEntryAddedBody();
+LocalizedValuesMap emailAssetEntryAddedSubjectMap = assetPublisherPortletInstanceConfiguration.emailAssetEntryAddedSubject();
 %>
 
 <liferay-ui:error key="emailAssetEntryAddedBody" message="please-enter-a-valid-body" />

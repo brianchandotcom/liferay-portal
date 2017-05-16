@@ -24,6 +24,7 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -95,9 +97,10 @@ public class AssetPublisherDisplayContext {
 	};
 
 	public AssetPublisherDisplayContext(
-		AssetPublisherCustomizer assetPublisherCustomizer,
-		PortletRequest portletRequest, PortletResponse portletResponse,
-		PortletPreferences portletPreferences) {
+			AssetPublisherCustomizer assetPublisherCustomizer,
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			PortletPreferences portletPreferences)
+		throws ConfigurationException {
 
 		_assetPublisherCustomizer = assetPublisherCustomizer;
 		_portletRequest = portletRequest;
@@ -107,7 +110,17 @@ public class AssetPublisherDisplayContext {
 		_assetPublisherWebConfiguration =
 			(AssetPublisherWebConfiguration)portletRequest.getAttribute(
 				AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION);
+
 		_request = PortalUtil.getHttpServletRequest(portletRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		_assetPublisherPortletInstanceConfiguration =
+			portletDisplay.getPortletInstanceConfiguration(
+				AssetPublisherPortletInstanceConfiguration.class);
 	}
 
 	/**
@@ -242,6 +255,12 @@ public class AssetPublisherDisplayContext {
 		return _assetLinkBehavior;
 	}
 
+	public AssetPublisherPortletInstanceConfiguration
+		getAssetPublisherPortletInstanceConfiguration() {
+
+		return _assetPublisherPortletInstanceConfiguration;
+	}
+
 	public Map<String, Serializable> getAttributes() {
 		if (_attributes != null) {
 			return _attributes;
@@ -367,7 +386,8 @@ public class AssetPublisherDisplayContext {
 			_displayStyle = GetterUtil.getString(
 				_portletPreferences.getValue(
 					"displayStyle",
-					_assetPublisherWebConfiguration.defaultDisplayStyle()));
+					_assetPublisherPortletInstanceConfiguration.
+						defaultDisplayStyle()));
 		}
 
 		return _displayStyle;
@@ -1216,6 +1236,8 @@ public class AssetPublisherDisplayContext {
 	private AssetEntryQuery _assetEntryQuery;
 	private String _assetLinkBehavior;
 	private final AssetPublisherCustomizer _assetPublisherCustomizer;
+	private final AssetPublisherPortletInstanceConfiguration
+		_assetPublisherPortletInstanceConfiguration;
 	private final AssetPublisherWebConfiguration
 		_assetPublisherWebConfiguration;
 	private Map<String, Serializable> _attributes;

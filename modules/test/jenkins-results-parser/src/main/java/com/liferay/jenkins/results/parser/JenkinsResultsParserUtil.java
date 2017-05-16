@@ -52,6 +52,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.codec.binary.Base64;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -739,6 +741,48 @@ public class JenkinsResultsParserUtil {
 		return getSlaves(getBuildProperties(), masterPatternString);
 	}
 
+	public static void offlineSlaves(String masterHostName, String nodeNames) {
+		try {
+			Class<?> clazz = JenkinsResultsParserUtil.class;
+
+			String resource =
+				"script=" +
+					readInputStream(
+						clazz.getResourceAsStream("setSlaveStatus.groovy"));
+
+			resource = resource.replace("${node.names}", nodeNames);
+			resource = resource.replace("${offline.status}", "true");
+
+			_executeJenkinsScript(resource, masterHostName);
+		}
+		catch (IOException ioe) {
+			System.out.println("Unable to turn " + nodeNames + " offline.");
+
+			ioe.printStackTrace();
+		}
+	}
+
+	public static void onlineSlaves(String masterHostName, String nodeNames) {
+		try {
+			Class<?> clazz = JenkinsResultsParserUtil.class;
+
+			String resource =
+				"script=" +
+					readInputStream(
+						clazz.getResourceAsStream("setSlaveStatus.groovy"));
+
+			resource = resource.replace("${node.names}", nodeNames);
+			resource = resource.replace("${offline.status}", "false");
+
+			_executeJenkinsScript(resource, masterHostName);
+		}
+		catch (IOException ioe) {
+			System.out.println("Unable to turn " + nodeNames + " online.");
+
+			ioe.printStackTrace();
+		}
+	}
+
 	public static String read(File file) throws IOException {
 		return new String(Files.readAllBytes(Paths.get(file.toURI())));
 	}
@@ -1215,6 +1259,53 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return duration;
+	}
+
+	private static void _executeJenkinsScript(
+		String script, String masterHostName) {
+
+		try {
+			String normalizedBuildURL = fixURL(
+				getLocalURL("http://" + masterHostName + "/script"));
+
+			URL urlObject = new URL(normalizedBuildURL);
+
+			HttpURLConnection httpURLConnection =
+				(HttpURLConnection)urlObject.openConnection();
+
+			Properties buildProperties = getBuildProperties();
+
+			httpURLConnection.setRequestMethod("POST");
+
+			String authorizationString =
+				buildProperties.getProperty("jenkins.admin.user.name") + ":" +
+					buildProperties.getProperty("jenkins.admin.user.token");
+
+			String encodedAuthString = Base64.encodeBase64String(
+				authorizationString.getBytes());
+
+			httpURLConnection.setDoOutput(true);
+			httpURLConnection.setRequestProperty(
+				"Authorization", "Basic " + encodedAuthString);
+
+			try (OutputStream outputStream =
+					httpURLConnection.getOutputStream()) {
+
+				outputStream.write(script.getBytes("UTF-8"));
+
+				outputStream.flush();
+			}
+
+			httpURLConnection.connect();
+
+			System.out.println(
+				"Response from " + urlObject.toString() + ": " +
+					httpURLConnection.getResponseCode() + " " +
+						httpURLConnection.getResponseMessage());
+		}
+		catch (IOException ioe) {
+			System.out.println("Error occurred while executing script.");
+		}
 	}
 
 	private static String _getRedactTokenKey(int index) {

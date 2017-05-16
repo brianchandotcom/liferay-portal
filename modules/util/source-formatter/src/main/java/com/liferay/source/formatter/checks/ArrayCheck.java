@@ -29,9 +29,21 @@ public class ArrayCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		content = _formatEmptyArray(content);
+		_checkAddAllArraysAsList(fileName, content);
 
-		return content;
+		return _formatEmptyArray(content);
+	}
+
+	private void _checkAddAllArraysAsList(String fileName, String content) {
+		Matcher matcher = _addAllArraysAsListPattern.matcher(content);
+
+		while (matcher.find()) {
+			if (!ToolsUtil.isInsideQuotes(content, matcher.start())) {
+				addMessage(
+					fileName, "Use Collections.addAll, see LPS-72429",
+					getLineCount(content, matcher.start()));
+			}
+		}
 	}
 
 	private String _formatEmptyArray(String content) {
@@ -52,6 +64,8 @@ public class ArrayCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private final Pattern _addAllArraysAsListPattern = Pattern.compile(
+		"\\.addAll\\(\\s*Arrays\\.asList\\(");
 	private final Pattern _emptyArrayPattern = Pattern.compile(
 		"((\\[\\])+) \\{\\}");
 

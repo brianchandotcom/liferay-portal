@@ -30,46 +30,60 @@ if (Validator.isNull(displayStyle)) {
 %>
 
 <aui:fieldset>
-	<aui:input name="preferences--enableSocialBookmarks--" type="toggle-switch" value="<%= enabled %>" />
+	<aui:row>
+		<aui:col width="<%= 50 %>">
+			<liferay-ui:message key="enable-social-bookmarks" />
+		</aui:col>
 
-	<div class="social-boomarks-options" id="<portlet:namespace />socialBookmarksOptions">
-		<aui:select label="display-style" name="preferences--socialBookmarksDisplayStyle--">
+		<aui:col width="<%= 50 %>">
+			<aui:input label="" name="preferences--enableSocialBookmarks--" type="toggle-switch" value="<%= enabled %>" wrapperCssClass="pull-right" />
+		</aui:col>
+	</aui:row>
 
-			<%
-			for (String curDisplayStyle : PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES)) {
-			%>
-
-				<aui:option label="<%= curDisplayStyle %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />
-
-			<%
-			}
-			%>
-
-		</aui:select>
-
-		<aui:select label="display-position" name="preferences--socialBookmarksDisplayPosition--" value="<%= displayPosition %>">
-			<aui:option label="top" />
-			<aui:option label="bottom" />
-		</aui:select>
-
-		<c:if test="<%= Validator.isNotNull(types) %>">
-			<aui:field-wrapper label="social-bookmarks">
+	<aui:row cssClass="social-boomarks-options" id="socialBookmarksOptions">
+		<aui:col width="<%= 50 %>">
+			<aui:select label="display-style" name="preferences--socialBookmarksDisplayStyle--">
 
 				<%
-				String[] typesArray = StringUtil.split(types);
-
-				for (String type : PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_TYPES)) {
+				for (String curDisplayStyle : PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES)) {
 				%>
 
-					<aui:input checked="<%= ArrayUtil.contains(typesArray, type) %>" id='<%= "socialBookmarksTypes" + type %>' ignoreRequestValue="<%= true %>" label="<%= type %>" name="preferences--socialBookmarksTypes--" type="checkbox" value="<%= type %>" />
+					<aui:option label="<%= curDisplayStyle %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />
 
 				<%
 				}
 				%>
 
-			</aui:field-wrapper>
-		</c:if>
-	</div>
+			</aui:select>
+		</aui:col>
+
+		<aui:col width="<%= 50 %>">
+			<aui:select label="display-position" name="preferences--socialBookmarksDisplayPosition--" value="<%= displayPosition %>">
+				<aui:option label="top" />
+				<aui:option label="bottom" />
+			</aui:select>
+		</aui:col>
+
+		<div class="row">
+			<c:if test="<%= Validator.isNotNull(types) %>">
+				<aui:field-wrapper label="social-bookmarks">
+
+					<%
+					String[] typesArray = StringUtil.split(types);
+
+					for (String type : PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_TYPES)) {
+					%>
+
+						<aui:input checked="<%= ArrayUtil.contains(typesArray, type) %>" id='<%= "socialBookmarksTypes" + type %>' ignoreRequestValue="<%= true %>" label="<%= type %>" name="preferences--socialBookmarksTypes--" type="checkbox" value="<%= type %>" />
+
+					<%
+					}
+					%>
+
+				</aui:field-wrapper>
+			</c:if>
+		</div>
+	</aui:row>
 </aui:fieldset>
 
 <aui:script use="aui-base">

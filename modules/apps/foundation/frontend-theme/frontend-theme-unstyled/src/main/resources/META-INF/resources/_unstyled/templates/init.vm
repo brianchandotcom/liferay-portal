@@ -64,6 +64,10 @@
 	#set ($w3c_language_id = $localeUtil.toW3cLanguageId($theme_display.getLanguageId()))
 #end
 
+#if (!$is_setup_complete)
+	#set ($is_setup_complete = $theme_display.isImpersonated())
+#end
+
 #set ($time_zone = $user.getTimeZoneId())
 #set ($is_login_redirect_required = $portalUtil.isLoginRedirectRequired($request))
 #set ($is_signed_in = $theme_display.isSignedIn())

@@ -14,6 +14,10 @@
 	#set ($is_setup_complete = $user.isSetupComplete())
 #end
 
+#if (!$is_setup_complete)
+	#set ($is_setup_complete = $themeDisplay.isImpersonated())
+#end
+
 #macro (breadcrumbs $default_preferences)
 	$theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", $portletProviderAction.VIEW, "", $!default_preferences)
 #end

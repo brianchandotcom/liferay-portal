@@ -19,10 +19,6 @@ package com.liferay.commerce.product.constants;
  */
 public class CPPortletKeys {
 
-	public static final String COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTINGS =
-		"com_liferay_commerce_product_type_virtual_web_internal_portlet_" +
-			"CPDefinitionVirtualSettingsPortlet";
-
 	public static final String COMMERCE_PRODUCT_DEFINITIONS =
 		"com_liferay_commerce_product_definitions_web_internal_portlet_" +
 			"CPDefinitionsPortlet";

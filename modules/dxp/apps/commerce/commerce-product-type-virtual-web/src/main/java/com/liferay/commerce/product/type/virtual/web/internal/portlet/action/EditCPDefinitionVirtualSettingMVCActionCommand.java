@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.product.type.virtual.web.internal.portlet.action;
 
-import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.type.virtual.exception.NoSuchCPDefinitionVirtualSettingException;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
+import com.liferay.commerce.product.type.virtual.web.internal.constants.CPDefinitionVirtualSettingPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTINGS,
+		"javax.portlet.name=" + CPDefinitionVirtualSettingPortletKeys.COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTINGS,
 		"mvc.command.name=editProductDefinitionVirtualSetting"
 	},
 	service = MVCActionCommand.class

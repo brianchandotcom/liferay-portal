@@ -14,14 +14,27 @@
 
 package com.liferay.commerce.product.type.virtual.web.internal.portlet.action;
 
-import com.liferay.commerce.product.type.virtual.web.internal.constants.CPDefinitionVirtualSettingPortletKeys;
+import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
+import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
+import com.liferay.commerce.product.type.virtual.web.internal.CPDefinitionVirtualSettingItemSelectorHelper;
+import com.liferay.commerce.product.type.virtual.web.internal.constants.CPDefinitionVirtualSettingWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -29,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CPDefinitionVirtualSettingPortletKeys.COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTINGS,
+		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
 		"mvc.command.name=editProductDefinitionVirtualSetting"
 	},
 	service = MVCRenderCommand.class
@@ -42,7 +55,48 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/edit_definition_virtual_setting.jsp";
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher("/edit_definition_virtual_setting.jsp");
+
+		try {
+			long cpDefinitionId = ParamUtil.getLong(renderRequest,"cpDefinitionId");
+
+			CPDefinitionVirtualSetting cpDefinitionVirtualSetting = _cpDefinitionVirtualSettingService.fetchCPDefinitionVirtualSetting(cpDefinitionId);
+
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(renderRequest);
+			HttpServletResponse httpServletResponse =
+				PortalUtil.getHttpServletResponse(renderResponse);
+
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
+
+			renderRequest.setAttribute(CPDefinitionVirtualSettingWebKeys.COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING, cpDefinitionVirtualSetting);
+
+			renderRequest.setAttribute(
+				CPDefinitionVirtualSettingWebKeys.
+					DEFINITION_VIRTUAL_SETTING_ITEM_SELECTOR_HELPER,
+				_cpDefinitionVirtualSettingItemSelectorHelper);
+
+			renderRequest.setAttribute("cpDefinitionServletContext", cpDefinitionServletContext);
+		}
+		catch (Exception e) {
+			throw new PortletException
+				("Unable to include edit_definition_virtual_setting.jsp", e);
+		}
+
+		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
 
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.virtual.web)")
+	protected ServletContext servletContext;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)")
+	protected ServletContext cpDefinitionServletContext;
+
+	@Reference
+	private CPDefinitionVirtualSettingItemSelectorHelper
+		_cpDefinitionVirtualSettingItemSelectorHelper;
+
+	@Reference
+	private CPDefinitionVirtualSettingService _cpDefinitionVirtualSettingService;
 }

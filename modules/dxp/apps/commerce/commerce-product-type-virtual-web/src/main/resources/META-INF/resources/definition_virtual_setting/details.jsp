@@ -18,8 +18,6 @@
 
 <%
 CPDefinitionVirtualSetting cpDefinitionVirtualSetting = (CPDefinitionVirtualSetting)request.getAttribute(CPDefinitionVirtualSettingWebKeys.COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING);
-
-CPDefinitionVirtualSettingItemSelectorHelper cpDefinitionVirtualSettingItemSelectorHelper = (CPDefinitionVirtualSettingItemSelectorHelper)request.getAttribute(CPWebKeys.DEFINITION_VIRTUAL_SETTING_ITEM_SELECTOR_HELPER);
 %>
 
 <aui:model-context bean="<%= cpDefinitionVirtualSetting %>" model="<%= CPDefinitionVirtualSetting.class %>" />

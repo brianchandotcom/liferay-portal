@@ -112,6 +112,10 @@ public class PortletTracker
 
 		Portlet portlet = _bundleContext.getService(serviceReference);
 
+		if (portlet == null) {
+			return null;
+		}
+
 		String portletName = (String)serviceReference.getProperty(
 			"javax.portlet.name");
 
@@ -173,6 +177,10 @@ public class PortletTracker
 
 		com.liferay.portal.kernel.model.Portlet newPortletModel = addingService(
 			serviceReference);
+
+		if (newPortletModel == null) {
+			return;
+		}
 
 		BeanPropertiesUtil.copyProperties(newPortletModel, portletModel);
 	}

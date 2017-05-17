@@ -667,7 +667,7 @@ public class AssetPublisherConfigurationAction
 
 		String[] extensions = actionRequest.getParameterValues("extensions");
 
-		if ((extensions.length == 1) &&
+		if (ArrayUtil.isNotEmpty(extensions) && (extensions.length == 1) &&
 			extensions[0].equals(Boolean.FALSE.toString())) {
 
 			extensions = new String[0];

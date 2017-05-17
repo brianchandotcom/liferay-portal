@@ -231,35 +231,6 @@ This change was made as part of the modularization efforts to ease portal
 configuration changes.
 
 ---------------------------------------
-
-### Removed indexation of fields 'ratings' and 'viewCount'
-- **Date:** 2017-May-16
-- **JIRA Ticket:** LPS-70724
-
-#### What changed?
-
-Fields 'ratings' and 'viewCount' are not longer indexed in BaseIndexer for AssetEntries objects
-
-#### Who is affected?
-
-Any custom code with index queries retrieving or sorting using that fields
-
-#### How should I update my code?
-
-There are several alternatives:
- - Use Liferay portlets "Highest rated assets" and "Most viewed assets"
- - Replace index query with a database query
- - Implement a Index Post Processor and add again both fields during indexation process
-
-#### Why was this change made?
-
-Ratings and viewCount database attributes are continuously updated by final users in case of rating or viewing a content, but indexation operations are only triggered in case of content is edited. So, both fields 'ratings' and 'viewCount' are not kept updated in index with same value than database.
-
-This behavior is not consistent and a bit confusing. Liferay always uses database attributes in order to sort by ratings or viewCount, so we decided to remove that fields to avoid future misunderstandings.
-
-Continuously updating that fields from database to index is not possible due to throughput problems.
-
----------------------------------------
 ### Standardize data attribute names passed into selectors
 - **Date:** 2016-Oct-26
 - **JIRA Ticket:** LPS-66646
@@ -297,3 +268,27 @@ New way:
 This change was made to standardize the data attribute names and allow the utility methods to accept standardized event parameters.
 
 ---------------------------------------
+### Removed indexation of fields 'ratings' and 'viewCount'
+- **Date:** 2017-May-16
+- **JIRA Ticket:** LPS-70724
+
+#### What changed?
+
+Fields 'ratings' and 'viewCount' are no longer indexed in BaseIndexer for AssetEntry objects.
+
+#### Who is affected?
+
+Any search related custom code where these fields are used in queries.
+
+#### How should I update my code?
+
+There are several alternatives:
+ - Use Liferay portlets "Highest rated assets" and "Most viewed assets"
+ - Replace index query with a database query
+ - Implement an IndexerPostProcessor to index these fields in certain documents
+
+#### Why was this change made?
+
+Keeping ratings and view count in the search index in sync with the database has a negative impact on the normal operation due to the significantly increased number of index write requests causing throughput issues and therefore performance degradation.
+
+In addition, the view count is not always up-to-date in the database either. This behavior is controlled by the _Buffered Increment_ mechanism. You can find more information about it in the `portal.properties`.

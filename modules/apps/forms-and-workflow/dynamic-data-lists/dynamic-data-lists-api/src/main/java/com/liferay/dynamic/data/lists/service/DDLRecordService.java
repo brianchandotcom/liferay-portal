@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -221,6 +222,17 @@ public interface DDLRecordService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	/**
+	* Returns all the records matching the record set ID
+	*
+	* @param recordSetId the record's record set ID
+	* @return the matching records
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecord> getRecords(long recordSetId)
+		throws PortalException;
 
 	/**
 	* Deletes the record and its resources.

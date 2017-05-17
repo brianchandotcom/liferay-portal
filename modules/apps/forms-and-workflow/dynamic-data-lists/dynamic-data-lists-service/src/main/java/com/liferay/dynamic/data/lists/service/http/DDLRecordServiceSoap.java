@@ -204,6 +204,28 @@ public class DDLRecordServiceSoap {
 	}
 
 	/**
+	* Returns all the records matching the record set ID
+	*
+	* @param recordSetId the record's record set ID
+	* @return the matching records
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSoap[] getRecords(
+		long recordSetId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> returnValue =
+				DDLRecordServiceUtil.getRecords(recordSetId);
+
+			return com.liferay.dynamic.data.lists.model.DDLRecordSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Reverts the record to a given version.
 	*
 	* @param recordId the primary key of the record

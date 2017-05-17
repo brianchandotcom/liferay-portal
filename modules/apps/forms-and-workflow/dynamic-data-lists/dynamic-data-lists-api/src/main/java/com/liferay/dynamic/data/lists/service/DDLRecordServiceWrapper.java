@@ -245,6 +245,20 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 	}
 
 	/**
+	* Returns all the records matching the record set ID
+	*
+	* @param recordSetId the record's record set ID
+	* @return the matching records
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
+		long recordSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordService.getRecords(recordSetId);
+	}
+
+	/**
 	* Deletes the record and its resources.
 	*
 	* @param recordId the primary key of the record to be deleted

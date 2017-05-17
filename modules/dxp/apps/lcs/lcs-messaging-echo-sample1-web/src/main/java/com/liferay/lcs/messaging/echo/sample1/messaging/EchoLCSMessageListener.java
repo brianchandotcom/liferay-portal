@@ -48,24 +48,24 @@ public class EchoLCSMessageListener implements LCSMessageListener {
 		String responseDestinationName =
 			messageBusMessage.getResponseDestinationName();
 
-		if (Validator.isNotNull(responseDestinationName)) {
-			MessageBusMessage responseMessageBusMessage =
-				new MessageBusMessage();
-
-			responseMessageBusMessage.setDestinationName(
-				responseDestinationName);
-			responseMessageBusMessage.setResponseId(
-				messageBusMessage.getResponseId());
-
-			StringBuilder sb = new StringBuilder(payload);
-
-			sb.reverse();
-
-			responseMessageBusMessage.setPayload(sb.toString());
-
-			_lcsMessageBusService.sendMessage(
-				responseDestinationName, responseMessageBusMessage);
+		if (Validator.isNull(responseDestinationName)) {
+			return;
 		}
+
+		MessageBusMessage responseMessageBusMessage = new MessageBusMessage();
+
+		responseMessageBusMessage.setDestinationName(responseDestinationName);
+		responseMessageBusMessage.setResponseId(
+			messageBusMessage.getResponseId());
+
+		StringBuilder sb = new StringBuilder(payload);
+
+		sb.reverse();
+
+		responseMessageBusMessage.setPayload(sb.toString());
+
+		_lcsMessageBusService.sendMessage(
+			responseDestinationName, responseMessageBusMessage);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

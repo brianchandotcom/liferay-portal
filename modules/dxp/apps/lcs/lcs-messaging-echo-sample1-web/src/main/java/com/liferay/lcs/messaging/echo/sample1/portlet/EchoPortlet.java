@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-			"com.liferay.portlet.display-category=category.sample",
+		"com.liferay.portlet.display-category=category.sample",
 		"javax.portlet.display-name=LCS Messaging Echo Sample1",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.info.keywords=LCS Messaging Echo Sample1",

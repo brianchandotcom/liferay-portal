@@ -25,10 +25,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -86,6 +87,27 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 
+		boolean useFileEntry = ParamUtil.getBoolean(
+			actionRequest, "useFileEntry");
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+		String url = ParamUtil.getString(actionRequest, "url");
+		String activationStatus = ParamUtil.getString(
+			actionRequest, "activationStatus");
+		long duration = ParamUtil.getLong(actionRequest, "duration");
+		int maxUsages = ParamUtil.getInteger(actionRequest, "maxUsages");
+		boolean useSampleFileEntry = ParamUtil.getBoolean(
+			actionRequest, "useSampleFileEntry");
+		long sampleFileEntryId = ParamUtil.getLong(
+			actionRequest, "sampleFileEntryId");
+		String sampleUrl = ParamUtil.getString(actionRequest, "sampleUrl");
+		boolean termsOfUseRequired = ParamUtil.getBoolean(
+			actionRequest, "termsOfUseRequired");
+		Map<Locale, String> termsOfUseContentMap =
+			LocalizationUtil.getLocalizationMap(
+				actionRequest, "termsOfUseContent");
+		long termsOfUseJournalArticleId = ParamUtil.getLong(
+			actionRequest, "termsOfUseJournalArticleId");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionVirtualSetting.class.getName(), actionRequest);
 
@@ -96,20 +118,26 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 			// Add commerce product definition virtual setting
 
 			cpDefinitionVirtualSetting =
-				_cpDefinitionVirtualSettingService.addCPDefinitionVirtualSetting(
-					cpDefinitionId, 0, "", "", 0, 0, 0, "", false,
-					new HashMap<Locale, String>(), 0, false, false,
-					serviceContext);
+				_cpDefinitionVirtualSettingService.
+					addCPDefinitionVirtualSetting(
+						cpDefinitionId, useFileEntry, fileEntryId, url,
+						activationStatus, duration, maxUsages,
+						useSampleFileEntry, sampleFileEntryId, sampleUrl,
+						termsOfUseRequired, termsOfUseContentMap,
+						termsOfUseJournalArticleId, serviceContext);
 		}
 		else {
 
 			// Update commerce product definition virtual setting
 
 			cpDefinitionVirtualSetting =
-				_cpDefinitionVirtualSettingService.updateCPDefinitionVirtualSetting(
-					cpDefinitionVirtualSettingId, 0, "", "", 0, 0, 0, "", false,
-					new HashMap<Locale, String>(), 0, false, false,
-					serviceContext);
+				_cpDefinitionVirtualSettingService.
+					updateCPDefinitionVirtualSetting(
+						cpDefinitionVirtualSettingId, useFileEntry, fileEntryId,
+						url, activationStatus, duration, maxUsages,
+						useSampleFileEntry, sampleFileEntryId, sampleUrl,
+						termsOfUseRequired, termsOfUseContentMap,
+						termsOfUseJournalArticleId, serviceContext);
 		}
 
 		return cpDefinitionVirtualSetting;

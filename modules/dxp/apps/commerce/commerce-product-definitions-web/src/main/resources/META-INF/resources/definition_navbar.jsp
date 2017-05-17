@@ -47,9 +47,9 @@ if (cpDefinition != null) {
 		/>
 
 		<c:if test="<%= cpDefinition != null %>">
-			<c:if test="<%= (cpType != null) && Validator.isNotNull(cpType.getCPDefinitionEditUrl(cpDefinitionId,request)) %>">
+			<c:if test="<%= (cpType != null) && Validator.isNotNull(cpType.getCPDefinitionEditUrl(cpDefinitionId, request)) %>">
 				<aui:nav-item
-					href="<%= cpType.getCPDefinitionEditUrl(cpDefinitionId,request) %>"
+					href="<%= cpType.getCPDefinitionEditUrl(cpDefinitionId, request) %>"
 					label="<%= cpType.getLabel(locale) %>"
 					selected="<%= toolbarItem.equals(cpType.getName()) %>"
 				/>

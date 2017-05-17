@@ -20,19 +20,19 @@ import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSett
 import com.liferay.commerce.product.type.virtual.web.internal.CPDefinitionVirtualSettingItemSelectorHelper;
 import com.liferay.commerce.product.type.virtual.web.internal.constants.CPDefinitionVirtualSettingWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -56,12 +56,16 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 		throws PortletException {
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher("/edit_definition_virtual_setting.jsp");
+			servletContext.getRequestDispatcher(
+				"/edit_definition_virtual_setting.jsp");
 
 		try {
-			long cpDefinitionId = ParamUtil.getLong(renderRequest,"cpDefinitionId");
+			long cpDefinitionId = ParamUtil.getLong(
+				renderRequest, "cpDefinitionId");
 
-			CPDefinitionVirtualSetting cpDefinitionVirtualSetting = _cpDefinitionVirtualSettingService.fetchCPDefinitionVirtualSetting(cpDefinitionId);
+			CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+				_cpDefinitionVirtualSettingService.
+					fetchCPDefinitionVirtualSetting(cpDefinitionId);
 
 			HttpServletRequest httpServletRequest =
 				PortalUtil.getHttpServletRequest(renderRequest);
@@ -70,33 +74,43 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 
-			renderRequest.setAttribute(CPDefinitionVirtualSettingWebKeys.COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING, cpDefinitionVirtualSetting);
+			renderRequest.setAttribute(
+				CPDefinitionVirtualSettingWebKeys.
+					COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING,
+				cpDefinitionVirtualSetting);
 
 			renderRequest.setAttribute(
 				CPDefinitionVirtualSettingWebKeys.
 					DEFINITION_VIRTUAL_SETTING_ITEM_SELECTOR_HELPER,
 				_cpDefinitionVirtualSettingItemSelectorHelper);
 
-			renderRequest.setAttribute("cpDefinitionServletContext", cpDefinitionServletContext);
+			renderRequest.setAttribute(
+				"cpDefinitionServletContext", cpDefinitionServletContext);
 		}
 		catch (Exception e) {
-			throw new PortletException
-				("Unable to include edit_definition_virtual_setting.jsp", e);
+			throw new PortletException(
+				"Unable to include edit_definition_virtual_setting.jsp", e);
 		}
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.virtual.web)")
-	protected ServletContext servletContext;
-
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)")
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"
+	)
 	protected ServletContext cpDefinitionServletContext;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.virtual.web)"
+	)
+	protected ServletContext servletContext;
 
 	@Reference
 	private CPDefinitionVirtualSettingItemSelectorHelper
 		_cpDefinitionVirtualSettingItemSelectorHelper;
 
 	@Reference
-	private CPDefinitionVirtualSettingService _cpDefinitionVirtualSettingService;
+	private CPDefinitionVirtualSettingService
+		_cpDefinitionVirtualSettingService;
+
 }

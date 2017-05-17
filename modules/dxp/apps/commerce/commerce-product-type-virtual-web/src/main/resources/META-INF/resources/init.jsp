@@ -19,7 +19,9 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+
+<%@
 taglib prefix="liferay-item-selector" uri="http://liferay.com/tld/item-selector" %>
 
 <%@ page import="com.liferay.commerce.product.type.virtual.exception.NoSuchCPDefinitionVirtualSettingException" %><%@

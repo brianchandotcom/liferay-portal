@@ -19,10 +19,10 @@ package com.liferay.commerce.product.type.virtual.web.internal.constants;
  */
 public class CPDefinitionVirtualSettingWebKeys {
 
-	public static final String DEFINITION_VIRTUAL_SETTING_ITEM_SELECTOR_HELPER =
-		"DEFINITION_VIRTUAL_SETTING_ITEM_SELECTOR_HELPER";
-
 	public static final String COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING =
 		"COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING";
+
+	public static final String DEFINITION_VIRTUAL_SETTING_ITEM_SELECTOR_HELPER =
+		"DEFINITION_VIRTUAL_SETTING_ITEM_SELECTOR_HELPER";
 
 }

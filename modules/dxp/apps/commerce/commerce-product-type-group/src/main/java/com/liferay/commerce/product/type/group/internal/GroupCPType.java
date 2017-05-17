@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marco Leo
@@ -38,7 +38,10 @@ import javax.servlet.http.HttpServletRequest;
 public class GroupCPType implements CPType {
 
 	@Override
-	public String getCPDefinitionEditUrl(long cpDefinitionId, HttpServletRequest httpServletRequest) throws PortalException {
+	public String getCPDefinitionEditUrl(
+			long cpDefinitionId, HttpServletRequest httpServletRequest)
+		throws PortalException {
+
 		return null;
 	}
 

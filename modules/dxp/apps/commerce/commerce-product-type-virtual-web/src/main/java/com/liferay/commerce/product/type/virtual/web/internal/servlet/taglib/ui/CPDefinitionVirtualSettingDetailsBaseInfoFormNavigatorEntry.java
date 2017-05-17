@@ -20,16 +20,17 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
 import java.io.IOException;
-import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -40,23 +41,6 @@ import javax.servlet.http.HttpServletResponse;
 )
 public class CPDefinitionVirtualSettingDetailsBaseInfoFormNavigatorEntry
 	extends BaseJSPFormNavigatorEntry<CPDefinitionVirtualSetting> {
-
-	@Override
-	public void include(
-			HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
-
-		RequestDispatcher requestDispatcher =
-				cpDefinitionVirtualSettingServletContext.getRequestDispatcher(getJspPath());
-
-		try {
-			requestDispatcher.include(request, response);
-		}
-		catch (ServletException se) {
-
-			throw new IOException("Unable to include " + getJspPath(), se);
-		}
-	}
 
 	@Override
 	public String getCategoryKey() {
@@ -81,11 +65,30 @@ public class CPDefinitionVirtualSettingDetailsBaseInfoFormNavigatorEntry
 	}
 
 	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		RequestDispatcher requestDispatcher =
+			cpDefinitionVirtualSettingServletContext.getRequestDispatcher(
+				getJspPath());
+
+		try {
+			requestDispatcher.include(request, response);
+		}
+		catch (ServletException se) {
+			throw new IOException("Unable to include " + getJspPath(), se);
+		}
+	}
+
+	@Override
 	protected String getJspPath() {
 		return "/definition_virtual_setting/base_information.jsp";
 	}
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.virtual.web)")
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.virtual.web)"
+	)
 	protected ServletContext cpDefinitionVirtualSettingServletContext;
 
 }

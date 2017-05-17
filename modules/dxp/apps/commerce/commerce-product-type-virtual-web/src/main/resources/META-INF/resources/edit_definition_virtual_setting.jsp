@@ -1,7 +1,4 @@
-<%@ page import="com.liferay.commerce.product.type.virtual.web.internal.VirtualCPType" %>
-<%@ page import="com.liferay.commerce.product.model.CPDefinition" %>
-<%@ page import="com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil" %>
-<%@ page import="javax.portlet.PortletURL" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -31,7 +28,7 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 <aui:form action="<%= editProductDefinitionVirtualSettingActionURL %>" method="post" name="fm1">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="cpDefinitionId" type="hidden"  />
+	<aui:input name="cpDefinitionId" type="hidden" />
 	<aui:input name="fileEntryId" type="hidden" />
 	<aui:input name="sampleFileEntryId" type="hidden" />
 	<aui:input name="termsOfUseJournalArticleId" type="hidden" />

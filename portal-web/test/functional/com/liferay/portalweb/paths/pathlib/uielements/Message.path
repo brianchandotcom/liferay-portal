@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>ERROR_3</td>
-	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-warning'))])</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-warning')) and (not(contains(@id,'warningMessage')))])</td>
 	<td></td>
 </tr>
 <tr>

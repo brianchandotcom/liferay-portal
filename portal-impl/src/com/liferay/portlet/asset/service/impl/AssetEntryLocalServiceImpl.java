@@ -422,13 +422,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		entry.setViewCount(entry.getViewCount() + increment);
 
 		assetEntryPersistence.update(entry);
-
-		try {
-			reindex(entry);
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
 	}
 
 	@Override

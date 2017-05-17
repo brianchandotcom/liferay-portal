@@ -1973,7 +1973,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			assetEntry = assetEntryLocalService.updateEntry(
 				userId, page.getGroupId(), page.getCreateDate(),
 				page.getModifiedDate(), WikiPage.class.getName(),
-				page.getPrimaryKey(), page.getUuid(), 0, assetCategoryIds,
+				page.getResourcePrimKey(), page.getUuid(), 0, assetCategoryIds,
 				assetTagNames, true, false, null, null, publishDate, null,
 				ContentTypes.TEXT_HTML, page.getTitle(), null, null, null, null,
 				0, 0, priority);

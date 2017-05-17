@@ -15,11 +15,14 @@
 package com.liferay.commerce.product.type.group.internal;
 
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
@@ -35,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 public class GroupCPType implements CPType {
 
 	@Override
-	public String getCPDefinitionEditUrl() {
+	public String getCPDefinitionEditUrl(long cpDefinitionId, HttpServletRequest httpServletRequest) throws PortalException {
 		return null;
 	}
 

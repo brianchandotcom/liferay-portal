@@ -12,16 +12,27 @@
  * details.
  */
 
-package com.liferay.commerce.product.type.virtual.internal;
+package com.liferay.commerce.product.type.virtual.web.internal;
 
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
+
+import javax.portlet.PortletURL;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
@@ -37,8 +48,22 @@ import org.osgi.service.component.annotations.Component;
 public class VirtualCPType implements CPType {
 
 	@Override
-	public String getCPDefinitionEditUrl() {
-		return null;
+	public String getCPDefinitionEditUrl(long cpDefinitionId, HttpServletRequest httpServletRequest) throws PortalException{
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				httpServletRequest, themeDisplay.getScopeGroup(),
+				CPDefinition.class.getName(), PortletProvider.Action.EDIT);
+
+		portletURL.setParameter(
+				"mvcRenderCommandName", "editProductDefinitionVirtualSetting");
+
+		portletURL.setParameter(
+				"cpDefinitionId", String.valueOf(cpDefinitionId));
+
+		return portletURL.toString();
 	}
 
 	@Override

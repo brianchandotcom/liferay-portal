@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.product.type;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
 /**
@@ -21,7 +24,7 @@ import java.util.Locale;
  */
 public interface CPType {
 
-	public String getCPDefinitionEditUrl();
+	public String getCPDefinitionEditUrl(long cpDefinitionId, HttpServletRequest httpServletRequest) throws PortalException;
 
 	public String getLabel(Locale locale);
 

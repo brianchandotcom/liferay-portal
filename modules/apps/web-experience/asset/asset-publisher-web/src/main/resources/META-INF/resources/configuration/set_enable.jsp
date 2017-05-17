@@ -81,52 +81,54 @@
 	</aui:col>
 </aui:row>
 
-<aui:row cssClass="panel-group">
-	<aui:col width="<%= 100 %>">
+<c:if test="<%= assetPublisherDisplayContext.isOpenOfficeServerEnabled() %>">
+	<aui:row cssClass="panel-group">
+		<aui:col width="<%= 100 %>">
 
-		<%
-		String[] conversions = DocumentConversionUtil.getConversions("html");
+			<%
+			String[] conversions = DocumentConversionUtil.getConversions("html");
 
-		int half = conversions.length / 2;
-		%>
+			int half = conversions.length / 2;
+			%>
 
-		<liferay-ui:panel collapsible="<%= false %>" extended="" helpMessage='<%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' markupView="lexicon" title="enable-conversion-to">
-			<aui:col width="<%= 50 %>">
+			<liferay-ui:panel collapsible="<%= false %>" extended="" helpMessage='<%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' markupView="lexicon" title="enable-conversion-to">
+				<aui:col width="<%= 50 %>">
 
-				<%
-				for (int k = 0; k < half; k++) {
-					String conversion = conversions[k];
-				%>
+					<%
+					for (int k = 0; k < half; k++) {
+						String conversion = conversions[k];
+					%>
 
-					<aui:row>
-						<aui:input checked="<%= ArrayUtil.contains(assetPublisherDisplayContext.getExtensions(), conversion) %>" disabled="<%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() %>" id='<%= "extensions" + conversion %>' inlineField="<%= true %>" label="<%= StringUtil.toUpperCase(conversion) %>" name="extensions" type="checkbox" value="<%= conversion %>" />
-					</aui:row>
+						<aui:row>
+							<aui:input checked="<%= ArrayUtil.contains(assetPublisherDisplayContext.getExtensions(), conversion) %>" id='<%= "extensions" + conversion %>' inlineField="<%= true %>" label="<%= StringUtil.toUpperCase(conversion) %>" name="extensions" type="checkbox" value="<%= conversion %>" />
+						</aui:row>
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
-			</aui:col>
+				</aui:col>
 
-			<aui:col width="<%= 50 %>">
+				<aui:col width="<%= 50 %>">
 
-				<%
-				for (int k = half; k < conversions.length; k++) {
-					String conversion = conversions[k];
-				%>
+					<%
+					for (int k = half; k < conversions.length; k++) {
+						String conversion = conversions[k];
+					%>
 
-					<aui:row>
-						<aui:input checked="<%= ArrayUtil.contains(assetPublisherDisplayContext.getExtensions(), conversion) %>" disabled="<%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() %>" id='<%= "extensions" + conversion %>' inlineField="<%= true %>" label="<%= StringUtil.toUpperCase(conversion) %>" name="extensions" type="checkbox" value="<%= conversion %>" />
-					</aui:row>
+						<aui:row>
+							<aui:input checked="<%= ArrayUtil.contains(assetPublisherDisplayContext.getExtensions(), conversion) %>" id='<%= "extensions" + conversion %>' inlineField="<%= true %>" label="<%= StringUtil.toUpperCase(conversion) %>" name="extensions" type="checkbox" value="<%= conversion %>" />
+						</aui:row>
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
-			</aui:col>
-		</liferay-ui:panel>
-	</aui:col>
-</aui:row>
+				</aui:col>
+			</liferay-ui:panel>
+		</aui:col>
+	</aui:row>
+</c:if>
 
 <br />
 

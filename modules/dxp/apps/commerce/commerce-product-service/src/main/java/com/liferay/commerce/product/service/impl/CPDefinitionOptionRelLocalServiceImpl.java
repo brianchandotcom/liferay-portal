@@ -119,6 +119,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		cpDefinitionOptionRelPersistence.update(cpDefinitionOptionRel);
 
+		// Commerce product definition option value rels
+
 		if (importOptionValue) {
 			cpDefinitionOptionValueRelLocalService.importCPDefinitionOptionRels(
 				cpDefinitionOptionRelId, serviceContext);

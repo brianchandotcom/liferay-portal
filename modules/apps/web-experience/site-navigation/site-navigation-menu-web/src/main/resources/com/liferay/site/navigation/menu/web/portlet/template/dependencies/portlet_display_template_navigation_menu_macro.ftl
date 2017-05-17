@@ -27,9 +27,9 @@
 
 				<li class="${nav_item_css_class}" ${nav_item_attr_selected}>
 					<#if navItem.isBrowsable()>
-						<a class="${nav_item_css_class}" href="${navItem.getRegularURL()!""}" ${navItem.getTarget()}>${htmlUtil.escape(navItem.getName())}</a>
+						<a class="${nav_item_css_class}" href="${navItem.getRegularURL()!""}" ${navItem.getTarget()}>${navItem.getName()}</a>
 					<#else>
-						${htmlUtil.escape(navItem.getName())}
+						${navItem.getName()}
 					</#if>
 
 					<#if includeAllChildNavItems || navItem.isInNavigation(branchNavItems)>

@@ -41,8 +41,8 @@ import java.util.List;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Marcellus Tavares
- * @author Manuel de la Peña
+ * @author     Marcellus Tavares
+ * @author     Manuel de la Peña
  * @deprecated As of 1.1.0, with no direct replacement
  */
 @Deprecated

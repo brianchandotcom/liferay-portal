@@ -19,8 +19,8 @@ Correct formatting:
 ### **Exceptions** ###
 
 We do allow chaining on Mockito methods in our test classes and on variables
-that are a stream or a builder. In these cases we apply the following formatting
-rules:
+that are a builder, optional or stream. In these cases we apply the following
+formatting rules:
 
     Stream<User> usersStream = users.stream();
 

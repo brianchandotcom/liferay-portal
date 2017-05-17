@@ -257,7 +257,7 @@ Ratings and viewCount database attributes are continuously updated by final user
 
 This behavior is not consistent and a bit confusing. Liferay always uses database attributes in order to sort by ratings or viewCount, so we decided to remove that fields to avoid future misunderstandings.
 
-Continuously updating that fields from database to index is not possible due to throughput problems. 
+Continuously updating that fields from database to index is not possible due to throughput problems.
 
 ---------------------------------------
 ### Standardize data attribute names passed into selectors

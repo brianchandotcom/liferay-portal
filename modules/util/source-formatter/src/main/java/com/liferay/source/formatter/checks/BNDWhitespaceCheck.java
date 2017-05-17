@@ -38,6 +38,8 @@ public class BNDWhitespaceCheck extends WhitespaceCheck {
 
 		content = _formatWhitespace(shortFileName, content);
 
+		content = StringUtil.replace(content, "\t ", "\t");
+
 		return super.doProcess(fileName, absolutePath, content);
 	}
 

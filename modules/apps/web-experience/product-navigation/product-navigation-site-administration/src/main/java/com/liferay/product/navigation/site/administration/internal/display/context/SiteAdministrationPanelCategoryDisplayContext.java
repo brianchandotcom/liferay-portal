@@ -182,7 +182,7 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			}
 			catch (PortalException pe) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe);
+					_log.debug("Error getting live group url", pe);
 				}
 
 				_log.error(pe.getMessage());

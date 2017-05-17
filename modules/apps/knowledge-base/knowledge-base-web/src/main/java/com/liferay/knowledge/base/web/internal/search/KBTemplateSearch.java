@@ -82,7 +82,7 @@ public class KBTemplateSearch extends SearchContainer<KBTemplate> {
 			setOrderByComparator(orderByComparator);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error setting up kb template search", e);
 		}
 	}
 

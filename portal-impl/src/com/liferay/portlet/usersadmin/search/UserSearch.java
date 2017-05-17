@@ -149,7 +149,7 @@ public class UserSearch extends SearchContainer<User> {
 			setOrderByComparator(orderByComparator);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error setting up user search", e);
 		}
 	}
 

@@ -192,7 +192,7 @@ public class AssetDisplayTag extends IncludeTag {
 			}
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error including asset renderer template", e);
 		}
 
 		super.includePage(

@@ -42,7 +42,7 @@ public class ServicePostAction extends Action {
 			}*/
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 	}
 

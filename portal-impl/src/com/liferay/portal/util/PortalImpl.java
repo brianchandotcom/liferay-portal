@@ -3292,7 +3292,7 @@ public class PortalImpl implements Portal {
 					inheritLocales = LanguageUtil.isInheritLocales(groupId);
 				}
 				catch (PortalException pe) {
-					_log.error(pe);
+					_log.error("Error checking inherit locales flag", pe);
 				}
 
 				if (!inheritLocales) {

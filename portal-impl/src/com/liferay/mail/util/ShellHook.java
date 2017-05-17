@@ -132,7 +132,7 @@ public class ShellHook implements Hook {
 			future.get();
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error invoking shell command " + cmdLine[0], e);
 		}
 	}
 

@@ -947,7 +947,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * Returns true if the layout matching the UUID, group, and privacy.
+	 * Returns true if there is a matching layout for UUID, groupId and
+	 * privateLayout
 	 *
 	 * @param  uuid the layout's UUID
 	 * @param  groupId the primary key of the group
@@ -957,9 +958,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	@Override
 	public boolean hasLayout(String uuid, long groupId, boolean privateLayout)
 		throws PortalException {
-
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return layoutLocalService.hasLayout(uuid, groupId, privateLayout);
 	}

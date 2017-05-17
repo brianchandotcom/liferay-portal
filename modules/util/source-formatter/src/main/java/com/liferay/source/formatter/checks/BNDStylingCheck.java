@@ -14,8 +14,10 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,6 +39,7 @@ public class BNDStylingCheck extends BaseFileCheck {
 
 		content = _fixTrailingSemiColon(content);
 
+		content = _formatMultipleValuesOnSingleLine(content);
 		content = _formatSingleValueOnMultipleLines(content);
 
 		return content;
@@ -65,6 +68,41 @@ public class BNDStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private String _formatMultipleValuesOnSingleLine(String content) {
+		Matcher matcher = _multipleValuesOnSingleLinePattern.matcher(content);
+
+		while (matcher.find()) {
+			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
+				continue;
+			}
+
+			int x = content.lastIndexOf(CharPool.NEW_LINE, matcher.start());
+
+			String s = content.substring(x + 1, matcher.start());
+
+			if (s.contains("-Description: ")) {
+				continue;
+			}
+
+			content = StringUtil.insert(content, "\\\n\t", matcher.start() + 1);
+
+			if (s.startsWith(StringPool.TAB)) {
+				return content;
+			}
+
+			x = content.indexOf(": ", x + 1);
+
+			if ((x == -1) || (x > matcher.start())) {
+				continue;
+			}
+
+			return StringUtil.replaceFirst(
+				content, StringPool.SPACE, "\\\n\t", x);
+		}
+
+		return content;
+	}
+
 	private String _formatSingleValueOnMultipleLines(String content) {
 		Matcher matcher = _singleValueOnMultipleLinesPattern.matcher(content);
 
@@ -78,6 +116,8 @@ public class BNDStylingCheck extends BaseFileCheck {
 
 	private final Pattern _incorrectIndentPattern = Pattern.compile(
 		"\n[^\t].*:\\\\\n(\t{2,})[^\t]");
+	private final Pattern _multipleValuesOnSingleLinePattern = Pattern.compile(
+		",(?!\\\\\n).");
 	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
 		"\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
 	private final Pattern _trailingSemiColonPattern = Pattern.compile(

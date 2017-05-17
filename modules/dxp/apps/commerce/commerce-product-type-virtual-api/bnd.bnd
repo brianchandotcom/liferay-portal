@@ -1,3 +1,10 @@
 Bundle-Name: Liferay Commerce Product Type Virtual API
 Bundle-SymbolicName: com.liferay.commerce.product.type.virtual.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.product.type.virtual.exception,\
+	com.liferay.commerce.product.type.virtual.model,\
+	com.liferay.commerce.product.type.virtual.service,\
+	com.liferay.commerce.product.type.virtual.service.persistence
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

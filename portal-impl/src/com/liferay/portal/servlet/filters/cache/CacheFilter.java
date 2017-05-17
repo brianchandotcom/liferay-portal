@@ -248,12 +248,12 @@ public class CacheFilter extends BasePortalFilter {
 			return layout.getPlid();
 		}
 		catch (NoSuchLayoutException nsle) {
-			_log.warn(nsle);
+			_log.warn("No such layout", nsle);
 
 			return 0;
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error fetching friendly url layout", e);
 
 			return 0;
 		}

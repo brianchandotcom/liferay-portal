@@ -171,7 +171,7 @@ public class PortletPreferencesServiceImpl
 			targetPreferences.store();
 		}
 		catch (IOException ioe) {
-			_log.error(ioe);
+			_log.error("Error copying preferences", ioe);
 		}
 		catch (ValidatorException ve) {
 			throw new SystemException(ve);

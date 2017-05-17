@@ -88,7 +88,7 @@ public class OmniadminImpl implements Omniadmin {
 				RoleConstants.ADMINISTRATOR, true);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error checking omniadmin", e);
 
 			return false;
 		}

@@ -132,7 +132,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 				PrincipalThreadLocal.getUserId(), this, true);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error getting document stream", e);
 		}
 
 		return inputStream;
@@ -147,7 +147,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 				PrincipalThreadLocal.getUserId(), this, true);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error getting document stream", e);
 		}
 
 		return inputStream;

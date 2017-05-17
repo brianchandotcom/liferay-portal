@@ -1575,7 +1575,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error authenticating", e);
 		}
 
 		return false;

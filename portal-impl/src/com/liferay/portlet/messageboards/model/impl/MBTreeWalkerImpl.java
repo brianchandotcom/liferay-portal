@@ -78,7 +78,7 @@ public class MBTreeWalkerImpl implements MBTreeWalker {
 			}
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error intializing tree walker", e);
 		}
 
 		_messages = messages;

@@ -91,7 +91,7 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 			}
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error checking permission", e);
 		}
 
 		return false;

@@ -184,7 +184,7 @@ public class PanelAppTag extends BasePanelTag {
 				portletURL = _panelApp.getPortletURL(request);
 			}
 			catch (PortalException pe) {
-				_log.error(pe);
+				_log.error("Error getting portlet url", pe);
 			}
 
 			_url = portletURL.toString();

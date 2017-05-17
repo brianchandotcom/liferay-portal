@@ -47,7 +47,7 @@ public class PanelContentTag extends BasePanelTag {
 			}
 		}
 		catch (IOException ioe) {
-			_log.error(ioe);
+			_log.error("Error including panel content", ioe);
 		}
 
 		return super.doEndTag();

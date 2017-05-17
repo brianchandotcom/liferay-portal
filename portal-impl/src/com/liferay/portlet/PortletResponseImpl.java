@@ -666,7 +666,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 						new Object[] {this, plid, lifecycle});
 				}
 				catch (Exception e) {
-					_log.error(e);
+					_log.error("Error creating portlet url", e);
 				}
 			}
 		}

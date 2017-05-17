@@ -49,7 +49,7 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.LITERAL_CATCH};
+		return new int[] {TokenTypes.LITERAL_CATCH, TokenTypes.LITERAL_NEW};
 	}
 
 	@Override
@@ -65,12 +65,19 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 			return;
 		}
 
+		if (detailAST.getType() == TokenTypes.LITERAL_CATCH) {
+			_checkUnprocessedException(detailAST);
+		}
+		else {
+			_checkUnprocessedThrownException(detailAST);
+		}
+	}
+
+	private void _checkUnprocessedException(DetailAST detailAST) {
 		DetailAST parameterDefAST = detailAST.findFirstToken(
 			TokenTypes.PARAMETER_DEF);
 
 		String exceptionVariableName = _getName(parameterDefAST);
-
-		_checkUnthrownException(detailAST, exceptionVariableName);
 
 		if (_containsVariable(
 				detailAST.findFirstToken(TokenTypes.SLIST),
@@ -145,32 +152,47 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 		}
 	}
 
-	private void _checkUnthrownException(
-		DetailAST detailAST, String variableName) {
+	private void _checkUnprocessedThrownException(DetailAST detailAST) {
+		String name = _getName(detailAST);
 
-		List<DetailAST> literalNewASTList = DetailASTUtil.getAllChildTokens(
-			detailAST, true, TokenTypes.LITERAL_NEW);
+		if ((name == null) || !name.endsWith("Exception")) {
+			return;
+		}
 
-		for (DetailAST literalNewAST : literalNewASTList) {
-			String name = _getName(literalNewAST);
+		DetailAST parentAST = detailAST.getParent();
 
-			if ((name == null) || !name.endsWith("Exception")) {
-				continue;
+		if (parentAST.getType() != TokenTypes.EXPR) {
+			return;
+		}
+
+		DetailAST exprAST = parentAST;
+
+		while (true) {
+			if (parentAST == null) {
+				return;
 			}
 
-			DetailAST parentAST = literalNewAST.getParent();
-
-			if (parentAST.getType() != TokenTypes.EXPR) {
-				continue;
+			if (parentAST.getType() == TokenTypes.LITERAL_CATCH) {
+				break;
 			}
 
 			parentAST = parentAST.getParent();
+		}
 
-			if (parentAST.getType() == TokenTypes.SLIST) {
-				log(
-					literalNewAST.getLineNo(), MSG_UNPROCESSED_EXCEPTION,
-					variableName);
-			}
+		DetailAST parameterDefAST = parentAST.findFirstToken(
+			TokenTypes.PARAMETER_DEF);
+
+		String exceptionVariableName = _getName(parameterDefAST);
+
+		parentAST = exprAST.getParent();
+
+		if ((parentAST.getType() == TokenTypes.SLIST) ||
+			((parentAST.getType() == TokenTypes.LITERAL_THROW) &&
+			 !_containsVariable(parentAST, exceptionVariableName))) {
+
+			log(
+				detailAST.getLineNo(), MSG_UNPROCESSED_EXCEPTION,
+				exceptionVariableName);
 		}
 	}
 

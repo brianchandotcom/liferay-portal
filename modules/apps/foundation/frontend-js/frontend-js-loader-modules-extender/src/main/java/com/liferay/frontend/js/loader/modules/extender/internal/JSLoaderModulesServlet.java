@@ -14,7 +14,12 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.npm.NPMRegistry;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -95,6 +100,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		printWriter.println("Liferay.PATHS = {");
 
 		String delimiter = "";
+		String delimiter2 = "";
 		Set<String> processedNames = new HashSet<>();
 
 		Collection<JSLoaderModule> jsLoaderModules =
@@ -122,6 +128,21 @@ public class JSLoaderModulesServlet extends HttpServlet {
 				printWriter.write(jsLoaderModule.getContextPath());
 				printWriter.write("'");
 			}
+
+			delimiter = ",\n";
+		}
+
+		Collection<JSModule> resolvedJSModules =
+			_npmRegistry.getResolvedJSModules();
+
+		for (JSModule resolvedJSModule : resolvedJSModules) {
+			printWriter.write(delimiter);
+			printWriter.write("'");
+			printWriter.write(resolvedJSModule.getResolvedId());
+			printWriter.write("': '");
+			printWriter.write(_portal.getPathProxy());
+			printWriter.write(resolvedJSModule.getResolvedURL());
+			printWriter.write("'");
 
 			delimiter = ",\n";
 		}
@@ -160,6 +181,65 @@ public class JSLoaderModulesServlet extends HttpServlet {
 			}
 		}
 
+		for (JSModule resolvedJSModule : resolvedJSModules) {
+			printWriter.write(delimiter);
+			printWriter.write("\"");
+			printWriter.write(resolvedJSModule.getResolvedId());
+			printWriter.write("\": {\n");
+
+			delimiter2 = "";
+
+			printWriter.write("  \"dependencies\": [");
+
+			for (String dependency : resolvedJSModule.getDependencies()) {
+				printWriter.write(delimiter2);
+				printWriter.write("\"" + dependency + "\"");
+
+				delimiter2 = ", ";
+			}
+
+			printWriter.write("],\n");
+
+			JSPackage jsPackage = resolvedJSModule.getJSPackage();
+
+			delimiter2 = "";
+
+			printWriter.write("  \"map\": {");
+
+			for (String dependencyPackageName :
+					resolvedJSModule.getDependencyPackageNames()) {
+
+				JSPackageDependency jsPackageDependency =
+					jsPackage.getJSPackageDependency(dependencyPackageName);
+
+				if (jsPackageDependency != null) {
+					JSPackage jsDependencyPackage =
+						_npmRegistry.resolveJSPackageDependency(
+							jsPackageDependency);
+
+					printWriter.write(delimiter2);
+
+					printWriter.write("\"");
+					printWriter.write(jsDependencyPackage.getName());
+					printWriter.write("\": ");
+
+					printWriter.write("\"");
+					printWriter.write(jsDependencyPackage.getName());
+					printWriter.write(StringPool.AT);
+					printWriter.write(jsDependencyPackage.getVersion());
+					printWriter.write("\"");
+
+					delimiter2 = ", ";
+				}
+			}
+
+			printWriter.write("}\n");
+
+			printWriter.write("}");
+
+			delimiter = ",\n";
+		}
+
 		printWriter.println("\n};");
 		printWriter.println("Liferay.MAPS = {");
 
@@ -193,6 +273,23 @@ public class JSLoaderModulesServlet extends HttpServlet {
 			}
 		}
 
+		for (JSPackage jsPackage : _npmRegistry.getJSPackages()) {
+			printWriter.write(delimiter);
+			printWriter.write("'");
+			printWriter.write(jsPackage.getName());
+			printWriter.write(StringPool.AT);
+			printWriter.write(jsPackage.getVersion());
+			printWriter.write("': { value: '");
+			printWriter.write(jsPackage.getName());
+			printWriter.write(StringPool.AT);
+			printWriter.write(jsPackage.getVersion());
+			printWriter.write(StringPool.SLASH);
+			printWriter.write(jsPackage.getMainModuleName());
+			printWriter.write("', exactMatch: true}");
+
+			delimiter = ",\n";
+		}
+
 		printWriter.println("\n};");
 
 		printWriter.println(
@@ -214,10 +311,16 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		_jsLoaderModulesTracker = jsLoaderModulesTracker;
 	}
 
+	@Reference(unbind = "-")
+	protected void setNPMRegistry(NPMRegistry npmRegistry) {
+		_npmRegistry = npmRegistry;
+	}
+
 	private ComponentContext _componentContext;
 	private volatile Details _details;
 	private JSLoaderModulesTracker _jsLoaderModulesTracker;
 	private Logger _logger;
+	private NPMRegistry _npmRegistry;
 
 	@Reference
 	private Portal _portal;

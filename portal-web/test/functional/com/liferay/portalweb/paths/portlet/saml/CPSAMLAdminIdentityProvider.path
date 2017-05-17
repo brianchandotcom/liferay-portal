@@ -26,42 +26,42 @@
 <!--IDENTITY_PROVIDER-->
 <tr>
 	<td>IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX</td>
-	<td>//input[contains(@id,'samlportlet_saml-sign-metadata')]</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_saml-sign-metadata')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>IDENTITY_PROVIDER_SSL_REQUIRED_CHECKBOX</td>
-	<td>//input[contains(@id,'samlportlet_saml-ssl-required')]</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_saml-ssl-required')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>IDENTITY_PROVIDER_AUTH_REQUEST_SIGNATURE_REQUIRED_CHECKBOX</td>
-	<td>//input[contains(@id,'samlportlet_saml-idp-authn-request-signature-required')]</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_saml-idp-authn-request-signature-required')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>IDENTITY_PROVIDER_NAME_IDENTIFIER_FORMAT_SELECT</td>
-	<td>//select[contains(@id,'samlportlet_saml-idp-metadata-name-id-format')]</td>
+	<td>//select[contains(@id,'SamlAdminPortlet_saml-idp-metadata-name-id-format')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>IDENTITY_PROVIDER_NAME_IDENTIFIER_ATTRIBUTE_NAME_FIELD</td>
-	<td>//input[contains(@id,'samlportlet_saml-idp-metadata-name-id-attribute')]</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_saml-idp-metadata-name-id-attribute')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>IDENTITY_PROVIDER_ATTRIBUTES_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'samlportlet_saml-idp-metadata-attributes-enabled')]</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_saml-idp-metadata-attributes-enabled')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>IDENTITY_PROVIDER_ATTRIBUTES_NAMESPACE_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'samlportlet_saml-idp-metadata-attributes-namespace-enabled')]</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_saml-idp-metadata-attributes-namespace-enabled')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>IDENTITY_PROVIDER_ATTRIBUTES_TEXTAREA</td>
-	<td>//textarea[contains(@id,'samlportlet_saml-idp-metadata-attribute-names')]</td>
+	<td>//textarea[contains(@id,'SamlAdminPortlet_saml-idp-metadata-attribute-names')]</td>
 	<td></td>
 </tr>
 </tbody>

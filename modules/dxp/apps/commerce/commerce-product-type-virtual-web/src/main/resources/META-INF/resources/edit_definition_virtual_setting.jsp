@@ -17,55 +17,28 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPDefinitionVirtualSetting cpDefinitionVirtualSetting = (CPDefinitionVirtualSetting)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING);
+CPDefinitionVirtualSetting cpDefinitionVirtualSetting = (CPDefinitionVirtualSetting)request.getAttribute(CPDefinitionVirtualSettingWebKeys.COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING);
 
-long fileEntryId = BeanParamUtil.getLong(cpDefinitionVirtualSetting, request, "fileEntryId");
+String redirect = ParamUtil.getString(request, "redirect");
 
-boolean fileEntry = ParamUtil.getBoolean(request, "fileEntry", false);
+String backURL = ParamUtil.getString(request, "backURL", redirect);
 %>
 
 <portlet:actionURL name="editProductDefinitionVirtualSetting" var="editProductDefinitionVirtualSettingActionURL" />
 
-<aui:form action="<%= editProductDefinitionVirtualSettingActionURL %>" method="post" name="fm">
+<aui:form action="<%= editProductDefinitionVirtualSettingActionURL %>" method="post" name="fm1">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="cpDefinitionId" type="hidden" />
+	<aui:input name="fileEntryId" type="hidden" />
+	<aui:input name="sampleFileEntryId" type="hidden" />
+	<aui:input name="termsOfUseJournalArticleId" type="hidden" />
 
-	<div class="lfr-form-content">
-		<aui:model-context bean="<%= cpDefinitionVirtualSetting %>" model="<%= CPDefinitionVirtualSetting.class %>" />
-
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<portlet:actionURL name="uploadCPDefinitionVirtualSetting" var="uploadCPDefinitionVirtualSettingURL" />
-
-				<div class="lfr-definition-virtual-setting-image-selector">
-
-					<%
-					String itemEventName = liferayPortletResponse.getNamespace() + "selectedItem";
-					%>
-
-					<liferay-item-selector:repository-entry-browser draggableImage="vertical" fileEntryId="<%= fileEntryId %>" itemSelectorEventName="<%= itemEventName %>" itemSelectorURL="" maxFileSize="<%= PropsValues.DL_FILE_MAX_SIZE %>" paramName="CPDefinitionVirtualSettingFileEntry" uploadURL="<%= uploadCPDefinitionVirtualSettingURL %>" %>' />
-				</div>
-
-				<aui:input dateTogglerCheckboxLabel="use-url" disabled="<%= !fileEntry %>" formName="fm" name="url" />
-
-				<aui:input name="" />
-
-				<aui:input name="" />
-
-				<aui:input name="" />
-
-				<aui:input name="" />
-
-				<aui:input name="" />
-
-				<aui:input name="" />
-
-				<aui:input name="" />
-
-				<aui:input name="" />
-
-				<aui:input name="" />
-			</aui:fieldset>
-		</aui:fieldset-group>
+	<div class="lfr-form-content" id="<portlet:namespace />fileEntryContainer">
+		<liferay-ui:form-navigator
+			backURL="<%= backURL %>"
+			formModelBean="<%= cpDefinitionVirtualSetting %>"
+			id="<%= CPDefinitionVirtualSettingFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING %>"
+			markupView="lexicon"
+		/>
 	</div>
 </aui:form>

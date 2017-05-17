@@ -14,11 +14,20 @@
 
 package com.liferay.commerce.product.type.virtual.web.internal.portlet;
 
-import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.type.virtual.web.internal.CPDefinitionVirtualSettingItemSelectorHelper;
+import com.liferay.commerce.product.type.virtual.web.internal.constants.CPDefinitionVirtualSettingPortletKeys;
+import com.liferay.commerce.product.type.virtual.web.internal.constants.CPDefinitionVirtualSettingWebKeys;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -28,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-commerce-product-type-virtual",
-		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.display-category=prova",
 		"com.liferay.portlet.layout-cacheable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.preferences-unique-per-layout=false",
@@ -36,15 +45,33 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.scopeable=true",
-		"javax.portlet.display-name=Virtual Products",
+		"javax.portlet.display-name=Virtual Settings",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.view-template=/edit_definition_virtual_setting.jsp",
-		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTINGS,
+		"javax.portlet.name=" + CPDefinitionVirtualSettingPortletKeys.COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTINGS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = {CPDefinitionVirtualSettingsPortlet.class, Portlet.class}
 )
-public class CPDefinitionVirtualSettingsPortlet {
+public class CPDefinitionVirtualSettingsPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			CPDefinitionVirtualSettingWebKeys.
+				DEFINITION_VIRTUAL_SETTING_ITEM_SELECTOR_HELPER,
+			_cpDefinitionVirtualSettingItemSelectorHelper);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private CPDefinitionVirtualSettingItemSelectorHelper
+		_cpDefinitionVirtualSettingItemSelectorHelper;
+
 }

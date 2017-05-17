@@ -958,21 +958,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public boolean hasLayout(String uuid, long groupId, boolean privateLayout)
 		throws PortalException {
 
-		try {
-			getLayoutByUuidAndGroupId(uuid, groupId, privateLayout);
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-			return true;
-		}
-		catch (NoSuchLayoutException nsle) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsle, nsle);
-			}
-		}
-
-		return false;
+		return layoutLocalService.hasLayout(uuid, groupId, privateLayout);
 	}
 
 	/**

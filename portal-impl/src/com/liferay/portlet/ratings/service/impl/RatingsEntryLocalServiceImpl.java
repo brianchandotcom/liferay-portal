@@ -91,8 +91,6 @@ public class RatingsEntryLocalServiceImpl
 
 		ratingsStatsPersistence.update(stats);
 
-		// Indexer
-
 		reindex(stats);
 	}
 
@@ -183,8 +181,6 @@ public class RatingsEntryLocalServiceImpl
 
 			ratingsStatsPersistence.update(stats);
 
-			// Indexer
-
 			reindex(stats);
 		}
 		else {
@@ -214,8 +210,6 @@ public class RatingsEntryLocalServiceImpl
 				stats.getTotalScore() / stats.getTotalEntries());
 
 			ratingsStatsPersistence.update(stats);
-
-			// Indexer
 
 			reindex(stats);
 		}

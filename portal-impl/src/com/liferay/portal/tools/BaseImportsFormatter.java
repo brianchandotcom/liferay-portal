@@ -35,6 +35,11 @@ import java.util.regex.Pattern;
 public abstract class BaseImportsFormatter implements ImportsFormatter {
 
 	@Override
+	public String format(String content) throws IOException {
+		return doFormat(content, null, null, null);
+	}
+
+	@Override
 	public String format(String content, Pattern importPattern)
 		throws IOException {
 

@@ -23,6 +23,8 @@ import java.util.regex.Pattern;
  */
 public interface ImportsFormatter {
 
+	public String format(String content) throws IOException;
+
 	public String format(String content, Pattern importPattern)
 		throws IOException;
 

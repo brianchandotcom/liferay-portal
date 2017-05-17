@@ -1675,8 +1675,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			layoutLocalService.getLayoutByUuidAndGroupId(
-				uuid, groupId, privateLayout);
+			getLayoutByUuidAndGroupId(uuid, groupId, privateLayout);
 
 			return true;
 		}

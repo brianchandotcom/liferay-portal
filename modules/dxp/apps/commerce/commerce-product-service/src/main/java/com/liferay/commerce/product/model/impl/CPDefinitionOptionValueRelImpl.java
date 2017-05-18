@@ -16,14 +16,27 @@ package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
 @ProviderType
 public class CPDefinitionOptionValueRelImpl
 	extends CPDefinitionOptionValueRelBaseImpl {
 
 	public CPDefinitionOptionValueRelImpl() {
+	}
+
+	@Override
+	public CPDefinitionOptionRel getCPDefinitionOptionRel()
+		throws PortalException {
+
+		return CPDefinitionOptionRelLocalServiceUtil.getCPDefinitionOptionRel(
+			getCPDefinitionOptionRelId());
 	}
 
 }

@@ -16,18 +16,25 @@ package com.liferay.gogo.shell.web.internal.portlet;
 
 import com.liferay.gogo.shell.web.internal.constants.GogoShellPortletKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 import java.io.PrintStream;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -69,6 +76,9 @@ public class GogoShellPortlet extends MVCPortlet {
 
 		String command = ParamUtil.getString(actionRequest, "command");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		CommandSession commandSession = null;
 
 		UnsyncByteArrayOutputStream outputUnsyncByteArrayOutputStream =
@@ -83,6 +93,8 @@ public class GogoShellPortlet extends MVCPortlet {
 
 		try {
 			SessionMessages.add(actionRequest, "command", command);
+
+			checkCommand(command, themeDisplay);
 
 			commandSession = _commandProcessor.createSession(
 				null, outputPrintStream, errorPrintStream);
@@ -124,6 +136,20 @@ public class GogoShellPortlet extends MVCPortlet {
 		super.processAction(actionRequest, actionResponse);
 	}
 
+	protected void checkCommand(String command, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (StringUtil.startsWith(command, "exit")) {
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(
+					themeDisplay.getLocale());
+
+			throw new Exception(
+				LanguageUtil.format(
+					resourceBundle, "the-command-x-is-not-supported", command));
+		}
+	}
+
 	protected void checkOmniAdmin() throws PortletException {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -141,5 +167,8 @@ public class GogoShellPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(bundle.symbolic.name=com.liferay.gogo.shell.web)")
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

@@ -90,8 +90,8 @@ public interface WeDeployAuthAppLocalService extends BaseLocalService,
 	public WeDeployAuthApp addWeDeployAuthApp(WeDeployAuthApp weDeployAuthApp);
 
 	public WeDeployAuthApp addWeDeployAuthApp(long userId,
-		java.lang.String name, ServiceContext serviceContext)
-		throws PortalException;
+		java.lang.String name, java.lang.String redirectURI,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new we deploy auth app with the primary key. Does not add the we deploy auth app to the database.

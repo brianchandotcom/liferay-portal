@@ -6,6 +6,7 @@ create table WeDeployAuth_WeDeployAuthApp (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
+	redirectURI VARCHAR(75) null,
 	clientId VARCHAR(75) null,
 	clientSecret VARCHAR(75) null
 );

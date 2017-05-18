@@ -65,6 +65,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
+		attributes.put("redirectURI", getRedirectURI());
 		attributes.put("clientId", getClientId());
 		attributes.put("clientSecret", getClientSecret());
 
@@ -113,6 +114,12 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String redirectURI = (String)attributes.get("redirectURI");
+
+		if (redirectURI != null) {
+			setRedirectURI(redirectURI);
 		}
 
 		String clientId = (String)attributes.get("clientId");
@@ -211,6 +218,16 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	@Override
 	public java.lang.String getName() {
 		return _weDeployAuthApp.getName();
+	}
+
+	/**
+	* Returns the redirect uri of this we deploy auth app.
+	*
+	* @return the redirect uri of this we deploy auth app
+	*/
+	@Override
+	public java.lang.String getRedirectURI() {
+		return _weDeployAuthApp.getRedirectURI();
 	}
 
 	/**
@@ -407,6 +424,16 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_weDeployAuthApp.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the redirect uri of this we deploy auth app.
+	*
+	* @param redirectURI the redirect uri of this we deploy auth app
+	*/
+	@Override
+	public void setRedirectURI(java.lang.String redirectURI) {
+		_weDeployAuthApp.setRedirectURI(redirectURI);
 	}
 
 	/**

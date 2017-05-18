@@ -41,6 +41,58 @@ public interface WeDeployAuthAppPersistence extends BasePersistence<WeDeployAuth
 	 */
 
 	/**
+	* Returns the we deploy auth app where redirectURI = &#63; and clientId = &#63; or throws a {@link NoSuchAppException} if it could not be found.
+	*
+	* @param redirectURI the redirect uri
+	* @param clientId the client ID
+	* @return the matching we deploy auth app
+	* @throws NoSuchAppException if a matching we deploy auth app could not be found
+	*/
+	public WeDeployAuthApp findByRU_CI(java.lang.String redirectURI,
+		java.lang.String clientId) throws NoSuchAppException;
+
+	/**
+	* Returns the we deploy auth app where redirectURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param redirectURI the redirect uri
+	* @param clientId the client ID
+	* @return the matching we deploy auth app, or <code>null</code> if a matching we deploy auth app could not be found
+	*/
+	public WeDeployAuthApp fetchByRU_CI(java.lang.String redirectURI,
+		java.lang.String clientId);
+
+	/**
+	* Returns the we deploy auth app where redirectURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param redirectURI the redirect uri
+	* @param clientId the client ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching we deploy auth app, or <code>null</code> if a matching we deploy auth app could not be found
+	*/
+	public WeDeployAuthApp fetchByRU_CI(java.lang.String redirectURI,
+		java.lang.String clientId, boolean retrieveFromCache);
+
+	/**
+	* Removes the we deploy auth app where redirectURI = &#63; and clientId = &#63; from the database.
+	*
+	* @param redirectURI the redirect uri
+	* @param clientId the client ID
+	* @return the we deploy auth app that was removed
+	*/
+	public WeDeployAuthApp removeByRU_CI(java.lang.String redirectURI,
+		java.lang.String clientId) throws NoSuchAppException;
+
+	/**
+	* Returns the number of we deploy auth apps where redirectURI = &#63; and clientId = &#63;.
+	*
+	* @param redirectURI the redirect uri
+	* @param clientId the client ID
+	* @return the number of matching we deploy auth apps
+	*/
+	public int countByRU_CI(java.lang.String redirectURI,
+		java.lang.String clientId);
+
+	/**
 	* Returns the we deploy auth app where clientId = &#63; and clientSecret = &#63; or throws a {@link NoSuchAppException} if it could not be found.
 	*
 	* @param clientId the client ID

@@ -80,11 +80,11 @@ public class WeDeployAuthAppLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp addWeDeployAuthApp(
-		long userId, java.lang.String name,
+		long userId, java.lang.String name, java.lang.String redirectURI,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _weDeployAuthAppLocalService.addWeDeployAuthApp(userId, name,
-			serviceContext);
+			redirectURI, serviceContext);
 	}
 
 	/**

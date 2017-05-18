@@ -1900,30 +1900,4 @@
 		<field name="receiverUserId" type="long" />
 		<field name="status" type="int" />
 	</model>
-	<model name="com.liferay.trash.kernel.model.TrashEntry">
-		<field name="entryId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
-		<field name="systemEventSetKey" type="long" />
-		<field name="typeSettings" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field name="status" type="int" />
-	</model>
-	<model name="com.liferay.trash.kernel.model.TrashVersion">
-		<field name="versionId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="entryId" type="long" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
-		<field name="typeSettings" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field name="status" type="int" />
-	</model>
 </model-hints>

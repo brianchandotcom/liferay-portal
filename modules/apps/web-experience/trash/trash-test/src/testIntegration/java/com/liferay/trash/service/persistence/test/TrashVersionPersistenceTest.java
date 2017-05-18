@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.trash.service.persistence.test;
+package com.liferay.trash.service.persistence.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -31,11 +33,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import com.liferay.trash.kernel.exception.NoSuchVersionException;
-import com.liferay.trash.kernel.model.TrashVersion;
-import com.liferay.trash.kernel.service.TrashVersionLocalServiceUtil;
-import com.liferay.trash.kernel.service.persistence.TrashVersionPersistence;
-import com.liferay.trash.kernel.service.persistence.TrashVersionUtil;
+import com.liferay.trash.exception.NoSuchVersionException;
+import com.liferay.trash.model.TrashVersion;
+import com.liferay.trash.service.TrashVersionLocalServiceUtil;
+import com.liferay.trash.service.persistence.TrashVersionPersistence;
+import com.liferay.trash.service.persistence.TrashVersionUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -43,6 +45,8 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
@@ -56,12 +60,14 @@ import java.util.Set;
 /**
  * @generated
  */
+@RunWith(Arquillian.class)
 public class TrashVersionPersistenceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED));
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.trash.service"));
 
 	@Before
 	public void setUp() {
@@ -196,7 +202,7 @@ public class TrashVersionPersistenceTest {
 	protected OrderByComparator<TrashVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("TrashVersion", "versionId",
 			true, "companyId", true, "entryId", true, "classNameId", true,
-			"classPK", true, "status", true);
+			"classPK", true, "typeSettings", true, "status", true);
 	}
 
 	@Test

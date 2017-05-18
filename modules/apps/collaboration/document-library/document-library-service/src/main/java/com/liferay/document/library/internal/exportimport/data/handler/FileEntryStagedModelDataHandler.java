@@ -16,6 +16,7 @@ package com.liferay.document.library.internal.exportimport.data.handler;
 
 import com.liferay.document.library.exportimport.data.handler.DLPluggableContentDataHandler;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -561,12 +562,20 @@ public class FileEntryStagedModelDataHandler
 						if (deleteFileEntry &&
 							ExportImportThreadLocal.isStagingInProcess()) {
 
-							_dlAppService.deleteFileVersion(
-								latestExistingFileVersion.getFileEntryId(),
-								latestExistingFileVersion.getVersion());
+							String latestExistingVersion =
+								latestExistingFileVersion.getVersion();
 
-							_overrideFileVersion(
-								importedFileEntry, fileVersion.getVersion());
+							if (!latestExistingVersion.equals(
+									importedFileEntry.getVersion())) {
+
+								_dlAppService.deleteFileVersion(
+									latestExistingFileVersion.getFileEntryId(),
+									latestExistingFileVersion.getVersion());
+
+								_overrideFileVersion(
+									importedFileEntry,
+									fileVersion.getVersion());
+							}
 						}
 					}
 					finally {

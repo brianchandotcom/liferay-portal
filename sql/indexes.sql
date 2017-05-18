@@ -459,14 +459,6 @@ create index IX_1E8DFB2E on Ticket (classNameId, classPK, type_);
 create index IX_8BACD0AA on Ticket (companyId, classNameId, classPK, type_);
 create index IX_B2468446 on Ticket (key_[$COLUMN_LENGTH:75$]);
 
-create unique index IX_B35F73D5 on TrashEntry (classNameId, classPK);
-create index IX_2674F2A8 on TrashEntry (companyId);
-create index IX_FC4EEA64 on TrashEntry (groupId, classNameId);
-create index IX_6CAAE2E8 on TrashEntry (groupId, createDate);
-
-create unique index IX_630A643B on TrashVersion (classNameId, classPK);
-create index IX_72D58D37 on TrashVersion (entryId, classNameId);
-
 create unique index IX_23EAD0D on UserGroup (companyId, name[$COLUMN_LENGTH:75$]);
 create index IX_69771487 on UserGroup (companyId, parentUserGroupId);
 create index IX_72394F8E on UserGroup (uuid_[$COLUMN_LENGTH:75$], companyId);

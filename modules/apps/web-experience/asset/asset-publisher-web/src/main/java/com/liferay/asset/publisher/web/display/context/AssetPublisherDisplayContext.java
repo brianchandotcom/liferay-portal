@@ -110,7 +110,6 @@ public class AssetPublisherDisplayContext {
 		_assetPublisherWebConfiguration =
 			(AssetPublisherWebConfiguration)portletRequest.getAttribute(
 				AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION);
-
 		_request = PortalUtil.getHttpServletRequest(portletRequest);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(

@@ -5,7 +5,7 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-	compile group: "org.elasticsearch", name: "elasticsearch", optional, transitive: false, version: "2.2.0"
+	compile group: "org.elasticsearch", name: "elasticsearch", optional, transitive: false, version: "2.4.0"
 }
 
 patch {

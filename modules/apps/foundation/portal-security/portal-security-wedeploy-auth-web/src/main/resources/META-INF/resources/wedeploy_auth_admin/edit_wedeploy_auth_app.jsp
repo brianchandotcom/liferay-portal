@@ -34,6 +34,8 @@ portletDisplay.setURLBack(redirect);
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset label="add-wedeploy-app">
 					<aui:input autoFocus="<%= true %>" name="name" />
+
+					<aui:input name="redirectURI" />
 				</aui:fieldset>
 			</aui:fieldset-group>
 		</div>

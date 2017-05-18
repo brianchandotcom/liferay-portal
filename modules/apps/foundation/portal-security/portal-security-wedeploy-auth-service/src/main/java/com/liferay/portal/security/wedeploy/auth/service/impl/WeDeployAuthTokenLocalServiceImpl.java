@@ -34,11 +34,11 @@ public class WeDeployAuthTokenLocalServiceImpl
 
 	@Override
 	public WeDeployAuthToken addAccessWeDeployAuthToken(
-			String clientId, String clientSecret, String authorizationToken,
-			int type, ServiceContext serviceContext)
+			String redirectURI, String clientId, String clientSecret,
+			String authorizationToken, int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		validate(clientId, clientSecret);
+		validateAccess(redirectURI, clientId, clientSecret);
 
 		WeDeployAuthToken weDeployAuthToken =
 			weDeployAuthTokenPersistence.removeByCI_T_T(
@@ -55,8 +55,11 @@ public class WeDeployAuthTokenLocalServiceImpl
 
 	@Override
 	public WeDeployAuthToken addAuthorizationWeDeployAuthToken(
-			long userId, String clientId, ServiceContext serviceContext)
+			long userId, String redirectURI, String clientId,
+			ServiceContext serviceContext)
 		throws PortalException {
+
+		validateAuthorization(redirectURI, clientId);
 
 		String token = DigesterUtil.digestHex(
 			Digester.MD5, clientId, PwdGenerator.getPassword());
@@ -102,10 +105,19 @@ public class WeDeployAuthTokenLocalServiceImpl
 		return weDeployAuthToken;
 	}
 
-	protected void validate(String clientId, String clientSecret)
+	protected void validateAccess(
+			String redirectURI, String clientId, String clientSecret)
 		throws PortalException {
 
+		weDeployAuthAppPersistence.findByRU_CI(redirectURI, clientId);
+
 		weDeployAuthAppPersistence.findByCI_CS(clientId, clientSecret);
+	}
+
+	protected void validateAuthorization(String redirectURI, String clientId)
+		throws PortalException {
+
+		weDeployAuthAppPersistence.findByRU_CI(redirectURI, clientId);
 	}
 
 }

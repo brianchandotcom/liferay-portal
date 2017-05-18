@@ -64,6 +64,12 @@ portletURL.setParameter("mvcRenderCommandName", "/wedeploy_auth_admin/view");
 			/>
 
 			<liferay-ui:search-container-column-text
+				name="redirect-uri"
+				orderable="<%= false %>"
+				property="redirectURI"
+			/>
+
+			<liferay-ui:search-container-column-text
 				name="client-id"
 				orderable="<%= false %>"
 				property="clientId"

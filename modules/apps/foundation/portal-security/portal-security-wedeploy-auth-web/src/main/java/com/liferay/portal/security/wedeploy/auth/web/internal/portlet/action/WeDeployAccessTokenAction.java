@@ -54,6 +54,7 @@ public class WeDeployAccessTokenAction extends BaseStrutsAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
+		String redirectURI = ParamUtil.getString(request, "redirect_uri");
 		String clientId = ParamUtil.getString(request, "client_id");
 		String clientSecret = ParamUtil.getString(request, "client_secret");
 		String authorizationToken = ParamUtil.getString(request, "code");
@@ -66,7 +67,7 @@ public class WeDeployAccessTokenAction extends BaseStrutsAction {
 		try {
 			WeDeployAuthToken weDeployAuthToken =
 				_weDeployAuthTokenLocalService.addAccessWeDeployAuthToken(
-					clientId, clientSecret, authorizationToken,
+					redirectURI, clientId, clientSecret, authorizationToken,
 					WeDeployAuthTokenConstants.TYPE_AUTHORIZATION,
 					serviceContext);
 

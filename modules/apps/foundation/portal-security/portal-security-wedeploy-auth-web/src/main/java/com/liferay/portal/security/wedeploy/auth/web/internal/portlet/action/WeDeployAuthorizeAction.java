@@ -56,15 +56,15 @@ public class WeDeployAuthorizeAction extends BaseStrutsAction {
 			return null;
 		}
 
-		String clientId = ParamUtil.getString(request, "client_id");
 		String redirectURI = ParamUtil.getString(request, "redirect_uri");
+		String clientId = ParamUtil.getString(request, "client_id");
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			request, WeDeployAuthPortletKeys.WEDEPLOY_AUTH,
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("clientId", clientId);
 		portletURL.setParameter("redirectURI", redirectURI);
+		portletURL.setParameter("clientId", clientId);
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 		portletURL.setPortletMode(PortletMode.VIEW);
 

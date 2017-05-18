@@ -330,6 +330,7 @@ public class ProjectTemplates {
 		}
 		else if ((template.equals("freemarker-portlet") ||
 				  template.equals("mvc-portlet") ||
+				  template.equals("spring-mvc-portlet") ||
 				  template.equals("portlet")) &&
 				 (className.length() > 7) && className.endsWith("Portlet")) {
 

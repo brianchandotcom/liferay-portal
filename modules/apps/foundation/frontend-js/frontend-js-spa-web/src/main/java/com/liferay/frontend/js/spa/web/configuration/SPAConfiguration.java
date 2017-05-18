@@ -25,6 +25,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @ObjectClassDefinition(
+	description = "spa.configuration.description",
 	id = "com.liferay.frontend.js.spa.web.configuration.SPAConfiguration",
 	localization = "content/Language", name = "spa.configuration.name"
 )

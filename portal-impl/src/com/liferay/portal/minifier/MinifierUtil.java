@@ -53,7 +53,8 @@ public class MinifierUtil {
 		catch (Exception e) {
 			_log.error(
 				"Unable to instantiate " +
-					PropsValues.MINIFIER_JAVASCRIPT_IMPL, e);
+					PropsValues.MINIFIER_JAVASCRIPT_IMPL,
+				e);
 
 			return new GoogleJavaScriptMinifier();
 		}

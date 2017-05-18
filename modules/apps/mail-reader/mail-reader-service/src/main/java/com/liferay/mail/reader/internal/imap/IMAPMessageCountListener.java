@@ -100,7 +100,7 @@ public class IMAPMessageCountListener implements MessageCountListener {
 				_imapAccessor.closeFolder(jxFolder, false);
 			}
 			catch (MailException me) {
-				_log.error(me,me);
+				_log.error(me, me);
 			}
 		}
 	}

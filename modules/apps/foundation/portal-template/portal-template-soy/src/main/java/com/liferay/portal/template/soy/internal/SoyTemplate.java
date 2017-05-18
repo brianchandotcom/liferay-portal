@@ -26,7 +26,6 @@ import com.google.template.soy.tofu.SoyTofu.Renderer;
 import com.google.template.soy.tofu.SoyTofuOptions;
 
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -75,7 +74,8 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 	public SoyTemplate(
 		List<TemplateResource> templateResources,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
-		SoyTemplateContextHelper templateContextHelper, boolean privileged) {
+		SoyTemplateContextHelper templateContextHelper, boolean privileged,
+		PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag> portalCache) {
 
 		super(
 			templateResources, errorTemplateResource, context,
@@ -85,7 +85,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		_privileged = privileged;
 
 		_soyMapData = new SoyMapData();
-		_soyTofuCacheHandler = new SoyTofuCacheHandler(_portalCache);
+		_soyTofuCacheHandler = new SoyTofuCacheHandler(portalCache);
 	}
 
 	@Override
@@ -356,9 +356,6 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 	private static final Log _log = LogFactoryUtil.getLog(SoyTemplate.class);
 
-	private final PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag>
-		_portalCache = SingleVMPoolUtil.getPortalCache(
-			SoyTemplate.class.getName());
 	private final boolean _privileged;
 	private final SoyMapData _soyMapData;
 	private final SoyTofuCacheHandler _soyTofuCacheHandler;

@@ -15,7 +15,7 @@
 package com.liferay.portal.template.soy.internal;
 
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -54,13 +54,20 @@ public class SoyTemplateResourcesTracker {
 		return _templateResources;
 	}
 
+	@Reference(unbind = "-")
+	public void setSingleVMPool(SingleVMPool singleVMPool) {
+		_portalCache =
+			(PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag>)
+				singleVMPool.getPortalCache(SoyTemplate.class.getName());
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		int stateMask = Bundle.ACTIVE | Bundle.RESOLVED;
 
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, stateMask,
-			new SoyCapabilityBundleTrackerCustomizer());
+			new SoyCapabilityBundleTrackerCustomizer(_portalCache));
 
 		_bundleTracker.open();
 	}
@@ -90,12 +97,17 @@ public class SoyTemplateResourcesTracker {
 		new CopyOnWriteArrayList<>();
 
 	private BundleTracker<List<BundleCapability>> _bundleTracker;
+	private PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag>
+		_portalCache;
 
 	private static final class SoyCapabilityBundleTrackerCustomizer
 		implements BundleTrackerCustomizer<List<BundleCapability>> {
 
-		public SoyCapabilityBundleTrackerCustomizer() {
-			_soyTofuCacheHandler = new SoyTofuCacheHandler(_portalCache);
+		public SoyCapabilityBundleTrackerCustomizer(
+			PortalCache
+				<HashSet<TemplateResource>, SoyTofuCacheBag> portalCache) {
+
+			_soyTofuCacheHandler = new SoyTofuCacheHandler(portalCache);
 		}
 
 		@Override
@@ -212,9 +224,6 @@ public class SoyTemplateResourcesTracker {
 		private static final Log _log = LogFactoryUtil.getLog(
 			SoyCapabilityBundleTrackerCustomizer.class);
 
-		private final PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag>
-			_portalCache = SingleVMPoolUtil.getPortalCache(
-				SoyTemplate.class.getName());
 		private final SoyTofuCacheHandler _soyTofuCacheHandler;
 
 	}

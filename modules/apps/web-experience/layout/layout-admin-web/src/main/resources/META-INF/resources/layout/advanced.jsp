@@ -48,7 +48,7 @@ Group group = layoutsAdminDisplayContext.getGroup();
 String curTarget = GetterUtil.getString(layoutTypeSettings.getProperty("target"));
 %>
 
-<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="target" name="TypeSettingsProperties--target--" size="15" type="text" value="<%= HtmlUtil.escapeAttribute(curTarget) %>" />
+<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" label="target" name="TypeSettingsProperties--target--" size="15" type="text" value="<%= curTarget %>" />
 
 <aui:field-wrapper helpMessage="this-icon-will-be-shown-in-the-navigation-menu" label="icon" name="iconFileName">
 	<liferay-ui:logo-selector

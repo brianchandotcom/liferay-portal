@@ -1379,8 +1379,7 @@ public class PortalImpl implements Portal {
 			StringBundler sb = new StringBundler();
 
 			String defaultLocalePath = _buildI18NPath(
-				getSiteDefaultLocale(layout.getGroupId()).getLanguage(),
-				getSiteDefaultLocale(layout.getGroupId()));
+				siteDefaultLocale.getLanguage(), siteDefaultLocale);
 
 			sb.append(groupFriendlyURL);
 			sb.append(defaultLocalePath);
@@ -8252,8 +8251,7 @@ public class PortalImpl implements Portal {
 
 		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
 			String defaultLocalePath = _buildI18NPath(
-				getSiteDefaultLocale(layout.getGroupId()).getLanguage(),
-				getSiteDefaultLocale(layout.getGroupId()));
+				siteDefaultLocale.getLanguage(), siteDefaultLocale);
 
 			canonicalURLSuffix = canonicalURL.substring(
 				pos + defaultLocalePath.length());

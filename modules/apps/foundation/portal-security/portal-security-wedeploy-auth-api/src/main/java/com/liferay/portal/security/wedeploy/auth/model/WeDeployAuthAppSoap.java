@@ -41,6 +41,7 @@ public class WeDeployAuthAppSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
+		soapModel.setRedirectURI(model.getRedirectURI());
 		soapModel.setClientId(model.getClientId());
 		soapModel.setClientSecret(model.getClientSecret());
 
@@ -153,6 +154,14 @@ public class WeDeployAuthAppSoap implements Serializable {
 		_name = name;
 	}
 
+	public String getRedirectURI() {
+		return _redirectURI;
+	}
+
+	public void setRedirectURI(String redirectURI) {
+		_redirectURI = redirectURI;
+	}
+
 	public String getClientId() {
 		return _clientId;
 	}
@@ -176,6 +185,7 @@ public class WeDeployAuthAppSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _name;
+	private String _redirectURI;
 	private String _clientId;
 	private String _clientSecret;
 }

@@ -65,7 +65,7 @@ public class WeDeployAuthAppCacheModel implements CacheModel<WeDeployAuthApp>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{weDeployAuthAppId=");
 		sb.append(weDeployAuthAppId);
@@ -81,6 +81,8 @@ public class WeDeployAuthAppCacheModel implements CacheModel<WeDeployAuthApp>,
 		sb.append(modifiedDate);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", redirectURI=");
+		sb.append(redirectURI);
 		sb.append(", clientId=");
 		sb.append(clientId);
 		sb.append(", clientSecret=");
@@ -126,6 +128,13 @@ public class WeDeployAuthAppCacheModel implements CacheModel<WeDeployAuthApp>,
 			weDeployAuthAppImpl.setName(name);
 		}
 
+		if (redirectURI == null) {
+			weDeployAuthAppImpl.setRedirectURI(StringPool.BLANK);
+		}
+		else {
+			weDeployAuthAppImpl.setRedirectURI(redirectURI);
+		}
+
 		if (clientId == null) {
 			weDeployAuthAppImpl.setClientId(StringPool.BLANK);
 		}
@@ -156,6 +165,7 @@ public class WeDeployAuthAppCacheModel implements CacheModel<WeDeployAuthApp>,
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
+		redirectURI = objectInput.readUTF();
 		clientId = objectInput.readUTF();
 		clientSecret = objectInput.readUTF();
 	}
@@ -186,6 +196,13 @@ public class WeDeployAuthAppCacheModel implements CacheModel<WeDeployAuthApp>,
 			objectOutput.writeUTF(name);
 		}
 
+		if (redirectURI == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(redirectURI);
+		}
+
 		if (clientId == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -208,6 +225,7 @@ public class WeDeployAuthAppCacheModel implements CacheModel<WeDeployAuthApp>,
 	public long createDate;
 	public long modifiedDate;
 	public String name;
+	public String redirectURI;
 	public String clientId;
 	public String clientSecret;
 }

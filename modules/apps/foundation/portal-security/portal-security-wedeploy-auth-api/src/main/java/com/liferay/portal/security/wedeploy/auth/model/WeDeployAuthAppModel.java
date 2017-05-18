@@ -192,6 +192,21 @@ public interface WeDeployAuthAppModel extends AuditedModel,
 	public void setName(String name);
 
 	/**
+	 * Returns the redirect uri of this we deploy auth app.
+	 *
+	 * @return the redirect uri of this we deploy auth app
+	 */
+	@AutoEscape
+	public String getRedirectURI();
+
+	/**
+	 * Sets the redirect uri of this we deploy auth app.
+	 *
+	 * @param redirectURI the redirect uri of this we deploy auth app
+	 */
+	public void setRedirectURI(String redirectURI);
+
+	/**
 	 * Returns the client ID of this we deploy auth app.
 	 *
 	 * @return the client ID of this we deploy auth app

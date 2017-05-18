@@ -14,6 +14,7 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="redirectURI" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="clientId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="clientSecret" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>

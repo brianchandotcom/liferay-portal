@@ -20,8 +20,10 @@ import com.liferay.portal.kernel.portlet.LiferayPortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -296,6 +298,19 @@ public class MVCPortlet extends LiferayPortlet {
 				renderRequest.setAttribute(
 					getMVCPathAttributeName(renderResponse.getNamespace()),
 					mvcPath);
+			}
+			else if (!mvcRenderCommandName.equals("/")) {
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(4);
+
+					sb.append(
+						"No render mappings found for mvcRenderCommandName '");
+					sb.append(HtmlUtil.escape(mvcRenderCommandName));
+					sb.append("' for portlet ");
+					sb.append(renderRequest.getAttribute(WebKeys.PORTLET_ID));
+
+					_log.warn(sb.toString());
+				}
 			}
 		}
 

@@ -47,9 +47,10 @@ import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 import org.elasticsearch.search.SearchService;
 import org.elasticsearch.search.action.SearchServiceTransportAction;
-import org.elasticsearch.search.fetch.QueryFetchSearchResult;
 import org.elasticsearch.search.internal.ShardSearchTransportRequest;
 import org.elasticsearch.threadpool.ThreadPool;
+import org.elasticsearch.transport.TransportChannel;
+import org.elasticsearch.transport.TransportRequestHandler;
 import org.elasticsearch.transport.TransportService;
 
 import org.jboss.netty.util.internal.ByteBufferUtil;
@@ -321,24 +322,9 @@ public class EmbeddedElasticsearchConnection
 			if (elasticsearchConfiguration.syncSearch()) {
 				Injector injector = node.injector();
 
-				TransportService transportService = injector.getInstance(
-					TransportService.class);
-
-				transportService.removeHandler(
-					SearchServiceTransportAction.QUERY_FETCH_ACTION_NAME);
-
-				SearchService searchService = injector.getInstance(
-					SearchService.class);
-
-				transportService.registerRequestHandler(
-					SearchServiceTransportAction.QUERY_FETCH_ACTION_NAME,
-					ShardSearchTransportRequest.class, ThreadPool.Names.SAME,
-					(request, channel) -> {
-						QueryFetchSearchResult queryFetchSearchResult =
-							searchService.executeFetchPhase(request);
-
-						channel.sendResponse(queryFetchSearchResult);
-					});
+				_replaceTransportRequestHandler(
+					injector.getInstance(TransportService.class),
+					injector.getInstance(SearchService.class));
 			}
 
 			return node;
@@ -398,6 +384,31 @@ public class EmbeddedElasticsearchConnection
 
 	@Reference
 	protected Props props;
+
+	private void _replaceTransportRequestHandler(
+		TransportService transportService, SearchService searchService) {
+
+		String action = SearchServiceTransportAction.QUERY_FETCH_ACTION_NAME;
+
+		transportService.removeHandler(action);
+
+		transportService.registerRequestHandler(
+			action, ShardSearchTransportRequest.class, ThreadPool.Names.SAME,
+			new TransportRequestHandler<ShardSearchTransportRequest>() {
+
+				@Override
+				public void messageReceived(
+						ShardSearchTransportRequest shardSearchTransportRequest,
+						TransportChannel transportChannel)
+					throws Exception {
+
+					transportChannel.sendResponse(
+						searchService.executeFetchPhase(
+							shardSearchTransportRequest));
+				}
+
+			});
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EmbeddedElasticsearchConnection.class);

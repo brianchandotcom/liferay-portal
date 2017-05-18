@@ -103,10 +103,22 @@ public class PortletInstance {
 	}
 
 	public String getUserIdAndInstanceId() {
-		UserIdAndInstanceIdEncoder userIdAndInstanceIdEncoder =
-			new UserIdAndInstanceIdEncoder(_userId, _instanceId);
+		if ((_userId <= 0) && Validator.isBlank(_instanceId)) {
+			return null;
+		}
 
-		return userIdAndInstanceIdEncoder.encode();
+		StringBundler sb = new StringBundler(3);
+
+		if (_userId > 0) {
+			sb.append(_userId);
+			sb.append(StringPool.UNDERLINE);
+		}
+
+		if (_instanceId != null) {
+			sb.append(_instanceId);
+		}
+
+		return sb.toString();
 	}
 
 	public boolean hasIdenticalPortletName(PortletInstance portletInstance) {
@@ -255,36 +267,12 @@ public class PortletInstance {
 			_instanceId = instanceId;
 		}
 
-		public String encode() {
-			if ((_userId <= 0) && Validator.isBlank(_instanceId)) {
-				return null;
-			}
-
-			StringBundler sb = new StringBundler(3);
-
-			if (_userId > 0) {
-				sb.append(_userId);
-				sb.append(StringPool.UNDERLINE);
-			}
-
-			if (_instanceId != null) {
-				sb.append(_instanceId);
-			}
-
-			return sb.toString();
-		}
-
 		public String getInstanceId() {
 			return _instanceId;
 		}
 
 		public long getUserId() {
 			return _userId;
-		}
-
-		@Override
-		public String toString() {
-			return encode();
 		}
 
 		private String _instanceId;

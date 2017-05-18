@@ -220,7 +220,7 @@ public class LoadBalancerUtil {
 		List<String> blacklist = _getBlacklist(properties);
 
 		if (blacklist.isEmpty()) {
-			return allJenkinsMasters;
+			return new ArrayList<>(allJenkinsMasters);
 		}
 
 		List<JenkinsMaster> filteredJenkinsMasters = new ArrayList<>(

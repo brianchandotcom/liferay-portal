@@ -357,6 +357,40 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateFreeMarkerPortlet() throws Exception {
+		_testBuildTemplatePortlet(
+			"freemarker-portlet", "FreeMarkerPortlet", "templates/init.ftl",
+			"templates/view.ftl");
+	}
+
+	@Test
+	public void testBuildTemplateFreeMarkerPortletWithPackage()
+		throws Exception {
+
+		_testBuildTemplatePortletWithPackage(
+			"freemarker-portlet", "FreeMarkerPortlet", "templates/init.ftl",
+			"templates/view.ftl");
+	}
+
+	@Test
+	public void testBuildTemplateFreeMarkerPortletWithPortletName()
+		throws Exception {
+
+		_testBuildTemplatePortletWithPortletName(
+			"freemarker-portlet", "FreeMarkerPortlet", "templates/init.ftl",
+			"templates/view.ftl");
+	}
+
+	@Test
+	public void testBuildTemplateFreeMarkerPortletWithPortletSuffix()
+		throws Exception {
+
+		_testBuildTemplatePortletWithPortletSuffix(
+			"freemarker-portlet", "FreeMarkerPortlet", "templates/init.ftl",
+			"templates/view.ftl");
+	}
+
+	@Test
 	public void testBuildTemplateLayoutTemplate() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"layout-template", "foo");

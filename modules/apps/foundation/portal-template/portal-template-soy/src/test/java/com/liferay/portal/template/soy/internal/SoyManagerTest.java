@@ -14,13 +14,9 @@
 
 package com.liferay.portal.template.soy.internal;
 
-import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
-
-import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -30,39 +26,15 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Bruno Basto
  */
-@PrepareForTest(SingleVMPoolUtil.class)
-@RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor(
-	"com.liferay.portal.kernel.cache.SingleVMPoolUtil"
-)
 public class SoyManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
 		_soyTestHelper.setUp();
-
-		PortalCache<Serializable, Object> portalCache =
-			_soyTestHelper.mockPortalCache();
-
-		PowerMockito.mockStatic(SingleVMPoolUtil.class);
-
-		PowerMockito.when(
-			SingleVMPoolUtil.getPortalCache(Mockito.anyString())
-		).thenReturn(
-			portalCache
-		);
 	}
 
 	@After

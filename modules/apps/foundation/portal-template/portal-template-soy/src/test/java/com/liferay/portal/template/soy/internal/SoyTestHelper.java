@@ -20,12 +20,17 @@ import com.google.template.soy.SoyFileSet.Builder;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Reader;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 import java.net.URL;
 
@@ -219,6 +224,27 @@ public class SoyTestHelper {
 		_soyManager = new SoyManager();
 
 		_soyManager.setTemplateContextHelper(new SoyTemplateContextHelper());
+
+		_soyManager.setSingleVMPool(
+			(SingleVMPool)ProxyUtil.newProxyInstance(
+				SingleVMPool.class.getClassLoader(),
+				new Class<?>[] {SingleVMPool.class},
+				new InvocationHandler() {
+
+					@Override
+					public Object invoke(
+							Object proxy, Method method, Object[] args)
+						throws Throwable {
+
+						if ("getPortalCache".equals(method.getName())) {
+							return mockPortalCache();
+						}
+
+						throw new UnsupportedOperationException(
+							method.toString());
+					}
+
+				}));
 
 		_soyManager.init();
 	}

@@ -620,6 +620,9 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 					disjunction.add(portletIdProperty.isNull());
 					disjunction.add(portletIdProperty.eq(StringPool.BLANK));
+					disjunction.add(
+						portletIdProperty.eq(
+							DLPortletKeys.DOCUMENT_LIBRARY_ADMIN));
 
 					dynamicQuery.add(disjunction);
 				}

@@ -143,6 +143,7 @@ This change was made as part of the modularization efforts to ease portal
 configuration changes.
 
 ---------------------------------------
+
 ### Moved CAPTCHA Portal Properties to OSGi Configuration
 - **Date:** 2017-Feb-13
 - **JIRA Ticket:** LPS-67830
@@ -231,6 +232,7 @@ This change was made as part of the modularization efforts to ease portal
 configuration changes.
 
 ---------------------------------------
+
 ### Standardize data attribute names passed into selectors
 - **Date:** 2016-Oct-26
 - **JIRA Ticket:** LPS-66646
@@ -268,6 +270,7 @@ New way:
 This change was made to standardize the data attribute names and allow the utility methods to accept standardized event parameters.
 
 ---------------------------------------
+
 ### Removed indexation of fields 'ratings' and 'viewCount'
 - **Date:** 2017-May-16
 - **JIRA Ticket:** LPS-70724
@@ -292,3 +295,5 @@ There are several alternatives:
 Keeping ratings and view count in the search index in sync with the database has a negative impact on the normal operation due to the significantly increased number of index write requests causing throughput issues and therefore performance degradation.
 
 In addition, the view count is not always up-to-date in the database either. This behavior is controlled by the _Buffered Increment_ mechanism. You can find more information about it in the `portal.properties`.
+
+---------------------------------------

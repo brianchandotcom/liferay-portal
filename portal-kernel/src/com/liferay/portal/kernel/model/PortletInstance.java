@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,12 +45,11 @@ public class PortletInstance {
 	public static PortletInstance fromPortletNameAndUserIdAndInstanceId(
 		String portletName, String userIdAndInstanceId) {
 
-		UserIdAndInstanceIdEncoder userIdAndInstanceIdEncoder =
+		ObjectValuePair<Long, String> objectValuePair =
 			_buildUserIdAndInstanceIdEncoder(userIdAndInstanceId);
 
 		return new PortletInstance(
-			portletName, userIdAndInstanceIdEncoder.getUserId(),
-			userIdAndInstanceIdEncoder.getInstanceId());
+			portletName, objectValuePair.getKey(), objectValuePair.getValue());
 	}
 
 	public PortletInstance(String portletName) {
@@ -146,8 +146,8 @@ public class PortletInstance {
 		return getPortletInstanceKey();
 	}
 
-	private static UserIdAndInstanceIdEncoder _buildUserIdAndInstanceIdEncoder(
-		String userIdAndInstanceId) {
+	private static ObjectValuePair<Long, String>
+		_buildUserIdAndInstanceIdEncoder(String userIdAndInstanceId) {
 
 		if (userIdAndInstanceId == null) {
 			throw new InvalidParameterException(
@@ -155,7 +155,7 @@ public class PortletInstance {
 		}
 
 		if (userIdAndInstanceId.isEmpty()) {
-			return new UserIdAndInstanceIdEncoder(0, null);
+			return new ObjectValuePair<>(0L, null);
 		}
 
 		int slashCount = StringUtil.count(userIdAndInstanceId, CharPool.SLASH);
@@ -189,10 +189,10 @@ public class PortletInstance {
 				instanceId = userIdAndInstanceId.substring(index + 1);
 			}
 
-			return new UserIdAndInstanceIdEncoder(userId, instanceId);
+			return new ObjectValuePair<>(userId, instanceId);
 		}
 
-		return new UserIdAndInstanceIdEncoder(0, userIdAndInstanceId);
+		return new ObjectValuePair<>(0L, userIdAndInstanceId);
 	}
 
 	private static String _getInstanceId(String portletInstanceKey) {
@@ -259,25 +259,5 @@ public class PortletInstance {
 	private final String _instanceId;
 	private final String _portletName;
 	private final long _userId;
-
-	private static final class UserIdAndInstanceIdEncoder {
-
-		public UserIdAndInstanceIdEncoder(long userId, String instanceId) {
-			_userId = userId;
-			_instanceId = instanceId;
-		}
-
-		public String getInstanceId() {
-			return _instanceId;
-		}
-
-		public long getUserId() {
-			return _userId;
-		}
-
-		private String _instanceId;
-		private long _userId;
-
-	}
 
 }

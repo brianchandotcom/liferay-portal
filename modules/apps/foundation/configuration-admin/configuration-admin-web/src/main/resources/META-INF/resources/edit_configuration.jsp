@@ -33,6 +33,8 @@ ResourceBundle componentResourceBundle = resourceBundleLoader.loadResourceBundle
 
 String configurationModelName = (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, configurationModel.getName()) : configurationModel.getName();
 
+String configurationModelDescription = (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, configurationModel.getDescription()) : configurationModel.getDescription();
+
 renderResponse.setTitle(configurationModelName);
 %>
 
@@ -60,6 +62,12 @@ renderResponse.setTitle(configurationModelName);
 					<aui:alert closeable="<%= false %>" id="errorAlert" type="info">
 						<liferay-ui:message key="this-configuration-was-not-saved-yet" />
 					</aui:alert>
+				</c:if>
+
+				<c:if test="<%= !Validator.isBlank(configurationModelDescription) %>">
+					<p>
+						<%= configurationModelDescription %>
+					</p>
 				</c:if>
 
 				<%= ddmFormHTML %>

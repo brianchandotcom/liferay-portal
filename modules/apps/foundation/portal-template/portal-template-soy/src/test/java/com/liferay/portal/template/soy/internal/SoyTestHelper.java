@@ -245,8 +245,6 @@ public class SoyTestHelper {
 					}
 
 				}));
-
-		_soyManager.init();
 	}
 
 	private static final String _TPL_PATH =

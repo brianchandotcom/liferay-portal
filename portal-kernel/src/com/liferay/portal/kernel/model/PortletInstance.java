@@ -46,7 +46,7 @@ public class PortletInstance {
 		String portletName, String userIdAndInstanceId) {
 
 		ObjectValuePair<Long, String> objectValuePair =
-			_buildUserIdAndInstanceIdEncoder(userIdAndInstanceId);
+			_decodeUserIdAndInstanceId(userIdAndInstanceId);
 
 		return new PortletInstance(
 			portletName, objectValuePair.getKey(), objectValuePair.getValue());
@@ -147,7 +147,7 @@ public class PortletInstance {
 	}
 
 	private static ObjectValuePair<Long, String>
-		_buildUserIdAndInstanceIdEncoder(String userIdAndInstanceId) {
+		_decodeUserIdAndInstanceId(String userIdAndInstanceId) {
 
 		if (userIdAndInstanceId == null) {
 			throw new InvalidParameterException(

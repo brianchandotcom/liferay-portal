@@ -368,7 +368,7 @@ public class BlogsEntryStagedModelDataHandler
 
 		newPrimaryKeysMap.put(entry.getEntryId(), importedEntry.getEntryId());
 
-		_importFriendlyURLEntries(portletDataContext, entry);
+		_importFriendlyURLEntries(portletDataContext, entry, importedEntry);
 
 		portletDataContext.importClassedModel(entry, importedEntry);
 	}
@@ -587,7 +587,8 @@ public class BlogsEntryStagedModelDataHandler
 	}
 
 	private void _importFriendlyURLEntries(
-			PortletDataContext portletDataContext, BlogsEntry blogsEntry)
+			PortletDataContext portletDataContext, BlogsEntry blogsEntry,
+			BlogsEntry importedBlogsEntry)
 		throws PortletDataException {
 
 		List<Element> friendlyURLEntryElements =
@@ -599,6 +600,11 @@ public class BlogsEntryStagedModelDataHandler
 
 			FriendlyURLEntry friendlyURLEntry =
 				(FriendlyURLEntry)portletDataContext.getZipEntryAsObject(path);
+
+			friendlyURLEntry.setClassNameId(
+				_portal.getClassNameId(BlogsEntry.class));
+
+			friendlyURLEntry.setClassPK(importedBlogsEntry.getPrimaryKey());
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, friendlyURLEntry);

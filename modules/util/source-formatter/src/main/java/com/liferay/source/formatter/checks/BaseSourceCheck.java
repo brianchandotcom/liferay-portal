@@ -336,6 +336,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return properties.getProperty("project.path.prefix");
 	}
 
+	protected String getProperty(String key) {
+		return GetterUtil.getString(_properties.getProperty(key));
+	}
+
 	protected List<String> getPropertyList(String key) {
 		return ListUtil.fromString(
 			GetterUtil.getString(_properties.getProperty(key)),

@@ -15,14 +15,18 @@
 package com.liferay.commerce.product.type.virtual.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
-import com.liferay.commerce.product.type.virtual.web.internal.CPDefinitionVirtualSettingItemSelectorHelper;
 import com.liferay.commerce.product.type.virtual.web.internal.constants.CPDefinitionVirtualSettingWebKeys;
+import com.liferay.commerce.product.type.virtual.web.internal.display.context.CPDefinitionVirtualSettingDisplayContext;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -60,6 +64,11 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 				"/edit_definition_virtual_setting.jsp");
 
 		try {
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(renderRequest);
+			HttpServletResponse httpServletResponse =
+				PortalUtil.getHttpServletResponse(renderResponse);
+
 			long cpDefinitionId = ParamUtil.getLong(
 				renderRequest, "cpDefinitionId");
 
@@ -67,25 +76,26 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 				_cpDefinitionVirtualSettingService.
 					fetchCPDefinitionVirtualSetting(cpDefinitionId);
 
-			HttpServletRequest httpServletRequest =
-				PortalUtil.getHttpServletRequest(renderRequest);
-			HttpServletResponse httpServletResponse =
-				PortalUtil.getHttpServletResponse(renderResponse);
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
-
 			renderRequest.setAttribute(
 				CPDefinitionVirtualSettingWebKeys.
 					COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING,
 				cpDefinitionVirtualSetting);
 
+			CPDefinitionVirtualSettingDisplayContext
+				cpDefinitionVirtualSettingDisplayContext =
+					new CPDefinitionVirtualSettingDisplayContext(
+						_actionHelper, httpServletRequest,
+						_cpDefinitionVirtualSettingService, _dlAppService,
+						_cpDefinitionVirtualSettingActionHelper, _itemSelector);
+
 			renderRequest.setAttribute(
-				CPDefinitionVirtualSettingWebKeys.
-					DEFINITION_VIRTUAL_SETTING_ITEM_SELECTOR_HELPER,
-				_cpDefinitionVirtualSettingItemSelectorHelper);
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				cpDefinitionVirtualSettingDisplayContext);
 
 			renderRequest.setAttribute(
 				"cpDefinitionServletContext", cpDefinitionServletContext);
+
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			throw new PortletException(
@@ -106,11 +116,20 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 	protected ServletContext servletContext;
 
 	@Reference
-	private CPDefinitionVirtualSettingItemSelectorHelper
-		_cpDefinitionVirtualSettingItemSelectorHelper;
+	private ActionHelper _actionHelper;
+
+	@Reference
+	private CPDefinitionVirtualSettingActionHelper
+		_cpDefinitionVirtualSettingActionHelper;
 
 	@Reference
 	private CPDefinitionVirtualSettingService
 		_cpDefinitionVirtualSettingService;
+
+	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 }

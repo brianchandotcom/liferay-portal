@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.roles.admin.demo.data.creator.RoleDemoDataCreator;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -128,6 +128,6 @@ public abstract class BaseRoleDemoDataCreator implements RoleDemoDataCreator {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseRoleDemoDataCreator.class);
 
-	private final List<Long> _roleIds = new ArrayList<>();
+	private final List<Long> _roleIds = new CopyOnWriteArrayList<>();
 
 }

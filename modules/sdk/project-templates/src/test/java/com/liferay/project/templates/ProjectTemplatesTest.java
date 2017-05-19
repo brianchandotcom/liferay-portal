@@ -358,36 +358,52 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateFreeMarkerPortlet() throws Exception {
-		_testBuildTemplatePortlet(
+		File gradleProjectDir = _testBuildTemplatePortlet(
 			"freemarker-portlet", "FreeMarkerPortlet", "templates/init.ftl",
 			"templates/view.ftl");
+
+		_testStartsWith(
+			gradleProjectDir, "src/main/resources/templates/view.ftl",
+			_FREEMARKER_PORTLET_VIEW_FTL_PREFIX);
 	}
 
 	@Test
 	public void testBuildTemplateFreeMarkerPortletWithPackage()
 		throws Exception {
 
-		_testBuildTemplatePortletWithPackage(
+		File gradleProjectDir = _testBuildTemplatePortletWithPackage(
 			"freemarker-portlet", "FreeMarkerPortlet", "templates/init.ftl",
 			"templates/view.ftl");
+
+		_testStartsWith(
+			gradleProjectDir, "src/main/resources/templates/view.ftl",
+			_FREEMARKER_PORTLET_VIEW_FTL_PREFIX);
 	}
 
 	@Test
 	public void testBuildTemplateFreeMarkerPortletWithPortletName()
 		throws Exception {
 
-		_testBuildTemplatePortletWithPortletName(
+		File gradleProjectDir = _testBuildTemplatePortletWithPortletName(
 			"freemarker-portlet", "FreeMarkerPortlet", "templates/init.ftl",
 			"templates/view.ftl");
+
+		_testStartsWith(
+			gradleProjectDir, "src/main/resources/templates/view.ftl",
+			_FREEMARKER_PORTLET_VIEW_FTL_PREFIX);
 	}
 
 	@Test
 	public void testBuildTemplateFreeMarkerPortletWithPortletSuffix()
 		throws Exception {
 
-		_testBuildTemplatePortletWithPortletSuffix(
+		File gradleProjectDir = _testBuildTemplatePortletWithPortletSuffix(
 			"freemarker-portlet", "FreeMarkerPortlet", "templates/init.ftl",
 			"templates/view.ftl");
+
+		_testStartsWith(
+			gradleProjectDir, "src/main/resources/templates/view.ftl",
+			_FREEMARKER_PORTLET_VIEW_FTL_PREFIX);
 	}
 
 	@Test
@@ -1600,6 +1616,21 @@ public class ProjectTemplatesTest {
 		return file;
 	}
 
+	private static File _testStartsWith(
+			File dir, String fileName, String prefix)
+		throws IOException {
+
+		File file = _testExists(dir, fileName);
+
+		String content = FileUtil.read(file.toPath());
+
+		Assert.assertTrue(
+			fileName + " must start with \"" + prefix + "\"",
+			content.startsWith(prefix));
+
+		return file;
+	}
+
 	private static void _testWarsDiff(File warFile1, File warFile2)
 		throws IOException {
 
@@ -2015,6 +2046,9 @@ public class ProjectTemplatesTest {
 			"Build-Jdk", "Built-By", "Javac-Debug", "Javac-Deprecation",
 			"Javac-Encoding"),
 		',');
+
+	private static final String _FREEMARKER_PORTLET_VIEW_FTL_PREFIX =
+		"<#include \"init.ftl\">";
 
 	private static final String _GRADLE_TASK_PATH_BUILD = ":build";
 

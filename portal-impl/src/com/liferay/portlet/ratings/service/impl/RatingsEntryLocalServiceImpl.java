@@ -190,8 +190,8 @@ public class RatingsEntryLocalServiceImpl
 
 			// Stats
 
-			RatingsStats stats = ratingsStatsLocalService.fetchStats(
-				className, classPK);
+			RatingsStats stats = ratingsStatsPersistence.fetchByC_C(
+				classNameId, classPK);
 
 			if (stats == null) {
 				stats = ratingsStatsLocalService.addStats(classNameId, classPK);
@@ -221,8 +221,8 @@ public class RatingsEntryLocalServiceImpl
 
 			// Stats
 
-			RatingsStats stats = ratingsStatsLocalService.fetchStats(
-				className, classPK);
+			RatingsStats stats = ratingsStatsPersistence.fetchByC_C(
+				classNameId, classPK);
 
 			if (stats == null) {
 				stats = ratingsStatsLocalService.addStats(classNameId, classPK);

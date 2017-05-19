@@ -17,6 +17,6 @@ create table CPDefinitionVirtualSetting (
 	sampleUrl VARCHAR(75) null,
 	termsOfUseRequired BOOLEAN,
 	termsOfUseContent STRING null,
-	termsOfUseJournalArticleResourcePK LONG,
+	termsOfUseArticleResourcePK LONG,
 	lastPublishDate DATE null
 );

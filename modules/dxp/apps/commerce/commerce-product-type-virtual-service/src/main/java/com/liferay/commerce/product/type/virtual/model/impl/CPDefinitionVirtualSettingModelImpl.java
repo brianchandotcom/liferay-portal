@@ -98,7 +98,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 			{ "sampleUrl", Types.VARCHAR },
 			{ "termsOfUseRequired", Types.BOOLEAN },
 			{ "termsOfUseContent", Types.VARCHAR },
-			{ "termsOfUseJournalArticleResourcePK", Types.BIGINT },
+			{ "termsOfUseArticleResourcePK", Types.BIGINT },
 			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -122,11 +122,11 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		TABLE_COLUMNS_MAP.put("sampleUrl", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("termsOfUseRequired", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("termsOfUseContent", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("termsOfUseJournalArticleResourcePK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("termsOfUseArticleResourcePK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionVirtualSetting (uuid_ VARCHAR(75) null,CPDefinitionVirtualSettingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,fileEntryId LONG,url VARCHAR(75) null,activationStatus VARCHAR(75) null,duration LONG,maxUsages INTEGER,sampleFileEntryId LONG,sampleUrl VARCHAR(75) null,termsOfUseRequired BOOLEAN,termsOfUseContent STRING null,termsOfUseJournalArticleResourcePK LONG,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionVirtualSetting (uuid_ VARCHAR(75) null,CPDefinitionVirtualSettingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,fileEntryId LONG,url VARCHAR(75) null,activationStatus VARCHAR(75) null,duration LONG,maxUsages INTEGER,sampleFileEntryId LONG,sampleUrl VARCHAR(75) null,termsOfUseRequired BOOLEAN,termsOfUseContent STRING null,termsOfUseArticleResourcePK LONG,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionVirtualSetting";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionVirtualSetting.CPDefinitionVirtualSettingId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionVirtualSetting.CPDefinitionVirtualSettingId ASC";

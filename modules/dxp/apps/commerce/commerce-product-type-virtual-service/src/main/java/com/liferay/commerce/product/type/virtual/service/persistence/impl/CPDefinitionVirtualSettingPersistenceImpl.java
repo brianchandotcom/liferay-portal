@@ -1725,6 +1725,8 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 			dbColumnNames.put("uuid", "uuid_");
+			dbColumnNames.put("termsOfUseJournalArticleResourcePK",
+				"termsOfUseArticleResourcePK");
 
 			field.set(this, dbColumnNames);
 		}
@@ -2613,6 +2615,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CPDefinitionVirtualSetting exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CPDefinitionVirtualSettingPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
+				"uuid", "termsOfUseJournalArticleResourcePK"
 			});
 }

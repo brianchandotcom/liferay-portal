@@ -22,6 +22,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
+import com.liferay.commerce.product.service.permission.CPPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -134,7 +135,7 @@ public class CPDefinitionAssetRendererFactory
 			PermissionChecker permissionChecker, long groupId, long classTypeId)
 		throws Exception {
 
-		return CPDefinitionPermission.contains(
+		return CPPermission.contains(
 			permissionChecker, groupId,
 			CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
 	}

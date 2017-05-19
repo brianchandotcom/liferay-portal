@@ -509,18 +509,18 @@ shield.transport.ssl: true</echo>
 			<if>
 				<os family="mac" />
 				<then>
-					<move file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-darwin-x64" tofile="${elastic.kibana.dir}" />
+					<move file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-darwin-x86_64" tofile="${elastic.kibana.dir}" />
 				</then>
 				<elseif>
 					<os family="unix" />
 					<then>
-						<move file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-linux-x64" tofile="${elastic.kibana.dir}" />
+						<move file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-linux-x86_64" tofile="${elastic.kibana.dir}" />
 					</then>
 				</elseif>
 				<elseif>
 					<os family="windows" />
 					<then>
-						<move file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-windows" tofile="${elastic.kibana.dir}" />
+						<move file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-windows-x86" tofile="${elastic.kibana.dir}" />
 					</then>
 				</elseif>
 			</if>

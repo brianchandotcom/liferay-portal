@@ -43,7 +43,7 @@ import org.osgi.util.tracker.BundleTracker;
 @Component(
 	immediate = true,
 	property = {"language.type=" + TemplateConstants.LANG_TYPE_SOY},
-	service = TemplateManager.class
+	service = {TemplateManager.class, SoyManager.class}
 )
 public class SoyManager extends BaseMultiTemplateManager {
 
@@ -57,6 +57,10 @@ public class SoyManager extends BaseMultiTemplateManager {
 	@Override
 	public void destroy(ClassLoader classLoader) {
 		templateContextHelper.removeHelperUtilities(classLoader);
+	}
+
+	public List<TemplateResource> getAllTemplateResources() {
+		return _soyCapabilityBundleTrackerCustomizer.getAllTemplateResources();
 	}
 
 	@Override
@@ -87,9 +91,11 @@ public class SoyManager extends BaseMultiTemplateManager {
 	protected void activate(BundleContext bundleContext) {
 		int stateMask = Bundle.ACTIVE | Bundle.RESOLVED;
 
+		_soyCapabilityBundleTrackerCustomizer =
+			new SoyCapabilityBundleTrackerCustomizer(_portalCache);
+
 		_bundleTracker = new BundleTracker<>(
-			bundleContext, stateMask,
-			new SoyCapabilityBundleTrackerCustomizer(_portalCache));
+			bundleContext, stateMask, _soyCapabilityBundleTrackerCustomizer);
 
 		_bundleTracker.open();
 	}
@@ -121,5 +127,7 @@ public class SoyManager extends BaseMultiTemplateManager {
 	private BundleTracker<List<BundleCapability>> _bundleTracker;
 	private PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag>
 		_portalCache;
+	private SoyCapabilityBundleTrackerCustomizer
+		_soyCapabilityBundleTrackerCustomizer;
 
 }

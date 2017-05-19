@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.template.soy.internal.SoyCapabilityBundleTrackerCustomizer;
+import com.liferay.portal.template.soy.internal.SoyManager;
 import com.liferay.portal.template.soy.internal.SoyProviderCapabilityBundleRegister;
 import com.liferay.portal.template.soy.internal.SoyTemplateResourcesCollector;
 
@@ -36,8 +36,12 @@ import org.osgi.service.component.annotations.Reference;
 public class SoyTemplateResourcesProvider {
 
 	public static List<TemplateResource> getAllTemplateResources() {
+		if (_soyManager == null) {
+			return Collections.<TemplateResource>emptyList();
+		}
+
 		return Collections.unmodifiableList(
-			_soyCapabilityBundleTrackerCustomizer.getAllTemplateResources());
+			_soyManager.getAllTemplateResources());
 	}
 
 	public static List<TemplateResource> getBundleTemplateResources(
@@ -69,12 +73,8 @@ public class SoyTemplateResourcesProvider {
 	}
 
 	@Reference(unbind = "-")
-	protected void setSoyCapabilityBundleTrackerCustomizer(
-		SoyCapabilityBundleTrackerCustomizer
-			soyCapabilityBundleTrackerCustomizer) {
-
-		_soyCapabilityBundleTrackerCustomizer =
-			soyCapabilityBundleTrackerCustomizer;
+	protected void setSoyManager(SoyManager soyManager) {
+		_soyManager = soyManager;
 	}
 
 	@Reference(unbind = "-")
@@ -89,8 +89,7 @@ public class SoyTemplateResourcesProvider {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SoyTemplateResourcesProvider.class);
 
-	private static SoyCapabilityBundleTrackerCustomizer
-		_soyCapabilityBundleTrackerCustomizer;
+	private static SoyManager _soyManager;
 	private static SoyProviderCapabilityBundleRegister
 		_soyProviderCapabilityBundleRegister;
 

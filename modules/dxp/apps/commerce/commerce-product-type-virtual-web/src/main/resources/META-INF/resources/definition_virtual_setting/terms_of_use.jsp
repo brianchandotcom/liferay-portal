@@ -48,14 +48,14 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 	<aui:fieldset>
 
 		<%
-		boolean useContent = true;
+		boolean insertText = true;
 
 		if ((cpDefinitionVirtualSetting != null) && Validator.isNull(cpDefinitionVirtualSetting.getTermsOfUseContentMap())) {
-			useContent = false;
+			insertText = false;
 		}
 		%>
 
-		<aui:input checked="<%= useContent %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="use-content" name="useContent" type="radio" />
+		<aui:input checked="<%= insertText %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="insert-text" name="insertText" type="radio" />
 
 		<%
 		String wrapperCssClass = "lfr-definition-virtual-setting-terms-of-use-value ";
@@ -81,18 +81,18 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 	<aui:fieldset>
 
 		<%
-		boolean useArticle = false;
+		boolean selectWebContent = false;
 
 		String articleContainerCssClass = "hidden lfr-definition-virtual-setting-terms-of-use-value";
 
 		if((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK())){
-			useArticle = true;
+			selectWebContent = true;
 
 			articleContainerCssClass = "lfr-definition-virtual-setting-terms-of-use-value";
 		}
 		%>
 
-		<aui:input checked="<%= useArticle %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="use-article" name="useArticle" type="radio" />
+		<aui:input checked="<%= selectWebContent %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="select-web-content" name="selectWebContent" type="radio" />
 
 		<div class="<%= articleContainerCssClass %>">
 			<liferay-ui:search-container
@@ -135,7 +135,7 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 			}
 			%>
 
-			<aui:button cssClass="<%= cssClass %>" name="selectArticle" value="select-article" />
+			<aui:button cssClass="<%= cssClass %>" name="selectArticle" value="select-web-content" />
 		</div>
 	</aui:fieldset>
 </div>
@@ -155,7 +155,7 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 					},
 					eventName: 'selectJournalArticle',
 					id: '',
-					title: '<liferay-ui:message key="select-article" />',
+					title: '<liferay-ui:message key="select-web-content" />',
 					uri: '<%= cpDefinitionVirtualSettingDisplayContext.getAssetBrowserURL() %>'
 				},
 				function(event) {

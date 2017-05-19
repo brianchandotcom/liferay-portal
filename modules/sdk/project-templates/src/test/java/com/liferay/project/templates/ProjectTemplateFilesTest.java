@@ -78,6 +78,17 @@ public class ProjectTemplateFilesTest {
 		}
 	}
 
+	private static String _readXmlDeclarationTemplate(String name)
+		throws IOException {
+
+		String template = FileTestUtil.read(
+			"com/liferay/project/templates/dependencies/" + name);
+
+		int pos = template.indexOf("[$XML$]");
+
+		return template.substring(0, pos);
+	}
+
 	private List<BuildGradleDependency> _getBuildGradleDependencies(
 			Path buildGradlePath)
 		throws IOException {
@@ -565,7 +576,10 @@ public class ProjectTemplateFilesTest {
 
 			String xmlDeclaration = _XML_DECLARATION;
 
-			if (fileName.equals("service.xml")) {
+			if (fileName.equals("pom.xml")) {
+				xmlDeclaration = _POM_XML_DECLARATION;
+			}
+			else if (fileName.equals("service.xml")) {
 				xmlDeclaration = _SERVICE_XML_DECLARATION;
 			}
 
@@ -578,6 +592,8 @@ public class ProjectTemplateFilesTest {
 	private static final String _GIT_IGNORE;
 
 	private static final String _GIT_IGNORE_WITH_PACKAGE_JSON;
+
+	private static final String _POM_XML_DECLARATION;
 
 	private static final String _SERVICE_XML_DECLARATION;
 
@@ -615,6 +631,14 @@ public class ProjectTemplateFilesTest {
 
 		_GIT_IGNORE_WITH_PACKAGE_JSON = StringTestUtil.merge(
 			gitIgnoreLines, '\n');
+
+		try {
+			_POM_XML_DECLARATION = _readXmlDeclarationTemplate(
+				"pom_xml_declaration.tmpl");
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
 
 		StringBuilder sb = new StringBuilder();
 

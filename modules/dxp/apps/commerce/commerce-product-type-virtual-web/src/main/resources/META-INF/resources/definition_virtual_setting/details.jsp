@@ -18,20 +18,79 @@
 
 <%
 CPDefinitionVirtualSetting cpDefinitionVirtualSetting = (CPDefinitionVirtualSetting)request.getAttribute(CPDefinitionVirtualSettingWebKeys.COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING);
+
+CPDefinitionVirtualSettingDisplayContext cpDefinitionVirtualSettingDisplayContext = (CPDefinitionVirtualSettingDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+SearchContainer<FileEntry> fileEntrySearchContainer = cpDefinitionVirtualSettingDisplayContext.getSearchContainer();
 %>
 
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+
 <aui:model-context bean="<%= cpDefinitionVirtualSetting %>" model="<%= CPDefinitionVirtualSetting.class %>" />
+
+<liferay-util:buffer var="removeFileEntryIcon">
+	<liferay-ui:icon
+		icon="times"
+		markupView="lexicon"
+		message="remove"
+	/>
+</liferay-util:buffer>
 
 <div class="lfr-definition-virtual-setting-file-selector">
 	<aui:fieldset>
 		<aui:input checked="<%= true %>" cssClass="lfr-definition-virtual-setting-type" label="use-file" name="useFileEntry" type="radio" />
 
-		<aui:button cssClass="lfr-definition-virtual-setting-value" name="selectFile" value="select-file" />
-	</aui:fieldset>
+		<liferay-ui:search-container
+			cssClass="lfr-search-container-definition-virtual-setting-file-entry"
+			curParam="curFileEntry"
+			headerNames="title,null"
+			id="fileEntrySearchContainer"
+			iteratorURL="<%= currentURLObj %>"
+			searchContainer="<%= fileEntrySearchContainer %>"
+		>
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.kernel.repository.model.FileEntry"
+				keyProperty="fileEntryId"
+				modelVar="fileEntry"
+			>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					name="title"
+				>
+					<liferay-ui:icon
+						iconCssClass="icon-ok-sign"
+						label="<%= true %>"
+						message="<%= HtmlUtil.escape(fileEntry.getTitle()) %>"
+						url="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadFileEntryURL() %>"
+					/>
+				</liferay-ui:search-container-column-text>
 
-	<div class="lfr-file-entry-title">
-		<liferay-ui:message key="select-file" />
-	</div>
+				<c:if test="<%= Validator.isNotNull(cpDefinitionVirtualSetting) %>">
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="size"
+						value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
+					/>
+				</c:if>
+
+				<liferay-ui:search-container-column-text>
+					<a class="modify-file-entry-link" data-rowId="<%= fileEntry.getFileEntryId() %>" href="javascript:;"><%= removeFileEntryIcon %></a>
+				</liferay-ui:search-container-column-text>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= fileEntrySearchContainer %>" />
+		</liferay-ui:search-container>
+
+		<%
+		String cssClass = "lfr-definition-virtual-setting-value modify-file-entry-link ";
+
+		if (fileEntrySearchContainer.hasResults()) {
+			cssClass += "hidden";
+		}
+		%>
+
+		<aui:button cssClass="<%= cssClass %>" name="selectFile" value="select-file" />
+	</aui:fieldset>
 
 	<aui:fieldset>
 		<aui:input cssClass="lfr-definition-virtual-setting-type" label="use-url" name="useUrl" type="radio" />
@@ -60,12 +119,24 @@ CPDefinitionVirtualSetting cpDefinitionVirtualSetting = (CPDefinitionVirtualSett
 
 								$('#<portlet:namespace />fileEntryId').val(value.fileEntryId);
 
-								$('div.lfr-file-entry-title').replaceWith('<div class="lfr-file-entry-title">Title: ' + value.title + '</div>');
+								var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />fileEntrySearchContainer');
+
+								var rowColumns = [];
+
+								rowColumns.push(value.title);
+
+								rowColumns.push('<a class="modify-file-entry-link" data-rowId="' + value.fileEntryId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeFileEntryIcon) %></a>');
+
+								searchContainer.addRow(rowColumns, value.fileEntryId);
+
+								searchContainer.updateDataStore();
+
+								$('#<portlet:namespace />selectFile').addClass('hidden');
 							}
 						}
 					},
 					title: '<liferay-ui:message key="select-file" />',
-					url: '<%= cpDefinitionVirtualSettingItemSelectorHelper.getItemSelectorURL(renderRequest) %>'
+					url: '<%= cpDefinitionVirtualSettingDisplayContext.getItemSelectorURL() %>'
 				}
 			);
 
@@ -101,10 +172,37 @@ CPDefinitionVirtualSetting cpDefinitionVirtualSetting = (CPDefinitionVirtualSett
 	container.delegate(
 		'change',
 		function(event) {
+
 			var index = types.indexOf(event.currentTarget);
 
 			selectFileType(index);
 		},
 		'.lfr-definition-virtual-setting-type'
+	);
+</aui:script>
+
+<aui:script use="liferay-search-container">
+	var Util = Liferay.Util;
+
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />fileEntrySearchContainer');
+
+	var searchContainerContentBox = searchContainer.get('contentBox');
+
+	searchContainerContentBox.delegate(
+		'click',
+		function(event) {
+			var link = event.currentTarget;
+
+			var rowId = link.attr('data-rowId');
+
+			var tr = link.ancestor('tr');
+
+			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
+
+			searchContainer.updateDataStore();
+
+			$('#<portlet:namespace />selectFile').removeClass('hidden');
+		},
+		'.modify-file-entry-link'
 	);
 </aui:script>

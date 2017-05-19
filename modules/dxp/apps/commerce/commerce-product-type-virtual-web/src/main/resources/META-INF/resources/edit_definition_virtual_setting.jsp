@@ -17,25 +17,54 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPDefinitionVirtualSetting cpDefinitionVirtualSetting = (CPDefinitionVirtualSetting)request.getAttribute(CPDefinitionVirtualSettingWebKeys.COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING);
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "virtual");
 
-String redirect = ParamUtil.getString(request, "redirect");
+ServletContext cpDefinitionServletContext = (ServletContext)request.getAttribute("cpDefinitionServletContext");
 
-String backURL = ParamUtil.getString(request, "backURL", redirect);
+CPDefinitionVirtualSettingDisplayContext cpDefinitionVirtualSettingDisplayContext = (CPDefinitionVirtualSettingDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSettingDisplayContext.getCPDefinitionVirtualSetting();
+
+CPDefinition cpDefinition = cpDefinitionVirtualSettingDisplayContext.getCPDefinition();
+
+long cpDefinitionId = cpDefinitionVirtualSettingDisplayContext.getCPDefinitionId();
+
+PortletURL portletURL = cpDefinitionVirtualSettingDisplayContext.getPortletURL();
+
+PortletURL backUrl = liferayPortletResponse.createRenderURL();
+
+backUrl.setParameter("mvcPath", "/view.jsp");
+
+String backURLString = backUrl.toString();
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURLString);
+
+renderResponse.setTitle(cpDefinition.getTitle(languageId));
+
+request.setAttribute("view.jsp-cpDefinition", cpDefinition);
+request.setAttribute("view.jsp-cpType", cpDefinitionVirtualSettingDisplayContext.getCPType());
+request.setAttribute("view.jsp-portletURL", portletURL);
+request.setAttribute("view.jsp-showSearch", false);
+request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 %>
+
+<liferay-util:include page="/definition_navbar.jsp" servletContext="<%= cpDefinitionServletContext %>" />
 
 <portlet:actionURL name="editProductDefinitionVirtualSetting" var="editProductDefinitionVirtualSettingActionURL" />
 
-<aui:form action="<%= editProductDefinitionVirtualSettingActionURL %>" method="post" name="fm1">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="cpDefinitionId" type="hidden" />
-	<aui:input name="fileEntryId" type="hidden" />
-	<aui:input name="sampleFileEntryId" type="hidden" />
+<aui:form action="<%= editProductDefinitionVirtualSettingActionURL %>" cssClass="container-fluid-1280" method="post" name="fm1">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
+	<aui:input name="cpDefinitionVirtualSettingId" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK : cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId() %>" />
+	<aui:input name="fileEntryId" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK: cpDefinitionVirtualSettingDisplayContext.getCPDefinitionVirtualSettingFileEntryId() %>" />
+	<aui:input name="sampleFileEntryId" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK : cpDefinitionVirtualSettingDisplayContext.getCPDefinitionVirtualSettingSampleFileEntryId() %>" />
 	<aui:input name="termsOfUseJournalArticleId" type="hidden" />
 
 	<div class="lfr-form-content" id="<portlet:namespace />fileEntryContainer">
 		<liferay-ui:form-navigator
-			backURL="<%= backURL %>"
+			backURL="<%= backURLString %>"
 			formModelBean="<%= cpDefinitionVirtualSetting %>"
 			id="<%= CPDefinitionVirtualSettingFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING %>"
 			markupView="lexicon"

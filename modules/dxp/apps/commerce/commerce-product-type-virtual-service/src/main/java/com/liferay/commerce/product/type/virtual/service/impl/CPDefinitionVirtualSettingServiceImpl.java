@@ -38,7 +38,8 @@ public class CPDefinitionVirtualSettingServiceImpl
 			boolean useSampleFileEntry, long sampleFileEntryId,
 			String sampleUrl, boolean termsOfUseRequired,
 			Map<Locale, String> termsOfUseContentMap,
-			long termsOfUseJournalArticleId, ServiceContext serviceContext)
+			long termsOfUseJournalArticleResourcePK,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
@@ -49,7 +50,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 				cpDefinitionId, useFileEntry, fileEntryId, url,
 				activationStatus, duration, maxUsages, useSampleFileEntry,
 				sampleFileEntryId, sampleUrl, termsOfUseRequired,
-				termsOfUseContentMap, termsOfUseJournalArticleId,
+				termsOfUseContentMap, termsOfUseJournalArticleResourcePK,
 				serviceContext);
 	}
 
@@ -93,7 +94,8 @@ public class CPDefinitionVirtualSettingServiceImpl
 			long sampleFileEntryId, String sampleUrl,
 			boolean termsOfUseRequired,
 			Map<Locale, String> termsOfUseContentMap,
-			long termsOfUseJournalArticleId, ServiceContext serviceContext)
+			long termsOfUseJournalArticleResourcePK,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		fetchCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId);
@@ -103,7 +105,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 				cpDefinitionVirtualSettingId, useFileEntry, fileEntryId, url,
 				activationStatus, duration, maxUsages, useSampleFileEntry,
 				sampleFileEntryId, sampleUrl, termsOfUseRequired,
-				termsOfUseContentMap, termsOfUseJournalArticleId,
+				termsOfUseContentMap, termsOfUseJournalArticleResourcePK,
 				serviceContext);
 	}
 

@@ -46,7 +46,8 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			boolean useSampleFileEntry, long sampleFileEntryId,
 			String sampleUrl, boolean termsOfUseRequired,
 			Map<Locale, String> termsOfUseContentMap,
-			long termsOfUseJournalArticleId, ServiceContext serviceContext)
+			long termsOfUseJournalArticleResourcePK,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -67,22 +68,22 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		}
 
 		if (termsOfUseRequired) {
-			if (termsOfUseJournalArticleId > 0) {
+			if (termsOfUseJournalArticleResourcePK > 0) {
 				termsOfUseContentMap = null;
 			}
 			else {
-				termsOfUseJournalArticleId = 0;
+				termsOfUseJournalArticleResourcePK = 0;
 			}
 		}
 		else {
 			termsOfUseContentMap = null;
-			termsOfUseJournalArticleId = 0;
+			termsOfUseJournalArticleResourcePK = 0;
 		}
 
 		validate(
 			useFileEntry, fileEntryId, url, useSampleFileEntry,
 			sampleFileEntryId, sampleUrl, termsOfUseRequired,
-			termsOfUseContentMap, termsOfUseJournalArticleId);
+			termsOfUseContentMap, termsOfUseJournalArticleResourcePK);
 
 		long cpDefinitionVirtualSettingId = counterLocalService.increment();
 
@@ -105,8 +106,8 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		cpDefinitionVirtualSetting.setTermsOfUseRequired(termsOfUseRequired);
 		cpDefinitionVirtualSetting.setTermsOfUseContentMap(
 			termsOfUseContentMap);
-		cpDefinitionVirtualSetting.setTermsOfUseJournalArticleId(
-			termsOfUseJournalArticleId);
+		cpDefinitionVirtualSetting.setTermsOfUseJournalArticleResourcePK(
+			termsOfUseJournalArticleResourcePK);
 		cpDefinitionVirtualSetting.setExpandoBridgeAttributes(serviceContext);
 
 		cpDefinitionVirtualSettingPersistence.update(
@@ -132,7 +133,8 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			long sampleFileEntryId, String sampleUrl,
 			boolean termsOfUseRequired,
 			Map<Locale, String> termsOfUseContentMap,
-			long termsOfUseJournalArticleId, ServiceContext serviceContext)
+			long termsOfUseJournalArticleResourcePK,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
@@ -154,22 +156,22 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		}
 
 		if (termsOfUseRequired) {
-			if (termsOfUseJournalArticleId > 0) {
+			if (termsOfUseJournalArticleResourcePK > 0) {
 				termsOfUseContentMap = null;
 			}
 			else {
-				termsOfUseJournalArticleId = 0;
+				termsOfUseJournalArticleResourcePK = 0;
 			}
 		}
 		else {
 			termsOfUseContentMap = null;
-			termsOfUseJournalArticleId = 0;
+			termsOfUseJournalArticleResourcePK = 0;
 		}
 
 		validate(
 			useFileEntry, fileEntryId, url, useSampleFileEntry,
 			sampleFileEntryId, sampleUrl, termsOfUseRequired,
-			termsOfUseContentMap, termsOfUseJournalArticleId);
+			termsOfUseContentMap, termsOfUseJournalArticleResourcePK);
 
 		cpDefinitionVirtualSetting.setFileEntryId(fileEntryId);
 		cpDefinitionVirtualSetting.setUrl(url);
@@ -181,8 +183,8 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		cpDefinitionVirtualSetting.setTermsOfUseRequired(termsOfUseRequired);
 		cpDefinitionVirtualSetting.setTermsOfUseContentMap(
 			termsOfUseContentMap);
-		cpDefinitionVirtualSetting.setTermsOfUseJournalArticleId(
-			termsOfUseJournalArticleId);
+		cpDefinitionVirtualSetting.setTermsOfUseJournalArticleResourcePK(
+			termsOfUseJournalArticleResourcePK);
 		cpDefinitionVirtualSetting.setExpandoBridgeAttributes(serviceContext);
 
 		cpDefinitionVirtualSettingPersistence.update(
@@ -196,7 +198,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			boolean useSampleFileEntry, long sampleFileEntryId,
 			String sampleUrl, boolean termsOfUseRequired,
 			Map<Locale, String> termsOfUseContentMap,
-			long termsOfUseJournalArticleId)
+			long termsOfUseJournalArticleResourcePK)
 		throws PortalException {
 
 		if (useFileEntry) {
@@ -227,7 +229,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		if (termsOfUseRequired && MapUtil.isEmpty(termsOfUseContentMap)) {
 			JournalArticle journalArticle =
 				journalArticleLocalService.fetchLatestArticle(
-					termsOfUseJournalArticleId);
+					termsOfUseJournalArticleResourcePK);
 
 			if (journalArticle == null) {
 				throw new

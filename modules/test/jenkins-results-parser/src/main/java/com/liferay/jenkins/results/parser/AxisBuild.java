@@ -260,7 +260,7 @@ public class AxisBuild extends BaseBuild {
 				}
 
 				elements.add(
-					testResult.getGitHubListItemElement(getTestRayLogsURL()));
+					testResult.getGitHubElement(getTestRayLogsURL()));
 			}
 
 			Dom4JUtil.getTruncatedOrderedListElement(

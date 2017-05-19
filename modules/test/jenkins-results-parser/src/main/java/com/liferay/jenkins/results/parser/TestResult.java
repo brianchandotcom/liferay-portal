@@ -105,11 +105,11 @@ public class TestResult {
 		return duration;
 	}
 
-	public Element getGitHubListItemElement(String testRayLogsURL) {
+	public Element getGitHubElement(String testRayLogsURL) {
 		String testReportURL = getTestReportURL();
 
 		Element downstreamBuildListItemElement = Dom4JUtil.getNewElement(
-			"li", null);
+			"div", null);
 
 		downstreamBuildListItemElement.add(
 			Dom4JUtil.getNewAnchorElement(testReportURL, getDisplayName()));

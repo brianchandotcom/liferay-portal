@@ -165,6 +165,21 @@ public class CPDefinitionVirtualSettingDisplayContext
 		return url;
 	}
 
+	public String getDownloadSampleFileEntryURL() throws PortalException {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(
+			getCPDefinitionVirtualSettingSampleFileEntryId());
+
+		String url = DLUtil.getDownloadURL(
+			fileEntry, fileEntry.getLatestFileVersion(), themeDisplay,
+			StringPool.BLANK, true, true);
+
+		return url;
+	}
+
 	public String getItemSelectorURL() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(
@@ -198,11 +213,13 @@ public class CPDefinitionVirtualSettingDisplayContext
 		List<JournalArticle> results = new ArrayList<>();
 
 		if (getCPDefinitionVirtualSetting() != null) {
-			JournalArticle journalArticle =
-				_journalArticleService.getLatestArticle(
-					getCPDefinitionVirtualSettingJournalArticleResourcePK());
+			if (getCPDefinitionVirtualSettingJournalArticleResourcePK() > 0) {
+				JournalArticle journalArticle =
+					_journalArticleService.getLatestArticle(
+						getCPDefinitionVirtualSettingJournalArticleResourcePK());
 
-			results.add(journalArticle);
+				results.add(journalArticle);
+			}
 		}
 
 		int total = results.size();
@@ -232,10 +249,12 @@ public class CPDefinitionVirtualSettingDisplayContext
 		List<FileEntry> results = new ArrayList<>();
 
 		if (getCPDefinitionVirtualSetting() != null) {
-			FileEntry fileEntry = _dlAppService.getFileEntry(
-				getCPDefinitionVirtualSettingSampleFileEntryId());
+			if (getCPDefinitionVirtualSettingSampleFileEntryId() > 0) {
+				FileEntry fileEntry = _dlAppService.getFileEntry(
+					getCPDefinitionVirtualSettingSampleFileEntryId());
 
-			results.add(fileEntry);
+				results.add(fileEntry);
+			}
 		}
 
 		int total = results.size();
@@ -259,11 +278,14 @@ public class CPDefinitionVirtualSettingDisplayContext
 
 		List<FileEntry> results = new ArrayList<>();
 
-		if (getCPDefinitionVirtualSetting() != null) {
-			FileEntry fileEntry = _dlAppService.getFileEntry(
-				getCPDefinitionVirtualSettingFileEntryId());
 
-			results.add(fileEntry);
+		if (getCPDefinitionVirtualSetting() != null) {
+			if (getCPDefinitionVirtualSettingFileEntryId() > 0) {
+				FileEntry fileEntry = _dlAppService.getFileEntry(
+					getCPDefinitionVirtualSettingFileEntryId());
+
+				results.add(fileEntry);
+			}
 		}
 
 		int total = results.size();

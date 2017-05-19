@@ -38,64 +38,98 @@ SearchContainer<FileEntry> fileEntrySearchContainer = cpDefinitionVirtualSetting
 
 <div class="lfr-definition-virtual-setting-file-selector">
 	<aui:fieldset>
-		<aui:input checked="<%= true %>" cssClass="lfr-definition-virtual-setting-type" label="use-file" name="useFileEntry" type="radio" />
-
-		<liferay-ui:search-container
-			cssClass="lfr-definition-virtual-setting-value"
-			curParam="curFileEntry"
-			headerNames="title,null"
-			id="fileEntrySearchContainer"
-			iteratorURL="<%= currentURLObj %>"
-			searchContainer="<%= fileEntrySearchContainer %>"
-		>
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.repository.model.FileEntry"
-				keyProperty="fileEntryId"
-				modelVar="fileEntry"
-			>
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					name="title"
-				>
-					<liferay-ui:icon
-						iconCssClass="icon-ok-sign"
-						label="<%= true %>"
-						message="<%= HtmlUtil.escape(fileEntry.getTitle()) %>"
-						url="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadFileEntryURL() %>"
-					/>
-				</liferay-ui:search-container-column-text>
-
-				<c:if test="<%= Validator.isNotNull(cpDefinitionVirtualSetting) %>">
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						name="size"
-						value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
-					/>
-				</c:if>
-
-				<liferay-ui:search-container-column-text>
-					<a class="modify-file-entry-link" data-rowId="<%= fileEntry.getFileEntryId() %>" href="javascript:;"><%= removeFileEntryIcon %></a>
-				</liferay-ui:search-container-column-text>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= fileEntrySearchContainer %>" />
-		</liferay-ui:search-container>
 
 		<%
-		String cssClass = "modify-file-entry-link ";
+		boolean useFileEntry = true;
 
-		if (fileEntrySearchContainer.hasResults()) {
-		    cssClass += "hidden";
+		if ((cpDefinitionVirtualSetting != null) && Validator.isNull(cpDefinitionVirtualSetting.getFileEntryId())) {
+		    useFileEntry = false;
 		}
 		%>
 
-		<aui:button cssClass="<%= cssClass %>" name="selectFile" value="select-file" />
+		<aui:input checked="<%= useFileEntry %>" cssClass="lfr-definition-virtual-setting-type" label="use-file" name="useFileEntry" type="radio" />
+
+		<%
+		String fileEntryContainerCssClass = "lfr-definition-virtual-setting-value ";
+
+		if ((cpDefinitionVirtualSetting != null) && (cpDefinitionVirtualSetting.getFileEntryId() <= 0)) {
+			fileEntryContainerCssClass += "hidden";
+		}
+		%>
+
+		<div class="<%= fileEntryContainerCssClass %>">
+			<liferay-ui:search-container
+				cssClass="lfr-definition-virtual-setting-file-entry"
+				curParam="curFileEntry"
+				headerNames="title,null"
+				id="fileEntrySearchContainer"
+				iteratorURL="<%= currentURLObj %>"
+				searchContainer="<%= fileEntrySearchContainer %>"
+			>
+				<liferay-ui:search-container-row
+					className="com.liferay.portal.kernel.repository.model.FileEntry"
+					keyProperty="fileEntryId"
+					modelVar="fileEntry"
+				>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="title"
+					>
+						<liferay-ui:icon
+							iconCssClass="icon-ok-sign"
+							label="<%= true %>"
+							message="<%= HtmlUtil.escape(fileEntry.getTitle()) %>"
+							url="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadFileEntryURL() %>"
+						/>
+					</liferay-ui:search-container-column-text>
+
+					<c:if test="<%= Validator.isNotNull(cpDefinitionVirtualSetting) %>">
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-content"
+							name="size"
+							value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
+						/>
+					</c:if>
+
+					<liferay-ui:search-container-column-text>
+						<a class="modify-file-entry-link" data-rowId="<%= fileEntry.getFileEntryId() %>" href="javascript:;"><%= removeFileEntryIcon %></a>
+					</liferay-ui:search-container-column-text>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= fileEntrySearchContainer %>" />
+			</liferay-ui:search-container>
+
+			<%
+			String cssClass = "modify-file-entry-link ";
+
+			if (fileEntrySearchContainer.hasResults()) {
+				cssClass += "hidden";
+			}
+			%>
+
+			<aui:button cssClass="<%= cssClass %>" name="selectFile" value="select-file" />
+		</div>
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:input cssClass="lfr-definition-virtual-setting-type" label="use-url" name="useUrl" type="radio" />
 
-		<aui:input cssClass="lfr-definition-virtual-setting-value hidden" name="url" />
+		<%
+		boolean useUrl = false;
+
+		String urlContainerCssClass = "hidden lfr-definition-virtual-setting-value";
+
+		if ((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getUrl())) {
+			useUrl = true;
+
+			urlContainerCssClass = "lfr-definition-virtual-setting-value";
+		}
+		%>
+
+		<aui:input checked="<%= useUrl %>" cssClass="lfr-definition-virtual-setting-type" label="use-url" name="useUrl" type="radio" />
+
+		<div class="<%= urlContainerCssClass %>">
+			<aui:input name="url" />
+		</div>
 	</aui:fieldset>
 </div>
 

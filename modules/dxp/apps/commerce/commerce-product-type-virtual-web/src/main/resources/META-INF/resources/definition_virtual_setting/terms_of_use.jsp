@@ -46,9 +46,26 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 
 <div class="lfr-definition-virtual-setting-terms-of-use-content toggler-content-collapsed">
 	<aui:fieldset>
-		<aui:input checked="<%= true %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="use-content" name="useContent" type="radio" />
 
-		<aui:field-wrapper cssClass="lfr-definition-virtual-setting-terms-of-use-value">
+		<%
+		boolean useContent = true;
+
+		if ((cpDefinitionVirtualSetting != null) && Validator.isNull(cpDefinitionVirtualSetting.getTermsOfUseContentMap())) {
+			useContent = false;
+		}
+		%>
+
+		<aui:input checked="<%= useContent %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="use-content" name="useContent" type="radio" />
+
+		<%
+		String wrapperCssClass = "lfr-definition-virtual-setting-terms-of-use-value ";
+
+		if ((cpDefinitionVirtualSetting != null) && (cpDefinitionVirtualSetting.getTermsOfUseContentMap() == null)) {
+		    wrapperCssClass += "hidden";
+		}
+		%>
+
+		<aui:field-wrapper cssClass="<%= wrapperCssClass %>">
 			<div class="entry-content form-group">
 				<liferay-ui:input-localized
 					cssClass="form-control"
@@ -62,49 +79,64 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:input cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="use-article" name="useArticle" type="radio" />
-
-		<liferay-ui:search-container
-			cssClass="lfr-definition-virtual-setting-terms-of-use-value hidden"
-			curParam="curJournalArticle"
-			headerNames="title,null"
-			id="journalArticleSearchContainer"
-			iteratorURL="<%= currentURLObj %>"
-			searchContainer="<%= journalArticleSearchContainer %>"
-		>
-			<liferay-ui:search-container-row
-				className="com.liferay.journal.model.JournalArticle"
-				keyProperty="id"
-				modelVar="journalArticle"
-			>
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					name="title"
-				>
-					<liferay-ui:icon
-						iconCssClass="icon-ok-sign"
-						label="<%= true %>"
-						message="<%= HtmlUtil.escape(journalArticle.getTitle(languageId)) %>"
-					/>
-				</liferay-ui:search-container-column-text>
-
-				<liferay-ui:search-container-column-text>
-					<a class="modify-journal-article-link" data-rowId="<%= journalArticle.getResourcePrimKey() %>" href="javascript:;"><%= removeJournalArticleIcon %></a>
-				</liferay-ui:search-container-column-text>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= journalArticleSearchContainer %>" />
-		</liferay-ui:search-container>
 
 		<%
-		String cssClass = "modify-journal-article-link ";
+		boolean useArticle = false;
 
-		if (journalArticleSearchContainer.hasResults()) {
-		    cssClass += "hidden";
+		String articleContainerCssClass = "hidden lfr-definition-virtual-setting-terms-of-use-value";
+
+		if((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK())){
+			useArticle = true;
+
+			articleContainerCssClass = "lfr-definition-virtual-setting-terms-of-use-value";
 		}
 		%>
 
-		<aui:button cssClass="<%= cssClass %>" name="selectArticle" value="select-article" />
+		<aui:input checked="<%= useArticle %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="use-article" name="useArticle" type="radio" />
+
+		<div class="<%= articleContainerCssClass %>">
+			<liferay-ui:search-container
+				cssClass="lfr-definition-virtual-setting-journal-article"
+				curParam="curJournalArticle"
+				headerNames="title,null"
+				id="journalArticleSearchContainer"
+				iteratorURL="<%= currentURLObj %>"
+				searchContainer="<%= journalArticleSearchContainer %>"
+			>
+				<liferay-ui:search-container-row
+					className="com.liferay.journal.model.JournalArticle"
+					keyProperty="id"
+					modelVar="journalArticle"
+				>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="title"
+					>
+						<liferay-ui:icon
+							iconCssClass="icon-ok-sign"
+							label="<%= true %>"
+							message="<%= HtmlUtil.escape(journalArticle.getTitle(languageId)) %>"
+						/>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text>
+						<a class="modify-journal-article-link" data-rowId="<%= journalArticle.getResourcePrimKey() %>" href="javascript:;"><%= removeJournalArticleIcon %></a>
+					</liferay-ui:search-container-column-text>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= journalArticleSearchContainer %>" />
+			</liferay-ui:search-container>
+
+			<%
+			String cssClass = "modify-journal-article-link ";
+
+			if (journalArticleSearchContainer.hasResults()) {
+				cssClass += "hidden";
+			}
+			%>
+
+			<aui:button cssClass="<%= cssClass %>" name="selectArticle" value="select-article" />
+		</div>
 	</aui:fieldset>
 </div>
 

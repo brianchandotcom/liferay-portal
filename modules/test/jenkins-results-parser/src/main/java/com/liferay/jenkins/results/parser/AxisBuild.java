@@ -20,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -247,37 +248,23 @@ public class AxisBuild extends BaseBuild {
 		}
 
 		if (result.equals("UNSTABLE")) {
-			Element downstreamBuildOrderedListElement = Dom4JUtil.getNewElement(
-				"ol", messageElement);
-
-			int failureCount = 0;
+			List<Element> elements = new ArrayList<>();
 
 			for (TestResult testResult : getTestResults(null)) {
 				String testStatus = testResult.getStatus();
 
 				if (testStatus.equals("PASSED") ||
-					testStatus.equals("SKIPPED")) {
+				testStatus.equals("SKIPPED")) {
 
 					continue;
 				}
 
-				if (failureCount < 3) {
-					Dom4JUtil.addToElement(
-						downstreamBuildOrderedListElement,
-						testResult.getGitHubListItemElement(
-							getTestRayLogsURL()));
-
-					failureCount++;
-
-					continue;
-				}
-
-				Dom4JUtil.addToElement(
-					downstreamBuildOrderedListElement,
-					Dom4JUtil.getNewElement("li", null, "..."));
-
-				break;
+				elements.add(
+					testResult.getGitHubListItemElement(getTestRayLogsURL()));
 			}
+
+			Dom4JUtil.getTruncatedOrderedListElement(
+				elements, messageElement, 3);
 		}
 
 		return messageElement;

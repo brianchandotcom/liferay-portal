@@ -67,28 +67,32 @@ public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 			(OpenIdConnectSession)httpSession.getAttribute(
 				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION);
 
-		if (Validator.isNotNull(openIdConnectSession)) {
-			OpenIdConnectFlowState openIdConnectFlowState =
-				openIdConnectSession.getOpenIdConnectFlowState();
+		if (Validator.isNull(openIdConnectSession)) {
+			return endSession;
+		}
 
-			if (OpenIdConnectFlowState.AUTH_COMPLETE.equals(
-					openIdConnectFlowState) ||
-				OpenIdConnectFlowState.PORTAL_AUTH_COMPLETE.equals(
-					openIdConnectFlowState)) {
+		OpenIdConnectFlowState openIdConnectFlowState =
+			openIdConnectSession.getOpenIdConnectFlowState();
 
-				try {
-					if (!_openIdConnectServiceHandler.
-							hasValidOpenIdConnectSession(httpSession)) {
+		if (!OpenIdConnectFlowState.AUTH_COMPLETE.equals(
+				openIdConnectFlowState) &&
+			!OpenIdConnectFlowState.PORTAL_AUTH_COMPLETE.equals(
+				openIdConnectFlowState)) {
 
-						endSession = true;
-					}
-				}
-				catch (PortalException pe) {
-					_log.error("Unable to validate OpenId session", pe);
+			return endSession;
+		}
 
-					endSession = true;
-				}
+		try {
+			if (!_openIdConnectServiceHandler.
+					hasValidOpenIdConnectSession(httpSession)) {
+
+				endSession = true;
 			}
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to validate OpenId session", pe);
+
+			endSession = true;
 		}
 
 		return endSession;

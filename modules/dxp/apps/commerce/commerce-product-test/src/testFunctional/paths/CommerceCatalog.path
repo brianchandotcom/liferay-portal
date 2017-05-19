@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>CommerceCatalog</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CommerceCatalog</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PRODUCT_TITLE</td>
+	<td>//tr[@data-qa-id='row']//a[contains(.,'${key_productTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_ALL_CHECKBOX</td>
+	<td>//input[contains (@id,'allRowIds') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_ENTRY_CHECKBOX</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_productTitle}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_BUTTON</td>
+	<td>//a[@data-qa-id='recycle-binButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//*[@data-qa-id='searchButton']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

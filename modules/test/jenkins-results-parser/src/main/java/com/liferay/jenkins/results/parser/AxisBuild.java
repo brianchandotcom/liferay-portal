@@ -267,6 +267,8 @@ public class AxisBuild extends BaseBuild {
 						testResult.getGitHubListItemElement(
 							getTestRayLogsURL()));
 
+					failureCount++;
+
 					continue;
 				}
 

@@ -85,10 +85,7 @@ public class RatingsStatsLocalServiceImpl
 	public RatingsStats fetchStats(String className, long classPK) {
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		RatingsStats stats = ratingsStatsPersistence.fetchByC_C(
-			classNameId, classPK);
-
-		return stats;
+		return ratingsStatsPersistence.fetchByC_C(classNameId, classPK);
 	}
 
 	@Override

@@ -19,5 +19,6 @@ package com.liferay.portal.security.sso.openid.connect;
  */
 public enum OpenIdConnectFlowState {
 
-	INITIALIZED, AUTH_REQUESTED, AUTH_COMPLETE, PORTAL_AUTH_COMPLETE
+	AUTH_COMPLETE, AUTH_REQUESTED, INITIALIZED, PORTAL_AUTH_COMPLETE
+
 }

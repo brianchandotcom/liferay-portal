@@ -426,6 +426,8 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<exceptions>
+		<exception>CPAttachmentFileEntryName</exception>
+		<exception>CPAttachmentFileEntrySize</exception>
 		<exception>CPDefinitionDisplayDate</exception>
 		<exception>CPDefinitionExpirationDate</exception>
 		<exception>CPInstanceDisplayDate</exception>

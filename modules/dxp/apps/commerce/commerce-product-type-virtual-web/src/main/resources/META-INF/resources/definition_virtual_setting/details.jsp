@@ -43,7 +43,7 @@ SearchContainer<FileEntry> fileEntrySearchContainer = cpDefinitionVirtualSetting
 		boolean useFileEntry = true;
 
 		if ((cpDefinitionVirtualSetting != null) && Validator.isNull(cpDefinitionVirtualSetting.getFileEntryId())) {
-		    useFileEntry = false;
+			useFileEntry = false;
 		}
 		%>
 

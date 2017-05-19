@@ -278,7 +278,6 @@ public class CPDefinitionVirtualSettingDisplayContext
 
 		List<FileEntry> results = new ArrayList<>();
 
-
 		if (getCPDefinitionVirtualSetting() != null) {
 			if (getCPDefinitionVirtualSettingFileEntryId() > 0) {
 				FileEntry fileEntry = _dlAppService.getFileEntry(

@@ -61,7 +61,7 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 		String wrapperCssClass = "lfr-definition-virtual-setting-terms-of-use-value ";
 
 		if ((cpDefinitionVirtualSetting != null) && (cpDefinitionVirtualSetting.getTermsOfUseContentMap() == null)) {
-		    wrapperCssClass += "hidden";
+			wrapperCssClass += "hidden";
 		}
 		%>
 
@@ -85,7 +85,7 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 
 		String articleContainerCssClass = "hidden lfr-definition-virtual-setting-terms-of-use-value";
 
-		if((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK())){
+		if ((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK())) {
 			selectWebContent = true;
 
 			articleContainerCssClass = "lfr-definition-virtual-setting-terms-of-use-value";

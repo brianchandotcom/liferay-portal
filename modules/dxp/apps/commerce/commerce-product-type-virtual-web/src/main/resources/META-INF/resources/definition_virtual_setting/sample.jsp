@@ -112,12 +112,13 @@ SearchContainer<FileEntry> sampleFileEntrySearchContainer = cpDefinitionVirtualS
 	</aui:fieldset>
 
 	<aui:fieldset>
+
 		<%
 		boolean useSampleUrl = false;
 
 		String sampleUrlContainerCssClass = "hidden lfr-definition-virtual-setting-sample-value";
 
-		if((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getSampleUrl())){
+		if ((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getSampleUrl())) {
 			useSampleUrl = true;
 
 			sampleUrlContainerCssClass = "lfr-definition-virtual-setting-sample-value";

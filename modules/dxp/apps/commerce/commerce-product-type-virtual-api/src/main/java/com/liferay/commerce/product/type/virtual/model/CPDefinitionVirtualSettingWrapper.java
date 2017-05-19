@@ -81,8 +81,8 @@ public class CPDefinitionVirtualSettingWrapper
 		attributes.put("sampleUrl", getSampleUrl());
 		attributes.put("termsOfUseRequired", getTermsOfUseRequired());
 		attributes.put("termsOfUseContent", getTermsOfUseContent());
-		attributes.put("termsOfUseJournalArticleId",
-			getTermsOfUseJournalArticleId());
+		attributes.put("termsOfUseJournalArticleResourcePK",
+			getTermsOfUseJournalArticleResourcePK());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -200,11 +200,11 @@ public class CPDefinitionVirtualSettingWrapper
 			setTermsOfUseContent(termsOfUseContent);
 		}
 
-		Long termsOfUseJournalArticleId = (Long)attributes.get(
-				"termsOfUseJournalArticleId");
+		Long termsOfUseJournalArticleResourcePK = (Long)attributes.get(
+				"termsOfUseJournalArticleResourcePK");
 
-		if (termsOfUseJournalArticleId != null) {
-			setTermsOfUseJournalArticleId(termsOfUseJournalArticleId);
+		if (termsOfUseJournalArticleResourcePK != null) {
+			setTermsOfUseJournalArticleResourcePK(termsOfUseJournalArticleResourcePK);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -570,13 +570,13 @@ public class CPDefinitionVirtualSettingWrapper
 	}
 
 	/**
-	* Returns the terms of use journal article ID of this cp definition virtual setting.
+	* Returns the terms of use journal article resource pk of this cp definition virtual setting.
 	*
-	* @return the terms of use journal article ID of this cp definition virtual setting
+	* @return the terms of use journal article resource pk of this cp definition virtual setting
 	*/
 	@Override
-	public long getTermsOfUseJournalArticleId() {
-		return _cpDefinitionVirtualSetting.getTermsOfUseJournalArticleId();
+	public long getTermsOfUseJournalArticleResourcePK() {
+		return _cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK();
 	}
 
 	/**
@@ -848,13 +848,14 @@ public class CPDefinitionVirtualSettingWrapper
 	}
 
 	/**
-	* Sets the terms of use journal article ID of this cp definition virtual setting.
+	* Sets the terms of use journal article resource pk of this cp definition virtual setting.
 	*
-	* @param termsOfUseJournalArticleId the terms of use journal article ID of this cp definition virtual setting
+	* @param termsOfUseJournalArticleResourcePK the terms of use journal article resource pk of this cp definition virtual setting
 	*/
 	@Override
-	public void setTermsOfUseJournalArticleId(long termsOfUseJournalArticleId) {
-		_cpDefinitionVirtualSetting.setTermsOfUseJournalArticleId(termsOfUseJournalArticleId);
+	public void setTermsOfUseJournalArticleResourcePK(
+		long termsOfUseJournalArticleResourcePK) {
+		_cpDefinitionVirtualSetting.setTermsOfUseJournalArticleResourcePK(termsOfUseJournalArticleResourcePK);
 	}
 
 	/**

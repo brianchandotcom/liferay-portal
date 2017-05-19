@@ -20,7 +20,7 @@
 		<field name="sampleUrl" type="String" />
 		<field name="termsOfUseRequired" type="boolean" />
 		<field localized="true" name="termsOfUseContent" type="String" />
-		<field name="termsOfUseJournalArticleId" type="long" />
+		<field name="termsOfUseJournalArticleResourcePK" type="long" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

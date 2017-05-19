@@ -2182,7 +2182,7 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 		cpDefinitionVirtualSettingImpl.setSampleUrl(cpDefinitionVirtualSetting.getSampleUrl());
 		cpDefinitionVirtualSettingImpl.setTermsOfUseRequired(cpDefinitionVirtualSetting.isTermsOfUseRequired());
 		cpDefinitionVirtualSettingImpl.setTermsOfUseContent(cpDefinitionVirtualSetting.getTermsOfUseContent());
-		cpDefinitionVirtualSettingImpl.setTermsOfUseJournalArticleId(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleId());
+		cpDefinitionVirtualSettingImpl.setTermsOfUseJournalArticleResourcePK(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK());
 		cpDefinitionVirtualSettingImpl.setLastPublishDate(cpDefinitionVirtualSetting.getLastPublishDate());
 
 		return cpDefinitionVirtualSettingImpl;

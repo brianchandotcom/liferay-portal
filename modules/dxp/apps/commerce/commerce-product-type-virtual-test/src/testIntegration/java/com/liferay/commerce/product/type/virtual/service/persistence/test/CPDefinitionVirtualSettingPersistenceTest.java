@@ -159,7 +159,7 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 
 		newCPDefinitionVirtualSetting.setTermsOfUseContent(RandomTestUtil.randomString());
 
-		newCPDefinitionVirtualSetting.setTermsOfUseJournalArticleId(RandomTestUtil.nextLong());
+		newCPDefinitionVirtualSetting.setTermsOfUseJournalArticleResourcePK(RandomTestUtil.nextLong());
 
 		newCPDefinitionVirtualSetting.setLastPublishDate(RandomTestUtil.nextDate());
 
@@ -208,8 +208,8 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 			newCPDefinitionVirtualSetting.getTermsOfUseRequired());
 		Assert.assertEquals(existingCPDefinitionVirtualSetting.getTermsOfUseContent(),
 			newCPDefinitionVirtualSetting.getTermsOfUseContent());
-		Assert.assertEquals(existingCPDefinitionVirtualSetting.getTermsOfUseJournalArticleId(),
-			newCPDefinitionVirtualSetting.getTermsOfUseJournalArticleId());
+		Assert.assertEquals(existingCPDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK(),
+			newCPDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPDefinitionVirtualSetting.getLastPublishDate()),
 			Time.getShortTimestamp(
@@ -281,7 +281,8 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 			"fileEntryId", true, "url", true, "activationStatus", true,
 			"duration", true, "maxUsages", true, "sampleFileEntryId", true,
 			"sampleUrl", true, "termsOfUseRequired", true, "termsOfUseContent",
-			true, "termsOfUseJournalArticleId", true, "lastPublishDate", true);
+			true, "termsOfUseJournalArticleResourcePK", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -559,7 +560,7 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 
 		cpDefinitionVirtualSetting.setTermsOfUseContent(RandomTestUtil.randomString());
 
-		cpDefinitionVirtualSetting.setTermsOfUseJournalArticleId(RandomTestUtil.nextLong());
+		cpDefinitionVirtualSetting.setTermsOfUseJournalArticleResourcePK(RandomTestUtil.nextLong());
 
 		cpDefinitionVirtualSetting.setLastPublishDate(RandomTestUtil.nextDate());
 

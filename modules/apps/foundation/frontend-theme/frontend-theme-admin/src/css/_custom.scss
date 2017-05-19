@@ -1,4 +1,5 @@
 $bg-color: #F5F7F8;
+$selector-color: #65B6F0;
 
 body {
 	background-color: $bg-color;
@@ -228,4 +229,10 @@ body {
 		min-width: 150px;
 		width: 20%;
 	}
+}
+
+/* ---------- Color Scheme Selector ---------- */
+
+.color-scheme-selector.selected {
+	border: 1px $selector-color solid;
 }

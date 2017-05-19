@@ -123,7 +123,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 		return cpDefinitionVirtualSetting.getFileEntryId();
 	}
 
-	public long getCPDefinitionVirtualSettingJournalArticleId()
+	public long getCPDefinitionVirtualSettingJournalArticleResourcePK()
 		throws PortalException {
 
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
@@ -133,7 +133,8 @@ public class CPDefinitionVirtualSettingDisplayContext
 			return 0;
 		}
 
-		return cpDefinitionVirtualSetting.getTermsOfUseJournalArticleId();
+		return cpDefinitionVirtualSetting.
+			getTermsOfUseJournalArticleResourcePK();
 	}
 
 	public long getCPDefinitionVirtualSettingSampleFileEntryId()
@@ -199,7 +200,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 		if (getCPDefinitionVirtualSetting() != null) {
 			JournalArticle journalArticle =
 				_journalArticleService.getLatestArticle(
-					getCPDefinitionVirtualSettingJournalArticleId());
+					getCPDefinitionVirtualSettingJournalArticleResourcePK());
 
 			results.add(journalArticle);
 		}

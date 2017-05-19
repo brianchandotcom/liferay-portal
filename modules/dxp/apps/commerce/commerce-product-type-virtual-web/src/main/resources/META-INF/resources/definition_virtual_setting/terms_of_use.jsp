@@ -127,7 +127,7 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 					uri: '<%= cpDefinitionVirtualSettingDisplayContext.getAssetBrowserURL() %>'
 				},
 				function(event) {
-					$('#<portlet:namespace />termsOfUseJournalArticleId').val(event.assetclasspk);
+					$('#<portlet:namespace />termsOfUseJournalArticleResourcePK').val(event.assetclasspk);
 
 					var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />journalArticleSearchContainer');
 

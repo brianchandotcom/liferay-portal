@@ -105,8 +105,8 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 		Map<Locale, String> termsOfUseContentMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "termsOfUseContent");
-		long termsOfUseJournalArticleId = ParamUtil.getLong(
-			actionRequest, "termsOfUseJournalArticleId");
+		long termsOfUseJournalArticleResourcePK = ParamUtil.getLong(
+			actionRequest, "termsOfUseJournalArticleResourcePK");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionVirtualSetting.class.getName(), actionRequest);
@@ -124,7 +124,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 						activationStatus, duration, maxUsages,
 						useSampleFileEntry, sampleFileEntryId, sampleUrl,
 						termsOfUseRequired, termsOfUseContentMap,
-						termsOfUseJournalArticleId, serviceContext);
+						termsOfUseJournalArticleResourcePK, serviceContext);
 		}
 		else {
 
@@ -137,7 +137,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 						url, activationStatus, duration, maxUsages,
 						useSampleFileEntry, sampleFileEntryId, sampleUrl,
 						termsOfUseRequired, termsOfUseContentMap,
-						termsOfUseJournalArticleId, serviceContext);
+						termsOfUseJournalArticleResourcePK, serviceContext);
 		}
 
 		return cpDefinitionVirtualSetting;

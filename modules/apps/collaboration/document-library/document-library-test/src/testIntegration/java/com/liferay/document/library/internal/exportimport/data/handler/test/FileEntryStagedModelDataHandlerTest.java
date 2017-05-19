@@ -154,6 +154,31 @@ public class FileEntryStagedModelDataHandlerTest
 		}
 	}
 
+	@Test
+	public void testExportsTheVersionOnStaging() throws Exception {
+		ExportImportThreadLocal.setPortletStagingInProcess(true);
+
+		try {
+			FileEntry fileEntry = addStagedModel(
+				stagingGroup, addCompanyDependencies());
+
+			fileEntry = addVersion(fileEntry);
+			fileEntry = addVersion(fileEntry);
+			fileEntry = addVersion(fileEntry);
+
+			exportImportStagedModel(fileEntry);
+
+			FileEntry importedFileEntry = getStagedModel(
+				fileEntry.getUuid(), liveGroup);
+
+			Assert.assertEquals(
+				fileEntry.getVersion(), importedFileEntry.getVersion());
+		}
+		finally {
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+		}
+	}
+
 	protected Map<String, List<StagedModel>> addCompanyDependencies()
 		throws Exception {
 

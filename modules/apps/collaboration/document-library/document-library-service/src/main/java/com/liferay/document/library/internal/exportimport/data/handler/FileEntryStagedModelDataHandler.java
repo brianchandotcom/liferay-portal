@@ -570,16 +570,17 @@ public class FileEntryStagedModelDataHandler
 								_dlAppService.deleteFileVersion(
 									latestExistingFileVersion.getFileEntryId(),
 									latestExistingFileVersion.getVersion());
-
-								_overrideFileVersion(
-									importedFileEntry,
-									fileVersion.getVersion());
 							}
 						}
 					}
 					finally {
 						serviceContext.setIndexingEnabled(indexEnabled);
 					}
+				}
+
+				if (ExportImportThreadLocal.isStagingInProcess()) {
+					_overrideFileVersion(
+						importedFileEntry, fileVersion.getVersion());
 				}
 			}
 			else {

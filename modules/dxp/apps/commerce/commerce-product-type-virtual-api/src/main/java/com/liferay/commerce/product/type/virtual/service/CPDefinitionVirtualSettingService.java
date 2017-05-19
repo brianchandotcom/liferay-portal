@@ -62,7 +62,7 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 		int maxUsages, boolean useSampleFileEntry, long sampleFileEntryId,
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
-		long termsOfUseJournalArticleId, ServiceContext serviceContext)
+		long termsOfUseJournalArticleResourcePK, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
@@ -80,7 +80,7 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 		boolean useSampleFileEntry, long sampleFileEntryId,
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
-		long termsOfUseJournalArticleId, ServiceContext serviceContext)
+		long termsOfUseJournalArticleResourcePK, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

@@ -76,7 +76,7 @@ public class CPDefinitionVirtualSettingServiceSoap {
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
 		java.lang.String[] termsOfUseContentMapLanguageIds,
 		java.lang.String[] termsOfUseContentMapValues,
-		long termsOfUseJournalArticleId,
+		long termsOfUseJournalArticleResourcePK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -88,7 +88,7 @@ public class CPDefinitionVirtualSettingServiceSoap {
 					useFileEntry, fileEntryId, url, activationStatus, duration,
 					maxUsages, useSampleFileEntry, sampleFileEntryId,
 					sampleUrl, termsOfUseRequired, termsOfUseContentMap,
-					termsOfUseJournalArticleId, serviceContext);
+					termsOfUseJournalArticleResourcePK, serviceContext);
 
 			return com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettingSoap.toSoapModel(returnValue);
 		}
@@ -139,7 +139,7 @@ public class CPDefinitionVirtualSettingServiceSoap {
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
 		java.lang.String[] termsOfUseContentMapLanguageIds,
 		java.lang.String[] termsOfUseContentMapValues,
-		long termsOfUseJournalArticleId,
+		long termsOfUseJournalArticleResourcePK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -151,7 +151,7 @@ public class CPDefinitionVirtualSettingServiceSoap {
 					useFileEntry, fileEntryId, url, activationStatus, duration,
 					maxUsages, useSampleFileEntry, sampleFileEntryId,
 					sampleUrl, termsOfUseRequired, termsOfUseContentMap,
-					termsOfUseJournalArticleId, serviceContext);
+					termsOfUseJournalArticleResourcePK, serviceContext);
 
 			return com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettingSoap.toSoapModel(returnValue);
 		}

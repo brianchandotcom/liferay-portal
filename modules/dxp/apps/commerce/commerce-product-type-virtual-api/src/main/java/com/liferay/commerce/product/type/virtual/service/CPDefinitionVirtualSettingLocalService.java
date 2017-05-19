@@ -83,7 +83,7 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 		int maxUsages, boolean useSampleFileEntry, long sampleFileEntryId,
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
-		long termsOfUseJournalArticleId, ServiceContext serviceContext)
+		long termsOfUseJournalArticleResourcePK, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -171,7 +171,7 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 		boolean useSampleFileEntry, long sampleFileEntryId,
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
-		long termsOfUseJournalArticleId, ServiceContext serviceContext)
+		long termsOfUseJournalArticleResourcePK, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

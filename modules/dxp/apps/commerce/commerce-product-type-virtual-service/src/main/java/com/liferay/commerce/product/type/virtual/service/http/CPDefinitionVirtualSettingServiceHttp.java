@@ -62,7 +62,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 		boolean useSampleFileEntry, long sampleFileEntryId,
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
-		long termsOfUseJournalArticleId,
+		long termsOfUseJournalArticleResourcePK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -74,7 +74,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 					cpDefinitionId, useFileEntry, fileEntryId, url,
 					activationStatus, duration, maxUsages, useSampleFileEntry,
 					sampleFileEntryId, sampleUrl, termsOfUseRequired,
-					termsOfUseContentMap, termsOfUseJournalArticleId,
+					termsOfUseContentMap, termsOfUseJournalArticleResourcePK,
 					serviceContext);
 
 			Object returnObj = null;
@@ -173,7 +173,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 		boolean useSampleFileEntry, long sampleFileEntryId,
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
-		long termsOfUseJournalArticleId,
+		long termsOfUseJournalArticleResourcePK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -186,7 +186,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 					url, activationStatus, duration, maxUsages,
 					useSampleFileEntry, sampleFileEntryId, sampleUrl,
 					termsOfUseRequired, termsOfUseContentMap,
-					termsOfUseJournalArticleId, serviceContext);
+					termsOfUseJournalArticleResourcePK, serviceContext);
 
 			Object returnObj = null;
 

@@ -57,10 +57,11 @@ public class DeployUtil {
 			Map<String, String> filterMap, boolean overwrite)
 		throws Exception {
 
-		File file = new File(getResourcePath(fileName));
 		File targetFile = new File(targetDir, targetFileName);
 
 		if (!targetFile.exists()) {
+			File file = new File(getResourcePath(fileName));
+
 			CopyTask.copyFile(
 				file, new File(targetDir), targetFileName, filterMap, overwrite,
 				true);

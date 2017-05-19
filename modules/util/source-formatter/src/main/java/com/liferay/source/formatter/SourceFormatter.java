@@ -353,9 +353,9 @@ public class SourceFormatter {
 
 		// Find properties files in any parent directory
 
-		String parentDirName = _sourceFormatterArgs.getBaseDirName() + "../";
+		String parentDirName = _sourceFormatterArgs.getBaseDirName();
 
-		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL - 1; i++) {
+		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL; i++) {
 			try {
 				InputStream inputStream = new FileInputStream(
 					parentDirName + _PROPERTIES_FILE_NAME);

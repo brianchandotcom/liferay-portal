@@ -480,13 +480,6 @@ public class TopLevelBuild extends BaseBuild {
 				rootElement, Dom4JUtil.getNewElement("hr"),
 				Dom4JUtil.getNewElement("h4", null, "Failed Jobs:"));
 
-			Element failedJobsOrderedListElement = Dom4JUtil.getNewElement(
-				"ol", rootElement,
-				Dom4JUtil.getNewElement(
-					"li", null, super.getGitHubMessageElement()));
-
-			int failureCount = 1;
-
 			List<Element> failureElements = new ArrayList<>();
 
 			for (Build downstreamBuild : getDownstreamBuilds(null)) {
@@ -508,20 +501,10 @@ public class TopLevelBuild extends BaseBuild {
 				failureElements.add(downstreamBuild.getGitHubMessageElement());
 			}
 
-			for (Element failureElement : failureElements) {
-				Element failedJobsListItemElement = Dom4JUtil.getNewElement(
-					"li", failedJobsOrderedListElement);
+			failureElements.add(0, super.getGitHubMessageElement());
 
-				if (failureCount == 5) {
-					failedJobsListItemElement.addText("...");
-
-					break;
-				}
-
-				failedJobsListItemElement.add(failureElement);
-
-				failureCount++;
-			}
+			Dom4JUtil.getTruncatedOrderedListElement(
+				failureElements, rootElement, 5);
 
 			String jobName = getJobName();
 

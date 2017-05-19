@@ -71,6 +71,8 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			content = _removeUnusedVariables(fileName, absolutePath, content);
 		}
 
+		_contentsMap.put(fileName, content);
+
 		return content;
 	}
 

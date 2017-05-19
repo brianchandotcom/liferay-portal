@@ -27,5 +27,5 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Portlet.class
 )
-public class ${className}FreeMarkerPortlet extends FreeMarkerPortlet {
+public class ${className}Portlet extends FreeMarkerPortlet {
 }

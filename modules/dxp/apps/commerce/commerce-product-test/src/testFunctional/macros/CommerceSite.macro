@@ -1,0 +1,22 @@
+<definition>
+	<command name="deleteCP">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="Commerce Site" />
+
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
+
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
+
+		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No sites were found." />
+		<execute function="AssertTextNotPresent" value1="${siteName}" />
+	</command>
+</definition>

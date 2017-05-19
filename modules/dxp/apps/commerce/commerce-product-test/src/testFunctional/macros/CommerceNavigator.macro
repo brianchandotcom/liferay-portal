@@ -1,0 +1,31 @@
+<definition>
+	<command name="gotoCatalogEntry">
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute function="AssertClick" locator1="CommerceCatalog#PRODUCT_TITLE" value1="${productTitle}">
+			<var name="key_productTitle" value="${productTitle}" />
+		</execute>
+	</command>
+
+	<command name="gotoSitesCommerce" summary="Navigate to Product Menu > Sites > Commerce > ${portlet}">
+		<execute macro="ProductMenuHelper#expandPanelSites" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Commerce" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
+	<command name="searchCatalogEntry">
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${productTitle}">
+			<var name="productTitle" value="${productTitle}" />
+		</execute>
+
+		<execute function="Click" locator1="CommerceCatalog#SEARCH_BUTTON" />
+	</command>
+</definition>

@@ -1,0 +1,59 @@
+<definition>
+	<command name="addCatalogEntry">
+		<execute function="Type" locator1="CommerceCatalogEntry#NAME_FIELD" value1="${productName}" />
+
+		<execute function="Type" locator1="CommerceCatalogEntry#TITLE_FIELD" value1="${productTitle}" />
+
+		<execute function="Type" locator1="CommerceCatalogEntry#SHORT_DESCRIPTION_FIELD" value1="${productShortDescription}" />
+
+		<execute macro="CommerceAlloyEditor#addDescription">
+			<var name="productDescription" value="${productDescription}" />
+		</execute>
+
+		<execute function="Type" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" value1="${baseSku}" />
+	</command>
+
+	<command name="assertDuplicateDenial">
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="The ${field} you requested is already taken.">
+			<var name="field" value="${field1}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="The ${field} you requested is already taken.">
+			<var name="field" value="${field2}" />
+		</execute>
+	</command>
+
+	<command name="editCatalogEntryBaseSKU">
+		<execute function="Type" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" value1="${baseSku}" />
+	</command>
+
+	<command name="editCatalogEntryDescription">
+		<execute function="Type" locator1="CommerceCatalogEntry#DESCRIPTION_FIELD" value1="${newProductDescription}" />
+	</command>
+
+	<command name="editCatalogEntryName">
+		<execute function="Type" locator1="CommerceCatalogEntry#NAME_FIELD" value1="${newProductName}" />
+	</command>
+
+	<command name="editCatalogEntryShortDescription">
+		<execute function="Type" locator1="CommerceCatalogEntry#SHORT_DESCRIPTION_FIELD" value1="${newProductShortDescription}" />
+	</command>
+
+	<command name="editCatalogEntryTitle">
+		<execute function="Type" locator1="CommerceCatalogEntry#NAME_FIELD" value1="${newProductTitle}" />
+	</command>
+
+	<command name="viewCatalogEntry">
+		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#NAME_FIELD" value1="${productName}" />
+
+		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#TITLE_FIELD" value1="${productTitle}" />
+
+		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#SHORT_DESCRIPTION_FIELD" value1="${productShortDescription}" />
+
+		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#DESCRIPTION_FIELD" value1="${productDescription}" />
+
+		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" value1="${baseSku}" />
+	</command>
+</definition>

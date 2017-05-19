@@ -1,0 +1,47 @@
+<definition>
+	<command name="addEntry">
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute macro="CommerceCatalogEntry#addCatalogEntry">
+			<var name="baseSku" value="${baseSku}" />
+			<var name="productDescription" value="${productDescription}" />
+			<var name="productName" value="${productName}" />
+			<var name="productShortDescription" value="${productShortDescription}" />
+			<var name="productTitle" value="${productTitle}" />
+		</execute>
+
+		<execute macro="Button#clickSave" />
+
+		<!-- <execute function="Click" locator1="CommerceCatalogEntry#SAVE_BUTTON" /> -->
+
+		<!-- <execute macro="Alert#viewSuccessMessage" /> -->
+
+		<if>
+			<condition function="IsElementPresent" locator1="Message#SUCCESS" />
+			<then>
+				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#WORKFLOW_STATUS" value1="Approved" />
+			</else>
+		</if>
+	</command>
+
+	<command name="moveCatalogEntriesToRecycleBin">
+		<execute function="Click" locator1="CommerceCatalog#ENTRY_TABLE_ALL_CHECKBOX" />
+
+		<execute function="Click" locator1="CommerceCatalog#RECYCLE_BIN_BUTTON" />
+	</command>
+
+	<command name="moveCatalogEntryToRecycleBinViaCheckbox">
+		<execute function="Click" locator1="CommerceCatalog#ENTRY_CONTENT_ENTRY_CHECKBOX">
+			<var name="key_productTitle" value="${productTitle}" />
+		</execute>
+
+		<execute function="Click" locator1="CommerceCatalog#RECYCLE_BIN_BUTTON" />
+	</command>
+</definition>

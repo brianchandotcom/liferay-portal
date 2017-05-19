@@ -142,7 +142,8 @@ public class RatingsStatsLocalServiceUtil {
 	}
 
 	public static com.liferay.ratings.kernel.model.RatingsStats getStats(
-		java.lang.String className, long classPK) {
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getStats(className, classPK);
 	}
 
@@ -247,8 +248,17 @@ public class RatingsStatsLocalServiceUtil {
 		return getService().getRatingsStatses(start, end);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.ratings.kernel.model.RatingsStats> getStats(
 		java.lang.String className, java.util.List<java.lang.Long> classPKs) {
+		return getService().getStats(className, classPKs);
+	}
+
+	public static java.util.Map<java.lang.Long, com.liferay.ratings.kernel.model.RatingsStats> getStats(
+		java.lang.String className, long[] classPKs) {
 		return getService().getStats(className, classPKs);
 	}
 

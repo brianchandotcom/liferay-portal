@@ -41,7 +41,7 @@ SearchContainer<FileEntry> sampleFileEntrySearchContainer = cpDefinitionVirtualS
 		<aui:input checked="<%= true %>" cssClass="lfr-definition-virtual-setting-sample-type" label="use-sample-file" name="useSampleFileEntry" type="radio" />
 
 		<liferay-ui:search-container
-			cssClass="lfr-search-container-definition-virtual-setting-file-entry"
+			cssClass="lfr-definition-virtual-setting-sample-value"
 			curParam="curSampleFileEntry"
 			headerNames="title,null"
 			id="sampleFileEntrySearchContainer"
@@ -82,7 +82,7 @@ SearchContainer<FileEntry> sampleFileEntrySearchContainer = cpDefinitionVirtualS
 		</liferay-ui:search-container>
 
 		<%
-		String cssClass = "lfr-definition-virtual-setting-sample-value modify-sample-file-entry-link ";
+		String cssClass = "modify-sample-file-entry-link ";
 
 		if (sampleFileEntrySearchContainer.hasResults()) {
 			cssClass += "hidden";
@@ -95,7 +95,7 @@ SearchContainer<FileEntry> sampleFileEntrySearchContainer = cpDefinitionVirtualS
 	<aui:fieldset>
 		<aui:input cssClass="lfr-definition-virtual-setting-sample-type" label="use-url" name="useSampleUrl" type="radio" />
 
-		<aui:input cssClass="lfr-definition-virtual-setting-sample-value" disabled="<%= true %>" name="sampleUrl" />
+		<aui:input cssClass="lfr-definition-virtual-setting-sample-value hidden" name="sampleUrl" />
 	</aui:fieldset>
 </div>
 
@@ -156,14 +156,14 @@ SearchContainer<FileEntry> sampleFileEntrySearchContainer = cpDefinitionVirtualS
 
 		sampleTypes.item(index).attr('checked', true);
 
-		sampleValues.attr('disabled', true);
+		sampleValues.addClass('hidden');
 
-		sampleValues.item(index).attr('disabled', false);
+		sampleValues.item(index).removeClass('hidden');
 
 		sampleTypes.each(
 			function(index) {
 				if (sampleTypes.item(index).get('checked')) {
-					sampleValues.item(index).attr('disabled', true);
+					sampleValues.item(index).addClass('hidden');
 				}
 			}
 		);

@@ -41,7 +41,7 @@ SearchContainer<FileEntry> fileEntrySearchContainer = cpDefinitionVirtualSetting
 		<aui:input checked="<%= true %>" cssClass="lfr-definition-virtual-setting-type" label="use-file" name="useFileEntry" type="radio" />
 
 		<liferay-ui:search-container
-			cssClass="lfr-search-container-definition-virtual-setting-file-entry"
+			cssClass="lfr-definition-virtual-setting-value"
 			curParam="curFileEntry"
 			headerNames="title,null"
 			id="fileEntrySearchContainer"
@@ -82,10 +82,10 @@ SearchContainer<FileEntry> fileEntrySearchContainer = cpDefinitionVirtualSetting
 		</liferay-ui:search-container>
 
 		<%
-		String cssClass = "lfr-definition-virtual-setting-value modify-file-entry-link ";
+		String cssClass = "modify-file-entry-link ";
 
 		if (fileEntrySearchContainer.hasResults()) {
-			cssClass += "hidden";
+		    cssClass += "hidden";
 		}
 		%>
 
@@ -95,7 +95,7 @@ SearchContainer<FileEntry> fileEntrySearchContainer = cpDefinitionVirtualSetting
 	<aui:fieldset>
 		<aui:input cssClass="lfr-definition-virtual-setting-type" label="use-url" name="useUrl" type="radio" />
 
-		<aui:input cssClass="lfr-definition-virtual-setting-value" disabled="<%= true %>" name="url" />
+		<aui:input cssClass="lfr-definition-virtual-setting-value hidden" name="url" />
 	</aui:fieldset>
 </div>
 
@@ -156,14 +156,14 @@ SearchContainer<FileEntry> fileEntrySearchContainer = cpDefinitionVirtualSetting
 
 		types.item(index).attr('checked', true);
 
-		values.attr('disabled', true);
+		values.addClass('hidden');
 
-		values.item(index).attr('disabled', false);
+		values.item(index).removeClass('hidden');
 
 		types.each(
 			function(index) {
 				if (types.item(index).get('checked')) {
-					values.item(index).attr('disabled', true);
+					values.item(index).addClass('hidden');
 				}
 			}
 		);
@@ -172,7 +172,6 @@ SearchContainer<FileEntry> fileEntrySearchContainer = cpDefinitionVirtualSetting
 	container.delegate(
 		'change',
 		function(event) {
-
 			var index = types.indexOf(event.currentTarget);
 
 			selectFileType(index);

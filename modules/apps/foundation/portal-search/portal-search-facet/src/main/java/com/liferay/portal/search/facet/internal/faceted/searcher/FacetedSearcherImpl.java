@@ -31,7 +31,9 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -47,9 +49,12 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -61,12 +66,16 @@ public class FacetedSearcherImpl
 	public FacetedSearcherImpl(
 		ExpandoBridgeFactory expandoBridgeFactory,
 		GroupLocalService groupLocalService, IndexerRegistry indexerRegistry,
-		IndexSearcherHelper indexSearcherHelper) {
+		IndexSearcherHelper indexSearcherHelper,
+		Collection<SearchPermissionFilterContributor>
+			searchPermissionFilterContributors) {
 
 		_expandoBridgeFactory = expandoBridgeFactory;
 		_groupLocalService = groupLocalService;
 		_indexerRegistry = indexerRegistry;
 		_indexSearcherHelper = indexSearcherHelper;
+		_searchPermissionFilterContributors =
+			searchPermissionFilterContributors;
 	}
 
 	protected void addSearchExpandoKeywords(
@@ -152,36 +161,9 @@ public class FacetedSearcherImpl
 		}
 
 		for (String entryClassName : searchContext.getEntryClassNames()) {
-			Indexer<?> indexer = _indexerRegistry.getIndexer(entryClassName);
-
-			if (indexer == null) {
-				continue;
-			}
-
-			String searchEngineId = searchContext.getSearchEngineId();
-
-			if (!searchEngineId.equals(indexer.getSearchEngineId())) {
-				continue;
-			}
-
-			if (!luceneSyntax) {
-				if (Validator.isNotNull(keywords)) {
-					addSearchExpandoKeywords(
-						searchQuery, searchContext, keywords, entryClassName);
-				}
-
-				indexer.postProcessSearchQuery(
-					searchQuery, fullQueryBooleanFilter, searchContext);
-			}
-
-			for (IndexerPostProcessor indexerPostProcessor :
-					indexer.getIndexerPostProcessors()) {
-
-				indexerPostProcessor.postProcessSearchQuery(
-					searchQuery, fullQueryBooleanFilter, searchContext);
-			}
-
-			doPostProcessSearchQuery(indexer, searchQuery, searchContext);
+			visitEntryClassName(
+				entryClassName, searchContext, searchQuery,
+				fullQueryBooleanFilter, luceneSyntax, keywords);
 		}
 
 		Map<String, Facet> facets = searchContext.getFacets();
@@ -250,6 +232,33 @@ public class FacetedSearcherImpl
 		return fullQuery;
 	}
 
+	protected BooleanFilter createPermissionBooleanFilter(
+		String entryClassName, SearchContext searchContext) {
+
+		BooleanFilter permissionBooleanFilter = new BooleanFilter();
+
+		permissionBooleanFilter.addTerm(Field.ENTRY_CLASS_NAME, entryClassName);
+
+		if (searchContext.getUserId() > 0) {
+			SearchPermissionChecker searchPermissionChecker =
+				SearchEngineHelperUtil.getSearchPermissionChecker();
+
+			Optional<String> parentEntryClassNameOptional =
+				getParentEntryClassName(entryClassName);
+
+			String permissionedEntryClassName =
+				parentEntryClassNameOptional.orElse(entryClassName);
+
+			permissionBooleanFilter =
+				searchPermissionChecker.getPermissionBooleanFilter(
+					searchContext.getCompanyId(), searchContext.getGroupIds(),
+					searchContext.getUserId(), permissionedEntryClassName,
+					permissionBooleanFilter, searchContext);
+		}
+
+		return permissionBooleanFilter;
+	}
+
 	@Override
 	protected Hits doSearch(SearchContext searchContext)
 		throws SearchException {
@@ -285,6 +294,25 @@ public class FacetedSearcherImpl
 		}
 	}
 
+	protected Optional<String> getParentEntryClassName(String entryClassName) {
+		for (SearchPermissionFilterContributor
+				searchPermissionFilterContributor :
+					_searchPermissionFilterContributors) {
+
+			Optional<String> parentEntryClassNameOptional =
+				searchPermissionFilterContributor.
+					getParentEntryClassNameOptional(entryClassName);
+
+			if ((parentEntryClassNameOptional != null) &&
+				parentEntryClassNameOptional.isPresent()) {
+
+				return parentEntryClassNameOptional;
+			}
+		}
+
+		return Optional.empty();
+	}
+
 	@Override
 	protected boolean isUseSearchResultPermissionFilter(
 		SearchContext searchContext) {
@@ -308,9 +336,50 @@ public class FacetedSearcherImpl
 		return super.isFilterSearch();
 	}
 
+	protected void visitEntryClassName(
+			String entryClassName, SearchContext searchContext,
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			boolean luceneSyntax, String keywords)
+		throws Exception {
+
+		Indexer<?> indexer = _indexerRegistry.getIndexer(entryClassName);
+
+		if (indexer == null) {
+			return;
+		}
+
+		String searchEngineId = searchContext.getSearchEngineId();
+
+		if (!searchEngineId.equals(indexer.getSearchEngineId())) {
+			return;
+		}
+
+		fullQueryBooleanFilter.add(
+			createPermissionBooleanFilter(entryClassName, searchContext));
+
+		if (!luceneSyntax) {
+			if (Validator.isNotNull(keywords)) {
+				addSearchExpandoKeywords(
+					searchQuery, searchContext, keywords, entryClassName);
+			}
+
+			indexer.postProcessSearchQuery(
+				searchQuery, fullQueryBooleanFilter, searchContext);
+		}
+
+		for (IndexerPostProcessor indexerPostProcessor :
+				indexer.getIndexerPostProcessors()) {
+
+			indexerPostProcessor.postProcessSearchQuery(
+				searchQuery, fullQueryBooleanFilter, searchContext);
+		}
+	}
+
 	private final ExpandoBridgeFactory _expandoBridgeFactory;
 	private final GroupLocalService _groupLocalService;
 	private final IndexerRegistry _indexerRegistry;
 	private final IndexSearcherHelper _indexSearcherHelper;
+	private final Collection<SearchPermissionFilterContributor>
+		_searchPermissionFilterContributors;
 
 }

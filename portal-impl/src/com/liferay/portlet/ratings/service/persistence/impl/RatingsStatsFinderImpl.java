@@ -37,7 +37,9 @@ import java.util.Set;
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class RatingsStatsFinderImpl
 	extends RatingsStatsFinderBaseImpl implements RatingsStatsFinder {
 

@@ -20,6 +20,8 @@
 CPDefinitionVirtualSetting cpDefinitionVirtualSetting = (CPDefinitionVirtualSetting)request.getAttribute(CPDefinitionVirtualSettingWebKeys.COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING);
 %>
 
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="base-information" />
+
 <aui:model-context bean="<%= cpDefinitionVirtualSetting %>" model="<%= CPDefinitionVirtualSetting.class %>" />
 
 <aui:fieldset>

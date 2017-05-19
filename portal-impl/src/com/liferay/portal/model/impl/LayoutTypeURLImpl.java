@@ -54,7 +54,7 @@ public class LayoutTypeURLImpl extends LayoutTypePortletImpl {
 				PermissionThreadLocal.getPermissionChecker(), getLayout());
 		}
 		catch (PortalException pe) {
-			_log.error(pe);
+			_log.error("Error verifying view permission", pe);
 
 			return false;
 		}

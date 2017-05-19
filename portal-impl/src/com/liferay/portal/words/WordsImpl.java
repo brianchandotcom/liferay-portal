@@ -150,7 +150,7 @@ public class WordsImpl implements Words {
 				}
 			}
 			catch (IOException ioe) {
-				_log.error(ioe);
+				_log.error("Error initializing dictionary", ioe);
 			}
 
 			_spellDictionaryHashMap = spellDictionaryHashMap;

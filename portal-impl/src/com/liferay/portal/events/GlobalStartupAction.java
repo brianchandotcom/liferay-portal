@@ -83,7 +83,7 @@ public class GlobalStartupAction extends SimpleAction {
 				autoDeployListeners.add(autoDeployListener);
 			}
 			catch (Exception e) {
-				_log.error(e);
+				_log.error("Error starting AutoDeploy listener", e);
 			}
 		}
 
@@ -115,7 +115,7 @@ public class GlobalStartupAction extends SimpleAction {
 				hotDeployListeners.add(hotDeployListener);
 			}
 			catch (Exception e) {
-				_log.error(e);
+				_log.error("Error starting HotDeploy listener", e);
 			}
 		}
 
@@ -163,7 +163,7 @@ public class GlobalStartupAction extends SimpleAction {
 			}
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error registering AutoDeploy directories", e);
 		}
 
 		// Hot deploy

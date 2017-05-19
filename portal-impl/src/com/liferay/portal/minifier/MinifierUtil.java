@@ -53,7 +53,8 @@ public class MinifierUtil {
 		catch (Exception e) {
 			_log.error(
 				"Unable to instantiate " +
-					PropsValues.MINIFIER_JAVASCRIPT_IMPL);
+					PropsValues.MINIFIER_JAVASCRIPT_IMPL,
+				e);
 
 			return new GoogleJavaScriptMinifier();
 		}
@@ -74,7 +75,7 @@ public class MinifierUtil {
 				unsyncStringWriter, PropsValues.YUI_COMPRESSOR_CSS_LINE_BREAK);
 		}
 		catch (Exception e) {
-			_log.error("Unable to minfiy CSS:\n" + content);
+			_log.error("Unable to minfiy CSS:\n" + content, e);
 
 			unsyncStringWriter.append(content);
 		}

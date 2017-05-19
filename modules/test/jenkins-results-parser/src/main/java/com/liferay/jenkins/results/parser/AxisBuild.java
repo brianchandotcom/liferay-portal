@@ -254,13 +254,12 @@ public class AxisBuild extends BaseBuild {
 				String testStatus = testResult.getStatus();
 
 				if (testStatus.equals("PASSED") ||
-				testStatus.equals("SKIPPED")) {
+					testStatus.equals("SKIPPED")) {
 
 					continue;
 				}
 
-				elements.add(
-					testResult.getGitHubElement(getTestRayLogsURL()));
+				elements.add(testResult.getGitHubElement(getTestRayLogsURL()));
 			}
 
 			Dom4JUtil.getTruncatedOrderedListElement(

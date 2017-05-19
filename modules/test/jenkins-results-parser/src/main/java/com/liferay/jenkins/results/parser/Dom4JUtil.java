@@ -133,12 +133,6 @@ public class Dom4JUtil {
 	}
 
 	public static Element getTruncatedOrderedListElement(
-		List<Element> items, int maxItems) {
-
-		return getTruncatedOrderedListElement(items, null, maxItems);
-	}
-
-	public static Element getTruncatedOrderedListElement(
 		List<Element> items, Element parentElement, int maxItems) {
 
 		Element orderedListElement = getNewElement("ol", parentElement);
@@ -160,6 +154,12 @@ public class Dom4JUtil {
 		}
 
 		return orderedListElement;
+	}
+
+	public static Element getTruncatedOrderedListElement(
+		List<Element> items, int maxItems) {
+
+		return getTruncatedOrderedListElement(items, null, maxItems);
 	}
 
 	public static Document parse(String xml) throws DocumentException {

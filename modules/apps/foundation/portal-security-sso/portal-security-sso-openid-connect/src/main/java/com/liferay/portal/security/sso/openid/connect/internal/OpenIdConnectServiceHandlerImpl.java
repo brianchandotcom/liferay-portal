@@ -241,15 +241,15 @@ public class OpenIdConnectServiceHandlerImpl
 			HttpServletRequest httpServletRequest)
 		throws OpenIdConnectServiceException.AuthenticationException {
 
-		StringBuffer url = httpServletRequest.getRequestURL();
+		StringBuffer requestURL = httpServletRequest.getRequestURL();
 
 		if (Validator.isNotNull(httpServletRequest.getQueryString())) {
-			url.append(StringPool.QUESTION);
-			url.append(httpServletRequest.getQueryString());
+			requestURL.append(StringPool.QUESTION);
+			requestURL.append(httpServletRequest.getQueryString());
 		}
 
 		try {
-			URI requestURI = new URI(url.toString());
+			URI requestURI = new URI(requestURL.toString());
 
 			AuthenticationResponse authenticationResponse =
 				AuthenticationResponseParser.parse(requestURI);
@@ -269,13 +269,13 @@ public class OpenIdConnectServiceHandlerImpl
 		}
 		catch (URISyntaxException | ParseException e) {
 			throw new OpenIdConnectServiceException.AuthenticationException(
-				"Unable to process response string: " + url.toString(), e);
+				"Unable to process response string: " + requestURL.toString(), e);
 		}
 	}
 
 	protected URI getLoginRedirectURI(HttpServletRequest httpServletRequest) {
 		try {
-			StringBundler loginURL = new StringBundler(5);
+			StringBundler loginURL = new StringBundler(2);
 
 			loginURL.append(_portal.getPortalURL(httpServletRequest));
 			loginURL.append(OpenIdConnectConstants.REDIRECT_URL_PATTERN);

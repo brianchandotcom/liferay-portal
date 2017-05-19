@@ -15,7 +15,6 @@
 package com.liferay.portal.template.soy.internal;
 
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -31,17 +30,13 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
@@ -53,29 +48,6 @@ public class SoyCapabilityBundleTrackerCustomizer
 
 	public List<TemplateResource> getAllTemplateResources() {
 		return _templateResources;
-	}
-
-	@Reference(unbind = "-")
-	public void setSingleVMPool(SingleVMPool singleVMPool) {
-		_portalCache =
-			(PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag>)
-				singleVMPool.getPortalCache(SoyTemplate.class.getName());
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		int stateMask = Bundle.ACTIVE | Bundle.RESOLVED;
-
-		_bundleTracker = new BundleTracker<>(
-			bundleContext, stateMask,
-			new SoyCapabilityBundleTrackerCustomizer(_portalCache));
-
-		_bundleTracker.open();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_bundleTracker.close();
 	}
 
 	@Reference(unbind = "-")
@@ -96,10 +68,6 @@ public class SoyCapabilityBundleTrackerCustomizer
 		_soyProviderCapabilityBundleRegister;
 	private static final List<TemplateResource> _templateResources =
 		new CopyOnWriteArrayList<>();
-
-	private BundleTracker<List<BundleCapability>> _bundleTracker;
-	private PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag>
-		_portalCache;
 
 	public SoyCapabilityBundleTrackerCustomizer(
 		PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag> portalCache) {

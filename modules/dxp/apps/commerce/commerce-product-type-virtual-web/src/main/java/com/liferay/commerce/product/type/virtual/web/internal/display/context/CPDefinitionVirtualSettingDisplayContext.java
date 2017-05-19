@@ -26,9 +26,14 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.*;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
@@ -52,6 +57,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 			CPDefinitionVirtualSettingService cpDefinitionVirtualSettingService,
 			DLAppService dlAppService,
+			JournalArticleService journalArticleService,
 			CPDefinitionVirtualSettingActionHelper
 				cpDefinitionVirtualSettingActionHelper,
 			ItemSelector itemSelector)
@@ -61,9 +67,32 @@ public class CPDefinitionVirtualSettingDisplayContext
 
 		_cpDefinitionVirtualSettingService = cpDefinitionVirtualSettingService;
 		_dlAppService = dlAppService;
+		_journalArticleService = journalArticleService;
 		_cpDefinitionVirtualSettingActionHelper =
 			cpDefinitionVirtualSettingActionHelper;
 		_itemSelector = itemSelector;
+	}
+
+	public String getAssetBrowserURL() throws Exception {
+		PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(
+			httpServletRequest, JournalArticle.class.getName(),
+			PortletProvider.Action.BROWSE);
+
+		assetBrowserURL.setParameter(
+			"groupId", String.valueOf(getScopeGroupId()));
+		assetBrowserURL.setParameter(
+			"selectedGroupIds", String.valueOf(getScopeGroupId()));
+		assetBrowserURL.setParameter(
+			"typeSelection", JournalArticle.class.getName());
+		assetBrowserURL.setParameter(
+			"showNonindexable", String.valueOf(Boolean.TRUE));
+		assetBrowserURL.setParameter(
+			"showScheduled", String.valueOf(Boolean.TRUE));
+		assetBrowserURL.setParameter("eventName", "selectJournalArticle");
+		assetBrowserURL.setPortletMode(PortletMode.VIEW);
+		assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return assetBrowserURL.toString();
 	}
 
 	public CPDefinitionVirtualSetting getCPDefinitionVirtualSetting()
@@ -92,6 +121,19 @@ public class CPDefinitionVirtualSettingDisplayContext
 		}
 
 		return cpDefinitionVirtualSetting.getFileEntryId();
+	}
+
+	public long getCPDefinitionVirtualSettingJournalArticleId()
+		throws PortalException {
+
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+			getCPDefinitionVirtualSetting();
+
+		if (cpDefinitionVirtualSetting == null) {
+			return 0;
+		}
+
+		return cpDefinitionVirtualSetting.getTermsOfUseJournalArticleId();
 	}
 
 	public long getCPDefinitionVirtualSettingSampleFileEntryId()
@@ -146,19 +188,28 @@ public class CPDefinitionVirtualSettingDisplayContext
 		return itemSelectorURL.toString();
 	}
 
-	public String getAssetBrowserURL() throws Exception {
-		PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(httpServletRequest, JournalArticle.class.getName(), PortletProvider.Action.BROWSE);
+	public SearchContainer<JournalArticle> getJournalArticleSearchContainer()
+		throws PortalException {
 
-		assetBrowserURL.setParameter("groupId", String.valueOf(getScopeGroupId()));
-		assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(getScopeGroupId()));
-		assetBrowserURL.setParameter("typeSelection", JournalArticle.class.getName());
-		assetBrowserURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
-		assetBrowserURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
-		assetBrowserURL.setParameter("eventName", "selectJournalArticle");
-		assetBrowserURL.setPortletMode(PortletMode.VIEW);
-		assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
+		SearchContainer<JournalArticle> searchContainer = new SearchContainer<>(
+			liferayPortletRequest, getPortletURL(), null, null);
 
-		return assetBrowserURL.toString();
+		List<JournalArticle> results = new ArrayList<>();
+
+		if (getCPDefinitionVirtualSetting() != null) {
+			JournalArticle journalArticle =
+				_journalArticleService.getLatestArticle(
+					getCPDefinitionVirtualSettingJournalArticleId());
+
+			results.add(journalArticle);
+		}
+
+		int total = results.size();
+
+		searchContainer.setResults(results);
+		searchContainer.setTotal(total);
+
+		return searchContainer;
 	}
 
 	@Override
@@ -231,5 +282,6 @@ public class CPDefinitionVirtualSettingDisplayContext
 		_cpDefinitionVirtualSettingService;
 	private final DLAppService _dlAppService;
 	private final ItemSelector _itemSelector;
+	private final JournalArticleService _journalArticleService;
 
 }

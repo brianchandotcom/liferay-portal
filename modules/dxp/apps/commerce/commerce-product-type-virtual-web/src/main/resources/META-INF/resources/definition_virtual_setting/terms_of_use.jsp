@@ -1,5 +1,4 @@
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.HashMap" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -22,7 +21,7 @@ CPDefinitionVirtualSettingDisplayContext cpDefinitionVirtualSettingDisplayContex
 
 CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSettingDisplayContext.getCPDefinitionVirtualSetting();
 
-PortletURL assetBrowserURL = cpDefinitionVirtualSettingDisplayContext.getAssetBrowserURL();
+SearchContainer<JournalArticle> journalArticleSearchContainer = cpDefinitionVirtualSettingDisplayContext.getJournalArticleSearchContainer();
 
 boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting, request, "termsOfUseRequired");
 %>
@@ -30,6 +29,14 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="terms-of-use" />
 
 <aui:model-context bean="<%= cpDefinitionVirtualSetting %>" model="<%= CPDefinitionVirtualSetting.class %>" />
+
+<liferay-util:buffer var="removeJournalArticleIcon">
+	<liferay-ui:icon
+		icon="times"
+		markupView="lexicon"
+		message="remove"
+	/>
+</liferay-util:buffer>
 
 <div class="lfr-definition-virtual-setting-terms-of-use-header">
 	<aui:fieldset>
@@ -57,7 +64,47 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 	<aui:fieldset>
 		<aui:input cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="use-article" name="useArticle" type="radio" />
 
-		<aui:button cssClass="lfr-definition-virtual-setting-terms-of-use-value hidden" name="selectArticle" value="select-article" />
+		<liferay-ui:search-container
+			cssClass="lfr-definition-virtual-setting-terms-of-use-value hidden"
+			curParam="curJournalArticle"
+			headerNames="title,null"
+			id="journalArticleSearchContainer"
+			iteratorURL="<%= currentURLObj %>"
+			searchContainer="<%= journalArticleSearchContainer %>"
+		>
+			<liferay-ui:search-container-row
+				className="com.liferay.journal.model.JournalArticle"
+				keyProperty="id"
+				modelVar="journalArticle"
+			>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					name="title"
+				>
+					<liferay-ui:icon
+						iconCssClass="icon-ok-sign"
+						label="<%= true %>"
+						message="<%= HtmlUtil.escape(journalArticle.getTitle(languageId)) %>"
+					/>
+				</liferay-ui:search-container-column-text>
+
+				<liferay-ui:search-container-column-text>
+					<a class="modify-journal-article-link" data-rowId="<%= journalArticle.getResourcePrimKey() %>" href="javascript:;"><%= removeJournalArticleIcon %></a>
+				</liferay-ui:search-container-column-text>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= journalArticleSearchContainer %>" />
+		</liferay-ui:search-container>
+
+		<%
+		String cssClass = "modify-journal-article-link ";
+
+		if (journalArticleSearchContainer.hasResults()) {
+		    cssClass += "hidden";
+		}
+		%>
+
+		<aui:button cssClass="<%= cssClass %>" name="selectArticle" value="select-article" />
 	</aui:fieldset>
 </div>
 
@@ -76,12 +123,25 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 					},
 					eventName: 'selectJournalArticle',
 					id: '',
-					title: '<liferay-ui:message key="select-article" />'
+					title: '<liferay-ui:message key="select-article" />',
 					uri: '<%= cpDefinitionVirtualSettingDisplayContext.getAssetBrowserURL() %>'
 				},
 				function(event) {
-					//selectAsset(event.entityid, event.assetclassname, event.assettype, event.assettitle, event.groupdescriptivename);
-					console.log(event);
+					$('#<portlet:namespace />termsOfUseJournalArticleId').val(event.assetclasspk);
+
+					var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />journalArticleSearchContainer');
+
+					var rowColumns = [];
+
+					rowColumns.push(event.assettitle);
+
+					rowColumns.push('<a class="modify-journal-article-link" data-rowId="' + event.assetclasspk + '" href="javascript:;"><%= UnicodeFormatter.toString(removeJournalArticleIcon) %></a>');
+
+					searchContainer.addRow(rowColumns, event.assetclasspk);
+
+					searchContainer.updateDataStore();
+
+					$('#<portlet:namespace />selectArticle').addClass('hidden');
 				}
 			);
 		}
@@ -143,5 +203,31 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 				}
 			}
 		}
+	);
+</aui:script>
+
+<aui:script use="liferay-search-container">
+	var Util = Liferay.Util;
+
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />journalArticleSearchContainer');
+
+	var searchContainerContentBox = searchContainer.get('contentBox');
+
+	searchContainerContentBox.delegate(
+		'click',
+		function(event) {
+			var link = event.currentTarget;
+
+			var rowId = link.attr('data-rowId');
+
+			var tr = link.ancestor('tr');
+
+			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
+
+			searchContainer.updateDataStore();
+
+			$('#<portlet:namespace />selectArticle').removeClass('hidden');
+		},
+		'.modify-journal-article-link'
 	);
 </aui:script>

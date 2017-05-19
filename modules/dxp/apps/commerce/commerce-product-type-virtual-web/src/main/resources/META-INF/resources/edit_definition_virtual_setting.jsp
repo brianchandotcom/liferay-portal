@@ -58,9 +58,9 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
 	<aui:input name="cpDefinitionVirtualSettingId" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK : cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId() %>" />
-	<aui:input name="fileEntryId" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK: cpDefinitionVirtualSettingDisplayContext.getCPDefinitionVirtualSettingFileEntryId() %>" />
-	<aui:input name="sampleFileEntryId" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK : cpDefinitionVirtualSettingDisplayContext.getCPDefinitionVirtualSettingSampleFileEntryId() %>" />
-	<aui:input name="termsOfUseJournalArticleId" type="hidden" />
+	<aui:input name="fileEntryId" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK: cpDefinitionVirtualSetting.getFileEntryId() %>" />
+	<aui:input name="sampleFileEntryId" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK : cpDefinitionVirtualSetting.getSampleFileEntryId() %>" />
+	<aui:input name="termsOfUseJournalArticleId" type="hidden" value="<%= (cpDefinitionVirtualSetting == null) ? StringPool.BLANK : cpDefinitionVirtualSetting.getTermsOfUseJournalArticleId() %>" />
 
 	<div class="lfr-form-content" id="<portlet:namespace />fileEntryContainer">
 		<liferay-ui:form-navigator

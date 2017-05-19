@@ -22,6 +22,7 @@ import com.liferay.commerce.product.type.virtual.web.internal.constants.CPDefini
 import com.liferay.commerce.product.type.virtual.web.internal.display.context.CPDefinitionVirtualSettingDisplayContext;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -86,6 +87,7 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 					new CPDefinitionVirtualSettingDisplayContext(
 						_actionHelper, httpServletRequest,
 						_cpDefinitionVirtualSettingService, _dlAppService,
+						_journalArticleService,
 						_cpDefinitionVirtualSettingActionHelper, _itemSelector);
 
 			renderRequest.setAttribute(
@@ -131,5 +133,8 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private JournalArticleService _journalArticleService;
 
 }

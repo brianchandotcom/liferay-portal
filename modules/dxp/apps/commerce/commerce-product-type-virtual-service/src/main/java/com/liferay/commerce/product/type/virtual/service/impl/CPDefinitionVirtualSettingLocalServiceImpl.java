@@ -226,7 +226,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 
 		if (termsOfUseRequired && MapUtil.isEmpty(termsOfUseContentMap)) {
 			JournalArticle journalArticle =
-				journalArticleLocalService.fetchJournalArticle(
+				journalArticleLocalService.fetchLatestArticle(
 					termsOfUseJournalArticleId);
 
 			if (journalArticle == null) {

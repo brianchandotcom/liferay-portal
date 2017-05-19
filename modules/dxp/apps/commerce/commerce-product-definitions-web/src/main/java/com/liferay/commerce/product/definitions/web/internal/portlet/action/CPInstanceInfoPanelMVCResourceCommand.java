@@ -16,6 +16,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
+import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;

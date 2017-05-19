@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.display.context;
+package com.liferay.commerce.product.definitions.web.display.context;
 
-import com.liferay.commerce.product.definitions.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.CPType;

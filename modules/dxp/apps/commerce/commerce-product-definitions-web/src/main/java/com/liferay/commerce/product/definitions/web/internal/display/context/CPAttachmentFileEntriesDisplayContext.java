@@ -14,7 +14,8 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
-import com.liferay.commerce.product.definitions.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
+import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.item.selector.ItemSelector;

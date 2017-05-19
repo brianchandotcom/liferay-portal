@@ -14,8 +14,9 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
-import com.liferay.commerce.product.definitions.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
+import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.item.selector.criterion.CPOptionItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;

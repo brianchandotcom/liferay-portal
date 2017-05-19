@@ -16,6 +16,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext;
+import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;

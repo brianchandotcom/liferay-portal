@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.portlet.action;
+package com.liferay.commerce.product.definitions.web.portlet.action;
 
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPDefinition;

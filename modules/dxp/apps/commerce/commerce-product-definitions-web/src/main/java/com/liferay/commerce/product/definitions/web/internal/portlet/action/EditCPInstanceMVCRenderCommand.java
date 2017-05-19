@@ -16,6 +16,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceDisplayContext;
+import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;

@@ -13,7 +13,7 @@
 	Uncomment the following to disable persistent sessions across reboots.
 	-->
 
-	<!--<Manager pathname="" />-->
+	<Manager pathname="" />
 
 	<!--
 	Uncomment the following to not use sessions. See the property

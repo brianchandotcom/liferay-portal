@@ -20,11 +20,9 @@ package com.liferay.commerce.product.type.virtual.web.internal.servlet.taglib.ui
 public class CPDefinitionVirtualSettingFormNavigatorConstants {
 
 	public static final String
-		CATEGORY_KEY_COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING_DETAILS =
-			"details";
+		CATEGORY_KEY_CP_DEFINITION_VIRTUAL_SETTING_DETAILS = "details";
 
-	public static final String
-		FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING =
-			"commerce.product.definition.virtual.setting.form";
+	public static final String FORM_NAVIGATOR_ID_CP_DEFINITION_VIRTUAL_SETTING =
+		"cp.definition.virtual.setting.form";
 
 }

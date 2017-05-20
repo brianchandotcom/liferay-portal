@@ -38,7 +38,7 @@ public class CPDefinitionVirtualSettingActionHelper {
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			(CPDefinitionVirtualSetting)renderRequest.getAttribute(
 				CPDefinitionVirtualSettingWebKeys.
-					COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING);
+					CP_DEFINITION_VIRTUAL_SETTING);
 
 		if (cpDefinitionVirtualSetting != null) {
 			return cpDefinitionVirtualSetting;
@@ -56,8 +56,7 @@ public class CPDefinitionVirtualSettingActionHelper {
 
 		if (cpDefinitionVirtualSetting != null) {
 			renderRequest.setAttribute(
-				CPDefinitionVirtualSettingWebKeys.
-					COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING,
+				CPDefinitionVirtualSettingWebKeys.CP_DEFINITION_VIRTUAL_SETTING,
 				cpDefinitionVirtualSetting);
 		}
 

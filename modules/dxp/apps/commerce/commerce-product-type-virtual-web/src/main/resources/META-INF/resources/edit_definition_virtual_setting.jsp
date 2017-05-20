@@ -66,7 +66,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 		<liferay-ui:form-navigator
 			backURL="<%= backURLString %>"
 			formModelBean="<%= cpDefinitionVirtualSetting %>"
-			id="<%= CPDefinitionVirtualSettingFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING %>"
+			id="<%= CPDefinitionVirtualSettingFormNavigatorConstants.FORM_NAVIGATOR_ID_CP_DEFINITION_VIRTUAL_SETTING %>"
 			markupView="lexicon"
 		/>
 	</div>

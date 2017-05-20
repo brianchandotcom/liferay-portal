@@ -34,13 +34,13 @@ public class CPDefinitionVirtualSettingDetailsFormNavigatorCategory
 	@Override
 	public String getFormNavigatorId() {
 		return CPDefinitionVirtualSettingFormNavigatorConstants.
-			FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING;
+			FORM_NAVIGATOR_ID_CP_DEFINITION_VIRTUAL_SETTING;
 	}
 
 	@Override
 	public String getKey() {
 		return CPDefinitionVirtualSettingFormNavigatorConstants.
-			CATEGORY_KEY_COMMERCE_PRODUCT_DEFINITION_VIRTUAL_SETTING_DETAILS;
+			CATEGORY_KEY_CP_DEFINITION_VIRTUAL_SETTING_DETAILS;
 	}
 
 	@Override

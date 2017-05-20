@@ -25,9 +25,10 @@ import com.liferay.portal.kernel.model.Role;
 @ProviderType
 public interface RoleDemoDataCreator {
 
-	public Role create(long companyId) throws PortalException;
+	public Role create(long companyId, String xml) throws PortalException;
 
-	public Role create(long companyId, String roleName) throws PortalException;
+	public Role create(long companyId, String roleName, String xml)
+		throws PortalException;
 
 	public void delete() throws PortalException;
 

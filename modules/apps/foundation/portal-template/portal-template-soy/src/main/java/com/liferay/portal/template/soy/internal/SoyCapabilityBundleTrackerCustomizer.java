@@ -41,14 +41,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  * @author Bruno Basto
  */
 public class SoyCapabilityBundleTrackerCustomizer
-	implements BundleTrackerCustomizer<List<BundleCapability>>{
-
-	public List<TemplateResource> getAllTemplateResources() {
-		return _templateResources;
-	}
-
-	private static final List<TemplateResource> _templateResources =
-		new CopyOnWriteArrayList<>();
+	implements BundleTrackerCustomizer<List<BundleCapability>> {
 
 	public SoyCapabilityBundleTrackerCustomizer(
 		PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag> portalCache,
@@ -79,6 +72,10 @@ public class SoyCapabilityBundleTrackerCustomizer
 		_addTemplateResourcesToList(bundle);
 
 		return bundleCapabilities;
+	}
+
+	public List<TemplateResource> getAllTemplateResources() {
+		return _templateResources;
 	}
 
 	@Override
@@ -175,9 +172,11 @@ public class SoyCapabilityBundleTrackerCustomizer
 	private static final Log _log = LogFactoryUtil.getLog(
 		SoyCapabilityBundleTrackerCustomizer.class);
 
-	private final SoyTofuCacheHandler _soyTofuCacheHandler;
+	private static final List<TemplateResource> _templateResources =
+		new CopyOnWriteArrayList<>();
 
 	private final SoyProviderCapabilityBundleRegister
 		_soyProviderCapabilityBundleRegister;
+	private final SoyTofuCacheHandler _soyTofuCacheHandler;
 
 }

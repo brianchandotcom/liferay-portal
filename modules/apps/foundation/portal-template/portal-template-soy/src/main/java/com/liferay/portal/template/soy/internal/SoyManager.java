@@ -139,13 +139,12 @@ public class SoyManager extends BaseMultiTemplateManager {
 		SoyTemplateBundleResourceParser soyTemplateBundleResourceParser) {
 	}
 
-	private static SoyProviderCapabilityBundleRegister
-		_soyProviderCapabilityBundleRegister;
-
 	private BundleTracker<List<BundleCapability>> _bundleTracker;
 	private PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag>
 		_portalCache;
 	private SoyCapabilityBundleTrackerCustomizer
 		_soyCapabilityBundleTrackerCustomizer;
+	private SoyProviderCapabilityBundleRegister
+		_soyProviderCapabilityBundleRegister;
 
 }

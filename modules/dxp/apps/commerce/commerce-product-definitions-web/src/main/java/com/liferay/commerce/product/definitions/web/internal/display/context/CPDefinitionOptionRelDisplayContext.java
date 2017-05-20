@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
-import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
+import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.item.selector.criterion.CPOptionItemSelectorCriterion;
@@ -50,8 +50,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alessio Antonio Rendina
  * @author Marco Leo
  */
-public class CPDefinitionOptionRelDisplayContext
-	extends BaseCPDefinitionsDisplayContext<CPDefinitionOptionRel> {
+public class CPDefinitionOptionRelDisplayContext extends
+	BaseCPDefinitionsSearchContainerDisplayContext<CPDefinitionOptionRel> {
 
 	public CPDefinitionOptionRelDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,

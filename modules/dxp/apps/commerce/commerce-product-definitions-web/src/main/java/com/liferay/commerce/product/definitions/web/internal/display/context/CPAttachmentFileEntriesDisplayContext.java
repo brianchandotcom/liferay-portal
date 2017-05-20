@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
-import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
+import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Marco Leo
  */
-public class CPAttachmentFileEntriesDisplayContext
-	extends BaseCPDefinitionsDisplayContext<CPAttachmentFileEntry> {
+public class CPAttachmentFileEntriesDisplayContext extends
+	BaseCPDefinitionsSearchContainerDisplayContext<CPAttachmentFileEntry> {
 
 	public CPAttachmentFileEntriesDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,

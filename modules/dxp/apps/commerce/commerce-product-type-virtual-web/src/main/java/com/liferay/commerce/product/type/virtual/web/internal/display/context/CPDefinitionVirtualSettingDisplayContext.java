@@ -48,10 +48,11 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CPDefinitionVirtualSettingDisplayContext
-	extends BaseCPDefinitionsDisplayContext<FileEntry> {
+	extends BaseCPDefinitionsDisplayContext {
 
 	public CPDefinitionVirtualSettingDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
@@ -63,7 +64,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 			ItemSelector itemSelector)
 		throws PortalException {
 
-		super(actionHelper, httpServletRequest, "CPDefinitionVirtualSetting");
+		super(actionHelper, httpServletRequest);
 
 		_cpDefinitionVirtualSettingService = cpDefinitionVirtualSettingService;
 		_dlAppService = dlAppService;

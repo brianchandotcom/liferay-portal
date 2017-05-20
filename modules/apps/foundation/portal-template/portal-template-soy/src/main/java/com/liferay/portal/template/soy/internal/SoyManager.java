@@ -92,7 +92,8 @@ public class SoyManager extends BaseMultiTemplateManager {
 		int stateMask = Bundle.ACTIVE | Bundle.RESOLVED;
 
 		_soyCapabilityBundleTrackerCustomizer =
-			new SoyCapabilityBundleTrackerCustomizer(_portalCache);
+			new SoyCapabilityBundleTrackerCustomizer(
+				_portalCache, _soyProviderCapabilityBundleRegister);
 
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, stateMask, _soyCapabilityBundleTrackerCustomizer);
@@ -123,6 +124,23 @@ public class SoyManager extends BaseMultiTemplateManager {
 
 		return template;
 	}
+
+	@Reference(unbind = "-")
+	protected void setSoyProviderCapabilityBundleRegister(
+		SoyProviderCapabilityBundleRegister
+			soyProviderCapabilityBundleRegister) {
+
+		_soyProviderCapabilityBundleRegister =
+			soyProviderCapabilityBundleRegister;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSoyTemplateBundleResourceParser(
+		SoyTemplateBundleResourceParser soyTemplateBundleResourceParser) {
+	}
+
+	private static SoyProviderCapabilityBundleRegister
+		_soyProviderCapabilityBundleRegister;
 
 	private BundleTracker<List<BundleCapability>> _bundleTracker;
 	private PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag>

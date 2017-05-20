@@ -35,14 +35,11 @@ import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Bruno Basto
  */
-@Component(service = SoyCapabilityBundleTrackerCustomizer.class)
 public class SoyCapabilityBundleTrackerCustomizer
 	implements BundleTrackerCustomizer<List<BundleCapability>>{
 
@@ -50,29 +47,18 @@ public class SoyCapabilityBundleTrackerCustomizer
 		return _templateResources;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSoyProviderCapabilityBundleRegister(
-		SoyProviderCapabilityBundleRegister
-			soyProviderCapabilityBundleRegister) {
-
-		_soyProviderCapabilityBundleRegister =
-			soyProviderCapabilityBundleRegister;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSoyTemplateBundleResourceParser(
-		SoyTemplateBundleResourceParser soyTemplateBundleResourceParser) {
-	}
-
-	private static SoyProviderCapabilityBundleRegister
-		_soyProviderCapabilityBundleRegister;
 	private static final List<TemplateResource> _templateResources =
 		new CopyOnWriteArrayList<>();
 
 	public SoyCapabilityBundleTrackerCustomizer(
-		PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag> portalCache) {
+		PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag> portalCache,
+		SoyProviderCapabilityBundleRegister
+			soyProviderCapabilityBundleRegister) {
 
 		_soyTofuCacheHandler = new SoyTofuCacheHandler(portalCache);
+
+		_soyProviderCapabilityBundleRegister =
+			soyProviderCapabilityBundleRegister;
 	}
 
 	@Override
@@ -190,5 +176,8 @@ public class SoyCapabilityBundleTrackerCustomizer
 		SoyCapabilityBundleTrackerCustomizer.class);
 
 	private final SoyTofuCacheHandler _soyTofuCacheHandler;
+
+	private final SoyProviderCapabilityBundleRegister
+		_soyProviderCapabilityBundleRegister;
 
 }

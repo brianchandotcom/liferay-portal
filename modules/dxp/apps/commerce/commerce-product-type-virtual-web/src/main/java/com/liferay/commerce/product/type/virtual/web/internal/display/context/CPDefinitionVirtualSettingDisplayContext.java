@@ -74,28 +74,6 @@ public class CPDefinitionVirtualSettingDisplayContext
 		_itemSelector = itemSelector;
 	}
 
-	public String getAssetBrowserURL() throws Exception {
-		PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, JournalArticle.class.getName(),
-			PortletProvider.Action.BROWSE);
-
-		assetBrowserURL.setParameter(
-			"groupId", String.valueOf(getScopeGroupId()));
-		assetBrowserURL.setParameter(
-			"selectedGroupIds", String.valueOf(getScopeGroupId()));
-		assetBrowserURL.setParameter(
-			"typeSelection", JournalArticle.class.getName());
-		assetBrowserURL.setParameter(
-			"showNonindexable", String.valueOf(Boolean.TRUE));
-		assetBrowserURL.setParameter(
-			"showScheduled", String.valueOf(Boolean.TRUE));
-		assetBrowserURL.setParameter("eventName", "selectJournalArticle");
-		assetBrowserURL.setPortletMode(PortletMode.VIEW);
-		assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return assetBrowserURL.toString();
-	}
-
 	public CPDefinitionVirtualSetting getCPDefinitionVirtualSetting()
 		throws PortalException {
 
@@ -111,59 +89,27 @@ public class CPDefinitionVirtualSettingDisplayContext
 		return _cpDefinitionVirtualSetting;
 	}
 
-	public long getCPDefinitionVirtualSettingFileEntryId()
-		throws PortalException {
-
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-			getCPDefinitionVirtualSetting();
-
-		if (cpDefinitionVirtualSetting == null) {
-			return 0;
-		}
-
-		return cpDefinitionVirtualSetting.getFileEntryId();
-	}
-
-	public long getCPDefinitionVirtualSettingJournalArticleResourcePK()
-		throws PortalException {
-
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-			getCPDefinitionVirtualSetting();
-
-		if (cpDefinitionVirtualSetting == null) {
-			return 0;
-		}
-
-		return cpDefinitionVirtualSetting.
-			getTermsOfUseJournalArticleResourcePK();
-	}
-
-	public long getCPDefinitionVirtualSettingSampleFileEntryId()
-		throws PortalException {
-
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-			getCPDefinitionVirtualSetting();
-
-		if (cpDefinitionVirtualSetting == null) {
-			return 0;
-		}
-
-		return cpDefinitionVirtualSetting.getSampleFileEntryId();
-	}
-
 	public String getDownloadFileEntryURL() throws PortalException {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		FileEntry fileEntry = _dlAppService.getFileEntry(
-			getCPDefinitionVirtualSettingFileEntryId());
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+			getCPDefinitionVirtualSetting();
 
-		String url = DLUtil.getDownloadURL(
+		if (cpDefinitionVirtualSetting == null) {
+			return null;
+		}
+
+		long fileEntryId = cpDefinitionVirtualSetting.getFileEntryId();
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+		String downloadUrl = DLUtil.getDownloadURL(
 			fileEntry, fileEntry.getLatestFileVersion(), themeDisplay,
 			StringPool.BLANK, true, true);
 
-		return url;
+		return downloadUrl;
 	}
 
 	public String getDownloadSampleFileEntryURL() throws PortalException {
@@ -171,17 +117,25 @@ public class CPDefinitionVirtualSettingDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		FileEntry fileEntry = _dlAppService.getFileEntry(
-			getCPDefinitionVirtualSettingSampleFileEntryId());
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+			getCPDefinitionVirtualSetting();
 
-		String url = DLUtil.getDownloadURL(
+		if (cpDefinitionVirtualSetting == null) {
+			return null;
+		}
+
+		long fileEntryId = cpDefinitionVirtualSetting.getSampleFileEntryId();
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+		String downloadUrl = DLUtil.getDownloadURL(
 			fileEntry, fileEntry.getLatestFileVersion(), themeDisplay,
 			StringPool.BLANK, true, true);
 
-		return url;
+		return downloadUrl;
 	}
 
-	public String getItemSelectorURL() {
+	public String getFileEntryItemSelectorURL() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(
 				cpRequestHelper.getRenderRequest());
@@ -205,6 +159,35 @@ public class CPDefinitionVirtualSettingDisplayContext
 		return itemSelectorURL.toString();
 	}
 
+	public SearchContainer<FileEntry> getFileEntrySearchContainer()
+		throws PortalException {
+
+		SearchContainer<FileEntry> searchContainer = new SearchContainer<>(
+			liferayPortletRequest, getPortletURL(), null, null);
+
+		List<FileEntry> results = new ArrayList<>();
+
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+			getCPDefinitionVirtualSetting();
+
+		if (cpDefinitionVirtualSetting == null) {
+			long fileEntryId = cpDefinitionVirtualSetting.getFileEntryId();
+
+			if (fileEntryId > 0) {
+				FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+				results.add(fileEntry);
+			}
+		}
+
+		int total = results.size();
+
+		searchContainer.setResults(results);
+		searchContainer.setTotal(total);
+
+		return searchContainer;
+	}
+
 	public SearchContainer<JournalArticle> getJournalArticleSearchContainer()
 		throws PortalException {
 
@@ -213,11 +196,18 @@ public class CPDefinitionVirtualSettingDisplayContext
 
 		List<JournalArticle> results = new ArrayList<>();
 
-		if (getCPDefinitionVirtualSetting() != null) {
-			if (getCPDefinitionVirtualSettingJournalArticleResourcePK() > 0) {
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+			getCPDefinitionVirtualSetting();
+
+		if (cpDefinitionVirtualSetting != null) {
+			long journalArticleResourcePK =
+				cpDefinitionVirtualSetting.
+					getTermsOfUseJournalArticleResourcePK();
+
+			if (journalArticleResourcePK > 0) {
 				JournalArticle journalArticle =
 					_journalArticleService.getLatestArticle(
-						getCPDefinitionVirtualSettingJournalArticleResourcePK());
+						journalArticleResourcePK);
 
 				results.add(journalArticle);
 			}
@@ -249,10 +239,15 @@ public class CPDefinitionVirtualSettingDisplayContext
 
 		List<FileEntry> results = new ArrayList<>();
 
-		if (getCPDefinitionVirtualSetting() != null) {
-			if (getCPDefinitionVirtualSettingSampleFileEntryId() > 0) {
-				FileEntry fileEntry = _dlAppService.getFileEntry(
-					getCPDefinitionVirtualSettingSampleFileEntryId());
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+			getCPDefinitionVirtualSetting();
+
+		if (cpDefinitionVirtualSetting == null) {
+			long fileEntryId =
+				cpDefinitionVirtualSetting.getSampleFileEntryId();
+
+			if (fileEntryId > 0) {
+				FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
 				results.add(fileEntry);
 			}
@@ -266,36 +261,24 @@ public class CPDefinitionVirtualSettingDisplayContext
 		return searchContainer;
 	}
 
-	@Override
-	public SearchContainer<FileEntry> getSearchContainer()
-		throws PortalException {
+	public String getTermsOfUseJournalArticleBrowserURL() throws Exception {
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			httpServletRequest, JournalArticle.class.getName(),
+			PortletProvider.Action.BROWSE);
 
-		if (searchContainer != null) {
-			return searchContainer;
-		}
+		portletURL.setParameter("groupId", String.valueOf(getScopeGroupId()));
+		portletURL.setParameter(
+			"selectedGroupIds", String.valueOf(getScopeGroupId()));
+		portletURL.setParameter(
+			"typeSelection", JournalArticle.class.getName());
+		portletURL.setParameter(
+			"showNonindexable", String.valueOf(Boolean.TRUE));
+		portletURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
+		portletURL.setParameter("eventName", "selectJournalArticle");
+		portletURL.setPortletMode(PortletMode.VIEW);
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-		SearchContainer<FileEntry> searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null, null);
-
-		List<FileEntry> results = new ArrayList<>();
-
-		if (getCPDefinitionVirtualSetting() != null) {
-			if (getCPDefinitionVirtualSettingFileEntryId() > 0) {
-				FileEntry fileEntry = _dlAppService.getFileEntry(
-					getCPDefinitionVirtualSettingFileEntryId());
-
-				results.add(fileEntry);
-			}
-		}
-
-		int total = results.size();
-
-		searchContainer.setResults(results);
-		searchContainer.setTotal(total);
-
-		this.searchContainer = searchContainer;
-
-		return this.searchContainer;
+		return portletURL.toString();
 	}
 
 	private CPDefinitionVirtualSetting _cpDefinitionVirtualSetting;

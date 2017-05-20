@@ -156,7 +156,7 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 					eventName: 'selectJournalArticle',
 					id: '',
 					title: '<liferay-ui:message key="select-web-content" />',
-					uri: '<%= cpDefinitionVirtualSettingDisplayContext.getAssetBrowserURL() %>'
+					uri: '<%= cpDefinitionVirtualSettingDisplayContext.getTermsOfUseJournalArticleBrowserURL() %>'
 				},
 				function(event) {
 					$('#<portlet:namespace />termsOfUseJournalArticleResourcePK').val(event.assetclasspk);

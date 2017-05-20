@@ -170,7 +170,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			getCPDefinitionVirtualSetting();
 
-		if (cpDefinitionVirtualSetting == null) {
+		if (cpDefinitionVirtualSetting != null) {
 			long fileEntryId = cpDefinitionVirtualSetting.getFileEntryId();
 
 			if (fileEntryId > 0) {
@@ -242,7 +242,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			getCPDefinitionVirtualSetting();
 
-		if (cpDefinitionVirtualSetting == null) {
+		if (cpDefinitionVirtualSetting != null) {
 			long fileEntryId =
 				cpDefinitionVirtualSetting.getSampleFileEntryId();
 

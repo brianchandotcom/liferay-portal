@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.roles.admin.demo.data.creator.RoleDemoDataCreator;
 
 import java.util.ArrayList;
@@ -34,6 +37,32 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 public abstract class BaseRoleDemoDataCreator implements RoleDemoDataCreator {
+
+	public void addPermissions(Role role, String xml, int scope, String primKey)
+		throws PortalException {
+
+		try {
+			Document document = SAXReaderUtil.read(xml);
+
+			Element rootElement = document.getRootElement();
+
+			List<Element> resources = rootElement.elements("resource");
+
+			for (Element resource : resources) {
+				String resourceName = resource.elementText("resource-name");
+
+				List<Element> actionIds = resource.elements("action-id");
+
+				for (Element actionId : actionIds) {
+					addResourcePermission(
+						role, resourceName, scope, primKey, actionId.getText());
+				}
+			}
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
+	}
 
 	public void addResourcePermission(
 			Role role, String resourceName, int scope, String primKey,

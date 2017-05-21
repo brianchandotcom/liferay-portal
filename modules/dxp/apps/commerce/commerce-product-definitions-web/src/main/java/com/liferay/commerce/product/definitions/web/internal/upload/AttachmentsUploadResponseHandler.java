@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.upload.UploadResponseHandler;
 
 import java.util.Map;

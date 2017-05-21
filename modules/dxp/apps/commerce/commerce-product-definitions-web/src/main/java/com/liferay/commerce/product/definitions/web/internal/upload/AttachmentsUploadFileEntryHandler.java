@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.upload.UploadFileEntryHandler;
 
 import java.io.IOException;

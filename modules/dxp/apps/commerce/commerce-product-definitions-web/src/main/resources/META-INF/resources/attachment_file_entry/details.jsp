@@ -31,7 +31,6 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 <aui:model-context bean="<%= cpAttachmentFileEntry %>" model="<%= CPAttachmentFileEntry.class %>" />
 
 <div class="lfr-attachment-cover-image-selector">
-
 	<portlet:actionURL name="uploadTempAttachment" var="uploadCoverImageURL">
 		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 	</portlet:actionURL>

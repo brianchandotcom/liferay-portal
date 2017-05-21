@@ -32,10 +32,6 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 
 <div class="lfr-attachment-cover-image-selector">
 
-	<%
-	String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
-	%>
-
 	<portlet:actionURL name="uploadTempAttachment" var="uploadCoverImageURL">
 		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 	</portlet:actionURL>
@@ -45,9 +41,9 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 		fileEntryId="<%= fileEntryId %>"
 		itemSelectorEventName='<%= "addCPAttachmentFileEntry" %>'
 		itemSelectorURL="<%= cpAttachmentFileEntriesDisplayContext.getItemSelectorUrl() %>"
-		maxFileSize="<%= PropsValues.BLOGS_IMAGE_MAX_SIZE %>"
+		maxFileSize="<%= cpAttachmentFileEntriesDisplayContext.getImageMaxSize() %>"
 		paramName="fileEntryId"
 		uploadURL="<%= uploadCoverImageURL %>"
-		validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>'
+		validExtensions='<%= StringUtil.merge(cpAttachmentFileEntriesDisplayContext.getImageExtensions(), ", ") %>'
 	/>
 </div>

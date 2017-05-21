@@ -15,15 +15,19 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.definitions.web.configuration.AttachmentConfiguration;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -31,13 +35,17 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  */
 @Component(
+	configurationPid = "com.liferay.commerce.product.definitions.web.configuration.AttachmentConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
@@ -60,8 +68,9 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 			CPAttachmentFileEntriesDisplayContext
 				cpAttachmentFileEntriesDisplayContext =
 					new CPAttachmentFileEntriesDisplayContext(
-						_actionHelper, httpServletRequest,
-						_cpAttachmentFileEntryService, _itemSelector);
+						_attachmentConfiguration, _actionHelper,
+						httpServletRequest, _cpAttachmentFileEntryService,
+						_itemSelector);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -74,8 +83,16 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 		return "/attachment_file_entries.jsp";
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_attachmentConfiguration = ConfigurableUtil.createConfigurable(
+			AttachmentConfiguration.class, properties);
+	}
+
 	@Reference
 	private ActionHelper _actionHelper;
+
+	private volatile AttachmentConfiguration _attachmentConfiguration;
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;

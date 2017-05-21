@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
+import com.liferay.commerce.product.definitions.web.configuration.AttachmentConfiguration;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
@@ -41,6 +42,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 	BaseCPDefinitionsSearchContainerDisplayContext<CPAttachmentFileEntry> {
 
 	public CPAttachmentFileEntriesDisplayContext(
+			AttachmentConfiguration attachmentConfiguration,
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			ItemSelector itemSelector)
@@ -51,6 +53,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		setDefaultOrderByCol("priority");
 		setDefaultOrderByType("asc");
 
+		_attachmentConfiguration = attachmentConfiguration;
 		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		_itemSelector = itemSelector;
 	}
@@ -77,6 +80,14 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		}
 
 		return cpAttachmentFileEntry.getCPAttachmentFileEntryId();
+	}
+
+	public String[] getImageExtensions() {
+		return _attachmentConfiguration.imageExtensions();
+	}
+
+	public long getImageMaxSize() {
+		return _attachmentConfiguration.imageMaxSize();
 	}
 
 	public String getItemSelectorUrl() {
@@ -110,6 +121,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		return null;
 	}
 
+	private final AttachmentConfiguration _attachmentConfiguration;
 	private CPAttachmentFileEntry _cpAttachmentFileEntry;
 	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 	private final ItemSelector _itemSelector;

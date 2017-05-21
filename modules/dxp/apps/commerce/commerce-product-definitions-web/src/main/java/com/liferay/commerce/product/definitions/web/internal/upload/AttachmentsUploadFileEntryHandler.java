@@ -15,11 +15,13 @@
 package com.liferay.commerce.product.definitions.web.internal.upload;
 
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.definitions.web.configuration.AttachmentConfiguration;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryNameException;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntrySizeException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -28,23 +30,29 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.upload.UploadFileEntryHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  */
-@Component(service = AttachmentsUploadFileEntryHandler.class)
+@Component(
+	configurationPid = "com.liferay.commerce.product.definitions.web.configuration.AttachmentConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
+	service = AttachmentsUploadFileEntryHandler.class
+)
 public class AttachmentsUploadFileEntryHandler
 	implements UploadFileEntryHandler {
 
@@ -79,6 +87,12 @@ public class AttachmentsUploadFileEntryHandler
 		}
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_attachmentConfiguration = ConfigurableUtil.createConfigurable(
+			AttachmentConfiguration.class, properties);
+	}
+
 	protected FileEntry addFileEntry(
 			long cpDefinitionId, String fileName, String contentType,
 			InputStream inputStream, ThemeDisplay themeDisplay)
@@ -108,16 +122,15 @@ public class AttachmentsUploadFileEntryHandler
 	private void _validateFile(String fileName, long size)
 		throws PortalException {
 
-		if ((PropsValues.BLOGS_IMAGE_MAX_SIZE > 0) &&
-			(size > PropsValues.BLOGS_IMAGE_MAX_SIZE)) {
+		if ((_attachmentConfiguration.imageMaxSize() > 0) &&
+			(size > _attachmentConfiguration.imageMaxSize())) {
 
 			throw new CPAttachmentFileEntrySizeException();
 		}
 
 		String extension = FileUtil.getExtension(fileName);
 
-		String[] imageExtensions = PrefsPropsUtil.getStringArray(
-			PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
+		String[] imageExtensions = _attachmentConfiguration.imageExtensions();
 
 		for (String imageExtension : imageExtensions) {
 			if (StringPool.STAR.equals(imageExtension) ||
@@ -132,5 +145,7 @@ public class AttachmentsUploadFileEntryHandler
 	}
 
 	private static final String _PARAMETER_NAME = "imageSelectorFileName";
+
+	private volatile AttachmentConfiguration _attachmentConfiguration;
 
 }

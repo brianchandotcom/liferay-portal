@@ -21,3 +21,9 @@ CPAttachmentFileEntriesDisplayContext cpAttachmentFileEntriesDisplayContext = (C
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
+
+<c:if test="<%= !cpAttachmentFileEntriesDisplayContext.hasOptions() %>">
+	<div class="alert alert-info">
+		<liferay-ui:message key="there-are-no-options-set-as-sku-contributor" />
+	</div>
+</c:if>

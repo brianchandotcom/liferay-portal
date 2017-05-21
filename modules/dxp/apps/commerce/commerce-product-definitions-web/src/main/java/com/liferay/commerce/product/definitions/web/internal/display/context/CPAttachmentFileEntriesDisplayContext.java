@@ -19,6 +19,7 @@ import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefini
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -42,10 +43,11 @@ public class CPAttachmentFileEntriesDisplayContext extends
 	BaseCPDefinitionsSearchContainerDisplayContext<CPAttachmentFileEntry> {
 
 	public CPAttachmentFileEntriesDisplayContext(
+			ActionHelper actionHelper,
 			AttachmentConfiguration attachmentConfiguration,
-			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
-			ItemSelector itemSelector)
+			CPDefinitionOptionRelService cpDefinitionOptionRelService,
+			HttpServletRequest httpServletRequest, ItemSelector itemSelector)
 		throws PortalException {
 
 		super(actionHelper, httpServletRequest, "CPAttachmentFileEntry");
@@ -55,6 +57,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 
 		_attachmentConfiguration = attachmentConfiguration;
 		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
+		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
 		_itemSelector = itemSelector;
 	}
 
@@ -121,9 +124,23 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		return null;
 	}
 
+	public boolean hasOptions() throws PortalException {
+		int skuContributorCPDefinitionOptionRelCount =
+			_cpDefinitionOptionRelService.
+				getSkuContributorCPDefinitionOptionRelCount(
+					getCPDefinitionId());
+
+		if (skuContributorCPDefinitionOptionRelCount > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private final AttachmentConfiguration _attachmentConfiguration;
 	private CPAttachmentFileEntry _cpAttachmentFileEntry;
 	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
+	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 	private final ItemSelector _itemSelector;
 
 }

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPOptionValue cpOptionValue = (CPOptionValue)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_OPTION_VALUE);
+CPOptionValue cpOptionValue = (CPOptionValue)request.getAttribute(CPWebKeys.CP_OPTION_VALUE);
 
 long cpOptionValueId = BeanParamUtil.getLong(cpOptionValue, request, "cpOptionValueId");
 

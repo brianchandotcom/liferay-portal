@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPOption cpOption = (CPOption)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_OPTION);
+CPOption cpOption = (CPOption)request.getAttribute(CPWebKeys.CP_OPTION);
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="custom-fields" />

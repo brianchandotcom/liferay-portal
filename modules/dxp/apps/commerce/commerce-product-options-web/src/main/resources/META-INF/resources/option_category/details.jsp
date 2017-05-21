@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_OPTION_CATEGORY);
+CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWebKeys.CP_OPTION_CATEGORY);
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<CPOptionCategory> cpOptionCategories = (List<CPOptionCategory>)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_OPTION_CATEGORIES);
+List<CPOptionCategory> cpOptionCategories = (List<CPOptionCategory>)request.getAttribute(CPWebKeys.CP_OPTION_CATEGORIES);
 
 if (ListUtil.isEmpty(cpOptionCategories)) {
 	cpOptionCategories = Collections.emptyList();

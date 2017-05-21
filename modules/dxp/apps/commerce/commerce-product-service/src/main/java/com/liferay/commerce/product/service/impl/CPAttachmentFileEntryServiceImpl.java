@@ -84,6 +84,22 @@ public class CPAttachmentFileEntryServiceImpl
 	}
 
 	@Override
+	public CPAttachmentFileEntry fetchCPAttachmentFileEntry(
+			long cpAttachmentFileEntryId)
+		throws PortalException {
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			cpAttachmentFileEntryLocalService.fetchCPAttachmentFileEntry(
+				cpAttachmentFileEntryId);
+
+		if (cpAttachmentFileEntry != null) {
+			checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntry);
+		}
+
+		return cpAttachmentFileEntry;
+	}
+
+	@Override
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 			long classNameId, int classPK, int start, int end)
 		throws PortalException {

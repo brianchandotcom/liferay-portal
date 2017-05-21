@@ -32,6 +32,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
+ * @author André de Oliveira
  */
 @Component(immediate = true, service = MatchQueryTranslator.class)
 public class MatchQueryTranslatorImpl implements MatchQueryTranslator {
@@ -86,18 +87,20 @@ public class MatchQueryTranslatorImpl implements MatchQueryTranslator {
 			}
 		}
 
-		switch (matchQueryType) {
-			case BOOLEAN: return translateQueryTypeBoolean(field, value);
-
-			case PHRASE:
-				return translateQueryTypePhrase(
-					field, value, matchQuery.getSlop());
-
-			case PHRASE_PREFIX:
-				return translateQueryTypePhrasePrefix(field, value);
-
-			default: throw new IllegalArgumentException();
+		if (matchQueryType == MatchQuery.Type.BOOLEAN) {
+			return translateQueryTypeBoolean(field, value);
 		}
+
+		if (matchQueryType == MatchQuery.Type.PHRASE) {
+			return translateQueryTypePhrase(field, value, matchQuery.getSlop());
+		}
+
+		if (matchQueryType == MatchQuery.Type.PHRASE_PREFIX) {
+			return translateQueryTypePhrasePrefix(field, value);
+		}
+
+		throw new IllegalArgumentException(
+			"Unknown match query type " + matchQueryType);
 	}
 
 	protected org.apache.lucene.search.Query translateQueryTypeBoolean(

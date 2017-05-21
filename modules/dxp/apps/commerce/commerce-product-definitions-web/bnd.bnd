@@ -5,3 +5,4 @@ Export-Package:\
 	com.liferay.commerce.product.definitions.web.display.context,\
 	com.liferay.commerce.product.definitions.web.portlet.action
 Web-ContextPath: /commerce-product-definitions-web
+-dsannotations-options: inherit

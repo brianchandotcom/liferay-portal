@@ -19,6 +19,12 @@ package com.liferay.commerce.product.constants;
  */
 public class CPWebKeys {
 
+	public static final String CP_ATTACHMENT_FILE_ENTRIES =
+		"CP_ATTACHMENT_FILE_ENTRIES";
+
+	public static final String CP_ATTACHMENT_FILE_ENTRY =
+		"CP_ATTACHMENT_FILE_ENTRY";
+
 	public static final String COMMERCE_PRODUCT_DEFINITION =
 		"COMMERCE_PRODUCT_DEFINITION";
 

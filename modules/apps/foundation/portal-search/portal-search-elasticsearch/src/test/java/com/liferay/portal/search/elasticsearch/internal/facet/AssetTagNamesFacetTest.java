@@ -16,52 +16,40 @@ package com.liferay.portal.search.elasticsearch.internal.facet;
 
 import com.liferay.portal.search.elasticsearch.internal.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.test.util.facet.BaseSimpleFacetTestCase;
+import com.liferay.portal.search.elasticsearch.internal.connection.LiferayIndexCreator;
+import com.liferay.portal.search.test.util.facet.BaseAssetTagNamesFacetTestCase;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 import org.junit.Test;
 
 /**
- * @author Bryan Engler
+ * @author André de Oliveira
  */
-public class SimpleFacetTest extends BaseSimpleFacetTestCase {
+public class AssetTagNamesFacetTest extends BaseAssetTagNamesFacetTestCase {
 
 	@Override
 	@Test
-	public void testFrequencyThreshold() throws Exception {
-		super.testFrequencyThreshold();
+	public void testCaseInsensitiveSearchCaseSensitiveGrouping()
+		throws Exception {
+
+		super.testCaseInsensitiveSearchCaseSensitiveGrouping();
 	}
 
 	@Override
 	@Test
-	public void testMaxTerms() throws Exception {
-		super.testMaxTerms();
+	public void testKeysWithSpaces() throws Exception {
+		super.testKeysWithSpaces();
 	}
 
 	@Override
-	@Test
-	public void testMaxTermsNegative() throws Exception {
-		super.testMaxTermsNegative();
-	}
+	protected IndexingFixture createIndexingFixture() throws Exception {
+		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
+			AssetTagNamesFacetTest.class.getSimpleName());
 
-	@Override
-	@Test
-	public void testMaxTermsZero() throws Exception {
-		super.testMaxTermsZero();
-	}
-
-	@Override
-	@Test
-	public void testUnmatchedAreIgnored() throws Exception {
-		super.testUnmatchedAreIgnored();
-	}
-
-	@Override
-	protected IndexingFixture createIndexingFixture() {
 		return new ElasticsearchIndexingFixture(
-			new ElasticsearchFixture(SimpleFacetTest.class.getSimpleName()),
-			BaseIndexingTestCase.COMPANY_ID);
+			elasticsearchFixture, BaseIndexingTestCase.COMPANY_ID,
+			new LiferayIndexCreator(elasticsearchFixture));
 	}
 
 }

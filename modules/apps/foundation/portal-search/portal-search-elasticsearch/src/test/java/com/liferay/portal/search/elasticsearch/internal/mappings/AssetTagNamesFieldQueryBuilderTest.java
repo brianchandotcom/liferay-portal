@@ -19,16 +19,15 @@ import com.liferay.portal.search.elasticsearch.internal.connection.Elasticsearch
 import com.liferay.portal.search.elasticsearch.internal.connection.LiferayIndexCreator;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
-import com.liferay.portal.search.test.util.mappings.BaseSubstringFieldQueryBuilderTestCase;
+import com.liferay.portal.search.test.util.mappings.BaseAssetTagNamesFieldQueryBuilderTestCase;
 
 import org.junit.Test;
 
 /**
  * @author André de Oliveira
- * @author Rodrigo Paulino
  */
-public class SubstringFieldQueryBuilderTest
-	extends BaseSubstringFieldQueryBuilderTestCase {
+public class AssetTagNamesFieldQueryBuilderTest
+	extends BaseAssetTagNamesFieldQueryBuilderTestCase {
 
 	@Override
 	@Test
@@ -38,8 +37,20 @@ public class SubstringFieldQueryBuilderTest
 
 	@Override
 	@Test
+	public void testExactMatchBoost() throws Exception {
+		super.testExactMatchBoost();
+	}
+
+	@Override
+	@Test
 	public void testMultiwordPhrasePrefixes() throws Exception {
 		super.testMultiwordPhrasePrefixes();
+	}
+
+	@Override
+	@Test
+	public void testMultiwordPrefixes() throws Exception {
+		super.testMultiwordPrefixes();
 	}
 
 	@Override
@@ -56,8 +67,8 @@ public class SubstringFieldQueryBuilderTest
 
 	@Override
 	@Test
-	public void testParentheses() throws Exception {
-		super.testParentheses();
+	public void testPhrasePrefixes() throws Exception {
+		super.testPhrasePrefixes();
 	}
 
 	@Override
@@ -74,14 +85,14 @@ public class SubstringFieldQueryBuilderTest
 
 	@Override
 	@Test
-	public void testSubstrings() throws Exception {
-		super.testSubstrings();
+	public void testWordPrefixes() throws Exception {
+		super.testWordPrefixes();
 	}
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {
 		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
-			SubstringFieldQueryBuilderTest.class.getSimpleName());
+			AssetTagNamesFieldQueryBuilderTest.class.getSimpleName());
 
 		return new ElasticsearchIndexingFixture(
 			elasticsearchFixture, BaseIndexingTestCase.COMPANY_ID,

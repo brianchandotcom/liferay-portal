@@ -124,6 +124,21 @@ public class CPAttachmentFileEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap fetchCPAttachmentFileEntry(
+		long cpAttachmentFileEntryId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPAttachmentFileEntry returnValue =
+				CPAttachmentFileEntryServiceUtil.fetchCPAttachmentFileEntry(cpAttachmentFileEntryId);
+
+			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap[] getCPAttachmentFileEntries(
 		long classNameId, int classPK, int start, int end)
 		throws RemoteException {

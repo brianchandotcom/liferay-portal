@@ -70,6 +70,12 @@ public class CPAttachmentFileEntryServiceUtil {
 		return getService().deleteCPAttachmentFileEntry(cpAttachmentFileEntryId);
 	}
 
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntry fetchCPAttachmentFileEntry(
+		long cpAttachmentFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchCPAttachmentFileEntry(cpAttachmentFileEntryId);
+	}
+
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntry updateCPAttachmentFileEntry(
 		long cpAttachmentFileEntryId, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,

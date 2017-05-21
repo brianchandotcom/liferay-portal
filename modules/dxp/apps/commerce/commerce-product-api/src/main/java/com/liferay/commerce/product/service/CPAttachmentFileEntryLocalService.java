@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -199,6 +200,10 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Folder getAttachmentsFolder(long userId, long groupId,
+		java.lang.String className, long classPK) throws PortalException;
 
 	/**
 	* Returns the number of cp attachment file entries.

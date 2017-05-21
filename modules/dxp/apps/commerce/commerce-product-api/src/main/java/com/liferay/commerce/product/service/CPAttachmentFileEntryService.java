@@ -73,6 +73,10 @@ public interface CPAttachmentFileEntryService extends BaseService {
 	public CPAttachmentFileEntry deleteCPAttachmentFileEntry(
 		long cpAttachmentFileEntryId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPAttachmentFileEntry fetchCPAttachmentFileEntry(
+		long cpAttachmentFileEntryId) throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
 		long cpAttachmentFileEntryId, int displayDateMonth, int displayDateDay,

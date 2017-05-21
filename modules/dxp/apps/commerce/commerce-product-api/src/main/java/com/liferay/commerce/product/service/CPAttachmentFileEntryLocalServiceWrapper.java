@@ -220,6 +220,14 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 		return _cpAttachmentFileEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder getAttachmentsFolder(
+		long userId, long groupId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpAttachmentFileEntryLocalService.getAttachmentsFolder(userId,
+			groupId, className, classPK);
+	}
+
 	/**
 	* Returns the number of cp attachment file entries.
 	*

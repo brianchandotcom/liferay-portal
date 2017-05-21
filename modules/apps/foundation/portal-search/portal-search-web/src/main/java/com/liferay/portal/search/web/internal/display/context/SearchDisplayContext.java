@@ -90,6 +90,7 @@ public class SearchDisplayContext {
 
 		if (keywords == null) {
 			_hits = null;
+			_queryString = null;
 			_searchContainer = null;
 			_searchContext = null;
 
@@ -118,6 +119,7 @@ public class SearchDisplayContext {
 		SearchResponseImpl searchResponseImpl = searchRequestImpl.search();
 
 		_hits = searchResponseImpl.getHits();
+		_queryString = searchResponseImpl.getQueryString();
 		_searchContainer = searchResponseImpl.getSearchContainer();
 		_searchContext = searchResponseImpl.getSearchContext();
 	}
@@ -216,6 +218,10 @@ public class SearchDisplayContext {
 		}
 
 		return _queryIndexingThreshold;
+	}
+
+	public String getQueryString() {
+		return _queryString;
 	}
 
 	public int getQuerySuggestionsDisplayThreshold() {
@@ -567,6 +573,7 @@ public class SearchDisplayContext {
 	private QueryConfig _queryConfig;
 	private Boolean _queryIndexingEnabled;
 	private Integer _queryIndexingThreshold;
+	private final String _queryString;
 	private Integer _querySuggestionsDisplayThreshold;
 	private Boolean _querySuggestionsEnabled;
 	private Integer _querySuggestionsMax;

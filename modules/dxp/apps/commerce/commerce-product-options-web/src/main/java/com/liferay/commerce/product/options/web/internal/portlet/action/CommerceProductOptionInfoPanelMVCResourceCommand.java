@@ -49,8 +49,7 @@ public class CommerceProductOptionInfoPanelMVCResourceCommand
 
 		List<CPOption> cpOptions = _actionHelper.getCPOptions(resourceRequest);
 
-		resourceRequest.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_OPTIONS, cpOptions);
+		resourceRequest.setAttribute(CPWebKeys.CP_OPTIONS, cpOptions);
 
 		include(resourceRequest, resourceResponse, "/option_info_panel.jsp");
 	}

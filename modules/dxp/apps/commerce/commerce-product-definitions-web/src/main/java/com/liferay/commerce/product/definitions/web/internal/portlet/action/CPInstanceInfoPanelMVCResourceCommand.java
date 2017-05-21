@@ -51,8 +51,7 @@ public class CPInstanceInfoPanelMVCResourceCommand
 		List<CPInstance> cpInstances = _actionHelper.getCPInstances(
 			resourceRequest);
 
-		resourceRequest.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_INSTANCES, cpInstances);
+		resourceRequest.setAttribute(CPWebKeys.CP_INSTANCES, cpInstances);
 
 		include(resourceRequest, resourceResponse, "/instance_info_panel.jsp");
 	}

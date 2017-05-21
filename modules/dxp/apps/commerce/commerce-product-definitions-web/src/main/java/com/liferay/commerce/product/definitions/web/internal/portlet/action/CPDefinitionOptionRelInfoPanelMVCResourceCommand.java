@@ -52,8 +52,7 @@ public class CPDefinitionOptionRelInfoPanelMVCResourceCommand
 			_actionHelper.getCPDefinitionOptionRels(resourceRequest);
 
 		resourceRequest.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_RELS,
-			cpDefinitionOptionRels);
+			CPWebKeys.CP_DEFINITION_OPTION_RELS, cpDefinitionOptionRels);
 
 		include(
 			resourceRequest, resourceResponse,

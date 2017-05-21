@@ -52,7 +52,7 @@ public class CPDefinitionOptionValueRelInfoPanelMVCResourceCommand
 			_actionHelper.getCPDefinitionOptionValueRels(resourceRequest);
 
 		resourceRequest.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_RELS,
+			CPWebKeys.CP_DEFINITION_OPTION_VALUE_RELS,
 			cpDefinitionOptionValueRels);
 
 		include(

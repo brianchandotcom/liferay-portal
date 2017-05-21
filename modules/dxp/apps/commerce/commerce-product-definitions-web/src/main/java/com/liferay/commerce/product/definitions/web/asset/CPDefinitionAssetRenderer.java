@@ -241,8 +241,7 @@ public class CPDefinitionAssetRenderer
 			String template)
 		throws Exception {
 
-		request.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_DEFINITION, _cpDefinition);
+		request.setAttribute(CPWebKeys.CP_DEFINITION, _cpDefinition);
 
 		return super.include(request, response, template);
 	}

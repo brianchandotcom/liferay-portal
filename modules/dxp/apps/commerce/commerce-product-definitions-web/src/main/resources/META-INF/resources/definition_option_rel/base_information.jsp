@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPDefinitionOptionRel cpDefinitionOptionRel = (CPDefinitionOptionRel)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_REL);
+CPDefinitionOptionRel cpDefinitionOptionRel = (CPDefinitionOptionRel)request.getAttribute(CPWebKeys.CP_DEFINITION_OPTION_REL);
 
 CPDefinitionOptionRelDisplayContext cpDefinitionOptionRelDisplayContext = (CPDefinitionOptionRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 

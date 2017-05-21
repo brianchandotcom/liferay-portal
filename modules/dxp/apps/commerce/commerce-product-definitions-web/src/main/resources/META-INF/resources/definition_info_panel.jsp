@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<CPDefinition> cpDefinitions = (List<CPDefinition>)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITIONS);
+List<CPDefinition> cpDefinitions = (List<CPDefinition>)request.getAttribute(CPWebKeys.CP_DEFINITIONS);
 
 if (ListUtil.isEmpty(cpDefinitions)) {
 	cpDefinitions = Collections.emptyList();

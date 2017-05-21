@@ -43,7 +43,7 @@ public class ActionHelper {
 		throws PortalException {
 
 		CPOption cpOption = (CPOption)renderRequest.getAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_OPTION);
+			CPWebKeys.CP_OPTION);
 
 		if (cpOption != null) {
 			return cpOption;
@@ -64,8 +64,7 @@ public class ActionHelper {
 		}
 
 		if (cpOption != null) {
-			renderRequest.setAttribute(
-				CPWebKeys.COMMERCE_PRODUCT_OPTION, cpOption);
+			renderRequest.setAttribute(CPWebKeys.CP_OPTION, cpOption);
 		}
 
 		return cpOption;
@@ -111,7 +110,7 @@ public class ActionHelper {
 		throws PortalException {
 
 		CPOptionValue cpOptionValue = (CPOptionValue)renderRequest.getAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_OPTION_VALUE);
+			CPWebKeys.CP_OPTION_VALUE);
 
 		if (cpOptionValue != null) {
 			return cpOptionValue;
@@ -127,7 +126,7 @@ public class ActionHelper {
 
 		if (cpOptionValue != null) {
 			renderRequest.setAttribute(
-				CPWebKeys.COMMERCE_PRODUCT_OPTION_VALUE, cpOptionValue);
+				CPWebKeys.CP_OPTION_VALUE, cpOptionValue);
 		}
 
 		return cpOptionValue;

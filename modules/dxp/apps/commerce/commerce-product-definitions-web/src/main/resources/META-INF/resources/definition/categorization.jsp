@@ -19,7 +19,7 @@
 <%
 long classPK = 0;
 
-CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITION);
+CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFINITION);
 
 if (cpDefinition != null) {
 	classPK = cpDefinition.getCPDefinitionId();

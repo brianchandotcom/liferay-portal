@@ -82,8 +82,7 @@ public class EditCPOptionValueMVCRenderCommand implements MVCRenderCommand {
 				cpOptionValueId);
 		}
 
-		renderRequest.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_OPTION_VALUE, cpOptionValue);
+		renderRequest.setAttribute(CPWebKeys.CP_OPTION_VALUE, cpOptionValue);
 	}
 
 	@Reference

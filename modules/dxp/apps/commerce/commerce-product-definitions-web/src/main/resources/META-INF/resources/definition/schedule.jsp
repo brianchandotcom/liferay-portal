@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITION);
+CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFINITION);
 
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 

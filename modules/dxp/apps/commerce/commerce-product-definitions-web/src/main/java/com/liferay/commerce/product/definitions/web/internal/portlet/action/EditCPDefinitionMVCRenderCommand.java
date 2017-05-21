@@ -92,8 +92,7 @@ public class EditCPDefinitionMVCRenderCommand implements MVCRenderCommand {
 
 		cpDefinition = _actionHelper.getCPDefinition(renderRequest);
 
-		renderRequest.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_DEFINITION, cpDefinition);
+		renderRequest.setAttribute(CPWebKeys.CP_DEFINITION, cpDefinition);
 	}
 
 	@Reference

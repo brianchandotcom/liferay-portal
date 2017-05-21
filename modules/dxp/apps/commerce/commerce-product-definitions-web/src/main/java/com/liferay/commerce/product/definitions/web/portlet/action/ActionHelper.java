@@ -47,7 +47,7 @@ public class ActionHelper {
 		throws PortalException {
 
 		CPDefinition cpDefinition = (CPDefinition)renderRequest.getAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_DEFINITION);
+			CPWebKeys.CP_DEFINITION);
 
 		if (cpDefinition != null) {
 			return cpDefinition;
@@ -71,8 +71,7 @@ public class ActionHelper {
 		}
 
 		if (cpDefinition != null) {
-			renderRequest.setAttribute(
-				CPWebKeys.COMMERCE_PRODUCT_DEFINITION, cpDefinition);
+			renderRequest.setAttribute(CPWebKeys.CP_DEFINITION, cpDefinition);
 		}
 
 		return cpDefinition;
@@ -84,7 +83,7 @@ public class ActionHelper {
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			(CPDefinitionOptionRel)renderRequest.getAttribute(
-				CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_REL);
+				CPWebKeys.CP_DEFINITION_OPTION_REL);
 
 		if (cpDefinitionOptionRel != null) {
 			return cpDefinitionOptionRel;
@@ -111,8 +110,7 @@ public class ActionHelper {
 
 		if (cpDefinitionOptionRel != null) {
 			renderRequest.setAttribute(
-				CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_REL,
-				cpDefinitionOptionRel);
+				CPWebKeys.CP_DEFINITION_OPTION_REL, cpDefinitionOptionRel);
 		}
 
 		return cpDefinitionOptionRel;
@@ -144,7 +142,7 @@ public class ActionHelper {
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 			(CPDefinitionOptionValueRel)renderRequest.getAttribute(
-				CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL);
+				CPWebKeys.CP_DEFINITION_OPTION_VALUE_REL);
 
 		if (cpDefinitionOptionValueRel != null) {
 			return cpDefinitionOptionValueRel;
@@ -162,7 +160,7 @@ public class ActionHelper {
 
 		if (cpDefinitionOptionValueRel != null) {
 			renderRequest.setAttribute(
-				CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_REL,
+				CPWebKeys.CP_DEFINITION_OPTION_VALUE_REL,
 				cpDefinitionOptionValueRel);
 		}
 
@@ -226,7 +224,7 @@ public class ActionHelper {
 		throws PortalException {
 
 		CPInstance cpInstance = (CPInstance)renderRequest.getAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_INSTANCE);
+			CPWebKeys.CP_INSTANCE);
 
 		if (cpInstance != null) {
 			return cpInstance;
@@ -239,8 +237,7 @@ public class ActionHelper {
 		}
 
 		if (cpInstance != null) {
-			renderRequest.setAttribute(
-				CPWebKeys.COMMERCE_PRODUCT_INSTANCE, cpInstance);
+			renderRequest.setAttribute(CPWebKeys.CP_INSTANCE, cpInstance);
 		}
 
 		return cpInstance;

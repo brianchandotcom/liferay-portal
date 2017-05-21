@@ -51,7 +51,7 @@ public class CPOptionCategoryInfoPanelMVCResourceCommand
 			_actionHelper.getCPOptionCategories(resourceRequest);
 
 		resourceRequest.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_OPTION_CATEGORIES, cpOptionCategories);
+			CPWebKeys.CP_OPTION_CATEGORIES, cpOptionCategories);
 
 		include(
 			resourceRequest, resourceResponse,

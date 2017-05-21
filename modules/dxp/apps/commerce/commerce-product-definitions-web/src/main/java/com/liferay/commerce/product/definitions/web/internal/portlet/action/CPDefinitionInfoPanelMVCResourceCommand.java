@@ -51,8 +51,7 @@ public class CPDefinitionInfoPanelMVCResourceCommand
 		List<CPDefinition> cpDefinitions = _actionHelper.getCPDefinitions(
 			resourceRequest);
 
-		resourceRequest.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_DEFINITIONS, cpDefinitions);
+		resourceRequest.setAttribute(CPWebKeys.CP_DEFINITIONS, cpDefinitions);
 
 		include(
 			resourceRequest, resourceResponse, "/definition_info_panel.jsp");

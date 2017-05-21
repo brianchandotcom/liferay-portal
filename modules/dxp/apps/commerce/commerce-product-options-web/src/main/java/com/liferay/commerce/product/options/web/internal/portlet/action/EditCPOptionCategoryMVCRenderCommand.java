@@ -84,7 +84,7 @@ public class EditCPOptionCategoryMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		renderRequest.setAttribute(
-			CPWebKeys.COMMERCE_PRODUCT_OPTION_CATEGORY, cpOptionCategory);
+			CPWebKeys.CP_OPTION_CATEGORY, cpOptionCategory);
 	}
 
 	@Reference

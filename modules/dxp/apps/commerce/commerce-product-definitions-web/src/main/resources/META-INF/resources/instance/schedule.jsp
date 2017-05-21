@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPInstance cpInstance = (CPInstance)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_INSTANCE);
+CPInstance cpInstance = (CPInstance)request.getAttribute(CPWebKeys.CP_INSTANCE);
 
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = (List<CPDefinitionOptionValueRel>)request.getAttribute(CPWebKeys.COMMERCE_PRODUCT_DEFINITION_OPTION_VALUE_RELS);
+List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = (List<CPDefinitionOptionValueRel>)request.getAttribute(CPWebKeys.CP_DEFINITION_OPTION_VALUE_RELS);
 
 if (ListUtil.isEmpty(cpDefinitionOptionValueRels)) {
 	cpDefinitionOptionValueRels = Collections.emptyList();

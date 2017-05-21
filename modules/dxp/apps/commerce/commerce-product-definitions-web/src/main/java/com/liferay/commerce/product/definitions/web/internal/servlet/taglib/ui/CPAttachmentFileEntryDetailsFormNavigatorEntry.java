@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	service = FormNavigatorEntry.class
 )
 public class CPAttachmentFileEntryDetailsFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry<CPInstance> {
+	extends BaseJSPFormNavigatorEntry<CPAttachmentFileEntry> {
 
 	@Override
 	public String getCategoryKey() {

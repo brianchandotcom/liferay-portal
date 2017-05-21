@@ -15,10 +15,12 @@
 package com.liferay.commerce.product.definitions.web.portlet.action;
 
 import com.liferay.commerce.product.constants.CPWebKeys;
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -42,6 +44,57 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ActionHelper.class)
 public class ActionHelper {
+
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			ResourceRequest resourceRequest)
+		throws PortalException {
+
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries = new ArrayList<>();
+
+		long[] cpAttachmentFileEntryIds = ParamUtil.getLongValues(
+			resourceRequest, "rowIds");
+
+		for (long cpAttachmentFileEntryId : cpAttachmentFileEntryIds) {
+			CPAttachmentFileEntry cpAttachmentFileEntry =
+				_cpAttachmentFileEntryService.fetchCPAttachmentFileEntry(
+					cpAttachmentFileEntryId);
+
+			if (cpAttachmentFileEntry != null) {
+				cpAttachmentFileEntries.add(cpAttachmentFileEntry);
+			}
+		}
+
+		return cpAttachmentFileEntries;
+	}
+
+	public CPAttachmentFileEntry getCPAttachmentFileEntry(
+			RenderRequest renderRequest)
+		throws PortalException {
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			(CPAttachmentFileEntry)renderRequest.getAttribute(
+				CPWebKeys.CP_ATTACHMENT_FILE_ENTRY);
+
+		if (cpAttachmentFileEntry != null) {
+			return cpAttachmentFileEntry;
+		}
+
+		long cpAttachmentFileEntryId = ParamUtil.getLong(
+			renderRequest, "cpAttachmentFileEntryId");
+
+		if (cpAttachmentFileEntryId > 0) {
+			cpAttachmentFileEntry =
+				_cpAttachmentFileEntryService.fetchCPAttachmentFileEntry(
+					cpAttachmentFileEntryId);
+		}
+
+		if (cpAttachmentFileEntry != null) {
+			renderRequest.setAttribute(
+				CPWebKeys.CP_ATTACHMENT_FILE_ENTRY, cpAttachmentFileEntry);
+		}
+
+		return cpAttachmentFileEntry;
+	}
 
 	public CPDefinition getCPDefinition(RenderRequest renderRequest)
 		throws PortalException {
@@ -276,6 +329,9 @@ public class ActionHelper {
 		return _cpDefinitionOptionRelService.
 			getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
 	}
+
+	@Reference
+	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;

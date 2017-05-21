@@ -27,29 +27,37 @@ taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
+<%@
+		taglib uri="http://liferay.com/tld/item-selector" prefix="liferay-item-selector" %>
+
 <%@ page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.commerce.product.constants.CPConstants" %><%@
 page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
+page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionOptionRelDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionOptionValueRelDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionsDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceDisplayContext" %><%@
+page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPAttachmentFileEntryFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionOptionRelFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionOptionValueRelFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPInstanceFormNavigatorConstants" %><%@
+page import="com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionExpirationDateException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionRelException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPInstanceException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException" %><%@
+page import="com.liferay.commerce.product.model.CPAttachmentFileEntry" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionOptionRel" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionOptionValueRel" %><%@
 page import="com.liferay.commerce.product.model.CPInstance" %><%@
 page import="com.liferay.commerce.product.type.CPType" %><%@
 page import="com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType" %><%@
+page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
@@ -78,6 +86,12 @@ page import="java.util.Set" %><%@
 page import="java.util.StringJoiner" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
+
+<%@
+		page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
+		page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+		page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
+		page import="com.liferay.portal.util.PropsValues" %>
 
 <liferay-frontend:defineObjects />
 

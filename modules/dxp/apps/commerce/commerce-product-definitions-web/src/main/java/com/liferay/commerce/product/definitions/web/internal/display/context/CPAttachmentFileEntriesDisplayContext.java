@@ -19,8 +19,18 @@ import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,6 +55,54 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		_itemSelector = itemSelector;
 	}
 
+	public CPAttachmentFileEntry getCPAttachmentFileEntry()
+		throws PortalException {
+
+		if (_cpAttachmentFileEntry != null) {
+			return _cpAttachmentFileEntry;
+		}
+
+		_cpAttachmentFileEntry = actionHelper.getCPAttachmentFileEntry(
+			cpRequestHelper.getRenderRequest());
+
+		return _cpAttachmentFileEntry;
+	}
+
+	public long getCPAttachmentFileEntryId() throws PortalException {
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			getCPAttachmentFileEntry();
+
+		if (cpAttachmentFileEntry == null) {
+			return 0;
+		}
+
+		return cpAttachmentFileEntry.getCPAttachmentFileEntryId();
+	}
+
+	public String getItemSelectorUrl() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(
+				cpRequestHelper.getRenderRequest());
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(
+			new FileEntryItemSelectorReturnType());
+
+		FileItemSelectorCriterion fileItemSelectorCriterion =
+			new FileItemSelectorCriterion();
+
+		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, "addCPAttachmentFileEntry",
+			fileItemSelectorCriterion);
+
+		return itemSelectorURL.toString();
+	}
+
 	@Override
 	public SearchContainer<CPAttachmentFileEntry> getSearchContainer()
 		throws PortalException {
@@ -52,6 +110,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		return null;
 	}
 
+	private CPAttachmentFileEntry _cpAttachmentFileEntry;
 	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 	private final ItemSelector _itemSelector;
 

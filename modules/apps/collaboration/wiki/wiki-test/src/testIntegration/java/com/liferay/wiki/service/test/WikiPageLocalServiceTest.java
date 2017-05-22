@@ -501,7 +501,22 @@ public class WikiPageLocalServiceTest {
 
 	@Test
 	public void testRenamePage() throws Exception {
-		testRenamePage(false);
+		WikiPage page = WikiTestUtil.addPage(
+			_group.getGroupId(), _node.getNodeId(), true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiPageLocalServiceUtil.renamePage(
+			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
+			"New Title", true, serviceContext);
+
+		WikiPage renamedPage = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "New Title");
+
+		Assert.assertNotNull(renamedPage);
+
+		checkPopulatedServiceContext(serviceContext, renamedPage, false);
 	}
 
 	@Test(expected = DuplicatePageException.class)
@@ -519,7 +534,25 @@ public class WikiPageLocalServiceTest {
 
 	@Test
 	public void testRenamePageWithExpando() throws Exception {
-		testRenamePage(true);
+		WikiPage page = WikiTestUtil.addPage(
+			_group.getGroupId(), _node.getNodeId(), true);
+
+		addExpandoValueToPage(page);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiPageLocalServiceUtil.renamePage(
+			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
+			"New Title", true, serviceContext);
+
+		WikiPage renamedPage = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "New Title");
+
+		Assert.assertNotNull(renamedPage);
+
+		checkPopulatedServiceContext(
+			serviceContext, renamedPage, true);
 	}
 
 	@Test
@@ -665,30 +698,6 @@ public class WikiPageLocalServiceTest {
 
 		checkPopulatedServiceContext(
 			serviceContext, retrievedPage, hasExpandoValues);
-	}
-
-	protected void testRenamePage(boolean hasExpandoValues) throws Exception {
-		WikiPage page = WikiTestUtil.addPage(
-			_group.getGroupId(), _node.getNodeId(), true);
-
-		if (hasExpandoValues) {
-			addExpandoValueToPage(page);
-		}
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		WikiPageLocalServiceUtil.renamePage(
-			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
-			"New Title", true, serviceContext);
-
-		WikiPage renamedPage = WikiPageLocalServiceUtil.getPage(
-			_node.getNodeId(), "New Title");
-
-		Assert.assertNotNull(renamedPage);
-
-		checkPopulatedServiceContext(
-			serviceContext, renamedPage, hasExpandoValues);
 	}
 
 	protected void testRestorePageFromTrash(boolean hasExpandoValues)

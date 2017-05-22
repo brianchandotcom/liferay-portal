@@ -51,12 +51,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteCPOptions(ActionRequest actionRequest)
+	protected void deleteCPOptions(ActionRequest actionRequest, long cpOptionId)
 		throws Exception {
 
 		long[] deleteCPOptionIds = null;
-
-		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
 
 		if (cpOptionId > 0) {
 			deleteCPOptionIds = new long[] {cpOptionId};
@@ -78,14 +76,34 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
+
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteCPOptions(actionRequest);
+				deleteCPOptions(actionRequest, cpOptionId);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				updateCPOption(actionRequest);
+				updateCPOption(actionRequest, cpOptionId);
+			}
+			else if (cmd.equals("SET_FACETABLE")) {
+				_cpOptionService.setFacetable(cpOptionId, true);
+			}
+			else if (cmd.equals("SET_REQUIRED")) {
+				_cpOptionService.setRequired(cpOptionId, true);
+			}
+			else if (cmd.equals("SET_SKU_CONTRIBUTOR")) {
+				_cpOptionService.setSkuContributor(cpOptionId, true);
+			}
+			else if (cmd.equals("UNSET_FACETABLE")) {
+				_cpOptionService.setFacetable(cpOptionId, false);
+			}
+			else if (cmd.equals("UNSET_REQUIRED")) {
+				_cpOptionService.setRequired(cpOptionId, false);
+			}
+			else if (cmd.equals("UNSET_SKU_CONTRIBUTOR")) {
+				_cpOptionService.setSkuContributor(cpOptionId, false);
 			}
 		}
 		catch (Exception e) {
@@ -102,10 +120,9 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected CPOption updateCPOption(ActionRequest actionRequest)
+	protected CPOption updateCPOption(
+			ActionRequest actionRequest, long cpOptionId)
 		throws Exception {
-
-		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(

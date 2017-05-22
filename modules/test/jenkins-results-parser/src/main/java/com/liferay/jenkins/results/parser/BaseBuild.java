@@ -1830,6 +1830,26 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
+	protected void setUpstreamJobFailuresJSONObject() {
+		try {
+			if (getJobName().contains("pullrequest")) {
+				String upstreamJobName =
+					getJobName().replace("pullrequest", "upstream");
+
+				upstreamFailuresJobJSONObject =
+					JenkinsResultsParserUtil.toJSONObject(
+						upstreamFailuresJobBaseURL + upstreamJobName +
+							"/builds/latest/test.results.json");
+			}
+		}
+		catch (Exception e) {
+			System.out.println(
+				"Unable to set upstream acceptance failure data.");
+
+			e.printStackTrace();
+		}
+	}
+
 	protected void writeArchiveFile(String content, String path)
 		throws IOException {
 
@@ -1864,6 +1884,9 @@ public abstract class BaseBuild implements Build {
 		"(?<baseJob>[^\\(]+)\\((?<branchName>[^\\)]+)\\)");
 	protected static final String tempMapBaseURL =
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/";
+	protected static final String upstreamFailuresJobBaseURL =
+		"https://test-1-0.liferay.com/userContent/testResults/";
+	protected static JSONObject upstreamFailuresJobJSONObject;
 
 	protected String archiveName;
 	protected List<Integer> badBuildNumbers = new ArrayList<>();

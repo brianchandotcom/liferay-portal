@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -214,10 +215,15 @@ public class GetDataProviderParametersSettingsMVCResourceCommand
 		return outputsJSONArray;
 	}
 
-	protected String getType(String type) throws Exception {
-		JSONArray typeJSONArray = _jsonFactory.createJSONArray(type);
+	protected String getType(String type) {
+		try {
+			JSONArray typeJSONArray = _jsonFactory.createJSONArray(type);
 
-		return typeJSONArray.getString(0);
+			return typeJSONArray.getString(0);
+		}
+		catch (JSONException jsone) {
+			return type;
+		}
 	}
 
 	@Reference

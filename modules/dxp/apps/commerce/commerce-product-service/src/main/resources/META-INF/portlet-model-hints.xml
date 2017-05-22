@@ -140,7 +140,9 @@
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
-		<field localized="true" name="title" type="String" />
+		<field localized="true" name="title" type="String">
+			<validator name="required" />
+		</field>
 		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
@@ -159,8 +161,12 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" />
-		<field localized="true" name="title" type="String" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="title" type="String">
+			<validator name="required" />
+		</field>
 		<field localized="true" name="description" type="String" />
 		<field name="priority" type="int">
 			<validator name="number" />
@@ -180,7 +186,9 @@
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
-		<field localized="true" name="title" type="String" />
+		<field localized="true" name="title" type="String">
+			<validator name="required" />
+		</field>
 		<field name="priority" type="int">
 			<validator name="number" />
 		</field>

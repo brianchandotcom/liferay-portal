@@ -483,11 +483,14 @@ public class TopLevelBuild extends BaseBuild {
 		String result = getResult();
 
 		if (!result.equals("SUCCESS")) {
+			setUpstreamJobFailuresJSONObject();
+
 			Dom4JUtil.addToElement(
 				rootElement, Dom4JUtil.getNewElement("hr"),
 				Dom4JUtil.getNewElement("h4", null, "Failed Jobs:"));
 
 			List<Element> failureElements = new ArrayList<>();
+			List<Element> upstreamJobFailureElements = new ArrayList<>();
 
 			for (Build downstreamBuild : getDownstreamBuilds(null)) {
 				String downstreamBuildResult = downstreamBuild.getResult();
@@ -500,6 +503,12 @@ public class TopLevelBuild extends BaseBuild {
 					downstreamBuild.getGitHubMessageElement();
 
 				if (failureElement != null) {
+					if (isBuildFailingInUpstreamJob(downstreamBuild)) {
+						upstreamJobFailureElements.add(failureElement);
+
+						continue;
+					}
+
 					if (isHighPriorityBuildFailureElement(failureElement)) {
 						failureElements.add(0, failureElement);
 
@@ -507,6 +516,13 @@ public class TopLevelBuild extends BaseBuild {
 					}
 
 					failureElements.add(failureElement);
+				}
+
+				Element upstreamJobFailureElement =
+					downstreamBuild.getGitHubMessageUpstreamJobFailureElement();
+
+				if (upstreamJobFailureElement != null) {
+					upstreamJobFailureElements.add(upstreamJobFailureElement);
 				}
 			}
 

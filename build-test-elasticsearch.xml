@@ -528,16 +528,16 @@ shield.transport.ssl: true</echo>
 	</macrodef>
 
 	<target name="configure-elasticsearch-osgi-bundle-properties">
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.cfg">operationMode=REMOTE
-logExceptionsOnly=false</echo>
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.config">operationMode=&quot;REMOTE&quot;
+logExceptionsOnly=&quot;false&quot;</echo>
 	</target>
 
 	<target name="configure-shield-osgi-bundle-properties">
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration.cfg">password=liferay
-requiresAuthentication=true
-requiresSSL=true
-sslKeystorePath=${elastic.shield.ca.dir}/es-ssl.keystore.jks
-username=liferay</echo>
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration.config">password=&quot;liferay&quot;
+requiresAuthentication=&quot;true&quot;
+requiresSSL=&quot;true&quot;
+sslKeystorePath=&quot;${elastic.shield.ca.dir}/es-ssl.keystore.jks&quot;
+username=&quot;liferay&quot;</echo>
 	</target>
 
 	<target name="start-elasticsearch">

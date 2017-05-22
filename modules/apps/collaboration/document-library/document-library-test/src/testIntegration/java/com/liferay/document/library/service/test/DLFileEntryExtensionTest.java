@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service;
+package com.liferay.document.library.service.test;
 
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.FileNameException;

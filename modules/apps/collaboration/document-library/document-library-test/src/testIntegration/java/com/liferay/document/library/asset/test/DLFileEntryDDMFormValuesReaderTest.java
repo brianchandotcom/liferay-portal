@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.asset;
+package com.liferay.document.library.asset.test;
 
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.documentlibrary.asset.DLFileEntryDDMFormValuesReader;
 
 import java.io.ByteArrayInputStream;
 

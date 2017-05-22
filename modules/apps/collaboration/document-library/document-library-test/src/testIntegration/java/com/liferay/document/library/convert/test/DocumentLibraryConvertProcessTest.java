@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.convert.documentlibrary;
+package com.liferay.document.library.convert.test;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -32,6 +32,7 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.portal.convert.ConvertProcess;
+import com.liferay.portal.convert.documentlibrary.DocumentLibraryConvertProcess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.User;

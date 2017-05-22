@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.document.library.util.test;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
 
 import java.util.List;

@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.ratings;
+package com.liferay.document.library.ratings.test;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -31,7 +29,7 @@ import org.junit.Rule;
 /**
  * @author Cristina González
  */
-public class DLFileEntryRatingsTest extends BaseRatingsTestCase {
+public class DLFolderRatingsTest extends BaseRatingsTestCase {
 
 	@ClassRule
 	@Rule
@@ -43,9 +41,7 @@ public class DLFileEntryRatingsTest extends BaseRatingsTestCase {
 			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
 		throws Exception {
 
-		DLFolder folder = (DLFolder)parentBaseModel;
-
-		return DLTestUtil.addDLFileEntry(folder.getFolderId());
+		return DLTestUtil.addDLFolder(group.getGroupId());
 	}
 
 	@Override
@@ -53,21 +49,12 @@ public class DLFileEntryRatingsTest extends BaseRatingsTestCase {
 			BaseModel<?> baseModel, ServiceContext serviceContext)
 		throws Exception {
 
-		return DLFileEntryLocalServiceUtil.deleteFileEntry(
-			(DLFileEntry)baseModel);
+		return DLFolderLocalServiceUtil.deleteFolder((DLFolder)baseModel);
 	}
 
 	@Override
 	protected Class<?> getBaseModelClass() {
-		return DLFileEntry.class;
-	}
-
-	@Override
-	protected BaseModel<?> getParentBaseModel(
-			Group group, ServiceContext serviceContext)
-		throws Exception {
-
-		return DLTestUtil.addDLFolder(group.getGroupId());
+		return DLFolder.class;
 	}
 
 }

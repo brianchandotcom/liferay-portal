@@ -75,13 +75,11 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		}
 	}
 
-	protected void deleteCPDefinitionOptionRels(ActionRequest actionRequest)
+	protected void deleteCPDefinitionOptionRels(
+			ActionRequest actionRequest, long cpDefinitionOptionRelId)
 		throws Exception {
 
 		long[] deleteCPDefinitionOptionRelIds = null;
-
-		long cpDefinitionOptionRelId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionOptionRelId");
 
 		if (cpDefinitionOptionRelId > 0) {
 			deleteCPDefinitionOptionRelIds =
@@ -109,23 +107,48 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		long cpDefinitionOptionRelId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionOptionRelId");
+
 		if (cmd.equals(Constants.ADD) || cmd.equals(Constants.ADD_MULTIPLE)) {
 			addCPDefinitionOptionRels(actionRequest);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
-			updateCPDefinitionOptionRel(actionRequest);
+			updateCPDefinitionOptionRel(actionRequest, cpDefinitionOptionRelId);
 		}
 		else if (cmd.equals(Constants.DELETE)) {
-			deleteCPDefinitionOptionRels(actionRequest);
+			deleteCPDefinitionOptionRels(
+				actionRequest, cpDefinitionOptionRelId);
+		}
+		else if (cmd.equals("SET_FACETABLE")) {
+			_cpDefinitionOptionRelService.setFacetable(
+				cpDefinitionOptionRelId, true);
+		}
+		else if (cmd.equals("SET_REQUIRED")) {
+			_cpDefinitionOptionRelService.setRequired(
+				cpDefinitionOptionRelId, true);
+		}
+		else if (cmd.equals("SET_SKU_CONTRIBUTOR")) {
+			_cpDefinitionOptionRelService.setSkuContributor(
+				cpDefinitionOptionRelId, true);
+		}
+		else if (cmd.equals("UNSET_FACETABLE")) {
+			_cpDefinitionOptionRelService.setFacetable(
+				cpDefinitionOptionRelId, false);
+		}
+		else if (cmd.equals("UNSET_REQUIRED")) {
+			_cpDefinitionOptionRelService.setRequired(
+				cpDefinitionOptionRelId, false);
+		}
+		else if (cmd.equals("UNSET_SKU_CONTRIBUTOR")) {
+			_cpDefinitionOptionRelService.setSkuContributor(
+				cpDefinitionOptionRelId, false);
 		}
 	}
 
 	protected CPDefinitionOptionRel updateCPDefinitionOptionRel(
-			ActionRequest actionRequest)
+			ActionRequest actionRequest, long cpDefinitionOptionRelId)
 		throws Exception {
-
-		long cpDefinitionOptionRelId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionOptionRelId");
 
 		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
 		String name = ParamUtil.getString(actionRequest, "name");

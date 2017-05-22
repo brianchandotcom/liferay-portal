@@ -41,6 +41,39 @@ else {
 		url="<%= editURL %>"
 	/>
 
+	<portlet:actionURL name="editProductDefinitionOptionRel" var="setFacetableURL">
+		<portlet:param name="<%= Constants.CMD %>" value='<%= (cpDefinitionOptionRel.getFacetable()) ? "UNSET_FACETABLE" : "SET_FACETABLE" %>' />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()) %>" />
+	</portlet:actionURL>
+
+	<liferay-ui:icon
+		message='<%= (cpDefinitionOptionRel.getFacetable()) ? LanguageUtil.get(request, "unset-facetable") : LanguageUtil.get(request, "set-facetable") %>'
+		url="<%= setFacetableURL %>"
+	/>
+
+	<portlet:actionURL name="editProductDefinitionOptionRel" var="setRequiredURL">
+		<portlet:param name="<%= Constants.CMD %>" value='<%= (cpDefinitionOptionRel.getRequired()) ? "UNSET_REQUIRED" : "SET_REQUIRED" %>' />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()) %>" />
+	</portlet:actionURL>
+
+	<liferay-ui:icon
+		message='<%= (cpDefinitionOptionRel.getRequired()) ? LanguageUtil.get(request, "unset-required") : LanguageUtil.get(request, "set-required") %>'
+		url="<%= setRequiredURL %>"
+	/>
+
+	<portlet:actionURL name="editProductDefinitionOptionRel" var="setSkuContributorURL">
+		<portlet:param name="<%= Constants.CMD %>" value='<%= (cpDefinitionOptionRel.getSkuContributor()) ? "UNSET_SKU_CONTRIBUTOR" : "SET_SKU_CONTRIBUTOR" %>' />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()) %>" />
+	</portlet:actionURL>
+
+	<liferay-ui:icon
+		message='<%= (cpDefinitionOptionRel.getSkuContributor()) ? LanguageUtil.get(request, "unset-sku-contributor") : LanguageUtil.get(request, "set-sku-contributor") %>'
+		url="<%= setSkuContributorURL %>"
+	/>
+
 	<portlet:actionURL name="editProductDefinitionOptionRel" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -1011,6 +1011,60 @@ public abstract class BaseBuild implements Build {
 
 	}
 
+	protected static List<String> getUpstreamJobFailures(String type)
+		throws Exception {
+
+		List<String> upstreamFailures = new ArrayList<>();
+
+		JSONArray failingBatchesJSONArray =
+			upstreamFailuresJobJSONObject.getJSONArray("failingBatches");
+
+		for (int i = 0; i < failingBatchesJSONArray.length(); i++) {
+			JSONObject failingBatchJSONObject =
+				failingBatchesJSONArray.getJSONObject(i);
+
+			JSONArray failingTestsJSONArray =
+				failingBatchJSONObject.getJSONArray("failingTests");
+
+			StringBuilder sb = new StringBuilder();
+
+			if (type.equals("build")) {
+				if (failingTestsJSONArray.length() == 0) {
+					sb.append(failingBatchJSONObject.getString("jobVariant"));
+					sb.append(",");
+					sb.append(failingBatchJSONObject.getString("result"));
+
+					upstreamFailures.add(sb.toString());
+				}
+			}
+			else if (type.equals("test")) {
+				for (int j = 0; j < failingTestsJSONArray.length(); j++) {
+					sb.append(failingTestsJSONArray.get(j));
+					sb.append(",");
+					sb.append(failingBatchJSONObject.getString("jobVariant"));
+
+					upstreamFailures.add(sb.toString());
+				}
+			}
+		}
+
+		return upstreamFailures;
+	}
+
+	protected static String getUpstreamJobFailuresSHA() {
+		try {
+			return upstreamFailuresJobJSONObject.getString("SHA");
+		}
+		catch (Exception e) {
+			System.out.println(
+				"Unable to get upstream acceptance failure data.");
+
+			e.printStackTrace();
+
+			return "";
+		}
+	}
+
 	protected static boolean isHighPriorityBuildFailureElement(
 		Element gitHubMessage) {
 

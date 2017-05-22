@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 
+import java.io.IOException;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -31,14 +33,24 @@ public class ThreadSafeAutoDeployer implements AutoDeployer {
 	public int autoDeploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 
-		AutoDeployer cloneAutoDeployer = _autoDeployer.cloneAutoDeployer();
+		try (AutoDeployer cloneAutoDeployer =
+				_autoDeployer.cloneAutoDeployer()) {
 
-		return cloneAutoDeployer.autoDeploy(autoDeploymentContext);
+			return cloneAutoDeployer.autoDeploy(autoDeploymentContext);
+		}
+		catch (IOException ioe) {
+			throw new AutoDeployException(ioe);
+		}
 	}
 
 	@Override
 	public AutoDeployer cloneAutoDeployer() {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void close() throws IOException {
+		_autoDeployer.close();
 	}
 
 	private final AutoDeployer _autoDeployer;

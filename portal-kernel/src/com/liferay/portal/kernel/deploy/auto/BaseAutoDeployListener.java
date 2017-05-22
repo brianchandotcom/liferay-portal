@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Ivica Cardic
@@ -42,15 +43,18 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 			_log.info(getPluginPathInfoMessage(file));
 		}
 
-		AutoDeployer autoDeployer = buildAutoDeployer();
+		try (AutoDeployer autoDeployer = buildAutoDeployer()) {
+			int code = autoDeployer.autoDeploy(autoDeploymentContext);
 
-		int code = autoDeployer.autoDeploy(autoDeploymentContext);
+			if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
+				_log.info(getSuccessMessage(file));
+			}
 
-		if ((code == AutoDeployer.CODE_DEFAULT) && _log.isInfoEnabled()) {
-			_log.info(getSuccessMessage(file));
+			return code;
 		}
-
-		return code;
+		catch (IOException ioe) {
+			throw new AutoDeployException(ioe);
+		}
 	}
 
 	@Override

@@ -271,32 +271,55 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	@Override
 	public AutoDeployer cloneAutoDeployer() throws AutoDeployException {
 		try {
-			Class<?> clazz = getClass();
+			Class<? extends BaseDeployer> clazz = getClass();
 
-			Deployer deployer = (Deployer)clazz.newInstance();
+			BaseDeployer baseDeployer = (BaseDeployer)clazz.newInstance();
 
-			deployer.setAppServerType(appServerType);
-			deployer.setAuiTaglibDTD(auiTaglibDTD);
-			deployer.setBaseDir(baseDir);
-			deployer.setDestDir(destDir);
-			deployer.setFilePattern(filePattern);
-			deployer.setJars(jars);
-			deployer.setJbossPrefix(jbossPrefix);
-			deployer.setPortletExtTaglibDTD(portletExtTaglibDTD);
-			deployer.setPortletTaglibDTD(portletTaglibDTD);
-			deployer.setSecurityTaglibDTD(securityTaglibDTD);
-			deployer.setThemeTaglibDTD(themeTaglibDTD);
-			deployer.setTomcatLibDir(tomcatLibDir);
-			deployer.setUiTaglibDTD(uiTaglibDTD);
-			deployer.setUnpackWar(unpackWar);
-			deployer.setUtilTaglibDTD(utilTaglibDTD);
-			deployer.setWars(wars);
-			deployer.setWildflyPrefix(wildflyPrefix);
+			baseDeployer.setAppServerType(appServerType);
+			baseDeployer.setAuiTaglibDTD(auiTaglibDTD);
+			baseDeployer.setBaseDir(baseDir);
+			baseDeployer.setDestDir(destDir);
+			baseDeployer.setFilePattern(filePattern);
+			baseDeployer.setJars(jars);
+			baseDeployer.setJbossPrefix(jbossPrefix);
+			baseDeployer.setPortletExtTaglibDTD(portletExtTaglibDTD);
+			baseDeployer.setPortletTaglibDTD(portletTaglibDTD);
+			baseDeployer.setSecurityTaglibDTD(securityTaglibDTD);
+			baseDeployer.setThemeTaglibDTD(themeTaglibDTD);
+			baseDeployer.setTomcatLibDir(tomcatLibDir);
+			baseDeployer.setUiTaglibDTD(uiTaglibDTD);
+			baseDeployer.setUnpackWar(unpackWar);
+			baseDeployer.setUtilTaglibDTD(utilTaglibDTD);
+			baseDeployer.setWars(wars);
+			baseDeployer.setWildflyPrefix(wildflyPrefix);
 
-			return (AutoDeployer)deployer;
+			return (AutoDeployer)baseDeployer;
 		}
 		catch (Exception e) {
 			throw new AutoDeployException(e);
+		}
+	}
+
+	@Override
+	public void close() throws IOException {
+		IOException ioe1 = null;
+
+		for (Path tempPath : tempPaths) {
+			try {
+				DeployUtil.deleteTemporaryPath(tempPath);
+			}
+			catch (IOException ioe) {
+				if (ioe1 == null) {
+					ioe1 = ioe;
+				}
+				else {
+					ioe1.addSuppressed(ioe);
+				}
+			}
+		}
+
+		if (ioe1 != null) {
+			throw ioe1;
 		}
 	}
 

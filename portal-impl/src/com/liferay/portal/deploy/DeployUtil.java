@@ -44,6 +44,7 @@ import java.nio.file.Paths;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 
@@ -108,8 +109,18 @@ public class DeployUtil {
 		return destDir;
 	}
 
+	public static String getResourcePath(Set<Path> tempPaths, String resource)
+		throws Exception {
+
+		return _instance._getResourcePath(tempPaths, resource);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getResourcePath(Set, String)}
+	*/
+	@Deprecated
 	public static String getResourcePath(String resource) throws Exception {
-		return _instance._getResourcePath(resource);
+		return _instance._getResourcePath(new HashSet<>(), resource);
 	}
 
 	public static void redeployJetty(String context) throws Exception {
@@ -257,7 +268,9 @@ public class DeployUtil {
 	private DeployUtil() {
 	}
 
-	private String _getResourcePath(String resource) throws IOException {
+	private String _getResourcePath(Set<Path> tempPaths, String resource)
+		throws IOException {
+
 		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(
@@ -269,6 +282,8 @@ public class DeployUtil {
 
 		Path tempDirPath = Files.createTempDirectory(
 			Paths.get(SystemProperties.get(SystemProperties.TMP_DIR)), null);
+
+		tempPaths.add(tempDirPath);
 
 		File file = new File(
 			tempDirPath + "/liferay/com/liferay/portal/deploy/dependencies/" +

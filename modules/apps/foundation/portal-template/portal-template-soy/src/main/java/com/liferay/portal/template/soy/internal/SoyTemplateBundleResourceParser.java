@@ -17,12 +17,14 @@ package com.liferay.portal.template.soy.internal;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.template.TemplateResourceParser;
 import com.liferay.portal.template.URLResourceParser;
+import com.liferay.portal.template.soy.utils.SoyTemplateUtil;
 
 import java.net.URL;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -43,14 +45,18 @@ public class SoyTemplateBundleResourceParser extends URLResourceParser {
 		String templateName = templateId.substring(
 			pos + TemplateConstants.BUNDLE_SEPARATOR.length());
 
-		Bundle bundle = _soyProviderCapabilityBundleRegister.getTemplateBundle(
-			templateId);
+		long bundleId = SoyTemplateUtil.getBundleId(templateId);
+
+		Bundle bundle = _bundleContext.getBundle(bundleId);
 
 		return bundle.getResource(templateName);
 	}
 
-	@Reference(unbind = "-")
-	private SoyProviderCapabilityBundleRegister
-		_soyProviderCapabilityBundleRegister;
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
+	private BundleContext _bundleContext;
 
 }

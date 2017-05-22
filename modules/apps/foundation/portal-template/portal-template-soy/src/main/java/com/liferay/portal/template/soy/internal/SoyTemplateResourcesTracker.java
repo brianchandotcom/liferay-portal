@@ -123,7 +123,17 @@ public class SoyTemplateResourcesTracker {
 				return bundleCapabilities;
 			}
 
-			_registerBundle(bundle);
+			for (BundleWire bundleWire : bundleWiring.getRequiredWires("soy")) {
+				BundleRevision bundleRevision = bundleWire.getProvider();
+
+				Bundle requiredBundle = bundleRevision.getBundle();
+
+				_soyProviderCapabilityBundleRegister.register(requiredBundle);
+
+				_addTemplateResourcesToList(requiredBundle);
+			}
+
+			_soyProviderCapabilityBundleRegister.register(bundle);
 
 			_addTemplateResourcesToList(bundle);
 
@@ -183,19 +193,6 @@ public class SoyTemplateResourcesTracker {
 						te);
 				}
 			}
-		}
-
-		private void _registerBundle(Bundle bundle) {
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-			for (BundleWire bundleWire : bundleWiring.getRequiredWires("soy")) {
-				BundleRevision bundleRevision = bundleWire.getProvider();
-
-				_soyProviderCapabilityBundleRegister.register(
-					bundleRevision.getBundle());
-			}
-
-			_soyProviderCapabilityBundleRegister.register(bundle);
 		}
 
 		private List<TemplateResource> _removeBundleTemplateResourcesFromList(

@@ -147,6 +147,28 @@ public class CPOptionLocalServiceWrapper implements CPOptionLocalService,
 		return _cpOptionLocalService.getCPOptionByUuidAndGroupId(uuid, groupId);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPOption setFacetable(
+		long cpOptionId, boolean facetable)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionLocalService.setFacetable(cpOptionId, facetable);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPOption setRequired(
+		long cpOptionId, boolean required)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionLocalService.setRequired(cpOptionId, required);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPOption setSkuContributor(
+		long cpOptionId, boolean skuContributor)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionLocalService.setSkuContributor(cpOptionId,
+			skuContributor);
+	}
+
 	/**
 	* Updates the cp option in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

@@ -364,6 +364,102 @@ public class CPOptionServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPOption setFacetable(
+		HttpPrincipal httpPrincipal, long cpOptionId, boolean facetable)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
+					"setFacetable", _setFacetableParameterTypes10);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpOptionId, facetable);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPOption)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPOption setRequired(
+		HttpPrincipal httpPrincipal, long cpOptionId, boolean required)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
+					"setRequired", _setRequiredParameterTypes11);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpOptionId, required);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPOption)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPOption setSkuContributor(
+		HttpPrincipal httpPrincipal, long cpOptionId, boolean skuContributor)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
+					"setSkuContributor", _setSkuContributorParameterTypes12);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpOptionId, skuContributor);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPOption)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPOption updateCPOption(
 		HttpPrincipal httpPrincipal, long cpOptionId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -374,7 +470,7 @@ public class CPOptionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"updateCPOption", _updateCPOptionParameterTypes10);
+					"updateCPOption", _updateCPOptionParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpOptionId, name, titleMap, descriptionMap,
@@ -438,7 +534,16 @@ public class CPOptionServiceHttp {
 			long.class, long.class, java.lang.String.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
-	private static final Class<?>[] _updateCPOptionParameterTypes10 = new Class[] {
+	private static final Class<?>[] _setFacetableParameterTypes10 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _setRequiredParameterTypes11 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _setSkuContributorParameterTypes12 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _updateCPOptionParameterTypes13 = new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class, boolean.class,
 			boolean.class, boolean.class,

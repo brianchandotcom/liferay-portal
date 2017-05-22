@@ -201,6 +201,51 @@ public class CPOptionServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPOptionSoap setFacetable(
+		long cpOptionId, boolean facetable) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPOption returnValue = CPOptionServiceUtil.setFacetable(cpOptionId,
+					facetable);
+
+			return com.liferay.commerce.product.model.CPOptionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPOptionSoap setRequired(
+		long cpOptionId, boolean required) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPOption returnValue = CPOptionServiceUtil.setRequired(cpOptionId,
+					required);
+
+			return com.liferay.commerce.product.model.CPOptionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPOptionSoap setSkuContributor(
+		long cpOptionId, boolean skuContributor) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPOption returnValue = CPOptionServiceUtil.setSkuContributor(cpOptionId,
+					skuContributor);
+
+			return com.liferay.commerce.product.model.CPOptionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPOptionSoap updateCPOption(
 		long cpOptionId, java.lang.String name,
 		java.lang.String[] titleMapLanguageIds,

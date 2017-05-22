@@ -154,6 +154,15 @@ public interface CPOptionLocalService extends BaseLocalService,
 	public CPOption getCPOptionByUuidAndGroupId(java.lang.String uuid,
 		long groupId) throws PortalException;
 
+	public CPOption setFacetable(long cpOptionId, boolean facetable)
+		throws PortalException;
+
+	public CPOption setRequired(long cpOptionId, boolean required)
+		throws PortalException;
+
+	public CPOption setSkuContributor(long cpOptionId, boolean skuContributor)
+		throws PortalException;
+
 	/**
 	* Updates the cp option in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

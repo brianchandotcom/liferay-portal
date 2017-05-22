@@ -529,6 +529,105 @@ public class CPDefinitionOptionRelServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinitionOptionRel setFacetable(
+		HttpPrincipal httpPrincipal, long cpDefinitionOptionRelId,
+		boolean facetable)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
+					"setFacetable", _setFacetableParameterTypes14);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpDefinitionOptionRelId, facetable);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPDefinitionOptionRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionOptionRel setRequired(
+		HttpPrincipal httpPrincipal, long cpDefinitionOptionRelId,
+		boolean required)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
+					"setRequired", _setRequiredParameterTypes15);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpDefinitionOptionRelId, required);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPDefinitionOptionRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionOptionRel setSkuContributor(
+		HttpPrincipal httpPrincipal, long cpDefinitionOptionRelId,
+		boolean skuContributor)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
+					"setSkuContributor", _setSkuContributorParameterTypes16);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpDefinitionOptionRelId, skuContributor);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPDefinitionOptionRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel updateCPDefinitionOptionRel(
 		HttpPrincipal httpPrincipal, long cpDefinitionOptionRelId,
 		long cpOptionId, java.lang.String name,
@@ -541,7 +640,7 @@ public class CPDefinitionOptionRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
 					"updateCPDefinitionOptionRel",
-					_updateCPDefinitionOptionRelParameterTypes14);
+					_updateCPDefinitionOptionRelParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionOptionRelId, cpOptionId, name, titleMap,
@@ -618,7 +717,16 @@ public class CPDefinitionOptionRelServiceHttp {
 			long.class, long.class, long.class, java.lang.String.class,
 			int.class, int.class, com.liferay.portal.kernel.search.Sort.class
 		};
-	private static final Class<?>[] _updateCPDefinitionOptionRelParameterTypes14 =
+	private static final Class<?>[] _setFacetableParameterTypes14 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _setRequiredParameterTypes15 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _setSkuContributorParameterTypes16 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _updateCPDefinitionOptionRelParameterTypes17 =
 		new Class[] {
 			long.class, long.class, java.lang.String.class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class, int.class,

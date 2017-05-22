@@ -98,6 +98,25 @@ public class CPDefinitionOptionRelServiceUtil {
 		return getService().getCPDefinitionOptionRel(cpDefinitionOptionRelId);
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinitionOptionRel setFacetable(
+		long cpDefinitionOptionRelId, boolean facetable)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().setFacetable(cpDefinitionOptionRelId, facetable);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionOptionRel setRequired(
+		long cpDefinitionOptionRelId, boolean required)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().setRequired(cpDefinitionOptionRelId, required);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionOptionRel setSkuContributor(
+		long cpDefinitionOptionRelId, boolean skuContributor)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .setSkuContributor(cpDefinitionOptionRelId, skuContributor);
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel updateCPDefinitionOptionRel(
 		long cpDefinitionOptionRelId, long cpOptionId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,

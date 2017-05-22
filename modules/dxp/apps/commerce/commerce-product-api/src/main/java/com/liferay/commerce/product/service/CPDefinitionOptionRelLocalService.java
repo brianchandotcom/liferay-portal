@@ -169,6 +169,16 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	public CPDefinitionOptionRel getCPDefinitionOptionRelByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
+	public CPDefinitionOptionRel setFacetable(long cpDefinitionOptionRelId,
+		boolean facetable) throws PortalException;
+
+	public CPDefinitionOptionRel setRequired(long cpDefinitionOptionRelId,
+		boolean required) throws PortalException;
+
+	public CPDefinitionOptionRel setSkuContributor(
+		long cpDefinitionOptionRelId, boolean skuContributor)
+		throws PortalException;
+
 	/**
 	* Updates the cp definition option rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

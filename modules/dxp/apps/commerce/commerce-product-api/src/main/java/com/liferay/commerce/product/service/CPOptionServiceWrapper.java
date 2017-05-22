@@ -75,6 +75,27 @@ public class CPOptionServiceWrapper implements CPOptionService,
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPOption setFacetable(
+		long cpOptionId, boolean facetable)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionService.setFacetable(cpOptionId, facetable);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPOption setRequired(
+		long cpOptionId, boolean required)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionService.setRequired(cpOptionId, required);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPOption setSkuContributor(
+		long cpOptionId, boolean skuContributor)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionService.setSkuContributor(cpOptionId, skuContributor);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CPOption updateCPOption(
 		long cpOptionId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,

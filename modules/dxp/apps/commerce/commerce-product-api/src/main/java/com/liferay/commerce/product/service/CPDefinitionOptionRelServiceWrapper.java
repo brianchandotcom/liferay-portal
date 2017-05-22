@@ -96,6 +96,30 @@ public class CPDefinitionOptionRelServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPDefinitionOptionRel setFacetable(
+		long cpDefinitionOptionRelId, boolean facetable)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionRelService.setFacetable(cpDefinitionOptionRelId,
+			facetable);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionOptionRel setRequired(
+		long cpDefinitionOptionRelId, boolean required)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionRelService.setRequired(cpDefinitionOptionRelId,
+			required);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionOptionRel setSkuContributor(
+		long cpDefinitionOptionRelId, boolean skuContributor)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionRelService.setSkuContributor(cpDefinitionOptionRelId,
+			skuContributor);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CPDefinitionOptionRel updateCPDefinitionOptionRel(
 		long cpDefinitionOptionRelId, long cpOptionId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,

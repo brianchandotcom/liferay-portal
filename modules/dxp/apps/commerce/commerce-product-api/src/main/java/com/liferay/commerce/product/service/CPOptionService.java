@@ -79,6 +79,15 @@ public interface CPOptionService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPOption getCPOption(long cpOptionId) throws PortalException;
 
+	public CPOption setFacetable(long cpOptionId, boolean facetable)
+		throws PortalException;
+
+	public CPOption setRequired(long cpOptionId, boolean required)
+		throws PortalException;
+
+	public CPOption setSkuContributor(long cpOptionId, boolean skuContributor)
+		throws PortalException;
+
 	public CPOption updateCPOption(long cpOptionId, java.lang.String name,
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,

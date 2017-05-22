@@ -92,6 +92,16 @@ public interface CPDefinitionOptionRelService extends BaseService {
 	public CPDefinitionOptionRel getCPDefinitionOptionRel(
 		long cpDefinitionOptionRelId) throws PortalException;
 
+	public CPDefinitionOptionRel setFacetable(long cpDefinitionOptionRelId,
+		boolean facetable) throws PortalException;
+
+	public CPDefinitionOptionRel setRequired(long cpDefinitionOptionRelId,
+		boolean required) throws PortalException;
+
+	public CPDefinitionOptionRel setSkuContributor(
+		long cpDefinitionOptionRelId, boolean skuContributor)
+		throws PortalException;
+
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
 		long cpDefinitionOptionRelId, long cpOptionId, java.lang.String name,
 		Map<Locale, java.lang.String> titleMap,

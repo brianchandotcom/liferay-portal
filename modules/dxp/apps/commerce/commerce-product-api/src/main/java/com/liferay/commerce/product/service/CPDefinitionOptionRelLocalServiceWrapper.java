@@ -169,6 +169,30 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 			groupId);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionOptionRel setFacetable(
+		long cpDefinitionOptionRelId, boolean facetable)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionRelLocalService.setFacetable(cpDefinitionOptionRelId,
+			facetable);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionOptionRel setRequired(
+		long cpDefinitionOptionRelId, boolean required)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionRelLocalService.setRequired(cpDefinitionOptionRelId,
+			required);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionOptionRel setSkuContributor(
+		long cpDefinitionOptionRelId, boolean skuContributor)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionRelLocalService.setSkuContributor(cpDefinitionOptionRelId,
+			skuContributor);
+	}
+
 	/**
 	* Updates the cp definition option rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

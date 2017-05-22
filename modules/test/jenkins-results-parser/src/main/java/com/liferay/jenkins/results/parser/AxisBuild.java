@@ -261,6 +261,7 @@ public class AxisBuild extends BaseBuild {
 
 		if (result.equals("UNSTABLE")) {
 			List<Element> failureElements = new ArrayList<>();
+			List<Element> upstreamJobFailureElements = new ArrayList<>();
 
 			for (TestResult testResult : getTestResults(null)) {
 				String testStatus = testResult.getStatus();
@@ -271,10 +272,29 @@ public class AxisBuild extends BaseBuild {
 					continue;
 				}
 
+				if (isTestFailingInUpstreamJob(testResult)) {
+					upstreamJobFailureElements.add(
+						testResult.getGitHubElement(getTestrayLogsURL()));
+
+					continue;
+				}
+
 				failureElements.add(testResult.getGitHubElement(getTestrayLogsURL()));
 			}
 
+			if (!upstreamJobFailureElements.isEmpty()) {
+				upstreamJobFailureMessageElement = messageElement.createCopy();
+
+				Dom4JUtil.getOrderedListElement(
+					upstreamJobFailureElements,
+					upstreamJobFailureMessageElement, 3);
+			}
+
 			Dom4JUtil.getOrderedListElement(failureElements, messageElement, 3);
+
+			if (failureElements.isEmpty()) {
+				return null;
+			}
 		}
 
 		return messageElement;

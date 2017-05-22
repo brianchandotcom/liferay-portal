@@ -40,6 +40,8 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.apache.felix.service.command.CommandProcessor;
 import org.apache.felix.service.command.CommandSession;
@@ -84,6 +86,8 @@ public class GogoShellPortlet extends MVCPortlet {
 
 		_commandSession = _commandProcessor.createSession(
 			null, _outputPrintStream, _errorPrintStream);
+
+		_commandSession.put("prompt", "g!");
 	}
 
 	@Deactivate
@@ -91,6 +95,17 @@ public class GogoShellPortlet extends MVCPortlet {
 		if (_commandSession != null) {
 			_commandSession.close();
 		}
+	}
+
+	@Override
+	public void doView(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		SessionMessages.add(
+			renderRequest, "prompt", _commandSession.get("prompt"));
+
+		super.doView(renderRequest, renderResponse);
 	}
 
 	public void executeCommand(

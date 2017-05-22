@@ -260,7 +260,7 @@ public class AxisBuild extends BaseBuild {
 		}
 
 		if (result.equals("UNSTABLE")) {
-			List<Element> elements = new ArrayList<>();
+			List<Element> failureElements = new ArrayList<>();
 
 			for (TestResult testResult : getTestResults(null)) {
 				String testStatus = testResult.getStatus();
@@ -271,10 +271,10 @@ public class AxisBuild extends BaseBuild {
 					continue;
 				}
 
-				elements.add(testResult.getGitHubElement(getTestrayLogsURL()));
+				failureElements.add(testResult.getGitHubElement(getTestrayLogsURL()));
 			}
 
-			Dom4JUtil.getOrderedListElement(elements, messageElement, 3);
+			Dom4JUtil.getOrderedListElement(failureElements, messageElement, 3);
 		}
 
 		return messageElement;

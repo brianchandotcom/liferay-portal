@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <p>
-	<b><liferay-ui:message key="lcs_messaging_echo_sample1_portlet_Echo.caption"/></b>
+	<b><liferay-ui:message key="lcs_messaging_echo_sample1_portlet_Echo.caption" /></b>
 
 	<portlet:actionURL name="sendMessage" var="sendMessageURL" />
 

@@ -39,11 +39,11 @@
 
 	</aui:select>
 
-	<liferay-ui:error exception="<%= OpenIdConnectServiceException.AuthenticationErrorException.class %>" message="an-error-occurred-while-attempting-to-authenticate-with-the-openid-connect-provider" />
-	<liferay-ui:error exception="<%= OpenIdConnectServiceException.MissingClientInformationException.class %>" message="an-error-occurred-while-attempting-to-communicate-with-the-openid-connect-provider" />
-	<liferay-ui:error exception="<%= OpenIdConnectServiceException.TokenErrorException.class %>" message="an-error-occurred-while-parsing-the-token-from-the-openid-connect-provider" />
-	<liferay-ui:error exception="<%= OpenIdConnectServiceException.UserInfoErrorException.class %>" message="an-error-occurred-while-retrieving-user-info-from-the-openid-connect-provider" />
-	<liferay-ui:error exception="<%= OpenIdConnectServiceException.UserInfoMissingException.class %>" message="unable-to-obtain-user-info-from-the-openid-connect-provider" />
+	<liferay-ui:error exception="<%= OpenIdConnectServiceException.AuthenticationException.class %>" message="an-error-occurred-while-attempting-to-authenticate-with-the-openid-connect-provider" />
+	<liferay-ui:error exception="<%= OpenIdConnectServiceException.ProviderException.class %>" message="an-error-occurred-while-attempting-to-communicate-with-the-openid-connect-provider" />
+	<liferay-ui:error exception="<%= OpenIdConnectServiceException.TokenException.class %>" message="an-error-occurred-while-parsing-the-token-from-the-openid-connect-provider" />
+	<liferay-ui:error exception="<%= OpenIdConnectServiceException.UserInfoException.class %>" message="an-error-occurred-while-retrieving-user-info-from-the-openid-connect-provider" />
+	<liferay-ui:error exception="<%= OpenIdConnectServiceException.UserMappingException.class %>" message="unable-to-obtain-user-info-from-the-openid-connect-provider" />
 
 	<aui:fieldset>
 		<aui:button-row>

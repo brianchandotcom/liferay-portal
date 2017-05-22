@@ -499,13 +499,15 @@ public class TopLevelBuild extends BaseBuild {
 				Element failureElement =
 					downstreamBuild.getGitHubMessageElement();
 
-				if (isHighPriorityBuildFailureElement(failureElement)) {
-					failureElements.add(0, failureElement);
+				if (failureElement != null) {
+					if (isHighPriorityBuildFailureElement(failureElement)) {
+						failureElements.add(0, failureElement);
 
-					continue;
+						continue;
+					}
+
+					failureElements.add(failureElement);
 				}
-
-				failureElements.add(downstreamBuild.getGitHubMessageElement());
 			}
 
 			failureElements.add(0, super.getGitHubMessageElement());

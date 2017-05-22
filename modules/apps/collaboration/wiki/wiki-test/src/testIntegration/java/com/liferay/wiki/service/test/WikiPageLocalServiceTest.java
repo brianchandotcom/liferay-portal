@@ -678,6 +678,10 @@ public class WikiPageLocalServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
+		String[] assetTageNames = new String[]{"tag1","tag2"};
+
+		serviceContext.setAssetTagNames(assetTageNames);
+
 		WikiPageLocalServiceUtil.renamePage(
 			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
 			"New Title", true, serviceContext);
@@ -686,6 +690,11 @@ public class WikiPageLocalServiceTest {
 			_node.getNodeId(), "New Title");
 
 		Assert.assertNotNull(renamedPage);
+
+		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
+				WikiPage.class.getName(), page.getResourcePrimKey());
+
+		Assert.assertEquals(assetTagNames.length, assetTageNames.length);
 
 		checkPopulatedServiceContext(
 			serviceContext, renamedPage, hasExpandoValues);

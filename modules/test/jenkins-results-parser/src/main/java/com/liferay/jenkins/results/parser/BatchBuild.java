@@ -69,6 +69,7 @@ public class BatchBuild extends BaseBuild {
 		}
 
 		List<Element> failureElements = new ArrayList<>();
+		List<Element> upstreamJobFailureElements = new ArrayList<>();
 
 		for (Build downstreamBuild : getDownstreamBuilds(null)) {
 			String downstreamBuildResult = downstreamBuild.getResult();
@@ -88,6 +89,21 @@ public class BatchBuild extends BaseBuild {
 
 				failureElements.add(failureElement);
 			}
+
+			Element upstreamJobFailureElement =
+				downstreamBuild.getGitHubMessageUpstreamJobFailureElement();
+
+			if (upstreamJobFailureElement != null) {
+				upstreamJobFailureElements.add(upstreamJobFailureElement);
+			}
+		}
+
+		if (!upstreamJobFailureElements.isEmpty()) {
+			upstreamJobFailureMessageElement = messageElement.createCopy();
+
+			Dom4JUtil.getTruncatedOrderedListElement(
+				upstreamJobFailureElements, upstreamJobFailureMessageElement,
+				4);
 		}
 
 		Dom4JUtil.getOrderedListElement(failureElements, messageElement, 4);
@@ -98,6 +114,10 @@ public class BatchBuild extends BaseBuild {
 				Dom4JUtil.getNewAnchorElement(
 					getBuildURL() + "testReport", "here"),
 				" for more failures.");
+		}
+
+		if (failureElements.isEmpty()) {
+			return null;
 		}
 
 		return messageElement;

@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.ratings.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -27,10 +28,12 @@ import com.liferay.portlet.ratings.test.BaseRatingsTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Cristina González
  */
+@RunWith(Arquillian.class)
 public class DLFileEntryRatingsTest extends BaseRatingsTestCase {
 
 	@ClassRule

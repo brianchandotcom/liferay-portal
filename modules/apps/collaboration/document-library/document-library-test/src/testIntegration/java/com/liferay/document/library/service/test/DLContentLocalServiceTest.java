@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLContent;
 import com.liferay.document.library.kernel.service.DLContentLocalService;
 import com.liferay.document.library.kernel.store.Store;
@@ -36,11 +37,13 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Tina Tian
  * @author Shuyang Zhou
  */
+@RunWith(Arquillian.class)
 public class DLContentLocalServiceTest {
 
 	@ClassRule

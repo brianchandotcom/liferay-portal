@@ -212,9 +212,8 @@ public class CPDefinitionOptionRelServiceImpl
 			long cpDefinitionOptionRelId, boolean facetable)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionOptionRelId,
-			ActionKeys.UPDATE);
+		CPDefinitionPermission.checkCPDefinitionOptionRel(
+			getPermissionChecker(), cpDefinitionOptionRelId, ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.setFacetable(
 			cpDefinitionOptionRelId, facetable);
@@ -225,7 +224,7 @@ public class CPDefinitionOptionRelServiceImpl
 			long cpDefinitionOptionRelId, boolean required)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		CPDefinitionPermission.checkCPDefinitionOptionRel(
 			getPermissionChecker(), cpDefinitionOptionRelId, ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.setRequired(
@@ -237,7 +236,7 @@ public class CPDefinitionOptionRelServiceImpl
 			long cpDefinitionOptionRelId, boolean skuContributor)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		CPDefinitionPermission.checkCPDefinitionOptionRel(
 			getPermissionChecker(), cpDefinitionOptionRelId, ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.setSkuContributor(

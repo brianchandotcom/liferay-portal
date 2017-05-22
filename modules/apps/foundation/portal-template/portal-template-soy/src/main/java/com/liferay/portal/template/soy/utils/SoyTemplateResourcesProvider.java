@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.template.soy.internal.SoyManager;
 import com.liferay.portal.template.soy.internal.SoyProviderCapabilityBundleRegister;
 import com.liferay.portal.template.soy.internal.SoyTemplateResourcesCollector;
-import com.liferay.portal.template.soy.internal.SoyTemplateResourcesTracker;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,8 +36,12 @@ import org.osgi.service.component.annotations.Reference;
 public class SoyTemplateResourcesProvider {
 
 	public static List<TemplateResource> getAllTemplateResources() {
+		if (_soyManager == null) {
+			return Collections.<TemplateResource>emptyList();
+		}
+
 		return Collections.unmodifiableList(
-			_soyTemplateResourcesTracker.getAllTemplateResources());
+			_soyManager.getAllTemplateResources());
 	}
 
 	public static List<TemplateResource> getBundleTemplateResources(
@@ -69,6 +73,11 @@ public class SoyTemplateResourcesProvider {
 	}
 
 	@Reference(unbind = "-")
+	protected void setSoyManager(SoyManager soyManager) {
+		_soyManager = soyManager;
+	}
+
+	@Reference(unbind = "-")
 	protected void setSoyProviderCapabilityBundleRegister(
 		SoyProviderCapabilityBundleRegister
 			soyProviderCapabilityBundleRegister) {
@@ -77,18 +86,11 @@ public class SoyTemplateResourcesProvider {
 			soyProviderCapabilityBundleRegister;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSoyTemplateResourcesTracker(
-		SoyTemplateResourcesTracker soyTemplateResourcesTracker) {
-
-		_soyTemplateResourcesTracker = soyTemplateResourcesTracker;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SoyTemplateResourcesProvider.class);
 
+	private static SoyManager _soyManager;
 	private static SoyProviderCapabilityBundleRegister
 		_soyProviderCapabilityBundleRegister;
-	private static SoyTemplateResourcesTracker _soyTemplateResourcesTracker;
 
 }

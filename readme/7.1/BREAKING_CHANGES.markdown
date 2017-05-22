@@ -282,35 +282,38 @@ configuration changes.
 
 ---------------------------------------
 
-### Removed indexation of fields 'ratings' and 'viewCount'
+### Removed Indexation of Fields ratings and viewCount
 - **Date:** 2017-May-16
 - **JIRA Ticket:** LPS-70724
 
 #### What changed?
 
-Fields 'ratings' and 'viewCount' are no longer indexed in BaseIndexer for
-AssetEntry objects.
+The fields `ratings` and `viewCount` are no longer indexed in the `BaseIndexer`
+class for `AssetEntry` objects.
 
 #### Who is affected?
 
-Any search related custom code where these fields are used in queries.
+This affects any search-related custom code where the `ratings` and `viewCount`
+fields are used in queries.
 
 #### How should I update my code?
 
-There are several alternatives:
- - Use Liferay portlets "Highest rated assets" and "Most viewed assets"
- - Replace index query with a database query
- - Implement an IndexerPostProcessor to index these fields in certain documents
+To adapt to these changes, consider several alternatives:
+
+ - Use the Highest Rated Assets and Most Viewed Assets Liferay portlets.
+ - Replace the index query with a database query.
+ - Implement an `IndexerPostProcessor` to index these fields in certain
+   documents.
 
 #### Why was this change made?
 
-Keeping ratings and view count in the search index in sync with the database has
-a negative impact on the normal operation due to the significantly increased
-number of index write requests causing throughput issues and therefore
-performance degradation.
+Keeping the Ratings and View Count options in the search index in sync with the
+database has a negative impact on normal operations due to the significantly
+increased number of index Write requests causing throughput issues and,
+therefore, performance degradation.
 
-In addition, the view count is not always up-to-date in the database either.
-This behavior is controlled by the _Buffered Increment_ mechanism. You can find
-more information about it in the `portal.properties`.
+In addition, the view count is not always up-to-date in the database. This
+behavior is controlled by the *Buffered Increment* mechanism. You can find
+more information about this in the `portal.properties` file.
 
 ---------------------------------------

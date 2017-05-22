@@ -1,5 +1,5 @@
 $bg-color: #F5F7F8;
-$selector-color: #65B6F0;
+$color-scheme-selected: #65B6F0;
 
 body {
 	background-color: $bg-color;
@@ -217,6 +217,14 @@ body {
 	}
 }
 
+/* ---------- Theme color scheme selector ---------- */
+
+.portlet-boundary_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_ {
+	.color-scheme-selector.selected {
+		border: 1px $color-scheme-selected solid;
+	}
+}
+
 /* ---------- Mobile device rules ---------- */
 
 .portlet-boundary_com_liferay_mobile_device_rules_web_portlet_MDRPortlet_ {
@@ -229,10 +237,4 @@ body {
 		min-width: 150px;
 		width: 20%;
 	}
-}
-
-/* ---------- Color Scheme Selector ---------- */
-
-.color-scheme-selector.selected {
-	border: 1px $selector-color solid;
 }

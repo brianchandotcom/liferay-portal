@@ -45,12 +45,12 @@ public class ChainingCheck extends AbstractCheck {
 		return new int[] {TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF};
 	}
 
-	public void setAllowedMethodNames(String allowedMethodNames) {
-		_allowedMethodNames = StringUtil.split(allowedMethodNames);
+	public void setAllowedClassNames(String allowedClassNames) {
+		_allowedClassNames = StringUtil.split(allowedClassNames);
 	}
 
-	public void setAllowedVariableNames(String allowedVariableNames) {
-		_allowedVariableNames = StringUtil.split(allowedVariableNames);
+	public void setAllowedMethodNames(String allowedMethodNames) {
+		_allowedMethodNames = StringUtil.split(allowedMethodNames);
 	}
 
 	@Override
@@ -121,9 +121,14 @@ public class ChainingCheck extends AbstractCheck {
 
 				String classOrVariableName = nameAST.getText();
 
-				for (String allowedVariableName : _allowedVariableNames) {
-					if (classOrVariableName.matches(allowedVariableName)) {
-						continue outerLoop;
+				String variableType = _getVariableType(
+					detailAST, classOrVariableName);
+
+				if (variableType != null) {
+					for (String allowedClassName : _allowedClassNames) {
+						if (classOrVariableName.matches(allowedClassName)) {
+							continue outerLoop;
+						}
 					}
 				}
 			}
@@ -169,6 +174,60 @@ public class ChainingCheck extends AbstractCheck {
 		}
 	}
 
+	private DetailAST _getClassAST(DetailAST detailAST) {
+		DetailAST parentAST = detailAST.getParent();
+
+		while (true) {
+			if (parentAST.getParent() == null) {
+				break;
+			}
+
+			return parentAST.getParent();
+		}
+
+		return null;
+	}
+
+	private String _getVariableType(DetailAST detailAST, String variableName) {
+		List<DetailAST> definitionASTList = new ArrayList<>();
+
+		if (variableName.matches("_[a-z].*")) {
+			definitionASTList = DetailASTUtil.getAllChildTokens(
+				_getClassAST(detailAST), true, TokenTypes.PARAMETER_DEF,
+				TokenTypes.VARIABLE_DEF);
+		}
+		else if (variableName.matches("[a-z].*")) {
+			definitionASTList = DetailASTUtil.getAllChildTokens(
+				detailAST, true, TokenTypes.PARAMETER_DEF,
+				TokenTypes.VARIABLE_DEF);
+		}
+
+		for (DetailAST definitionAST : definitionASTList) {
+			DetailAST nameAST = definitionAST.findFirstToken(TokenTypes.IDENT);
+
+			if (nameAST == null) {
+				continue;
+			}
+
+			String name = nameAST.getText();
+
+			if (name.equals(variableName)) {
+				DetailAST typeAST = definitionAST.findFirstToken(
+					TokenTypes.TYPE);
+
+				nameAST = typeAST.findFirstToken(TokenTypes.IDENT);
+
+				if (nameAST == null) {
+					return null;
+				}
+
+				return nameAST.getText();
+			}
+		}
+
+		return null;
+	}
+
 	private boolean _isInsideConstructorThisCall(
 		DetailAST methodCallAST, DetailAST detailAST) {
 
@@ -193,7 +252,7 @@ public class ChainingCheck extends AbstractCheck {
 		return false;
 	}
 
+	private String[] _allowedClassNames = new String[0];
 	private String[] _allowedMethodNames = new String[0];
-	private String[] _allowedVariableNames = new String[0];
 
 }

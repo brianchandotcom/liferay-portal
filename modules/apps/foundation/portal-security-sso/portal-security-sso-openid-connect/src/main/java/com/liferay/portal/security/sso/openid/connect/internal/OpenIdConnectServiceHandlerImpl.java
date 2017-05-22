@@ -267,9 +267,10 @@ public class OpenIdConnectServiceHandlerImpl
 
 			return (AuthenticationSuccessResponse)authenticationResponse;
 		}
-		catch (URISyntaxException | ParseException e) {
+		catch (ParseException | URISyntaxException e) {
 			throw new OpenIdConnectServiceException.AuthenticationException(
-				"Unable to process response string: " + requestURL.toString(), e);
+				"Unable to process response string: " + requestURL.toString(),
+				e);
 		}
 	}
 

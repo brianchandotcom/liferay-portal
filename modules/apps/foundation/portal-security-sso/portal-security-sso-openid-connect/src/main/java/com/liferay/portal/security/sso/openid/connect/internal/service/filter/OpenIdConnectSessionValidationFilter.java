@@ -83,8 +83,8 @@ public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 		}
 
 		try {
-			if (!_openIdConnectServiceHandler.
-					hasValidOpenIdConnectSession(httpSession)) {
+			if (!_openIdConnectServiceHandler.hasValidOpenIdConnectSession(
+					httpSession)) {
 
 				endSession = true;
 			}

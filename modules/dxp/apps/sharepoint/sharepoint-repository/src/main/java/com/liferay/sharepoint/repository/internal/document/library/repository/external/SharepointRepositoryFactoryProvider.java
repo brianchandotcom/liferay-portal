@@ -100,8 +100,9 @@ public class SharepointRepositoryFactoryProvider {
 
 			SharepointExtRepositoryAdapter sharepointExtRepositoryAdapter =
 				new SharepointExtRepositoryAdapter(
-					new SharepointExtRepository(
-						_tokenStore, _sharepointRepositoryConfiguration));
+					new SharepointCachingExtRepository(
+						new SharepointExtRepository(
+							_tokenStore, _sharepointRepositoryConfiguration)));
 
 			sharepointExtRepositoryAdapter.setAssetEntryLocalService(
 				_assetEntryLocalService);

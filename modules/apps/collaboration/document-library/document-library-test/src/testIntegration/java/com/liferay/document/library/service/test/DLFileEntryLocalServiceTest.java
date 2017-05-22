@@ -464,8 +464,8 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			Collections.emptyMap(), null, new ByteArrayInputStream(new byte[0]),
-			0, serviceContext);
+			new HashMap<String, DDMFormValues>(), null,
+			new ByteArrayInputStream(new byte[0]), 0, serviceContext);
 
 		Group destinationGroup = GroupTestUtil.addGroup();
 

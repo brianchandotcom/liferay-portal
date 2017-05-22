@@ -33,7 +33,7 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 <aui:fieldset>
 	<aui:input name="published" type="checkbox" />
 
-	<aui:input formName="fm1" name="displayDate" />
+	<aui:input formName="fm" name="displayDate" />
 
-	<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm1" name="expirationDate" />
+	<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
 </aui:fieldset>

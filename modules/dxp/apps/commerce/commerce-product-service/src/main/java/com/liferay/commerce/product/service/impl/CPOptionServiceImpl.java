@@ -125,6 +125,37 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 	}
 
 	@Override
+	public CPOption setFacetable(long cpOptionId, boolean facetable)
+		throws PortalException {
+
+		CPOptionPermission.check(
+			getPermissionChecker(), cpOptionId, ActionKeys.UPDATE);
+
+		return cpOptionLocalService.setFacetable(cpOptionId, facetable);
+	}
+
+	@Override
+	public CPOption setRequired(long cpOptionId, boolean required)
+		throws PortalException {
+
+		CPOptionPermission.check(
+			getPermissionChecker(), cpOptionId, ActionKeys.UPDATE);
+
+		return cpOptionLocalService.setRequired(cpOptionId, required);
+	}
+
+	@Override
+	public CPOption setSkuContributor(long cpOptionId, boolean skuContributor)
+		throws PortalException {
+
+		CPOptionPermission.check(
+			getPermissionChecker(), cpOptionId, ActionKeys.UPDATE);
+
+		return cpOptionLocalService.setSkuContributor(
+			cpOptionId, skuContributor);
+	}
+
+	@Override
 	public CPOption updateCPOption(
 			long cpOptionId, String name, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,

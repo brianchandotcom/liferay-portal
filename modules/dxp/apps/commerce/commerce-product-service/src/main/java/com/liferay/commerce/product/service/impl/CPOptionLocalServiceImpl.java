@@ -181,6 +181,45 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 	}
 
 	@Override
+	public CPOption setFacetable(long cpOptionId, boolean facetable)
+		throws PortalException {
+
+		CPOption cpOption = cpOptionPersistence.findByPrimaryKey(cpOptionId);
+
+		cpOption.setFacetable(facetable);
+
+		cpOptionPersistence.update(cpOption);
+
+		return cpOption;
+	}
+
+	@Override
+	public CPOption setRequired(long cpOptionId, boolean required)
+		throws PortalException {
+
+		CPOption cpOption = cpOptionPersistence.findByPrimaryKey(cpOptionId);
+
+		cpOption.setRequired(required);
+
+		cpOptionPersistence.update(cpOption);
+
+		return cpOption;
+	}
+
+	@Override
+	public CPOption setSkuContributor(long cpOptionId, boolean skuContributor)
+		throws PortalException {
+
+		CPOption cpOption = cpOptionPersistence.findByPrimaryKey(cpOptionId);
+
+		cpOption.setSkuContributor(skuContributor);
+
+		cpOptionPersistence.update(cpOption);
+
+		return cpOption;
+	}
+
+	@Override
 	public CPOption updateCPOption(
 			long cpOptionId, String name, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,

@@ -250,6 +250,54 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	@Override
+	public CPDefinitionOptionRel setFacetable(
+			long cpDefinitionOptionRelId, boolean facetable)
+		throws PortalException {
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			cpDefinitionOptionRelPersistence.findByPrimaryKey(
+				cpDefinitionOptionRelId);
+
+		cpDefinitionOptionRel.setFacetable(facetable);
+
+		cpDefinitionOptionRelPersistence.update(cpDefinitionOptionRel);
+
+		return cpDefinitionOptionRel;
+	}
+
+	@Override
+	public CPDefinitionOptionRel setRequired(
+			long cpDefinitionOptionRelId, boolean required)
+		throws PortalException {
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			cpDefinitionOptionRelPersistence.findByPrimaryKey(
+				cpDefinitionOptionRelId);
+
+		cpDefinitionOptionRel.setRequired(required);
+
+		cpDefinitionOptionRelPersistence.update(cpDefinitionOptionRel);
+
+		return cpDefinitionOptionRel;
+	}
+
+	@Override
+	public CPDefinitionOptionRel setSkuContributor(
+			long cpDefinitionOptionRelId, boolean skuContributor)
+		throws PortalException {
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			cpDefinitionOptionRelPersistence.findByPrimaryKey(
+				cpDefinitionOptionRelId);
+
+		cpDefinitionOptionRel.setSkuContributor(skuContributor);
+
+		cpDefinitionOptionRelPersistence.update(cpDefinitionOptionRel);
+
+		return cpDefinitionOptionRel;
+	}
+
+	@Override
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
 			long cpDefinitionOptionRelId, long cpOptionId, String name,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,

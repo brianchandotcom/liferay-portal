@@ -192,7 +192,16 @@ public class NPMRegistry {
 	)
 	private List<JSBundleProcessor> _jsBundleProcessors = new ArrayList<>();
 
-	private final Set<JSBundle> _jsBundles = new ConcurrentSkipListSet<>();
+	private final Set<JSBundle> _jsBundles = new ConcurrentSkipListSet<>(
+		new Comparator<JSBundle>() {
+
+			@Override
+			public int compare(JSBundle o1, JSBundle o2) {
+				return o1.getId().compareTo(o2.getId());
+			}
+
+		});
+
 	private Map<String, JSModule> _jsModules = new HashMap<>();
 	private Map<String, JSPackage> _jsPackages = new HashMap<>();
 	private Map<String, JSModule> _resolvedJSModules = new HashMap<>();

@@ -1065,6 +1065,38 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
+	protected static boolean isBuildFailingInUpstreamJob(Build build) {
+		try {
+			String jobVariant = build.getJobVariant();
+			String result = build.getResult();
+
+			List<TestResult> testResults = new ArrayList<>();
+
+			testResults.addAll(build.getTestResults("FAILED"));
+			testResults.addAll(build.getTestResults("REGRESSION"));
+
+			if (testResults.isEmpty()) {
+				for (String upstreamJobFailure : getUpstreamJobFailures("build")) {
+					if (upstreamJobFailure.contains(jobVariant) &&
+					upstreamJobFailure.contains(result)) {
+
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+		catch (Exception e) {
+			System.out.println(
+			"Unable to get upstream acceptance failure data.");
+
+			e.printStackTrace();
+
+			return false;
+		}
+	}
+
 	protected static boolean isHighPriorityBuildFailureElement(
 		Element gitHubMessage) {
 
@@ -1084,6 +1116,30 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return false;
+	}
+
+	protected static boolean isTestFailingInUpstreamJob(TestResult testResult) {
+		try {
+			for (String failure : getUpstreamJobFailures("test")) {
+				Build axisBuild = testResult.getAxisBuild();
+
+				if (failure.contains(axisBuild.getJobVariant()) &&
+					failure.contains(testResult.getDisplayName())) {
+
+					return true;
+				}
+			}
+
+			return false;
+		}
+		catch (Exception e) {
+			System.out.println(
+				"Unable to get upstream acceptance failure data.");
+
+			e.printStackTrace();
+
+			return false;
+		}
 	}
 
 	protected BaseBuild(String url) {

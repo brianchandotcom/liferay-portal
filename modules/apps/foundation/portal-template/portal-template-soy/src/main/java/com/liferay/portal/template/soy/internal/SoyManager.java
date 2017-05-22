@@ -74,9 +74,9 @@ public class SoyManager extends BaseMultiTemplateManager {
 
 	@Reference(unbind = "-")
 	public void setSingleVMPool(SingleVMPool singleVMPool) {
-		_portalCache =
+		_soyTofuCacheHandler = new SoyTofuCacheHandler(
 			(PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag>)
-				singleVMPool.getPortalCache(SoyTemplate.class.getName());
+				singleVMPool.getPortalCache(SoyTemplate.class.getName()));
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class SoyManager extends BaseMultiTemplateManager {
 
 		_soyCapabilityBundleTrackerCustomizer =
 			new SoyCapabilityBundleTrackerCustomizer(
-				_portalCache, _soyProviderCapabilityBundleRegister);
+				_soyTofuCacheHandler, _soyProviderCapabilityBundleRegister);
 
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, stateMask, _soyCapabilityBundleTrackerCustomizer);
@@ -115,7 +115,7 @@ public class SoyManager extends BaseMultiTemplateManager {
 		Template template = new SoyTemplate(
 			templateResources, errorTemplateResource, helperUtilities,
 			(SoyTemplateContextHelper)templateContextHelper, privileged,
-			_portalCache);
+			_soyTofuCacheHandler);
 
 		if (restricted) {
 			template = new RestrictedTemplate(
@@ -140,11 +140,10 @@ public class SoyManager extends BaseMultiTemplateManager {
 	}
 
 	private BundleTracker<List<BundleCapability>> _bundleTracker;
-	private PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag>
-		_portalCache;
 	private SoyCapabilityBundleTrackerCustomizer
 		_soyCapabilityBundleTrackerCustomizer;
 	private SoyProviderCapabilityBundleRegister
 		_soyProviderCapabilityBundleRegister;
+	private SoyTofuCacheHandler _soyTofuCacheHandler;
 
 }

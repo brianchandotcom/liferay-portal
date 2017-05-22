@@ -14,7 +14,6 @@
 
 package com.liferay.portal.template.soy.internal;
 
-import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.soy.utils.SoyTemplateUtil;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -44,11 +42,11 @@ public class SoyCapabilityBundleTrackerCustomizer
 	implements BundleTrackerCustomizer<List<BundleCapability>> {
 
 	public SoyCapabilityBundleTrackerCustomizer(
-		PortalCache<HashSet<TemplateResource>, SoyTofuCacheBag> portalCache,
+		SoyTofuCacheHandler soyTofuCacheHandler,
 		SoyProviderCapabilityBundleRegister
 			soyProviderCapabilityBundleRegister) {
 
-		_soyTofuCacheHandler = new SoyTofuCacheHandler(portalCache);
+		_soyTofuCacheHandler = soyTofuCacheHandler;
 
 		_soyProviderCapabilityBundleRegister =
 			soyProviderCapabilityBundleRegister;

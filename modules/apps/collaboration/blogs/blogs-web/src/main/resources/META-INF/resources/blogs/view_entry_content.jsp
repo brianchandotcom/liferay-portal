@@ -23,6 +23,9 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entr
 
 AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp-assetEntry");
 
+RatingsEntry ratingsEntry = (RatingsEntry)request.getAttribute("view_entry_content.jsp-ratingsEntry");
+RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_content.jsp-ratingsStats");
+
 String socialBookmarksDisplayPosition = blogsPortletInstanceConfiguration.socialBookmarksDisplayPosition();
 %>
 
@@ -287,6 +290,8 @@ String socialBookmarksDisplayPosition = blogsPortletInstanceConfiguration.social
 							<liferay-ui:ratings
 								className="<%= BlogsEntry.class.getName() %>"
 								classPK="<%= entry.getEntryId() %>"
+								ratingsEntry="<%= ratingsEntry %>"
+								ratingsStats="<%= ratingsStats %>"
 							/>
 						</div>
 					</c:if>

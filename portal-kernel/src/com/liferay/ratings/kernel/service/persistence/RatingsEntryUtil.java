@@ -612,6 +612,91 @@ public class RatingsEntryUtil {
 	}
 
 	/**
+	* Returns all the ratings entries where userId = &#63; and classNameId = &#63; and classPK = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPKs the class pks
+	* @return the matching ratings entries
+	*/
+	public static List<RatingsEntry> findByU_C_C(long userId, long classNameId,
+		long[] classPKs) {
+		return getPersistence().findByU_C_C(userId, classNameId, classPKs);
+	}
+
+	/**
+	* Returns a range of all the ratings entries where userId = &#63; and classNameId = &#63; and classPK = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPKs the class pks
+	* @param start the lower bound of the range of ratings entries
+	* @param end the upper bound of the range of ratings entries (not inclusive)
+	* @return the range of matching ratings entries
+	*/
+	public static List<RatingsEntry> findByU_C_C(long userId, long classNameId,
+		long[] classPKs, int start, int end) {
+		return getPersistence()
+				   .findByU_C_C(userId, classNameId, classPKs, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the ratings entries where userId = &#63; and classNameId = &#63; and classPK = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPKs the class pks
+	* @param start the lower bound of the range of ratings entries
+	* @param end the upper bound of the range of ratings entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching ratings entries
+	*/
+	public static List<RatingsEntry> findByU_C_C(long userId, long classNameId,
+		long[] classPKs, int start, int end,
+		OrderByComparator<RatingsEntry> orderByComparator) {
+		return getPersistence()
+				   .findByU_C_C(userId, classNameId, classPKs, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the ratings entries where userId = &#63; and classNameId = &#63; and classPK = &#63;, optionally using the finder cache.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param start the lower bound of the range of ratings entries
+	* @param end the upper bound of the range of ratings entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching ratings entries
+	*/
+	public static List<RatingsEntry> findByU_C_C(long userId, long classNameId,
+		long[] classPKs, int start, int end,
+		OrderByComparator<RatingsEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByU_C_C(userId, classNameId, classPKs, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
 	* Returns the ratings entry where userId = &#63; and classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchEntryException} if it could not be found.
 	*
 	* @param userId the user ID
@@ -678,6 +763,19 @@ public class RatingsEntryUtil {
 	*/
 	public static int countByU_C_C(long userId, long classNameId, long classPK) {
 		return getPersistence().countByU_C_C(userId, classNameId, classPK);
+	}
+
+	/**
+	* Returns the number of ratings entries where userId = &#63; and classNameId = &#63; and classPK = any &#63;.
+	*
+	* @param userId the user ID
+	* @param classNameId the class name ID
+	* @param classPKs the class pks
+	* @return the number of matching ratings entries
+	*/
+	public static int countByU_C_C(long userId, long classNameId,
+		long[] classPKs) {
+		return getPersistence().countByU_C_C(userId, classNameId, classPKs);
 	}
 
 	/**

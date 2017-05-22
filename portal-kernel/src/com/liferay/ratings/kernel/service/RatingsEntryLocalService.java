@@ -43,6 +43,7 @@ import com.liferay.ratings.kernel.model.RatingsEntry;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for RatingsEntry. Methods of this
@@ -250,6 +251,10 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	public List<RatingsEntry> getEntries(java.lang.String className,
 		long classPK, double score);
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<RatingsEntry> getEntries(long userId,
 		java.lang.String className, List<java.lang.Long> classPKs);
@@ -267,6 +272,10 @@ public interface RatingsEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<RatingsEntry> getRatingsEntries(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<java.lang.Long, RatingsEntry> getEntries(long userId,
+		java.lang.String className, long[] classPKs);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

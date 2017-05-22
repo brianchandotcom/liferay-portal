@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 
+import java.io.Serializable;
+
+import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -71,7 +74,8 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			return StringUtil.replace(content, dependencies, newDependencies);
 		}
 
-		Set<String> uniqueDependencies = new TreeSet<>();
+		Set<String> uniqueDependencies = new TreeSet<>(
+			new GradleDependencyComparator());
 
 		for (String dependency : StringUtil.splitLines(dependencies)) {
 			dependency = dependency.trim();
@@ -88,9 +92,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		String previousConfiguration = null;
 
 		for (String dependency : uniqueDependencies) {
-			int pos = dependency.indexOf(StringPool.SPACE);
-
-			String configuration = dependency.substring(0, pos);
+			String configuration = _getConfiguration(dependency);
 
 			if (configuration.equals("compile") &&
 				isModulesApp(absolutePath, _projectPathPrefix, false)) {
@@ -115,10 +117,60 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		return StringUtil.replace(content, dependencies, sb.toString());
 	}
 
+	private String _getConfiguration(String dependency) {
+		int pos = dependency.indexOf(StringPool.SPACE);
+
+		return dependency.substring(0, pos);
+	}
+
 	private final Pattern _dependenciesPattern = Pattern.compile(
 		"^dependencies \\{(.+?\n)\\}", Pattern.DOTALL | Pattern.MULTILINE);
 	private final Pattern _incorrectWhitespacePattern = Pattern.compile(
 		":[^ \n]");
 	private String _projectPathPrefix;
+
+	private class GradleDependencyComparator
+		implements Comparator<String>, Serializable {
+
+		@Override
+		public int compare(String dependency1, String dependency2) {
+			String configuration1 = _getConfiguration(dependency1);
+			String configuration2 = _getConfiguration(dependency2);
+
+			if (!configuration1.equals(configuration2)) {
+				return dependency1.compareTo(dependency2);
+			}
+
+			String group1 = _getPropertyValue(dependency1, "group");
+			String group2 = _getPropertyValue(dependency2, "group");
+
+			if ((group1 != null) && group1.equals(group2)) {
+				String name1 = _getPropertyValue(dependency1, "name");
+				String name2 = _getPropertyValue(dependency2, "name");
+
+				if ((name1 != null) && name1.equals(name2)) {
+					return 0;
+				}
+			}
+
+			return dependency1.compareTo(dependency2);
+		}
+
+		private String _getPropertyValue(
+			String dependency, String propertyName) {
+
+			Pattern pattern = Pattern.compile(
+				".* " + propertyName + ": \"(.+?)\"");
+
+			Matcher matcher = pattern.matcher(dependency);
+
+			if (matcher.find()) {
+				return matcher.group(1);
+			}
+
+			return null;
+		}
+
+	}
 
 }

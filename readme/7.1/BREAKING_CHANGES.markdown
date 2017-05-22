@@ -79,15 +79,21 @@ in ascending chronological order.
 
 #### What changed?
 
-The data attributes passed into the event when someone uses a selector (asset selector, document selector, file selector, role selector, site selector, user group selector, etc) have been standardized from being selector specific (`groupid`, `groupdescriptivename`, `teamid`, `teamname`, etc) to being more generic (`entityid` and `entityname`).
+The data attributes passed into the event when someone uses a selector (asset
+selector, document selector, file selector, role selector, site selector, user
+group selector, etc) have been standardized from being selector specific
+(`groupid`, `groupdescriptivename`, `teamid`, `teamname`, etc) to being more
+generic (`entityid` and `entityname`).
 
 #### Who is affected?
 
-This affects anyone who is passing selector specific data attributes to a selector.
+This affects anyone who is passing selector specific data attributes to a
+selector.
 
 #### How should I update my code?
 
-Instead of using selector specific data attributes, you should change your data attributes to use `entityid` and `entityname`.
+Instead of using selector specific data attributes, you should change your data
+attributes to use `entityid` and `entityname`.
 
 **Example**
 
@@ -107,7 +113,8 @@ New way:
 
 #### Why was this change made?
 
-This change was made to standardize the data attribute names and allow the utility methods to accept standardized event parameters.
+This change was made to standardize the data attribute names and allow the
+utility methods to accept standardized event parameters.
 
 ---------------------------------------
 
@@ -277,7 +284,8 @@ configuration changes.
 
 #### What changed?
 
-Fields 'ratings' and 'viewCount' are no longer indexed in BaseIndexer for AssetEntry objects.
+Fields 'ratings' and 'viewCount' are no longer indexed in BaseIndexer for
+AssetEntry objects.
 
 #### Who is affected?
 
@@ -292,8 +300,13 @@ There are several alternatives:
 
 #### Why was this change made?
 
-Keeping ratings and view count in the search index in sync with the database has a negative impact on the normal operation due to the significantly increased number of index write requests causing throughput issues and therefore performance degradation.
+Keeping ratings and view count in the search index in sync with the database has
+a negative impact on the normal operation due to the significantly increased
+number of index write requests causing throughput issues and therefore
+performance degradation.
 
-In addition, the view count is not always up-to-date in the database either. This behavior is controlled by the _Buffered Increment_ mechanism. You can find more information about it in the `portal.properties`.
+In addition, the view count is not always up-to-date in the database either.
+This behavior is controlled by the _Buffered Increment_ mechanism. You can find
+more information about it in the `portal.properties`.
 
 ---------------------------------------

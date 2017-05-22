@@ -44,11 +44,14 @@ import javax.portlet.PortletException;
 import org.apache.felix.service.command.CommandProcessor;
 import org.apache.felix.service.command.CommandSession;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Gregory Amerson
  */
 @Component(
 	immediate = true,
@@ -70,6 +73,26 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class GogoShellPortlet extends MVCPortlet {
 
+	@Activate
+	public void activate() {
+		_outputUnsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream();
+		_errorUnsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream();
+
+		_outputPrintStream = new PrintStream(
+			_outputUnsyncByteArrayOutputStream);
+		_errorPrintStream = new PrintStream(_errorUnsyncByteArrayOutputStream);
+
+		_commandSession = _commandProcessor.createSession(
+			null, _outputPrintStream, _errorPrintStream);
+	}
+
+	@Deactivate
+	public void deactivate() {
+		if (_commandSession != null) {
+			_commandSession.close();
+		}
+	}
+
 	public void executeCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -79,36 +102,21 @@ public class GogoShellPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		CommandSession commandSession = null;
-
-		UnsyncByteArrayOutputStream outputUnsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-		UnsyncByteArrayOutputStream errorUnsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-
-		PrintStream outputPrintStream = new PrintStream(
-			outputUnsyncByteArrayOutputStream);
-		PrintStream errorPrintStream = new PrintStream(
-			errorUnsyncByteArrayOutputStream);
-
 		try {
 			SessionMessages.add(actionRequest, "command", command);
 
 			checkCommand(command, themeDisplay);
 
-			commandSession = _commandProcessor.createSession(
-				null, outputPrintStream, errorPrintStream);
+			_commandSession.execute(command);
 
-			commandSession.execute(command);
-
-			outputPrintStream.flush();
-			errorPrintStream.flush();
+			_outputPrintStream.flush();
+			_errorPrintStream.flush();
 
 			SessionMessages.add(
 				actionRequest, "commandOutput",
-				outputUnsyncByteArrayOutputStream.toString());
+				_outputUnsyncByteArrayOutputStream.toString());
 
-			String errorContent = errorUnsyncByteArrayOutputStream.toString();
+			String errorContent = _errorUnsyncByteArrayOutputStream.toString();
 
 			if (Validator.isNotNull(errorContent)) {
 				throw new Exception(errorContent);
@@ -120,9 +128,8 @@ public class GogoShellPortlet extends MVCPortlet {
 			SessionErrors.add(actionRequest, "gogo", e);
 		}
 		finally {
-			if (commandSession != null) {
-				commandSession.close();
-			}
+			_outputUnsyncByteArrayOutputStream.reset();
+			_errorUnsyncByteArrayOutputStream.reset();
 		}
 	}
 
@@ -164,6 +171,12 @@ public class GogoShellPortlet extends MVCPortlet {
 
 	@Reference
 	private CommandProcessor _commandProcessor;
+
+	private CommandSession _commandSession;
+	private PrintStream _errorPrintStream;
+	private UnsyncByteArrayOutputStream _errorUnsyncByteArrayOutputStream;
+	private PrintStream _outputPrintStream;
+	private UnsyncByteArrayOutputStream _outputUnsyncByteArrayOutputStream;
 
 	@Reference
 	private Portal _portal;

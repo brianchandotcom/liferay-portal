@@ -61,7 +61,6 @@ public class VirtualCPType implements CPType {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "editProductDefinitionVirtualSetting");
-
 		portletURL.setParameter(
 			"cpDefinitionId", String.valueOf(cpDefinitionId));
 

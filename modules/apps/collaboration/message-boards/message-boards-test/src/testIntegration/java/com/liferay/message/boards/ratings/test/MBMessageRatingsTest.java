@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.ratings.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
@@ -34,10 +35,12 @@ import java.util.Date;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Cristina González
  */
+@RunWith(Arquillian.class)
 public class MBMessageRatingsTest extends BaseRatingsTestCase {
 
 	@ClassRule

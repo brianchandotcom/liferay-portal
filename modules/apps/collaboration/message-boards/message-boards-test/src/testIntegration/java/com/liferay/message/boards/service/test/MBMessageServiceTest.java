@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
@@ -61,10 +62,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Alexander Chow
  */
+@RunWith(Arquillian.class)
 @Sync
 public class MBMessageServiceTest {
 

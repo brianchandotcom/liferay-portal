@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
@@ -45,10 +46,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Michael C. Han
  */
+@RunWith(Arquillian.class)
 public class MBThreadLocalServiceTest {
 
 	@ClassRule

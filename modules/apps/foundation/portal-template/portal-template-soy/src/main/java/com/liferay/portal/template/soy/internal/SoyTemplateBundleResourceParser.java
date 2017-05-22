@@ -25,7 +25,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -59,9 +58,5 @@ public class SoyTemplateBundleResourceParser extends URLResourceParser {
 	}
 
 	private BundleContext _bundleContext;
-
-	@Reference(unbind = "-")
-	private SoyProviderCapabilityBundleRegister
-		_soyProviderCapabilityBundleRegister;
 
 }

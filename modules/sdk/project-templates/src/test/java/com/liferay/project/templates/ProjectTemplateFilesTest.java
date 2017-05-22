@@ -601,8 +601,7 @@ public class ProjectTemplateFilesTest {
 		"main", "test", "testIntegration"
 	};
 
-	private static final String _XML_DECLARATION =
-		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
+	private static final String _XML_DECLARATION;
 
 	private static final Pattern _buildGradleDependencyPattern =
 		Pattern.compile(
@@ -633,23 +632,16 @@ public class ProjectTemplateFilesTest {
 			gitIgnoreLines, '\n');
 
 		try {
+			_XML_DECLARATION = _readXmlDeclarationTemplate(
+				"xml_declaration.tmpl");
 			_POM_XML_DECLARATION = _readXmlDeclarationTemplate(
 				"pom_xml_declaration.tmpl");
+			_SERVICE_XML_DECLARATION = _readXmlDeclarationTemplate(
+				"service_xml_declaration.tmpl");
 		}
 		catch (IOException ioe) {
 			throw new ExceptionInInitializerError(ioe);
 		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("<?xml version=\"1.0\"?>");
-		sb.append('\n');
-		sb.append("<!DOCTYPE service-builder PUBLIC ");
-		sb.append("\"-//Liferay//DTD Service Builder 7.0.0//EN\" ");
-		sb.append("\"http://www.liferay.com/dtd/");
-		sb.append("liferay-service-builder_7_0_0.dtd\">\n\n");
-
-		_SERVICE_XML_DECLARATION = sb.toString();
 	}
 
 	private static class BuildGradleDependency {

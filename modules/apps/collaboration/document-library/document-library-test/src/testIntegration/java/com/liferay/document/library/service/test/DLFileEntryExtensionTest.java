@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -36,6 +37,7 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * This JUnit test case takes into consideration all possible permutations of
@@ -191,6 +193,7 @@ import org.junit.Test;
  *
  * @author Alexander Chow
  */
+@RunWith(Arquillian.class)
 @Sync
 public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 

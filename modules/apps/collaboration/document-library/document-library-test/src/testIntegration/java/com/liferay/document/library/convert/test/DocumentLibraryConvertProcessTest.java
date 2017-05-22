@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.convert.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -72,12 +73,14 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
  * @author Sergio González
  * @author Manuel de la Peña
  */
+@RunWith(Arquillian.class)
 public class DocumentLibraryConvertProcessTest {
 
 	@ClassRule

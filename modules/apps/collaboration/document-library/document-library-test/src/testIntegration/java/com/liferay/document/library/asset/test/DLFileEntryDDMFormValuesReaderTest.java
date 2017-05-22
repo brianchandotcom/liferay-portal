@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.asset.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -56,10 +57,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Marcellus Tavares
  */
+@RunWith(Arquillian.class)
 public class DLFileEntryDDMFormValuesReaderTest {
 
 	@ClassRule

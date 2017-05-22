@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
@@ -102,6 +103,7 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class DLAppServiceTest extends BaseDLAppTestCase {
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenAddingAFileEntry extends BaseDLAppTestCase {
 
@@ -494,6 +496,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenAddingAFolder extends BaseDLAppTestCase {
 
@@ -538,6 +541,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenCheckingInAFileEntry extends BaseDLAppTestCase {
 
@@ -618,6 +622,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenCheckingOutAFileEntry extends BaseDLAppTestCase {
 
@@ -647,6 +652,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenCopyingAFolder extends BaseDLAppTestCase {
 
@@ -720,6 +726,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenDeletingAFileEntry extends BaseDLAppTestCase {
 
@@ -758,6 +765,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenDeletingAFolder extends BaseDLAppTestCase {
 
@@ -842,6 +850,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenDeletingAFolderByName extends BaseDLAppTestCase {
 
@@ -916,6 +925,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenMovingAFileEntry extends BaseDLAppTestCase {
 
@@ -966,6 +976,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenMovingAFileEntryToTrash extends BaseDLAppTestCase {
 
@@ -1036,6 +1047,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenMovingAFolder extends BaseDLAppTestCase {
 
@@ -1069,6 +1081,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenRevertingAFileEntry extends BaseDLAppTestCase {
 
@@ -1147,6 +1160,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenSearchingFileEntries extends BaseDLAppTestCase {
 
@@ -1219,6 +1233,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenUpdatingAFileEntry extends BaseDLAppTestCase {
 
@@ -1539,6 +1554,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenUpdatingAFolder extends BaseDLAppTestCase {
 
@@ -1582,6 +1598,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	@RunWith(Arquillian.class)
 	@Sync
 	public static class WhenViewingFolderContents extends BaseDLAppTestCase {
 

@@ -40,15 +40,14 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.apache.felix.service.command.CommandProcessor;
 import org.apache.felix.service.command.CommandSession;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -75,35 +74,20 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class GogoShellPortlet extends MVCPortlet {
 
-	@Activate
-	public void activate() {
-		_outputUnsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream();
-		_errorUnsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream();
-
-		_outputPrintStream = new PrintStream(
-			_outputUnsyncByteArrayOutputStream);
-		_errorPrintStream = new PrintStream(_errorUnsyncByteArrayOutputStream);
-
-		_commandSession = _commandProcessor.createSession(
-			null, _outputPrintStream, _errorPrintStream);
-
-		_commandSession.put("prompt", "g!");
-	}
-
-	@Deactivate
-	public void deactivate() {
-		if (_commandSession != null) {
-			_commandSession.close();
-		}
-	}
-
 	@Override
 	public void doView(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		PortletSession portletSession = renderRequest.getPortletSession();
+
+		_ensureCommandSessionInitialized(portletSession);
+
+		CommandSession commandSession =
+			(CommandSession)portletSession.getAttribute("commandSession");
+
 		SessionMessages.add(
-			renderRequest, "prompt", _commandSession.get("prompt"));
+			renderRequest, "prompt", commandSession.get("prompt"));
 
 		super.doView(renderRequest, renderResponse);
 	}
@@ -117,21 +101,40 @@ public class GogoShellPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		PortletSession portletSession = actionRequest.getPortletSession();
+
+		_ensureCommandSessionInitialized(portletSession);
+
+		CommandSession commandSession =
+			(CommandSession)portletSession.getAttribute("commandSession");
+
+		UnsyncByteArrayOutputStream outputUnsyncByteArrayOutputStream =
+			(UnsyncByteArrayOutputStream)portletSession.getAttribute(
+				"outputUnsyncByteArrayOutputStream");
+		UnsyncByteArrayOutputStream errorUnsyncByteArrayOutputStream =
+			(UnsyncByteArrayOutputStream)portletSession.getAttribute(
+				"errorUnsyncByteArrayOutputStream");
+
+		PrintStream outputPrintStream =
+			(PrintStream)portletSession.getAttribute("outputPrintStream");
+		PrintStream errorPrintStream = (PrintStream)portletSession.getAttribute(
+			"errorPrintStream");
+
 		try {
 			SessionMessages.add(actionRequest, "command", command);
 
 			checkCommand(command, themeDisplay);
 
-			_commandSession.execute(command);
+			commandSession.execute(command);
 
-			_outputPrintStream.flush();
-			_errorPrintStream.flush();
+			outputPrintStream.flush();
+			errorPrintStream.flush();
 
 			SessionMessages.add(
 				actionRequest, "commandOutput",
-				_outputUnsyncByteArrayOutputStream.toString());
+				outputUnsyncByteArrayOutputStream.toString());
 
-			String errorContent = _errorUnsyncByteArrayOutputStream.toString();
+			String errorContent = errorUnsyncByteArrayOutputStream.toString();
 
 			if (Validator.isNotNull(errorContent)) {
 				throw new Exception(errorContent);
@@ -143,8 +146,8 @@ public class GogoShellPortlet extends MVCPortlet {
 			SessionErrors.add(actionRequest, "gogo", e);
 		}
 		finally {
-			_outputUnsyncByteArrayOutputStream.reset();
-			_errorUnsyncByteArrayOutputStream.reset();
+			outputUnsyncByteArrayOutputStream.reset();
+			errorUnsyncByteArrayOutputStream.reset();
 		}
 	}
 
@@ -184,14 +187,47 @@ public class GogoShellPortlet extends MVCPortlet {
 		}
 	}
 
+	private void _ensureCommandSessionInitialized(
+		PortletSession portletSession) {
+
+		CommandSession commandSession = null;
+
+		Object commandSessionAttribute = portletSession.getAttribute(
+			"commandSession");
+
+		if (commandSessionAttribute instanceof CommandSession) {
+			commandSession = (CommandSession)commandSessionAttribute;
+		}
+		else {
+			UnsyncByteArrayOutputStream outputUnsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream();
+			UnsyncByteArrayOutputStream errorUnsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream();
+
+			PrintStream outputPrintStream = new PrintStream(
+				outputUnsyncByteArrayOutputStream);
+			PrintStream errorPrintStream = new PrintStream(
+				errorUnsyncByteArrayOutputStream);
+
+			commandSession = _commandProcessor.createSession(
+				null, outputPrintStream, errorPrintStream);
+
+			commandSession.put("prompt", "g!");
+			portletSession.setAttribute("commandSession", commandSession);
+
+			portletSession.setAttribute("errorPrintStream", errorPrintStream);
+			portletSession.setAttribute(
+				"errorUnsyncByteArrayOutputStream",
+				errorUnsyncByteArrayOutputStream);
+			portletSession.setAttribute("outputPrintStream", outputPrintStream);
+			portletSession.setAttribute(
+				"outputUnsyncByteArrayOutputStream",
+				outputUnsyncByteArrayOutputStream);
+		}
+	}
+
 	@Reference
 	private CommandProcessor _commandProcessor;
-
-	private CommandSession _commandSession;
-	private PrintStream _errorPrintStream;
-	private UnsyncByteArrayOutputStream _errorUnsyncByteArrayOutputStream;
-	private PrintStream _outputPrintStream;
-	private UnsyncByteArrayOutputStream _outputUnsyncByteArrayOutputStream;
 
 	@Reference
 	private Portal _portal;

@@ -194,11 +194,17 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 
 		String exceptionVariableName = _getName(parameterDefAST);
 
+		if (_containsVariable(
+				parentAST.findFirstToken(TokenTypes.SLIST),
+				exceptionVariableName)) {
+
+			return;
+		}
+
 		parentAST = exprAST.getParent();
 
-		if ((parentAST.getType() == TokenTypes.SLIST) ||
-			((parentAST.getType() == TokenTypes.LITERAL_THROW) &&
-			 !_containsVariable(parentAST, exceptionVariableName))) {
+		if ((parentAST.getType() == TokenTypes.LITERAL_THROW) ||
+			(parentAST.getType() == TokenTypes.SLIST)) {
 
 			log(
 				detailAST.getLineNo(), MSG_UNPROCESSED_EXCEPTION,

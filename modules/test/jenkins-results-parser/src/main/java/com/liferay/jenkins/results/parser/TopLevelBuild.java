@@ -564,7 +564,7 @@ public class TopLevelBuild extends BaseBuild {
 						0);
 
 					Dom4JUtil.addToElement(
-						Dom4JUtil.getNewElement("h5", rootElement),
+						Dom4JUtil.getNewElement("h4", rootElement),
 						"For upstream results, click ",
 						Dom4JUtil.getNewAnchorElement(url, "here"), ".");
 				}

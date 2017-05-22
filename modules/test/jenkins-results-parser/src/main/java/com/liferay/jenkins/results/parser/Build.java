@@ -68,6 +68,8 @@ public interface Build {
 
 	public Element getGitHubMessageElement();
 
+	public Element getGitHubMessageUpstreamJobFailureElement();
+
 	public String getInvocationURL();
 
 	public String getJDK();

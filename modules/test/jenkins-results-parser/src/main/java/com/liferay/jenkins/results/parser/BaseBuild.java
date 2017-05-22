@@ -447,6 +447,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public Element getGitHubMessageUpstreamJobFailureElement() {
+		return upstreamJobFailureMessageElement;
+	}
+
+	@Override
 	public String getInvocationURL() {
 		String jobURL = getJobURL();
 
@@ -2010,6 +2015,7 @@ public abstract class BaseBuild implements Build {
 	protected String repositoryName;
 	protected String result;
 	protected long statusModifiedTime;
+	protected Element upstreamJobFailureMessageElement;
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{

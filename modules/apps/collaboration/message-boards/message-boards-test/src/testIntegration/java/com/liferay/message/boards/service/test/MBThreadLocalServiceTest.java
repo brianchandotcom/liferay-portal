@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.service;
+package com.liferay.message.boards.service.test;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;

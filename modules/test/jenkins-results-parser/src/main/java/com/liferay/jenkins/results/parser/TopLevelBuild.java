@@ -503,8 +503,7 @@ public class TopLevelBuild extends BaseBuild {
 
 			failureElements.add(0, super.getGitHubMessageElement());
 
-			Dom4JUtil.getTruncatedOrderedListElement(
-				failureElements, rootElement, 5);
+			Dom4JUtil.getOrderedListElement(failureElements, rootElement, 5);
 
 			String jobName = getJobName();
 

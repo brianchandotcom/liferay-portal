@@ -90,8 +90,7 @@ public class BatchBuild extends BaseBuild {
 			}
 		}
 
-		Dom4JUtil.getTruncatedOrderedListElement(
-			failureElements, messageElement, 4);
+		Dom4JUtil.getOrderedListElement(failureElements, messageElement, 4);
 
 		if (failureElements.size() >= 4) {
 			Dom4JUtil.getNewElement(

@@ -76,10 +76,10 @@ public class BatchBuild extends BaseBuild {
 			if (downstreamBuildResult.equals("SUCCESS")) {
 				continue;
 			}
-			else {
-				Element failureElement =
-					downstreamBuild.getGitHubMessageElement();
 
+			Element failureElement = downstreamBuild.getGitHubMessageElement();
+
+			if (failureElement != null) {
 				if (isHighPriorityBuildFailureElement(failureElement)) {
 					failureElements.add(0, failureElement);
 

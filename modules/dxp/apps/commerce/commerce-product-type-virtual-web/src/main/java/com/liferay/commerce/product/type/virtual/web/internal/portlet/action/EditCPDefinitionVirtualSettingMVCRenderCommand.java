@@ -26,7 +26,7 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
@@ -66,9 +66,9 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 
 		try {
 			HttpServletRequest httpServletRequest =
-				PortalUtil.getHttpServletRequest(renderRequest);
+				_portal.getHttpServletRequest(renderRequest);
 			HttpServletResponse httpServletResponse =
-				PortalUtil.getHttpServletResponse(renderResponse);
+				_portal.getHttpServletResponse(renderResponse);
 
 			long cpDefinitionId = ParamUtil.getLong(
 				renderRequest, "cpDefinitionId");
@@ -135,5 +135,8 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 
 	@Reference
 	private JournalArticleService _journalArticleService;
+
+	@Reference
+	private Portal _portal;
 
 }

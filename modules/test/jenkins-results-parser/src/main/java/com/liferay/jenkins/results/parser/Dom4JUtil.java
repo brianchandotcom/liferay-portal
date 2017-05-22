@@ -141,7 +141,14 @@ public class Dom4JUtil {
 
 		for (Element item : items) {
 			if (i < maxItems) {
-				getNewElement("li", orderedListElement, item);
+				String itemName = item.getName();
+
+				if (itemName.equals("li")) {
+					orderedListElement.add(item);
+				}
+				else {
+					getNewElement("li", orderedListElement, item);
+				}
 
 				i++;
 

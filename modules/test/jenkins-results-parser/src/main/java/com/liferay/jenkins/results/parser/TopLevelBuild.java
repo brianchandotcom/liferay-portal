@@ -528,7 +528,28 @@ public class TopLevelBuild extends BaseBuild {
 
 			failureElements.add(0, super.getGitHubMessageElement());
 
-			Dom4JUtil.getOrderedListElement(failureElements, rootElement, 5);
+			int maxFailureCount = 5;
+
+			Dom4JUtil.getOrderedListElement(
+				failureElements, rootElement, maxFailureCount);
+
+			if ((failureElements.size() < maxFailureCount) &&
+				!upstreamJobFailureElements.isEmpty()) {
+
+				Dom4JUtil.addToElement(
+					rootElement, Dom4JUtil.getNewElement("hr"),
+					Dom4JUtil.getNewElement(
+						"h4", null,
+						"Failures in common with upstream(" +
+							getUpstreamJobFailuresSHA() + "):"));
+
+				int remainingFailureCount =
+					maxFailureCount - failureElements.size();
+
+				Dom4JUtil.getOrderedListElement(
+					upstreamJobFailureElements, rootElement,
+					remainingFailureCount);
+			}
 
 			String jobName = getJobName();
 

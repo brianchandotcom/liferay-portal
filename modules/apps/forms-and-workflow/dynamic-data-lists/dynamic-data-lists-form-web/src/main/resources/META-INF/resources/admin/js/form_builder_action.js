@@ -26,6 +26,34 @@ AUI.add(
 				prototype: {
 					conditionChange: function() {},
 
+					createSelectField: function(context) {
+						var instance = this;
+
+						var config = A.merge(
+							context,
+							{
+								bubbleTargets: [instance],
+								context: A.clone(context)
+							}
+						);
+
+						return new Liferay.DDM.Field.Select(config);
+					},
+
+					createTextField: function(context) {
+						var instance = this;
+
+						var config = A.merge(
+							context,
+							{
+								bubbleTargets: [instance],
+								context: A.clone(context)
+							}
+						);
+
+						return new Liferay.DDM.Field.Text(config);
+					},
+
 					getFieldsByType: function(type) {
 						var instance = this;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.search;
+package com.liferay.message.boards.search.test;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;

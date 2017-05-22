@@ -1021,32 +1021,32 @@ public abstract class BaseBuild implements Build {
 
 		List<String> upstreamFailures = new ArrayList<>();
 
-		JSONArray failingBatchesJSONArray =
-			upstreamFailuresJobJSONObject.getJSONArray("failingBatches");
+		JSONArray failedBatchesJSONArray =
+			upstreamFailuresJobJSONObject.getJSONArray("failedBatches");
 
-		for (int i = 0; i < failingBatchesJSONArray.length(); i++) {
-			JSONObject failingBatchJSONObject =
-				failingBatchesJSONArray.getJSONObject(i);
+		for (int i = 0; i < failedBatchesJSONArray.length(); i++) {
+			JSONObject failedBatchJSONObject =
+				failedBatchesJSONArray.getJSONObject(i);
 
-			JSONArray failingTestsJSONArray =
-				failingBatchJSONObject.getJSONArray("failingTests");
+			JSONArray failedTestsJSONArray =
+				failedBatchJSONObject.getJSONArray("failedTests");
 
 			StringBuilder sb = new StringBuilder();
 
 			if (type.equals("build")) {
-				if (failingTestsJSONArray.length() == 0) {
-					sb.append(failingBatchJSONObject.getString("jobVariant"));
+				if (failedTestsJSONArray.length() == 0) {
+					sb.append(failedBatchJSONObject.getString("jobVariant"));
 					sb.append(",");
-					sb.append(failingBatchJSONObject.getString("result"));
+					sb.append(failedBatchJSONObject.getString("result"));
 
 					upstreamFailures.add(sb.toString());
 				}
 			}
 			else if (type.equals("test")) {
-				for (int j = 0; j < failingTestsJSONArray.length(); j++) {
-					sb.append(failingTestsJSONArray.get(j));
+				for (int j = 0; j < failedTestsJSONArray.length(); j++) {
+					sb.append(failedTestsJSONArray.get(j));
 					sb.append(",");
-					sb.append(failingBatchJSONObject.getString("jobVariant"));
+					sb.append(failedBatchJSONObject.getString("jobVariant"));
 
 					upstreamFailures.add(sb.toString());
 				}

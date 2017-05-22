@@ -73,17 +73,17 @@ in ascending chronological order.
 
 ## Breaking Changes List
 
-### Standardize data attribute names passed into selectors
+### Standardized Data Attribute Names Passed into Selectors
 - **Date:** 2016-Oct-26
 - **JIRA Ticket:** LPS-66646
 
 #### What changed?
 
-The data attributes passed into the event when someone uses a selector (asset
-selector, document selector, file selector, role selector, site selector, user
-group selector, etc) have been standardized from being selector specific
-(`groupid`, `groupdescriptivename`, `teamid`, `teamname`, etc) to being more
-generic (`entityid` and `entityname`).
+The data attributes passed into the event when someone uses a selector (e.g.,
+asset selector, document selector, file selector, role selector, site selector,
+user group selector, etc.) have been standardized from being selector specific
+(e.g., `groupid`, `groupdescriptivename`, `teamid`, `teamname`, etc.) to being
+more generic (e.g., `entityid` and `entityname`).
 
 #### Who is affected?
 
@@ -98,23 +98,27 @@ attributes to use `entityid` and `entityname`.
 **Example**
 
 Old way:
+
     <portlet:namespace />selectFileEntryType(event.fileentrytypeid, event.fileentrytypename);
 
-New way
+New way:
+
     <portlet:namespace />selectFileEntryType(event.entityid, event.entityname);
 
 Old way:
+
     data.put("roleid", role.getRoleId());
     data.put("roletitle", role.getTitle(locale));
 
 New way:
+
     data.put("entityid", role.getRoleId());
     data.put("entityname", role.getTitle(locale));
 
 #### Why was this change made?
 
-This change was made to standardize the data attribute names and allow the
-utility methods to accept standardized event parameters.
+This change was made to standardize the data attribute names and allow utility
+methods to accept standardized event parameters.
 
 ---------------------------------------
 

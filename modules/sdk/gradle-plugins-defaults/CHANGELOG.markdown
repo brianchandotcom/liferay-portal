@@ -1500,6 +1500,11 @@ task.
 version 1.1.7.
 - [LPS-72656]: Update the [Liferay Gradle Plugins] dependency to version 3.3.15.
 
+## 3.6.20 - 2017-05-23
+
+### Changed
+- [LPS-72723]: Update the [Liferay Gradle Plugins] dependency to version 3.3.16.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1656,6 +1661,7 @@ version 1.1.7.
 [LPS-72562]: https://issues.liferay.com/browse/LPS-72562
 [LPS-72572]: https://issues.liferay.com/browse/LPS-72572
 [LPS-72656]: https://issues.liferay.com/browse/LPS-72656
+[LPS-72723]: https://issues.liferay.com/browse/LPS-72723
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

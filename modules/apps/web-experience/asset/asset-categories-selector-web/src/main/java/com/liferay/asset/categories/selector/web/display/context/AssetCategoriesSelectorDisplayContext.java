@@ -14,9 +14,15 @@
 
 package com.liferay.asset.categories.selector.web.display.context;
 
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -28,6 +34,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -46,6 +54,29 @@ public class AssetCategoriesSelectorDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_request = request;
+	}
+
+	public JSONArray getCategoriesJSONArray() throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONArray jsonArray = _getCategoriesJSONArray();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("children", jsonArray);
+		jsonObject.put("disabled", true);
+		jsonObject.put("expanded", true);
+		jsonObject.put("icon", "folder");
+		jsonObject.put("id", "0");
+		jsonObject.put(
+			"name", LanguageUtil.get(themeDisplay.getLocale(), "vocabularies"));
+
+		JSONArray rootJSONArray = JSONFactoryUtil.createJSONArray();
+
+		rootJSONArray.put(jsonObject);
+
+		return rootJSONArray;
 	}
 
 	public long getCategoryId() {
@@ -161,6 +192,65 @@ public class AssetCategoriesSelectorDisplayContext {
 		_singleSelect = ParamUtil.getBoolean(_request, "singleSelect");
 
 		return _singleSelect;
+	}
+
+	private JSONArray _getCategoriesJSONArray() throws Exception {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (long vocabularyId : getVocabularyIds()) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put(
+				"children", _getCategoriesJSONArray(vocabularyId, 0));
+			jsonObject.put("disabled", true);
+			jsonObject.put("icon", "folder");
+			jsonObject.put("id", "vocabulary" + vocabularyId);
+			jsonObject.put("name", getVocabularyTitle(vocabularyId));
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray;
+	}
+
+	private JSONArray _getCategoriesJSONArray(
+			long vocabularyId, long categoryId)
+		throws Exception {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<AssetCategory> categories =
+			AssetCategoryServiceUtil.getVocabularyCategories(
+				categoryId, vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		for (AssetCategory category : categories) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			JSONArray children = _getCategoriesJSONArray(
+				vocabularyId, category.getCategoryId());
+
+			if (children.length() > 0) {
+				jsonObject.put("children", children);
+			}
+
+			jsonObject.put("icon", "page");
+			jsonObject.put("id", category.getCategoryId());
+			jsonObject.put("name", category.getTitle(themeDisplay.getLocale()));
+
+			if (getSelectedCategories().contains(
+					String.valueOf(category.getCategoryId()))) {
+
+				jsonObject.put("selected", true);
+			}
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray;
 	}
 
 	private Boolean _allowedSelectVocabularies;

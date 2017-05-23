@@ -12,7 +12,6 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_SAP_ENTRY</action-key>
-				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />

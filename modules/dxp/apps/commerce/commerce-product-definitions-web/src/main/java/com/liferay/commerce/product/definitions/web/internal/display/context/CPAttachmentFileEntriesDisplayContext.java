@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
-import com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentConfiguration;
+import com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
@@ -47,7 +47,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 
 	public CPAttachmentFileEntriesDisplayContext(
 			ActionHelper actionHelper,
-			AttachmentConfiguration attachmentConfiguration,
+			AttachmentsConfiguration attachmentsConfiguration,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPDefinitionOptionRelService cpDefinitionOptionRelService,
 			CPInstanceHelper cpInstanceHelper,
@@ -59,7 +59,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		setDefaultOrderByCol("priority");
 		setDefaultOrderByType("asc");
 
-		_attachmentConfiguration = attachmentConfiguration;
+		_attachmentsConfiguration = attachmentsConfiguration;
 		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
 		_cpInstanceHelper = cpInstanceHelper;
@@ -91,11 +91,11 @@ public class CPAttachmentFileEntriesDisplayContext extends
 	}
 
 	public String[] getImageExtensions() {
-		return _attachmentConfiguration.imageExtensions();
+		return _attachmentsConfiguration.imageExtensions();
 	}
 
 	public long getImageMaxSize() {
-		return _attachmentConfiguration.imageMaxSize();
+		return _attachmentsConfiguration.imageMaxSize();
 	}
 
 	public String getItemSelectorUrl() {
@@ -159,7 +159,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 			getCPDefinitionId(), json, false, renderRequest, renderResponse);
 	}
 
-	private final AttachmentConfiguration _attachmentConfiguration;
+	private final AttachmentsConfiguration _attachmentsConfiguration;
 	private CPAttachmentFileEntry _cpAttachmentFileEntry;
 	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;

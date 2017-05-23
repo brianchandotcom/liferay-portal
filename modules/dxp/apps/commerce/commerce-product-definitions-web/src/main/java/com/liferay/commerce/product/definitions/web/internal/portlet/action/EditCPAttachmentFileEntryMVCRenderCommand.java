@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentConfiguration;
+import com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	configurationPid = "com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentConfiguration",
+	configurationPid = "com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentsConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PRODUCT_DEFINITIONS,
@@ -70,7 +70,7 @@ public class EditCPAttachmentFileEntryMVCRenderCommand
 			CPAttachmentFileEntriesDisplayContext
 				cpAttachmentFileEntriesDisplayContext =
 					new CPAttachmentFileEntriesDisplayContext(
-						_actionHelper, _attachmentConfiguration,
+						_actionHelper, _attachmentsConfiguration,
 						_cpAttachmentFileEntryService,
 						_cpDefinitionOptionRelService, _cpInstanceHelper,
 						httpServletRequest, _itemSelector);
@@ -97,14 +97,14 @@ public class EditCPAttachmentFileEntryMVCRenderCommand
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_attachmentConfiguration = ConfigurableUtil.createConfigurable(
-			AttachmentConfiguration.class, properties);
+		_attachmentsConfiguration = ConfigurableUtil.createConfigurable(
+			AttachmentsConfiguration.class, properties);
 	}
 
 	@Reference
 	private ActionHelper _actionHelper;
 
-	private volatile AttachmentConfiguration _attachmentConfiguration;
+	private volatile AttachmentsConfiguration _attachmentsConfiguration;
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;

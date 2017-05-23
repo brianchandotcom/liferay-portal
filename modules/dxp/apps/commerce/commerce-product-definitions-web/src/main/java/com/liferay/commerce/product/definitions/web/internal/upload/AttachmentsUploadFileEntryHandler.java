@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.definitions.web.internal.upload;
 
 import com.liferay.commerce.product.constants.CPConstants;
-import com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentConfiguration;
+import com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryNameException;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntrySizeException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	configurationPid = "com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentConfiguration",
+	configurationPid = "com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentsConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	service = AttachmentsUploadFileEntryHandler.class
 )
@@ -88,8 +88,8 @@ public class AttachmentsUploadFileEntryHandler
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_attachmentConfiguration = ConfigurableUtil.createConfigurable(
-			AttachmentConfiguration.class, properties);
+		_attachmentsConfiguration = ConfigurableUtil.createConfigurable(
+			AttachmentsConfiguration.class, properties);
 	}
 
 	protected FileEntry addFileEntry(
@@ -121,15 +121,15 @@ public class AttachmentsUploadFileEntryHandler
 	private void _validateFile(String fileName, long size)
 		throws PortalException {
 
-		if ((_attachmentConfiguration.imageMaxSize() > 0) &&
-			(size > _attachmentConfiguration.imageMaxSize())) {
+		if ((_attachmentsConfiguration.imageMaxSize() > 0) &&
+			(size > _attachmentsConfiguration.imageMaxSize())) {
 
 			throw new CPAttachmentFileEntrySizeException();
 		}
 
 		String extension = FileUtil.getExtension(fileName);
 
-		String[] imageExtensions = _attachmentConfiguration.imageExtensions();
+		String[] imageExtensions = _attachmentsConfiguration.imageExtensions();
 
 		for (String imageExtension : imageExtensions) {
 			if (StringPool.STAR.equals(imageExtension) ||
@@ -145,6 +145,6 @@ public class AttachmentsUploadFileEntryHandler
 
 	private static final String _PARAMETER_NAME = "imageSelectorFileName";
 
-	private volatile AttachmentConfiguration _attachmentConfiguration;
+	private volatile AttachmentsConfiguration _attachmentsConfiguration;
 
 }

@@ -25,11 +25,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "commerce", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentConfiguration",
+	id = "com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentsConfiguration",
 	localization = "content/Language",
-	name = "commerce.attachment.configuration.name"
+	name = "commerce.attachments.configuration.name"
 )
-public interface AttachmentConfiguration {
+public interface AttachmentsConfiguration {
 
 	@Meta.AD(
 		deflt = ".gif,.jpeg,.jpg,.png,.mpg,.ogg",

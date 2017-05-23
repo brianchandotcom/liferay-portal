@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.upload;
 
-import com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentConfiguration;
+import com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryNameException;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntrySizeException;
 import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	configurationPid = "com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentConfiguration",
+	configurationPid = "com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentsConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	service = AttachmentsUploadResponseHandler.class
 )
@@ -67,7 +67,7 @@ public class AttachmentsUploadResponseHandler implements UploadResponseHandler {
 					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 
 				errorMessage = StringUtil.merge(
-					_attachmentConfiguration.imageExtensions());
+					_attachmentsConfiguration.imageExtensions());
 			}
 			else if (pe instanceof CPAttachmentFileEntrySizeException) {
 				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
@@ -98,11 +98,11 @@ public class AttachmentsUploadResponseHandler implements UploadResponseHandler {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_attachmentConfiguration = ConfigurableUtil.createConfigurable(
-			AttachmentConfiguration.class, properties);
+		_attachmentsConfiguration = ConfigurableUtil.createConfigurable(
+			AttachmentsConfiguration.class, properties);
 	}
 
-	private volatile AttachmentConfiguration _attachmentConfiguration;
+	private volatile AttachmentsConfiguration _attachmentsConfiguration;
 
 	@Reference
 	private ItemSelectorUploadResponseHandler

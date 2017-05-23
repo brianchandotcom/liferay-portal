@@ -37,7 +37,6 @@
 	</source-processor>
 	<source-processor name="GradleSourceProcessor">
 		<check name="GradleDependenciesCheck" />
-		<check name="GradleImportsCheck" />
 		<check name="GradleVersionCheck" />
 		<check name="WhitespaceCheck" />
 	</source-processor>

@@ -67,7 +67,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -97,6 +97,8 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 		sb.append(duration);
 		sb.append(", maxUsages=");
 		sb.append(maxUsages);
+		sb.append(", useSample=");
+		sb.append(useSample);
 		sb.append(", sampleFileEntryId=");
 		sb.append(sampleFileEntryId);
 		sb.append(", sampleUrl=");
@@ -171,6 +173,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 
 		cpDefinitionVirtualSettingImpl.setDuration(duration);
 		cpDefinitionVirtualSettingImpl.setMaxUsages(maxUsages);
+		cpDefinitionVirtualSettingImpl.setUseSample(useSample);
 		cpDefinitionVirtualSettingImpl.setSampleFileEntryId(sampleFileEntryId);
 
 		if (sampleUrl == null) {
@@ -228,6 +231,8 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 		duration = objectInput.readLong();
 
 		maxUsages = objectInput.readInt();
+
+		useSample = objectInput.readBoolean();
 
 		sampleFileEntryId = objectInput.readLong();
 		sampleUrl = objectInput.readUTF();
@@ -289,6 +294,8 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 
 		objectOutput.writeInt(maxUsages);
 
+		objectOutput.writeBoolean(useSample);
+
 		objectOutput.writeLong(sampleFileEntryId);
 
 		if (sampleUrl == null) {
@@ -325,6 +332,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 	public String activationStatus;
 	public long duration;
 	public int maxUsages;
+	public boolean useSample;
 	public long sampleFileEntryId;
 	public String sampleUrl;
 	public boolean termsOfUseRequired;

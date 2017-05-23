@@ -2180,6 +2180,7 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 		cpDefinitionVirtualSettingImpl.setActivationStatus(cpDefinitionVirtualSetting.getActivationStatus());
 		cpDefinitionVirtualSettingImpl.setDuration(cpDefinitionVirtualSetting.getDuration());
 		cpDefinitionVirtualSettingImpl.setMaxUsages(cpDefinitionVirtualSetting.getMaxUsages());
+		cpDefinitionVirtualSettingImpl.setUseSample(cpDefinitionVirtualSetting.isUseSample());
 		cpDefinitionVirtualSettingImpl.setSampleFileEntryId(cpDefinitionVirtualSetting.getSampleFileEntryId());
 		cpDefinitionVirtualSettingImpl.setSampleUrl(cpDefinitionVirtualSetting.getSampleUrl());
 		cpDefinitionVirtualSettingImpl.setTermsOfUseRequired(cpDefinitionVirtualSetting.isTermsOfUseRequired());

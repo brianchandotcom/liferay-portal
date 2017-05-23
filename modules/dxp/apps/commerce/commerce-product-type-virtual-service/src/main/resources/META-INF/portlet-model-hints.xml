@@ -15,7 +15,10 @@
 		<field name="url" type="String" />
 		<field name="activationStatus" type="String" />
 		<field name="duration" type="long" />
-		<field name="maxUsages" type="int" />
+		<field name="maxUsages" type="int">
+			<validator name="number" />
+		</field>
+		<field name="useSample" type="boolean" />
 		<field name="sampleFileEntryId" type="long" />
 		<field name="sampleUrl" type="String" />
 		<field name="termsOfUseRequired" type="boolean" />

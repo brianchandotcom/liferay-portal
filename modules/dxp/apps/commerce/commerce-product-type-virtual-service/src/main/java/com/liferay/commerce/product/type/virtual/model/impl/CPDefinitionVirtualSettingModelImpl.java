@@ -94,6 +94,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 			{ "activationStatus", Types.VARCHAR },
 			{ "duration", Types.BIGINT },
 			{ "maxUsages", Types.INTEGER },
+			{ "useSample", Types.BOOLEAN },
 			{ "sampleFileEntryId", Types.BIGINT },
 			{ "sampleUrl", Types.VARCHAR },
 			{ "termsOfUseRequired", Types.BOOLEAN },
@@ -118,6 +119,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		TABLE_COLUMNS_MAP.put("activationStatus", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("duration", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("maxUsages", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("useSample", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("sampleFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("sampleUrl", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("termsOfUseRequired", Types.BOOLEAN);
@@ -126,7 +128,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionVirtualSetting (uuid_ VARCHAR(75) null,CPDefinitionVirtualSettingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,fileEntryId LONG,url VARCHAR(75) null,activationStatus VARCHAR(75) null,duration LONG,maxUsages INTEGER,sampleFileEntryId LONG,sampleUrl VARCHAR(75) null,termsOfUseRequired BOOLEAN,termsOfUseContent STRING null,termsOfUseArticleResourcePK LONG,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionVirtualSetting (uuid_ VARCHAR(75) null,CPDefinitionVirtualSettingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,fileEntryId LONG,url VARCHAR(75) null,activationStatus VARCHAR(75) null,duration LONG,maxUsages INTEGER,useSample BOOLEAN,sampleFileEntryId LONG,sampleUrl VARCHAR(75) null,termsOfUseRequired BOOLEAN,termsOfUseContent STRING null,termsOfUseArticleResourcePK LONG,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionVirtualSetting";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionVirtualSetting.CPDefinitionVirtualSettingId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionVirtualSetting.CPDefinitionVirtualSettingId ASC";
@@ -176,6 +178,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		model.setActivationStatus(soapModel.getActivationStatus());
 		model.setDuration(soapModel.getDuration());
 		model.setMaxUsages(soapModel.getMaxUsages());
+		model.setUseSample(soapModel.getUseSample());
 		model.setSampleFileEntryId(soapModel.getSampleFileEntryId());
 		model.setSampleUrl(soapModel.getSampleUrl());
 		model.setTermsOfUseRequired(soapModel.getTermsOfUseRequired());
@@ -262,6 +265,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		attributes.put("activationStatus", getActivationStatus());
 		attributes.put("duration", getDuration());
 		attributes.put("maxUsages", getMaxUsages());
+		attributes.put("useSample", getUseSample());
 		attributes.put("sampleFileEntryId", getSampleFileEntryId());
 		attributes.put("sampleUrl", getSampleUrl());
 		attributes.put("termsOfUseRequired", getTermsOfUseRequired());
@@ -361,6 +365,12 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 
 		if (maxUsages != null) {
 			setMaxUsages(maxUsages);
+		}
+
+		Boolean useSample = (Boolean)attributes.get("useSample");
+
+		if (useSample != null) {
+			setUseSample(useSample);
 		}
 
 		Long sampleFileEntryId = (Long)attributes.get("sampleFileEntryId");
@@ -641,6 +651,23 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 	@Override
 	public void setMaxUsages(int maxUsages) {
 		_maxUsages = maxUsages;
+	}
+
+	@JSON
+	@Override
+	public boolean getUseSample() {
+		return _useSample;
+	}
+
+	@JSON
+	@Override
+	public boolean isUseSample() {
+		return _useSample;
+	}
+
+	@Override
+	public void setUseSample(boolean useSample) {
+		_useSample = useSample;
 	}
 
 	@JSON
@@ -931,6 +958,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		cpDefinitionVirtualSettingImpl.setActivationStatus(getActivationStatus());
 		cpDefinitionVirtualSettingImpl.setDuration(getDuration());
 		cpDefinitionVirtualSettingImpl.setMaxUsages(getMaxUsages());
+		cpDefinitionVirtualSettingImpl.setUseSample(getUseSample());
 		cpDefinitionVirtualSettingImpl.setSampleFileEntryId(getSampleFileEntryId());
 		cpDefinitionVirtualSettingImpl.setSampleUrl(getSampleUrl());
 		cpDefinitionVirtualSettingImpl.setTermsOfUseRequired(getTermsOfUseRequired());
@@ -1089,6 +1117,8 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 
 		cpDefinitionVirtualSettingCacheModel.maxUsages = getMaxUsages();
 
+		cpDefinitionVirtualSettingCacheModel.useSample = getUseSample();
+
 		cpDefinitionVirtualSettingCacheModel.sampleFileEntryId = getSampleFileEntryId();
 
 		cpDefinitionVirtualSettingCacheModel.sampleUrl = getSampleUrl();
@@ -1125,7 +1155,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1155,6 +1185,8 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		sb.append(getDuration());
 		sb.append(", maxUsages=");
 		sb.append(getMaxUsages());
+		sb.append(", useSample=");
+		sb.append(getUseSample());
 		sb.append(", sampleFileEntryId=");
 		sb.append(getSampleFileEntryId());
 		sb.append(", sampleUrl=");
@@ -1174,7 +1206,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(64);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -1238,6 +1270,10 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		sb.append(getMaxUsages());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>useSample</column-name><column-value><![CDATA[");
+		sb.append(getUseSample());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>sampleFileEntryId</column-name><column-value><![CDATA[");
 		sb.append(getSampleFileEntryId());
 		sb.append("]]></column-value></column>");
@@ -1293,6 +1329,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 	private String _activationStatus;
 	private long _duration;
 	private int _maxUsages;
+	private boolean _useSample;
 	private long _sampleFileEntryId;
 	private String _sampleUrl;
 	private boolean _termsOfUseRequired;

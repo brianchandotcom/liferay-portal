@@ -21,23 +21,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Marco Leo
  */
 @ProviderType
-public class CPDefinitionVirtualSettingFileEntryException
-	extends PortalException {
+public class CPDefinitionVirtualSettingUseSampleUrlException extends PortalException {
 
-	public CPDefinitionVirtualSettingFileEntryException() {
+	public CPDefinitionVirtualSettingUseSampleUrlException() {
 	}
 
-	public CPDefinitionVirtualSettingFileEntryException(String msg) {
+	public CPDefinitionVirtualSettingUseSampleUrlException(String msg) {
 		super(msg);
 	}
 
-	public CPDefinitionVirtualSettingFileEntryException(
-		String msg, Throwable cause) {
-
+	public CPDefinitionVirtualSettingUseSampleUrlException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public CPDefinitionVirtualSettingFileEntryException(Throwable cause) {
+	public CPDefinitionVirtualSettingUseSampleUrlException(Throwable cause) {
 		super(cause);
 	}
 

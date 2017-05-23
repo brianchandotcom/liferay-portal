@@ -151,6 +151,8 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 
 		newCPDefinitionVirtualSetting.setMaxUsages(RandomTestUtil.nextInt());
 
+		newCPDefinitionVirtualSetting.setUseSample(RandomTestUtil.randomBoolean());
+
 		newCPDefinitionVirtualSetting.setSampleFileEntryId(RandomTestUtil.nextLong());
 
 		newCPDefinitionVirtualSetting.setSampleUrl(RandomTestUtil.randomString());
@@ -200,6 +202,8 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 			newCPDefinitionVirtualSetting.getDuration());
 		Assert.assertEquals(existingCPDefinitionVirtualSetting.getMaxUsages(),
 			newCPDefinitionVirtualSetting.getMaxUsages());
+		Assert.assertEquals(existingCPDefinitionVirtualSetting.getUseSample(),
+			newCPDefinitionVirtualSetting.getUseSample());
 		Assert.assertEquals(existingCPDefinitionVirtualSetting.getSampleFileEntryId(),
 			newCPDefinitionVirtualSetting.getSampleFileEntryId());
 		Assert.assertEquals(existingCPDefinitionVirtualSetting.getSampleUrl(),
@@ -279,10 +283,10 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "CPDefinitionId", true,
 			"fileEntryId", true, "url", true, "activationStatus", true,
-			"duration", true, "maxUsages", true, "sampleFileEntryId", true,
-			"sampleUrl", true, "termsOfUseRequired", true, "termsOfUseContent",
-			true, "termsOfUseJournalArticleResourcePK", true,
-			"lastPublishDate", true);
+			"duration", true, "maxUsages", true, "useSample", true,
+			"sampleFileEntryId", true, "sampleUrl", true, "termsOfUseRequired",
+			true, "termsOfUseContent", true,
+			"termsOfUseJournalArticleResourcePK", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -551,6 +555,8 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 		cpDefinitionVirtualSetting.setDuration(RandomTestUtil.nextLong());
 
 		cpDefinitionVirtualSetting.setMaxUsages(RandomTestUtil.nextInt());
+
+		cpDefinitionVirtualSetting.setUseSample(RandomTestUtil.randomBoolean());
 
 		cpDefinitionVirtualSetting.setSampleFileEntryId(RandomTestUtil.nextLong());
 

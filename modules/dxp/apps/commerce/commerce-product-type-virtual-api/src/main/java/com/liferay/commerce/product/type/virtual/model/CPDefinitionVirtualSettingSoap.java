@@ -49,6 +49,7 @@ public class CPDefinitionVirtualSettingSoap implements Serializable {
 		soapModel.setActivationStatus(model.getActivationStatus());
 		soapModel.setDuration(model.getDuration());
 		soapModel.setMaxUsages(model.getMaxUsages());
+		soapModel.setUseSample(model.getUseSample());
 		soapModel.setSampleFileEntryId(model.getSampleFileEntryId());
 		soapModel.setSampleUrl(model.getSampleUrl());
 		soapModel.setTermsOfUseRequired(model.getTermsOfUseRequired());
@@ -223,6 +224,18 @@ public class CPDefinitionVirtualSettingSoap implements Serializable {
 		_maxUsages = maxUsages;
 	}
 
+	public boolean getUseSample() {
+		return _useSample;
+	}
+
+	public boolean isUseSample() {
+		return _useSample;
+	}
+
+	public void setUseSample(boolean useSample) {
+		_useSample = useSample;
+	}
+
 	public long getSampleFileEntryId() {
 		return _sampleFileEntryId;
 	}
@@ -290,6 +303,7 @@ public class CPDefinitionVirtualSettingSoap implements Serializable {
 	private String _activationStatus;
 	private long _duration;
 	private int _maxUsages;
+	private boolean _useSample;
 	private long _sampleFileEntryId;
 	private String _sampleUrl;
 	private boolean _termsOfUseRequired;

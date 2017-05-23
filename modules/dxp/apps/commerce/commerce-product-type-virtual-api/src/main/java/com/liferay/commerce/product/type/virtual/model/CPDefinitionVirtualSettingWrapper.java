@@ -77,6 +77,7 @@ public class CPDefinitionVirtualSettingWrapper
 		attributes.put("activationStatus", getActivationStatus());
 		attributes.put("duration", getDuration());
 		attributes.put("maxUsages", getMaxUsages());
+		attributes.put("useSample", getUseSample());
 		attributes.put("sampleFileEntryId", getSampleFileEntryId());
 		attributes.put("sampleUrl", getSampleUrl());
 		attributes.put("termsOfUseRequired", getTermsOfUseRequired());
@@ -175,6 +176,12 @@ public class CPDefinitionVirtualSettingWrapper
 			setMaxUsages(maxUsages);
 		}
 
+		Boolean useSample = (Boolean)attributes.get("useSample");
+
+		if (useSample != null) {
+			setUseSample(useSample);
+		}
+
 		Long sampleFileEntryId = (Long)attributes.get("sampleFileEntryId");
 
 		if (sampleFileEntryId != null) {
@@ -234,6 +241,16 @@ public class CPDefinitionVirtualSettingWrapper
 		return _cpDefinitionVirtualSetting.getTermsOfUseRequired();
 	}
 
+	/**
+	* Returns the use sample of this cp definition virtual setting.
+	*
+	* @return the use sample of this cp definition virtual setting
+	*/
+	@Override
+	public boolean getUseSample() {
+		return _cpDefinitionVirtualSetting.getUseSample();
+	}
+
 	@Override
 	public boolean isCachedModel() {
 		return _cpDefinitionVirtualSetting.isCachedModel();
@@ -257,6 +274,16 @@ public class CPDefinitionVirtualSettingWrapper
 	@Override
 	public boolean isTermsOfUseRequired() {
 		return _cpDefinitionVirtualSetting.isTermsOfUseRequired();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp definition virtual setting is use sample.
+	*
+	* @return <code>true</code> if this cp definition virtual setting is use sample; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isUseSample() {
+		return _cpDefinitionVirtualSetting.isUseSample();
 	}
 
 	@Override
@@ -876,6 +903,16 @@ public class CPDefinitionVirtualSettingWrapper
 	@Override
 	public void setUrl(java.lang.String url) {
 		_cpDefinitionVirtualSetting.setUrl(url);
+	}
+
+	/**
+	* Sets whether this cp definition virtual setting is use sample.
+	*
+	* @param useSample the use sample of this cp definition virtual setting
+	*/
+	@Override
+	public void setUseSample(boolean useSample) {
+		_cpDefinitionVirtualSetting.setUseSample(useSample);
 	}
 
 	/**

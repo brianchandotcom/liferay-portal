@@ -301,6 +301,27 @@ public interface CPDefinitionVirtualSettingModel extends BaseModel<CPDefinitionV
 	public void setMaxUsages(int maxUsages);
 
 	/**
+	 * Returns the use sample of this cp definition virtual setting.
+	 *
+	 * @return the use sample of this cp definition virtual setting
+	 */
+	public boolean getUseSample();
+
+	/**
+	 * Returns <code>true</code> if this cp definition virtual setting is use sample.
+	 *
+	 * @return <code>true</code> if this cp definition virtual setting is use sample; <code>false</code> otherwise
+	 */
+	public boolean isUseSample();
+
+	/**
+	 * Sets whether this cp definition virtual setting is use sample.
+	 *
+	 * @param useSample the use sample of this cp definition virtual setting
+	 */
+	public void setUseSample(boolean useSample);
+
+	/**
 	 * Returns the sample file entry ID of this cp definition virtual setting.
 	 *
 	 * @return the sample file entry ID of this cp definition virtual setting

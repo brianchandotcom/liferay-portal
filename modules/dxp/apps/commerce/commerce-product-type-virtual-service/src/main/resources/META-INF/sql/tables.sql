@@ -13,6 +13,7 @@ create table CPDefinitionVirtualSetting (
 	activationStatus VARCHAR(75) null,
 	duration LONG,
 	maxUsages INTEGER,
+	useSample BOOLEAN,
 	sampleFileEntryId LONG,
 	sampleUrl VARCHAR(75) null,
 	termsOfUseRequired BOOLEAN,

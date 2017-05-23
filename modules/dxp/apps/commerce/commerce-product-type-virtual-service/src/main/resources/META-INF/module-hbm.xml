@@ -20,6 +20,7 @@
 		<property name="activationStatus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="duration" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="maxUsages" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="useSample" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="sampleFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="sampleUrl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="termsOfUseRequired" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />

@@ -63,7 +63,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 				deleteFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="exportImport"><portlet:param name="mvcRenderCommandName" value="exportImport" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="portletResource" value="<%= portletResource %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />',
 				fileDescription: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',
-				maxFileSize: '<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) %> B',
+				maxFileSize: '<%= UploadServletRequestConfigurationHelperUtil.getMaxSize() %> B',
 				metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
 				metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
 				multipleFiles: false,

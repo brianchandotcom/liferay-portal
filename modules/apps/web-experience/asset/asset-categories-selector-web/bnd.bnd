@@ -4,3 +4,13 @@ Bundle-Version: 1.0.0
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Asset
+Provide-Capability:\
+	soy;\
+		type="asset-categories-selector-web";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	osgi.extender;\
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))",\
+	soy;\
+		filter:="(type=journal-web)"
+Web-ContextPath: /asset-categories-selector-web

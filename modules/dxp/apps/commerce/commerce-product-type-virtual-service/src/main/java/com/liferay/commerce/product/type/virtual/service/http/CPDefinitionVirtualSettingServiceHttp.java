@@ -59,7 +59,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 		HttpPrincipal httpPrincipal, long cpDefinitionId, boolean useFileEntry,
 		long fileEntryId, java.lang.String url,
 		java.lang.String activationStatus, long duration, int maxUsages,
-		boolean useSampleFileEntry, long sampleFileEntryId,
+		boolean useSample, boolean useSampleFileEntry, long sampleFileEntryId,
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK,
@@ -72,10 +72,10 @@ public class CPDefinitionVirtualSettingServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId, useFileEntry, fileEntryId, url,
-					activationStatus, duration, maxUsages, useSampleFileEntry,
-					sampleFileEntryId, sampleUrl, termsOfUseRequired,
-					termsOfUseContentMap, termsOfUseJournalArticleResourcePK,
-					serviceContext);
+					activationStatus, duration, maxUsages, useSample,
+					useSampleFileEntry, sampleFileEntryId, sampleUrl,
+					termsOfUseRequired, termsOfUseContentMap,
+					termsOfUseJournalArticleResourcePK, serviceContext);
 
 			Object returnObj = null;
 
@@ -170,7 +170,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 		HttpPrincipal httpPrincipal, long cpDefinitionVirtualSettingId,
 		boolean useFileEntry, long fileEntryId, java.lang.String url,
 		java.lang.String activationStatus, long duration, int maxUsages,
-		boolean useSampleFileEntry, long sampleFileEntryId,
+		boolean useSample, boolean useSampleFileEntry, long sampleFileEntryId,
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK,
@@ -183,7 +183,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionVirtualSettingId, useFileEntry, fileEntryId,
-					url, activationStatus, duration, maxUsages,
+					url, activationStatus, duration, maxUsages, useSample,
 					useSampleFileEntry, sampleFileEntryId, sampleUrl,
 					termsOfUseRequired, termsOfUseContentMap,
 					termsOfUseJournalArticleResourcePK, serviceContext);
@@ -215,7 +215,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 		new Class[] {
 			long.class, boolean.class, long.class, java.lang.String.class,
 			java.lang.String.class, long.class, int.class, boolean.class,
-			long.class, java.lang.String.class, boolean.class,
+			boolean.class, long.class, java.lang.String.class, boolean.class,
 			java.util.Map.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -229,7 +229,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 		new Class[] {
 			long.class, boolean.class, long.class, java.lang.String.class,
 			java.lang.String.class, long.class, int.class, boolean.class,
-			long.class, java.lang.String.class, boolean.class,
+			boolean.class, long.class, java.lang.String.class, boolean.class,
 			java.util.Map.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

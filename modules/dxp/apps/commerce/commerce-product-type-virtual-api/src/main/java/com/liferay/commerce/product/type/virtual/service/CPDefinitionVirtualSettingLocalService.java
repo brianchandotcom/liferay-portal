@@ -80,8 +80,9 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 	public CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
 		long cpDefinitionId, boolean useFileEntry, long fileEntryId,
 		java.lang.String url, java.lang.String activationStatus, long duration,
-		int maxUsages, boolean useSampleFileEntry, long sampleFileEntryId,
-		java.lang.String sampleUrl, boolean termsOfUseRequired,
+		int maxUsages, boolean useSample, boolean useSampleFileEntry,
+		long sampleFileEntryId, java.lang.String sampleUrl,
+		boolean termsOfUseRequired,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK, ServiceContext serviceContext)
 		throws PortalException;
@@ -168,7 +169,7 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 		long cpDefinitionVirtualSettingId, boolean useFileEntry,
 		long fileEntryId, java.lang.String url,
 		java.lang.String activationStatus, long duration, int maxUsages,
-		boolean useSampleFileEntry, long sampleFileEntryId,
+		boolean useSample, boolean useSampleFileEntry, long sampleFileEntryId,
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK, ServiceContext serviceContext)

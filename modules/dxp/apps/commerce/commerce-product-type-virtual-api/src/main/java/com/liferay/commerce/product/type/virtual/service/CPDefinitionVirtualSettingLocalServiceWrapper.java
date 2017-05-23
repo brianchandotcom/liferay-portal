@@ -50,16 +50,17 @@ public class CPDefinitionVirtualSettingLocalServiceWrapper
 	public com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
 		long cpDefinitionId, boolean useFileEntry, long fileEntryId,
 		java.lang.String url, java.lang.String activationStatus, long duration,
-		int maxUsages, boolean useSampleFileEntry, long sampleFileEntryId,
-		java.lang.String sampleUrl, boolean termsOfUseRequired,
+		int maxUsages, boolean useSample, boolean useSampleFileEntry,
+		long sampleFileEntryId, java.lang.String sampleUrl,
+		boolean termsOfUseRequired,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionVirtualSettingLocalService.addCPDefinitionVirtualSetting(cpDefinitionId,
 			useFileEntry, fileEntryId, url, activationStatus, duration,
-			maxUsages, useSampleFileEntry, sampleFileEntryId, sampleUrl,
-			termsOfUseRequired, termsOfUseContentMap,
+			maxUsages, useSample, useSampleFileEntry, sampleFileEntryId,
+			sampleUrl, termsOfUseRequired, termsOfUseContentMap,
 			termsOfUseJournalArticleResourcePK, serviceContext);
 	}
 
@@ -168,7 +169,7 @@ public class CPDefinitionVirtualSettingLocalServiceWrapper
 		long cpDefinitionVirtualSettingId, boolean useFileEntry,
 		long fileEntryId, java.lang.String url,
 		java.lang.String activationStatus, long duration, int maxUsages,
-		boolean useSampleFileEntry, long sampleFileEntryId,
+		boolean useSample, boolean useSampleFileEntry, long sampleFileEntryId,
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK,
@@ -176,8 +177,8 @@ public class CPDefinitionVirtualSettingLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionVirtualSettingLocalService.updateCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId,
 			useFileEntry, fileEntryId, url, activationStatus, duration,
-			maxUsages, useSampleFileEntry, sampleFileEntryId, sampleUrl,
-			termsOfUseRequired, termsOfUseContentMap,
+			maxUsages, useSample, useSampleFileEntry, sampleFileEntryId,
+			sampleUrl, termsOfUseRequired, termsOfUseContentMap,
 			termsOfUseJournalArticleResourcePK, serviceContext);
 	}
 

@@ -2128,9 +2128,8 @@
 			<var name="pageName" value="Asset Publisher Page 2" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
-			<var name="portletName" value="Asset Publisher" />
-			<var name="setAsDefaultPage" value="true" />
+		<execute macro="AssetPublisherPortlet#configureDisplaySettings">
+			<var name="displaySettings" value="Set as the Default Asset Publisher for This Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

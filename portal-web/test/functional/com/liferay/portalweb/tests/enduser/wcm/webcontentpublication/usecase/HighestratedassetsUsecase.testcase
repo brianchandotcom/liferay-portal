@@ -50,9 +50,8 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
-			<var name="enableRatings" value="true" />
-			<var name="portletName" value="Asset Publisher" />
+		<execute macro="AssetPublisherPortlet#configureDisplaySettings">
+			<var name="displaySettings" value="Ratings" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -64,8 +63,8 @@
 			<var name="portletName" value="Highest Rated Assets" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
-			<var name="enableRatings" value="true" />
+		<execute macro="AssetPublisherPortlet#configureDisplaySettings">
+			<var name="displaySettings" value="Ratings" />
 			<var name="portletName" value="Highest Rated Assets" />
 		</execute>
 

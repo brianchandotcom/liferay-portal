@@ -260,7 +260,9 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureFlagAllDisplaySettingsCheckboxes" />
+		<execute macro="AssetPublisherPortlet#configureDisplaySettings">
+			<var name="displaySettings" value="Comments,Comment Ratings,Enable Social Bookmarks,Flags,Print,Ratings,Related Assets" />
+		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="ADT Test Page" />

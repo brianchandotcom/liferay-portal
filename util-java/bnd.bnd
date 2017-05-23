@@ -4,6 +4,7 @@ Bundle-Version: 2.3.0
 Export-Package: com.liferay.util.*
 Import-Package:\
 	com.liferay.*,\
+	\
 	*;resolution:=optional
 Include-Resource: classes
 -baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.util.java-2.2.2.jar

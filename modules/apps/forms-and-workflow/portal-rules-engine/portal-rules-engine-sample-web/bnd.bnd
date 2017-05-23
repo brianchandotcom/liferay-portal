@@ -12,6 +12,7 @@ Import-Package:\
 	org.apache.commons.chain,\
 	org.apache.commons.chain.generic,\
 	org.apache.commons.chain.impl,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Rules Engine

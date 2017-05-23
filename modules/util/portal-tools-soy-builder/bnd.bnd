@@ -9,5 +9,6 @@ Export-Package:\
 Import-Package:\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
+	\
 	*
 Main-Class: com.liferay.portal.tools.soy.builder.SoyBuilder

@@ -16,6 +16,7 @@ Import-Package:\
 	!javax.mail.*,\
 	\
 	!javax.transaction.*,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scheduling

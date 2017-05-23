@@ -9,6 +9,7 @@ Export-Package:\
 Import-Package:\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
+	\
 	*
 Main-Class: com.liferay.portal.tools.db.support.DBSupport
 -includeresource: @com.liferay.portal.tools.service.builder-[0-9]*.jar!/com/liferay/portal/tools/service/builder/dependencies/bad_table_names.txt

@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package: com.liferay.portal.configuration.extender
 Import-Package:\
 	!javax.*,\
+	\
 	*
 -includeresource:\
 	classes,\

@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.portal.settings.authentication.ldap.web
 Bundle-Version: 1.0.10
 Import-Package:\
 	javax.net.ssl,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Portal Settings

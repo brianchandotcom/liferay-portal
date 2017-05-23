@@ -4,6 +4,7 @@ Bundle-Version: 2.0.3
 Export-Package: com.liferay.util.bridges.*
 Import-Package:\
 	com.liferay.*,\
+	\
 	*;resolution:=optional
 Include-Resource: classes
 -baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.util.bridges-2.0.2.jar

@@ -8,6 +8,7 @@ Export-Package:\
 	com.liferay.portal.monitoring.statistics
 Import-Package:\
 	com.liferay.portal.kernel.portlet;version="[7.0.0,8)",\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

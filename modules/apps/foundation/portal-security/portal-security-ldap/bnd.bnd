@@ -15,6 +15,7 @@ Import-Package:\
 	!junit.*,\
 	\
 	!org.junit.*,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: LDAP

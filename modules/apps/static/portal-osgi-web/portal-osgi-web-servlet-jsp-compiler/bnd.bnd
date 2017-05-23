@@ -61,6 +61,7 @@ Import-Package:\
 	org.xml.sax,\
 	org.xml.sax.ext,\
 	org.xml.sax.helpers,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: OSGI JSP support

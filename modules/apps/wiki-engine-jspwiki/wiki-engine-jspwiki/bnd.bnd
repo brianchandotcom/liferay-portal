@@ -18,6 +18,7 @@ Import-Package:\
 	!org.intabulas.sandler.*,\
 	\
 	!org.jgroups.*,\
+	\
 	*
 Web-ContextPath: /wiki-engine-jspwiki
 -includeresource:\

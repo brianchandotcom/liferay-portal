@@ -32,6 +32,7 @@ Import-Package:\
 	!org.slf4j.spi.*,\
 	\
 	!org.springframework.*,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines

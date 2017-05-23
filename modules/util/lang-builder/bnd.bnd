@@ -4,6 +4,7 @@ Bundle-Version: 1.0.14
 Import-Package:\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
+	\
 	*
 Main-Class: com.liferay.lang.builder.LangBuilder
 -includeresource:\

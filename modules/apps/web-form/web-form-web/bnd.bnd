@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.web.form.web
 Bundle-Version: 1.0.13
 Import-Package:\
 	!org.apache.xmlbeans.*,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

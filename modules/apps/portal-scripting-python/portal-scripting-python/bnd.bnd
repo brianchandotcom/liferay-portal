@@ -19,6 +19,7 @@ Import-Package:\
 	!sun.io.*,\
 	\
 	!sun.misc.*,\
+	\
 	*
 -fixupmessages:\
 	"The default package '.' is not permitted by the Import-Package ...";is:=ignore,\

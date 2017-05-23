@@ -4,6 +4,7 @@ Bundle-Version: 1.0.8
 Import-Package:\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
+	\
 	*
 Main-Class: com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilder
 -includeresource:\

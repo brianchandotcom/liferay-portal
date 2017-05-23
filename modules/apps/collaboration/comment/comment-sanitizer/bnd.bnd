@@ -5,6 +5,7 @@ Import-Package:\
 	!javax.annotation,\
 	\
 	!sun.misc,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Comments

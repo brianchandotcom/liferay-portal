@@ -7,6 +7,7 @@ Import-Package:\
 	!org.apache.lucene.*,\
 	!org.apache.pdfbox.*,\
 	!org.apache.tika.*,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Stores

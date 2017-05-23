@@ -16,5 +16,6 @@ Import-Package:\
 	!org.slf4j.spi,\
 	\
 	!org.zeroturnaround.javarebel,\
+	\
 	*
 Web-ContextPath: /document-library-google-docs

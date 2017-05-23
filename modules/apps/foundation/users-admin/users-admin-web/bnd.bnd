@@ -14,6 +14,7 @@ Export-Package:\
 	com.liferay.users.admin.web.util.comparator
 Import-Package:\
 	javax.net.ssl,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

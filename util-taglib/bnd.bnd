@@ -16,6 +16,7 @@ Import-Package:\
 	com.ibm.crypto.provider;resolution:=optional,\
 	\
 	com.liferay.*,\
+	\
 	*
 Include-Resource:\
 	classes,\

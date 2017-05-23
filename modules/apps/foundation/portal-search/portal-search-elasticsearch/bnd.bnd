@@ -65,6 +65,7 @@ Import-Package:\
 	!sun.security.*,\
 	\
 	com.liferay.portal.search.analysis,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Elasticsearch

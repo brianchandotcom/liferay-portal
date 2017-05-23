@@ -9,4 +9,5 @@ Import-Package:\
 	\
 	org.osgi.framework,\
 	org.osgi.resource,\
+	\
 	*

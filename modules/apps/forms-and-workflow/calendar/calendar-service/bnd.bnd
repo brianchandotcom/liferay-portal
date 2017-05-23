@@ -20,6 +20,7 @@ Import-Package:\
 	!net.fortuna.*,\
 	\
 	!org.codehaus.*,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Calendar

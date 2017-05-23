@@ -14,6 +14,7 @@ Import-Package:\
 	!sun.misc.*,\
 	\
 	!sun.nio.cs*,\
+	\
 	*
 -fixupmessages:\
 	"The default package '.' is not permitted by the Import-Package ...";is:=ignore,\

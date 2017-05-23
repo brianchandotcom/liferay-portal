@@ -8,6 +8,7 @@ Import-Package:\
 	\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
+	\
 	*
 Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 -includeresource:\

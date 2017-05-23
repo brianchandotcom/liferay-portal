@@ -4,6 +4,7 @@ Bundle-Version: 1.0.5
 Export-Package: com.liferay.petra.encryptor
 Import-Package:\
 	com.ibm.crypto.provider;resolution:=optional,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

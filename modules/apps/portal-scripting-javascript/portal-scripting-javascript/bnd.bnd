@@ -5,4 +5,5 @@ Import-Package:\
 	!javax.swing.*,\
 	\
 	!org.apache.xmlbeans.*,\
+	\
 	*

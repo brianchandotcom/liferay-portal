@@ -12,6 +12,7 @@ Export-Package:\
 	com.liferay.portal.search.web.search.result
 Import-Package:\
 	!com.liferay.util.xml,\
+	\
 	*
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:

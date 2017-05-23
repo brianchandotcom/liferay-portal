@@ -4,6 +4,7 @@ Bundle-Version: 1.0.2
 Export-Package: com.liferay.util.slf4j
 Import-Package:\
 	com.liferay.*,\
+	\
 	*;resolution:=optional
 Include-Resource: classes
 -baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.util.slf4j-1.0.1.jar

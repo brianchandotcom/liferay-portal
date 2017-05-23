@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.configuration.admin.web.test
 Bundle-Version: 1.0.0
 Import-Package:\
 	!javax.*,\
+	\
 	*
 -includeresource:\
 	com/liferay/configuration/admin/web/internal/exporter=../../../classes/com/liferay/configuration/admin/web/internal/exporter,\

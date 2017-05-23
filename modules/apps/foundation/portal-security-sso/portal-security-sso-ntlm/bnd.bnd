@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.portal.security.sso.ntlm.constants
 Import-Package:\
 	!javax.microedition.*,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks

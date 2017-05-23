@@ -66,6 +66,7 @@ Import-Package:\
 	org.springframework.scripting.config,\
 	org.springframework.transaction.config,\
 	org.springframework.web.servlet.config,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Runtime

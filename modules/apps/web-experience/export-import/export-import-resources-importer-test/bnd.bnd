@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.exportimport.resources.importer.test
 Bundle-Version: 1.0.0
 Import-Package:\
 	!com.liferay.shrinkwrap.osgi.api,\
+	\
 	*
 Include-Resource: test-classes/integration
 Liferay-Releng-Module-Group-Description:

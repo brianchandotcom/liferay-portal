@@ -8,5 +8,6 @@ Import-Package:\
 	!org.apache.commons.pool.impl.*,\
 	\
 	!org.incava.util.diff.*,\
+	\
 	*
 Web-ContextPath: /wiki-engine-mediawiki

@@ -19,6 +19,7 @@ Import-Package:\
 	!org.omg.*,\
 	\
 	!sun.awt.image.codec,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines

@@ -45,6 +45,7 @@ Import-Package:\
 	!org.terracotta.toolkit.store,\
 	\
 	!sun.misc,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Cache Engines

@@ -5,5 +5,6 @@ Export-Package: com.liferay.portal.tools.theme.builder
 Import-Package:\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
+	\
 	*
 Main-Class: com.liferay.portal.tools.theme.builder.ThemeBuilder

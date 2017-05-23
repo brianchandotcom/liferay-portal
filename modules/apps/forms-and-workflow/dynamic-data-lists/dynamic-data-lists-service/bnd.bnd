@@ -10,6 +10,7 @@ Export-Package:\
 Import-Package:\
 	!org.apache.poi.hssf.usermodel.*,\
 	!org.apache.poi.ss.usermodel.*,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Lists

@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.portal.tools.wsdd.builder
 Bundle-Version: 1.0.9
 Import-Package:\
 	!org.apache.maven.plugin.*,\
+	\
 	*
 Main-Class: com.liferay.portal.tools.wsdd.builder.WSDDBuilder
 -donotcopy: .touch

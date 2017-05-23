@@ -8,6 +8,7 @@ Export-Package:\
 	com.liferay.portal.search.index
 Import-Package:\
 	com.liferay.portal.kernel.search;version="[7.1.0,8)",\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Search

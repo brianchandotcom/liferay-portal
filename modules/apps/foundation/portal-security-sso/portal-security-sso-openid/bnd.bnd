@@ -15,6 +15,7 @@ Import-Package:\
 	!org.apache.log.*,\
 	\
 	!sun.io.*,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks

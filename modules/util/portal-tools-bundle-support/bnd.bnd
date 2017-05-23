@@ -10,6 +10,7 @@ Export-Package:\
 Import-Package:\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
+	\
 	*
 JPM-Command: liferay-bundle-support
 Main-Class: com.liferay.portal.tools.bundle.support.BundleSupport

@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.my.account.web
 Bundle-Version: 1.0.8
 Import-Package:\
 	javax.net.ssl,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

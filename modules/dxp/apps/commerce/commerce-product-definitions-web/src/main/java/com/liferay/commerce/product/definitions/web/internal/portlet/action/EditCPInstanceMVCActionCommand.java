@@ -185,7 +185,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			String ddmFormValues = ParamUtil.getString(
 				actionRequest, "ddmFormValues");
 
-			String ddmContent = _cpInstanceHelper.getDDMContent(
+			String ddmContent = _cpInstanceHelper.toJSON(
 				cpDefinitionId, locale, ddmFormValues);
 
 			_cpInstanceService.addCPInstance(

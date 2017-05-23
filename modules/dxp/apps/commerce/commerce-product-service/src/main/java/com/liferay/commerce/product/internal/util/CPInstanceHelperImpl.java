@@ -16,19 +16,17 @@ package com.liferay.commerce.product.internal.util;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -62,39 +60,8 @@ import org.osgi.service.component.annotations.Reference;
 public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Override
-	public String getDDMContent(
-		long cpDefinitionId, Locale locale, String serializedDDMFormValues) {
-
-		DDMFormValues ddmFormValues = getDDMFormValues(
-			cpDefinitionId, locale, serializedDDMFormValues);
-
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValueMap =
-			ddmFormValues.getDDMFormFieldValuesMap();
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (Map.Entry<String, List<DDMFormFieldValue>> entry :
-				ddmFormFieldValueMap.entrySet()) {
-
-			for (DDMFormFieldValue ddmFormFieldValue : entry.getValue()) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				jsonObject.put("cpDefinitionOptionRelId", entry.getKey());
-
-				Value value = ddmFormFieldValue.getValue();
-
-				jsonObject.put(
-					"cpDefinitionOptionValueRelId", value.getString(locale));
-
-				jsonArray.put(jsonObject);
-			}
-		}
-
-		return jsonArray.toString();
-	}
-
-	@Override
-	public DDMForm getDDMForm(long cpDefinitionId, Locale locale)
+	public DDMForm getDDMForm(
+			long cpDefinitionId, Locale locale, boolean required)
 		throws PortalException {
 
 		DDMForm ddmForm = new DDMForm();
@@ -122,8 +89,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 						cpDefinitionOptionValueRels) {
 
 					ddmFormFieldOptions.addOptionLabel(
-						String.valueOf(cpDefinitionOptionValueRel.
-							getCPDefinitionOptionValueRelId()),
+						"cpDefinitionOptionValueRelId" +
+							String.valueOf(cpDefinitionOptionValueRel.
+								getCPDefinitionOptionValueRelId()),
 						locale, cpDefinitionOptionValueRel.getTitle(locale));
 				}
 
@@ -137,7 +105,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 			ddmFormField.setLabel(localizedValue);
 
-			ddmFormField.setRequired(true);
+			ddmFormField.setRequired(required);
 
 			ddmForm.addDDMFormField(ddmFormField);
 		}
@@ -151,7 +119,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		if (Validator.isNotNull(serializedDDMFormValues)) {
 			try {
-				DDMForm ddmForm = getDDMForm(cpDefinitionId, locale);
+				DDMForm ddmForm = getDDMForm(cpDefinitionId, locale, true);
 
 				return DDMUtil.getDDMFormValues(
 					ddmForm, serializedDDMFormValues);
@@ -168,16 +136,13 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Override
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-			parseCPInstanceDDMContent(long cpInstanceId)
+			parseJSONString(String json)
 		throws PortalException {
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			cpDefinitionOptionRelListMap = new HashMap<>();
 
-		CPInstance cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-			cpInstance.getDDMContent());
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -216,6 +181,16 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			RenderResponse renderResponse)
 		throws PortalException {
 
+		return render(
+			cpDefinitionId, null, true, renderRequest, renderResponse);
+	}
+
+	@Override
+	public String render(
+			long cpDefinitionId, String json, boolean required,
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException {
+
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
@@ -224,7 +199,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
-		DDMForm ddmForm = getDDMForm(cpDefinitionId, locale);
+		DDMForm ddmForm = getDDMForm(cpDefinitionId, locale, required);
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
@@ -236,7 +211,24 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		ddmFormRenderingContext.setPortletNamespace(
 			renderResponse.getNamespace());
 
+		if (Validator.isNotNull(json)) {
+			DDMFormValues ddmFormValues = _ddmFormValuesHelper.deserialize(
+				ddmForm, json, locale);
+
+			ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
+		}
+
 		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
+	}
+
+	@Override
+	public String toJSON(
+		long cpDefinitionId, Locale locale, String serializedDDMFormValues) {
+
+		DDMFormValues ddmFormValues = getDDMFormValues(
+			cpDefinitionId, locale, serializedDDMFormValues);
+
+		return _ddmFormValuesHelper.serialize(ddmFormValues);
 	}
 
 	private static final String _DDM_CONTAINER_ID = "cpDefinitionOptionsRender";
@@ -256,6 +248,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Reference
 	private DDMFormRenderer _ddmFormRenderer;
+
+	@Reference
+	private DDMFormValuesHelper _ddmFormValuesHelper;
 
 	@Reference
 	private Portal _portal;

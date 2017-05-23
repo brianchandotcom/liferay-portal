@@ -35,21 +35,27 @@ import javax.portlet.RenderResponse;
 @ProviderType
 public interface CPInstanceHelper {
 
-	public String getDDMContent(
-		long cpDefinitionId, Locale locale, String serializedDDMFormValues);
-
-	public DDMForm getDDMForm(long cpDefinitionId, Locale locale)
+	public DDMForm getDDMForm(
+			long cpDefinitionId, Locale locale, boolean required)
 		throws PortalException;
 
 	public DDMFormValues getDDMFormValues(
 		long cpDefinitionId, Locale locale, String serializedDDMFormValues);
 
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-		parseCPInstanceDDMContent(long cpInstanceId) throws PortalException;
+		parseJSONString(String json) throws PortalException;
 
 	public String render(
 			long cpDefinitionId, RenderRequest renderRequest,
 			RenderResponse renderResponse)
 		throws PortalException;
+
+	public String render(
+			long cpDefinitionId, String json, boolean requierd,
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException;
+
+	public String toJSON(
+		long cpDefinitionId, Locale locale, String serializedDDMFormValues);
 
 }

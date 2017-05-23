@@ -191,7 +191,9 @@ public class CPInstanceDisplayContext
 			return Collections.emptyMap();
 		}
 
-		return _cpInstanceHelper.parseCPInstanceDDMContent(cpInstanceId);
+		CPInstance cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
+
+		return _cpInstanceHelper.parseJSONString(cpInstance.getDDMContent());
 	}
 
 	public String renderOptions(

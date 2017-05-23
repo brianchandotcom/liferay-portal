@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.permission;
 
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -23,6 +24,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -32,8 +34,11 @@ import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourcePermissionCheckerUtil;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -120,8 +125,28 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 			if (hasPermission != null) {
 				return hasPermission.booleanValue();
 			}
-			else if (actionId.equals(ActionKeys.VIEW)) {
-				return false;
+
+			// See LPS-10500 and LPS-72547
+
+			if (actionId.equals(ActionKeys.VIEW)) {
+				WorkflowInstanceLink workflowInstanceLink =
+					WorkflowInstanceLinkLocalServiceUtil.
+						fetchWorkflowInstanceLink(
+							permissionChecker.getCompanyId(),
+							dlFileEntry.getGroupId(),
+							DLFileEntryConstants.getClassName(),
+							currentDLFileVersion.getFileVersionId());
+
+				if (workflowInstanceLink != null) {
+					WorkflowInstance workflowInstance =
+						WorkflowInstanceManagerUtil.getWorkflowInstance(
+							permissionChecker.getCompanyId(),
+							workflowInstanceLink.getWorkflowInstanceId());
+
+					if (!workflowInstance.isComplete()) {
+						return false;
+					}
+				}
 			}
 		}
 

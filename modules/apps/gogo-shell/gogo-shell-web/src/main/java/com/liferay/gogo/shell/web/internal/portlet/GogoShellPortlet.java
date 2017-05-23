@@ -15,6 +15,7 @@
 package com.liferay.gogo.shell.web.internal.portlet;
 
 import com.liferay.gogo.shell.web.internal.constants.GogoShellPortletKeys;
+import com.liferay.gogo.shell.web.internal.constants.GogoShellWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -83,7 +84,8 @@ public class GogoShellPortlet extends MVCPortlet {
 		_ensureCommandSessionInitialized(renderRequest);
 
 		CommandSession commandSession = _getSessionAttribute(
-			CommandSession.class, "commandSession", renderRequest);
+			CommandSession.class, GogoShellWebKeys.COMMAND_SESSION,
+			renderRequest);
 
 		SessionMessages.add(
 			renderRequest, "prompt", commandSession.get("prompt"));
@@ -103,23 +105,27 @@ public class GogoShellPortlet extends MVCPortlet {
 		_ensureCommandSessionInitialized(actionRequest);
 
 		CommandSession commandSession = _getSessionAttribute(
-			CommandSession.class, "commandSession", actionRequest);
+			CommandSession.class, GogoShellWebKeys.COMMAND_SESSION,
+			actionRequest);
 
 		UnsyncByteArrayOutputStream outputUnsyncByteArrayOutputStream =
 			_getSessionAttribute(
 				UnsyncByteArrayOutputStream.class,
-				"outputUnsyncByteArrayOutputStream", actionRequest);
+				GogoShellWebKeys.COMMAND_SESSION_OUTPUT_STREAM, actionRequest);
 
 		UnsyncByteArrayOutputStream errorUnsyncByteArrayOutputStream =
 			_getSessionAttribute(
 				UnsyncByteArrayOutputStream.class,
-				"errorUnsyncByteArrayOutputStream", actionRequest);
+				GogoShellWebKeys.COMMAND_SESSION_ERROR_STREAM, actionRequest);
 
 		PrintStream outputPrintStream = _getSessionAttribute(
-			PrintStream.class, "outputPrintStream", actionRequest);
+			PrintStream.class,
+			GogoShellWebKeys.COMMAND_SESSION_OUTPUT_PRINT_STREAM,
+			actionRequest);
 
 		PrintStream errorPrintStream = _getSessionAttribute(
-			PrintStream.class, "errorPrintStream", actionRequest);
+			PrintStream.class,
+			GogoShellWebKeys.COMMAND_SESSION_ERROR_PRINT_STREAM, actionRequest);
 
 		try {
 			SessionMessages.add(actionRequest, "command", command);
@@ -209,7 +215,7 @@ public class GogoShellPortlet extends MVCPortlet {
 		PortletSession portletSession = portletRequest.getPortletSession();
 
 		Object commandSessionAttribute = portletSession.getAttribute(
-			"commandSession");
+			GogoShellWebKeys.COMMAND_SESSION);
 
 		if (!(commandSessionAttribute instanceof CommandSession)) {
 			UnsyncByteArrayOutputStream outputUnsyncByteArrayOutputStream =
@@ -226,15 +232,20 @@ public class GogoShellPortlet extends MVCPortlet {
 				null, outputPrintStream, errorPrintStream);
 
 			commandSession.put("prompt", "g!");
-			portletSession.setAttribute("commandSession", commandSession);
+			portletSession.setAttribute(
+				GogoShellWebKeys.COMMAND_SESSION, commandSession);
 
-			portletSession.setAttribute("errorPrintStream", errorPrintStream);
 			portletSession.setAttribute(
-				"errorUnsyncByteArrayOutputStream",
+				GogoShellWebKeys.COMMAND_SESSION_ERROR_PRINT_STREAM,
+				errorPrintStream);
+			portletSession.setAttribute(
+				GogoShellWebKeys.COMMAND_SESSION_ERROR_STREAM,
 				errorUnsyncByteArrayOutputStream);
-			portletSession.setAttribute("outputPrintStream", outputPrintStream);
 			portletSession.setAttribute(
-				"outputUnsyncByteArrayOutputStream",
+				GogoShellWebKeys.COMMAND_SESSION_OUTPUT_PRINT_STREAM,
+				outputPrintStream);
+			portletSession.setAttribute(
+				GogoShellWebKeys.COMMAND_SESSION_OUTPUT_STREAM,
 				outputUnsyncByteArrayOutputStream);
 		}
 	}

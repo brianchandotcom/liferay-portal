@@ -19,6 +19,7 @@ import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.internal.util.WorkspaceUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 import com.liferay.project.templates.util.StringTestUtil;
+import com.liferay.project.templates.util.XMLTestUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,8 +34,11 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -50,7 +54,6 @@ import org.junit.Test;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
@@ -75,21 +78,47 @@ public class ProjectTemplateFilesTest {
 		}
 	}
 
-	private Element _getChildElement(Element parentElement, String name) {
-		Node node = parentElement.getFirstChild();
+	private static String _readXmlDeclarationTemplate(String name)
+		throws IOException {
 
-		do {
-			if (node.getNodeType() == Node.ELEMENT_NODE) {
-				Element element = (Element)node;
+		String template = FileTestUtil.read(
+			"com/liferay/project/templates/dependencies/" + name);
 
-				if (name.equals(element.getTagName())) {
-					return element;
-				}
+		int pos = template.indexOf("[$XML$]");
+
+		return template.substring(0, pos);
+	}
+
+	private List<BuildGradleDependency> _getBuildGradleDependencies(
+			Path buildGradlePath)
+		throws IOException {
+
+		List<BuildGradleDependency> buildGradleDependencies = new ArrayList<>();
+
+		String buildGradle = new String(
+			Files.readAllBytes(buildGradlePath), StandardCharsets.UTF_8);
+
+		Matcher matcher = _buildGradleDependencyPattern.matcher(buildGradle);
+
+		while (matcher.find()) {
+			String configuration = matcher.group(1);
+			String dependencyGroup = matcher.group(2);
+			String dependencyName = matcher.group(3);
+			String dependencyVersion = matcher.group(4);
+
+			boolean provided = false;
+
+			if (configuration.equals("compileOnly")) {
+				provided = true;
 			}
-		}
-		while ((node = node.getNextSibling()) != null);
 
-		return null;
+			buildGradleDependencies.add(
+				new BuildGradleDependency(
+					dependencyGroup, dependencyName, dependencyVersion,
+					provided));
+		}
+
+		return buildGradleDependencies;
 	}
 
 	private boolean _isInJavaSrcDir(Path path) throws IOException {
@@ -269,7 +298,7 @@ public class ProjectTemplateFilesTest {
 
 		Element projectElement = document.getDocumentElement();
 
-		Element packagingElement = _getChildElement(
+		Element packagingElement = XMLTestUtil.getChildElement(
 			projectElement, "packaging");
 
 		if (packagingElement != null) {
@@ -278,7 +307,7 @@ public class ProjectTemplateFilesTest {
 				packagingElement.getTextContent());
 		}
 
-		Element propertiesElement = _getChildElement(
+		Element propertiesElement = XMLTestUtil.getChildElement(
 			projectElement, "properties");
 
 		Assert.assertNotNull(
@@ -287,7 +316,7 @@ public class ProjectTemplateFilesTest {
 
 		String sourceEncoding = null;
 
-		Element sourceEncodingElement = _getChildElement(
+		Element sourceEncodingElement = XMLTestUtil.getChildElement(
 			propertiesElement, "project.build.sourceEncoding");
 
 		if (sourceEncodingElement != null) {
@@ -305,7 +334,8 @@ public class ProjectTemplateFilesTest {
 		for (int i = 0; i < executionNodeList.getLength(); i++) {
 			Element executionElement = (Element)executionNodeList.item(i);
 
-			Element idElement = _getChildElement(executionElement, "id");
+			Element idElement = XMLTestUtil.getChildElement(
+				executionElement, "id");
 
 			if (idElement != null) {
 				String id = idElement.getTextContent();
@@ -325,6 +355,64 @@ public class ProjectTemplateFilesTest {
 			}
 		}
 
+		Path buildGradlePath = archetypeResourcesDirPath.resolve(
+			"build.gradle");
+
+		List<BuildGradleDependency> buildGradleDependencies =
+			_getBuildGradleDependencies(buildGradlePath);
+
+		Element dependenciesElement = XMLTestUtil.getChildElement(
+			projectElement, "dependencies");
+
+		List<Element> dependencyElements;
+
+		if (dependenciesElement != null) {
+			dependencyElements = XMLTestUtil.getChildElements(
+				dependenciesElement);
+		}
+		else {
+			dependencyElements = Collections.emptyList();
+		}
+
+		Assert.assertEquals(
+			"Number of dependencies in " + pomXmlPath + " must match " +
+				buildGradlePath,
+			buildGradleDependencies.size(), dependencyElements.size());
+
+		for (int i = 0; i < buildGradleDependencies.size(); i++) {
+			BuildGradleDependency buildGradleDependency =
+				buildGradleDependencies.get(i);
+			Element dependencyElement = dependencyElements.get(i);
+
+			List<Element> dependencyChildElements =
+				XMLTestUtil.getChildElements(dependencyElement);
+
+			String dependencyElementString = XMLTestUtil.toString(
+				dependencyElement);
+
+			XMLTestUtil.testXmlElement(
+				pomXmlPath, dependencyElementString, dependencyChildElements, 0,
+				"groupId", buildGradleDependency.group);
+			XMLTestUtil.testXmlElement(
+				pomXmlPath, dependencyElementString, dependencyChildElements, 1,
+				"artifactId", buildGradleDependency.name);
+			XMLTestUtil.testXmlElement(
+				pomXmlPath, dependencyElementString, dependencyChildElements, 2,
+				"version", buildGradleDependency.version);
+
+			if (buildGradleDependency.provided) {
+				XMLTestUtil.testXmlElement(
+					pomXmlPath, dependencyElementString,
+					dependencyChildElements, 3, "scope", "provided");
+			}
+			else {
+				Assert.assertEquals(
+					"Incorrect number of child nodes of " +
+						dependencyElementString + " in " + pomXmlPath,
+					dependencyChildElements.size(), 3);
+			}
+		}
+
 		_testPomXmlVersions(pomXmlPath, projectElement, "dependency");
 		_testPomXmlVersions(pomXmlPath, projectElement, "plugin");
 	}
@@ -339,14 +427,16 @@ public class ProjectTemplateFilesTest {
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Element element = (Element)nodeList.item(i);
 
-			Element artifactIdElement = _getChildElement(element, "artifactId");
+			Element artifactIdElement = XMLTestUtil.getChildElement(
+				element, "artifactId");
 
 			String artifactId = artifactIdElement.getTextContent();
 
 			String key = artifactId + ".version";
 
 			if (systemProperties.containsKey(key)) {
-				Element versionElement = _getChildElement(element, "version");
+				Element versionElement = XMLTestUtil.getChildElement(
+					element, "version");
 
 				Assert.assertEquals(
 					"Incorrect version of " + name + " \"" + artifactId +
@@ -486,7 +576,10 @@ public class ProjectTemplateFilesTest {
 
 			String xmlDeclaration = _XML_DECLARATION;
 
-			if (fileName.equals("service.xml")) {
+			if (fileName.equals("pom.xml")) {
+				xmlDeclaration = _POM_XML_DECLARATION;
+			}
+			else if (fileName.equals("service.xml")) {
 				xmlDeclaration = _SERVICE_XML_DECLARATION;
 			}
 
@@ -500,15 +593,20 @@ public class ProjectTemplateFilesTest {
 
 	private static final String _GIT_IGNORE_WITH_PACKAGE_JSON;
 
+	private static final String _POM_XML_DECLARATION;
+
 	private static final String _SERVICE_XML_DECLARATION;
 
 	private static final String[] _SOURCESET_NAMES = {
 		"main", "test", "testIntegration"
 	};
 
-	private static final String _XML_DECLARATION =
-		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
+	private static final String _XML_DECLARATION;
 
+	private static final Pattern _buildGradleDependencyPattern =
+		Pattern.compile(
+			"(compile(?:Only)?) group: \"(.+)\", name: \"(.+)\", " +
+				"(?:transitive: (?:true|false), )?version: \"(.+)\"");
 	private static final Pattern _bundleDescriptionPattern = Pattern.compile(
 		"Creates a .+\\.");
 	private static final Pattern _pomXmlExecutionIdPattern = Pattern.compile(
@@ -533,16 +631,35 @@ public class ProjectTemplateFilesTest {
 		_GIT_IGNORE_WITH_PACKAGE_JSON = StringTestUtil.merge(
 			gitIgnoreLines, '\n');
 
-		StringBuilder sb = new StringBuilder();
+		try {
+			_XML_DECLARATION = _readXmlDeclarationTemplate(
+				"xml_declaration.tmpl");
+			_POM_XML_DECLARATION = _readXmlDeclarationTemplate(
+				"pom_xml_declaration.tmpl");
+			_SERVICE_XML_DECLARATION = _readXmlDeclarationTemplate(
+				"service_xml_declaration.tmpl");
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
+	}
 
-		sb.append("<?xml version=\"1.0\"?>");
-		sb.append('\n');
-		sb.append("<!DOCTYPE service-builder PUBLIC ");
-		sb.append("\"-//Liferay//DTD Service Builder 7.0.0//EN\" ");
-		sb.append("\"http://www.liferay.com/dtd/");
-		sb.append("liferay-service-builder_7_0_0.dtd\">\n\n");
+	private static class BuildGradleDependency {
 
-		_SERVICE_XML_DECLARATION = sb.toString();
+		public BuildGradleDependency(
+			String group, String name, String version, boolean provided) {
+
+			this.group = group;
+			this.name = name;
+			this.version = version;
+			this.provided = provided;
+		}
+
+		public final String group;
+		public final String name;
+		public final boolean provided;
+		public final String version;
+
 	}
 
 }

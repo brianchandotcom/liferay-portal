@@ -82,10 +82,6 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 				termsOfUseJournalArticleResourcePK = 0;
 			}
 		}
-		else {
-			termsOfUseContentMap = null;
-			termsOfUseJournalArticleResourcePK = 0;
-		}
 
 		validate(
 			useFileEntry, fileEntryId, url, useSample, useSampleFileEntry,
@@ -176,10 +172,6 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			else {
 				termsOfUseJournalArticleResourcePK = 0;
 			}
-		}
-		else {
-			termsOfUseContentMap = null;
-			termsOfUseJournalArticleResourcePK = 0;
 		}
 
 		validate(

@@ -12,7 +12,7 @@ create table CPAttachmentFileEntry (
 	fileEntryId LONG,
 	displayDate DATE null,
 	expirationDate DATE null,
-	json VARCHAR(75) null,
+	json TEXT null,
 	priority INTEGER,
 	type_ INTEGER,
 	lastPublishDate DATE null

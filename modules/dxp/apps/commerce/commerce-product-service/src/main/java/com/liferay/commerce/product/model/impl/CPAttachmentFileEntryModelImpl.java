@@ -87,7 +87,7 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 			{ "fileEntryId", Types.BIGINT },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
-			{ "json", Types.VARCHAR },
+			{ "json", Types.CLOB },
 			{ "priority", Types.INTEGER },
 			{ "type_", Types.INTEGER },
 			{ "lastPublishDate", Types.TIMESTAMP }
@@ -108,13 +108,13 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 		TABLE_COLUMNS_MAP.put("fileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("json", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("json", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPAttachmentFileEntry (uuid_ VARCHAR(75) null,CPAttachmentFileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,displayDate DATE null,expirationDate DATE null,json VARCHAR(75) null,priority INTEGER,type_ INTEGER,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPAttachmentFileEntry (uuid_ VARCHAR(75) null,CPAttachmentFileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,displayDate DATE null,expirationDate DATE null,json TEXT null,priority INTEGER,type_ INTEGER,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPAttachmentFileEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpAttachmentFileEntry.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPAttachmentFileEntry.priority ASC";

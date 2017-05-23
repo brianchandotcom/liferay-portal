@@ -268,8 +268,7 @@ public class CPAttachmentFileEntryPersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "classNameId", true, "classPK", true,
 			"fileEntryId", true, "displayDate", true, "expirationDate", true,
-			"json", true, "priority", true, "type", true, "lastPublishDate",
-			true);
+			"priority", true, "type", true, "lastPublishDate", true);
 	}
 
 	@Test

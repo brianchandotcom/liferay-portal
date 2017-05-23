@@ -178,6 +178,8 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 				project, file, npmInstallTask.getNodeModulesDir(),
 				"expandJSCompileDependency", renameDependencyClosure);
 
+			copy.mustRunAfter(npmInstallTask);
+
 			transpileJSTask.dependsOn(copy);
 		}
 	}

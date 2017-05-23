@@ -212,6 +212,11 @@ public class ModulesStructureTest {
 							"Incorrect repository URL in " + path +
 								", please use " + _REPOSITORY_URL + " instead",
 							content.contains("plugins.gradle.org/m2"));
+
+						Assert.assertFalse(
+							"Plugins DSL forbidden in " + path +
+								", please use \"apply plugin:\" instead",
+							content.contains("plugins {"));
 					}
 
 					return FileVisitResult.CONTINUE;

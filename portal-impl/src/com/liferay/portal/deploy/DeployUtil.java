@@ -74,32 +74,32 @@ public class DeployUtil {
 				true);
 
 			for (Path tempPath : tempPaths) {
-				deleteTemporaryPath(tempPath);
+				deletePath(tempPath);
 			}
 		}
 	}
 
-	public static void deleteTemporaryPath(Path tempPath) throws IOException {
+	public static void deletePath(Path tempPath) throws IOException {
 		Files.walkFileTree(
 			tempPath,
 			new SimpleFileVisitor<Path>() {
 
 				@Override
 				public FileVisitResult postVisitDirectory(
-						Path directory, IOException exc)
+						Path dirPath, IOException ioe)
 					throws IOException {
 
-					Files.delete(directory);
+					Files.delete(dirPath);
 
 					return FileVisitResult.CONTINUE;
 				}
 
 				@Override
 				public FileVisitResult visitFile(
-						Path file, BasicFileAttributes attrs)
+						Path filePath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					Files.delete(file);
+					Files.delete(filePath);
 
 					return FileVisitResult.CONTINUE;
 				}
@@ -307,7 +307,7 @@ public class DeployUtil {
 	private DeployUtil() {
 	}
 
-	private String _getResourcePath(Set<Path> tempPaths, String resource)
+	private String _getResourcePath(Set<Path> tempDirPaths, String resource)
 		throws IOException {
 
 		Class<?> clazz = getClass();
@@ -322,7 +322,7 @@ public class DeployUtil {
 		Path tempDirPath = Files.createTempDirectory(
 			Paths.get(SystemProperties.get(SystemProperties.TMP_DIR)), null);
 
-		tempPaths.add(tempDirPath);
+		tempDirPaths.add(tempDirPath);
 
 		File file = new File(
 			tempDirPath + "/liferay/com/liferay/portal/deploy/dependencies/" +

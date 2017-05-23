@@ -171,7 +171,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			String extResource =
 				"ext-" + servletContextName + resource.substring(3);
 
-			String path = DeployUtil.getResourcePath(tempPaths, extResource);
+			String path = DeployUtil.getResourcePath(tempDirPaths, extResource);
 
 			if (_log.isDebugEnabled()) {
 				if (path == null) {
@@ -193,7 +193,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	public void addRequiredJar(List<String> jars, String resource)
 		throws Exception {
 
-		String path = DeployUtil.getResourcePath(tempPaths, resource);
+		String path = DeployUtil.getResourcePath(tempDirPaths, resource);
 
 		if (path == null) {
 			throw new RuntimeException(
@@ -304,9 +304,9 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	public void close() throws IOException {
 		IOException ioe1 = null;
 
-		for (Path tempPath : tempPaths) {
+		for (Path tempPath : tempDirPaths) {
 			try {
-				DeployUtil.deleteTemporaryPath(tempPath);
+				DeployUtil.deletePath(tempPath);
 			}
 			catch (IOException ioe) {
 				if (ioe1 == null) {
@@ -359,7 +359,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				jarFullName.lastIndexOf("/") + 1);
 
 			if (!FileUtil.exists(jarFullName)) {
-				DeployUtil.getResourcePath(tempPaths, jarName);
+				DeployUtil.getResourcePath(tempDirPaths, jarName);
 			}
 
 			FileUtil.copyFile(
@@ -417,7 +417,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 			try {
 				String portalTldPath = DeployUtil.getResourcePath(
-					tempPaths, portalTld);
+					tempDirPaths, portalTld);
 
 				FileUtil.copyFile(
 					portalTldPath, srcFile + "/WEB-INF/tld/" + portalTld, true);
@@ -566,7 +566,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		}
 
 		String contextPath = DeployUtil.getResourcePath(
-			tempPaths, "context.xml");
+			tempDirPaths, "context.xml");
 
 		String content = FileUtil.read(contextPath);
 
@@ -1312,7 +1312,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		if (ignoreFiltersEnabled) {
 			String ignoreFiltersContent = FileUtil.read(
 				DeployUtil.getResourcePath(
-					tempPaths, "ignore-filters-web.xml"));
+					tempDirPaths, "ignore-filters-web.xml"));
 
 			return ignoreFiltersContent;
 		}
@@ -1566,12 +1566,13 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		return FileUtil.read(
 			DeployUtil.getResourcePath(
-				tempPaths, "servlet-context-include-filters-web.xml"));
+				tempDirPaths, "servlet-context-include-filters-web.xml"));
 	}
 
 	public String getSessionFiltersContent() throws Exception {
 		String sessionFiltersContent = FileUtil.read(
-			DeployUtil.getResourcePath(tempPaths, "session-filters-web.xml"));
+			DeployUtil.getResourcePath(
+				tempDirPaths, "session-filters-web.xml"));
 
 		return sessionFiltersContent;
 	}
@@ -1588,7 +1589,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		if (speedFiltersEnabled) {
 			String speedFiltersContent = FileUtil.read(
-				DeployUtil.getResourcePath(tempPaths, "speed-filters-web.xml"));
+				DeployUtil.getResourcePath(
+					tempDirPaths, "speed-filters-web.xml"));
 
 			return speedFiltersContent;
 		}
@@ -2079,7 +2081,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				getExtraFiltersContent(webXmlVersion, srcFile);
 
 		String liferayWebXmlContent = FileUtil.read(
-			DeployUtil.getResourcePath(tempPaths, "web.xml"));
+			DeployUtil.getResourcePath(tempDirPaths, "web.xml"));
 
 		int z = liferayWebXmlContent.indexOf("</web-app>");
 
@@ -2233,7 +2235,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	protected String portletExtTaglibDTD;
 	protected String portletTaglibDTD;
 	protected String securityTaglibDTD;
-	protected final Set<Path> tempPaths = new HashSet<>();
+	protected final Set<Path> tempDirPaths = new HashSet<>();
 	protected String themeTaglibDTD;
 	protected String tomcatLibDir;
 	protected String uiTaglibDTD;

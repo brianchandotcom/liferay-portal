@@ -30,6 +30,7 @@
 		<column name="activationStatus" type="String" />
 		<column name="duration" type="long" />
 		<column name="maxUsages" type="int" />
+		<column name="useSample" type="boolean" />
 		<column name="sampleFileEntryId" type="long" />
 		<column name="sampleUrl" type="String" />
 		<column name="termsOfUseRequired" type="boolean" />
@@ -54,5 +55,6 @@
 		<exception>CPDefinitionVirtualSettingSampleUrl</exception>
 		<exception>CPDefinitionVirtualSettingTermsOfUseRequired</exception>
 		<exception>CPDefinitionVirtualSettingUrl</exception>
+		<exception>CPDefinitionVirtualSettingUseSampleUrl</exception>
 	</exceptions>
 </service-builder>

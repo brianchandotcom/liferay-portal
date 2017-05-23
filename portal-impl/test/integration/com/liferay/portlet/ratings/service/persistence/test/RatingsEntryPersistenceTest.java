@@ -200,13 +200,6 @@ public class RatingsEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByU_C_CArrayable() throws Exception {
-		_persistence.countByU_C_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(),
-			new long[] { RandomTestUtil.nextLong(), 0L });
-	}
-
-	@Test
 	public void testCountByC_C_S() throws Exception {
 		_persistence.countByC_C_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextDouble());

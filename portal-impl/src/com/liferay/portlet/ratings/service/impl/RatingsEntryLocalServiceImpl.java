@@ -29,9 +29,7 @@ import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -101,10 +99,6 @@ public class RatingsEntryLocalServiceImpl
 			userId, classNameId, classPK);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
 	@Override
 	public List<RatingsEntry> getEntries(
 		long userId, String className, List<Long> classPKs) {
@@ -112,23 +106,6 @@ public class RatingsEntryLocalServiceImpl
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return ratingsEntryFinder.findByU_C_C(userId, classNameId, classPKs);
-	}
-
-	@Override
-	public Map<Long, RatingsEntry> getEntries(
-		long userId, String className, long[] classPKs) {
-
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		Map<Long, RatingsEntry> ratingsEntries = new HashMap<>();
-
-		for (RatingsEntry entry : ratingsEntryPersistence.findByU_C_C(
-				userId, classNameId, classPKs)) {
-
-			ratingsEntries.put(entry.getClassPK(), entry);
-		}
-
-		return ratingsEntries;
 	}
 
 	@Override
@@ -190,12 +167,8 @@ public class RatingsEntryLocalServiceImpl
 
 			// Stats
 
-			RatingsStats stats = ratingsStatsPersistence.fetchByC_C(
-				classNameId, classPK);
-
-			if (stats == null) {
-				stats = ratingsStatsLocalService.addStats(classNameId, classPK);
-			}
+			RatingsStats stats = ratingsStatsLocalService.getStats(
+				className, classPK);
 
 			stats.setTotalScore(stats.getTotalScore() - oldScore + score);
 			stats.setAverageScore(
@@ -221,12 +194,8 @@ public class RatingsEntryLocalServiceImpl
 
 			// Stats
 
-			RatingsStats stats = ratingsStatsPersistence.fetchByC_C(
-				classNameId, classPK);
-
-			if (stats == null) {
-				stats = ratingsStatsLocalService.addStats(classNameId, classPK);
-			}
+			RatingsStats stats = ratingsStatsLocalService.getStats(
+				className, classPK);
 
 			stats.setTotalEntries(stats.getTotalEntries() + 1);
 			stats.setTotalScore(stats.getTotalScore() + score);

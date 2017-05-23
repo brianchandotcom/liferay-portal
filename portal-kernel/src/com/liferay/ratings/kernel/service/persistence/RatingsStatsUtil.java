@@ -110,85 +110,6 @@ public class RatingsStatsUtil {
 	}
 
 	/**
-	* Returns all the ratings statses where classNameId = &#63; and classPK = any &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsStatsModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param classNameId the class name ID
-	* @param classPKs the class pks
-	* @return the matching ratings statses
-	*/
-	public static List<RatingsStats> findByC_C(long classNameId, long[] classPKs) {
-		return getPersistence().findByC_C(classNameId, classPKs);
-	}
-
-	/**
-	* Returns a range of all the ratings statses where classNameId = &#63; and classPK = any &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsStatsModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param classNameId the class name ID
-	* @param classPKs the class pks
-	* @param start the lower bound of the range of ratings statses
-	* @param end the upper bound of the range of ratings statses (not inclusive)
-	* @return the range of matching ratings statses
-	*/
-	public static List<RatingsStats> findByC_C(long classNameId,
-		long[] classPKs, int start, int end) {
-		return getPersistence().findByC_C(classNameId, classPKs, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the ratings statses where classNameId = &#63; and classPK = any &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsStatsModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param classNameId the class name ID
-	* @param classPKs the class pks
-	* @param start the lower bound of the range of ratings statses
-	* @param end the upper bound of the range of ratings statses (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching ratings statses
-	*/
-	public static List<RatingsStats> findByC_C(long classNameId,
-		long[] classPKs, int start, int end,
-		OrderByComparator<RatingsStats> orderByComparator) {
-		return getPersistence()
-				   .findByC_C(classNameId, classPKs, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the ratings statses where classNameId = &#63; and classPK = &#63;, optionally using the finder cache.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsStatsModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param start the lower bound of the range of ratings statses
-	* @param end the upper bound of the range of ratings statses (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching ratings statses
-	*/
-	public static List<RatingsStats> findByC_C(long classNameId,
-		long[] classPKs, int start, int end,
-		OrderByComparator<RatingsStats> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByC_C(classNameId, classPKs, start, end,
-			orderByComparator, retrieveFromCache);
-	}
-
-	/**
 	* Returns the ratings stats where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchStatsException} if it could not be found.
 	*
 	* @param classNameId the class name ID
@@ -247,17 +168,6 @@ public class RatingsStatsUtil {
 	*/
 	public static int countByC_C(long classNameId, long classPK) {
 		return getPersistence().countByC_C(classNameId, classPK);
-	}
-
-	/**
-	* Returns the number of ratings statses where classNameId = &#63; and classPK = any &#63;.
-	*
-	* @param classNameId the class name ID
-	* @param classPKs the class pks
-	* @return the number of matching ratings statses
-	*/
-	public static int countByC_C(long classNameId, long[] classPKs) {
-		return getPersistence().countByC_C(classNameId, classPKs);
 	}
 
 	/**

@@ -31,10 +31,8 @@ import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
-@Deprecated
 public class RatingsEntryFinderBaseImpl extends BasePersistenceImpl<RatingsEntry> {
 	public RatingsEntryFinderBaseImpl() {
 		setModelClass(RatingsEntry.class);

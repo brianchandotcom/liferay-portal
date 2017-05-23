@@ -149,8 +149,7 @@ public class RatingsStatsLocalServiceWrapper implements RatingsStatsLocalService
 
 	@Override
 	public com.liferay.ratings.kernel.model.RatingsStats getStats(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		java.lang.String className, long classPK) {
 		return _ratingsStatsLocalService.getStats(className, classPK);
 	}
 
@@ -262,19 +261,9 @@ public class RatingsStatsLocalServiceWrapper implements RatingsStatsLocalService
 		return _ratingsStatsLocalService.getRatingsStatses(start, end);
 	}
 
-	/**
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@Deprecated
 	@Override
 	public java.util.List<com.liferay.ratings.kernel.model.RatingsStats> getStats(
 		java.lang.String className, java.util.List<java.lang.Long> classPKs) {
-		return _ratingsStatsLocalService.getStats(className, classPKs);
-	}
-
-	@Override
-	public java.util.Map<java.lang.Long, com.liferay.ratings.kernel.model.RatingsStats> getStats(
-		java.lang.String className, long[] classPKs) {
 		return _ratingsStatsLocalService.getStats(className, classPKs);
 	}
 

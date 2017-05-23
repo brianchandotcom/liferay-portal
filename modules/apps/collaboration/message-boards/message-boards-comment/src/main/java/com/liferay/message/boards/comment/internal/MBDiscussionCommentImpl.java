@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.model.RatingsStats;
+import com.liferay.ratings.kernel.service.persistence.RatingsStatsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Adolfo Pérez
@@ -36,8 +36,7 @@ public class MBDiscussionCommentImpl
 
 	public MBDiscussionCommentImpl(
 		MBMessage message, MBTreeWalker treeWalker,
-		Map<Long, RatingsEntry> ratingsEntries,
-		Map<Long, RatingsStats> ratingsStats) {
+		List<RatingsEntry> ratingsEntries, List<RatingsStats> ratingsStats) {
 
 		super(message);
 
@@ -86,12 +85,28 @@ public class MBDiscussionCommentImpl
 
 	@Override
 	public RatingsEntry getRatingsEntry() {
-		return _ratingsEntries.get(getCommentId());
+		long classPK = getCommentId();
+
+		for (RatingsEntry ratingsEntry : _ratingsEntries) {
+			if (ratingsEntry.getClassPK() == classPK) {
+				return ratingsEntry;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
 	public RatingsStats getRatingsStats() {
-		return _ratingsStats.get(getCommentId());
+		long classPK = getCommentId();
+
+		for (RatingsStats ratingsStats : _ratingsStats) {
+			if (ratingsStats.getClassPK() == classPK) {
+				return ratingsStats;
+			}
+		}
+
+		return RatingsStatsUtil.create(0);
 	}
 
 	/**
@@ -148,8 +163,8 @@ public class MBDiscussionCommentImpl
 		return message.isRoot();
 	}
 
-	private final Map<Long, RatingsEntry> _ratingsEntries;
-	private final Map<Long, RatingsStats> _ratingsStats;
+	private final List<RatingsEntry> _ratingsEntries;
+	private final List<RatingsStats> _ratingsStats;
 	private final MBTreeWalker _treeWalker;
 
 	private class MBDiscussionCommentIterator

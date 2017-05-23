@@ -16,10 +16,12 @@ package com.liferay.portal.workflow.rest.internal.helper;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -31,9 +33,13 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowLog;
+import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
+import com.liferay.portal.workflow.rest.internal.model.WorkflowActivityModel;
 import com.liferay.portal.workflow.rest.internal.model.WorkflowAssetModel;
 import com.liferay.portal.workflow.rest.internal.model.WorkflowAssigneeModel;
 import com.liferay.portal.workflow.rest.internal.model.WorkflowTaskModel;
@@ -42,6 +48,9 @@ import com.liferay.portal.workflow.rest.internal.model.WorkflowUserModel;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -82,6 +91,67 @@ public class WorkflowHelper {
 			workflowTaskTransitionOperationModel.getComment(), workflowContext);
 	}
 
+	public String getAssetType(
+			long companyId, long workflowTaskId, Locale locale)
+		throws PortalException {
+
+		Map<String, Serializable> workflowContext = getWorkflowContext(
+			companyId, workflowTaskId);
+
+		String className = (String)workflowContext.get(
+			WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME);
+
+		String modelResource = _resourceActions.getModelResource(
+			locale, className);
+
+		return LanguageUtil.get(locale, modelResource);
+	}
+
+	public List<WorkflowActivityModel> getWorkflowActivityModels(
+			long companyId, long userId, long workflowTaskId, Locale locale)
+		throws PortalException {
+
+		List<WorkflowLog> workflowLogs = getWorkflowLogs(
+			companyId, workflowTaskId, true);
+
+		String assetType = getAssetType(companyId, workflowTaskId, locale);
+
+		List<WorkflowActivityModel> workflowActivityModels =
+			getWorkflowActivityModels(
+				companyId, workflowLogs, assetType, locale);
+
+		Collections.reverse(workflowActivityModels);
+
+		return workflowActivityModels;
+	}
+
+	public List<WorkflowLog> getWorkflowLogs(
+			long companyId, long workflowTaskId)
+		throws PortalException {
+
+		return getWorkflowLogs(companyId, workflowTaskId, false);
+	}
+
+	public List<WorkflowLog> getWorkflowLogs(
+			long companyId, long workflowTaskId, boolean oldestFirst)
+		throws PortalException {
+
+		List<Integer> logTypes = new ArrayList<>();
+
+		logTypes.add(WorkflowLog.TASK_ASSIGN);
+		logTypes.add(WorkflowLog.TASK_COMPLETION);
+		logTypes.add(WorkflowLog.TASK_UPDATE);
+		logTypes.add(WorkflowLog.TRANSITION);
+
+		WorkflowInstance workflowInstance = getWorkflowInstance(
+			companyId, workflowTaskId);
+
+		return _workflowLogManager.getWorkflowLogsByWorkflowInstance(
+			companyId, workflowInstance.getWorkflowInstanceId(), logTypes,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			_workflowComparatorFactory.getLogCreateDateComparator(oldestFirst));
+	}
+
 	public WorkflowTaskModel getWorkflowTaskModel(
 			long companyId, long userId, long workflowTaskId, Locale locale)
 		throws PortalException {
@@ -98,9 +168,91 @@ public class WorkflowHelper {
 		List<String> transitions = _workflowTaskManager.getNextTransitionNames(
 			companyId, userId, workflowTaskId);
 
+		List<WorkflowLog> workflowLogs = getWorkflowLogs(
+			companyId, workflowTaskId);
+
+		long lastActivityTime = 0;
+
+		if (!workflowLogs.isEmpty()) {
+			WorkflowLog workflowLog = workflowLogs.get(0);
+
+			Date createDate = workflowLog.getCreateDate();
+
+			lastActivityTime = createDate.getTime();
+		}
+
 		return new WorkflowTaskModel(
-			workflowTask, workflowAssigneeModel, workflowAssetModel, state,
-			transitions);
+			workflowTask, workflowAssigneeModel, workflowAssetModel,
+			lastActivityTime, state, transitions);
+	}
+
+	protected String getAssignmentDetails(WorkflowLog workflowLog) {
+		return null;
+	}
+
+	protected String getAssignmentMessage(
+			WorkflowLog workflowLog, Locale locale)
+		throws PortalException {
+
+		String message = "";
+
+		long auditUserId = workflowLog.getAuditUserId();
+		long userId = workflowLog.getUserId();
+		long roleId = workflowLog.getRoleId();
+
+		String auditUserName = getAuditUserName(workflowLog);
+
+		if (userId != 0) {
+			User user = _userLocalService.getUser(userId);
+
+			if (auditUserId == userId) {
+				if (user.isMale()) {
+					message = LanguageUtil.format(
+						locale, "x-assigned-the-task-to-himself",
+						quote(auditUserName));
+				}
+				else {
+					message = LanguageUtil.format(
+						locale, "x-assigned-the-task-to-herself",
+						quote(auditUserName));
+				}
+			}
+		}
+		else if (roleId != 0) {
+			Role role = _roleLocalService.getRole(roleId);
+
+			message = LanguageUtil.format(
+				locale, "x-assigned-the-task-to-the-x-role",
+				new String[] {quote(auditUserName), role.getDescriptiveName()});
+		}
+
+		return message;
+	}
+
+	protected String getAuditUserName(WorkflowLog workflowLog)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(workflowLog.getAuditUserId());
+
+		return user.getFullName();
+	}
+
+	protected String getCompletionDetails(WorkflowLog workflowLog) {
+		return workflowLog.getState();
+	}
+
+	protected String getCompletionMessage(
+			long companyId, WorkflowLog workflowLog, Locale locale)
+		throws PortalException {
+
+		String userName = getAuditUserName(workflowLog);
+
+		WorkflowTask workflowTask = _workflowTaskManager.getWorkflowTask(
+			companyId, workflowLog.getWorkflowTaskId());
+
+		return LanguageUtil.format(
+			locale, "x-completed-the-task-x",
+			new String[] {userName, workflowTask.getName()});
 	}
 
 	protected String getState(
@@ -121,6 +273,106 @@ public class WorkflowHelper {
 			companyId, groupId, className, classPK);
 
 		return LanguageUtil.get(locale, state);
+	}
+
+	protected String getSubmissionForPublicationDetails(
+			WorkflowLog workflowLog, Locale locale)
+		throws PortalException {
+
+		if (workflowLog.getUserId() != 0) {
+			User user = _userLocalService.getUser(workflowLog.getUserId());
+
+			return LanguageUtil.format(
+				locale, "task-initially-assigned-to-x", user.getFullName());
+		}
+		else {
+			Role role = _roleLocalService.getRole(workflowLog.getRoleId());
+
+			return LanguageUtil.format(
+				locale, "task-initially-assigned-to-the-x-role",
+				role.getDescriptiveName());
+		}
+	}
+
+	protected String getSubmissionForPublicationMessage(
+			WorkflowLog workflowLog, String assetType, Locale locale)
+		throws PortalException {
+
+		String userName = getAuditUserName(workflowLog);
+
+		return LanguageUtil.format(
+			locale, "x-submitted-a-x-for-publication",
+			new String[] {quote(userName), assetType});
+	}
+
+	protected String getUpdateDetails(WorkflowLog workflowLog) {
+		return null;
+	}
+
+	protected String getUpdateMessage(WorkflowLog workflowLog, Locale locale)
+		throws PortalException {
+
+		String userName = getAuditUserName(workflowLog);
+
+		return LanguageUtil.format(
+			locale, "x-updated-the-task", quote(userName));
+	}
+
+	protected WorkflowActivityModel getWorkflowActivityModel(
+			long companyId, WorkflowLog workflowLog, int index,
+			String assetType, Locale locale)
+		throws PortalException {
+
+		int type = workflowLog.getType();
+		String message = "";
+		String details = "";
+
+		if (index == 0) {
+			message = getSubmissionForPublicationMessage(
+				workflowLog, assetType, locale);
+
+			details = getSubmissionForPublicationDetails(workflowLog, locale);
+		}
+		else if (type == WorkflowLog.TASK_ASSIGN) {
+			message = getAssignmentMessage(workflowLog, locale);
+
+			details = getAssignmentDetails(workflowLog);
+		}
+		else if (type == WorkflowLog.TASK_COMPLETION) {
+			message = getCompletionMessage(companyId, workflowLog, locale);
+
+			details = getCompletionDetails(workflowLog);
+		}
+		else if (type == WorkflowLog.TASK_UPDATE) {
+			message = getUpdateMessage(workflowLog, locale);
+
+			details = getUpdateDetails(workflowLog);
+		}
+
+		Date createDate = workflowLog.getCreateDate();
+
+		return new WorkflowActivityModel(
+			createDate.getTime(), message, details);
+	}
+
+	protected List<WorkflowActivityModel> getWorkflowActivityModels(
+			long companyId, List<WorkflowLog> workflowLogs, String assetType,
+			Locale locale)
+		throws PortalException {
+
+		List<WorkflowActivityModel> workflowActivityModels = new ArrayList<>();
+
+		for (int i = 0; i < workflowLogs.size(); i++) {
+			WorkflowLog workflowLog = workflowLogs.get(i);
+
+			WorkflowActivityModel workflowActivityModel =
+				getWorkflowActivityModel(
+					companyId, workflowLog, i, assetType, locale);
+
+			workflowActivityModels.add(workflowActivityModel);
+		}
+
+		return workflowActivityModels;
 	}
 
 	protected WorkflowAssetModel getWorkflowAssetModel(
@@ -145,10 +397,13 @@ public class WorkflowHelper {
 		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
 			className, classPK);
 
+		String assetType = getAssetType(companyId, workflowTaskId, locale);
+
 		WorkflowUserModel workflowUserModel = getWorkflowUserModel(
 			assetEntry.getUserId());
 
-		return new WorkflowAssetModel(assetEntry, locale, workflowUserModel);
+		return new WorkflowAssetModel(
+			assetEntry, assetType, workflowUserModel, locale);
 	}
 
 	protected WorkflowAssigneeModel getWorkflowAssigneeModel(
@@ -215,8 +470,17 @@ public class WorkflowHelper {
 		return null;
 	}
 
+	protected String quote(String userName) {
+		return _EMPHASIS_TOKEN + userName + _EMPHASIS_TOKEN;
+	}
+
+	private static final String _EMPHASIS_TOKEN = "%~{}~%";
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private ResourceActions _resourceActions;
 
 	@Reference
 	private RoleLocalService _roleLocalService;
@@ -225,10 +489,16 @@ public class WorkflowHelper {
 	private UserLocalService _userLocalService;
 
 	@Reference
+	private WorkflowComparatorFactory _workflowComparatorFactory;
+
+	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 	@Reference
 	private WorkflowInstanceManager _workflowInstanceManager;
+
+	@Reference
+	private WorkflowLogManager _workflowLogManager;
 
 	@Reference
 	private WorkflowTaskManager _workflowTaskManager;

@@ -18,10 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
-@Deprecated
 @ProviderType
 public interface RatingsEntryFinder {
 	public java.util.Map<java.io.Serializable, com.liferay.ratings.kernel.model.RatingsEntry> fetchByPrimaryKeys(

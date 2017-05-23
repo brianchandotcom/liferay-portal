@@ -276,10 +276,6 @@ public class RatingsEntryLocalServiceUtil {
 		return getService().getEntries(className, classPK, score);
 	}
 
-	/**
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@Deprecated
 	public static java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
 		long userId, java.lang.String className,
 		java.util.List<java.lang.Long> classPKs) {
@@ -300,11 +296,6 @@ public class RatingsEntryLocalServiceUtil {
 	public static java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getRatingsEntries(
 		int start, int end) {
 		return getService().getRatingsEntries(start, end);
-	}
-
-	public static java.util.Map<java.lang.Long, com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
-		long userId, java.lang.String className, long[] classPKs) {
-		return getService().getEntries(userId, className, classPKs);
 	}
 
 	/**

@@ -176,13 +176,10 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 					result.get(Field.ENTRY_CLASS_PK));
 
 				if (Validator.isNotNull(entryClassName) && (entryClassPK > 0)) {
-					RatingsStats stats =
-						RatingsStatsLocalServiceUtil.fetchStats(
-							entryClassName, entryClassPK);
+					RatingsStats stats = RatingsStatsLocalServiceUtil.getStats(
+						entryClassName, entryClassPK);
 
-					if (stats != null) {
-						ratings = stats.getTotalScore();
-					}
+					ratings = stats.getTotalScore();
 				}
 
 				double score = results.score(i);

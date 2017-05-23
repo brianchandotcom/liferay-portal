@@ -139,10 +139,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.upload.LiferayFileItem" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
-page import="com.liferay.ratings.kernel.model.RatingsEntry" %><%@
-page import="com.liferay.ratings.kernel.model.RatingsStats" %><%@
-page import="com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil" %><%@
-page import="com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil" %><%@
 page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 

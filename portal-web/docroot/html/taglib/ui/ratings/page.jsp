@@ -39,7 +39,7 @@ if (!setRatingsEntry) {
 }
 
 if (!setRatingsStats) {
-	ratingsStats = RatingsStatsLocalServiceUtil.fetchStats(className, classPK);
+	ratingsStats = RatingsStatsLocalServiceUtil.getStats(className, classPK);
 }
 
 if (Validator.isNull(url)) {
@@ -47,13 +47,9 @@ if (Validator.isNull(url)) {
 }
 
 double averageScore = 0.0;
-int totalEntries = 0;
-double totalScore = 0.0;
 
 if (ratingsStats != null) {
 	averageScore = ratingsStats.getAverageScore() * numberOfStars;
-	totalEntries = ratingsStats.getTotalEntries();
-	totalScore = ratingsStats.getTotalScore();
 }
 
 double formattedAverageScore = MathUtil.format(averageScore, 1, 1);
@@ -112,7 +108,7 @@ boolean inTrash = TrashUtil.isInTrash(className, classPK);
 					<div class="rating-label">
 						<liferay-ui:message key="average" />
 
-						(<%= totalEntries %> <liferay-ui:message key='<%= (totalEntries == 1) ? "vote" : "votes" %>' />)
+						(<%= ratingsStats.getTotalEntries() %> <liferay-ui:message key='<%= (ratingsStats.getTotalEntries() == 1) ? "vote" : "votes" %>' />)
 					</div>
 
 					<liferay-util:whitespace-remover>
@@ -146,9 +142,9 @@ boolean inTrash = TrashUtil.isInTrash(className, classPK);
 					<liferay-util:whitespace-remover>
 
 						<%
-						int positiveVotes = (int)Math.round(totalScore);
+						int positiveVotes = (int)Math.round(ratingsStats.getTotalScore());
 
-						int negativeVotes = totalEntries - positiveVotes;
+						int negativeVotes = ratingsStats.getTotalEntries() - positiveVotes;
 
 						boolean thumbUp = (yourScore != -1.0) && (yourScore >= 0.5);
 						boolean thumbDown = (yourScore != -1.0) && (yourScore < 0.5);
@@ -228,8 +224,8 @@ boolean inTrash = TrashUtil.isInTrash(className, classPK);
 				namespace: '<%= randomNamespace %>',
 				round: <%= round %>,
 				size: <%= numberOfStars %>,
-				totalEntries: <%= totalEntries %>,
-				totalScore: <%= totalScore %>,
+				totalEntries: <%= ratingsStats.getTotalEntries() %>,
+				totalScore: <%= ratingsStats.getTotalScore() %>,
 				type: '<%= type %>',
 				uri: '<%= url %>',
 				yourScore: <%= yourScore %>

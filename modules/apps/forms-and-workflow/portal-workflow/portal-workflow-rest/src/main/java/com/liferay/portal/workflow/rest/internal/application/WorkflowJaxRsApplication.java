@@ -37,25 +37,26 @@ import org.osgi.service.component.annotations.Reference;
 public class WorkflowJaxRsApplication extends Application {
 
 	@Override
-	public Set<Class<?>> getClasses() {
-		Set<Class<?>> classes = new HashSet<>();
-
-		classes.add(CompanyContextProvider.class);
-		classes.add(LocaleContextProvider.class);
-		classes.add(UserContextProvider.class);
-
-		return classes;
-	}
-
-	@Override
 	public Set<Object> getSingletons() {
 		Set<Object> singletons = new HashSet<>();
 
+		singletons.add(_companyContextProvider);
+		singletons.add(_localeContextProvider);
+		singletons.add(_userContextProvider);
 		singletons.add(_workflowListedTaskResource);
 		singletons.add(_workflowTaskResource);
 
 		return singletons;
 	}
+
+	@Reference
+	private CompanyContextProvider _companyContextProvider;
+
+	@Reference
+	private LocaleContextProvider _localeContextProvider;
+
+	@Reference
+	private UserContextProvider _userContextProvider;
 
 	@Reference
 	private WorkflowListedTaskResource _workflowListedTaskResource;

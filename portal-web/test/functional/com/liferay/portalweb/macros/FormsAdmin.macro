@@ -50,15 +50,7 @@
 	<command name="editDataProviderOutputParameter">
 		<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD" value1="${outputParameterPath}" />
 
-		<toggle name="LPS-70895">
-			<on>
-				<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_LABEL_FIELD" value1="${outputParameterLabel}" />
-			</on>
-
-			<off>
-				<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_NAME_FIELD" value1="${outputParameterName}" />
-			</off>
-		</toggle>
+		<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_LABEL_FIELD" value1="${outputParameterLabel}" />
 
 		<execute macro="FormFields#selectDataProviderOutputType">
 			<var name="outputParameterType" value="${outputParameterType}" />
@@ -71,15 +63,7 @@
 
 				<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_PATH_FIELD_2" value1="${outputParameterPath2}" />
 
-				<toggle name="LPS-70895">
-					<on>
-						<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_LABEL_FIELD_2" value1="${outputParameterLabel2}" />
-					</on>
-
-					<off>
-						<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_NAME_FIELD_2" value1="${outputParameterName2}" />
-					</off>
-				</toggle>
+				<execute function="Type" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_LABEL_FIELD_2" value1="${outputParameterLabel2}" />
 
 				<execute function="Click" locator1="Form#DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_2" />
 

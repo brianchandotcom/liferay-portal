@@ -61,7 +61,7 @@ AUI.add(
 					_createField: function() {
 						var instance = this;
 
-						var value;
+						var value = [];
 
 						var action = instance.get('action');
 
@@ -69,9 +69,8 @@ AUI.add(
 							value = action.target;
 						}
 
-						instance._field = new Liferay.DDM.Field.Select(
+						instance._field = instance.createSelectField(
 							{
-								bubbleTargets: [instance],
 								fieldName: instance.get('index') + '-action',
 								label: Liferay.Language.get('the'),
 								options: instance.get('options'),

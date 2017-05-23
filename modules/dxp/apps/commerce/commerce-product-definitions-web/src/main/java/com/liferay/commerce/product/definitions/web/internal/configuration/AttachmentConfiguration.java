@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.configuration;
+package com.liferay.commerce.product.definitions.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "commerce", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.product.definitions.web.configuration.AttachmentConfiguration",
+	id = "com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentConfiguration",
 	localization = "content/Language",
 	name = "commerce.attachment.configuration.name"
 )

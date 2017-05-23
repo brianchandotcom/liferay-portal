@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.upload;
 
-import com.liferay.commerce.product.definitions.web.configuration.AttachmentConfiguration;
+import com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentConfiguration;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryNameException;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntrySizeException;
 import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	configurationPid = "com.liferay.commerce.product.definitions.web.configuration.AttachmentConfiguration",
+	configurationPid = "com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	service = AttachmentsUploadResponseHandler.class
 )

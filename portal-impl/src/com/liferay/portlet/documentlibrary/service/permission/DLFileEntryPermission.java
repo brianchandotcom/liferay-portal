@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.security.permission.ResourcePermissionCheckerUt
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
@@ -128,25 +129,12 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 
 			// See LPS-10500 and LPS-72547
 
-			if (actionId.equals(ActionKeys.VIEW)) {
-				WorkflowInstanceLink workflowInstanceLink =
-					WorkflowInstanceLinkLocalServiceUtil.
-						fetchWorkflowInstanceLink(
-							permissionChecker.getCompanyId(),
-							dlFileEntry.getGroupId(),
-							DLFileEntryConstants.getClassName(),
-							currentDLFileVersion.getFileVersionId());
+			if (actionId.equals(ActionKeys.VIEW) &&
+				_hasActiveWorkflowInstance(
+					permissionChecker.getCompanyId(), dlFileEntry.getGroupId(),
+					currentDLFileVersion.getFileVersionId())) {
 
-				if (workflowInstanceLink != null) {
-					WorkflowInstance workflowInstance =
-						WorkflowInstanceManagerUtil.getWorkflowInstance(
-							permissionChecker.getCompanyId(),
-							workflowInstanceLink.getWorkflowInstanceId());
-
-					if (!workflowInstance.isComplete()) {
-						return false;
-					}
-				}
+				return false;
 			}
 		}
 
@@ -236,6 +224,30 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		check(permissionChecker, primaryKey, actionId);
+	}
+
+	private static boolean _hasActiveWorkflowInstance(
+			long companyId, long groupId, long fileVersionId)
+		throws WorkflowException {
+
+		WorkflowInstanceLink workflowInstanceLink =
+			WorkflowInstanceLinkLocalServiceUtil.fetchWorkflowInstanceLink(
+				companyId, groupId, DLFileEntryConstants.getClassName(),
+				fileVersionId);
+
+		if (workflowInstanceLink != null) {
+			WorkflowInstance workflowInstance =
+				WorkflowInstanceManagerUtil.getWorkflowInstance(
+					companyId, workflowInstanceLink.getWorkflowInstanceId());
+
+			if (!workflowInstance.isComplete()) {
+				return true;
+			}
+
+			return false;
+		}
+
+		return false;
 	}
 
 }

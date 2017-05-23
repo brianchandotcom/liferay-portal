@@ -1620,7 +1620,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="resin" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tcserver31-mysql56-jdk8">
+	<target name="functional-smoke-tcserver32-mysql56-jdk8">
 		<run-functional-test app.server.type="tcserver" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
@@ -1688,7 +1688,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="jboss" database.type="mysql" />
 	</target>
 
-	<target name="functional-upgrade-tcserver31-mysql56-jdk8">
+	<target name="functional-upgrade-tcserver32-mysql56-jdk8">
 		<run-functional-test app.server.type="tcserver" database.type="mysql" />
 	</target>
 

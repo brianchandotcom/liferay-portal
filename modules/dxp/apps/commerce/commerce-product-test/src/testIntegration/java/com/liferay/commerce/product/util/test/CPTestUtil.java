@@ -64,7 +64,8 @@ import org.junit.Assert;
 public class CPTestUtil {
 
 	public static CPAttachmentFileEntry addCPAttachmentFileEntry(
-			long groupId, long classNameId, long classPK, long fileEntryId)
+			long groupId, long classNameId, long classPK, long fileEntryId,
+			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -107,11 +108,13 @@ public class CPTestUtil {
 			expirationDateHour += 12;
 		}
 
+		String json = getJSON(cpDefinitionOptionValueRels);
+
 		return CPAttachmentFileEntryLocalServiceUtil.addCPAttachmentFileEntry(
 			classNameId, classPK, fileEntryId, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, false, null,
+			expirationDateHour, expirationDateMinute, false, json,
 			RandomTestUtil.randomInt(), 0, serviceContext);
 	}
 

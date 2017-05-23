@@ -94,7 +94,8 @@ public class CPPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 		CPTestUtil.addCPAttachmentFileEntry(
 			groupId, PortalUtil.getClassNameId(CPDefinition.class),
-			cpDefinition.getCPDefinitionId(), fileEntry.getFileEntryId());
+			cpDefinition.getCPDefinitionId(), fileEntry.getFileEntryId(),
+			cpDefinitionOptionValueRels);
 	}
 
 	@Override

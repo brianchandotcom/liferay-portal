@@ -17,8 +17,14 @@ package com.liferay.commerce.product.internal.exportimport.data.handler.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalServiceUtil;
+import com.liferay.commerce.product.service.CPOptionLocalServiceUtil;
 import com.liferay.commerce.product.util.test.CPTestUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -31,6 +37,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +82,34 @@ public class CPAttachmentFileEntryStagedModelDataHandlerTest
 		addDependentStagedModel(
 			dependentStagedModelsMap, FileEntry.class, fileEntry);
 
+		CPOption cpOption = CPTestUtil.addCPOption(groupId);
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, CPOption.class, cpOption);
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			CPTestUtil.addCPDefinitionOptionRel(
+				groupId, cpDefinition.getCPDefinitionId(),
+				cpOption.getCPOptionId());
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, CPDefinitionOptionRel.class,
+			cpDefinitionOptionRel);
+
+		for (int i = 0; i <
+			CPInstanceStagedModelDataHandlerTest.
+				CP_DEFINITION_OPTION_VALUE_RELS_COUNT; i++) {
+
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+				CPTestUtil.addCPDefinitionOptionValueRel(
+					groupId,
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+			addDependentStagedModel(
+				dependentStagedModelsMap, CPDefinitionOptionValueRel.class,
+				cpDefinitionOptionValueRel);
+		}
+
 		return dependentStagedModelsMap;
 	}
 
@@ -95,9 +130,25 @@ public class CPAttachmentFileEntryStagedModelDataHandlerTest
 
 		FileEntry fileEntry = (FileEntry)fileEntryDependentStagedModels.get(0);
 
+		List<StagedModel> cpDefinitionOptionValueRelDependentStagedModels =
+			dependentStagedModelsMap.get(
+				CPDefinitionOptionValueRel.class.getSimpleName());
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			new ArrayList<>(
+				cpDefinitionOptionValueRelDependentStagedModels.size());
+
+		for (StagedModel stagedModel :
+				cpDefinitionOptionValueRelDependentStagedModels) {
+
+			cpDefinitionOptionValueRels.add(
+				(CPDefinitionOptionValueRel)stagedModel);
+		}
+
 		return CPTestUtil.addCPAttachmentFileEntry(
 			group.getGroupId(), PortalUtil.getClassNameId(CPDefinition.class),
-			cpDefinition.getCPDefinitionId(), fileEntry.getFileEntryId());
+			cpDefinition.getCPDefinitionId(), fileEntry.getFileEntryId(),
+			cpDefinitionOptionValueRels);
 	}
 
 	@Override
@@ -147,6 +198,55 @@ public class CPAttachmentFileEntryStagedModelDataHandlerTest
 
 		DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
 			fileEntry.getUuid(), fileEntry.getGroupId());
+
+		List<StagedModel> cpOptionDependentStagedModels =
+			dependentStagedModelsMap.get(CPOption.class.getSimpleName());
+
+		Assert.assertEquals(
+			cpOptionDependentStagedModels.toString(), 1,
+			cpOptionDependentStagedModels.size());
+
+		CPOption cpOption = (CPOption)cpOptionDependentStagedModels.get(0);
+
+		CPOptionLocalServiceUtil.getCPOptionByUuidAndGroupId(
+			cpOption.getUuid(), group.getGroupId());
+
+		List<StagedModel> cpDefinitionOptionRelDependentStagedModels =
+			dependentStagedModelsMap.get(
+				CPDefinitionOptionRel.class.getSimpleName());
+
+		Assert.assertEquals(
+			cpDefinitionOptionRelDependentStagedModels.toString(), 1,
+			cpDefinitionOptionRelDependentStagedModels.size());
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			(CPDefinitionOptionRel)
+				cpDefinitionOptionRelDependentStagedModels.get(0);
+
+		CPDefinitionOptionRelLocalServiceUtil.
+			getCPDefinitionOptionRelByUuidAndGroupId(
+				cpDefinitionOptionRel.getUuid(), group.getGroupId());
+
+		List<StagedModel> cpDefinitionOptionValueRelDependentStagedModels =
+			dependentStagedModelsMap.get(
+				CPDefinitionOptionValueRel.class.getSimpleName());
+
+		Assert.assertEquals(
+			cpDefinitionOptionValueRelDependentStagedModels.toString(),
+			CPInstanceStagedModelDataHandlerTest.
+				CP_DEFINITION_OPTION_VALUE_RELS_COUNT,
+			cpDefinitionOptionValueRelDependentStagedModels.size());
+
+		for (StagedModel stagedModel :
+				cpDefinitionOptionValueRelDependentStagedModels) {
+
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+				(CPDefinitionOptionValueRel)stagedModel;
+
+			CPDefinitionOptionValueRelLocalServiceUtil.
+				getCPDefinitionOptionValueRelByUuidAndGroupId(
+					cpDefinitionOptionValueRel.getUuid(), group.getGroupId());
+		}
 	}
 
 	@Override

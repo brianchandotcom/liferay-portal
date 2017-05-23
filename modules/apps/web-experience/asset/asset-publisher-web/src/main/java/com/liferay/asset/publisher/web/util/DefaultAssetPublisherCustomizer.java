@@ -41,7 +41,10 @@ import org.osgi.service.component.annotations.Modified;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = AssetPublisherCustomizer.class)
+@Component(
+	configurationPid = "com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration",
+	immediate = true, service = AssetPublisherCustomizer.class
+)
 public class DefaultAssetPublisherCustomizer
 	implements AssetPublisherCustomizer {
 

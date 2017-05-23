@@ -14,7 +14,6 @@
 
 package com.liferay.portal.language.extender.internal;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -30,12 +29,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 import org.apache.felix.utils.extender.Extension;
 import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWiring;
@@ -54,10 +57,16 @@ public class LanguageExtension implements Extension {
 		_bundle = bundle;
 		_bundleCapabilities = bundleCapabilities;
 		_logger = logger;
+
+		_closingHandlers = new ArrayList<>();
 	}
 
 	@Override
 	public void destroy() throws Exception {
+		for (Runnable closingHandler : _closingHandlers) {
+			closingHandler.run();
+		}
+
 		for (ServiceRegistration<ResourceBundleLoader> serviceRegistration :
 				_serviceRegistrations) {
 
@@ -74,11 +83,24 @@ public class LanguageExtension implements Extension {
 
 			Object aggregate = attributes.get("resource.bundle.aggregate");
 			Object baseName = attributes.get("resource.bundle.base.name");
+			Object bundleSymbolicNameObject = attributes.get(
+				"bundle.symbolic.name");
+
+			String bundleSymbolicName;
+
+			if (Validator.isNull(bundleSymbolicNameObject)) {
+				bundleSymbolicName = _bundle.getSymbolicName();
+			}
+			else {
+				bundleSymbolicName = bundleSymbolicNameObject.toString();
+			}
 
 			ResourceBundleLoader resourceBundleLoader = null;
 
 			if (aggregate instanceof String) {
-				resourceBundleLoader = processAggregate((String)aggregate);
+				resourceBundleLoader = processAggregate(
+					(String)aggregate, bundleSymbolicName,
+					_safeServiceRanking(attributes.get("service.ranking")));
 			}
 			else if (baseName instanceof String) {
 				resourceBundleLoader = processBaseName(
@@ -97,7 +119,9 @@ public class LanguageExtension implements Extension {
 		}
 	}
 
-	protected ResourceBundleLoader processAggregate(String aggregate) {
+	protected ResourceBundleLoader processAggregate(
+		String aggregate, final String bundleSymbolicName, final int limit) {
+
 		String[] filterStrings = aggregate.split(",");
 
 		List<ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>>
@@ -108,9 +132,24 @@ public class LanguageExtension implements Extension {
 				"(&(objectClass=" + ResourceBundleLoader.class.getName() + ")" +
 					filterString + ")";
 
+			Filter filter = null;
+
+			try {
+				filter = _bundleContext.createFilter(filterString);
+			}
+			catch (InvalidSyntaxException ise) {
+				throw new IllegalArgumentException(ise);
+			}
+
 			ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
-				serviceTracker = ServiceTrackerFactory.open(
-					_bundleContext, filterString);
+				serviceTracker = new PredicateServiceTracker(
+					filter,
+					new ResourceBundleLoaderPredicate(
+						bundleSymbolicName, limit));
+
+			serviceTracker.open();
+
+			_closingHandlers.add(serviceTracker::close);
 
 			serviceTrackers.add(serviceTracker);
 		}
@@ -144,9 +183,19 @@ public class LanguageExtension implements Extension {
 				ResourceBundleLoader.class, resourceBundleLoader, properties));
 	}
 
+	private int _safeServiceRanking(Object serviceRankingObject) {
+		try {
+			return Integer.parseInt(serviceRankingObject.toString());
+		}
+		catch (Exception e) {
+			return Integer.MIN_VALUE;
+		}
+	}
+
 	private final Bundle _bundle;
 	private final List<BundleCapability> _bundleCapabilities;
 	private final BundleContext _bundleContext;
+	private final ArrayList<Runnable> _closingHandlers;
 	private final Logger _logger;
 	private final Collection<ServiceRegistration<ResourceBundleLoader>>
 		_serviceRegistrations = new ArrayList<>();
@@ -171,11 +220,13 @@ public class LanguageExtension implements Extension {
 				ResourceBundleLoader resourceBundleLoader =
 					serviceTracker.getService();
 
-				ResourceBundle resourceBundle =
-					resourceBundleLoader.loadResourceBundle(locale);
+				if (resourceBundleLoader != null) {
+					ResourceBundle resourceBundle =
+						resourceBundleLoader.loadResourceBundle(locale);
 
-				if (resourceBundle != null) {
-					resourceBundles.add(resourceBundle);
+					if (resourceBundle != null) {
+						resourceBundles.add(resourceBundle);
+					}
 				}
 			}
 
@@ -204,6 +255,94 @@ public class LanguageExtension implements Extension {
 		private final
 			List<ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>>
 				_serviceTrackers;
+
+	}
+
+	private class PredicateServiceTracker
+		extends ServiceTracker<ResourceBundleLoader, ResourceBundleLoader> {
+
+		public PredicateServiceTracker(
+			Filter filter,
+			Predicate<ServiceReference<ResourceBundleLoader>> predicate) {
+
+			super(_bundleContext, filter, null);
+			_predicate = predicate;
+		}
+
+		@Override
+		public ResourceBundleLoader addingService(
+			ServiceReference<ResourceBundleLoader> serviceReference) {
+
+			if (_predicate.test(serviceReference)) {
+				return _bundleContext.getService(serviceReference);
+			}
+			else {
+				return null;
+			}
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<ResourceBundleLoader> serviceReference,
+			ResourceBundleLoader service) {
+
+			if (!_predicate.test(serviceReference)) {
+				_bundleContext.ungetService(serviceReference);
+
+				remove(serviceReference);
+			}
+
+			super.modifiedService(serviceReference, service);
+		}
+
+		private final Predicate<ServiceReference<ResourceBundleLoader>>
+			_predicate;
+
+	}
+
+	private class ResourceBundleLoaderPredicate
+		implements Predicate<ServiceReference<ResourceBundleLoader>> {
+
+		public ResourceBundleLoaderPredicate(
+			String bundleSymbolicName, int limit) {
+
+			_bundleSymbolicName = bundleSymbolicName;
+			_limit = limit;
+		}
+
+		@Override
+		public boolean test(
+			ServiceReference<ResourceBundleLoader> serviceReference) {
+
+			int serviceRanking = _safeServiceRanking(
+				serviceReference.getProperty("service.ranking"));
+
+			Object bundleSymbolicNameObject = serviceReference.getProperty(
+				"bundle.symbolic.name");
+
+			String incomingBundleSymbolicName;
+
+			if (bundleSymbolicNameObject == null) {
+				Bundle incomingBundle = serviceReference.getBundle();
+
+				incomingBundleSymbolicName = incomingBundle.getSymbolicName();
+			}
+			else {
+				incomingBundleSymbolicName =
+					bundleSymbolicNameObject.toString();
+			}
+
+			if (_bundleSymbolicName.equals(incomingBundleSymbolicName)) {
+				if (_limit <= serviceRanking) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		private final String _bundleSymbolicName;
+		private final int _limit;
 
 	}
 

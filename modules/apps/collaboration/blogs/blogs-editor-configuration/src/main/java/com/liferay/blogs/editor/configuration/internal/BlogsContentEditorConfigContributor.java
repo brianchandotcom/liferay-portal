@@ -114,17 +114,16 @@ public class BlogsContentEditorConfigContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		String eventName) {
 
+		ItemSelectorCriterion blogsItemSelectorCriterion =
+			new BlogsItemSelectorCriterion();
+
 		List<ItemSelectorReturnType> blogsDesiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
 		blogsDesiredItemSelectorReturnTypes.add(
 			new PortletFileEntryItemSelectorReturnType());
-
 		blogsDesiredItemSelectorReturnTypes.add(
 			new PortletFileEntryURLItemSelectorReturnType());
-
-		ItemSelectorCriterion blogsItemSelectorCriterion =
-			new BlogsItemSelectorCriterion();
 
 		blogsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			blogsDesiredItemSelectorReturnTypes);

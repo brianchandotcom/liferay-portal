@@ -40,9 +40,12 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.registry.collections.StringServiceRegistrationMap;
 import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mika Koivisto
  */
+@Component(immediate = true, service = DLProcessorRegistry.class)
 @DoPrivileged
 public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 

@@ -71,16 +71,10 @@ public class ModulesStructureTest {
 
 	@Test
 	public void testScanBuildScripts() throws IOException {
-		ClassLoader classLoader = ModulesStructureTest.class.getClassLoader();
-
-		final String gitRepoBuildGradleTemplate = StringUtil.read(
-			classLoader,
-			"com/liferay/portal/modules/dependencies" +
-				"/git_repo_build_gradle.tmpl");
-		final String gitRepoSettingsGradleTemplate = StringUtil.read(
-			classLoader,
-			"com/liferay/portal/modules/dependencies" +
-				"/git_repo_settings_gradle.tmpl");
+		final String gitRepoBuildGradleTemplate = _getGradleTemplate(
+			"dependencies/git_repo_build_gradle.tmpl");
+		final String gitRepoSettingsGradleTemplate = _getGradleTemplate(
+			"dependencies/git_repo_settings_gradle.tmpl");
 
 		Files.walkFileTree(
 			_modulesDirPath,
@@ -508,6 +502,13 @@ public class ModulesStructureTest {
 			buildGradleTemplate, "[$BUILDSCRIPT_DEPENDENCIES$]", sb.toString());
 	}
 
+	private String _getGradleTemplate(String name) throws IOException {
+		String template = StringUtil.read(ModulesStructureTest.class, name);
+
+		return StringUtil.replace(
+			template, "[$REPOSITORY_URL$]", _REPOSITORY_URL);
+	}
+
 	private String _getProjectPathPrefix(Path dirPath) {
 		String projectPathPrefix = String.valueOf(
 			_modulesDirPath.relativize(dirPath));
@@ -932,6 +933,10 @@ public class ModulesStructureTest {
 	private static final String[] _GRADLE_WRAPPER_FILE_NAMES = {
 		"gradle", "gradlew", "gradlew.bat"
 	};
+
+	private static final String _REPOSITORY_URL =
+		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
+			"/public";
 
 	private static final String _SOURCE_FORMATTER_IGNORE_FILE_NAME =
 		"source_formatter.ignore";

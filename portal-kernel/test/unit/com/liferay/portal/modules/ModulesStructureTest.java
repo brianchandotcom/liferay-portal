@@ -205,6 +205,14 @@ public class ModulesStructureTest {
 							"Marker file " + path + " must be empty", 0,
 							basicFileAttributes.size());
 					}
+					else if (StringUtil.endsWith(fileName, ".gradle")) {
+						String content = _read(path);
+
+						Assert.assertFalse(
+							"Incorrect repository URL in " + path +
+								", please use " + _REPOSITORY_URL + " instead",
+							content.contains("plugins.gradle.org/m2"));
+					}
 
 					return FileVisitResult.CONTINUE;
 				}

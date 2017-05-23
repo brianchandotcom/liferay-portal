@@ -1,0 +1,15 @@
+{
+	"dependencies": {
+		"metal": "^2.5.18",
+		"metal-dom": "^2.5.18",
+		"metal-soy": "^2.4.5",
+		"metal-state": "^2.6.4",
+		"metal-treeview": "^2.1.0"
+	},
+	"devDependencies": {
+		"liferay-module-config-generator": "^1.2.1",
+		"metal-cli": "^4.0.1"
+	},
+	"name": "asset-categories-selector-web",
+	"version": "1.0.0"
+}

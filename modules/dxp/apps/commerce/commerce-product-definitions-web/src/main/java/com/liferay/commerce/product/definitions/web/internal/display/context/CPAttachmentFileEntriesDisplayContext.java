@@ -20,6 +20,7 @@ import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -33,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,6 +50,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 			AttachmentConfiguration attachmentConfiguration,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPDefinitionOptionRelService cpDefinitionOptionRelService,
+			CPInstanceHelper cpInstanceHelper,
 			HttpServletRequest httpServletRequest, ItemSelector itemSelector)
 		throws PortalException {
 
@@ -58,6 +62,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		_attachmentConfiguration = attachmentConfiguration;
 		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
+		_cpInstanceHelper = cpInstanceHelper;
 		_itemSelector = itemSelector;
 	}
 
@@ -137,10 +142,28 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		return false;
 	}
 
+	public String renderOptions(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException {
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			getCPAttachmentFileEntry();
+
+		String json = null;
+
+		if (cpAttachmentFileEntry != null) {
+			json = cpAttachmentFileEntry.getJson();
+		}
+
+		return _cpInstanceHelper.render(
+			getCPDefinitionId(), json, false, renderRequest, renderResponse);
+	}
+
 	private final AttachmentConfiguration _attachmentConfiguration;
 	private CPAttachmentFileEntry _cpAttachmentFileEntry;
 	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;
+	private final CPInstanceHelper _cpInstanceHelper;
 	private final ItemSelector _itemSelector;
 
 }

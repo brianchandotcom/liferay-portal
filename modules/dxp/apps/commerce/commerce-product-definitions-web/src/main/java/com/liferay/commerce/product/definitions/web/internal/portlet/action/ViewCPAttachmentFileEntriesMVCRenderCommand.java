@@ -20,6 +20,7 @@ import com.liferay.commerce.product.definitions.web.internal.display.context.CPA
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -68,11 +69,10 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 			CPAttachmentFileEntriesDisplayContext
 				cpAttachmentFileEntriesDisplayContext =
 					new CPAttachmentFileEntriesDisplayContext(
-						_actionHelper , _attachmentConfiguration,
+						_actionHelper, _attachmentConfiguration,
 						_cpAttachmentFileEntryService,
-						_cpDefinitionOptionRelService, httpServletRequest,
-						_itemSelector);
-
+						_cpDefinitionOptionRelService, _cpInstanceHelper,
+						httpServletRequest, _itemSelector);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -92,15 +92,18 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 	}
 
 	@Reference
-	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
-
-	@Reference
 	private ActionHelper _actionHelper;
 
 	private volatile AttachmentConfiguration _attachmentConfiguration;
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
+
+	@Reference
+	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
+
+	@Reference
+	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
 	private ItemSelector _itemSelector;

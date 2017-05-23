@@ -28,6 +28,19 @@ AUI.add(
 						NAME: fieldClass.NAME
 					}
 				);
+			},
+
+			visitLayout: function(pages, fieldHandler) {
+				var visitor = new Liferay.DDM.LayoutVisitor();
+
+				visitor.setAttrs(
+					{
+						fieldHandler: fieldHandler,
+						pages: pages
+					}
+				);
+
+				visitor.visit();
 			}
 		};
 
@@ -35,6 +48,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddl-form-builder-field-support', 'liferay-ddm-form-renderer-util']
+		requires: ['liferay-ddl-form-builder-field-support', 'liferay-ddl-form-builder-layout-visitor', 'liferay-ddm-form-renderer-util']
 	}
 );

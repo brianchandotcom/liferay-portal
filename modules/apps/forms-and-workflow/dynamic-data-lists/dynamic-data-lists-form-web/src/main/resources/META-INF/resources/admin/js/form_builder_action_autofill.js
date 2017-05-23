@@ -5,6 +5,8 @@ AUI.add(
 
 		var Lang = A.Lang;
 
+		var Settings = Liferay.DDL.Settings;
+
 		var TPL_CONTAINER_INPUT_OUTPUT_COMPONENT = '<div class="col-md-9 container-input-field container-input-field-{index}"></div>';
 
 		var TPL_CONTAINER_INPUT_OUTPUT_FIELD = '<div class="col-md-3 container-input-label">{field}{required}</div>';
@@ -24,10 +26,6 @@ AUI.add(
 						value: []
 					},
 
-					getDataProviderParametersSettingsURL: {
-						value: ''
-					},
-
 					getDataProviders: {
 						value: []
 					},
@@ -38,10 +36,6 @@ AUI.add(
 
 					options: {
 						value: []
-					},
-
-					portletNamespace: {
-						value: ''
 					},
 
 					strings: {
@@ -108,7 +102,13 @@ AUI.add(
 					_afterDataProviderChange: function(event) {
 						var instance = this;
 
-						var ddmDataProviderInstanceId = event.newVal[0];
+						var dataProviderSelectField = event.newVal;
+
+						if (!dataProviderSelectField) {
+							return;
+						}
+
+						var ddmDataProviderInstanceId = dataProviderSelectField.getValue()[0];
 
 						if (!ddmDataProviderInstanceId) {
 							return;
@@ -121,7 +121,7 @@ AUI.add(
 						boundingBox.one('.additional-info-' + index).empty();
 
 						A.io.request(
-							instance.get('getDataProviderParametersSettingsURL'),
+							Settings.getDataProviderParametersSettingsURL,
 							{
 								data: instance._getDataProviderPayload(ddmDataProviderInstanceId),
 								method: 'GET',
@@ -158,7 +158,7 @@ AUI.add(
 							var name = inputParameters[i].name;
 							var requiredField = inputParameters[i].required;
 
-							value = null;
+							value = [];
 
 							inputParametersContainer.append(
 								Lang.sub(
@@ -180,10 +180,10 @@ AUI.add(
 							);
 
 							if (action && action.inputs && action.inputs[name]) {
-								value = action.inputs[name];
+								value = [action.inputs[name]];
 							}
 
-							inputParameterField = new Liferay.DDM.Field.Select(
+							inputParameterField = instance.createSelectField(
 								{
 									bubbleTargets: [instance],
 									fieldName: instance.get('index') + '-action',
@@ -207,10 +207,11 @@ AUI.add(
 					_createDataProviderList: function() {
 						var instance = this;
 
-						instance._dataProvidersList = new Liferay.DDM.Field.Select(
+						instance._dataProvidersList = instance.createSelectField(
 							{
 								bubbleTargets: [instance],
 								fieldName: instance.get('index') + '-action',
+								options: [],
 								showLabel: false,
 								visible: true
 							}
@@ -241,7 +242,7 @@ AUI.add(
 						for (var i = 0; i < outputParameters.length; i++) {
 							var name = outputParameters[i].name;
 
-							value = null;
+							value = [];
 
 							outputParametersContainer.append(
 								Lang.sub(
@@ -263,10 +264,10 @@ AUI.add(
 							);
 
 							if (action && action.outputs && action.outputs[name]) {
-								value = action.outputs[name];
+								value = [action.outputs[name]];
 							}
 
-							outputParameterField = new Liferay.DDM.Field.Select(
+							outputParameterField = instance.createSelectField(
 								{
 									bubbleTargets: [instance],
 									fieldName: instance.get('index') + '-action',
@@ -312,10 +313,8 @@ AUI.add(
 					_getDataProviderPayload: function(ddmDataProviderInstanceId) {
 						var instance = this;
 
-						var portletNamespace = instance.get('portletNamespace');
-
 						var payload = Liferay.Util.ns(
-							portletNamespace,
+							Settings.portletNamespace,
 							{
 								ddmDataProviderInstanceId: ddmDataProviderInstanceId
 							}
@@ -387,11 +386,17 @@ AUI.add(
 
 						var dataProviderList = instance._dataProvidersList.get('options');
 
+						var uuid;
+
 						for (var i = 0; i < dataProviderList.length; i++) {
 							if (dataProviderList[i].value === id) {
-								return dataProviderList[i].uuid;
+								uuid = dataProviderList[i].uuid;
+
+								break;
 							}
 						}
+
+						return uuid;
 					},
 
 					_renderDataProvidersList: function(result) {

@@ -16,60 +16,19 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="container-fluid-1280">
-	<aui:fieldset-group>
-		<aui:fieldset markupView="lexicon">
-			<div class="lfr-categories-selector-list lfr-tags-selector-list" id="<portlet:namespace />listCategories">
-			</div>
-		</aui:fieldset>
-	</aui:fieldset-group>
-</div>
+<%
+Map<String, Object> context = new HashMap<>();
 
-<aui:script use="liferay-asset-portlet-category-selector">
-	<portlet:resourceURL id="getCategories" var="resourceURL" />
+context.put("itemSelectorSaveEvent", HtmlUtil.escapeJS(assetCategoriesSelectorDisplayContext.getEventName()));
+context.put("multiSelection", !assetCategoriesSelectorDisplayContext.isSingleSelect());
+context.put("namespace", liferayPortletResponse.getNamespace());
+context.put("nodes", assetCategoriesSelectorDisplayContext.getCategoriesJSONArray());
+context.put("pathThemeImages", themeDisplay.getPathThemeImages());
+context.put("viewType", "tree");
+%>
 
-	new Liferay.AssetPortletCategorySelector(
-		{
-			boundingBox: '#<portlet:namespace />listCategories',
-			entries: {},
-			entryIds: '<%= assetCategoriesSelectorDisplayContext.getSelectedCategories() %>',
-			eventName: '<%= HtmlUtil.escapeJS(assetCategoriesSelectorDisplayContext.getEventName()) %>',
-			namespace: '<portlet:namespace />',
-			singleSelect: <%= assetCategoriesSelectorDisplayContext.isSingleSelect() %>,
-			url: '<%= resourceURL %>',
-			vocabularyRootNode: [
-				{
-					expanded: true,
-					children: [
-
-						<%
-						long vocabularyIds[] = assetCategoriesSelectorDisplayContext.getVocabularyIds();
-
-						for (int i = 0; i < vocabularyIds.length; i++) {
-							long vocabularyId = vocabularyIds[i];
-						%>
-
-							{
-								alwaysShowHitArea: true,
-								expanded: true,
-								id: 'vocabulary<%= vocabularyId %>',
-								label: '<%= assetCategoriesSelectorDisplayContext.getVocabularyTitle(vocabularyId) %>',
-								leaf: false,
-								type: '<%= assetCategoriesSelectorDisplayContext.getType() %>'
-							}
-
-							<c:if test="<%= (i + 1) < vocabularyIds.length %>">
-								,
-							</c:if>
-
-						<%
-						}
-						%>
-
-					],
-					label: '<liferay-ui:message key="vocabularies" />'
-				}
-			]
-		}
-	).render();
-</aui:script>
+<soy:template-renderer
+	context="<%= context %>"
+	module="asset-categories-selector-web/js/SelectCategory.es"
+	templateNamespace="SelectCategory.render"
+/>

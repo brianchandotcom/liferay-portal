@@ -37,6 +37,13 @@ public class BNDBundleNameCheck extends BaseFileCheck {
 			!absolutePath.contains("/third-party/")) {
 
 			_checkBundleName(fileName, absolutePath, content);
+
+			String bundleVersion = BNDSourceUtil.getDefinitionValue(
+				content, "Bundle-Version");
+
+			if (bundleVersion == null) {
+				addMessage(fileName, "Missing Bundle-Version");
+			}
 		}
 
 		return content;
@@ -69,6 +76,9 @@ public class BNDBundleNameCheck extends BaseFileCheck {
 					fileName, "Incorrect Bundle-Name '" + bundleName + "'");
 			}
 		}
+		else {
+			addMessage(fileName, "Missing Bundle-Name");
+		}
 
 		if (moduleName.contains("-import-") ||
 			moduleName.contains("-private-")) {
@@ -91,6 +101,9 @@ public class BNDBundleNameCheck extends BaseFileCheck {
 					"Incorrect Bundle-SymbolicName '" + bundleSymbolicName +
 						"'");
 			}
+		}
+		else {
+			addMessage(fileName, "Missing Bundle-SymbolicName");
 		}
 	}
 

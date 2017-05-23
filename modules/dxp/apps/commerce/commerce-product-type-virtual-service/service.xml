@@ -55,6 +55,5 @@
 		<exception>CPDefinitionVirtualSettingSampleUrl</exception>
 		<exception>CPDefinitionVirtualSettingTermsOfUseRequired</exception>
 		<exception>CPDefinitionVirtualSettingUrl</exception>
-		<exception>CPDefinitionVirtualSettingUseSampleUrl</exception>
 	</exceptions>
 </service-builder>

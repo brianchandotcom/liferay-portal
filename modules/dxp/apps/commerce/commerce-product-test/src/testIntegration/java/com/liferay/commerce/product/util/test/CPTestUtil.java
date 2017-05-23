@@ -187,22 +187,7 @@ public class CPTestUtil {
 			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels)
 		throws Exception {
 
-		JSONArray ddmContentJSONArray = JSONFactoryUtil.createJSONArray();
-
-		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionValueRels) {
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put(
-				"cpDefinitionOptionRelId",
-				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
-			jsonObject.put(
-				"cpDefinitionOptionValueRelId",
-				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
-
-			ddmContentJSONArray.put(jsonObject);
-		}
+		String ddmContent = getJSON(cpDefinitionOptionValueRels);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
@@ -245,11 +230,11 @@ public class CPTestUtil {
 		}
 
 		return CPInstanceLocalServiceUtil.addCPInstance(
-			cpDefinitionId, RandomTestUtil.randomString(),
-			ddmContentJSONArray.toJSONString(), displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, false, serviceContext);
+			cpDefinitionId, RandomTestUtil.randomString(), ddmContent,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute, false,
+			serviceContext);
 	}
 
 	public static CPOption addCPOption(long groupId) throws Exception {
@@ -375,6 +360,29 @@ public class CPTestUtil {
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute, false,
 			serviceContext);
+	}
+
+	protected static String getJSON(
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+				cpDefinitionOptionValueRels) {
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put(
+				"cpDefinitionOptionRelId",
+				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
+			jsonObject.put(
+				"cpDefinitionOptionValueRelId",
+				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray.toJSONString();
 	}
 
 	protected static CPDefinition updateStatus(

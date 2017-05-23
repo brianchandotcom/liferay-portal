@@ -148,7 +148,7 @@ public class ModulesStructureTest {
 	}
 
 	@Test
-	public void testScanIgnoreFiles() throws IOException {
+	public void testScanFiles() throws IOException {
 		ClassLoader classLoader = ModulesStructureTest.class.getClassLoader();
 
 		final String gitRepoGitIgnoreTemplate = StringUtil.read(
@@ -209,6 +209,13 @@ public class ModulesStructureTest {
 					if (fileName.equals(".gitignore")) {
 						_testGitIgnoreFile(path);
 					}
+					else if (StringUtil.startsWith(fileName, ".lfrbuild-") ||
+							 StringUtil.startsWith(fileName, ".lfrrelease-")) {
+
+						Assert.assertEquals(
+							"Marker file " + path + " must be empty", 0,
+							basicFileAttributes.size());
+					}
 
 					return FileVisitResult.CONTINUE;
 				}
@@ -249,33 +256,6 @@ public class ModulesStructureTest {
 										path.resolveSibling(entry.getValue()));
 							}
 						}
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-	}
-
-	@Test
-	public void testScanMarkerFiles() throws IOException {
-		Files.walkFileTree(
-			_modulesDirPath,
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					String fileName = String.valueOf(path.getFileName());
-
-					if (StringUtil.startsWith(fileName, ".lfrbuild-") ||
-						StringUtil.startsWith(fileName, ".lfrrelease-")) {
-
-						Assert.assertEquals(
-							"Marker file " + path + " must be empty", 0,
-							basicFileAttributes.size());
 					}
 
 					return FileVisitResult.CONTINUE;

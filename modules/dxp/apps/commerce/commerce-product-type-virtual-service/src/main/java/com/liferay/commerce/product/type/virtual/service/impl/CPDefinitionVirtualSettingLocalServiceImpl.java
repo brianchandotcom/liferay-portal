@@ -43,8 +43,9 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 	public CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
 			long cpDefinitionId, boolean useFileEntry, long fileEntryId,
 			String url, String activationStatus, long duration, int maxUsages,
-			boolean useSampleFileEntry, long sampleFileEntryId,
-			String sampleUrl, boolean termsOfUseRequired,
+			boolean useSample, boolean useSampleFileEntry,
+			long sampleFileEntryId, String sampleUrl,
+			boolean termsOfUseRequired,
 			Map<Locale, String> termsOfUseContentMap,
 			long termsOfUseJournalArticleResourcePK,
 			ServiceContext serviceContext)
@@ -60,10 +61,16 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			fileEntryId = 0;
 		}
 
-		if (useSampleFileEntry) {
-			sampleUrl = null;
+		if (useSample) {
+			if (useSampleFileEntry) {
+				sampleUrl = null;
+			}
+			else {
+				sampleFileEntryId = 0;
+			}
 		}
 		else {
+			sampleUrl = null;
 			sampleFileEntryId = 0;
 		}
 
@@ -81,7 +88,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		}
 
 		validate(
-			useFileEntry, fileEntryId, url, useSampleFileEntry,
+			useFileEntry, fileEntryId, url, useSample, useSampleFileEntry,
 			sampleFileEntryId, sampleUrl, termsOfUseRequired,
 			termsOfUseContentMap, termsOfUseJournalArticleResourcePK);
 
@@ -101,6 +108,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		cpDefinitionVirtualSetting.setActivationStatus(activationStatus);
 		cpDefinitionVirtualSetting.setDuration(duration);
 		cpDefinitionVirtualSetting.setMaxUsages(maxUsages);
+		cpDefinitionVirtualSetting.setUseSample(useSample);
 		cpDefinitionVirtualSetting.setSampleFileEntryId(sampleFileEntryId);
 		cpDefinitionVirtualSetting.setSampleUrl(sampleUrl);
 		cpDefinitionVirtualSetting.setTermsOfUseRequired(termsOfUseRequired);
@@ -129,9 +137,9 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 			long cpDefinitionVirtualSettingId, boolean useFileEntry,
 			long fileEntryId, String url, String activationStatus,
-			long duration, int maxUsages, boolean useSampleFileEntry,
-			long sampleFileEntryId, String sampleUrl,
-			boolean termsOfUseRequired,
+			long duration, int maxUsages, boolean useSample,
+			boolean useSampleFileEntry, long sampleFileEntryId,
+			String sampleUrl, boolean termsOfUseRequired,
 			Map<Locale, String> termsOfUseContentMap,
 			long termsOfUseJournalArticleResourcePK,
 			ServiceContext serviceContext)
@@ -148,10 +156,16 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			fileEntryId = 0;
 		}
 
-		if (useSampleFileEntry) {
-			sampleUrl = null;
+		if (useSample) {
+			if (useSampleFileEntry) {
+				sampleUrl = null;
+			}
+			else {
+				sampleFileEntryId = 0;
+			}
 		}
 		else {
+			sampleUrl = null;
 			sampleFileEntryId = 0;
 		}
 
@@ -169,7 +183,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		}
 
 		validate(
-			useFileEntry, fileEntryId, url, useSampleFileEntry,
+			useFileEntry, fileEntryId, url, useSample, useSampleFileEntry,
 			sampleFileEntryId, sampleUrl, termsOfUseRequired,
 			termsOfUseContentMap, termsOfUseJournalArticleResourcePK);
 
@@ -178,6 +192,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		cpDefinitionVirtualSetting.setActivationStatus(activationStatus);
 		cpDefinitionVirtualSetting.setDuration(duration);
 		cpDefinitionVirtualSetting.setMaxUsages(maxUsages);
+		cpDefinitionVirtualSetting.setUseSample(useSample);
 		cpDefinitionVirtualSetting.setSampleFileEntryId(sampleFileEntryId);
 		cpDefinitionVirtualSetting.setSampleUrl(sampleUrl);
 		cpDefinitionVirtualSetting.setTermsOfUseRequired(termsOfUseRequired);
@@ -195,8 +210,9 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 
 	protected void validate(
 			boolean useFileEntry, long fileEntryId, String url,
-			boolean useSampleFileEntry, long sampleFileEntryId,
-			String sampleUrl, boolean termsOfUseRequired,
+			boolean useSample, boolean useSampleFileEntry,
+			long sampleFileEntryId, String sampleUrl,
+			boolean termsOfUseRequired,
 			Map<Locale, String> termsOfUseContentMap,
 			long termsOfUseJournalArticleResourcePK)
 		throws PortalException {
@@ -213,17 +229,20 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			throw new CPDefinitionVirtualSettingUrlException();
 		}
 
-		if (useSampleFileEntry) {
-			try {
-				dlAppLocalService.getFileEntry(sampleFileEntryId);
+		if (useSample) {
+			if (useSampleFileEntry) {
+				try {
+					dlAppLocalService.getFileEntry(sampleFileEntryId);
+				}
+				catch (NoSuchFileEntryException nsfee) {
+					throw new
+						CPDefinitionVirtualSettingSampleFileEntryIdException(
+							nsfee);
+				}
 			}
-			catch (NoSuchFileEntryException nsfee) {
-				throw new
-					CPDefinitionVirtualSettingSampleFileEntryIdException(nsfee);
+			else if (Validator.isNull(sampleUrl)) {
+				throw new CPDefinitionVirtualSettingSampleUrlException();
 			}
-		}
-		else if (Validator.isNull(sampleUrl)) {
-			throw new CPDefinitionVirtualSettingSampleUrlException();
 		}
 
 		if (termsOfUseRequired && MapUtil.isEmpty(termsOfUseContentMap)) {

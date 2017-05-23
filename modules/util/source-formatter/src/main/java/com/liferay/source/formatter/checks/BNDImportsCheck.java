@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.BNDImportsFormatter;
 
@@ -43,6 +44,8 @@ public class BNDImportsCheck extends BaseFileCheck {
 		content = importsFormatter.format(content, _exportsPattern);
 		content = importsFormatter.format(content, _importsPattern);
 		content = importsFormatter.format(content, _privatePackagesPattern);
+
+		content = _removeInternalPrivatePackages(content);
 
 		return content;
 	}
@@ -82,6 +85,27 @@ public class BNDImportsCheck extends BaseFileCheck {
 		}
 	}
 
+	private String _removeInternalPrivatePackages(String content) {
+		Matcher matcher = _privatePackagesPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String match = matcher.group();
+
+		matcher = _internalPrivatePackagePattern.matcher(match);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String replacement = StringUtil.removeSubstring(
+			match, matcher.group(2));
+
+		return StringUtil.replace(content, match, replacement);
+	}
+
 	private final Pattern _conditionalPackagePattern = Pattern.compile(
 		"\n-conditionalpackage:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
@@ -94,6 +118,8 @@ public class BNDImportsCheck extends BaseFileCheck {
 	private final Pattern _importsPattern = Pattern.compile(
 		"\nImport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
+	private final Pattern _internalPrivatePackagePattern = Pattern.compile(
+		"(,\\\\\n\t|: )(.*\\.internal.*)(\n|\\Z)");
 	private final Pattern _privatePackagesPattern = Pattern.compile(
 		"\nPrivate-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);

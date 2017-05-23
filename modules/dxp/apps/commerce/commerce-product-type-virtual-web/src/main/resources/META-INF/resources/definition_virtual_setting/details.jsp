@@ -22,11 +22,37 @@ CPDefinitionVirtualSettingDisplayContext cpDefinitionVirtualSettingDisplayContex
 CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSettingDisplayContext.getCPDefinitionVirtualSetting();
 
 SearchContainer<FileEntry> fileEntrySearchContainer = cpDefinitionVirtualSettingDisplayContext.getFileEntrySearchContainer();
+
+String fileEntryTogglerCssClass = "lfr-virtual-header toggler-header-expanded";
+String urlTogglerCssClass = "lfr-virtual-header toggler-header-collapsed";
+String buttonCssClass = "lfr-definition-virtual-setting-value modify-file-entry-link ";
+
+boolean useFileEntry = ParamUtil.getBoolean(request, "useFileEntry", true);
+boolean useUrl = ParamUtil.getBoolean(request, "useUrl", false);
+
+if ((cpDefinitionVirtualSetting != null) && Validator.isNull(cpDefinitionVirtualSetting.getFileEntryId())) {
+	useFileEntry = false;
+
+	fileEntryTogglerCssClass = "lfr-virtual-header toggler-header-collapsed";
+}
+
+if ((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getUrl())) {
+	useUrl = true;
+
+	urlTogglerCssClass = "lfr-virtual-header toggler-header-expanded";
+}
+
+if (fileEntrySearchContainer.hasResults()) {
+	buttonCssClass += "hidden";
+}
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
 
 <aui:model-context bean="<%= cpDefinitionVirtualSetting %>" model="<%= CPDefinitionVirtualSetting.class %>" />
+
+<liferay-ui:error exception="<%= CPDefinitionVirtualSettingFileEntryIdException.class %>" message="please-select-an-existing-file" />
+<liferay-ui:error exception="<%= CPDefinitionVirtualSettingUrlException.class %>" message="please-insert-a-valid-url" />
 
 <liferay-util:buffer var="removeFileEntryIcon">
 	<liferay-ui:icon
@@ -36,28 +62,13 @@ SearchContainer<FileEntry> fileEntrySearchContainer = cpDefinitionVirtualSetting
 	/>
 </liferay-util:buffer>
 
-<div class="lfr-definition-virtual-setting-file-selector">
-	<aui:fieldset>
+<div class="<%= fileEntryTogglerCssClass %>">
+	<aui:input checked="<%= useFileEntry %>" cssClass="lfr-definition-virtual-setting-type" label="use-file" name="useFileEntry" type="checkbox" />
+</div>
 
-		<%
-		boolean useFileEntry = true;
-
-		if ((cpDefinitionVirtualSetting != null) && Validator.isNull(cpDefinitionVirtualSetting.getFileEntryId())) {
-			useFileEntry = false;
-		}
-		%>
-
-		<aui:input checked="<%= useFileEntry %>" cssClass="lfr-definition-virtual-setting-type" label="use-file" name="useFileEntry" type="radio" />
-
-		<%
-		String fileEntryContainerCssClass = "lfr-definition-virtual-setting-value ";
-
-		if ((cpDefinitionVirtualSetting != null) && (cpDefinitionVirtualSetting.getFileEntryId() <= 0)) {
-			fileEntryContainerCssClass += "hidden";
-		}
-		%>
-
-		<div class="<%= fileEntryContainerCssClass %>">
+<div class="lfr-virtual-content">
+	<div class="lfr-definition-virtual-setting-file-selector">
+		<aui:fieldset>
 			<liferay-ui:search-container
 				cssClass="lfr-definition-virtual-setting-file-entry"
 				curParam="curFileEntry"
@@ -99,37 +110,18 @@ SearchContainer<FileEntry> fileEntrySearchContainer = cpDefinitionVirtualSetting
 				<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= fileEntrySearchContainer %>" />
 			</liferay-ui:search-container>
 
-			<%
-			String cssClass = "modify-file-entry-link ";
+			<aui:button cssClass="<%= buttonCssClass %>" name="selectFile" value="select-file" />
+		</aui:fieldset>
+	</div>
+</div>
 
-			if (fileEntrySearchContainer.hasResults()) {
-				cssClass += "hidden";
-			}
-			%>
+<div class="<%= urlTogglerCssClass %>">
+	<aui:input checked="<%= useUrl %>" cssClass="lfr-definition-virtual-setting-type" label="use-url" name="useUrl" type="checkbox" />
+</div>
 
-			<aui:button cssClass="<%= cssClass %>" name="selectFile" value="select-file" />
-		</div>
-	</aui:fieldset>
-
+<div class="lfr-virtual-content">
 	<aui:fieldset>
-
-		<%
-		boolean useUrl = false;
-
-		String urlContainerCssClass = "hidden lfr-definition-virtual-setting-value";
-
-		if ((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getUrl())) {
-			useUrl = true;
-
-			urlContainerCssClass = "lfr-definition-virtual-setting-value";
-		}
-		%>
-
-		<aui:input checked="<%= useUrl %>" cssClass="lfr-definition-virtual-setting-type" label="use-url" name="useUrl" type="radio" />
-
-		<div class="<%= urlContainerCssClass %>">
-			<aui:input name="url" />
-		</div>
+		<aui:input cssClass="lfr-definition-virtual-setting-value" name="url" />
 	</aui:fieldset>
 </div>
 
@@ -190,17 +182,9 @@ SearchContainer<FileEntry> fileEntrySearchContainer = cpDefinitionVirtualSetting
 
 		types.item(index).attr('checked', true);
 
-		values.addClass('hidden');
+		values.attr('disabled', true);
 
-		values.item(index).removeClass('hidden');
-
-		types.each(
-			function(index) {
-				if (types.item(index).get('checked')) {
-					values.item(index).addClass('hidden');
-				}
-			}
-		);
+		values.item(index).attr('disabled', false);
 	};
 
 	container.delegate(
@@ -211,6 +195,17 @@ SearchContainer<FileEntry> fileEntrySearchContainer = cpDefinitionVirtualSetting
 			selectFileType(index);
 		},
 		'.lfr-definition-virtual-setting-type'
+	);
+
+	new A.TogglerDelegate(
+		{
+			container: container,
+			animated: true,
+			content: '.lfr-virtual-content',
+			expanded: 'false',
+			closeAllOnExpand: true,
+			header: '.lfr-virtual-header'
+		}
 	);
 </aui:script>
 

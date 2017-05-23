@@ -15,6 +15,11 @@
 package com.liferay.commerce.product.type.virtual.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingFileEntryIdException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleFileEntryIdException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleUrlException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseRequiredException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingUrlException;
 import com.liferay.commerce.product.type.virtual.exception.NoSuchCPDefinitionVirtualSettingException;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
@@ -64,12 +69,26 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchCPDefinitionVirtualSettingException ||
+			if (e instanceof CPDefinitionVirtualSettingFileEntryIdException ||
+				e instanceof
+					CPDefinitionVirtualSettingSampleFileEntryIdException ||
+				e instanceof CPDefinitionVirtualSettingSampleUrlException ||
+				e instanceof
+					CPDefinitionVirtualSettingTermsOfUseRequiredException ||
+				e instanceof CPDefinitionVirtualSettingUrlException ||
+				e instanceof NoSuchCPDefinitionVirtualSettingException ||
 				e instanceof PrincipalException) {
+
+				hideDefaultErrorMessage(actionRequest);
+				hideDefaultSuccessMessage(actionRequest);
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName",
+					"editProductDefinitionVirtualSetting");
+
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;
@@ -95,6 +114,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 			actionRequest, "activationStatus");
 		long duration = ParamUtil.getLong(actionRequest, "duration");
 		int maxUsages = ParamUtil.getInteger(actionRequest, "maxUsages");
+		boolean useSample = ParamUtil.getBoolean(actionRequest, "useSample");
 		boolean useSampleFileEntry = ParamUtil.getBoolean(
 			actionRequest, "useSampleFileEntry");
 		long sampleFileEntryId = ParamUtil.getLong(
@@ -121,7 +141,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 				_cpDefinitionVirtualSettingService.
 					addCPDefinitionVirtualSetting(
 						cpDefinitionId, useFileEntry, fileEntryId, url,
-						activationStatus, duration, maxUsages,
+						activationStatus, duration, maxUsages, useSample,
 						useSampleFileEntry, sampleFileEntryId, sampleUrl,
 						termsOfUseRequired, termsOfUseContentMap,
 						termsOfUseJournalArticleResourcePK, serviceContext);
@@ -134,7 +154,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 				_cpDefinitionVirtualSettingService.
 					updateCPDefinitionVirtualSetting(
 						cpDefinitionVirtualSettingId, useFileEntry, fileEntryId,
-						url, activationStatus, duration, maxUsages,
+						url, activationStatus, duration, maxUsages, useSample,
 						useSampleFileEntry, sampleFileEntryId, sampleUrl,
 						termsOfUseRequired, termsOfUseContentMap,
 						termsOfUseJournalArticleResourcePK, serviceContext);

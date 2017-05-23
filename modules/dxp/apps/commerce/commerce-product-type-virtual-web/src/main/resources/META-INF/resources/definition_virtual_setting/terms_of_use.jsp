@@ -24,11 +24,36 @@ CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSetti
 SearchContainer<JournalArticle> journalArticleSearchContainer = cpDefinitionVirtualSettingDisplayContext.getJournalArticleSearchContainer();
 
 boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting, request, "termsOfUseRequired");
+
+String termsOfUseContentTogglerCssClass = "lfr-virtual-terms-of-use-header toggler-header-expanded";
+String termsOfUseArticleTogglerCssClass = "lfr-virtual-terms-of-use-header toggler-header-collapsed";
+String termsOfUseButtonCssClass = "lfr-definition-virtual-setting-terms-of-use-value modify-journal-article-link ";
+
+boolean insertText = ParamUtil.getBoolean(request, "insertText", true);
+boolean selectWebContent = ParamUtil.getBoolean(request, "selectWebContent", false);
+
+if ((cpDefinitionVirtualSetting != null) && Validator.isNull(cpDefinitionVirtualSetting.getTermsOfUseContentMap())) {
+	insertText = false;
+
+	termsOfUseContentTogglerCssClass = "lfr-virtual-terms-of-use-header toggler-header-collapsed";
+}
+
+if ((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK())) {
+	selectWebContent = true;
+
+	termsOfUseArticleTogglerCssClass = "lfr-virtual-terms-of-use-header toggler-header-expanded";
+}
+
+if (journalArticleSearchContainer.hasResults()) {
+	termsOfUseButtonCssClass += "hidden";
+}
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="terms-of-use" />
 
 <aui:model-context bean="<%= cpDefinitionVirtualSetting %>" model="<%= CPDefinitionVirtualSetting.class %>" />
+
+<liferay-ui:error exception="<%= CPDefinitionVirtualSettingTermsOfUseRequiredException.class %>" />
 
 <liferay-util:buffer var="removeJournalArticleIcon">
 	<liferay-ui:icon
@@ -45,56 +70,32 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 </div>
 
 <div class="lfr-definition-virtual-setting-terms-of-use-content toggler-content-collapsed">
-	<aui:fieldset>
+	<div class="<%= termsOfUseContentTogglerCssClass %>">
+		<aui:input checked="<%= insertText %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="insert-text" name="insertText" type="checkbox" />
+	</div>
 
-		<%
-		boolean insertText = true;
+	<div class="lfr-virtual-terms-of-use-content">
+		<aui:fieldset>
+			<aui:field-wrapper cssClass="lfr-definition-virtual-setting-terms-of-use-value">
+				<div class="entry-content form-group">
+					<liferay-ui:input-localized
+						cssClass="form-control"
+						editorName="alloyeditor"
+						name="termsOfUseContent"
+						type="editor"
+						xml='<%= BeanPropertiesUtil.getString(cpDefinitionVirtualSetting, "termsOfUseContent") %>'
+					/>
+				</div>
+			</aui:field-wrapper>
+		</aui:fieldset>
+	</div>
 
-		if ((cpDefinitionVirtualSetting != null) && Validator.isNull(cpDefinitionVirtualSetting.getTermsOfUseContentMap())) {
-			insertText = false;
-		}
-		%>
+	<div class="<%= termsOfUseArticleTogglerCssClass %>">
+		<aui:input checked="<%= selectWebContent %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="select-web-content" name="selectWebContent" type="checkbox" />
+	</div>
 
-		<aui:input checked="<%= insertText %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="insert-text" name="insertText" type="radio" />
-
-		<%
-		String wrapperCssClass = "lfr-definition-virtual-setting-terms-of-use-value ";
-
-		if ((cpDefinitionVirtualSetting != null) && (cpDefinitionVirtualSetting.getTermsOfUseContentMap() == null)) {
-			wrapperCssClass += "hidden";
-		}
-		%>
-
-		<aui:field-wrapper cssClass="<%= wrapperCssClass %>">
-			<div class="entry-content form-group">
-				<liferay-ui:input-localized
-					cssClass="form-control"
-					editorName="alloyeditor"
-					name="termsOfUseContent"
-					type="editor"
-					xml='<%= BeanPropertiesUtil.getString(cpDefinitionVirtualSetting, "termsOfUseContent") %>'
-				/>
-			</div>
-		</aui:field-wrapper>
-	</aui:fieldset>
-
-	<aui:fieldset>
-
-		<%
-		boolean selectWebContent = false;
-
-		String articleContainerCssClass = "hidden lfr-definition-virtual-setting-terms-of-use-value";
-
-		if ((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK())) {
-			selectWebContent = true;
-
-			articleContainerCssClass = "lfr-definition-virtual-setting-terms-of-use-value";
-		}
-		%>
-
-		<aui:input checked="<%= selectWebContent %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="select-web-content" name="selectWebContent" type="radio" />
-
-		<div class="<%= articleContainerCssClass %>">
+	<div class="lfr-virtual-terms-of-use-content">
+		<aui:fieldset>
 			<liferay-ui:search-container
 				cssClass="lfr-definition-virtual-setting-journal-article"
 				curParam="curJournalArticle"
@@ -127,17 +128,9 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 				<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= journalArticleSearchContainer %>" />
 			</liferay-ui:search-container>
 
-			<%
-			String cssClass = "modify-journal-article-link ";
-
-			if (journalArticleSearchContainer.hasResults()) {
-				cssClass += "hidden";
-			}
-			%>
-
-			<aui:button cssClass="<%= cssClass %>" name="selectArticle" value="select-web-content" />
-		</div>
-	</aui:fieldset>
+			<aui:button cssClass="<%= termsOfUseButtonCssClass %>" name="selectArticle" value="select-web-content" />
+		</aui:fieldset>
+	</div>
 </div>
 
 <aui:script sandbox="<%= true %>">
@@ -191,9 +184,9 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 
 		termsOfUseTypes.item(index).attr('checked', true);
 
-		termsOfUseValues.addClass('hidden');
+		termsOfUseValues.attr('disabled', true);
 
-		termsOfUseValues.item(index).removeClass('hidden');
+		termsOfUseValues.item(index).attr('disabled', false);
 	};
 
 	container.delegate(
@@ -219,21 +212,19 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 					var expanded = !instance.get('expanded');
 
 					A.one('#<portlet:namespace />termsOfUseRequired').attr('checked', expanded);
-
-					if (expanded) {
-						termsOfUseTypes.each(
-							function(item, index) {
-								if (item.get('checked')) {
-									termsOfUseValues.item(index).removeClass('hidden');
-								}
-							}
-						);
-					}
-					else {
-						termsOfUseValues.addClass('hidden');
-					}
 				}
 			}
+		}
+	);
+
+	new A.TogglerDelegate(
+		{
+			container: container,
+			animated: true,
+			content: '.lfr-virtual-terms-of-use-content',
+			expanded: 'false',
+			closeAllOnExpand: true,
+			header: '.lfr-virtual-terms-of-use-header'
 		}
 	);
 </aui:script>

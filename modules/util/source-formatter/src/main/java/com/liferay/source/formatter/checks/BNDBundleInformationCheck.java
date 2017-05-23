@@ -21,7 +21,7 @@ import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 /**
  * @author Hugo Huijser
  */
-public class BNDBundleNameCheck extends BaseFileCheck {
+public class BNDBundleInformationCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isModulesCheck() {

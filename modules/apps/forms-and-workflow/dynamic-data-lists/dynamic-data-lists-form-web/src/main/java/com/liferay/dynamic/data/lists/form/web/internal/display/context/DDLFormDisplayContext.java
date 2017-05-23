@@ -272,7 +272,11 @@ public class DDLFormDisplayContext {
 			PortalUtil.getHttpServletRequest(_renderRequest));
 		ddmFormRenderingContext.setHttpServletResponse(
 			PortalUtil.getHttpServletResponse(_renderResponse));
-		ddmFormRenderingContext.setLocale(ddmForm.getDefaultLocale());
+
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		ddmFormRenderingContext.setLocale(themeDisplay.getLocale());
+
 		ddmFormRenderingContext.setPortletNamespace(
 			_renderResponse.getNamespace());
 

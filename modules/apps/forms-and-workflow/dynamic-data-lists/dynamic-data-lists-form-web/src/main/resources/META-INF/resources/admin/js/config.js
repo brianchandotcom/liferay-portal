@@ -98,6 +98,12 @@
 							path: 'form_builder_confirmation_dialog.js',
 							requires: []
 						},
+						'liferay-ddl-form-builder-copy-publish-form-url-popover': {
+							path: 'form_builder_copy_publish_form_url_popover.js',
+							requires: [
+								'aui-popover'
+							]
+						},
 						'liferay-ddl-form-builder-data-provider-parameter-template': {
 							path: '../templates/data_provider_parameter.soy.js',
 							requires: [
@@ -199,12 +205,6 @@
 							path: 'form_builder_pagination.js',
 							requires: [
 								'aui-pagination'
-							]
-						},
-						'liferay-ddl-form-builder-copy-publish-form-url-popover': {
-							path: 'form_builder_copy_publish_form_url_popover.js',
-							requires: [
-								'aui-popover'
 							]
 						},
 						'liferay-ddl-form-builder-render-rule': {

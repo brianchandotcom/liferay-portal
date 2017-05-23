@@ -7,6 +7,8 @@ AUI.add(
 
 		var OPERATORS_MAP = ['+', '-', '*', '/', '.'];
 
+		var Settings = Liferay.DDL.Settings;
+
 		var FormBuilderActionCalculate = A.Component.create(
 			{
 				ATTRS: {
@@ -15,10 +17,6 @@ AUI.add(
 					},
 
 					functions: {
-						value: ''
-					},
-
-					getFunctionsURL: {
 						value: ''
 					},
 
@@ -72,7 +70,7 @@ AUI.add(
 						calculateContainer.setHTML(instance._getRuleContainerTemplate());
 
 						A.io.request(
-							instance.get('getFunctionsURL'),
+							Settings.getFunctionsURL,
 							{
 								method: 'GET',
 								on: {
@@ -114,7 +112,7 @@ AUI.add(
 					_createExpressionField: function() {
 						var instance = this;
 
-						var value;
+						var value = '';
 
 						var action = instance.get('action');
 
@@ -124,7 +122,7 @@ AUI.add(
 							value = action.expression.replace(/\[|\]/g, '');
 						}
 
-						instance._expressionField = new Liferay.DDM.Field.Text(
+						instance._expressionField = instance.createTextField(
 							{
 								bubbleTargets: [instance],
 								displayStyle: 'multiline',
@@ -142,15 +140,15 @@ AUI.add(
 					_createTargetField: function() {
 						var instance = this;
 
-						var value;
+						var value = [];
 
 						var action = instance.get('action');
 
 						if (action && action.target) {
-							value = action.target;
+							value = [action.target];
 						}
 
-						instance._targetField = new Liferay.DDM.Field.Select(
+						instance._targetField = instance.createSelectField(
 							{
 								bubbleTargets: [instance],
 								fieldName: instance.get('index') + '-action',

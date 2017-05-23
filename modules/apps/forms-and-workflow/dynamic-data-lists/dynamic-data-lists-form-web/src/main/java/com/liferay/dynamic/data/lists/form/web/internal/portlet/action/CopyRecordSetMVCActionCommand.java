@@ -31,10 +31,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionC
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.Map;
@@ -112,9 +111,6 @@ public class CopyRecordSetMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 
 		DDLRecordSet recordSet = ddlRecordSetService.getRecordSet(recordSetId);
@@ -122,10 +118,13 @@ public class CopyRecordSetMVCActionCommand
 		DDMStructure ddmStructureCopy = copyRecordSetDDMStructure(
 			actionRequest, recordSet);
 
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			ddmStructureCopy.getDefaultLanguageId());
+
 		DDLRecordSet recordSetCopy = saveRecordSetMVCCommandHelper.addRecordSet(
 			actionRequest, ddmStructureCopy.getStructureId(),
-			getNameMap(recordSet, themeDisplay.getSiteDefaultLocale()),
-			getDescriptionMap(recordSet, themeDisplay.getSiteDefaultLocale()));
+			getNameMap(recordSet, defaultLocale),
+			recordSet.getDescriptionMap());
 
 		DDMFormValues settingsDDMFormValues =
 			createRecordSetSettingsDDMFormValues(actionRequest, recordSet);
@@ -134,22 +133,19 @@ public class CopyRecordSetMVCActionCommand
 			recordSetCopy.getRecordSetId(), settingsDDMFormValues);
 	}
 
-	protected Map<Locale, String> getDescriptionMap(
-		DDLRecordSet recordSet, Locale locale) {
-
-		return saveRecordSetMVCCommandHelper.getLocalizedMap(
-			locale, recordSet.getDescription(locale, true));
-	}
-
 	protected Map<Locale, String> getNameMap(
-		DDLRecordSet recordSet, Locale locale) {
+		DDLRecordSet recordSet, Locale defaultLocale) {
 
-		ResourceBundle resourceBundle = getResourceBundle(locale);
+		Map<Locale, String> nameMap = recordSet.getNameMap();
+
+		ResourceBundle resourceBundle = getResourceBundle(defaultLocale);
 
 		String name = LanguageUtil.format(
-			resourceBundle, "copy-of-x", recordSet.getName(locale, true));
+			resourceBundle, "copy-of-x", nameMap.get(defaultLocale));
 
-		return saveRecordSetMVCCommandHelper.getLocalizedMap(locale, name);
+		nameMap.put(defaultLocale, name);
+
+		return nameMap;
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {

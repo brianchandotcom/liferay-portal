@@ -261,10 +261,11 @@ public class CPAttachmentFileEntryStagedModelRepository
 
 		return _cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, cpAttachmentFileEntry.getJson(),
+			cpAttachmentFileEntry.getFileEntryId(), displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			cpAttachmentFileEntry.getJson(),
 			cpAttachmentFileEntry.getPriority(),
 			cpAttachmentFileEntry.getType(), serviceContext);
 	}

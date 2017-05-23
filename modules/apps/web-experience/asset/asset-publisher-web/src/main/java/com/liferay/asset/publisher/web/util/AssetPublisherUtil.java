@@ -866,15 +866,25 @@ public class AssetPublisherUtil {
 	public static Map<Locale, String> getEmailAssetEntryAddedBodyMap(
 		PortletPreferences portletPreferences) {
 
-		LocalizedValuesMap emailAssetEntryAddedBodyMap =
+		LocalizedValuesMap emailAssetEntryAddedLocalizedBodyMap =
 			_assetPublisherPortletInstanceConfiguration.
 				emailAssetEntryAddedBody();
 
-		return LocalizationUtil.getLocalizationMap(
-			portletPreferences, "emailAssetEntryAddedBody",
-			emailAssetEntryAddedBodyMap.get(LocaleUtil.getSiteDefault()),
-			emailAssetEntryAddedBodyMap.get(LocaleUtil.getSiteDefault()),
-			AssetPublisherUtil.class.getClassLoader());
+		Map<Locale, String> emailAssetEntryAddedBodyMap =
+			LocalizationUtil.getLocalizationMap(
+				portletPreferences, "emailAssetEntryAddedBody",
+				StringPool.BLANK, StringPool.BLANK,
+				AssetPublisherUtil.class.getClassLoader());
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		if (Validator.isNull(emailAssetEntryAddedBodyMap.get(defaultLocale))) {
+			emailAssetEntryAddedBodyMap.put(
+				defaultLocale,
+				emailAssetEntryAddedLocalizedBodyMap.getDefaultValue());
+		}
+
+		return emailAssetEntryAddedBodyMap;
 	}
 
 	public static boolean getEmailAssetEntryAddedEnabled(
@@ -895,15 +905,27 @@ public class AssetPublisherUtil {
 	public static Map<Locale, String> getEmailAssetEntryAddedSubjectMap(
 		PortletPreferences portletPreferences) {
 
-		LocalizedValuesMap emailAssetEntryAddedSubjectMap =
+		LocalizedValuesMap emailAssetEntryAddedLocalizedSubjectMap =
 			_assetPublisherPortletInstanceConfiguration.
 				emailAssetEntryAddedSubject();
 
-		return LocalizationUtil.getLocalizationMap(
-			portletPreferences, "emailAssetEntryAddedSubject",
-			emailAssetEntryAddedSubjectMap.get(LocaleUtil.getSiteDefault()),
-			emailAssetEntryAddedSubjectMap.get(LocaleUtil.getSiteDefault()),
-			AssetPublisherUtil.class.getClassLoader());
+		Map<Locale, String> emailAssetEntryAddedSubjectMap =
+			LocalizationUtil.getLocalizationMap(
+				portletPreferences, "emailAssetEntryAddedBody",
+				StringPool.BLANK, StringPool.BLANK,
+				AssetPublisherUtil.class.getClassLoader());
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		if (Validator.isNull(
+				emailAssetEntryAddedSubjectMap.get(defaultLocale))) {
+
+			emailAssetEntryAddedSubjectMap.put(
+				defaultLocale,
+				emailAssetEntryAddedLocalizedSubjectMap.getDefaultValue());
+		}
+
+		return emailAssetEntryAddedSubjectMap;
 	}
 
 	public static Map<String, String> getEmailDefinitionTerms(

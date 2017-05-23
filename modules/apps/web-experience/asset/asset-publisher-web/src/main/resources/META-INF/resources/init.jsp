@@ -44,6 +44,7 @@ page import="com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil" %><
 page import="com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil" %><%@
 page import="com.liferay.asset.kernel.util.AssetEntryQueryProcessor" %><%@
 page import="com.liferay.asset.kernel.util.comparator.AssetRendererFactoryTypeNameComparator" %><%@
+page import="com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration" %><%@
 page import="com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration" %><%@
 page import="com.liferay.asset.publisher.web.constants.AssetPublisherConstants" %><%@
 page import="com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys" %><%@
@@ -143,6 +144,8 @@ page import="javax.portlet.PortletURL" %>
 AssetPublisherCustomizer assetPublisherCustomizer = (AssetPublisherCustomizer)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER);
 AssetPublisherDisplayContext assetPublisherDisplayContext = new AssetPublisherDisplayContext(assetPublisherCustomizer, liferayPortletRequest, liferayPortletResponse, portletPreferences);
 AssetPublisherWebConfiguration assetPublisherWebConfiguration = (AssetPublisherWebConfiguration)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION);
+
+AssetPublisherPortletInstanceConfiguration assetPublisherPortletInstanceConfiguration = (AssetPublisherPortletInstanceConfiguration)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_PORTLET_INSTANCE_CONFIGURATION);
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>

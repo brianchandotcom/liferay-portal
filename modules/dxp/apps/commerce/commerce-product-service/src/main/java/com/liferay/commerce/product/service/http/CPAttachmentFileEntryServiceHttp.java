@@ -297,11 +297,11 @@ public class CPAttachmentFileEntryServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntry updateCPAttachmentFileEntry(
 		HttpPrincipal httpPrincipal, long cpAttachmentFileEntryId,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire, java.lang.String json,
-		int priority, int type,
+		long fileEntryId, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		java.lang.String json, int priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -310,11 +310,12 @@ public class CPAttachmentFileEntryServiceHttp {
 					_updateCPAttachmentFileEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpAttachmentFileEntryId, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					json, priority, type, serviceContext);
+					cpAttachmentFileEntryId, fileEntryId, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, json, priority, type,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -364,9 +365,9 @@ public class CPAttachmentFileEntryServiceHttp {
 	private static final Class<?>[] _getCPAttachmentFileEntriesCountParameterTypes6 =
 		new Class[] { long.class, int.class };
 	private static final Class<?>[] _updateCPAttachmentFileEntryParameterTypes7 = new Class[] {
-			long.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, int.class, boolean.class,
-			java.lang.String.class, int.class, int.class,
+			long.class, long.class, int.class, int.class, int.class, int.class,
+			int.class, int.class, int.class, int.class, int.class, int.class,
+			boolean.class, java.lang.String.class, int.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

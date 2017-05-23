@@ -19,8 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -76,7 +76,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = AssetEntriesCheckerUtil.class)
+@Component(
+	configurationPid = "com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration",
+	immediate = true, service = AssetEntriesCheckerUtil.class
+)
 @ProviderType
 public class AssetEntriesCheckerUtil {
 

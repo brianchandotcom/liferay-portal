@@ -22,8 +22,8 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -103,6 +103,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mate Thurzo
  */
 @Component(
+	configurationPid = "com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration",
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER

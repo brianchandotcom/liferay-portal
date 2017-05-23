@@ -21,9 +21,6 @@ String emailFromName = ParamUtil.getString(request, "preferences--emailFromName-
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", AssetPublisherUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
 
 boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailAssetEntryAddedEnabled--", AssetPublisherUtil.getEmailAssetEntryAddedEnabled(portletPreferences));
-
-LocalizedValuesMap emailAssetEntryAddedBodyMap = assetPublisherWebConfiguration.emailAssetEntryAddedBody();
-LocalizedValuesMap emailAssetEntryAddedSubjectMap = assetPublisherWebConfiguration.emailAssetEntryAddedSubject();
 %>
 
 <liferay-ui:error key="emailAssetEntryAddedBody" message="please-enter-a-valid-body" />
@@ -39,11 +36,11 @@ LocalizedValuesMap emailAssetEntryAddedSubjectMap = assetPublisherWebConfigurati
 	<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
 
 	<liferay-frontend:email-notification-settings
-		emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailAssetEntryAddedBody", "preferences", emailAssetEntryAddedBodyMap.get(locale)) %>'
+		emailBodyLocalizedValuesMap="<%= assetPublisherPortletInstanceConfiguration.emailAssetEntryAddedBody() %>"
 		emailDefinitionTerms="<%= AssetPublisherUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName) %>"
 		emailEnabled="<%= emailAssetEntryAddedEnabled %>"
 		emailParam="emailAssetEntryAdded"
-		emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailAssetEntryAddedSubject", "preferences", emailAssetEntryAddedSubjectMap.get(locale)) %>'
+		emailSubjectLocalizedValuesMap="<%= assetPublisherPortletInstanceConfiguration.emailAssetEntryAddedSubject() %>"
 		showEmailEnabled="<%= false %>"
 	/>
 </div>

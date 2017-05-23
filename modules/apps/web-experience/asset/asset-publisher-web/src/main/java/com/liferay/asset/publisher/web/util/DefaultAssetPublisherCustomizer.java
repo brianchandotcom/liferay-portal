@@ -16,8 +16,8 @@ package com.liferay.asset.publisher.web.util;
 
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.kernel.util.AssetEntryQueryProcessor;
+import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -41,7 +41,10 @@ import org.osgi.service.component.annotations.Modified;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = AssetPublisherCustomizer.class)
+@Component(
+	configurationPid = "com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration",
+	immediate = true, service = AssetPublisherCustomizer.class
+)
 public class DefaultAssetPublisherCustomizer
 	implements AssetPublisherCustomizer {
 

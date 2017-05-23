@@ -235,19 +235,19 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 				companyId, groupId, DLFileEntryConstants.getClassName(),
 				fileVersionId);
 
-		if (workflowInstanceLink != null) {
-			WorkflowInstance workflowInstance =
-				WorkflowInstanceManagerUtil.getWorkflowInstance(
-					companyId, workflowInstanceLink.getWorkflowInstanceId());
-
-			if (!workflowInstance.isComplete()) {
-				return true;
-			}
-
+		if (workflowInstanceLink == null) {
 			return false;
 		}
 
-		return false;
+		WorkflowInstance workflowInstance =
+			WorkflowInstanceManagerUtil.getWorkflowInstance(
+				companyId, workflowInstanceLink.getWorkflowInstanceId());
+
+		if (workflowInstance.isComplete()) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

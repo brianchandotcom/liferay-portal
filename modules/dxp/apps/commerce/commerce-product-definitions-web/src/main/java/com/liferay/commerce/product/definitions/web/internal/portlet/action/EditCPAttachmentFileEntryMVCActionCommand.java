@@ -149,13 +149,10 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 			cpDefinitionId, locale, ddmFormValues);
 
 		int priority = ParamUtil.getInteger(actionRequest, "priority");
-
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPAttachmentFileEntry.class.getName(), actionRequest);
-
-		long classNameId = _portal.getClassNameId(CPDefinition.class);
 
 		if (cpAttachmentFileEntryId > 0) {
 			_cpAttachmentFileEntryService.updateCPAttachmentFileEntry(
@@ -166,6 +163,8 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 				neverExpire, json, priority, type, serviceContext);
 		}
 		else {
+			long classNameId = _portal.getClassNameId(CPDefinition.class);
+
 			_cpAttachmentFileEntryService.addCPAttachmentFileEntry(
 				classNameId, cpDefinitionId, fileEntryId, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,

@@ -21,14 +21,12 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/item-selector" prefix="liferay-item-selector" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
-
-<%@
-		taglib uri="http://liferay.com/tld/item-selector" prefix="liferay-item-selector" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.commerce.product.constants.CPConstants" %><%@
@@ -71,6 +69,7 @@ page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
@@ -86,12 +85,6 @@ page import="java.util.Set" %><%@
 page import="java.util.StringJoiner" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
-
-<%@
-		page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
-		page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-		page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
-		page import="com.liferay.portal.util.PropsValues" %>
 
 <liferay-frontend:defineObjects />
 

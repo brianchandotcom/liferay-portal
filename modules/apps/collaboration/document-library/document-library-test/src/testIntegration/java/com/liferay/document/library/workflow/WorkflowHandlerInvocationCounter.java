@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.workflow.test;
+package com.liferay.document.library.workflow;
 
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;

@@ -32,30 +32,6 @@ AUI.add(
 						return validConditions && validActions;
 					},
 
-					_checkPropertyAction: function(action) {
-						var instance = this;
-
-						if (action.action === 'show' | action.action === 'enable' | action.action === 'require' | action.action === 'jump-to-page') {
-							return action.target;
-						}
-						else if (action.action === 'auto-fill') {
-							var inputs = action.inputs;
-
-							var outputs = action.outputs;
-
-							var requiredInputs = action.requiredInputs;
-
-							if (!AObject.isEmpty(requiredInputs)) {
-								return !AObject.isEmpty(outputs) && !AObject.isEmpty(inputs) && instance._checkRequiredInputIsFilled(inputs, requiredInputs);
-							}
-
-							return !AObject.isEmpty(outputs);
-						}
-						else if (action.action === 'calculate') {
-							return action.expression && action.target;
-						}
-					},
-
 					_checkRequiredInputIsFilled: function(inputs, requiredInputs) {
 						for (var input in inputs) {
 							if (requiredInputs[input]) {
@@ -73,9 +49,7 @@ AUI.add(
 							return false;
 						}
 
-						var actionDone = instance._checkPropertyAction(action);
-
-						return actionDone;
+						return instance._validateAction(action);
 					},
 
 					_isValidActions: function(actions) {
@@ -136,6 +110,34 @@ AUI.add(
 						}
 
 						return true;
+					},
+
+					_validateAction: function(action) {
+						var instance = this;
+
+						var valid = false;
+
+						if (action.action === 'show' | action.action === 'enable' | action.action === 'require' | action.action === 'jump-to-page') {
+							valid = action.target;
+						}
+						else if (action.action === 'auto-fill') {
+							var inputs = action.inputs;
+
+							var outputs = action.outputs;
+
+							var requiredInputs = action.requiredInputs;
+
+							if (!AObject.isEmpty(requiredInputs)) {
+								return !AObject.isEmpty(outputs) && !AObject.isEmpty(inputs) && instance._checkRequiredInputIsFilled(inputs, requiredInputs);
+							}
+
+							valid = !AObject.isEmpty(outputs);
+						}
+						else if (action.action === 'calculate') {
+							valid = action.expression && action.target;
+						}
+
+						return valid;
 					}
 				}
 			}

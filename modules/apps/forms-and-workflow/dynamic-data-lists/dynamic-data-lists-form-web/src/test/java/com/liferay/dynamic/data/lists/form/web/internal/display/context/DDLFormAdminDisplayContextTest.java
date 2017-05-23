@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.DDMFormContextProviderServlet;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
@@ -280,6 +281,7 @@ public class DDLFormAdminDisplayContextTest extends PowerMockito {
 			mock(DDMFormContextProviderServlet.class),
 			mock(DDMFormFieldTypeServicesTracker.class),
 			mock(DDMFormFieldTypesJSONSerializer.class),
+			mock(DDMFormTemplateContextFactory.class),
 			mock(DDMFormJSONSerializer.class),
 			mock(DDMFormLayoutJSONSerializer.class),
 			mock(DDMFormRenderer.class),

@@ -37,6 +37,12 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 			false);
 	}
 
+	public EntityColumn(String name, String dbName) {
+		this(
+			name, dbName, "String", false, false, false, null, null, null, null,
+			true, false, false, false, false, false);
+	}
+
 	public EntityColumn(
 		String name, String dbName, String type, boolean primary,
 		boolean accessor, boolean filterPrimary, String ejbName,

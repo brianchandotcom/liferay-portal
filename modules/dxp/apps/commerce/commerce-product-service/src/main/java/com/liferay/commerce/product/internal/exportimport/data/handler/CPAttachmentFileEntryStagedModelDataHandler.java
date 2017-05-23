@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.internal.exportimport.data.handler;
 
+import com.liferay.commerce.product.internal.exportimport.content.processor.CPInstanceExportImportContentProcessor;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
@@ -74,6 +75,14 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 		Element cpAttachmentFileEntryElement =
 			portletDataContext.getExportDataElement(cpAttachmentFileEntry);
 
+		String json =
+			_cpInstanceExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, cpAttachmentFileEntry,
+					cpAttachmentFileEntry.getJson(), true, false);
+
+		cpAttachmentFileEntry.setJson(json);
+
 		portletDataContext.addClassedModel(
 			cpAttachmentFileEntryElement,
 			ExportImportPathUtil.getModelPath(cpAttachmentFileEntry),
@@ -128,6 +137,14 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 		importedCPAttachmentFileEntry.setClassPK(classPK);
 		importedCPAttachmentFileEntry.setFileEntryId(fileEntryId);
 
+		String json =
+			_cpInstanceExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, cpAttachmentFileEntry,
+					cpAttachmentFileEntry.getJson());
+
+		importedCPAttachmentFileEntry.setJson(json);
+
 		CPAttachmentFileEntry existingCPAttachmentFileEntry =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
 				cpAttachmentFileEntry.getUuid(),
@@ -172,6 +189,10 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private CPInstanceExportImportContentProcessor
+		_cpInstanceExportImportContentProcessor;
 
 	@Reference
 	private Portal _portal;

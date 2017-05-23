@@ -154,8 +154,9 @@ public class DeployUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getResourcePath(Set, String)}
-	*/
+	 * @deprecated As of 7.0.0, replaced by {@link #getResourcePath(
+	 *			   Set, String)}
+	 */
 	@Deprecated
 	public static String getResourcePath(String resource) throws Exception {
 		return _instance._getResourcePath(new HashSet<>(), resource);

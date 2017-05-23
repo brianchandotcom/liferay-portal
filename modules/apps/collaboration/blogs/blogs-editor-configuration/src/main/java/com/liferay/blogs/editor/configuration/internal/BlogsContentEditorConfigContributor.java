@@ -136,7 +136,6 @@ public class BlogsContentEditorConfigContributor
 
 		imageDesiredItemSelectorReturnTypes.add(
 			new FileEntryItemSelectorReturnType());
-
 		imageDesiredItemSelectorReturnTypes.add(
 			new URLItemSelectorReturnType());
 

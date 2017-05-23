@@ -129,6 +129,9 @@ public class BlogsContentEditorConfigContributor
 		blogsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			blogsDesiredItemSelectorReturnTypes);
 
+		ItemSelectorCriterion imageItemSelectorCriterion =
+			new ImageItemSelectorCriterion();
+
 		List<ItemSelectorReturnType> imageDesiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
@@ -137,9 +140,6 @@ public class BlogsContentEditorConfigContributor
 
 		imageDesiredItemSelectorReturnTypes.add(
 			new URLItemSelectorReturnType());
-
-		ItemSelectorCriterion imageItemSelectorCriterion =
-			new ImageItemSelectorCriterion();
 
 		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			imageDesiredItemSelectorReturnTypes);

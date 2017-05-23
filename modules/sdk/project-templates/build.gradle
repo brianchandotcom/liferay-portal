@@ -37,6 +37,7 @@ dependencies {
 	projectTemplates project(":sdk:project-templates-control-menu-entry")
 	projectTemplates project(":sdk:project-templates-form-field")
 	projectTemplates project(":sdk:project-templates-fragment")
+	projectTemplates project(":sdk:project-templates-freemarker-portlet")
 	projectTemplates project(":sdk:project-templates-layout-template")
 	projectTemplates project(":sdk:project-templates-mvc-portlet")
 	projectTemplates project(":sdk:project-templates-panel-app")

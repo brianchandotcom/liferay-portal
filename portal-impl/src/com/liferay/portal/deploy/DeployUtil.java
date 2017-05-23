@@ -38,11 +38,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -61,12 +65,46 @@ public class DeployUtil {
 		File targetFile = new File(targetDir, targetFileName);
 
 		if (!targetFile.exists()) {
-			File file = new File(getResourcePath(fileName));
+			Set<Path> tempPaths = new HashSet<>();
+
+			File file = new File(getResourcePath(tempPaths, fileName));
 
 			CopyTask.copyFile(
 				file, new File(targetDir), targetFileName, filterMap, overwrite,
 				true);
+
+			for (Path tempPath : tempPaths) {
+				deleteTemporaryPath(tempPath);
+			}
 		}
+	}
+
+	public static void deleteTemporaryPath(Path tempPath) throws IOException {
+		Files.walkFileTree(
+			tempPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult postVisitDirectory(
+						Path directory, IOException exc)
+					throws IOException {
+
+					Files.delete(directory);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path file, BasicFileAttributes attrs)
+					throws IOException {
+
+					Files.delete(file);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	public static String getAutoDeployDestDir() throws Exception {

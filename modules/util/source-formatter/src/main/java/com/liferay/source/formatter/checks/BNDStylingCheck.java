@@ -117,7 +117,7 @@ public class BNDStylingCheck extends BaseFileCheck {
 	private final Pattern _incorrectIndentPattern = Pattern.compile(
 		"\n[^\t].*:\\\\\n(\t{2,})[^\t]");
 	private final Pattern _multipleValuesOnSingleLinePattern = Pattern.compile(
-		",(?!\\\\\n).");
+		",(?!\\\\(\n|\\Z)).");
 	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
 		"\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
 	private final Pattern _trailingSemiColonPattern = Pattern.compile(

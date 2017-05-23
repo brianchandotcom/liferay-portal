@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>ENABLE_SOCIAL_BOOKMARKS</td>
-	<td>//label[contains(.,'Enable Social Bookmarks')]/input[@type='checkbox']/../span[2]/span</td>
+	<td>//label[contains(@for,'enableSocialBookmarks')]/input/../span/span</td>
 	<td></td>
 </tr>
 <tr>

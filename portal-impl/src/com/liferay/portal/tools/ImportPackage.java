@@ -141,13 +141,13 @@ public class ImportPackage implements Comparable<ImportPackage> {
 
 	public boolean isGroupedWith(ImportPackage importPackage) {
 		if (_importString.equals(StringPool.STAR)) {
-			return true;
+			return false;
 		}
 
 		String importPackageImportString = importPackage.getImportString();
 
 		if (importPackageImportString.equals(StringPool.STAR)) {
-			return true;
+			return false;
 		}
 
 		if (_isStatic != importPackage.isStatic()) {

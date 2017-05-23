@@ -143,17 +143,12 @@ public class ModulesStructureTest {
 
 	@Test
 	public void testScanFiles() throws IOException {
-		ClassLoader classLoader = ModulesStructureTest.class.getClassLoader();
-
 		final String gitRepoGitIgnoreTemplate = StringUtil.read(
-			classLoader,
-			"com/liferay/portal/modules/dependencies/git_repo_gitignore.tmpl");
+			ModulesStructureTest.class, "dependencies/git_repo_gitignore.tmpl");
 		final String themeGitIgnoreTemplate = StringUtil.read(
-			classLoader,
-			"com/liferay/portal/modules/dependencies/theme_gitignore.tmpl");
+			ModulesStructureTest.class, "dependencies/theme_gitignore.tmpl");
 		final String themeNpmIgnoreTemplate = StringUtil.read(
-			classLoader,
-			"com/liferay/portal/modules/dependencies/theme_npmignore.tmpl");
+			ModulesStructureTest.class, "dependencies/theme_npmignore.tmpl");
 
 		Files.walkFileTree(
 			_modulesDirPath,

@@ -40,6 +40,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -79,12 +80,10 @@ public class GogoShellPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		PortletSession portletSession = renderRequest.getPortletSession();
+		_ensureCommandSessionInitialized(renderRequest);
 
-		_ensureCommandSessionInitialized(portletSession);
-
-		CommandSession commandSession =
-			(CommandSession)portletSession.getAttribute("commandSession");
+		CommandSession commandSession = _getSessionAttribute(
+			CommandSession.class, "commandSession", renderRequest);
 
 		SessionMessages.add(
 			renderRequest, "prompt", commandSession.get("prompt"));
@@ -101,24 +100,26 @@ public class GogoShellPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletSession portletSession = actionRequest.getPortletSession();
+		_ensureCommandSessionInitialized(actionRequest);
 
-		_ensureCommandSessionInitialized(portletSession);
-
-		CommandSession commandSession =
-			(CommandSession)portletSession.getAttribute("commandSession");
+		CommandSession commandSession = _getSessionAttribute(
+			CommandSession.class, "commandSession", actionRequest);
 
 		UnsyncByteArrayOutputStream outputUnsyncByteArrayOutputStream =
-			(UnsyncByteArrayOutputStream)portletSession.getAttribute(
-				"outputUnsyncByteArrayOutputStream");
-		UnsyncByteArrayOutputStream errorUnsyncByteArrayOutputStream =
-			(UnsyncByteArrayOutputStream)portletSession.getAttribute(
-				"errorUnsyncByteArrayOutputStream");
+			_getSessionAttribute(
+				UnsyncByteArrayOutputStream.class,
+				"outputUnsyncByteArrayOutputStream", actionRequest);
 
-		PrintStream outputPrintStream =
-			(PrintStream)portletSession.getAttribute("outputPrintStream");
-		PrintStream errorPrintStream = (PrintStream)portletSession.getAttribute(
-			"errorPrintStream");
+		UnsyncByteArrayOutputStream errorUnsyncByteArrayOutputStream =
+			_getSessionAttribute(
+				UnsyncByteArrayOutputStream.class,
+				"errorUnsyncByteArrayOutputStream", actionRequest);
+
+		PrintStream outputPrintStream = _getSessionAttribute(
+			PrintStream.class, "outputPrintStream", actionRequest);
+
+		PrintStream errorPrintStream = _getSessionAttribute(
+			PrintStream.class, "errorPrintStream", actionRequest);
 
 		try {
 			SessionMessages.add(actionRequest, "command", command);
@@ -187,18 +188,30 @@ public class GogoShellPortlet extends MVCPortlet {
 		}
 	}
 
-	private void _ensureCommandSessionInitialized(
-		PortletSession portletSession) {
+	private static <T> T _getSessionAttribute(
+		Class<T> type, String name, PortletRequest portletRequest) {
 
-		CommandSession commandSession = null;
+		PortletSession portletSession = portletRequest.getPortletSession();
+
+		Object sessionAttribute = portletSession.getAttribute(name);
+
+		if (sessionAttribute != null) {
+			return type.cast(sessionAttribute);
+		}
+		else {
+			return null;
+		}
+	}
+
+	private void _ensureCommandSessionInitialized(
+		PortletRequest portletRequest) {
+
+		PortletSession portletSession = portletRequest.getPortletSession();
 
 		Object commandSessionAttribute = portletSession.getAttribute(
 			"commandSession");
 
-		if (commandSessionAttribute instanceof CommandSession) {
-			commandSession = (CommandSession)commandSessionAttribute;
-		}
-		else {
+		if (!(commandSessionAttribute instanceof CommandSession)) {
 			UnsyncByteArrayOutputStream outputUnsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
 			UnsyncByteArrayOutputStream errorUnsyncByteArrayOutputStream =
@@ -209,7 +222,7 @@ public class GogoShellPortlet extends MVCPortlet {
 			PrintStream errorPrintStream = new PrintStream(
 				errorUnsyncByteArrayOutputStream);
 
-			commandSession = _commandProcessor.createSession(
+			CommandSession commandSession = _commandProcessor.createSession(
 				null, outputPrintStream, errorPrintStream);
 
 			commandSession.put("prompt", "g!");

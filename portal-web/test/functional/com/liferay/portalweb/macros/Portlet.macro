@@ -200,6 +200,12 @@
 		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_${displayStyle}_ACTIVE" />
 	</command>
 
+	<command name="clickPortletPlusIconPG">
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN">
+			<var name="key_portletName" value="${portletName}" />
+		</execute>
+	</command>
+
 	<command name="configureApplicationDecoratorViaLookandfeelPG">
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="General" />

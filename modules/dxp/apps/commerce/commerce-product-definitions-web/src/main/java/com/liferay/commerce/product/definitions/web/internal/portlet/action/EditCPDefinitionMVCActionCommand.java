@@ -207,7 +207,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 
-		String name = ParamUtil.getString(actionRequest, "name");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "titleMapAsXML");
 		Map<Locale, String> shortDescriptionMap =
@@ -267,7 +266,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			// Add commerce product definition
 
 			cpDefinition = _cpDefinitionService.addCPDefinition(
-				baseSKU, name, titleMap, shortDescriptionMap, descriptionMap,
+				baseSKU, titleMap, shortDescriptionMap, descriptionMap,
 				productTypeName, null, displayDateMonth, displayDateDay,
 				displayDateYear, displayDateHour, displayDateMinute,
 				expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -279,7 +278,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			// Update commerce product definition
 
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
-				cpDefinitionId, baseSKU, name, titleMap, shortDescriptionMap,
+				cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
 				descriptionMap, productTypeName, null, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,

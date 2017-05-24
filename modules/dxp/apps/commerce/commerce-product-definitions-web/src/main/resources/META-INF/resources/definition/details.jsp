@@ -25,9 +25,7 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFI
 <aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
 <aui:fieldset>
-	<aui:input autoFocus="<%= true %>" name="name" />
-
-	<aui:input label="title" localized="<%= true %>" name="titleMapAsXML" type="text" wrapperCssClass="commerce-product-definition-title">
+	<aui:input autoFocus="<%= true %>" label="title" localized="<%= true %>" name="titleMapAsXML" type="text" wrapperCssClass="commerce-product-definition-title">
 		<aui:validator name="required" />
 	</aui:input>
 
@@ -41,7 +39,7 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFI
 	}
 	%>
 
-	<aui:field-wrapper cssClass="commerce-product-definition-description" label="description">
+	<aui:field-wrapper cssClass="commerce-product-definition-description" label="full-description">
 		<div class="entry-content form-group">
 			<liferay-ui:input-localized cssClass="form-control" editorName="alloyeditor" name="descriptionMapAsXML" type="editor" xml="<%= descriptionMapAsXML %>" />
 		</div>

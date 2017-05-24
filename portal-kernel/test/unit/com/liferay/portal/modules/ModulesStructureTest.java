@@ -205,7 +205,9 @@ public class ModulesStructureTest {
 							"Marker file " + path + " must be empty", 0,
 							basicFileAttributes.size());
 					}
-					else if (StringUtil.endsWith(fileName, ".gradle")) {
+					else if (StringUtil.endsWith(fileName, ".gradle") &&
+							 !_whitelistedGradleFileNames.contains(fileName)) {
+
 						String content = _read(path);
 
 						Assert.assertFalse(
@@ -955,5 +957,7 @@ public class ModulesStructureTest {
 	private static final Set<String> _gitRepoGradlePropertiesKeys =
 		Collections.singleton("com.liferay.source.formatter.version");
 	private static Path _modulesDirPath;
+	private static final Set<String> _whitelistedGradleFileNames =
+		Collections.singleton("licenses.gradle");
 
 }

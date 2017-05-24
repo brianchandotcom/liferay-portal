@@ -782,6 +782,19 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String addPreservedParameters(
+		ThemeDisplay themeDisplay, String url, boolean isUser) {
+
+		if (isUser) {
+			return addPreservedParameters(themeDisplay, url, false, true);
+		}
+		else {
+			return addPreservedParameters(
+				themeDisplay, themeDisplay.getLayout(), url, true);
+		}
+	}
+
+	@Override
+	public String addPreservedParameters(
 		ThemeDisplay themeDisplay, String url, boolean typeControlPanel,
 		boolean doAsUser) {
 

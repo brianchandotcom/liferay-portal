@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -66,15 +65,13 @@ public class CPInstanceDisplayContext
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels()
 		throws PortalException {
 
-		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
-
 		CPDefinition cpDefinition = getCPDefinition();
 
-		if (cpDefinition != null) {
-			cpDefinitionOptionRels = cpDefinition.getCPDefinitionOptionRels();
+		if (cpDefinition == null) {
+			return Collections.emptyList();
 		}
 
-		return cpDefinitionOptionRels;
+		return cpDefinition.getCPDefinitionOptionRels();
 	}
 
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(

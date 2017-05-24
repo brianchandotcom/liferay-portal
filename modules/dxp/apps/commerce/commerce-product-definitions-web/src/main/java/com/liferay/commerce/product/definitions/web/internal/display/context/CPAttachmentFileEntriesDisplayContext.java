@@ -111,15 +111,13 @@ public class CPAttachmentFileEntriesDisplayContext extends
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels()
 		throws PortalException {
 
-		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
-
 		CPDefinition cpDefinition = getCPDefinition();
 
-		if (cpDefinition != null) {
-			cpDefinitionOptionRels = cpDefinition.getCPDefinitionOptionRels();
+		if (cpDefinition == null) {
+			return Collections.emptyList();
 		}
 
-		return cpDefinitionOptionRels;
+		return cpDefinition.getCPDefinitionOptionRels();
 	}
 
 	public String getCssClassFileMimeType(FileEntry fileEntry) {

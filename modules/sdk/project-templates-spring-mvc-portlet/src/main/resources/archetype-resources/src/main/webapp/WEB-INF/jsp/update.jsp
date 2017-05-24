@@ -1,9 +1,7 @@
-
 <%@ include file="/WEB-INF/jsp/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
-
 %>
 
 <portlet:actionURL name="updateURL" var="updateURL">
@@ -16,8 +14,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
-		title='update'
-	/>
+		title='update'/>
 
 	<liferay-ui:asset-categories-error />
 

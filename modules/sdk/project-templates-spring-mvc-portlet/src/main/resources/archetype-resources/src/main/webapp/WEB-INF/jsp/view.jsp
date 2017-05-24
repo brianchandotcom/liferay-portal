@@ -1,4 +1,3 @@
-
 <%@ include file="/WEB-INF/jsp/init.jsp" %>
 
 <strong><liferay-ui:message key="welcome-to-the-${artifactId}" /></strong>
@@ -9,4 +8,3 @@
 </portlet:renderURL>
 
 <aui:button href="<%= updateURL %>" value="update" />
-

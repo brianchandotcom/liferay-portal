@@ -18,7 +18,9 @@
 		<field name="json" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="priority" type="int" />
+		<field name="priority" type="int">
+			<validator name="number" />
+		</field>
 		<field name="type" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

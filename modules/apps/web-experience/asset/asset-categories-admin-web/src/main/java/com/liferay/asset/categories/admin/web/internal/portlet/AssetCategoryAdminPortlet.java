@@ -14,7 +14,9 @@
 
 package com.liferay.asset.categories.admin.web.internal.portlet;
 
+import com.liferay.asset.categories.admin.web.configuration.AssetCategoriesAdminWebConfiguration;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
+import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminWebKeys;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.NoSuchClassTypeException;
 import com.liferay.asset.kernel.exception.AssetCategoryNameException;
@@ -33,6 +35,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -63,13 +66,16 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
+	configurationPid = "com.liferay.asset.categories.admin.web.configuration.AssetCategoriesAdminWebConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-asset-category-admin",
@@ -245,6 +251,14 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			categoryId, parentCategoryId, vocabularyId, serviceContext);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_assetCategoriesAdminWebConfiguration =
+			ConfigurableUtil.createConfigurable(
+				AssetCategoriesAdminWebConfiguration.class, properties);
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -260,6 +274,11 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			include("/error.jsp", renderRequest, renderResponse);
 		}
 		else {
+			renderRequest.setAttribute(
+				AssetCategoriesAdminWebKeys.
+					ASSET_CATEGORIES_ADMIN_CONFIGURATION,
+				_assetCategoriesAdminWebConfiguration);
+
 			super.doDispatch(renderRequest, renderResponse);
 		}
 	}
@@ -385,6 +404,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		_assetVocabularyService = assetVocabularyService;
 	}
 
+	private AssetCategoriesAdminWebConfiguration
+		_assetCategoriesAdminWebConfiguration;
 	private AssetCategoryService _assetCategoryService;
 	private AssetVocabularyService _assetVocabularyService;
 

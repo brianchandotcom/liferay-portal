@@ -782,9 +782,9 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String addPreservedParameters(
-		ThemeDisplay themeDisplay, String url, boolean isUser) {
+		ThemeDisplay themeDisplay, String url, boolean user) {
 
-		if (isUser) {
+		if (user) {
 			return addPreservedParameters(themeDisplay, url, false, true);
 		}
 		else {

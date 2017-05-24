@@ -78,10 +78,14 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 
 	@Override
 	public String serialize(DDMFormValues ddmFormValues) {
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		if (ddmFormValues == null) {
+			return jsonArray.toString();
+		}
+
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			JSONObject jsonObject = _toJSONObject(ddmFormFieldValue);

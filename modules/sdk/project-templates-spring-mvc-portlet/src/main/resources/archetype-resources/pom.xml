@@ -122,7 +122,6 @@
 				<version>@com.liferay.css.builder.version@</version>
 				<executions>
 					<execution>
-						<id>default-build-css</id>
 						<phase>compile</phase>
 						<goals>
 							<goal>build-css</goal>
@@ -131,7 +130,6 @@
 				</executions>
 				<configuration>
 					<docrootDirName>src/main/webapp</docrootDirName>
-					<precision>9</precision>
 				</configuration>
 			</plugin>
 		</plugins>

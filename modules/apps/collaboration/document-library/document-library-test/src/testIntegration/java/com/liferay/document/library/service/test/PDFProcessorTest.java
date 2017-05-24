@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -34,11 +37,13 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
@@ -92,6 +97,9 @@ public class PDFProcessorTest {
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
+
+		setUpPermissionThreadLocal();
+		setUpPrincipalThreadLocal();
 	}
 
 	@After
@@ -107,6 +115,10 @@ public class PDFProcessorTest {
 		if (_dlProcessorServiceRegistration != null) {
 			_dlProcessorServiceRegistration.unregister();
 		}
+
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -512,6 +524,34 @@ public class PDFProcessorTest {
 		return cleanUp;
 	}
 
+	protected void setUpPermissionThreadLocal() throws Exception {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			new SimplePermissionChecker() {
+
+				{
+					init(TestPropsValues.getUser());
+				}
+
+				@Override
+				public boolean hasOwnerPermission(
+					long companyId, String name, String primKey, long ownerId,
+					String actionId) {
+
+					return true;
+				}
+
+			});
+	}
+
+	protected void setUpPrincipalThreadLocal() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
 	protected enum EventType {
 
 		COPY_PREVIOUS {
@@ -546,6 +586,8 @@ public class PDFProcessorTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
 	private ServiceContext _serviceContext;
 
 }

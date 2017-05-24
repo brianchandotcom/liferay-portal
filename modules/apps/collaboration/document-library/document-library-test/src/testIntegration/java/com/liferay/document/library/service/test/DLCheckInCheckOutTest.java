@@ -32,7 +32,10 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -50,6 +53,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 
@@ -81,6 +85,9 @@ public class DLCheckInCheckOutTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpPermissionThreadLocal();
+		setUpPrincipalThreadLocal();
+
 		_group = GroupTestUtil.addGroup();
 
 		RoleTestUtil.addResourcePermission(
@@ -111,6 +118,10 @@ public class DLCheckInCheckOutTest {
 			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			ActionKeys.VIEW);
+
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -574,6 +585,34 @@ public class DLCheckInCheckOutTest {
 		return assetEntry;
 	}
 
+	protected void setUpPermissionThreadLocal() throws Exception {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			new SimplePermissionChecker() {
+
+				{
+					init(TestPropsValues.getUser());
+				}
+
+				@Override
+				public boolean hasOwnerPermission(
+					long companyId, String name, String primKey, long ownerId,
+					String actionId) {
+
+					return true;
+				}
+
+			});
+	}
+
+	protected void setUpPrincipalThreadLocal() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
 	protected FileEntry updateFileEntry(long fileEntryId) throws Exception {
 		return updateFileEntry(fileEntryId, _FILE_NAME);
 	}
@@ -602,6 +641,8 @@ public class DLCheckInCheckOutTest {
 	private FileEntry _fileEntry;
 	private Folder _folder;
 	private Group _group;
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
 
 	@DeleteAfterTestRun
 	private User _overriderUser;

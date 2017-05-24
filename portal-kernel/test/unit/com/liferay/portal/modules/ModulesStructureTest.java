@@ -71,16 +71,10 @@ public class ModulesStructureTest {
 
 	@Test
 	public void testScanBuildScripts() throws IOException {
-		ClassLoader classLoader = ModulesStructureTest.class.getClassLoader();
-
-		final String gitRepoBuildGradleTemplate = StringUtil.read(
-			classLoader,
-			"com/liferay/portal/modules/dependencies" +
-				"/git_repo_build_gradle.tmpl");
-		final String gitRepoSettingsGradleTemplate = StringUtil.read(
-			classLoader,
-			"com/liferay/portal/modules/dependencies" +
-				"/git_repo_settings_gradle.tmpl");
+		final String gitRepoBuildGradleTemplate = _getGradleTemplate(
+			"dependencies/git_repo_build_gradle.tmpl");
+		final String gitRepoSettingsGradleTemplate = _getGradleTemplate(
+			"dependencies/git_repo_settings_gradle.tmpl");
 
 		Files.walkFileTree(
 			_modulesDirPath,
@@ -148,18 +142,13 @@ public class ModulesStructureTest {
 	}
 
 	@Test
-	public void testScanIgnoreFiles() throws IOException {
-		ClassLoader classLoader = ModulesStructureTest.class.getClassLoader();
-
+	public void testScanFiles() throws IOException {
 		final String gitRepoGitIgnoreTemplate = StringUtil.read(
-			classLoader,
-			"com/liferay/portal/modules/dependencies/git_repo_gitignore.tmpl");
+			ModulesStructureTest.class, "dependencies/git_repo_gitignore.tmpl");
 		final String themeGitIgnoreTemplate = StringUtil.read(
-			classLoader,
-			"com/liferay/portal/modules/dependencies/theme_gitignore.tmpl");
+			ModulesStructureTest.class, "dependencies/theme_gitignore.tmpl");
 		final String themeNpmIgnoreTemplate = StringUtil.read(
-			classLoader,
-			"com/liferay/portal/modules/dependencies/theme_npmignore.tmpl");
+			ModulesStructureTest.class, "dependencies/theme_npmignore.tmpl");
 
 		Files.walkFileTree(
 			_modulesDirPath,
@@ -209,6 +198,26 @@ public class ModulesStructureTest {
 					if (fileName.equals(".gitignore")) {
 						_testGitIgnoreFile(path);
 					}
+					else if (StringUtil.startsWith(fileName, ".lfrbuild-") ||
+							 StringUtil.startsWith(fileName, ".lfrrelease-")) {
+
+						Assert.assertEquals(
+							"Marker file " + path + " must be empty", 0,
+							basicFileAttributes.size());
+					}
+					else if (StringUtil.endsWith(fileName, ".gradle")) {
+						String content = _read(path);
+
+						Assert.assertFalse(
+							"Incorrect repository URL in " + path +
+								", please use " + _REPOSITORY_URL + " instead",
+							content.contains("plugins.gradle.org/m2"));
+
+						Assert.assertFalse(
+							"Plugins DSL forbidden in " + path +
+								", please use \"apply plugin:\" instead",
+							content.contains("plugins {"));
+					}
 
 					return FileVisitResult.CONTINUE;
 				}
@@ -249,33 +258,6 @@ public class ModulesStructureTest {
 										path.resolveSibling(entry.getValue()));
 							}
 						}
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-	}
-
-	@Test
-	public void testScanMarkerFiles() throws IOException {
-		Files.walkFileTree(
-			_modulesDirPath,
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					String fileName = String.valueOf(path.getFileName());
-
-					if (StringUtil.startsWith(fileName, ".lfrbuild-") ||
-						StringUtil.startsWith(fileName, ".lfrrelease-")) {
-
-						Assert.assertEquals(
-							"Marker file " + path + " must be empty", 0,
-							basicFileAttributes.size());
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -526,6 +508,13 @@ public class ModulesStructureTest {
 
 		return StringUtil.replace(
 			buildGradleTemplate, "[$BUILDSCRIPT_DEPENDENCIES$]", sb.toString());
+	}
+
+	private String _getGradleTemplate(String name) throws IOException {
+		String template = StringUtil.read(ModulesStructureTest.class, name);
+
+		return StringUtil.replace(
+			template, "[$REPOSITORY_URL$]", _REPOSITORY_URL);
 	}
 
 	private String _getProjectPathPrefix(Path dirPath) {
@@ -952,6 +941,10 @@ public class ModulesStructureTest {
 	private static final String[] _GRADLE_WRAPPER_FILE_NAMES = {
 		"gradle", "gradlew", "gradlew.bat"
 	};
+
+	private static final String _REPOSITORY_URL =
+		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
+			"/public";
 
 	private static final String _SOURCE_FORMATTER_IGNORE_FILE_NAME =
 		"source_formatter.ignore";

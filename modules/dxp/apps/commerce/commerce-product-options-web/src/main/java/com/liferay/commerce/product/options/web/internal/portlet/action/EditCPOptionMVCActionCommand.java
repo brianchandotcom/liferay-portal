@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteCPOptions(ActionRequest actionRequest, long cpOptionId)
+	protected void deleteCPOptions(long cpOptionId, ActionRequest actionRequest)
 		throws Exception {
 
 		long[] deleteCPOptionIds = null;
@@ -80,12 +80,12 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteCPOptions(actionRequest, cpOptionId);
+				deleteCPOptions(cpOptionId, actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				updateCPOption(actionRequest, cpOptionId);
+				updateCPOption(cpOptionId, actionRequest);
 			}
 			else if (cmd.equals("SET_FACETABLE")) {
 				_cpOptionService.setFacetable(cpOptionId, true);
@@ -121,7 +121,7 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected CPOption updateCPOption(
-			ActionRequest actionRequest, long cpOptionId)
+			long cpOptionId, ActionRequest actionRequest)
 		throws Exception {
 
 		String name = ParamUtil.getString(actionRequest, "name");

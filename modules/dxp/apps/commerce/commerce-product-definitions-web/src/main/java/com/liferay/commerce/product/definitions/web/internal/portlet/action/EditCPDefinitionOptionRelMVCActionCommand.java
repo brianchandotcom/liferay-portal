@@ -76,7 +76,7 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 	}
 
 	protected void deleteCPDefinitionOptionRels(
-			ActionRequest actionRequest, long cpDefinitionOptionRelId)
+			long cpDefinitionOptionRelId, ActionRequest actionRequest)
 		throws Exception {
 
 		long[] deleteCPDefinitionOptionRelIds = null;
@@ -114,11 +114,11 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 			addCPDefinitionOptionRels(actionRequest);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
-			updateCPDefinitionOptionRel(actionRequest, cpDefinitionOptionRelId);
+			updateCPDefinitionOptionRel(cpDefinitionOptionRelId, actionRequest);
 		}
 		else if (cmd.equals(Constants.DELETE)) {
 			deleteCPDefinitionOptionRels(
-				actionRequest, cpDefinitionOptionRelId);
+				cpDefinitionOptionRelId, actionRequest);
 		}
 		else if (cmd.equals("SET_FACETABLE")) {
 			_cpDefinitionOptionRelService.setFacetable(
@@ -147,7 +147,7 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 	}
 
 	protected CPDefinitionOptionRel updateCPDefinitionOptionRel(
-			ActionRequest actionRequest, long cpDefinitionOptionRelId)
+			long cpDefinitionOptionRelId, ActionRequest actionRequest)
 		throws Exception {
 
 		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");

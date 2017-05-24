@@ -78,7 +78,6 @@
 		<!-- Other fields -->
 
 		<column name="baseSKU" type="String" />
-		<column name="name" type="String" />
 		<column name="productTypeName" type="String" />
 		<column name="availableIndividually" type="boolean" />
 		<column name="DDMStructureKey" type="String" />

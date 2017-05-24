@@ -41,6 +41,12 @@ public class CPDefinitionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntry getDefaultImage(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDefaultImage(cpDefinitionId);
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinition addCPDefinition(
 		java.lang.String baseSKU, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,

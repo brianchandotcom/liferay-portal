@@ -41,6 +41,11 @@ public class CPDefinitionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntry getDefaultImage(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDefaultImage(cpDefinitionId);
+	}
 
 	/**
 	* Adds the cp definition to the database. Also notifies the appropriate model listeners.

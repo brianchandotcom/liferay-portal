@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -64,6 +65,10 @@ public interface CPDefinitionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionServiceUtil} to access the cp definition remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPAttachmentFileEntry getDefaultImage(long cpDefinitionId)
+		throws PortalException;
+
 	public CPDefinition addCPDefinition(java.lang.String baseSKU,
 		java.lang.String name, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> shortDescriptionMap,

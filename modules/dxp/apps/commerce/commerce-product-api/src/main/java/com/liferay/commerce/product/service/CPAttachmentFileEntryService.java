@@ -77,6 +77,10 @@ public interface CPAttachmentFileEntryService extends BaseService {
 	public CPAttachmentFileEntry fetchCPAttachmentFileEntry(
 		long cpAttachmentFileEntryId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPAttachmentFileEntry getCPAttachmentFileEntry(
+		long cpAttachmentFileEntryId) throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
 		long cpAttachmentFileEntryId, long fileEntryId, int displayDateMonth,
@@ -88,7 +92,7 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPAttachmentFileEntriesCount(long classNameId, int classPK);
+	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -99,12 +103,12 @@ public interface CPAttachmentFileEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, int classPK, int start, int end)
+		long classNameId, long classPK, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, int classPK, int start, int end,
+		long classNameId, long classPK, int start, int end,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws PortalException;
 }

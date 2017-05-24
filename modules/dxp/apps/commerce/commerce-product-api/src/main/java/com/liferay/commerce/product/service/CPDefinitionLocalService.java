@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 
@@ -73,6 +74,9 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionLocalServiceUtil} to access the cp definition local service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPAttachmentFileEntry getDefaultImage(long cpDefinitionId)
+		throws PortalException;
 
 	/**
 	* Adds the cp definition to the database. Also notifies the appropriate model listeners.

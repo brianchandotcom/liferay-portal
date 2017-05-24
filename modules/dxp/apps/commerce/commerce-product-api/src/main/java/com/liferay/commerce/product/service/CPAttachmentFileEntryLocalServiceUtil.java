@@ -231,7 +231,7 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 	}
 
 	public static int getCPAttachmentFileEntriesCount(long classNameId,
-		int classPK) {
+		long classPK) {
 		return getService().getCPAttachmentFileEntriesCount(classNameId, classPK);
 	}
 
@@ -311,14 +311,14 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, int classPK, int start, int end)
+		long classNameId, long classPK, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCPAttachmentFileEntries(classNameId, classPK, start, end);
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, int classPK, int start, int end,
+		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPAttachmentFileEntry> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

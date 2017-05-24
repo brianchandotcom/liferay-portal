@@ -140,7 +140,7 @@ public class CPAttachmentFileEntryServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap[] getCPAttachmentFileEntries(
-		long classNameId, int classPK, int start, int end)
+		long classNameId, long classPK, int start, int end)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> returnValue =
@@ -157,7 +157,7 @@ public class CPAttachmentFileEntryServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap[] getCPAttachmentFileEntries(
-		long classNameId, int classPK, int start, int end,
+		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPAttachmentFileEntry> orderByComparator)
 		throws RemoteException {
 		try {
@@ -175,12 +175,27 @@ public class CPAttachmentFileEntryServiceSoap {
 	}
 
 	public static int getCPAttachmentFileEntriesCount(long classNameId,
-		int classPK) throws RemoteException {
+		long classPK) throws RemoteException {
 		try {
 			int returnValue = CPAttachmentFileEntryServiceUtil.getCPAttachmentFileEntriesCount(classNameId,
 					classPK);
 
 			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap getCPAttachmentFileEntry(
+		long cpAttachmentFileEntryId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPAttachmentFileEntry returnValue =
+				CPAttachmentFileEntryServiceUtil.getCPAttachmentFileEntry(cpAttachmentFileEntryId);
+
+			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

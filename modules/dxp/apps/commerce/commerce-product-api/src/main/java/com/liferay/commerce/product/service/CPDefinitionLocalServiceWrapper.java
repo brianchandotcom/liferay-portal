@@ -33,6 +33,13 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		_cpDefinitionLocalService = cpDefinitionLocalService;
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry getDefaultImage(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLocalService.getDefaultImage(cpDefinitionId);
+	}
+
 	/**
 	* Adds the cp definition to the database. Also notifies the appropriate model listeners.
 	*

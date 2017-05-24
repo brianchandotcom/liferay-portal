@@ -215,7 +215,7 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	public int getCPAttachmentFileEntriesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPAttachmentFileEntriesCount(long classNameId, int classPK);
+	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -280,12 +280,12 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, int classPK, int start, int end)
+		long classNameId, long classPK, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, int classPK, int start, int end,
+		long classNameId, long classPK, int start, int end,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws PortalException;
 

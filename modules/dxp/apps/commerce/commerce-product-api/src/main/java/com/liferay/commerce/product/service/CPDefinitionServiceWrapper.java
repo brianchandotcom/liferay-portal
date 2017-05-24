@@ -33,6 +33,13 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry getDefaultImage(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionService.getDefaultImage(cpDefinitionId);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CPDefinition addCPDefinition(
 		java.lang.String baseSKU, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,

@@ -201,6 +201,21 @@ public class CPDefinitionServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap getDefaultImage(
+		long cpDefinitionId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPAttachmentFileEntry returnValue =
+				CPDefinitionServiceUtil.getDefaultImage(cpDefinitionId);
+
+			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinitionSoap moveCPDefinitionToTrash(
 		long cpDefinitionId) throws RemoteException {
 		try {

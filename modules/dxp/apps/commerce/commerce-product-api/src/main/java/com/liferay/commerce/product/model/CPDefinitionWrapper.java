@@ -453,6 +453,13 @@ public class CPDefinitionWrapper implements CPDefinition,
 		return _cpDefinition.getDDMStructureKey();
 	}
 
+	@Override
+	public java.lang.String getDefaultImageThumbnailSrc(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws java.lang.Exception {
+		return _cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
+	}
+
 	/**
 	* Returns the default language ID of this cp definition.
 	*

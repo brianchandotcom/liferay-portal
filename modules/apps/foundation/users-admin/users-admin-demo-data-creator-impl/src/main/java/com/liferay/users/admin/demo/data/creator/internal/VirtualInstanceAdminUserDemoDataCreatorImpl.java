@@ -15,56 +15,43 @@
 package com.liferay.users.admin.demo.data.creator.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
-import com.liferay.users.admin.demo.data.creator.SiteAdminUserDemoDataCreator;
+import com.liferay.users.admin.demo.data.creator.VirtualInstanceAdminUserDemoDataCreator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Pei-Jung Lan
  */
-@Component(service = SiteAdminUserDemoDataCreator.class)
-public class SiteAdminUserDemoDataCreatorImpl
-	extends BaseUserDemoDataCreator implements SiteAdminUserDemoDataCreator {
+@Component(service = VirtualInstanceAdminUserDemoDataCreator.class)
+public class VirtualInstanceAdminUserDemoDataCreatorImpl
+	extends BaseUserDemoDataCreator
+	implements VirtualInstanceAdminUserDemoDataCreator {
 
 	@Override
-	public User create(long groupId) throws PortalException {
-		return create(groupId, null);
+	public User create(long companyId) throws PortalException {
+		return create(companyId, null);
 	}
 
 	@Override
-	public User create(long groupId, String emailAddress)
+	public User create(long companyId, String emailAddress)
 		throws PortalException {
 
-		Group group = _groupLocalService.getGroup(groupId);
-
-		User user = createUser(group.getCompanyId(), emailAddress);
-
-		userLocalService.addGroupUser(groupId, user.getUserId());
+		User user = createUser(companyId, emailAddress);
 
 		Role role = _roleLocalService.getRole(
-			group.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
+			companyId, RoleConstants.ADMINISTRATOR);
 
-		_userGroupRoleLocalService.addUserGroupRoles(
-			user.getUserId(), groupId, new long[] {role.getRoleId()});
+		userLocalService.addRoleUser(role.getRoleId(), user);
 
 		return userLocalService.getUser(user.getUserId());
 	}
 
 	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

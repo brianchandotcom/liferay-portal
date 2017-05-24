@@ -25,23 +25,12 @@ SearchContainer<FileEntry> sampleFileEntrySearchContainer = cpDefinitionVirtualS
 
 boolean useSample = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting, request, "useSample");
 
-String sampleFileEntryTogglerCssClass = "lfr-virtual-sample-header toggler-header-expanded";
-String sampleUrlTogglerCssClass = "lfr-virtual-sample-header toggler-header-collapsed";
-String sampleButtonCssClass = "lfr-definition-virtual-setting-sample-value modify-sample-file-entry-link ";
+String sampleButtonCssClass = "modify-sample-file-entry-link ";
 
-boolean useSampleFileEntry = ParamUtil.getBoolean(request, "useSampleFileEntry", true);
 boolean useSampleUrl = ParamUtil.getBoolean(request, "useSampleUrl", false);
-
-if ((cpDefinitionVirtualSetting != null) && Validator.isNull(cpDefinitionVirtualSetting.getSampleFileEntryId())) {
-	useSampleFileEntry = false;
-
-	sampleFileEntryTogglerCssClass = "lfr-virtual-sample-header toggler-header-collapsed";
-}
 
 if ((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getSampleUrl())) {
 	useSampleUrl = true;
-
-	sampleUrlTogglerCssClass = "lfr-virtual-sample-header toggler-header-expanded";
 }
 
 if (sampleFileEntrySearchContainer.hasResults()) {
@@ -70,69 +59,59 @@ if (sampleFileEntrySearchContainer.hasResults()) {
 </aui:fieldset>
 </div>
 
-<div class="lfr-definition-virtual-setting-use-sample-content toggler-content-collapsed">
-	<div class="<%= sampleFileEntryTogglerCssClass %>">
-		<aui:input checked="<%= useSampleFileEntry %>" cssClass="lfr-definition-virtual-setting-sample-type" label="use-sample-file" name="useSampleFileEntry" type="checkbox" />
-	</div>
+<div class="lfr-definition-virtual-setting-use-sample-content">
+	<aui:fieldset>
+		<aui:input checked="<%= useSampleUrl %>" cssClass="lfr-definition-virtual-setting-sample-type" label="use-sample-url" name="useSampleUrl" type="checkbox" />
 
-	<div class="lfr-virtual-sample-content">
 		<div class="lfr-definition-virtual-setting-sample-file-selector">
-			<aui:fieldset>
-				<liferay-ui:search-container
-					cssClass="lfr-definition-virtual-setting-sample-file-entry"
-					curParam="curSampleFileEntry"
-					headerNames="title,null"
-					id="sampleFileEntrySearchContainer"
-					iteratorURL="<%= currentURLObj %>"
-					searchContainer="<%= sampleFileEntrySearchContainer %>"
+			<liferay-ui:search-container
+				cssClass="lfr-definition-virtual-setting-sample-file-entry"
+				curParam="curSampleFileEntry"
+				headerNames="title,null"
+				id="sampleFileEntrySearchContainer"
+				iteratorURL="<%= currentURLObj %>"
+				searchContainer="<%= sampleFileEntrySearchContainer %>"
+			>
+				<liferay-ui:search-container-row
+					className="com.liferay.portal.kernel.repository.model.FileEntry"
+					keyProperty="fileEntryId"
+					modelVar="sampleFileEntry"
 				>
-					<liferay-ui:search-container-row
-						className="com.liferay.portal.kernel.repository.model.FileEntry"
-						keyProperty="fileEntryId"
-						modelVar="sampleFileEntry"
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="title"
 					>
+						<liferay-ui:icon
+							iconCssClass="icon-ok-sign"
+							label="<%= true %>"
+							message="<%= HtmlUtil.escape(sampleFileEntry.getTitle()) %>"
+							url="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadSampleFileEntryURL() %>"
+						/>
+					</liferay-ui:search-container-column-text>
+
+					<c:if test="<%= Validator.isNotNull(cpDefinitionVirtualSetting) %>">
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-content"
-							name="title"
-						>
-							<liferay-ui:icon
-								iconCssClass="icon-ok-sign"
-								label="<%= true %>"
-								message="<%= HtmlUtil.escape(sampleFileEntry.getTitle()) %>"
-								url="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadSampleFileEntryURL() %>"
-							/>
-						</liferay-ui:search-container-column-text>
+							name="size"
+							value="<%= TextFormatter.formatStorageSize(sampleFileEntry.getSize(), locale) %>"
+						/>
+					</c:if>
 
-						<c:if test="<%= Validator.isNotNull(cpDefinitionVirtualSetting) %>">
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
-								name="size"
-								value="<%= TextFormatter.formatStorageSize(sampleFileEntry.getSize(), locale) %>"
-							/>
-						</c:if>
+					<liferay-ui:search-container-column-text>
+						<a class="modify-sample-file-entry-link" data-rowId="<%= sampleFileEntry.getFileEntryId() %>" href="javascript:;"><%= removeSampleFileEntryIcon %></a>
+					</liferay-ui:search-container-column-text>
+				</liferay-ui:search-container-row>
 
-						<liferay-ui:search-container-column-text>
-							<a class="modify-sample-file-entry-link" data-rowId="<%= sampleFileEntry.getFileEntryId() %>" href="javascript:;"><%= removeSampleFileEntryIcon %></a>
-						</liferay-ui:search-container-column-text>
-					</liferay-ui:search-container-row>
+				<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= sampleFileEntrySearchContainer %>" />
+			</liferay-ui:search-container>
 
-					<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= sampleFileEntrySearchContainer %>" />
-				</liferay-ui:search-container>
-
-				<aui:button cssClass="<%= sampleButtonCssClass %>" name="selectSampleFile" value="select-file" />
-			</aui:fieldset>
+			<aui:button cssClass="<%= sampleButtonCssClass %>" name="selectSampleFile" value="select-file" />
 		</div>
-	</div>
 
-	<div class="<%= sampleUrlTogglerCssClass %>">
-		<aui:input checked="<%= useSampleUrl %>" cssClass="lfr-definition-virtual-setting-sample-type" label="use-sample-url" name="useSampleUrl" type="checkbox" />
-	</div>
-
-	<div class="lfr-virtual-sample-content">
-		<aui:fieldset>
-			<aui:input cssClass="lfr-definition-virtual-setting-sample-value" name="sampleUrl" />
-		</aui:fieldset>
-	</div>
+		<div class="hidden lfr-definition-virtual-sample-url">
+			<aui:input name="sampleUrl" />
+		</div>
+	</aui:fieldset>
 </div>
 
 <aui:script use="liferay-item-selector-dialog">
@@ -182,31 +161,6 @@ if (sampleFileEntrySearchContainer.hasResults()) {
 </aui:script>
 
 <aui:script use="aui-toggler">
-	var container = A.one('#<portlet:namespace />fileEntryContainer');
-
-	var sampleTypes = container.all('.lfr-definition-virtual-setting-sample-type');
-	var sampleValues = container.all('.lfr-definition-virtual-setting-sample-value');
-
-	var selectSampleFileType = function(index) {
-		sampleTypes.attr('checked', false);
-
-		sampleTypes.item(index).attr('checked', true);
-
-		sampleValues.attr('disabled', true);
-
-		sampleValues.item(index).attr('disabled', false);
-	};
-
-	container.delegate(
-		'change',
-		function(event) {
-			var index = sampleTypes.indexOf(event.currentTarget);
-
-			selectSampleFileType(index);
-		},
-		'.lfr-definition-virtual-setting-sample-type'
-	);
-
 	new A.Toggler(
 		{
 			animated: true,
@@ -224,17 +178,29 @@ if (sampleFileEntrySearchContainer.hasResults()) {
 			}
 		}
 	);
+</aui:script>
 
-	new A.TogglerDelegate(
-		{
-			container: container,
-			animated: true,
-			content: '.lfr-virtual-sample-content',
-			expanded: 'false',
-			closeAllOnExpand: true,
-			header: '.lfr-virtual-sample-header'
+<aui:script>
+	AUI().ready('node', 'event', function(A){
+		selectSampleFileType(A);
+
+		A.one('#<portlet:namespace/>useSampleUrl').on('click',function(b){
+			selectSampleFileType(A);
+		})
+	});
+
+	function selectSampleFileType(A){
+		var sampleUrlCheckbox = A.one('#<portlet:namespace/>useSampleUrl');
+
+		if(sampleUrlCheckbox.attr('checked')) {
+			A.one('.lfr-definition-virtual-setting-sample-file-selector').addClass('hidden');
+			A.one('.lfr-definition-virtual-sample-url').removeClass('hidden');
 		}
-	);
+		else {
+			A.one('.lfr-definition-virtual-setting-sample-file-selector').removeClass('hidden');
+			A.one('.lfr-definition-virtual-sample-url').addClass('hidden');
+		}
+	}
 </aui:script>
 
 <aui:script use="liferay-search-container">

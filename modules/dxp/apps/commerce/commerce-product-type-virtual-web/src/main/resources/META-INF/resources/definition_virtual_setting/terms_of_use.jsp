@@ -25,23 +25,12 @@ SearchContainer<JournalArticle> journalArticleSearchContainer = cpDefinitionVirt
 
 boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting, request, "termsOfUseRequired");
 
-String termsOfUseContentTogglerCssClass = "lfr-virtual-terms-of-use-header toggler-header-expanded";
-String termsOfUseArticleTogglerCssClass = "lfr-virtual-terms-of-use-header toggler-header-collapsed";
 String termsOfUseButtonCssClass = "lfr-definition-virtual-setting-terms-of-use-value modify-journal-article-link ";
 
-boolean insertText = ParamUtil.getBoolean(request, "insertText", true);
 boolean selectWebContent = ParamUtil.getBoolean(request, "selectWebContent", false);
-
-if ((cpDefinitionVirtualSetting != null) && Validator.isNull(cpDefinitionVirtualSetting.getTermsOfUseContentMap())) {
-	insertText = false;
-
-	termsOfUseContentTogglerCssClass = "lfr-virtual-terms-of-use-header toggler-header-collapsed";
-}
 
 if ((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK())) {
 	selectWebContent = true;
-
-	termsOfUseArticleTogglerCssClass = "lfr-virtual-terms-of-use-header toggler-header-expanded";
 }
 
 if (journalArticleSearchContainer.hasResults()) {
@@ -70,32 +59,22 @@ if (journalArticleSearchContainer.hasResults()) {
 </div>
 
 <div class="lfr-definition-virtual-setting-terms-of-use-content toggler-content-collapsed">
-	<div class="<%= termsOfUseContentTogglerCssClass %>">
-		<aui:input checked="<%= insertText %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="insert-text" name="insertText" type="checkbox" />
-	</div>
-
-	<div class="lfr-virtual-terms-of-use-content">
-		<aui:fieldset>
-			<aui:field-wrapper cssClass="lfr-definition-virtual-setting-terms-of-use-value">
-				<div class="entry-content form-group">
-					<liferay-ui:input-localized
-						cssClass="form-control"
-						editorName="alloyeditor"
-						name="termsOfUseContent"
-						type="editor"
-						xml='<%= BeanPropertiesUtil.getString(cpDefinitionVirtualSetting, "termsOfUseContent") %>'
-					/>
-				</div>
-			</aui:field-wrapper>
-		</aui:fieldset>
-	</div>
-
-	<div class="<%= termsOfUseArticleTogglerCssClass %>">
+	<aui:fieldset>
 		<aui:input checked="<%= selectWebContent %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="select-web-content" name="selectWebContent" type="checkbox" />
-	</div>
 
-	<div class="lfr-virtual-terms-of-use-content">
-		<aui:fieldset>
+		<aui:field-wrapper cssClass="lfr-definition-virtual-setting-content">
+			<div class="entry-content form-group">
+				<liferay-ui:input-localized
+					cssClass="form-control"
+					editorName="alloyeditor"
+					name="termsOfUseContent"
+					type="editor"
+					xml='<%= BeanPropertiesUtil.getString(cpDefinitionVirtualSetting, "termsOfUseContent") %>'
+				/>
+			</div>
+		</aui:field-wrapper>
+
+		<div class="hidden lfr-definition-virtual-setting-web-content-selector">
 			<liferay-ui:search-container
 				cssClass="lfr-definition-virtual-setting-journal-article"
 				curParam="curJournalArticle"
@@ -129,8 +108,8 @@ if (journalArticleSearchContainer.hasResults()) {
 			</liferay-ui:search-container>
 
 			<aui:button cssClass="<%= termsOfUseButtonCssClass %>" name="selectArticle" value="select-web-content" />
-		</aui:fieldset>
-	</div>
+		</div>
+	</aui:fieldset>
 </div>
 
 <aui:script sandbox="<%= true %>">
@@ -174,32 +153,7 @@ if (journalArticleSearchContainer.hasResults()) {
 </aui:script>
 
 <aui:script use="aui-toggler">
-	var container = A.one('#<portlet:namespace />fileEntryContainer');
-
-	var termsOfUseTypes = container.all('.lfr-definition-virtual-setting-terms-of-use-type');
-	var termsOfUseValues = container.all('.lfr-definition-virtual-setting-terms-of-use-value');
-
-	var selectTermsOfUseType = function(index) {
-		termsOfUseTypes.attr('checked', false);
-
-		termsOfUseTypes.item(index).attr('checked', true);
-
-		termsOfUseValues.attr('disabled', true);
-
-		termsOfUseValues.item(index).attr('disabled', false);
-	};
-
-	container.delegate(
-		'change',
-		function(event) {
-			var index = termsOfUseTypes.indexOf(event.currentTarget);
-
-			selectTermsOfUseType(index);
-		},
-		'.lfr-definition-virtual-setting-terms-of-use-type'
-	);
-
-	new A.Toggler(
+		new A.Toggler(
 		{
 			animated: true,
 			content: '#<portlet:namespace />fileEntryContainer .lfr-definition-virtual-setting-terms-of-use-content',
@@ -216,17 +170,29 @@ if (journalArticleSearchContainer.hasResults()) {
 			}
 		}
 	);
+</aui:script>
 
-	new A.TogglerDelegate(
-		{
-			container: container,
-			animated: true,
-			content: '.lfr-virtual-terms-of-use-content',
-			expanded: 'false',
-			closeAllOnExpand: true,
-			header: '.lfr-virtual-terms-of-use-header'
+<aui:script>
+	AUI().ready('node', 'event', function(A){
+		selectContentType(A);
+
+		A.one('#<portlet:namespace/>selectWebContent').on('click',function(b){
+			selectContentType(A);
+		})
+	});
+
+	function selectContentType(A){
+		var contentCheckbox = A.one('#<portlet:namespace/>selectWebContent');
+
+		if(contentCheckbox.attr('checked')) {
+			A.one('.lfr-definition-virtual-setting-web-content-selector').removeClass('hidden');
+			A.one('.lfr-definition-virtual-setting-content').addClass('hidden');
 		}
-	);
+		else {
+			A.one('.lfr-definition-virtual-setting-web-content-selector').addClass('hidden');
+			A.one('.lfr-definition-virtual-setting-content').removeClass('hidden');
+		}
+	}
 </aui:script>
 
 <aui:script use="liferay-search-container">

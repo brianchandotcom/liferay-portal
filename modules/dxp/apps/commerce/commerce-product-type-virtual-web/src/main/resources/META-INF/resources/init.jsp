@@ -49,6 +49,8 @@ page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
+<%@ page import="java.util.concurrent.TimeUnit" %>
+
 <%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />

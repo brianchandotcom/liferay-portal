@@ -29,7 +29,9 @@ CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSetti
 <aui:fieldset>
 	<aui:input name="activationStatus" />
 
-	<aui:input name="duration" />
+	<aui:input helpMessage="number-of-days" label="duration" name="numberOfDays" type="long" value="<%= (cpDefinitionVirtualSetting == null) ? 0 : TimeUnit.MILLISECONDS.toDays(cpDefinitionVirtualSetting.getDuration()) %>">
+		<aui:validator name="number" />
+	</aui:input>
 
 	<aui:input name="maxUsages" />
 </aui:fieldset>

@@ -104,9 +104,9 @@ public class IndentationCheck extends AbstractCheck {
 
 		if (expectedTabCount != leadingTabCount) {
 			if (_isInsideChain(detailAST)) {
-				log(
+				/*log(
 					detailAST.getLineNo(),
-					MSG_INCORRECT_INDENTATION_INSIDE_CHAIN);
+					MSG_INCORRECT_INDENTATION_INSIDE_CHAIN);*/
 			}
 			else {
 				log(

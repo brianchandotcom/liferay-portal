@@ -126,7 +126,7 @@ public class ChainingCheck extends AbstractCheck {
 
 				if (variableType != null) {
 					for (String allowedClassName : _allowedClassNames) {
-						if (classOrVariableName.matches(allowedClassName)) {
+						if (variableType.matches(allowedClassName)) {
 							continue outerLoop;
 						}
 					}

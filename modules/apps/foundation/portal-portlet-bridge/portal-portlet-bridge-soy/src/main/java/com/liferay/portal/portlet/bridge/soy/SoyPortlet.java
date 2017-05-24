@@ -79,6 +79,10 @@ public class SoyPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		Template template = getTemplate(renderRequest);
+
+		renderRequest.setAttribute(WebKeys.TEMPLATE, template);
+
 		super.render(renderRequest, renderResponse);
 	}
 
@@ -116,8 +120,6 @@ public class SoyPortlet extends MVCPortlet {
 			catch (TemplateException te) {
 				throw new PortletException("Unable to create template", te);
 			}
-
-			portletRequest.setAttribute(WebKeys.TEMPLATE, template);
 		}
 
 		return template;

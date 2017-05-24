@@ -46,7 +46,8 @@ public class FieldInterceptionHelperUtil {
 		catch (NoSuchFieldException nsfe) {
 			_log.error(
 				"Missing Hibernate FieldInterceptionHelper patch from " +
-					"LPS-52218");
+					"LPS-52218",
+				nsfe);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

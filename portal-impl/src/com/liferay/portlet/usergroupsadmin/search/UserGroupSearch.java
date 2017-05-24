@@ -108,7 +108,7 @@ public class UserGroupSearch extends SearchContainer<UserGroup> {
 			setOrderByComparator(orderByComparator);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error setting up user group search", e);
 		}
 	}
 

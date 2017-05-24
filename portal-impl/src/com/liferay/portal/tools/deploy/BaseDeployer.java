@@ -1808,7 +1808,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			}
 		}
 		catch (Exception e) {
-			_log.error(file.getPath() + ": " + e.toString());
+			_log.error(file.getPath() + ": " + e.toString(), e);
 		}
 		finally {
 			if (is != null) {

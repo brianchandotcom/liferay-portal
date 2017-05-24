@@ -242,7 +242,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Throwable t) {
-			_log.error(t);
+			_log.error("Error processing action", t);
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/message_boards/error.jsp");

@@ -84,7 +84,7 @@ public class UploadImageMVCResourceCommand extends BaseMVCResourceCommand {
 			}
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error serving resource", e);
 		}
 	}
 

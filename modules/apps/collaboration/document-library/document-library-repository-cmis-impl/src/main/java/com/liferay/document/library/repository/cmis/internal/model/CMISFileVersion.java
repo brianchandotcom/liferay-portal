@@ -116,7 +116,7 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 				incrementCounter);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error getting document stream", e);
 		}
 
 		return contentStream.getStream();

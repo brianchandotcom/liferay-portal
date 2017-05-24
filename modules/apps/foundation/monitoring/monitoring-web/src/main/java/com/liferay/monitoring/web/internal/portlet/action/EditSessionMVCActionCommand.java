@@ -93,7 +93,7 @@ public class EditSessionMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 			catch (Exception e) {
-				_log.error(e);
+				_log.error("Error invalidating session", e);
 			}
 		}
 	}

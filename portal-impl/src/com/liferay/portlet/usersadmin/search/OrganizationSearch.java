@@ -135,7 +135,7 @@ public class OrganizationSearch extends SearchContainer<Organization> {
 			setOrderByComparator(orderByComparator);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error("Error setting up org search", e);
 		}
 	}
 

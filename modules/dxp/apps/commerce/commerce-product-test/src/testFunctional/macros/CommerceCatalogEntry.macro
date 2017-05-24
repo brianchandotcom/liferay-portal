@@ -13,6 +13,10 @@
 		<execute function="Type" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" value1="${baseSku}" />
 	</command>
 
+	<command name="addLongDescriptionViaAlloyEditor">
+		<execute function="Type#typeEditor" locator1="CommerceCatalogEntry#LONG_DESCRIPTION_FIELD" value1="${productLongDescription}" />
+	</command>
+
 	<command name="assertDuplicateDenial">
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
 
@@ -57,9 +61,5 @@
 		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#LONG_DESCRIPTION_FIELD" value1="${productLongDescription}" />
 
 		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" value1="${baseSku}" />
-	</command>
-
-	<command name="addLongDescriptionViaAlloyEditor">
-		<execute function="Type#typeEditor" locator1="CommerceCatalogEntry#LONG_DESCRIPTION_FIELD" value1="${productLongDescription}" />
 	</command>
 </definition>

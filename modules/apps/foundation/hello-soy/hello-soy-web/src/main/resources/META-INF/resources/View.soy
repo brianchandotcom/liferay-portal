@@ -4,8 +4,8 @@
  * Prints the Hello Soy portlet main view.
  *
  * @param id
+ * @param layouts
  * @param navigationURL
- * @param themeDisplay
  */
 {template .render}
 	<div id="{$id}">
@@ -18,7 +18,7 @@
 		<div class="list-group">
 			<div class="list-group-heading">{msg desc=""}navigate-to{/msg}</div>
 
-			{foreach $layout in $themeDisplay.layouts}
+			{foreach $layout in $layouts}
 				<a class="list-group-item" href="{$layout.friendlyURL}">{$layout.nameCurrentValue}</a>
 			{/foreach}
 		</div>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CPDefinitionFinder.countByG_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CPDefinition.CPDefinitionId) AS COUNT_VALUE
+			FROM
+				CPDefinition
+			LEFT JOIN CPDefinitionLocalization ON
+				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.cpDefinitionPK)
+			WHERE
+				(CPDefinition.groupId = ?) AND
+				([$STATUS$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CPDefinitionFinder.findByG_S">
+		<![CDATA[
+			SELECT
+				CPDefinition.* , CPDefinitionLocalization.*
+			FROM
+				CPDefinition
+			LEFT JOIN CPDefinitionLocalization ON
+				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.cpDefinitionPK)
+			WHERE
+				(CPDefinition.groupId = ?) AND
+				([$STATUS$])
+		]]>
+	</sql>
+</custom-sql>

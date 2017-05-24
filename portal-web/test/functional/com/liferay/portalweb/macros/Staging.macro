@@ -41,19 +41,25 @@
 				<execute function="Check#checkToggleSwitch" locator1="Checkbox#STAGED_CONTENT">
 					<var name="key_contentName" value="${contentName}" />
 				</execute>
-
-				<for list="Documents and Media,Mobile Device Families" param="contentName">
-					<execute function="Uncheck#uncheckToggleSwitchNoErrorNoAssert" locator1="Checkbox#STAGED_CONTENT">
-						<var name="key_contentName" value="${contentName}" />
-					</execute>
-				</for>
 			</then>
-			<else>
-				<for list="Application Display Template,Blogs,Bookmarks,Calendar,Documents and Media,Dynamic Data Lists,Message Boards,Mobile Device Families,Polls,Web Content,Wiki" param="contentName">
-					<var name="key_contentName" value="${contentName}" />
+			<elseif>
+				<isset var="contentByContent" />
+				<then>
+					<for list="Documents and Media,Mobile Device Families,Web Content" param="contentName">
+						<var name="key_contentName" value="${contentName}" />
 
-					<execute function="Check#checkToggleSwitch" locator1="Checkbox#STAGED_CONTENT" />
-				</for>
+						<execute function="Uncheck#uncheckToggleSwitchNoErrorNoAssert" locator1="Checkbox#STAGED_CONTENT" />
+					</for>
+
+					<for list="Application Display Template,Blogs,Bookmarks,Calendar,Documents and Media,Forms,Knowledge Base,Message Boards,Mobile Device Families,Polls,Web Content,Wiki" param="contentName">
+						<var name="key_contentName" value="${contentName}" />
+
+						<execute function="Check#checkToggleSwitch" locator1="Checkbox#STAGED_CONTENT" />
+					</for>
+				</then>
+			</elseif>
+			<else>
+				<execute function="Check" locator1="Checkbox#SELECT_ALL" />
 			</else>
 		</if>
 

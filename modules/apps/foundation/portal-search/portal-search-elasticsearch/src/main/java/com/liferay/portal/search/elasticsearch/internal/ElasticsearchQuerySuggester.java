@@ -177,19 +177,21 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 		SuggesterResult suggesterResult = suggesterResults.getSuggesterResult(
 			phraseSuggester.getName());
 
-		List<SuggesterResult.Entry> suggesterResultEntries =
-			suggesterResult.getEntries();
+		if (suggesterResult != null) {
+			List<SuggesterResult.Entry> suggesterResultEntries =
+				suggesterResult.getEntries();
 
-		for (SuggesterResult.Entry suggesterResultEntry :
-				suggesterResultEntries) {
+			for (SuggesterResult.Entry suggesterResultEntry :
+					suggesterResultEntries) {
 
-			for (SuggesterResult.Entry.Option suggesterResultEntryOption :
-					suggesterResultEntry.getOptions()) {
+				for (SuggesterResult.Entry.Option suggesterResultEntryOption :
+						suggesterResultEntry.getOptions()) {
 
-				String optionText = String.valueOf(
-					suggesterResultEntryOption.getText());
+					String optionText = String.valueOf(
+						suggesterResultEntryOption.getText());
 
-				keywordQueries.add(optionText);
+					keywordQueries.add(optionText);
+				}
 			}
 		}
 

@@ -14,11 +14,7 @@
 
 package com.liferay.commerce.product.type.virtual.service.impl;
 
-import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingFileEntryIdException;
-import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleFileEntryIdException;
-import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleUrlException;
-import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseRequiredException;
-import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingUrlException;
+import com.liferay.commerce.product.type.virtual.exception.*;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.base.CPDefinitionVirtualSettingLocalServiceBaseImpl;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
@@ -47,7 +43,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			String url, String activationStatus, long duration, int maxUsages,
 			boolean useSample, boolean useSampleUrl,
 			long sampleFileEntryId, String sampleUrl,
-			boolean termsOfUseRequired,
+			boolean termsOfUseRequired, boolean useWebContent,
 			Map<Locale, String> termsOfUseContentMap,
 			long termsOfUseJournalArticleResourcePK,
 			ServiceContext serviceContext)
@@ -79,7 +75,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		}
 
 		if (termsOfUseRequired) {
-			if (termsOfUseJournalArticleResourcePK > 0) {
+			if (useWebContent) {
 				termsOfUseContentMap = Collections.emptyMap();
 			}
 			else {
@@ -93,7 +89,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 
 		validate(
 			useUrl, fileEntryId, url, useSample, useSampleUrl,
-			sampleFileEntryId, sampleUrl, termsOfUseRequired,
+			sampleFileEntryId, sampleUrl, termsOfUseRequired, useWebContent,
 			termsOfUseContentMap, termsOfUseJournalArticleResourcePK);
 
 		long cpDefinitionVirtualSettingId = counterLocalService.increment();
@@ -143,7 +139,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			long fileEntryId, String url, String activationStatus,
 			long duration, int maxUsages, boolean useSample,
 			boolean useSampleUrl, long sampleFileEntryId,
-			String sampleUrl, boolean termsOfUseRequired,
+			String sampleUrl, boolean termsOfUseRequired, boolean useWebContent,
 			Map<Locale, String> termsOfUseContentMap,
 			long termsOfUseJournalArticleResourcePK,
 			ServiceContext serviceContext)
@@ -176,7 +172,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		}
 
 		if (termsOfUseRequired) {
-			if (termsOfUseJournalArticleResourcePK > 0) {
+			if (useWebContent) {
 				termsOfUseContentMap = Collections.emptyMap();
 			}
 			else {
@@ -190,7 +186,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 
 		validate(
 			useUrl, fileEntryId, url, useSample, useSampleUrl,
-			sampleFileEntryId, sampleUrl, termsOfUseRequired,
+			sampleFileEntryId, sampleUrl, termsOfUseRequired, useWebContent,
 			termsOfUseContentMap, termsOfUseJournalArticleResourcePK);
 
 		cpDefinitionVirtualSetting.setFileEntryId(fileEntryId);
@@ -218,7 +214,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			boolean useUrl, long fileEntryId, String url,
 			boolean useSample, boolean useSampleUrl,
 			long sampleFileEntryId, String sampleUrl,
-			boolean termsOfUseRequired,
+			boolean termsOfUseRequired, boolean useWebContent,
 			Map<Locale, String> termsOfUseContentMap,
 			long termsOfUseJournalArticleResourcePK)
 		throws PortalException {
@@ -251,16 +247,21 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			}
 		}
 
-		if (termsOfUseRequired && MapUtil.isEmpty(termsOfUseContentMap)) {
-			JournalArticle journalArticle =
-				journalArticleLocalService.getLatestArticle(
-					termsOfUseJournalArticleResourcePK);
+		if (termsOfUseRequired) {
+			if (useWebContent) {
+				JournalArticle journalArticle =
+					journalArticleLocalService.fetchLatestArticle(
+						termsOfUseJournalArticleResourcePK);
 
-			if (journalArticle == null) {
-				throw new
-					CPDefinitionVirtualSettingTermsOfUseRequiredException();
+				if (journalArticle == null) {
+					throw new
+						CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException();
+				}
+				else if (MapUtil.isEmpty(termsOfUseContentMap)) {
+					throw new
+						CPDefinitionVirtualSettingTermsOfUseContentException();
+				}
 			}
 		}
 	}
-
 }

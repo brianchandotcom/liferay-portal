@@ -33,11 +33,11 @@ public class CPDefinitionVirtualSettingServiceImpl
 
 	@Override
 	public CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
-			long cpDefinitionId, boolean useFileEntry, long fileEntryId,
+			long cpDefinitionId, boolean useUrl, long fileEntryId,
 			String url, String activationStatus, long duration, int maxUsages,
-			boolean useSample, boolean useSampleFileEntry,
+			boolean useSample, boolean useSampleUrl,
 			long sampleFileEntryId, String sampleUrl,
-			boolean termsOfUseRequired,
+			boolean termsOfUseRequired, boolean useWebContent,
 			Map<Locale, String> termsOfUseContentMap,
 			long termsOfUseJournalArticleResourcePK,
 			ServiceContext serviceContext)
@@ -48,10 +48,10 @@ public class CPDefinitionVirtualSettingServiceImpl
 
 		return cpDefinitionVirtualSettingLocalService.
 			addCPDefinitionVirtualSetting(
-				cpDefinitionId, useFileEntry, fileEntryId, url,
+				cpDefinitionId, useUrl, fileEntryId, url,
 				activationStatus, duration, maxUsages, useSample,
-				useSampleFileEntry, sampleFileEntryId, sampleUrl,
-				termsOfUseRequired, termsOfUseContentMap,
+				useSampleUrl, sampleFileEntryId, sampleUrl,
+				termsOfUseRequired, useWebContent, termsOfUseContentMap,
 				termsOfUseJournalArticleResourcePK, serviceContext);
 	}
 
@@ -89,11 +89,11 @@ public class CPDefinitionVirtualSettingServiceImpl
 
 	@Override
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
-			long cpDefinitionVirtualSettingId, boolean useFileEntry,
+			long cpDefinitionVirtualSettingId, boolean useUrl,
 			long fileEntryId, String url, String activationStatus,
 			long duration, int maxUsages, boolean useSample,
-			boolean useSampleFileEntry, long sampleFileEntryId,
-			String sampleUrl, boolean termsOfUseRequired,
+			boolean useSampleUrl, long sampleFileEntryId,
+			String sampleUrl, boolean termsOfUseRequired, boolean useWebContent,
 			Map<Locale, String> termsOfUseContentMap,
 			long termsOfUseJournalArticleResourcePK,
 			ServiceContext serviceContext)
@@ -103,10 +103,10 @@ public class CPDefinitionVirtualSettingServiceImpl
 
 		return cpDefinitionVirtualSettingLocalService.
 			updateCPDefinitionVirtualSetting(
-				cpDefinitionVirtualSettingId, useFileEntry, fileEntryId, url,
+				cpDefinitionVirtualSettingId, useUrl, fileEntryId, url,
 				activationStatus, duration, maxUsages, useSample,
-				useSampleFileEntry, sampleFileEntryId, sampleUrl,
-				termsOfUseRequired, termsOfUseContentMap,
+				useSampleUrl, sampleFileEntryId, sampleUrl,
+				termsOfUseRequired, useWebContent, termsOfUseContentMap,
 				termsOfUseJournalArticleResourcePK, serviceContext);
 	}
 

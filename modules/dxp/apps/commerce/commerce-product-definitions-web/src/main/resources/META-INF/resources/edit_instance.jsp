@@ -51,9 +51,7 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 
 <aui:script>
 	function <portlet:namespace />saveInstance(forceDisable) {
-		var $ = AUI.$;
-
-		var form = $(document.<portlet:namespace />fm);
+		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.fm('ddmFormValues').val(JSON.stringify(Liferay.component("cpDefinitionOptionsRenderDDMForm").toJSON()));
 

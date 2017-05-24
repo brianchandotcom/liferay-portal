@@ -1,63 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<?xml version="1.0"?>
 
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+	<modelVersion>4.0.0</modelVersion>
 	<groupId>${groupId}</groupId>
 	<artifactId>${artifactId}</artifactId>
 	<version>${version}</version>
-
 	<packaging>war</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<version.spring>4.1.9.RELEASE</version.spring>
 	</properties>
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>3.0.0</version>
-				<configuration>
-					<packagingExcludes>**/*.scss,**/.sass-cache</packagingExcludes>
-					<webResources>
-						<resource>
-							<directory>src/main/webapp</directory>
-							<excludes>
-								<exclude>**/*.scss</exclude>
-								<exclude>**/.sass-cache</exclude>
-							</excludes>
-						</resource>
-					</webResources>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.liferay</groupId>
-				<artifactId>com.liferay.css.builder</artifactId>
-				<version>@com.liferay.css.builder.version@</version>
-				<executions>
-					<execution>
-						<id>default-build-css</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>build-css</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<docrootDirName>src/main/webapp</docrootDirName>
-					<precision>9</precision>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
 	<dependencies>
 		<dependency>
 			<groupId>javax.portlet</groupId>
@@ -134,4 +90,50 @@
 			<version>${version.spring}</version>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<packagingExcludes>**/*.scss,**/.sass-cache</packagingExcludes>
+					<webResources>
+						<resource>
+							<directory>src/main/webapp</directory>
+							<excludes>
+								<exclude>**/*.scss</exclude>
+								<exclude>**/.sass-cache</exclude>
+							</excludes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.css.builder</artifactId>
+				<version>@com.liferay.css.builder.version@</version>
+				<executions>
+					<execution>
+						<id>default-build-css</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>build-css</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<docrootDirName>src/main/webapp</docrootDirName>
+					<precision>9</precision>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

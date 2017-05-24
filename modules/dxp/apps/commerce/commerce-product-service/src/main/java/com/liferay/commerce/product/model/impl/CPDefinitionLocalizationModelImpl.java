@@ -64,7 +64,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 			{ "mvccVersion", Types.BIGINT },
 			{ "cpDefinitionLocalizationId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
-			{ "cpDefinitionPK", Types.BIGINT },
+			{ "CPDefinitionId", Types.BIGINT },
 			{ "languageId", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
 			{ "urlTitle", Types.VARCHAR },
@@ -77,7 +77,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("cpDefinitionLocalizationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("cpDefinitionPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
@@ -85,7 +85,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionLocalization (mvccVersion LONG default 0 not null,cpDefinitionLocalizationId LONG not null primary key,companyId LONG,cpDefinitionPK LONG,languageId VARCHAR(75) null,title VARCHAR(75) null,urlTitle VARCHAR(75) null,shortDescription STRING null,description TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionLocalization (mvccVersion LONG default 0 not null,cpDefinitionLocalizationId LONG not null primary key,companyId LONG,CPDefinitionId LONG,languageId VARCHAR(75) null,title VARCHAR(75) null,urlTitle VARCHAR(75) null,shortDescription STRING null,description TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionLocalization";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionLocalization.cpDefinitionLocalizationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionLocalization.cpDefinitionLocalizationId ASC";
@@ -101,7 +101,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.product.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CPDefinitionLocalization"),
 			true);
-	public static final long CPDEFINITIONPK_COLUMN_BITMASK = 1L;
+	public static final long CPDEFINITIONID_COLUMN_BITMASK = 1L;
 	public static final long LANGUAGEID_COLUMN_BITMASK = 2L;
 	public static final long CPDEFINITIONLOCALIZATIONID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.commerce.product.service.util.ServiceProps.get(
@@ -148,7 +148,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		attributes.put("cpDefinitionLocalizationId",
 			getCpDefinitionLocalizationId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("cpDefinitionPK", getCpDefinitionPK());
+		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("title", getTitle());
 		attributes.put("urlTitle", getUrlTitle());
@@ -182,10 +182,10 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 			setCompanyId(companyId);
 		}
 
-		Long cpDefinitionPK = (Long)attributes.get("cpDefinitionPK");
+		Long CPDefinitionId = (Long)attributes.get("CPDefinitionId");
 
-		if (cpDefinitionPK != null) {
-			setCpDefinitionPK(cpDefinitionPK);
+		if (CPDefinitionId != null) {
+			setCPDefinitionId(CPDefinitionId);
 		}
 
 		String languageId = (String)attributes.get("languageId");
@@ -250,25 +250,25 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	}
 
 	@Override
-	public long getCpDefinitionPK() {
-		return _cpDefinitionPK;
+	public long getCPDefinitionId() {
+		return _CPDefinitionId;
 	}
 
 	@Override
-	public void setCpDefinitionPK(long cpDefinitionPK) {
-		_columnBitmask |= CPDEFINITIONPK_COLUMN_BITMASK;
+	public void setCPDefinitionId(long CPDefinitionId) {
+		_columnBitmask |= CPDEFINITIONID_COLUMN_BITMASK;
 
-		if (!_setOriginalCpDefinitionPK) {
-			_setOriginalCpDefinitionPK = true;
+		if (!_setOriginalCPDefinitionId) {
+			_setOriginalCPDefinitionId = true;
 
-			_originalCpDefinitionPK = _cpDefinitionPK;
+			_originalCPDefinitionId = _CPDefinitionId;
 		}
 
-		_cpDefinitionPK = cpDefinitionPK;
+		_CPDefinitionId = CPDefinitionId;
 	}
 
-	public long getOriginalCpDefinitionPK() {
-		return _originalCpDefinitionPK;
+	public long getOriginalCPDefinitionId() {
+		return _originalCPDefinitionId;
 	}
 
 	@Override
@@ -390,7 +390,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		cpDefinitionLocalizationImpl.setMvccVersion(getMvccVersion());
 		cpDefinitionLocalizationImpl.setCpDefinitionLocalizationId(getCpDefinitionLocalizationId());
 		cpDefinitionLocalizationImpl.setCompanyId(getCompanyId());
-		cpDefinitionLocalizationImpl.setCpDefinitionPK(getCpDefinitionPK());
+		cpDefinitionLocalizationImpl.setCPDefinitionId(getCPDefinitionId());
 		cpDefinitionLocalizationImpl.setLanguageId(getLanguageId());
 		cpDefinitionLocalizationImpl.setTitle(getTitle());
 		cpDefinitionLocalizationImpl.setUrlTitle(getUrlTitle());
@@ -458,9 +458,9 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	public void resetOriginalValues() {
 		CPDefinitionLocalizationModelImpl cpDefinitionLocalizationModelImpl = this;
 
-		cpDefinitionLocalizationModelImpl._originalCpDefinitionPK = cpDefinitionLocalizationModelImpl._cpDefinitionPK;
+		cpDefinitionLocalizationModelImpl._originalCPDefinitionId = cpDefinitionLocalizationModelImpl._CPDefinitionId;
 
-		cpDefinitionLocalizationModelImpl._setOriginalCpDefinitionPK = false;
+		cpDefinitionLocalizationModelImpl._setOriginalCPDefinitionId = false;
 
 		cpDefinitionLocalizationModelImpl._originalLanguageId = cpDefinitionLocalizationModelImpl._languageId;
 
@@ -477,7 +477,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 
 		cpDefinitionLocalizationCacheModel.companyId = getCompanyId();
 
-		cpDefinitionLocalizationCacheModel.cpDefinitionPK = getCpDefinitionPK();
+		cpDefinitionLocalizationCacheModel.CPDefinitionId = getCPDefinitionId();
 
 		cpDefinitionLocalizationCacheModel.languageId = getLanguageId();
 
@@ -532,8 +532,8 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		sb.append(getCpDefinitionLocalizationId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
-		sb.append(", cpDefinitionPK=");
-		sb.append(getCpDefinitionPK());
+		sb.append(", CPDefinitionId=");
+		sb.append(getCPDefinitionId());
 		sb.append(", languageId=");
 		sb.append(getLanguageId());
 		sb.append(", title=");
@@ -570,8 +570,8 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>cpDefinitionPK</column-name><column-value><![CDATA[");
-		sb.append(getCpDefinitionPK());
+			"<column><column-name>CPDefinitionId</column-name><column-value><![CDATA[");
+		sb.append(getCPDefinitionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>languageId</column-name><column-value><![CDATA[");
@@ -606,9 +606,9 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	private long _mvccVersion;
 	private long _cpDefinitionLocalizationId;
 	private long _companyId;
-	private long _cpDefinitionPK;
-	private long _originalCpDefinitionPK;
-	private boolean _setOriginalCpDefinitionPK;
+	private long _CPDefinitionId;
+	private long _originalCPDefinitionId;
+	private boolean _setOriginalCPDefinitionId;
 	private String _languageId;
 	private String _originalLanguageId;
 	private String _title;

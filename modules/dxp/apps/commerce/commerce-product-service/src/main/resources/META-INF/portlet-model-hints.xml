@@ -51,7 +51,7 @@
 		<field name="mvccVersion" type="long" />
 		<field name="cpDefinitionLocalizationId" type="long" />
 		<field name="companyId" type="long" />
-		<field name="cpDefinitionPK" type="long" />
+		<field name="CPDefinitionId" type="long" />
 		<field name="languageId" type="String" />
 		<field name="title" type="String" />
 		<field name="urlTitle" type="String" />

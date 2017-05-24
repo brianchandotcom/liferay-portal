@@ -368,15 +368,15 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Locale, java.lang.String> getCPDefinitionDescriptionMap(
-		long cpDefinitionPK);
+		long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Locale, java.lang.String> getCPDefinitionShortDescriptionMap(
-		long cpDefinitionPK);
+		long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Locale, java.lang.String> getCPDefinitionTitleMap(
-		long cpDefinitionPK);
+		long cpDefinitionId);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

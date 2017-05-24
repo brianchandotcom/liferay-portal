@@ -515,28 +515,28 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 	@Override
 	public CPDefinitionLocalization fetchCPDefinitionLocalization(
 		long CPDefinitionId, String languageId) {
-		return cpDefinitionLocalizationPersistence.fetchByCPD_L(CPDefinitionId,
+		return cpDefinitionLocalizationPersistence.fetchByCPDefinitionId_LanguageId(CPDefinitionId,
 			languageId);
 	}
 
 	@Override
 	public CPDefinitionLocalization getCPDefinitionLocalization(
 		long CPDefinitionId, String languageId) throws PortalException {
-		return cpDefinitionLocalizationPersistence.findByCPD_L(CPDefinitionId,
+		return cpDefinitionLocalizationPersistence.findByCPDefinitionId_LanguageId(CPDefinitionId,
 			languageId);
 	}
 
 	@Override
 	public List<CPDefinitionLocalization> getCPDefinitionLocalizations(
 		long CPDefinitionId) {
-		return cpDefinitionLocalizationPersistence.findByCPDefinitionPK(CPDefinitionId);
+		return cpDefinitionLocalizationPersistence.findByCPDefinitionId(CPDefinitionId);
 	}
 
 	protected CPDefinitionLocalization updateCPDefinitionLocalization(
 		CPDefinition cpDefinition, String languageId, String title,
 		String urlTitle, String shortDescription, String description)
 		throws PortalException {
-		CPDefinitionLocalization cpDefinitionLocalization = cpDefinitionLocalizationPersistence.fetchByCPD_L(cpDefinition.getPrimaryKey(),
+		CPDefinitionLocalization cpDefinitionLocalization = cpDefinitionLocalizationPersistence.fetchByCPDefinitionId_LanguageId(cpDefinition.getCPDefinitionId(),
 				languageId);
 
 		if (cpDefinitionLocalization == null) {
@@ -544,11 +544,11 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 
 			cpDefinitionLocalization = cpDefinitionLocalizationPersistence.create(cpDefinitionLocalizationId);
 
-			cpDefinitionLocalization.setCompanyId(cpDefinition.getCompanyId());
-
-			cpDefinitionLocalization.setCpDefinitionPK(cpDefinition.getPrimaryKey());
+			cpDefinitionLocalization.setCPDefinitionId(cpDefinition.getCPDefinitionId());
 			cpDefinitionLocalization.setLanguageId(languageId);
 		}
+
+		cpDefinitionLocalization.setCompanyId(cpDefinition.getCompanyId());
 
 		cpDefinitionLocalization.setTitle(title);
 		cpDefinitionLocalization.setUrlTitle(urlTitle);
@@ -623,14 +623,16 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 
 		List<CPDefinitionLocalization> cpDefinitionLocalizations = new ArrayList<CPDefinitionLocalization>(localizedValuesMap.size());
 
-		for (CPDefinitionLocalization cpDefinitionLocalization : cpDefinitionLocalizationPersistence.findByCPDefinitionPK(
-				cpDefinition.getPrimaryKey())) {
+		for (CPDefinitionLocalization cpDefinitionLocalization : cpDefinitionLocalizationPersistence.findByCPDefinitionId(
+				cpDefinition.getCPDefinitionId())) {
 			String[] localizedValues = localizedValuesMap.remove(cpDefinitionLocalization.getLanguageId());
 
 			if (localizedValues == null) {
 				cpDefinitionLocalizationPersistence.remove(cpDefinitionLocalization);
 			}
 			else {
+				cpDefinitionLocalization.setCompanyId(cpDefinition.getCompanyId());
+
 				cpDefinitionLocalization.setTitle(localizedValues[0]);
 				cpDefinitionLocalization.setUrlTitle(localizedValues[1]);
 				cpDefinitionLocalization.setShortDescription(localizedValues[2]);
@@ -649,9 +651,9 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 
 			CPDefinitionLocalization cpDefinitionLocalization = cpDefinitionLocalizationPersistence.create(cpDefinitionLocalizationId);
 
+			cpDefinitionLocalization.setCPDefinitionId(cpDefinition.getCPDefinitionId());
 			cpDefinitionLocalization.setCompanyId(cpDefinition.getCompanyId());
 
-			cpDefinitionLocalization.setCpDefinitionPK(cpDefinition.getPrimaryKey());
 			cpDefinitionLocalization.setLanguageId(languageId);
 
 			cpDefinitionLocalization.setTitle(localizedValues[0]);

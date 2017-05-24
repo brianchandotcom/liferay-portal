@@ -57,13 +57,13 @@
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 		<property name="defaultLanguageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.liferay.commerce.product.model.impl.CPDefinitionLocalizationImpl" table="CPDefinitionLocalization">
+	<class dynamic-update="true" name="com.liferay.commerce.product.model.impl.CPDefinitionLocalizationImpl" table="CPDefinitionLocalization">
 		<id name="cpDefinitionLocalizationId" type="long">
 			<generator class="assigned" />
 		</id>
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="cpDefinitionPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="CPDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="urlTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />

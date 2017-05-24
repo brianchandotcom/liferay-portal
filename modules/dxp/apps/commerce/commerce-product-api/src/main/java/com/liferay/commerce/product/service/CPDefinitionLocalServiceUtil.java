@@ -422,18 +422,18 @@ public class CPDefinitionLocalServiceUtil {
 	}
 
 	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionDescriptionMap(
-		long cpDefinitionPK) {
-		return getService().getCPDefinitionDescriptionMap(cpDefinitionPK);
+		long cpDefinitionId) {
+		return getService().getCPDefinitionDescriptionMap(cpDefinitionId);
 	}
 
 	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionShortDescriptionMap(
-		long cpDefinitionPK) {
-		return getService().getCPDefinitionShortDescriptionMap(cpDefinitionPK);
+		long cpDefinitionId) {
+		return getService().getCPDefinitionShortDescriptionMap(cpDefinitionId);
 	}
 
 	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionTitleMap(
-		long cpDefinitionPK) {
-		return getService().getCPDefinitionTitleMap(cpDefinitionPK);
+		long cpDefinitionId) {
+		return getService().getCPDefinitionTitleMap(cpDefinitionId);
 	}
 
 	/**

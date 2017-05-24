@@ -86,8 +86,8 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 		sb.append(cpDefinitionLocalizationId);
 		sb.append(", companyId=");
 		sb.append(companyId);
-		sb.append(", cpDefinitionPK=");
-		sb.append(cpDefinitionPK);
+		sb.append(", CPDefinitionId=");
+		sb.append(CPDefinitionId);
 		sb.append(", languageId=");
 		sb.append(languageId);
 		sb.append(", title=");
@@ -110,7 +110,7 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 		cpDefinitionLocalizationImpl.setMvccVersion(mvccVersion);
 		cpDefinitionLocalizationImpl.setCpDefinitionLocalizationId(cpDefinitionLocalizationId);
 		cpDefinitionLocalizationImpl.setCompanyId(companyId);
-		cpDefinitionLocalizationImpl.setCpDefinitionPK(cpDefinitionPK);
+		cpDefinitionLocalizationImpl.setCPDefinitionId(CPDefinitionId);
 
 		if (languageId == null) {
 			cpDefinitionLocalizationImpl.setLanguageId(StringPool.BLANK);
@@ -160,7 +160,7 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 
 		companyId = objectInput.readLong();
 
-		cpDefinitionPK = objectInput.readLong();
+		CPDefinitionId = objectInput.readLong();
 		languageId = objectInput.readUTF();
 		title = objectInput.readUTF();
 		urlTitle = objectInput.readUTF();
@@ -177,7 +177,7 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 
 		objectOutput.writeLong(companyId);
 
-		objectOutput.writeLong(cpDefinitionPK);
+		objectOutput.writeLong(CPDefinitionId);
 
 		if (languageId == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -218,7 +218,7 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 	public long mvccVersion;
 	public long cpDefinitionLocalizationId;
 	public long companyId;
-	public long cpDefinitionPK;
+	public long CPDefinitionId;
 	public String languageId;
 	public String title;
 	public String urlTitle;

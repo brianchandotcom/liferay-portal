@@ -62,7 +62,7 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 		attributes.put("cpDefinitionLocalizationId",
 			getCpDefinitionLocalizationId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("cpDefinitionPK", getCpDefinitionPK());
+		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("title", getTitle());
 		attributes.put("urlTitle", getUrlTitle());
@@ -93,10 +93,10 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 			setCompanyId(companyId);
 		}
 
-		Long cpDefinitionPK = (Long)attributes.get("cpDefinitionPK");
+		Long CPDefinitionId = (Long)attributes.get("CPDefinitionId");
 
-		if (cpDefinitionPK != null) {
-			setCpDefinitionPK(cpDefinitionPK);
+		if (CPDefinitionId != null) {
+			setCPDefinitionId(CPDefinitionId);
 		}
 
 		String languageId = (String)attributes.get("languageId");
@@ -246,6 +246,16 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	}
 
 	/**
+	* Returns the cp definition ID of this cp definition localization.
+	*
+	* @return the cp definition ID of this cp definition localization
+	*/
+	@Override
+	public long getCPDefinitionId() {
+		return _cpDefinitionLocalization.getCPDefinitionId();
+	}
+
+	/**
 	* Returns the company ID of this cp definition localization.
 	*
 	* @return the company ID of this cp definition localization
@@ -266,16 +276,6 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	}
 
 	/**
-	* Returns the cp definition pk of this cp definition localization.
-	*
-	* @return the cp definition pk of this cp definition localization
-	*/
-	@Override
-	public long getCpDefinitionPK() {
-		return _cpDefinitionLocalization.getCpDefinitionPK();
-	}
-
-	/**
 	* Returns the mvcc version of this cp definition localization.
 	*
 	* @return the mvcc version of this cp definition localization
@@ -293,6 +293,16 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	@Override
 	public long getPrimaryKey() {
 		return _cpDefinitionLocalization.getPrimaryKey();
+	}
+
+	/**
+	* Sets the cp definition ID of this cp definition localization.
+	*
+	* @param CPDefinitionId the cp definition ID of this cp definition localization
+	*/
+	@Override
+	public void setCPDefinitionId(long CPDefinitionId) {
+		_cpDefinitionLocalization.setCPDefinitionId(CPDefinitionId);
 	}
 
 	@Override
@@ -318,16 +328,6 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	@Override
 	public void setCpDefinitionLocalizationId(long cpDefinitionLocalizationId) {
 		_cpDefinitionLocalization.setCpDefinitionLocalizationId(cpDefinitionLocalizationId);
-	}
-
-	/**
-	* Sets the cp definition pk of this cp definition localization.
-	*
-	* @param cpDefinitionPK the cp definition pk of this cp definition localization
-	*/
-	@Override
-	public void setCpDefinitionPK(long cpDefinitionPK) {
-		_cpDefinitionLocalization.setCpDefinitionPK(cpDefinitionPK);
 	}
 
 	/**

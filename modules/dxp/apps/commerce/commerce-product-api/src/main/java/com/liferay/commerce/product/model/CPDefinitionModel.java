@@ -434,6 +434,8 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	 */
 	public void setDefaultLanguageId(String defaultLanguageId);
 
+	public String[] getAvailableLanguageIds();
+
 	public String getTitle();
 
 	public String getTitle(String languageId);

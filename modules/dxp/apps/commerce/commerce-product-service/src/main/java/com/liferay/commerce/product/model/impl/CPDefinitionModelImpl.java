@@ -411,6 +411,21 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	}
 
 	@Override
+	public String[] getAvailableLanguageIds() {
+		List<CPDefinitionLocalization> cpDefinitionLocalizations = CPDefinitionLocalServiceUtil.getCPDefinitionLocalizations(getPrimaryKey());
+
+		String[] availableLanguageIds = new String[cpDefinitionLocalizations.size()];
+
+		for (int i = 0; i < availableLanguageIds.length; i++) {
+			CPDefinitionLocalization cpDefinitionLocalization = cpDefinitionLocalizations.get(i);
+
+			availableLanguageIds[i] = cpDefinitionLocalization.getLanguageId();
+		}
+
+		return availableLanguageIds;
+	}
+
+	@Override
 	public String getTitle() {
 		return getTitle(getDefaultLanguageId(), false);
 	}
@@ -977,7 +992,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		_statusDate = statusDate;
 	}
 
-	@JSON(include = false)
+	@JSON
 	@Override
 	public String getDefaultLanguageId() {
 		if (_defaultLanguageId == null) {

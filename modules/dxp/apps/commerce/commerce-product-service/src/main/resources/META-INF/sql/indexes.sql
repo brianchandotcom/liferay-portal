@@ -7,7 +7,7 @@ create index IX_419350EA on CPDefinition (groupId, status);
 create index IX_8EA585DA on CPDefinition (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_BA9BADC on CPDefinition (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create unique index IX_9D876175 on CPDefinitionLocalization (cpDefinitionPK, languageId[$COLUMN_LENGTH:75$]);
+create unique index IX_F4B4ACB5 on CPDefinitionLocalization (CPDefinitionId, languageId[$COLUMN_LENGTH:75$]);
 
 create index IX_749E99EB on CPDefinitionOptionRel (CPDefinitionId, skuContributor);
 create index IX_449BFCFE on CPDefinitionOptionRel (companyId);

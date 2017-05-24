@@ -36,7 +36,7 @@ public class CPDefinitionLocalizationSoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCpDefinitionLocalizationId(model.getCpDefinitionLocalizationId());
 		soapModel.setCompanyId(model.getCompanyId());
-		soapModel.setCpDefinitionPK(model.getCpDefinitionPK());
+		soapModel.setCPDefinitionId(model.getCPDefinitionId());
 		soapModel.setLanguageId(model.getLanguageId());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setUrlTitle(model.getUrlTitle());
@@ -121,12 +121,12 @@ public class CPDefinitionLocalizationSoap implements Serializable {
 		_companyId = companyId;
 	}
 
-	public long getCpDefinitionPK() {
-		return _cpDefinitionPK;
+	public long getCPDefinitionId() {
+		return _CPDefinitionId;
 	}
 
-	public void setCpDefinitionPK(long cpDefinitionPK) {
-		_cpDefinitionPK = cpDefinitionPK;
+	public void setCPDefinitionId(long CPDefinitionId) {
+		_CPDefinitionId = CPDefinitionId;
 	}
 
 	public String getLanguageId() {
@@ -172,7 +172,7 @@ public class CPDefinitionLocalizationSoap implements Serializable {
 	private long _mvccVersion;
 	private long _cpDefinitionLocalizationId;
 	private long _companyId;
-	private long _cpDefinitionPK;
+	private long _CPDefinitionId;
 	private String _languageId;
 	private String _title;
 	private String _urlTitle;

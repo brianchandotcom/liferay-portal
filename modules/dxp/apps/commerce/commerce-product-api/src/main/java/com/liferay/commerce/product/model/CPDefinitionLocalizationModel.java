@@ -110,18 +110,18 @@ public interface CPDefinitionLocalizationModel extends BaseModel<CPDefinitionLoc
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the cp definition pk of this cp definition localization.
+	 * Returns the cp definition ID of this cp definition localization.
 	 *
-	 * @return the cp definition pk of this cp definition localization
+	 * @return the cp definition ID of this cp definition localization
 	 */
-	public long getCpDefinitionPK();
+	public long getCPDefinitionId();
 
 	/**
-	 * Sets the cp definition pk of this cp definition localization.
+	 * Sets the cp definition ID of this cp definition localization.
 	 *
-	 * @param cpDefinitionPK the cp definition pk of this cp definition localization
+	 * @param CPDefinitionId the cp definition ID of this cp definition localization
 	 */
-	public void setCpDefinitionPK(long cpDefinitionPK);
+	public void setCPDefinitionId(long CPDefinitionId);
 
 	/**
 	 * Returns the language ID of this cp definition localization.

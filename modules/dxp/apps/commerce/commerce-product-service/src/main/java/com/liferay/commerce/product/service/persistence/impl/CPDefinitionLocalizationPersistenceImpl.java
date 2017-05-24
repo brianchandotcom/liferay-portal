@@ -86,89 +86,89 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionLocalizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CPDEFINITIONPK =
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CPDEFINITIONID =
 		new FinderPath(CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionLocalizationModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionLocalizationImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPDefinitionPK",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPDefinitionId",
 			new String[] {
 				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONPK =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONID =
 		new FinderPath(CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionLocalizationModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionLocalizationImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPDefinitionPK",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPDefinitionId",
 			new String[] { Long.class.getName() },
-			CPDefinitionLocalizationModelImpl.CPDEFINITIONPK_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_CPDEFINITIONPK = new FinderPath(CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
+			CPDefinitionLocalizationModelImpl.CPDEFINITIONID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CPDEFINITIONID = new FinderPath(CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionLocalizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDefinitionPK",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDefinitionId",
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the cp definition localizations where cpDefinitionPK = &#63;.
+	 * Returns all the cp definition localizations where CPDefinitionId = &#63;.
 	 *
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 * @return the matching cp definition localizations
 	 */
 	@Override
-	public List<CPDefinitionLocalization> findByCPDefinitionPK(
-		long cpDefinitionPK) {
-		return findByCPDefinitionPK(cpDefinitionPK, QueryUtil.ALL_POS,
+	public List<CPDefinitionLocalization> findByCPDefinitionId(
+		long CPDefinitionId) {
+		return findByCPDefinitionId(CPDefinitionId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the cp definition localizations where cpDefinitionPK = &#63;.
+	 * Returns a range of all the cp definition localizations where CPDefinitionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLocalizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 * @param start the lower bound of the range of cp definition localizations
 	 * @param end the upper bound of the range of cp definition localizations (not inclusive)
 	 * @return the range of matching cp definition localizations
 	 */
 	@Override
-	public List<CPDefinitionLocalization> findByCPDefinitionPK(
-		long cpDefinitionPK, int start, int end) {
-		return findByCPDefinitionPK(cpDefinitionPK, start, end, null);
+	public List<CPDefinitionLocalization> findByCPDefinitionId(
+		long CPDefinitionId, int start, int end) {
+		return findByCPDefinitionId(CPDefinitionId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the cp definition localizations where cpDefinitionPK = &#63;.
+	 * Returns an ordered range of all the cp definition localizations where CPDefinitionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLocalizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 * @param start the lower bound of the range of cp definition localizations
 	 * @param end the upper bound of the range of cp definition localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching cp definition localizations
 	 */
 	@Override
-	public List<CPDefinitionLocalization> findByCPDefinitionPK(
-		long cpDefinitionPK, int start, int end,
+	public List<CPDefinitionLocalization> findByCPDefinitionId(
+		long CPDefinitionId, int start, int end,
 		OrderByComparator<CPDefinitionLocalization> orderByComparator) {
-		return findByCPDefinitionPK(cpDefinitionPK, start, end,
+		return findByCPDefinitionId(CPDefinitionId, start, end,
 			orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the cp definition localizations where cpDefinitionPK = &#63;.
+	 * Returns an ordered range of all the cp definition localizations where CPDefinitionId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLocalizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 * @param start the lower bound of the range of cp definition localizations
 	 * @param end the upper bound of the range of cp definition localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -176,8 +176,8 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 	 * @return the ordered range of matching cp definition localizations
 	 */
 	@Override
-	public List<CPDefinitionLocalization> findByCPDefinitionPK(
-		long cpDefinitionPK, int start, int end,
+	public List<CPDefinitionLocalization> findByCPDefinitionId(
+		long CPDefinitionId, int start, int end,
 		OrderByComparator<CPDefinitionLocalization> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -187,13 +187,13 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONPK;
-			finderArgs = new Object[] { cpDefinitionPK };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONID;
+			finderArgs = new Object[] { CPDefinitionId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CPDEFINITIONPK;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CPDEFINITIONID;
 			finderArgs = new Object[] {
-					cpDefinitionPK,
+					CPDefinitionId,
 					
 					start, end, orderByComparator
 				};
@@ -207,7 +207,7 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CPDefinitionLocalization cpDefinitionLocalization : list) {
-					if ((cpDefinitionPK != cpDefinitionLocalization.getCpDefinitionPK())) {
+					if ((CPDefinitionId != cpDefinitionLocalization.getCPDefinitionId())) {
 						list = null;
 
 						break;
@@ -229,7 +229,7 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 			query.append(_SQL_SELECT_CPDEFINITIONLOCALIZATION_WHERE);
 
-			query.append(_FINDER_COLUMN_CPDEFINITIONPK_CPDEFINITIONPK_2);
+			query.append(_FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -251,7 +251,7 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(cpDefinitionPK);
+				qPos.add(CPDefinitionId);
 
 				if (!pagination) {
 					list = (List<CPDefinitionLocalization>)QueryUtil.list(q,
@@ -284,19 +284,19 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
-	 * Returns the first cp definition localization in the ordered set where cpDefinitionPK = &#63;.
+	 * Returns the first cp definition localization in the ordered set where CPDefinitionId = &#63;.
 	 *
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cp definition localization
 	 * @throws NoSuchCPDefinitionLocalizationException if a matching cp definition localization could not be found
 	 */
 	@Override
-	public CPDefinitionLocalization findByCPDefinitionPK_First(
-		long cpDefinitionPK,
+	public CPDefinitionLocalization findByCPDefinitionId_First(
+		long CPDefinitionId,
 		OrderByComparator<CPDefinitionLocalization> orderByComparator)
 		throws NoSuchCPDefinitionLocalizationException {
-		CPDefinitionLocalization cpDefinitionLocalization = fetchByCPDefinitionPK_First(cpDefinitionPK,
+		CPDefinitionLocalization cpDefinitionLocalization = fetchByCPDefinitionId_First(CPDefinitionId,
 				orderByComparator);
 
 		if (cpDefinitionLocalization != null) {
@@ -307,8 +307,8 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("cpDefinitionPK=");
-		msg.append(cpDefinitionPK);
+		msg.append("CPDefinitionId=");
+		msg.append(CPDefinitionId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -316,17 +316,17 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
-	 * Returns the first cp definition localization in the ordered set where cpDefinitionPK = &#63;.
+	 * Returns the first cp definition localization in the ordered set where CPDefinitionId = &#63;.
 	 *
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cp definition localization, or <code>null</code> if a matching cp definition localization could not be found
 	 */
 	@Override
-	public CPDefinitionLocalization fetchByCPDefinitionPK_First(
-		long cpDefinitionPK,
+	public CPDefinitionLocalization fetchByCPDefinitionId_First(
+		long CPDefinitionId,
 		OrderByComparator<CPDefinitionLocalization> orderByComparator) {
-		List<CPDefinitionLocalization> list = findByCPDefinitionPK(cpDefinitionPK,
+		List<CPDefinitionLocalization> list = findByCPDefinitionId(CPDefinitionId,
 				0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -337,19 +337,19 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition localization in the ordered set where cpDefinitionPK = &#63;.
+	 * Returns the last cp definition localization in the ordered set where CPDefinitionId = &#63;.
 	 *
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching cp definition localization
 	 * @throws NoSuchCPDefinitionLocalizationException if a matching cp definition localization could not be found
 	 */
 	@Override
-	public CPDefinitionLocalization findByCPDefinitionPK_Last(
-		long cpDefinitionPK,
+	public CPDefinitionLocalization findByCPDefinitionId_Last(
+		long CPDefinitionId,
 		OrderByComparator<CPDefinitionLocalization> orderByComparator)
 		throws NoSuchCPDefinitionLocalizationException {
-		CPDefinitionLocalization cpDefinitionLocalization = fetchByCPDefinitionPK_Last(cpDefinitionPK,
+		CPDefinitionLocalization cpDefinitionLocalization = fetchByCPDefinitionId_Last(CPDefinitionId,
 				orderByComparator);
 
 		if (cpDefinitionLocalization != null) {
@@ -360,8 +360,8 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("cpDefinitionPK=");
-		msg.append(cpDefinitionPK);
+		msg.append("CPDefinitionId=");
+		msg.append(CPDefinitionId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -369,23 +369,23 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
-	 * Returns the last cp definition localization in the ordered set where cpDefinitionPK = &#63;.
+	 * Returns the last cp definition localization in the ordered set where CPDefinitionId = &#63;.
 	 *
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching cp definition localization, or <code>null</code> if a matching cp definition localization could not be found
 	 */
 	@Override
-	public CPDefinitionLocalization fetchByCPDefinitionPK_Last(
-		long cpDefinitionPK,
+	public CPDefinitionLocalization fetchByCPDefinitionId_Last(
+		long CPDefinitionId,
 		OrderByComparator<CPDefinitionLocalization> orderByComparator) {
-		int count = countByCPDefinitionPK(cpDefinitionPK);
+		int count = countByCPDefinitionId(CPDefinitionId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CPDefinitionLocalization> list = findByCPDefinitionPK(cpDefinitionPK,
+		List<CPDefinitionLocalization> list = findByCPDefinitionId(CPDefinitionId,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -396,17 +396,17 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
-	 * Returns the cp definition localizations before and after the current cp definition localization in the ordered set where cpDefinitionPK = &#63;.
+	 * Returns the cp definition localizations before and after the current cp definition localization in the ordered set where CPDefinitionId = &#63;.
 	 *
 	 * @param cpDefinitionLocalizationId the primary key of the current cp definition localization
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next cp definition localization
 	 * @throws NoSuchCPDefinitionLocalizationException if a cp definition localization with the primary key could not be found
 	 */
 	@Override
-	public CPDefinitionLocalization[] findByCPDefinitionPK_PrevAndNext(
-		long cpDefinitionLocalizationId, long cpDefinitionPK,
+	public CPDefinitionLocalization[] findByCPDefinitionId_PrevAndNext(
+		long cpDefinitionLocalizationId, long CPDefinitionId,
 		OrderByComparator<CPDefinitionLocalization> orderByComparator)
 		throws NoSuchCPDefinitionLocalizationException {
 		CPDefinitionLocalization cpDefinitionLocalization = findByPrimaryKey(cpDefinitionLocalizationId);
@@ -418,14 +418,14 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 			CPDefinitionLocalization[] array = new CPDefinitionLocalizationImpl[3];
 
-			array[0] = getByCPDefinitionPK_PrevAndNext(session,
-					cpDefinitionLocalization, cpDefinitionPK,
+			array[0] = getByCPDefinitionId_PrevAndNext(session,
+					cpDefinitionLocalization, CPDefinitionId,
 					orderByComparator, true);
 
 			array[1] = cpDefinitionLocalization;
 
-			array[2] = getByCPDefinitionPK_PrevAndNext(session,
-					cpDefinitionLocalization, cpDefinitionPK,
+			array[2] = getByCPDefinitionId_PrevAndNext(session,
+					cpDefinitionLocalization, CPDefinitionId,
 					orderByComparator, false);
 
 			return array;
@@ -438,9 +438,9 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 		}
 	}
 
-	protected CPDefinitionLocalization getByCPDefinitionPK_PrevAndNext(
+	protected CPDefinitionLocalization getByCPDefinitionId_PrevAndNext(
 		Session session, CPDefinitionLocalization cpDefinitionLocalization,
-		long cpDefinitionPK,
+		long CPDefinitionId,
 		OrderByComparator<CPDefinitionLocalization> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
@@ -456,7 +456,7 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 		query.append(_SQL_SELECT_CPDEFINITIONLOCALIZATION_WHERE);
 
-		query.append(_FINDER_COLUMN_CPDEFINITIONPK_CPDEFINITIONPK_2);
+		query.append(_FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -526,7 +526,7 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(cpDefinitionPK);
+		qPos.add(CPDefinitionId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(cpDefinitionLocalization);
@@ -547,29 +547,29 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
-	 * Removes all the cp definition localizations where cpDefinitionPK = &#63; from the database.
+	 * Removes all the cp definition localizations where CPDefinitionId = &#63; from the database.
 	 *
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 */
 	@Override
-	public void removeByCPDefinitionPK(long cpDefinitionPK) {
-		for (CPDefinitionLocalization cpDefinitionLocalization : findByCPDefinitionPK(
-				cpDefinitionPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+	public void removeByCPDefinitionId(long CPDefinitionId) {
+		for (CPDefinitionLocalization cpDefinitionLocalization : findByCPDefinitionId(
+				CPDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(cpDefinitionLocalization);
 		}
 	}
 
 	/**
-	 * Returns the number of cp definition localizations where cpDefinitionPK = &#63;.
+	 * Returns the number of cp definition localizations where CPDefinitionId = &#63;.
 	 *
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 * @return the number of matching cp definition localizations
 	 */
 	@Override
-	public int countByCPDefinitionPK(long cpDefinitionPK) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_CPDEFINITIONPK;
+	public int countByCPDefinitionId(long CPDefinitionId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CPDEFINITIONID;
 
-		Object[] finderArgs = new Object[] { cpDefinitionPK };
+		Object[] finderArgs = new Object[] { CPDefinitionId };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -578,7 +578,7 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 			query.append(_SQL_COUNT_CPDEFINITIONLOCALIZATION_WHERE);
 
-			query.append(_FINDER_COLUMN_CPDEFINITIONPK_CPDEFINITIONPK_2);
+			query.append(_FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2);
 
 			String sql = query.toString();
 
@@ -591,7 +591,7 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(cpDefinitionPK);
+				qPos.add(CPDefinitionId);
 
 				count = (Long)q.uniqueResult();
 
@@ -610,31 +610,35 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CPDEFINITIONPK_CPDEFINITIONPK_2 = "cpDefinitionLocalization.cpDefinitionPK = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_CPD_L = new FinderPath(CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
+	private static final String _FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2 = "cpDefinitionLocalization.CPDefinitionId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_CPDEFINITIONID_LANGUAGEID =
+		new FinderPath(CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionLocalizationModelImpl.FINDER_CACHE_ENABLED,
 			CPDefinitionLocalizationImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByCPD_L",
+			"fetchByCPDefinitionId_LanguageId",
 			new String[] { Long.class.getName(), String.class.getName() },
-			CPDefinitionLocalizationModelImpl.CPDEFINITIONPK_COLUMN_BITMASK |
+			CPDefinitionLocalizationModelImpl.CPDEFINITIONID_COLUMN_BITMASK |
 			CPDefinitionLocalizationModelImpl.LANGUAGEID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_CPD_L = new FinderPath(CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_CPDEFINITIONID_LANGUAGEID =
+		new FinderPath(CPDefinitionLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionLocalizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPD_L",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCPDefinitionId_LanguageId",
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the cp definition localization where cpDefinitionPK = &#63; and languageId = &#63; or throws a {@link NoSuchCPDefinitionLocalizationException} if it could not be found.
+	 * Returns the cp definition localization where CPDefinitionId = &#63; and languageId = &#63; or throws a {@link NoSuchCPDefinitionLocalizationException} if it could not be found.
 	 *
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 * @param languageId the language ID
 	 * @return the matching cp definition localization
 	 * @throws NoSuchCPDefinitionLocalizationException if a matching cp definition localization could not be found
 	 */
 	@Override
-	public CPDefinitionLocalization findByCPD_L(long cpDefinitionPK,
-		String languageId) throws NoSuchCPDefinitionLocalizationException {
-		CPDefinitionLocalization cpDefinitionLocalization = fetchByCPD_L(cpDefinitionPK,
+	public CPDefinitionLocalization findByCPDefinitionId_LanguageId(
+		long CPDefinitionId, String languageId)
+		throws NoSuchCPDefinitionLocalizationException {
+		CPDefinitionLocalization cpDefinitionLocalization = fetchByCPDefinitionId_LanguageId(CPDefinitionId,
 				languageId);
 
 		if (cpDefinitionLocalization == null) {
@@ -642,8 +646,8 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("cpDefinitionPK=");
-			msg.append(cpDefinitionPK);
+			msg.append("CPDefinitionId=");
+			msg.append(CPDefinitionId);
 
 			msg.append(", languageId=");
 			msg.append(languageId);
@@ -661,42 +665,42 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
-	 * Returns the cp definition localization where cpDefinitionPK = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the cp definition localization where CPDefinitionId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 * @param languageId the language ID
 	 * @return the matching cp definition localization, or <code>null</code> if a matching cp definition localization could not be found
 	 */
 	@Override
-	public CPDefinitionLocalization fetchByCPD_L(long cpDefinitionPK,
-		String languageId) {
-		return fetchByCPD_L(cpDefinitionPK, languageId, true);
+	public CPDefinitionLocalization fetchByCPDefinitionId_LanguageId(
+		long CPDefinitionId, String languageId) {
+		return fetchByCPDefinitionId_LanguageId(CPDefinitionId, languageId, true);
 	}
 
 	/**
-	 * Returns the cp definition localization where cpDefinitionPK = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the cp definition localization where CPDefinitionId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 * @param languageId the language ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching cp definition localization, or <code>null</code> if a matching cp definition localization could not be found
 	 */
 	@Override
-	public CPDefinitionLocalization fetchByCPD_L(long cpDefinitionPK,
-		String languageId, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { cpDefinitionPK, languageId };
+	public CPDefinitionLocalization fetchByCPDefinitionId_LanguageId(
+		long CPDefinitionId, String languageId, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { CPDefinitionId, languageId };
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_CPD_L,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_CPDEFINITIONID_LANGUAGEID,
 					finderArgs, this);
 		}
 
 		if (result instanceof CPDefinitionLocalization) {
 			CPDefinitionLocalization cpDefinitionLocalization = (CPDefinitionLocalization)result;
 
-			if ((cpDefinitionPK != cpDefinitionLocalization.getCpDefinitionPK()) ||
+			if ((CPDefinitionId != cpDefinitionLocalization.getCPDefinitionId()) ||
 					!Objects.equals(languageId,
 						cpDefinitionLocalization.getLanguageId())) {
 				result = null;
@@ -708,20 +712,20 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 			query.append(_SQL_SELECT_CPDEFINITIONLOCALIZATION_WHERE);
 
-			query.append(_FINDER_COLUMN_CPD_L_CPDEFINITIONPK_2);
+			query.append(_FINDER_COLUMN_CPDEFINITIONID_LANGUAGEID_CPDEFINITIONID_2);
 
 			boolean bindLanguageId = false;
 
 			if (languageId == null) {
-				query.append(_FINDER_COLUMN_CPD_L_LANGUAGEID_1);
+				query.append(_FINDER_COLUMN_CPDEFINITIONID_LANGUAGEID_LANGUAGEID_1);
 			}
 			else if (languageId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_CPD_L_LANGUAGEID_3);
+				query.append(_FINDER_COLUMN_CPDEFINITIONID_LANGUAGEID_LANGUAGEID_3);
 			}
 			else {
 				bindLanguageId = true;
 
-				query.append(_FINDER_COLUMN_CPD_L_LANGUAGEID_2);
+				query.append(_FINDER_COLUMN_CPDEFINITIONID_LANGUAGEID_LANGUAGEID_2);
 			}
 
 			String sql = query.toString();
@@ -735,7 +739,7 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(cpDefinitionPK);
+				qPos.add(CPDefinitionId);
 
 				if (bindLanguageId) {
 					qPos.add(languageId);
@@ -744,7 +748,7 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 				List<CPDefinitionLocalization> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_CPD_L,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_CPDEFINITIONID_LANGUAGEID,
 						finderArgs, list);
 				}
 				else {
@@ -754,17 +758,18 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 					cacheResult(cpDefinitionLocalization);
 
-					if ((cpDefinitionLocalization.getCpDefinitionPK() != cpDefinitionPK) ||
+					if ((cpDefinitionLocalization.getCPDefinitionId() != CPDefinitionId) ||
 							(cpDefinitionLocalization.getLanguageId() == null) ||
 							!cpDefinitionLocalization.getLanguageId()
 														 .equals(languageId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_CPD_L,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_CPDEFINITIONID_LANGUAGEID,
 							finderArgs, cpDefinitionLocalization);
 					}
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_CPD_L, finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_CPDEFINITIONID_LANGUAGEID,
+					finderArgs);
 
 				throw processException(e);
 			}
@@ -782,33 +787,35 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
-	 * Removes the cp definition localization where cpDefinitionPK = &#63; and languageId = &#63; from the database.
+	 * Removes the cp definition localization where CPDefinitionId = &#63; and languageId = &#63; from the database.
 	 *
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 * @param languageId the language ID
 	 * @return the cp definition localization that was removed
 	 */
 	@Override
-	public CPDefinitionLocalization removeByCPD_L(long cpDefinitionPK,
-		String languageId) throws NoSuchCPDefinitionLocalizationException {
-		CPDefinitionLocalization cpDefinitionLocalization = findByCPD_L(cpDefinitionPK,
+	public CPDefinitionLocalization removeByCPDefinitionId_LanguageId(
+		long CPDefinitionId, String languageId)
+		throws NoSuchCPDefinitionLocalizationException {
+		CPDefinitionLocalization cpDefinitionLocalization = findByCPDefinitionId_LanguageId(CPDefinitionId,
 				languageId);
 
 		return remove(cpDefinitionLocalization);
 	}
 
 	/**
-	 * Returns the number of cp definition localizations where cpDefinitionPK = &#63; and languageId = &#63;.
+	 * Returns the number of cp definition localizations where CPDefinitionId = &#63; and languageId = &#63;.
 	 *
-	 * @param cpDefinitionPK the cp definition pk
+	 * @param CPDefinitionId the cp definition ID
 	 * @param languageId the language ID
 	 * @return the number of matching cp definition localizations
 	 */
 	@Override
-	public int countByCPD_L(long cpDefinitionPK, String languageId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_CPD_L;
+	public int countByCPDefinitionId_LanguageId(long CPDefinitionId,
+		String languageId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CPDEFINITIONID_LANGUAGEID;
 
-		Object[] finderArgs = new Object[] { cpDefinitionPK, languageId };
+		Object[] finderArgs = new Object[] { CPDefinitionId, languageId };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -817,20 +824,20 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 			query.append(_SQL_COUNT_CPDEFINITIONLOCALIZATION_WHERE);
 
-			query.append(_FINDER_COLUMN_CPD_L_CPDEFINITIONPK_2);
+			query.append(_FINDER_COLUMN_CPDEFINITIONID_LANGUAGEID_CPDEFINITIONID_2);
 
 			boolean bindLanguageId = false;
 
 			if (languageId == null) {
-				query.append(_FINDER_COLUMN_CPD_L_LANGUAGEID_1);
+				query.append(_FINDER_COLUMN_CPDEFINITIONID_LANGUAGEID_LANGUAGEID_1);
 			}
 			else if (languageId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_CPD_L_LANGUAGEID_3);
+				query.append(_FINDER_COLUMN_CPDEFINITIONID_LANGUAGEID_LANGUAGEID_3);
 			}
 			else {
 				bindLanguageId = true;
 
-				query.append(_FINDER_COLUMN_CPD_L_LANGUAGEID_2);
+				query.append(_FINDER_COLUMN_CPDEFINITIONID_LANGUAGEID_LANGUAGEID_2);
 			}
 
 			String sql = query.toString();
@@ -844,7 +851,7 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(cpDefinitionPK);
+				qPos.add(CPDefinitionId);
 
 				if (bindLanguageId) {
 					qPos.add(languageId);
@@ -867,10 +874,14 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CPD_L_CPDEFINITIONPK_2 = "cpDefinitionLocalization.cpDefinitionPK = ? AND ";
-	private static final String _FINDER_COLUMN_CPD_L_LANGUAGEID_1 = "cpDefinitionLocalization.languageId IS NULL";
-	private static final String _FINDER_COLUMN_CPD_L_LANGUAGEID_2 = "cpDefinitionLocalization.languageId = ?";
-	private static final String _FINDER_COLUMN_CPD_L_LANGUAGEID_3 = "(cpDefinitionLocalization.languageId IS NULL OR cpDefinitionLocalization.languageId = '')";
+	private static final String _FINDER_COLUMN_CPDEFINITIONID_LANGUAGEID_CPDEFINITIONID_2 =
+		"cpDefinitionLocalization.CPDefinitionId = ? AND ";
+	private static final String _FINDER_COLUMN_CPDEFINITIONID_LANGUAGEID_LANGUAGEID_1 =
+		"cpDefinitionLocalization.languageId IS NULL";
+	private static final String _FINDER_COLUMN_CPDEFINITIONID_LANGUAGEID_LANGUAGEID_2 =
+		"cpDefinitionLocalization.languageId = ?";
+	private static final String _FINDER_COLUMN_CPDEFINITIONID_LANGUAGEID_LANGUAGEID_3 =
+		"(cpDefinitionLocalization.languageId IS NULL OR cpDefinitionLocalization.languageId = '')";
 
 	public CPDefinitionLocalizationPersistenceImpl() {
 		setModelClass(CPDefinitionLocalization.class);
@@ -887,9 +898,9 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 			CPDefinitionLocalizationImpl.class,
 			cpDefinitionLocalization.getPrimaryKey(), cpDefinitionLocalization);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_CPD_L,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_CPDEFINITIONID_LANGUAGEID,
 			new Object[] {
-				cpDefinitionLocalization.getCpDefinitionPK(),
+				cpDefinitionLocalization.getCPDefinitionId(),
 				cpDefinitionLocalization.getLanguageId()
 			}, cpDefinitionLocalization);
 
@@ -972,14 +983,14 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 	protected void cacheUniqueFindersCache(
 		CPDefinitionLocalizationModelImpl cpDefinitionLocalizationModelImpl) {
 		Object[] args = new Object[] {
-				cpDefinitionLocalizationModelImpl.getCpDefinitionPK(),
+				cpDefinitionLocalizationModelImpl.getCPDefinitionId(),
 				cpDefinitionLocalizationModelImpl.getLanguageId()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_CPD_L, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_CPD_L, args,
-			cpDefinitionLocalizationModelImpl, false);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_CPDEFINITIONID_LANGUAGEID,
+			args, Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_CPDEFINITIONID_LANGUAGEID,
+			args, cpDefinitionLocalizationModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -987,23 +998,27 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 		boolean clearCurrent) {
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					cpDefinitionLocalizationModelImpl.getCpDefinitionPK(),
+					cpDefinitionLocalizationModelImpl.getCPDefinitionId(),
 					cpDefinitionLocalizationModelImpl.getLanguageId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_CPD_L, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_CPD_L, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_CPDEFINITIONID_LANGUAGEID,
+				args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_CPDEFINITIONID_LANGUAGEID,
+				args);
 		}
 
 		if ((cpDefinitionLocalizationModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_CPD_L.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_CPDEFINITIONID_LANGUAGEID.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
-					cpDefinitionLocalizationModelImpl.getOriginalCpDefinitionPK(),
+					cpDefinitionLocalizationModelImpl.getOriginalCPDefinitionId(),
 					cpDefinitionLocalizationModelImpl.getOriginalLanguageId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_CPD_L, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_CPD_L, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_CPDEFINITIONID_LANGUAGEID,
+				args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_CPDEFINITIONID_LANGUAGEID,
+				args);
 		}
 	}
 
@@ -1149,11 +1164,11 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 		else
 		 if (isNew) {
 			Object[] args = new Object[] {
-					cpDefinitionLocalizationModelImpl.getCpDefinitionPK()
+					cpDefinitionLocalizationModelImpl.getCPDefinitionId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_CPDEFINITIONPK, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONPK,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_CPDEFINITIONID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONID,
 				args);
 
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
@@ -1163,23 +1178,23 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 
 		else {
 			if ((cpDefinitionLocalizationModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONPK.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						cpDefinitionLocalizationModelImpl.getOriginalCpDefinitionPK()
+						cpDefinitionLocalizationModelImpl.getOriginalCPDefinitionId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_CPDEFINITIONPK,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CPDEFINITIONID,
 					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONPK,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONID,
 					args);
 
 				args = new Object[] {
-						cpDefinitionLocalizationModelImpl.getCpDefinitionPK()
+						cpDefinitionLocalizationModelImpl.getCPDefinitionId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_CPDEFINITIONPK,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CPDEFINITIONID,
 					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONPK,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPDEFINITIONID,
 					args);
 			}
 		}
@@ -1211,7 +1226,7 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 		cpDefinitionLocalizationImpl.setMvccVersion(cpDefinitionLocalization.getMvccVersion());
 		cpDefinitionLocalizationImpl.setCpDefinitionLocalizationId(cpDefinitionLocalization.getCpDefinitionLocalizationId());
 		cpDefinitionLocalizationImpl.setCompanyId(cpDefinitionLocalization.getCompanyId());
-		cpDefinitionLocalizationImpl.setCpDefinitionPK(cpDefinitionLocalization.getCpDefinitionPK());
+		cpDefinitionLocalizationImpl.setCPDefinitionId(cpDefinitionLocalization.getCPDefinitionId());
 		cpDefinitionLocalizationImpl.setLanguageId(cpDefinitionLocalization.getLanguageId());
 		cpDefinitionLocalizationImpl.setTitle(cpDefinitionLocalization.getTitle());
 		cpDefinitionLocalizationImpl.setUrlTitle(cpDefinitionLocalization.getUrlTitle());

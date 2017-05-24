@@ -46,7 +46,7 @@ create table CPDefinitionLocalization (
 	mvccVersion LONG default 0 not null,
 	cpDefinitionLocalizationId LONG not null primary key,
 	companyId LONG,
-	cpDefinitionPK LONG,
+	CPDefinitionId LONG,
 	languageId VARCHAR(75) null,
 	title VARCHAR(75) null,
 	urlTitle VARCHAR(75) null,

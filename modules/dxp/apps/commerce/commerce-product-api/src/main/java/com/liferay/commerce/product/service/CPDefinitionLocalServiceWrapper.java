@@ -450,20 +450,20 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 
 	@Override
 	public java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionDescriptionMap(
-		long cpDefinitionPK) {
-		return _cpDefinitionLocalService.getCPDefinitionDescriptionMap(cpDefinitionPK);
+		long cpDefinitionId) {
+		return _cpDefinitionLocalService.getCPDefinitionDescriptionMap(cpDefinitionId);
 	}
 
 	@Override
 	public java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionShortDescriptionMap(
-		long cpDefinitionPK) {
-		return _cpDefinitionLocalService.getCPDefinitionShortDescriptionMap(cpDefinitionPK);
+		long cpDefinitionId) {
+		return _cpDefinitionLocalService.getCPDefinitionShortDescriptionMap(cpDefinitionId);
 	}
 
 	@Override
 	public java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionTitleMap(
-		long cpDefinitionPK) {
-		return _cpDefinitionLocalService.getCPDefinitionTitleMap(cpDefinitionPK);
+		long cpDefinitionId) {
+		return _cpDefinitionLocalService.getCPDefinitionTitleMap(cpDefinitionId);
 	}
 
 	/**

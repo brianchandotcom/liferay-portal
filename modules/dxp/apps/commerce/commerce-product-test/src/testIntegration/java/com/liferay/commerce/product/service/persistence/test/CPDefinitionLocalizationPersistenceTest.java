@@ -125,7 +125,7 @@ public class CPDefinitionLocalizationPersistenceTest {
 
 		newCPDefinitionLocalization.setCompanyId(RandomTestUtil.nextLong());
 
-		newCPDefinitionLocalization.setCpDefinitionPK(RandomTestUtil.nextLong());
+		newCPDefinitionLocalization.setCPDefinitionId(RandomTestUtil.nextLong());
 
 		newCPDefinitionLocalization.setLanguageId(RandomTestUtil.randomString());
 
@@ -148,8 +148,8 @@ public class CPDefinitionLocalizationPersistenceTest {
 			newCPDefinitionLocalization.getCpDefinitionLocalizationId());
 		Assert.assertEquals(existingCPDefinitionLocalization.getCompanyId(),
 			newCPDefinitionLocalization.getCompanyId());
-		Assert.assertEquals(existingCPDefinitionLocalization.getCpDefinitionPK(),
-			newCPDefinitionLocalization.getCpDefinitionPK());
+		Assert.assertEquals(existingCPDefinitionLocalization.getCPDefinitionId(),
+			newCPDefinitionLocalization.getCPDefinitionId());
 		Assert.assertEquals(existingCPDefinitionLocalization.getLanguageId(),
 			newCPDefinitionLocalization.getLanguageId());
 		Assert.assertEquals(existingCPDefinitionLocalization.getTitle(),
@@ -163,19 +163,21 @@ public class CPDefinitionLocalizationPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCPDefinitionPK() throws Exception {
-		_persistence.countByCPDefinitionPK(RandomTestUtil.nextLong());
+	public void testCountByCPDefinitionId() throws Exception {
+		_persistence.countByCPDefinitionId(RandomTestUtil.nextLong());
 
-		_persistence.countByCPDefinitionPK(0L);
+		_persistence.countByCPDefinitionId(0L);
 	}
 
 	@Test
-	public void testCountByCPD_L() throws Exception {
-		_persistence.countByCPD_L(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByCPDefinitionId_LanguageId()
+		throws Exception {
+		_persistence.countByCPDefinitionId_LanguageId(RandomTestUtil.nextLong(),
+			StringPool.BLANK);
 
-		_persistence.countByCPD_L(0L, StringPool.NULL);
+		_persistence.countByCPDefinitionId_LanguageId(0L, StringPool.NULL);
 
-		_persistence.countByCPD_L(0L, (String)null);
+		_persistence.countByCPDefinitionId_LanguageId(0L, (String)null);
 	}
 
 	@Test
@@ -204,7 +206,7 @@ public class CPDefinitionLocalizationPersistenceTest {
 	protected OrderByComparator<CPDefinitionLocalization> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CPDefinitionLocalization",
 			"mvccVersion", true, "cpDefinitionLocalizationId", true,
-			"companyId", true, "cpDefinitionPK", true, "languageId", true,
+			"companyId", true, "CPDefinitionId", true, "languageId", true,
 			"title", true, "urlTitle", true, "shortDescription", true);
 	}
 
@@ -401,9 +403,9 @@ public class CPDefinitionLocalizationPersistenceTest {
 		CPDefinitionLocalization existingCPDefinitionLocalization = _persistence.findByPrimaryKey(newCPDefinitionLocalization.getPrimaryKey());
 
 		Assert.assertEquals(Long.valueOf(
-				existingCPDefinitionLocalization.getCpDefinitionPK()),
+				existingCPDefinitionLocalization.getCPDefinitionId()),
 			ReflectionTestUtil.<Long>invoke(existingCPDefinitionLocalization,
-				"getOriginalCpDefinitionPK", new Class<?>[0]));
+				"getOriginalCPDefinitionId", new Class<?>[0]));
 		Assert.assertTrue(Objects.equals(
 				existingCPDefinitionLocalization.getLanguageId(),
 				ReflectionTestUtil.invoke(existingCPDefinitionLocalization,
@@ -420,7 +422,7 @@ public class CPDefinitionLocalizationPersistenceTest {
 
 		cpDefinitionLocalization.setCompanyId(RandomTestUtil.nextLong());
 
-		cpDefinitionLocalization.setCpDefinitionPK(RandomTestUtil.nextLong());
+		cpDefinitionLocalization.setCPDefinitionId(RandomTestUtil.nextLong());
 
 		cpDefinitionLocalization.setLanguageId(RandomTestUtil.randomString());
 

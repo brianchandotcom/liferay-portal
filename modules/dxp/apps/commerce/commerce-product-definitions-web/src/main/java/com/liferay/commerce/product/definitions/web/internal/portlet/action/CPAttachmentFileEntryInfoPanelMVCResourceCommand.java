@@ -49,7 +49,7 @@ public class CPAttachmentFileEntryInfoPanelMVCResourceCommand
 		throws Exception {
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
-			_actionHelper.getCpAttachmentFileEntries(resourceRequest);
+			_actionHelper.getCPAttachmentFileEntries(resourceRequest);
 
 		resourceRequest.setAttribute(
 			CPWebKeys.CP_ATTACHMENT_FILE_ENTRIES, cpAttachmentFileEntries);

@@ -45,26 +45,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ActionHelper.class)
 public class ActionHelper {
 
-	public List<CPAttachmentFileEntry> getCpAttachmentFileEntries(
-			ResourceRequest resourceRequest)
-		throws PortalException {
-
-		List<CPAttachmentFileEntry> cpAttachmentFileEntries = new ArrayList<>();
-
-		long[] cpAttachmentFileEntryIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIds");
-
-		for (long cpAttachmentFileEntryId : cpAttachmentFileEntryIds) {
-			CPAttachmentFileEntry cpAttachmentFileEntry =
-				_cpAttachmentFileEntryService.getCPAttachmentFileEntry(
-					cpAttachmentFileEntryId);
-
-			cpAttachmentFileEntries.add(cpAttachmentFileEntry);
-		}
-
-		return cpAttachmentFileEntries;
-	}
-
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 			ResourceRequest resourceRequest)
 		throws PortalException {

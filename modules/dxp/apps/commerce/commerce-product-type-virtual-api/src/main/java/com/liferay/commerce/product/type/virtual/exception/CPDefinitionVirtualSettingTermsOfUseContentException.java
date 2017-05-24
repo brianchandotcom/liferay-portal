@@ -21,23 +21,23 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Marco Leo
  */
 @ProviderType
-public class CPDefinitionVirtualSettingTermsOfUseRequiredException
+public class CPDefinitionVirtualSettingTermsOfUseContentException
 	extends PortalException {
 
-	public CPDefinitionVirtualSettingTermsOfUseRequiredException() {
+	public CPDefinitionVirtualSettingTermsOfUseContentException() {
 	}
 
-	public CPDefinitionVirtualSettingTermsOfUseRequiredException(String msg) {
+	public CPDefinitionVirtualSettingTermsOfUseContentException(String msg) {
 		super(msg);
 	}
 
-	public CPDefinitionVirtualSettingTermsOfUseRequiredException(
+	public CPDefinitionVirtualSettingTermsOfUseContentException(
 		String msg, Throwable cause) {
 
 		super(msg, cause);
 	}
 
-	public CPDefinitionVirtualSettingTermsOfUseRequiredException(
+	public CPDefinitionVirtualSettingTermsOfUseContentException(
 		Throwable cause) {
 
 		super(cause);

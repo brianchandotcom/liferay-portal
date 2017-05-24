@@ -78,11 +78,11 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting);
 
 	public CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
-		long cpDefinitionId, boolean useFileEntry, long fileEntryId,
+		long cpDefinitionId, boolean useUrl, long fileEntryId,
 		java.lang.String url, java.lang.String activationStatus, long duration,
-		int maxUsages, boolean useSample, boolean useSampleFileEntry,
+		int maxUsages, boolean useSample, boolean useSampleUrl,
 		long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired,
+		boolean termsOfUseRequired, boolean useWebContent,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK, ServiceContext serviceContext)
 		throws PortalException;
@@ -166,11 +166,11 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting);
 
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId, boolean useFileEntry,
-		long fileEntryId, java.lang.String url,
-		java.lang.String activationStatus, long duration, int maxUsages,
-		boolean useSample, boolean useSampleFileEntry, long sampleFileEntryId,
-		java.lang.String sampleUrl, boolean termsOfUseRequired,
+		long cpDefinitionVirtualSettingId, boolean useUrl, long fileEntryId,
+		java.lang.String url, java.lang.String activationStatus, long duration,
+		int maxUsages, boolean useSample, boolean useSampleUrl,
+		long sampleFileEntryId, java.lang.String sampleUrl,
+		boolean termsOfUseRequired, boolean useWebContent,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK, ServiceContext serviceContext)
 		throws PortalException;

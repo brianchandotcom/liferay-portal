@@ -70,11 +70,11 @@ import java.util.Map;
 @ProviderType
 public class CPDefinitionVirtualSettingServiceSoap {
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettingSoap addCPDefinitionVirtualSetting(
-		long cpDefinitionId, boolean useFileEntry, long fileEntryId,
+		long cpDefinitionId, boolean useUrl, long fileEntryId,
 		java.lang.String url, java.lang.String activationStatus, long duration,
-		int maxUsages, boolean useSample, boolean useSampleFileEntry,
+		int maxUsages, boolean useSample, boolean useSampleUrl,
 		long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired,
+		boolean termsOfUseRequired, boolean useWebContent,
 		java.lang.String[] termsOfUseContentMapLanguageIds,
 		java.lang.String[] termsOfUseContentMapValues,
 		long termsOfUseJournalArticleResourcePK,
@@ -86,9 +86,9 @@ public class CPDefinitionVirtualSettingServiceSoap {
 
 			com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting returnValue =
 				CPDefinitionVirtualSettingServiceUtil.addCPDefinitionVirtualSetting(cpDefinitionId,
-					useFileEntry, fileEntryId, url, activationStatus, duration,
-					maxUsages, useSample, useSampleFileEntry,
-					sampleFileEntryId, sampleUrl, termsOfUseRequired,
+					useUrl, fileEntryId, url, activationStatus, duration,
+					maxUsages, useSample, useSampleUrl, sampleFileEntryId,
+					sampleUrl, termsOfUseRequired, useWebContent,
 					termsOfUseContentMap, termsOfUseJournalArticleResourcePK,
 					serviceContext);
 
@@ -134,11 +134,11 @@ public class CPDefinitionVirtualSettingServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettingSoap updateCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId, boolean useFileEntry,
-		long fileEntryId, java.lang.String url,
-		java.lang.String activationStatus, long duration, int maxUsages,
-		boolean useSample, boolean useSampleFileEntry, long sampleFileEntryId,
-		java.lang.String sampleUrl, boolean termsOfUseRequired,
+		long cpDefinitionVirtualSettingId, boolean useUrl, long fileEntryId,
+		java.lang.String url, java.lang.String activationStatus, long duration,
+		int maxUsages, boolean useSample, boolean useSampleUrl,
+		long sampleFileEntryId, java.lang.String sampleUrl,
+		boolean termsOfUseRequired, boolean useWebContent,
 		java.lang.String[] termsOfUseContentMapLanguageIds,
 		java.lang.String[] termsOfUseContentMapValues,
 		long termsOfUseJournalArticleResourcePK,
@@ -150,9 +150,9 @@ public class CPDefinitionVirtualSettingServiceSoap {
 
 			com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting returnValue =
 				CPDefinitionVirtualSettingServiceUtil.updateCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId,
-					useFileEntry, fileEntryId, url, activationStatus, duration,
-					maxUsages, useSample, useSampleFileEntry,
-					sampleFileEntryId, sampleUrl, termsOfUseRequired,
+					useUrl, fileEntryId, url, activationStatus, duration,
+					maxUsages, useSample, useSampleUrl, sampleFileEntryId,
+					sampleUrl, termsOfUseRequired, useWebContent,
 					termsOfUseContentMap, termsOfUseJournalArticleResourcePK,
 					serviceContext);
 

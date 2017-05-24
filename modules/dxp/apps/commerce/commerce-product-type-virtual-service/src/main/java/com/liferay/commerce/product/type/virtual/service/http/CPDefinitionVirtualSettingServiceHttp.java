@@ -56,11 +56,12 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CPDefinitionVirtualSettingServiceHttp {
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
-		HttpPrincipal httpPrincipal, long cpDefinitionId, boolean useFileEntry,
+		HttpPrincipal httpPrincipal, long cpDefinitionId, boolean useUrl,
 		long fileEntryId, java.lang.String url,
 		java.lang.String activationStatus, long duration, int maxUsages,
-		boolean useSample, boolean useSampleFileEntry, long sampleFileEntryId,
+		boolean useSample, boolean useSampleUrl, long sampleFileEntryId,
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
+		boolean useWebContent,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -71,10 +72,10 @@ public class CPDefinitionVirtualSettingServiceHttp {
 					_addCPDefinitionVirtualSettingParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId, useFileEntry, fileEntryId, url,
-					activationStatus, duration, maxUsages, useSample,
-					useSampleFileEntry, sampleFileEntryId, sampleUrl,
-					termsOfUseRequired, termsOfUseContentMap,
+					cpDefinitionId, useUrl, fileEntryId, url, activationStatus,
+					duration, maxUsages, useSample, useSampleUrl,
+					sampleFileEntryId, sampleUrl, termsOfUseRequired,
+					useWebContent, termsOfUseContentMap,
 					termsOfUseJournalArticleResourcePK, serviceContext);
 
 			Object returnObj = null;
@@ -168,10 +169,11 @@ public class CPDefinitionVirtualSettingServiceHttp {
 
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 		HttpPrincipal httpPrincipal, long cpDefinitionVirtualSettingId,
-		boolean useFileEntry, long fileEntryId, java.lang.String url,
+		boolean useUrl, long fileEntryId, java.lang.String url,
 		java.lang.String activationStatus, long duration, int maxUsages,
-		boolean useSample, boolean useSampleFileEntry, long sampleFileEntryId,
+		boolean useSample, boolean useSampleUrl, long sampleFileEntryId,
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
+		boolean useWebContent,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -182,10 +184,10 @@ public class CPDefinitionVirtualSettingServiceHttp {
 					_updateCPDefinitionVirtualSettingParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionVirtualSettingId, useFileEntry, fileEntryId,
-					url, activationStatus, duration, maxUsages, useSample,
-					useSampleFileEntry, sampleFileEntryId, sampleUrl,
-					termsOfUseRequired, termsOfUseContentMap,
+					cpDefinitionVirtualSettingId, useUrl, fileEntryId, url,
+					activationStatus, duration, maxUsages, useSample,
+					useSampleUrl, sampleFileEntryId, sampleUrl,
+					termsOfUseRequired, useWebContent, termsOfUseContentMap,
 					termsOfUseJournalArticleResourcePK, serviceContext);
 
 			Object returnObj = null;
@@ -216,7 +218,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 			long.class, boolean.class, long.class, java.lang.String.class,
 			java.lang.String.class, long.class, int.class, boolean.class,
 			boolean.class, long.class, java.lang.String.class, boolean.class,
-			java.util.Map.class, long.class,
+			boolean.class, java.util.Map.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPDefinitionVirtualSettingParameterTypes1 =
@@ -230,7 +232,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 			long.class, boolean.class, long.class, java.lang.String.class,
 			java.lang.String.class, long.class, int.class, boolean.class,
 			boolean.class, long.class, java.lang.String.class, boolean.class,
-			java.util.Map.class, long.class,
+			boolean.class, java.util.Map.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

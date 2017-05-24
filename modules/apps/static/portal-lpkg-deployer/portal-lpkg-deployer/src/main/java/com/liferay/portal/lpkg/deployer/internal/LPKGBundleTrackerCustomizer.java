@@ -92,9 +92,7 @@ public class LPKGBundleTrackerCustomizer
 
 	@Override
 	public List<Bundle> addingBundle(Bundle bundle, BundleEvent bundleEvent) {
-		URL url = bundle.getEntry(_MARKER_FILE);
-
-		if (url != null) {
+		if (bundle.getEntry(_MARKER_FILE) != null) {
 			try {
 				bundle.uninstall();
 			}
@@ -105,20 +103,16 @@ public class LPKGBundleTrackerCustomizer
 			return null;
 		}
 
-		url = bundle.getEntry("liferay-marketplace.properties");
+		try {
+			Properties properties = _readMarketplaceProperties(bundle);
 
-		if (url == null) {
-			return null;
-		}
+			if (properties == null) {
+				return null;
+			}
 
-		try (InputStream inputStream1 = url.openStream()) {
-			Properties properties = new Properties();
+			if (_outdatedRemoteAppIds.contains(
+					properties.getProperty("remote-app-id"))) {
 
-			properties.load(inputStream1);
-
-			String remoteAppId = properties.getProperty("remote-app-id");
-
-			if (_outdatedRemoteAppIds.contains(remoteAppId)) {
 				_processOutdatedBundle(bundle);
 
 				return null;
@@ -133,17 +127,10 @@ public class LPKGBundleTrackerCustomizer
 					StringUtil.split(supersedesRemoteAppIds, StringPool.COMMA));
 
 				for (Bundle installedBundle : _bundleContext.getBundles()) {
-					url = installedBundle.getEntry(
-						"liferay-marketplace.properties");
+					properties = _readMarketplaceProperties(installedBundle);
 
-					if (url == null) {
+					if (properties == null) {
 						continue;
-					}
-
-					properties = new Properties();
-
-					try (InputStream inputStream2 = url.openStream()) {
-						properties.load(inputStream2);
 					}
 
 					if (_outdatedRemoteAppIds.contains(
@@ -175,7 +162,7 @@ public class LPKGBundleTrackerCustomizer
 
 			if (enumeration != null) {
 				while (enumeration.hasMoreElements()) {
-					url = enumeration.nextElement();
+					URL url = enumeration.nextElement();
 
 					if (_checkOverridden(symbolicName, url)) {
 						continue;
@@ -206,7 +193,7 @@ public class LPKGBundleTrackerCustomizer
 			}
 
 			while (enumeration.hasMoreElements()) {
-				url = enumeration.nextElement();
+				URL url = enumeration.nextElement();
 
 				if (_checkOverridden(symbolicName, url)) {
 					continue;
@@ -300,6 +287,24 @@ public class LPKGBundleTrackerCustomizer
 						" in response to uninstallation of " + bundle,
 					be);
 			}
+		}
+	}
+
+	private static Properties _readMarketplaceProperties(Bundle bundle)
+		throws IOException {
+
+		URL url = bundle.getEntry("liferay-marketplace.properties");
+
+		if (url == null) {
+			return null;
+		}
+
+		try (InputStream in = url.openStream()) {
+			Properties properties = new Properties();
+
+			properties.load(in);
+
+			return properties;
 		}
 	}
 

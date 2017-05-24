@@ -882,106 +882,102 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateSpringMVCPortlet() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle("spring-mvc-portlet", "foo");
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"spring-mvc-portlet", "foo");
 
-		_testExists(
-				gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
-		_testExists(
-				gradleProjectDir, "src/main/webapp/WEB-INF/jsp/update.jsp");
-		_testExists(
-				gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/update.jsp");
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
 
 		_testContains(
-				gradleProjectDir, "src/main/java/foo/portlet/FooPortletViewController.java",
-				"public class FooPortletViewController {");
+			gradleProjectDir,
+			"src/main/java/foo/portlet/FooPortletViewController.java",
+			"public class FooPortletViewController {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-				"spring-mvc-portlet", "foo", "-DclassName=Foo", "-Dpackage=foo");
+			"spring-mvc-portlet", "foo", "-DclassName=Foo", "-Dpackage=foo");
 
 		_buildProjects(
-				gradleProjectDir, mavenProjectDir, "build/libs/foo-1.0.0.war",
-				"target/foo-1.0.0.war");
+			gradleProjectDir, mavenProjectDir, "build/libs/foo-1.0.0.war",
+			"target/foo-1.0.0.war");
 	}
 
 	@Test
-	public void testBuildTemplateSpringMVCPortletWithPackage() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-				"spring-mvc-portlet", "foo", "--package-name", "com.liferay.test");
+	public void testBuildTemplateSpringMVCPortletWithPackage()
+		throws Exception {
 
-		_testExists(
-				gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
-		_testExists(
-				gradleProjectDir, "src/main/webapp/WEB-INF/jsp/update.jsp");
-		_testExists(
-				gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"spring-mvc-portlet", "foo", "--package-name", "com.liferay.test");
+
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/update.jsp");
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
 
 		_testContains(
-				gradleProjectDir,
-				"src/main/java/com/liferay/test/portlet/FooPortletViewController.java",
-				"public class FooPortletViewController {");
+			gradleProjectDir,
+			"src/main/java/com/liferay/test/portlet" +
+				"/FooPortletViewController.java",
+			"public class FooPortletViewController {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-				"spring-mvc-portlet", "foo", "-DclassName=Foo",
-				"-Dpackage=com.liferay.test");
+			"spring-mvc-portlet", "foo", "-DclassName=Foo",
+			"-Dpackage=com.liferay.test");
 
 		_buildProjects(
-				gradleProjectDir, mavenProjectDir,
-				"build/libs/com.liferay.test-1.0.0.war", "target/foo-1.0.0.war");
+			gradleProjectDir, mavenProjectDir,
+			"build/libs/com.liferay.test-1.0.0.war", "target/foo-1.0.0.war");
 	}
 
 	@Test
-	public void testBuildTemplateSpringMVCPortletWithPortletName() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-				"spring-mvc-portlet", "portlet");
+	public void testBuildTemplateSpringMVCPortletWithPortletName()
+		throws Exception {
 
-		_testExists(
-				gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
-		_testExists(
-				gradleProjectDir, "src/main/webapp/WEB-INF/jsp/update.jsp");
-		_testExists(
-				gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"spring-mvc-portlet", "portlet");
+
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/update.jsp");
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
 
 		_testContains(
-				gradleProjectDir,
-				"src/main/java/portlet/portlet/PortletPortletViewController.java",
-				"public class PortletPortletViewController {");
+			gradleProjectDir,
+			"src/main/java/portlet/portlet/PortletPortletViewController.java",
+			"public class PortletPortletViewController {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-				"spring-mvc-portlet", "portlet", "-DclassName=Portlet",
-				"-Dpackage=portlet");
+			"spring-mvc-portlet", "portlet", "-DclassName=Portlet",
+			"-Dpackage=portlet");
 
 		_buildProjects(
-				gradleProjectDir, mavenProjectDir, "build/libs/portlet-1.0.0.war",
-				"target/portlet-1.0.0.war");
+			gradleProjectDir, mavenProjectDir, "build/libs/portlet-1.0.0.war",
+			"target/portlet-1.0.0.war");
 	}
 
 	@Test
 	public void testBuildTemplateSpringMVCPortletWithPortletSuffix()
-			throws Exception {
+		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-				"spring-mvc-portlet", "portlet-portlet");
+			"spring-mvc-portlet", "portlet-portlet");
 
-		_testExists(
-				gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
-		_testExists(
-				gradleProjectDir, "src/main/webapp/WEB-INF/jsp/update.jsp");
-		_testExists(
-				gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/update.jsp");
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
 
 		_testContains(
-				gradleProjectDir,
-				"src/main/java/portlet/portlet/portlet/PortletPortletViewController.java",
-				"public class PortletPortletViewController {");
+			gradleProjectDir,
+			"src/main/java/portlet/portlet/portlet" +
+				"/PortletPortletViewController.java",
+			"public class PortletPortletViewController {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-				"spring-mvc-portlet", "portlet-portlet", "-DclassName=Portlet",
-				"-Dpackage=portlet.portlet");
+			"spring-mvc-portlet", "portlet-portlet", "-DclassName=Portlet",
+			"-Dpackage=portlet.portlet");
 
 		_buildProjects(
-				gradleProjectDir, mavenProjectDir,
-				"build/libs/portlet.portlet-1.0.0.war",
-				"target/portlet-portlet-1.0.0.war");
+			gradleProjectDir, mavenProjectDir,
+			"build/libs/portlet.portlet-1.0.0.war",
+			"target/portlet-portlet-1.0.0.war");
 	}
 
 	@Test

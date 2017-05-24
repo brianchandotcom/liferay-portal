@@ -67,11 +67,11 @@
 
 	<command name="AssertCatalogEntriesSearchResultsNotInTrashBin" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
+			<var name="baseSku" value="ProductSKU" />
+			<var name="productLongDescription" value="Product_Long_Description_1" />
 			<var name="productName" value="Product_Name_1" />
 			<var name="productShortDescription" value="Product_Short_Description_1" />
 			<var name="productTitle" value="Product_Title_1" />
-			<var name="baseSku" value="ProductSKU" />
-			<var name="productLongDescription" value="Product_Long_Description_1" />
 		</execute>
 
 		<execute macro="CommerceNavigator#gotoSitesCommerce">

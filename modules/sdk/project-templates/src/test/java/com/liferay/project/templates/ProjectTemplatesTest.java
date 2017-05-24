@@ -886,7 +886,6 @@ public class ProjectTemplatesTest {
 			"spring-mvc-portlet", "foo");
 
 		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
-		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/update.jsp");
 		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
 
 		_testContains(
@@ -898,7 +897,7 @@ public class ProjectTemplatesTest {
 			"spring-mvc-portlet", "foo", "-DclassName=Foo", "-Dpackage=foo");
 
 		_buildProjects(
-			gradleProjectDir, mavenProjectDir, "build/libs/foo-1.0.0.war",
+			gradleProjectDir, mavenProjectDir, "build/libs/foo.war",
 			"target/foo-1.0.0.war");
 	}
 
@@ -910,7 +909,6 @@ public class ProjectTemplatesTest {
 			"spring-mvc-portlet", "foo", "--package-name", "com.liferay.test");
 
 		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
-		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/update.jsp");
 		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
 
 		_testContains(
@@ -925,7 +923,7 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir,
-			"build/libs/com.liferay.test-1.0.0.war", "target/foo-1.0.0.war");
+			"build/libs/foo.war", "target/foo-1.0.0.war");
 	}
 
 	@Test
@@ -936,7 +934,6 @@ public class ProjectTemplatesTest {
 			"spring-mvc-portlet", "portlet");
 
 		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
-		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/update.jsp");
 		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
 
 		_testContains(
@@ -949,7 +946,7 @@ public class ProjectTemplatesTest {
 			"-Dpackage=portlet");
 
 		_buildProjects(
-			gradleProjectDir, mavenProjectDir, "build/libs/portlet-1.0.0.war",
+			gradleProjectDir, mavenProjectDir, "build/libs/portlet.war",
 			"target/portlet-1.0.0.war");
 	}
 
@@ -961,7 +958,6 @@ public class ProjectTemplatesTest {
 			"spring-mvc-portlet", "portlet-portlet");
 
 		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
-		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/update.jsp");
 		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
 
 		_testContains(
@@ -976,7 +972,7 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir,
-			"build/libs/portlet.portlet-1.0.0.war",
+			"build/libs/portlet-portlet.war",
 			"target/portlet-portlet-1.0.0.war");
 	}
 

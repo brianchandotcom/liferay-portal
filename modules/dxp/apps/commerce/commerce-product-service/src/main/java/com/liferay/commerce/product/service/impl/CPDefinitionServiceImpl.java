@@ -44,7 +44,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Override
 	public CPDefinition addCPDefinition(
-			String baseSKU, String name, Map<Locale, String> titleMap,
+			String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, String productTypeName,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
@@ -60,7 +60,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
 
 		return cpDefinitionLocalService.addCPDefinition(
-			baseSKU, name, titleMap, shortDescriptionMap, descriptionMap,
+			baseSKU, titleMap, shortDescriptionMap, descriptionMap,
 			productTypeName, ddmStructureKey, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -194,8 +194,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Override
 	public CPDefinition updateCPDefinition(
-			long cpDefinitionId, String baseSKU, String name,
-			Map<Locale, String> titleMap,
+			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, String productTypeName,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
@@ -210,7 +209,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateCPDefinition(
-			cpDefinitionId, baseSKU, name, titleMap, shortDescriptionMap,
+			cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
 			descriptionMap, productTypeName, ddmStructureKey, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,

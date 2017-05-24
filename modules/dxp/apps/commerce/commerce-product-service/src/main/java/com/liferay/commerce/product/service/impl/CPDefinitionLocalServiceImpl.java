@@ -83,7 +83,7 @@ public class CPDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition addCPDefinition(
-			String baseSKU, String name, Map<Locale, String> titleMap,
+			String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, String productTypeName,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
@@ -128,7 +128,6 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setUserId(user.getUserId());
 		cpDefinition.setUserName(user.getFullName());
 		cpDefinition.setBaseSKU(baseSKU);
-		cpDefinition.setName(name);
 		cpDefinition.setProductTypeName(productTypeName);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
 		cpDefinition.setDisplayDate(displayDate);
@@ -521,8 +520,7 @@ public class CPDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition updateCPDefinition(
-			long cpDefinitionId, String baseSKU, String name,
-			Map<Locale, String> titleMap,
+			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, String productTypeName,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
@@ -559,7 +557,6 @@ public class CPDefinitionLocalServiceImpl
 		validateReferences(groupId, ddmStructureKey);
 
 		cpDefinition.setBaseSKU(baseSKU);
-		cpDefinition.setName(name);
 		cpDefinition.setProductTypeName(productTypeName);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
 		cpDefinition.setDisplayDate(displayDate);

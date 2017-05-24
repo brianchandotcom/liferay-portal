@@ -119,8 +119,7 @@ public class CPDefinitionFinderImpl
 				CPDefinitionImpl.TABLE_NAME);
 
 			sql = CustomSQLUtil.replaceOrderBy(
-				sql,
-				queryDefinition.getOrderByComparator());
+				sql, queryDefinition.getOrderByComparator());
 
 			if (groupId <= 0) {
 				sql = StringUtil.replace(

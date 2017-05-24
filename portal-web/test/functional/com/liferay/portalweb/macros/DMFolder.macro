@@ -28,7 +28,9 @@
 	</command>
 
 	<command name="addPG">
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
 
 		<execute function="AssertClick#assertTextClickAt" locator1="MenuItem#FOLDER" value1="Folder" />
 
@@ -72,7 +74,9 @@
 	</command>
 
 	<command name="addPGViaMG">
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Media Gallery" />
+		</execute>
 
 		<execute function="AssertClick#assertTextClickAt" locator1="MenuItem#ADD_FOLDER" value1="Folder" />
 
@@ -133,7 +137,9 @@
 	</command>
 
 	<command name="addSubfolderPG">
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
 
 		<execute function="AssertClick#assertTextClickAt" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
 
@@ -172,7 +178,9 @@
 	</command>
 
 	<command name="addSubfolderPGViaMG">
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Media Gallery" />
+		</execute>
 
 		<execute function="AssertClick#assertTextClickAt" locator1="MenuItem#ADD_SUBFOLDER" value1="Subfolder" />
 

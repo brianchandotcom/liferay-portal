@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service.base;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
+import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
@@ -176,6 +177,24 @@ public abstract class CPDefinitionOptionValueRelServiceBaseImpl
 	public void setCPDefinitionPersistence(
 		CPDefinitionPersistence cpDefinitionPersistence) {
 		this.cpDefinitionPersistence = cpDefinitionPersistence;
+	}
+
+	/**
+	 * Returns the cp definition finder.
+	 *
+	 * @return the cp definition finder
+	 */
+	public CPDefinitionFinder getCPDefinitionFinder() {
+		return cpDefinitionFinder;
+	}
+
+	/**
+	 * Sets the cp definition finder.
+	 *
+	 * @param cpDefinitionFinder the cp definition finder
+	 */
+	public void setCPDefinitionFinder(CPDefinitionFinder cpDefinitionFinder) {
+		this.cpDefinitionFinder = cpDefinitionFinder;
 	}
 
 	/**
@@ -787,6 +806,8 @@ public abstract class CPDefinitionOptionValueRelServiceBaseImpl
 	protected com.liferay.commerce.product.service.CPDefinitionService cpDefinitionService;
 	@BeanReference(type = CPDefinitionPersistence.class)
 	protected CPDefinitionPersistence cpDefinitionPersistence;
+	@BeanReference(type = CPDefinitionFinder.class)
+	protected CPDefinitionFinder cpDefinitionFinder;
 	@BeanReference(type = CPDefinitionLocalizationPersistence.class)
 	protected CPDefinitionLocalizationPersistence cpDefinitionLocalizationPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService.class)

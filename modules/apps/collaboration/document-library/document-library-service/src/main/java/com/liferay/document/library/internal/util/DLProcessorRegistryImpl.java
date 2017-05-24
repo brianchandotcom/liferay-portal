@@ -18,29 +18,32 @@ import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLProcessorRegistry;
 import com.liferay.document.library.kernel.util.DLProcessorThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
-import com.liferay.registry.collections.StringServiceRegistrationMap;
-import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Mika Koivisto
@@ -49,7 +52,33 @@ import org.osgi.service.component.annotations.Component;
 @DoPrivileged
 public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
-	public void afterPropertiesSet() throws Exception {
+	@Activate
+	public void activate(BundleContext bundleContext) throws Exception {
+		_bundleContext = bundleContext;
+
+		_dlProcessorServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, DLProcessor.class, null,
+				new ServiceReferenceMapper<String, DLProcessor>() {
+
+					@Override
+					public void map(
+						ServiceReference<DLProcessor> serviceReference,
+						Emitter<String> emitter) {
+
+						DLProcessor dlProcessor = _bundleContext.getService(
+							serviceReference);
+
+						try {
+							emitter.emit(dlProcessor.getType());
+						}
+						finally {
+							_bundleContext.ungetService(serviceReference);
+						}
+					}
+
+				});
+
 		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		for (String dlProcessorClassName : _DL_FILE_ENTRY_PROCESSORS) {
@@ -194,8 +223,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 	@Override
 	public void register(DLProcessor dlProcessor) {
-		Registry registry = RegistryUtil.getRegistry();
-
 		ServiceRegistration<DLProcessor> previousServiceRegistration =
 			_serviceRegistrations.remove(dlProcessor.getType());
 
@@ -204,7 +231,9 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 
 		ServiceRegistration<DLProcessor> serviceRegistration =
-			registry.registerService(DLProcessor.class, dlProcessor);
+			_bundleContext.registerService(
+				DLProcessor.class, dlProcessor,
+				new HashMapDictionary<String, Object>());
 
 		_serviceRegistrations.put(dlProcessor.getType(), serviceRegistration);
 	}
@@ -254,6 +283,11 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		serviceRegistration.unregister();
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_dlProcessorServiceTrackerMap.close();
+	}
+
 	private FileVersion _getLatestFileVersion(
 		FileEntry fileEntry, boolean trusted) {
 
@@ -273,33 +307,10 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLProcessorRegistryImpl.class);
 
-	private final ServiceTrackerMap<String, DLProcessor>
-		_dlProcessorServiceTrackerMap =
-			ServiceTrackerCollections.openSingleValueMap(
-				DLProcessor.class, null,
-				new ServiceReferenceMapper<String, DLProcessor>() {
-
-					@Override
-					public void map(
-						ServiceReference<DLProcessor> serviceReference,
-						Emitter<String> emitter) {
-
-						Registry registry = RegistryUtil.getRegistry();
-
-						DLProcessor dlProcessor = registry.getService(
-							serviceReference);
-
-						try {
-							emitter.emit(dlProcessor.getType());
-						}
-						finally {
-							registry.ungetService(serviceReference);
-						}
-					}
-
-				});
-
-	private final StringServiceRegistrationMap<DLProcessor>
-		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
+	private BundleContext _bundleContext;
+	private ServiceTrackerMap<String, DLProcessor>
+		_dlProcessorServiceTrackerMap;
+	private final Map<String, ServiceRegistration<DLProcessor>>
+		_serviceRegistrations = new ConcurrentHashMap<>();
 
 }

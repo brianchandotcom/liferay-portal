@@ -560,6 +560,7 @@ information.
 	</macrodef>
 
 	<macrodef name="gradle-execute">
+		<attribute default="false" name="checktask" />
 		<attribute default="${basedir}" name="dir" />
 		<attribute default="true" name="failonerror" />
 		<attribute default="true" name="forcedcacheenabled" />
@@ -580,18 +581,54 @@ information.
 				</else>
 			</if>
 
-			<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
-				<args />
-				<arg value="--no-daemon" />
-				<arg value="--project-cache-dir=${project.dir}/.gradle" />
-				<arg value="--stacktrace" />
-				<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
-				<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
-				<arg value="-Dliferay.home=${liferay.home}" />
-				<arg value="@{task}" />
-				<env key="GRADLE_OPTS" value="${env.ANT_OPTS}" />
-				<redirector errorproperty="@{outputproperty}.error" outputproperty="@{outputproperty}" unless:blank="@{outputproperty}" />
-			</exec>
+			<local name="task.available" />
+
+			<if>
+				<equals arg1="@{checktask}" arg2="true" />
+				<then>
+					<local name="tasks.output" />
+
+					<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
+						<arg value="--no-daemon" />
+						<arg value="--project-cache-dir=${project.dir}/.gradle" />
+						<arg value="--stacktrace" />
+						<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
+						<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
+						<arg value="-Dliferay.home=${liferay.home}" />
+						<arg value="tasks" />
+						<arg value="--all" />
+						<env key="GRADLE_OPTS" value="${env.ANT_OPTS}" />
+						<redirector outputproperty="tasks.output" unless:blank="tasks.output" />
+					</exec>
+
+					<condition else="false" property="task.available" value="true">
+						<contains string="${tasks.output}" substring="@{task} -" />
+					</condition>
+				</then>
+			</if>
+
+			<property name="task.available" value="true" />
+
+			<if>
+				<equals arg1="${task.available}" arg2="true" />
+				<then>
+					<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
+						<args />
+						<arg value="--no-daemon" />
+						<arg value="--project-cache-dir=${project.dir}/.gradle" />
+						<arg value="--stacktrace" />
+						<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
+						<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
+						<arg value="-Dliferay.home=${liferay.home}" />
+						<arg value="@{task}" />
+						<env key="GRADLE_OPTS" value="${env.ANT_OPTS}" />
+						<redirector errorproperty="@{outputproperty}.error" outputproperty="@{outputproperty}" unless:blank="@{outputproperty}" />
+					</exec>
+				</then>
+				<else>
+					<echo>SKIPPED: Unavailable task @{task}</echo>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 

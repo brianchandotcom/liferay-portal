@@ -39,6 +39,9 @@ import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -54,6 +57,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -106,6 +110,9 @@ public class DocumentLibraryConvertProcessTest {
 
 		_convertProcess.setParameterValues(
 			new String[] {_CLASS_NAME_DB_STORE, Boolean.TRUE.toString()});
+
+		setUpPermissionThreadLocal();
+		setUpPrincipalThreadLocal();
 	}
 
 	@After
@@ -122,6 +129,10 @@ public class DocumentLibraryConvertProcessTest {
 		PropsValues.DL_STORE_IMPL = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
 
 		_storeFactory.setStore(PropsValues.DL_STORE_IMPL);
+
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -240,6 +251,34 @@ public class DocumentLibraryConvertProcessTest {
 			fileEntry.getFileEntryId());
 	}
 
+	protected void setUpPermissionThreadLocal() throws Exception {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			new SimplePermissionChecker() {
+
+				{
+					init(TestPropsValues.getUser());
+				}
+
+				@Override
+				public boolean hasOwnerPermission(
+					long companyId, String name, String primKey, long ownerId,
+					String actionId) {
+
+					return true;
+				}
+
+			});
+	}
+
+	protected void setUpPrincipalThreadLocal() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
 	protected void testMigrateAndCheckOldRepositoryFiles(Boolean delete)
 		throws Exception {
 
@@ -347,6 +386,8 @@ public class DocumentLibraryConvertProcessTest {
 	@DeleteAfterTestRun
 	private Image _image;
 
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
 	private Store _sourceStore;
 
 }

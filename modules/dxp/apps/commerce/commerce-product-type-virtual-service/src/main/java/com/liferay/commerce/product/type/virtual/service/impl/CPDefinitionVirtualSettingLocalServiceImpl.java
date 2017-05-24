@@ -14,7 +14,12 @@
 
 package com.liferay.commerce.product.type.virtual.service.impl;
 
-import com.liferay.commerce.product.type.virtual.exception.*;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingFileEntryIdException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleFileEntryIdException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleUrlException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseContentException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingUrlException;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.base.CPDefinitionVirtualSettingLocalServiceBaseImpl;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
@@ -39,11 +44,10 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 
 	@Override
 	public CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
-			long cpDefinitionId, boolean useUrl, long fileEntryId,
-			String url, String activationStatus, long duration, int maxUsages,
-			boolean useSample, boolean useSampleUrl,
-			long sampleFileEntryId, String sampleUrl,
-			boolean termsOfUseRequired, boolean useWebContent,
+			long cpDefinitionId, boolean useUrl, long fileEntryId, String url,
+			String activationStatus, long duration, int maxUsages,
+			boolean useSample, boolean useSampleUrl, long sampleFileEntryId,
+			String sampleUrl, boolean termsOfUseRequired, boolean useWebContent,
 			Map<Locale, String> termsOfUseContentMap,
 			long termsOfUseJournalArticleResourcePK,
 			ServiceContext serviceContext)
@@ -135,10 +139,9 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 
 	@Override
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
-			long cpDefinitionVirtualSettingId, boolean useUrl,
-			long fileEntryId, String url, String activationStatus,
-			long duration, int maxUsages, boolean useSample,
-			boolean useSampleUrl, long sampleFileEntryId,
+			long cpDefinitionVirtualSettingId, boolean useUrl, long fileEntryId,
+			String url, String activationStatus, long duration, int maxUsages,
+			boolean useSample, boolean useSampleUrl, long sampleFileEntryId,
 			String sampleUrl, boolean termsOfUseRequired, boolean useWebContent,
 			Map<Locale, String> termsOfUseContentMap,
 			long termsOfUseJournalArticleResourcePK,
@@ -211,9 +214,8 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 	}
 
 	protected void validate(
-			boolean useUrl, long fileEntryId, String url,
-			boolean useSample, boolean useSampleUrl,
-			long sampleFileEntryId, String sampleUrl,
+			boolean useUrl, long fileEntryId, String url, boolean useSample,
+			boolean useSampleUrl, long sampleFileEntryId, String sampleUrl,
 			boolean termsOfUseRequired, boolean useWebContent,
 			Map<Locale, String> termsOfUseContentMap,
 			long termsOfUseJournalArticleResourcePK)
@@ -227,7 +229,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 				throw new CPDefinitionVirtualSettingFileEntryIdException(nsfee);
 			}
 		}
-		else if (Validator.isNull(url)){
+		else if (Validator.isNull(url)) {
 			throw new CPDefinitionVirtualSettingUrlException();
 		}
 
@@ -239,10 +241,10 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 				catch (NoSuchFileEntryException nsfee) {
 					throw new
 						CPDefinitionVirtualSettingSampleFileEntryIdException(
-						nsfee);
+							nsfee);
 				}
 			}
-			else if (Validator.isNull(sampleUrl)){
+			else if (Validator.isNull(sampleUrl)) {
 				throw new CPDefinitionVirtualSettingSampleUrlException();
 			}
 		}
@@ -264,4 +266,5 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			}
 		}
 	}
+
 }

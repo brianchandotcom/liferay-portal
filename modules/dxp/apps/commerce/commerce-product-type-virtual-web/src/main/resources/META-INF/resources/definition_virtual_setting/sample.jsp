@@ -54,9 +54,9 @@ if (sampleFileEntrySearchContainer.hasResults()) {
 </liferay-util:buffer>
 
 <div class="lfr-definition-virtual-setting-use-sample-header">
-<aui:fieldset>
-	<aui:input name="useSample" />
-</aui:fieldset>
+	<aui:fieldset>
+		<aui:input name="useSample" />
+	</aui:fieldset>
 </div>
 
 <div class="lfr-definition-virtual-setting-use-sample-content">
@@ -181,18 +181,18 @@ if (sampleFileEntrySearchContainer.hasResults()) {
 </aui:script>
 
 <aui:script>
-	AUI().ready('node', 'event', function(A){
+	AUI().ready('node', 'event', function(A) {
 		selectSampleFileType(A);
 
-		A.one('#<portlet:namespace/>useSampleUrl').on('click',function(b){
+		A.one('#<portlet:namespace/>useSampleUrl').on('click',function(b) {
 			selectSampleFileType(A);
 		})
 	});
 
-	function selectSampleFileType(A){
+	function selectSampleFileType(A) {
 		var sampleUrlCheckbox = A.one('#<portlet:namespace/>useSampleUrl');
 
-		if(sampleUrlCheckbox.attr('checked')) {
+		if (sampleUrlCheckbox.attr('checked')) {
 			A.one('.lfr-definition-virtual-setting-sample-file-selector').addClass('hidden');
 			A.one('.lfr-definition-virtual-sample-url').removeClass('hidden');
 		}

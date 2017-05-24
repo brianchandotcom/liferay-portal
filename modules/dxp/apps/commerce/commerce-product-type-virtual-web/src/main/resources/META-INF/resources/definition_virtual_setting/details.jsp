@@ -151,18 +151,18 @@ if (fileEntrySearchContainer.hasResults()) {
 </aui:script>
 
 <aui:script>
-	AUI().ready('node', 'event', function(A){
+	AUI().ready('node', 'event', function(A) {
 		selectFileType(A);
 
-		A.one('#<portlet:namespace/>useUrl').on('click',function(b){
+		A.one('#<portlet:namespace/>useUrl').on('click',function(b) {
 			selectFileType(A);
 		})
 	});
 
-	function selectFileType(A){
+	function selectFileType(A) {
 		var urlCheckbox = A.one('#<portlet:namespace/>useUrl');
 
-		if(urlCheckbox.attr('checked')) {
+		if (urlCheckbox.attr('checked')) {
 			A.one('.lfr-definition-virtual-setting-file-selector').addClass('hidden');
 			A.one('.lfr-definition-virtual-url').removeClass('hidden');
 		}

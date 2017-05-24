@@ -17,7 +17,7 @@ package com.liferay.document.library.kernel.util;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.xml.Element;
 
 /**
@@ -47,9 +47,6 @@ public class DLProcessorRegistryUtil {
 	}
 
 	public static DLProcessorRegistry getDLProcessorRegistry() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			DLProcessorRegistryUtil.class);
-
 		return _dlProcessorRegistry;
 	}
 
@@ -84,14 +81,17 @@ public class DLProcessorRegistryUtil {
 		getDLProcessorRegistry().unregister(dlProcessor);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setDLProcessorRegistry(
 		DLProcessorRegistry dlProcessorRegistry) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_dlProcessorRegistry = dlProcessorRegistry;
 	}
 
-	private static DLProcessorRegistry _dlProcessorRegistry;
+	private static volatile DLProcessorRegistry _dlProcessorRegistry =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			DLProcessorRegistry.class, DLProcessorRegistryUtil.class,
+			"_dlProcessorRegistry", false);
 
 }

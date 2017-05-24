@@ -180,7 +180,7 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product definition localization
 
-		cpDefinitionLocalizationPersistence.removeByCPDefinitionPK(
+		cpDefinitionLocalizationPersistence.removeByCPDefinitionId(
 			cpDefinition.getCPDefinitionId());
 
 		// Commerce product definition option rels
@@ -250,14 +250,14 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public Map<Locale, String> getCPDefinitionDescriptionMap(
-		long cpDefinitionPK) {
+		long cpDefinitionId) {
 
 		Map<Locale, String> cpDefinitionLocalizationDescriptionMap =
 			new HashMap<>();
 
 		List<CPDefinitionLocalization> cpDefinitionLocalizationList =
-			cpDefinitionLocalizationPersistence.findByCPDefinitionPK(
-				cpDefinitionPK);
+			cpDefinitionLocalizationPersistence.findByCPDefinitionId(
+				cpDefinitionId);
 
 		for (CPDefinitionLocalization cpDefinitionLocalization :
 				cpDefinitionLocalizationList) {
@@ -276,7 +276,7 @@ public class CPDefinitionLocalServiceImpl
 		long cpDefinitionId) {
 
 		List<CPDefinitionLocalization> cpDefinitionLocalizationList =
-			cpDefinitionLocalizationPersistence.findByCPDefinitionPK(
+			cpDefinitionLocalizationPersistence.findByCPDefinitionId(
 				cpDefinitionId);
 
 		List<String> availableLanguageIds = new ArrayList<>();
@@ -293,14 +293,14 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public Map<Locale, String> getCPDefinitionShortDescriptionMap(
-		long cpDefinitionPK) {
+		long cpDefinitionId) {
 
 		Map<Locale, String> cpDefinitionLocalizationShortDescriptionMap =
 			new HashMap<>();
 
 		List<CPDefinitionLocalization> cpDefinitionLocalizationList =
-			cpDefinitionLocalizationPersistence.findByCPDefinitionPK(
-				cpDefinitionPK);
+			cpDefinitionLocalizationPersistence.findByCPDefinitionId(
+				cpDefinitionId);
 
 		for (CPDefinitionLocalization cpDefinitionLocalization :
 				cpDefinitionLocalizationList) {
@@ -315,12 +315,12 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public Map<Locale, String> getCPDefinitionTitleMap(long cpDefinitionPK) {
+	public Map<Locale, String> getCPDefinitionTitleMap(long cpDefinitionId) {
 		Map<Locale, String> cpDefinitionLocalizationTitleMap = new HashMap<>();
 
 		List<CPDefinitionLocalization> cpDefinitionLocalizationList =
-			cpDefinitionLocalizationPersistence.findByCPDefinitionPK(
-				cpDefinitionPK);
+			cpDefinitionLocalizationPersistence.findByCPDefinitionId(
+				cpDefinitionId);
 
 		for (CPDefinitionLocalization cpDefinitionLocalization :
 				cpDefinitionLocalizationList) {
@@ -822,8 +822,8 @@ public class CPDefinitionLocalServiceImpl
 		throws PortalException {
 
 		CPDefinitionLocalization cpDefinitionLocalization =
-			cpDefinitionLocalizationPersistence.fetchByCPD_L(
-				cpDefinitionId, languageId);
+			cpDefinitionLocalizationPersistence.
+				fetchByCPDefinitionId_LanguageId(cpDefinitionId, languageId);
 
 		if (cpDefinitionLocalization == null) {
 			long cpDefinitionLocalizationId = counterLocalService.increment();
@@ -833,7 +833,7 @@ public class CPDefinitionLocalServiceImpl
 					cpDefinitionLocalizationId);
 
 			cpDefinitionLocalization.setCompanyId(companyId);
-			cpDefinitionLocalization.setCpDefinitionPK(cpDefinitionId);
+			cpDefinitionLocalization.setCPDefinitionId(cpDefinitionId);
 			cpDefinitionLocalization.setTitle(title);
 			cpDefinitionLocalization.setShortDescription(shortDescription);
 			cpDefinitionLocalization.setDescription(description);
@@ -856,7 +856,7 @@ public class CPDefinitionLocalServiceImpl
 
 		List<CPDefinitionLocalization> oldCPDefinitionLocalizations =
 			new ArrayList<>(
-				cpDefinitionLocalizationPersistence.findByCPDefinitionPK(
+				cpDefinitionLocalizationPersistence.findByCPDefinitionId(
 					cpDefinitionId));
 
 		List<CPDefinitionLocalization> newCPDefinitionLocalizations =

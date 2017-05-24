@@ -259,7 +259,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 					throw new
 						CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException();
 				}
-				else if (MapUtil.isEmpty(termsOfUseContentMap)) {
+				else if (!useWebContent && MapUtil.isEmpty(termsOfUseContentMap)) {
 					throw new
 						CPDefinitionVirtualSettingTermsOfUseContentException();
 				}

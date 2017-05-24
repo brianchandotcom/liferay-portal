@@ -31,6 +31,8 @@ public interface DLProcessorRegistry {
 
 	public void cleanUp(FileVersion fileVersion);
 
+	public void destroy();
+
 	public void exportGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement)

@@ -95,6 +95,9 @@ public interface DLProcessor {
 	public void copy(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion);
 
+	public default void destroy() {
+	}
+
 	/**
 	 * Exports any resources generated for the file entry into file entry
 	 * element.

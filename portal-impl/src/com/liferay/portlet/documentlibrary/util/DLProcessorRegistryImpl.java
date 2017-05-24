@@ -40,6 +40,9 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.registry.collections.StringServiceRegistrationMap;
 import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Mika Koivisto
  */
@@ -56,6 +59,8 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 			dlProcessor.afterPropertiesSet();
 
 			register(dlProcessor);
+
+			_dlProcessors.add(dlProcessor);
 		}
 	}
 
@@ -94,6 +99,13 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 			if (dlProcessor.isSupported(fileVersion)) {
 				dlProcessor.cleanUp(fileVersion);
 			}
+		}
+	}
+
+	@Override
+	public void destroy() {
+		for (DLProcessor dlProcessor : _dlProcessors) {
+			dlProcessor.destroy();
 		}
 	}
 
@@ -269,6 +281,8 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLProcessorRegistryImpl.class);
+
+	private final List<DLProcessor> _dlProcessors = new ArrayList<>();
 
 	private final ServiceTrackerMap<String, DLProcessor>
 		_dlProcessorServiceTrackerMap =

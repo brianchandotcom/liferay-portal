@@ -96,6 +96,11 @@ public class PDFProcessorImpl
 	}
 
 	@Override
+	public void destroy() {
+		FileUtil.deltree(TMP_PATH);
+	}
+
+	@Override
 	public void generateImages(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {

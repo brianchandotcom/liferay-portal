@@ -109,6 +109,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TimeZone;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -241,15 +242,17 @@ public class MainServlet extends ActionServlet {
 				_log.warn(sb.toString());
 			}
 
-			String userTimeZone = System.getProperty("user.timezone");
+			TimeZone timeZone = TimeZone.getDefault();
 
-			if (!Objects.equals("UTC", userTimeZone) &&
-				!Objects.equals("GMT", userTimeZone)) {
+			String jvmTimeZone = timeZone.getID();
+
+			if (!Objects.equals("UTC", jvmTimeZone) &&
+				!Objects.equals("GMT", jvmTimeZone)) {
 
 				StringBundler sb = new StringBundler(4);
 
 				sb.append("The default JVM time zone \"");
-				sb.append(userTimeZone);
+				sb.append(jvmTimeZone);
 				sb.append("\" is not UTC or GMT. Please review the JVM ");
 				sb.append("property \"user.timezone\".");
 

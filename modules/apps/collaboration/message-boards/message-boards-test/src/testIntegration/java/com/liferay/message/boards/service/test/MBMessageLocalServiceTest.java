@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
@@ -80,9 +81,14 @@ public class MBMessageLocalServiceTest {
 	public void testAddMessageAttachment() throws Exception {
 		MBMessage message = addMessage(null, false);
 
+		byte[] fileBytes = FileUtil.getBytes(
+			getClass(), "dependencies/company_logo.png");
+
+		File file = FileUtil.createTempFile(fileBytes);
+
 		MBMessageLocalServiceUtil.addMessageAttachment(
-			TestPropsValues.getUserId(), message.getMessageId(), "test",
-			_attachmentFile, "image/png");
+			TestPropsValues.getUserId(), message.getMessageId(), "test", file,
+			"image/png");
 
 		Assert.assertEquals(1, message.getAttachmentsFileEntriesCount());
 	}
@@ -191,9 +197,14 @@ public class MBMessageLocalServiceTest {
 	public void testDeleteMessageAttachment() throws Exception {
 		MBMessage message = addMessage(null, false);
 
+		byte[] fileBytes = FileUtil.getBytes(
+			getClass(), "dependencies/company_logo.png");
+
+		File file = FileUtil.createTempFile(fileBytes);
+
 		MBMessageLocalServiceUtil.addMessageAttachment(
-			TestPropsValues.getUserId(), message.getMessageId(), "test",
-			_attachmentFile, "image/png");
+			TestPropsValues.getUserId(), message.getMessageId(), "test", file,
+			"image/png");
 
 		Assert.assertEquals(1, message.getAttachmentsFileEntriesCount());
 
@@ -297,9 +308,6 @@ public class MBMessageLocalServiceTest {
 			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
 			false, serviceContext);
 	}
-
-	private static final File _attachmentFile = new File(
-		"dependencies/company_logo.png");
 
 	@DeleteAfterTestRun
 	private Group _group;

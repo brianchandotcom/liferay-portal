@@ -1644,8 +1644,20 @@ to version 2.0.7.
 ## 3.3.16 - 2017-05-23
 
 ### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.0.8.
+- [LPS-67352]: Update the [Liferay Source Formatter] dependency to version
+1.0.398.
 - [LPS-72723]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.3.13.
+
+## 3.3.17 - 2017-05-23
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.0.9.
+- [LPS-67352]: Update the [Liferay Source Formatter] dependency to version
+1.0.399.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs

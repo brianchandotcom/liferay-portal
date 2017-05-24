@@ -215,6 +215,7 @@
 /lib/portal/jodd-servlet.jar
 /lib/portal/jodd-upload.jar
 /lib/portal/json-java.jar
+/lib/portal/json-schema-validator.jar
 /lib/portal/jrcs-diff.jar
 /lib/portal/jsr107cache.jar
 /lib/portal/jstl-api.jar

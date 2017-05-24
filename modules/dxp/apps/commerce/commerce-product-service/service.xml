@@ -73,10 +73,6 @@
 
 		<column name="baseSKU" type="String" />
 		<column name="name" type="String" />
-		<column localized="extra-table" name="title" type="String"  />
-		<column localized="extra-table" name="urlTitle" type="String"  />
-		<column localized="extra-table" name="shortDescription" type="String" />
-		<column localized="extra-table" name="description" type="String" />
 		<column name="productTypeName" type="String" />
 		<column name="availableIndividually" type="boolean" />
 		<column name="DDMStructureKey" type="String" />
@@ -87,6 +83,15 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+
+		<!-- Localized entity -->
+
+		<localized-entity>
+			<localized-column name="title" />
+			<localized-column name="urlTitle" />
+			<localized-column name="shortDescription" />
+			<localized-column name="description" />
+		</localized-entity>
 
 		<!-- Order -->
 

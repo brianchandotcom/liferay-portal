@@ -154,6 +154,14 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			lpkgBundle = bundleContext.installBundle(
 				location, toBundle(lpkgFile));
 
+			if (lpkgBundle.getState() == Bundle.UNINSTALLED) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Did not deploy outdated LPKG " + lpkgFile);
+				}
+
+				return bundles;
+			}
+
 			BundleStartLevel bundleStartLevel = lpkgBundle.adapt(
 				BundleStartLevel.class);
 

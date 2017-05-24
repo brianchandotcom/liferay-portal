@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -117,25 +116,13 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			OrderByComparator<CPDefinition> orderByComparator)
 		throws PortalException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return cpDefinitionPersistence.filterFindByG_NotS(
-				groupId, WorkflowConstants.STATUS_IN_TRASH, start, end,
-				orderByComparator);
-		}
-
-		return cpDefinitionPersistence.filterFindByG_S(
-			groupId, WorkflowConstants.STATUS_ANY, start, end,
-			orderByComparator);
+		return cpDefinitionLocalService.getCPDefinitions(
+			groupId, status, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getCPDefinitionsCount(long groupId, int status) {
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return cpDefinitionPersistence.filterCountByG_NotS(
-				groupId, WorkflowConstants.STATUS_IN_TRASH);
-		}
-
-		return cpDefinitionPersistence.filterCountByG_S(groupId, status);
+		return cpDefinitionLocalService.getCPDefinitionsCount(groupId, status);
 	}
 
 	@Override

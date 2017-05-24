@@ -6,8 +6,8 @@
 
 		<execute function="Type" locator1="CommerceCatalogEntry#SHORT_DESCRIPTION_FIELD" value1="${productShortDescription}" />
 
-		<execute macro="CommerceAlloyEditor#addDescription">
-			<var name="productDescription" value="${productDescription}" />
+		<execute macro="CommerceCatalogEntry#addLongDescriptionViaAlloyEditor">
+			<var name="productLongDescription" value="${productLongDescription}" />
 		</execute>
 
 		<execute function="Type" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" value1="${baseSku}" />
@@ -29,8 +29,10 @@
 		<execute function="Type" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" value1="${baseSku}" />
 	</command>
 
-	<command name="editCatalogEntryDescription">
-		<execute function="Type" locator1="CommerceCatalogEntry#DESCRIPTION_FIELD" value1="${newProductDescription}" />
+	<command name="editCatalogEntryLongDescription">
+		<execute macro="CommerceCatalogEntry#addLongDescriptionViaAlloyEditor">
+			<var name="productLongDescription" value="${newProductLongDescription}" />
+		</execute>
 	</command>
 
 	<command name="editCatalogEntryName">
@@ -42,7 +44,7 @@
 	</command>
 
 	<command name="editCatalogEntryTitle">
-		<execute function="Type" locator1="CommerceCatalogEntry#NAME_FIELD" value1="${newProductTitle}" />
+		<execute function="Type" locator1="CommerceCatalogEntry#TITLE_FIELD" value1="${newProductTitle}" />
 	</command>
 
 	<command name="viewCatalogEntry">
@@ -52,8 +54,12 @@
 
 		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#SHORT_DESCRIPTION_FIELD" value1="${productShortDescription}" />
 
-		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#DESCRIPTION_FIELD" value1="${productDescription}" />
+		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#LONG_DESCRIPTION_FIELD" value1="${productLongDescription}" />
 
 		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" value1="${baseSku}" />
+	</command>
+
+	<command name="addLongDescriptionViaAlloyEditor">
+		<execute function="Type#typeEditor" locator1="CommerceCatalogEntry#LONG_DESCRIPTION_FIELD" value1="${productLongDescription}" />
 	</command>
 </definition>

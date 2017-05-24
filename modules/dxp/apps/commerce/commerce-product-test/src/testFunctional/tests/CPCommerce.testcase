@@ -6,13 +6,24 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<if>
+			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
+			<then>
+				<execute macro="CommerceCatalog#moveCatalogEntriesToRecycleBin" />
+			</then>
+		</if>
+
 		<execute macro="User#logoutPG" />
 	</tear-down>
 
 	<command name="AddCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productDescription" value="Product Description 1" />
+			<var name="productLongDescription" value="Product Long Description 1" />
 			<var name="productName" value="Product Name 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
@@ -24,7 +35,7 @@
 
 		<execute macro="CommerceCatalogEntry#viewCatalogEntry">
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productDescription" value="Product Description 1" />
+			<var name="productLongDescription" value="Product Long Description 1" />
 			<var name="productName" value="Product Name 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
@@ -34,7 +45,7 @@
 	<command name="AddDuplicateEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productDescription" value="Product Description 1" />
+			<var name="productLongDescription" value="Product Long Description 1" />
 			<var name="productName" value="Product Name 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
@@ -42,7 +53,7 @@
 
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productDescription" value="Product Description 1" />
+			<var name="productLongDescription" value="Product Long Description 1" />
 			<var name="productName" value="Product Name 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
@@ -55,12 +66,12 @@
 	</command>
 
 	<command name="AssertCatalogEntriesSearchResultsNotInTrashBin" priority="5">
-		<var name="portlet" value="Catalog" />
-
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="productName" value="Product_Name_1" />
 			<var name="productShortDescription" value="Product_Short_Description_1" />
 			<var name="productTitle" value="Product_Title_1" />
+			<var name="baseSku" value="ProductSKU" />
+			<var name="productLongDescription" value="Product_Long_Description_1" />
 		</execute>
 
 		<execute macro="CommerceNavigator#gotoSitesCommerce">
@@ -79,16 +90,19 @@
 	</command>
 
 	<command name="DeleteAllCatalogEntriesViaCheckbox" priority="5">
-
 		<for list="1,2,3" param="entryNumber">
 			<execute macro="CommerceCatalog#addEntry">
 				<var name="baseSku" value="ProductSKU ${entryNumber}" />
-				<var name="productDescription" value="Product_Description ${entryNumber}" />
+				<var name="productLongDescription" value="Product Long Description ${entryNumber}" />
 				<var name="productName" value="Product Name ${entryNumber}" />
 				<var name="productShortDescription" value="Product Short Description ${entryNumber}" />
 				<var name="productTitle" value="Product Title ${entryNumber}" />
 			</execute>
 		</for>
+
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
 
 		<execute macro="CommerceCatalog#moveCatalogEntriesToRecycleBin" />
 
@@ -102,7 +116,7 @@
 
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productDescription" value="Product Description 1" />
+			<var name="productLongDescription" value="Product Long Description 1" />
 			<var name="productName" value="Product Name 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
@@ -117,10 +131,10 @@
 		</execute>
 	</command>
 
-	<command name="editCatalogEntry">
+	<command name="EditCatalogEntry">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productDescription" value="Product Description" />
+			<var name="productLongDescription" value="Product Long Description" />
 			<var name="productName" value="Product Name" />
 			<var name="productShortDescription" value="Product Short Description" />
 			<var name="productTitle" value="Product Title" />
@@ -142,8 +156,8 @@
 			<var name="newProductShortDescription" value="New Product Short Description" />
 		</execute>
 
-		<execute macro="CommerceCatalogEntry#editCatalogEntryDescription">
-			<var name="newProductDescription" value="New Product Description" />
+		<execute macro="CommerceCatalogEntry#editCatalogEntryLongDescription">
+			<var name="newProductLongDescription" value="New Product Long Description" />
 		</execute>
 
 		<execute macro="CommerceCatalogEntry#editCatalogEntryBaseSKU">
@@ -152,7 +166,15 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<if>
+			<condition function="IsElementPresent" locator1="Message#SUCCESS" />
+			<then>
+				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#WORKFLOW_STATUS" value1="Approved" />
+			</else>
+		</if>
 
 		<execute macro="ProductMenuHelper#gotoPortlet">
 			<var name="portlet" value="Catalog" />
@@ -160,13 +182,16 @@
 
 		<execute function="AssertTextEquals" locator1="CommerceCatalog#PRODUCT_TITLE" value1="${newProductTitle}">
 			<var name="key_productTitle" value="New Product Title" />
+			<var name="newProductTitle" value="New Product Title" />
 		</execute>
 
 		<execute macro="CommerceNavigator#gotoCatalogEntry">
-			<var name="productTitle" value="Product Title" />
+			<var name="productTitle" value="New Product Title" />
 		</execute>
 
 		<execute macro="CommerceCatalogEntry#viewCatalogEntry">
+			<var name="baseSku" value="New Base SKU" />
+			<var name="productLongDescription" value="New Product Long Description" />
 			<var name="productName" value="New Product Name" />
 			<var name="productShortDescription" value="New Product Short Description" />
 			<var name="productTitle" value="New Product Title" />
@@ -176,7 +201,7 @@
 	<command name="SetCatalogEntryExpirationDate" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productDescription" value="Product Description 1" />
+			<var name="productLongDescription" value="Product Long Description 1" />
 			<var name="productName" value="Product Name 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />

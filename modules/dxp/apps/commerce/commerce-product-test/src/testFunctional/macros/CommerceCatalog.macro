@@ -8,17 +8,13 @@
 
 		<execute macro="CommerceCatalogEntry#addCatalogEntry">
 			<var name="baseSku" value="${baseSku}" />
-			<var name="productDescription" value="${productDescription}" />
+			<var name="productLongDescription" value="${productLongDescription}" />
 			<var name="productName" value="${productName}" />
 			<var name="productShortDescription" value="${productShortDescription}" />
 			<var name="productTitle" value="${productTitle}" />
 		</execute>
 
 		<execute macro="Button#clickSave" />
-
-		<!-- <execute function="Click" locator1="CommerceCatalogEntry#SAVE_BUTTON" /> -->
-
-		<!-- <execute macro="Alert#viewSuccessMessage" /> -->
 
 		<if>
 			<condition function="IsElementPresent" locator1="Message#SUCCESS" />
@@ -43,5 +39,11 @@
 		</execute>
 
 		<execute function="Click" locator1="CommerceCatalog#RECYCLE_BIN_BUTTON" />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
+
+		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" value1="${productTitle}" />
 	</command>
 </definition>

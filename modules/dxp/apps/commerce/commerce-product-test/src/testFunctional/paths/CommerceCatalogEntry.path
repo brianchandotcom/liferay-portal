@@ -20,12 +20,7 @@
 </tr>
 <tr>
 	<td>SHORT_DESCRIPTION_FIELD</td>
-	<td>//textarea[contains (@id, 'shortDescription')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DESCRIPTION_FIELD</td>
-	<td>//div[@class='wrapper']/div[contains (@aria-label, 'Rich Text Editor')]</td>
+	<td>//textarea[contains (@id,'shortDescription')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,15 +87,15 @@
 	<td></td>
 </tr>
 <tr>
- 	<td>DESCRIPTION_FIELD</td>
- 	<td>//div[contains(@id,'descriptionMap') and contains(@aria-label,'Rich Text Editor')]</td>
- 	<td></td>
- </tr>
- <tr>
- 	<td>BASE_SKU_FIELD</td>
- 	<td>//div/input[contains(@id, 'baseSKU')]</td>
- 	<td></td>
- </tr>
+	<td>LONG_DESCRIPTION_FIELD</td>
+	<td>//div[contains(@id,'descriptionMap') and contains(@aria-label,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASE_SKU_FIELD</td>
+	<td>//div/input[contains(@id, 'baseSKU')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

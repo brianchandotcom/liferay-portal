@@ -53,7 +53,8 @@
 		<exception>CPDefinitionVirtualSettingFileEntryId</exception>
 		<exception>CPDefinitionVirtualSettingSampleFileEntryId</exception>
 		<exception>CPDefinitionVirtualSettingSampleUrl</exception>
-		<exception>CPDefinitionVirtualSettingTermsOfUseRequired</exception>
+		<exception>CPDefinitionVirtualSettingTermsOfUseContent</exception>
+		<exception>CPDefinitionVirtualSettingTermsOfUseArticleResourcePK</exception>
 		<exception>CPDefinitionVirtualSettingUrl</exception>
 	</exceptions>
 </service-builder>

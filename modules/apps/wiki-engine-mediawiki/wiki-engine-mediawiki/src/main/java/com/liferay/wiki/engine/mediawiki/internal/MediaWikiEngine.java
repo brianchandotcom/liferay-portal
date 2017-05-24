@@ -155,7 +155,7 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 	protected void activate() throws IOException {
 		Thread currentThread = Thread.currentThread();
 
-		final ClassLoader classLoader = currentThread.getContextClassLoader();
+		ClassLoader classLoader = currentThread.getContextClassLoader();
 
 		try (RootDetectionClassLoader rootDetectionClassLoader =
 				new RootDetectionClassLoader(classLoader)) {
@@ -407,7 +407,7 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 			catch (IOException ioe) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Unable to create temp class loader root detection " +
+						"Unable to create class loader root detection temp " +
 							"file " + tempPath,
 						ioe);
 				}

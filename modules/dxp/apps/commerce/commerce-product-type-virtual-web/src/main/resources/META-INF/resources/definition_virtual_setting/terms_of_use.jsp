@@ -27,10 +27,10 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 
 String termsOfUseButtonCssClass = "lfr-definition-virtual-setting-terms-of-use-value modify-journal-article-link ";
 
-boolean useWebContent = ParamUtil.getBoolean(request, "useWebContent", false);
+boolean useJournal = ParamUtil.getBoolean(request, "useJournal", false);
 
 if ((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK())) {
-	useWebContent = true;
+	useJournal = true;
 }
 
 if (journalArticleSearchContainer.hasResults()) {
@@ -61,7 +61,7 @@ if (journalArticleSearchContainer.hasResults()) {
 
 <div class="lfr-definition-virtual-setting-terms-of-use-content toggler-content-collapsed">
 	<aui:fieldset>
-		<aui:input checked="<%= useWebContent %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="use-web-content" name="useWebContent" type="checkbox" />
+		<aui:input checked="<%= useJournal %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="use-web-content" name="useJournal" type="checkbox" />
 
 		<aui:field-wrapper cssClass="lfr-definition-virtual-setting-content">
 			<div class="entry-content form-group">
@@ -177,13 +177,13 @@ if (journalArticleSearchContainer.hasResults()) {
 	AUI().ready('node', 'event', function(A) {
 		selectContentType(A);
 
-		A.one('#<portlet:namespace/>useWebContent').on('click',function(b) {
+		A.one('#<portlet:namespace/>useJournal').on('click',function(b) {
 			selectContentType(A);
 		})
 	});
 
 	function selectContentType(A) {
-		var contentCheckbox = A.one('#<portlet:namespace/>useWebContent');
+		var contentCheckbox = A.one('#<portlet:namespace/>useJournal');
 
 		if (contentCheckbox.attr('checked')) {
 			A.one('.lfr-definition-virtual-setting-web-content-selector').removeClass('hidden');

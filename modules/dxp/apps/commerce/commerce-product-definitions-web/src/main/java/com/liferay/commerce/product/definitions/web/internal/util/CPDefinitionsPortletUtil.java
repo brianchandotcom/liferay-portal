@@ -14,11 +14,15 @@
 
 package com.liferay.commerce.product.definitions.web.internal.util;
 
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.search.CPInstanceIndexer;
+import com.liferay.commerce.product.util.comparator.CPAttachmentFileEntryCreateDateComparator;
+import com.liferay.commerce.product.util.comparator.CPAttachmentFileEntryDisplayDateComparator;
+import com.liferay.commerce.product.util.comparator.CPAttachmentFileEntryPriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelCreateDateComparator;
@@ -42,6 +46,59 @@ import java.util.Objects;
  * @author Marco Leo
  */
 public class CPDefinitionsPortletUtil {
+
+	public static OrderByComparator<CPAttachmentFileEntry>
+		getCPAttachmentFileEntryOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CPAttachmentFileEntry> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new CPAttachmentFileEntryCreateDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("display-date")) {
+			orderByComparator = new CPAttachmentFileEntryDisplayDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("prority")) {
+			orderByComparator = new CPAttachmentFileEntryPriorityComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	public static Sort getCPAttachmentFileEntrySort(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(orderByType, "asc")) {
+			orderByAsc = true;
+		}
+
+		Sort sort = null;
+
+		if (orderByCol.equals("create-date")) {
+			sort = SortFactoryUtil.create(Field.CREATE_DATE, true);
+		}
+		else if (orderByCol.equals("display-date")) {
+			sort = SortFactoryUtil.create("display-date", true);
+		}
+		else if (orderByCol.equals("priority")) {
+			sort = SortFactoryUtil.create(
+				Field.PRIORITY, Sort.INT_TYPE, orderByAsc);
+		}
+
+		return sort;
+	}
 
 	public static OrderByComparator<CPDefinitionOptionRel>
 		getCPDefinitionOptionRelOrderByComparator(

@@ -15,12 +15,13 @@
 package com.liferay.document.library.internal.exportimport.data.handler;
 
 import com.liferay.document.library.exportimport.data.handler.DLPluggableContentDataHandler;
-import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
+import com.liferay.document.library.kernel.util.DLProcessorRegistry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.xml.Element;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -42,7 +43,7 @@ public class DLProcessorPluggableContentDataHandler
 		throws Exception {
 
 		if (_isEnabled(portletDataContext)) {
-			DLProcessorRegistryUtil.exportGeneratedFiles(
+			_dlProcessorRegistry.exportGeneratedFiles(
 				portletDataContext, fileEntry, fileEntryElement);
 		}
 	}
@@ -54,7 +55,7 @@ public class DLProcessorPluggableContentDataHandler
 		throws Exception {
 
 		if (_isEnabled(portletDataContext)) {
-			DLProcessorRegistryUtil.importGeneratedFiles(
+			_dlProcessorRegistry.importGeneratedFiles(
 				portletDataContext, fileEntry, importedFileEntry,
 				fileEntryElement);
 		}
@@ -70,5 +71,8 @@ public class DLProcessorPluggableContentDataHandler
 	 */
 	private static final String _DL_PORTLET_DATA_HANDLER_NAMESPACE =
 		"document_library";
+
+	@Reference
+	private DLProcessorRegistry _dlProcessorRegistry;
 
 }

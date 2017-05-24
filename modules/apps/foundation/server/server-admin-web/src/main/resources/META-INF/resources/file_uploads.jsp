@@ -19,12 +19,6 @@
 <div class="server-admin-tabs">
 	<aui:fieldset>
 		<liferay-ui:panel-container extended="<%= true %>" id="uploadPanelContainer" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminGeneralUploadPanel" markupView="lexicon" persistState="<%= true %>" title="general">
-				<aui:input cssClass="lfr-input-text-container" label="overall-maximum-upload-request-size" name="uploadServletRequestImplMaxSize" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) %>" />
-
-				<aui:input cssClass="lfr-input-text-container" label="temporary-storage-directory" name="uploadServletRequestImplTempDir" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_TEMP_DIR, StringPool.BLANK) %>" />
-			</liferay-ui:panel>
-
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminDocumentLibraryPanel" markupView="lexicon" persistState="<%= true %>" title="documents-and-media">
 				<aui:input cssClass="lfr-input-text-container" label="maximum-file-size" name="dlFileMaxSize" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %>" />
 

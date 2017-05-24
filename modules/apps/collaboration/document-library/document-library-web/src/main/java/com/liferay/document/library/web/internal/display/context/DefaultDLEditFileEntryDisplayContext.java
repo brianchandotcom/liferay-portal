@@ -33,9 +33,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.UUID;
@@ -81,8 +80,7 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public long getMaximumUploadRequestSize() {
-		return PrefsPropsUtil.getLong(
-			PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+		return UploadServletRequestConfigurationHelperUtil.getMaxSize();
 	}
 
 	@Override

@@ -55,7 +55,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 				deleteFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="importLayouts"><portlet:param name="mvcRenderCommandName" value="importLayouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />',
 				fileDescription: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',
-				maxFileSize: '<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) %> B',
+				maxFileSize: '<%= UploadServletRequestConfigurationHelperUtil.getMaxSize() %> B',
 				metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
 				metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
 				multipleFiles: false,

@@ -18,16 +18,14 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.servlet.ServletInputStreamAdapter;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.LiferayInputStream;
 import com.liferay.portal.upload.LiferayServletRequest;
 import com.liferay.portal.upload.UploadServletRequestImpl;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
 
 import java.io.File;
@@ -1295,9 +1293,7 @@ public class UploadServletRequestTest {
 			File tempDir = UploadServletRequestImpl.getTempDir();
 
 			File expectedTempDir = new File(
-				PrefsPropsUtil.getString(
-					PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_TEMP_DIR,
-					SystemProperties.get(SystemProperties.TMP_DIR)));
+				UploadServletRequestConfigurationHelperUtil.getTempDir());
 
 			Assert.assertEquals(expectedTempDir, tempDir);
 		}

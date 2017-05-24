@@ -136,10 +136,6 @@ public class CPDefinitionAssetRenderer
 	public String getTitle(Locale locale) {
 		String languageId = LanguageUtil.getLanguageId(locale);
 
-		if (Validator.isNull(_cpDefinition.getTitle(languageId))) {
-			return _cpDefinition.getName();
-		}
-
 		return _cpDefinition.getTitle(languageId);
 	}
 

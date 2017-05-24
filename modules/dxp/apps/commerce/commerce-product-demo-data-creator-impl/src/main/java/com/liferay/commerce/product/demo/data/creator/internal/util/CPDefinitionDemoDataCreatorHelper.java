@@ -70,7 +70,6 @@ public class CPDefinitionDemoDataCreatorHelper
 			JSONObject productJSONObject = catalogJSONArray.getJSONObject(i);
 
 			String baseSKU = productJSONObject.getString("baseSKU");
-			String name = productJSONObject.getString("name");
 			String title = productJSONObject.getString("title");
 			String description = productJSONObject.getString("description");
 			String productTypeName = productJSONObject.getString(
@@ -99,7 +98,7 @@ public class CPDefinitionDemoDataCreatorHelper
 				commerceAssetCategoryIds, manufacturersAssetCategoryIds);
 
 			CPDefinition cpDefinition = createCPDefinition(
-				userId, groupId, baseSKU, name, titleMap, descriptionMap,
+				userId, groupId, baseSKU, titleMap, descriptionMap,
 				productTypeName, assetCategoryIds);
 
 			JSONArray cpOptionsJSONArray = productJSONObject.getJSONArray(
@@ -140,7 +139,7 @@ public class CPDefinitionDemoDataCreatorHelper
 	}
 
 	protected CPDefinition createCPDefinition(
-			long userId, long groupId, String baseSKU, String name,
+			long userId, long groupId, String baseSKU,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String productTypeName, long[] assetCategoryIds)
 		throws PortalException {
@@ -178,7 +177,7 @@ public class CPDefinitionDemoDataCreatorHelper
 		}
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.addCPDefinition(
-			baseSKU, name, titleMap, null, descriptionMap, productTypeName,
+			baseSKU, titleMap, null, descriptionMap, productTypeName,
 			null, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,

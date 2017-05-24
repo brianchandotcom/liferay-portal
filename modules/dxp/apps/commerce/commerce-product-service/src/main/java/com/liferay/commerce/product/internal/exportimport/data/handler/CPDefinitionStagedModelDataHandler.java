@@ -54,7 +54,7 @@ public class CPDefinitionStagedModelDataHandler
 		String displayName = cpDefinition.getTitleCurrentValue();
 
 		if (Validator.isNull(displayName)) {
-			displayName = cpDefinition.getName();
+			displayName = cpDefinition.getTitle();
 		}
 
 		return displayName;

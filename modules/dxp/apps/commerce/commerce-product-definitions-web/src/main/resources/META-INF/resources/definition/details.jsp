@@ -41,7 +41,7 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFI
 
 	<aui:field-wrapper cssClass="commerce-product-definition-description" label="full-description">
 		<div class="entry-content form-group">
-			<liferay-ui:input-localized cssClass="form-control" editorName="alloyeditor" name="descriptionMapAsXML" type="editor" xml="<%= descriptionMapAsXML %>" />
+			<liferay-ui:input-localized editorName="alloyeditor" name="descriptionMapAsXML" type="editor" xml="<%= descriptionMapAsXML %>" />
 		</div>
 	</aui:field-wrapper>
 </aui:fieldset>

@@ -106,8 +106,6 @@ public class CPDefinitionStagedModelDataHandlerTest
 		CPDefinition importedCPDefinition = (CPDefinition)importedStagedModel;
 
 		Assert.assertEquals(
-			cpDefinition.getName(), importedCPDefinition.getName());
-		Assert.assertEquals(
 			cpDefinition.getTitleMap(), importedCPDefinition.getTitleMap());
 		Assert.assertEquals(
 			cpDefinition.getDescriptionMap(),

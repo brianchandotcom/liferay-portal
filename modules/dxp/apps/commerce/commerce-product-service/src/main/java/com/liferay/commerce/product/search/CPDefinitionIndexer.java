@@ -62,7 +62,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
-			Field.NAME, Field.UID);
+			Field.TITLE, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
@@ -98,7 +98,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, false);
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
+		addSearchTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchTerm(searchQuery, searchContext, FIELD_SKUS, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
@@ -159,7 +159,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			document.addText(Field.CONTENT, description);
 		}
 
-		document.addText(Field.NAME, cpDefinition.getName());
+		document.addText(Field.TITLE, cpDefinition.getTitle());
 		document.addText(FIELD_BASE_SKU, cpDefinition.getBaseSKU());
 
 		String[] skus = _cpInstanceLocalService.getSKUs(

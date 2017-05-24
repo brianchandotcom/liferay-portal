@@ -12,7 +12,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="CPDefinitionId" type="long" />
 		<field name="fileEntryId" type="long" />
-		<field name="url" type="String" />
+		<field name="url" type="String">
+			<validator name="url" />
+		</field>
 		<field name="activationStatus" type="String" />
 		<field name="duration" type="long" />
 		<field name="maxUsages" type="int">
@@ -20,7 +22,9 @@
 		</field>
 		<field name="useSample" type="boolean" />
 		<field name="sampleFileEntryId" type="long" />
-		<field name="sampleUrl" type="String" />
+		<field name="sampleUrl" type="String">
+			<validator name="url" />
+		</field>
 		<field name="termsOfUseRequired" type="boolean" />
 		<field localized="true" name="termsOfUseContent" type="String" />
 		<field name="termsOfUseJournalArticleResourcePK" type="long" />

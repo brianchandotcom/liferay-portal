@@ -27,10 +27,10 @@ boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting
 
 String termsOfUseButtonCssClass = "lfr-definition-virtual-setting-terms-of-use-value modify-journal-article-link ";
 
-boolean selectWebContent = ParamUtil.getBoolean(request, "selectWebContent", false);
+boolean useWebContent = ParamUtil.getBoolean(request, "useWebContent", false);
 
 if ((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK())) {
-	selectWebContent = true;
+	useWebContent = true;
 }
 
 if (journalArticleSearchContainer.hasResults()) {
@@ -42,7 +42,8 @@ if (journalArticleSearchContainer.hasResults()) {
 
 <aui:model-context bean="<%= cpDefinitionVirtualSetting %>" model="<%= CPDefinitionVirtualSetting.class %>" />
 
-<liferay-ui:error exception="<%= CPDefinitionVirtualSettingTermsOfUseRequiredException.class %>" />
+<liferay-ui:error exception="<%= CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException.class %>" message="please-select-an-existing-web-content" />
+<liferay-ui:error exception="<%= CPDefinitionVirtualSettingTermsOfUseContentException.class %>" message="please-insert-terms-of-use-content" />
 
 <liferay-util:buffer var="removeJournalArticleIcon">
 	<liferay-ui:icon
@@ -60,7 +61,7 @@ if (journalArticleSearchContainer.hasResults()) {
 
 <div class="lfr-definition-virtual-setting-terms-of-use-content toggler-content-collapsed">
 	<aui:fieldset>
-		<aui:input checked="<%= selectWebContent %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="select-web-content" name="selectWebContent" type="checkbox" />
+		<aui:input checked="<%= useWebContent %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="use-web-content" name="useWebContent" type="checkbox" />
 
 		<aui:field-wrapper cssClass="lfr-definition-virtual-setting-content">
 			<div class="entry-content form-group">
@@ -173,18 +174,18 @@ if (journalArticleSearchContainer.hasResults()) {
 </aui:script>
 
 <aui:script>
-	AUI().ready('node', 'event', function(A){
+	AUI().ready('node', 'event', function(A) {
 		selectContentType(A);
 
-		A.one('#<portlet:namespace/>selectWebContent').on('click',function(b){
+		A.one('#<portlet:namespace/>useWebContent').on('click',function(b) {
 			selectContentType(A);
 		})
 	});
 
-	function selectContentType(A){
-		var contentCheckbox = A.one('#<portlet:namespace/>selectWebContent');
+	function selectContentType(A) {
+		var contentCheckbox = A.one('#<portlet:namespace/>useWebContent');
 
-		if(contentCheckbox.attr('checked')) {
+		if (contentCheckbox.attr('checked')) {
 			A.one('.lfr-definition-virtual-setting-web-content-selector').removeClass('hidden');
 			A.one('.lfr-definition-virtual-setting-content').addClass('hidden');
 		}

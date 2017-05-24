@@ -18,12 +18,12 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingFileEntryIdException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleFileEntryIdException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleUrlException;
-import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseRequiredException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseContentException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingUrlException;
 import com.liferay.commerce.product.type.virtual.exception.NoSuchCPDefinitionVirtualSettingException;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -34,6 +34,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.struts.StrutsActionPortletURL;
+import com.liferay.portlet.PortletResponseImpl;
+import com.liferay.portlet.PortletURLImpl;
 
 import java.util.Locale;
 import java.util.Map;
@@ -42,10 +46,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.struts.StrutsActionPortletURL;
-import com.liferay.portlet.PortletResponseImpl;
-import com.liferay.portlet.PortletURLImpl;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -63,26 +63,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EditCPDefinitionVirtualSettingMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected String getSaveAndContinueRedirect(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletURLImpl portletURL = new StrutsActionPortletURL(
-			(PortletResponseImpl)actionResponse, themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
-
-		long cpDefinitionId = ParamUtil.getLong(actionRequest, "cpDefinitionId");
-
-		portletURL.setParameter("mvcRenderCommandName", "editProductDefinitionVirtualSetting");
-		portletURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
-		portletURL.setWindowState(actionRequest.getWindowState());
-
-		return portletURL.toString();
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -90,7 +70,8 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String redirect = getSaveAndContinueRedirect(actionRequest, actionResponse);
+		String redirect = getSaveAndContinueRedirect(
+			actionRequest, actionResponse);
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
@@ -105,7 +86,9 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 					CPDefinitionVirtualSettingSampleFileEntryIdException ||
 				e instanceof CPDefinitionVirtualSettingSampleUrlException ||
 				e instanceof
-					CPDefinitionVirtualSettingTermsOfUseRequiredException ||
+					CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException ||
+				e instanceof
+					CPDefinitionVirtualSettingTermsOfUseContentException ||
 				e instanceof CPDefinitionVirtualSettingUrlException ||
 				e instanceof NoSuchCPDefinitionVirtualSettingException ||
 				e instanceof PrincipalException) {
@@ -115,7 +98,9 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				actionResponse.setRenderParameter("mvcRenderCommandName", "editProductDefinitionVirtualSetting");
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName",
+					"editProductDefinitionVirtualSetting");
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}
@@ -123,6 +108,29 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 				throw e;
 			}
 		}
+	}
+
+	protected String getSaveAndContinueRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURLImpl portletURL = new StrutsActionPortletURL(
+			(PortletResponseImpl)actionResponse, themeDisplay.getPlid(),
+			PortletRequest.RENDER_PHASE);
+
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editProductDefinitionVirtualSetting");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(cpDefinitionId));
+		portletURL.setWindowState(actionRequest.getWindowState());
+
+		return portletURL.toString();
 	}
 
 	protected CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
@@ -135,8 +143,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 
-		boolean useUrl = ParamUtil.getBoolean(
-			actionRequest, "useUrl");
+		boolean useUrl = ParamUtil.getBoolean(actionRequest, "useUrl");
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 		String url = ParamUtil.getString(actionRequest, "url");
 		String activationStatus = ParamUtil.getString(
@@ -151,6 +158,8 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 		String sampleUrl = ParamUtil.getString(actionRequest, "sampleUrl");
 		boolean termsOfUseRequired = ParamUtil.getBoolean(
 			actionRequest, "termsOfUseRequired");
+		boolean useWebContent = ParamUtil.getBoolean(
+			actionRequest, "useWebContent");
 		Map<Locale, String> termsOfUseContentMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "termsOfUseContent");
@@ -172,7 +181,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 						cpDefinitionId, useUrl, fileEntryId, url,
 						activationStatus, numberOfDays, maxUsages, useSample,
 						useSampleUrl, sampleFileEntryId, sampleUrl,
-						termsOfUseRequired, termsOfUseContentMap,
+						termsOfUseRequired, useWebContent, termsOfUseContentMap,
 						termsOfUseJournalArticleResourcePK, serviceContext);
 		}
 		else {
@@ -182,10 +191,10 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 			cpDefinitionVirtualSetting =
 				_cpDefinitionVirtualSettingService.
 					updateCPDefinitionVirtualSetting(
-						cpDefinitionVirtualSettingId, useUrl, fileEntryId,
-						url, activationStatus, numberOfDays, maxUsages, useSample,
+						cpDefinitionVirtualSettingId, useUrl, fileEntryId, url,
+						activationStatus, numberOfDays, maxUsages, useSample,
 						useSampleUrl, sampleFileEntryId, sampleUrl,
-						termsOfUseRequired, termsOfUseContentMap,
+						termsOfUseRequired, useWebContent, termsOfUseContentMap,
 						termsOfUseJournalArticleResourcePK, serviceContext);
 		}
 

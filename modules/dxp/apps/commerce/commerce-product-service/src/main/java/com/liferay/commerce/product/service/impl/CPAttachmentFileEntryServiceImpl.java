@@ -28,10 +28,9 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -101,7 +100,7 @@ public class CPAttachmentFileEntryServiceImpl
 
 	@Override
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long classNameId, int classPK, int start, int end)
+			long classNameId, long classPK, int start, int end)
 		throws PortalException {
 
 		return cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
@@ -110,7 +109,7 @@ public class CPAttachmentFileEntryServiceImpl
 
 	@Override
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long classNameId, int classPK, int start, int end,
+			long classNameId, long classPK, int start, int end,
 			OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws PortalException {
 
@@ -119,10 +118,24 @@ public class CPAttachmentFileEntryServiceImpl
 	}
 
 	@Override
-	public int getCPAttachmentFileEntriesCount(long classNameId, int classPK) {
+	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK) {
 		return
 			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntriesCount(
 				classNameId, classPK);
+	}
+
+	@Override
+	public CPAttachmentFileEntry getCPAttachmentFileEntry(
+			long cpAttachmentFileEntryId)
+		throws PortalException {
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntry(
+				cpAttachmentFileEntryId);
+
+		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntry);
+
+		return cpAttachmentFileEntry;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -194,7 +207,7 @@ public class CPAttachmentFileEntryServiceImpl
 		return CPActionKeys.MANAGE_COMMERCE_PRODUCT_IMAGES;
 	}
 
-	@Reference
+	@ServiceReference(type = Portal.class)
 	private Portal _portal;
 
 }

@@ -24,9 +24,13 @@ CPAttachmentFileEntriesDisplayContext cpAttachmentFileEntriesDisplayContext = (C
 
 <c:choose>
 	<c:when test="<%= !cpAttachmentFileEntriesDisplayContext.hasOptions() %>">
-		<liferay-ui:message key="there-are-no-options-set-as-sku-contributor" />
+		<div class="alert alert-info">
+			<liferay-ui:message key="there-are-no-options-set-as-sku-contributor" />
+		</div>
 	</c:when>
 	<c:otherwise>
 		<%= cpAttachmentFileEntriesDisplayContext.renderOptions(renderRequest, renderResponse) %>
+
+		<aui:input name="ddmFormValues" type="hidden" />
 	</c:otherwise>
 </c:choose>

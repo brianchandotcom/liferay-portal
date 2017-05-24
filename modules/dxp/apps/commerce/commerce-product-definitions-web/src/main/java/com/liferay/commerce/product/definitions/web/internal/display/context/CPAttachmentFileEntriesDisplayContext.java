@@ -16,10 +16,16 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentsConfiguration;
+import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -28,9 +34,18 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -47,9 +62,12 @@ public class CPAttachmentFileEntriesDisplayContext extends
 	public CPAttachmentFileEntriesDisplayContext(
 			ActionHelper actionHelper,
 			AttachmentsConfiguration attachmentsConfiguration,
+			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPDefinitionOptionRelService cpDefinitionOptionRelService,
 			CPInstanceHelper cpInstanceHelper,
-			HttpServletRequest httpServletRequest, ItemSelector itemSelector)
+			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
+			HttpServletRequest httpServletRequest, ItemSelector itemSelector,
+			Portal portal)
 		throws PortalException {
 
 		super(actionHelper, httpServletRequest, "CPAttachmentFileEntry");
@@ -58,9 +76,12 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		setDefaultOrderByType("asc");
 
 		_attachmentsConfiguration = attachmentsConfiguration;
+		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
 		_cpInstanceHelper = cpInstanceHelper;
+		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 		_itemSelector = itemSelector;
+		_portal = portal;
 	}
 
 	public CPAttachmentFileEntry getCPAttachmentFileEntry()
@@ -85,6 +106,29 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		}
 
 		return cpAttachmentFileEntry.getCPAttachmentFileEntryId();
+	}
+
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels()
+		throws PortalException {
+
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
+
+		CPDefinition cpDefinition = getCPDefinition();
+
+		if (cpDefinition != null) {
+			cpDefinitionOptionRels = cpDefinition.getCPDefinitionOptionRels();
+		}
+
+		return cpDefinitionOptionRels;
+	}
+
+	public String getCssClassFileMimeType(FileEntry fileEntry) {
+		if (fileEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return _dlMimeTypeDisplayContext.getCssClassFileMimeType(
+			fileEntry.getMimeType());
 	}
 
 	public String[] getImageExtensions() {
@@ -120,10 +164,81 @@ public class CPAttachmentFileEntriesDisplayContext extends
 	}
 
 	@Override
+	public PortletURL getPortletURL() throws PortalException {
+		PortletURL portletURL = super.getPortletURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "viewAttachmentFileEntries");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+
+		return portletURL;
+	}
+
+	@Override
 	public SearchContainer<CPAttachmentFileEntry> getSearchContainer()
 		throws PortalException {
 
-		return null;
+		if (searchContainer != null) {
+			return searchContainer;
+		}
+
+		long classNameId = _portal.getClassNameId(CPDefinition.class);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		SearchContainer<CPAttachmentFileEntry> searchContainer =
+			new SearchContainer<>(
+				liferayPortletRequest, getPortletURL(), null, null);
+
+		OrderByComparator<CPAttachmentFileEntry> orderByComparator =
+			CPDefinitionsPortletUtil.getCPAttachmentFileEntryOrderByComparator(
+				getOrderByCol(), getOrderByType());
+
+		searchContainer.setOrderByCol(getOrderByCol());
+		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByType(getOrderByType());
+		searchContainer.setEmptyResultsMessage("no-attachments-were-found");
+
+		searchContainer.setRowChecker(getRowChecker());
+
+		if (isSearch()) {
+			Sort sort = CPDefinitionsPortletUtil.getCPAttachmentFileEntrySort(
+				getOrderByCol(), getOrderByType());
+			/*BaseModelSearchResult<CPAttachmentFileEntry>
+				cpAttachmentFileEntryBaseModelSearchResult =
+					_cpAttachmentFileEntryService.searchCPOptions(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId(), getCPDefinitionId(),
+						getKeywords(), searchContainer.getStart(),
+						searchContainer.getEnd(), sort);
+
+			searchContainer.setTotal(
+				cpAttachmentFileEntryBaseModelSearchResult.getLength());
+			searchContainer.setResults(
+				cpAttachmentFileEntryBaseModelSearchResult.getBaseModels());*/
+		}
+		else {
+			int total =
+				_cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(
+					classNameId, getCPDefinitionId());
+
+			searchContainer.setTotal(total);
+
+			List<CPAttachmentFileEntry> results =
+				_cpAttachmentFileEntryService.getCPAttachmentFileEntries(
+					classNameId, getCPDefinitionId(),
+					searchContainer.getStart(), searchContainer.getEnd(),
+					orderByComparator);
+
+			searchContainer.setResults(results);
+		}
+
+		this.searchContainer = searchContainer;
+
+		return this.searchContainer;
 	}
 
 	public boolean hasOptions() throws PortalException {
@@ -137,6 +252,26 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		}
 
 		return false;
+	}
+
+	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+			parseCPAttachmentFileEntry(long cpAttachmentFileEntryId)
+		throws PortalException {
+
+		if (cpAttachmentFileEntryId <= 0) {
+			return Collections.emptyMap();
+		}
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			_cpAttachmentFileEntryService.fetchCPAttachmentFileEntry(
+				cpAttachmentFileEntryId);
+
+		if (cpAttachmentFileEntry == null) {
+			return Collections.emptyMap();
+		}
+
+		return _cpInstanceHelper.parseJSONString(
+			cpAttachmentFileEntry.getJson());
 	}
 
 	public String renderOptions(
@@ -158,8 +293,11 @@ public class CPAttachmentFileEntriesDisplayContext extends
 
 	private final AttachmentsConfiguration _attachmentsConfiguration;
 	private CPAttachmentFileEntry _cpAttachmentFileEntry;
+	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 	private final CPInstanceHelper _cpInstanceHelper;
+	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private final ItemSelector _itemSelector;
+	private final Portal _portal;
 
 }

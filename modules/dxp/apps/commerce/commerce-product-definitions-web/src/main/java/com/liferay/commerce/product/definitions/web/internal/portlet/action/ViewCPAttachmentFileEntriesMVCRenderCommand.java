@@ -20,6 +20,7 @@ import com.liferay.commerce.product.definitions.web.internal.display.context.CPA
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -70,7 +71,8 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 					new CPAttachmentFileEntriesDisplayContext(
 						_actionHelper, _attachmentsConfiguration,
 						_cpDefinitionOptionRelService, _cpInstanceHelper,
-						httpServletRequest, _itemSelector);
+						_dlMimeTypeDisplayContext, httpServletRequest,
+						_itemSelector, _portal);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -99,6 +101,9 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
 	@Reference
 	private ItemSelector _itemSelector;

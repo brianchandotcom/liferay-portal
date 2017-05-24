@@ -841,6 +841,7 @@ public class CPDefinitionLocalServiceImpl
 		}
 		else {
 			cpDefinitionLocalization.setTitle(title);
+			cpDefinitionLocalization.setShortDescription(shortDescription);
 			cpDefinitionLocalization.setDescription(description);
 		}
 

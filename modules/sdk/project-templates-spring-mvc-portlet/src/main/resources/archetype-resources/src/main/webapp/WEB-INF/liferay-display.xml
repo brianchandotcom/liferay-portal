@@ -3,7 +3,7 @@
 <!DOCTYPE display PUBLIC "-//Liferay//DTD Display 7.0.0//EN" "http://www.liferay.com/dtd/liferay-display_7_0_0.dtd">
 
 <display>
-    <category name="category.sample">
-        <portlet id="${artifactId}" />
-    </category>
+	<category name="category.sample">
+		<portlet id="${artifactId}" />
+	</category>
 </display>

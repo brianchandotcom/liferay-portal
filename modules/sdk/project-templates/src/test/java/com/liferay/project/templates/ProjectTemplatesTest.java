@@ -922,8 +922,8 @@ public class ProjectTemplatesTest {
 			"-Dpackage=com.liferay.test");
 
 		_buildProjects(
-			gradleProjectDir, mavenProjectDir,
-			"build/libs/foo.war", "target/foo-1.0.0.war");
+			gradleProjectDir, mavenProjectDir, "build/libs/foo.war",
+			"target/foo-1.0.0.war");
 	}
 
 	@Test
@@ -971,8 +971,7 @@ public class ProjectTemplatesTest {
 			"-Dpackage=portlet.portlet");
 
 		_buildProjects(
-			gradleProjectDir, mavenProjectDir,
-			"build/libs/portlet-portlet.war",
+			gradleProjectDir, mavenProjectDir, "build/libs/portlet-portlet.war",
 			"target/portlet-portlet-1.0.0.war");
 	}
 

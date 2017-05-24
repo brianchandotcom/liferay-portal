@@ -16,10 +16,14 @@ package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -65,6 +69,26 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels() {
 		return CPDefinitionOptionRelLocalServiceUtil.getCPDefinitionOptionRels(
 			getCPDefinitionId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	@Override
+	public String getDefaultImageThumbnailSrc(ThemeDisplay themeDisplay)
+		throws Exception {
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			CPDefinitionLocalServiceUtil.getDefaultImage(getCPDefinitionId());
+
+		if (cpAttachmentFileEntry == null) {
+			return null;
+		}
+
+		FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+
+		if (fileEntry == null) {
+			return null;
+		}
+
+		return DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
 	}
 
 	@Override

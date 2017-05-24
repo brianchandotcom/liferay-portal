@@ -299,8 +299,7 @@ public class MBMessageLocalServiceTest {
 	}
 
 	private static final File _attachmentFile = new File(
-		"portal-impl/test/integration/com/liferay/portlet/messageboards" +
-			"/attachments/dependencies/company_logo.png");
+		"dependencies/company_logo.png");
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -13,10 +13,10 @@
         <supports>
             <mime-type>text/html</mime-type>
         </supports>
-        <resource-bundle>content/Language</resource-bundle>
+        <resource-bundle>content.Language</resource-bundle>
         <portlet-info>
-            <title>${artifactId}</title>
-            <short-title>${artifactId}</short-title>
+            <title>${artifactId} Spring MVC Portlet</title>
+            <short-title>${artifactId} Spring MVC Portlet</short-title>
             <keywords>${artifactId}</keywords>
         </portlet-info>
         <security-role-ref>

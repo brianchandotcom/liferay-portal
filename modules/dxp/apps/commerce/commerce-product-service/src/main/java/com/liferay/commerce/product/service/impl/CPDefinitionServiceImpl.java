@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.base.CPDefinitionServiceBaseImpl;
 import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
@@ -142,6 +143,16 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionFinder.filterCountByG_S(
 			groupId, languageId, queryDefinition);
+	}
+
+	@Override
+	public CPAttachmentFileEntry getDefaultImage(long cpDefinitionId)
+		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionLocalService.getDefaultImage(cpDefinitionId);
 	}
 
 	@Override

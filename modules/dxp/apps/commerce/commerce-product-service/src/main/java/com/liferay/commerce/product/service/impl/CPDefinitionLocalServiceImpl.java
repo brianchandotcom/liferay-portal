@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.service.base.CPDefinitionLocalServiceBaseImpl;
@@ -332,6 +333,24 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return cpDefinitionLocalizationTitleMap;
+	}
+
+	@Override
+	public CPAttachmentFileEntry getDefaultImage(long cpDefinitionId)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(
+			CPDefinition.class);
+
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
+				classNameId, cpDefinitionId, 1, 1);
+
+		if (cpAttachmentFileEntries.isEmpty()) {
+			return null;
+		}
+
+		return cpAttachmentFileEntries.get(0);
 	}
 
 	@Override

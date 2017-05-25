@@ -187,8 +187,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String parentDirName = sourceFormatterArgs.getBaseDirName();
 
 		if (portalSource || subrepository) {
-			maxDirLevel = PORTAL_MAX_DIR_LEVEL - 1;
-			parentDirName += "../";
+			maxDirLevel = PORTAL_MAX_DIR_LEVEL;
 		}
 
 		for (int i = 0; i < maxDirLevel; i++) {

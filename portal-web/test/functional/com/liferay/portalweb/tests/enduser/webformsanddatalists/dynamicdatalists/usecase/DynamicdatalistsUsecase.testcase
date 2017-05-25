@@ -2939,15 +2939,9 @@
 		<for list="Device,Company,PermissionChecker" param="fieldName">
 			<var name="key_fieldName" value="${fieldName}" />
 
-			<if>
-				<equals arg1="${fieldName}" arg2="PermissionChecker" />
-				<then>
-					<execute function="MouseOver" locator1="DDMEditTemplate#SCRIPT_UTIL" />
-				</then>
-				<else>
-					<execute function="MouseOver" locator1="DDMEditTemplate#SCRIPT_VARIABLE" />
-				</else>
-			</if>
+			<execute macro="DDLTemplate#editTemplateScript">
+				<var name="fieldName" value="${fieldName}" />
+			</execute>
 
 			<execute function="AssertClick" locator1="JavaDocs#TOOLTIP_JAVA_CLASS_LINK" value1="${fieldName}" />
 

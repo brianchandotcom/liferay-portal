@@ -134,6 +134,20 @@
 		</execute>
 	</command>
 
+	<command name="viewFieldValueNotPresent">
+		<if>
+			<not>
+				<equals arg1="${fieldValueNotVisible}" arg2="${fieldValue}" />
+			</not>
+			<then>
+				<execute macro="FormsAdmin#viewTableEntryNotPresent">
+					<var name="fieldLabel" value="Text Field" />
+					<var name="fieldValue" value="${fieldValueNotVisible}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
 	<command name="viewForm">
 		<var name="key_formName" value="${formName}" />
 

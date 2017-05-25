@@ -2146,22 +2146,9 @@
 		<execute macro="PortletEntry#save" />
 
 		<for list="private,public" param="formAccessLevel" >
-			<if>
-				<equals arg1="${formAccessLevel}" arg2="private" />
-				<then>
-					<execute macro="Navigator#gotoPage">
-						<var name="pageName" value="Form Page" />
-					</execute>
-				</then>
-				<elseif>
-					<equals arg1="${formAccessLevel}" arg2="public" />
-					<then>
-						<execute macro="Navigator#openSpecificURL">
-							<var name="url" value="${publishedFormPublicURL}" />
-						</execute>
-					</then>
-				</elseif>
-			</if>
+			<execute macro="Form#gotoFormAccessLevelPage">
+				<var name="formAccessLevel" value="${formAccessLevel}" />
+			</execute>
 
 			<execute macro="FormFields#viewTextField">
 				<var name="fieldLabel" value="Text Field" />

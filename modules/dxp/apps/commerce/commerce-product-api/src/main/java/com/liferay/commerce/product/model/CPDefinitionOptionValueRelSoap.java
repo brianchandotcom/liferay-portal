@@ -191,11 +191,11 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 		_title = title;
 	}
 
-	public int getPriority() {
+	public double getPriority() {
 		return _priority;
 	}
 
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_priority = priority;
 	}
 
@@ -210,5 +210,5 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 	private long _CPDefinitionOptionRelId;
 	private String _name;
 	private String _title;
-	private int _priority;
+	private double _priority;
 }

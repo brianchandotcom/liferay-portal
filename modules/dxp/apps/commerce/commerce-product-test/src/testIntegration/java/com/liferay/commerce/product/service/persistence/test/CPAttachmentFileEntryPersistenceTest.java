@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -153,7 +154,7 @@ public class CPAttachmentFileEntryPersistenceTest {
 
 		newCPAttachmentFileEntry.setJson(RandomTestUtil.randomString());
 
-		newCPAttachmentFileEntry.setPriority(RandomTestUtil.nextInt());
+		newCPAttachmentFileEntry.setPriority(RandomTestUtil.nextDouble());
 
 		newCPAttachmentFileEntry.setType(RandomTestUtil.nextInt());
 
@@ -198,7 +199,7 @@ public class CPAttachmentFileEntryPersistenceTest {
 			newCPAttachmentFileEntry.getTitle());
 		Assert.assertEquals(existingCPAttachmentFileEntry.getJson(),
 			newCPAttachmentFileEntry.getJson());
-		Assert.assertEquals(existingCPAttachmentFileEntry.getPriority(),
+		AssertUtils.assertEquals(existingCPAttachmentFileEntry.getPriority(),
 			newCPAttachmentFileEntry.getPriority());
 		Assert.assertEquals(existingCPAttachmentFileEntry.getType(),
 			newCPAttachmentFileEntry.getType());
@@ -538,7 +539,7 @@ public class CPAttachmentFileEntryPersistenceTest {
 
 		cpAttachmentFileEntry.setJson(RandomTestUtil.randomString());
 
-		cpAttachmentFileEntry.setPriority(RandomTestUtil.nextInt());
+		cpAttachmentFileEntry.setPriority(RandomTestUtil.nextDouble());
 
 		cpAttachmentFileEntry.setType(RandomTestUtil.nextInt());
 

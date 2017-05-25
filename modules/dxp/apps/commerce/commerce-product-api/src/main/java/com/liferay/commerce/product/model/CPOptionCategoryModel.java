@@ -433,14 +433,14 @@ public interface CPOptionCategoryModel extends BaseModel<CPOptionCategory>,
 	 *
 	 * @return the priority of this cp option category
 	 */
-	public int getPriority();
+	public double getPriority();
 
 	/**
 	 * Sets the priority of this cp option category.
 	 *
 	 * @param priority the priority of this cp option category
 	 */
-	public void setPriority(int priority);
+	public void setPriority(double priority);
 
 	/**
 	 * Returns the last publish date of this cp option category.

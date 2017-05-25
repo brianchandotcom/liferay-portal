@@ -418,14 +418,14 @@ public interface CPAttachmentFileEntryModel extends AttachedModel,
 	 *
 	 * @return the priority of this cp attachment file entry
 	 */
-	public int getPriority();
+	public double getPriority();
 
 	/**
 	 * Sets the priority of this cp attachment file entry.
 	 *
 	 * @param priority the priority of this cp attachment file entry
 	 */
-	public void setPriority(int priority);
+	public void setPriority(double priority);
 
 	/**
 	 * Returns the type of this cp attachment file entry.

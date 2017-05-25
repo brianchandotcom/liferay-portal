@@ -149,7 +149,7 @@ public class CPDefinitionOptionValueRelWrapper
 			setTitle(title);
 		}
 
-		Integer priority = (Integer)attributes.get("priority");
+		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -197,19 +197,19 @@ public class CPDefinitionOptionValueRelWrapper
 		return _cpDefinitionOptionValueRel.toCacheModel();
 	}
 
-	@Override
-	public int compareTo(CPDefinitionOptionValueRel cpDefinitionOptionValueRel) {
-		return _cpDefinitionOptionValueRel.compareTo(cpDefinitionOptionValueRel);
-	}
-
 	/**
 	* Returns the priority of this cp definition option value rel.
 	*
 	* @return the priority of this cp definition option value rel
 	*/
 	@Override
-	public int getPriority() {
+	public double getPriority() {
 		return _cpDefinitionOptionValueRel.getPriority();
+	}
+
+	@Override
+	public int compareTo(CPDefinitionOptionValueRel cpDefinitionOptionValueRel) {
+		return _cpDefinitionOptionValueRel.compareTo(cpDefinitionOptionValueRel);
 	}
 
 	@Override
@@ -580,7 +580,7 @@ public class CPDefinitionOptionValueRelWrapper
 	* @param priority the priority of this cp definition option value rel
 	*/
 	@Override
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_cpDefinitionOptionValueRel.setPriority(priority);
 	}
 

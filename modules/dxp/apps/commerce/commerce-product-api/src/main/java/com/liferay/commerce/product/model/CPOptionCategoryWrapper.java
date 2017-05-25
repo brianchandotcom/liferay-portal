@@ -145,7 +145,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 			setDescription(description);
 		}
 
-		Integer priority = (Integer)attributes.get("priority");
+		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -193,19 +193,19 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 		return _cpOptionCategory.toCacheModel();
 	}
 
-	@Override
-	public int compareTo(CPOptionCategory cpOptionCategory) {
-		return _cpOptionCategory.compareTo(cpOptionCategory);
-	}
-
 	/**
 	* Returns the priority of this cp option category.
 	*
 	* @return the priority of this cp option category
 	*/
 	@Override
-	public int getPriority() {
+	public double getPriority() {
 		return _cpOptionCategory.getPriority();
+	}
+
+	@Override
+	public int compareTo(CPOptionCategory cpOptionCategory) {
+		return _cpOptionCategory.compareTo(cpOptionCategory);
 	}
 
 	@Override
@@ -717,7 +717,7 @@ public class CPOptionCategoryWrapper implements CPOptionCategory,
 	* @param priority the priority of this cp option category
 	*/
 	@Override
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_cpOptionCategory.setPriority(priority);
 	}
 

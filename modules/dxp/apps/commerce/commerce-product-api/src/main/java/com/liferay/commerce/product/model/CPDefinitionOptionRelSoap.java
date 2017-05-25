@@ -220,11 +220,11 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 		_DDMFormFieldTypeName = DDMFormFieldTypeName;
 	}
 
-	public int getPriority() {
+	public double getPriority() {
 		return _priority;
 	}
 
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_priority = priority;
 	}
 
@@ -278,7 +278,7 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 	private String _title;
 	private String _description;
 	private String _DDMFormFieldTypeName;
-	private int _priority;
+	private double _priority;
 	private boolean _facetable;
 	private boolean _required;
 	private boolean _skuContributor;

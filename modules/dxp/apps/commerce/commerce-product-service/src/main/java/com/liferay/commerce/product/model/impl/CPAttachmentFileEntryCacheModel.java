@@ -219,7 +219,7 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 		title = objectInput.readUTF();
 		json = objectInput.readUTF();
 
-		priority = objectInput.readInt();
+		priority = objectInput.readDouble();
 
 		type = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
@@ -275,7 +275,7 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 			objectOutput.writeUTF(json);
 		}
 
-		objectOutput.writeInt(priority);
+		objectOutput.writeDouble(priority);
 
 		objectOutput.writeInt(type);
 		objectOutput.writeLong(lastPublishDate);
@@ -296,7 +296,7 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 	public long expirationDate;
 	public String title;
 	public String json;
-	public int priority;
+	public double priority;
 	public int type;
 	public long lastPublishDate;
 }

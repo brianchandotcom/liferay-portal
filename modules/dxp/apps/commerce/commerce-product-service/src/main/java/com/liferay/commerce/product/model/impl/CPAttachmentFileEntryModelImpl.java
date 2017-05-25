@@ -95,7 +95,7 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 			{ "expirationDate", Types.TIMESTAMP },
 			{ "title", Types.VARCHAR },
 			{ "json", Types.CLOB },
-			{ "priority", Types.INTEGER },
+			{ "priority", Types.DOUBLE },
 			{ "type_", Types.INTEGER },
 			{ "lastPublishDate", Types.TIMESTAMP }
 		};
@@ -117,12 +117,12 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("json", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPAttachmentFileEntry (uuid_ VARCHAR(75) null,CPAttachmentFileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,displayDate DATE null,expirationDate DATE null,title STRING null,json TEXT null,priority INTEGER,type_ INTEGER,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPAttachmentFileEntry (uuid_ VARCHAR(75) null,CPAttachmentFileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,displayDate DATE null,expirationDate DATE null,title STRING null,json TEXT null,priority DOUBLE,type_ INTEGER,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPAttachmentFileEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpAttachmentFileEntry.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPAttachmentFileEntry.priority ASC";
@@ -361,7 +361,7 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 			setJson(json);
 		}
 
-		Integer priority = (Integer)attributes.get("priority");
+		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -748,12 +748,12 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 
 	@JSON
 	@Override
-	public int getPriority() {
+	public double getPriority() {
 		return _priority;
 	}
 
 	@Override
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_columnBitmask = -1L;
 
 		_priority = priority;
@@ -1267,7 +1267,7 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 	private String _title;
 	private String _titleCurrentLanguageId;
 	private String _json;
-	private int _priority;
+	private double _priority;
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;

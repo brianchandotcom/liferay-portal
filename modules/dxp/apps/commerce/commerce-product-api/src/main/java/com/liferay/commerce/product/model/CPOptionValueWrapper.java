@@ -145,7 +145,7 @@ public class CPOptionValueWrapper implements CPOptionValue,
 			setTitle(title);
 		}
 
-		Integer priority = (Integer)attributes.get("priority");
+		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -199,19 +199,19 @@ public class CPOptionValueWrapper implements CPOptionValue,
 		return _cpOptionValue.toCacheModel();
 	}
 
-	@Override
-	public int compareTo(CPOptionValue cpOptionValue) {
-		return _cpOptionValue.compareTo(cpOptionValue);
-	}
-
 	/**
 	* Returns the priority of this cp option value.
 	*
 	* @return the priority of this cp option value
 	*/
 	@Override
-	public int getPriority() {
+	public double getPriority() {
 		return _cpOptionValue.getPriority();
+	}
+
+	@Override
+	public int compareTo(CPOptionValue cpOptionValue) {
+		return _cpOptionValue.compareTo(cpOptionValue);
 	}
 
 	@Override
@@ -601,7 +601,7 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	* @param priority the priority of this cp option value
 	*/
 	@Override
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_cpOptionValue.setPriority(priority);
 	}
 

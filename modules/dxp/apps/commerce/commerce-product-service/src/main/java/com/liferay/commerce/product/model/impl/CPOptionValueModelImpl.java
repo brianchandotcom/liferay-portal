@@ -91,7 +91,7 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 			{ "CPOptionId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
-			{ "priority", Types.INTEGER },
+			{ "priority", Types.DOUBLE },
 			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -108,11 +108,11 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 		TABLE_COLUMNS_MAP.put("CPOptionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPOptionValue (uuid_ VARCHAR(75) null,CPOptionValueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPOptionId LONG,name VARCHAR(75) null,title STRING null,priority INTEGER,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPOptionValue (uuid_ VARCHAR(75) null,CPOptionValueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPOptionId LONG,name VARCHAR(75) null,title STRING null,priority DOUBLE,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPOptionValue";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpOptionValue.title ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPOptionValue.title ASC";
@@ -312,7 +312,7 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 			setTitle(title);
 		}
 
-		Integer priority = (Integer)attributes.get("priority");
+		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -619,12 +619,12 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 
 	@JSON
 	@Override
-	public int getPriority() {
+	public double getPriority() {
 		return _priority;
 	}
 
 	@Override
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_priority = priority;
 	}
 
@@ -1032,7 +1032,7 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 	private String _name;
 	private String _title;
 	private String _titleCurrentLanguageId;
-	private int _priority;
+	private double _priority;
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CPOptionValue _escapedModel;

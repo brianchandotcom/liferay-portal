@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -145,7 +146,7 @@ public class CPOptionCategoryPersistenceTest {
 
 		newCPOptionCategory.setDescription(RandomTestUtil.randomString());
 
-		newCPOptionCategory.setPriority(RandomTestUtil.nextInt());
+		newCPOptionCategory.setPriority(RandomTestUtil.nextDouble());
 
 		newCPOptionCategory.setLastPublishDate(RandomTestUtil.nextDate());
 
@@ -177,7 +178,7 @@ public class CPOptionCategoryPersistenceTest {
 			newCPOptionCategory.getTitle());
 		Assert.assertEquals(existingCPOptionCategory.getDescription(),
 			newCPOptionCategory.getDescription());
-		Assert.assertEquals(existingCPOptionCategory.getPriority(),
+		AssertUtils.assertEquals(existingCPOptionCategory.getPriority(),
 			newCPOptionCategory.getPriority());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPOptionCategory.getLastPublishDate()),
@@ -496,7 +497,7 @@ public class CPOptionCategoryPersistenceTest {
 
 		cpOptionCategory.setDescription(RandomTestUtil.randomString());
 
-		cpOptionCategory.setPriority(RandomTestUtil.nextInt());
+		cpOptionCategory.setPriority(RandomTestUtil.nextDouble());
 
 		cpOptionCategory.setLastPublishDate(RandomTestUtil.nextDate());
 

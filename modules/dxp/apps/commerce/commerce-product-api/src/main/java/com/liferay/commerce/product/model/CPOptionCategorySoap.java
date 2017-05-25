@@ -189,11 +189,11 @@ public class CPOptionCategorySoap implements Serializable {
 		_description = description;
 	}
 
-	public int getPriority() {
+	public double getPriority() {
 		return _priority;
 	}
 
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_priority = priority;
 	}
 
@@ -216,6 +216,6 @@ public class CPOptionCategorySoap implements Serializable {
 	private String _name;
 	private String _title;
 	private String _description;
-	private int _priority;
+	private double _priority;
 	private Date _lastPublishDate;
 }

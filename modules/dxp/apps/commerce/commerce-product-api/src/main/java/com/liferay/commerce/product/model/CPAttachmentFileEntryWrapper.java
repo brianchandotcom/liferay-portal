@@ -176,7 +176,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 			setJson(json);
 		}
 
-		Integer priority = (Integer)attributes.get("priority");
+		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -236,19 +236,19 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 		return _cpAttachmentFileEntry.getFileEntry();
 	}
 
-	@Override
-	public int compareTo(CPAttachmentFileEntry cpAttachmentFileEntry) {
-		return _cpAttachmentFileEntry.compareTo(cpAttachmentFileEntry);
-	}
-
 	/**
 	* Returns the priority of this cp attachment file entry.
 	*
 	* @return the priority of this cp attachment file entry
 	*/
 	@Override
-	public int getPriority() {
+	public double getPriority() {
 		return _cpAttachmentFileEntry.getPriority();
+	}
+
+	@Override
+	public int compareTo(CPAttachmentFileEntry cpAttachmentFileEntry) {
+		return _cpAttachmentFileEntry.compareTo(cpAttachmentFileEntry);
 	}
 
 	/**
@@ -743,7 +743,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	* @param priority the priority of this cp attachment file entry
 	*/
 	@Override
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_cpAttachmentFileEntry.setPriority(priority);
 	}
 

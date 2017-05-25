@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -145,7 +146,7 @@ public class CPOptionValuePersistenceTest {
 
 		newCPOptionValue.setTitle(RandomTestUtil.randomString());
 
-		newCPOptionValue.setPriority(RandomTestUtil.nextInt());
+		newCPOptionValue.setPriority(RandomTestUtil.nextDouble());
 
 		newCPOptionValue.setLastPublishDate(RandomTestUtil.nextDate());
 
@@ -177,7 +178,7 @@ public class CPOptionValuePersistenceTest {
 			newCPOptionValue.getName());
 		Assert.assertEquals(existingCPOptionValue.getTitle(),
 			newCPOptionValue.getTitle());
-		Assert.assertEquals(existingCPOptionValue.getPriority(),
+		AssertUtils.assertEquals(existingCPOptionValue.getPriority(),
 			newCPOptionValue.getPriority());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPOptionValue.getLastPublishDate()),
@@ -497,7 +498,7 @@ public class CPOptionValuePersistenceTest {
 
 		cpOptionValue.setTitle(RandomTestUtil.randomString());
 
-		cpOptionValue.setPriority(RandomTestUtil.nextInt());
+		cpOptionValue.setPriority(RandomTestUtil.nextDouble());
 
 		cpOptionValue.setLastPublishDate(RandomTestUtil.nextDate());
 

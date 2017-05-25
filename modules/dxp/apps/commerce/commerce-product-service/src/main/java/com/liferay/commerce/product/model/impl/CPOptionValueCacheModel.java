@@ -185,7 +185,7 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		name = objectInput.readUTF();
 		title = objectInput.readUTF();
 
-		priority = objectInput.readInt();
+		priority = objectInput.readDouble();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -233,7 +233,7 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 			objectOutput.writeUTF(title);
 		}
 
-		objectOutput.writeInt(priority);
+		objectOutput.writeDouble(priority);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -248,6 +248,6 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 	public long CPOptionId;
 	public String name;
 	public String title;
-	public int priority;
+	public double priority;
 	public long lastPublishDate;
 }

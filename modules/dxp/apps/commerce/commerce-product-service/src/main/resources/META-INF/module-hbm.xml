@@ -29,7 +29,7 @@
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="json" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
@@ -87,7 +87,7 @@
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="DDMFormFieldTypeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="facetable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="required" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="skuContributor" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
@@ -106,7 +106,7 @@
 		<property name="CPDefinitionOptionRelId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
 	<class name="com.liferay.commerce.product.model.impl.CPInstanceImpl" table="CPInstance">
 		<id name="CPInstanceId" type="long">
@@ -164,7 +164,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.commerce.product.model.impl.CPOptionValueImpl" table="CPOptionValue">
@@ -181,7 +181,7 @@
 		<property name="CPOptionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 </hibernate-mapping>

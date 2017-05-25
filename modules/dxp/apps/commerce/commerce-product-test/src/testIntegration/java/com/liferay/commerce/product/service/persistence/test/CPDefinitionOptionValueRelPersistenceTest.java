@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -145,7 +146,7 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 
 		newCPDefinitionOptionValueRel.setTitle(RandomTestUtil.randomString());
 
-		newCPDefinitionOptionValueRel.setPriority(RandomTestUtil.nextInt());
+		newCPDefinitionOptionValueRel.setPriority(RandomTestUtil.nextDouble());
 
 		_cpDefinitionOptionValueRels.add(_persistence.update(
 				newCPDefinitionOptionValueRel));
@@ -178,7 +179,7 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 			newCPDefinitionOptionValueRel.getName());
 		Assert.assertEquals(existingCPDefinitionOptionValueRel.getTitle(),
 			newCPDefinitionOptionValueRel.getTitle());
-		Assert.assertEquals(existingCPDefinitionOptionValueRel.getPriority(),
+		AssertUtils.assertEquals(existingCPDefinitionOptionValueRel.getPriority(),
 			newCPDefinitionOptionValueRel.getPriority());
 	}
 
@@ -517,7 +518,7 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 
 		cpDefinitionOptionValueRel.setTitle(RandomTestUtil.randomString());
 
-		cpDefinitionOptionValueRel.setPriority(RandomTestUtil.nextInt());
+		cpDefinitionOptionValueRel.setPriority(RandomTestUtil.nextDouble());
 
 		_cpDefinitionOptionValueRels.add(_persistence.update(
 				cpDefinitionOptionValueRel));

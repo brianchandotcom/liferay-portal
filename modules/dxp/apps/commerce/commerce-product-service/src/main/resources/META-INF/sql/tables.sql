@@ -14,7 +14,7 @@ create table CPAttachmentFileEntry (
 	expirationDate DATE null,
 	title STRING null,
 	json TEXT null,
-	priority INTEGER,
+	priority DOUBLE,
 	type_ INTEGER,
 	lastPublishDate DATE null
 );
@@ -69,7 +69,7 @@ create table CPDefinitionOptionRel (
 	title STRING null,
 	description STRING null,
 	DDMFormFieldTypeName VARCHAR(75) null,
-	priority INTEGER,
+	priority DOUBLE,
 	facetable BOOLEAN,
 	required BOOLEAN,
 	skuContributor BOOLEAN
@@ -87,7 +87,7 @@ create table CPDefinitionOptionValueRel (
 	CPDefinitionOptionRelId LONG,
 	name VARCHAR(75) null,
 	title STRING null,
-	priority INTEGER
+	priority DOUBLE
 );
 
 create table CPInstance (
@@ -142,7 +142,7 @@ create table CPOptionCategory (
 	name VARCHAR(75) null,
 	title STRING null,
 	description STRING null,
-	priority INTEGER,
+	priority DOUBLE,
 	lastPublishDate DATE null
 );
 
@@ -158,6 +158,6 @@ create table CPOptionValue (
 	CPOptionId LONG,
 	name VARCHAR(75) null,
 	title STRING null,
-	priority INTEGER,
+	priority DOUBLE,
 	lastPublishDate DATE null
 );

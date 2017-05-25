@@ -346,14 +346,14 @@ public interface CPOptionValueModel extends BaseModel<CPOptionValue>,
 	 *
 	 * @return the priority of this cp option value
 	 */
-	public int getPriority();
+	public double getPriority();
 
 	/**
 	 * Sets the priority of this cp option value.
 	 *
 	 * @param priority the priority of this cp option value
 	 */
-	public void setPriority(int priority);
+	public void setPriority(double priority);
 
 	/**
 	 * Returns the last publish date of this cp option value.

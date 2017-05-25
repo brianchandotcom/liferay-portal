@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -151,7 +152,7 @@ public class CPDefinitionOptionRelPersistenceTest {
 
 		newCPDefinitionOptionRel.setDDMFormFieldTypeName(RandomTestUtil.randomString());
 
-		newCPDefinitionOptionRel.setPriority(RandomTestUtil.nextInt());
+		newCPDefinitionOptionRel.setPriority(RandomTestUtil.nextDouble());
 
 		newCPDefinitionOptionRel.setFacetable(RandomTestUtil.randomBoolean());
 
@@ -194,7 +195,7 @@ public class CPDefinitionOptionRelPersistenceTest {
 			newCPDefinitionOptionRel.getDescription());
 		Assert.assertEquals(existingCPDefinitionOptionRel.getDDMFormFieldTypeName(),
 			newCPDefinitionOptionRel.getDDMFormFieldTypeName());
-		Assert.assertEquals(existingCPDefinitionOptionRel.getPriority(),
+		AssertUtils.assertEquals(existingCPDefinitionOptionRel.getPriority(),
 			newCPDefinitionOptionRel.getPriority());
 		Assert.assertEquals(existingCPDefinitionOptionRel.getFacetable(),
 			newCPDefinitionOptionRel.getFacetable());
@@ -543,7 +544,7 @@ public class CPDefinitionOptionRelPersistenceTest {
 
 		cpDefinitionOptionRel.setDDMFormFieldTypeName(RandomTestUtil.randomString());
 
-		cpDefinitionOptionRel.setPriority(RandomTestUtil.nextInt());
+		cpDefinitionOptionRel.setPriority(RandomTestUtil.nextDouble());
 
 		cpDefinitionOptionRel.setFacetable(RandomTestUtil.randomBoolean());
 

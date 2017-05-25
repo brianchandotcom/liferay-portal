@@ -171,7 +171,7 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 			setDDMFormFieldTypeName(DDMFormFieldTypeName);
 		}
 
-		Integer priority = (Integer)attributes.get("priority");
+		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -303,19 +303,19 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 		return _cpDefinitionOptionRel.toCacheModel();
 	}
 
-	@Override
-	public int compareTo(CPDefinitionOptionRel cpDefinitionOptionRel) {
-		return _cpDefinitionOptionRel.compareTo(cpDefinitionOptionRel);
-	}
-
 	/**
 	* Returns the priority of this cp definition option rel.
 	*
 	* @return the priority of this cp definition option rel
 	*/
 	@Override
-	public int getPriority() {
+	public double getPriority() {
 		return _cpDefinitionOptionRel.getPriority();
+	}
+
+	@Override
+	public int compareTo(CPDefinitionOptionRel cpDefinitionOptionRel) {
+		return _cpDefinitionOptionRel.compareTo(cpDefinitionOptionRel);
 	}
 
 	@Override
@@ -882,7 +882,7 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 	* @param priority the priority of this cp definition option rel
 	*/
 	@Override
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_cpDefinitionOptionRel.setPriority(priority);
 	}
 

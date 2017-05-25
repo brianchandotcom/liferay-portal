@@ -19,7 +19,7 @@
 		<field name="json" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="priority" type="int">
+		<field name="priority" type="double">
 			<validator name="number" />
 		</field>
 		<field name="type" type="int" />
@@ -79,7 +79,7 @@
 		<field localized="true" name="title" type="String" />
 		<field localized="true" name="description" type="String" />
 		<field name="DDMFormFieldTypeName" type="String" />
-		<field name="priority" type="int">
+		<field name="priority" type="double">
 			<validator name="number" />
 		</field>
 		<field name="facetable" type="boolean" />
@@ -100,7 +100,7 @@
 			<validator name="required" />
 		</field>
 		<field localized="true" name="title" type="String" />
-		<field name="priority" type="int">
+		<field name="priority" type="double">
 			<validator name="number" />
 		</field>
 	</model>
@@ -166,7 +166,7 @@
 			<validator name="required" />
 		</field>
 		<field localized="true" name="description" type="String" />
-		<field name="priority" type="int">
+		<field name="priority" type="double">
 			<validator name="number" />
 		</field>
 		<field name="lastPublishDate" type="Date" />
@@ -187,7 +187,7 @@
 		<field localized="true" name="title" type="String">
 			<validator name="required" />
 		</field>
-		<field name="priority" type="int">
+		<field name="priority" type="double">
 			<validator name="number" />
 		</field>
 		<field name="lastPublishDate" type="Date" />

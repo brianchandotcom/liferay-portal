@@ -189,7 +189,7 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
 
-		priority = objectInput.readInt();
+		priority = objectInput.readDouble();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -242,7 +242,7 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 			objectOutput.writeUTF(description);
 		}
 
-		objectOutput.writeInt(priority);
+		objectOutput.writeDouble(priority);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -257,6 +257,6 @@ public class CPOptionCategoryCacheModel implements CacheModel<CPOptionCategory>,
 	public String name;
 	public String title;
 	public String description;
-	public int priority;
+	public double priority;
 	public long lastPublishDate;
 }

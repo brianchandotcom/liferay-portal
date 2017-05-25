@@ -228,11 +228,11 @@ public class CPAttachmentFileEntrySoap implements Serializable {
 		_json = json;
 	}
 
-	public int getPriority() {
+	public double getPriority() {
 		return _priority;
 	}
 
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_priority = priority;
 	}
 
@@ -267,7 +267,7 @@ public class CPAttachmentFileEntrySoap implements Serializable {
 	private Date _expirationDate;
 	private String _title;
 	private String _json;
-	private int _priority;
+	private double _priority;
 	private int _type;
 	private Date _lastPublishDate;
 }

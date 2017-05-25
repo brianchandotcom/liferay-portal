@@ -348,14 +348,14 @@ public interface CPDefinitionOptionValueRelModel extends BaseModel<CPDefinitionO
 	 *
 	 * @return the priority of this cp definition option value rel
 	 */
-	public int getPriority();
+	public double getPriority();
 
 	/**
 	 * Sets the priority of this cp definition option value rel.
 	 *
 	 * @param priority the priority of this cp definition option value rel
 	 */
-	public void setPriority(int priority);
+	public void setPriority(double priority);
 
 	@Override
 	public boolean isNew();

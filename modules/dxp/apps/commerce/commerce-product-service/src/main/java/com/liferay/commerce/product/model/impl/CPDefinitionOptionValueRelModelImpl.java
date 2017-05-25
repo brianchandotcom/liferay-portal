@@ -91,7 +91,7 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 			{ "CPDefinitionOptionRelId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
-			{ "priority", Types.INTEGER }
+			{ "priority", Types.DOUBLE }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -107,10 +107,10 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 		TABLE_COLUMNS_MAP.put("CPDefinitionOptionRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionOptionValueRel (uuid_ VARCHAR(75) null,CPDefinitionOptionValueRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionOptionRelId LONG,name VARCHAR(75) null,title STRING null,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionOptionValueRel (uuid_ VARCHAR(75) null,CPDefinitionOptionValueRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionOptionRelId LONG,name VARCHAR(75) null,title STRING null,priority DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionOptionValueRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionOptionValueRel.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionOptionValueRel.priority ASC";
@@ -313,7 +313,7 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 			setTitle(title);
 		}
 
-		Integer priority = (Integer)attributes.get("priority");
+		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
@@ -613,12 +613,12 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 
 	@JSON
 	@Override
-	public int getPriority() {
+	public double getPriority() {
 		return _priority;
 	}
 
 	@Override
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_columnBitmask = -1L;
 
 		_priority = priority;
@@ -1011,7 +1011,7 @@ public class CPDefinitionOptionValueRelModelImpl extends BaseModelImpl<CPDefinit
 	private String _name;
 	private String _title;
 	private String _titleCurrentLanguageId;
-	private int _priority;
+	private double _priority;
 	private long _columnBitmask;
 	private CPDefinitionOptionValueRel _escapedModel;
 }

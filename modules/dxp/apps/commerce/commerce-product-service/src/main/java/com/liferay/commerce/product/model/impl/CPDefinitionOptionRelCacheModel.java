@@ -210,7 +210,7 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		description = objectInput.readUTF();
 		DDMFormFieldTypeName = objectInput.readUTF();
 
-		priority = objectInput.readInt();
+		priority = objectInput.readDouble();
 
 		facetable = objectInput.readBoolean();
 
@@ -279,7 +279,7 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 			objectOutput.writeUTF(DDMFormFieldTypeName);
 		}
 
-		objectOutput.writeInt(priority);
+		objectOutput.writeDouble(priority);
 
 		objectOutput.writeBoolean(facetable);
 
@@ -302,7 +302,7 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 	public String title;
 	public String description;
 	public String DDMFormFieldTypeName;
-	public int priority;
+	public double priority;
 	public boolean facetable;
 	public boolean required;
 	public boolean skuContributor;

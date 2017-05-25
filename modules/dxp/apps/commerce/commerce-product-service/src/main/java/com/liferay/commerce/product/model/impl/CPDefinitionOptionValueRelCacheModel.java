@@ -178,7 +178,7 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		name = objectInput.readUTF();
 		title = objectInput.readUTF();
 
-		priority = objectInput.readInt();
+		priority = objectInput.readDouble();
 	}
 
 	@Override
@@ -225,7 +225,7 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 			objectOutput.writeUTF(title);
 		}
 
-		objectOutput.writeInt(priority);
+		objectOutput.writeDouble(priority);
 	}
 
 	public String uuid;
@@ -239,5 +239,5 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 	public long CPDefinitionOptionRelId;
 	public String name;
 	public String title;
-	public int priority;
+	public double priority;
 }

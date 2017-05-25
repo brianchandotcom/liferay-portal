@@ -161,7 +161,7 @@
 		</execute>
 
 		<execute macro="CommerceCatalogEntry#editCatalogEntryBaseSKU">
-			<var name="baseSku" value="New ProductSKU" />
+			<var name="baseSku" value="New Product BaseSKU" />
 		</execute>
 
 		<execute macro="Button#clickSave" />
@@ -190,7 +190,7 @@
 		</execute>
 
 		<execute macro="CommerceCatalogEntry#viewCatalogEntry">
-			<var name="baseSku" value="New Base SKU" />
+			<var name="baseSku" value="New Product BaseSKU" />
 			<var name="productLongDescription" value="New Product Long Description" />
 			<var name="productName" value="New Product Name" />
 			<var name="productShortDescription" value="New Product Short Description" />

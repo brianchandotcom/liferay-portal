@@ -15,7 +15,9 @@
 package com.liferay.ratings.internal.page.ratings.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
@@ -23,7 +25,15 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
@@ -88,6 +98,27 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 			_ratingsEntryLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<RatingsEntry>() {
+
+				@Override
+				public void performAction(RatingsEntry ratingsEntry)
+					throws PortalException {
+
+					long groupId = getRatedEntityGroupId(ratingsEntry);
+
+					if ((groupId > 0) &&
+						(groupId != portletDataContext.getScopeGroupId())) {
+
+						return;
+					}
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, ratingsEntry);
+				}
+
+			});
+
 		actionableDynamicQuery.performActions();
 
 		return getExportDataRootElementString(rootElement);
@@ -116,11 +147,98 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		ActionableDynamicQuery actionableDynamicQuery =
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
 			_ratingsEntryLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
-		actionableDynamicQuery.performCount();
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<RatingsEntry>() {
+
+				@Override
+				public void performAction(RatingsEntry ratingsEntry)
+					throws PortalException {
+
+					long groupId = getRatedEntityGroupId(ratingsEntry);
+
+					if ((groupId > 0) &&
+						(groupId != portletDataContext.getScopeGroupId())) {
+
+						return;
+					}
+
+					ManifestSummary manifestSummary =
+						portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType =
+						exportActionableDynamicQuery.getStagedModelType();
+
+					manifestSummary.incrementModelAdditionCount(
+						stagedModelType);
+				}
+
+			});
+
+		exportActionableDynamicQuery.setPerformCountMethod(
+			new ActionableDynamicQuery.PerformCountMethod() {
+
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary =
+						portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType =
+						exportActionableDynamicQuery.getStagedModelType();
+
+					long modelDeletionCount =
+						ExportImportHelperUtil.getModelDeletionCount(
+							portletDataContext, stagedModelType);
+
+					manifestSummary.addModelDeletionCount(
+						stagedModelType, modelDeletionCount);
+
+					return manifestSummary.getModelAdditionCount(
+						stagedModelType);
+				}
+
+			});
+
+		exportActionableDynamicQuery.performActions();
+
+		exportActionableDynamicQuery.performCount();
+	}
+
+	protected long getRatedEntityGroupId(RatingsEntry ratingsEntry)
+		throws PortalException {
+
+		PersistedModelLocalService persistedModelLocalService =
+			PersistedModelLocalServiceRegistryUtil.
+				getPersistedModelLocalService(ratingsEntry.getClassName());
+
+		if (persistedModelLocalService == null) {
+			return 0;
+		}
+
+		PersistedModel persistedModel = null;
+
+		try {
+			persistedModel = persistedModelLocalService.getPersistedModel(
+				ratingsEntry.getClassPK());
+		}
+		catch (NoSuchModelException nsme) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsme.getMessage(), nsme);
+			}
+
+			return 0;
+		}
+
+		if (!(persistedModel instanceof GroupedModel)) {
+			return 0;
+		}
+
+		GroupedModel groupedModel = (GroupedModel)persistedModel;
+
+		return groupedModel.getGroupId();
 	}
 
 	@Reference(unbind = "-")
@@ -129,6 +247,9 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 
 		_ratingsEntryLocalService = ratingsEntryLocalService;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PageRatingsPortletDataHandler.class);
 
 	private RatingsEntryLocalService _ratingsEntryLocalService;
 

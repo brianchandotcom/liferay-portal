@@ -154,7 +154,7 @@ if (journalArticleSearchContainer.hasResults()) {
 </aui:script>
 
 <aui:script use="aui-toggler">
-		new A.Toggler(
+	new A.Toggler(
 		{
 			animated: true,
 			content: '#<portlet:namespace />fileEntryContainer .lfr-definition-virtual-setting-terms-of-use-content',

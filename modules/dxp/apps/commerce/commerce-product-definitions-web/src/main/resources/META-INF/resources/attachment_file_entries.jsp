@@ -35,6 +35,9 @@ PortletURL portletURL = cpAttachmentFileEntriesDisplayContext.getPortletURL();
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
 request.setAttribute("view.jsp-cpDefinition", cpDefinition);
 request.setAttribute("view.jsp-cpType", cpAttachmentFileEntriesDisplayContext.getCPType());
 request.setAttribute("view.jsp-portletURL", portletURL);

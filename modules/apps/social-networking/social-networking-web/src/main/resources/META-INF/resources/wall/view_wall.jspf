@@ -152,6 +152,7 @@
 										iconCssClass="icon-copy"
 										label="<%= true %>"
 										message="wall-to-wall"
+										method="get"
 										url="<%= wallToWallHREF %>"
 									/>
 								</c:if>
@@ -180,6 +181,7 @@
 									iconCssClass="icon-comments"
 									label="<%= true %>"
 									message="<%= postMessage %>"
+									method="get"
 									url="<%= postHREF %>"
 								/>
 

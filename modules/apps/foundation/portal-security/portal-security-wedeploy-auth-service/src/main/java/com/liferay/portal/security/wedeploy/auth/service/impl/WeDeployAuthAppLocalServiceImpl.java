@@ -75,8 +75,7 @@ public class WeDeployAuthAppLocalServiceImpl
 	}
 
 	public WeDeployAuthApp fetchWeDeployAuthApp(
-			String redirectURI, String clientId)
-		throws PortalException {
+		String redirectURI, String clientId) {
 
 		return weDeployAuthAppPersistence.fetchByRU_CI(redirectURI, clientId);
 	}

@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Marco Leo
@@ -45,8 +47,8 @@ public class CPAttachmentFileEntryServiceImpl
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String json, int priority, int type,
-			ServiceContext serviceContext)
+			boolean neverExpire, Map<Locale, String> titleMap, String json,
+			int priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		checkCPAttachmentFileEntryPermissions(
@@ -56,8 +58,8 @@ public class CPAttachmentFileEntryServiceImpl
 			classNameId, classPK, fileEntryId, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, json,
-			priority, type, serviceContext);
+			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
+			json, priority, type, serviceContext);
 	}
 
 	@Override
@@ -100,28 +102,30 @@ public class CPAttachmentFileEntryServiceImpl
 
 	@Override
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long classNameId, long classPK, int start, int end)
+			long classNameId, long classPK, int type, int start, int end)
 		throws PortalException {
 
 		return cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-			classNameId, classPK, start, end);
+			classNameId, classPK, type, start, end);
 	}
 
 	@Override
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long classNameId, long classPK, int start, int end,
+			long classNameId, long classPK, int type, int start, int end,
 			OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws PortalException {
 
 		return cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-			classNameId, classPK, start, end, orderByComparator);
+			classNameId, classPK, type, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK) {
+	public int getCPAttachmentFileEntriesCount(
+		long classNameId, long classPK, int type) {
+
 		return
 			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntriesCount(
-				classNameId, classPK);
+				classNameId, classPK, type);
 	}
 
 	@Override
@@ -146,8 +150,8 @@ public class CPAttachmentFileEntryServiceImpl
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String json, int priority, int type,
-			ServiceContext serviceContext)
+			boolean neverExpire, Map<Locale, String> titleMap, String json,
+			int priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
@@ -156,8 +160,8 @@ public class CPAttachmentFileEntryServiceImpl
 			cpAttachmentFileEntryId, fileEntryId, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, json,
-			priority, type, serviceContext);
+			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
+			json, priority, type, serviceContext);
 	}
 
 	protected void checkCPAttachmentFileEntryPermissions(

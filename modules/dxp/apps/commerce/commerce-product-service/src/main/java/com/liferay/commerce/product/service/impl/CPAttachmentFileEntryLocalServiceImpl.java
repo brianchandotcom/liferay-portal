@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Marco Leo
@@ -50,8 +52,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String json, int priority, int type,
-			ServiceContext serviceContext)
+			boolean neverExpire, Map<Locale, String> titleMap, String json,
+			int priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product attachment file entry
@@ -89,6 +91,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
 		cpAttachmentFileEntry.setDisplayDate(displayDate);
 		cpAttachmentFileEntry.setExpirationDate(expirationDate);
+		cpAttachmentFileEntry.setTitleMap(titleMap);
 		cpAttachmentFileEntry.setJson(json);
 		cpAttachmentFileEntry.setPriority(priority);
 		cpAttachmentFileEntry.setType(type);
@@ -175,27 +178,29 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 	@Override
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long classNameId, long classPK, int start, int end)
+			long classNameId, long classPK, int type, int start, int end)
 		throws PortalException {
 
-		return cpAttachmentFileEntryPersistence.findByC_C(
-			classNameId, classPK, start, end);
+		return cpAttachmentFileEntryPersistence.findByC_C_T(
+			classNameId, classPK, type, start, end);
 	}
 
 	@Override
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long classNameId, long classPK, int start, int end,
+			long classNameId, long classPK, int type, int start, int end,
 			OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws PortalException {
 
-		return cpAttachmentFileEntryPersistence.findByC_C(
-			classNameId, classPK, start, end, orderByComparator);
+		return cpAttachmentFileEntryPersistence.findByC_C_T(
+			classNameId, classPK, type, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK) {
-		return cpAttachmentFileEntryPersistence.countByC_C(
-			classNameId, classPK);
+	public int getCPAttachmentFileEntriesCount(
+		long classNameId, long classPK, int type) {
+
+		return cpAttachmentFileEntryPersistence.countByC_C_T(
+			classNameId, classPK, type);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -206,8 +211,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String json, int priority, int type,
-			ServiceContext serviceContext)
+			boolean neverExpire, Map<Locale, String> titleMap, String json,
+			int priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -233,6 +238,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
 		cpAttachmentFileEntry.setDisplayDate(displayDate);
 		cpAttachmentFileEntry.setExpirationDate(expirationDate);
+		cpAttachmentFileEntry.setTitleMap(titleMap);
 		cpAttachmentFileEntry.setJson(json);
 		cpAttachmentFileEntry.setPriority(priority);
 		cpAttachmentFileEntry.setType(type);

@@ -43,7 +43,7 @@ if (journalArticleSearchContainer.hasResults()) {
 <aui:model-context bean="<%= cpDefinitionVirtualSetting %>" model="<%= CPDefinitionVirtualSetting.class %>" />
 
 <liferay-ui:error exception="<%= CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException.class %>" message="please-select-an-existing-web-content" />
-<liferay-ui:error exception="<%= CPDefinitionVirtualSettingTermsOfUseContentException.class %>" message="please-insert-terms-of-use-content" />
+<liferay-ui:error exception="<%= CPDefinitionVirtualSettingTermsOfUseContentException.class %>" message="please-enter-terms-of-use-content" />
 
 <liferay-util:buffer var="removeJournalArticleIcon">
 	<liferay-ui:icon

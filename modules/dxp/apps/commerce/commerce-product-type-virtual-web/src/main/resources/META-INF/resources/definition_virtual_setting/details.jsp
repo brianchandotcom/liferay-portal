@@ -41,7 +41,7 @@ if (fileEntrySearchContainer.hasResults()) {
 <aui:model-context bean="<%= cpDefinitionVirtualSetting %>" model="<%= CPDefinitionVirtualSetting.class %>" />
 
 <liferay-ui:error exception="<%= CPDefinitionVirtualSettingFileEntryIdException.class %>" message="please-select-an-existing-file" />
-<liferay-ui:error exception="<%= CPDefinitionVirtualSettingUrlException.class %>" message="please-insert-a-valid-url" />
+<liferay-ui:error exception="<%= CPDefinitionVirtualSettingUrlException.class %>" message="please-enter-a-valid-url" />
 
 <liferay-util:buffer var="removeFileEntryIcon">
 	<liferay-ui:icon

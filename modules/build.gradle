@@ -85,7 +85,13 @@ gradle.beforeProject {
 		}
 
 		if (project.path.startsWith(":sdk:project-templates-")) {
+			buildCSS {
+				enabled = false
+			}
+
 			processResources {
+				exclude "**/.sass-cache/"
+
 				filesMatching(["**/*.gradle", "**/pom.xml"]) {
 					filter(ReplaceTokens, tokens: projectTemplateTokens)
 				}

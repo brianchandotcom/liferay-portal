@@ -48,4 +48,5 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 </div>
 
 <aui:input name="title" />
+
 <aui:input name="priority" />

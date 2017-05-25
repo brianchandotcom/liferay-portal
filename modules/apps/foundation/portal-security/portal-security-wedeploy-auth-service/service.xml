@@ -64,4 +64,7 @@
 			<finder-column name="type" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>WeDeployAuthTokenExpired</exception>
+	</exceptions>
 </service-builder>

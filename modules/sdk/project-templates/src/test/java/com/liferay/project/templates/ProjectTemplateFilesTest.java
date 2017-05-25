@@ -713,8 +713,14 @@ public class ProjectTemplateFilesTest {
 
 		try {
 			_addXmlDeclaration(null, "xml_declaration.tmpl");
+			_addXmlDeclaration(
+				"liferay-display.xml", "liferay_display_xml_declaration.tmpl");
+			_addXmlDeclaration(
+				"liferay-portlet.xml", "liferay_portlet_xml_declaration.tmpl");
 			_addXmlDeclaration("pom.xml", "pom_xml_declaration.tmpl");
+			_addXmlDeclaration("portlet.xml", "portlet_xml_declaration.tmpl");
 			_addXmlDeclaration("service.xml", "service_xml_declaration.tmpl");
+			_addXmlDeclaration("web.xml", "web_xml_declaration.tmpl");
 		}
 		catch (IOException ioe) {
 			throw new ExceptionInInitializerError(ioe);

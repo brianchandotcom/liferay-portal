@@ -324,11 +324,6 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		return _cpDefinitionLocalService.getCPDefinitionsCount();
 	}
 
-	@Override
-	public int getCPDefinitionsCount(long groupId, int status) {
-		return _cpDefinitionLocalService.getCPDefinitionsCount(groupId, status);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -419,15 +414,6 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 	public java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
 		int start, int end) {
 		return _cpDefinitionLocalService.getCPDefinitions(start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
-		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLocalService.getCPDefinitions(groupId, status,
-			start, end, orderByComparator);
 	}
 
 	/**

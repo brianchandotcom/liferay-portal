@@ -232,8 +232,8 @@ public class CPDefinitionServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
-		HttpPrincipal httpPrincipal, long groupId, int status, int start,
-		int end,
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String languageId,
+		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -241,7 +241,7 @@ public class CPDefinitionServiceHttp {
 					"getCPDefinitions", _getCPDefinitionsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					status, start, end, orderByComparator);
+					languageId, status, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -266,14 +266,14 @@ public class CPDefinitionServiceHttp {
 	}
 
 	public static int getCPDefinitionsCount(HttpPrincipal httpPrincipal,
-		long groupId, int status) {
+		long groupId, java.lang.String languageId, int status) {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
 					"getCPDefinitionsCount",
 					_getCPDefinitionsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					status);
+					languageId, status);
 
 			Object returnObj = null;
 
@@ -522,11 +522,11 @@ public class CPDefinitionServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getCPDefinitionsParameterTypes5 = new Class[] {
-			long.class, int.class, int.class, int.class,
+			long.class, java.lang.String.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getCPDefinitionsCountParameterTypes6 = new Class[] {
-			long.class, int.class
+			long.class, java.lang.String.class, int.class
 		};
 	private static final Class<?>[] _moveCPDefinitionToTrashParameterTypes7 = new Class[] {
 			long.class

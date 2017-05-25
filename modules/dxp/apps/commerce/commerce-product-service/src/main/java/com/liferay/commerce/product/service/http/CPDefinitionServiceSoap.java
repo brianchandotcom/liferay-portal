@@ -168,13 +168,14 @@ public class CPDefinitionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionSoap[] getCPDefinitions(
-		long groupId, int status, int start, int end,
+		long groupId, java.lang.String languageId, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.product.model.CPDefinition> returnValue =
-				CPDefinitionServiceUtil.getCPDefinitions(groupId, status,
-					start, end, orderByComparator);
+				CPDefinitionServiceUtil.getCPDefinitions(groupId, languageId,
+					status, start, end, orderByComparator);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModels(returnValue);
 		}
@@ -185,11 +186,11 @@ public class CPDefinitionServiceSoap {
 		}
 	}
 
-	public static int getCPDefinitionsCount(long groupId, int status)
-		throws RemoteException {
+	public static int getCPDefinitionsCount(long groupId,
+		java.lang.String languageId, int status) throws RemoteException {
 		try {
 			int returnValue = CPDefinitionServiceUtil.getCPDefinitionsCount(groupId,
-					status);
+					languageId, status);
 
 			return returnValue;
 		}

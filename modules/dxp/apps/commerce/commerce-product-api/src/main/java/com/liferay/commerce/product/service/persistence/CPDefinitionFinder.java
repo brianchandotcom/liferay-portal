@@ -22,10 +22,17 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface CPDefinitionFinder {
-	public int filterCountByG_S(long groupId,
+	public int countByG_S(long groupId, java.lang.String languageId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition);
+
+	public int filterCountByG_S(long groupId, java.lang.String languageId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition);
 
 	public java.util.List<com.liferay.commerce.product.model.CPDefinition> filterFindByG_S(
-		long groupId,
+		long groupId, java.lang.String languageId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition);
+
+	public java.util.List<com.liferay.commerce.product.model.CPDefinition> findByG_S(
+		long groupId, java.lang.String languageId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition);
 }

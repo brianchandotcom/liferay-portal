@@ -137,8 +137,9 @@ public class CPDefinitionServiceUtil {
 		return getService().search(searchContext);
 	}
 
-	public static int getCPDefinitionsCount(long groupId, int status) {
-		return getService().getCPDefinitionsCount(groupId, status);
+	public static int getCPDefinitionsCount(long groupId,
+		java.lang.String languageId, int status) {
+		return getService().getCPDefinitionsCount(groupId, languageId, status);
 	}
 
 	/**
@@ -151,11 +152,12 @@ public class CPDefinitionServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
-		long groupId, int status, int start, int end,
+		long groupId, java.lang.String languageId, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCPDefinitions(groupId, status, start, end,
+				   .getCPDefinitions(groupId, languageId, status, start, end,
 			orderByComparator);
 	}
 

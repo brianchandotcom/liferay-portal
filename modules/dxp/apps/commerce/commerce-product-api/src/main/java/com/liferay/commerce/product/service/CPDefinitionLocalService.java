@@ -272,9 +272,6 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionsCount();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionsCount(long groupId, int status);
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -342,11 +339,6 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinition> getCPDefinitions(int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinition> getCPDefinitions(long groupId, int status,
-		int start, int end, OrderByComparator<CPDefinition> orderByComparator)
-		throws PortalException;
 
 	/**
 	* Returns all the cp definitions matching the UUID and company.

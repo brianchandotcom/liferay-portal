@@ -136,8 +136,10 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 	}
 
 	@Override
-	public int getCPDefinitionsCount(long groupId, int status) {
-		return _cpDefinitionService.getCPDefinitionsCount(groupId, status);
+	public int getCPDefinitionsCount(long groupId, java.lang.String languageId,
+		int status) {
+		return _cpDefinitionService.getCPDefinitionsCount(groupId, languageId,
+			status);
 	}
 
 	/**
@@ -152,11 +154,12 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
-		long groupId, int status, int start, int end,
+		long groupId, java.lang.String languageId, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionService.getCPDefinitions(groupId, status, start,
-			end, orderByComparator);
+		return _cpDefinitionService.getCPDefinitions(groupId, languageId,
+			status, start, end, orderByComparator);
 	}
 
 	@Override

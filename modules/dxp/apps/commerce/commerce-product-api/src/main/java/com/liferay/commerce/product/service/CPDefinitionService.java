@@ -118,7 +118,8 @@ public interface CPDefinitionService extends BaseService {
 	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionsCount(long groupId, int status);
+	public int getCPDefinitionsCount(long groupId, java.lang.String languageId,
+		int status);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -128,8 +129,9 @@ public interface CPDefinitionService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinition> getCPDefinitions(long groupId, int status,
-		int start, int end, OrderByComparator<CPDefinition> orderByComparator)
+	public List<CPDefinition> getCPDefinitions(long groupId,
+		java.lang.String languageId, int status, int start, int end,
+		OrderByComparator<CPDefinition> orderByComparator)
 		throws PortalException;
 
 	public void restoreCPDefinitionFromTrash(long cpDefinitionId)

@@ -36,13 +36,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -189,10 +186,6 @@ public class CPAttachmentFileEntriesDisplayContext extends
 
 		long classNameId = _portal.getClassNameId(CPDefinition.class);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		SearchContainer<CPAttachmentFileEntry> searchContainer =
 			new SearchContainer<>(
 				liferayPortletRequest, getPortletURL(), null, null);
@@ -208,23 +201,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 
 		searchContainer.setRowChecker(getRowChecker());
 
-		if (isSearch()) {
-			Sort sort = CPDefinitionsPortletUtil.getCPAttachmentFileEntrySort(
-				getOrderByCol(), getOrderByType());
-			/*BaseModelSearchResult<CPAttachmentFileEntry>
-				cpAttachmentFileEntryBaseModelSearchResult =
-					_cpAttachmentFileEntryService.searchCPOptions(
-						themeDisplay.getCompanyId(),
-						themeDisplay.getScopeGroupId(), getCPDefinitionId(),
-						getKeywords(), searchContainer.getStart(),
-						searchContainer.getEnd(), sort);
-
-			searchContainer.setTotal(
-				cpAttachmentFileEntryBaseModelSearchResult.getLength());
-			searchContainer.setResults(
-				cpAttachmentFileEntryBaseModelSearchResult.getBaseModels());*/
-		}
-		else {
+		if (!isSearch()) {
 			int total =
 				_cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(
 					classNameId, getCPDefinitionId(), _type);

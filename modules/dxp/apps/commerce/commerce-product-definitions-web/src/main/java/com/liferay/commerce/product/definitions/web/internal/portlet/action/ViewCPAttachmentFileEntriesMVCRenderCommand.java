@@ -18,7 +18,6 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
-import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.item.selector.ItemSelector;
@@ -70,7 +69,6 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 				cpAttachmentFileEntriesDisplayContext =
 					new CPAttachmentFileEntriesDisplayContext(
 						_actionHelper, _attachmentsConfiguration,
-						_cpAttachmentFileEntryService,
 						_cpDefinitionOptionRelService, _cpInstanceHelper,
 						httpServletRequest, _itemSelector);
 
@@ -95,9 +93,6 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 	private ActionHelper _actionHelper;
 
 	private volatile AttachmentsConfiguration _attachmentsConfiguration;
-
-	@Reference
-	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;

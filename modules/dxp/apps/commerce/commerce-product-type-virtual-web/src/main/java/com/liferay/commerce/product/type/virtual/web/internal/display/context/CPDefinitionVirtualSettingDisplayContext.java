@@ -17,7 +17,6 @@ package com.liferay.commerce.product.type.virtual.web.internal.display.context;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
-import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
 import com.liferay.commerce.product.type.virtual.web.internal.portlet.action.CPDefinitionVirtualSettingActionHelper;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -56,7 +55,6 @@ public class CPDefinitionVirtualSettingDisplayContext
 
 	public CPDefinitionVirtualSettingDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CPDefinitionVirtualSettingService cpDefinitionVirtualSettingService,
 			DLAppService dlAppService,
 			JournalArticleService journalArticleService,
 			CPDefinitionVirtualSettingActionHelper
@@ -66,7 +64,6 @@ public class CPDefinitionVirtualSettingDisplayContext
 
 		super(actionHelper, httpServletRequest);
 
-		_cpDefinitionVirtualSettingService = cpDefinitionVirtualSettingService;
 		_dlAppService = dlAppService;
 		_journalArticleService = journalArticleService;
 		_cpDefinitionVirtualSettingActionHelper =
@@ -284,8 +281,6 @@ public class CPDefinitionVirtualSettingDisplayContext
 	private CPDefinitionVirtualSetting _cpDefinitionVirtualSetting;
 	private final CPDefinitionVirtualSettingActionHelper
 		_cpDefinitionVirtualSettingActionHelper;
-	private final CPDefinitionVirtualSettingService
-		_cpDefinitionVirtualSettingService;
 	private final DLAppService _dlAppService;
 	private final ItemSelector _itemSelector;
 	private final JournalArticleService _journalArticleService;

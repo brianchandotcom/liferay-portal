@@ -84,8 +84,7 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 			CPDefinitionVirtualSettingDisplayContext
 				cpDefinitionVirtualSettingDisplayContext =
 					new CPDefinitionVirtualSettingDisplayContext(
-						_actionHelper, httpServletRequest,
-						_cpDefinitionVirtualSettingService, _dlAppService,
+						_actionHelper, httpServletRequest, _dlAppService,
 						_journalArticleService,
 						_cpDefinitionVirtualSettingActionHelper, _itemSelector);
 

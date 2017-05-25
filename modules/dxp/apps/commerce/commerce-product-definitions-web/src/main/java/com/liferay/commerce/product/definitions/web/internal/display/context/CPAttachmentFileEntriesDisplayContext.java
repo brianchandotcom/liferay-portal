@@ -18,7 +18,6 @@ import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefini
 import com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
-import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.item.selector.ItemSelector;
@@ -48,7 +47,6 @@ public class CPAttachmentFileEntriesDisplayContext extends
 	public CPAttachmentFileEntriesDisplayContext(
 			ActionHelper actionHelper,
 			AttachmentsConfiguration attachmentsConfiguration,
-			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPDefinitionOptionRelService cpDefinitionOptionRelService,
 			CPInstanceHelper cpInstanceHelper,
 			HttpServletRequest httpServletRequest, ItemSelector itemSelector)
@@ -60,7 +58,6 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		setDefaultOrderByType("asc");
 
 		_attachmentsConfiguration = attachmentsConfiguration;
-		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
 		_cpInstanceHelper = cpInstanceHelper;
 		_itemSelector = itemSelector;
@@ -161,7 +158,6 @@ public class CPAttachmentFileEntriesDisplayContext extends
 
 	private final AttachmentsConfiguration _attachmentsConfiguration;
 	private CPAttachmentFileEntry _cpAttachmentFileEntry;
-	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final ItemSelector _itemSelector;

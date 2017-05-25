@@ -23,6 +23,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.search.web.internal.result.display.context.SearchResultFieldDisplayContext" %><%@
+page import="com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletDisplayContext" %>
 
 <portlet:defineObjects />
@@ -82,119 +84,132 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 	>
 
 		<%
-		com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext searchResultSummaryDisplayContext = java.util.Objects.requireNonNull(searchResultsPortletDisplayContext.getSearchResultSummaryDisplayContext(document));
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext = java.util.Objects.requireNonNull(searchResultsPortletDisplayContext.getSearchResultSummaryDisplayContext(document));
 		%>
 
-		<liferay-ui:search-container-column-text>
-			<c:if test="<%= searchResultSummaryDisplayContext.isThumbnailVisible() %>">
-				<img alt="blog cover image" class="img-rounded search-result-thumbnail-img" src="<%= searchResultSummaryDisplayContext.getThumbnailURLString() %>" />
-			</c:if>
+		<c:choose>
+			<c:when test="<%= !searchResultSummaryDisplayContext.isTemporarilyUnavailable() %>">
+				<liferay-ui:search-container-column-text>
+					<c:if test="<%= searchResultSummaryDisplayContext.isThumbnailVisible() %>">
+						<img alt="blog cover image" class="img-rounded search-result-thumbnail-img" src="<%= searchResultSummaryDisplayContext.getThumbnailURLString() %>" />
+					</c:if>
 
-			<c:if test="<%= searchResultSummaryDisplayContext.isIconVisible() %>">
-				<span class="search-asset-type-sticker sticker sticker-default sticker-lg sticker-rounded sticker-static">
-					<svg class="lexicon-icon">
-						<use xlink:href="<%= searchResultSummaryDisplayContext.getPathThemeImages() %>/lexicon/icons.svg#<%= searchResultSummaryDisplayContext.getIconId() %>" />
-					</svg>
-				</span>
-			</c:if>
-		</liferay-ui:search-container-column-text>
+					<c:if test="<%= searchResultSummaryDisplayContext.isIconVisible() %>">
+						<span class="search-asset-type-sticker sticker sticker-default sticker-lg sticker-rounded sticker-static">
+							<svg class="lexicon-icon">
+								<use xlink:href="<%= searchResultSummaryDisplayContext.getPathThemeImages() %>/lexicon/icons.svg#<%= searchResultSummaryDisplayContext.getIconId() %>" />
+							</svg>
+						</span>
+					</c:if>
+				</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			colspan="<%= 2 %>"
-		>
-			<h4>
-				<a href="<%= searchResultSummaryDisplayContext.getViewURL() %>">
-					<strong><%= searchResultSummaryDisplayContext.getHighlightedTitle() %></strong>
-				</a>
-			</h4>
+				<liferay-ui:search-container-column-text
+					colspan="<%= 2 %>"
+				>
+					<h4>
+						<a href="<%= searchResultSummaryDisplayContext.getViewURL() %>">
+							<strong><%= searchResultSummaryDisplayContext.getHighlightedTitle() %></strong>
+						</a>
+					</h4>
 
-			<h6 class="text-default">
-				<strong><%= searchResultSummaryDisplayContext.getModelResource() %></strong> &#183;
+					<h6 class="text-default">
+						<strong><%= searchResultSummaryDisplayContext.getModelResource() %></strong> &#183;
 
-				<c:if test="<%= searchResultSummaryDisplayContext.isLocaleReminderVisible() %>">
-					<liferay-ui:icon image='<%= "../language/" + searchResultSummaryDisplayContext.getLocaleLanguageId() %>' message="<%= searchResultSummaryDisplayContext.getLocaleReminder() %>" />
-				</c:if>
+						<c:if test="<%= searchResultSummaryDisplayContext.isLocaleReminderVisible() %>">
+							<liferay-ui:icon image='<%= "../language/" + searchResultSummaryDisplayContext.getLocaleLanguageId() %>' message="<%= searchResultSummaryDisplayContext.getLocaleReminder() %>" />
+						</c:if>
 
-				<c:if test="<%= searchResultSummaryDisplayContext.isCreatorVisible() %>">
-					<liferay-ui:message key="written-by" /> <strong><%= searchResultSummaryDisplayContext.getCreatorUserName() %></strong>
-				</c:if>
+						<c:if test="<%= searchResultSummaryDisplayContext.isCreatorVisible() %>">
+							<liferay-ui:message key="written-by" /> <strong><%= searchResultSummaryDisplayContext.getCreatorUserName() %></strong>
+						</c:if>
 
-				<c:if test="<%= searchResultSummaryDisplayContext.isCreationDateVisible() %>">
-					<liferay-ui:message key="on-date" /> <%= searchResultSummaryDisplayContext.getCreationDateString() %>
-				</c:if>
-			</h6>
+						<c:if test="<%= searchResultSummaryDisplayContext.isCreationDateVisible() %>">
+							<liferay-ui:message key="on-date" /> <%= searchResultSummaryDisplayContext.getCreationDateString() %>
+						</c:if>
+					</h6>
 
-			<c:if test="<%= searchResultSummaryDisplayContext.isContentVisible() %>">
-				<h6 class="search-document-content text-default">
-					<%= searchResultSummaryDisplayContext.getContent() %>
-				</h6>
-			</c:if>
+					<c:if test="<%= searchResultSummaryDisplayContext.isContentVisible() %>">
+						<h6 class="search-document-content text-default">
+							<%= searchResultSummaryDisplayContext.getContent() %>
+						</h6>
+					</c:if>
 
-			<c:if test="<%= searchResultSummaryDisplayContext.isAssetCategoriesOrTagsVisible() %>">
-				<h6 class="search-document-tags text-default">
-					<liferay-ui:asset-tags-summary
-						className="<%= searchResultSummaryDisplayContext.getClassName() %>"
-						classPK="<%= searchResultSummaryDisplayContext.getClassPK() %>"
-						paramName="<%= searchResultSummaryDisplayContext.getFieldAssetTagNames() %>"
-						portletURL="<%= searchResultSummaryDisplayContext.getPortletURL() %>"
-					/>
+					<c:if test="<%= searchResultSummaryDisplayContext.isAssetCategoriesOrTagsVisible() %>">
+						<h6 class="search-document-tags text-default">
+							<liferay-ui:asset-tags-summary
+								className="<%= searchResultSummaryDisplayContext.getClassName() %>"
+								classPK="<%= searchResultSummaryDisplayContext.getClassPK() %>"
+								paramName="<%= searchResultSummaryDisplayContext.getFieldAssetTagNames() %>"
+								portletURL="<%= searchResultSummaryDisplayContext.getPortletURL() %>"
+							/>
 
-					<liferay-ui:asset-categories-summary
-						className="<%= searchResultSummaryDisplayContext.getClassName() %>"
-						classPK="<%= searchResultSummaryDisplayContext.getClassPK() %>"
-						paramName="<%= searchResultSummaryDisplayContext.getFieldAssetCategoryIds() %>"
-						portletURL="<%= searchResultSummaryDisplayContext.getPortletURL() %>"
-					/>
-				</h6>
-			</c:if>
+							<liferay-ui:asset-categories-summary
+								className="<%= searchResultSummaryDisplayContext.getClassName() %>"
+								classPK="<%= searchResultSummaryDisplayContext.getClassPK() %>"
+								paramName="<%= searchResultSummaryDisplayContext.getFieldAssetCategoryIds() %>"
+								portletURL="<%= searchResultSummaryDisplayContext.getPortletURL() %>"
+							/>
+						</h6>
+					</c:if>
 
-			<c:if test="<%= searchResultSummaryDisplayContext.isDocumentFormVisible() %>">
-				<h6 class="expand-details text-default"><a href="javascript:;"><liferay-ui:message key="details" />...</a></h6>
+					<c:if test="<%= searchResultSummaryDisplayContext.isDocumentFormVisible() %>">
+						<h6 class="expand-details text-default"><a href="javascript:;"><liferay-ui:message key="details" />...</a></h6>
 
-				<div class="hide table-details table-responsive">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>
-									<liferay-ui:message key="key" />
-								</th>
-								<th>
-									<liferay-ui:message key="value" />
-								</th>
-							</tr>
-						</thead>
+						<div class="hide table-details table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>
+											<liferay-ui:message key="key" />
+										</th>
+										<th>
+											<liferay-ui:message key="value" />
+										</th>
+									</tr>
+								</thead>
 
-						<tbody>
+								<tbody>
 
-							<%
-							for (com.liferay.portal.search.web.internal.result.display.context.SearchResultFieldDisplayContext searchResultFieldDisplayContext : searchResultSummaryDisplayContext.getDocumentFormFieldDisplayContexts()) {
-							%>
+									<%
+									for (SearchResultFieldDisplayContext searchResultFieldDisplayContext : searchResultSummaryDisplayContext.getDocumentFormFieldDisplayContexts()) {
+									%>
 
-								<tr>
-									<td>
-										<strong><%= HtmlUtil.escape(searchResultFieldDisplayContext.getName()) %></strong>
-										<br />
+										<tr>
+											<td>
+												<strong><%= HtmlUtil.escape(searchResultFieldDisplayContext.getName()) %></strong>
+												<br />
 
-										<em>
-											<liferay-ui:message key="array" /> = <%= searchResultFieldDisplayContext.isArray() %>, <liferay-ui:message key="numeric" /> = <%= searchResultFieldDisplayContext.isNumeric() %>, <liferay-ui:message key="tokenized" /> = <%= searchResultFieldDisplayContext.isTokenized() %>
-										</em>
-									</td>
-									<td>
-										<code>
-											<%= searchResultFieldDisplayContext.getValuesToString() %>
-										</code>
-									</td>
-								</tr>
+												<em>
+													<liferay-ui:message key="array" /> = <%= searchResultFieldDisplayContext.isArray() %>, <liferay-ui:message key="numeric" /> = <%= searchResultFieldDisplayContext.isNumeric() %>, <liferay-ui:message key="tokenized" /> = <%= searchResultFieldDisplayContext.isTokenized() %>
+												</em>
+											</td>
+											<td>
+												<code>
+													<%= searchResultFieldDisplayContext.getValuesToString() %>
+												</code>
+											</td>
+										</tr>
 
-							<%
-							}
-							%>
+									<%
+									}
+									%>
 
-						</tbody>
-					</table>
-				</div>
-			</c:if>
-		</liferay-ui:search-container-column-text>
+								</tbody>
+							</table>
+						</div>
+					</c:if>
+				</liferay-ui:search-container-column-text>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:search-container-column-text
+					colspan="<%= 3 %>"
+				>
+					<div class="alert alert-danger">
+						<liferay-ui:message arguments="result" key="is-temporarily-unavailable" translateArguments="<%= true %>" />
+					</div>
+				</liferay-ui:search-container-column-text>
+			</c:otherwise>
+		</c:choose>
 	</liferay-ui:search-container-row>
 
 	<aui:form useNamespace="<%= false %>">

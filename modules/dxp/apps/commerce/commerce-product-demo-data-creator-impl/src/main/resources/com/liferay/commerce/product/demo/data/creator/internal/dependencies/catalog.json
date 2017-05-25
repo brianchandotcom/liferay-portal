@@ -44,27 +44,6 @@
 						"title": "Gold"
 					}
 				]
-			},
-			{
-				"ddmFormFieldTypeName": "text",
-				"facetable": true,
-				"name": "Material",
-				"priority": 1,
-				"required": false,
-				"skuContributor": true,
-				"title": "Material",
-				"values": [
-					{
-						"name": "Calf",
-						"priority": 1,
-						"title": "Calf"
-					},
-					{
-						"name": "Suede",
-						"priority": 2,
-						"title": "Suede"
-					}
-				]
 			}
 		],
 		"productTypeName": "simple",
@@ -120,22 +99,6 @@
 						"name": "Blue",
 						"priority": 4,
 						"title": "Blue"
-					}
-				]
-			},
-			{
-				"ddmFormFieldTypeName": "text",
-				"facetable": true,
-				"name": "Material",
-				"priority": 2,
-				"required": false,
-				"skuContributor": false,
-				"title": "Color",
-				"values": [
-					{
-						"name": "Calf",
-						"priority": 1,
-						"title": "Calf"
 					}
 				]
 			}
@@ -207,22 +170,6 @@
 						"title": "Blue"
 					}
 				]
-			},
-			{
-				"ddmFormFieldTypeName": "text",
-				"facetable": true,
-				"name": "Color",
-				"priority": 2,
-				"required": false,
-				"skuContributor": false,
-				"title": "Material",
-				"values": [
-					{
-						"name": "Calf",
-						"priority": 1,
-						"title": "Calf"
-					}
-				]
 			}
 		],
 		"productTypeName": "simple",
@@ -284,22 +231,6 @@
 						"name": "Indigo",
 						"priority": 5,
 						"title": "Indigo"
-					}
-				]
-			},
-			{
-				"ddmFormFieldTypeName": "text",
-				"facetable": true,
-				"name": "Material",
-				"priority": 2,
-				"required": false,
-				"skuContributor": false,
-				"title": "Material",
-				"values": [
-					{
-						"name": "Calf",
-						"priority": 1,
-						"title": "Calf"
 					}
 				]
 			}
@@ -377,27 +308,6 @@
 						"title": "Fuchsia"
 					}
 				]
-			},
-			{
-				"ddmFormFieldTypeName": "text",
-				"facetable": true,
-				"name": "Material",
-				"priority": 2,
-				"required": false,
-				"skuContributor": true,
-				"title": "Material",
-				"values": [
-					{
-						"name": "Calf",
-						"priority": 1,
-						"title": "Calf"
-					},
-					{
-						"name": "Suede",
-						"priority": 2,
-						"title": "Suede"
-					}
-				]
 			}
 		],
 		"productTypeName": "simple",
@@ -455,27 +365,6 @@
 						"title": "Marine"
 					}
 				]
-			},
-			{
-				"ddmFormFieldTypeName": "text",
-				"facetable": true,
-				"name": "Material",
-				"priority": 2,
-				"required": false,
-				"skuContributor": true,
-				"title": "Material",
-				"values": [
-					{
-						"name": "Suede",
-						"priority": 1,
-						"title": "Suede"
-					},
-					{
-						"name": "Calf",
-						"priority": 2,
-						"title": "Calf"
-					}
-				]
 			}
 		],
 		"productTypeName": "simple",
@@ -525,22 +414,6 @@
 						"name": "Blue",
 						"priority": 3,
 						"title": "Blue"
-					}
-				]
-			},
-			{
-				"ddmFormFieldTypeName": "text",
-				"facetable": true,
-				"name": "Material",
-				"priority": 2,
-				"required": false,
-				"skuContributor": false,
-				"title": "Material",
-				"values": [
-					{
-						"name": "Calf",
-						"priority": 1,
-						"title": "Calf"
 					}
 				]
 			}
@@ -606,22 +479,6 @@
 						"title": "Fuchsia"
 					}
 				]
-			},
-			{
-				"ddmFormFieldTypeName": "text",
-				"facetable": true,
-				"name": "Material",
-				"priority": 2,
-				"required": false,
-				"skuContributor": false,
-				"title": "Material",
-				"values": [
-					{
-						"name": "Calf",
-						"priority": 1,
-						"title": "Calf"
-					}
-				]
 			}
 		],
 		"productTypeName": "simple",
@@ -677,22 +534,6 @@
 						"name": "Pink",
 						"priority": 4,
 						"title": "Pink"
-					}
-				]
-			},
-			{
-				"ddmFormFieldTypeName": "text",
-				"facetable": true,
-				"name": "Material",
-				"priority": 2,
-				"required": false,
-				"skuContributor": false,
-				"title": "Material",
-				"values": [
-					{
-						"name": "Calf",
-						"priority": 1,
-						"title": "Calf"
 					}
 				]
 			}
@@ -762,22 +603,6 @@
 						"name": "Fuchsia",
 						"priority": 6,
 						"title": "Fuchsia"
-					}
-				]
-			},
-			{
-				"ddmFormFieldTypeName": "text",
-				"facetable": true,
-				"name": "Material",
-				"priority": 2,
-				"required": false,
-				"skuContributor": false,
-				"title": "Material",
-				"values": [
-					{
-						"name": "Calf",
-						"priority": 1,
-						"title": "Calf"
 					}
 				]
 			}
@@ -855,22 +680,6 @@
 						"title": "Blue"
 					}
 				]
-			},
-			{
-				"ddmFormFieldTypeName": "text",
-				"facetable": true,
-				"name": "Material",
-				"priority": 2,
-				"required": false,
-				"skuContributor": false,
-				"title": "Material",
-				"values": [
-					{
-						"name": "Calf",
-						"priority": 1,
-						"title": "Calf"
-					}
-				]
 			}
 		],
 		"productTypeName": "simple",
@@ -920,22 +729,6 @@
 						"name": "Orange",
 						"priority": 3,
 						"title": "Orange"
-					}
-				]
-			},
-			{
-				"ddmFormFieldTypeName": "text",
-				"facetable": true,
-				"name": "Material",
-				"priority": 2,
-				"required": false,
-				"skuContributor": false,
-				"title": "Material",
-				"values": [
-					{
-						"name": "Calf",
-						"priority": 1,
-						"title": "Calf"
 					}
 				]
 			}
@@ -1007,22 +800,6 @@
 						"title": "Mink"
 					}
 				]
-			},
-			{
-				"ddmFormFieldTypeName": "text",
-				"facetable": true,
-				"name": "Material",
-				"priority": 2,
-				"required": false,
-				"skuContributor": false,
-				"title": "Material",
-				"values": [
-					{
-						"name": "Calf",
-						"priority": 1,
-						"title": "Calf"
-					}
-				]
 			}
 		],
 		"productTypeName": "simple",
@@ -1080,22 +857,6 @@
 						"title": "Indigo"
 					}
 				]
-			},
-			{
-				"ddmFormFieldTypeName": "text",
-				"facetable": true,
-				"name": "Material",
-				"priority": 2,
-				"required": false,
-				"skuContributor": false,
-				"title": "Material",
-				"values": [
-					{
-						"name": "Calf",
-						"priority": 1,
-						"title": "Calf"
-					}
-				]
 			}
 		],
 		"productTypeName": "simple",
@@ -1151,22 +912,6 @@
 						"name": "Green",
 						"priority": 4,
 						"title": "Green"
-					}
-				]
-			},
-			{
-				"ddmFormFieldTypeName": "text",
-				"facetable": true,
-				"name": "Material",
-				"priority": 2,
-				"required": false,
-				"skuContributor": false,
-				"title": "Material",
-				"values": [
-					{
-						"name": "Calf",
-						"priority": 1,
-						"title": "Calf"
 					}
 				]
 			}

@@ -19,9 +19,9 @@ CPType cpType = cpDefinitionsDisplayContext.getCPType(cpDefinition.getProductTyp
 %>
 
 <liferay-ui:search-container-column-text
-		cssClass="table-cell-content"
-		name="id"
-		value="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>"
+	cssClass="table-cell-content"
+	name="id"
+	value="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>"
 />
 
 <c:choose>

@@ -53,7 +53,7 @@
 	for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 		StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 
-		if(!cpDefinitionOptionRelListMap.containsKey(cpDefinitionOptionRel)) {
+		if (!cpDefinitionOptionRelListMap.containsKey(cpDefinitionOptionRel)) {
 			continue;
 		}
 

@@ -32,9 +32,9 @@
 </c:choose>
 
 <liferay-ui:search-container-column-text
-		cssClass="table-cell-content"
-		name="title"
-		value="<%= HtmlUtil.escape(cpAttachmentFileEntry.getTitle(languageId)) %>"
+	cssClass="table-cell-content"
+	name="title"
+	value="<%= HtmlUtil.escape(cpAttachmentFileEntry.getTitle(languageId)) %>"
 />
 
 <liferay-ui:search-container-column-text
@@ -54,7 +54,7 @@ for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 		<%
 		StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 
-		if(cpDefinitionOptionRelListMap.containsKey(cpDefinitionOptionRel)) {
+		if (cpDefinitionOptionRelListMap.containsKey(cpDefinitionOptionRel)) {
 			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
 
 			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {

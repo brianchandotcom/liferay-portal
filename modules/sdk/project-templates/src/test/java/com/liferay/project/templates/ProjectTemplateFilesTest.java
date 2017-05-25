@@ -292,6 +292,9 @@ public class ProjectTemplateFilesTest {
 					"Forbidden empty line in " + path, line.isEmpty());
 				Assert.assertFalse(
 					"Forbidden comments in " + path, line.startsWith("##"));
+				Assert.assertFalse(
+					"Forbidden whitespace leading character in " + path,
+					Character.isWhitespace(line.charAt(0)));
 
 				int pos = line.indexOf('=');
 

@@ -76,8 +76,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 				cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
 
-			if(Validator.isNull(
-				cpDefinitionOptionRel.getDDMFormFieldTypeName())){
+			if (Validator.isNull(
+					cpDefinitionOptionRel.getDDMFormFieldTypeName())) {
+
 				continue;
 			}
 

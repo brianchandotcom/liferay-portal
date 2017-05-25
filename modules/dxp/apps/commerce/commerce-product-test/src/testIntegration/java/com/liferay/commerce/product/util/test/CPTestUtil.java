@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.util.test;
 
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -54,6 +55,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -114,8 +116,10 @@ public class CPTestUtil {
 			classNameId, classPK, fileEntryId, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, false, json,
-			RandomTestUtil.randomInt(), 0, serviceContext);
+			expirationDateHour, expirationDateMinute, false,
+			RandomTestUtil.randomLocaleStringMap(), json,
+			RandomTestUtil.randomInt(),
+			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGES, serviceContext);
 	}
 
 	public static CPDefinition addCPDefinition(long groupId) throws Exception {

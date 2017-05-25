@@ -149,6 +149,8 @@ public class CPAttachmentFileEntryPersistenceTest {
 
 		newCPAttachmentFileEntry.setExpirationDate(RandomTestUtil.nextDate());
 
+		newCPAttachmentFileEntry.setTitle(RandomTestUtil.randomString());
+
 		newCPAttachmentFileEntry.setJson(RandomTestUtil.randomString());
 
 		newCPAttachmentFileEntry.setPriority(RandomTestUtil.nextInt());
@@ -192,6 +194,8 @@ public class CPAttachmentFileEntryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPAttachmentFileEntry.getExpirationDate()),
 			Time.getShortTimestamp(newCPAttachmentFileEntry.getExpirationDate()));
+		Assert.assertEquals(existingCPAttachmentFileEntry.getTitle(),
+			newCPAttachmentFileEntry.getTitle());
 		Assert.assertEquals(existingCPAttachmentFileEntry.getJson(),
 			newCPAttachmentFileEntry.getJson());
 		Assert.assertEquals(existingCPAttachmentFileEntry.getPriority(),
@@ -240,6 +244,14 @@ public class CPAttachmentFileEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_T() throws Exception {
+		_persistence.countByC_C_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_C_T(0L, 0L, 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CPAttachmentFileEntry newCPAttachmentFileEntry = addCPAttachmentFileEntry();
 
@@ -268,7 +280,8 @@ public class CPAttachmentFileEntryPersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "classNameId", true, "classPK", true,
 			"fileEntryId", true, "displayDate", true, "expirationDate", true,
-			"priority", true, "type", true, "lastPublishDate", true);
+			"title", true, "priority", true, "type", true, "lastPublishDate",
+			true);
 	}
 
 	@Test
@@ -520,6 +533,8 @@ public class CPAttachmentFileEntryPersistenceTest {
 		cpAttachmentFileEntry.setDisplayDate(RandomTestUtil.nextDate());
 
 		cpAttachmentFileEntry.setExpirationDate(RandomTestUtil.nextDate());
+
+		cpAttachmentFileEntry.setTitle(RandomTestUtil.randomString());
 
 		cpAttachmentFileEntry.setJson(RandomTestUtil.randomString());
 

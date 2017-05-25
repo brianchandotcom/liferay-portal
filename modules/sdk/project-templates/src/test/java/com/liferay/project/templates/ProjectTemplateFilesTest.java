@@ -637,10 +637,7 @@ public class ProjectTemplateFilesTest {
 				text.contains("* @author ${author}"));
 		}
 
-		if (extension.equals("xml") &&
-			!fileName.equals("liferay-layout-templates.xml") &&
-			Validator.isNotNull(text)) {
-
+		if (extension.equals("xml") && Validator.isNotNull(text)) {
 			String xmlDeclaration = _xmlDeclarations.get(fileName);
 
 			if (xmlDeclaration == null) {
@@ -703,6 +700,9 @@ public class ProjectTemplateFilesTest {
 			_addXmlDeclaration(null, "xml_declaration.tmpl");
 			_addXmlDeclaration(
 				"liferay-display.xml", "liferay_display_xml_declaration.tmpl");
+			_addXmlDeclaration(
+				"liferay-layout-templates.xml",
+				"liferay_layout_templates_xml_declaration.tmpl");
 			_addXmlDeclaration(
 				"liferay-portlet.xml", "liferay_portlet_xml_declaration.tmpl");
 			_addXmlDeclaration("pom.xml", "pom_xml_declaration.tmpl");

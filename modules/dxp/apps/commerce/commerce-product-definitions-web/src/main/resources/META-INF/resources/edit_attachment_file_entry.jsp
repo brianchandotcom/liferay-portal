@@ -32,6 +32,14 @@ long cpDefinitionId = cpAttachmentFileEntriesDisplayContext.getCPDefinitionId();
 
 CPAttachmentFileEntry cpAttachmentFileEntry = cpAttachmentFileEntriesDisplayContext.getCPAttachmentFileEntry();
 
+long cpAttachmentFileEntryId = cpAttachmentFileEntriesDisplayContext.getCPAttachmentFileEntryId();
+
+int type = CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGES;
+
+if (toolbarItem.equals("view-product-definition-attachments")) {
+	type = CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_ATTACHMENTS;
+}
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
@@ -42,10 +50,12 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-
 
 <div class="container-fluid-1280 entry-body">
 	<aui:form action="<%= editProductDefinitionOptionRelActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveAttachmentFileEntry();" %>'>
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpAttachmentFileEntry == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 		<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
+		<aui:input name="cpAttachmentFileEntryId" type="hidden" value="<%= cpAttachmentFileEntryId %>" />
+		<aui:input name="type" type="hidden" value="<%= type %>" />
 
 		<div class="lfr-form-content">
 			<liferay-ui:form-navigator

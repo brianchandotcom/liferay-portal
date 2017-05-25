@@ -18,28 +18,28 @@
 CPType cpType = cpDefinitionsDisplayContext.getCPType(cpDefinition.getProductTypeName());
 %>
 
+<liferay-ui:search-container-column-text
+		cssClass="table-cell-content"
+		name="id"
+		value="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>"
+/>
+
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
 		<liferay-ui:search-container-column-image
-				cssClass="table-cell-content"
-				name="image"
-				src="<%= thumbnailSrc %>"
-				toggleRowChecker="<%= true %>"
+			cssClass="table-cell-content"
+			name="image"
+			src="<%= thumbnailSrc %>"
+			toggleRowChecker="<%= true %>"
 		/>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-icon
-				icon="documents-and-media"
-				toggleRowChecker="<%= true %>"
+			icon="documents-and-media"
+			toggleRowChecker="<%= true %>"
 		/>
 	</c:otherwise>
 </c:choose>
-
-<liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
-	name="id"
-	value="<%= String.valueOf(cpDefinition.getCPDefinitionId()) %>"
-/>
 
 <liferay-ui:search-container-column-text
 	cssClass="table-cell-content"

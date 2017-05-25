@@ -103,7 +103,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						>
 
 							<%
-
 							String thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
 
 							PortletURL rowURL = renderResponse.createRenderURL();
@@ -128,28 +127,28 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 										<c:choose>
 											<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
 												<liferay-frontend:icon-vertical-card
-														actionJsp="/definition_action.jsp"
-														actionJspServletContext="<%= application %>"
-														cssClass="entry-display-style"
-														icon="documents-and-media"
-														resultRow="<%= row %>"
-														rowChecker="<%= cpDefinitionsDisplayContext.getRowChecker() %>"
-														title="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
-														url="<%= rowURL.toString() %>"
+													actionJsp="/definition_action.jsp"
+													actionJspServletContext="<%= application %>"
+													cssClass="entry-display-style"
+													icon="documents-and-media"
+													resultRow="<%= row %>"
+													rowChecker="<%= cpDefinitionsDisplayContext.getRowChecker() %>"
+													title="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
+													url="<%= rowURL.toString() %>"
 												>
 													<%@ include file="/definition_vertical_card.jspf" %>
 												</liferay-frontend:icon-vertical-card>
 											</c:when>
 											<c:otherwise>
 												<liferay-frontend:vertical-card
-														actionJsp="/definition_action.jsp"
-														actionJspServletContext="<%= application %>"
-														cssClass="entry-display-style"
-														imageUrl="<%= thumbnailSrc %>"
-														resultRow="<%= row %>"
-														rowChecker="<%= cpDefinitionsDisplayContext.getRowChecker() %>"
-														title="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
-														url="<%= rowURL.toString() %>"
+													actionJsp="/definition_action.jsp"
+													actionJspServletContext="<%= application %>"
+													cssClass="entry-display-style"
+													imageUrl="<%= thumbnailSrc %>"
+													resultRow="<%= row %>"
+													rowChecker="<%= cpDefinitionsDisplayContext.getRowChecker() %>"
+													title="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
+													url="<%= rowURL.toString() %>"
 												>
 													<%@ include file="/definition_vertical_card.jspf" %>
 												</liferay-frontend:vertical-card>

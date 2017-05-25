@@ -35,8 +35,7 @@ repositories {
 
 war {
 	dependsOn buildCSS
-
-	exclude("**/*.scss")
+	exclude "**/*.scss"
 
 	filesMatching("**/.sass-cache/") {
 		it.path = it.path.replace(".sass-cache/", "")

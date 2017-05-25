@@ -20,7 +20,7 @@
 		"name": "Puzzle Small Bag",
 		"options": [
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
@@ -46,7 +46,7 @@
 				]
 			},
 			{
-				"ddmFormFieldType": "text",
+				"ddmFormFieldTypeName": "text",
 				"facetable": true,
 				"name": "Material",
 				"priority": 1,
@@ -93,7 +93,7 @@
 		"name": "Hammock Bag",
 		"options": [
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
@@ -124,7 +124,7 @@
 				]
 			},
 			{
-				"ddmFormFieldType": "text",
+				"ddmFormFieldTypeName": "text",
 				"facetable": true,
 				"name": "Material",
 				"priority": 2,
@@ -168,7 +168,7 @@
 		"name": "Elephant Mini Bag",
 		"options": [
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
@@ -209,7 +209,7 @@
 				]
 			},
 			{
-				"ddmFormFieldType": "text",
+				"ddmFormFieldTypeName": "text",
 				"facetable": true,
 				"name": "Color",
 				"priority": 2,
@@ -252,7 +252,7 @@
 		"name": "Fortune Hobo Bag",
 		"options": [
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
@@ -288,7 +288,7 @@
 				]
 			},
 			{
-				"ddmFormFieldType": "text",
+				"ddmFormFieldTypeName": "text",
 				"facetable": true,
 				"name": "Material",
 				"priority": 2,
@@ -333,7 +333,7 @@
 		"name": "Puzzle Bag",
 		"options": [
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
@@ -379,7 +379,7 @@
 				]
 			},
 			{
-				"ddmFormFieldType": "text",
+				"ddmFormFieldTypeName": "text",
 				"facetable": true,
 				"name": "Material",
 				"priority": 2,
@@ -426,7 +426,7 @@
 		"name": "Amazona Bag",
 		"options": [
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
@@ -457,7 +457,7 @@
 				]
 			},
 			{
-				"ddmFormFieldType": "text",
+				"ddmFormFieldTypeName": "text",
 				"facetable": true,
 				"name": "Material",
 				"priority": 2,
@@ -503,7 +503,7 @@
 		"name": "Medium T Pouch",
 		"options": [
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
@@ -529,7 +529,7 @@
 				]
 			},
 			{
-				"ddmFormFieldType": "text",
+				"ddmFormFieldTypeName": "text",
 				"facetable": true,
 				"name": "Material",
 				"priority": 2,
@@ -561,7 +561,6 @@
 			"Avenue-black.jpg",
 			"Avenue-yellow.jpg",
 			"Avenue-red.jpg",
-			"Avenue-green.jpg",
 			"Avenue-stone.jpg",
 			"Avenue-fuchsia.jpg"
 		],
@@ -573,7 +572,7 @@
 		"name": "Avenue Bag",
 		"options": [
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
@@ -597,24 +596,19 @@
 						"title": "Red"
 					},
 					{
-						"name": "Green",
-						"priority": 4,
-						"title": "Green"
-					},
-					{
 						"name": "Stone",
-						"priority": 5,
+						"priority": 4,
 						"title": "Stone"
 					},
 					{
 						"name": "Fuchsia",
-						"priority": 6,
+						"priority": 5,
 						"title": "Fuchsia"
 					}
 				]
 			},
 			{
-				"ddmFormFieldType": "text",
+				"ddmFormFieldTypeName": "text",
 				"facetable": true,
 				"name": "Material",
 				"priority": 2,
@@ -656,7 +650,7 @@
 		"name": "Flamenco Knot bag",
 		"options": [
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
@@ -687,7 +681,7 @@
 				]
 			},
 			{
-				"ddmFormFieldType": "text",
+				"ddmFormFieldTypeName": "text",
 				"facetable": true,
 				"name": "Material",
 				"priority": 2,
@@ -731,7 +725,7 @@
 		"name": "T Pouch",
 		"options": [
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
@@ -772,7 +766,7 @@
 				]
 			},
 			{
-				"ddmFormFieldType": "text",
+				"ddmFormFieldTypeName": "text",
 				"facetable": true,
 				"name": "Material",
 				"priority": 2,
@@ -817,7 +811,7 @@
 		"name": "Hammock Small Bag",
 		"options": [
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
@@ -863,7 +857,7 @@
 				]
 			},
 			{
-				"ddmFormFieldType": "text",
+				"ddmFormFieldTypeName": "text",
 				"facetable": true,
 				"name": "Material",
 				"priority": 2,
@@ -904,7 +898,7 @@
 		"name": "Joyce Small Bag",
 		"options": [
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
@@ -930,7 +924,7 @@
 				]
 			},
 			{
-				"ddmFormFieldType": "text",
+				"ddmFormFieldTypeName": "text",
 				"facetable": true,
 				"name": "Material",
 				"priority": 2,
@@ -974,7 +968,7 @@
 		"name": "Barcelona Bag",
 		"options": [
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
@@ -1015,7 +1009,7 @@
 				]
 			},
 			{
-				"ddmFormFieldType": "text",
+				"ddmFormFieldTypeName": "text",
 				"facetable": true,
 				"name": "Material",
 				"priority": 2,
@@ -1057,7 +1051,7 @@
 		"name": "Goya Backpack",
 		"options": [
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
@@ -1088,7 +1082,7 @@
 				]
 			},
 			{
-				"ddmFormFieldType": "text",
+				"ddmFormFieldTypeName": "text",
 				"facetable": true,
 				"name": "Material",
 				"priority": 2,
@@ -1130,7 +1124,7 @@
 		"name": "T Mini Bag",
 		"options": [
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"name": "Color",
 				"priority": 1,
@@ -1161,7 +1155,7 @@
 				]
 			},
 			{
-				"ddmFormFieldType": "text",
+				"ddmFormFieldTypeName": "text",
 				"facetable": true,
 				"name": "Material",
 				"priority": 2,

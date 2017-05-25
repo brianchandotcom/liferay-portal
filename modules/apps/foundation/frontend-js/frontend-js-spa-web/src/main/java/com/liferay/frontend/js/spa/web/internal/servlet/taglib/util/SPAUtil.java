@@ -276,8 +276,10 @@ public class SPAUtil {
 		String[] excludedPaths = StringUtil.split(
 			SPAConfigurationUtil.get("spa.excluded.paths"));
 
+		String pathContext = PortalUtil.getPathContext();
+
 		for (String excludedPath : excludedPaths) {
-			jsonArray.put(excludedPath);
+			jsonArray.put(pathContext + excludedPath);
 		}
 
 		_spaExcludedPaths = jsonArray.toString();

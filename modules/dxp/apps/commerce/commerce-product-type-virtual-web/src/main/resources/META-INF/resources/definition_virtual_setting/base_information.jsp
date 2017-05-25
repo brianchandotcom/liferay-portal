@@ -21,10 +21,10 @@ CPDefinitionVirtualSettingDisplayContext cpDefinitionVirtualSettingDisplayContex
 
 CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSettingDisplayContext.getCPDefinitionVirtualSetting();
 
-int durationDays = 0;
+long durationDays = 0;
 
 if ((cpDefinitionVirtualSetting != null) && (cpDefinitionVirtualSetting.getDuration() > 0)) {
-	durationDays = cpDefinitionVirtualSetting.getDuration() / Time.DAY;
+	durationDays = TimeUnit.MILLISECONDS.toDays(cpDefinitionVirtualSetting.getDuration());
 }
 %>
 

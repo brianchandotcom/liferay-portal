@@ -109,6 +109,14 @@ public class CPDefinitionDemoDataCreatorHelper
 				Locale.US, userId, groupId, cpDefinition.getCPDefinitionId(),
 				cpOptionsJSONArray);
 
+			JSONArray cpAttachmentFileEntriesJSONArray =
+				productJSONObject.getJSONArray("images");
+
+			_cpAttachmentFileEntryDemoDataCreatorHelper.
+				addCPAttachmentFileEntries(
+					userId, groupId, cpDefinition.getCPDefinitionId(),
+					cpAttachmentFileEntriesJSONArray);
+
 			if (buildSkus) {
 				_cpInstanceLocalService.buildCPInstances(
 					cpDefinition.getCPDefinitionId(), serviceContext);
@@ -207,6 +215,10 @@ public class CPDefinitionDemoDataCreatorHelper
 	@Reference
 	private AssetVocabularyDemoDataCreatorHelper
 		_assetVocabularyDemoDataCreatorHelper;
+
+	@Reference
+	private CPAttachmentFileEntryDemoDataCreatorHelper
+		_cpAttachmentFileEntryDemoDataCreatorHelper;
 
 	private final List<Long> _cpDefinitionIds = new CopyOnWriteArrayList<>();
 

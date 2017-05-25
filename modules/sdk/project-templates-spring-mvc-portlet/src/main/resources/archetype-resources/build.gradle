@@ -17,15 +17,6 @@ apply plugin: "war"
 
 #end
 dependencies {
-	compile group: "aopalliance", name: "aopalliance", version: "1.0"
-	compile group: "commons-logging", name: "commons-logging", version: "1.2"
-	compile group: "org.springframework", name: "spring-aop", version: "4.1.9.RELEASE"
-	compile group: "org.springframework", name: "spring-beans", version: "4.1.9.RELEASE"
-	compile group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
-	compile group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
-	compile group: "org.springframework", name: "spring-expression", version: "4.1.9.RELEASE"
-	compile group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
-	compile group: "org.springframework", name: "spring-webmvc", version: "4.1.9.RELEASE"
 	compile group: "org.springframework", name: "spring-webmvc-portlet", version: "4.1.9.RELEASE"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"

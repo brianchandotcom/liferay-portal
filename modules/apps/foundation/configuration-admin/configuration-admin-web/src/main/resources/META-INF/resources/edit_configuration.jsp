@@ -65,8 +65,8 @@ renderResponse.setTitle(configurationModelName);
 				</c:if>
 
 				<c:if test="<%= !Validator.isBlank(configurationModelDescription) %>">
-					<p>
-						<%= configurationModelDescription %>
+					<p class="text-default">
+						<strong><%= configurationModelDescription %></strong>
 					</p>
 				</c:if>
 

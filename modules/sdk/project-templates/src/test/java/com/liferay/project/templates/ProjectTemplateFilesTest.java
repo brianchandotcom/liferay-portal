@@ -37,6 +37,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
@@ -272,6 +273,7 @@ public class ProjectTemplateFilesTest {
 				path, StandardCharsets.UTF_8)) {
 
 			String line = null;
+			String previousKey = null;
 
 			while ((line = bufferedReader.readLine()) != null) {
 				Assert.assertFalse(
@@ -279,11 +281,26 @@ public class ProjectTemplateFilesTest {
 				Assert.assertFalse(
 					"Forbidden comments in " + path, line.startsWith("##"));
 
+				int pos = line.indexOf('=');
+
+				Assert.assertNotEquals(
+					"Incorrect line \"" + line + "\" in " + path, -1, pos);
+
+				String key = line.substring(0, pos);
+
+				Assert.assertTrue(
+					path + " contains duplicate lines or is not sorted",
+					(previousKey == null) ||
+						(_languagePropertiesKeyComparator.compare(
+							key, previousKey) > 0));
+
 				if (sb.length() > 0) {
 					sb.append('\n');
 				}
 
 				sb.append(line);
+
+				previousKey = key;
 			}
 		}
 
@@ -633,6 +650,30 @@ public class ProjectTemplateFilesTest {
 				"(?:transitive: (?:true|false), )?version: \"(.+)\"");
 	private static final Pattern _bundleDescriptionPattern = Pattern.compile(
 		"Creates a .+\\.");
+
+	private static final Comparator<String> _languagePropertiesKeyComparator =
+		new Comparator<String>() {
+
+			@Override
+			public int compare(String key1, String key2) {
+				boolean key1StartsWithLetter = Character.isLetter(
+					key1.charAt(0));
+				boolean key2StartsWithLetter = Character.isLetter(
+					key2.charAt(0));
+
+				if (key1StartsWithLetter && !key2StartsWithLetter) {
+					return -1;
+				}
+
+				if (!key1StartsWithLetter && key2StartsWithLetter) {
+					return 1;
+				}
+
+				return key1.compareTo(key2);
+			}
+
+		};
+
 	private static final Pattern _pomXmlExecutionIdPattern = Pattern.compile(
 		"[a-z]+(?:-[a-z]+)*");
 	private static final Set<String> _textFileExtensions = new HashSet<>(

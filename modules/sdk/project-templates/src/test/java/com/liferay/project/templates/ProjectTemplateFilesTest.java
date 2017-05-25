@@ -267,7 +267,7 @@ public class ProjectTemplateFilesTest {
 	}
 
 	private void _testLanguageProperties(Path path) throws IOException {
-		StringBuilder sb = new StringBuilder();
+		boolean portlet = false;
 
 		try (BufferedReader bufferedReader = Files.newBufferedReader(
 				path, StandardCharsets.UTF_8)) {
@@ -294,26 +294,48 @@ public class ProjectTemplateFilesTest {
 						(_languagePropertiesKeyComparator.compare(
 							key, previousKey) > 0));
 
-				if (sb.length() > 0) {
-					sb.append('\n');
+				if (key.startsWith("javax.portlet.")) {
+					portlet = true;
 				}
-
-				sb.append(line);
 
 				previousKey = key;
 			}
 		}
 
-		String languageProperties = sb.toString();
+		if (portlet) {
+			Properties properties = FileUtil.readProperties(path);
 
-		if (languageProperties.contains("javax.portlet.")) {
-			for (String key : _LANGUAGE_PROPERTIES_JAVAX_PORTLET_KEYS) {
-				String completeKey = "javax.portlet." + key + ".${artifactId}";
+			String keywords = properties.getProperty(
+				"javax.portlet.keywords.${artifactId}");
 
-				Assert.assertTrue(
-					"Missing \"" + completeKey + "\" in " + path,
-					languageProperties.contains(completeKey + "="));
-			}
+			Assert.assertTrue(
+				"Value of \"javax.portlet.keywords.${artifactId}\" in " + path +
+					" must start with \"${artifactId},\"",
+				(keywords != null) && keywords.startsWith("${artifactId},"));
+
+			String title = properties.getProperty(
+				"javax.portlet.title.${artifactId}");
+
+			Assert.assertTrue(
+				"Value of \"javax.portlet.title.${artifactId}\" in " + path +
+					" must end with \" Portlet\"",
+				(title != null) && title.endsWith(" Portlet"));
+
+			String expectedShortTitle = title.substring(0, title.length() - 8);
+
+			Assert.assertEquals(
+				"Incorrect value of " +
+					"\"javax.portlet.display-name.${artifactId}\" in " + path,
+				expectedShortTitle,
+				properties.getProperty(
+					"javax.portlet.display-name.${artifactId}"));
+
+			Assert.assertEquals(
+				"Incorrect value of " +
+					"\"javax.portlet.short-title.${artifactId}\" in " + path,
+				expectedShortTitle,
+				properties.getProperty(
+					"javax.portlet.short-title.${artifactId}"));
 		}
 	}
 
@@ -629,10 +651,6 @@ public class ProjectTemplateFilesTest {
 	private static final String _GIT_IGNORE;
 
 	private static final String _GIT_IGNORE_WITH_PACKAGE_JSON;
-
-	private static final String[] _LANGUAGE_PROPERTIES_JAVAX_PORTLET_KEYS = {
-		"display-name", "keywords", "short-title", "title"
-	};
 
 	private static final String _POM_XML_DECLARATION;
 

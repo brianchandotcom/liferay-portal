@@ -122,19 +122,19 @@ public class AlloyEditorLinkBrowseConfigContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		String eventName) {
 
+		ItemSelectorCriterion fileItemSelectorCriterion =
+			new FileItemSelectorCriterion();
+
+		ItemSelectorCriterion layoutItemSelectorCriterion =
+			new LayoutItemSelectorCriterion();
+
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
 		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
 
-		ItemSelectorCriterion fileItemSelectorCriterion =
-			new FileItemSelectorCriterion();
-
 		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
-
-		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
-			new LayoutItemSelectorCriterion();
 
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);

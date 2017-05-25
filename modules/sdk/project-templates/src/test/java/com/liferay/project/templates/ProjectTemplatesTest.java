@@ -1264,7 +1264,11 @@ public class ProjectTemplatesTest {
 
 		String[] gradleTaskPaths;
 
-		if (FileTestUtil.containsFile(gradleProjectDir.toPath(), "*.java")) {
+		if (FileTestUtil.containsFile(gradleProjectDir.toPath(), "*.java") &&
+			!_contains(
+				new File(gradleProjectDir, "build.gradle"),
+				"apply plugin: \"war\"")) {
+
 			gradleTaskPaths = new String[] {
 				_GRADLE_TASK_PATH_CHECK_SOURCE_FORMATTING,
 				_GRADLE_TASK_PATH_BUILD
@@ -1459,6 +1463,12 @@ public class ProjectTemplatesTest {
 		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.properties");
 
 		return projectDir;
+	}
+
+	private static boolean _contains(File file, String s) throws IOException {
+		String text = FileUtil.read(file.toPath());
+
+		return text.contains(s);
 	}
 
 	private static void _createNewFiles(String fileName, File... dirs)

@@ -31,7 +31,7 @@
 		<column name="expirationDate" type="Date" />
 		<column localized="true" name="title" type="String" />
 		<column name="json" type="String" />
-		<column name="priority" type="int" />
+		<column name="priority" type="double" />
 		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />
 
@@ -158,7 +158,7 @@
 		<column localized="true" name="title" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="DDMFormFieldTypeName" type="String" />
-		<column name="priority" type="int" />
+		<column name="priority" type="double" />
 		<column name="facetable" type="boolean" />
 		<column name="required" type="boolean" />
 		<column name="skuContributor" type="boolean" />
@@ -212,7 +212,7 @@
 		<column name="CPDefinitionOptionRelId"  type="long" />
 		<column name="name" type="String" />
 		<column localized="true" name="title" type="String" />
-		<column name="priority" type="int" />
+		<column name="priority" type="double" />
 
 		<!-- Order -->
 
@@ -369,7 +369,7 @@
 		<column name="name" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column localized="true" name="description" type="String" />
-		<column name="priority" type="int" />
+		<column name="priority" type="double" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
@@ -410,7 +410,7 @@
 		<column name="CPOptionId" type="long" />
 		<column name="name" type="String" />
 		<column localized="true" name="title" type="String" />
-		<column name="priority" type="int" />
+		<column name="priority" type="double" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->

@@ -121,8 +121,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 		QueryDefinition<CPDefinition> queryDefinition = new QueryDefinition<>(
 			status);
 
-		if(status == WorkflowConstants.STATUS_ANY){
-			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH,true);
+		if (status == WorkflowConstants.STATUS_ANY) {
+			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 		}
 
 		return cpDefinitionFinder.filterFindByG_S(
@@ -136,12 +136,12 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 		QueryDefinition<CPDefinition> queryDefinition = new QueryDefinition<>(
 			status);
 
-		if(status == WorkflowConstants.STATUS_ANY){
-			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH,true);
+		if (status == WorkflowConstants.STATUS_ANY) {
+			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 		}
 
 		return cpDefinitionFinder.filterCountByG_S(
-			groupId,languageId, queryDefinition);
+			groupId, languageId, queryDefinition);
 	}
 
 	@Override

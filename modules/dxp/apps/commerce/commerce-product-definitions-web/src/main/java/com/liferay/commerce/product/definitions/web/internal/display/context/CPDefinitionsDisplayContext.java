@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -94,12 +93,12 @@ public class CPDefinitionsDisplayContext
 		}
 		else {
 			int total = _cpDefinitionService.getCPDefinitionsCount(
-				getScopeGroupId(),languageId, WorkflowConstants.STATUS_ANY);
+				getScopeGroupId(), languageId, WorkflowConstants.STATUS_ANY);
 
 			searchContainer.setTotal(total);
 
 			List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
-				getScopeGroupId(),languageId, WorkflowConstants.STATUS_ANY,
+				getScopeGroupId(), languageId, WorkflowConstants.STATUS_ANY,
 				searchContainer.getStart(), searchContainer.getEnd(),
 				orderByComparator);
 

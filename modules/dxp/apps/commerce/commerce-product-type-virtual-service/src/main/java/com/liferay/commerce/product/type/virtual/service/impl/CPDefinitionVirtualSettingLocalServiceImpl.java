@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Marco Leo

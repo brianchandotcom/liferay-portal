@@ -21,12 +21,11 @@ CPDefinitionVirtualSettingDisplayContext cpDefinitionVirtualSettingDisplayContex
 
 CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSettingDisplayContext.getCPDefinitionVirtualSetting();
 
-int durationDays =  0;
+int durationDays = 0;
 
-if(cpDefinitionVirtualSetting != null && cpDefinitionVirtualSetting.getDuration() > 0){
+if ((cpDefinitionVirtualSetting != null) && (cpDefinitionVirtualSetting.getDuration() > 0)) {
 	durationDays = cpDefinitionVirtualSetting.getDuration() / Time.DAY;
 }
-
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="base-information" />

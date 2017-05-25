@@ -46,34 +46,39 @@ public class CPDefinitionFinderImpl
 
 	@Override
 	public int countByG_S(
-		long groupId, String languageId, QueryDefinition<CPDefinition> queryDefinition) {
+		long groupId, String languageId,
+		QueryDefinition<CPDefinition> queryDefinition) {
 
 		return doCountByG_S(groupId, languageId, queryDefinition, false);
 	}
 
 	@Override
 	public int filterCountByG_S(
-		long groupId, String languageId, QueryDefinition<CPDefinition> queryDefinition) {
+		long groupId, String languageId,
+		QueryDefinition<CPDefinition> queryDefinition) {
 
 		return doCountByG_S(groupId, languageId, queryDefinition, true);
 	}
 
 	@Override
 	public List<CPDefinition> filterFindByG_S(
-		long groupId, String languageId, QueryDefinition<CPDefinition> queryDefinition) {
+		long groupId, String languageId,
+		QueryDefinition<CPDefinition> queryDefinition) {
 
 		return doFindByG_S(groupId, languageId, queryDefinition, true);
 	}
 
 	@Override
 	public List<CPDefinition> findByG_S(
-		long groupId, String languageId, QueryDefinition<CPDefinition> queryDefinition) {
+		long groupId, String languageId,
+		QueryDefinition<CPDefinition> queryDefinition) {
 
 		return doFindByG_S(groupId, languageId, queryDefinition, false);
 	}
 
 	protected int doCountByG_S(
-		long groupId,String languageId, QueryDefinition<CPDefinition> queryDefinition,
+		long groupId, String languageId,
+		QueryDefinition<CPDefinition> queryDefinition,
 		boolean inlineSQLHelper) {
 
 		Session session = null;
@@ -130,7 +135,8 @@ public class CPDefinitionFinderImpl
 	}
 
 	protected List<CPDefinition> doFindByG_S(
-		long groupId, String languageId, QueryDefinition<CPDefinition> queryDefinition,
+		long groupId, String languageId,
+		QueryDefinition<CPDefinition> queryDefinition,
 		boolean inlineSQLHelper) {
 
 		Session session = null;

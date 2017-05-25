@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.internal.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -82,6 +84,10 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 		_itemSelector = itemSelector;
 		_portal = portal;
+
+		_type = ParamUtil.get(
+			httpServletRequest, "type",
+			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGES);
 	}
 
 	public CPAttachmentFileEntry getCPAttachmentFileEntry()
@@ -221,13 +227,13 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		else {
 			int total =
 				_cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(
-					classNameId, getCPDefinitionId());
+					classNameId, getCPDefinitionId(), _type);
 
 			searchContainer.setTotal(total);
 
 			List<CPAttachmentFileEntry> results =
 				_cpAttachmentFileEntryService.getCPAttachmentFileEntries(
-					classNameId, getCPDefinitionId(),
+					classNameId, getCPDefinitionId(), _type,
 					searchContainer.getStart(), searchContainer.getEnd(),
 					orderByComparator);
 
@@ -297,5 +303,6 @@ public class CPAttachmentFileEntriesDisplayContext extends
 	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private final ItemSelector _itemSelector;
 	private final Portal _portal;
+	private final int _type;
 
 }

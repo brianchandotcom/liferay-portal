@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
@@ -344,7 +345,8 @@ public class CPDefinitionLocalServiceImpl
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-				classNameId, cpDefinitionId, 0, 1);
+				classNameId, cpDefinitionId,
+				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGES, 0, 1);
 
 		if (cpAttachmentFileEntries.isEmpty()) {
 			return null;

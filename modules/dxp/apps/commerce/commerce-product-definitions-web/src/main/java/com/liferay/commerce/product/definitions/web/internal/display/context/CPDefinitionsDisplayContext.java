@@ -63,8 +63,6 @@ public class CPDefinitionsDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String languageId = themeDisplay.getLanguageId();
-
 		SearchContainer<CPDefinition> searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
@@ -93,14 +91,15 @@ public class CPDefinitionsDisplayContext
 		}
 		else {
 			int total = _cpDefinitionService.getCPDefinitionsCount(
-				getScopeGroupId(), languageId, WorkflowConstants.STATUS_ANY);
+				getScopeGroupId(), themeDisplay.getLanguageId(),
+				WorkflowConstants.STATUS_ANY);
 
 			searchContainer.setTotal(total);
 
 			List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
-				getScopeGroupId(), languageId, WorkflowConstants.STATUS_ANY,
-				searchContainer.getStart(), searchContainer.getEnd(),
-				orderByComparator);
+				getScopeGroupId(), themeDisplay.getLanguageId(),
+				WorkflowConstants.STATUS_ANY, searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
 
 			searchContainer.setResults(results);
 		}

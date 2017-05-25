@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -85,6 +86,7 @@ import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.model.TrashVersion;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -1983,13 +1985,24 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				publishDate = page.getCreateDate();
 			}
 
-			assetEntry = assetEntryLocalService.updateEntry(
-				userId, page.getGroupId(), page.getCreateDate(),
-				page.getModifiedDate(), WikiPage.class.getName(),
-				page.getResourcePrimKey(), page.getUuid(), 0, assetCategoryIds,
-				assetTagNames, true, page.isApproved(), null, null, publishDate,
-				null, ContentTypes.TEXT_HTML, page.getTitle(), null, null, null,
-				null, 0, 0, priority);
+			String frontPageName =
+				wikiGroupServiceConfiguration.frontPageName();
+
+			if (!StringUtil.equals(frontPageName, page.getTitle()) ||
+				(page.getVersion() != 1.0)) {
+
+				assetEntry = assetEntryLocalService.updateEntry(
+					userId, page.getGroupId(), page.getCreateDate(),
+					page.getModifiedDate(), WikiPage.class.getName(),
+					page.getResourcePrimKey(), page.getUuid(), 0,
+					assetCategoryIds, assetTagNames, true, page.isApproved(),
+					null, null, publishDate, null, ContentTypes.TEXT_HTML,
+					page.getTitle(), null, null, null, null, 0, 0, priority);
+			}
+			else {
+				assetEntry = updateAssetEntryWithoutValidation(
+					page, priority, publishDate);
+			}
 		}
 
 		assetLinkLocalService.updateLinks(
@@ -3169,6 +3182,71 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			workflowContext);
 	}
 
+	protected AssetEntry updateAssetEntryWithoutValidation(
+		WikiPage page, Double priority, Date publishDate) {
+
+		String className = WikiPage.class.getName();
+
+		long classPK = page.getResourcePrimKey();
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		AssetEntry entry = assetEntryLocalService.fetchEntry(
+			className, classPK);
+
+		if (entry == null) {
+			long entryId = counterLocalService.increment();
+
+			entry = assetEntryPersistence.create(entryId);
+		}
+
+		long userId = page.getUserId();
+
+		entry.setUserId(userId);
+
+		User user = userLocalService.fetchUser(userId);
+
+		if (user != null) {
+			entry.setUserName(user.getFullName());
+		}
+		else {
+			entry.setUserName(StringPool.BLANK);
+		}
+
+		Date now = new Date();
+
+		entry.setCreateDate(now);
+
+		entry.setClassNameId(classNameId);
+		entry.setClassPK(classPK);
+		entry.setClassUuid(page.getUuid());
+
+		entry.setCompanyId(page.getCompanyId());
+
+		entry.setViewCount(0);
+
+		entry.setGroupId(page.getGroupId());
+		entry.setModifiedDate(now);
+		entry.setClassTypeId(0);
+		entry.setListable(true);
+		entry.setVisible(page.isApproved());
+
+		if (publishDate != null) {
+			entry.setPublishDate(publishDate);
+		}
+
+		entry.setMimeType(ContentTypes.TEXT_HTML);
+		entry.setTitle(page.getTitle());
+		entry.setHeight(0);
+		entry.setWidth(0);
+
+		if (priority != null) {
+			entry.setPriority(priority.doubleValue());
+		}
+
+		return assetEntryLocalService.updateAssetEntry(entry);
+	}
+
 	protected WikiPage updatePage(
 			long userId, WikiPage oldPage, long newNodeId, String newTitle,
 			String content, String summary, boolean minorEdit, String format,
@@ -3309,6 +3387,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		validate(nodeId, content, format);
 	}
 
+	@ServiceReference(type = ClassNameLocalService.class)
+	protected ClassNameLocalService classNameLocalService;
+
 	@ServiceReference(type = ConfigurationProvider.class)
 	protected ConfigurationProvider configurationProvider;
 
@@ -3323,6 +3404,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@ServiceReference(type = WikiEngineRenderer.class)
 	protected WikiEngineRenderer wikiEngineRenderer;
+
+	@ServiceReference(type = WikiGroupServiceConfiguration.class)
+	protected WikiGroupServiceConfiguration wikiGroupServiceConfiguration;
 
 	@ServiceReference(type = WikiPageTitleValidator.class)
 	protected WikiPageTitleValidator wikiPageTitleValidator;

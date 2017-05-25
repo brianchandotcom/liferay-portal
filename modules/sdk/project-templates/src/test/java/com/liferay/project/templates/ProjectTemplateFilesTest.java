@@ -251,16 +251,23 @@ public class ProjectTemplateFilesTest {
 				FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX +
 					WorkspaceUtil.WORKSPACE)) {
 
-			String gitIgnore = _GIT_IGNORE;
+			Set<String> gitIgnoreLines = new TreeSet<>(_gitIgnoreLines);
 
 			if (Files.exists(
 					archetypeResourcesDirPath.resolve("package.json"))) {
 
-				gitIgnore = _GIT_IGNORE_WITH_PACKAGE_JSON;
+				gitIgnoreLines.add("node_modules/");
+			}
+
+			if (FileTestUtil.containsFile(
+					archetypeResourcesDirPath, "*.scss")) {
+
+				gitIgnoreLines.add(".sass-cache/");
 			}
 
 			Assert.assertEquals(
-				"Incorrect " + gitIgnorePath, gitIgnore,
+				"Incorrect " + gitIgnorePath,
+				StringTestUtil.merge(gitIgnoreLines, '\n'),
 				FileUtil.read(gitIgnorePath));
 		}
 	}
@@ -646,10 +653,6 @@ public class ProjectTemplateFilesTest {
 		}
 	}
 
-	private static final String _GIT_IGNORE;
-
-	private static final String _GIT_IGNORE_WITH_PACKAGE_JSON;
-
 	private static final String[] _SOURCESET_NAMES = {
 		"main", "test", "testIntegration"
 	};
@@ -660,6 +663,8 @@ public class ProjectTemplateFilesTest {
 				"(?:transitive: (?:true|false), )?version: \"(.+)\"");
 	private static final Pattern _bundleDescriptionPattern = Pattern.compile(
 		"Creates a .+\\.");
+	private static final List<String> _gitIgnoreLines = Arrays.asList(
+		".gradle/", "build/", "target/");
 
 	private static final Comparator<String> _languagePropertiesKeyComparator =
 		new Comparator<String>() {
@@ -694,19 +699,6 @@ public class ProjectTemplateFilesTest {
 	private static final Map<String, String> _xmlDeclarations = new HashMap<>();
 
 	static {
-		Set<String> gitIgnoreLines = new TreeSet<>();
-
-		gitIgnoreLines.add(".gradle/");
-		gitIgnoreLines.add("build/");
-		gitIgnoreLines.add("target/");
-
-		_GIT_IGNORE = StringTestUtil.merge(gitIgnoreLines, '\n');
-
-		gitIgnoreLines.add("node_modules/");
-
-		_GIT_IGNORE_WITH_PACKAGE_JSON = StringTestUtil.merge(
-			gitIgnoreLines, '\n');
-
 		try {
 			_addXmlDeclaration(null, "xml_declaration.tmpl");
 			_addXmlDeclaration(

@@ -14,7 +14,6 @@
 
 package com.liferay.directory.web.internal.upgrade;
 
-import com.liferay.directory.web.internal.constants.DirectoryPortletKeys;
 import com.liferay.directory.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
@@ -41,13 +40,7 @@ public class DirectoryWebUpgrade implements UpgradeStepRegistrator {
 
 				@Override
 				protected String[] getPortletIds() {
-					return new String[] {
-						"11", "186", "187", "188",
-						DirectoryPortletKeys.DIRECTORY,
-						DirectoryPortletKeys.FRIENDS_DIRECTORY,
-						DirectoryPortletKeys.MY_SITES_DIRECTORY,
-						DirectoryPortletKeys.SITE_MEMBERS_DIRECTORY
-					};
+					return new String[] {"11", "186", "187", "188"};
 				}
 
 			};

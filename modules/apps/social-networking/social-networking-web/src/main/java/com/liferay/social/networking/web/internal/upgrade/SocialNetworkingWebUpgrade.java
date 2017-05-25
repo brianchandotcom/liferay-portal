@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
-import com.liferay.social.networking.constants.SocialNetworkingPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -48,15 +47,7 @@ public class SocialNetworkingWebUpgrade implements UpgradeStepRegistrator {
 						"5_WAR_socialnetworkingportlet",
 						"6_WAR_socialnetworkingportlet",
 						"7_WAR_socialnetworkingportlet",
-						"8_WAR_socialnetworkingportlet",
-						SocialNetworkingPortletKeys.FRIENDS,
-						SocialNetworkingPortletKeys.FRIENDS_ACTIVITIES,
-						SocialNetworkingPortletKeys.MAP,
-						SocialNetworkingPortletKeys.MEMBERS,
-						SocialNetworkingPortletKeys.MEMBERS_ACTIVITIES,
-						SocialNetworkingPortletKeys.MEETUPS,
-						SocialNetworkingPortletKeys.SUMMARY,
-						SocialNetworkingPortletKeys.WALL
+						"8_WAR_socialnetworkingportlet"
 					};
 				}
 

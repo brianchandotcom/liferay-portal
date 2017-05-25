@@ -14,7 +14,6 @@
 
 package com.liferay.microblogs.web.internal.upgrade;
 
-import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
@@ -43,9 +42,7 @@ public class MicroblogsWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[] getPortletIds() {
 					return new String[] {
-						"1_WAR_microblogsportlet", "2_WAR_microblogsportlet",
-						MicroblogsPortletKeys.MICROBLOGS,
-						MicroblogsPortletKeys.MICROBLOGS_STATUS_UPDATE
+						"1_WAR_microblogsportlet", "2_WAR_microblogsportlet"
 					};
 				}
 

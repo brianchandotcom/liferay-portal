@@ -14,12 +14,15 @@
 
 package com.liferay.portal.upgrade.release;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.dao.ReleaseDAO;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,6 +31,26 @@ import java.sql.SQLException;
  * @author Adolfo Pérez
  */
 public abstract class BaseUpgradeServiceModuleRelease extends UpgradeProcess {
+
+	@Override
+	public void upgrade() throws UpgradeException {
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			try (PreparedStatement ps = con.prepareStatement(
+					"select * from Release_ where servletContextName = ?")) {
+
+				ps.setString(1, getNewBundleSymbolicName());
+
+				try (ResultSet rs = ps.executeQuery()) {
+					if (!rs.next()) {
+						super.upgrade();
+					}
+				}
+			}
+		}
+		catch (SQLException sqle) {
+			throw new UpgradeException(sqle);
+		}
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {

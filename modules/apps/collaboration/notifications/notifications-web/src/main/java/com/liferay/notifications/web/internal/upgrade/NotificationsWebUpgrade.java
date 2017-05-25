@@ -47,8 +47,7 @@ public class NotificationsWebUpgrade implements UpgradeStepRegistrator {
 				protected String[] getPortletIds() {
 					return new String[] {
 						"1_WAR_notificationsportlet",
-						"2_WAR_notificationsportlet",
-						NotificationsPortletKeys.NOTIFICATIONS
+						"2_WAR_notificationsportlet"
 					};
 				}
 

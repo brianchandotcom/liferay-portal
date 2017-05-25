@@ -15,12 +15,11 @@
 package com.liferay.asset.categories.admin.web.internal.constants;
 
 /**
- * @author Eudaldo Alonso
+ * @author Pavel Savinov
  */
 public class AssetCategoriesAdminWebKeys {
 
 	public static final String ASSET_CATEGORIES_ADMIN_CONFIGURATION =
-		"com_liferay_asset_categories_admin_web_configuration_" +
-			"AssetCategoriesAdminWebConfiguration";
+		"ASSET_PUBLISHER_WEB_CONFIGURATION";
 
 }

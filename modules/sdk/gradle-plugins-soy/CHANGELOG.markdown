@@ -53,6 +53,12 @@ version 3.0.0.
 - [LPS-69139]: Update the [Liferay Portal Tools Soy Builder] dependency to
 version 3.0.1.
 
+## 3.1.3 - 2017-05-24
+
+### Changed
+- [LPS-72750]: Update the [Liferay Portal Tools Soy Builder] dependency to
+version 3.0.2.
+
 [Command Line Tools for Metal.js]: https://github.com/metal/metal-cli
 [Liferay Portal Tools Soy Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-soy-builder
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -60,3 +66,4 @@ version 3.0.1.
 [LPS-69139]: https://issues.liferay.com/browse/LPS-69139
 [LPS-70036]: https://issues.liferay.com/browse/LPS-70036
 [LPS-70092]: https://issues.liferay.com/browse/LPS-70092
+[LPS-72750]: https://issues.liferay.com/browse/LPS-72750

@@ -72,6 +72,23 @@ public class SearchResultSummaryDisplayBuilderTest {
 	}
 
 	@Test
+	public void testResultIsTemporarilyUnavailable() throws Exception {
+		ruinAssetRendererFactoryLookup();
+
+		SearchResultSummaryDisplayBuilder searchResultSummaryDisplayBuilder =
+			createSearchResultSummaryDisplayBuilder();
+
+		searchResultSummaryDisplayBuilder.setDocument(
+			Mockito.mock(Document.class));
+
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
+			searchResultSummaryDisplayBuilder.build();
+
+		Assert.assertTrue(
+			searchResultSummaryDisplayContext.isTemporarilyUnavailable());
+	}
+
+	@Test
 	public void testTagsURLDownloadAndUserPortraitFromResult()
 		throws Exception {
 
@@ -306,6 +323,16 @@ public class SearchResultSummaryDisplayBuilderTest {
 		themeDisplay.setPermissionChecker(permissionChecker);
 
 		return themeDisplay;
+	}
+
+	protected void ruinAssetRendererFactoryLookup() {
+		Mockito.doThrow(
+			RuntimeException.class
+		).when(
+			assetRendererFactoryLookup
+		).getAssetRendererFactoryByClassName(
+			Mockito.anyString()
+		);
 	}
 
 	protected void setUpAssetRenderer() throws Exception {

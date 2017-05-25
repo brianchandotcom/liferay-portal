@@ -33,7 +33,7 @@ else {
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editCPAttachmentFileEntry" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
+		<portlet:param name="backURL" value="<%= currentURL %>" />
 		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpAttachmentFileEntry.getClassPK()) %>" />
 		<portlet:param name="cpAttachmentFileEntryId" value="<%= String.valueOf(cpAttachmentFileEntry.getCPAttachmentFileEntryId()) %>" />
 	</portlet:renderURL>

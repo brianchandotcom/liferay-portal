@@ -15,7 +15,6 @@
 package com.liferay.wiki.editor.configuration.internal;
 
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -48,32 +47,21 @@ public class WikiAttachmentImageHTMLEditorConfigContributor
 		String itemSelectedEventName, long wikiPageResourcePrimKey,
 		ThemeDisplay themeDisplay) {
 
-		ItemSelectorCriterion imageItemSelectorCriterion =
-			getImageItemSelectorCriterion();
-
-		ItemSelectorCriterion urlItemSelectorCriterion =
-			getURLItemSelectorCriterion();
-
 		PortletURL itemSelectorURL = null;
 
 		if (wikiPageResourcePrimKey == 0) {
 			itemSelectorURL = _itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, itemSelectedEventName,
-				imageItemSelectorCriterion, urlItemSelectorCriterion);
+				getImageItemSelectorCriterion(), getURLItemSelectorCriterion());
 		}
 		else {
-			ItemSelectorCriterion attachmentItemSelectorCriterion =
-				getWikiAttachmentItemSelectorCriterion(wikiPageResourcePrimKey);
-
-			ItemSelectorCriterion uploadItemSelectorCriterion =
-				getUploadItemSelectorCriterion(
-					wikiPageResourcePrimKey, themeDisplay,
-					requestBackedPortletURLFactory);
-
 			itemSelectorURL = _itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, itemSelectedEventName,
-				attachmentItemSelectorCriterion, imageItemSelectorCriterion,
-				urlItemSelectorCriterion, uploadItemSelectorCriterion);
+				getWikiAttachmentItemSelectorCriterion(wikiPageResourcePrimKey),
+				getImageItemSelectorCriterion(), getURLItemSelectorCriterion(),
+				getUploadItemSelectorCriterion(
+					wikiPageResourcePrimKey, themeDisplay,
+					requestBackedPortletURLFactory));
 		}
 
 		return itemSelectorURL.toString();

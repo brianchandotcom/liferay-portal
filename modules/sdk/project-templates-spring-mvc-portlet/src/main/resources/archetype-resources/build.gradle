@@ -17,8 +17,6 @@ apply plugin: "war"
 
 #end
 dependencies {
-	// These are marked as "compile" so they will be included in the gradle-built war file in /WEB-INF/lib
-
 	compile group: "aopalliance", name: "aopalliance", version: "1.0"
 	compile group: "commons-logging", name: "commons-logging", version: "1.2"
 	compile group: "org.springframework", name: "spring-aop", version: "4.1.9.RELEASE"

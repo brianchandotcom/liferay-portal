@@ -72,6 +72,7 @@ public class EditCPAttachmentFileEntryMVCRenderCommand
 				cpAttachmentFileEntriesDisplayContext =
 					new CPAttachmentFileEntriesDisplayContext(
 						_actionHelper, _attachmentsConfiguration,
+						_cpAttachmentFileEntryService,
 						_cpDefinitionOptionRelService, _cpInstanceHelper,
 						_dlMimeTypeDisplayContext, httpServletRequest,
 						_itemSelector, _portal);

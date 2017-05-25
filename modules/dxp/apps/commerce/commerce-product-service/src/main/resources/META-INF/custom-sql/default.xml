@@ -8,23 +8,25 @@
 			FROM
 				CPDefinition
 			LEFT JOIN CPDefinitionLocalization ON
-				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.cpDefinitionPK)
+				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId)
 			WHERE
 				(CPDefinition.groupId = ?) AND
-				([$STATUS$])
+				(CPDefinitionLocalization.languageId = ?) AND
+				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.product.service.persistence.CPDefinitionFinder.findByG_S">
 		<![CDATA[
 			SELECT
-				CPDefinition.* , CPDefinitionLocalization.*
+				CPDefinition.*
 			FROM
 				CPDefinition
 			LEFT JOIN CPDefinitionLocalization ON
-				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.cpDefinitionPK)
+				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId)
 			WHERE
 				(CPDefinition.groupId = ?) AND
-				([$STATUS$])
+				(CPDefinitionLocalization.languageId = ?) AND
+				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 		]]>
 	</sql>
 </custom-sql>

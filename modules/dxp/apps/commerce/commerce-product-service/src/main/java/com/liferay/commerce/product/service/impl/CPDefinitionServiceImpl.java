@@ -19,6 +19,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.base.CPDefinitionServiceBaseImpl;
 import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
 import com.liferay.commerce.product.service.permission.CPPermission;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -112,17 +114,34 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Override
 	public List<CPDefinition> getCPDefinitions(
-			long groupId, int status, int start, int end,
+			long groupId, String languageId, int status, int start, int end,
 			OrderByComparator<CPDefinition> orderByComparator)
 		throws PortalException {
 
-		return cpDefinitionLocalService.getCPDefinitions(
-			groupId, status, start, end, orderByComparator);
+		QueryDefinition<CPDefinition> queryDefinition = new QueryDefinition<>(
+			status);
+
+		if(status == WorkflowConstants.STATUS_ANY){
+			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH,true);
+		}
+
+		return cpDefinitionFinder.filterFindByG_S(
+			groupId, languageId, queryDefinition);
 	}
 
 	@Override
-	public int getCPDefinitionsCount(long groupId, int status) {
-		return cpDefinitionLocalService.getCPDefinitionsCount(groupId, status);
+	public int getCPDefinitionsCount(
+		long groupId, String languageId, int status) {
+
+		QueryDefinition<CPDefinition> queryDefinition = new QueryDefinition<>(
+			status);
+
+		if(status == WorkflowConstants.STATUS_ANY){
+			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH,true);
+		}
+
+		return cpDefinitionFinder.filterCountByG_S(
+			groupId,languageId, queryDefinition);
 	}
 
 	@Override

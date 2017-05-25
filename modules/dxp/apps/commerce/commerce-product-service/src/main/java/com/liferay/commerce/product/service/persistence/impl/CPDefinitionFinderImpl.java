@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -44,21 +45,36 @@ public class CPDefinitionFinderImpl
 		CPDefinitionFinder.class.getName() + ".findByG_S";
 
 	@Override
-	public int filterCountByG_S(
-		long groupId, QueryDefinition<CPDefinition> queryDefinition) {
+	public int countByG_S(
+		long groupId, String languageId, QueryDefinition<CPDefinition> queryDefinition) {
 
-		return doCountByG_S(groupId, queryDefinition);
+		return doCountByG_S(groupId, languageId, queryDefinition, false);
+	}
+
+	@Override
+	public int filterCountByG_S(
+		long groupId, String languageId, QueryDefinition<CPDefinition> queryDefinition) {
+
+		return doCountByG_S(groupId, languageId, queryDefinition, true);
 	}
 
 	@Override
 	public List<CPDefinition> filterFindByG_S(
-		long groupId, QueryDefinition<CPDefinition> queryDefinition) {
+		long groupId, String languageId, QueryDefinition<CPDefinition> queryDefinition) {
 
-		return doFindByG_S(groupId, queryDefinition);
+		return doFindByG_S(groupId, languageId, queryDefinition, true);
+	}
+
+	@Override
+	public List<CPDefinition> findByG_S(
+		long groupId, String languageId, QueryDefinition<CPDefinition> queryDefinition) {
+
+		return doFindByG_S(groupId, languageId, queryDefinition, false);
 	}
 
 	protected int doCountByG_S(
-		long groupId, QueryDefinition<CPDefinition> queryDefinition) {
+		long groupId,String languageId, QueryDefinition<CPDefinition> queryDefinition,
+		boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -74,6 +90,12 @@ public class CPDefinitionFinderImpl
 					sql, "(CPDefinition.groupId = ?) AND", StringPool.BLANK);
 			}
 
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, CPDefinition.class.getName(),
+					"CPDefinition.CPDefinitionId", groupId);
+			}
+
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
@@ -84,6 +106,7 @@ public class CPDefinitionFinderImpl
 				qPos.add(groupId);
 			}
 
+			qPos.add(languageId);
 			qPos.add(queryDefinition.getStatus());
 
 			Iterator<Long> itr = q.iterate();
@@ -107,7 +130,8 @@ public class CPDefinitionFinderImpl
 	}
 
 	protected List<CPDefinition> doFindByG_S(
-		long groupId, QueryDefinition<CPDefinition> queryDefinition) {
+		long groupId, String languageId, QueryDefinition<CPDefinition> queryDefinition,
+		boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -126,6 +150,12 @@ public class CPDefinitionFinderImpl
 					sql, "(CPDefinition.groupId = ?) AND", StringPool.BLANK);
 			}
 
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, CPDefinition.class.getName(),
+					"CPDefinition.CPDefinitionId", groupId);
+			}
+
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity(CPDefinitionImpl.TABLE_NAME, CPDefinitionImpl.class);
@@ -136,6 +166,7 @@ public class CPDefinitionFinderImpl
 				qPos.add(groupId);
 			}
 
+			qPos.add(languageId);
 			qPos.add(queryDefinition.getStatus());
 
 			return (List<CPDefinition>)QueryUtil.list(

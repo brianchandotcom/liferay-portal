@@ -344,7 +344,7 @@ public class CPDefinitionLocalServiceImpl
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-				classNameId, cpDefinitionId, 1, 1);
+				classNameId, cpDefinitionId, 0, 1);
 
 		if (cpAttachmentFileEntries.isEmpty()) {
 			return null;

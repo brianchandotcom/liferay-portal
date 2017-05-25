@@ -66,7 +66,7 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -94,6 +94,8 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 		sb.append(displayDate);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
+		sb.append(", title=");
+		sb.append(title);
 		sb.append(", json=");
 		sb.append(json);
 		sb.append(", priority=");
@@ -162,6 +164,13 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 			cpAttachmentFileEntryImpl.setExpirationDate(new Date(expirationDate));
 		}
 
+		if (title == null) {
+			cpAttachmentFileEntryImpl.setTitle(StringPool.BLANK);
+		}
+		else {
+			cpAttachmentFileEntryImpl.setTitle(title);
+		}
+
 		if (json == null) {
 			cpAttachmentFileEntryImpl.setJson(StringPool.BLANK);
 		}
@@ -207,6 +216,7 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 		fileEntryId = objectInput.readLong();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
+		title = objectInput.readUTF();
 		json = objectInput.readUTF();
 
 		priority = objectInput.readInt();
@@ -251,6 +261,13 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 
+		if (title == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(title);
+		}
+
 		if (json == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -277,6 +294,7 @@ public class CPAttachmentFileEntryCacheModel implements CacheModel<CPAttachmentF
 	public long fileEntryId;
 	public long displayDate;
 	public long expirationDate;
+	public String title;
 	public String json;
 	public int priority;
 	public int type;

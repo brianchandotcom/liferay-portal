@@ -19,9 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -29,6 +31,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * The base model interface for the CPAttachmentFileEntry service. Represents a row in the &quot;CPAttachmentFileEntry&quot; database table, with each column mapped to a property of this class.
@@ -45,7 +49,8 @@ import java.util.Date;
  */
 @ProviderType
 public interface CPAttachmentFileEntryModel extends AttachedModel,
-	BaseModel<CPAttachmentFileEntry>, ShardedModel, StagedGroupedModel {
+	BaseModel<CPAttachmentFileEntry>, LocalizedModel, ShardedModel,
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -295,6 +300,105 @@ public interface CPAttachmentFileEntryModel extends AttachedModel,
 	public void setExpirationDate(Date expirationDate);
 
 	/**
+	 * Returns the title of this cp attachment file entry.
+	 *
+	 * @return the title of this cp attachment file entry
+	 */
+	public String getTitle();
+
+	/**
+	 * Returns the localized title of this cp attachment file entry in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized title of this cp attachment file entry
+	 */
+	@AutoEscape
+	public String getTitle(Locale locale);
+
+	/**
+	 * Returns the localized title of this cp attachment file entry in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this cp attachment file entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getTitle(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized title of this cp attachment file entry in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized title of this cp attachment file entry
+	 */
+	@AutoEscape
+	public String getTitle(String languageId);
+
+	/**
+	 * Returns the localized title of this cp attachment file entry in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this cp attachment file entry
+	 */
+	@AutoEscape
+	public String getTitle(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getTitleCurrentLanguageId();
+
+	@AutoEscape
+	public String getTitleCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized titles of this cp attachment file entry.
+	 *
+	 * @return the locales and localized titles of this cp attachment file entry
+	 */
+	public Map<Locale, String> getTitleMap();
+
+	/**
+	 * Sets the title of this cp attachment file entry.
+	 *
+	 * @param title the title of this cp attachment file entry
+	 */
+	public void setTitle(String title);
+
+	/**
+	 * Sets the localized title of this cp attachment file entry in the language.
+	 *
+	 * @param title the localized title of this cp attachment file entry
+	 * @param locale the locale of the language
+	 */
+	public void setTitle(String title, Locale locale);
+
+	/**
+	 * Sets the localized title of this cp attachment file entry in the language, and sets the default locale.
+	 *
+	 * @param title the localized title of this cp attachment file entry
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setTitle(String title, Locale locale, Locale defaultLocale);
+
+	public void setTitleCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized titles of this cp attachment file entry from the map of locales and localized titles.
+	 *
+	 * @param titleMap the locales and localized titles of this cp attachment file entry
+	 */
+	public void setTitleMap(Map<Locale, String> titleMap);
+
+	/**
+	 * Sets the localized titles of this cp attachment file entry from the map of locales and localized titles, and sets the default locale.
+	 *
+	 * @param titleMap the locales and localized titles of this cp attachment file entry
+	 * @param defaultLocale the default locale
+	 */
+	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale);
+
+	/**
 	 * Returns the json of this cp attachment file entry.
 	 *
 	 * @return the json of this cp attachment file entry
@@ -385,6 +489,19 @@ public interface CPAttachmentFileEntryModel extends AttachedModel,
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
+
+	@Override
+	public String[] getAvailableLanguageIds();
+
+	@Override
+	public String getDefaultLanguageId();
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException;
+
+	@Override
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException;
 
 	@Override
 	public Object clone();

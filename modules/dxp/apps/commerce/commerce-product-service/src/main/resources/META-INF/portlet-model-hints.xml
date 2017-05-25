@@ -15,6 +15,7 @@
 		<field name="fileEntryId" type="long" />
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />
+		<field localized="true" name="title" type="String" />
 		<field name="json" type="String">
 			<hint-collection name="CLOB" />
 		</field>

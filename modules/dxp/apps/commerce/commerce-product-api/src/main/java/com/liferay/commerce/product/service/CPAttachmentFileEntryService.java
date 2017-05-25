@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for CPAttachmentFileEntry. Methods of this
@@ -63,7 +65,8 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire, java.lang.String json,
+		int expirationDateMinute, boolean neverExpire,
+		Map<Locale, java.lang.String> titleMap, java.lang.String json,
 		int priority, int type, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -87,12 +90,14 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire, java.lang.String json,
+		int expirationDateMinute, boolean neverExpire,
+		Map<Locale, java.lang.String> titleMap, java.lang.String json,
 		int priority, int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK);
+	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK,
+		int type);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -103,12 +108,12 @@ public interface CPAttachmentFileEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, long classPK, int start, int end)
+		long classNameId, long classPK, int type, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, long classPK, int start, int end,
+		long classNameId, long classPK, int type, int start, int end,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws PortalException;
 }

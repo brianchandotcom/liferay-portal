@@ -26,6 +26,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -34,6 +35,8 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -48,7 +51,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * The base model implementation for the CPAttachmentFileEntry service. Represents a row in the &quot;CPAttachmentFileEntry&quot; database table, with each column mapped to a property of this class.
@@ -87,6 +93,7 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 			{ "fileEntryId", Types.BIGINT },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
+			{ "title", Types.VARCHAR },
 			{ "json", Types.CLOB },
 			{ "priority", Types.INTEGER },
 			{ "type_", Types.INTEGER },
@@ -108,13 +115,14 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 		TABLE_COLUMNS_MAP.put("fileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("json", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPAttachmentFileEntry (uuid_ VARCHAR(75) null,CPAttachmentFileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,displayDate DATE null,expirationDate DATE null,json TEXT null,priority INTEGER,type_ INTEGER,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPAttachmentFileEntry (uuid_ VARCHAR(75) null,CPAttachmentFileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,displayDate DATE null,expirationDate DATE null,title STRING null,json TEXT null,priority INTEGER,type_ INTEGER,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPAttachmentFileEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpAttachmentFileEntry.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPAttachmentFileEntry.priority ASC";
@@ -134,8 +142,9 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
-	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long PRIORITY_COLUMN_BITMASK = 32L;
+	public static final long TYPE_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long PRIORITY_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -164,6 +173,7 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 		model.setFileEntryId(soapModel.getFileEntryId());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
+		model.setTitle(soapModel.getTitle());
 		model.setJson(soapModel.getJson());
 		model.setPriority(soapModel.getPriority());
 		model.setType(soapModel.getType());
@@ -246,6 +256,7 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 		attributes.put("fileEntryId", getFileEntryId());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("title", getTitle());
 		attributes.put("json", getJson());
 		attributes.put("priority", getPriority());
 		attributes.put("type", getType());
@@ -336,6 +347,12 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
 		}
 
 		String json = (String)attributes.get("json");
@@ -616,6 +633,105 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 
 	@JSON
 	@Override
+	public String getTitle() {
+		if (_title == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _title;
+		}
+	}
+
+	@Override
+	public String getTitle(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getTitle(languageId);
+	}
+
+	@Override
+	public String getTitle(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getTitle(languageId, useDefault);
+	}
+
+	@Override
+	public String getTitle(String languageId) {
+		return LocalizationUtil.getLocalization(getTitle(), languageId);
+	}
+
+	@Override
+	public String getTitle(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(getTitle(), languageId,
+			useDefault);
+	}
+
+	@Override
+	public String getTitleCurrentLanguageId() {
+		return _titleCurrentLanguageId;
+	}
+
+	@JSON
+	@Override
+	public String getTitleCurrentValue() {
+		Locale locale = getLocale(_titleCurrentLanguageId);
+
+		return getTitle(locale);
+	}
+
+	@Override
+	public Map<Locale, String> getTitleMap() {
+		return LocalizationUtil.getLocalizationMap(getTitle());
+	}
+
+	@Override
+	public void setTitle(String title) {
+		_title = title;
+	}
+
+	@Override
+	public void setTitle(String title, Locale locale) {
+		setTitle(title, locale, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setTitle(String title, Locale locale, Locale defaultLocale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(title)) {
+			setTitle(LocalizationUtil.updateLocalization(getTitle(), "Title",
+					title, languageId, defaultLanguageId));
+		}
+		else {
+			setTitle(LocalizationUtil.removeLocalization(getTitle(), "Title",
+					languageId));
+		}
+	}
+
+	@Override
+	public void setTitleCurrentLanguageId(String languageId) {
+		_titleCurrentLanguageId = languageId;
+	}
+
+	@Override
+	public void setTitleMap(Map<Locale, String> titleMap) {
+		setTitleMap(titleMap, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale) {
+		if (titleMap == null) {
+			return;
+		}
+
+		setTitle(LocalizationUtil.updateLocalization(titleMap, getTitle(),
+				"Title", LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	@JSON
+	@Override
 	public String getJson() {
 		if (_json == null) {
 			return StringPool.BLANK;
@@ -651,7 +767,19 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 
 	@Override
 	public void setType(int type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
+		if (!_setOriginalType) {
+			_setOriginalType = true;
+
+			_originalType = _type;
+		}
+
 		_type = type;
+	}
+
+	public int getOriginalType() {
+		return _originalType;
 	}
 
 	@JSON
@@ -689,6 +817,67 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 	}
 
 	@Override
+	public String[] getAvailableLanguageIds() {
+		Set<String> availableLanguageIds = new TreeSet<String>();
+
+		Map<Locale, String> titleMap = getTitleMap();
+
+		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
+			}
+		}
+
+		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
+	}
+
+	@Override
+	public String getDefaultLanguageId() {
+		String xml = getTitle();
+
+		if (xml == null) {
+			return StringPool.BLANK;
+		}
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException {
+		Locale defaultLocale = LocaleUtil.fromLanguageId(getDefaultLanguageId());
+
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(getAvailableLanguageIds());
+
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(CPAttachmentFileEntry.class.getName(),
+				getPrimaryKey(), defaultLocale, availableLocales);
+
+		prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String modelDefaultLanguageId = getDefaultLanguageId();
+
+		String title = getTitle(defaultLocale);
+
+		if (Validator.isNull(title)) {
+			setTitle(getTitle(modelDefaultLanguageId), defaultLocale);
+		}
+		else {
+			setTitle(getTitle(defaultLocale), defaultLocale, defaultLocale);
+		}
+	}
+
+	@Override
 	public CPAttachmentFileEntry toEscapedModel() {
 		if (_escapedModel == null) {
 			_escapedModel = (CPAttachmentFileEntry)ProxyUtil.newProxyInstance(_classLoader,
@@ -715,6 +904,7 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 		cpAttachmentFileEntryImpl.setFileEntryId(getFileEntryId());
 		cpAttachmentFileEntryImpl.setDisplayDate(getDisplayDate());
 		cpAttachmentFileEntryImpl.setExpirationDate(getExpirationDate());
+		cpAttachmentFileEntryImpl.setTitle(getTitle());
 		cpAttachmentFileEntryImpl.setJson(getJson());
 		cpAttachmentFileEntryImpl.setPriority(getPriority());
 		cpAttachmentFileEntryImpl.setType(getType());
@@ -807,6 +997,10 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 
 		cpAttachmentFileEntryModelImpl._setOriginalClassPK = false;
 
+		cpAttachmentFileEntryModelImpl._originalType = cpAttachmentFileEntryModelImpl._type;
+
+		cpAttachmentFileEntryModelImpl._setOriginalType = false;
+
 		cpAttachmentFileEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -880,6 +1074,14 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 			cpAttachmentFileEntryCacheModel.expirationDate = Long.MIN_VALUE;
 		}
 
+		cpAttachmentFileEntryCacheModel.title = getTitle();
+
+		String title = cpAttachmentFileEntryCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			cpAttachmentFileEntryCacheModel.title = null;
+		}
+
 		cpAttachmentFileEntryCacheModel.json = getJson();
 
 		String json = cpAttachmentFileEntryCacheModel.json;
@@ -906,7 +1108,7 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -934,6 +1136,8 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 		sb.append(getDisplayDate());
 		sb.append(", expirationDate=");
 		sb.append(getExpirationDate());
+		sb.append(", title=");
+		sb.append(getTitle());
 		sb.append(", json=");
 		sb.append(getJson());
 		sb.append(", priority=");
@@ -949,7 +1153,7 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPAttachmentFileEntry");
@@ -1008,6 +1212,10 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 		sb.append(getExpirationDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>title</column-name><column-value><![CDATA[");
+		sb.append(getTitle());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>json</column-name><column-value><![CDATA[");
 		sb.append(getJson());
 		sb.append("]]></column-value></column>");
@@ -1056,9 +1264,13 @@ public class CPAttachmentFileEntryModelImpl extends BaseModelImpl<CPAttachmentFi
 	private long _fileEntryId;
 	private Date _displayDate;
 	private Date _expirationDate;
+	private String _title;
+	private String _titleCurrentLanguageId;
 	private String _json;
 	private int _priority;
 	private int _type;
+	private int _originalType;
+	private boolean _setOriginalType;
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CPAttachmentFileEntry _escapedModel;

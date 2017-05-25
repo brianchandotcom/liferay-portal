@@ -48,6 +48,7 @@ public class CPAttachmentFileEntrySoap implements Serializable {
 		soapModel.setFileEntryId(model.getFileEntryId());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
+		soapModel.setTitle(model.getTitle());
 		soapModel.setJson(model.getJson());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setType(model.getType());
@@ -211,6 +212,14 @@ public class CPAttachmentFileEntrySoap implements Serializable {
 		_expirationDate = expirationDate;
 	}
 
+	public String getTitle() {
+		return _title;
+	}
+
+	public void setTitle(String title) {
+		_title = title;
+	}
+
 	public String getJson() {
 		return _json;
 	}
@@ -256,6 +265,7 @@ public class CPAttachmentFileEntrySoap implements Serializable {
 	private long _fileEntryId;
 	private Date _displayDate;
 	private Date _expirationDate;
+	private String _title;
 	private String _json;
 	private int _priority;
 	private int _type;

@@ -58,8 +58,9 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire, java.lang.String json,
-		int priority, int type,
+		int expirationDateMinute, boolean neverExpire,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.lang.String json, int priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -67,7 +68,7 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, json, priority, type, serviceContext);
+			neverExpire, titleMap, json, priority, type, serviceContext);
 	}
 
 	/**
@@ -169,8 +170,9 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire, java.lang.String json,
-		int priority, int type,
+		int expirationDateMinute, boolean neverExpire,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.lang.String json, int priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -178,7 +180,7 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 			fileEntryId, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, json, priority, type,
+			expirationDateMinute, neverExpire, titleMap, json, priority, type,
 			serviceContext);
 	}
 
@@ -231,8 +233,9 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 	}
 
 	public static int getCPAttachmentFileEntriesCount(long classNameId,
-		long classPK) {
-		return getService().getCPAttachmentFileEntriesCount(classNameId, classPK);
+		long classPK, int type) {
+		return getService()
+				   .getCPAttachmentFileEntriesCount(classNameId, classPK, type);
 	}
 
 	/**
@@ -311,19 +314,20 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, long classPK, int start, int end)
+		long classNameId, long classPK, int type, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCPAttachmentFileEntries(classNameId, classPK, start, end);
+				   .getCPAttachmentFileEntries(classNameId, classPK, type,
+			start, end);
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, long classPK, int start, int end,
+		long classNameId, long classPK, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPAttachmentFileEntry> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCPAttachmentFileEntries(classNameId, classPK, start,
-			end, orderByComparator);
+				   .getCPAttachmentFileEntries(classNameId, classPK, type,
+			start, end, orderByComparator);
 	}
 
 	/**

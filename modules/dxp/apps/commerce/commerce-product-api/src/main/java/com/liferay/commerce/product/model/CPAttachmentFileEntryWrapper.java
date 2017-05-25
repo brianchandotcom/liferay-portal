@@ -74,6 +74,7 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 		attributes.put("fileEntryId", getFileEntryId());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("title", getTitle());
 		attributes.put("json", getJson());
 		attributes.put("priority", getPriority());
 		attributes.put("type", getType());
@@ -161,6 +162,12 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
 		}
 
 		String json = (String)attributes.get("json");
@@ -279,6 +286,11 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 		return _cpAttachmentFileEntry.getClassName();
 	}
 
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _cpAttachmentFileEntry.getDefaultLanguageId();
+	}
+
 	/**
 	* Returns the json of this cp attachment file entry.
 	*
@@ -287,6 +299,73 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	@Override
 	public java.lang.String getJson() {
 		return _cpAttachmentFileEntry.getJson();
+	}
+
+	/**
+	* Returns the title of this cp attachment file entry.
+	*
+	* @return the title of this cp attachment file entry
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _cpAttachmentFileEntry.getTitle();
+	}
+
+	/**
+	* Returns the localized title of this cp attachment file entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized title of this cp attachment file entry
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId) {
+		return _cpAttachmentFileEntry.getTitle(languageId);
+	}
+
+	/**
+	* Returns the localized title of this cp attachment file entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this cp attachment file entry
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpAttachmentFileEntry.getTitle(languageId, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this cp attachment file entry in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized title of this cp attachment file entry
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _cpAttachmentFileEntry.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this cp attachment file entry in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this cp attachment file entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _cpAttachmentFileEntry.getTitle(locale, useDefault);
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentLanguageId() {
+		return _cpAttachmentFileEntry.getTitleCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentValue() {
+		return _cpAttachmentFileEntry.getTitleCurrentValue();
 	}
 
 	/**
@@ -327,6 +406,11 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	@Override
 	public java.lang.String toXmlString() {
 		return _cpAttachmentFileEntry.toXmlString();
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _cpAttachmentFileEntry.getAvailableLanguageIds();
 	}
 
 	/**
@@ -377,6 +461,16 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	@Override
 	public Date getModifiedDate() {
 		return _cpAttachmentFileEntry.getModifiedDate();
+	}
+
+	/**
+	* Returns a map of the locales and localized titles of this cp attachment file entry.
+	*
+	* @return the locales and localized titles of this cp attachment file entry
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _cpAttachmentFileEntry.getTitleMap();
 	}
 
 	/**
@@ -462,6 +556,19 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	@Override
 	public void persist() {
 		_cpAttachmentFileEntry.persist();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.kernel.exception.LocaleException {
+		_cpAttachmentFileEntry.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.kernel.exception.LocaleException {
+		_cpAttachmentFileEntry.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -638,6 +745,67 @@ public class CPAttachmentFileEntryWrapper implements CPAttachmentFileEntry,
 	@Override
 	public void setPriority(int priority) {
 		_cpAttachmentFileEntry.setPriority(priority);
+	}
+
+	/**
+	* Sets the title of this cp attachment file entry.
+	*
+	* @param title the title of this cp attachment file entry
+	*/
+	@Override
+	public void setTitle(java.lang.String title) {
+		_cpAttachmentFileEntry.setTitle(title);
+	}
+
+	/**
+	* Sets the localized title of this cp attachment file entry in the language.
+	*
+	* @param title the localized title of this cp attachment file entry
+	* @param locale the locale of the language
+	*/
+	@Override
+	public void setTitle(java.lang.String title, java.util.Locale locale) {
+		_cpAttachmentFileEntry.setTitle(title, locale);
+	}
+
+	/**
+	* Sets the localized title of this cp attachment file entry in the language, and sets the default locale.
+	*
+	* @param title the localized title of this cp attachment file entry
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setTitle(java.lang.String title, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		_cpAttachmentFileEntry.setTitle(title, locale, defaultLocale);
+	}
+
+	@Override
+	public void setTitleCurrentLanguageId(java.lang.String languageId) {
+		_cpAttachmentFileEntry.setTitleCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized titles of this cp attachment file entry from the map of locales and localized titles.
+	*
+	* @param titleMap the locales and localized titles of this cp attachment file entry
+	*/
+	@Override
+	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
+		_cpAttachmentFileEntry.setTitleMap(titleMap);
+	}
+
+	/**
+	* Sets the localized titles of this cp attachment file entry from the map of locales and localized titles, and sets the default locale.
+	*
+	* @param titleMap the locales and localized titles of this cp attachment file entry
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Locale defaultLocale) {
+		_cpAttachmentFileEntry.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**

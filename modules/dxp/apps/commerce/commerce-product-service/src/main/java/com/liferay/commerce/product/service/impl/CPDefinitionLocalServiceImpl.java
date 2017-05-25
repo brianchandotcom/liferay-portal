@@ -294,27 +294,6 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public List<CPDefinition> getCPDefinitions(
-			long groupId, int status, int start, int end,
-			OrderByComparator<CPDefinition> orderByComparator)
-		throws PortalException {
-
-		QueryDefinition<CPDefinition> queryDefinition = new QueryDefinition<>(
-			status, true, start, end, orderByComparator);
-
-		return cpDefinitionFinder.filterFindByG_S(groupId, queryDefinition);
-	}
-
-	@Override
-	public int getCPDefinitionsCount(long groupId, int status) {
-		QueryDefinition<CPDefinition> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setStatus(status, true);
-
-		return cpDefinitionFinder.filterCountByG_S(groupId, queryDefinition);
-	}
-
-	@Override
 	public Map<Locale, String> getCPDefinitionShortDescriptionMap(
 		long cpDefinitionId) {
 

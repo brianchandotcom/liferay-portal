@@ -90,8 +90,8 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 					ddmFormFieldOptions.addOptionLabel(
 						"_cpDefinitionOptionValueRelId_" +
-							String.valueOf(cpDefinitionOptionValueRel.
-								getCPDefinitionOptionValueRelId()),
+							cpDefinitionOptionValueRel.
+								getCPDefinitionOptionValueRelId(),
 						locale, cpDefinitionOptionValueRel.getTitle(locale));
 				}
 
@@ -221,7 +221,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		ddmFormRenderingContext.setPortletNamespace(
 			renderResponse.getNamespace());
 
-		if (Validator.isNotNull(json) && !Validator.isBlank(json)) {
+		if (Validator.isNotNull(json)) {
 			DDMFormValues ddmFormValues = _ddmFormValuesHelper.deserialize(
 				ddmForm, json, locale);
 

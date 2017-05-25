@@ -71,6 +71,10 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 			ddmFormFieldValues.add(ddmFormFieldValue);
 		}
 
+		if(ddmFormFieldValues.size() == 0){
+			return null;
+		}
+
 		ddmFormValues.setDDMFormFieldValues(ddmFormFieldValues);
 
 		return ddmFormValues;

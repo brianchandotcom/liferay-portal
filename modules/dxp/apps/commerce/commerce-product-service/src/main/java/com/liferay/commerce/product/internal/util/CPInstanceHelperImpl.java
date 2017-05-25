@@ -89,8 +89,8 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 						cpDefinitionOptionValueRels) {
 
 					ddmFormFieldOptions.addOptionLabel(
-						"cpDefinitionOptionValueRelId" +
-							String.valueOf(cpDefinitionOptionValueRel.
+							"_cpDefinitionOptionValueRelId_" +
+								String.valueOf(cpDefinitionOptionValueRel.
 								getCPDefinitionOptionValueRelId()),
 						locale, cpDefinitionOptionValueRel.getTitle(locale));
 				}
@@ -153,11 +153,21 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 				"cpDefinitionOptionValueRelId");
 
 			CPDefinitionOptionRel cpDefinitionOptionRel =
-				_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
+				_cpDefinitionOptionRelService.fetchCPDefinitionOptionRel(
 					cpDefinitionOptionRelId);
+
+			if(cpDefinitionOptionRel == null){
+				continue;
+			}
+
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 				_cpDefinitionOptionValueRelService.
-					getCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
+					fetchCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
+
+			if(cpDefinitionOptionValueRel == null){
+				continue;
+			}
+
 
 			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 				cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
@@ -211,11 +221,14 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		ddmFormRenderingContext.setPortletNamespace(
 			renderResponse.getNamespace());
 
-		if (Validator.isNotNull(json)) {
+		if (Validator.isNotNull(json) && !Validator.isBlank(json) ) {
+
 			DDMFormValues ddmFormValues = _ddmFormValuesHelper.deserialize(
 				ddmForm, json, locale);
 
-			ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
+			if(ddmFormValues != null) {
+				ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
+			}
 		}
 
 		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);

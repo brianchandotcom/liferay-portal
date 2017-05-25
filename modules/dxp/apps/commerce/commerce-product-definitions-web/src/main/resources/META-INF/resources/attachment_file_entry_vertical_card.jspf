@@ -32,11 +32,16 @@
 	for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 		StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 
+		if(!cpDefinitionOptionRelListMap.containsKey(cpDefinitionOptionRel)) {
+			continue;
+		}
+
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
 
 		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
 			stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
 		}
+
 	%>
 
 		<h6 class="text-default">

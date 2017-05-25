@@ -253,9 +253,8 @@ public class SoyPortlet extends MVCPortlet {
 		writer.write(sb.toString());
 	}
 
-	private static List<TemplateResource> _templateResources;
-
 	private Bundle _bundle;
 	private SoyPortletHelper _soyPortletHelper;
+	private List<TemplateResource> _templateResources;
 
 }

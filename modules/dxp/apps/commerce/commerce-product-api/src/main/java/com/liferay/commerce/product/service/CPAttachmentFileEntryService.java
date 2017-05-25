@@ -67,7 +67,7 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		Map<Locale, java.lang.String> titleMap, java.lang.String json,
-		int priority, int type, ServiceContext serviceContext)
+		double priority, int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPAttachmentFileEntry deleteCPAttachmentFileEntry(
@@ -92,7 +92,7 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		Map<Locale, java.lang.String> titleMap, java.lang.String json,
-		int priority, int type, ServiceContext serviceContext)
+		double priority, int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

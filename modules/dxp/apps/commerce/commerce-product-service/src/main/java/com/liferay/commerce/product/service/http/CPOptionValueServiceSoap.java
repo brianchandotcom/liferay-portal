@@ -72,7 +72,7 @@ public class CPOptionValueServiceSoap {
 	public static com.liferay.commerce.product.model.CPOptionValueSoap addCPOptionValue(
 		long cpOptionId, java.lang.String name,
 		java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues, int priority,
+		java.lang.String[] titleMapValues, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -200,7 +200,7 @@ public class CPOptionValueServiceSoap {
 	public static com.liferay.commerce.product.model.CPOptionValueSoap updateCPOptionValue(
 		long cpOptionValueId, java.lang.String name,
 		java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues, int priority,
+		java.lang.String[] titleMapValues, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

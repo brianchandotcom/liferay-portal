@@ -130,8 +130,9 @@ public class CPDefinitionOptionRelServiceHttp {
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
-		boolean required, boolean skuContributor, boolean importOptionValue,
+		java.lang.String ddmFormFieldTypeName, double priority,
+		boolean facetable, boolean required, boolean skuContributor,
+		boolean importOptionValue,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -633,8 +634,8 @@ public class CPDefinitionOptionRelServiceHttp {
 		long cpOptionId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
-		boolean required, boolean skuContributor,
+		java.lang.String ddmFormFieldTypeName, double priority,
+		boolean facetable, boolean required, boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -680,7 +681,7 @@ public class CPDefinitionOptionRelServiceHttp {
 		};
 	private static final Class<?>[] _addCPDefinitionOptionRelParameterTypes2 = new Class[] {
 			long.class, long.class, java.lang.String.class, java.util.Map.class,
-			java.util.Map.class, java.lang.String.class, int.class,
+			java.util.Map.class, java.lang.String.class, double.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -729,7 +730,7 @@ public class CPDefinitionOptionRelServiceHttp {
 	private static final Class<?>[] _updateCPDefinitionOptionRelParameterTypes17 =
 		new Class[] {
 			long.class, long.class, java.lang.String.class, java.util.Map.class,
-			java.util.Map.class, java.lang.String.class, int.class,
+			java.util.Map.class, java.lang.String.class, double.class,
 			boolean.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

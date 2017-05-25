@@ -48,7 +48,7 @@ public class CPAttachmentFileEntryServiceUtil {
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String json, int priority, int type,
+		java.lang.String json, double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -90,7 +90,7 @@ public class CPAttachmentFileEntryServiceUtil {
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String json, int priority, int type,
+		java.lang.String json, double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

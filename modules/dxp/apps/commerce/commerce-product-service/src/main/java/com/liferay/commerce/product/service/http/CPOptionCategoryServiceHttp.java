@@ -59,7 +59,7 @@ public class CPOptionCategoryServiceHttp {
 		HttpPrincipal httpPrincipal, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int priority,
+		double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -312,7 +312,7 @@ public class CPOptionCategoryServiceHttp {
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int priority,
+		double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -349,7 +349,7 @@ public class CPOptionCategoryServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CPOptionCategoryServiceHttp.class);
 	private static final Class<?>[] _addCPOptionCategoryParameterTypes0 = new Class[] {
 			java.lang.String.class, java.util.Map.class, java.util.Map.class,
-			int.class, com.liferay.portal.kernel.service.ServiceContext.class
+			double.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPOptionCategoryParameterTypes1 = new Class[] {
 			com.liferay.commerce.product.model.CPOptionCategory.class
@@ -375,7 +375,7 @@ public class CPOptionCategoryServiceHttp {
 		};
 	private static final Class<?>[] _updateCPOptionCategoryParameterTypes8 = new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,
-			java.util.Map.class, int.class,
+			java.util.Map.class, double.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

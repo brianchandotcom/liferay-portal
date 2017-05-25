@@ -95,9 +95,10 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 		long cpOptionId, java.lang.String name,
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
-		boolean required, boolean skuContributor, boolean importOptionValue,
-		ServiceContext serviceContext) throws PortalException;
+		java.lang.String ddmFormFieldTypeName, double priority,
+		boolean facetable, boolean required, boolean skuContributor,
+		boolean importOptionValue, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new cp definition option rel with the primary key. Does not add the cp definition option rel to the database.
@@ -193,9 +194,9 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 		long cpDefinitionOptionRelId, long cpOptionId, java.lang.String name,
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
-		boolean required, boolean skuContributor, ServiceContext serviceContext)
-		throws PortalException;
+		java.lang.String ddmFormFieldTypeName, double priority,
+		boolean facetable, boolean required, boolean skuContributor,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

@@ -63,8 +63,9 @@ public class CPDefinitionOptionRelServiceUtil {
 		long cpDefinitionId, long cpOptionId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
-		boolean required, boolean skuContributor, boolean importOptionValue,
+		java.lang.String ddmFormFieldTypeName, double priority,
+		boolean facetable, boolean required, boolean skuContributor,
+		boolean importOptionValue,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -121,8 +122,8 @@ public class CPDefinitionOptionRelServiceUtil {
 		long cpDefinitionOptionRelId, long cpOptionId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String ddmFormFieldTypeName, int priority, boolean facetable,
-		boolean required, boolean skuContributor,
+		java.lang.String ddmFormFieldTypeName, double priority,
+		boolean facetable, boolean required, boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

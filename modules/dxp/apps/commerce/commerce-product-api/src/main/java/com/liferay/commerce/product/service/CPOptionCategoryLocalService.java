@@ -81,7 +81,7 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 
 	public CPOptionCategory addCPOptionCategory(java.lang.String name,
 		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, int priority,
+		Map<Locale, java.lang.String> descriptionMap, double priority,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -164,7 +164,7 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 
 	public CPOptionCategory updateCPOptionCategory(long cpOptionCategoryId,
 		java.lang.String name, Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, int priority,
+		Map<Locale, java.lang.String> descriptionMap, double priority,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

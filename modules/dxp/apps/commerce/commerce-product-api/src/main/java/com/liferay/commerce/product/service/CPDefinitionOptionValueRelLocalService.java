@@ -90,7 +90,7 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 
 	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
 		long cpDefinitionOptionRelId, java.lang.String name,
-		Map<Locale, java.lang.String> titleMap, int priority,
+		Map<Locale, java.lang.String> titleMap, double priority,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -176,7 +176,7 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 		long cpDefinitionOptionValueRelId, java.lang.String name,
-		Map<Locale, java.lang.String> titleMap, int priority,
+		Map<Locale, java.lang.String> titleMap, double priority,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

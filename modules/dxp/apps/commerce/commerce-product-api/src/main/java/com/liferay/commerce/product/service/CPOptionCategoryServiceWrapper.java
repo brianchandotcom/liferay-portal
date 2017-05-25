@@ -38,7 +38,7 @@ public class CPOptionCategoryServiceWrapper implements CPOptionCategoryService,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int priority,
+		double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionCategoryService.addCPOptionCategory(name, titleMap,
@@ -78,7 +78,7 @@ public class CPOptionCategoryServiceWrapper implements CPOptionCategoryService,
 		long cpOptionCategoryId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int priority,
+		double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionCategoryService.updateCPOptionCategory(cpOptionCategoryId,

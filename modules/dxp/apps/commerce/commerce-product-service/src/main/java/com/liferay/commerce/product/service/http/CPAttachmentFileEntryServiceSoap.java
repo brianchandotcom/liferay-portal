@@ -76,8 +76,8 @@ public class CPAttachmentFileEntryServiceSoap {
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues, java.lang.String json, int priority,
-		int type,
+		java.lang.String[] titleMapValues, java.lang.String json,
+		double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -220,8 +220,8 @@ public class CPAttachmentFileEntryServiceSoap {
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues, java.lang.String json, int priority,
-		int type,
+		java.lang.String[] titleMapValues, java.lang.String json,
+		double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

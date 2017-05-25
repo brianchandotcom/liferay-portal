@@ -72,7 +72,7 @@ public class CPDefinitionOptionValueRelServiceSoap {
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap addCPDefinitionOptionValueRel(
 		long cpDefinitionOptionRelId, java.lang.String name,
 		java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues, int priority,
+		java.lang.String[] titleMapValues, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -206,7 +206,7 @@ public class CPDefinitionOptionValueRelServiceSoap {
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap updateCPDefinitionOptionValueRel(
 		long cpDefinitionOptionValueRelId, java.lang.String name,
 		java.lang.String[] titleMapLanguageIds,
-		java.lang.String[] titleMapValues, int priority,
+		java.lang.String[] titleMapValues, double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

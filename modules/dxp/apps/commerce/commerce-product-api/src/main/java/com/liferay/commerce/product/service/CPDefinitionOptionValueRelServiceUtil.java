@@ -44,7 +44,7 @@ public class CPDefinitionOptionValueRelServiceUtil {
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
 		long cpDefinitionOptionRelId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		int priority,
+		double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -83,7 +83,7 @@ public class CPDefinitionOptionValueRelServiceUtil {
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 		long cpDefinitionOptionValueRelId, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		int priority,
+		double priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

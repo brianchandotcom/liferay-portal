@@ -62,7 +62,7 @@ public class CPAttachmentFileEntryServiceHttp {
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String json, int priority, int type,
+		java.lang.String json, double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -337,7 +337,7 @@ public class CPAttachmentFileEntryServiceHttp {
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String json, int priority, int type,
+		java.lang.String json, double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -380,7 +380,7 @@ public class CPAttachmentFileEntryServiceHttp {
 			long.class, long.class, long.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, boolean.class, java.util.Map.class,
-			java.lang.String.class, int.class, int.class,
+			java.lang.String.class, double.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPAttachmentFileEntryParameterTypes1 = new Class[] {
@@ -408,7 +408,7 @@ public class CPAttachmentFileEntryServiceHttp {
 			long.class, long.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
 			boolean.class, java.util.Map.class, java.lang.String.class,
-			int.class, int.class,
+			double.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

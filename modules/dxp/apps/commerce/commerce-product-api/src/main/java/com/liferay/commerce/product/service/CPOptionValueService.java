@@ -64,7 +64,8 @@ public interface CPOptionValueService extends BaseService {
 	 */
 	public CPOptionValue addCPOptionValue(long cpOptionId,
 		java.lang.String name, Map<Locale, java.lang.String> titleMap,
-		int priority, ServiceContext serviceContext) throws PortalException;
+		double priority, ServiceContext serviceContext)
+		throws PortalException;
 
 	public CPOptionValue deleteCPOptionValue(CPOptionValue cpOptionValue)
 		throws PortalException;
@@ -82,7 +83,8 @@ public interface CPOptionValueService extends BaseService {
 
 	public CPOptionValue updateCPOptionValue(long cpOptionValueId,
 		java.lang.String name, Map<Locale, java.lang.String> titleMap,
-		int priority, ServiceContext serviceContext) throws PortalException;
+		double priority, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(

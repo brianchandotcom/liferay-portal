@@ -35,14 +35,14 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
+		_companyAdminUserDemoDataCreator.create(
+			company.getCompanyId(), "bruno@liferay.com");
+
 		Group acmeCorpGroup = _siteDemoDataCreator.create(
 			company.getCompanyId(), "Acme’s Corporation");
 
 		_siteAdminUserDemoDataCreator.create(
 			acmeCorpGroup.getGroupId(), "helen@liferay.com");
-
-		_companyAdminUserDemoDataCreator.create(
-			company.getCompanyId(), "bruno@liferay.com");
 	}
 
 	@Deactivate

@@ -55,59 +55,42 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 			long userId, long groupId, long cpDefinitionId, JSONArray jsonArray)
 		throws Exception {
 
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		long classeNameId = PortalUtil.getClassNameId(
+			CPDefinition.class);
+
+		Folder folder =
+			_cpAttachmentFileEntryLocalService.getAttachmentsFolder(
+				userId, groupId, CPDefinition.class.getName(),
+				cpDefinitionId);
+
 		for (int i = 0; i < jsonArray.length(); i++) {
 			String fileName = jsonArray.getString(i);
 
 			Map<Locale, String> titleMap = Collections.singletonMap(
 				Locale.US, fileName);
 
-			Folder folder =
-				_cpAttachmentFileEntryLocalService.getAttachmentsFolder(
-					userId, groupId, CPDefinition.class.getName(),
-					cpDefinitionId);
-
 			String uniqueFileName = PortletFileRepositoryUtil.getUniqueFileName(
 				groupId, folder.getFolderId(), fileName);
 
-			Class<?> clazz = getClass();
+			try (InputStream inputStream = classLoader.getResourceAsStream(
+					"com/liferay/commerce/product/demo/data/creator/internal" +
+						"/dependencies/images/" + fileName)) {
 
-			String filePath =
-				"com/liferay/commerce/product/demo/data/creator/internal" +
-					"/dependencies/images/" + fileName;
+				FileEntry fileEntry =
+					PortletFileRepositoryUtil.addPortletFileEntry(
+						groupId, userId, CPDefinition.class.getName(),
+						cpDefinitionId, CPConstants.SERVICE_NAME,
+						folder.getFolderId(), inputStream, uniqueFileName,
+						"image/jpeg", true);
 
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			Enumeration<URL> enu = classLoader.getResources(filePath);
-
-			while (enu.hasMoreElements()) {
-				URL url = enu.nextElement();
-
-				InputStream is = url.openStream();
-
-				if (is == null) {
-					throw new IOException(
-						"Unable to open resource at " + url.toString());
-				}
-
-				try {
-					FileEntry fileEntry =
-						PortletFileRepositoryUtil.addPortletFileEntry(
-							groupId, userId, CPDefinition.class.getName(),
-							cpDefinitionId, CPConstants.SERVICE_NAME,
-							folder.getFolderId(), is, uniqueFileName,
-							"image/jpeg", true);
-
-					long classeNameId = PortalUtil.getClassNameId(
-						CPDefinition.class);
-
-					createCPAttachmentFileEntry(
-						userId, groupId, classeNameId, cpDefinitionId,
-						fileEntry.getFileEntryId(), titleMap, null, 0,
-						CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGES);
-				}
-				finally {
-					StreamUtil.cleanUp(is);
-				}
+				createCPAttachmentFileEntry(
+					userId, groupId, classeNameId, cpDefinitionId,
+					fileEntry.getFileEntryId(), titleMap, null, 0,
+					CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
 			}
 		}
 	}

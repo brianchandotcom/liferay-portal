@@ -38,8 +38,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -79,15 +81,18 @@ public class ProjectTemplateFilesTest {
 		}
 	}
 
-	private static String _readXmlDeclarationTemplate(String name)
+	private static void _addXmlDeclaration(
+			String fileName, String templateFileName)
 		throws IOException {
 
 		String template = FileTestUtil.read(
-			"com/liferay/project/templates/dependencies/" + name);
+			"com/liferay/project/templates/dependencies/" + templateFileName);
 
 		int pos = template.indexOf("[$XML$]");
 
-		return template.substring(0, pos);
+		template = template.substring(0, pos);
+
+		_xmlDeclarations.put(fileName, template);
 	}
 
 	private List<BuildGradleDependency> _getBuildGradleDependencies(
@@ -633,13 +638,10 @@ public class ProjectTemplateFilesTest {
 			!fileName.equals("liferay-layout-templates.xml") &&
 			Validator.isNotNull(text)) {
 
-			String xmlDeclaration = _XML_DECLARATION;
+			String xmlDeclaration = _xmlDeclarations.get(fileName);
 
-			if (fileName.equals("pom.xml")) {
-				xmlDeclaration = _POM_XML_DECLARATION;
-			}
-			else if (fileName.equals("service.xml")) {
-				xmlDeclaration = _SERVICE_XML_DECLARATION;
+			if (xmlDeclaration == null) {
+				xmlDeclaration = _xmlDeclarations.get(null);
 			}
 
 			Assert.assertTrue(
@@ -652,15 +654,9 @@ public class ProjectTemplateFilesTest {
 
 	private static final String _GIT_IGNORE_WITH_PACKAGE_JSON;
 
-	private static final String _POM_XML_DECLARATION;
-
-	private static final String _SERVICE_XML_DECLARATION;
-
 	private static final String[] _SOURCESET_NAMES = {
 		"main", "test", "testIntegration"
 	};
-
-	private static final String _XML_DECLARATION;
 
 	private static final Pattern _buildGradleDependencyPattern =
 		Pattern.compile(
@@ -699,6 +695,7 @@ public class ProjectTemplateFilesTest {
 			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));
 	private static final Pattern _velocityIfPattern = Pattern.compile(
 		"#if\\s*\\(\\s*(.+)\\s*\\)");
+	private static final Map<String, String> _xmlDeclarations = new HashMap<>();
 
 	static {
 		Set<String> gitIgnoreLines = new TreeSet<>();
@@ -715,12 +712,9 @@ public class ProjectTemplateFilesTest {
 			gitIgnoreLines, '\n');
 
 		try {
-			_XML_DECLARATION = _readXmlDeclarationTemplate(
-				"xml_declaration.tmpl");
-			_POM_XML_DECLARATION = _readXmlDeclarationTemplate(
-				"pom_xml_declaration.tmpl");
-			_SERVICE_XML_DECLARATION = _readXmlDeclarationTemplate(
-				"service_xml_declaration.tmpl");
+			_addXmlDeclaration(null, "xml_declaration.tmpl");
+			_addXmlDeclaration("pom.xml", "pom_xml_declaration.tmpl");
+			_addXmlDeclaration("service.xml", "service_xml_declaration.tmpl");
 		}
 		catch (IOException ioe) {
 			throw new ExceptionInInitializerError(ioe);

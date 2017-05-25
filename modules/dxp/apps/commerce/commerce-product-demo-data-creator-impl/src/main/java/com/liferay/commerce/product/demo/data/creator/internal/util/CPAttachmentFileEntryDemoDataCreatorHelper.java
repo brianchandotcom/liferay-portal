@@ -27,17 +27,12 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
-import java.io.IOException;
 import java.io.InputStream;
-
-import java.net.URL;
 
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
@@ -59,13 +54,10 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		long classeNameId = PortalUtil.getClassNameId(
-			CPDefinition.class);
+		long classeNameId = _portal.getClassNameId(CPDefinition.class);
 
-		Folder folder =
-			_cpAttachmentFileEntryLocalService.getAttachmentsFolder(
-				userId, groupId, CPDefinition.class.getName(),
-				cpDefinitionId);
+		Folder folder = _cpAttachmentFileEntryLocalService.getAttachmentsFolder(
+			userId, groupId, CPDefinition.class.getName(), cpDefinitionId);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			String fileName = jsonArray.getString(i);
@@ -145,5 +137,8 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

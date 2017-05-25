@@ -21,7 +21,9 @@ import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
@@ -60,6 +62,10 @@ public class CPDefinitionItemSelectorViewDisplayContext
 			return searchContainer;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		SearchContainer<CPDefinition> searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
@@ -75,14 +81,15 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		int total = _cpDefinitionService.getCPDefinitionsCount(
-			getScopeGroupId(), WorkflowConstants.STATUS_ANY);
+			getScopeGroupId(), themeDisplay.getLanguageId(),
+			WorkflowConstants.STATUS_ANY);
 
 		searchContainer.setTotal(total);
 
 		List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
-			getScopeGroupId(), WorkflowConstants.STATUS_ANY,
-			searchContainer.getStart(), searchContainer.getEnd(),
-			orderByComparator);
+			getScopeGroupId(), themeDisplay.getLanguageId(),
+			WorkflowConstants.STATUS_ANY, searchContainer.getStart(),
+			searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
 

@@ -19,9 +19,9 @@ package com.liferay.commerce.product.constants;
  */
 public class CPConstants {
 
-	public static final int ATTACHMENT_FILE_ENTRY_TYPE_ATTACHMENTS = 1;
+	public static final int ATTACHMENT_FILE_ENTRY_TYPE_IMAGE = 0;
 
-	public static final int ATTACHMENT_FILE_ENTRY_TYPE_IMAGES = 0;
+	public static final int ATTACHMENT_FILE_ENTRY_TYPE_OTHER = 1;
 
 	public static final String SERVICE_NAME = "com.liferay.commerce.product";
 

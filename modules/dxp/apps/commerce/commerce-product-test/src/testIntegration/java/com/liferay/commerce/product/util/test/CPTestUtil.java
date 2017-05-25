@@ -118,7 +118,7 @@ public class CPTestUtil {
 			expirationDateHour, expirationDateMinute, false,
 			RandomTestUtil.randomLocaleStringMap(), json,
 			RandomTestUtil.randomInt(),
-			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGES, serviceContext);
+			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE, serviceContext);
 	}
 
 	public static CPDefinition addCPDefinition(long groupId) throws Exception {

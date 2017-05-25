@@ -204,7 +204,7 @@ public class CPAttachmentFileEntryServiceImpl
 	}
 
 	protected String getActionKeyByCPAttachmentFileEntryType(int type) {
-		if (type == CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_ATTACHMENTS) {
+		if (type == CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER) {
 			return CPActionKeys.MANAGE_COMMERCE_PRODUCT_ATTACHMENTS;
 		}
 

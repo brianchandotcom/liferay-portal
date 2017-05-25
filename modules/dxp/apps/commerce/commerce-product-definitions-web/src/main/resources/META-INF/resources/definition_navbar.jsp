@@ -59,7 +59,7 @@ if (cpDefinition != null) {
 				<portlet:param name="mvcRenderCommandName" value="viewAttachmentFileEntries" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
-				<portlet:param name="type" value="<%= String.valueOf(CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGES) %>" />
+				<portlet:param name="type" value="<%= String.valueOf(CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE) %>" />
 				<portlet:param name="toolbarItem" value="view-product-definition-images" />
 			</liferay-portlet:renderURL>
 
@@ -99,7 +99,7 @@ if (cpDefinition != null) {
 				<portlet:param name="mvcRenderCommandName" value="viewAttachmentFileEntries" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
-				<portlet:param name="type" value="<%= String.valueOf(CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_ATTACHMENTS) %>" />
+				<portlet:param name="type" value="<%= String.valueOf(CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER) %>" />
 				<portlet:param name="toolbarItem" value="view-product-definition-attachments" />
 			</liferay-portlet:renderURL>
 

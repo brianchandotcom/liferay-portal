@@ -34,10 +34,10 @@ CPAttachmentFileEntry cpAttachmentFileEntry = cpAttachmentFileEntriesDisplayCont
 
 long cpAttachmentFileEntryId = cpAttachmentFileEntriesDisplayContext.getCPAttachmentFileEntryId();
 
-int type = CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGES;
+int type = CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE;
 
 if (toolbarItem.equals("view-product-definition-attachments")) {
-	type = CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_ATTACHMENTS;
+	type = CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER;
 }
 
 portletDisplay.setShowBackIcon(true);

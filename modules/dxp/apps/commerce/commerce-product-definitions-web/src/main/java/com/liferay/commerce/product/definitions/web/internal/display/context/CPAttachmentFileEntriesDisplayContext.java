@@ -84,7 +84,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 
 		_type = ParamUtil.get(
 			httpServletRequest, "type",
-			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGES);
+			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
 	}
 
 	public CPAttachmentFileEntry getCPAttachmentFileEntry()

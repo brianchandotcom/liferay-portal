@@ -29,6 +29,7 @@
 		<column name="fileEntryId" type="long" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
+		<column localized="true" name="title" type="String" />
 		<column name="json" type="String" />
 		<column name="priority" type="int" />
 		<column name="type" type="int" />

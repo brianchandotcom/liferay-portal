@@ -137,7 +137,8 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 			else {
 				String previousLine = signatureLines[i - 1];
 
-				if (previousLine.endsWith(StringPool.COMMA) ||
+				if ((previousLine.endsWith(StringPool.COMMA) &&
+					 (getLevel(previousLine, "<", ">") <= 0)) ||
 					previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
 
 					newSignature = _fixLeadingTabs(

@@ -67,11 +67,7 @@ public class WikiAttachmentImageHTMLEditorConfigContributor
 		return itemSelectorURL.toString();
 	}
 
-	@Reference(unbind = "-")
-	protected void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
+	@Reference
 	private ItemSelector _itemSelector;
 
 }

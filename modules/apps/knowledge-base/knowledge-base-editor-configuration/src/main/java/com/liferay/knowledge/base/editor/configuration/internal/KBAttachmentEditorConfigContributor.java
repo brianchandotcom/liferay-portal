@@ -112,11 +112,6 @@ public class KBAttachmentEditorConfigContributor
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
 	}
 
-	@Reference(unbind = "-")
-	public void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
 	protected ItemSelectorCriterion getImageItemSelectorCriterion() {
 		ItemSelectorCriterion imageItemSelectorCriterion =
 			new ImageItemSelectorCriterion();
@@ -215,7 +210,9 @@ public class KBAttachmentEditorConfigContributor
 			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
 	}
 
+	@Reference
 	private ItemSelector _itemSelector;
+
 	private ResourceBundleLoader _resourceBundleLoader;
 
 }

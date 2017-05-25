@@ -146,11 +146,6 @@ public class AlloyEditorLinkBrowseConfigContributor
 		jsonObject.put("documentBrowseLinkUrl", itemSelectorURL.toString());
 	}
 
-	@Reference(unbind = "-")
-	protected void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
 	protected JSONObject updateButtonCfgJSONObject(
 		JSONObject oldButtonCfgJSONObject) {
 
@@ -239,6 +234,7 @@ public class AlloyEditorLinkBrowseConfigContributor
 		return newButtonsJSONArray;
 	}
 
+	@Reference
 	private ItemSelector _itemSelector;
 
 }

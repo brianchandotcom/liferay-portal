@@ -106,11 +106,7 @@ public class MBAttachmentHTMLEditorConfigContributor
 		return urlItemSelectorCriterion;
 	}
 
-	@Reference(unbind = "-")
-	protected void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
+	@Reference
 	private ItemSelector _itemSelector;
 
 }

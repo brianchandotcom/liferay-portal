@@ -91,11 +91,6 @@ public class BlogsContentEditorConfigContributor
 			namespace + name + "selectItem");
 	}
 
-	@Reference(unbind = "-")
-	public void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
 	protected String getAllowedContentLists() {
 		return "li ol ul;";
 	}
@@ -187,6 +182,7 @@ public class BlogsContentEditorConfigContributor
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
 	}
 
+	@Reference
 	private ItemSelector _itemSelector;
 
 }

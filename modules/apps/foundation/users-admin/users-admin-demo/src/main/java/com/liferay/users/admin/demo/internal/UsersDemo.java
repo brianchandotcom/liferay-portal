@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.site.demo.data.creator.SiteDemoDataCreator;
-import com.liferay.users.admin.demo.data.creator.SiteAdminUserDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.CompanyAdminUserDemoDataCreator;
+import com.liferay.users.admin.demo.data.creator.SiteAdminUserDemoDataCreator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -53,13 +53,12 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 	}
 
 	@Reference
+	private CompanyAdminUserDemoDataCreator _companyAdminUserDemoDataCreator;
+
+	@Reference
 	private SiteAdminUserDemoDataCreator _siteAdminUserDemoDataCreator;
 
 	@Reference
 	private SiteDemoDataCreator _siteDemoDataCreator;
-
-	@Reference
-	private CompanyAdminUserDemoDataCreator
-		_companyAdminUserDemoDataCreator;
 
 }

@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CompanyAdminUserDemoDataCreator.class)
 public class CompanyAdminUserDemoDataCreatorImpl
-	extends BaseUserDemoDataCreator
-	implements CompanyAdminUserDemoDataCreator {
+	extends BaseUserDemoDataCreator implements CompanyAdminUserDemoDataCreator {
 
 	@Override
 	public User create(long companyId) throws PortalException {

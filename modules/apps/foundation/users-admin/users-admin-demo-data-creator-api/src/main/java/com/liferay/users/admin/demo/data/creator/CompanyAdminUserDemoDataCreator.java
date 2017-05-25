@@ -23,8 +23,7 @@ import com.liferay.portal.kernel.model.User;
  * @author Pei-Jung Lan
  */
 @ProviderType
-public interface CompanyAdminUserDemoDataCreator
-	extends UserDemoDataCreator {
+public interface CompanyAdminUserDemoDataCreator extends UserDemoDataCreator {
 
 	public User create(long companyId) throws PortalException;
 

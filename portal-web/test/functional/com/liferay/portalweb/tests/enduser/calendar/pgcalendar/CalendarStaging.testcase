@@ -48,12 +48,7 @@
 					<var name="pageName" value="Calendar Page" />
 				</execute>
 
-				<if>
-					<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
-					<then>
-						<execute macro="CalendarEvent#tearDown" />
-					</then>
-				</if>
+				<execute macro="Calendar#tearDownEvent" />
 
 				<execute macro="Site#tearDownCP" />
 			</else>

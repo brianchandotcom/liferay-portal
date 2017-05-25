@@ -39,13 +39,10 @@ import java.net.URI;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,7 +52,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.diibadaaba.zipdiff.DifferenceCalculator;
 import net.diibadaaba.zipdiff.Differences;
@@ -1266,30 +1262,9 @@ public class ProjectTemplatesTest {
 			String gradleBundleFileName, String mavenBundleFileName)
 		throws Exception {
 
-		final AtomicBoolean hasJavaFiles = new AtomicBoolean();
-
-		Files.walkFileTree(
-			gradleProjectDir.toPath(),
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult visitFile(
-					Path path, BasicFileAttributes basicFileAttributes) {
-
-					if (path.endsWith(".java")) {
-						hasJavaFiles.set(true);
-
-						return FileVisitResult.TERMINATE;
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-
 		String[] gradleTaskPaths;
 
-		if (hasJavaFiles.get()) {
+		if (FileTestUtil.containsFile(gradleProjectDir.toPath(), "*.java")) {
 			gradleTaskPaths = new String[] {
 				_GRADLE_TASK_PATH_CHECK_SOURCE_FORMATTING,
 				_GRADLE_TASK_PATH_BUILD

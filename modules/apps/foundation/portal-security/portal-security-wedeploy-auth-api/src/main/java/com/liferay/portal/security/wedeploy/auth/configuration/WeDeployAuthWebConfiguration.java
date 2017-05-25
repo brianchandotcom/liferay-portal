@@ -29,9 +29,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface WeDeployAuthWebConfiguration {
 
 	@Meta.AD(
-		deflt = "3600000", description = "wedeploy-auth-token-expires-in-help",
-		name = "wedeploy-auth-token-expires-in", required = false
+		deflt = "3600000",
+		description = "authorization-token-expiration-time-help",
+		name = "authorization-token-expiration-time", required = false
 	)
-	public long weDeployAuthTokenExpiresIn();
+	public long authorizationTokenExpirationTime();
 
 }

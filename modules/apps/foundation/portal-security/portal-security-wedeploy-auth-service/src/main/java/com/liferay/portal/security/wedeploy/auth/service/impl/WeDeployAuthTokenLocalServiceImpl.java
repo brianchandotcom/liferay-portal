@@ -49,11 +49,12 @@ public class WeDeployAuthTokenLocalServiceImpl
 
 		Date date = weDeployAuthToken.getCreateDate();
 
-		long expiresIn =
+		long expirationTime =
 			date.getTime() +
-				_weDeployAuthWebConfiguration.weDeployAuthTokenExpiresIn();
+				_weDeployAuthWebConfiguration.
+					authorizationTokenExpirationTime();
 
-		if (System.currentTimeMillis() > expiresIn) {
+		if (System.currentTimeMillis() > expirationTime) {
 			throw new NoSuchTokenException();
 		}
 

@@ -127,6 +127,13 @@ public class WeDeployAuthAppLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp fetchWeDeployAuthApp(
+		java.lang.String redirectURI, java.lang.String clientId) {
+		return _weDeployAuthAppLocalService.fetchWeDeployAuthApp(redirectURI,
+			clientId);
+	}
+
+	@Override
+	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp fetchWeDeployAuthApp(
 		long weDeployAuthAppId) {
 		return _weDeployAuthAppLocalService.fetchWeDeployAuthApp(weDeployAuthAppId);
 	}

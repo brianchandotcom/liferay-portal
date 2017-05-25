@@ -74,7 +74,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	@Override
 	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
 			long cpDefinitionOptionRelId, String name,
-			Map<Locale, String> titleMap, int priority,
+			Map<Locale, String> titleMap, double priority,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -242,7 +242,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	@Override
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 			long cpDefinitionOptionValueRelId, String name,
-			Map<Locale, String> titleMap, int priority,
+			Map<Locale, String> titleMap, double priority,
 			ServiceContext serviceContext)
 		throws PortalException {
 

@@ -85,7 +85,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(
 			long cpDefinitionId, long cpOptionId, String name,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, int priority, boolean facetable,
+			String ddmFormFieldTypeName, double priority, boolean facetable,
 			boolean required, boolean skuContributor, boolean importOptionValue,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -301,7 +301,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
 			long cpDefinitionOptionRelId, long cpOptionId, String name,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, int priority, boolean facetable,
+			String ddmFormFieldTypeName, double priority, boolean facetable,
 			boolean required, boolean skuContributor,
 			ServiceContext serviceContext)
 		throws PortalException {

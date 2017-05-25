@@ -53,7 +53,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			int priority, int type, ServiceContext serviceContext)
+			double priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product attachment file entry
@@ -212,7 +212,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			int priority, int type, ServiceContext serviceContext)
+			double priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());

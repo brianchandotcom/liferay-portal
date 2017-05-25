@@ -38,7 +38,7 @@ public class CPOptionCategoryLocalServiceImpl
 	@Override
 	public CPOptionCategory addCPOptionCategory(
 			String name, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, int priority,
+			Map<Locale, String> descriptionMap, double priority,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -138,7 +138,7 @@ public class CPOptionCategoryLocalServiceImpl
 	@Override
 	public CPOptionCategory updateCPOptionCategory(
 			long cpOptionCategoryId, String name, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, int priority,
+			Map<Locale, String> descriptionMap, double priority,
 			ServiceContext serviceContext)
 		throws PortalException {
 

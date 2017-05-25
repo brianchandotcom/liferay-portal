@@ -48,7 +48,7 @@ public class CPAttachmentFileEntryServiceImpl
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			int priority, int type, ServiceContext serviceContext)
+			double priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		checkCPAttachmentFileEntryPermissions(
@@ -151,7 +151,7 @@ public class CPAttachmentFileEntryServiceImpl
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			int priority, int type, ServiceContext serviceContext)
+			double priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);

@@ -39,7 +39,7 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 	@Override
 	public CPOptionValue addCPOptionValue(
 			long cpOptionId, String name, Map<Locale, String> titleMap,
-			int priority, ServiceContext serviceContext)
+			double priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPOptionPermission.check(
@@ -146,7 +146,7 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 	@Override
 	public CPOptionValue updateCPOptionValue(
 			long cpOptionValueId, String name, Map<Locale, String> titleMap,
-			int priority, ServiceContext serviceContext)
+			double priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPOptionPermission.checkCPOptionValue(

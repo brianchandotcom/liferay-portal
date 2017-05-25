@@ -56,8 +56,6 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
-		duration = TimeUnit.DAYS.toMillis(duration);
-
 		if (useUrl) {
 			fileEntryId = 0;
 		}
@@ -151,8 +149,6 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			cpDefinitionVirtualSettingPersistence.findByPrimaryKey(
 				cpDefinitionVirtualSettingId);
-
-		duration = TimeUnit.DAYS.toMillis(duration);
 
 		if (useUrl) {
 			fileEntryId = 0;

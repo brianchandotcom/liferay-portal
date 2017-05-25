@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.StrutsActionPortletURL;
 import com.liferay.portlet.PortletResponseImpl;
@@ -148,7 +149,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 		String url = ParamUtil.getString(actionRequest, "url");
 		String activationStatus = ParamUtil.getString(
 			actionRequest, "activationStatus");
-		long numberOfDays = ParamUtil.getLong(actionRequest, "numberOfDays");
+		long durationDays = ParamUtil.getLong(actionRequest, "durationDays");
 		int maxUsages = ParamUtil.getInteger(actionRequest, "maxUsages");
 		boolean useSample = ParamUtil.getBoolean(actionRequest, "useSample");
 		boolean useSampleUrl = ParamUtil.getBoolean(
@@ -158,13 +159,14 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 		String sampleUrl = ParamUtil.getString(actionRequest, "sampleUrl");
 		boolean termsOfUseRequired = ParamUtil.getBoolean(
 			actionRequest, "termsOfUseRequired");
-		boolean useJournal = ParamUtil.getBoolean(
-			actionRequest, "useJournal");
+		boolean useJournal = ParamUtil.getBoolean(actionRequest, "useJournal");
 		Map<Locale, String> termsOfUseContentMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "termsOfUseContent");
 		long termsOfUseJournalArticleResourcePK = ParamUtil.getLong(
 			actionRequest, "termsOfUseJournalArticleResourcePK");
+
+		long duration = durationDays * Time.DAY;
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionVirtualSetting.class.getName(), actionRequest);
@@ -179,7 +181,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 				_cpDefinitionVirtualSettingService.
 					addCPDefinitionVirtualSetting(
 						cpDefinitionId, useUrl, fileEntryId, url,
-						activationStatus, numberOfDays, maxUsages, useSample,
+						activationStatus, duration, maxUsages, useSample,
 						useSampleUrl, sampleFileEntryId, sampleUrl,
 						termsOfUseRequired, useJournal, termsOfUseContentMap,
 						termsOfUseJournalArticleResourcePK, serviceContext);
@@ -192,7 +194,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 				_cpDefinitionVirtualSettingService.
 					updateCPDefinitionVirtualSetting(
 						cpDefinitionVirtualSettingId, useUrl, fileEntryId, url,
-						activationStatus, numberOfDays, maxUsages, useSample,
+						activationStatus, duration, maxUsages, useSample,
 						useSampleUrl, sampleFileEntryId, sampleUrl,
 						termsOfUseRequired, useJournal, termsOfUseContentMap,
 						termsOfUseJournalArticleResourcePK, serviceContext);

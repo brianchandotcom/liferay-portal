@@ -49,9 +49,8 @@ public class CPDefinitionVirtualSettingServiceImpl
 			addCPDefinitionVirtualSetting(
 				cpDefinitionId, useUrl, fileEntryId, url, activationStatus,
 				duration, maxUsages, useSample, useSampleUrl, sampleFileEntryId,
-				sampleUrl, termsOfUseRequired, useJournal,
-				termsOfUseContentMap, termsOfUseJournalArticleResourcePK,
-				serviceContext);
+				sampleUrl, termsOfUseRequired, useJournal, termsOfUseContentMap,
+				termsOfUseJournalArticleResourcePK, serviceContext);
 	}
 
 	@Override

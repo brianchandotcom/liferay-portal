@@ -20,6 +20,13 @@
 CPDefinitionVirtualSettingDisplayContext cpDefinitionVirtualSettingDisplayContext = (CPDefinitionVirtualSettingDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSettingDisplayContext.getCPDefinitionVirtualSetting();
+
+int durationDays =  0;
+
+if(cpDefinitionVirtualSetting != null && cpDefinitionVirtualSetting.getDuration() > 0){
+	durationDays = cpDefinitionVirtualSetting.getDuration() / Time.DAY;
+}
+
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="base-information" />
@@ -29,7 +36,7 @@ CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSetti
 <aui:fieldset>
 	<aui:input name="activationStatus" />
 
-	<aui:input helpMessage="number-of-days" label="duration" name="numberOfDays" type="long" value="<%= (cpDefinitionVirtualSetting == null) ? 0 : TimeUnit.MILLISECONDS.toDays(cpDefinitionVirtualSetting.getDuration()) %>">
+	<aui:input helpMessage="duration-help" label="duration" name="durationDays" suffix="days" type="long" value="<%= durationDays %>">
 		<aui:validator name="number" />
 	</aui:input>
 

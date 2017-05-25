@@ -1,544 +1,638 @@
 [
 	{
-		"baseSKU": "TNTERS",
+		"baseSKU": "PZLSMB",
 		"categories": [
 			{
-				"title": "Jewellery"
+				"title": "Bags"
 			}
 		],
-		"description": "Boldly shaped triple hoop in gold-pleated brass. It is a smaller version of the Tentacle earring of WOMEN AW16 Show, they suit a perfect size.",
-		"manufacturers": [
-			{
-				"title": "Cartier"
-			}
+		"description": "The first completely new bag designed by Jonathan Anderson has become a LOEWE icon. With its innovative cuboid shape, extreme tactility and maximum utility, volume is created through precise cutting so the Puzzle small bag can be worn in five different ways, from shoulder bag to clutch and folds completely until it´s flat. Key characteristics: hand-painted edges, textile lining, two pockets inside and one zippered pocket outside. Removable adjustable strap for the most comfortable length.",
+		"images": [
+			"Puzzle-bag-blue.jpg",
+			"Puzzle-bag-pink.jpg",
+			"Puzzle-bag-gold.jpg"
 		],
-		"name": "Tentacle Earring S",
-		"options": [
-			{
-				"ddmFormFieldType": "select",
-				"facetable": true,
-				"name": "Color",
-				"priority": 1,
-				"required": true,
-				"skuContributor": true,
-				"title": "Color",
-				"values": [
-					{
-						"name": "Gold",
-						"priority": 1,
-						"title": "Gold"
-					},
-					{
-						"name": "Rose Gold",
-						"priority": 2,
-						"title": "Rose Gold"
-					}
-				]
-			}
-		],
-		"productTypeName": "simple",
-		"title": "Tentacle Earring S"
-	},
-	{
-		"baseSKU": "LHLMCC",
-		"categories": [
-			{
-				"title": "Shoes"
-			}
-		],
-		"description": "Slip on loafer in yellow patent calfskin & brown grained deerskin leather with contrasting white low heel.",
 		"manufacturers": [
 			{
 				"title": "LOEWE"
 			}
 		],
-		"name": "Low Heeled Moccasin",
+		"name": "Puzzle Small Bag",
 		"options": [
 			{
 				"ddmFormFieldType": "select",
 				"facetable": true,
-				"name": "Size",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
+				"title": "Color",
 				"values": [
 					{
-						"name": "35",
+						"name": "Blue",
 						"priority": 1,
-						"title": "35"
+						"title": "Blue"
 					},
 					{
-						"name": "36",
+						"name": "Pink",
 						"priority": 2,
-						"title": "36"
+						"title": "Pink"
 					},
 					{
-						"name": "37",
+						"name": "Gold",
 						"priority": 3,
-						"title": "37"
-					},
-					{
-						"name": "38",
-						"priority": 4,
-						"title": "38"
-					},
-					{
-						"name": "39",
-						"priority": 5,
-						"title": "39"
-					},
-					{
-						"name": "40",
-						"priority": 6,
-						"title": "40"
+						"title": "Gold"
 					}
 				]
 			},
 			{
-				"ddmFormFieldType": "select",
+				"ddmFormFieldType": "text",
 				"facetable": true,
-				"name": "Color",
-				"priority": 2,
-				"required": true,
-				"skuContributor": false,
-				"title": "Color",
+				"name": "Material",
+				"priority": 1,
+				"required": false,
+				"skuContributor": true,
+				"title": "Material",
 				"values": [
 					{
-						"name": "Yellow",
+						"name": "Calf",
 						"priority": 1,
-						"title": "Yellow"
+						"title": "Calf"
+					},
+					{
+						"name": "Suede",
+						"priority": 2,
+						"title": "Suede"
 					}
 				]
 			}
 		],
 		"productTypeName": "simple",
-		"title": "Low Heeled Moccasin"
+		"shortDescription": "",
+		"title": "Puzzle Small Bag"
 	},
 	{
-		"baseSKU": "DRSSJP",
+		"baseSKU": "HMMKBG",
 		"categories": [
 			{
-				"title": "Clothes"
+				"title": "Bags"
 			}
 		],
-		"description": "Long halter neck dress in Paula's Ibiza print viscose with contrasting knitwear top.",
+		"description": "Versatility and eye-catching, multi-functional form define the Hammock, the latest, completely novel bag design from LOEWE. Its innovative design allows this bag to be worn as a shoulder bag, hand-held or even as a crossbody guaranteeing modern comfort and a different character for different times of the day. It's fitted with zipped and patch pockets for easy organization. Key features: tan grained calf leather, golden hardware, hand-edge painting, hook fastening at open top, folded zippered sides, exterior zippered pocket, embossed Anagram and two leather top handles.",
+		"images": [
+			"Hammock-tan.jpg",
+			"Hammock-black.jpg",
+			"Hammock-red.jpg",
+			"Hammock-blue.jpg"
+		],
 		"manufacturers": [
 			{
-				"title": "Valentino"
+				"title": "LOEWE"
 			}
 		],
-		"name": "Dress Julia Paula Khaki",
+		"name": "Hammock Bag",
 		"options": [
 			{
 				"ddmFormFieldType": "select",
 				"facetable": true,
-				"name": "Size",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
-				"values": [
-					{
-						"name": "XXS",
-						"priority": 1,
-						"title": "XXS"
-					},
-					{
-						"name": "XS",
-						"priority": 2,
-						"title": "XS"
-					},
-					{
-						"name": "S",
-						"priority": 3,
-						"title": "S"
-					},
-					{
-						"name": "M",
-						"priority": 4,
-						"title": "M"
-					},
-					{
-						"name": "L",
-						"priority": 5,
-						"title": "L"
-					},
-					{
-						"name": "XL",
-						"priority": 6,
-						"title": "XL"
-					},
-					{
-						"name": "XXL",
-						"priority": 7,
-						"title": "XXL"
-					}
-				]
-			},
-			{
-				"ddmFormFieldType": "select",
-				"facetable": true,
-				"name": "Color",
-				"priority": 2,
-				"required": true,
-				"skuContributor": false,
-				"title": "Color",
-				"values": [
-					{
-						"name": "Khaki Green/Yellow",
-						"priority": 1,
-						"title": "Khaki Green/Yellow"
-					}
-				]
-			}
-		],
-		"productTypeName": "simple",
-		"title": "Dress Julia Paula"
-	},
-	{
-		"baseSKU": "SKRTCS",
-		"categories": [
-			{
-				"title": "Stitches"
-			}
-		],
-		"description": "Mini skirt in washed navy napa lambskin leather with off white contrast crochet stitching.",
-		"manufacturers": [
-			{
-				"title": "Versace"
-			}
-		],
-		"name": "Skirt Crochet Stitching",
-		"options": [
-			{
-				"ddmFormFieldType": "select",
-				"facetable": true,
-				"name": "Size",
-				"priority": 1,
-				"required": true,
-				"skuContributor": true,
-				"title": "Size",
-				"values": [
-					{
-						"name": "32",
-						"priority": 1,
-						"title": "32"
-					},
-					{
-						"name": "34",
-						"priority": 2,
-						"title": "34"
-					},
-					{
-						"name": "36",
-						"priority": 3,
-						"title": "36"
-					},
-					{
-						"name": "38",
-						"priority": 4,
-						"title": "38"
-					},
-					{
-						"name": "40",
-						"priority": 5,
-						"title": "40"
-					},
-					{
-						"name": "42",
-						"priority": 6,
-						"title": "42"
-					}
-				]
-			},
-			{
-				"ddmFormFieldType": "select",
-				"facetable": true,
-				"name": "Color",
-				"priority": 2,
-				"required": true,
-				"skuContributor": false,
-				"title": "Color",
-				"values": [
-					{
-						"name": "Navy Blue",
-						"priority": 1,
-						"title": "Navy Blue"
-					}
-				]
-			}
-		],
-		"productTypeName": "simple",
-		"title": "Skirt Crochet Stitching"
-	},
-	{
-		"baseSKU": "ESPDRCS",
-		"categories": [
-			{
-				"title": "Stitches"
-			}
-		],
-		"description": "Espadrille in nappa calfskin leather with contrast top stitching, rubber sole & embossed Anagram.",
-		"manufacturers": [
-			{
-				"title": "Hogan"
-			}
-		],
-		"name": "Espadrille Contrast Stitching",
-		"options": [
-			{
-				"ddmFormFieldType": "select",
-				"facetable": true,
-				"name": "Size",
-				"priority": 1,
-				"required": true,
-				"skuContributor": true,
-				"title": "Size",
-				"values": [
-					{
-						"name": "38",
-						"priority": 1,
-						"title": "38"
-					},
-					{
-						"name": "39",
-						"priority": 2,
-						"title": "39"
-					},
-					{
-						"name": "40",
-						"priority": 3,
-						"title": "40"
-					},
-					{
-						"name": "41",
-						"priority": 4,
-						"title": "41"
-					},
-					{
-						"name": "42",
-						"priority": 5,
-						"title": "42"
-					},
-					{
-						"name": "43",
-						"priority": 6,
-						"title": "43"
-					}
-				]
-			},
-			{
-				"ddmFormFieldType": "select",
-				"facetable": true,
-				"name": "Color",
-				"priority": 2,
-				"required": true,
-				"skuContributor": false,
 				"title": "Color",
 				"values": [
 					{
 						"name": "Tan",
 						"priority": 1,
 						"title": "Tan"
-					}
-				]
-			}
-		],
-		"productTypeName": "simple",
-		"title": "Espadrille Contrast Stitching"
-	},
-	{
-		"baseSKU": "ESPDERPF",
-		"categories": [
-			{
-				"title": "Shoes"
-			}
-		],
-		"description": "Espadrilles in Paula's Ibiza print canvas & contrasting tan napa calfskin leather.",
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
-		],
-		"name": "Espadrille Paula Flowers",
-		"options": [
-			{
-				"ddmFormFieldType": "select",
-				"facetable": true,
-				"name": "Size",
-				"priority": 1,
-				"required": true,
-				"skuContributor": true,
-				"title": "Size",
-				"values": [
-					{
-						"name": "34",
-						"priority": 1,
-						"title": "34"
-					},
-					{
-						"name": "35",
-						"priority": 2,
-						"title": "35"
-					},
-					{
-						"name": "36",
-						"priority": 3,
-						"title": "36"
-					},
-					{
-						"name": "37",
-						"priority": 4,
-						"title": "37"
-					},
-					{
-						"name": "38",
-						"priority": 5,
-						"title": "38"
-					},
-					{
-						"name": "39",
-						"priority": 6,
-						"title": "39"
-					},
-					{
-						"name": "40",
-						"priority": 7,
-						"title": "40"
-					},
-					{
-						"name": "41",
-						"priority": 8,
-						"title": "41"
-					},
-					{
-						"name": "42",
-						"priority": 9,
-						"title": "42"
-					}
-				]
-			},
-			{
-				"ddmFormFieldType": "select",
-				"facetable": true,
-				"name": "Color",
-				"priority": 2,
-				"required": true,
-				"skuContributor": false,
-				"title": "Color",
-				"values": [
-					{
-						"name": "Blue/Multicolour",
-						"priority": 1,
-						"title": "Blue/Multicolour"
-					}
-				]
-			}
-		],
-		"productTypeName": "simple",
-		"title": "Espadrille Paula Flowers"
-	},
-	{
-		"baseSKU": "MNGBNG",
-		"categories": [
-			{
-				"title": "Jewellery"
-			}
-		],
-		"description": "Monogram bangle made of brass with gold or palladium plate. Size S: 5,5cm diameter Size M: 6,5cm diameter.",
-		"manufacturers": [
-			{
-				"title": "Tiffany"
-			}
-		],
-		"name": "Monogram Bangle",
-		"options": [
-			{
-				"ddmFormFieldType": "select",
-				"facetable": true,
-				"name": "Size",
-				"priority": 1,
-				"required": true,
-				"skuContributor": true,
-				"title": "Size",
-				"values": [
-					{
-						"name": "S",
-						"priority": 1,
-						"title": "S"
-					},
-					{
-						"name": "M",
-						"priority": 2,
-						"title": "M"
-					}
-				]
-			},
-			{
-				"ddmFormFieldType": "select",
-				"facetable": true,
-				"name": "Color",
-				"priority": 2,
-				"required": true,
-				"skuContributor": true,
-				"title": "Color",
-				"values": [
-					{
-						"name": "Gold",
-						"priority": 1,
-						"title": "Gold"
-					},
-					{
-						"name": "Palladium",
-						"priority": 2,
-						"title": "Palladium"
-					}
-				]
-			}
-		],
-		"productTypeName": "simple",
-		"title": "Monogram Bangle"
-	},
-	{
-		"baseSKU": "PBZSCRF",
-		"categories": [
-			{
-				"title": "Scarves & Shawls"
-			}
-		],
-		"description": "90X90 100% silk scarf featuring a colorful design and contrasting edges. The Paula´s Ibiza Collection will be available at the beginning of May.",
-		"manufacturers": [
-			{
-				"title": "D&G"
-			}
-		],
-		"name": "90X90 Paulas Ibiza Scarf",
-		"options": [
-			{
-				"ddmFormFieldType": "select",
-				"facetable": true,
-				"name": "Color",
-				"priority": 1,
-				"required": true,
-				"skuContributor": true,
-				"title": "Color",
-				"values": [
-					{
-						"name": "Orange",
-						"priority": 1,
-						"title": "Orange"
 					},
 					{
 						"name": "Black",
 						"priority": 2,
 						"title": "Black"
+					},
+					{
+						"name": "Red",
+						"priority": 3,
+						"title": "Red"
+					},
+					{
+						"name": "Blue",
+						"priority": 4,
+						"title": "Blue"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "text",
+				"facetable": true,
+				"name": "Material",
+				"priority": 2,
+				"required": false,
+				"skuContributor": false,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Calf",
+						"priority": 1,
+						"title": "Calf"
 					}
 				]
 			}
 		],
 		"productTypeName": "simple",
-		"title": "90X90 Paulas Ibiza Scarf"
+		"shortDescription": "",
+		"title": "Hammock Bag"
+	},
+	{
+		"baseSKU": "ELEMNB",
+		"categories": [
+			{
+				"title": "Bags"
+			}
+		],
+		"description": "Loewe presents a playful collection of Elephant-shaped mini bags in calf leather with adjustable strap, complete with a long trunk and dot-perforated eyes. Key features: Black lacquered edging, polished silvertone hardware, Detachable, adjustable flat leather strap and Top zip closure.",
+		"images": [
+			"Elephant-mini-black.jpg",
+			"Elephant-mini-yellow.jpg",
+			"Elephant-mini-orange.jpg",
+			"Elephant-mini-pink.jpg",
+			"Elephant-mini-red.jpg",
+			"Elephant-mini-blue.jpg"
+		],
+		"manufacturers": [
+			{
+				"title": "LOEWE"
+			}
+		],
+		"name": "Elephant Mini Bag",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 1,
+				"required": true,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Black",
+						"priority": 1,
+						"title": "Black"
+					},
+					{
+						"name": "Yellow",
+						"priority": 2,
+						"title": "Yellow"
+					},
+					{
+						"name": "Orange",
+						"priority": 3,
+						"title": "Orange"
+					},
+					{
+						"name": "Pink",
+						"priority": 4,
+						"title": "Pink"
+					},
+					{
+						"name": "Red",
+						"priority": 5,
+						"title": "Red"
+					},
+					{
+						"name": "Blue",
+						"priority": 6,
+						"title": "Blue"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "text",
+				"facetable": true,
+				"name": "Color",
+				"priority": 2,
+				"required": false,
+				"skuContributor": false,
+				"title": "Material",
+				"values": [
+					{
+						"name": "Calf",
+						"priority": 1,
+						"title": "Calf"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"shortDescription": "",
+		"title": "Elephant Mini Bag"
+	},
+	{
+		"baseSKU": "FRTHBG",
+		"categories": [
+			{
+				"title": "Bags"
+			}
+		],
+		"description": "LOEWE's new approach of a basic functionality in a cool ultra-fashionable shape. Hobo-style bag highly adorned with different leather dangling elements adding playfulness. Sleek and subtle accordion-like silhouette with long slender knotted tassels, hold the bag?s refined construction. Perfectly sized for daily use, it provides a comfortable carry when simply slipped over the shoulder, worn as a cross-carry or even hand-held. Versatile multiple straps: long hand-braided leather, plain leather and small wide shoulder strap. Key features: oro suede lining, trimmed in leather to tone, crafted from refined calf leather.",
+		"images": [
+			"Fortune-hobo-black.jpg",
+			"Fortune-hobo-yellow.jpg",
+			"Fortune-hobo-tan.jpg",
+			"Fortune-hobo-red.jpg",
+			"Fortune-hobo-indigo.jpg"
+		],
+		"manufacturers": [
+			{
+				"title": "LOEWE"
+			}
+		],
+		"name": "Fortune Hobo Bag",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 1,
+				"required": true,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Black",
+						"priority": 1,
+						"title": "Black"
+					},
+					{
+						"name": "Yellow",
+						"priority": 2,
+						"title": "Yellow"
+					},
+					{
+						"name": "Tan",
+						"priority": 3,
+						"title": "Tan"
+					},
+					{
+						"name": "Red",
+						"priority": 4,
+						"title": "Red"
+					},
+					{
+						"name": "Indigo",
+						"priority": 5,
+						"title": "Indigo"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "text",
+				"facetable": true,
+				"name": "Material",
+				"priority": 2,
+				"required": false,
+				"skuContributor": false,
+				"title": "Material",
+				"values": [
+					{
+						"name": "Calf",
+						"priority": 1,
+						"title": "Calf"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"shortDescription": "",
+		"title": "Fortune Hobo Bag"
+	},
+	{
+		"baseSKU": "PZLBG",
+		"categories": [
+			{
+				"title": "Bags"
+			}
+		],
+		"description": "The first completely new bag designed by Jonathan Anderson has become a LOEWE icon. With its innovative cuboid shape, extreme tactility and maximum utility, volume is created through precise cutting so the Puzzle bag can be worn in five different ways, from shoulder bag to clutch and folds completely until it´s flat. Key characteristics: hand-painted edges; textile lining and two pockets inside. Removable adjustable strap for the most comfortable length.",
+		"images": [
+			"Puzzle-black.jpg",
+			"Puzzle-yellow.jpg",
+			"Puzzle-tan.jpg",
+			"Puzzle-red.jpg",
+			"Puzzle-stone.jpg",
+			"Puzzle-blue.jpg",
+			"Puzzle-fuchsia.jpg"
+		],
+		"manufacturers": [
+			{
+				"title": "LOEWE"
+			}
+		],
+		"name": "Puzzle Bag",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 1,
+				"required": true,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Black",
+						"priority": 1,
+						"title": "Black"
+					},
+					{
+						"name": "Yellow",
+						"priority": 2,
+						"title": "Yellow"
+					},
+					{
+						"name": "Tan",
+						"priority": 3,
+						"title": "Tan"
+					},
+					{
+						"name": "Red",
+						"priority": 4,
+						"title": "Red"
+					},
+					{
+						"name": "Stone",
+						"priority": 5,
+						"title": "Stone"
+					},
+					{
+						"name": "Blue",
+						"priority": 6,
+						"title": "Blue"
+					},
+					{
+						"name": "Fuchsia",
+						"priority": 7,
+						"title": "Fuchsia"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "text",
+				"facetable": true,
+				"name": "Material",
+				"priority": 2,
+				"required": false,
+				"skuContributor": true,
+				"title": "Material",
+				"values": [
+					{
+						"name": "Calf",
+						"priority": 1,
+						"title": "Calf"
+					},
+					{
+						"name": "Suede",
+						"priority": 2,
+						"title": "Suede"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"shortDescription": "",
+		"title": "Puzzle Bag"
+	},
+	{
+		"baseSKU": "AMZBG",
+		"categories": [
+			{
+				"title": "Bags"
+			}
+		],
+		"description": "Amazona bag in suede with embossed Anagram. An icon among icons, the Amazona is reinterpreted enhancing the bag’s superior features and perfecting its unmistakable shape. Born 40 years ago, the Amazona bag now features an adjustable shoulder strap and a name tag, both removable. Key features: high grade exposed leather, reinforcement corner patches, protective bottom studs, large interior zippered pocket in calf leather, D ring, unlined interior. Shoulder strap and name tag in calf leather.",
+		"images": [
+			"Amazona-black.jpg",
+			"Amazona-tan.jpg",
+			"Amazona-mink.jpg",
+			"Amazona-marine.jpg"
+		],
+		"manufacturers": [
+			{
+				"title": "LOEWE"
+			}
+		],
+		"name": "Amazona Bag",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 1,
+				"required": true,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Black",
+						"priority": 1,
+						"title": "Black"
+					},
+					{
+						"name": "Tan",
+						"priority": 2,
+						"title": "Tan"
+					},
+					{
+						"name": "Mink",
+						"priority": 3,
+						"title": "Mink"
+					},
+					{
+						"name": "Marine",
+						"priority": 4,
+						"title": "Marine"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "text",
+				"facetable": true,
+				"name": "Material",
+				"priority": 2,
+				"required": false,
+				"skuContributor": true,
+				"title": "Material",
+				"values": [
+					{
+						"name": "Suede",
+						"priority": 1,
+						"title": "Suede"
+					},
+					{
+						"name": "Calf",
+						"priority": 2,
+						"title": "Calf"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"shortDescription": "",
+		"title": "Amazona Bag"
+	},
+	{
+		"baseSKU": "MDTPCH",
+		"categories": [
+			{
+				"title": "Bags"
+			}
+		],
+		"description": "The perfect clutch bag. Exemplifying the pared-down, modern craft of Loewe the zipped medium T Pouch in calf leather engraved with a repeat Anagram pattern features a straightforward notched silhouette and a characteristic T-bar profile with hand-painted edges. Herringbone-patterned including an inside flat pocket. Secure the zip using the interlocking strap, and carry it tucked under one arm.",
+		"images": [
+			"Medium-pouch-black.jpg",
+			"Medium-pouch-tan.jpg",
+			"Medium-pouch-blue.jpg"
+		],
+		"manufacturers": [
+			{
+				"title": "LOEWE"
+			}
+		],
+		"name": "Medium T Pouch",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 1,
+				"required": true,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Black",
+						"priority": 1,
+						"title": "Black"
+					},
+					{
+						"name": "Tan",
+						"priority": 2,
+						"title": "Tan"
+					},
+					{
+						"name": "Blue",
+						"priority": 3,
+						"title": "Blue"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "text",
+				"facetable": true,
+				"name": "Material",
+				"priority": 2,
+				"required": false,
+				"skuContributor": false,
+				"title": "Material",
+				"values": [
+					{
+						"name": "Calf",
+						"priority": 1,
+						"title": "Calf"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"shortDescription": "",
+		"title": "Medium T Pouch"
+	},
+	{
+		"baseSKU": "AVNBG",
+		"categories": [
+			{
+				"title": "Bags"
+			}
+		],
+		"description": "Introducing the new Avenue crossbody bag in calf leather with the Anagram embossed all over and with a light gold chain shoulder strap. Key features: Side T construction, magnetic closure, leather lining.",
+		"images": [
+			"Avenue-black.jpg",
+			"Avenue-yellow.jpg",
+			"Avenue-red.jpg",
+			"Avenue-green.jpg",
+			"Avenue-stone.jpg",
+			"Avenue-fuchsia.jpg"
+		],
+		"manufacturers": [
+			{
+				"title": "LOEWE"
+			}
+		],
+		"name": "Avenue Bag",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 1,
+				"required": true,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Black",
+						"priority": 1,
+						"title": "Black"
+					},
+					{
+						"name": "Yellow",
+						"priority": 2,
+						"title": "Yellow"
+					},
+					{
+						"name": "Red",
+						"priority": 3,
+						"title": "Red"
+					},
+					{
+						"name": "Green",
+						"priority": 4,
+						"title": "Green"
+					},
+					{
+						"name": "Stone",
+						"priority": 5,
+						"title": "Stone"
+					},
+					{
+						"name": "Fuchsia",
+						"priority": 6,
+						"title": "Fuchsia"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "text",
+				"facetable": true,
+				"name": "Material",
+				"priority": 2,
+				"required": false,
+				"skuContributor": false,
+				"title": "Material",
+				"values": [
+					{
+						"name": "Calf",
+						"priority": 1,
+						"title": "Calf"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"shortDescription": "",
+		"title": "Avenue Bag"
 	},
 	{
 		"baseSKU": "FMKTBG",
@@ -548,12 +642,18 @@
 			}
 		],
 		"description": "The Flamenco Knot Bag is a softly structured shoulder bag where volume is created through precise cutting. It has a detailed drawstring to cinch the top and keep your belongings secure. Its spacious interior is lined in durable canvas and sized to hold daily essentials. Key characteristics: Soft, two-fold construction with T-bar profile and hand-painted edges; notched silhouette; interior with two flat pockets. Adjustable strap for the most comfortable length.",
+		"images": [
+			"Flamenco-black.jpg",
+			"Flamenco-tan.jpg",
+			"Flamenco-marine.jpg",
+			"Flamenco-pink.jpg"
+		],
 		"manufacturers": [
 			{
-				"title": "Michael Kors"
+				"title": "LOEWE"
 			}
 		],
-		"name": "Flamenco Knot Bag",
+		"name": "Flamenco Knot bag",
 		"options": [
 			{
 				"ddmFormFieldType": "select",
@@ -570,9 +670,410 @@
 						"title": "Black"
 					},
 					{
-						"name": "Primary Red",
+						"name": "Tan",
 						"priority": 2,
-						"title": "Primary Red"
+						"title": "Tan"
+					},
+					{
+						"name": "Marine",
+						"priority": 3,
+						"title": "Marine"
+					},
+					{
+						"name": "Pink",
+						"priority": 4,
+						"title": "Pink"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "text",
+				"facetable": true,
+				"name": "Material",
+				"priority": 2,
+				"required": false,
+				"skuContributor": false,
+				"title": "Material",
+				"values": [
+					{
+						"name": "Calf",
+						"priority": 1,
+						"title": "Calf"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"shortDescription": "",
+		"title": "Flamenco Knot Bag"
+	},
+	{
+		"baseSKU": "",
+		"categories": [
+			{
+				"title": "Bags"
+			}
+		],
+		"description": "The perfect clutch bag. Exemplifying the pared-down, modern craft of Loewe the zipped clutch in calf leather engraved with Textured Leather pattern features a straightforward notched silhouette and a characteristic T-bar profile with hand-painted edges. Herringbone-patterned. Secure the zip using the interlocking strap, and carry it tucked under one arm.",
+		"images": [
+			"Pouch-black.jpg",
+			"Pouch-yellow.jpg",
+			"Pouch-red.jpg",
+			"Pouch-orange.jpg",
+			"Pouch-blue.jpg",
+			"Pouch-fuchsia.jpg"
+		],
+		"manufacturers": [
+			{
+				"title": "LOEWE"
+			}
+		],
+		"name": "T Pouch",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 1,
+				"required": true,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Black",
+						"priority": 1,
+						"title": "Black"
+					},
+					{
+						"name": "Yellow",
+						"priority": 2,
+						"title": "Yellow"
+					},
+					{
+						"name": "Red",
+						"priority": 3,
+						"title": "Red"
+					},
+					{
+						"name": "Orange",
+						"priority": 4,
+						"title": "Orange"
+					},
+					{
+						"name": "Blue",
+						"priority": 5,
+						"title": "Blue"
+					},
+					{
+						"name": "Fuchsia",
+						"priority": 6,
+						"title": "Fuchsia"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "text",
+				"facetable": true,
+				"name": "Material",
+				"priority": 2,
+				"required": false,
+				"skuContributor": false,
+				"title": "Material",
+				"values": [
+					{
+						"name": "Calf",
+						"priority": 1,
+						"title": "Calf"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"shortDescription": "",
+		"title": "T Pouch"
+	},
+	{
+		"baseSKU": "HMKSMB",
+		"categories": [
+			{
+				"title": "Bags"
+			}
+		],
+		"description": "Versatility and eye-catching, multi-functional form define the Hammock Small Bag, the latest, completely novel bag design from LOEWE. Its innovative design allows this bag to be worn as a shoulder bag, hand-held or even as a crossbody guaranteeing modern comfort and a different character for different times of the day. It's fitted with zipped and patch pockets for easy organization. Key features: classic calf leather, hand-edge painting, hook fastening at open top, folded zippered sides, exterior zippered pocket, embossed Anagram and two leather top handles.",
+		"images": [
+			"Hammock-small-black.jpg",
+			"Hammock-small-yellow.jpg",
+			"Hammock-small-red.jpg",
+			"Hammock-small-aqua.jpg",
+			"Hammock-small-tan.jpg",
+			"Hammock-small-orange.jpg",
+			"Hammock-small-blue.jpg"
+		],
+		"manufacturers": [
+			{
+				"title": "LOEWE"
+			}
+		],
+		"name": "Hammock Small Bag",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 1,
+				"required": true,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Black",
+						"priority": 1,
+						"title": "Black"
+					},
+					{
+						"name": "Yellow",
+						"priority": 2,
+						"title": "Yellow"
+					},
+					{
+						"name": "Red",
+						"priority": 3,
+						"title": "Red"
+					},
+					{
+						"name": "Aqua",
+						"priority": 4,
+						"title": "Aqua"
+					},
+					{
+						"name": "Tan",
+						"priority": 5,
+						"title": "Tan"
+					},
+					{
+						"name": "Orange",
+						"priority": 6,
+						"title": "Orange"
+					},
+					{
+						"name": "Blue",
+						"priority": 7,
+						"title": "Blue"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "text",
+				"facetable": true,
+				"name": "Material",
+				"priority": 2,
+				"required": false,
+				"skuContributor": false,
+				"title": "Material",
+				"values": [
+					{
+						"name": "Calf",
+						"priority": 1,
+						"title": "Calf"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"shortDescription": "",
+		"title": "Hammock Small Bag"
+	},
+	{
+		"baseSKU": "JYCSMB",
+		"categories": [
+			{
+				"title": "Bags"
+			}
+		],
+		"description": "Desirable cool new style with a sleek rounded silhouette embellished with an ornate gold-tone rounded Loewe engraved medal. Handcrafted from soft calf leather with an excepcional handfeel. Key features: non-detachable slender leather shoulder strap;flat rounded interior pocket; oval buckle and hidden snap-fastening.This time in the new colour: electric blue.",
+		"images": [
+			"Joyce-small-black.jpg",
+			"Joyce-small-blue.jpg",
+			"Joyce-small-orange.jpg"
+		],
+		"manufacturers": [
+			{
+				"title": "LOEWE"
+			}
+		],
+		"name": "Joyce Small Bag",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 1,
+				"required": true,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Black",
+						"priority": 1,
+						"title": "Black"
+					},
+					{
+						"name": "Blue",
+						"priority": 2,
+						"title": "Blue"
+					},
+					{
+						"name": "Orange",
+						"priority": 3,
+						"title": "Orange"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "text",
+				"facetable": true,
+				"name": "Material",
+				"priority": 2,
+				"required": false,
+				"skuContributor": false,
+				"title": "Material",
+				"values": [
+					{
+						"name": "Calf",
+						"priority": 1,
+						"title": "Calf"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"shortDescription": "",
+		"title": "Joyce Small Bag"
+	},
+	{
+		"baseSKU": "BCLNBG",
+		"categories": [
+			{
+				"title": "Bags"
+			}
+		],
+		"description": "Barcelona bag is meticulously handcrafted from calf leather for a new sophisticated style. Its streamlined shape is enriched with distinctive geometric detailing taken from the LOEWE archives. It features a unique metallic triangle closure with embossed Logo. Adjust the slim calf leather strap to suit your carrying style on the shoulder or as a crossbody bag. This structured piece opens to two internal compartments and has a central slit pocket for securing small items.",
+		"images": [
+			"Barcelona-black.jpg",
+			"Barcelona-yellow.jpg",
+			"Barcelona-red.jpg",
+			"Barcelona-orange.jpg",
+			"Barcelona-pink.jpg",
+			"Barcelona-mink.jpg"
+		],
+		"manufacturers": [
+			{
+				"title": "LOEWE"
+			}
+		],
+		"name": "Barcelona Bag",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 1,
+				"required": true,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Black",
+						"priority": 1,
+						"title": "Black"
+					},
+					{
+						"name": "Yellow",
+						"priority": 2,
+						"title": "Yellow"
+					},
+					{
+						"name": "Red",
+						"priority": 3,
+						"title": "Red"
+					},
+					{
+						"name": "Orange",
+						"priority": 4,
+						"title": "Orange"
+					},
+					{
+						"name": "Pink",
+						"priority": 5,
+						"title": "Pink"
+					},
+					{
+						"name": "Mink",
+						"priority": 6,
+						"title": "Mink"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "text",
+				"facetable": true,
+				"name": "Material",
+				"priority": 2,
+				"required": false,
+				"skuContributor": false,
+				"title": "Material",
+				"values": [
+					{
+						"name": "Calf",
+						"priority": 1,
+						"title": "Calf"
+					}
+				]
+			}
+		],
+		"productTypeName": "simple",
+		"shortDescription": "",
+		"title": "Barcelona Bag"
+	},
+	{
+		"baseSKU": "GYBKPK",
+		"categories": [
+			{
+				"title": "Bags"
+			}
+		],
+		"description": "Goya Backpack in canvas and classic calf. Key features: zippered closure, detachable top handle, two adjustable shoulder straps, herringbone-patterned textile lining, interior zippered pocket.",
+		"images": [
+			"Goya-black.jpg",
+			"Goya-red.jpg",
+			"Goya-tan.jpg",
+			"Goya-indigo.jpg"
+		],
+		"manufacturers": [
+			{
+				"title": "LOEWE"
+			}
+		],
+		"name": "Goya Backpack",
+		"options": [
+			{
+				"ddmFormFieldType": "select",
+				"facetable": true,
+				"name": "Color",
+				"priority": 1,
+				"required": true,
+				"skuContributor": true,
+				"title": "Color",
+				"values": [
+					{
+						"name": "Black",
+						"priority": 1,
+						"title": "Black"
+					},
+					{
+						"name": "Red",
+						"priority": 2,
+						"title": "Red"
 					},
 					{
 						"name": "Tan",
@@ -580,40 +1081,53 @@
 						"title": "Tan"
 					},
 					{
-						"name": "Marine",
+						"name": "Indigo",
 						"priority": 4,
-						"title": "Marine"
-					},
+						"title": "Indigo"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "text",
+				"facetable": true,
+				"name": "Material",
+				"priority": 2,
+				"required": false,
+				"skuContributor": false,
+				"title": "Material",
+				"values": [
 					{
-						"name": "Stone Blue",
-						"priority": 5,
-						"title": "Stone Blue"
-					},
-					{
-						"name": "Soft Pink",
-						"priority": 6,
-						"title": "Soft Pink"
+						"name": "Calf",
+						"priority": 1,
+						"title": "Calf"
 					}
 				]
 			}
 		],
 		"productTypeName": "simple",
-		"title": "Flamenco Knot Bag"
+		"shortDescription": "",
+		"title": "Goya Backpack"
 	},
 	{
-		"baseSKU": "TRNSGL",
+		"baseSKU": "TMNBG",
 		"categories": [
 			{
-				"title": "Accessories"
+				"title": "Bags"
 			}
 		],
-		"description": "Gold metal inlaid along the frame and temples, adorn this ultrachic pair of sunglasses with a squared cat-eye silhouette.",
+		"description": "The perfect small bag. Exemplifying the pared-down, modern craft of Loewe the zipped clutch in calf leather engraved with a repeat Anagram pattern features a straightforward notched silhouette and a characteristic T-bar profile with hand-painted edges. Herringbone-patterned. Secure the zip using the interlocking strap,and a detachable, adjustable flat leather strap.",
+		"images": [
+			"Mini-black.jpg",
+			"Mini-yellow.jpg",
+			"Mini-red.jpg",
+			"Mini-green.jpg"
+		],
 		"manufacturers": [
 			{
-				"title": "Ray-Ban"
+				"title": "LOEWE"
 			}
 		],
-		"name": "Torrenova Sunglasses",
+		"name": "T Mini Bag",
 		"options": [
 			{
 				"ddmFormFieldType": "select",
@@ -625,24 +1139,46 @@
 				"title": "Color",
 				"values": [
 					{
-						"name": "Havana",
-						"priority": 1,
-						"title": "Havana"
-					},
-					{
-						"name": "Havana/Gold",
-						"priority": 2,
-						"title": "Havana/Gold"
-					},
-					{
 						"name": "Black",
-						"priority": 3,
+						"priority": 1,
 						"title": "Black"
+					},
+					{
+						"name": "Yellow",
+						"priority": 2,
+						"title": "Yellow"
+					},
+					{
+						"name": "Red",
+						"priority": 3,
+						"title": "Red"
+					},
+					{
+						"name": "Green",
+						"priority": 4,
+						"title": "Green"
+					}
+				]
+			},
+			{
+				"ddmFormFieldType": "text",
+				"facetable": true,
+				"name": "Material",
+				"priority": 2,
+				"required": false,
+				"skuContributor": false,
+				"title": "Material",
+				"values": [
+					{
+						"name": "Calf",
+						"priority": 1,
+						"title": "Calf"
 					}
 				]
 			}
 		],
 		"productTypeName": "simple",
-		"title": "Torrenova Sunglasses"
+		"shortDescription": "",
+		"title": "T Mini Bag"
 	}
 ]

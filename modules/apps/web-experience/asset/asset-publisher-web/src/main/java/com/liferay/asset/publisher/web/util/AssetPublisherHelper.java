@@ -119,8 +119,6 @@ public class AssetPublisherHelper {
 					!Objects.equals(viewURL, noSuchEntryRedirect)) {
 
 					viewURL = HttpUtil.setParameter(
-						viewURL, "inheritRedirect", Boolean.TRUE);
-					viewURL = HttpUtil.setParameter(
 						viewURL, "redirect",
 						PortalUtil.getCurrentURL(liferayPortletRequest));
 				}

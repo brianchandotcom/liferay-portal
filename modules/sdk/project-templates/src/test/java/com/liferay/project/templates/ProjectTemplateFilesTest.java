@@ -597,13 +597,9 @@ public class ProjectTemplateFilesTest {
 
 		String text = FileUtil.read(path);
 
-		boolean trailingEmptyLine = false;
-
-		if ((text.length() > 0) && (text.charAt(text.length() - 1) == '\n')) {
-			trailingEmptyLine = true;
-		}
-
-		Assert.assertFalse("Trailing empty line in " + path, trailingEmptyLine);
+		Assert.assertEquals(
+			"Forbidden leading or trailing whitespaces in " + path, text.trim(),
+			text);
 
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new StringReader(text))) {

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.security.wedeploy.auth.configuration.WeDeployAuthWebConfiguration;
 import com.liferay.portal.security.wedeploy.auth.constants.WeDeployAuthTokenConstants;
-import com.liferay.portal.security.wedeploy.auth.exception.NoSuchTokenException;
+import com.liferay.portal.security.wedeploy.auth.exception.WeDeployAuthTokenExpiredException;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken;
 import com.liferay.portal.security.wedeploy.auth.service.base.WeDeployAuthTokenLocalServiceBaseImpl;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -55,7 +55,7 @@ public class WeDeployAuthTokenLocalServiceImpl
 					authorizationTokenExpirationTime();
 
 		if (System.currentTimeMillis() > expirationTime) {
-			throw new NoSuchTokenException();
+			throw new WeDeployAuthTokenExpiredException();
 		}
 
 		String token = DigesterUtil.digestHex(

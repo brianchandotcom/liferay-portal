@@ -123,6 +123,11 @@ public class WeDeployAuthAppLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp fetchWeDeployAuthApp(
+		java.lang.String redirectURI, java.lang.String clientId) {
+		return getService().fetchWeDeployAuthApp(redirectURI, clientId);
+	}
+
+	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp fetchWeDeployAuthApp(
 		long weDeployAuthAppId) {
 		return getService().fetchWeDeployAuthApp(weDeployAuthAppId);
 	}

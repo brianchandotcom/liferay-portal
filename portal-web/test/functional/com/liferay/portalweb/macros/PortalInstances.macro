@@ -67,30 +67,35 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="SignOut#signOutOfSpecificURL">
-			<var name="url" value="http://localhost:8080/" />
-		</execute>
-
-		<execute macro="SignIn#signInSpecificURL">
-			<var name="url" value="http://localhost:8080/" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Virtual Instances" />
-		</execute>
-
-		<while>
-			<condition function="IsElementPresent" locator1="PortalInstances#INSTANCE_TABLE_ACTIONS_GENERIC_2" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
 			<then>
-				<execute function="Click#waitForMenuToggleJSClick" locator1="PortalInstances#INSTANCE_TABLE_ACTIONS_GENERIC_2" />
+				<execute macro="SignOut#signOutOfSpecificURL">
+					<var name="url" value="http://localhost:8080/" />
+				</execute>
 
-				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+				<execute macro="SignIn#signInSpecificURL">
+					<var name="url" value="http://localhost:8080/" />
+				</execute>
 
-				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute macro="ProductMenu#gotoControlPanelConfiguration">
+					<var name="portlet" value="Virtual Instances" />
+				</execute>
 
-				<execute macro="Alert#viewSuccessMessage" />
+				<while>
+					<condition function="IsElementPresent" locator1="PortalInstances#INSTANCE_TABLE_ACTIONS_GENERIC_2" />
+					<then>
+						<execute function="Click#waitForMenuToggleJSClick" locator1="PortalInstances#INSTANCE_TABLE_ACTIONS_GENERIC_2" />
+
+						<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+
+						<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+						<execute macro="Alert#viewSuccessMessage" />
+					</then>
+				</while>
 			</then>
-		</while>
+		</if>
 	</command>
 
 	<command name="viewCP">

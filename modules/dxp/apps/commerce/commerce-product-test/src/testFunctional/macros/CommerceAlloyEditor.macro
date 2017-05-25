@@ -1,5 +1,0 @@
-<definition>
-	<command name="addDescription">
-		<execute function="Type#typeEditor" locator1="CommerceCatalogEntry#DESCRIPTION_FIELD" value1="${productDescription}" />
-	</command>
-</definition>

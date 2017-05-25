@@ -272,15 +272,15 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 				renderRequest, PrincipalException.getNestedClasses())) {
 
 			include("/error.jsp", renderRequest, renderResponse);
-		}
-		else {
-			renderRequest.setAttribute(
-				AssetCategoriesAdminWebKeys.
-					ASSET_CATEGORIES_ADMIN_CONFIGURATION,
-				_assetCategoriesAdminWebConfiguration);
 
-			super.doDispatch(renderRequest, renderResponse);
+			return;
 		}
+
+		renderRequest.setAttribute(
+			AssetCategoriesAdminWebKeys.ASSET_CATEGORIES_ADMIN_CONFIGURATION,
+			_assetCategoriesAdminWebConfiguration);
+
+		super.doDispatch(renderRequest, renderResponse);
 	}
 
 	protected String[] getCategoryProperties(ActionRequest actionRequest) {

@@ -351,6 +351,53 @@ public class ProjectTemplateFilesTest {
 		}
 	}
 
+	private void _testLiferayPluginPackageProperties(Path path)
+		throws IOException {
+
+		StringBuilder sb = new StringBuilder();
+
+		try (BufferedReader bufferedReader = Files.newBufferedReader(
+				path, StandardCharsets.UTF_8)) {
+
+			String line = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				Assert.assertFalse(
+					"Forbidden empty line in " + path, line.isEmpty());
+
+				if (line.startsWith("#set")) {
+					continue;
+				}
+
+				line = line.replace("${symbol_escape}", "\\");
+				line = line.replace("${symbol_pound}", "#");
+
+				if (sb.length() > 0) {
+					sb.append('\n');
+				}
+
+				sb.append(line);
+			}
+		}
+
+		Properties properties = new Properties();
+
+		properties.load(new StringReader(sb.toString()));
+
+		_testPropertyValue(path, properties, "author", "${author}");
+		_testPropertyValue(path, properties, "change-log", "");
+		_testPropertyValue(path, properties, "licenses", "LGPL");
+		_testPropertyValue(path, properties, "liferay-versions", "7.0.0+");
+		_testPropertyValue(path, properties, "long-description", "");
+		_testPropertyValue(path, properties, "module-group-id", "liferay");
+		_testPropertyValue(path, properties, "module-incremental-version", "1");
+		_testPropertyValue(path, properties, "name", "${artifactId}");
+		_testPropertyValue(
+			path, properties, "page-url", "http://www.liferay.com");
+		_testPropertyValue(path, properties, "short-description", "");
+		_testPropertyValue(path, properties, "tags", "");
+	}
+
 	private void _testMavenWrapper(Path archetypeResourcesDirPath) {
 		Assert.assertFalse(
 			"Forbidden Maven Wrapper in " + archetypeResourcesDirPath,
@@ -562,6 +609,14 @@ public class ProjectTemplateFilesTest {
 							FileUtil.getFile(dirPath, glob));
 					}
 
+					Path liferayPluginPackagePropertiesPath = dirPath.resolve(
+						"liferay-plugin-package.properties");
+
+					if (Files.exists(liferayPluginPackagePropertiesPath)) {
+						_testLiferayPluginPackageProperties(
+							liferayPluginPackagePropertiesPath);
+					}
+
 					return FileVisitResult.CONTINUE;
 				}
 
@@ -597,6 +652,14 @@ public class ProjectTemplateFilesTest {
 
 		_testArchetypeMetadataXml(
 			projectTemplateDirPath, projectTemplateDirName, hasJavaFiles.get());
+	}
+
+	private void _testPropertyValue(
+		Path path, Properties properties, String key, String expectedValue) {
+
+		Assert.assertEquals(
+			"Incorrect value of \"" + key + "\" in " + path, expectedValue,
+			properties.getProperty(key));
 	}
 
 	private void _testTextFile(Path path, String fileName, String extension)

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.users.admin.demo.data.creator.VirtualInstanceAdminUserDemoDataCreator;
+import com.liferay.users.admin.demo.data.creator.CompanyAdminUserDemoDataCreator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,10 +27,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(service = VirtualInstanceAdminUserDemoDataCreator.class)
-public class VirtualInstanceAdminUserDemoDataCreatorImpl
+@Component(service = CompanyAdminUserDemoDataCreator.class)
+public class CompanyAdminUserDemoDataCreatorImpl
 	extends BaseUserDemoDataCreator
-	implements VirtualInstanceAdminUserDemoDataCreator {
+	implements CompanyAdminUserDemoDataCreator {
 
 	@Override
 	public User create(long companyId) throws PortalException {

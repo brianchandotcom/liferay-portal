@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.site.demo.data.creator.SiteDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.SiteAdminUserDemoDataCreator;
-import com.liferay.users.admin.demo.data.creator.VirtualInstanceAdminUserDemoDataCreator;
+import com.liferay.users.admin.demo.data.creator.CompanyAdminUserDemoDataCreator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -41,13 +41,13 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 		_siteAdminUserDemoDataCreator.create(
 			acmeCorpGroup.getGroupId(), "helen@liferay.com");
 
-		_virtualInstanceAdminUserDemoDataCreator.create(
+		_companyAdminUserDemoDataCreator.create(
 			company.getCompanyId(), "bruno@liferay.com");
 	}
 
 	@Deactivate
 	protected void deactivate() throws PortalException {
-		_virtualInstanceAdminUserDemoDataCreator.delete();
+		_companyAdminUserDemoDataCreator.delete();
 		_siteAdminUserDemoDataCreator.delete();
 		_siteDemoDataCreator.delete();
 	}
@@ -59,7 +59,7 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 	private SiteDemoDataCreator _siteDemoDataCreator;
 
 	@Reference
-	private VirtualInstanceAdminUserDemoDataCreator
-		_virtualInstanceAdminUserDemoDataCreator;
+	private CompanyAdminUserDemoDataCreator
+		_companyAdminUserDemoDataCreator;
 
 }

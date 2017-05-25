@@ -266,6 +266,8 @@ public class ProjectTemplateFilesTest {
 	}
 
 	private void _testLanguageProperties(Path path) throws IOException {
+		StringBuilder sb = new StringBuilder();
+
 		try (BufferedReader bufferedReader = Files.newBufferedReader(
 				path, StandardCharsets.UTF_8)) {
 
@@ -276,6 +278,24 @@ public class ProjectTemplateFilesTest {
 					"Forbidden empty line in " + path, line.isEmpty());
 				Assert.assertFalse(
 					"Forbidden comments in " + path, line.startsWith("##"));
+
+				if (sb.length() > 0) {
+					sb.append('\n');
+				}
+
+				sb.append(line);
+			}
+		}
+
+		String languageProperties = sb.toString();
+
+		if (languageProperties.contains("javax.portlet.")) {
+			for (String key : _LANGUAGE_PROPERTIES_JAVAX_PORTLET_KEYS) {
+				String completeKey = "javax.portlet." + key + ".${artifactId}";
+
+				Assert.assertTrue(
+					"Missing \"" + completeKey + "\" in " + path,
+					languageProperties.contains(completeKey + "="));
 			}
 		}
 	}
@@ -592,6 +612,10 @@ public class ProjectTemplateFilesTest {
 	private static final String _GIT_IGNORE;
 
 	private static final String _GIT_IGNORE_WITH_PACKAGE_JSON;
+
+	private static final String[] _LANGUAGE_PROPERTIES_JAVAX_PORTLET_KEYS = {
+		"display-name", "keywords", "short-title", "title"
+	};
 
 	private static final String _POM_XML_DECLARATION;
 

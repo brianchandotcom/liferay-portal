@@ -169,7 +169,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 													icon="documents-and-media"
 													resultRow="<%= row %>"
 													rowChecker="<%= cpAttachmentFileEntriesDisplayContext.getRowChecker() %>"
-													title="<%= fileEntry.getTitle() %>"
+													title="<%= cpAttachmentFileEntry.getTitle(languageId) %>"
 													url="<%= rowURL != null ? rowURL.toString() : null %>"
 												>
 													<%@ include file="/attachment_file_entry_vertical_card.jspf" %>
@@ -183,7 +183,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 													imageUrl="<%= thumbnailSrc %>"
 													resultRow="<%= row %>"
 													rowChecker="<%= cpAttachmentFileEntriesDisplayContext.getRowChecker() %>"
-													title="<%= fileEntry.getTitle() %>"
+													title="<%= cpAttachmentFileEntry.getTitle(languageId) %>"
 													url="<%= rowURL != null ? rowURL.toString() : null %>"
 												>
 													<%@ include file="/attachment_file_entry_vertical_card.jspf" %>

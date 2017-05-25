@@ -124,6 +124,7 @@ public class CPAttachmentFileEntryStagedModelRepository
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
+			cpAttachmentFileEntry.getTitleMap(),
 			cpAttachmentFileEntry.getJson(),
 			cpAttachmentFileEntry.getPriority(),
 			cpAttachmentFileEntry.getType(), serviceContext);
@@ -265,6 +266,7 @@ public class CPAttachmentFileEntryStagedModelRepository
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
+			cpAttachmentFileEntry.getTitleMap(),
 			cpAttachmentFileEntry.getJson(),
 			cpAttachmentFileEntry.getPriority(),
 			cpAttachmentFileEntry.getType(), serviceContext);

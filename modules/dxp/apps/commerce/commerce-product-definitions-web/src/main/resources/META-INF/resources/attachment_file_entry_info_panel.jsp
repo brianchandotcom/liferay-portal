@@ -43,7 +43,7 @@ if (ListUtil.isEmpty(cpAttachmentFileEntries)) {
 				</li>
 			</ul>
 
-			<h4><%= HtmlUtil.escape("TITLE") %></h4>
+			<h4><%= HtmlUtil.escape(cpAttachmentFileEntry.getTitle(languageId)) %></h4>
 		</div>
 
 		<aui:nav-bar markupView="lexicon">

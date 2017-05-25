@@ -45,7 +45,7 @@
 
 	<h5>
 		<a href="<%= rowURL %>">
-			<%= HtmlUtil.escape(fileEntry.getTitle()) %>
+			<%= HtmlUtil.escape(cpAttachmentFileEntry.getTitle(languageId)) %>
 		</a>
 	</h5>
 

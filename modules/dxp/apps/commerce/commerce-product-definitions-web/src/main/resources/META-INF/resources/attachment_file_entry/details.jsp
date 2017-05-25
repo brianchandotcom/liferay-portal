@@ -46,3 +46,6 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 		validExtensions='<%= StringUtil.merge(cpAttachmentFileEntriesDisplayContext.getImageExtensions(), ", ") %>'
 	/>
 </div>
+
+<aui:input name="title" />
+<aui:input name="priority" />

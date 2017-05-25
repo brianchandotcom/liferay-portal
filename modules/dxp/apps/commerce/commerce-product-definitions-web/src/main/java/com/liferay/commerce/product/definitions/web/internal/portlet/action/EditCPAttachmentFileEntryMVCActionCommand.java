@@ -24,12 +24,14 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -141,13 +143,12 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 
 		boolean neverExpire = ParamUtil.getBoolean(
 			actionRequest, "neverExpire");
-
 		String ddmFormValues = ParamUtil.getString(
 			actionRequest, "ddmFormValues");
-
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "title");
 		String json = _cpInstanceHelper.toJSON(
 			cpDefinitionId, locale, ddmFormValues);
-
 		int priority = ParamUtil.getInteger(actionRequest, "priority");
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
@@ -160,7 +161,7 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, json, priority, type, serviceContext);
+				neverExpire, titleMap, json, priority, type, serviceContext);
 		}
 		else {
 			long classNameId = _portal.getClassNameId(CPDefinition.class);
@@ -170,7 +171,7 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, json, priority, type, serviceContext);
+				neverExpire, titleMap, json, priority, type, serviceContext);
 		}
 	}
 

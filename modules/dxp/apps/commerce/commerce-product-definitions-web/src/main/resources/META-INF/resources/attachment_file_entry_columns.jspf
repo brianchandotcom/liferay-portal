@@ -32,6 +32,12 @@
 </c:choose>
 
 <liferay-ui:search-container-column-text
+		cssClass="table-cell-content"
+		name="title"
+		value="<%= HtmlUtil.escape(cpAttachmentFileEntry.getTitle(languageId)) %>"
+/>
+
+<liferay-ui:search-container-column-text
 	cssClass="table-cell-content"
 	property="priority"
 />

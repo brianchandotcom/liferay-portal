@@ -32,10 +32,12 @@ for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 		<%
 		StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
+		if (cpDefinitionOptionRelListMap.containsKey(cpDefinitionOptionRel)) {
+			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
 
-		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
-			stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
+				stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+			}
 		}
 		%>
 

@@ -24,7 +24,7 @@ CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSetti
 long durationDays = 0;
 
 if ((cpDefinitionVirtualSetting != null) && (cpDefinitionVirtualSetting.getDuration() > 0)) {
-	durationDays = TimeUnit.MILLISECONDS.toDays(cpDefinitionVirtualSetting.getDuration());
+	durationDays = cpDefinitionVirtualSetting.getDuration() / Time.DAY;
 }
 %>
 

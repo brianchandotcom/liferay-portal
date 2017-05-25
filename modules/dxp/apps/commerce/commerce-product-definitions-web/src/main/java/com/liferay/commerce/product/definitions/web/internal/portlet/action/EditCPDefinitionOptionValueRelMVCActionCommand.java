@@ -104,7 +104,7 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
-		int priority = ParamUtil.getInteger(actionRequest, "priority");
+		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionOptionValueRel.class.getName(), actionRequest);

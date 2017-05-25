@@ -42,7 +42,7 @@ public class CPOptionCategoryPriorityComparator
 		CPOptionCategory cpOptionCategory1,
 		CPOptionCategory cpOptionCategory2) {
 
-		int value = Integer.compare(
+		int value = Double.compare(
 			cpOptionCategory1.getPriority(), cpOptionCategory2.getPriority());
 
 		if (_ascending) {

@@ -41,7 +41,7 @@ public class CPOptionValuePriorityComparator
 	public int compare(
 		CPOptionValue cpOptionValue1, CPOptionValue cpOptionValue2) {
 
-		int value = Integer.compare(
+		int value = Double.compare(
 			cpOptionValue1.getPriority(), cpOptionValue2.getPriority());
 
 		if (_ascending) {

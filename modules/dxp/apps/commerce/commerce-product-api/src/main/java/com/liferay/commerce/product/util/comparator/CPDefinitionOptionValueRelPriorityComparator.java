@@ -42,7 +42,7 @@ public class CPDefinitionOptionValueRelPriorityComparator
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel1,
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel2) {
 
-		int value = Integer.compare(
+		int value = Double.compare(
 			cpDefinitionOptionValueRel1.getPriority(),
 			cpDefinitionOptionValueRel2.getPriority());
 

@@ -44,7 +44,7 @@ public class CPAttachmentFileEntryPriorityComparator
 		CPAttachmentFileEntry cpAttachmentFileEntry1,
 		CPAttachmentFileEntry cpAttachmentFileEntry2) {
 
-		int value = Integer.compare(
+		int value = Double.compare(
 			cpAttachmentFileEntry1.getPriority(),
 			cpAttachmentFileEntry2.getPriority());
 

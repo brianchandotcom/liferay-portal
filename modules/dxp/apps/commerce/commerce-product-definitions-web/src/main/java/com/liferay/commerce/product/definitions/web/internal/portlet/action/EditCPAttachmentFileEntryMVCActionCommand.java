@@ -149,7 +149,7 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 			actionRequest, "title");
 		String json = _cpInstanceHelper.toJSON(
 			cpDefinitionId, locale, ddmFormValues);
-		int priority = ParamUtil.getInteger(actionRequest, "priority");
+		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

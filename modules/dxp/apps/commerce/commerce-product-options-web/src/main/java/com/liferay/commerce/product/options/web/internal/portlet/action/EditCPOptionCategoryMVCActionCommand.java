@@ -117,7 +117,7 @@ public class EditCPOptionCategoryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "title");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		int priority = ParamUtil.getInteger(actionRequest, "priority");
+		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPOptionCategory.class.getName(), actionRequest);

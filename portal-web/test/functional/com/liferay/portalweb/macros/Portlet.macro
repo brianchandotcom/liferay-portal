@@ -224,6 +224,8 @@
 		</execute>
 
 		<execute function="Type" locator1="Portlet#BORDER_WIDTH_TOP_INPUT" value1="20" />
+
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureCustomTitleViaLookandfeelPG">

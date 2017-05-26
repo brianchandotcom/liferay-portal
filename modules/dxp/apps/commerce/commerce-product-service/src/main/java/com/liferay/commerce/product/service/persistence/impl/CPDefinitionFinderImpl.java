@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Iterator;
 import java.util.List;
@@ -38,46 +39,46 @@ import java.util.List;
 public class CPDefinitionFinderImpl
 	extends CPDefinitionFinderBaseImpl implements CPDefinitionFinder {
 
-	public static final String COUNT_BY_G_S =
-		CPDefinitionFinder.class.getName() + ".countByG_S";
+	public static final String COUNT_BY_G_P_S =
+		CPDefinitionFinder.class.getName() + ".countByG_P_S";
 
-	public static final String FIND_BY_G_S =
-		CPDefinitionFinder.class.getName() + ".findByG_S";
+	public static final String FIND_BY_G_P_S =
+		CPDefinitionFinder.class.getName() + ".findByG_P_S";
 
 	@Override
-	public int countByG_S(
-		long groupId, String languageId,
+	public int countByG_P_S(
+		long groupId, String productTypeName, String languageId,
 		QueryDefinition<CPDefinition> queryDefinition) {
 
-		return doCountByG_S(groupId, languageId, queryDefinition, false);
+		return doCountByG_P_S(groupId, productTypeName, languageId, queryDefinition, false);
 	}
 
 	@Override
-	public int filterCountByG_S(
-		long groupId, String languageId,
+	public int filterCountByG_P_S(
+		long groupId, String productTypeName, String languageId,
 		QueryDefinition<CPDefinition> queryDefinition) {
 
-		return doCountByG_S(groupId, languageId, queryDefinition, true);
+		return doCountByG_P_S(groupId, productTypeName, languageId, queryDefinition, true);
 	}
 
 	@Override
-	public List<CPDefinition> filterFindByG_S(
-		long groupId, String languageId,
+	public List<CPDefinition> filterFindByG_P_S(
+		long groupId, String productTypeName, String languageId,
 		QueryDefinition<CPDefinition> queryDefinition) {
 
-		return doFindByG_S(groupId, languageId, queryDefinition, true);
+		return doFindByG_P_S(groupId, productTypeName, languageId, queryDefinition, true);
 	}
 
 	@Override
-	public List<CPDefinition> findByG_S(
-		long groupId, String languageId,
+	public List<CPDefinition> findByG_P_S(
+		long groupId, String productTypeName, String languageId,
 		QueryDefinition<CPDefinition> queryDefinition) {
 
-		return doFindByG_S(groupId, languageId, queryDefinition, false);
+		return doFindByG_P_S(groupId, productTypeName, languageId, queryDefinition, false);
 	}
 
-	protected int doCountByG_S(
-		long groupId, String languageId,
+	protected int doCountByG_P_S(
+		long groupId, String productTypeName, String languageId,
 		QueryDefinition<CPDefinition> queryDefinition,
 		boolean inlineSQLHelper) {
 
@@ -87,12 +88,17 @@ public class CPDefinitionFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				getClass(), COUNT_BY_G_S, queryDefinition,
+				getClass(), COUNT_BY_G_P_S, queryDefinition,
 				CPDefinitionImpl.TABLE_NAME);
 
 			if (groupId <= 0) {
 				sql = StringUtil.replace(
 					sql, "(CPDefinition.groupId = ?) AND", StringPool.BLANK);
+			}
+
+			if (Validator.isNull(productTypeName)) {
+				sql = StringUtil.replace(
+					sql, "(CPDefinition.productTypeName = ?) AND", StringPool.BLANK);
 			}
 
 			if (inlineSQLHelper) {
@@ -109,6 +115,10 @@ public class CPDefinitionFinderImpl
 
 			if (groupId > 0) {
 				qPos.add(groupId);
+			}
+
+			if (Validator.isNull(productTypeName)) {
+				qPos.add(productTypeName);
 			}
 
 			qPos.add(languageId);
@@ -134,8 +144,8 @@ public class CPDefinitionFinderImpl
 		}
 	}
 
-	protected List<CPDefinition> doFindByG_S(
-		long groupId, String languageId,
+	protected List<CPDefinition> doFindByG_P_S(
+		long groupId, String productTypeName, String languageId,
 		QueryDefinition<CPDefinition> queryDefinition,
 		boolean inlineSQLHelper) {
 
@@ -145,7 +155,7 @@ public class CPDefinitionFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				getClass(), FIND_BY_G_S, queryDefinition,
+				getClass(), FIND_BY_G_P_S, queryDefinition,
 				CPDefinitionImpl.TABLE_NAME);
 
 			sql = CustomSQLUtil.replaceOrderBy(
@@ -154,6 +164,11 @@ public class CPDefinitionFinderImpl
 			if (groupId <= 0) {
 				sql = StringUtil.replace(
 					sql, "(CPDefinition.groupId = ?) AND", StringPool.BLANK);
+			}
+
+			if (Validator.isNull(productTypeName)) {
+				sql = StringUtil.replace(
+					sql, "(CPDefinition.productTypeName = ?) AND", StringPool.BLANK);
 			}
 
 			if (inlineSQLHelper) {
@@ -170,6 +185,10 @@ public class CPDefinitionFinderImpl
 
 			if (groupId > 0) {
 				qPos.add(groupId);
+			}
+
+			if (Validator.isNull(productTypeName)) {
+				qPos.add(productTypeName);
 			}
 
 			qPos.add(languageId);

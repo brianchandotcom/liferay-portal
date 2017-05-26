@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.commerce.product.service.persistence.CPDefinitionFinder.countByG_S">
+	<sql id="com.liferay.commerce.product.service.persistence.CPDefinitionFinder.countByG_P_S">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT CPDefinition.CPDefinitionId) AS COUNT_VALUE
@@ -11,11 +11,12 @@
 				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId)
 			WHERE
 				(CPDefinition.groupId = ?) AND
+				(CPDefinition.productTypeName = ?) AND
 				(CPDefinitionLocalization.languageId = ?) AND
 				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 		]]>
 	</sql>
-	<sql id="com.liferay.commerce.product.service.persistence.CPDefinitionFinder.findByG_S">
+	<sql id="com.liferay.commerce.product.service.persistence.CPDefinitionFinder.findByG_P_S">
 		<![CDATA[
 			SELECT
 				CPDefinition.*
@@ -25,6 +26,7 @@
 				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId)
 			WHERE
 				(CPDefinition.groupId = ?) AND
+				(CPDefinition.productTypeName = ?) AND
 				(CPDefinitionLocalization.languageId = ?) AND
 				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 		]]>

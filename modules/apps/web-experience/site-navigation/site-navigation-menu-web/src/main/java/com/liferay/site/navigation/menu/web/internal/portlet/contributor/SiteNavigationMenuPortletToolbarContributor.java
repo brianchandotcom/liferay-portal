@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eduardo Garcia
+ * @author Jürgen Kappler
  */
 @Component(
 	immediate = true,
@@ -64,30 +64,25 @@ public class SiteNavigationMenuPortletToolbarContributor
 			PortletRequest portletRequest)
 		throws Exception {
 
-		long scopeGroupId = themeDisplay.getScopeGroupId();
-
-		Layout layout = themeDisplay.getLayout();
-
-		boolean privateLayout = layout.isPrivateLayout();
-
 		URLMenuItem urlMenuItem = new URLMenuItem();
+
+		urlMenuItem.setLabel(
+			LanguageUtil.get(
+				_portal.getHttpServletRequest(portletRequest), "add-page"));
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
 			portletRequest, Layout.class.getName(),
 			PortletProvider.Action.EDIT);
 
-		portletURL.setParameter("groupId", String.valueOf(scopeGroupId));
+		portletURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 		portletURL.setParameter("mvcPath", "/add_layout.jsp");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
-		if (privateLayout) {
-			portletURL.setParameter(
-				"privateLayout", String.valueOf(privateLayout));
-		}
+		Layout layout = themeDisplay.getLayout();
 
-		urlMenuItem.setLabel(
-			LanguageUtil.get(
-				_portal.getHttpServletRequest(portletRequest), "add-page"));
+		portletURL.setParameter(
+			"privateLayout", String.valueOf(layout.isPrivateLayout()));
 
 		urlMenuItem.setURL(portletURL.toString());
 

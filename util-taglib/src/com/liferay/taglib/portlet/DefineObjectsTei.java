@@ -42,57 +42,63 @@ public class DefineObjectsTei extends TagExtraInfo {
 
 	@Override
 	public VariableInfo[] getVariableInfo(TagData tagData) {
-		return _variableInfo;
+		return Holder._variableInfo;
 	}
 
-	private static final VariableInfo[] _variableInfo = new VariableInfo[] {
-		new VariableInfo(
-			"actionRequest", ActionRequest.class.getName(), true,
-			VariableInfo.AT_END),
-		new VariableInfo(
-			"actionResponse", ActionResponse.class.getName(), true,
-			VariableInfo.AT_END),
-		new VariableInfo(
-			"eventRequest", EventRequest.class.getName(), true,
-			VariableInfo.AT_END),
-		new VariableInfo(
-			"eventResponse", EventResponse.class.getName(), true,
-			VariableInfo.AT_END),
-		new VariableInfo(
-			"liferayPortletRequest", LiferayPortletRequest.class.getName(),
-			true, VariableInfo.AT_END),
-		new VariableInfo(
-			"liferayPortletResponse", LiferayPortletResponse.class.getName(),
-			true, VariableInfo.AT_END),
-		new VariableInfo(
-			"portletConfig", PortletConfig.class.getName(), true,
-			VariableInfo.AT_END),
-		new VariableInfo(
-			"portletName", String.class.getName(), true, VariableInfo.AT_END),
-		new VariableInfo(
-			"portletPreferences", PortletPreferences.class.getName(), true,
-			VariableInfo.AT_END),
-		new VariableInfo(
-			"portletPreferencesValues", Map.class.getName(), true,
-			VariableInfo.AT_END),
-		new VariableInfo(
-			"portletSession", PortletSession.class.getName(), true,
-			VariableInfo.AT_END),
-		new VariableInfo(
-			"portletSessionScope", Map.class.getName(), true,
-			VariableInfo.AT_END),
-		new VariableInfo(
-			"renderRequest", RenderRequest.class.getName(), true,
-			VariableInfo.AT_END),
-		new VariableInfo(
-			"renderResponse", RenderResponse.class.getName(), true,
-			VariableInfo.AT_END),
-		new VariableInfo(
-			"resourceRequest", ResourceRequest.class.getName(), true,
-			VariableInfo.AT_END),
-		new VariableInfo(
-			"resourceResponse", ResourceResponse.class.getName(), true,
-			VariableInfo.AT_END)
-	};
+	private static class Holder {
+
+		private static final VariableInfo[] _variableInfo = new VariableInfo[] {
+			new VariableInfo(
+				"actionRequest", ActionRequest.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"actionResponse", ActionResponse.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"eventRequest", EventRequest.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"eventResponse", EventResponse.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"liferayPortletRequest", LiferayPortletRequest.class.getName(),
+				true, VariableInfo.AT_END),
+			new VariableInfo(
+				"liferayPortletResponse",
+				LiferayPortletResponse.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"portletConfig", PortletConfig.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"portletName", String.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"portletPreferences", PortletPreferences.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"portletPreferencesValues", Map.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"portletSession", PortletSession.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"portletSessionScope", Map.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"renderRequest", RenderRequest.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"renderResponse", RenderResponse.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"resourceRequest", ResourceRequest.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"resourceResponse", ResourceResponse.class.getName(), true,
+				VariableInfo.AT_END)
+		};
+
+	}
 
 }

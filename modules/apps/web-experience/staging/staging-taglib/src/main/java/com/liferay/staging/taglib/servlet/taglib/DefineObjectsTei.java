@@ -30,29 +30,36 @@ public class DefineObjectsTei extends TagExtraInfo {
 
 	@Override
 	public VariableInfo[] getVariableInfo(TagData tagData) {
-		return _variableInfo;
+		return Holder._variableInfo;
 	}
 
-	private static final VariableInfo[] _variableInfo = new VariableInfo[] {
-		new VariableInfo(
-			"group", Group.class.getName(), true, VariableInfo.AT_END),
-		new VariableInfo(
-			"groupId", Long.class.getName(), true, VariableInfo.AT_END),
-		new VariableInfo(
-			"liveGroup", Group.class.getName(), true, VariableInfo.AT_END),
-		new VariableInfo(
-			"liveGroupId", Long.class.getName(), true, VariableInfo.AT_END),
-		new VariableInfo(
-			"privateLayout", Boolean.class.getName(), true,
-			VariableInfo.AT_END),
-		new VariableInfo(
-			"scopeGroup", Group.class.getName(), true, VariableInfo.AT_END),
-		new VariableInfo(
-			"scopeGroupId", Long.class.getName(), true, VariableInfo.AT_END),
-		new VariableInfo(
-			"stagingGroup", Group.class.getName(), true, VariableInfo.AT_END),
-		new VariableInfo(
-			"stagingGroupId", Long.class.getName(), true, VariableInfo.AT_END)
-	};
+	private static class Holder {
+
+		private static final VariableInfo[] _variableInfo = new VariableInfo[] {
+			new VariableInfo(
+				"group", Group.class.getName(), true, VariableInfo.AT_END),
+			new VariableInfo(
+				"groupId", Long.class.getName(), true, VariableInfo.AT_END),
+			new VariableInfo(
+				"liveGroup", Group.class.getName(), true, VariableInfo.AT_END),
+			new VariableInfo(
+				"liveGroupId", Long.class.getName(), true, VariableInfo.AT_END),
+			new VariableInfo(
+				"privateLayout", Boolean.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"scopeGroup", Group.class.getName(), true, VariableInfo.AT_END),
+			new VariableInfo(
+				"scopeGroupId", Long.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"stagingGroup", Group.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
+				"stagingGroupId", Long.class.getName(), true,
+				VariableInfo.AT_END)
+		};
+
+	}
 
 }

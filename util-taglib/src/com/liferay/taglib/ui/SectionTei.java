@@ -25,22 +25,29 @@ public class SectionTei extends TagExtraInfo {
 
 	@Override
 	public VariableInfo[] getVariableInfo(TagData tagData) {
-		return _variableInfo;
+		return Holder._variableInfo;
 	}
 
-	private static final VariableInfo[] _variableInfo = new VariableInfo[] {
-		new VariableInfo(
-			"sectionParam", String.class.getName(), true, VariableInfo.NESTED),
-		new VariableInfo(
-			"sectionName", String.class.getName(), true, VariableInfo.NESTED),
-		new VariableInfo(
-			"sectionSelected", Boolean.class.getName(), true,
-			VariableInfo.NESTED),
-		new VariableInfo(
-			"sectionScroll", String.class.getName(), true, VariableInfo.NESTED),
-		new VariableInfo(
-			"sectionRedirectParams", String.class.getName(), true,
-			VariableInfo.NESTED)
-	};
+	private static class Holder {
+
+		private static final VariableInfo[] _variableInfo = new VariableInfo[] {
+			new VariableInfo(
+				"sectionParam", String.class.getName(), true,
+				VariableInfo.NESTED),
+			new VariableInfo(
+				"sectionName", String.class.getName(), true,
+				VariableInfo.NESTED),
+			new VariableInfo(
+				"sectionSelected", Boolean.class.getName(), true,
+				VariableInfo.NESTED),
+			new VariableInfo(
+				"sectionScroll", String.class.getName(), true,
+				VariableInfo.NESTED),
+			new VariableInfo(
+				"sectionRedirectParams", String.class.getName(), true,
+				VariableInfo.NESTED)
+		};
+
+	}
 
 }

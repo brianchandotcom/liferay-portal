@@ -27,13 +27,17 @@ public class DefineObjectsTei extends TagExtraInfo {
 
 	@Override
 	public VariableInfo[] getVariableInfo(TagData data) {
-		return _variableInfo;
+		return Holder._variableInfo;
 	}
 
-	private static final VariableInfo[] _variableInfo = new VariableInfo[] {
-		new VariableInfo(
-			"trashHelper", TrashHelper.class.getName(), true,
-			VariableInfo.AT_END)
-	};
+	private static class Holder {
+
+		private static final VariableInfo[] _variableInfo = new VariableInfo[] {
+			new VariableInfo(
+				"trashHelper", TrashHelper.class.getName(), true,
+				VariableInfo.AT_END)
+		};
+
+	}
 
 }

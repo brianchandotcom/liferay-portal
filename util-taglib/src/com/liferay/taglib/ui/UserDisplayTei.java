@@ -27,12 +27,17 @@ public class UserDisplayTei extends TagExtraInfo {
 
 	@Override
 	public VariableInfo[] getVariableInfo(TagData tagData) {
-		return _variableInfo;
+		return Holder._variableInfo;
 	}
 
-	private static final VariableInfo[] _variableInfo = new VariableInfo[] {
-		new VariableInfo(
-			"userDisplay", User.class.getName(), true, VariableInfo.AT_BEGIN)
-	};
+	private static class Holder {
+
+		private static final VariableInfo[] _variableInfo = new VariableInfo[] {
+			new VariableInfo(
+				"userDisplay", User.class.getName(), true,
+				VariableInfo.AT_BEGIN)
+		};
+
+	}
 
 }

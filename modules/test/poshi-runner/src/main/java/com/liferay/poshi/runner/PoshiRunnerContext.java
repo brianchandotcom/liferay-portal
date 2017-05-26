@@ -504,7 +504,7 @@ public class PoshiRunnerContext {
 					filePath = filePath.replace("/", "\\");
 				}
 
-				filePaths.add(filePath);
+				filePaths.add("file:" + filePath);
 			}
 		}
 

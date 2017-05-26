@@ -348,6 +348,8 @@ public interface PortletDataContext extends Serializable {
 
 	public ManifestSummary getManifestSummary();
 
+	public Element getMissingReferenceElement(ClassedModel classedModel);
+
 	public Element getMissingReferencesElement();
 
 	/**

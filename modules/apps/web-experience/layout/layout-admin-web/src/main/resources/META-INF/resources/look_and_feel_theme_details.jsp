@@ -89,7 +89,7 @@ List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 <c:if test="<%= !colorSchemes.isEmpty() %>">
 	<h4><liferay-ui:message key="color-schemes" /></h4>
 
-	<div class="row" id="<portlet:namespace />colorSchemesContainer">
+	<div id="<portlet:namespace />colorSchemesContainer" class="clearfix">
 
 		<%
 		String selColorSchemeId = selColorScheme.getColorSchemeId();
@@ -97,9 +97,9 @@ List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 		for (ColorScheme curColorScheme : colorSchemes) {
 		%>
 
-			<div class="col-md-2">
-				<div class="color-scheme-selector img-thumbnail <%= selColorSchemeId.equals(curColorScheme.getColorSchemeId()) ? "selected" : StringPool.BLANK %>" data-color-scheme-id="<%= curColorScheme.getColorSchemeId() %>">
-					<img alt="" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(curColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curColorScheme.getName()) %>" />
+			<div class="color-scheme-selector-container">
+				<div class="aspect-ratio-4-to-3 aspect-ratio-middle aspect-ratio color-scheme-selector img-thumbnail <%= selColorSchemeId.equals(curColorScheme.getColorSchemeId()) ? "selected" : StringPool.BLANK %>" data-color-scheme-id="<%= curColorScheme.getColorSchemeId() %>">
+					<img alt="" class="img-thumbnail" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(curColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curColorScheme.getName()) %>" />
 				</div>
 			</div>
 
@@ -108,6 +108,7 @@ List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 		%>
 
 	</div>
+
 </c:if>
 
 <%

@@ -1,5 +1,4 @@
 $bg-color: #F5F7F8;
-$color-scheme-selected: #65B6F0;
 
 body {
 	background-color: $bg-color;
@@ -220,8 +219,41 @@ body {
 /* ---------- Theme color scheme selector ---------- */
 
 .portlet-boundary_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_ {
-	.color-scheme-selector.selected {
-		border: 1px $color-scheme-selected solid;
+	.color-scheme-selector {
+		@media (max-width: $screen-xs-max) {
+			max-width: 100%;
+		}
+
+		@media (min-width: $screen-sm-min) {
+			width: 150px;
+		}
+
+		&.selected {
+			border: 1px $brand-primary solid;
+		}
+
+		img {
+			height: auto;
+			max-width: 100%;
+		}
+	}
+
+	.color-scheme-selector-container {
+		@media (max-width: $screen-xs-max) {
+			width: 31%;
+			margin-left: 3.5%;
+
+			&:nth-child(3n+1) {
+				margin-left: 0;
+			}
+		}
+
+		@media (min-width: $screen-sm-min) {
+			margin-right: 10px;
+		}
+
+		float: left;
+		margin-bottom: 10px;
 	}
 }
 

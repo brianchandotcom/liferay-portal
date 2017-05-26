@@ -67,7 +67,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 			<liferay-frontend:management-bar-sort
 				orderByCol="<%= assetCategoriesDisplayContext.getOrderByCol() %>"
 				orderByType="<%= assetCategoriesDisplayContext.getOrderByType() %>"
-				orderColumns='<%= new String[] {"create-date"} %>'
+				orderColumns="<%= assetCategoriesDisplayContext.getOrderColumns() %>"
 				portletURL="<%= PortletURLUtil.clone(assetCategoriesDisplayContext.getIteratorURL(), liferayPortletResponse) %>"
 			/>
 		</liferay-frontend:management-bar-filters>
@@ -77,7 +77,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 		</liferay-portlet:actionURL>
 
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+			displayViews="<%= assetCategoriesDisplayContext.getDisplayViews() %>"
 			portletURL="<%= changeDisplayStyleURL %>"
 			selectedDisplayStyle="<%= assetCategoriesDisplayContext.getDisplayStyle() %>"
 		/>
@@ -178,24 +178,42 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= Objects.equals(assetCategoriesDisplayContext.getDisplayStyle(), "list") %>'>
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						href="<%= rowURL %>"
-						name="category"
-						value="<%= HtmlUtil.escape(curCategory.getTitle(locale)) %>"
-					/>
+					<c:choose>
+						<c:when test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								href="<%= rowURL %>"
+								name="path"
+								value="<%= HtmlUtil.escape(curCategory.getPath(locale)) %>"
+							/>
 
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						name="description"
-						value="<%= HtmlUtil.escape(curCategory.getDescription(locale)) %>"
-					/>
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								name="category"
+								value="<%= HtmlUtil.escape(curCategory.getTitle(locale)) %>"
+							/>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								href="<%= rowURL %>"
+								name="category"
+								value="<%= HtmlUtil.escape(curCategory.getTitle(locale)) %>"
+							/>
 
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						name="subcategories"
-						value="<%= String.valueOf(subcategoriesCount) %>"
-					/>
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								name="description"
+								value="<%= HtmlUtil.escape(curCategory.getDescription(locale)) %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								name="subcategories"
+								value="<%= String.valueOf(subcategoriesCount) %>"
+							/>
+						</c:otherwise>
+					</c:choose>
 
 					<liferay-ui:search-container-column-date
 						name="create-date"

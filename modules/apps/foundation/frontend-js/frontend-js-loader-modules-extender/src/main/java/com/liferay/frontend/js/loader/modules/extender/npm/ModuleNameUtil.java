@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.js.loader.modules.extender.npm;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -57,7 +58,13 @@ public class ModuleNameUtil {
 	}
 
 	public static String toModuleName(String fileName) {
-		return fileName.substring(0, fileName.length() - 3);
+		int i = fileName.lastIndexOf(CharPool.PERIOD);
+
+		if (i == -1) {
+			return fileName;
+		}
+
+		return fileName.substring(0, i);
 	}
 
 }

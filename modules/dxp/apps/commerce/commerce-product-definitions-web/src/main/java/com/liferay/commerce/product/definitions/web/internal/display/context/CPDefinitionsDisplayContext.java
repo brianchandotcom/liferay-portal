@@ -19,23 +19,15 @@ import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsP
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -56,30 +48,6 @@ public class CPDefinitionsDisplayContext
 		setDefaultOrderByType("desc");
 
 		_cpDefinitionService = cpDefinitionService;
-	}
-
-	public List<ManagementBarFilterItem> getManagementBarStatusFilterItems()
-		throws PortalException, PortletException {
-
-		List<ManagementBarFilterItem> managementBarFilterItems =
-			new ArrayList<>();
-
-		managementBarFilterItems.add(
-			getManagementBarFilterItem(WorkflowConstants.STATUS_ANY));
-		managementBarFilterItems.add(
-			getManagementBarFilterItem(WorkflowConstants.STATUS_DRAFT));
-		managementBarFilterItems.add(
-			getManagementBarFilterItem(WorkflowConstants.STATUS_SCHEDULED));
-		managementBarFilterItems.add(
-			getManagementBarFilterItem(WorkflowConstants.STATUS_APPROVED));
-		managementBarFilterItems.add(
-			getManagementBarFilterItem(WorkflowConstants.STATUS_EXPIRED));
-
-		return managementBarFilterItems;
-	}
-
-	public String getManagementBarStatusFilterValue() {
-		return WorkflowConstants.getStatusLabel(getStatus());
 	}
 
 	@Override
@@ -122,15 +90,14 @@ public class CPDefinitionsDisplayContext
 		}
 		else {
 			int total = _cpDefinitionService.getCPDefinitionsCount(
-				getScopeGroupId(), themeDisplay.getLanguageId(),
-				getStatus());
+				getScopeGroupId(), themeDisplay.getLanguageId(), getStatus());
 
 			searchContainer.setTotal(total);
 
 			List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
-				getScopeGroupId(), themeDisplay.getLanguageId(),
-				getStatus(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
+				getScopeGroupId(), themeDisplay.getLanguageId(), getStatus(),
+				searchContainer.getStart(), searchContainer.getEnd(),
+				orderByComparator);
 
 			searchContainer.setResults(results);
 		}
@@ -138,30 +105,6 @@ public class CPDefinitionsDisplayContext
 		this.searchContainer = searchContainer;
 
 		return this.searchContainer;
-	}
-
-	public int getStatus() {
-		return ParamUtil.getInteger(
-			httpServletRequest, "status", WorkflowConstants.STATUS_ANY);
-	}
-
-	protected ManagementBarFilterItem getManagementBarFilterItem(int status)
-		throws PortalException, PortletException {
-
-		boolean active = false;
-
-		if (status == getStatus()) {
-			active = true;
-		}
-
-		PortletURL portletURL = PortletURLUtil.clone(
-			getPortletURL(), liferayPortletResponse);
-
-		portletURL.setParameter("status", String.valueOf(status));
-
-		return new ManagementBarFilterItem(
-			active, WorkflowConstants.getStatusLabel(status),
-			portletURL.toString());
 	}
 
 	private final CPDefinitionService _cpDefinitionService;

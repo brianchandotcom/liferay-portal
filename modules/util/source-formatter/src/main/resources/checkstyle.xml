@@ -204,6 +204,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedParameter">
 			<message key="parameter.unused" value="Parameter ''{0}'' is unused" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.UnwrappedVariableInfo">
+			<message key="variable.info.unwrapped" value="Wrap the variable ''{0}'' into an inner class ''Concealer'' in order to defer array elements initialization, see LPS-72768" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ValidatorIsNull">
 			<message key="method.invalidName" value="Avoid using method ''{0}''" />
 		</module>

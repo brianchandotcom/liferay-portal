@@ -14,6 +14,9 @@
 
 package com.liferay.exportimport.lar;
 
+import static com.liferay.exportimport.kernel.lar.StagedModelType.REFERRER_CLASS_NAME_ALL;
+import static com.liferay.exportimport.kernel.lar.StagedModelType.REFERRER_CLASS_NAME_ANY;
+
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -26,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.ElementHandler;
 import com.liferay.portal.kernel.xml.ElementProcessor;
@@ -33,6 +37,7 @@ import com.liferay.portal.kernel.xml.ElementProcessor;
 import java.io.StringReader;
 
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
@@ -87,14 +92,13 @@ public class DeletionSystemEventImporter {
 	protected void doImportDeletionSystemEvents(
 		PortletDataContext portletDataContext, Element element) {
 
-		Set<StagedModelType> stagedModelTypes =
-			portletDataContext.getDeletionSystemEventStagedModelTypes();
-
 		StagedModelType stagedModelType = new StagedModelType(
 			element.attributeValue("class-name"),
 			element.attributeValue("referrer-class-name"));
 
-		if (!stagedModelTypes.contains(stagedModelType)) {
+		if (!_shouldImportDeletionSystemEvent(
+				portletDataContext, stagedModelType)) {
+
 			return;
 		}
 
@@ -117,6 +121,40 @@ public class DeletionSystemEventImporter {
 	}
 
 	private DeletionSystemEventImporter() {
+	}
+
+	private boolean _shouldImportDeletionSystemEvent(
+		PortletDataContext portletDataContext,
+		StagedModelType stagedModelType) {
+
+		Set<StagedModelType> stagedModelTypes =
+			portletDataContext.getDeletionSystemEventStagedModelTypes();
+
+		if (stagedModelTypes.contains(stagedModelType)) {
+			return true;
+		}
+
+		Predicate<StagedModelType> classNameIdPredicate =
+			smt -> smt.getClassNameId() == stagedModelType.getClassNameId();
+
+		Predicate<StagedModelType> allReferrerClassNamePredicate =
+			smt -> REFERRER_CLASS_NAME_ALL.equals(smt.getReferrerClassName());
+
+		Predicate<StagedModelType> anyReferrerClassNamePredicate =
+			smt -> Validator.isNotNull(
+				stagedModelType.getReferrerClassName()) &&
+				   REFERRER_CLASS_NAME_ANY.equals(smt.getReferrerClassName());
+
+		boolean hasSimilar = stagedModelTypes.stream().anyMatch(
+			classNameIdPredicate.and(
+				allReferrerClassNamePredicate.or(
+					anyReferrerClassNamePredicate)));
+
+		if (hasSimilar) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

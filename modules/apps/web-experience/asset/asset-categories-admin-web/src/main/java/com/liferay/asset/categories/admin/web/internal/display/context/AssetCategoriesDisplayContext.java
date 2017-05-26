@@ -14,7 +14,9 @@
 
 package com.liferay.asset.categories.admin.web.internal.display.context;
 
+import com.liferay.asset.categories.admin.web.configuration.AssetCategoriesAdminWebConfiguration;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
+import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminWebKeys;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
@@ -82,6 +84,11 @@ public class AssetCategoriesDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_request = request;
+
+		_assetCategoriesAdminWebConfiguration =
+			(AssetCategoriesAdminWebConfiguration)_request.getAttribute(
+				AssetCategoriesAdminWebKeys.
+					ASSET_CATEGORIES_ADMIN_CONFIGURATION);
 	}
 
 	public String getAssetType(AssetVocabulary vocabulary)
@@ -620,6 +627,11 @@ public class AssetCategoriesDisplayContext {
 		return false;
 	}
 
+	public boolean isFlattenedNavigationAllowed() {
+		return _assetCategoriesAdminWebConfiguration.
+			flattenedNavigationAllowed();
+	}
+
 	public boolean isShowCategoriesAddButton() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -685,6 +697,8 @@ public class AssetCategoriesDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetCategoriesDisplayContext.class);
 
+	private final AssetCategoriesAdminWebConfiguration
+		_assetCategoriesAdminWebConfiguration;
 	private SearchContainer _categoriesSearchContainer;
 	private AssetCategory _category;
 	private Long _categoryId;

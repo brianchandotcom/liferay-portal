@@ -16,19 +16,8 @@ package com.liferay.frontend.js.loader.modules.extender.internal.npm.builtin;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
-import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.StreamUtil;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import javax.servlet.Servlet;
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,42 +34,16 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {BuiltInJSModuleServlet.class, Servlet.class}
 )
-public class BuiltInJSModuleServlet extends HttpServlet {
+public class BuiltInJSModuleServlet extends BaseBuiltInJSModuleServlet {
 
 	@Override
-	protected void service(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException {
-
-		String pathInfo = request.getPathInfo();
-
-		String identifier = pathInfo.substring(1);
-
-		String moduleName = ModuleNameUtil.toModuleName(identifier);
-
-		JSModule jsModule = _packageRegistry.getJSModule(moduleName);
-
-		response.setContentType(ContentTypes.TEXT_JAVASCRIPT_UTF8);
-
-		ServletOutputStream servletOutputStream = response.getOutputStream();
-
-		try (InputStream inputStream = jsModule.getInputStream()) {
-			StreamUtil.transfer(inputStream, servletOutputStream, false);
-		}
-		catch (Exception e) {
-			response.sendError(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-				"Unable to read file");
-		}
+	protected JSModule getJSModule(String moduleName) {
+		return _packageRegistry.getJSModule(moduleName);
 	}
 
-	@Reference(unbind = "-")
-	protected void setPackageRegistry(NPMRegistry packageRegistry) {
-		_packageRegistry = packageRegistry;
-	}
+	private static final long serialVersionUID = -8753225208295935344L;
 
-	private static final long serialVersionUID = -2683080595698939805L;
-
-	private transient NPMRegistry _packageRegistry;
+	@Reference
+	private NPMRegistry _packageRegistry;
 
 }

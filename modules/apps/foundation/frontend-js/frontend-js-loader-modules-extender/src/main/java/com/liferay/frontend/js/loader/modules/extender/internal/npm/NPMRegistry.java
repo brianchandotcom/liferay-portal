@@ -79,7 +79,7 @@ public class NPMRegistry {
 		List<JSPackage> jsPackages = new ArrayList<>();
 
 		for (JSPackage jsPackage : _jsPackages.values()) {
-			if (jsPackage.getName().equals(packageName)) {
+			if (packageName.equals(jsPackage.getName())) {
 				jsPackages.add(jsPackage);
 			}
 		}

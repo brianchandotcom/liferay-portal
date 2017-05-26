@@ -16,7 +16,9 @@ package com.liferay.portal.osgi.web.wab.extender.internal;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.FilterDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
@@ -600,10 +602,27 @@ public class WabBundleProcessor {
 			URL url = initializerResources.nextElement();
 
 			try (InputStream inputStream = url.openStream()) {
-				String fqcn = StringUtil.read(inputStream);
+				Collection<String> fqcns = new ArrayList<>();
 
-				processServletContainerInitializerClass(
-					fqcn, bundle, bundleWiring, servletContext);
+				StringUtil.readLines(inputStream, fqcns);
+
+				for (String fqcn : fqcns) {
+					int poundIndex = fqcn.indexOf(StringPool.POUND);
+
+					if (poundIndex == 0) {
+						continue;
+					}
+					else if (poundIndex > 0) {
+						fqcn = fqcn.substring(0, poundIndex);
+					}
+
+					fqcn = fqcn.trim();
+
+					if (Validator.isNotNull(fqcn)) {
+						processServletContainerInitializerClass(
+							fqcn, bundle, bundleWiring, servletContext);
+					}
+				}
 			}
 			catch (IOException ioe) {
 				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);

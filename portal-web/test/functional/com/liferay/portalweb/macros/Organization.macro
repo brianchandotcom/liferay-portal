@@ -145,6 +145,36 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="addMultipleCP">
+		<if>
+			<equals arg1="${suborganization}" arg2="true" />
+			<then>
+				<var name="type" value="Suborganization" />
+			</then>
+			<else>
+				<var name="type" value="Organization" />
+			</else>
+		</if>
+
+		<var name="counter" value="1" />
+
+		<while>
+			<not>
+				<equals arg1="${counter}" arg2="${count}" />
+			</not>
+			<then>
+				<execute macro="ProductMenu#gotoControlPanelUsers">
+					<var name="portlet" value="Users and Organizations" />
+				</execute>
+
+				<execute macro="Organization#addCP">
+					<var name="orgName" value="${type} Name ${counter}" />
+					<var name="orgType" value="Organization" />
+				</execute>
+			</then>
+		</while>
+	</command>
+
 	<command name="addPhoneNumbersCP">
 		<execute macro="Organization#gotoIdentificationCP">
 			<var name="panelHeading" value="Phone Numbers" />
@@ -638,6 +668,48 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_TABLE_NAME" value1="${parentOrgName}" />
 
 		<execute macro="PortletEntry#save" />
+	</command>
+
+	<command name="selectParentOrganizationMultipleCP">
+		<var name="counter" value="1" />
+
+		<while>
+			<not>
+				<equals arg1="${counter}" arg2="${count}" />
+			</not>
+			<then>
+				<execute macro="ProductMenu#gotoControlPanelUsers">
+					<var name="portlet" value="Users and Organizations" />
+				</execute>
+
+				<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+				<execute macro="Organization#searchCP">
+					<var name="orgName" value="Suborganization Name ${counter}" />
+					<var name="searchTerm" value="Suborganization Name ${counter}" />
+				</execute>
+
+				<execute macro="Organization#selectParentOrganizationCP">
+					<var name="orgName" value="Suborganization Name ${counter}" />
+					<var name="parentOrgName" value="${parentOrg}" />
+				</execute>
+
+				<execute macro="ProductMenu#gotoControlPanelUsers">
+					<var name="portlet" value="Users and Organizations" />
+				</execute>
+
+				<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+				<execute macro="Organization#viewParentOrganizationCP">
+					<var name="orgName" value="Suborganization Name ${counter}" />
+					<var name="parentOrgExist" value="true" />
+					<var name="parentOrgName" value="${parentOrg}" />
+					<var name="subOrgName" value="Suborganization Name ${counter}" />
+				</execute>
+
+				<var method="MathUtil#sum('${count}', '1')" name="count" />
+			</then>
+		</while>
 	</command>
 
 	<command name="tearDownCP">

@@ -1702,6 +1702,24 @@
 		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 	</command>
 
+	<command name="loginUserInvalidMultiplePG">
+		<while>
+			<not>
+				<equals arg1="${loginAttempts}" arg2="${maximumFailure}" />
+			</not>
+			<then>
+				<var method="MathUtil#sum('${loginAttempts}', '1')" name="loginAttempts" />
+
+				<execute macro="User#loginUserInvalidPG">
+					<var name="loginAttempts" value="${loginAttempts}" />
+					<var name="maximumFailure" value="${maximumFailure}" />
+					<var name="password" value="incorrectpassword" />
+					<var name="userEmailAddress" value="userea@liferay.com" />
+				</execute>
+			</then>
+		</while>
+	</command>
+
 	<command name="loginUserInvalidPG">
 		<execute macro="Navigator#openURL" />
 
@@ -2277,6 +2295,24 @@
 		<execute function="AssertElementPresent" locator1="Checkbox#REMEMBER_ME" />
 
 		<execute function="AssertTextEquals" locator1="Button#SIGN_IN" value1="Sign In" />
+	</command>
+
+	<command name="viewMultipleCP">
+		<for list="${usersEmailsList}" param="userEmail" >
+			<var name="userEmailAddress" value="${userEmail}" />
+			<var method="StringUtil#replace('${userEmail}', '@liferay.com', '')" name="userName" />
+
+			<execute macro="ProductMenu#gotoControlPanelUsers">
+				<var name="portlet" value="Users and Organizations" />
+			</execute>
+
+			<execute macro="User#viewCP">
+				<var name="userEmailAddress" value="${userEmailAddress}" />
+				<var name="userFirstName" value="${userName}" />
+				<var name="userLastName" value="${userName}" />
+				<var name="userScreenName" value="${userName}" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="viewNoUsersFoundCP">

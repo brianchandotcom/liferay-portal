@@ -321,25 +321,9 @@
 
 		<var name="count" value="1" />
 
-		<while>
-			<not>
-				<equals arg1="${count}" arg2="6" />
-			</not>
-			<then>
-				<execute macro="ProductMenu#gotoControlPanelUsers">
-					<var name="portlet" value="Users and Organizations" />
-				</execute>
-
-				<execute macro="User#addCP">
-					<var name="userEmailAddress" value="userea${count}@liferay.com" />
-					<var name="userFirstName" value="userfn${count}" />
-					<var name="userLastName" value="userln${count}" />
-					<var name="userScreenName" value="usersn${count}" />
-				</execute>
-
-				<var method="MathUtil#sum('${count}', '1')" name="count" />
-			</then>
-		</while>
+		<execute macro="User#addMultipleCP">
+			<var name="usersEmailsList" value="userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />

@@ -25,7 +25,7 @@ public interface JSBundle extends JSBundleObject {
 
 	public Collection<JSPackage> getJSPackages();
 
-	public URL getResource(String location);
+	public URL getResourceURL(String location);
 
 	public String getVersion();
 

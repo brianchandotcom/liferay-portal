@@ -44,7 +44,7 @@ public class FlatJSBundle extends JSBundleAdapter {
 	}
 
 	@Override
-	public URL getResource(String location) {
+	public URL getResourceURL(String location) {
 		return _bundle.getResource(location);
 	}
 

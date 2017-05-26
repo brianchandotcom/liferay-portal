@@ -54,10 +54,10 @@ public class FlatJSPackage extends JSPackageAdapter {
 	}
 
 	@Override
-	public URL getResource(String location) {
+	public URL getResourceURL(String location) {
 		JSBundle jsBundle = getJSBundle();
 
-		return jsBundle.getResource(_basePath + location);
+		return jsBundle.getResourceURL(_basePath + location);
 	}
 
 	@Override

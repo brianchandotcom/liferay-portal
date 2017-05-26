@@ -35,7 +35,8 @@ public class FlatJSModule extends BuiltInJSModule {
 
 		super(jsPackage, name, dependencies);
 
-		_resource = jsPackage.getResource(ModuleNameUtil.toFileName(getName()));
+		_resource = jsPackage.getResourceURL(
+			ModuleNameUtil.toFileName(getName()));
 	}
 
 	@Override

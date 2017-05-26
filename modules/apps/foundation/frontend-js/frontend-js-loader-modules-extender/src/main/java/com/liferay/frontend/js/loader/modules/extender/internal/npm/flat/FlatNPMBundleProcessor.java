@@ -82,7 +82,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	private String _getResourceContent(
 		FlatJSBundle flatJSBundle, String location) {
 
-		URL url = flatJSBundle.getResource(location);
+		URL url = flatJSBundle.getResourceURL(location);
 
 		if (url == null) {
 			return null;

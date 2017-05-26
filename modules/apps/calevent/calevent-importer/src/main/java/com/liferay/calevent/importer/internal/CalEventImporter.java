@@ -1175,18 +1175,12 @@ public class CalEventImporter {
 				className, classPK, ratingsEntry.getScore());
 		}
 
-		List<Long> oldClassPKs = new ArrayList<>();
+		RatingsStats ratingsStats = _ratingsStatsLocalService.fetchStats(
+			oldClassName, oldClassPK);
 
-		oldClassPKs.add(oldClassPK);
-
-		List<RatingsStats> ratingsStatsList =
-			_ratingsStatsLocalService.getStats(oldClassName, oldClassPKs);
-
-		if (ratingsStatsList.isEmpty()) {
+		if (ratingsStats == null) {
 			return;
 		}
-
-		RatingsStats ratingsStats = ratingsStatsList.get(0);
 
 		addRatingsStats(
 			_counterLocalService.increment(), className, classPK,

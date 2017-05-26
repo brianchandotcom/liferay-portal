@@ -899,6 +899,8 @@ public interface PropsKeys {
 
 	public static final String HIBERNATE_JDBC_BATCH_SIZE = "hibernate.jdbc.batch_size";
 
+	public static final String HIBERNATE_SESSION_FACTORY_IMPORTED_CLASS_NAME_PATTERN = "hibernate.session.factory.imported.class.name.pattern";
+
 	public static final String HOT_DEPLOY_DEPENDENCY_MANAGEMENT_ENABLED = "hot.deploy.dependency.management.enabled";
 
 	public static final String HOT_DEPLOY_LISTENERS = "hot.deploy.listeners";

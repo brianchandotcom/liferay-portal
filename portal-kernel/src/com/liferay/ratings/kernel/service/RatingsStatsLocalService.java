@@ -37,6 +37,7 @@ import com.liferay.ratings.kernel.model.RatingsStats;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for RatingsStats. Methods of this
@@ -136,7 +137,8 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	public RatingsStats getRatingsStats(long statsId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RatingsStats getStats(java.lang.String className, long classPK);
+	public RatingsStats getStats(java.lang.String className, long classPK)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public RatingsStats getStats(long statsId) throws PortalException;
@@ -218,9 +220,17 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<RatingsStats> getRatingsStatses(int start, int end);
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<RatingsStats> getStats(java.lang.String className,
 		List<java.lang.Long> classPKs);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<java.lang.Long, RatingsStats> getStats(
+		java.lang.String className, long[] classPKs);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

@@ -50,17 +50,27 @@ public class RateEntryAction extends JSONAction {
 			RatingsEntryServiceUtil.updateEntry(className, classPK, score);
 		}
 
-		RatingsStats stats = RatingsStatsLocalServiceUtil.getStats(
+		RatingsStats stats = RatingsStatsLocalServiceUtil.fetchStats(
 			className, classPK);
 
-		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+		double averageScore = 0.0;
+		int totalEntries = 0;
+		double totalScore = 0.0;
 
-		jsonObj.put("averageScore", stats.getAverageScore());
-		jsonObj.put("score", score);
-		jsonObj.put("totalEntries", stats.getTotalEntries());
-		jsonObj.put("totalScore", stats.getTotalScore());
+		if (stats != null) {
+			averageScore = stats.getAverageScore();
+			totalEntries = stats.getTotalEntries();
+			totalScore = stats.getTotalScore();
+		}
 
-		return jsonObj.toString();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("averageScore", averageScore);
+		jsonObject.put("score", score);
+		jsonObject.put("totalEntries", totalEntries);
+		jsonObject.put("totalScore", totalScore);
+
+		return jsonObject.toString();
 	}
 
 	protected String getClassName(HttpServletRequest request) {

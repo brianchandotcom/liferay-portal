@@ -29,10 +29,10 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="U_C_C" return-type="Ratings" unique="true">
+		<finder name="U_C_C" return-type="Collection" unique="true">
 			<finder-column name="userId" />
 			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column arrayable-operator="OR" name="classPK" />
 		</finder>
 		<finder name="C_C_S" return-type="Collection">
 			<finder-column name="classNameId" />
@@ -64,9 +64,9 @@
 
 		<!-- Finder methods -->
 
-		<finder name="C_C" return-type="RatingsStats" unique="true">
+		<finder name="C_C" return-type="Collection" unique="true">
 			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column arrayable-operator="OR" name="classPK" />
 		</finder>
 	</entity>
 	<exceptions>

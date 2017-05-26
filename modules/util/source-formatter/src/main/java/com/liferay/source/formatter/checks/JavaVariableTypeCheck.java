@@ -249,8 +249,8 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		return ListUtil.fromArray(
 			new String[] {
 				"ArquillianResource", "Autowired", "BeanReference", "Captor",
-				"Inject", "Mock", "Parameter", "Reference", "ServiceReference",
-				"SuppressWarnings", "Value"
+				"Context", "Inject", "Mock", "Parameter", "Reference",
+				"ServiceReference", "SuppressWarnings", "Value"
 			});
 	}
 

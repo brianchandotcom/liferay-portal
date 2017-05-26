@@ -82,9 +82,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	static {
 		TMP_PATH = SystemProperties.get(SystemProperties.TMP_DIR) + "/liferay/";
 
-		DECRYPT_TMP_PATH = TMP_PATH + DECRYPT_PATH;
-		PREVIEW_TMP_PATH = TMP_PATH + PREVIEW_PATH;
-		THUMBNAIL_TMP_PATH = TMP_PATH + THUMBNAIL_PATH;
+		DECRYPT_TMP_PATH = TMP_PATH.concat(DECRYPT_PATH);
+		PREVIEW_TMP_PATH = TMP_PATH.concat(PREVIEW_PATH);
+		THUMBNAIL_TMP_PATH = TMP_PATH.concat(THUMBNAIL_PATH);
 	}
 
 	public static void deleteFiles() {

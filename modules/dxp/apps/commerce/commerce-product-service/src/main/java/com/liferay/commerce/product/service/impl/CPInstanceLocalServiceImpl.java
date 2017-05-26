@@ -274,16 +274,27 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@Override
 	public List<CPInstance> getCPInstances(
-		long cpDefinitionId, int start, int end,
+		long cpDefinitionId, int status, int start, int end,
 		OrderByComparator<CPInstance> orderByComparator) {
 
-		return cpInstancePersistence.findByCPDefinitionId(
-			cpDefinitionId, start, end, orderByComparator);
+		if (status == WorkflowConstants.STATUS_ANY) {
+			cpInstancePersistence.findByC_NotST(
+				cpDefinitionId, WorkflowConstants.STATUS_IN_TRASH, start, end,
+				orderByComparator);
+		}
+
+		return cpInstancePersistence.findByC_ST(
+			cpDefinitionId, status, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCPInstancesCount(long cpDefinitionId) {
-		return cpInstancePersistence.countByCPDefinitionId(cpDefinitionId);
+	public int getCPInstancesCount(long cpDefinitionId, int status) {
+		if (status == WorkflowConstants.STATUS_ANY) {
+			cpInstancePersistence.countByC_NotST(
+				cpDefinitionId, WorkflowConstants.STATUS_IN_TRASH);
+		}
+
+		return cpInstancePersistence.countByC_ST(cpDefinitionId, status);
 	}
 
 	@Override

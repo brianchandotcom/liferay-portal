@@ -115,7 +115,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 	@Override
 	public List<CPInstance> getCPInstances(
-			long cpDefinitionId, int start, int end,
+			long cpDefinitionId, int status, int start, int end,
 			OrderByComparator<CPInstance> orderByComparator)
 		throws PortalException {
 
@@ -123,15 +123,18 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpInstanceLocalService.getCPInstances(
-			cpDefinitionId, start, end, orderByComparator);
+			cpDefinitionId, status, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCPInstancesCount(long cpDefinitionId) throws PortalException {
+	public int getCPInstancesCount(long cpDefinitionId, int status)
+		throws PortalException {
+
 		CPDefinitionPermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
-		return cpInstanceLocalService.getCPInstancesCount(cpDefinitionId);
+		return cpInstanceLocalService.getCPInstancesCount(
+			cpDefinitionId, status);
 	}
 
 	@Override

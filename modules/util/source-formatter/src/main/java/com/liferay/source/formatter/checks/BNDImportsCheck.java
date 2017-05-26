@@ -45,7 +45,9 @@ public class BNDImportsCheck extends BaseFileCheck {
 		content = importsFormatter.format(content, _importsPattern);
 		content = importsFormatter.format(content, _privatePackagesPattern);
 
-		content = _removeInternalPrivatePackages(content);
+		if (!absolutePath.contains("-test/")) {
+			content = _removeInternalPrivatePackages(content);
+		}
 
 		return content;
 	}

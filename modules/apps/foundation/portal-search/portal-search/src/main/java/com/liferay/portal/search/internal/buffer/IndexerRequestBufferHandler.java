@@ -46,8 +46,6 @@ public class IndexerRequestBufferHandler {
 				_indexerRegistryConfiguration.maxBufferSize());
 		}
 		else {
-			indexerRequestBuffer.remove(indexerRequest);
-
 			indexerRequest.execute();
 		}
 	}

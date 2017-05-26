@@ -39,7 +39,7 @@ public class FlatJSModule extends BuiltInJSModule {
 	}
 
 	@Override
-	public InputStream openStream() throws IOException {
+	public InputStream getInputStream() throws IOException {
 		return _resource.openStream();
 	}
 

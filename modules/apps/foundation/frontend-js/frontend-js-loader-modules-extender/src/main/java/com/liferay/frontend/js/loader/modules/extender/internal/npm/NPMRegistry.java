@@ -36,7 +36,6 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -114,14 +113,14 @@ public class NPMRegistry {
 
 	@Activate
 	protected void activate(
-			ComponentContext componentContext, Map<String, Object> properties)
+			BundleContext bundleContext, Map<String, Object> properties)
 		throws Exception {
 
 		if (_bundleTracker != null) {
 			_bundleTracker.close();
 		}
 
-		_bundleContext = componentContext.getBundleContext();
+		_bundleContext = bundleContext;
 
 		_bundleTracker = new BundleTracker<>(
 			_bundleContext, Bundle.ACTIVE,

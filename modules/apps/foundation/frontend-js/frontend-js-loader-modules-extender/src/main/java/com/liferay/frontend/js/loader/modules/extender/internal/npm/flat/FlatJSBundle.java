@@ -50,7 +50,7 @@ public class FlatJSBundle extends JSBundleAdapter {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(getId());
 		sb.append(StringPool.COLON);

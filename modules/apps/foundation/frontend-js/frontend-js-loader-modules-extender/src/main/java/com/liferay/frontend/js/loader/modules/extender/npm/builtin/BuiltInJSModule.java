@@ -39,7 +39,7 @@ public abstract class BuiltInJSModule extends JSModuleAdapter {
 	private static String _getResolvedId(
 		JSPackage jsPackage, String moduleName) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(jsPackage.getName());
 		sb.append(StringPool.AT);
@@ -53,7 +53,7 @@ public abstract class BuiltInJSModule extends JSModuleAdapter {
 	private static String _getResolvedURL(
 		JSPackage jsPackage, String moduleName) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(2);
 
 		sb.append("/o/js/resolved-module/");
 		sb.append(_getResolvedId(jsPackage, moduleName));
@@ -62,7 +62,7 @@ public abstract class BuiltInJSModule extends JSModuleAdapter {
 	}
 
 	private static String _getURL(JSPackage jsPackage, String moduleName) {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(2);
 
 		sb.append("/o/js/module/");
 		sb.append(ModuleNameUtil.getModuleId(jsPackage, moduleName));

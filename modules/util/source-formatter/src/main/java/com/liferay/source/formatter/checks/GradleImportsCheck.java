@@ -12,23 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.tools;
+package com.liferay.source.formatter.checks;
 
-import java.io.IOException;
-
-import java.util.regex.Pattern;
+import com.liferay.portal.tools.ImportsFormatter;
+import com.liferay.source.formatter.GradleImportsFormatter;
 
 /**
  * @author Hugo Huijser
  */
-public interface ImportsFormatter {
+public class GradleImportsCheck extends BaseFileCheck {
 
-	public String format(String content) throws IOException;
+	@Override
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
+		throws Exception {
 
-	public String format(String content, Pattern importPattern)
-		throws IOException;
+		ImportsFormatter importsFormatter = new GradleImportsFormatter();
 
-	public String format(String content, String packageDir, String className)
-		throws IOException;
+		return importsFormatter.format(content);
+	}
 
 }

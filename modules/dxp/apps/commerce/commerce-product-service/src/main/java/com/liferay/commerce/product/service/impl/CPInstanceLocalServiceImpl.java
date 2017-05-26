@@ -278,7 +278,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		OrderByComparator<CPInstance> orderByComparator) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			cpInstancePersistence.findByC_NotST(
+			return cpInstancePersistence.findByC_NotST(
 				cpDefinitionId, WorkflowConstants.STATUS_IN_TRASH, start, end,
 				orderByComparator);
 		}

@@ -612,7 +612,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 			Element missingReferenceElement = getMissingReferenceElement(
 				classedModel);
 
-			_missingReferencesElement.remove(missingReferenceElement);
+			if (classedModel instanceof Layout) {
+				missingReferenceElement.addAttribute(
+					"element-path", "/manifest.xml");
+			}
+			else {
+				missingReferenceElement.addAttribute(
+					"element-path",
+					ExportImportPathUtil.getPortletDataPath(this));
+			}
 		}
 	}
 
@@ -1758,15 +1766,19 @@ public class PortletDataContextImpl implements PortletDataContext {
 				_missingReferencesElement.elements();
 
 			for (Element missingReferenceElement : missingReferenceElements) {
-				String missingReferenceClassName =
-					missingReferenceElement.attributeValue("class-name");
-				String missingReferenceClassPK =
-					missingReferenceElement.attributeValue("class-pk");
+				if (missingReferenceElement.attributeValue("element-path") ==
+						null) {
 
-				String missingReferenceKey = getReferenceKey(
-					missingReferenceClassName, missingReferenceClassPK);
+					String missingReferenceClassName =
+						missingReferenceElement.attributeValue("class-name");
+					String missingReferenceClassPK =
+						missingReferenceElement.attributeValue("class-pk");
 
-				_missingReferences.add(missingReferenceKey);
+					String missingReferenceKey = getReferenceKey(
+						missingReferenceClassName, missingReferenceClassPK);
+
+					_missingReferences.add(missingReferenceKey);
+				}
 			}
 		}
 

@@ -47,6 +47,12 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 			portletURL="<%= cpDefinitionsDisplayContext.getPortletURL() %>"
 		/>
 
+		<liferay-frontend:management-bar-filter
+			label="status"
+			managementBarFilterItems="<%= cpDefinitionsDisplayContext.getManagementBarStatusFilterItems() %>"
+			value="<%= cpDefinitionsDisplayContext.getManagementBarStatusFilterValue() %>"
+		/>
+
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= cpDefinitionsDisplayContext.getOrderByCol() %>"
 			orderByType="<%= cpDefinitionsDisplayContext.getOrderByType() %>"

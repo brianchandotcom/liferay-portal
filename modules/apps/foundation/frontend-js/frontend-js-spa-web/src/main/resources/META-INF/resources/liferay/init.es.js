@@ -37,7 +37,7 @@ var initSPA = function(callback) {
 					}
 
 					var excluded = Liferay.SPA.excludedPaths.some(
-						(excludedPath) => url.indexOf(themeDisplay.getPathContext() + excludedPath) === 0
+						(excludedPath) => url.indexOf(excludedPath) === 0
 					);
 
 					if (excluded) {

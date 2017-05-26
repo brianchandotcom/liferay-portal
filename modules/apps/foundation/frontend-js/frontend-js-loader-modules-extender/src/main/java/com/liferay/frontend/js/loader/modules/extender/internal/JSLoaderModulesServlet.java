@@ -219,15 +219,23 @@ public class JSLoaderModulesServlet extends HttpServlet {
 
 					printWriter.write(delimiter2);
 
-					printWriter.write("\"");
-					printWriter.write(jsDependencyPackage.getName());
-					printWriter.write("\": ");
+					if (jsDependencyPackage == null) {
+						printWriter.write("\"");
+						printWriter.write(dependencyPackageName);
+						printWriter.write("\": \"[NOT-DEPLOYED:");
+						printWriter.write(dependencyPackageName);
+						printWriter.write("]\"");
+					} else {
+						printWriter.write("\"");
+						printWriter.write(jsDependencyPackage.getName());
+						printWriter.write("\": ");
 
-					printWriter.write("\"");
-					printWriter.write(jsDependencyPackage.getName());
-					printWriter.write(StringPool.AT);
-					printWriter.write(jsDependencyPackage.getVersion());
-					printWriter.write("\"");
+						printWriter.write("\"");
+						printWriter.write(jsDependencyPackage.getName());
+						printWriter.write(StringPool.AT);
+						printWriter.write(jsDependencyPackage.getVersion());
+						printWriter.write("\"");
+					}
 
 					delimiter2 = ", ";
 				}

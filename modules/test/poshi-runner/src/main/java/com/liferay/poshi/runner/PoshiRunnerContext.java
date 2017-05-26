@@ -1001,9 +1001,9 @@ public class PoshiRunnerContext {
 					className + "#" + commandElement.attributeValue("name");
 
 				if (isCommandElement(classType + "#" + classCommandName)) {
-					throw new Exception(
-						"Duplicate command name\n" + filePath + ":" +
-							commandElement.attributeValue("line-number"));
+					System.out.println(
+						"Overriding command " + className + "#" +
+							commandElement.attributeValue("name"));
 				}
 
 				_commandElements.put(

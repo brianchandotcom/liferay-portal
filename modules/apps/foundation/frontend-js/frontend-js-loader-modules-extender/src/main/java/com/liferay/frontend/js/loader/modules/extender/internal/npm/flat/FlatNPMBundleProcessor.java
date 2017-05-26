@@ -155,11 +155,13 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		while (urls.hasMoreElements()) {
 			URL url = urls.nextElement();
 
-			if (url.getPath().startsWith(nodeModulesPath)) {
+			String path = url.getPath();
+
+			if (path.startsWith(nodeModulesPath)) {
 				continue;
 			}
 
-			String name = url.getPath().substring(location.length() + 2);
+			String name = path.substring(location.length() + 2);
 
 			name = ModuleNameUtil.toModuleName(name);
 

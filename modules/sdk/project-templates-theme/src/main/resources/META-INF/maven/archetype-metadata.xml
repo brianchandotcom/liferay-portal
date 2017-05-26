@@ -23,6 +23,8 @@
 		</fileSet>
 	</fileSets>
 	<requiredProperties>
+		<requiredProperty key="author">
+		</requiredProperty>
 		<requiredProperty key="projectType">
 			<defaultValue>standalone</defaultValue>
 		</requiredProperty>

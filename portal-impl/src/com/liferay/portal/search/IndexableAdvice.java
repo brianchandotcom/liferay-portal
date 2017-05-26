@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexingThreadLocal;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
@@ -46,12 +47,18 @@ public class IndexableAdvice
 		}
 
 		if (CompanyThreadLocal.isDeleteInProcess() ||
+			IndexingThreadLocal.isIndexingDisabled() ||
 			IndexWriterHelperUtil.isIndexReadOnly()) {
 
 			if (_log.isDebugEnabled()) {
 				if (CompanyThreadLocal.isDeleteInProcess()) {
 					_log.debug(
 						"Skip indexing because company delete is in process");
+				}
+				else if (!IndexingThreadLocal.isIndexingEnabled()) {
+					_log.debug(
+						"Skip indexing because it is disabled for the " +
+							"current thread");
 				}
 				else if (IndexWriterHelperUtil.isIndexReadOnly()) {
 					_log.debug(

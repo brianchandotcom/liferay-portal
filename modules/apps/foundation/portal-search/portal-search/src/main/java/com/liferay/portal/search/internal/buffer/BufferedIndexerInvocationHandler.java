@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.search.Bufferable;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexingThreadLocal;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
@@ -68,6 +69,16 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 			(indexerRequestBuffer == null)) {
 
 			return method.invoke(_indexer, args);
+		}
+
+		if (IndexingThreadLocal.isIndexingDisabled()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Skipping indexer request because indexing is disabled " +
+						"for the current thread");
+			}
+
+			return null;
 		}
 
 		if (_indexStatusManager.isIndexReadOnly()) {

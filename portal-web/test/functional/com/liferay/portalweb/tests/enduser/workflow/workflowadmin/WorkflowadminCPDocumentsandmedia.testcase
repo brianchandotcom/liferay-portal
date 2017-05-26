@@ -10,29 +10,9 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="DMDocument#tearDownCP" />
-
-				<execute macro="Navigator#openURL" />
-
-				<execute macro="ProductMenu#gotoSitesContent">
-					<var name="portlet" value="Documents and Media" />
-				</execute>
-
-				<execute macro="Workflow#configureWorkflowViaPortlet">
-					<var name="workflowDefinition" value="No Workflow" />
-				</execute>
-
-				<execute macro="DMDocumentType#tearDownCP" />
-			</else>
-		</if>
+		<execute macro="PortalInstances#tearDownCP">
+			<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		</execute>
 	</tear-down>
 
 	<command name="ConfigureFolderWorkflow" priority="4">

@@ -20,6 +20,7 @@ import java.io.StringReader;
 import java.io.Writer;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -129,6 +130,43 @@ public class Dom4JUtil {
 		}
 
 		return childElement;
+	}
+
+	public static Element getOrderedListElement(
+		List<Element> items, Element parentElement, int maxItems) {
+
+		Element orderedListElement = getNewElement("ol", parentElement);
+
+		int i = 0;
+
+		for (Element item : items) {
+			if (i < maxItems) {
+				String itemName = item.getName();
+
+				if (itemName.equals("li")) {
+					orderedListElement.add(item);
+				}
+				else {
+					getNewElement("li", orderedListElement, item);
+				}
+
+				i++;
+
+				continue;
+			}
+
+			getNewElement("li", orderedListElement, "...");
+
+			break;
+		}
+
+		return orderedListElement;
+	}
+
+	public static Element getOrderedListElement(
+		List<Element> items, int maxItems) {
+
+		return getOrderedListElement(items, null, maxItems);
 	}
 
 	public static Document parse(String xml) throws DocumentException {

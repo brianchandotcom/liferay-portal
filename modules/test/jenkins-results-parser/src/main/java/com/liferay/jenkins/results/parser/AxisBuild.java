@@ -20,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -103,6 +104,8 @@ public class AxisBuild extends BaseBuild {
 				continue;
 			}
 
+			String testRayLogsURL = getTestRayLogsURL();
+
 			Element listItemElement = Dom4JUtil.getNewElement(
 				"li", unorderedListElement);
 
@@ -115,15 +118,15 @@ public class AxisBuild extends BaseBuild {
 				"li", reportLinksUnorderedListElement);
 
 			Dom4JUtil.getNewAnchorElement(
-				testResult.getPoshiReportURL(), poshiReportListItemElement,
-				"Poshi Report");
+				testResult.getPoshiReportURL(testRayLogsURL),
+				poshiReportListItemElement, "Poshi Report");
 
 			Element poshiSummaryListItemElement = Dom4JUtil.getNewElement(
 				"li", reportLinksUnorderedListElement);
 
 			Dom4JUtil.getNewAnchorElement(
-				testResult.getPoshiSummaryURL(), poshiSummaryListItemElement,
-				"Poshi Summary");
+				testResult.getPoshiSummaryURL(testRayLogsURL),
+				poshiSummaryListItemElement, "Poshi Summary");
 		}
 
 		Dom4JUtil.addToElement(
@@ -245,10 +248,7 @@ public class AxisBuild extends BaseBuild {
 		}
 
 		if (result.equals("UNSTABLE")) {
-			Element downstreamBuildOrderedListElement = Dom4JUtil.getNewElement(
-				"ol", messageElement);
-
-			int failureCount = 0;
+			List<Element> elements = new ArrayList<>();
 
 			for (TestResult testResult : getTestResults(null)) {
 				String testStatus = testResult.getStatus();
@@ -259,51 +259,10 @@ public class AxisBuild extends BaseBuild {
 					continue;
 				}
 
-				Element downstreamBuildListItemElement =
-					Dom4JUtil.getNewElement(
-						"li", downstreamBuildOrderedListElement);
-
-				if (failureCount < 3) {
-					String testReportURL = testResult.getTestReportURL();
-
-					downstreamBuildListItemElement.add(
-						Dom4JUtil.getNewAnchorElement(
-							testReportURL, testResult.getDisplayName()));
-
-					if (testReportURL.contains(
-							"com.liferay.poshi.runner/PoshiRunner")) {
-
-						Dom4JUtil.addToElement(
-							downstreamBuildListItemElement, " - ",
-							Dom4JUtil.getNewAnchorElement(
-								testResult.getPoshiReportURL(), "Poshi Report"),
-							" - ",
-							Dom4JUtil.getNewAnchorElement(
-								testResult.getPoshiSummaryURL(),
-								"Poshi Summary"),
-							" - ",
-							Dom4JUtil.getNewAnchorElement(
-								testResult.getConsoleOutputURL(),
-								"Console Output"));
-
-						if (testResult.hasLiferayLog()) {
-							Dom4JUtil.addToElement(
-								downstreamBuildListItemElement, " - ",
-								Dom4JUtil.getNewAnchorElement(
-									testResult.getLiferayLogURL(),
-									"Liferay Log"));
-						}
-					}
-
-					failureCount++;
-
-					continue;
-				}
-
-				downstreamBuildListItemElement.addText("...");
-
-				break;
+				elements.add(testResult.getGitHubElement(getTestRayLogsURL()));
 			}
+
+			Dom4JUtil.getOrderedListElement(elements, messageElement, 3);
 		}
 
 		return messageElement;

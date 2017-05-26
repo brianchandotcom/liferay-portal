@@ -88,9 +88,11 @@ public class NPMRegistry {
 			new Comparator<JSPackage>() {
 
 				@Override
-				public int compare(JSPackage o1, JSPackage o2) {
-					Version version1 = Version.from(o1.getVersion(), true);
-					Version version2 = Version.from(o2.getVersion(), true);
+				public int compare(JSPackage jsPackage1, JSPackage jsPackage2) {
+					Version version1 = Version.from(
+						jsPackage1.getVersion(), true);
+					Version version2 = Version.from(
+						jsPackage2.getVersion(), true);
 
 					return version1.compareTo(version2);
 				}

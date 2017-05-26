@@ -233,30 +233,7 @@
 
 		<var name="pauseCount" value="0" />
 
-		<while>
-			<and>
-				<condition function="IsElementNotPresent" locator1="OpenAM#USER_NAME" />
-				<not>
-					<equals arg1="${pauseCount}" arg2="20" />
-				</not>
-			</and>
-			<then>
-				<execute function="Refresh" />
-
-				<execute function="Pause" locator1="30000" />
-
-				<var method="MathUtil#sum('${pauseCount}', '1')" name="pauseCount" />
-
-				<echo>Pause count: ${pauseCount}</echo>
-			</then>
-		</while>
-
-		<if>
-			<equals arg1="${pauseCount}" arg2="20" />
-			<then>
-				<fail message="OpenAM setup timed out after 10 minutes." />
-			</then>
-		</if>
+		<execute macro="PortalSettings#viewPauseCount" />
 
 		<execute macro="User#firstLoginPG" />
 

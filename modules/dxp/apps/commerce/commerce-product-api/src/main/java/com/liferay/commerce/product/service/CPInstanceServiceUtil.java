@@ -116,9 +116,9 @@ public class CPInstanceServiceUtil {
 		return getService().search(searchContext);
 	}
 
-	public static int getCPInstancesCount(long cpDefinitionId)
+	public static int getCPInstancesCount(long cpDefinitionId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPInstancesCount(cpDefinitionId);
+		return getService().getCPInstancesCount(cpDefinitionId, status);
 	}
 
 	/**
@@ -137,11 +137,12 @@ public class CPInstanceServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstances(
-		long cpDefinitionId, int start, int end,
+		long cpDefinitionId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCPInstances(cpDefinitionId, start, end, orderByComparator);
+				   .getCPInstances(cpDefinitionId, status, start, end,
+			orderByComparator);
 	}
 
 	public static void buildCPInstances(long cpDefinitionId,

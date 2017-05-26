@@ -243,8 +243,8 @@ public class CPInstanceLocalServiceUtil {
 		return getService().getCPInstancesCount();
 	}
 
-	public static int getCPInstancesCount(long cpDefinitionId) {
-		return getService().getCPInstancesCount(cpDefinitionId);
+	public static int getCPInstancesCount(long cpDefinitionId, int status) {
+		return getService().getCPInstancesCount(cpDefinitionId, status);
 	}
 
 	/**
@@ -332,10 +332,11 @@ public class CPInstanceLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstances(
-		long cpDefinitionId, int start, int end,
+		long cpDefinitionId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator) {
 		return getService()
-				   .getCPInstances(cpDefinitionId, start, end, orderByComparator);
+				   .getCPInstances(cpDefinitionId, status, start, end,
+			orderByComparator);
 	}
 
 	/**

@@ -112,9 +112,9 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 	}
 
 	@Override
-	public int getCPInstancesCount(long cpDefinitionId)
+	public int getCPInstancesCount(long cpDefinitionId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpInstanceService.getCPInstancesCount(cpDefinitionId);
+		return _cpInstanceService.getCPInstancesCount(cpDefinitionId, status);
 	}
 
 	/**
@@ -136,11 +136,11 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstances(
-		long cpDefinitionId, int start, int end,
+		long cpDefinitionId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpInstanceService.getCPInstances(cpDefinitionId, start, end,
-			orderByComparator);
+		return _cpInstanceService.getCPInstances(cpDefinitionId, status, start,
+			end, orderByComparator);
 	}
 
 	@Override

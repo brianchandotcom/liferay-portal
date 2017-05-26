@@ -221,7 +221,7 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	public int getCPInstancesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPInstancesCount(long cpDefinitionId);
+	public int getCPInstancesCount(long cpDefinitionId, int status);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -291,8 +291,8 @@ public interface CPInstanceLocalService extends BaseLocalService,
 		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPInstance> getCPInstances(long cpDefinitionId, int start,
-		int end, OrderByComparator<CPInstance> orderByComparator);
+	public List<CPInstance> getCPInstances(long cpDefinitionId, int status,
+		int start, int end, OrderByComparator<CPInstance> orderByComparator);
 
 	/**
 	* Returns all the cp instances matching the UUID and company.

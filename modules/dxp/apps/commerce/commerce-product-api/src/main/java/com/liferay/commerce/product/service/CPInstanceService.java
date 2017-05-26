@@ -101,7 +101,7 @@ public interface CPInstanceService extends BaseService {
 	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPInstancesCount(long cpDefinitionId)
+	public int getCPInstancesCount(long cpDefinitionId, int status)
 		throws PortalException;
 
 	/**
@@ -116,8 +116,8 @@ public interface CPInstanceService extends BaseService {
 		int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPInstance> getCPInstances(long cpDefinitionId, int start,
-		int end, OrderByComparator<CPInstance> orderByComparator)
+	public List<CPInstance> getCPInstances(long cpDefinitionId, int status,
+		int start, int end, OrderByComparator<CPInstance> orderByComparator)
 		throws PortalException;
 
 	public void buildCPInstances(long cpDefinitionId,

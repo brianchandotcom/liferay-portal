@@ -254,8 +254,9 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 	}
 
 	@Override
-	public int getCPInstancesCount(long cpDefinitionId) {
-		return _cpInstanceLocalService.getCPInstancesCount(cpDefinitionId);
+	public int getCPInstancesCount(long cpDefinitionId, int status) {
+		return _cpInstanceLocalService.getCPInstancesCount(cpDefinitionId,
+			status);
 	}
 
 	/**
@@ -351,10 +352,10 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstances(
-		long cpDefinitionId, int start, int end,
+		long cpDefinitionId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator) {
-		return _cpInstanceLocalService.getCPInstances(cpDefinitionId, start,
-			end, orderByComparator);
+		return _cpInstanceLocalService.getCPInstances(cpDefinitionId, status,
+			start, end, orderByComparator);
 	}
 
 	/**

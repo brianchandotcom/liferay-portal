@@ -255,7 +255,8 @@ public class CPInstanceServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstances(
-		HttpPrincipal httpPrincipal, long cpDefinitionId, int start, int end,
+		HttpPrincipal httpPrincipal, long cpDefinitionId, int status,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -263,7 +264,7 @@ public class CPInstanceServiceHttp {
 					"getCPInstances", _getCPInstancesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId, start, end, orderByComparator);
+					cpDefinitionId, status, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -288,14 +289,14 @@ public class CPInstanceServiceHttp {
 	}
 
 	public static int getCPInstancesCount(HttpPrincipal httpPrincipal,
-		long cpDefinitionId)
+		long cpDefinitionId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPInstanceServiceUtil.class,
 					"getCPInstancesCount", _getCPInstancesCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId);
+					cpDefinitionId, status);
 
 			Object returnObj = null;
 
@@ -481,11 +482,11 @@ public class CPInstanceServiceHttp {
 			long.class, int.class, int.class
 		};
 	private static final Class<?>[] _getCPInstancesParameterTypes6 = new Class[] {
-			long.class, int.class, int.class,
+			long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getCPInstancesCountParameterTypes7 = new Class[] {
-			long.class
+			long.class, int.class
 		};
 	private static final Class<?>[] _searchParameterTypes8 = new Class[] {
 			com.liferay.portal.kernel.search.SearchContext.class

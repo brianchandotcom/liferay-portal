@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_FACET_TAGS</td>
+	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_tagName}')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_FACET_USER_NAME</td>
 	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_userLoginFullName}')]/a</td>
 	<td></td>

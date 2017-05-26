@@ -264,6 +264,22 @@ public class CPInstancePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_ST() throws Exception {
+		_persistence.countByC_ST(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_ST(0L, 0);
+	}
+
+	@Test
+	public void testCountByC_NotST() throws Exception {
+		_persistence.countByC_NotST(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_NotST(0L, 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CPInstance newCPInstance = addCPInstance();
 

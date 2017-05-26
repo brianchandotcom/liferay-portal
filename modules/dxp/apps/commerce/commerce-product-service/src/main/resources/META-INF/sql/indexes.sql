@@ -22,6 +22,7 @@ create index IX_CD95E77 on CPDefinitionOptionValueRel (uuid_[$COLUMN_LENGTH:75$]
 create unique index IX_34516B9 on CPDefinitionOptionValueRel (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create unique index IX_7E830576 on CPInstance (CPDefinitionId, sku[$COLUMN_LENGTH:75$]);
+create index IX_F4C9CDD on CPInstance (CPDefinitionId, status);
 create index IX_48C70BC0 on CPInstance (companyId);
 create index IX_C1F8242 on CPInstance (groupId);
 create index IX_8A7A3F5C on CPInstance (uuid_[$COLUMN_LENGTH:75$], companyId);

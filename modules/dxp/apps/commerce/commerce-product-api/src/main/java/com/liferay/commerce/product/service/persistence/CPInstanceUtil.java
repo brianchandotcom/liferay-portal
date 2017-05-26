@@ -1043,6 +1043,357 @@ public class CPInstanceUtil {
 	}
 
 	/**
+	* Returns all the cp instances where CPDefinitionId = &#63; and status = &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @return the matching cp instances
+	*/
+	public static List<CPInstance> findByC_ST(long CPDefinitionId, int status) {
+		return getPersistence().findByC_ST(CPDefinitionId, status);
+	}
+
+	/**
+	* Returns a range of all the cp instances where CPDefinitionId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param start the lower bound of the range of cp instances
+	* @param end the upper bound of the range of cp instances (not inclusive)
+	* @return the range of matching cp instances
+	*/
+	public static List<CPInstance> findByC_ST(long CPDefinitionId, int status,
+		int start, int end) {
+		return getPersistence().findByC_ST(CPDefinitionId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the cp instances where CPDefinitionId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param start the lower bound of the range of cp instances
+	* @param end the upper bound of the range of cp instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp instances
+	*/
+	public static List<CPInstance> findByC_ST(long CPDefinitionId, int status,
+		int start, int end, OrderByComparator<CPInstance> orderByComparator) {
+		return getPersistence()
+				   .findByC_ST(CPDefinitionId, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the cp instances where CPDefinitionId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param start the lower bound of the range of cp instances
+	* @param end the upper bound of the range of cp instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp instances
+	*/
+	public static List<CPInstance> findByC_ST(long CPDefinitionId, int status,
+		int start, int end, OrderByComparator<CPInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_ST(CPDefinitionId, status, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first cp instance in the ordered set where CPDefinitionId = &#63; and status = &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp instance
+	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	*/
+	public static CPInstance findByC_ST_First(long CPDefinitionId, int status,
+		OrderByComparator<CPInstance> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
+		return getPersistence()
+				   .findByC_ST_First(CPDefinitionId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the first cp instance in the ordered set where CPDefinitionId = &#63; and status = &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	*/
+	public static CPInstance fetchByC_ST_First(long CPDefinitionId, int status,
+		OrderByComparator<CPInstance> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_ST_First(CPDefinitionId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp instance in the ordered set where CPDefinitionId = &#63; and status = &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp instance
+	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	*/
+	public static CPInstance findByC_ST_Last(long CPDefinitionId, int status,
+		OrderByComparator<CPInstance> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
+		return getPersistence()
+				   .findByC_ST_Last(CPDefinitionId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp instance in the ordered set where CPDefinitionId = &#63; and status = &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	*/
+	public static CPInstance fetchByC_ST_Last(long CPDefinitionId, int status,
+		OrderByComparator<CPInstance> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_ST_Last(CPDefinitionId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the cp instances before and after the current cp instance in the ordered set where CPDefinitionId = &#63; and status = &#63;.
+	*
+	* @param CPInstanceId the primary key of the current cp instance
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp instance
+	* @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
+	*/
+	public static CPInstance[] findByC_ST_PrevAndNext(long CPInstanceId,
+		long CPDefinitionId, int status,
+		OrderByComparator<CPInstance> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
+		return getPersistence()
+				   .findByC_ST_PrevAndNext(CPInstanceId, CPDefinitionId,
+			status, orderByComparator);
+	}
+
+	/**
+	* Removes all the cp instances where CPDefinitionId = &#63; and status = &#63; from the database.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	*/
+	public static void removeByC_ST(long CPDefinitionId, int status) {
+		getPersistence().removeByC_ST(CPDefinitionId, status);
+	}
+
+	/**
+	* Returns the number of cp instances where CPDefinitionId = &#63; and status = &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @return the number of matching cp instances
+	*/
+	public static int countByC_ST(long CPDefinitionId, int status) {
+		return getPersistence().countByC_ST(CPDefinitionId, status);
+	}
+
+	/**
+	* Returns all the cp instances where CPDefinitionId = &#63; and status &ne; &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @return the matching cp instances
+	*/
+	public static List<CPInstance> findByC_NotST(long CPDefinitionId, int status) {
+		return getPersistence().findByC_NotST(CPDefinitionId, status);
+	}
+
+	/**
+	* Returns a range of all the cp instances where CPDefinitionId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param start the lower bound of the range of cp instances
+	* @param end the upper bound of the range of cp instances (not inclusive)
+	* @return the range of matching cp instances
+	*/
+	public static List<CPInstance> findByC_NotST(long CPDefinitionId,
+		int status, int start, int end) {
+		return getPersistence().findByC_NotST(CPDefinitionId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the cp instances where CPDefinitionId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param start the lower bound of the range of cp instances
+	* @param end the upper bound of the range of cp instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp instances
+	*/
+	public static List<CPInstance> findByC_NotST(long CPDefinitionId,
+		int status, int start, int end,
+		OrderByComparator<CPInstance> orderByComparator) {
+		return getPersistence()
+				   .findByC_NotST(CPDefinitionId, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the cp instances where CPDefinitionId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param start the lower bound of the range of cp instances
+	* @param end the upper bound of the range of cp instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp instances
+	*/
+	public static List<CPInstance> findByC_NotST(long CPDefinitionId,
+		int status, int start, int end,
+		OrderByComparator<CPInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_NotST(CPDefinitionId, status, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first cp instance in the ordered set where CPDefinitionId = &#63; and status &ne; &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp instance
+	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	*/
+	public static CPInstance findByC_NotST_First(long CPDefinitionId,
+		int status, OrderByComparator<CPInstance> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
+		return getPersistence()
+				   .findByC_NotST_First(CPDefinitionId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first cp instance in the ordered set where CPDefinitionId = &#63; and status &ne; &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	*/
+	public static CPInstance fetchByC_NotST_First(long CPDefinitionId,
+		int status, OrderByComparator<CPInstance> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_NotST_First(CPDefinitionId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last cp instance in the ordered set where CPDefinitionId = &#63; and status &ne; &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp instance
+	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	*/
+	public static CPInstance findByC_NotST_Last(long CPDefinitionId,
+		int status, OrderByComparator<CPInstance> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
+		return getPersistence()
+				   .findByC_NotST_Last(CPDefinitionId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp instance in the ordered set where CPDefinitionId = &#63; and status &ne; &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	*/
+	public static CPInstance fetchByC_NotST_Last(long CPDefinitionId,
+		int status, OrderByComparator<CPInstance> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_NotST_Last(CPDefinitionId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the cp instances before and after the current cp instance in the ordered set where CPDefinitionId = &#63; and status &ne; &#63;.
+	*
+	* @param CPInstanceId the primary key of the current cp instance
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp instance
+	* @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
+	*/
+	public static CPInstance[] findByC_NotST_PrevAndNext(long CPInstanceId,
+		long CPDefinitionId, int status,
+		OrderByComparator<CPInstance> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
+		return getPersistence()
+				   .findByC_NotST_PrevAndNext(CPInstanceId, CPDefinitionId,
+			status, orderByComparator);
+	}
+
+	/**
+	* Removes all the cp instances where CPDefinitionId = &#63; and status &ne; &#63; from the database.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	*/
+	public static void removeByC_NotST(long CPDefinitionId, int status) {
+		getPersistence().removeByC_NotST(CPDefinitionId, status);
+	}
+
+	/**
+	* Returns the number of cp instances where CPDefinitionId = &#63; and status &ne; &#63;.
+	*
+	* @param CPDefinitionId the cp definition ID
+	* @param status the status
+	* @return the number of matching cp instances
+	*/
+	public static int countByC_NotST(long CPDefinitionId, int status) {
+		return getPersistence().countByC_NotST(CPDefinitionId, status);
+	}
+
+	/**
 	* Caches the cp instance in the entity cache if it is enabled.
 	*
 	* @param cpInstance the cp instance

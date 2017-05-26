@@ -209,6 +209,8 @@
 	</command>
 
 	<command name="configureCustomStylesViaLookandfeelPG">
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="Text Styles" />
 		</execute>

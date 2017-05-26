@@ -289,6 +289,14 @@
 			<finder-column name="CPDefinitionId" />
 			<finder-column name="sku" />
 		</finder>
+		<finder name="C_ST" return-type="Collection">
+			<finder-column name="CPDefinitionId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="C_NotST" return-type="Collection">
+			<finder-column name="CPDefinitionId" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
 
 		<!-- References -->
 

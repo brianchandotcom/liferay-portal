@@ -895,6 +895,30 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/foo.war",
 			"target/foo-1.0.0.war");
+
+		ZipFile zipFile = null;
+
+		File gradleWarFile = new File(gradleProjectDir, "build/libs/foo.war");
+
+		try {
+			zipFile = new ZipFile(gradleWarFile);
+
+			_testExists(zipFile, "css/main.css");
+			_testExists(zipFile, "css/main_rtl.css");
+
+			_testExists(zipFile, "WEB-INF/lib/aopalliance-1.0.jar");
+			_testExists(zipFile, "WEB-INF/lib/commons-logging-1.2.jar");
+
+			for (String jarName : _SPRING_MVC_PORTLET_JAR_NAMES) {
+				_testExists(
+					zipFile,
+					"WEB-INF/lib/spring-" + jarName + "-" +
+						_SPRING_MVC_PORTLET_VERSION + ".jar");
+			}
+		}
+		finally {
+			ZipFile.closeQuietly(zipFile);
+		}
 	}
 
 	@Test
@@ -1672,6 +1696,10 @@ public class ProjectTemplatesTest {
 		return file;
 	}
 
+	private static void _testExists(ZipFile zipFile, String name) {
+		Assert.assertNotNull("Missing " + name, zipFile.getEntry(name));
+	}
+
 	private static File _testNotContains(
 			File dir, String fileName, String... strings)
 		throws IOException {
@@ -2158,6 +2186,13 @@ public class ProjectTemplatesTest {
 	private static final String _REPOSITORY_CDN_URL =
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
 			"/public";
+
+	private static final String[] _SPRING_MVC_PORTLET_JAR_NAMES = {
+		"aop", "beans", "context", "core", "expression", "web", "webmvc",
+		"webmvc-portlet"
+	};
+
+	private static final String _SPRING_MVC_PORTLET_VERSION = "4.1.9.RELEASE";
 
 	private static final boolean _TEST_DEBUG_BUNDLE_DIFFS = Boolean.getBoolean(
 		"test.debug.bundle.diffs");

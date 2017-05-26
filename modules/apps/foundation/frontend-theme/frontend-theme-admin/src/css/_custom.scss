@@ -220,40 +220,27 @@ body {
 
 .portlet-boundary_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_ {
 	.color-scheme-selector {
-		@media (max-width: $screen-xs-max) {
-			max-width: 100%;
+		float: left;
+		margin-bottom: 10px;
+		margin-left: 3.5%;
+
+		@include transition(border-color 0.2s ease-in-out);
+
+		width: 31%;
+
+		@include sm {
+			margin-left: 0;
+			margin-right: 10px;
+			width: 150px;
 		}
 
-		@media (min-width: $screen-sm-min) {
-			width: 150px;
+		&:nth-child(3n + 1) {
+			margin-left: 0;
 		}
 
 		&.selected {
 			border: 1px $brand-primary solid;
 		}
-
-		img {
-			height: auto;
-			max-width: 100%;
-		}
-	}
-
-	.color-scheme-selector-container {
-		@media (max-width: $screen-xs-max) {
-			width: 31%;
-			margin-left: 3.5%;
-
-			&:nth-child(3n+1) {
-				margin-left: 0;
-			}
-		}
-
-		@media (min-width: $screen-sm-min) {
-			margin-right: 10px;
-		}
-
-		float: left;
-		margin-bottom: 10px;
 	}
 }
 

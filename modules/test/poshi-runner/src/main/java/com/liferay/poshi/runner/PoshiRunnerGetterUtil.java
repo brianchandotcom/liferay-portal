@@ -16,7 +16,6 @@ package com.liferay.poshi.runner;
 
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.ExternalMethod;
-import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
@@ -26,7 +25,9 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
+import java.io.InputStreamReader;
+
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -254,8 +255,10 @@ public class PoshiRunnerGetterUtil {
 		int lineNumber = 1;
 		StringBuilder sb = new StringBuilder();
 
+		URL url = new URL(filePath);
+
 		BufferedReader bufferedReader = new BufferedReader(
-			new StringReader(FileUtil.read(filePath)));
+			new InputStreamReader(url.openStream()));
 
 		String line = null;
 

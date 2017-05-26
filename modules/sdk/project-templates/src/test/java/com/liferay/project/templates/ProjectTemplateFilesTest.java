@@ -157,7 +157,7 @@ public class ProjectTemplateFilesTest {
 
 	private void _testArchetypeMetadataXml(
 			Path projectTemplateDirPath, String projectTemplateDirName,
-			boolean hasJavaFiles)
+			boolean requireAuthorProperty)
 		throws IOException {
 
 		Path archetypeMetadataXmlPath = projectTemplateDirPath.resolve(
@@ -187,20 +187,20 @@ public class ProjectTemplateFilesTest {
 				"<?xml version=\"1.0\"?>\n\n<archetype-descriptor name=\"" +
 					archetypeDescriptorName + "\">"));
 
-		boolean hasArchetypeMetadataAuthorProperty =
-			archetypeMetadataXml.contains("<requiredProperty key=\"author\">");
+		boolean authorProperty = archetypeMetadataXml.contains(
+			"<requiredProperty key=\"author\">");
 
-		if (hasJavaFiles) {
+		if (requireAuthorProperty) {
 			Assert.assertTrue(
 				"Missing \"author\" required property in " +
 					archetypeMetadataXmlPath,
-				hasArchetypeMetadataAuthorProperty);
+				authorProperty);
 		}
 		else {
 			Assert.assertFalse(
 				"Forbidden \"author\" required property in " +
 					archetypeMetadataXmlPath,
-				hasArchetypeMetadataAuthorProperty);
+				authorProperty);
 		}
 	}
 
@@ -588,7 +588,7 @@ public class ProjectTemplateFilesTest {
 		_testMavenWrapper(archetypeResourcesDirPath);
 		_testPomXml(archetypeResourcesDirPath, documentBuilder);
 
-		final AtomicBoolean hasJavaFiles = new AtomicBoolean();
+		final AtomicBoolean requireAuthorProperty = new AtomicBoolean();
 
 		Files.walkFileTree(
 			archetypeResourcesDirPath,
@@ -616,6 +616,8 @@ public class ProjectTemplateFilesTest {
 						"liferay-plugin-package.properties");
 
 					if (Files.exists(liferayPluginPackagePropertiesPath)) {
+						requireAuthorProperty.set(true);
+
 						_testLiferayPluginPackageProperties(
 							liferayPluginPackagePropertiesPath);
 					}
@@ -635,7 +637,7 @@ public class ProjectTemplateFilesTest {
 					boolean javaFile = extension.equals("java");
 
 					if (javaFile) {
-						hasJavaFiles.set(true);
+						requireAuthorProperty.set(true);
 					}
 
 					if (!fileName.equals(".gitkeep") &&
@@ -654,7 +656,8 @@ public class ProjectTemplateFilesTest {
 			});
 
 		_testArchetypeMetadataXml(
-			projectTemplateDirPath, projectTemplateDirName, hasJavaFiles.get());
+			projectTemplateDirPath, projectTemplateDirName,
+			requireAuthorProperty.get());
 	}
 
 	private void _testPropertyValue(

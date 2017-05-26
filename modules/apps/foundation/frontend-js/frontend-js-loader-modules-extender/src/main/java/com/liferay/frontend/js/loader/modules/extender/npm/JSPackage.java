@@ -35,7 +35,7 @@ public interface JSPackage extends JSBundleObject {
 
 	public String getMainModuleName();
 
-	public URL getResource(String location);
+	public URL getResourceURL(String location);
 
 	public String getVersion();
 

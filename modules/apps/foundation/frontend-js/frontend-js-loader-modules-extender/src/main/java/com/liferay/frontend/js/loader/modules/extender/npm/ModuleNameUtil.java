@@ -37,7 +37,7 @@ public class ModuleNameUtil {
 		int i = moduleName.indexOf(StringPool.SLASH);
 
 		if (i == -1) {
-			i = moduleName.length();
+			return moduleName;
 		}
 
 		return moduleName.substring(0, i);

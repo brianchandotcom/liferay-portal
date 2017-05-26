@@ -23,8 +23,8 @@ import java.io.InputStream;
  */
 public interface JSBundleAsset extends JSBundleObject {
 
-	public String getURL();
+	public InputStream getInputStream() throws IOException;
 
-	public InputStream openStream() throws IOException;
+	public String getURL();
 
 }

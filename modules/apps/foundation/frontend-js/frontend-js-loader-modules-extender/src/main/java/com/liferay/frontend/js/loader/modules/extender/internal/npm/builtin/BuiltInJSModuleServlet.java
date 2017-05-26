@@ -64,7 +64,7 @@ public class BuiltInJSModuleServlet extends HttpServlet {
 
 		ServletOutputStream servletOutputStream = response.getOutputStream();
 
-		try (InputStream inputStream = jsModule.openStream()) {
+		try (InputStream inputStream = jsModule.getInputStream()) {
 			StreamUtil.transfer(inputStream, servletOutputStream, false);
 		}
 		catch (Exception e) {

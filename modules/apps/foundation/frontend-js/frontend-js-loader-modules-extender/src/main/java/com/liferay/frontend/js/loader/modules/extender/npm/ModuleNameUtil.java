@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.StringPool;
 public class ModuleNameUtil {
 
 	public static String getModuleId(JSPackage jsPackage, String moduleName) {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(3);
 
 		sb.append(jsPackage.getId());
 		sb.append(StringPool.SLASH);

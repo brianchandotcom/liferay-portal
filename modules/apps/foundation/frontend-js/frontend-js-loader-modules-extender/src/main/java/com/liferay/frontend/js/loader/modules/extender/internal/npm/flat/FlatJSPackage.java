@@ -32,20 +32,20 @@ public class FlatJSPackage extends JSPackageAdapter {
 
 		super(flatJSBundle, name, version, mainModuleName);
 
-		StringBundler basePath = new StringBundler();
-
 		if (root) {
-			basePath.append("META-INF/resources/");
+			_basePath = "META-INF/resources/";
 		}
 		else {
+			StringBundler basePath = new StringBundler(5);
+
 			basePath.append("META-INF/resources/node_modules/");
 			basePath.append(getName());
 			basePath.append(StringPool.AT);
 			basePath.append(getVersion());
 			basePath.append(StringPool.SLASH);
-		}
 
-		_basePath = basePath.toString();
+			_basePath = basePath.toString();
+		}
 	}
 
 	@Override

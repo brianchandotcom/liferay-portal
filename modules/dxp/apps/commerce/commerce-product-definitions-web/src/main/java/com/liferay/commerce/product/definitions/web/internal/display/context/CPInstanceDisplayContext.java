@@ -108,8 +108,6 @@ public class CPInstanceDisplayContext
 		PortletURL portletURL = super.getPortletURL();
 
 		portletURL.setParameter("mvcRenderCommandName", "viewProductInstances");
-		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
 
 		return portletURL;
 	}
@@ -157,12 +155,12 @@ public class CPInstanceDisplayContext
 		}
 		else {
 			int total = _cpInstanceService.getCPInstancesCount(
-				getCPDefinitionId());
+				getCPDefinitionId(), getStatus());
 
 			searchContainer.setTotal(total);
 
 			List<CPInstance> results = _cpInstanceService.getCPInstances(
-				getCPDefinitionId(), searchContainer.getStart(),
+				getCPDefinitionId(), getStatus(), searchContainer.getStart(),
 				searchContainer.getEnd(), orderByComparator);
 
 			searchContainer.setResults(results);

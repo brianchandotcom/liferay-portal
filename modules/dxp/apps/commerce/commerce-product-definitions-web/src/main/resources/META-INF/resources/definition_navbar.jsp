@@ -86,13 +86,13 @@ if (cpDefinition != null) {
 				<portlet:param name="mvcRenderCommandName" value="viewProductInstances" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
-				<portlet:param name="toolbarItem" value="view-product-definition-instances" />
+				<portlet:param name="toolbarItem" value="view-product-instances" />
 			</liferay-portlet:renderURL>
 
 			<aui:nav-item
 				href="<%= viewProductDefinitionInstancesURL.toString() %>"
 				label='<%= LanguageUtil.get(request, "skus") %>'
-				selected='<%= toolbarItem.equals("view-product-definition-instances") %>'
+				selected='<%= toolbarItem.equals("view-product-instances") %>'
 			/>
 
 			<liferay-portlet:renderURL varImpl="viewProductDefinitionAttachmentsURL">

@@ -80,6 +80,12 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 			portletURL="<%= portletURL %>"
 		/>
 
+		<liferay-frontend:management-bar-filter
+			label="status"
+			managementBarFilterItems="<%= cpInstanceDisplayContext.getManagementBarStatusFilterItems() %>"
+			value="<%= cpInstanceDisplayContext.getManagementBarStatusFilterValue() %>"
+		/>
+
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= cpInstanceDisplayContext.getOrderByCol() %>"
 			orderByType="<%= cpInstanceDisplayContext.getOrderByType() %>"

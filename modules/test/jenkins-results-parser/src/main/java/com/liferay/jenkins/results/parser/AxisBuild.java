@@ -94,7 +94,7 @@ public class AxisBuild extends BaseBuild {
 		return parentBuild.getBrowser();
 	}
 
-	public String getBuildDescriptionTestRayReports() {
+	public String getBuildDescriptionTestrayReports() {
 		Element unorderedListElement = Dom4JUtil.getNewElement("ul");
 
 		for (TestResult testResult : getTestResults(null)) {
@@ -104,7 +104,7 @@ public class AxisBuild extends BaseBuild {
 				continue;
 			}
 
-			String testRayLogsURL = getTestRayLogsURL();
+			String testrayLogsURL = getTestrayLogsURL();
 
 			Element listItemElement = Dom4JUtil.getNewElement(
 				"li", unorderedListElement);
@@ -118,14 +118,14 @@ public class AxisBuild extends BaseBuild {
 				"li", reportLinksUnorderedListElement);
 
 			Dom4JUtil.getNewAnchorElement(
-				testResult.getPoshiReportURL(testRayLogsURL),
+				testResult.getPoshiReportURL(testrayLogsURL),
 				poshiReportListItemElement, "Poshi Report");
 
 			Element poshiSummaryListItemElement = Dom4JUtil.getNewElement(
 				"li", reportLinksUnorderedListElement);
 
 			Dom4JUtil.getNewAnchorElement(
-				testResult.getPoshiSummaryURL(testRayLogsURL),
+				testResult.getPoshiSummaryURL(testrayLogsURL),
 				poshiSummaryListItemElement, "Poshi Summary");
 		}
 
@@ -259,7 +259,7 @@ public class AxisBuild extends BaseBuild {
 					continue;
 				}
 
-				elements.add(testResult.getGitHubElement(getTestRayLogsURL()));
+				elements.add(testResult.getGitHubElement(getTestrayLogsURL()));
 			}
 
 			Dom4JUtil.getOrderedListElement(elements, messageElement, 3);
@@ -282,7 +282,7 @@ public class AxisBuild extends BaseBuild {
 		return parentBuild.getOperatingSystem();
 	}
 
-	public String getTestRayLogsURL() {
+	public String getTestrayLogsURL() {
 		Properties buildProperties = null;
 
 		try {

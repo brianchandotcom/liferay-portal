@@ -84,10 +84,10 @@ public class TestResult {
 		return className;
 	}
 
-	public String getConsoleOutputURL(String testRayLogsURL) {
+	public String getConsoleOutputURL(String testrayLogsURL) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(testRayLogsURL);
+		sb.append(testrayLogsURL);
 		sb.append("/jenkins-console.txt.gz");
 
 		return sb.toString();
@@ -105,7 +105,7 @@ public class TestResult {
 		return duration;
 	}
 
-	public Element getGitHubElement(String testRayLogsURL) {
+	public Element getGitHubElement(String testrayLogsURL) {
 		String testReportURL = getTestReportURL();
 
 		Element downstreamBuildListItemElement = Dom4JUtil.getNewElement(
@@ -118,31 +118,31 @@ public class TestResult {
 			Dom4JUtil.addToElement(
 				downstreamBuildListItemElement, " - ",
 				Dom4JUtil.getNewAnchorElement(
-					getPoshiReportURL(testRayLogsURL), "Poshi Report"),
+					getPoshiReportURL(testrayLogsURL), "Poshi Report"),
 				" - ",
 				Dom4JUtil.getNewAnchorElement(
-					getPoshiSummaryURL(testRayLogsURL), "Poshi Summary"),
+					getPoshiSummaryURL(testrayLogsURL), "Poshi Summary"),
 				" - ",
 				Dom4JUtil.getNewAnchorElement(
-					getConsoleOutputURL(testRayLogsURL), "Console Output"));
+					getConsoleOutputURL(testrayLogsURL), "Console Output"));
 
-			if (hasLiferayLog(testRayLogsURL)) {
+			if (hasLiferayLog(testrayLogsURL)) {
 				Dom4JUtil.addToElement(
 					downstreamBuildListItemElement, " - ",
 					Dom4JUtil.getNewAnchorElement(
-						getLiferayLogURL(testRayLogsURL), "Liferay Log"));
+						getLiferayLogURL(testrayLogsURL), "Liferay Log"));
 			}
 		}
 
 		return downstreamBuildListItemElement;
 	}
 
-	public String getLiferayLogURL(String testRayLogsURL) {
+	public String getLiferayLogURL(String testrayLogsURL) {
 		StringBuilder sb = new StringBuilder();
 
 		String name = getDisplayName();
 
-		sb.append(testRayLogsURL);
+		sb.append(testrayLogsURL);
 		sb.append("/");
 		sb.append(name.replace("#", "_"));
 		sb.append("/liferay-log.txt.gz");
@@ -150,12 +150,12 @@ public class TestResult {
 		return sb.toString();
 	}
 
-	public String getPoshiReportURL(String testRayLogsURL) {
+	public String getPoshiReportURL(String testrayLogsURL) {
 		StringBuilder sb = new StringBuilder();
 
 		String name = getDisplayName();
 
-		sb.append(testRayLogsURL);
+		sb.append(testrayLogsURL);
 		sb.append("/");
 		sb.append(name.replace("#", "_"));
 		sb.append("/index.html.gz");
@@ -163,12 +163,12 @@ public class TestResult {
 		return sb.toString();
 	}
 
-	public String getPoshiSummaryURL(String testRayLogsURL) {
+	public String getPoshiSummaryURL(String testrayLogsURL) {
 		StringBuilder sb = new StringBuilder();
 
 		String name = getDisplayName();
 
-		sb.append(testRayLogsURL);
+		sb.append(testrayLogsURL);
 		sb.append("/");
 		sb.append(name.replace("#", "_"));
 		sb.append("/summary.html.gz");
@@ -209,12 +209,12 @@ public class TestResult {
 		return sb.toString();
 	}
 
-	public boolean hasLiferayLog(String testRayLogsURL) {
+	public boolean hasLiferayLog(String testrayLogsURL) {
 		String liferayLog = null;
 
 		try {
 			liferayLog = JenkinsResultsParserUtil.toString(
-				getLiferayLogURL(testRayLogsURL), false, 0, 0, 0);
+				getLiferayLogURL(testrayLogsURL), false, 0, 0, 0);
 		}
 		catch (IOException ioe) {
 			return false;

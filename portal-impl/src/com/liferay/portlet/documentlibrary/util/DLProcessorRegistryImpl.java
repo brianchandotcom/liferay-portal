@@ -102,10 +102,25 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 	}
 
-	@Override
-	public void destroy() {
+	public void destroy() throws Exception {
+		Exception exception = null;
+
 		for (DLProcessor dlProcessor : _dlProcessors) {
-			dlProcessor.destroy();
+			try {
+				dlProcessor.destroy();
+			}
+			catch (Exception e) {
+				if (exception == null) {
+					exception = e;
+				}
+				else {
+					exception.addSuppressed(e);
+				}
+			}
+		}
+
+		if (exception != null) {
+			throw exception;
 		}
 	}
 

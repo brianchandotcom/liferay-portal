@@ -17,12 +17,15 @@ package com.liferay.portal.convert.documentlibrary;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLContentLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
+import com.liferay.document.library.kernel.util.DLProcessor;
+import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
@@ -53,6 +56,7 @@ import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
+import com.liferay.portlet.documentlibrary.util.ImageProcessorImpl;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import java.io.InputStream;
@@ -272,12 +276,18 @@ public class DocumentLibraryConvertProcessTest {
 
 		DLFileEntry folderDLFileEntry = (DLFileEntry)folderFileEntry.getModel();
 
-		Assert.assertNotEquals(
-			delete,
-			_sourceStore.hasDirectory(
-				folderDLFileEntry.getCompanyId(),
-				DLPreviewableProcessor.REPOSITORY_ID,
-				DLPreviewableProcessor.THUMBNAIL_PATH));
+		DLProcessor imageProcessor = DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.IMAGE_PROCESSOR);
+
+		if (imageProcessor instanceof ImageProcessorImpl) {
+			Assert.assertNotEquals(
+				delete,
+				_sourceStore.hasDirectory(
+					folderDLFileEntry.getCompanyId(),
+					DLPreviewableProcessor.REPOSITORY_ID,
+					DLPreviewableProcessor.THUMBNAIL_PATH));
+		}
+
 		Assert.assertNotEquals(
 			delete,
 			_sourceStore.hasFile(

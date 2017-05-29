@@ -280,7 +280,6 @@ public class AssetCategoriesDisplayContext {
 				new AssetCategoryLeftCategoryIdComparator(true));
 
 			categoriesSearchContainer.setTotal(categoriesCount);
-			categoriesSearchContainer.setResults(categories);
 		}
 		else {
 			categoriesCount =

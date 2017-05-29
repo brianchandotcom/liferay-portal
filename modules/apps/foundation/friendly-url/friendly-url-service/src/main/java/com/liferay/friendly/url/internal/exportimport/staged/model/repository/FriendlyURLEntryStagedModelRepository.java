@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -153,11 +154,23 @@ public class FriendlyURLEntryStagedModelRepository
 			}
 		}
 
-		friendlyURLEntry.setUrlTitle(
-			_friendlyURLEntryLocalService.getUniqueUrlTitle(
-				friendlyURLEntry.getGroupId(),
-				friendlyURLEntry.getClassNameId(),
-				friendlyURLEntry.getClassPK(), friendlyURLEntry.getUrlTitle()));
+		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations =
+			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
+				friendlyURLEntry.getFriendlyURLEntryId());
+
+		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
+				friendlyURLEntryLocalizations) {
+
+			_friendlyURLEntryLocalService.updateFriendlyURLLocalization(
+				friendlyURLEntryLocalization.
+					getFriendlyURLEntryLocalizationId(),
+				_friendlyURLEntryLocalService.getUniqueUrlTitle(
+					friendlyURLEntry.getGroupId(),
+					friendlyURLEntry.getCompanyId(),
+					friendlyURLEntry.getClassNameId(),
+					friendlyURLEntry.getClassPK(),
+					friendlyURLEntryLocalization.getUrlTitle()));
+		}
 
 		return _friendlyURLEntryLocalService.updateFriendlyURLEntry(
 			friendlyURLEntry);

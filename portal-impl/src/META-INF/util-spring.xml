@@ -357,6 +357,7 @@
 	<bean class="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" id="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil">
 		<property name="fastDateFormatFactory" ref="com.liferay.portal.kernel.util.FastDateFormatFactory" />
 	</bean>
+	<bean class="com.liferay.portal.util.FileImpl" id="com.liferay.portal.kernel.util.File" />
 	<bean class="com.liferay.portal.kernel.util.FileUtil" id="com.liferay.portal.kernel.util.FileUtil">
 		<property name="file">
 			<bean class="com.liferay.portal.util.FileImpl" />

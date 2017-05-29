@@ -30,8 +30,10 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	protected String[] doGetIncludes() {
 		if (portalSource) {
 			return new String[] {
-				"**/lib/*/dependencies.properties",
-				"**/liferay-plugin-package.properties", "**/portal.properties",
+				"**/app-server.properties", "**/ci.properties",
+				"**/lib/*/dependencies.properties", "**/framework.properties",
+				"**/gradle-wrapper.properties", "**/imported-files.properties",
+				"**/liferay-plugin-package*.properties", "**/portal.properties",
 				"**/portal-ext.properties", "**/portal-legacy-*.properties",
 				"**/portlet.properties", "**/source-formatter.properties",
 				"**/test.properties"

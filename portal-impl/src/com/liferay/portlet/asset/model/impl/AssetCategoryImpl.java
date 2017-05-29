@@ -57,6 +57,13 @@ public class AssetCategoryImpl extends AssetCategoryBaseImpl {
 
 	@Override
 	public String getPath(Locale locale) throws PortalException {
+		return getPath(locale, false);
+	}
+
+	@Override
+	public String getPath(Locale locale, boolean reverse)
+		throws PortalException {
+
 		List<AssetCategory> categories = getAncestors();
 
 		StringBundler sb = new StringBundler((categories.size() * 4) + 1);
@@ -66,7 +73,9 @@ public class AssetCategoryImpl extends AssetCategoryBaseImpl {
 
 		sb.append(vocabulary.getTitle(locale));
 
-		Collections.reverse(categories);
+		if (reverse) {
+			Collections.reverse(categories);
+		}
 
 		for (AssetCategory category : categories) {
 			sb.append(StringPool.SPACE);

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+String redirect = ParamUtil.getString(request, "redirect", assetCategoriesDisplayContext.getEditCategoryRedirect());
 
 long categoryId = ParamUtil.getLong(request, "categoryId");
 
@@ -26,10 +26,6 @@ AssetCategory category = AssetCategoryLocalServiceUtil.fetchCategory(categoryId)
 long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategoryId");
 
 long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
-
-if (Validator.isNull(redirect)) {
-	redirect = assetCategoriesDisplayContext.getEditCategoryRedirect();
-}
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

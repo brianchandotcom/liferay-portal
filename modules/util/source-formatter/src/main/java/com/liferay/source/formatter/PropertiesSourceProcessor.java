@@ -23,7 +23,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
-		return getFileNames(new String[0], getIncludes());
+		return getFileNames(new String[] {"**/docroot/dtd/**"}, getIncludes());
 	}
 
 	@Override

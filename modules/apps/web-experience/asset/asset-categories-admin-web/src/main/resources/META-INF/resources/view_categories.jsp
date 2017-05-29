@@ -184,7 +184,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 								cssClass="table-cell-content"
 								href="<%= rowURL %>"
 								name="path"
-								value="<%= HtmlUtil.escape(curCategory.getPath(locale)) %>"
+								value="<%= HtmlUtil.escape(curCategory.getPath(locale, true)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

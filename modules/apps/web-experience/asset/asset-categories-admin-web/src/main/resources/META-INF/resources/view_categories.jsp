@@ -182,7 +182,6 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 						<c:when test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								href="<%= rowURL %>"
 								name="path"
 								value="<%= HtmlUtil.escape(curCategory.getPath(locale, true)) %>"
 							/>

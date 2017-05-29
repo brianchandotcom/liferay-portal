@@ -64,7 +64,6 @@ import com.liferay.portlet.asset.util.comparator.AssetCategoryCreateDateComparat
 import com.liferay.portlet.asset.util.comparator.AssetCategoryLeftCategoryIdComparator;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyCreateDateComparator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -271,27 +270,14 @@ public class AssetCategoriesDisplayContext {
 			categories = assetCategoryDisplay.getCategories();
 		}
 		else if (isFlattenedNavigationAllowed()) {
-			AssetCategory parentCategory =
-				AssetCategoryServiceUtil.fetchCategory(getCategoryId());
+			categoriesCount =
+				AssetCategoryServiceUtil.getVocabularyCategoriesCount(
+					themeDisplay.getScopeGroupId(), getVocabularyId());
 
-			if (parentCategory != null) {
-				categoriesCount = _getCategoriesFlattenTreeTotal(
-					parentCategory);
-
-				categories = _getCategoriesFlattenTree(
-					parentCategory, categoriesSearchContainer.getStart(),
-					categoriesSearchContainer.getEnd());
-			}
-			else {
-				categoriesCount =
-					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
-						themeDisplay.getScopeGroupId(), getVocabularyId());
-
-				categories = AssetCategoryServiceUtil.getVocabularyCategories(
-					getVocabularyId(), categoriesSearchContainer.getStart(),
-					categoriesSearchContainer.getEnd(),
-					new AssetCategoryLeftCategoryIdComparator(true));
-			}
+			categories = AssetCategoryServiceUtil.getVocabularyCategories(
+				getVocabularyId(), categoriesSearchContainer.getStart(),
+				categoriesSearchContainer.getEnd(),
+				new AssetCategoryLeftCategoryIdComparator(true));
 
 			categoriesSearchContainer.setTotal(categoriesCount);
 			categoriesSearchContainer.setResults(categories);
@@ -766,38 +752,6 @@ public class AssetCategoriesDisplayContext {
 		}
 
 		return false;
-	}
-
-	private List<AssetCategory> _getCategoriesFlattenTree(
-			AssetCategory parentCategory, int start, int end)
-		throws PortalException {
-
-		List<AssetCategory> categoriesTree = new ArrayList<>();
-
-		categoriesTree.add(parentCategory);
-
-		List<AssetCategory> childCategories =
-			AssetCategoryServiceUtil.getChildCategories(
-				parentCategory.getCategoryId(), start, end,
-				new AssetCategoryLeftCategoryIdComparator(true));
-
-		int childEnd = end - start - childCategories.size();
-
-		for (AssetCategory category : childCategories) {
-			categoriesTree.addAll(
-				_getCategoriesFlattenTree(category, 0, childEnd));
-		}
-
-		return categoriesTree;
-	}
-
-	private int _getCategoriesFlattenTreeTotal(AssetCategory parentCategory) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return AssetCategoryServiceUtil.getVocabularyCategoriesCount(
-			themeDisplay.getScopeGroupId(), parentCategory.getCategoryId(),
-			getVocabularyId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

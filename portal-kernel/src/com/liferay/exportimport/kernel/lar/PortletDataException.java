@@ -87,6 +87,18 @@ public class PortletDataException extends PortalException {
 		return _stagedModel;
 	}
 
+	public String getStagedModelClassName() {
+		return _stagedModelClassName;
+	}
+
+	public String getStagedModelClassPk() {
+		return _stagedModelClassPK;
+	}
+
+	public String getStagedModelDisplayName() {
+		return _stagedModelDisplayName;
+	}
+
 	public int getType() {
 		return _type;
 	}
@@ -99,12 +111,27 @@ public class PortletDataException extends PortalException {
 		_stagedModel = stagedModel;
 	}
 
+	public void setStagedModelClassName(String stagedModelClassName) {
+		_stagedModelClassName = stagedModelClassName;
+	}
+
+	public void setStagedModelClassPk(String stagedModelClassPK) {
+		_stagedModelClassPK = stagedModelClassPK;
+	}
+
+	public void setStagedModelDisplayName(String stagedModelDisplayName) {
+		_stagedModelDisplayName = stagedModelDisplayName;
+	}
+
 	public void setType(int type) {
 		_type = type;
 	}
 
 	private String _portletId = StringPool.BLANK;
 	private StagedModel _stagedModel;
+	private String _stagedModelClassName = StringPool.BLANK;
+	private String _stagedModelClassPK = StringPool.BLANK;
+	private String _stagedModelDisplayName = StringPool.BLANK;
 	private int _type = DEFAULT;
 
 }

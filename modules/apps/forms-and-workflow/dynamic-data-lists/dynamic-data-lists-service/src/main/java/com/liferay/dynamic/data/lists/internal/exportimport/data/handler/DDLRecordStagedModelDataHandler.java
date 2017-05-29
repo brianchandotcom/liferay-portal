@@ -34,6 +34,7 @@ import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
@@ -308,7 +309,10 @@ public class DDLRecordStagedModelDataHandler
 			PortletDataException pde = new PortletDataException(
 				PortletDataException.STATUS_UNAVAILABLE);
 
-			pde.setStagedModel(record);
+			pde.setStagedModelDisplayName(record.getUuid());
+			pde.setStagedModelClassName(record.getModelClassName());
+			pde.setStagedModelClassPk(
+				GetterUtil.getString(record.getRecordId()));
 
 			throw pde;
 		}

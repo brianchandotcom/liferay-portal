@@ -143,7 +143,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataException pde = new PortletDataException(t);
 
 			if (t instanceof NoSuchModelException) {
-				pde.setStagedModel(stagedModel);
+				pde.setStagedModelDisplayName(getDisplayName(stagedModel));
+				pde.setStagedModelClassName(stagedModel.getModelClassName());
+				pde.setStagedModelClassPk(
+					GetterUtil.getString(stagedModel.getPrimaryKeyObj()));
 				pde.setType(PortletDataException.MISSING_DEPENDENCY);
 			}
 
@@ -389,7 +392,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			PortletDataException pde = new PortletDataException(nsme);
 
-			pde.setStagedModel(stagedModel);
+			pde.setStagedModelDisplayName(getDisplayName(stagedModel));
+			pde.setStagedModelClassName(stagedModel.getModelClassName());
+			pde.setStagedModelClassPk(
+				GetterUtil.getString(stagedModel.getPrimaryKeyObj()));
 			pde.setType(PortletDataException.MISSING_DEPENDENCY);
 
 			throw pde;
@@ -432,7 +438,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		catch (Exception e) {
 			PortletDataException pde = new PortletDataException(e);
 
-			pde.setStagedModel(stagedModel);
+			pde.setStagedModelDisplayName(getDisplayName(stagedModel));
+			pde.setStagedModelClassName(stagedModel.getModelClassName());
+			pde.setStagedModelClassPk(
+				GetterUtil.getString(stagedModel.getPrimaryKeyObj()));
 
 			throw pde;
 		}
@@ -842,7 +851,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				PortletDataException pde = new PortletDataException(
 					PortletDataException.STATUS_UNAVAILABLE);
 
-				pde.setStagedModel(stagedModel);
+				pde.setStagedModelDisplayName(getDisplayName(stagedModel));
+				pde.setStagedModelClassName(stagedModel.getModelClassName());
+				pde.setStagedModelClassPk(
+					GetterUtil.getString(stagedModel.getPrimaryKeyObj()));
 
 				throw pde;
 			}
@@ -855,7 +867,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				PortletDataException pde = new PortletDataException(
 					PortletDataException.STATUS_IN_TRASH);
 
-				pde.setStagedModel(stagedModel);
+				pde.setStagedModelDisplayName(getDisplayName(stagedModel));
+				pde.setStagedModelClassName(stagedModel.getModelClassName());
+				pde.setStagedModelClassPk(
+					GetterUtil.getString(stagedModel.getPrimaryKeyObj()));
 
 				throw pde;
 			}

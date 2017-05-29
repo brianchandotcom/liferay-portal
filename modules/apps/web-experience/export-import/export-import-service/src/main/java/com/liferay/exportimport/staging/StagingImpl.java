@@ -38,8 +38,6 @@ import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
@@ -79,7 +77,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.RecentLayoutBranch;
 import com.liferay.portal.kernel.model.RecentLayoutRevision;
 import com.liferay.portal.kernel.model.RecentLayoutSetBranch;
-import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.model.adapter.StagedTheme;
@@ -906,20 +903,8 @@ public class StagingImpl implements Staging {
 		else if (e instanceof PortletDataException) {
 			PortletDataException pde = (PortletDataException)e;
 
-			StagedModel stagedModel = pde.getStagedModel();
-
-			String referrerClassName = StringPool.BLANK;
-			String referrerDisplayName = StringPool.BLANK;
-
-			if (stagedModel != null) {
-				StagedModelType stagedModelType =
-					stagedModel.getStagedModelType();
-
-				referrerClassName = stagedModelType.getClassName();
-
-				referrerDisplayName = StagedModelDataHandlerUtil.getDisplayName(
-					stagedModel);
-			}
+			String referrerClassName = pde.getStagedModelClassName();
+			String referrerDisplayName = pde.getStagedModelDisplayName();
 
 			String modelResource = ResourceActionsUtil.getModelResource(
 				locale, referrerClassName);

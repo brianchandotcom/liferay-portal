@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -889,7 +890,10 @@ public class FileEntryStagedModelDataHandler
 			PortletDataException pde = new PortletDataException(
 				PortletDataException.INVALID_GROUP);
 
-			pde.setStagedModel(fileEntry);
+			pde.setStagedModelDisplayName(getDisplayName(fileEntry));
+			pde.setStagedModelClassName(fileEntry.getModelClassName());
+			pde.setStagedModelClassPk(
+				GetterUtil.getString(fileEntry.getFileEntryId()));
 
 			throw pde;
 		}
@@ -904,7 +908,10 @@ public class FileEntryStagedModelDataHandler
 				PortletDataException pde = new PortletDataException(
 					PortletDataException.STATUS_UNAVAILABLE);
 
-				pde.setStagedModel(fileVersion);
+				pde.setStagedModelDisplayName(getDisplayName(fileEntry));
+				pde.setStagedModelClassName(fileVersion.getModelClassName());
+				pde.setStagedModelClassPk(
+					GetterUtil.getString(fileVersion.getFileVersionId()));
 
 				throw pde;
 			}

@@ -494,7 +494,10 @@ public class FolderStagedModelDataHandler
 			PortletDataException pde = new PortletDataException(
 				PortletDataException.INVALID_GROUP);
 
-			pde.setStagedModel(folder);
+			pde.setStagedModelDisplayName(folder.getName());
+			pde.setStagedModelClassName(folder.getModelClassName());
+			pde.setStagedModelClassPk(
+				GetterUtil.getString(folder.getFolderId()));
 
 			throw pde;
 		}
@@ -508,7 +511,10 @@ public class FolderStagedModelDataHandler
 				PortletDataException pde = new PortletDataException(
 					PortletDataException.STATUS_IN_TRASH);
 
-				pde.setStagedModel(folder);
+				pde.setStagedModelDisplayName(folder.getName());
+				pde.setStagedModelClassName(folder.getModelClassName());
+				pde.setStagedModelClassPk(
+					GetterUtil.getString(folder.getFolderId()));
 
 				throw pde;
 			}

@@ -430,7 +430,8 @@ public class AssetCategoriesDisplayContext {
 		}
 
 		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "create-date");
+			_request, "orderByCol",
+			isFlattenedNavigationAllowed() ? "path" : "create-date");
 
 		return _orderByCol;
 	}
@@ -447,7 +448,7 @@ public class AssetCategoriesDisplayContext {
 
 	public String[] getOrderColumns() {
 		if (isFlattenedNavigationAllowed()) {
-			return new String[0];
+			return new String[] {"path"};
 		}
 
 		return new String[] {"create-date"};

@@ -5,6 +5,7 @@ AUI.add(
 	function(A) {
 		var Do = A.Do;
 		var Lang = A.Lang;
+		var UA = A.UA;
 
 		var contentFilter = new CKEDITOR.filter(
 			{
@@ -327,6 +328,26 @@ AUI.add(
 						if (instance.customDataProcessorLoaded || !instance.get('useCustomDataProcessor')) {
 							instance._initializeData();
 						}
+
+						// LPS-71967
+
+						if (UA.edge && parseInt(UA.edge) >= 14) {
+							A.soon(function() {
+								var activeElement = document.activeElement;
+								var nativeEditor = instance.getNativeEditor();
+
+								nativeEditor.once('focus', function() {
+									setTimeout(function() {
+										if (activeElement) {
+											nativeEditor.focusManager.blur(true);
+											activeElement.focus();
+										}
+									}, 100);
+								});
+
+								nativeEditor.focus();
+							});
+						}
 					},
 
 					_onKey: function(event) {
@@ -358,6 +379,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'liferay-portlet-base']
+		requires: ['aui-component', 'liferay-portlet-base', 'timers']
 	}
 );

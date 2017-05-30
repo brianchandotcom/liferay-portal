@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.service.persistence;
+package com.liferay.site.service.persistence.test;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;

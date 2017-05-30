@@ -917,13 +917,12 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Permissions" />
+			<var name="rowEntry" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#gotoArticlePermissionsCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
+		<execute macro="IFrame#selectPermissionsFrame" />
 
 		<execute macro="Role#viewPermissionPG">
 			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />

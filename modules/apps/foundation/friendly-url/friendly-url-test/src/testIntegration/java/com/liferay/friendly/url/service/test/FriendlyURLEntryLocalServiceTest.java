@@ -17,7 +17,7 @@ package com.liferay.friendly.url.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
-import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -100,7 +100,7 @@ public class FriendlyURLEntryLocalServiceTest {
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(User.class);
 
 		int maxLength = ModelHintsUtil.getMaxLength(
-			FriendlyURLEntry.class.getName(), "urlTitle");
+			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
 
 		String urlTitle = StringUtil.randomString(maxLength + 1);
 
@@ -117,7 +117,7 @@ public class FriendlyURLEntryLocalServiceTest {
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(User.class);
 
 		int maxLength = ModelHintsUtil.getMaxLength(
-			FriendlyURLEntry.class.getName(), "urlTitle");
+			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
 
 		String urlTitle = StringUtil.randomString(maxLength);
 
@@ -134,7 +134,7 @@ public class FriendlyURLEntryLocalServiceTest {
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(User.class);
 
 		int maxLength = ModelHintsUtil.getMaxLength(
-			FriendlyURLEntry.class.getName(), "urlTitle");
+			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
 
 		String urlTitle = StringUtil.randomString(maxLength);
 
@@ -151,7 +151,7 @@ public class FriendlyURLEntryLocalServiceTest {
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(User.class);
 
 		int maxLength = ModelHintsUtil.getMaxLength(
-			FriendlyURLEntry.class.getName(), "urlTitle");
+			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
 
 		String urlTitle = StringUtil.randomString(maxLength);
 
@@ -169,7 +169,7 @@ public class FriendlyURLEntryLocalServiceTest {
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(User.class);
 
 		int maxLength = ModelHintsUtil.getMaxLength(
-			FriendlyURLEntry.class.getName(), "urlTitle");
+			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
 
 		String urlTitle = StringUtil.randomString(maxLength + 1);
 
@@ -182,7 +182,7 @@ public class FriendlyURLEntryLocalServiceTest {
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(User.class);
 
 		int maxLength = ModelHintsUtil.getMaxLength(
-			FriendlyURLEntry.class.getName(), "urlTitle");
+			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
 
 		String urlTitle = StringUtil.randomString(maxLength);
 

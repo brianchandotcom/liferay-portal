@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -60,6 +61,13 @@ public class LayoutTypeURLTest {
 		_group = GroupTestUtil.addGroup();
 
 		_publicLayout = LayoutTestUtil.addLayout(_group);
+
+		setUpVirtualHostName();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_company.setVirtualHostname(_originalVirtualHostName);
 	}
 
 	@Test
@@ -90,6 +98,12 @@ public class LayoutTypeURLTest {
 				layoutURLType.getRegularURL(mockHttpServletRequest), true));
 	}
 
+	protected void setUpVirtualHostName() {
+		_originalVirtualHostName = _company.getVirtualHostname();
+
+		_company.setVirtualHostname(_VIRTUAL_HOSTNAME);
+	}
+
 	private ThemeDisplay _initThemeDisplay() throws Exception {
 		_company.setVirtualHostname(_VIRTUAL_HOSTNAME);
 
@@ -116,6 +130,7 @@ public class LayoutTypeURLTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private String _originalVirtualHostName;
 	private Layout _publicLayout;
 
 }

@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.layout.type.controller.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.type.controller.TestLayoutTypeController;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -22,7 +24,7 @@ import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.LayoutTypeControllerImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
-import com.liferay.portal.util.bundle.layouttypecontrollertracker.TestLayoutTypeController;
+import com.liferay.portal.util.LayoutTypeControllerTracker;
 
 import java.util.Locale;
 import java.util.Map;
@@ -31,10 +33,12 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Philip Jones
  */
+@RunWith(Arquillian.class)
 public class LayoutTypeControllerTrackerTest {
 
 	@ClassRule

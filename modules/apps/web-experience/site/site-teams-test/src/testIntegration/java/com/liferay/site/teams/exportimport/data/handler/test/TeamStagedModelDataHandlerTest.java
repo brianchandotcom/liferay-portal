@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.siteteams.lar;
+package com.liferay.site.teams.exportimport.data.handler.test;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;

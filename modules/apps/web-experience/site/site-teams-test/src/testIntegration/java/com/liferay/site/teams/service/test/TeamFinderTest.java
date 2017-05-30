@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.service.persistence;
+package com.liferay.site.teams.service.test;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Team;

@@ -3,5 +3,6 @@
 
 <suppressions>
 	<suppress checks="PersistenceCall" files="modules/apps/web-experience/asset/asset-publisher-web/src/main/java/com/liferay/asset/publisher/web/display/context/AssetPublisherDisplayContext\.java" />
+	<suppress checks="PersistenceCall" files="/modules/apps/web-experience/asset/asset-test/src/testIntegration/java/com/liferay/asset/service/test/AssetTagFinderTest\.java" />
 	<suppress checks="StaticVariableName" files="modules/apps/web-experience/asset/asset-publisher-web/src/main/java/com/liferay/asset/publisher/web/internal/configuration/AssetPublisherWebConfigurationValues\.java" />
 </suppressions>

@@ -54,7 +54,7 @@ public class WeDeployUserAction extends BaseStrutsAction {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			User user = _weDeployAuthTokenLocalService.getUserByToken(
+			User user = _weDeployAuthTokenLocalService.getUser(
 				accessToken, WeDeployAuthTokenConstants.TYPE_AUTHORIZATION);
 
 			JSONObject elementJSONObject = JSONFactoryUtil.createJSONObject();
@@ -86,7 +86,7 @@ public class WeDeployUserAction extends BaseStrutsAction {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		WeDeployUserInfoAction.class);
+		WeDeployUserAction.class);
 
 	@Reference
 	private WeDeployAuthTokenLocalService _weDeployAuthTokenLocalService;

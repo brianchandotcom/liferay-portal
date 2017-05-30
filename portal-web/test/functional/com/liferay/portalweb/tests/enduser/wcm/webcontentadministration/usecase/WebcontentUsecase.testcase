@@ -276,23 +276,6 @@
 		</execute>
 
 		<execute macro="ServerAdministration#configureExternalServices">
-			<var name="installXuggler" value="true" />
-			<var name="xugglerJarFile" value="Linux 32-bit JVM (with GNU libc v6) (xuggle-xuggler-arch-i686-pc-linux-gnu.jar)" />
-		</execute>
-
-		<execute macro="Portlet#shutdownServer" />
-
-		<execute macro="Portlet#startServer" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Server Administration" />
-		</execute>
-
-		<execute macro="ServerAdministration#configureExternalServices">
 			<var name="enableXuggler" value="true" />
 		</execute>
 
@@ -697,23 +680,6 @@
 		<property name="custom.properties" value="editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor" />
 		<property name="test.name.skip.portal.instance" value="WebcontentUsecase#AddVideoViaWebContent" />
 		<property name="testray.component.names" value="Web Content Administration" />
-
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Server Administration" />
-		</execute>
-
-		<execute macro="ServerAdministration#configureExternalServices">
-			<var name="installXuggler" value="true" />
-			<var name="xugglerJarFile" value="Linux 32-bit JVM (with GNU libc v6) (xuggle-xuggler-arch-i686-pc-linux-gnu.jar)" />
-		</execute>
-
-		<execute macro="Portlet#shutdownServer" />
-
-		<execute macro="Portlet#startServer" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="User#firstLoginPG" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />

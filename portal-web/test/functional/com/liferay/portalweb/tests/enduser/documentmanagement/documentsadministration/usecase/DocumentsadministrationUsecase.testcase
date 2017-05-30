@@ -662,26 +662,6 @@
 		</execute>
 
 		<execute macro="ServerAdministration#configureExternalServices">
-			<var name="installXuggler" value="true" />
-			<var name="xugglerJarFile" value="Linux 32-bit JVM (with GNU libc v6) (xuggle-xuggler-arch-i686-pc-linux-gnu.jar)" />
-		</execute>
-
-		<execute macro="Portlet#shutdownServer" />
-
-		<execute macro="Portlet#startServer" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Server Administration" />
-		</execute>
-
-		<execute macro="ServerAdministration#configureExternalServices">
 			<var name="enableXuggler" value="true" />
 		</execute>
 

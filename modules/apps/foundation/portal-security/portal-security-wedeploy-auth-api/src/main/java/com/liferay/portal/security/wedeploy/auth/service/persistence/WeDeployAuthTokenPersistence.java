@@ -41,6 +41,56 @@ public interface WeDeployAuthTokenPersistence extends BasePersistence<WeDeployAu
 	 */
 
 	/**
+	* Returns the we deploy auth token where token = &#63; and type = &#63; or throws a {@link NoSuchTokenException} if it could not be found.
+	*
+	* @param token the token
+	* @param type the type
+	* @return the matching we deploy auth token
+	* @throws NoSuchTokenException if a matching we deploy auth token could not be found
+	*/
+	public WeDeployAuthToken findByT_T(java.lang.String token, int type)
+		throws NoSuchTokenException;
+
+	/**
+	* Returns the we deploy auth token where token = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param token the token
+	* @param type the type
+	* @return the matching we deploy auth token, or <code>null</code> if a matching we deploy auth token could not be found
+	*/
+	public WeDeployAuthToken fetchByT_T(java.lang.String token, int type);
+
+	/**
+	* Returns the we deploy auth token where token = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param token the token
+	* @param type the type
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching we deploy auth token, or <code>null</code> if a matching we deploy auth token could not be found
+	*/
+	public WeDeployAuthToken fetchByT_T(java.lang.String token, int type,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the we deploy auth token where token = &#63; and type = &#63; from the database.
+	*
+	* @param token the token
+	* @param type the type
+	* @return the we deploy auth token that was removed
+	*/
+	public WeDeployAuthToken removeByT_T(java.lang.String token, int type)
+		throws NoSuchTokenException;
+
+	/**
+	* Returns the number of we deploy auth tokens where token = &#63; and type = &#63;.
+	*
+	* @param token the token
+	* @param type the type
+	* @return the number of matching we deploy auth tokens
+	*/
+	public int countByT_T(java.lang.String token, int type);
+
+	/**
 	* Returns the we deploy auth token where clientId = &#63; and token = &#63; and type = &#63; or throws a {@link NoSuchTokenException} if it could not be found.
 	*
 	* @param clientId the client ID

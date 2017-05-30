@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -148,6 +151,7 @@ public class LayoutTypePortletImplTest {
 		@Before
 		public void setUp() throws Exception {
 			_setUp();
+			_setUpPermissionThreadLocal();
 		}
 
 		@Test
@@ -204,6 +208,8 @@ public class LayoutTypePortletImplTest {
 		@After
 		public void tearDown() {
 			_tearDown();
+
+			PermissionThreadLocal.setPermissionChecker(_permissionChecker);
 		}
 
 	}
@@ -306,6 +312,26 @@ public class LayoutTypePortletImplTest {
 		_layoutStaticPortletsAll = PropsValues.LAYOUT_STATIC_PORTLETS_ALL;
 	}
 
+	private static void _setUpPermissionThreadLocal() throws Exception {
+		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			new SimplePermissionChecker() {
+				{
+					init(TestPropsValues.getUser());
+				}
+
+				@Override
+				public boolean hasOwnerPermission(
+					long companyId, String name, String primKey, long ownerId,
+					String actionId) {
+
+					return true;
+				}
+
+			});
+	}
+
 	private static void _tearDown() {
 		StringBundler sb = new StringBundler(_layoutStaticPortletsAll.length);
 
@@ -322,5 +348,6 @@ public class LayoutTypePortletImplTest {
 	private static Layout _layout;
 	private static String[] _layoutStaticPortletsAll;
 	private static LayoutTypePortlet _layoutTypePortlet;
+	private static PermissionChecker _permissionChecker;
 
 }

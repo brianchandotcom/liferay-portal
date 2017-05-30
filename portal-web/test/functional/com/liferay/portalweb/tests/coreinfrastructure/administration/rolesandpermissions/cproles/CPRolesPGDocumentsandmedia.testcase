@@ -174,7 +174,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
 
@@ -247,7 +249,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
 
@@ -284,7 +288,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
 	</command>

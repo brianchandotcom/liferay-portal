@@ -18,7 +18,9 @@
 	</command>
 
 	<command name="gotoAddRepositoryPG">
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#REPOSITORY" value1="Repository" />
 	</command>

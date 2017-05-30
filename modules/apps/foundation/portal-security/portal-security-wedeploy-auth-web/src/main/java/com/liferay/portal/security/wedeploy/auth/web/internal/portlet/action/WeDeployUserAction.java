@@ -39,10 +39,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author Supritha Sundaram
  */
 @Component(
-	immediate = true, property = {"path=/portal/wedeploy/whoami"},
+	immediate = true, property = {"path=/portal/wedeploy/user"},
 	service = StrutsAction.class
 )
-public class WeDeployUserInfoAction extends BaseStrutsAction {
+public class WeDeployUserAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(

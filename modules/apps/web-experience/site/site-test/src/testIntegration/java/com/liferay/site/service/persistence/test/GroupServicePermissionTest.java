@@ -26,10 +26,12 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -64,15 +66,27 @@ public class GroupServicePermissionTest {
 
 	@Test
 	public void testAddPermissionsCustomRole() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		Group group1 = GroupTestUtil.addGroup();
 
-		User user = UserTestUtil.addUser(null, group.getGroupId());
+		Group group11 = GroupTestUtil.addGroup(group1.getGroupId());
 
-		givePermissionToManageSubsites(user, group);
+		Group group111 = GroupTestUtil.addGroup(group11.getGroupId());
+
+		User user = UserTestUtil.addUser(null, group1.getGroupId());
+
+		givePermissionToManageSubsites(user, group1);
 
 		testGroup(
-			user, group, null, null, true, false, false, false, true, true,
-			true);
+			user, group1, group11, group111, true, false, false, false, true,
+			true, true);
+
+		UserLocalServiceUtil.deleteUser(user);
+
+		GroupLocalServiceUtil.deleteGroup(group111);
+
+		GroupLocalServiceUtil.deleteGroup(group11);
+
+		GroupLocalServiceUtil.deleteGroup(group1);
 	}
 
 	@Test
@@ -81,37 +95,71 @@ public class GroupServicePermissionTest {
 
 		Group group11 = GroupTestUtil.addGroup(group1.getGroupId());
 
+		Group group111 = GroupTestUtil.addGroup(group11.getGroupId());
+
 		User user = UserTestUtil.addUser(null, group11.getGroupId());
 
 		givePermissionToManageSubsites(user, group11);
 
 		testGroup(
-			user, group1, group11, null, true, false, false, false, false, true,
-			true);
+			user, group1, group11, group111, true, false, false, false, false,
+			true, true);
+
+		UserLocalServiceUtil.deleteUser(user);
+
+		GroupLocalServiceUtil.deleteGroup(group111);
+
+		GroupLocalServiceUtil.deleteGroup(group11);
+
+		GroupLocalServiceUtil.deleteGroup(group1);
 	}
 
 	@Test
 	public void testAddPermissionsRegularUser() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		Group group1 = GroupTestUtil.addGroup();
 
-		User user = UserTestUtil.addUser(null, group.getGroupId());
+		Group group11 = GroupTestUtil.addGroup(group1.getGroupId());
+
+		Group group111 = GroupTestUtil.addGroup(group11.getGroupId());
+
+		User user = UserTestUtil.addUser(null, group1.getGroupId());
 
 		testGroup(
-			user, group, null, null, true, false, false, false, false, false,
-			false);
+			user, group1, group11, group111, true, false, false, false, false,
+			false, false);
+
+		UserLocalServiceUtil.deleteUser(user);
+
+		GroupLocalServiceUtil.deleteGroup(group111);
+
+		GroupLocalServiceUtil.deleteGroup(group11);
+
+		GroupLocalServiceUtil.deleteGroup(group1);
 	}
 
 	@Test
 	public void testAddPermissionsSiteAdmin() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		Group group1 = GroupTestUtil.addGroup();
 
-		User user = UserTestUtil.addUser(null, group.getGroupId());
+		Group group11 = GroupTestUtil.addGroup(group1.getGroupId());
 
-		giveSiteAdminRole(user, group);
+		Group group111 = GroupTestUtil.addGroup(group11.getGroupId());
+
+		User user = UserTestUtil.addUser(null, group1.getGroupId());
+
+		giveSiteAdminRole(user, group1);
 
 		testGroup(
-			user, group, null, null, true, false, true, false, true, true,
-			true);
+			user, group1, group11, group111, true, false, true, false, true,
+			true, true);
+
+		UserLocalServiceUtil.deleteUser(user);
+
+		GroupLocalServiceUtil.deleteGroup(group111);
+
+		GroupLocalServiceUtil.deleteGroup(group11);
+
+		GroupLocalServiceUtil.deleteGroup(group1);
 	}
 
 	@Test
@@ -120,26 +168,48 @@ public class GroupServicePermissionTest {
 
 		Group group11 = GroupTestUtil.addGroup(group1.getGroupId());
 
+		Group group111 = GroupTestUtil.addGroup(group11.getGroupId());
+
 		User user = UserTestUtil.addUser(null, group11.getGroupId());
 
 		giveSiteAdminRole(user, group11);
 
 		testGroup(
-			user, group1, group11, null, true, false, false, true, false, true,
-			true);
+			user, group1, group11, group111, true, false, false, true, false,
+			true, true);
+
+		UserLocalServiceUtil.deleteUser(user);
+
+		GroupLocalServiceUtil.deleteGroup(group111);
+
+		GroupLocalServiceUtil.deleteGroup(group11);
+
+		GroupLocalServiceUtil.deleteGroup(group1);
 	}
 
 	@Test
 	public void testUpdatePermissionsCustomRole() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		Group group1 = GroupTestUtil.addGroup();
 
-		User user = UserTestUtil.addUser(null, group.getGroupId());
+		Group group11 = GroupTestUtil.addGroup(group1.getGroupId());
 
-		givePermissionToManageSubsites(user, group);
+		Group group111 = GroupTestUtil.addGroup(group11.getGroupId());
+
+		User user = UserTestUtil.addUser(null, group1.getGroupId());
+
+		givePermissionToManageSubsites(user, group1);
 
 		testGroup(
-			user, group, null, null, false, true, false, false, true, true,
-			true);
+			user, group1, group11, group111, false, true, false, false, true,
+			true, true);
+
+		UserLocalServiceUtil.deleteUser(user);
+
+		GroupLocalServiceUtil.deleteGroup(group111);
+
+		GroupLocalServiceUtil.deleteGroup(group11);
+
+		GroupLocalServiceUtil.deleteGroup(group1);
 	}
 
 	@Test
@@ -148,37 +218,71 @@ public class GroupServicePermissionTest {
 
 		Group group11 = GroupTestUtil.addGroup(group1.getGroupId());
 
+		Group group111 = GroupTestUtil.addGroup(group11.getGroupId());
+
 		User user = UserTestUtil.addUser(null, group11.getGroupId());
 
 		givePermissionToManageSubsites(user, group11);
 
 		testGroup(
-			user, group1, group11, null, false, true, false, false, false, true,
-			true);
+			user, group1, group11, group111, false, true, false, false, false,
+			true, true);
+
+		UserLocalServiceUtil.deleteUser(user);
+
+		GroupLocalServiceUtil.deleteGroup(group111);
+
+		GroupLocalServiceUtil.deleteGroup(group11);
+
+		GroupLocalServiceUtil.deleteGroup(group1);
 	}
 
 	@Test
 	public void testUpdatePermissionsRegularUser() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		Group group1 = GroupTestUtil.addGroup();
 
-		User user = UserTestUtil.addUser(null, group.getGroupId());
+		Group group11 = GroupTestUtil.addGroup(group1.getGroupId());
+
+		Group group111 = GroupTestUtil.addGroup(group11.getGroupId());
+
+		User user = UserTestUtil.addUser(null, group1.getGroupId());
 
 		testGroup(
-			user, group, null, null, false, true, false, false, false, false,
-			false);
+			user, group1, group11, group111, false, true, false, false, false,
+			false, false);
+
+		UserLocalServiceUtil.deleteUser(user);
+
+		GroupLocalServiceUtil.deleteGroup(group111);
+
+		GroupLocalServiceUtil.deleteGroup(group11);
+
+		GroupLocalServiceUtil.deleteGroup(group1);
 	}
 
 	@Test
 	public void testUpdatePermissionsSiteAdmin() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		Group group1 = GroupTestUtil.addGroup();
 
-		User user = UserTestUtil.addUser(null, group.getGroupId());
+		Group group11 = GroupTestUtil.addGroup(group1.getGroupId());
 
-		giveSiteAdminRole(user, group);
+		Group group111 = GroupTestUtil.addGroup(group11.getGroupId());
+
+		User user = UserTestUtil.addUser(null, group1.getGroupId());
+
+		giveSiteAdminRole(user, group1);
 
 		testGroup(
-			user, group, null, null, false, true, true, false, true, true,
-			true);
+			user, group1, group11, group111, false, true, true, false, true,
+			true, true);
+
+		UserLocalServiceUtil.deleteUser(user);
+
+		GroupLocalServiceUtil.deleteGroup(group111);
+
+		GroupLocalServiceUtil.deleteGroup(group11);
+
+		GroupLocalServiceUtil.deleteGroup(group1);
 	}
 
 	@Test
@@ -187,13 +291,23 @@ public class GroupServicePermissionTest {
 
 		Group group11 = GroupTestUtil.addGroup(group1.getGroupId());
 
+		Group group111 = GroupTestUtil.addGroup(group11.getGroupId());
+
 		User user = UserTestUtil.addUser(null, group11.getGroupId());
 
 		giveSiteAdminRole(user, group11);
 
 		testGroup(
-			user, group1, group11, null, false, true, false, true, false, true,
-			true);
+			user, group1, group11, group111, false, true, false, true, false,
+			true, true);
+
+		UserLocalServiceUtil.deleteUser(user);
+
+		GroupLocalServiceUtil.deleteGroup(group111);
+
+		GroupLocalServiceUtil.deleteGroup(group11);
+
+		GroupLocalServiceUtil.deleteGroup(group1);
 	}
 
 	protected void givePermissionToManageSubsites(User user, Group group)
@@ -229,18 +343,6 @@ public class GroupServicePermissionTest {
 			boolean hasManageSubsitePermisionOnGroup111)
 		throws Exception {
 
-		if (group1 == null) {
-			group1 = GroupTestUtil.addGroup();
-		}
-
-		if (group11 == null) {
-			group11 = GroupTestUtil.addGroup(group1.getGroupId());
-		}
-
-		if (group111 == null) {
-			group111 = GroupTestUtil.addGroup(group11.getGroupId());
-		}
-
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
@@ -252,21 +354,30 @@ public class GroupServicePermissionTest {
 
 		if (addGroup) {
 			try {
-				GroupTestUtil.addGroup(
+				Group group = GroupTestUtil.addGroup(
 					GroupConstants.DEFAULT_PARENT_GROUP_ID, serviceContext);
 
 				Assert.fail(
 					"The user should not be able to add top level sites");
+
+				if (group != null) {
+					GroupLocalServiceUtil.deleteGroup(group);
+				}
 			}
 			catch (PrincipalException pe) {
 			}
 
 			try {
-				GroupTestUtil.addGroup(group1.getGroupId(), serviceContext);
+				Group group = GroupTestUtil.addGroup(
+					group1.getGroupId(), serviceContext);
 
 				Assert.assertTrue(
 					"The user should not be able to add this site",
 					hasManageSubsitePermisionOnGroup1 || hasManageSite1);
+
+				if (group != null) {
+					GroupLocalServiceUtil.deleteGroup(group);
+				}
 			}
 			catch (PrincipalException pe) {
 				Assert.assertFalse(
@@ -275,11 +386,16 @@ public class GroupServicePermissionTest {
 			}
 
 			try {
-				GroupTestUtil.addGroup(group11.getGroupId(), serviceContext);
+				Group group = GroupTestUtil.addGroup(
+					group11.getGroupId(), serviceContext);
 
 				Assert.assertTrue(
 					"The user should not be able to add this site",
 					hasManageSubsitePermisionOnGroup11 || hasManageSite1);
+
+				if (group != null) {
+					GroupLocalServiceUtil.deleteGroup(group);
+				}
 			}
 			catch (PrincipalException pe) {
 				Assert.assertFalse(
@@ -288,11 +404,16 @@ public class GroupServicePermissionTest {
 			}
 
 			try {
-				GroupTestUtil.addGroup(group111.getGroupId(), serviceContext);
+				Group group = GroupTestUtil.addGroup(
+					group111.getGroupId(), serviceContext);
 
 				Assert.assertTrue(
 					"The user should not be able to add this site",
 					hasManageSubsitePermisionOnGroup111 || hasManageSite1);
+
+				if (group != null) {
+					GroupLocalServiceUtil.deleteGroup(group);
+				}
 			}
 			catch (PrincipalException pe) {
 				Assert.assertFalse(

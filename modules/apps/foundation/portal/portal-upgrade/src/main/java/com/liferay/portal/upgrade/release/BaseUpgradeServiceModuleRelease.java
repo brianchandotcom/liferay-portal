@@ -35,16 +35,8 @@ public abstract class BaseUpgradeServiceModuleRelease extends UpgradeProcess {
 	@Override
 	public void upgrade() throws UpgradeException {
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			try (PreparedStatement ps = con.prepareStatement(
-					"select * from Release_ where servletContextName = ?")) {
-
-				ps.setString(1, getNewBundleSymbolicName());
-
-				try (ResultSet rs = ps.executeQuery()) {
-					if (!rs.next()) {
-						super.upgrade();
-					}
-				}
+			if (_getBuildNumber(con, getNewBundleSymbolicName()) == null) {
+				super.upgrade();
 			}
 		}
 		catch (SQLException sqle) {
@@ -54,22 +46,14 @@ public abstract class BaseUpgradeServiceModuleRelease extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select buildNumber from Release_ where servletContextName = " +
-					"?")) {
+		String buildNumber = _getBuildNumber(
+			connection, getOldBundleSymbolicName());
 
-			ps.setString(1, getOldBundleSymbolicName());
-
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					String buildNumber = rs.getString("buildNumber");
-
-					_updateRelease(_toSchemaVersion(buildNumber));
-				}
-				else if (_hasServiceComponent()) {
-					_createRelease();
-				}
-			}
+		if (buildNumber != null) {
+			_updateRelease(_toSchemaVersion(buildNumber));
+		}
+		else if (_hasServiceComponent()) {
+			_createRelease();
 		}
 	}
 
@@ -85,6 +69,26 @@ public abstract class BaseUpgradeServiceModuleRelease extends UpgradeProcess {
 		ReleaseDAO releaseDAO = new ReleaseDAO();
 
 		releaseDAO.addRelease(connection, getNewBundleSymbolicName());
+	}
+
+	private String _getBuildNumber(
+			Connection connection, String servletContextName)
+		throws SQLException {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select buildNumber from Release_ where servletContextName = " +
+					"?")) {
+
+			ps.setString(1, servletContextName);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return rs.getString("buildNumber");
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private boolean _hasServiceComponent() throws SQLException {

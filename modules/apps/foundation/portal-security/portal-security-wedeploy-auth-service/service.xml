@@ -63,5 +63,9 @@
 			<finder-column name="token" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="T_T" return-type="WeDeployAuthToken">
+			<finder-column name="token" />
+			<finder-column name="type" />
+		</finder>
 	</entity>
 </service-builder>

@@ -105,6 +105,13 @@ public class WeDeployAuthTokenLocalServiceImpl
 		return weDeployAuthToken;
 	}
 
+	public User getUserByToken(String token, int type) throws PortalException {
+		WeDeployAuthToken weDeployAuthToken =
+			weDeployAuthTokenPersistence.findByT_T(token, type);
+
+		return userLocalService.getUser(weDeployAuthToken.getUserId());
+	}
+
 	protected void validateAccess(
 			String redirectURI, String clientId, String clientSecret)
 		throws PortalException {

@@ -58,12 +58,12 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CI_T_T" return-type="WeDeployAuthToken">
-			<finder-column name="clientId" />
+		<finder name="T_T" return-type="WeDeployAuthToken">
 			<finder-column name="token" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="T_T" return-type="WeDeployAuthToken">
+		<finder name="CI_T_T" return-type="WeDeployAuthToken">
+			<finder-column name="clientId" />
 			<finder-column name="token" />
 			<finder-column name="type" />
 		</finder>

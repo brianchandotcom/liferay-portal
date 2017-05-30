@@ -105,7 +105,7 @@ public class WeDeployAuthTokenLocalServiceImpl
 		return weDeployAuthToken;
 	}
 
-	public User getUserByToken(String token, int type) throws PortalException {
+	public User getUser(String token, int type) throws PortalException {
 		WeDeployAuthToken weDeployAuthToken =
 			weDeployAuthTokenPersistence.findByT_T(token, type);
 

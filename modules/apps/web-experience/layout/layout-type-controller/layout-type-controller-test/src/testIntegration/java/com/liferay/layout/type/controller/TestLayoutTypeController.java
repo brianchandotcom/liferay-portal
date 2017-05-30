@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.util.bundle.layouttypecontrollertracker;
+package com.liferay.layout.type.controller;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeController;

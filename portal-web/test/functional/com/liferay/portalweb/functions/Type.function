@@ -168,7 +168,7 @@
 	<command name="typeCKEditorWaitForCKEditor">
 		<execute function="WaitForSPARefresh" />
 
-		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
+		<execute argument1="//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]" selenium="waitForVisible" />
 
 		<execute argument1="1000" selenium="pause" />
 

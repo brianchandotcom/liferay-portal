@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal.facet;
+package com.liferay.portal.search.solr.internal.facet;
 
-import com.liferay.portal.search.elasticsearch.internal.ElasticsearchIndexingFixture;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.facet.BaseSimpleFacetTestCase;
-import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 import org.junit.Test;
@@ -59,9 +57,7 @@ public class SimpleFacetTest extends BaseSimpleFacetTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {
-		return new ElasticsearchIndexingFixture(
-			new ElasticsearchFixture(SimpleFacetTest.class.getSimpleName()),
-			BaseIndexingTestCase.COMPANY_ID);
+		return new SolrIndexingFixture();
 	}
 
 }

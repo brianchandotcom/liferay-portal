@@ -89,7 +89,7 @@ List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 <c:if test="<%= !colorSchemes.isEmpty() %>">
 	<h4><liferay-ui:message key="color-schemes" /></h4>
 
-	<div id="<portlet:namespace />colorSchemesContainer" class="clearfix">
+	<div class="clearfix" id="<portlet:namespace />colorSchemesContainer">
 
 		<%
 		String selColorSchemeId = selColorScheme.getColorSchemeId();
@@ -108,7 +108,6 @@ List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 		%>
 
 	</div>
-
 </c:if>
 
 <%

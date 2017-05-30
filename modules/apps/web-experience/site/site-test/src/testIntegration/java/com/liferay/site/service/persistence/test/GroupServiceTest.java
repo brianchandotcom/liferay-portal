@@ -14,6 +14,7 @@
 
 package com.liferay.site.service.persistence.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.GroupParentException;
@@ -79,12 +80,14 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Julio Camarero
  * @author Roberto Díaz
  * @author Sergio González
  */
+@RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
 public class GroupServiceTest {
 

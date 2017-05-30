@@ -14,6 +14,7 @@
 
 package com.liferay.site.service.persistence.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.TreeModel;
@@ -26,10 +27,12 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Shinn Lok
  */
+@RunWith(Arquillian.class)
 public class GroupLocalServiceTreeTest extends BaseLocalServiceTreeTestCase {
 
 	@ClassRule

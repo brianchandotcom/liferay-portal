@@ -14,6 +14,7 @@
 
 package com.liferay.site.service.persistence.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -61,11 +62,13 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Alberto Chaparro
  * @author László Csontos
  */
+@RunWith(Arquillian.class)
 public class GroupFinderTest {
 
 	@ClassRule

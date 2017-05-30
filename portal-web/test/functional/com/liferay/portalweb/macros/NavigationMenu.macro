@@ -1,0 +1,11 @@
+<definition>
+	<command name="gotoAddPage">
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Navigation Menu" />
+		</execute>
+
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
+			<var name="key_menuItem" value="Add Page" />
+		</execute>
+	</command>
+</definition>

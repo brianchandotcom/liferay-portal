@@ -6,7 +6,9 @@
 	</command>
 
 	<command name="gotoAddPageViaPG">
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Wiki" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ADD_PAGE" value1="Add Page" />
 	</command>

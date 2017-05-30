@@ -101,7 +101,9 @@
 	</command>
 
 	<command name="addInvalidURLPG">
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Bookmarks" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#BOOKMARK" value1="Bookmark" />
 
@@ -154,7 +156,9 @@
 		<var name="bookmarkName" value="${bookmarkName}" />
 		<var name="bookmarkURL" value="${bookmarkURL}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Bookmarks" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#BOOKMARK" value1="Bookmark" />
 

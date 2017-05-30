@@ -14,6 +14,7 @@
 
 package com.liferay.site.service.persistence.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -25,10 +26,12 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Miguel Pastor
  */
+@RunWith(Arquillian.class)
 public class GroupLocalServiceTest {
 
 	@ClassRule

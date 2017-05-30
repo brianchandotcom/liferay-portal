@@ -414,6 +414,13 @@ public class PoshiRunnerContext {
 				continue;
 			}
 
+			if (!FileUtil.exists(basedir)) {
+				System.out.println(
+					"WARNING: basedir does not exist: " + basedir);
+
+				continue;
+			}
+
 			DirectoryScanner directoryScanner = new DirectoryScanner();
 
 			directoryScanner.setBasedir(basedir);

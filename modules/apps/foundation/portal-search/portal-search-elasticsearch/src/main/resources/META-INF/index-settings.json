@@ -1,14 +1,6 @@
 {
 	"analysis": {
 		"analyzer": {
-			"asset_tag_name": {
-				"filter": [
-					"lowercase", "stop", "trim", "word_delimiter"
-				],
-				"tokenizer": "whitespace"
-			}
-		},
-		"analyzer": {
 			"keyword_lowercase": {
 				"filter": "lowercase",
 				"tokenizer": "keyword"

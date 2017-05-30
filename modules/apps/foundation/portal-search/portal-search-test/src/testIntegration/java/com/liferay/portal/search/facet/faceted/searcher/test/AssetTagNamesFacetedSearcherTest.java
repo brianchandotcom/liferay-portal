@@ -16,14 +16,15 @@ package com.liferay.portal.search.facet.faceted.searcher.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.MultiValueFacetFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
+import com.liferay.portal.search.facet.tag.AssetTagNamesFacetFactory;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -60,8 +61,8 @@ public class AssetTagNamesFacetedSearcherTest
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		_multiValueFacetFactory = registry.getService(
-			MultiValueFacetFactory.class);
+		_assetTagNamesFacetFactory = registry.getService(
+			AssetTagNamesFacetFactory.class);
 	}
 
 	@Test
@@ -74,9 +75,7 @@ public class AssetTagNamesFacetedSearcherTest
 
 		SearchContext searchContext = getSearchContext(tag);
 
-		Facet facet = _multiValueFacetFactory.newInstance(searchContext);
-
-		facet.setFieldName(Field.ASSET_TAG_NAMES);
+		Facet facet = _assetTagNamesFacetFactory.newInstance(searchContext);
 
 		searchContext.addFacet(facet);
 
@@ -87,6 +86,35 @@ public class AssetTagNamesFacetedSearcherTest
 		assertFrequencies(facet.getFieldName(), searchContext, frequencies);
 	}
 
+	@Test
+	public void testSearchQuoted() throws Exception {
+		Group group = userSearchFixture.addGroup();
+
+		String[] assetTagNames =
+			new String[] {"Enterprise", "Open Source", "For   Life"};
+
+		User user = userSearchFixture.addUser(group, assetTagNames);
+
+		Map<String, String> expected = userSearchFixture.toMap(
+			user, assetTagNames);
+
+		assertTags("\"Enterprise\"", expected);
+		assertTags("\"Open\"", expected);
+		assertTags("\"Source\"", expected);
+		assertTags("\"Open Source\"", expected);
+		assertTags("\"For   Life\"", expected);
+	}
+
+	protected void assertTags(String keywords, Map<String, String> expected)
+		throws Exception {
+
+		SearchContext searchContext = getSearchContext(keywords);
+
+		Hits hits = search(searchContext);
+
+		assertTags(keywords, hits, expected);
+	}
+
 	protected SearchContext getSearchContext(String keywords) throws Exception {
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 
@@ -95,6 +123,6 @@ public class AssetTagNamesFacetedSearcherTest
 		return searchContext;
 	}
 
-	private MultiValueFacetFactory _multiValueFacetFactory;
+	private AssetTagNamesFacetFactory _assetTagNamesFacetFactory;
 
 }

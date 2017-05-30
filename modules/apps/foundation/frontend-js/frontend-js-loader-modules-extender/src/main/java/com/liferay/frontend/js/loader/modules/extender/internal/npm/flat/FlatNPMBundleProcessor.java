@@ -242,6 +242,10 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		}
 		else {
 			mainModuleName = ModuleNameUtil.toModuleName(main);
+
+			if (mainModuleName.startsWith("./")) {
+				mainModuleName = mainModuleName.substring(2);
+			}
 		}
 
 		FlatJSPackage flatJSPackage = new FlatJSPackage(

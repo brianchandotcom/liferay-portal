@@ -509,6 +509,33 @@
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="${userScreenName}" />
 	</command>
 
+	<command name="refreshOpenAMSetup">
+		<while>
+			<and>
+				<condition function="IsElementNotPresent" locator1="OpenAM#USER_NAME" />
+				<not>
+					<equals arg1="${pauseCount}" arg2="20" />
+				</not>
+			</and>
+			<then>
+				<execute function="Refresh" />
+
+				<execute function="Pause" locator1="30000" />
+
+				<var method="MathUtil#sum('${pauseCount}', '1')" name="pauseCount" />
+
+				<echo>Pause count: ${pauseCount}</echo>
+			</then>
+		</while>
+
+		<if>
+			<equals arg1="${pauseCount}" arg2="20" />
+			<then>
+				<fail message="OpenAM setup timed out after 10 minutes." />
+			</then>
+		</if>
+	</command>
+
 	<command name="tearDownAuthenticationCP">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
@@ -834,33 +861,6 @@
 
 	<command name="viewEnabledLDAPSetting">
 		<execute function="AssertChecked" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_${enableCheckboxKey}_CHECKBOX" />
-	</command>
-
-	<command name="viewPauseCount">
-		<while>
-			<and>
-				<condition function="IsElementNotPresent" locator1="OpenAM#USER_NAME" />
-				<not>
-					<equals arg1="${pauseCount}" arg2="20" />
-				</not>
-			</and>
-			<then>
-				<execute function="Refresh" />
-
-				<execute function="Pause" locator1="30000" />
-
-				<var method="MathUtil#sum('${pauseCount}', '1')" name="pauseCount" />
-
-				<echo>Pause count: ${pauseCount}</echo>
-			</then>
-		</while>
-
-		<if>
-			<equals arg1="${pauseCount}" arg2="20" />
-			<then>
-				<fail message="OpenAM setup timed out after 10 minutes." />
-			</then>
-		</if>
 	</command>
 
 	<command name="viewReservedCredentialsScreenNamesCP">

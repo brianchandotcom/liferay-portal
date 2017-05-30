@@ -231,9 +231,9 @@
 
 		<execute function="AntCommand" locator1="build-test-authentication.xml" value1="run-openam-tools" />
 
-		<var name="pauseCount" value="0" />
-
-		<execute macro="PortalSettings#viewPauseCount" />
+		<execute macro="PortalSettings#refreshOpenAMSetup" >
+			<var name="pauseCount" value="0" />
+		</execute>
 
 		<execute macro="User#firstLoginPG" />
 

@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.asset.util;
+package com.liferay.asset.util.test;
 
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.Arrays;
 

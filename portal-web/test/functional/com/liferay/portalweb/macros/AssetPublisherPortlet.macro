@@ -128,7 +128,9 @@
 	<command name="configureAssetLinkBehaviorPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
-		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Display Settings" />
+		</execute>
 
 		<execute function="Select" locator1="APConfigurationDisplaysettings#ASSET_LINK_BEHAVIOR_SELECT" value1="${assetLinkBehavior}" />
 
@@ -171,7 +173,9 @@
 	<command name="configureDisplayConversionsPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
-		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Display Settings" />
+		</execute>
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Set and Enable" />
@@ -242,7 +246,9 @@
 	<command name="configureDisplayTemplatePG">
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Display Settings" />
+		</execute>
 
 		<execute function="Select" locator1="APConfigurationDisplaysettings#DISPLAY_TEMPLATE_SELECT" value1="${displayTemplate}" />
 
@@ -540,7 +546,9 @@
 	<command name="enableRSSSubscription">
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick" locator1="NavTab#SUBSCRIPTIONS" value1="Subscriptions" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Subscriptions" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="APConfiguration#SUBSCRIPTIONS_ENABLE_RSS_SUBSCRIPTION_LABEL" value1="Enable RSS Subscription" />
 

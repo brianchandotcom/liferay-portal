@@ -14,6 +14,7 @@
 
 package com.liferay.site.teams.exportimport.data.handler.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.Team;
@@ -40,10 +41,12 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Akos Thurzo
  */
+@RunWith(Arquillian.class)
 @Sync
 public class TeamStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {

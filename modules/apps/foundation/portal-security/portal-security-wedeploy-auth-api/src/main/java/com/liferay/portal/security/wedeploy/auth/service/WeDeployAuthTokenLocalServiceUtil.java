@@ -68,6 +68,12 @@ public class WeDeployAuthTokenLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.portal.kernel.model.User getUser(
+		java.lang.String token, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUser(token, type);
+	}
+
 	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken addAccessWeDeployAuthToken(
 		java.lang.String redirectURI, java.lang.String clientId,
 		java.lang.String clientSecret, java.lang.String authorizationToken,

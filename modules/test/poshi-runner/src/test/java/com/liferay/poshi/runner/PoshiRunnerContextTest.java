@@ -14,7 +14,7 @@
 
 package com.liferay.poshi.runner;
 
-import java.io.File;
+import java.net.URL;
 
 import java.util.List;
 
@@ -91,12 +91,11 @@ public class PoshiRunnerContextTest extends TestCase {
 		String actualFilePath = PoshiRunnerContext.getFilePathFromFileName(
 			"Action2.action");
 
-		String baseDirName = PoshiRunnerGetterUtil.getCanonicalPath(
-			"src/test/resources/com/liferay/poshi/runner/");
+		Class<?> clazz = PoshiRunnerContextTest.class;
 
-		File file = new File(baseDirName + "/dependencies/Action2.action");
+		URL url = clazz.getResource("dependencies/Action2.action");
 
-		String expectedFilePath = file.getCanonicalPath();
+		String expectedFilePath = url.toString();
 
 		Assert.assertEquals(
 			"getFilePath is failing", expectedFilePath, actualFilePath);

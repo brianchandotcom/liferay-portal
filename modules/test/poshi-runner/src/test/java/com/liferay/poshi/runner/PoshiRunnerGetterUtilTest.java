@@ -77,7 +77,7 @@ public class PoshiRunnerGetterUtilTest extends TestCase {
 	@Test
 	public void testGetRootElementFromFilePath() throws Exception {
 		Element rootElement = PoshiRunnerGetterUtil.getRootElementFromFilePath(
-			"src/test/resources/com/liferay/poshi/runner/dependencies" +
+			"file:src/test/resources/com/liferay/poshi/runner/dependencies" +
 				"/Test.testcase");
 
 		Assert.assertEquals(

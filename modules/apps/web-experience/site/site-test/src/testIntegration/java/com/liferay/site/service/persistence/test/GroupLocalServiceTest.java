@@ -12,28 +12,35 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.site.service.persistence.test;
 
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 
+import java.util.List;
+
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 
 /**
- * @author Manuel de la Peña
+ * @author Miguel Pastor
  */
-public class VerifyGroupTest extends BaseVerifyProcessTestCase {
+public class GroupLocalServiceTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Override
-	protected VerifyProcess getVerifyProcess() {
-		return new VerifyGroup();
+	@Test
+	public void testGetStagedSites() {
+		List<Group> groups = GroupLocalServiceUtil.getStagedSites();
+
+		Assert.assertTrue(groups.isEmpty());
 	}
 
 }

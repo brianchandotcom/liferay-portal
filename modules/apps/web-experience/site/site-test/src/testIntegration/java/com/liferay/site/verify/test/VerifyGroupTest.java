@@ -12,35 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.service;
+package com.liferay.site.verify.test;
 
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.verify.VerifyGroup;
+import com.liferay.portal.verify.VerifyProcess;
+import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 
-import java.util.List;
-
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 
 /**
- * @author Miguel Pastor
+ * @author Manuel de la Peña
  */
-public class GroupLocalServiceTest {
+public class VerifyGroupTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Test
-	public void testGetStagedSites() {
-		List<Group> groups = GroupLocalServiceUtil.getStagedSites();
-
-		Assert.assertTrue(groups.isEmpty());
+	@Override
+	protected VerifyProcess getVerifyProcess() {
+		return new VerifyGroup();
 	}
 
 }

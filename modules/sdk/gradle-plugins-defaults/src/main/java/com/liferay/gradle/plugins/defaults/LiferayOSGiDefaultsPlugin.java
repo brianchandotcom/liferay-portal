@@ -33,6 +33,7 @@ import com.liferay.gradle.plugins.defaults.internal.util.GitUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure;
 import com.liferay.gradle.plugins.defaults.internal.util.copy.RenameDependencyAction;
+import com.liferay.gradle.plugins.defaults.tasks.CheckOSGiBundleStateTask;
 import com.liferay.gradle.plugins.defaults.tasks.InstallCacheTask;
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.defaults.tasks.WriteArtifactPublishCommandsTask;
@@ -204,6 +205,7 @@ import org.gradle.external.javadoc.CoreJavadocOptions;
 import org.gradle.external.javadoc.StandardJavadocDocletOptions;
 import org.gradle.internal.authentication.DefaultBasicAuthentication;
 import org.gradle.internal.service.ServiceRegistry;
+import org.gradle.language.base.plugins.LifecycleBasePlugin;
 import org.gradle.plugins.ide.api.XmlFileContentMerger;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.eclipse.model.Classpath;
@@ -229,6 +231,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String ASPECTJ_WEAVER_CONFIGURATION_NAME =
 		"aspectJWeaver";
+
+	public static final String CHECK_OSGI_BUNDLE_STATE_TASK_NAME =
+		"checkOSGiBundleState";
 
 	public static final String COMMIT_CACHE_TASK_NAME = "commitCache";
 
@@ -369,6 +374,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				baselineTask, versionOverrideFile);
 		}
 
+		if (!testProject) {
+			_addTaskCheckOSGiBundleState(project);
+		}
+
 		InstallCacheTask installCacheTask = _addTaskInstallCache(project);
 
 		_addTaskCommitCache(project, installCacheTask);
@@ -421,6 +430,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTaskTestIntegration(project);
 		_configureTaskTlddoc(project, portalRootDir);
 		_configureTasksBaseline(project);
+		_configureTasksCheckOSGiBundleState(project, liferayExtension);
 		_configureTasksFindBugs(project);
 		_configureTasksJavaCompile(project);
 		_configureTasksPmd(project);
@@ -685,6 +695,32 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		task.setGroup(originalTask.getGroup());
 
 		return task;
+	}
+
+	private CheckOSGiBundleStateTask _addTaskCheckOSGiBundleState(
+		final Project project) {
+
+		CheckOSGiBundleStateTask checkOSGiBundleStateTask = GradleUtil.addTask(
+			project, CHECK_OSGI_BUNDLE_STATE_TASK_NAME,
+			CheckOSGiBundleStateTask.class);
+
+		checkOSGiBundleStateTask.setBundleSymbolicName(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return _getBundleInstruction(
+						project, Constants.BUNDLE_SYMBOLICNAME);
+				}
+
+			});
+
+		checkOSGiBundleStateTask.setDescription(
+			"Checks the state of the deployed OSGi bundle.");
+		checkOSGiBundleStateTask.setGroup(
+			LifecycleBasePlugin.VERIFICATION_GROUP);
+
+		return checkOSGiBundleStateTask;
 	}
 
 	private Task _addTaskCommitCache(
@@ -2616,6 +2652,21 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
+	private void _configureTaskCheckOSGiBundleState(
+		CheckOSGiBundleStateTask checkOSGiBundleState,
+		final LiferayExtension liferayExtension) {
+
+		checkOSGiBundleState.setJmxPort(
+			new Callable<Integer>() {
+
+				@Override
+				public Integer call() throws Exception {
+					return liferayExtension.getJmxRemotePort();
+				}
+
+			});
+	}
+
 	private void _configureTaskCompileJSP(
 		Project project, Jar jarJSPsTask, LiferayExtension liferayExtension) {
 
@@ -3013,6 +3064,26 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				@Override
 				public void execute(BaselineTask baselineTask) {
 					_configureTaskBaseline(baselineTask);
+				}
+
+			});
+	}
+
+	private void _configureTasksCheckOSGiBundleState(
+		Project project, final LiferayExtension liferayExtension) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			CheckOSGiBundleStateTask.class,
+			new Action<CheckOSGiBundleStateTask>() {
+
+				@Override
+				public void execute(
+					CheckOSGiBundleStateTask checkOSGiBundleState) {
+
+					_configureTaskCheckOSGiBundleState(
+						checkOSGiBundleState, liferayExtension);
 				}
 
 			});

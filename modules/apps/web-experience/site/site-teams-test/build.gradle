@@ -1,0 +1,11 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+copyLibs {
+	enabled = true
+}
+
+dependencies {
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.5"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+}

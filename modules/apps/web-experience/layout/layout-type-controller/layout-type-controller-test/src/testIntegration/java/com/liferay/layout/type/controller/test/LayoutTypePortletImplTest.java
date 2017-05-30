@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.model.impl;
+package com.liferay.layout.type.controller.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
@@ -31,7 +33,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.service.util.test.PortletPreferencesTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -54,6 +55,7 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class LayoutTypePortletImplTest {
 
+	@RunWith(Arquillian.class)
 	public static class
 		IsCacheableWhenThereAreEmbeddedPortletsAndNoStaticPortlets {
 
@@ -93,8 +95,7 @@ public class LayoutTypePortletImplTest {
 			Portlet cacheablePortlet = PortletLocalServiceUtil.getPortletById(
 				cacheablePortletId);
 
-			PortletPreferencesTestUtil.addLayoutPortletPreferences(
-				_layout, cacheablePortlet);
+			_addLayoutPortletPreferences(_layout, cacheablePortlet);
 
 			Assert.assertFalse(_layoutTypePortlet.isCacheable());
 		}
@@ -116,8 +117,7 @@ public class LayoutTypePortletImplTest {
 				Portlet cacheablePortlet =
 					PortletLocalServiceUtil.getPortletById(cacheablePortletId);
 
-				PortletPreferencesTestUtil.addLayoutPortletPreferences(
-					_layout, cacheablePortlet);
+				_addLayoutPortletPreferences(_layout, cacheablePortlet);
 
 				Assert.assertTrue(_layoutTypePortlet.isCacheable());
 			}
@@ -136,6 +136,7 @@ public class LayoutTypePortletImplTest {
 
 	}
 
+	@RunWith(Arquillian.class)
 	public static class
 		IsCacheableWhenThereAreNoStaticPortletsAndNoEmbeddedPortlets {
 
@@ -207,6 +208,7 @@ public class LayoutTypePortletImplTest {
 
 	}
 
+	@RunWith(Arquillian.class)
 	public static class
 		IsCacheableWhenThereAreStaticPortletsAndNoEmbeddedPortlets {
 
@@ -282,6 +284,16 @@ public class LayoutTypePortletImplTest {
 			_tearDown();
 		}
 
+	}
+
+	private static PortletPreferences _addLayoutPortletPreferences(
+			Layout layout, Portlet portlet)
+		throws Exception {
+
+		return PortletPreferencesLocalServiceUtil.addPortletPreferences(
+			TestPropsValues.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+			portlet.getPortletId(), portlet, null);
 	}
 
 	private static void _setUp() throws Exception {

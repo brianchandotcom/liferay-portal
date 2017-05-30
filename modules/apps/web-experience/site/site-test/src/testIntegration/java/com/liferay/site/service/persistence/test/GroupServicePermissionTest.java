@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -73,6 +74,8 @@ public class GroupServicePermissionTest {
 		_group11 = GroupTestUtil.addGroup(_group1.getGroupId());
 
 		_group111 = GroupTestUtil.addGroup(_group11.getGroupId());
+
+		setUpPrincipalThreadLocal();
 	}
 
 	@After
@@ -84,6 +87,8 @@ public class GroupServicePermissionTest {
 		GroupLocalServiceUtil.deleteGroup(_group1);
 
 		UserLocalServiceUtil.deleteUser(_user);
+
+		PrincipalThreadLocal.setName(_name);
 	}
 
 	@Test
@@ -195,6 +200,12 @@ public class GroupServicePermissionTest {
 
 		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
 			_user.getUserId(), group.getGroupId(), roleIds);
+	}
+
+	protected void setUpPrincipalThreadLocal() throws Exception {
+		_name = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 	}
 
 	protected void testAddGroup(
@@ -335,6 +346,7 @@ public class GroupServicePermissionTest {
 	private Group _group1;
 	private Group _group11;
 	private Group _group111;
+	private String _name;
 	private User _user;
 
 }

@@ -12,29 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.configuration;
+package com.liferay.portal.search.facet.tag;
 
 import aQute.bnd.annotation.ProviderType;
-import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
-@ExtendedObjectClassDefinition(category = "foundation")
-@Meta.OCD(
-	id = "com.liferay.portal.search.configuration.QueryPreProcessConfiguration",
-	localization = "content/Language",
-	name = "query.pre.process.configuration.name"
-)
 @ProviderType
-public interface QueryPreProcessConfiguration {
-
-	@Meta.AD(
-		deflt = "assetCategoryTitles?(_.+)?|emailAddress|license|path|screenName|tag|treePath|userName",
-		required = false
-	)
-	public String[] fieldNamePatterns();
-
+public interface AssetTagNamesFacetFactory extends FacetFactory {
 }

@@ -543,8 +543,12 @@
 				"type": "string"
 			},
 			"assetTagNames": {
-				"analyzer" : "keyword_lowercase",
-				"search_analyzer" : "asset_tag_name",
+				"fields": {
+					"raw" : {
+						"index": "not_analyzed",
+						"type": "string"
+					}
+				},
 				"store": "yes",
 				"term_vector": "with_positions_offsets",
 				"type": "string"

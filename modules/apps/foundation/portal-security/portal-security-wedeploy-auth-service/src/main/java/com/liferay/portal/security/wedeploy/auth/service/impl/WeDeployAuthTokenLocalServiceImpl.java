@@ -16,6 +16,7 @@ package com.liferay.portal.security.wedeploy.auth.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
@@ -49,10 +50,13 @@ public class WeDeployAuthTokenLocalServiceImpl
 
 		Date date = weDeployAuthToken.getCreateDate();
 
+		WeDeployAuthWebConfiguration weDeployAuthWebConfiguration =
+			configurationProvider.getSystemConfiguration(
+				WeDeployAuthWebConfiguration.class);
+
 		long expirationTime =
 			date.getTime() +
-				_weDeployAuthWebConfiguration.
-					authorizationTokenExpirationTime();
+				weDeployAuthWebConfiguration.authorizationTokenExpirationTime();
 
 		if (System.currentTimeMillis() > expirationTime) {
 			throw new WeDeployAuthTokenExpiredException();
@@ -134,7 +138,7 @@ public class WeDeployAuthTokenLocalServiceImpl
 		weDeployAuthAppPersistence.findByRU_CI(redirectURI, clientId);
 	}
 
-	@ServiceReference(type = WeDeployAuthWebConfiguration.class)
-	private WeDeployAuthWebConfiguration _weDeployAuthWebConfiguration;
+	@ServiceReference(type = ConfigurationProvider.class)
+	protected ConfigurationProvider configurationProvider;
 
 }

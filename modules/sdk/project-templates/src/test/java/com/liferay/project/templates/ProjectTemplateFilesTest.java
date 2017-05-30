@@ -37,8 +37,11 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -78,15 +81,18 @@ public class ProjectTemplateFilesTest {
 		}
 	}
 
-	private static String _readXmlDeclarationTemplate(String name)
+	private static void _addXmlDeclaration(
+			String fileName, String templateFileName)
 		throws IOException {
 
 		String template = FileTestUtil.read(
-			"com/liferay/project/templates/dependencies/" + name);
+			"com/liferay/project/templates/dependencies/" + templateFileName);
 
 		int pos = template.indexOf("[$XML$]");
 
-		return template.substring(0, pos);
+		template = template.substring(0, pos);
+
+		_xmlDeclarations.put(fileName, template);
 	}
 
 	private List<BuildGradleDependency> _getBuildGradleDependencies(
@@ -245,16 +251,23 @@ public class ProjectTemplateFilesTest {
 				FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX +
 					WorkspaceUtil.WORKSPACE)) {
 
-			String gitIgnore = _GIT_IGNORE;
+			Set<String> gitIgnoreLines = new TreeSet<>(_gitIgnoreLines);
 
 			if (Files.exists(
 					archetypeResourcesDirPath.resolve("package.json"))) {
 
-				gitIgnore = _GIT_IGNORE_WITH_PACKAGE_JSON;
+				gitIgnoreLines.add("node_modules/");
+			}
+
+			if (FileTestUtil.containsFile(
+					archetypeResourcesDirPath, "*.scss")) {
+
+				gitIgnoreLines.add(".sass-cache/");
 			}
 
 			Assert.assertEquals(
-				"Incorrect " + gitIgnorePath, gitIgnore,
+				"Incorrect " + gitIgnorePath,
+				StringTestUtil.merge(gitIgnoreLines, '\n'),
 				FileUtil.read(gitIgnorePath));
 		}
 	}
@@ -266,6 +279,86 @@ public class ProjectTemplateFilesTest {
 	}
 
 	private void _testLanguageProperties(Path path) throws IOException {
+		boolean portlet = false;
+
+		try (BufferedReader bufferedReader = Files.newBufferedReader(
+				path, StandardCharsets.UTF_8)) {
+
+			String line = null;
+			String previousKey = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				Assert.assertFalse(
+					"Forbidden empty line in " + path, line.isEmpty());
+				Assert.assertFalse(
+					"Forbidden comments in " + path, line.startsWith("##"));
+				Assert.assertFalse(
+					"Forbidden whitespace leading character in " + path,
+					Character.isWhitespace(line.charAt(0)));
+
+				int pos = line.indexOf('=');
+
+				Assert.assertNotEquals(
+					"Incorrect line \"" + line + "\" in " + path, -1, pos);
+
+				String key = line.substring(0, pos);
+
+				Assert.assertTrue(
+					path + " contains duplicate lines or is not sorted",
+					(previousKey == null) ||
+						(_languagePropertiesKeyComparator.compare(
+							key, previousKey) > 0));
+
+				if (key.startsWith("javax.portlet.")) {
+					portlet = true;
+				}
+
+				previousKey = key;
+			}
+		}
+
+		if (portlet) {
+			Properties properties = FileUtil.readProperties(path);
+
+			String keywords = properties.getProperty(
+				"javax.portlet.keywords.${artifactId}");
+
+			Assert.assertTrue(
+				"Value of \"javax.portlet.keywords.${artifactId}\" in " + path +
+					" must start with \"${artifactId},\"",
+				(keywords != null) && keywords.startsWith("${artifactId},"));
+
+			String title = properties.getProperty(
+				"javax.portlet.title.${artifactId}");
+
+			Assert.assertTrue(
+				"Value of \"javax.portlet.title.${artifactId}\" in " + path +
+					" must end with \" Portlet\"",
+				(title != null) && title.endsWith(" Portlet"));
+
+			String expectedShortTitle = title.substring(0, title.length() - 8);
+
+			Assert.assertEquals(
+				"Incorrect value of " +
+					"\"javax.portlet.display-name.${artifactId}\" in " + path,
+				expectedShortTitle,
+				properties.getProperty(
+					"javax.portlet.display-name.${artifactId}"));
+
+			Assert.assertEquals(
+				"Incorrect value of " +
+					"\"javax.portlet.short-title.${artifactId}\" in " + path,
+				expectedShortTitle,
+				properties.getProperty(
+					"javax.portlet.short-title.${artifactId}"));
+		}
+	}
+
+	private void _testLiferayPluginPackageProperties(Path path)
+		throws IOException {
+
+		StringBuilder sb = new StringBuilder();
+
 		try (BufferedReader bufferedReader = Files.newBufferedReader(
 				path, StandardCharsets.UTF_8)) {
 
@@ -274,10 +367,38 @@ public class ProjectTemplateFilesTest {
 			while ((line = bufferedReader.readLine()) != null) {
 				Assert.assertFalse(
 					"Forbidden empty line in " + path, line.isEmpty());
-				Assert.assertFalse(
-					"Forbidden comments in " + path, line.startsWith("##"));
+
+				if (line.startsWith("#set")) {
+					continue;
+				}
+
+				line = line.replace("${symbol_escape}", "\\");
+				line = line.replace("${symbol_pound}", "#");
+
+				if (sb.length() > 0) {
+					sb.append('\n');
+				}
+
+				sb.append(line);
 			}
 		}
+
+		Properties properties = new Properties();
+
+		properties.load(new StringReader(sb.toString()));
+
+		_testPropertyValue(path, properties, "author", "${author}");
+		_testPropertyValue(path, properties, "change-log", "");
+		_testPropertyValue(path, properties, "licenses", "LGPL");
+		_testPropertyValue(path, properties, "liferay-versions", "7.0.0+");
+		_testPropertyValue(path, properties, "long-description", "");
+		_testPropertyValue(path, properties, "module-group-id", "liferay");
+		_testPropertyValue(path, properties, "module-incremental-version", "1");
+		_testPropertyValue(path, properties, "name", "${artifactId}");
+		_testPropertyValue(
+			path, properties, "page-url", "http://www.liferay.com");
+		_testPropertyValue(path, properties, "short-description", "");
+		_testPropertyValue(path, properties, "tags", "");
 	}
 
 	private void _testMavenWrapper(Path archetypeResourcesDirPath) {
@@ -491,6 +612,14 @@ public class ProjectTemplateFilesTest {
 							FileUtil.getFile(dirPath, glob));
 					}
 
+					Path liferayPluginPackagePropertiesPath = dirPath.resolve(
+						"liferay-plugin-package.properties");
+
+					if (Files.exists(liferayPluginPackagePropertiesPath)) {
+						_testLiferayPluginPackageProperties(
+							liferayPluginPackagePropertiesPath);
+					}
+
 					return FileVisitResult.CONTINUE;
 				}
 
@@ -528,18 +657,22 @@ public class ProjectTemplateFilesTest {
 			projectTemplateDirPath, projectTemplateDirName, hasJavaFiles.get());
 	}
 
+	private void _testPropertyValue(
+		Path path, Properties properties, String key, String expectedValue) {
+
+		Assert.assertEquals(
+			"Incorrect value of \"" + key + "\" in " + path, expectedValue,
+			properties.getProperty(key));
+	}
+
 	private void _testTextFile(Path path, String fileName, String extension)
 		throws IOException {
 
 		String text = FileUtil.read(path);
 
-		boolean trailingEmptyLine = false;
-
-		if ((text.length() > 0) && (text.charAt(text.length() - 1) == '\n')) {
-			trailingEmptyLine = true;
-		}
-
-		Assert.assertFalse("Trailing empty line in " + path, trailingEmptyLine);
+		Assert.assertEquals(
+			"Forbidden leading or trailing whitespaces in " + path, text.trim(),
+			text);
 
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new StringReader(text))) {
@@ -570,17 +703,11 @@ public class ProjectTemplateFilesTest {
 				text.contains("* @author ${author}"));
 		}
 
-		if (extension.equals("xml") &&
-			!fileName.equals("liferay-layout-templates.xml") &&
-			Validator.isNotNull(text)) {
+		if (extension.equals("xml") && Validator.isNotNull(text)) {
+			String xmlDeclaration = _xmlDeclarations.get(fileName);
 
-			String xmlDeclaration = _XML_DECLARATION;
-
-			if (fileName.equals("pom.xml")) {
-				xmlDeclaration = _POM_XML_DECLARATION;
-			}
-			else if (fileName.equals("service.xml")) {
-				xmlDeclaration = _SERVICE_XML_DECLARATION;
+			if (xmlDeclaration == null) {
+				xmlDeclaration = _xmlDeclarations.get(null);
 			}
 
 			Assert.assertTrue(
@@ -589,19 +716,9 @@ public class ProjectTemplateFilesTest {
 		}
 	}
 
-	private static final String _GIT_IGNORE;
-
-	private static final String _GIT_IGNORE_WITH_PACKAGE_JSON;
-
-	private static final String _POM_XML_DECLARATION;
-
-	private static final String _SERVICE_XML_DECLARATION;
-
 	private static final String[] _SOURCESET_NAMES = {
 		"main", "test", "testIntegration"
 	};
-
-	private static final String _XML_DECLARATION;
 
 	private static final Pattern _buildGradleDependencyPattern =
 		Pattern.compile(
@@ -609,6 +726,32 @@ public class ProjectTemplateFilesTest {
 				"(?:transitive: (?:true|false), )?version: \"(.+)\"");
 	private static final Pattern _bundleDescriptionPattern = Pattern.compile(
 		"Creates a .+\\.");
+	private static final List<String> _gitIgnoreLines = Arrays.asList(
+		".gradle/", "build/", "target/");
+
+	private static final Comparator<String> _languagePropertiesKeyComparator =
+		new Comparator<String>() {
+
+			@Override
+			public int compare(String key1, String key2) {
+				boolean key1StartsWithLetter = Character.isLetter(
+					key1.charAt(0));
+				boolean key2StartsWithLetter = Character.isLetter(
+					key2.charAt(0));
+
+				if (key1StartsWithLetter && !key2StartsWithLetter) {
+					return -1;
+				}
+
+				if (!key1StartsWithLetter && key2StartsWithLetter) {
+					return 1;
+				}
+
+				return key1.compareTo(key2);
+			}
+
+		};
+
 	private static final Pattern _pomXmlExecutionIdPattern = Pattern.compile(
 		"[a-z]+(?:-[a-z]+)*");
 	private static final Set<String> _textFileExtensions = new HashSet<>(
@@ -616,28 +759,22 @@ public class ProjectTemplateFilesTest {
 			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));
 	private static final Pattern _velocityIfPattern = Pattern.compile(
 		"#if\\s*\\(\\s*(.+)\\s*\\)");
+	private static final Map<String, String> _xmlDeclarations = new HashMap<>();
 
 	static {
-		Set<String> gitIgnoreLines = new TreeSet<>();
-
-		gitIgnoreLines.add(".gradle/");
-		gitIgnoreLines.add("build/");
-		gitIgnoreLines.add("target/");
-
-		_GIT_IGNORE = StringTestUtil.merge(gitIgnoreLines, '\n');
-
-		gitIgnoreLines.add("node_modules/");
-
-		_GIT_IGNORE_WITH_PACKAGE_JSON = StringTestUtil.merge(
-			gitIgnoreLines, '\n');
-
 		try {
-			_XML_DECLARATION = _readXmlDeclarationTemplate(
-				"xml_declaration.tmpl");
-			_POM_XML_DECLARATION = _readXmlDeclarationTemplate(
-				"pom_xml_declaration.tmpl");
-			_SERVICE_XML_DECLARATION = _readXmlDeclarationTemplate(
-				"service_xml_declaration.tmpl");
+			_addXmlDeclaration(null, "xml_declaration.tmpl");
+			_addXmlDeclaration(
+				"liferay-display.xml", "liferay_display_xml_declaration.tmpl");
+			_addXmlDeclaration(
+				"liferay-layout-templates.xml",
+				"liferay_layout_templates_xml_declaration.tmpl");
+			_addXmlDeclaration(
+				"liferay-portlet.xml", "liferay_portlet_xml_declaration.tmpl");
+			_addXmlDeclaration("pom.xml", "pom_xml_declaration.tmpl");
+			_addXmlDeclaration("portlet.xml", "portlet_xml_declaration.tmpl");
+			_addXmlDeclaration("service.xml", "service_xml_declaration.tmpl");
+			_addXmlDeclaration("web.xml", "web_xml_declaration.tmpl");
 		}
 		catch (IOException ioe) {
 			throw new ExceptionInInitializerError(ioe);

@@ -39,13 +39,10 @@ import java.net.URI;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,7 +52,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.diibadaaba.zipdiff.DifferenceCalculator;
 import net.diibadaaba.zipdiff.Differences;
@@ -881,6 +877,125 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateSpringMVCPortlet() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"spring-mvc-portlet", "foo");
+
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
+
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/foo/portlet/FooPortletViewController.java",
+			"public class FooPortletViewController {");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"spring-mvc-portlet", "foo", "-DclassName=Foo", "-Dpackage=foo");
+
+		_buildProjects(
+			gradleProjectDir, mavenProjectDir, "build/libs/foo.war",
+			"target/foo-1.0.0.war");
+
+		ZipFile zipFile = null;
+
+		File gradleWarFile = new File(gradleProjectDir, "build/libs/foo.war");
+
+		try {
+			zipFile = new ZipFile(gradleWarFile);
+
+			_testExists(zipFile, "css/main.css");
+			_testExists(zipFile, "css/main_rtl.css");
+
+			_testExists(zipFile, "WEB-INF/lib/aopalliance-1.0.jar");
+			_testExists(zipFile, "WEB-INF/lib/commons-logging-1.2.jar");
+
+			for (String jarName : _SPRING_MVC_PORTLET_JAR_NAMES) {
+				_testExists(
+					zipFile,
+					"WEB-INF/lib/spring-" + jarName + "-" +
+						_SPRING_MVC_PORTLET_VERSION + ".jar");
+			}
+		}
+		finally {
+			ZipFile.closeQuietly(zipFile);
+		}
+	}
+
+	@Test
+	public void testBuildTemplateSpringMVCPortletWithPackage()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"spring-mvc-portlet", "foo", "--package-name", "com.liferay.test");
+
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
+
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/com/liferay/test/portlet" +
+				"/FooPortletViewController.java",
+			"public class FooPortletViewController {");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"spring-mvc-portlet", "foo", "-DclassName=Foo",
+			"-Dpackage=com.liferay.test");
+
+		_buildProjects(
+			gradleProjectDir, mavenProjectDir, "build/libs/foo.war",
+			"target/foo-1.0.0.war");
+	}
+
+	@Test
+	public void testBuildTemplateSpringMVCPortletWithPortletName()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"spring-mvc-portlet", "portlet");
+
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
+
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/portlet/portlet/PortletPortletViewController.java",
+			"public class PortletPortletViewController {");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"spring-mvc-portlet", "portlet", "-DclassName=Portlet",
+			"-Dpackage=portlet");
+
+		_buildProjects(
+			gradleProjectDir, mavenProjectDir, "build/libs/portlet.war",
+			"target/portlet-1.0.0.war");
+	}
+
+	@Test
+	public void testBuildTemplateSpringMVCPortletWithPortletSuffix()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"spring-mvc-portlet", "portlet-portlet");
+
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/init.jsp");
+		_testExists(gradleProjectDir, "src/main/webapp/WEB-INF/jsp/view.jsp");
+
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/portlet/portlet/portlet" +
+				"/PortletPortletViewController.java",
+			"public class PortletPortletViewController {");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"spring-mvc-portlet", "portlet-portlet", "-DclassName=Portlet",
+			"-Dpackage=portlet.portlet");
+
+		_buildProjects(
+			gradleProjectDir, mavenProjectDir, "build/libs/portlet-portlet.war",
+			"target/portlet-portlet-1.0.0.war");
+	}
+
+	@Test
 	public void testBuildTemplateTemplateContextContributor() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"template-context-contributor", "blade-test");
@@ -1171,30 +1286,13 @@ public class ProjectTemplatesTest {
 			String gradleBundleFileName, String mavenBundleFileName)
 		throws Exception {
 
-		final AtomicBoolean hasJavaFiles = new AtomicBoolean();
-
-		Files.walkFileTree(
-			gradleProjectDir.toPath(),
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult visitFile(
-					Path path, BasicFileAttributes basicFileAttributes) {
-
-					if (path.endsWith(".java")) {
-						hasJavaFiles.set(true);
-
-						return FileVisitResult.TERMINATE;
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-
 		String[] gradleTaskPaths;
 
-		if (hasJavaFiles.get()) {
+		if (FileTestUtil.containsFile(gradleProjectDir.toPath(), "*.java") &&
+			!_contains(
+				new File(gradleProjectDir, "build.gradle"),
+				"apply plugin: \"war\"")) {
+
 			gradleTaskPaths = new String[] {
 				_GRADLE_TASK_PATH_CHECK_SOURCE_FORMATTING,
 				_GRADLE_TASK_PATH_BUILD
@@ -1389,6 +1487,12 @@ public class ProjectTemplatesTest {
 		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.properties");
 
 		return projectDir;
+	}
+
+	private static boolean _contains(File file, String s) throws IOException {
+		String text = FileUtil.read(file.toPath());
+
+		return text.contains(s);
 	}
 
 	private static void _createNewFiles(String fileName, File... dirs)
@@ -1590,6 +1694,10 @@ public class ProjectTemplatesTest {
 		Assert.assertTrue("Missing " + fileName, file.exists());
 
 		return file;
+	}
+
+	private static void _testExists(ZipFile zipFile, String name) {
+		Assert.assertNotNull("Missing " + name, zipFile.getEntry(name));
 	}
 
 	private static File _testNotContains(
@@ -2078,6 +2186,13 @@ public class ProjectTemplatesTest {
 	private static final String _REPOSITORY_CDN_URL =
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
 			"/public";
+
+	private static final String[] _SPRING_MVC_PORTLET_JAR_NAMES = {
+		"aop", "beans", "context", "core", "expression", "web", "webmvc",
+		"webmvc-portlet"
+	};
+
+	private static final String _SPRING_MVC_PORTLET_VERSION = "4.1.9.RELEASE";
 
 	private static final boolean _TEST_DEBUG_BUNDLE_DIFFS = Boolean.getBoolean(
 		"test.debug.bundle.diffs");

@@ -1,0 +1,21 @@
+<definition default="waitForSPARefresh">
+	<command name="waitForSPARefresh">
+		<execute argument1="//html[contains(@class,'lfr-spa-loading')]" selenium="waitForElementNotPresent" />
+
+		<if>
+			<and>
+				<condition argument1="//div[contains(@class,'lfr-notification-wrapper') and contains(@style,'height: 82px;')]" selenium="isElementPresent" />
+				<condition argument1="//div[contains(@class,'lfr-notification-wrapper') and contains(@style,'height: 82px;')]" selenium="isVisible" />
+			</and>
+			<then>
+				<execute argument1="//button[contains(@class,'close')]" selenium="click" />
+			</then>
+		</if>
+
+		<execute argument1="//div[contains(@class,'lfr-notification-wrapper') and contains(@style,'height: 82px;')]" selenium="waitForElementNotPresent" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+</definition>

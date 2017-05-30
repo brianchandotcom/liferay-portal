@@ -1,0 +1,11 @@
+<definition default="assertValue">
+	<command name="assertValue">
+		<execute function="WaitForSPARefresh" />
+
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForValue" />
+
+		<execute selenium="assertValue" />
+	</command>
+</definition>

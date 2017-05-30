@@ -1,0 +1,7 @@
+<definition default="typeScreen">
+	<command name="typeScreen">
+		<execute function="WaitForSPARefresh" />
+
+		<execute selenium="typeScreen" />
+	</command>
+</definition>

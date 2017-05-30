@@ -14,6 +14,7 @@
 
 package com.liferay.layout.type.controller.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -54,6 +55,7 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class LayoutTypePortletImplTest {
 
+	@RunWith(Arquillian.class)
 	public static class
 		IsCacheableWhenThereAreEmbeddedPortletsAndNoStaticPortlets {
 
@@ -136,6 +138,7 @@ public class LayoutTypePortletImplTest {
 
 	}
 
+	@RunWith(Arquillian.class)
 	public static class
 		IsCacheableWhenThereAreNoStaticPortletsAndNoEmbeddedPortlets {
 
@@ -207,6 +210,7 @@ public class LayoutTypePortletImplTest {
 
 	}
 
+	@RunWith(Arquillian.class)
 	public static class
 		IsCacheableWhenThereAreStaticPortletsAndNoEmbeddedPortlets {
 

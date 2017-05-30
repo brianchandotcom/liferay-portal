@@ -34,11 +34,7 @@ import com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalSer
 @ProviderType
 public abstract class WeDeployAuthAppBaseImpl extends WeDeployAuthAppModelImpl
 	implements WeDeployAuthApp {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a we deploy auth app model instance should use the {@link WeDeployAuthApp} interface instead.
-	 */
+
 	@Override
 	public void persist() {
 		if (this.isNew()) {

@@ -62,11 +62,7 @@ import java.util.Map;
 @ProviderType
 public class WeDeployAuthAppModelImpl extends BaseModelImpl<WeDeployAuthApp>
 	implements WeDeployAuthAppModel {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a we deploy auth app model instance should use the {@link WeDeployAuthApp} interface instead.
-	 */
+	
 	public static final String TABLE_NAME = "WeDeployAuth_WeDeployAuthApp";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "weDeployAuthAppId", Types.BIGINT },

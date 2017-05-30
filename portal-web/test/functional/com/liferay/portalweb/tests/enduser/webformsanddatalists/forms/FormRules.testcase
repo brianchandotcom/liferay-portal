@@ -859,9 +859,8 @@
 			<var name="fieldName" value="B" />
 		</execute>
 
-		<execute macro="FormFields#editText">
+		<execute macro="FormFields#editTextWithBackspace">
 			<var name="fieldName" value="A" />
-			<var name="fieldValue" value=" " />
 		</execute>
 
 		<execute macro="FormFields#viewDateFieldNotPresent">

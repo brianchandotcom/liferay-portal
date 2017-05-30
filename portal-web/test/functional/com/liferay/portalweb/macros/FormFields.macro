@@ -105,6 +105,14 @@
 		<execute function="Type" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${fieldValue}" />
 	</command>
 
+	<command name="editTextWithBackspace">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Click" locator1="FormFields#TEXT_FIELD" />
+
+		<execute function="KeyPress" locator1="FormFields#TEXT_FIELD" value1="\BACK_SPACE" />
+	</command>
+
 	<command name="editValidation">
 		<execute function="Select" locator1="FormFields#VALIDATION_ARGUMENT" value1="${validationArgument}" />
 

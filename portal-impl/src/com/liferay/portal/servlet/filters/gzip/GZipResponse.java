@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import java.util.zip.GZIPOutputStream;
@@ -57,23 +56,16 @@ public class GZipResponse extends MetaInfoCacheServletResponse {
 
 	@Override
 	public void finishResponse(boolean reapplyMetaData) throws IOException {
+		if (!isCommitted() && (_servletOutputStream == null)) {
 
-		// Is the response committed?
+			// Resposne is not committed and the content has not been GZipped.
+			// Reset the wrapped response to clear out the GZip header
 
-		if (!isCommitted()) {
+			_response.reset();
 
-			// Has the content been GZipped yet?
+			// Reapply meta data
 
-			if (_servletOutputStream == null) {
-
-				// Reset the wrapped response to clear out the GZip header
-
-				_response.reset();
-
-				// Reapply meta data
-
-				super.finishResponse(reapplyMetaData);
-			}
+			super.finishResponse(reapplyMetaData);
 		}
 
 		try {
@@ -102,13 +94,8 @@ public class GZipResponse extends MetaInfoCacheServletResponse {
 		}
 
 		if (_servletOutputStream == null) {
-			if (_isGZipContentType()) {
-				_servletOutputStream = _response.getOutputStream();
-			}
-			else {
-				_servletOutputStream = _createGZipServletOutputStream(
-					_response.getOutputStream());
-			}
+			_servletOutputStream = _createGZipServletOutputStream(
+				_response.getOutputStream());
 		}
 
 		return _servletOutputStream;
@@ -150,10 +137,15 @@ public class GZipResponse extends MetaInfoCacheServletResponse {
 	}
 
 	private ServletOutputStream _createGZipServletOutputStream(
-			OutputStream outputStream)
+			ServletOutputStream servletOutputStream)
 		throws IOException {
 
-		GZIPOutputStream gzipOutputStream = new GZIPOutputStream(outputStream) {
+		if (_isGZipContentType()) {
+			return servletOutputStream;
+		}
+
+		GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
+			servletOutputStream) {
 
 			{
 				def.setLevel(PropsValues.GZIP_COMPRESSION_LEVEL);

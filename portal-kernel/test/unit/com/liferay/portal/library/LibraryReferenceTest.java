@@ -33,6 +33,7 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -363,15 +364,19 @@ public class LibraryReferenceTest {
 		Document document = documentBuilder.parse(
 			new File(_NETBEANS_FILE_NAME));
 
-		NodeList nodelist = document.getElementsByTagName("classpath");
+		Properties properties = new Properties();
 
-		for (int i = 0; i < nodelist.getLength(); i++) {
-			Node node = nodelist.item(i);
+		try (InputStream in = Files.newInputStream(
+				Paths.get("nbproject/project.properties"))) {
 
-			_netBeansJars.add(node.getTextContent());
+			properties.load(in);
 		}
 
-		nodelist = document.getElementsByTagName("source-folder");
+		Collections.addAll(
+			_netBeansJars,
+			StringUtil.split(properties.getProperty("javac.classpath"), ':'));
+
+		NodeList nodelist = document.getElementsByTagName("source-folder");
 
 		for (int i = 0; i < nodelist.getLength(); i++) {
 			Element element = (Element)nodelist.item(i);

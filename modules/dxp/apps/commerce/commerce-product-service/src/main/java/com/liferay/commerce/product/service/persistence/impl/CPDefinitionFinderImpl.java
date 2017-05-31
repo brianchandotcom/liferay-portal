@@ -50,7 +50,8 @@ public class CPDefinitionFinderImpl
 		long groupId, String productTypeName, String languageId,
 		QueryDefinition<CPDefinition> queryDefinition) {
 
-		return doCountByG_P_S(groupId, productTypeName, languageId, queryDefinition, false);
+		return doCountByG_P_S(
+			groupId, productTypeName, languageId, queryDefinition, false);
 	}
 
 	@Override
@@ -58,7 +59,8 @@ public class CPDefinitionFinderImpl
 		long groupId, String productTypeName, String languageId,
 		QueryDefinition<CPDefinition> queryDefinition) {
 
-		return doCountByG_P_S(groupId, productTypeName, languageId, queryDefinition, true);
+		return doCountByG_P_S(
+			groupId, productTypeName, languageId, queryDefinition, true);
 	}
 
 	@Override
@@ -66,7 +68,8 @@ public class CPDefinitionFinderImpl
 		long groupId, String productTypeName, String languageId,
 		QueryDefinition<CPDefinition> queryDefinition) {
 
-		return doFindByG_P_S(groupId, productTypeName, languageId, queryDefinition, true);
+		return doFindByG_P_S(
+			groupId, productTypeName, languageId, queryDefinition, true);
 	}
 
 	@Override
@@ -74,7 +77,8 @@ public class CPDefinitionFinderImpl
 		long groupId, String productTypeName, String languageId,
 		QueryDefinition<CPDefinition> queryDefinition) {
 
-		return doFindByG_P_S(groupId, productTypeName, languageId, queryDefinition, false);
+		return doFindByG_P_S(
+			groupId, productTypeName, languageId, queryDefinition, false);
 	}
 
 	protected int doCountByG_P_S(
@@ -98,7 +102,8 @@ public class CPDefinitionFinderImpl
 
 			if (Validator.isNull(productTypeName)) {
 				sql = StringUtil.replace(
-					sql, "(CPDefinition.productTypeName = ?) AND", StringPool.BLANK);
+					sql, "(CPDefinition.productTypeName = ?) AND",
+					StringPool.BLANK);
 			}
 
 			if (inlineSQLHelper) {
@@ -117,7 +122,7 @@ public class CPDefinitionFinderImpl
 				qPos.add(groupId);
 			}
 
-			if (Validator.isNull(productTypeName)) {
+			if (Validator.isNotNull(productTypeName)) {
 				qPos.add(productTypeName);
 			}
 
@@ -168,7 +173,8 @@ public class CPDefinitionFinderImpl
 
 			if (Validator.isNull(productTypeName)) {
 				sql = StringUtil.replace(
-					sql, "(CPDefinition.productTypeName = ?) AND", StringPool.BLANK);
+					sql, "(CPDefinition.productTypeName = ?) AND",
+					StringPool.BLANK);
 			}
 
 			if (inlineSQLHelper) {
@@ -187,7 +193,7 @@ public class CPDefinitionFinderImpl
 				qPos.add(groupId);
 			}
 
-			if (Validator.isNull(productTypeName)) {
+			if (Validator.isNotNull(productTypeName)) {
 				qPos.add(productTypeName);
 			}
 

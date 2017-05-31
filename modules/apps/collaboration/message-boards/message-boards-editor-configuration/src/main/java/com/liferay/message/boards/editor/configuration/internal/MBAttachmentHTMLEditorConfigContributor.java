@@ -78,12 +78,12 @@ public class MBAttachmentHTMLEditorConfigContributor
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
+		ItemSelectorCriterion imageItemSelectorCriterion =
+			new ImageItemSelectorCriterion();
+
 		desiredItemSelectorReturnTypes.add(
 			new FileEntryItemSelectorReturnType());
 		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
-
-		ItemSelectorCriterion imageItemSelectorCriterion =
-			new ImageItemSelectorCriterion();
 
 		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
@@ -106,11 +106,7 @@ public class MBAttachmentHTMLEditorConfigContributor
 		return urlItemSelectorCriterion;
 	}
 
-	@Reference(unbind = "-")
-	protected void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
+	@Reference
 	private ItemSelector _itemSelector;
 
 }

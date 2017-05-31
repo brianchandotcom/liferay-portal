@@ -70,16 +70,12 @@ public class VideoEditorConfigContributor extends BaseEditorConfigContributor {
 		}
 	}
 
-	@Reference(unbind = "-")
-	public void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
 	@Override
 	protected ItemSelector getItemSelector() {
 		return _itemSelector;
 	}
 
+	@Reference
 	private ItemSelector _itemSelector;
 
 }

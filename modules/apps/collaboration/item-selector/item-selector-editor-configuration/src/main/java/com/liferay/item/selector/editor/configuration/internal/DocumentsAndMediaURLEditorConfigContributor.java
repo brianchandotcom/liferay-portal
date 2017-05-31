@@ -48,19 +48,19 @@ public class DocumentsAndMediaURLEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
+		ItemSelectorCriterion fileItemSelectorCriterion =
+			new FileItemSelectorCriterion();
+
+		ItemSelectorCriterion layoutItemSelectorCriterion =
+			new LayoutItemSelectorCriterion();
+
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
 		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
 
-		ItemSelectorCriterion fileItemSelectorCriterion =
-			new FileItemSelectorCriterion();
-
 		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
-
-		ItemSelectorCriterion layoutItemSelectorCriterion =
-			new LayoutItemSelectorCriterion();
 
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
@@ -79,16 +79,12 @@ public class DocumentsAndMediaURLEditorConfigContributor
 		jsonObject.put("filebrowserBrowseUrl", itemSelectorURL.toString());
 	}
 
-	@Reference(unbind = "-")
-	public void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
 	@Override
 	protected ItemSelector getItemSelector() {
 		return _itemSelector;
 	}
 
+	@Reference
 	private ItemSelector _itemSelector;
 
 }

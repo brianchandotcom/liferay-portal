@@ -36,7 +36,7 @@
 			<finder-column name="clientSecret" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="WeDeployAuthToken" remote-service="true" uuid="false">
+	<entity local-service="true" name="WeDeployAuthToken" remote-service="false" uuid="false">
 
 		<!-- PK fields -->
 

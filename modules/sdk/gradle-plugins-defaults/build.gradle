@@ -18,6 +18,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.12"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.4"
 	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.0.3"
+	compile group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.api", version: "1.1.0"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
 

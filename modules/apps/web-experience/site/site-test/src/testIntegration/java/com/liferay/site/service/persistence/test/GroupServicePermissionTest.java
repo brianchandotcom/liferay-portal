@@ -98,8 +98,6 @@ public class GroupServicePermissionTest {
 		givePermissionToManageSubsites(_group1);
 
 		testAddGroup(false, true, true, true);
-
-		UserLocalServiceUtil.deleteUser(_user);
 	}
 
 	@Test

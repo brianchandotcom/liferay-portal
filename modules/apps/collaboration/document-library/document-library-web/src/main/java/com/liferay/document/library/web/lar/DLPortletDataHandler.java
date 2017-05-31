@@ -113,7 +113,9 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(DLFileShortcut.class),
 			new StagedModelType(DLFileEntryConstants.getClassName()),
 			new StagedModelType(DLFolderConstants.getClassName()),
-			new StagedModelType(Repository.class));
+			new StagedModelType(
+				Repository.class.getName(),
+				StagedModelType.REFERRER_CLASS_NAME_ALL));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "repositories", true, false, null,

@@ -1270,6 +1270,11 @@
 				<var name="assetTitle" value="${siteName} WC Title" />
 			</execute>
 		</for>
+
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="Liferay WC Content" />
+			<var name="assetTitle" value="Liferay WC Title" />
+		</execute>
 	</command>
 
 	<command name="AssetPublisherTogglingBetweenSites" priority="4">

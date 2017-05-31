@@ -55,8 +55,21 @@ public class CPDefinitionsDisplayContext
 	}
 
 	public String getNavigation() {
-		return ParamUtil.getString(
-			httpServletRequest, "navigation", "all");
+		return ParamUtil.getString(httpServletRequest, "navigation", "all");
+	}
+
+	@Override
+	public PortletURL getPortletURL() throws PortalException {
+		PortletURL portletURL = super.getPortletURL();
+
+		String navigation = ParamUtil.getString(
+			httpServletRequest, "navigation");
+
+		if (Validator.isNotNull(navigation)) {
+			portletURL.setParameter("navigation", getNavigation());
+		}
+
+		return portletURL;
 	}
 
 	public String getProductTypeName() {
@@ -75,20 +88,6 @@ public class CPDefinitionsDisplayContext
 		}
 
 		return productTypeName;
-	}
-
-	@Override
-	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = super.getPortletURL();
-
-		String navigation = ParamUtil.getString(
-			httpServletRequest, "navigation");
-
-		if (Validator.isNotNull(navigation)) {
-			portletURL.setParameter("navigation", getNavigation());
-		}
-
-		return portletURL;
 	}
 
 	@Override

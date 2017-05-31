@@ -58,8 +58,7 @@ public class CPDefinitionItemSelectorViewDisplayContext
 	}
 
 	public String getNavigation() {
-		return ParamUtil.getString(
-			httpServletRequest, "navigation", "all");
+		return ParamUtil.getString(httpServletRequest, "navigation", "all");
 	}
 
 	@Override
@@ -117,15 +116,16 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		int total = _cpDefinitionService.getCPDefinitionsCount(
-			getScopeGroupId(), getProductTypeName(), themeDisplay.getLanguageId(),
-			WorkflowConstants.STATUS_ANY);
+			getScopeGroupId(), getProductTypeName(),
+			themeDisplay.getLanguageId(), WorkflowConstants.STATUS_ANY);
 
 		searchContainer.setTotal(total);
 
 		List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
-			getScopeGroupId(), getProductTypeName(), themeDisplay.getLanguageId(),
-			WorkflowConstants.STATUS_ANY, searchContainer.getStart(),
-			searchContainer.getEnd(), orderByComparator);
+			getScopeGroupId(), getProductTypeName(),
+			themeDisplay.getLanguageId(), WorkflowConstants.STATUS_ANY,
+			searchContainer.getStart(), searchContainer.getEnd(),
+			orderByComparator);
 
 		searchContainer.setResults(results);
 

@@ -19,12 +19,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
-import com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalService;
+import com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppService;
 import com.liferay.portal.security.wedeploy.auth.web.internal.constants.WeDeployAuthPortletKeys;
 
 import javax.portlet.ActionRequest;
@@ -68,17 +66,14 @@ public class EditWeDeployAuthAppMVCActionCommand extends BaseMVCActionCommand {
 	protected void addWeDeployAuthApp(ActionRequest actionRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String name = ParamUtil.getString(actionRequest, "name");
 		String redirectURI = ParamUtil.getString(actionRequest, "redirectURI");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			WeDeployAuthApp.class.getName(), actionRequest);
 
-		_weDeployAuthAppLocalService.addWeDeployAuthApp(
-			themeDisplay.getUserId(), name, redirectURI, serviceContext);
+		_weDeployAuthAppService.addWeDeployAuthApp(
+			name, redirectURI, serviceContext);
 	}
 
 	protected void deleteWeDeployAuthApp(ActionRequest actionRequest)
@@ -87,10 +82,10 @@ public class EditWeDeployAuthAppMVCActionCommand extends BaseMVCActionCommand {
 		long weDeployAuthAppId = ParamUtil.getLong(
 			actionRequest, "weDeployAuthAppId");
 
-		_weDeployAuthAppLocalService.deleteWeDeployAuthApp(weDeployAuthAppId);
+		_weDeployAuthAppService.deleteWeDeployAuthApp(weDeployAuthAppId);
 	}
 
 	@Reference
-	private WeDeployAuthAppLocalService _weDeployAuthAppLocalService;
+	private WeDeployAuthAppService _weDeployAuthAppService;
 
 }

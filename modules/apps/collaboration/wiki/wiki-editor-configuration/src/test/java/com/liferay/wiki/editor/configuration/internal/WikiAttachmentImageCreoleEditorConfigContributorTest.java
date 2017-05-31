@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.service.WikiPageLocalService;
@@ -34,18 +36,27 @@ import javax.portlet.PortletURL;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.internal.util.reflection.Whitebox;
 
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Roberto Díaz
  */
+@RunWith(PowerMockRunner.class)
+@SuppressStaticInitializationFor(
+	"com.liferay.portal.kernel.upload." +
+		"UploadServletRequestConfigurationHelperUtil"
+)
 public class WikiAttachmentImageCreoleEditorConfigContributorTest
 	extends PowerMockito {
 
@@ -144,6 +155,8 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 		).thenReturn(
 			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews"
 		);
+
+		mockUploadServletRequestConfigurationHelperUtil();
 
 		when(
 			_itemSelector.getItemSelectorURL(
@@ -263,6 +276,27 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 		jsonObject.put("removePlugins", "plugin1");
 
 		return jsonObject;
+	}
+
+	protected void mockUploadServletRequestConfigurationHelperUtil() {
+		UploadServletRequestConfigurationHelper
+			uploadServletRequestConfigurationHelper = mock(
+				UploadServletRequestConfigurationHelper.class);
+
+		when(
+			uploadServletRequestConfigurationHelper.getMaxSize()
+		).thenReturn(
+			104857600L
+		);
+
+		UploadServletRequestConfigurationHelperUtil
+			uploadServletRequestConfigurationHelperUtil = mock(
+				UploadServletRequestConfigurationHelperUtil.class);
+
+		Whitebox.setInternalState(
+			uploadServletRequestConfigurationHelperUtil,
+			"_uploadServletRequestConfigurationHelper",
+			uploadServletRequestConfigurationHelper);
 	}
 
 	protected void setAllowBrowseDocuments(boolean allowBrowseDocuments) {

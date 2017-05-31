@@ -4240,7 +4240,7 @@
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="label" />
-			<var name="fieldValue" value=",.?/;:{}[]\|-+!@#$%^*()=_" />
+			<var name="fieldValue" value=",-+!@#$%^*()=_.?/;:{}[]\|" />
 		</execute>
 
 		<execute macro="FormFields#viewFieldName">
@@ -4248,7 +4248,7 @@
 		</execute>
 
 		<execute macro="FormFields#editFieldName">
-			<var name="fieldValue" value=",.?/;:{}[]\|-+!@#$%^*()=_" />
+			<var name="fieldValue" value=",-+!@#$%^*()=_.?/;:{}[]\|" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />
@@ -4294,7 +4294,7 @@
 		</execute>
 
 		<execute macro="FormFields#viewTextField">
-			<var name="fieldLabel" value=",.?/;:{}[]\|-+!@#$%^*()=_" />
+			<var name="fieldLabel" value=",-+!@#$%^*()=_.?/;:{}[]\|" />
 			<var name="fieldName" value="text" />
 		</execute>
 
@@ -4310,7 +4310,7 @@
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="JumpSheexclaimed" />
-			<var name="fieldValue" value=",.?/;:{}[]\|-+!@#$%^*()=_" />
+			<var name="fieldValue" value=",-+!@#$%^*()=_.?/;:{}[]\|" />
 		</execute>
 
 		<execute macro="FormPortlet#submitSuccessfully" />

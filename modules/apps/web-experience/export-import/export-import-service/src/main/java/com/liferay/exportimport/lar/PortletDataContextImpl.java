@@ -1783,19 +1783,22 @@ public class PortletDataContextImpl implements PortletDataContext {
 				_missingReferencesElement.elements();
 
 			for (Element missingReferenceElement : missingReferenceElements) {
-				if (missingReferenceElement.attributeValue("element-path") ==
-						null) {
+				if (Validator.isNotNull(
+						missingReferenceElement.attributeValue(
+							"element-path"))) {
 
-					String missingReferenceClassName =
-						missingReferenceElement.attributeValue("class-name");
-					String missingReferenceClassPK =
-						missingReferenceElement.attributeValue("class-pk");
-
-					String missingReferenceKey = getReferenceKey(
-						missingReferenceClassName, missingReferenceClassPK);
-
-					_missingReferences.add(missingReferenceKey);
+					continue;
 				}
+
+				String missingReferenceClassName =
+					missingReferenceElement.attributeValue("class-name");
+				String missingReferenceClassPK =
+					missingReferenceElement.attributeValue("class-pk");
+
+				String missingReferenceKey = getReferenceKey(
+					missingReferenceClassName, missingReferenceClassPK);
+
+				_missingReferences.add(missingReferenceKey);
 			}
 		}
 

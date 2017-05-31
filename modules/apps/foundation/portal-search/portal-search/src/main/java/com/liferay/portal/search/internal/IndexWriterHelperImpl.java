@@ -69,7 +69,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexingDisabled() || isIndexReadOnly() ||
+		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
+			_indexStatusManager.isIndexReadOnly() ||
 			(document == null)) {
 
 			return;
@@ -102,7 +103,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			Collection<Document> documents, boolean commitImmediately)
 		throws SearchException {
 
-		if (!IndexStatusManagerThreadLocal.isIndexingEnabled() || isIndexReadOnly() ||
+		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
+			_indexStatusManager.isIndexReadOnly() ||
 			(documents == null) || documents.isEmpty()) {
 
 			return;
@@ -161,7 +163,9 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (!IndexStatusManagerThreadLocal.isIndexingEnabled() || isIndexReadOnly()) {
+		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
+			_indexStatusManager.isIndexReadOnly()) {
+
 			return;
 		}
 
@@ -186,7 +190,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexingDisabled() || isIndexReadOnly() ||
+		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
+			_indexStatusManager.isIndexReadOnly() ||
 			(uids == null) || uids.isEmpty()) {
 
 			return;
@@ -213,7 +218,9 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexingDisabled() || isIndexReadOnly()) {
+		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
+			_indexStatusManager.isIndexReadOnly()) {
+
 			return;
 		}
 
@@ -397,7 +404,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 	/**
 	 * @deprecated As of 3.3.0, replaced by {@link IndexStatusManager#
-	 *             isIndexReadOnly}
+	 *             isIndexReadWrite}
 	 */
 	@Deprecated
 	@Override
@@ -407,7 +414,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 	/**
 	 * @deprecated As of 3.3.0, replaced by {@link IndexStatusManager#
-	 *             isIndexReadOnly(String)}
+	 *             isIndexReadWrite(String)}
 	 */
 	@Deprecated
 	@Override
@@ -421,7 +428,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexingDisabled() || isIndexReadOnly() ||
+		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
+			_indexStatusManager.isIndexReadOnly() ||
 			(document == null)) {
 
 			return;
@@ -454,7 +462,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			Collection<Document> documents, boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexingDisabled() || isIndexReadOnly() ||
+		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
+			_indexStatusManager.isIndexReadOnly() ||
 			(documents == null) || documents.isEmpty()) {
 
 			return;
@@ -567,7 +576,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexingDisabled() || isIndexReadOnly() ||
+		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
+			_indexStatusManager.isIndexReadOnly() ||
 			(document == null)) {
 
 			return;
@@ -602,7 +612,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			Collection<Document> documents, boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexingDisabled() || isIndexReadOnly() ||
+		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
+			_indexStatusManager.isIndexReadOnly() ||
 			(documents == null) || documents.isEmpty()) {
 
 			return;
@@ -633,7 +644,9 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 	@Override
 	public void updatePermissionFields(String name, String primKey) {
-		if (IndexStatusManagerThreadLocal.isIndexingDisabled() || isIndexReadOnly()) {
+		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
+			_indexStatusManager.isIndexReadOnly()) {
+
 			return;
 		}
 

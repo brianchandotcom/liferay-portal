@@ -47,7 +47,7 @@ public class IndexableAdvice
 		}
 
 		if (CompanyThreadLocal.isDeleteInProcess() ||
-			IndexStatusManagerThreadLocal.isIndexingDisabled() ||
+			IndexStatusManagerThreadLocal.isIndexReadOnly() ||
 			IndexWriterHelperUtil.isIndexReadOnly()) {
 
 			if (_log.isDebugEnabled()) {
@@ -55,7 +55,7 @@ public class IndexableAdvice
 					_log.debug(
 						"Skip indexing because company delete is in process");
 				}
-				else if (!IndexStatusManagerThreadLocal.isIndexingEnabled()) {
+				else if (IndexStatusManagerThreadLocal.isIndexReadOnly()) {
 					_log.debug(
 						"Skip indexing because it is disabled for the " +
 							"current thread");

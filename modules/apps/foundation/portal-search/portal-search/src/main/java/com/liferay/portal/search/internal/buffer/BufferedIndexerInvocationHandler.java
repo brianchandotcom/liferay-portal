@@ -71,7 +71,7 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 			return method.invoke(_indexer, args);
 		}
 
-		if (IndexStatusManagerThreadLocal.isIndexingDisabled()) {
+		if (IndexStatusManagerThreadLocal.isIndexReadOnly()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Skipping indexer request because indexing is disabled " +

@@ -23,22 +23,17 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 @ProviderType
 public class IndexStatusManagerThreadLocal {
 
-	public static boolean isIndexingDisabled() {
-		return !isIndexingEnabled();
+	public static boolean isIndexReadOnly() {
+		return _indexReadOnly.get();
 	}
 
-	public static boolean isIndexingEnabled() {
-		return _indexingEnabled.get();
+	public static void setIndexReadOnly(boolean indexReadOnly) {
+		_indexReadOnly.set(indexReadOnly);
 	}
 
-	public static void setIndexingEnabled(boolean indexingEnabled) {
-		_indexingEnabled.set(indexingEnabled);
-	}
-
-	//_indexReadOnly
-	private static final ThreadLocal<Boolean> _indexingEnabled =
+	private static final ThreadLocal<Boolean> _indexReadOnly =
 		new AutoResetThreadLocal<>(
-			IndexStatusManagerThreadLocal.class + "._indexingEnabled",
+			IndexStatusManagerThreadLocal.class + "._indexReadOnly",
 			() -> Boolean.TRUE);
 
 }

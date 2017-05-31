@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Gradle Plugins App Docker
+Bundle-SymbolicName: com.liferay.gradle.plugins.app.docker
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.gradle.plugins.app.docker

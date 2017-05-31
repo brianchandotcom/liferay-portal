@@ -5228,6 +5228,12 @@ public class ServiceBuilder {
 			}
 		}
 
+		if (uuid && pkList.isEmpty()) {
+			throw new ServiceBuilderException(
+				"Cannot create entity \"" + ejbName +
+					"\" with a uuid without a primary key.");
+		}
+
 		EntityOrder order = null;
 
 		Element orderElement = entityElement.element("order");

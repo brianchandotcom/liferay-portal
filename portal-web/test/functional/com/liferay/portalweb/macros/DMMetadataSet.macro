@@ -63,7 +63,7 @@
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertTextNotPresent" locator1="DocumentsAndMediaDocumentTypes#DOCUMENT_TYPES_TABLE_NAME" value1="${key_dmDocumentTypeName}" />
+		<execute function="AssertTextNotPresent" locator1="DocumentsAndMediaDocumentTypes#DOCUMENT_TYPES_TABLE_NAME" value1="${dmDocumentTypeName}" />
 	</command>
 
 	<command name="deletePGFailure">
@@ -79,7 +79,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Required structures could not be deleted." />
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_TABLE_NAME" value1="${key_metadataSetName}" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_TABLE_NAME" value1="${metadataSetName}" />
 	</command>
 
 	<command name="save">

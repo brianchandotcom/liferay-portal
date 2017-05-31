@@ -217,11 +217,11 @@
 
 		<execute function="AssertTextEquals" locator1="SearchResults#USER_FACET_ANY_USER" value1="Any User" />
 
-		<var method="StringUtil#lowerCase('${userLoginFullName}')" name="key_userLoginFullName" />
+		<var method="StringUtil#lowerCase('${userLoginFullName}')" name="userLoginFullName" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SearchResults#USER_FACET_FREQUENCY" value1="${facetFrequency}" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#USER_FACET_USER_NAME" value1="${key_userLoginFullName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#USER_FACET_USER_NAME" value1="${userLoginFullName}" />
 
 		<execute macro="Search#viewSearchResultPG">
 			<var name="searchAssetSummary" value="${searchAssetSummary}" />

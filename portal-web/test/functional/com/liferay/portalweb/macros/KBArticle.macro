@@ -1296,11 +1296,11 @@
 
 		<var name="key_versionNumber" value="${kbArticleVersionNew}" />
 
-		<execute function="Check" locator1="KnowledgeBaseArticle#HISTORY_SELECT_VERSION_CHECKBOX" value1="${key_versionNumber}" />
+		<execute function="Check" locator1="KnowledgeBaseArticle#HISTORY_SELECT_VERSION_CHECKBOX" value1="${kbArticleVersionNew}" />
 
 		<var name="key_versionNumber" value="${kbArticleVersionOld}" />
 
-		<execute function="Check" locator1="KnowledgeBaseArticle#HISTORY_SELECT_VERSION_CHECKBOX" value1="${key_versionNumber}" />
+		<execute function="Check" locator1="KnowledgeBaseArticle#HISTORY_SELECT_VERSION_CHECKBOX" value1="${kbArticleVersionOld}" />
 
 		<execute function="AssertClick" locator1="Button#COMPARE_VERSIONS" value1="Compare Versions" />
 
@@ -1386,7 +1386,7 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
 
-		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${key_kbChildArticleTitle}" />
+		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_TITLE" value1="${kbChildArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_CONTENT" value1="${kbChildArticleContent}" />

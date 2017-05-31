@@ -15,7 +15,7 @@
 package com.liferay.blogs.util;
 
 import com.liferay.blogs.internal.util.BlogsEntryAttachmentFileEntryReferenceAdapter;
-import com.liferay.blogs.util.test.BlogsTestUtil;
+import com.liferay.blogs.test.util.BlogsTestUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;

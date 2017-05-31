@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Blogs Test Utilities
 Bundle-SymbolicName: com.liferay.blogs.test.util
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.blogs.util.test
+Export-Package: com.liferay.blogs.test.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs

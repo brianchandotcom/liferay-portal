@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.blogs.util.test.BlogsTestUtil;
+import com.liferay.blogs.test.util.BlogsTestUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.ServiceContext;

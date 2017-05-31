@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.util.test;
+package com.liferay.blogs.test.util;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;

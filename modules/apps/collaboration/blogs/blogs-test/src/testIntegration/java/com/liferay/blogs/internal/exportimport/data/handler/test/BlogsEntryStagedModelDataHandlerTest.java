@@ -17,7 +17,7 @@ package com.liferay.blogs.internal.exportimport.data.handler.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.blogs.util.test.BlogsTestUtil;
+import com.liferay.blogs.test.util.BlogsTestUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;

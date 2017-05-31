@@ -17,7 +17,7 @@ package com.liferay.blogs.subscription.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.blogs.util.test.BlogsTestUtil;
+import com.liferay.blogs.test.util.BlogsTestUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;

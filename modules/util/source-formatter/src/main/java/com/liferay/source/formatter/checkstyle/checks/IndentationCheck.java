@@ -509,8 +509,6 @@ public class IndentationCheck extends AbstractCheck {
 		expectedTabCount = _addExtraTabForSwitch(expectedTabCount, detailAST);
 		expectedTabCount = _addExtraTabForTryStatement(
 			expectedTabCount, detailAST);
-		expectedTabCount = _adjustTabCountForChains(
-			expectedTabCount, detailAST);
 
 		if ((detailAST.getType() == TokenTypes.BLOCK_COMMENT_END) ||
 			(detailAST.getType() == TokenTypes.RCURLY) ||
@@ -578,7 +576,7 @@ public class IndentationCheck extends AbstractCheck {
 				(parentAST.getType() == TokenTypes.OBJBLOCK) ||
 				(parentAST.getType() == TokenTypes.SLIST)) {
 
-				return lineNumbers.size();
+				return _adjustTabCountForChains(lineNumbers.size(), detailAST);
 			}
 
 			if ((parentAST.getType() == TokenTypes.ANNOTATION_DEF) ||
@@ -727,7 +725,8 @@ public class IndentationCheck extends AbstractCheck {
 					(_findParent(parentAST, TokenTypes.PARAMETER_DEF) ==
 						null)) {
 
-					return lineNumbers.size();
+					return _adjustTabCountForChains(
+						lineNumbers.size(), detailAST);
 				}
 
 				continue;

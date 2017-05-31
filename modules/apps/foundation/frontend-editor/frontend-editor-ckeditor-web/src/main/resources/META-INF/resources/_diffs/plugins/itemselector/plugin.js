@@ -1,5 +1,6 @@
 (function() {
 	var STR_FILE_ENTRY_RETURN_TYPE = 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType';
+	var STR_PORTLET_FILE_ENTRY_RETURN_TYPE = 'com.liferay.item.selector.criteria.PortletFileEntryItemSelectorReturnType';
 
 	var TPL_AUDIO_SCRIPT = 'boundingBox: "#" + mediaId,' +
 		'oggUrl: "{oggUrl}",' +
@@ -346,7 +347,11 @@
 			_getItemSrc: function(editor, selectedItem) {
 				var itemSrc = selectedItem.value;
 
-				if (selectedItem.returnType === STR_FILE_ENTRY_RETURN_TYPE) {
+				var returnType = selectedItem.returnType;
+
+				if ((returnType === STR_FILE_ENTRY_RETURN_TYPE) ||
+					(returnType === STR_PORTLET_FILE_ENTRY_RETURN_TYPE)) {
+
 					try {
 						var itemValue = JSON.parse(selectedItem.value);
 

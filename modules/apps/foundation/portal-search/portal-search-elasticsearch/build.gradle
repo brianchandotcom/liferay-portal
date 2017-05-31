@@ -54,6 +54,7 @@ dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.ibm.icu", name: "icu4j", version: "54.1.1"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "commons-cli", name: "commons-cli", version: "1.3.1"
 	provided group: "org.hdrhistogram", name: "HdrHistogram", version: "2.1.8"

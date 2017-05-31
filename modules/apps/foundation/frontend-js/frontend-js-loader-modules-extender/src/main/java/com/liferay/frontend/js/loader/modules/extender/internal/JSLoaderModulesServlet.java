@@ -225,7 +225,8 @@ public class JSLoaderModulesServlet extends HttpServlet {
 						printWriter.write("\": \"[NOT-DEPLOYED:");
 						printWriter.write(dependencyPackageName);
 						printWriter.write("]\"");
-					} else {
+					}
+					else {
 						printWriter.write("\"");
 						printWriter.write(jsDependencyPackage.getName());
 						printWriter.write("\": ");

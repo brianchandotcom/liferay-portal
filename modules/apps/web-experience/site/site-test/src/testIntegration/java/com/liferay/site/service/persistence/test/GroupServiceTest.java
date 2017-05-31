@@ -409,16 +409,20 @@ public class GroupServiceTest {
 	public void testGroupHasCurrentPageScopeDescriptiveName() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Group group = addGroup(false, true, false);
+		Group group = GroupTestUtil.addGroup();
 
-		themeDisplay.setPlid(group.getClassPK());
+		Group scopeGroup = addScopeGroup(group);
+
+		themeDisplay.setPlid(scopeGroup.getClassPK());
 
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 
-		String scopeDescriptiveName = group.getScopeDescriptiveName(
+		String scopeDescriptiveName = scopeGroup.getScopeDescriptiveName(
 			themeDisplay);
 
 		Assert.assertTrue(scopeDescriptiveName.contains("current-page"));
+
+		GroupLocalServiceUtil.deleteGroup(scopeGroup);
 
 		GroupLocalServiceUtil.deleteGroup(group);
 	}
@@ -427,7 +431,7 @@ public class GroupServiceTest {
 	public void testGroupHasCurrentSiteScopeDescriptiveName() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Group group = addGroup(true, false, false);
+		Group group = GroupTestUtil.addGroup();
 
 		themeDisplay.setScopeGroupId(group.getGroupId());
 
@@ -443,7 +447,9 @@ public class GroupServiceTest {
 	public void testGroupHasDefaultScopeDescriptiveName() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Group group = addGroup(false, false, true);
+		Group group = GroupTestUtil.addGroup();
+
+		group.setClassName(LayoutPrototype.class.getName());
 
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 
@@ -494,7 +500,7 @@ public class GroupServiceTest {
 	public void testGroupIsCurrentSiteScopeLabel() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Group group = addGroup(true, false, false);
+		Group group = GroupTestUtil.addGroup();
 
 		themeDisplay.setScopeGroupId(group.getGroupId());
 
@@ -509,7 +515,7 @@ public class GroupServiceTest {
 	public void testGroupIsGlobalScopeLabel() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Group group = addGroup(false, false, false);
+		Group group = GroupTestUtil.addGroup();
 
 		Company company = CompanyLocalServiceUtil.getCompany(
 			group.getCompanyId());
@@ -529,15 +535,19 @@ public class GroupServiceTest {
 	public void testGroupIsPageScopeLabel() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Group group = addGroup(false, true, false);
+		Group group = GroupTestUtil.addGroup();
 
-		themeDisplay.setPlid(group.getClassPK());
+		Group scopeGroup = addScopeGroup(group);
+
+		themeDisplay.setPlid(scopeGroup.getClassPK());
 
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 
-		String scopeLabel = group.getScopeLabel(themeDisplay);
+		String scopeLabel = scopeGroup.getScopeLabel(themeDisplay);
 
 		Assert.assertEquals("page", scopeLabel);
+
+		GroupLocalServiceUtil.deleteGroup(scopeGroup);
 
 		GroupLocalServiceUtil.deleteGroup(group);
 	}
@@ -811,40 +821,20 @@ public class GroupServiceTest {
 			LocaleUtil.GERMANY, false);
 	}
 
-	protected Group addGroup(
-			boolean site, boolean layout, boolean layoutPrototype)
-		throws Exception {
+	protected Group addScopeGroup(Group group) throws Exception {
+		Layout scopeLayout = LayoutTestUtil.addLayout(group);
 
-		if (site) {
-			return GroupTestUtil.addGroup();
-		}
-		else if (layout) {
-			Group group = GroupTestUtil.addGroup();
+		Map<Locale, String> nameMap = new HashMap<>();
 
-			Layout scopeLayout = LayoutTestUtil.addLayout(group);
+		nameMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
 
-			Map<Locale, String> nameMap = new HashMap<>();
-
-			nameMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
-
-			return GroupLocalServiceUtil.addGroup(
-				TestPropsValues.getUserId(),
-				GroupConstants.DEFAULT_PARENT_GROUP_ID, Layout.class.getName(),
-				scopeLayout.getPlid(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
-				nameMap, (Map<Locale, String>)null, 0, true,
-				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false,
-				true, null);
-		}
-		else if (layoutPrototype) {
-			Group group = GroupTestUtil.addGroup();
-
-			group.setClassName(LayoutPrototype.class.getName());
-
-			return group;
-		}
-		else {
-			return GroupTestUtil.addGroup();
-		}
+		return GroupLocalServiceUtil.addGroup(
+			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			Layout.class.getName(), scopeLayout.getPlid(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
+			(Map<Locale, String>)null, 0, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, true,
+			null);
 	}
 
 	protected Locale getLocale() {

@@ -41,8 +41,6 @@ import javax.portlet.ActionResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import static com.liferay.portal.kernel.security.permission.PermissionThreadLocal.getPermissionChecker;
-
 /**
  * @author Supritha Sundaram
  */

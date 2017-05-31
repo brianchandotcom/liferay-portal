@@ -41,27 +41,27 @@ public class WeDeployAuthPermission extends BaseResourcePermissionChecker {
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, 0, actionId)) {
+		if (!contains(permissionChecker, actionId)) {
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker.getUserId(), RESOURCE_NAME, 0, actionId);
 		}
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
+		PermissionChecker permissionChecker, String actionId) {
 
 		String portletId = PortletProviderUtil.getPortletId(
 			WeDeployAuthApp.class.getName(), PortletProvider.Action.EDIT);
 
 		return contains(
-			permissionChecker, RESOURCE_NAME, portletId, classPK, actionId);
+			permissionChecker, RESOURCE_NAME, portletId, 0, actionId);
 	}
 
 	@Override
 	public Boolean checkResource(
 		PermissionChecker permissionChecker, long classPK, String actionId) {
 
-		return contains(permissionChecker, 0, actionId);
+		return contains(permissionChecker, actionId);
 	}
 
 }

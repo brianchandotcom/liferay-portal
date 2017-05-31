@@ -29,13 +29,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Supritha Sundaram
  */
 @Component(
-	property = {"resource.name=" + WeDeployAuthAppPermission.RESOURCE_NAME},
+	property = {"resource.name=com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp"},
 	service = ResourcePermissionChecker.class
 )
 public class WeDeployAuthAppPermission extends BaseResourcePermissionChecker {
-
-	public static final String RESOURCE_NAME =
-		"com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp";
 
 	public static void check(
 			PermissionChecker permissionChecker, long weDeployAuthId,
@@ -44,8 +41,8 @@ public class WeDeployAuthAppPermission extends BaseResourcePermissionChecker {
 
 		if (!contains(permissionChecker, weDeployAuthId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), RESOURCE_NAME, weDeployAuthId,
-				actionId);
+				permissionChecker.getUserId(), WeDeployAuthApp.class.getName(),
+				weDeployAuthId, actionId);
 		}
 	}
 
@@ -57,8 +54,8 @@ public class WeDeployAuthAppPermission extends BaseResourcePermissionChecker {
 			WeDeployAuthApp.class.getName(), PortletProvider.Action.VIEW);
 
 		return contains(
-			permissionChecker, RESOURCE_NAME, portletId, weDeployAuthId,
-			actionId);
+			permissionChecker, WeDeployAuthApp.class.getName(), portletId,
+			weDeployAuthId, actionId);
 	}
 
 	@Override

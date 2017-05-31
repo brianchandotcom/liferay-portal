@@ -21,6 +21,4 @@ public class WeDeployAuthActionKeys {
 
 	public static final String ADD_APP = "ADD_APP";
 
-	public static final String AUTHORIZE = "AUTHORIZE";
-
 }

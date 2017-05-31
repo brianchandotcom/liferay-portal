@@ -69,8 +69,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
-			_indexStatusManager.isIndexReadOnly() ||
+		if (_indexStatusManager.isIndexReadOnly() ||
 			(document == null)) {
 
 			return;
@@ -103,8 +102,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			Collection<Document> documents, boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
-			_indexStatusManager.isIndexReadOnly() ||
+		if (_indexStatusManager.isIndexReadOnly() ||
 			(documents == null) || documents.isEmpty()) {
 
 			return;
@@ -163,8 +161,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
-			_indexStatusManager.isIndexReadOnly()) {
+		if (_indexStatusManager.isIndexReadOnly()) {
 
 			return;
 		}
@@ -190,8 +187,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
-			_indexStatusManager.isIndexReadOnly() ||
+		if (_indexStatusManager.isIndexReadOnly() ||
 			(uids == null) || uids.isEmpty()) {
 
 			return;
@@ -218,8 +214,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
-			_indexStatusManager.isIndexReadOnly()) {
+		if (_indexStatusManager.isIndexReadOnly()) {
 
 			return;
 		}
@@ -428,8 +423,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
-			_indexStatusManager.isIndexReadOnly() ||
+		if (_indexStatusManager.isIndexReadOnly() ||
 			(document == null)) {
 
 			return;
@@ -462,8 +456,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			Collection<Document> documents, boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
-			_indexStatusManager.isIndexReadOnly() ||
+		if (_indexStatusManager.isIndexReadOnly() ||
 			(documents == null) || documents.isEmpty()) {
 
 			return;
@@ -576,8 +569,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
-			_indexStatusManager.isIndexReadOnly() ||
+		if (_indexStatusManager.isIndexReadOnly() ||
 			(document == null)) {
 
 			return;
@@ -612,8 +604,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			Collection<Document> documents, boolean commitImmediately)
 		throws SearchException {
 
-		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
-			_indexStatusManager.isIndexReadOnly() ||
+		if (_indexStatusManager.isIndexReadOnly() ||
 			(documents == null) || documents.isEmpty()) {
 
 			return;
@@ -644,8 +635,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 	@Override
 	public void updatePermissionFields(String name, String primKey) {
-		if (IndexStatusManagerThreadLocal.isIndexReadOnly() ||
-			_indexStatusManager.isIndexReadOnly()) {
+		if (_indexStatusManager.isIndexReadOnly()) {
 
 			return;
 		}

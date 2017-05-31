@@ -9,3 +9,4 @@ Provide-Capability:\
 Require-Capability:\
 	alloyeditor.link.browse;\
 		filter:="(alloyeditor.link.browse=default)"
+-dsannotations-options: inherit

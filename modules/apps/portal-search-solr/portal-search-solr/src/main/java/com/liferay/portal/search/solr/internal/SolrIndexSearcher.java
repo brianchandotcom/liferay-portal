@@ -448,6 +448,8 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 		solrQuery.setQuery(queryString);
 
+		searchContext.setAttribute("queryString", queryString);
+
 		List<String> filterQueries = new ArrayList<>();
 
 		if (query.getPreBooleanFilter() != null) {

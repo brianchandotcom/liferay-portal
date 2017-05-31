@@ -118,10 +118,10 @@ Hits hits = searchDisplayContext.getHits();
 
 			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" type="more" />
 
-			<c:if test="<%= searchDisplayContext.isDisplayMainQuery() && (hits.getQuery() != null) %>">
+			<c:if test="<%= searchDisplayContext.isDisplayMainQuery() && (searchDisplayContext.getQueryString() != null) %>">
 				<div class="full-query">
 					<code>
-						<%= HtmlUtil.escape(IndexSearcherHelperUtil.getQueryString(searchDisplayContext.getSearchContext(), hits.getQuery())) %>
+						<%= HtmlUtil.escape(searchDisplayContext.getQueryString()) %>
 					</code>
 				</div>
 			</c:if>

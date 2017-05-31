@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.portal.kernel.servlet.PortalSessionContext;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
@@ -35,20 +35,15 @@ import javax.servlet.http.HttpSession;
  */
 public class PublicRenderParametersPool {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #get(HttpServletRequest, long)}
+	 */
+	@Deprecated
 	public static Map<String, String[]> get(
 		HttpServletRequest request, long plid, boolean warFile) {
 
-		Map<String, String[]> map1 = get(request, plid);
-
-		if (warFile) {
-			Map<String, String[]> map2 = _publicRenderParametersMap.get();
-
-			map1.putAll(map2);
-
-			return new PublicRenderParameters(map1, map2);
-		}
-
-		return map1;
+		return get(request, plid);
 	}
 
 	protected static Map<String, String[]> get(
@@ -60,6 +55,12 @@ public class PublicRenderParametersPool {
 		}
 
 		HttpSession session = request.getSession();
+
+		HttpSession portalSession = PortalSessionContext.get(session.getId());
+
+		if (portalSession != null) {
+			session = portalSession;
+		}
 
 		Map<Long, Map<String, String[]>> publicRenderParametersPool =
 			(Map<Long, Map<String, String[]>>)session.getAttribute(
@@ -78,17 +79,8 @@ public class PublicRenderParametersPool {
 
 			LayoutSet layoutSet = layout.getLayoutSet();
 
-			Map<String, String[]> publicRenderParameters =
-				publicRenderParametersPool.get(layoutSet.getLayoutSetId());
-
-			if (publicRenderParameters == null) {
-				publicRenderParameters = new HashMap<>();
-
-				publicRenderParametersPool.put(
-					layoutSet.getLayoutSetId(), publicRenderParameters);
-			}
-
-			return publicRenderParameters;
+			return publicRenderParametersPool.computeIfAbsent(
+				layoutSet.getLayoutSetId(), key -> new HashMap<>());
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -104,11 +96,5 @@ public class PublicRenderParametersPool {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PublicRenderParametersPool.class);
-
-	private static final ThreadLocal<Map<String, String[]>>
-		_publicRenderParametersMap = new AutoResetThreadLocal<>(
-			PublicRenderParametersPool.class +
-				"._publicRenderParametersMap",
-			HashMap::new);
 
 }

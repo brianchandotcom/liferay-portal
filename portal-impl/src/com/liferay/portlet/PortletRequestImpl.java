@@ -674,8 +674,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		PortletApp portletApp = portlet.getPortletApp();
 
 		Map<String, String[]> publicRenderParametersMap =
-			PublicRenderParametersPool.get(
-				request, plid, portletApp.isWARFile());
+			PublicRenderParametersPool.get(request, plid);
 
 		if (invokerPortlet != null) {
 			if (invokerPortlet.isStrutsPortlet() ||

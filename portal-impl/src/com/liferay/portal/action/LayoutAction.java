@@ -336,6 +336,9 @@ public class LayoutAction extends Action {
 				// Include layout content before the page loads because portlets
 				// on the page can set the page title and page subtitle
 
+				PortletContainerUtil.processPublicRenderParameters(
+					request, layout);
+
 				if (layout.includeLayoutContent(request, response)) {
 					return null;
 				}

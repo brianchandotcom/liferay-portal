@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 
@@ -27,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Shuyang Zhou
  */
+@ProviderType
 public interface PortletContainer {
 
 	public void preparePortlet(HttpServletRequest request, Portlet portlet)
@@ -41,6 +44,9 @@ public interface PortletContainer {
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet, Layout layout, Event event)
 		throws PortletContainerException;
+
+	public void processPublicRenderParameters(
+		HttpServletRequest request, Layout layout);
 
 	public void render(
 			HttpServletRequest request, HttpServletResponse response,

@@ -17,7 +17,6 @@ package com.liferay.portal.servlet.filters.gzip;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse;
 import com.liferay.portal.kernel.servlet.ServletOutputStreamAdapter;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
@@ -30,13 +29,14 @@ import java.util.zip.GZIPOutputStream;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 /**
  * @author Jayson Falkner
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class GZipResponse extends MetaInfoCacheServletResponse {
+public class GZipResponse extends HttpServletResponseWrapper {
 
 	public GZipResponse(HttpServletResponse response) {
 		super(response);
@@ -54,20 +54,7 @@ public class GZipResponse extends MetaInfoCacheServletResponse {
 		_response.addHeader(HttpHeaders.CONTENT_ENCODING, _GZIP);
 	}
 
-	@Override
-	public void finishResponse(boolean reapplyMetaData) throws IOException {
-		if (!isCommitted() && (_servletOutputStream == null)) {
-
-			// Resposne is not committed and the content has not been GZipped.
-			// Reset the wrapped response to clear out the GZip header
-
-			_response.reset();
-
-			// Reapply meta data
-
-			super.finishResponse(reapplyMetaData);
-		}
-
+	public void finishResponse() throws IOException {
 		try {
 			if (_printWriter != null) {
 				_printWriter.close();

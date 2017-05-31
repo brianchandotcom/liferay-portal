@@ -21,6 +21,7 @@ import org.dom4j.Element;
 /**
  * @author Peter Yoo
  * @author Michael Hashimoto
+ * @author Yi-Chen Tsai
  */
 public class SemanticVersioningFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
@@ -54,7 +55,9 @@ public class SemanticVersioningFailureMessageGenerator
 
 		end = consoleOutput.indexOf("\n", end);
 
-		int start = consoleOutput.lastIndexOf(_SEMVER_START_STRING, end);
+		int start = consoleOutput.indexOf(_BASELINE_LOG_STRING);
+
+		start = consoleOutput.indexOf(_SEMVER_START_STRING, start);
 
 		start = consoleOutput.lastIndexOf("\n", start);
 
@@ -77,7 +80,9 @@ public class SemanticVersioningFailureMessageGenerator
 
 		end = consoleText.indexOf("\n", end);
 
-		int start = consoleText.lastIndexOf(_SEMVER_START_STRING, end);
+		int start = consoleText.indexOf(_BASELINE_LOG_STRING);
+
+		start = consoleText.indexOf(_SEMVER_START_STRING, start);
 
 		start = consoleText.lastIndexOf("\n", start);
 
@@ -94,7 +99,11 @@ public class SemanticVersioningFailureMessageGenerator
 						consoleText, true, start, end))));
 	}
 
-	private static final String _SEMVER_END_STRING = ":baseline FAILED";
+	private static final String _BASELINE_LOG_STRING =
+		"Checking for baseline log files";
+
+	private static final String _SEMVER_END_STRING =
+		"Semantic versioning is incorrect";
 
 	private static final String _SEMVER_START_STRING = "PACKAGE_NAME";
 

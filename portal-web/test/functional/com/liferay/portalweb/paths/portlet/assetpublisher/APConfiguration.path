@@ -241,6 +241,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDERING_AND_GROUPING_ORDER_ASCENDING</td>
+	<td>//a[span/*[name()='svg'][contains(@class,'icon-angle-up')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDERING_AND_GROUPING_ORDER_DESCENDING</td>
+	<td>//a[span/*[name()='svg'][contains(@class,'icon-angle-down')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

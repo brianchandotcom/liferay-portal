@@ -1575,7 +1575,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		// Missing reference is exported after added as missing
 
-		if (element.attributeValue("element-path") != null) {
+		if (Validator.isNotNull(element.attributeValue("element-path"))) {
 			return null;
 		}
 

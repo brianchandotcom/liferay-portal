@@ -471,7 +471,7 @@ public class StagedModelDataHandlerUtil {
 		Attribute missingAttribute = referenceElement.attribute("missing");
 
 		if ((missingAttribute != null) &&
-			GetterUtil.getBoolean(referenceElement.attributeValue("missing"))) {
+			GetterUtil.getBoolean(missingAttribute.getValue())) {
 
 			StagedModel stagedModel = _getReferenceStagedModel(
 				portletDataContext, referenceElement);

@@ -1539,6 +1539,11 @@ the deployed OSGi bundle is not `ACTIVE`.
 ### Changed
 - [LPS-69661]: Update the [Liferay Gradle Plugins] dependency to version 3.3.22.
 
+## 3.7.1 - 2017-05-31
+
+### Changed
+- [LPS-72851]: Update the [Liferay Gradle Plugins] dependency to version 3.3.23.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1700,6 +1705,7 @@ the deployed OSGi bundle is not `ACTIVE`.
 [LPS-72723]: https://issues.liferay.com/browse/LPS-72723
 [LPS-72750]: https://issues.liferay.com/browse/LPS-72750
 [LPS-72830]: https://issues.liferay.com/browse/LPS-72830
+[LPS-72851]: https://issues.liferay.com/browse/LPS-72851
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

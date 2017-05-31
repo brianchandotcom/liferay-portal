@@ -144,6 +144,12 @@ JavaScript dependencies for the `transpileJS` task.
 - [LPS-72723]: Avoid the `npmInstall` task from deleting the `node_modules`
 subdirectories created from the dependencies in the `jsCompile` configuration.
 
+## 2.3.14 - 2017-05-31
+
+### Fixed
+- [LPS-72851]: Fix `InvalidUserDataException` in parallel builds when the
+`jsCompile` or `soyCompile` configurations include project dependencies.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
@@ -165,3 +171,4 @@ subdirectories created from the dependencies in the `jsCompile` configuration.
 [LPS-72152]: https://issues.liferay.com/browse/LPS-72152
 [LPS-72340]: https://issues.liferay.com/browse/LPS-72340
 [LPS-72723]: https://issues.liferay.com/browse/LPS-72723
+[LPS-72851]: https://issues.liferay.com/browse/LPS-72851

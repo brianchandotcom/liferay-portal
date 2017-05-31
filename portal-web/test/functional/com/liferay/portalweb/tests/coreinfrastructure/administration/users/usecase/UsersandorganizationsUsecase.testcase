@@ -319,10 +319,8 @@
 			<var name="actionsDescription" value="Reindex all search indexes." />
 		</execute>
 
-		<var name="count" value="1" />
-
 		<execute macro="User#addMultipleCP">
-			<var name="usersEmailsList" value="userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com" />
+			<var name="numberOfUsers" value="6" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -372,54 +370,10 @@
 			<var name="tagName" value="bravo" />
 		</execute>
 
-		<var name="count" value="1" />
-
-		<while>
-			<not>
-				<equals arg1="${count}" arg2="5" />
-			</not>
-			<then>
-				<execute macro="ProductMenu#gotoControlPanelUsers">
-					<var name="portlet" value="Users and Organizations" />
-				</execute>
-
-				<execute macro="Organization#addCP">
-					<var name="orgName" value="Suborganization Name ${count}" />
-					<var name="orgType" value="Organization" />
-				</execute>
-
-				<execute macro="ProductMenu#gotoControlPanelUsers">
-					<var name="portlet" value="Users and Organizations" />
-				</execute>
-
-				<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-				<execute macro="Organization#searchCP">
-					<var name="orgName" value="Suborganization Name ${count}" />
-					<var name="searchTerm" value="Suborganization Name ${count}" />
-				</execute>
-
-				<execute macro="Organization#selectParentOrganizationCP">
-					<var name="orgName" value="Suborganization Name ${count}" />
-					<var name="parentOrgName" value="Organization Name 2" />
-				</execute>
-
-				<execute macro="ProductMenu#gotoControlPanelUsers">
-					<var name="portlet" value="Users and Organizations" />
-				</execute>
-
-				<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-				<execute macro="Organization#viewParentOrganizationCP">
-					<var name="orgName" value="Suborganization Name ${count}" />
-					<var name="parentOrgExist" value="true" />
-					<var name="parentOrgName" value="Organization Name 2" />
-					<var name="subOrgName" value="Suborganization Name ${count}" />
-				</execute>
-
-				<var method="MathUtil#sum('${count}', '1')" name="count" />
-			</then>
-		</while>
+		<execute macro="Organization#addMultipleSuborganizationsWithSameParentOrganization">
+			<var name="numberOfSuborganizations" value="5" />
+			<var name="parentOrganization" value="Organization Name 2" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -453,11 +407,9 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<for list="usersn1,usersn2,usersn3,usersn4,usersn5" param="userScreenName">
-			<var name="key_userScreenName" value="${userScreenName}" />
-
-			<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		</for>
+		<execute macro="Organization#viewAssignedMembersByScreenName">
+			<var name="userScreenNameList" value="usersn1,usersn2,usersn3,usersn4,usersn5" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -511,17 +463,13 @@
 
 		<execute function="Click" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" />
 
-		<for list="usersn1,usersn3,usersn5" param="userScreenName">
-			<var name="key_userScreenName" value="${userScreenName}" />
+		<execute macro="Organization#viewAssignedMembersByScreenName">
+			<var name="userScreenNameList" value="usersn1,usersn3,usersn5" />
+		</execute>
 
-			<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		</for>
-
-		<for list="usersn2,usersn4" param="userScreenName">
-			<var name="key_userScreenName" value="${userScreenName}" />
-
-			<execute function="AssertTextNotPresent" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		</for>
+		<execute macro="Organization#viewNotAssignedMembersByScreenName">
+			<var name="userScreenNameList" value="usersn2,usersn4" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -586,11 +534,13 @@
 			<var name="pageNameList" value="Home,Wiki" />
 		</execute>
 
-		<for list="Message Boards,User Statistics" param="portletTitleName">
-			<var name="key_portletTitleName" value="${portletTitleName}" />
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Message Board" />
+		</execute>
 
-			<execute function="AssertTextEquals" locator1="Portlet#SPECIFIC_TITLE" value1="${portletTitleName}" />
-		</for>
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="User Statistics" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />

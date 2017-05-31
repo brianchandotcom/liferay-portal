@@ -223,26 +223,28 @@
 	</command>
 
 	<command name="addMultipleCP">
-		<for list="${usersEmailsList}" param="userEmail" >
-			<var name="userEmailAddress" value="${userEmail}" />
-			<var method="StringUtil#replace('${userEmail}', '@liferay.com', '')" name="userName" />
+		<var name="count" value="1" />
+		<var method="MathUtil#sum('${numberOfUsers}', '1')" name="numberOfUsersCount" />
 
-			<execute macro="ProductMenu#gotoControlPanelUsers">
-				<var name="portlet" value="Users and Organizations" />
-			</execute>
+		<while>
+			<not>
+				<equals arg1="${count}" arg2="${numberOfUsersCount}" />
+			</not>
+			<then>
+				<execute macro="ProductMenu#gotoControlPanelUsers">
+					<var name="portlet" value="Users and Organizations" />
+				</execute>
 
-			<execute macro="User#addCP">
-				<var name="userBirthday" value="${userBirthday}" />
-				<var name="userEmailAddress" value="${userEmailAddress}" />
-				<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
-				<var name="userFirstName" value="${userName}" />
-				<var name="userGender" value="${userGender}" />
-				<var name="userLastName" value="${userName}" />
-				<var name="userMiddleName" value="${userMiddleName}" />
-				<var name="userScreenName" value="${userName}" />
-				<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
-			</execute>
-		</for>
+				<execute macro="User#addCP">
+					<var name="userEmailAddress" value="userea${count}@liferay.com" />
+					<var name="userFirstName" value="userfn${count}" />
+					<var name="userLastName" value="userln${count}" />
+					<var name="userScreenName" value="usersn${count}" />
+				</execute>
+
+				<var method="MathUtil#sum('${count}', '1')" name="count" />
+			</then>
+		</while>
 	</command>
 
 	<command name="addPersonalSiteCP">
@@ -1702,7 +1704,9 @@
 		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 	</command>
 
-	<command name="loginUserInvalidMultiplePG">
+	<command name="loginUntilAccountLockout">
+		<var name="loginAttempts" value="0" />
+
 		<while>
 			<not>
 				<equals arg1="${loginAttempts}" arg2="${maximumFailure}" />
@@ -2298,21 +2302,28 @@
 	</command>
 
 	<command name="viewMultipleCP">
-		<for list="${usersEmailsList}" param="userEmail" >
-			<var name="userEmailAddress" value="${userEmail}" />
-			<var method="StringUtil#replace('${userEmail}', '@liferay.com', '')" name="userName" />
+		<var name="count" value="1" />
+		<var method="MathUtil#sum('${numberOfUsers}', '1')" name="numberOfUsersCount" />
 
-			<execute macro="ProductMenu#gotoControlPanelUsers">
-				<var name="portlet" value="Users and Organizations" />
-			</execute>
+		<while>
+			<not>
+				<equals arg1="${count}" arg2="${numberOfUsersCount}" />
+			</not>
+			<then>
+				<execute macro="ProductMenu#gotoControlPanelUsers">
+					<var name="portlet" value="Users and Organizations" />
+				</execute>
 
-			<execute macro="User#viewCP">
-				<var name="userEmailAddress" value="${userEmailAddress}" />
-				<var name="userFirstName" value="${userName}" />
-				<var name="userLastName" value="${userName}" />
-				<var name="userScreenName" value="${userName}" />
-			</execute>
-		</for>
+				<execute macro="User#viewCP">
+					<var name="userEmailAddress" value="userea${count}@liferay.com" />
+					<var name="userFirstName" value="userfn${count}" />
+					<var name="userLastName" value="userln${count}" />
+					<var name="userScreenName" value="usersn${count}" />
+				</execute>
+
+				<var method="MathUtil#sum('${count}', '1')" name="count" />
+			</then>
+		</while>
 	</command>
 
 	<command name="viewNoUsersFoundCP">

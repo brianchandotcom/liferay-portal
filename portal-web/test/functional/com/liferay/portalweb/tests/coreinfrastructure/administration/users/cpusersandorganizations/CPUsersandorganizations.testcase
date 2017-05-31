@@ -893,11 +893,11 @@
 		</execute>
 
 		<execute macro="User#addMultipleCP">
-			<var name="usersEmailsList" value="userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn4@liferay.com" />
+			<var name="numberOfUsers" value="4" />
 		</execute>
 
 		<execute macro="User#viewMultipleCP">
-			<var name="usersEmailsList" value="userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn4@liferay.com" />
+			<var name="numberOfUsers" value="4" />
 		</execute>
 	</command>
 

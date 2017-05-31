@@ -227,11 +227,9 @@ public class GroupServicePermissionTest {
 			Group group = GroupTestUtil.addGroup(
 				GroupConstants.DEFAULT_PARENT_GROUP_ID, serviceContext);
 
-			Assert.fail("The user should not be able to add top level sites");
-
-			if (group != null) {
-				GroupLocalServiceUtil.deleteGroup(group);
-			}
+			Assert.assertTrue(
+				"The user should not be able to add top level sites",
+				group == null);
 		}
 		catch (PrincipalException pe) {
 		}

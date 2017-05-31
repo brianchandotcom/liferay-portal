@@ -6,7 +6,6 @@
 		<model-name>com.liferay.portal.security.wedeploy.auth</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_portal_security_wedeploy_auth_web_internal_portlet_WeDeployAuthAdminPortlet</portlet-name>
-			<portlet-name>com_liferay_portal_security_wedeploy_auth_web_internal_portlet_WeDeployAuthPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -14,35 +13,30 @@
 			<supports>
 				<action-key>ADD_APP</action-key>
 				<action-key>PERMISSIONS</action-key>
-				<action-key>VIEW</action-key>
 			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
+			<site-member-defaults />
 			<guest-unsupported>
 				<action-key>ADD_APP</action-key>
 				<action-key>PERMISSIONS</action-key>
-				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
 	<model-resource>
 		<model-name>com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp</model-name>
 		<portlet-ref>
-			<portlet-name>
-				com_liferay_portal_security_wedeploy_auth_web_internal_portlet_WeDeployAuthAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_portal_security_wedeploy_auth_web_internal_portlet_WeDeployAuthAdminPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>2</weight>
 		<permissions>
 			<supports>
-				<action-key>UPDATE</action-key>
 				<action-key>DELETE</action-key>
+				<action-key>VIEW</action-key>
 			</supports>
-			<site-member-defaults/>
+			<site-member-defaults />
 			<guest-unsupported>
-				<action-key>UPDATE</action-key>
 				<action-key>DELETE</action-key>
+				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

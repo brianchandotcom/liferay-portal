@@ -39,6 +39,10 @@ public class FlagsTag extends IncludeTag {
 		_contentTitle = contentTitle;
 	}
 
+	public void setEnabled(boolean enabled) {
+		_enabled = enabled;
+	}
+
 	public void setLabel(boolean label) {
 		_label = label;
 	}
@@ -63,6 +67,7 @@ public class FlagsTag extends IncludeTag {
 		_className = null;
 		_classPK = 0;
 		_contentTitle = null;
+		_enabled = true;
 		_label = true;
 		_message = null;
 		_reportedUserId = 0;
@@ -80,6 +85,8 @@ public class FlagsTag extends IncludeTag {
 			"liferay-flags:flags:classPK", String.valueOf(_classPK));
 		request.setAttribute("liferay-flags:flags:contentTitle", _contentTitle);
 		request.setAttribute(
+			"liferay-flags:flags:enabled", String.valueOf(_enabled));
+		request.setAttribute(
 			"liferay-flags:flags:label", String.valueOf(_label));
 		request.setAttribute("liferay-flags:flags:message", _message);
 		request.setAttribute(
@@ -92,6 +99,7 @@ public class FlagsTag extends IncludeTag {
 	private String _className;
 	private long _classPK;
 	private String _contentTitle;
+	private boolean _enabled = true;
 	private boolean _label = true;
 	private String _message;
 	private long _reportedUserId;

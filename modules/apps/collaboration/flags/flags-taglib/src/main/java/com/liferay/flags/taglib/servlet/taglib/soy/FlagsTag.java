@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Map;
 
@@ -58,6 +57,10 @@ public class FlagsTag extends TemplateRendererTag {
 
 		try {
 			Map<String, Object> context = getContext();
+
+			String className = (String)context.get("className");
+
+			long classPK = (Long)context.get("classPK");
 
 			boolean enabled = (Boolean)context.get("enabled");
 
@@ -119,6 +122,10 @@ public class FlagsTag extends TemplateRendererTag {
 
 	public void setContentTitle(String contentTitle) {
 		putValue("contentTitle", contentTitle);
+	}
+
+	public void setEnabled(boolean enabled) {
+		putValue("enabled", enabled);
 	}
 
 	public void setLabel(boolean label) {

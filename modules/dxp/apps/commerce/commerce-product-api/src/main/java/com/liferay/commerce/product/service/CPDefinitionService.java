@@ -122,7 +122,8 @@ public interface CPDefinitionService extends BaseService {
 	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionsCount(long groupId, java.lang.String languageId,
+	public int getCPDefinitionsCount(long groupId,
+		java.lang.String productTypeName, java.lang.String languageId,
 		int status);
 
 	/**
@@ -134,7 +135,8 @@ public interface CPDefinitionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinition> getCPDefinitions(long groupId,
-		java.lang.String languageId, int status, int start, int end,
+		java.lang.String productTypeName, java.lang.String languageId,
+		int status, int start, int end,
 		OrderByComparator<CPDefinition> orderByComparator)
 		throws PortalException;
 

@@ -22,17 +22,21 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface CPDefinitionFinder {
-	public int countByG_S(long groupId, java.lang.String languageId,
+	public int countByG_P_S(long groupId, java.lang.String productTypeName,
+		java.lang.String languageId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition);
 
-	public int filterCountByG_S(long groupId, java.lang.String languageId,
+	public int filterCountByG_P_S(long groupId,
+		java.lang.String productTypeName, java.lang.String languageId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition);
 
-	public java.util.List<com.liferay.commerce.product.model.CPDefinition> filterFindByG_S(
-		long groupId, java.lang.String languageId,
+	public java.util.List<com.liferay.commerce.product.model.CPDefinition> filterFindByG_P_S(
+		long groupId, java.lang.String productTypeName,
+		java.lang.String languageId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition);
 
-	public java.util.List<com.liferay.commerce.product.model.CPDefinition> findByG_S(
-		long groupId, java.lang.String languageId,
+	public java.util.List<com.liferay.commerce.product.model.CPDefinition> findByG_P_S(
+		long groupId, java.lang.String productTypeName,
+		java.lang.String languageId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition);
 }

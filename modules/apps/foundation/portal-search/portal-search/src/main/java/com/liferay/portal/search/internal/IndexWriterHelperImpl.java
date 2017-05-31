@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
-import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
@@ -69,9 +68,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (_indexStatusManager.isIndexReadOnly() ||
-			(document == null)) {
-
+		if (_indexStatusManager.isIndexReadOnly() || (document == null)) {
 			return;
 		}
 
@@ -102,8 +99,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			Collection<Document> documents, boolean commitImmediately)
 		throws SearchException {
 
-		if (_indexStatusManager.isIndexReadOnly() ||
-			(documents == null) || documents.isEmpty()) {
+		if (_indexStatusManager.isIndexReadOnly() || (documents == null) ||
+			documents.isEmpty()) {
 
 			return;
 		}
@@ -162,7 +159,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		throws SearchException {
 
 		if (_indexStatusManager.isIndexReadOnly()) {
-
 			return;
 		}
 
@@ -187,8 +183,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (_indexStatusManager.isIndexReadOnly() ||
-			(uids == null) || uids.isEmpty()) {
+		if (_indexStatusManager.isIndexReadOnly() || (uids == null) ||
+			uids.isEmpty()) {
 
 			return;
 		}
@@ -215,7 +211,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 		throws SearchException {
 
 		if (_indexStatusManager.isIndexReadOnly()) {
-
 			return;
 		}
 
@@ -423,9 +418,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (_indexStatusManager.isIndexReadOnly() ||
-			(document == null)) {
-
+		if (_indexStatusManager.isIndexReadOnly() || (document == null)) {
 			return;
 		}
 
@@ -456,8 +449,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			Collection<Document> documents, boolean commitImmediately)
 		throws SearchException {
 
-		if (_indexStatusManager.isIndexReadOnly() ||
-			(documents == null) || documents.isEmpty()) {
+		if (_indexStatusManager.isIndexReadOnly() || (documents == null) ||
+			documents.isEmpty()) {
 
 			return;
 		}
@@ -569,9 +562,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			boolean commitImmediately)
 		throws SearchException {
 
-		if (_indexStatusManager.isIndexReadOnly() ||
-			(document == null)) {
-
+		if (_indexStatusManager.isIndexReadOnly() || (document == null)) {
 			return;
 		}
 
@@ -604,8 +595,8 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			Collection<Document> documents, boolean commitImmediately)
 		throws SearchException {
 
-		if (_indexStatusManager.isIndexReadOnly() ||
-			(documents == null) || documents.isEmpty()) {
+		if (_indexStatusManager.isIndexReadOnly() || (documents == null) ||
+			documents.isEmpty()) {
 
 			return;
 		}
@@ -636,7 +627,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	@Override
 	public void updatePermissionFields(String name, String primKey) {
 		if (_indexStatusManager.isIndexReadOnly()) {
-
 			return;
 		}
 

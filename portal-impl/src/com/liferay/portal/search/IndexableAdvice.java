@@ -54,8 +54,7 @@ public class IndexableAdvice
 						"Skip indexing because company delete is in process");
 				}
 				else if (IndexWriterHelperUtil.isIndexReadOnly()) {
-					_log.debug(
-						"Skip indexing because the index is read only");
+					_log.debug("Skip indexing because the index is read only");
 				}
 			}
 

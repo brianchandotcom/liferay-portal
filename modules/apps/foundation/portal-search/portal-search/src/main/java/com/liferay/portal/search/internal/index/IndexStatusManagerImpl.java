@@ -38,8 +38,11 @@ public class IndexStatusManagerImpl implements IndexStatusManager {
 
 	@Override
 	public boolean isIndexReadOnly() {
-		return IndexStatusManagerThreadLocal.isIndexReadOnly() ||
-			_indexReadOnly;
+		if (IndexStatusManagerThreadLocal.isIndexReadOnly() || _indexReadOnly) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

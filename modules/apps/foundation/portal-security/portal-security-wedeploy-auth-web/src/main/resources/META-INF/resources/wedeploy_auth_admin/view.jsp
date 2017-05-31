@@ -95,7 +95,7 @@ portletURL.setParameter("mvcRenderCommandName", "/wedeploy_auth_admin/view");
 		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 	</liferay-ui:search-container>
 
-	<c:if test="<%= WeDeployAuthPermission.contains(permissionChecker, scopeGroupId, WeDeployAuthActionKeys.ADD_APP) %>">
+	<c:if test="<%= WeDeployAuthPermission.contains(permissionChecker, WeDeployAuthActionKeys.ADD_APP) %>">
 		<portlet:renderURL var="editWeDeployAuthAppURL">
 			<portlet:param name="mvcRenderCommandName" value="/wedeploy_auth_admin/edit_wedeploy_auth_app" />
 		</portlet:renderURL>

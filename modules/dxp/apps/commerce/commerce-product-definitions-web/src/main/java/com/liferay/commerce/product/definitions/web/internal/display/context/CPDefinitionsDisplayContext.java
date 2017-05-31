@@ -25,9 +25,13 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,6 +52,43 @@ public class CPDefinitionsDisplayContext
 		setDefaultOrderByType("desc");
 
 		_cpDefinitionService = cpDefinitionService;
+	}
+
+	public String getNavigation() {
+		return ParamUtil.getString(
+			httpServletRequest, "navigation", "all");
+	}
+
+	public String getProductTypeName() {
+		String navigation = getNavigation();
+
+		String productTypeName = null;
+
+		if (navigation.equals("simple")) {
+			productTypeName = navigation;
+		}
+		else if (navigation.equals("group")) {
+			productTypeName = navigation;
+		}
+		else if (navigation.equals("virtual")) {
+			productTypeName = navigation;
+		}
+
+		return productTypeName;
+	}
+
+	@Override
+	public PortletURL getPortletURL() throws PortalException {
+		PortletURL portletURL = super.getPortletURL();
+
+		String navigation = ParamUtil.getString(
+			httpServletRequest, "navigation");
+
+		if (Validator.isNotNull(navigation)) {
+			portletURL.setParameter("navigation", getNavigation());
+		}
+
+		return portletURL;
 	}
 
 	@Override
@@ -90,12 +131,14 @@ public class CPDefinitionsDisplayContext
 		}
 		else {
 			int total = _cpDefinitionService.getCPDefinitionsCount(
-				getScopeGroupId(), themeDisplay.getLanguageId(), getStatus());
+				getScopeGroupId(), getProductTypeName(),
+				themeDisplay.getLanguageId(), getStatus());
 
 			searchContainer.setTotal(total);
 
 			List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
-				getScopeGroupId(), themeDisplay.getLanguageId(), getStatus(),
+				getScopeGroupId(), getProductTypeName(),
+				themeDisplay.getLanguageId(), getStatus(),
 				searchContainer.getStart(), searchContainer.getEnd(),
 				orderByComparator);
 

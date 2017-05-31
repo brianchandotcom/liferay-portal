@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -55,6 +57,40 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		return _cpTypeServicesTracker.getCPType(name);
 	}
 
+	public String getNavigation() {
+		return ParamUtil.getString(
+			httpServletRequest, "navigation", "all");
+	}
+
+	@Override
+	public PortletURL getPortletURL() {
+		PortletURL portletURL = super.getPortletURL();
+
+		if (Validator.isNotNull(getNavigation())) {
+			portletURL.setParameter("navigation", getNavigation());
+		}
+
+		return portletURL;
+	}
+
+	public String getProductTypeName() {
+		String navigation = getNavigation();
+
+		String productTypeName = null;
+
+		if (navigation.equals("simple")) {
+			productTypeName = navigation;
+		}
+		else if (navigation.equals("group")) {
+			productTypeName = navigation;
+		}
+		else if (navigation.equals("virtual")) {
+			productTypeName = navigation;
+		}
+
+		return productTypeName;
+	}
+
 	public SearchContainer<CPDefinition> getSearchContainer()
 		throws PortalException {
 
@@ -81,13 +117,13 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		int total = _cpDefinitionService.getCPDefinitionsCount(
-			getScopeGroupId(), themeDisplay.getLanguageId(),
+			getScopeGroupId(), getProductTypeName(), themeDisplay.getLanguageId(),
 			WorkflowConstants.STATUS_ANY);
 
 		searchContainer.setTotal(total);
 
 		List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
-			getScopeGroupId(), themeDisplay.getLanguageId(),
+			getScopeGroupId(), getProductTypeName(), themeDisplay.getLanguageId(),
 			WorkflowConstants.STATUS_ANY, searchContainer.getStart(),
 			searchContainer.getEnd(), orderByComparator);
 

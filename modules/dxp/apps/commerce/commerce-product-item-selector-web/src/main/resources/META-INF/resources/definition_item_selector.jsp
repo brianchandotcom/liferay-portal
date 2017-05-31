@@ -41,6 +41,11 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all", "simple", "group", "virtual"} %>'
+			portletURL="<%= cpDefinitionItemSelectorViewDisplayContext.getPortletURL() %>"
+		/>
+
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= cpDefinitionItemSelectorViewDisplayContext.getOrderByCol() %>"
 			orderByType="<%= cpDefinitionItemSelectorViewDisplayContext.getOrderByType() %>"

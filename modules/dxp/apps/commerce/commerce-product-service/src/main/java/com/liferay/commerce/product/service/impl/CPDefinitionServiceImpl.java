@@ -115,7 +115,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Override
 	public List<CPDefinition> getCPDefinitions(
-			long groupId, String languageId, int status, int start, int end,
+			long groupId, String productTypeName, String languageId, int status,
+			int start, int end,
 			OrderByComparator<CPDefinition> orderByComparator)
 		throws PortalException {
 
@@ -126,13 +127,13 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 		}
 
-		return cpDefinitionFinder.filterFindByG_S(
-			groupId, languageId, queryDefinition);
+		return cpDefinitionFinder.filterFindByG_P_S(
+			groupId, productTypeName, languageId, queryDefinition);
 	}
 
 	@Override
 	public int getCPDefinitionsCount(
-		long groupId, String languageId, int status) {
+		long groupId, String productTypeName, String languageId, int status) {
 
 		QueryDefinition<CPDefinition> queryDefinition = new QueryDefinition<>(
 			status);
@@ -141,8 +142,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 		}
 
-		return cpDefinitionFinder.filterCountByG_S(
-			groupId, languageId, queryDefinition);
+		return cpDefinitionFinder.filterCountByG_P_S(
+			groupId, productTypeName, languageId, queryDefinition);
 	}
 
 	@Override

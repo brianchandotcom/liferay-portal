@@ -224,6 +224,25 @@ public class MBMessageStagedModelDataHandler
 	}
 
 	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long messageId)
+		throws Exception {
+
+		MBMessage existingMessage = fetchMissingReference(uuid, groupId);
+
+		if (existingMessage == null) {
+			return;
+		}
+
+		Map<Long, Long> messageIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				MBMessage.class);
+
+		messageIds.put(messageId, existingMessage.getMessageId());
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, MBMessage message)
 		throws Exception {

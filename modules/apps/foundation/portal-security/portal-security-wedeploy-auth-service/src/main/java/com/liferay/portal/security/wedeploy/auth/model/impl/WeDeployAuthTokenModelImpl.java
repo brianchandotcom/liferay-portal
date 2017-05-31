@@ -21,7 +21,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -33,16 +32,13 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthTokenModel;
-import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthTokenSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,7 +54,6 @@ import java.util.Map;
  * @see WeDeployAuthTokenModel
  * @generated
  */
-@JSON(strict = true)
 @ProviderType
 public class WeDeployAuthTokenModelImpl extends BaseModelImpl<WeDeployAuthToken>
 	implements WeDeployAuthTokenModel {
@@ -113,54 +108,6 @@ public class WeDeployAuthTokenModelImpl extends BaseModelImpl<WeDeployAuthToken>
 	public static final long TOKEN_COLUMN_BITMASK = 2L;
 	public static final long TYPE_COLUMN_BITMASK = 4L;
 	public static final long WEDEPLOYAUTHTOKENID_COLUMN_BITMASK = 8L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 */
-	public static WeDeployAuthToken toModel(WeDeployAuthTokenSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		WeDeployAuthToken model = new WeDeployAuthTokenImpl();
-
-		model.setWeDeployAuthTokenId(soapModel.getWeDeployAuthTokenId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setClientId(soapModel.getClientId());
-		model.setToken(soapModel.getToken());
-		model.setType(soapModel.getType());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 */
-	public static List<WeDeployAuthToken> toModels(
-		WeDeployAuthTokenSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<WeDeployAuthToken> models = new ArrayList<WeDeployAuthToken>(soapModels.length);
-
-		for (WeDeployAuthTokenSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.security.wedeploy.auth.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken"));
 
@@ -274,7 +221,6 @@ public class WeDeployAuthTokenModelImpl extends BaseModelImpl<WeDeployAuthToken>
 		}
 	}
 
-	@JSON
 	@Override
 	public long getWeDeployAuthTokenId() {
 		return _weDeployAuthTokenId;
@@ -285,7 +231,6 @@ public class WeDeployAuthTokenModelImpl extends BaseModelImpl<WeDeployAuthToken>
 		_weDeployAuthTokenId = weDeployAuthTokenId;
 	}
 
-	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -296,7 +241,6 @@ public class WeDeployAuthTokenModelImpl extends BaseModelImpl<WeDeployAuthToken>
 		_companyId = companyId;
 	}
 
-	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -323,7 +267,6 @@ public class WeDeployAuthTokenModelImpl extends BaseModelImpl<WeDeployAuthToken>
 	public void setUserUuid(String userUuid) {
 	}
 
-	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -339,7 +282,6 @@ public class WeDeployAuthTokenModelImpl extends BaseModelImpl<WeDeployAuthToken>
 		_userName = userName;
 	}
 
-	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -350,7 +292,6 @@ public class WeDeployAuthTokenModelImpl extends BaseModelImpl<WeDeployAuthToken>
 		_createDate = createDate;
 	}
 
-	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -367,7 +308,6 @@ public class WeDeployAuthTokenModelImpl extends BaseModelImpl<WeDeployAuthToken>
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
 	@Override
 	public String getClientId() {
 		if (_clientId == null) {
@@ -393,7 +333,6 @@ public class WeDeployAuthTokenModelImpl extends BaseModelImpl<WeDeployAuthToken>
 		return GetterUtil.getString(_originalClientId);
 	}
 
-	@JSON
 	@Override
 	public String getToken() {
 		if (_token == null) {
@@ -419,7 +358,6 @@ public class WeDeployAuthTokenModelImpl extends BaseModelImpl<WeDeployAuthToken>
 		return GetterUtil.getString(_originalToken);
 	}
 
-	@JSON
 	@Override
 	public int getType() {
 		return _type;

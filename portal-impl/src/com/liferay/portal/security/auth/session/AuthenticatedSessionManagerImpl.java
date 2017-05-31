@@ -90,7 +90,9 @@ public class AuthenticatedSessionManagerImpl
 
 		String queryString = request.getQueryString();
 
-		if (queryString.contains("password=")) {
+		if (Validator.isNotNull(queryString) &&
+			queryString.contains("password=")) {
+
 			String passwordParameterName = "password=";
 
 			String portletId = PortalUtil.getPortletId(request);

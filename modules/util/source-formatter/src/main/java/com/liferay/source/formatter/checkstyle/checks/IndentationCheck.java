@@ -509,6 +509,8 @@ public class IndentationCheck extends AbstractCheck {
 		expectedTabCount = _addExtraTabForSwitch(expectedTabCount, detailAST);
 		expectedTabCount = _addExtraTabForTryStatement(
 			expectedTabCount, detailAST);
+		expectedTabCount = _adjustTabCountForChains(
+			expectedTabCount, detailAST);
 
 		if ((detailAST.getType() == TokenTypes.BLOCK_COMMENT_END) ||
 			(detailAST.getType() == TokenTypes.RCURLY) ||

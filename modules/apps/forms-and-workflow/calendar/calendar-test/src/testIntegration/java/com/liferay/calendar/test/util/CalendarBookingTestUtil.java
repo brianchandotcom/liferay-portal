@@ -124,6 +124,21 @@ public class CalendarBookingTestUtil {
 			serviceContext);
 	}
 
+	public static CalendarBooking addDailyRecurringCalendarBooking(
+			User user, ServiceContext serviceContext)
+		throws PortalException {
+
+		Calendar calendar = CalendarTestUtil.addCalendar(user, serviceContext);
+
+		Recurrence recurrence = RecurrenceTestUtil.getDailyRecurrence();
+
+		long startTime = System.currentTimeMillis();
+
+		return addRecurringCalendarBooking(
+			user, calendar, startTime, startTime + (Time.HOUR * 10), recurrence,
+			serviceContext);
+	}
+
 	public static CalendarBooking addDraftCalendarBooking(User user)
 		throws PortalException {
 
@@ -174,6 +189,19 @@ public class CalendarBookingTestUtil {
 			user, calendar, new long[0], RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), startTime, endTime,
 			recurrence, 0, null, 0, null, serviceContext);
+	}
+
+	public static CalendarBooking addRecurringCalendarBooking(
+			User user, Recurrence recurrence, ServiceContext serviceContext)
+		throws PortalException {
+
+		Calendar calendar = CalendarTestUtil.addCalendar(user, serviceContext);
+
+		long startTime = System.currentTimeMillis();
+
+		return addRecurringCalendarBooking(
+			user, calendar, startTime, startTime + (Time.HOUR * 10), recurrence,
+			serviceContext);
 	}
 
 	public static CalendarBooking addRegularCalendarBooking(
@@ -235,6 +263,24 @@ public class CalendarBookingTestUtil {
 	}
 
 	public static CalendarBooking updateCalendarBookingInstance(
+			CalendarBooking calendarBooking, int instanceIndex,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
+		throws PortalException {
+
+		long endTime = calendarBooking.getEndTime() + Time.DAY * instanceIndex;
+
+		long startTime =
+			calendarBooking.getStartTime() + Time.DAY * instanceIndex;
+
+		return CalendarBookingLocalServiceUtil.updateCalendarBookingInstance(
+			calendarBooking.getUserId(), calendarBooking.getCalendarBookingId(),
+			instanceIndex, calendarBooking.getCalendarId(), titleMap,
+			calendarBooking.getDescriptionMap(), calendarBooking.getLocation(),
+			startTime, endTime, false, null, false, 0, null, 0, null,
+			serviceContext);
+	}
+
+	public static CalendarBooking updateCalendarBookingInstance(
 			User user, CalendarBooking calendarBooking, int instanceIndex,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			long instanceStartTime, long instanceEndTime,
@@ -246,6 +292,24 @@ public class CalendarBookingTestUtil {
 			instanceIndex, calendarBooking.getCalendarId(), titleMap,
 			descriptionMap, calendarBooking.getLocation(), instanceStartTime,
 			instanceEndTime, false, null, false, 0, null, 0, null,
+			serviceContext);
+	}
+
+	public static CalendarBooking updateCalendarBookingInstanceAndAllFollowing(
+			CalendarBooking calendarBooking, int instanceIndex,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
+		throws PortalException {
+
+		long endTime = calendarBooking.getEndTime() + Time.DAY * instanceIndex;
+
+		long startTime =
+			calendarBooking.getStartTime() + Time.DAY * instanceIndex;
+
+		return CalendarBookingLocalServiceUtil.updateCalendarBookingInstance(
+			calendarBooking.getUserId(), calendarBooking.getCalendarBookingId(),
+			instanceIndex, calendarBooking.getCalendarId(), titleMap,
+			calendarBooking.getDescriptionMap(), calendarBooking.getLocation(),
+			startTime, endTime, false, null, true, 0, null, 0, null,
 			serviceContext);
 	}
 

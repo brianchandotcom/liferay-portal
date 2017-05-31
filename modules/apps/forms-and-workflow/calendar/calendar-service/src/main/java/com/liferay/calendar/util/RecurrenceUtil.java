@@ -24,8 +24,10 @@ import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.recurrence.PositionalWeekday;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.Weekday;
+import com.liferay.calendar.util.comparator.CalendarBookingStartTimeComparator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.text.ParseException;
 
@@ -155,6 +157,42 @@ public class RecurrenceUtil {
 		return count;
 	}
 
+	public static CalendarBooking getLastInstanceCalendarBooking(
+		List<CalendarBooking> calendarBookings) {
+
+		calendarBookings = ListUtil.sort(
+			calendarBookings, new CalendarBookingStartTimeComparator(false));
+
+		CalendarBooking lastCalendarBooking = calendarBookings.get(0);
+
+		long lastStartTime = 0;
+
+		for (CalendarBooking calendarBooking : calendarBookings) {
+			Recurrence recurrence = calendarBooking.getRecurrenceObj();
+
+			if (recurrence == null) {
+				continue;
+			}
+
+			if (!hasLimit(recurrence)) {
+				lastCalendarBooking = calendarBooking;
+
+				break;
+			}
+
+			CalendarBooking lastCalendarBookingInstance =
+				getLastCalendarBookingInstance(calendarBooking);
+
+			if (lastCalendarBookingInstance.getStartTime() > lastStartTime) {
+				lastStartTime = lastCalendarBookingInstance.getStartTime();
+
+				lastCalendarBooking = calendarBooking;
+			}
+		}
+
+		return lastCalendarBooking;
+	}
+
 	public static Recurrence inTimeZone(
 		Recurrence recurrence, Calendar startTimeJCalendar, TimeZone timeZone) {
 
@@ -227,6 +265,28 @@ public class RecurrenceUtil {
 		}
 
 		return recurrence;
+	}
+
+	protected static CalendarBooking getLastCalendarBookingInstance(
+		CalendarBooking calendarBooking) {
+
+		List<CalendarBooking> calendarBookingInstances = expandCalendarBooking(
+			calendarBooking, calendarBooking.getStartTime(), Long.MAX_VALUE, 0);
+
+		return calendarBookingInstances.get(
+			calendarBookingInstances.size() - 1);
+	}
+
+	protected static boolean hasLimit(Recurrence recurrence) {
+		if (recurrence.getUntilJCalendar() != null) {
+			return true;
+		}
+
+		if (recurrence.getCount() != 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static DateValue _toDateValue(long time) {

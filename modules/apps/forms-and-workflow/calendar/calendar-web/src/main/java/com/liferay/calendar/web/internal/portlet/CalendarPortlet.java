@@ -1538,8 +1538,8 @@ public class CalendarPortlet extends MVCPortlet {
 
 		CalendarDisplayContext calendarDisplayContext =
 			new CalendarDisplayContext(
-				_groupLocalService, _calendarService, _calendarLocalService,
-				themeDisplay);
+				_groupLocalService, _calendarBookingLocalService,
+				_calendarService, _calendarLocalService, themeDisplay);
 
 		renderRequest.setAttribute(
 			CalendarWebKeys.CALENDAR_DISPLAY_CONTEXT, calendarDisplayContext);
@@ -1594,21 +1594,24 @@ public class CalendarPortlet extends MVCPortlet {
 							calendarBookingId, instanceIndex,
 							calendar.getCalendarId(), childCalendarIds,
 							titleMap, descriptionMap, location, startTime,
-							endTime, allDay,
-							RecurrenceSerializer.serialize(recurrence),
-							allFollowing, reminders[0], remindersType[0],
-							reminders[1], remindersType[1], serviceContext);
+							endTime, allDay, allFollowing, reminders[0],
+							remindersType[0], reminders[1], remindersType[1],
+							serviceContext);
 				}
 				else {
 					calendarBooking =
 						_calendarBookingService.updateRecurringCalendarBooking(
 							calendarBookingId, calendar.getCalendarId(),
 							childCalendarIds, titleMap, descriptionMap,
-							location, startTime, endTime, allDay,
-							RecurrenceSerializer.serialize(recurrence),
-							reminders[0], remindersType[0], reminders[1],
-							remindersType[1], serviceContext);
+							location, startTime, endTime, allDay, reminders[0],
+							remindersType[0], reminders[1], remindersType[1],
+							serviceContext);
 				}
+
+				_calendarBookingService.
+					updateLastInstanceCalendarBookingRecurrence(
+						calendarBooking.getCalendarBookingId(),
+						RecurrenceSerializer.serialize(recurrence));
 			}
 			else {
 				calendarBooking =

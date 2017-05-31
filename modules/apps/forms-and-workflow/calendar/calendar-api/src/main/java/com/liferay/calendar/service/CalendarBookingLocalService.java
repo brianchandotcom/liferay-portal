@@ -262,6 +262,16 @@ public interface CalendarBookingLocalService extends BaseLocalService,
 		long[] childCalendarIds, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String location, long startTime, long endTime,
+		boolean allDay, boolean allFollowing, long firstReminder,
+		java.lang.String firstReminderType, long secondReminder,
+		java.lang.String secondReminderType, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CalendarBooking updateCalendarBookingInstance(long userId,
+		long calendarBookingId, int instanceIndex, long calendarId,
+		long[] childCalendarIds, Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		java.lang.String location, long startTime, long endTime,
 		boolean allDay, java.lang.String recurrence, boolean allFollowing,
 		long firstReminder, java.lang.String firstReminderType,
 		long secondReminder, java.lang.String secondReminderType,
@@ -516,4 +526,7 @@ public interface CalendarBookingLocalService extends BaseLocalService,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
 		long[] assetLinkEntryIds, java.lang.Double priority)
 		throws PortalException;
+
+	public void updateLastInstanceCalendarBookingRecurrence(
+		CalendarBooking calendarBooking, java.lang.String recurrence);
 }

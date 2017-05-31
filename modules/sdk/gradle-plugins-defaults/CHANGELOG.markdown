@@ -1536,6 +1536,9 @@ version 1.1.7.
 - [LPS-72830]: Add task `checkOSGiBundleState` to fail the build if the state of
 the deployed OSGi bundle is not `ACTIVE`.
 
+### Changed
+- [LPS-69661]: Update the [Liferay Gradle Plugins] dependency to version 3.3.22.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1619,6 +1622,7 @@ the deployed OSGi bundle is not `ACTIVE`.
 [LPS-69518]: https://issues.liferay.com/browse/LPS-69518
 [LPS-69606]: https://issues.liferay.com/browse/LPS-69606
 [LPS-69618]: https://issues.liferay.com/browse/LPS-69618
+[LPS-69661]: https://issues.liferay.com/browse/LPS-69661
 [LPS-69677]: https://issues.liferay.com/browse/LPS-69677
 [LPS-69706]: https://issues.liferay.com/browse/LPS-69706
 [LPS-69719]: https://issues.liferay.com/browse/LPS-69719

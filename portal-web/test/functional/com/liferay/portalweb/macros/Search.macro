@@ -1,4 +1,10 @@
 <definition>
+	<command name="addTagFacet">
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#USER_FACET_TAGS" value1="${tagName}">
+			<var name="key_tagName" value="${tagName}" />
+		</execute>
+	</command>
+
 	<command name="clearSearchPG">
 		<execute function="AssertClick" locator1="Button#CLEAR" value1="Clear" />
 

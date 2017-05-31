@@ -796,9 +796,9 @@
 			<var name="searchAssetType" value="Document" />
 		</execute>
 
-		<var name="key_tagName" value="moon rocks" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#USER_FACET_TAGS" value1="${key_tagName}" />
+		<execute macro="Search#addTagFacet">
+			<var name="tagName" value="moon rocks" />
+		</execute>
 
 		<execute macro="Search#viewSearchResultPG">
 			<var name="searchAssetTitle" value="DM Document Title" />

@@ -113,7 +113,9 @@
 		<check name="JavaModuleServiceProxyFactoryCheck" />
 		<check name="JavaModuleServiceReferenceCheck" />
 		<check name="JavaModuleTestCheck" />
-		<check name="JavaOSGiReferenceCheck" />
+		<check name="JavaOSGiReferenceCheck">
+			<property name="serviceReferenceUtilClassNames" value="com.liferay.portal.kernel.util.HttpUtil,com.liferay.portal.kernel.util.PortalUtil" />
+		</check>
 
 		<!-- Plugins checks -->
 

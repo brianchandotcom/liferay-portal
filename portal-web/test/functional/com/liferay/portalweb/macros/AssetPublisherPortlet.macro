@@ -114,6 +114,8 @@
 	<command name="configureAssetDisplayOrderPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
+		<execute function="AssertClick" locator1="NavTab#ASSET_SELECTION" value1="Asset Selection" />
+
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Ordering and Grouping" />
 		</execute>

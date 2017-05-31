@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.search.test.util.SearchMapUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -103,14 +102,6 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		group.setActive(false);
 
 		GroupLocalServiceUtil.updateGroup(group);
-	}
-
-	protected SearchContext getSearchContext(String keywords) throws Exception {
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
-
-		searchContext.setKeywords(keywords);
-
-		return searchContext;
 	}
 
 }

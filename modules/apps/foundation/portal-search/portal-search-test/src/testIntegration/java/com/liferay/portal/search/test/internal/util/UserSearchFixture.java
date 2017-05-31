@@ -18,13 +18,23 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -75,6 +85,16 @@ public class UserSearchFixture {
 
 	public List<Group> getGroups() {
 		return _groups;
+	}
+
+	public SearchContext getSearchContext(String keywords) throws Exception {
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+
+		searchContext.setKeywords(keywords);
+
+		_filterByGroups(searchContext);
+
+		return searchContext;
 	}
 
 	public List<User> getUsers() {
@@ -150,6 +170,35 @@ public class UserSearchFixture {
 
 		return ServiceContextTestUtil.getServiceContext(
 			group.getGroupId(), TestPropsValues.getUserId());
+	}
+
+	private Query _addShouldClause(BooleanQuery booleanQuery, Query query) {
+		try {
+			return booleanQuery.add(query, BooleanClauseOccur.SHOULD);
+		}
+		catch (ParseException pe) {
+			throw new RuntimeException(pe);
+		}
+	}
+
+	private void _filterByGroups(SearchContext searchContext) {
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		_groups.stream().map(
+			this::_getGroupIdQuery
+		).forEach(
+			query -> _addShouldClause(booleanQuery, query)
+		);
+
+		searchContext.setBooleanClauses(
+			new BooleanClause[] {
+				new BooleanClauseImpl<>(booleanQuery, BooleanClauseOccur.MUST)
+			});
+	}
+
+	private Query _getGroupIdQuery(Group group) {
+		return new TermQueryImpl(
+			Field.GROUP_ID, String.valueOf(group.getGroupId()));
 	}
 
 	private final List<AssetTag> _assetTags = new ArrayList<>();

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
  * @author Daniel Kocsis
  */
 @ProviderType
-public class IndexingThreadLocal {
+public class IndexStatusManagerThreadLocal {
 
 	public static boolean isIndexingDisabled() {
 		return !isIndexingEnabled();
@@ -35,9 +35,10 @@ public class IndexingThreadLocal {
 		_indexingEnabled.set(indexingEnabled);
 	}
 
+	//_indexReadOnly
 	private static final ThreadLocal<Boolean> _indexingEnabled =
 		new AutoResetThreadLocal<>(
-			IndexingThreadLocal.class + "._indexingEnabled",
+			IndexStatusManagerThreadLocal.class + "._indexingEnabled",
 			() -> Boolean.TRUE);
 
 }

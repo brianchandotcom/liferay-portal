@@ -10,6 +10,7 @@ Export-Package:\
 	com.liferay.wiki.escape,\
 	com.liferay.wiki.exception,\
 	com.liferay.wiki.importer,\
+	com.liferay.wiki.item.selector,\
 	com.liferay.wiki.item.selector.criterion,\
 	com.liferay.wiki.model,\
 	com.liferay.wiki.processor,\

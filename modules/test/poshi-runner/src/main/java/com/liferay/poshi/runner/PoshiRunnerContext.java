@@ -296,62 +296,6 @@ public class PoshiRunnerContext {
 		_componentClassCommandNames.put(componentName, classCommandNames);
 	}
 
-	private static void _addFilePathsFromResource()
-		throws IOException, URISyntaxException {
-
-		Class<?> clazz = PoshiRunnerContext.class;
-
-		URL url = clazz.getResource("/poshi");
-
-		FileSystem fileSystem = null;
-
-		Path path;
-
-		try {
-			String urlString = url.toString();
-
-			int x = urlString.indexOf("!");
-
-			if (x != -1) {
-				fileSystem = FileSystems.newFileSystem(
-					URI.create(urlString.substring(0, x)),
-					new HashMap<String, String>());
-
-				path = fileSystem.getPath(urlString.substring(x + 1));
-			}
-			else {
-				path = Paths.get(url.toURI());
-			}
-
-			Files.walkFileTree(
-				path,
-				new SimpleFileVisitor<Path>() {
-
-					@Override
-					public FileVisitResult visitFile(
-							Path filePath,
-							BasicFileAttributes basicFileAttributes)
-						throws IOException {
-
-						URI uri = filePath.toUri();
-
-						_filePathsList.add(uri.toString());
-
-						return FileVisitResult.CONTINUE;
-					}
-
-				});
-		}
-		catch (IOException | URISyntaxException e) {
-			throw e;
-		}
-		finally {
-			if (fileSystem != null) {
-				fileSystem.close();
-			}
-		}
-	}
-
 	private static String[] _combine(String[]... arrays) {
 		int size = 0;
 
@@ -479,6 +423,8 @@ public class PoshiRunnerContext {
 
 		List<String> filePaths = new ArrayList<>();
 
+		filePaths.addAll(_getResourceFilePaths());
+
 		for (String basedir : basedirs) {
 			if (Validator.isNull(basedir)) {
 				continue;
@@ -536,6 +482,66 @@ public class PoshiRunnerContext {
 		relatedClassCommandNames.add("BaseLiferay#" + commandName);
 
 		return relatedClassCommandNames;
+	}
+
+	private static List<String> _getResourceFilePaths()
+		throws IOException, URISyntaxException {
+
+		Class<?> clazz = PoshiRunnerContext.class;
+
+		URL url = clazz.getResource("/poshi");
+
+		FileSystem fileSystem = null;
+
+		Path path;
+
+		try {
+			String urlString = url.toString();
+
+			int x = urlString.indexOf("!");
+
+			if (x != -1) {
+				fileSystem = FileSystems.newFileSystem(
+					URI.create(urlString.substring(0, x)),
+					new HashMap<String, String>());
+
+				path = fileSystem.getPath(urlString.substring(x + 1));
+			}
+			else {
+				path = Paths.get(url.toURI());
+			}
+
+			final List<String> filePathsList = new ArrayList<>();
+
+			Files.walkFileTree(
+				path,
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult visitFile(
+							Path filePath,
+							BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						URI uri = filePath.toUri();
+
+						filePathsList.add(uri.toString());
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+
+			return filePathsList;
+		}
+		catch (IOException | URISyntaxException e) {
+			throw e;
+		}
+		finally {
+			if (fileSystem != null) {
+				fileSystem.close();
+			}
+		}
 	}
 
 	private static String _getTestBatchGroups() throws Exception {
@@ -1074,8 +1080,6 @@ public class PoshiRunnerContext {
 	}
 
 	private static void _readPoshiFiles() throws Exception {
-		_addFilePathsFromResource();
-
 		String[] poshiFileNames = {
 			"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.path",
 			"**\\*.testcase"

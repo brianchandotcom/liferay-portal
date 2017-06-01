@@ -154,7 +154,12 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 		}
 
 		try {
-			return extractMetadata(file, metadata, _parser);
+			Metadata extractedMetadata = extractMetadata(
+				file, metadata, _parser);
+
+			extractedMetadata.remove(Metadata.RESOURCE_NAME_KEY);
+
+			return extractedMetadata;
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);

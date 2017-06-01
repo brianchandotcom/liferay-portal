@@ -120,7 +120,7 @@ public class GZipFilter extends BasePortalFilter {
 
 		request.setAttribute(SKIP_FILTER, Boolean.TRUE);
 
-		GZipResponse gZipResponse = new GZipResponse(request, response);
+		GZipResponse gZipResponse = new GZipResponse(response);
 
 		processFilter(
 			GZipFilter.class.getName(), request, gZipResponse, filterChain);

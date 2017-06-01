@@ -119,7 +119,7 @@ public class TasksEntryLocalServiceClpInvoker {
 		_methodParameterTypes48 = new String[] {
 				"long", "java.lang.String", "int", "long", "int", "int", "int",
 				"int", "int", "boolean",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName49 = "deleteTasksEntry";
@@ -217,14 +217,14 @@ public class TasksEntryLocalServiceClpInvoker {
 		_methodParameterTypes69 = new String[] {
 				"long", "java.lang.String", "int", "long", "long", "int", "int",
 				"int", "int", "int", "boolean", "int",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName70 = "updateTasksEntryStatus";
 
 		_methodParameterTypes70 = new String[] {
 				"long", "long", "int",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 	}
 
@@ -341,7 +341,7 @@ public class TasksEntryLocalServiceClpInvoker {
 				((Integer)arguments[7]).intValue(),
 				((Integer)arguments[8]).intValue(),
 				((Boolean)arguments[9]).booleanValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[10]);
+				(com.liferay.portal.kernel.service.ServiceContext)arguments[10]);
 		}
 
 		if (_methodName49.equals(name) &&
@@ -493,7 +493,7 @@ public class TasksEntryLocalServiceClpInvoker {
 				((Integer)arguments[9]).intValue(),
 				((Boolean)arguments[10]).booleanValue(),
 				((Integer)arguments[11]).intValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[12]);
+				(com.liferay.portal.kernel.service.ServiceContext)arguments[12]);
 		}
 
 		if (_methodName70.equals(name) &&
@@ -501,7 +501,7 @@ public class TasksEntryLocalServiceClpInvoker {
 			return TasksEntryLocalServiceUtil.updateTasksEntryStatus(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[3]);
+				(com.liferay.portal.kernel.service.ServiceContext)arguments[3]);
 		}
 
 		throw new UnsupportedOperationException();

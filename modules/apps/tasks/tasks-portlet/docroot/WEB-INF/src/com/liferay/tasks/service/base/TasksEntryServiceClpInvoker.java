@@ -36,7 +36,7 @@ public class TasksEntryServiceClpInvoker {
 
 		_methodParameterTypes32 = new String[] {
 				"java.lang.String", "int", "long", "int", "int", "int", "int",
-				"int", "boolean", "com.liferay.portal.service.ServiceContext"
+				"int", "boolean", "com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName33 = "deleteTasksEntry";
@@ -52,14 +52,14 @@ public class TasksEntryServiceClpInvoker {
 		_methodParameterTypes35 = new String[] {
 				"long", "java.lang.String", "int", "long", "long", "int", "int",
 				"int", "int", "int", "boolean", "int",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName36 = "updateTasksEntryStatus";
 
 		_methodParameterTypes36 = new String[] {
 				"long", "long", "int",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 	}
 
@@ -88,7 +88,7 @@ public class TasksEntryServiceClpInvoker {
 				((Integer)arguments[6]).intValue(),
 				((Integer)arguments[7]).intValue(),
 				((Boolean)arguments[8]).booleanValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[9]);
+				(com.liferay.portal.kernel.service.ServiceContext)arguments[9]);
 		}
 
 		if (_methodName33.equals(name) &&
@@ -115,7 +115,7 @@ public class TasksEntryServiceClpInvoker {
 				((Integer)arguments[9]).intValue(),
 				((Boolean)arguments[10]).booleanValue(),
 				((Integer)arguments[11]).intValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[12]);
+				(com.liferay.portal.kernel.service.ServiceContext)arguments[12]);
 		}
 
 		if (_methodName36.equals(name) &&
@@ -123,7 +123,7 @@ public class TasksEntryServiceClpInvoker {
 			return TasksEntryServiceUtil.updateTasksEntryStatus(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[3]);
+				(com.liferay.portal.kernel.service.ServiceContext)arguments[3]);
 		}
 
 		throw new UnsupportedOperationException();

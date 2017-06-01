@@ -14,7 +14,7 @@
 
 package com.liferay.tasks.service;
 
-import com.liferay.portal.service.InvokableService;
+import com.liferay.portal.kernel.service.InvokableService;
 
 /**
  * @author Ryan Park
@@ -36,7 +36,7 @@ public class TasksEntryServiceClp implements TasksEntryService {
 
 		_methodParameterTypes3 = new String[] {
 				"java.lang.String", "int", "long", "int", "int", "int", "int",
-				"int", "boolean", "com.liferay.portal.service.ServiceContext"
+				"int", "boolean", "com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName4 = "deleteTasksEntry";
@@ -52,14 +52,14 @@ public class TasksEntryServiceClp implements TasksEntryService {
 		_methodParameterTypes6 = new String[] {
 				"long", "java.lang.String", "int", "long", "long", "int", "int",
 				"int", "int", "int", "boolean", "int",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName7 = "updateTasksEntryStatus";
 
 		_methodParameterTypes7 = new String[] {
 				"long", "long", "int",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 	}
 
@@ -118,7 +118,7 @@ public class TasksEntryServiceClp implements TasksEntryService {
 		java.lang.String title, int priority, long assigneeUserId,
 		int dueDateMonth, int dueDateDay, int dueDateYear, int dueDateHour,
 		int dueDateMinute, boolean neverDue,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -244,7 +244,7 @@ public class TasksEntryServiceClp implements TasksEntryService {
 		long assigneeUserId, long resolverUserId, int dueDateMonth,
 		int dueDateDay, int dueDateYear, int dueDateHour, int dueDateMinute,
 		boolean neverDue, int status,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -306,7 +306,7 @@ public class TasksEntryServiceClp implements TasksEntryService {
 	@Override
 	public com.liferay.tasks.model.TasksEntry updateTasksEntryStatus(
 		long tasksEntryId, long resolverUserId, int status,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;

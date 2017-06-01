@@ -14,7 +14,7 @@
 
 package com.liferay.tasks.service.persistence;
 
-import com.liferay.portal.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import com.liferay.tasks.model.TasksEntry;
 

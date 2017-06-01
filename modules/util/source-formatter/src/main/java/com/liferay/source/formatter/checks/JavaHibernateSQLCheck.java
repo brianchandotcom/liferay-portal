@@ -36,5 +36,4 @@ public class JavaHibernateSQLCheck extends BaseFileCheck {
 		return content;
 	}
 
-
 }

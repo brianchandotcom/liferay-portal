@@ -33,9 +33,7 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		content = _sortMethodCalls(absolutePath, content);
-
-		return content;
+		return _sortMethodCalls(content);
 	}
 
 	private boolean _isAllowedVariableType(
@@ -135,7 +133,7 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _sortMethodCalls(String absolutePath, String content) {
+	private String _sortMethodCalls(String content) {
 		content = _sortMethodCall(
 			content, "add", "ConcurrentSkipListSet<.*>", "HashSet<.*>",
 			"TreeSet<.*>");

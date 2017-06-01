@@ -138,7 +138,9 @@ if (calendarBooking != null) {
 		recurring = true;
 	}
 
-	recurrence = RecurrenceUtil.inTimeZone(calendarBooking.getRecurrenceObj(), startTimeJCalendar, calendarBookingTimeZone);
+	recurrence = calendarDisplayContext.getLastRecurrence(calendarBooking);
+
+	recurrence = RecurrenceUtil.inTimeZone(recurrence, startTimeJCalendar, calendarBookingTimeZone);
 
 	approved = calendarBooking.isApproved();
 

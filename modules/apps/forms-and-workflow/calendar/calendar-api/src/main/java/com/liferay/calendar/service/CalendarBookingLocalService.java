@@ -203,6 +203,10 @@ public interface CalendarBookingLocalService extends BaseLocalService,
 	public CalendarBooking getCalendarBookingInstance(long calendarBookingId,
 		int instanceIndex) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CalendarBooking getLastInstanceCalendarBooking(
+		CalendarBooking calendarBooking);
+
 	public CalendarBooking invokeTransition(long userId,
 		CalendarBooking calendarBooking, long startTime, int status,
 		boolean updateInstance, boolean allFollowing,
@@ -256,6 +260,16 @@ public interface CalendarBookingLocalService extends BaseLocalService,
 		long firstReminder, java.lang.String firstReminderType,
 		long secondReminder, java.lang.String secondReminderType,
 		ServiceContext serviceContext) throws PortalException;
+
+	public CalendarBooking updateCalendarBookingInstance(long userId,
+		long calendarBookingId, int instanceIndex, long calendarId,
+		long[] childCalendarIds, Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		java.lang.String location, long startTime, long endTime,
+		boolean allDay, boolean allFollowing, long firstReminder,
+		java.lang.String firstReminderType, long secondReminder,
+		java.lang.String secondReminderType, ServiceContext serviceContext)
+		throws PortalException;
 
 	public CalendarBooking updateCalendarBookingInstance(long userId,
 		long calendarBookingId, int instanceIndex, long calendarId,
@@ -516,4 +530,7 @@ public interface CalendarBookingLocalService extends BaseLocalService,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
 		long[] assetLinkEntryIds, java.lang.Double priority)
 		throws PortalException;
+
+	public void updateLastInstanceCalendarBookingRecurrence(
+		CalendarBooking calendarBooking, java.lang.String recurrence);
 }

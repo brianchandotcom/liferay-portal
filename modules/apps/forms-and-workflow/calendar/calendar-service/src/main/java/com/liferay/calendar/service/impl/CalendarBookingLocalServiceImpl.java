@@ -728,6 +728,16 @@ public class CalendarBookingLocalServiceImpl
 	}
 
 	@Override
+	public CalendarBooking getLastInstanceCalendarBooking(
+		CalendarBooking calendarBooking) {
+
+		List<CalendarBooking> calendarBookings = getRecurringCalendarBookings(
+			calendarBooking);
+
+		return RecurrenceUtil.getLastInstanceCalendarBooking(calendarBookings);
+	}
+
+	@Override
 	public List<CalendarBooking> getRecurringCalendarBookings(
 		CalendarBooking calendarBooking) {
 
@@ -1235,6 +1245,28 @@ public class CalendarBookingLocalServiceImpl
 			long calendarId, long[] childCalendarIds,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String location, long startTime, long endTime, boolean allDay,
+			boolean allFollowing, long firstReminder, String firstReminderType,
+			long secondReminder, String secondReminderType,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CalendarBooking calendarBooking =
+			calendarBookingPersistence.fetchByPrimaryKey(calendarBookingId);
+
+		return updateCalendarBookingInstance(
+			userId, calendarBookingId, instanceIndex, calendarId,
+			childCalendarIds, titleMap, descriptionMap, location, startTime,
+			endTime, allDay, calendarBooking.getRecurrence(), allFollowing,
+			firstReminder, firstReminderType, secondReminder,
+			secondReminderType, serviceContext);
+	}
+
+	@Override
+	public CalendarBooking updateCalendarBookingInstance(
+			long userId, long calendarBookingId, int instanceIndex,
+			long calendarId, long[] childCalendarIds,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String location, long startTime, long endTime, boolean allDay,
 			String recurrence, boolean allFollowing, long firstReminder,
 			String firstReminderType, long secondReminder,
 			String secondReminderType, ServiceContext serviceContext)
@@ -1272,7 +1304,7 @@ public class CalendarBookingLocalServiceImpl
 			Recurrence recurrenceObj = RecurrenceSerializer.deserialize(
 				recurrence, calendar.getTimeZone());
 
-			if (oldRecurrence.equals(recurrence) &&
+			if ((recurrenceObj != null) && oldRecurrence.equals(recurrence) &&
 				(recurrenceObj.getCount() > 0)) {
 
 				recurrenceObj.setCount(
@@ -1321,6 +1353,38 @@ public class CalendarBookingLocalServiceImpl
 			endTime, allDay, recurrence, allFollowing, firstReminder,
 			firstReminderType, secondReminder, secondReminderType,
 			serviceContext);
+	}
+
+	@Override
+	public void updateLastInstanceCalendarBookingRecurrence(
+		CalendarBooking calendarBooking, String recurrence) {
+
+		CalendarBooking lastInstanceCalendarBooking =
+			getLastInstanceCalendarBooking(calendarBooking);
+
+		if (recurrence == null) {
+			recurrence = StringPool.BLANK;
+		}
+		else {
+			Recurrence oldRecurrenceObj =
+				lastInstanceCalendarBooking.getRecurrenceObj();
+
+			Recurrence recurrenceObj = RecurrenceSerializer.deserialize(
+				recurrence, calendarBooking.getTimeZone());
+
+			if ((oldRecurrenceObj != null) && (recurrenceObj != null)) {
+				recurrenceObj.setExceptionJCalendars(
+					oldRecurrenceObj.getExceptionJCalendars());
+
+				recurrence = RecurrenceSerializer.serialize(recurrenceObj);
+			}
+		}
+
+		if (!recurrence.equals(lastInstanceCalendarBooking.getRecurrence())) {
+			lastInstanceCalendarBooking.setRecurrence(recurrence);
+
+			calendarBookingPersistence.update(lastInstanceCalendarBooking);
+		}
 	}
 
 	@Override

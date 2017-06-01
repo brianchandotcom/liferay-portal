@@ -230,6 +230,11 @@ public class CalendarBookingLocalServiceUtil {
 				   .getCalendarBookingInstance(calendarBookingId, instanceIndex);
 	}
 
+	public static com.liferay.calendar.model.CalendarBooking getLastInstanceCalendarBooking(
+		com.liferay.calendar.model.CalendarBooking calendarBooking) {
+		return getService().getLastInstanceCalendarBooking(calendarBooking);
+	}
+
 	public static com.liferay.calendar.model.CalendarBooking invokeTransition(
 		long userId,
 		com.liferay.calendar.model.CalendarBooking calendarBooking,
@@ -323,6 +328,25 @@ public class CalendarBookingLocalServiceUtil {
 				   .updateCalendarBookingInstance(userId, calendarBookingId,
 			instanceIndex, calendarId, titleMap, descriptionMap, location,
 			startTime, endTime, allDay, recurrence, allFollowing,
+			firstReminder, firstReminderType, secondReminder,
+			secondReminderType, serviceContext);
+	}
+
+	public static com.liferay.calendar.model.CalendarBooking updateCalendarBookingInstance(
+		long userId, long calendarBookingId, int instanceIndex,
+		long calendarId, long[] childCalendarIds,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String location, long startTime, long endTime,
+		boolean allDay, boolean allFollowing, long firstReminder,
+		java.lang.String firstReminderType, long secondReminder,
+		java.lang.String secondReminderType,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCalendarBookingInstance(userId, calendarBookingId,
+			instanceIndex, calendarId, childCalendarIds, titleMap,
+			descriptionMap, location, startTime, endTime, allDay, allFollowing,
 			firstReminder, firstReminderType, secondReminder,
 			secondReminderType, serviceContext);
 	}
@@ -726,6 +750,14 @@ public class CalendarBookingLocalServiceUtil {
 		getService()
 			.updateAsset(userId, calendarBooking, assetCategoryIds,
 			assetTagNames, assetLinkEntryIds, priority);
+	}
+
+	public static void updateLastInstanceCalendarBookingRecurrence(
+		com.liferay.calendar.model.CalendarBooking calendarBooking,
+		java.lang.String recurrence) {
+		getService()
+			.updateLastInstanceCalendarBookingRecurrence(calendarBooking,
+			recurrence);
 	}
 
 	public static CalendarBookingLocalService getService() {

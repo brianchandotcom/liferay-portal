@@ -399,6 +399,22 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 	}
 
 	@Override
+	public CalendarBooking getLastInstanceCalendarBooking(
+			long calendarBookingId)
+		throws PortalException {
+
+		CalendarBooking calendarBooking =
+			calendarBookingPersistence.findByPrimaryKey(calendarBookingId);
+
+		CalendarPermission.check(
+			getPermissionChecker(), calendarBooking.getCalendarId(),
+			CalendarActionKeys.MANAGE_BOOKINGS);
+
+		return calendarBookingLocalService.getLastInstanceCalendarBooking(
+			calendarBooking);
+	}
+
+	@Override
 	public CalendarBooking getNewStartTimeAndDurationCalendarBooking(
 			long calendarBookingId, long offset, long duration)
 		throws PortalException {
@@ -631,6 +647,27 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			long calendarBookingId, int instanceIndex, long calendarId,
 			long[] childCalendarIds, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String location, long startTime,
+			long endTime, boolean allDay, boolean allFollowing,
+			long firstReminder, String firstReminderType, long secondReminder,
+			String secondReminderType, ServiceContext serviceContext)
+		throws PortalException {
+
+		CalendarPermission.check(
+			getPermissionChecker(), calendarId,
+			CalendarActionKeys.MANAGE_BOOKINGS);
+
+		return calendarBookingLocalService.updateCalendarBookingInstance(
+			getUserId(), calendarBookingId, instanceIndex, calendarId,
+			childCalendarIds, titleMap, descriptionMap, location, startTime,
+			endTime, allDay, allFollowing, firstReminder, firstReminderType,
+			secondReminder, secondReminderType, serviceContext);
+	}
+
+	@Override
+	public CalendarBooking updateCalendarBookingInstance(
+			long calendarBookingId, int instanceIndex, long calendarId,
+			long[] childCalendarIds, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String location, long startTime,
 			long endTime, boolean allDay, String recurrence,
 			boolean allFollowing, long firstReminder, String firstReminderType,
 			long secondReminder, String secondReminderType,
@@ -706,6 +743,22 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 	}
 
 	@Override
+	public void updateLastInstanceCalendarBookingRecurrence(
+			long calendarBookingId, String recurrence)
+		throws PortalException {
+
+		CalendarBooking calendarBooking =
+			calendarBookingPersistence.findByPrimaryKey(calendarBookingId);
+
+		CalendarPermission.check(
+			getPermissionChecker(), calendarBooking.getCalendarId(),
+			CalendarActionKeys.MANAGE_BOOKINGS);
+
+		calendarBookingLocalService.updateLastInstanceCalendarBookingRecurrence(
+			calendarBooking, recurrence);
+	}
+
+	@Override
 	public CalendarBooking updateOffsetAndDuration(
 			long calendarBookingId, long calendarId, long[] childCalendarIds,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
@@ -758,9 +811,8 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			long calendarBookingId, long calendarId, long[] childCalendarIds,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			String location, long startTime, long endTime, boolean allDay,
-			String recurrence, long firstReminder, String firstReminderType,
-			long secondReminder, String secondReminderType,
-			ServiceContext serviceContext)
+			long firstReminder, String firstReminderType, long secondReminder,
+			String secondReminderType, ServiceContext serviceContext)
 		throws PortalException {
 
 		CalendarPermission.check(
@@ -772,6 +824,34 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			titleMap, descriptionMap, location, startTime, endTime, allDay,
 			firstReminder, firstReminderType, secondReminder,
 			secondReminderType, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 2.2.0, replaced by {@link
+	 *             #updateRecurringCalendarBooking(long, long, long[], Map, Map,
+	 *             String, long, long, boolean, long, String, long, String,
+	 *             ServiceContext)
+	 */
+	@Deprecated
+	@Override
+	public CalendarBooking updateRecurringCalendarBooking(
+			long calendarBookingId, long calendarId, long[] childCalendarIds,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String location, long startTime, long endTime, boolean allDay,
+			String recurrence, long firstReminder, String firstReminderType,
+			long secondReminder, String secondReminderType,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CalendarPermission.check(
+			getPermissionChecker(), calendarId,
+			CalendarActionKeys.MANAGE_BOOKINGS);
+
+		return updateRecurringCalendarBooking(
+			calendarBookingId, calendarId, childCalendarIds, titleMap,
+			descriptionMap, location, startTime, endTime, allDay, firstReminder,
+			firstReminderType, secondReminder, secondReminderType,
+			serviceContext);
 	}
 
 	protected String exportToRSS(

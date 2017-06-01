@@ -66,6 +66,14 @@
 			<finder-column name="groupId" />
 			<finder-column name="resolverUserId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal.kernel" />
+		<reference entity="UserNotificationEvent" package-path="com.liferay.portal.kernel" />
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+		<reference entity="MBMessage" package-path="com.liferay.portlet.messageboards" />
+		<reference entity="SocialActivity" package-path="com.liferay.portlet.social" />
 	</entity>
 	<exceptions>
 		<exception>TasksEntryDueDate</exception>

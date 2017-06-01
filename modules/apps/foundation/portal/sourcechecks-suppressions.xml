@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<suppress checks="JavaVerifyUpgradeConnectionCheck" files="modules/apps/foundation/portal/portal-upgrade/src/main/java/com/liferay/portal/upgrade/release/BaseUpgradeServiceModuleRelease.java" />
+	<suppress checks="JavaVerifyUpgradeConnectionCheck" files="modules/apps/foundation/portal/portal-upgrade/src/main/java/com/liferay/portal/upgrade/release/BaseUpgradeWebModuleRelease.java" />
 	<suppress checks="JavaXMLSecurityCheck" files="modules/apps/foundation/portal/portal-monitoring/src/main/java/com/liferay/portal/monitoring/internal/MonitoringGateKeeper\.java" />
 </suppressions>

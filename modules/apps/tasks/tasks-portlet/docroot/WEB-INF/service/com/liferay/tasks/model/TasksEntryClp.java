@@ -14,14 +14,19 @@
 
 package com.liferay.tasks.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.impl.BaseModelImpl;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.tasks.service.ClpSerializer;
 import com.liferay.tasks.service.TasksEntryLocalServiceUtil;
@@ -35,8 +40,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Ryan Park
+ * @generated
  */
+@ProviderType
 public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 	implements TasksEntry {
 	public TasksEntryClp() {
@@ -90,6 +96,9 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 		attributes.put("dueDate", getDueDate());
 		attributes.put("finishDate", getFinishDate());
 		attributes.put("status", getStatus());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -179,6 +188,9 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 		if (status != null) {
 			setStatus(status);
 		}
+
+		_entityCacheEnabled = GetterUtil.getBoolean("entityCacheEnabled");
+		_finderCacheEnabled = GetterUtil.getBoolean("finderCacheEnabled");
 	}
 
 	@Override
@@ -274,13 +286,19 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 	}
 
 	@Override
-	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
 	@Override
@@ -422,14 +440,19 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 	}
 
 	@Override
-	public String getAssigneeUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getAssigneeUserId(), "uuid",
-			_assigneeUserUuid);
+	public String getAssigneeUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getAssigneeUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
 	public void setAssigneeUserUuid(String assigneeUserUuid) {
-		_assigneeUserUuid = assigneeUserUuid;
 	}
 
 	@Override
@@ -456,14 +479,19 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 	}
 
 	@Override
-	public String getResolverUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getResolverUserId(), "uuid",
-			_resolverUserUuid);
+	public String getResolverUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getResolverUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
 	public void setResolverUserUuid(String resolverUserUuid) {
-		_resolverUserUuid = resolverUserUuid;
 	}
 
 	@Override
@@ -536,9 +564,9 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 	}
 
 	@Override
-	public java.lang.String getReporterFullName() {
+	public java.lang.String getAssigneeFullName() {
 		try {
-			String methodName = "getReporterFullName";
+			String methodName = "getAssigneeFullName";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
@@ -574,9 +602,9 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 	}
 
 	@Override
-	public java.lang.String getStatusLabel() {
+	public java.lang.String getReporterFullName() {
 		try {
-			String methodName = "getStatusLabel";
+			String methodName = "getReporterFullName";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
@@ -593,9 +621,9 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 	}
 
 	@Override
-	public java.lang.String getAssigneeFullName() {
+	public java.lang.String getStatusLabel() {
 		try {
-			String methodName = "getAssigneeFullName";
+			String methodName = "getStatusLabel";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
@@ -661,7 +689,7 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 	}
 
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			TasksEntryLocalServiceUtil.addTasksEntry(this);
 		}
@@ -753,9 +781,23 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _entityCacheEnabled;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -869,18 +911,18 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
-	private String _userUuid;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _title;
 	private int _priority;
 	private long _assigneeUserId;
-	private String _assigneeUserUuid;
 	private long _resolverUserId;
-	private String _resolverUserUuid;
 	private Date _dueDate;
 	private Date _finishDate;
 	private int _status;
 	private BaseModel<?> _tasksEntryRemoteModel;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
+	private boolean _entityCacheEnabled;
+	private boolean _finderCacheEnabled;
 }

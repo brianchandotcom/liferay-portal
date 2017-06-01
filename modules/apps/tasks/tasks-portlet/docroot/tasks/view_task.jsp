@@ -40,7 +40,7 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 		<liferay-ui:header title="<%= HtmlUtil.unescape(tasksEntry.getTitle()) %>" />
 
 		<div class="task-data-container">
-			<div class="task-data assignee">
+			<div class="assignee task-data">
 				<c:choose>
 					<c:when test="<%= tasksEntry.getAssigneeUserId() > 0 %>">
 
@@ -65,7 +65,7 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 				</c:choose>
 			</div>
 
-			<div class="task-data reporter">
+			<div class="reporter task-data">
 
 				<%
 				String reporterDisplayURL = StringPool.BLANK;
@@ -83,62 +83,62 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 				<liferay-ui:message arguments="<%= taglibReporterDisplayURL %>" key="created-by-x" translateArguments="<%= false %>" />
 			</div>
 
-			<div class="task-data last modified-date">
+			<div class="last modified-date task-data">
 				<liferay-ui:message arguments="<%= dateFormatDateTime.format(tasksEntry.getModifiedDate()) %>" key="modified-on-x" translateArguments="<%= false %>" />
 			</div>
 		</div>
 
-		<table class="task-data-table lfr-table">
-		<tr>
-			<td class="lfr-label">
-				<liferay-ui:message key="status" />
-			</td>
-			<td>
-				<div class="task-data status">
-					<liferay-ui:message key="<%= tasksEntry.getStatusLabel() %>" />
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td class="lfr-label">
-				<liferay-ui:message key="priority" />
-			</td>
-			<td>
-				<div class="task-data <%= tasksEntry.getPriorityLabel() %>">
-					<liferay-ui:message key="<%= tasksEntry.getPriorityLabel() %>" />
-				</div>
-			</td>
-		</tr>
-
-		<c:if test="<%= tasksEntry.getDueDate() != null %>">
+		<table class="lfr-table task-data-table">
 			<tr>
 				<td class="lfr-label">
-					<liferay-ui:message key="due-date" />
+					<liferay-ui:message key="status" />
 				</td>
 				<td>
-					<div class="task-data due-date">
-						<%= dateFormatDateTime.format(tasksEntry.getDueDate()) %>
+					<div class="status task-data">
+						<liferay-ui:message key="<%= tasksEntry.getStatusLabel() %>" />
 					</div>
 				</td>
 			</tr>
-		</c:if>
+			<tr>
+				<td class="lfr-label">
+					<liferay-ui:message key="priority" />
+				</td>
+				<td>
+					<div class="task-data <%= tasksEntry.getPriorityLabel() %>">
+						<liferay-ui:message key="<%= tasksEntry.getPriorityLabel() %>" />
+					</div>
+				</td>
+			</tr>
 
-		<tr>
-			<td colspan="2">
-				<br />
-			</td>
-		</tr>
-		<tr>
-			<td class="lfr-label">
-				<liferay-ui:message key="tags" />
-			</td>
-			<td>
-				<liferay-ui:asset-tags-summary
-					className="<%= TasksEntry.class.getName() %>"
-					classPK="<%= tasksEntry.getTasksEntryId() %>"
-				/>
-			</td>
-		</tr>
+			<c:if test="<%= tasksEntry.getDueDate() != null %>">
+				<tr>
+					<td class="lfr-label">
+						<liferay-ui:message key="due-date" />
+					</td>
+					<td>
+						<div class="due-date task-data">
+							<%= dateFormatDateTime.format(tasksEntry.getDueDate()) %>
+						</div>
+					</td>
+				</tr>
+			</c:if>
+
+			<tr>
+				<td colspan="2">
+					<br />
+				</td>
+			</tr>
+			<tr>
+				<td class="lfr-label">
+					<liferay-ui:message key="tags" />
+				</td>
+				<td>
+					<liferay-ui:asset-tags-summary
+						className="<%= TasksEntry.class.getName() %>"
+						classPK="<%= tasksEntry.getTasksEntryId() %>"
+					/>
+				</td>
+			</tr>
 		</table>
 
 		<div class="task-action">

@@ -15,9 +15,7 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 
 import java.io.File;
@@ -165,61 +163,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return fileNames;
 	}
 
-	private List<File> _getSuppressionsFiles() throws Exception {
-		String fileName = "checkstyle-suppressions.xml";
-
-		List<File> suppressionsFiles = new ArrayList<>();
-
-		// Find suppressions file in portal-impl/src/
-
-		if (portalSource) {
-			File suppressionsFile = getFile(
-				"portal-impl/src/" + fileName, PORTAL_MAX_DIR_LEVEL);
-
-			if (suppressionsFile != null) {
-				suppressionsFiles.add(suppressionsFile);
-			}
-		}
-
-		// Find suppressions files in any parent directory
-
-		int maxDirLevel = PLUGINS_MAX_DIR_LEVEL;
-		String parentDirName = sourceFormatterArgs.getBaseDirName();
-
-		if (portalSource || subrepository) {
-			maxDirLevel = PORTAL_MAX_DIR_LEVEL;
-		}
-
-		for (int i = 0; i < maxDirLevel; i++) {
-			File suppressionsFile = new File(parentDirName + fileName);
-
-			if (suppressionsFile.exists()) {
-				suppressionsFiles.add(suppressionsFile);
-			}
-
-			parentDirName += "../";
-		}
-
-		if (!portalSource && !subrepository) {
-			return suppressionsFiles;
-		}
-
-		// Find suppressions files in any child directory
-
-		List<String> moduleSuppressionsFileNames = getFileNames(
-			new String[0], new String[] {"**/modules/**/" + fileName}, true);
-
-		for (String moduleSuppressionsFileName : moduleSuppressionsFileNames) {
-			moduleSuppressionsFileName = StringUtil.replace(
-				moduleSuppressionsFileName, CharPool.BACK_SLASH,
-				CharPool.SLASH);
-
-			suppressionsFiles.add(new File(moduleSuppressionsFileName));
-		}
-
-		return suppressionsFiles;
-	}
-
 	private boolean _hasGeneratedTag(String content) {
 		if ((content.contains("* @generated") || content.contains("$ANTLR")) &&
 			!content.contains("hasGeneratedTag")) {
@@ -238,7 +181,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		Set<SourceFormatterMessage> sourceFormatterMessages =
 			CheckStyleUtil.process(
-				_ungeneratedFiles, _getSuppressionsFiles(),
+				_ungeneratedFiles,
+				getSuppressionsFiles("checkstyle-suppressions.xml"),
 				sourceFormatterArgs.getBaseDirName());
 
 		for (SourceFormatterMessage sourceFormatterMessage :

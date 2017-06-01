@@ -300,6 +300,61 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			GetterUtil.getString(getProperty(key)), StringPool.COMMA);
 	}
 
+	protected List<File> getSuppressionsFiles(String fileName)
+		throws Exception {
+
+		List<File> suppressionsFiles = new ArrayList<>();
+
+		// Find suppressions file in portal-impl/src/
+
+		if (portalSource) {
+			File suppressionsFile = getFile(
+				"portal-impl/src/" + fileName, PORTAL_MAX_DIR_LEVEL);
+
+			if (suppressionsFile != null) {
+				suppressionsFiles.add(suppressionsFile);
+			}
+		}
+
+		// Find suppressions files in any parent directory
+
+		int maxDirLevel = PLUGINS_MAX_DIR_LEVEL;
+		String parentDirName = sourceFormatterArgs.getBaseDirName();
+
+		if (portalSource || subrepository) {
+			maxDirLevel = PORTAL_MAX_DIR_LEVEL;
+		}
+
+		for (int i = 0; i < maxDirLevel; i++) {
+			File suppressionsFile = new File(parentDirName + fileName);
+
+			if (suppressionsFile.exists()) {
+				suppressionsFiles.add(suppressionsFile);
+			}
+
+			parentDirName += "../";
+		}
+
+		if (!portalSource && !subrepository) {
+			return suppressionsFiles;
+		}
+
+		// Find suppressions files in any child directory
+
+		List<String> moduleSuppressionsFileNames = getFileNames(
+			new String[0], new String[] {"**/modules/**/" + fileName}, true);
+
+		for (String moduleSuppressionsFileName : moduleSuppressionsFileNames) {
+			moduleSuppressionsFileName = StringUtil.replace(
+				moduleSuppressionsFileName, CharPool.BACK_SLASH,
+				CharPool.SLASH);
+
+			suppressionsFiles.add(new File(moduleSuppressionsFileName));
+		}
+
+		return suppressionsFiles;
+	}
+
 	protected void postFormat() throws Exception {
 	}
 

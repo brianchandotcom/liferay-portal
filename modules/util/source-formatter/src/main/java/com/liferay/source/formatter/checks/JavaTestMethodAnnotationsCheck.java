@@ -35,9 +35,7 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
-		if (!fileName.endsWith("Test.java") ||
-			isExcludedPath(_TEST_ANNOTATIONS_EXCLUDES, absolutePath)) {
-
+		if (!fileName.endsWith("Test.java")) {
 			return javaTerm.getContent();
 		}
 
@@ -102,8 +100,5 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 					"', see LPS-36303");
 		}
 	}
-
-	private static final String _TEST_ANNOTATIONS_EXCLUDES =
-		"test.annotations.excludes";
 
 }

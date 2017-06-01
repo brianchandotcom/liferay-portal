@@ -20,6 +20,7 @@ import org.dom4j.Element;
 
 /**
  * @author Peter Yoo
+ * @author Yi-Chen Tsai
  */
 public class SourceFormatFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
@@ -32,12 +33,20 @@ public class SourceFormatFailureMessageGenerator
 			return null;
 		}
 
-		consoleOutput = consoleOutput.substring(
-			consoleOutput.lastIndexOf("format-source:"));
+		int start = consoleOutput.lastIndexOf("format-source:");
 
-		int end = consoleOutput.indexOf("merge-test-results:");
+		start = consoleOutput.indexOf(
+			_UTIL_SYSTEM_EXT_PROPERTIES_STRING, start);
 
-		return getConsoleOutputSnippet(consoleOutput, true, end);
+		start = consoleOutput.indexOf("\n", start);
+
+		int end = consoleOutput.indexOf("merge-test-results:", start);
+
+		end = consoleOutput.lastIndexOf(_SOURCE_FORMAT_STRING, end);
+
+		end = consoleOutput.indexOf("\n", end);
+
+		return getConsoleOutputSnippet(consoleOutput, true, start, end);
 	}
 
 	@Override
@@ -48,15 +57,25 @@ public class SourceFormatFailureMessageGenerator
 			return null;
 		}
 
-		consoleText = consoleText.substring(
-			consoleText.lastIndexOf("format-source:"));
+		int start = consoleText.lastIndexOf("format-source:");
 
-		int end = consoleText.indexOf("merge-test-results:");
+		start = consoleText.indexOf(_UTIL_SYSTEM_EXT_PROPERTIES_STRING, start);
 
-		return getConsoleOutputSnippetElement(consoleText, true, end);
+		start = consoleText.indexOf("\n", start);
+
+		int end = consoleText.indexOf("merge-test-results:", start);
+
+		end = consoleText.lastIndexOf(_SOURCE_FORMAT_STRING, end);
+
+		end = consoleText.indexOf("\n", end);
+
+		return getConsoleOutputSnippetElement(consoleText, true, start, end);
 	}
 
 	private static final String _SOURCE_FORMAT_STRING =
-		"at com.liferay.source.formatter.SourceFormatter.format";
+		"at com.liferay.source.formatter";
+
+	private static final String _UTIL_SYSTEM_EXT_PROPERTIES_STRING =
+		"util-java/test-classes/unit/system-ext.properties";
 
 }

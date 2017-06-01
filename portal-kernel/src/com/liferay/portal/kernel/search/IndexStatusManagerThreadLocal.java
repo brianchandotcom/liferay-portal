@@ -35,6 +35,6 @@ public class IndexStatusManagerThreadLocal {
 	private static final ThreadLocal<Boolean> _indexReadOnly =
 		new AutoResetThreadLocal<>(
 			IndexStatusManagerThreadLocal.class + "._indexReadOnly",
-			() -> Boolean.TRUE);
+			() -> Boolean.FALSE);
 
 }

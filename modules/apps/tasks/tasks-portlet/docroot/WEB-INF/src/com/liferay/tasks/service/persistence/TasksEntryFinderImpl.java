@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.tasks.model.TasksEntry;
 import com.liferay.tasks.model.TasksEntryConstants;
 import com.liferay.tasks.model.impl.TasksEntryImpl;
+import com.liferay.tasks.service.persistence.TasksEntryFinder;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Iterator;

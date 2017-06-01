@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -830,6 +831,9 @@ public abstract class BaseSearchTestCase {
 
 		assertGroupEntriesCount(initialUser1SearchGroupEntriesCount + 3, user1);
 		assertGroupEntriesCount(initialUser2SearchGroupEntriesCount + 2, user2);
+
+		UserLocalServiceUtil.deleteUser(user1);
+		UserLocalServiceUtil.deleteUser(user2);
 	}
 
 	protected void searchRecentEntries() throws Exception {
@@ -872,6 +876,9 @@ public abstract class BaseSearchTestCase {
 			baseModel = addBaseModel(
 				parentBaseModel2, true, RandomTestUtil.randomString(),
 				serviceContext);
+
+			UserLocalServiceUtil.deleteUser(user1);
+			UserLocalServiceUtil.deleteUser(user2);
 		}
 		finally {
 			PrincipalThreadLocal.setName(name);
@@ -1043,6 +1050,8 @@ public abstract class BaseSearchTestCase {
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
 		}
+
+		UserLocalServiceUtil.deleteUser(user);
 	}
 
 	protected BaseModel<?> updateBaseModel(

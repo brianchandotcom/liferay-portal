@@ -14,7 +14,7 @@
 
 package com.liferay.tasks.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.tasks.model.TasksEntry;
 import com.liferay.tasks.service.TasksEntryLocalServiceUtil;
@@ -28,9 +28,10 @@ import com.liferay.tasks.service.TasksEntryLocalServiceUtil;
  *
  * @author Ryan Park
  * @see TasksEntryImpl
- * @see com.liferay.tasks.model.TasksEntry
+ * @see TasksEntry
  * @generated
  */
+@ProviderType
 public abstract class TasksEntryBaseImpl extends TasksEntryModelImpl
 	implements TasksEntry {
 	/*
@@ -39,7 +40,7 @@ public abstract class TasksEntryBaseImpl extends TasksEntryModelImpl
 	 * Never modify or reference this class directly. All methods that expect a tasks entry model instance should use the {@link TasksEntry} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			TasksEntryLocalServiceUtil.addTasksEntry(this);
 		}

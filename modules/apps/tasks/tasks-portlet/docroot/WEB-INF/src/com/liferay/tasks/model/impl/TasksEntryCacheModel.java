@@ -14,9 +14,12 @@
 
 package com.liferay.tasks.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.model.CacheModel;
 
 import com.liferay.tasks.model.TasksEntry;
 
@@ -34,8 +37,33 @@ import java.util.Date;
  * @see TasksEntry
  * @generated
  */
+@ProviderType
 public class TasksEntryCacheModel implements CacheModel<TasksEntry>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof TasksEntryCacheModel)) {
+			return false;
+		}
+
+		TasksEntryCacheModel tasksEntryCacheModel = (TasksEntryCacheModel)obj;
+
+		if (tasksEntryId == tasksEntryCacheModel.tasksEntryId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, tasksEntryId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(29);
@@ -138,18 +166,25 @@ public class TasksEntryCacheModel implements CacheModel<TasksEntry>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		tasksEntryId = objectInput.readLong();
+
 		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		title = objectInput.readUTF();
+
 		priority = objectInput.readInt();
+
 		assigneeUserId = objectInput.readLong();
+
 		resolverUserId = objectInput.readLong();
 		dueDate = objectInput.readLong();
 		finishDate = objectInput.readLong();
+
 		status = objectInput.readInt();
 	}
 
@@ -157,8 +192,11 @@ public class TasksEntryCacheModel implements CacheModel<TasksEntry>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(tasksEntryId);
+
 		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -179,10 +217,13 @@ public class TasksEntryCacheModel implements CacheModel<TasksEntry>,
 		}
 
 		objectOutput.writeInt(priority);
+
 		objectOutput.writeLong(assigneeUserId);
+
 		objectOutput.writeLong(resolverUserId);
 		objectOutput.writeLong(dueDate);
 		objectOutput.writeLong(finishDate);
+
 		objectOutput.writeInt(status);
 	}
 

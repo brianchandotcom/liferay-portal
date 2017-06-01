@@ -14,14 +14,16 @@
 
 package com.liferay.tasks.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
-
-import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
@@ -40,7 +42,9 @@ import java.util.Date;
  * @see com.liferay.tasks.model.impl.TasksEntryModelImpl
  * @generated
  */
-public interface TasksEntryModel extends BaseModel<TasksEntry>, GroupedModel {
+@ProviderType
+public interface TasksEntryModel extends BaseModel<TasksEntry>, GroupedModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -127,10 +131,9 @@ public interface TasksEntryModel extends BaseModel<TasksEntry>, GroupedModel {
 	 * Returns the user uuid of this tasks entry.
 	 *
 	 * @return the user uuid of this tasks entry
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this tasks entry.
@@ -236,9 +239,8 @@ public interface TasksEntryModel extends BaseModel<TasksEntry>, GroupedModel {
 	 * Returns the assignee user uuid of this tasks entry.
 	 *
 	 * @return the assignee user uuid of this tasks entry
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getAssigneeUserUuid() throws SystemException;
+	public String getAssigneeUserUuid();
 
 	/**
 	 * Sets the assignee user uuid of this tasks entry.
@@ -265,9 +267,8 @@ public interface TasksEntryModel extends BaseModel<TasksEntry>, GroupedModel {
 	 * Returns the resolver user uuid of this tasks entry.
 	 *
 	 * @return the resolver user uuid of this tasks entry
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getResolverUserUuid() throws SystemException;
+	public String getResolverUserUuid();
 
 	/**
 	 * Sets the resolver user uuid of this tasks entry.

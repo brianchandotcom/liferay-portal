@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<suppress checks="JavaXMLSecurityCheck" files="modules/apps/foundation/petra/petra-log4j/src/main/java/com/liferay/petra/log4j/Log4JUtil\.java" />
+</suppressions>

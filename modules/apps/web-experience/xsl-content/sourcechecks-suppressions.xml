@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<suppress checks="JavaXMLSecurityCheck" files="modules/apps/web-experience/xsl-content/xsl-content-web/src/main/java/com/liferay/xsl/content/web/internal/util/XSLContentUtil\.java" />
+</suppressions>

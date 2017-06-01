@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<suppress checks="JavaXMLSecurityCheck" files="modules/apps/static/portal-target-platform-indexer/portal-target-platform-indexer/src/main/java/com/liferay/portal/target/platform/indexer/internal/DefaultIndexValidator\.java" />
+</suppressions>

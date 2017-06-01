@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<suppress checks="JavaXMLSecurityCheck" files="modules/apps/static/portal-osgi-web/portal-osgi-web-servlet-context-helper/src/main/java/com/liferay/portal/osgi/web/servlet/context/helper/internal/definition/WebXMLDefinitionLoader\.java" />
+</suppressions>

@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<suppress checks="JavaXMLSecurityCheck" files="modules/apps/static/petra/petra-xml/src/main/java/com/liferay/petra/xml/Dom4jUtil\.java" />
+</suppressions>

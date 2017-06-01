@@ -5,4 +5,5 @@
 	<suppress checks="JavaVariableTypeCheck" files="modules/util/portal-tools-soy-builder/src/main/java/com/liferay/portal/tools/soy/builder/maven/BaseSoyJsMojo\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="modules/util/portal-tools-soy-builder/src/main/java/com/liferay/portal/tools/soy/builder/maven/BuildSoyMojo\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="modules/util/portal-tools-theme-builder/src/main/java/com/liferay/portal/tools/theme/builder/maven/BuildThemeMojo\.java" />
+	<suppress checks="JavaXMLSecurityCheck" files="modules/util/portal-tools-db-support/.*" />
 </suppressions>

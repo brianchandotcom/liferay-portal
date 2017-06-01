@@ -30,8 +30,7 @@ public class JavaXMLSecurityCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (isExcludedPath(_SECURE_XML_EXCLUDES, absolutePath) ||
-			fileName.contains("/test/") ||
+		if (fileName.contains("/test/") ||
 			fileName.contains("/testIntegration/")) {
 
 			return content;
@@ -80,7 +79,5 @@ public class JavaXMLSecurityCheck extends BaseFileCheck {
 			addMessage(fileName, sb.toString());
 		}
 	}
-
-	private static final String _SECURE_XML_EXCLUDES = "secure.xml.excludes";
 
 }

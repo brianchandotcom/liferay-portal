@@ -11,6 +11,16 @@
 	<suppress checks="JavaVariableTypeCheck" files="portal-impl/test/unit/com/liferay/portal/json/One\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="portal-impl/test/unit/com/liferay/portal/json/Two\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/PathHolder\.java" />
+	<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/security/xml/SecureXMLFactoryProviderImpl\.java" />
+	<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/tools/JavadocBuilder\.java" />
+	<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/tools/PluginsEnvironmentBuilder\.java" />
+	<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/tools/ToolDependencies\.java" />
+	<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/util/MimeTypesImpl\.java" />
+	<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/xml/SAXReaderFactory\.java" />
+	<suppress checks="JavaXMLSecurityCheck" files="util-java/src/com/liferay/util/ant/Java2WsddTask\.java" />
+	<suppress checks="JavaXMLSecurityCheck" files="util-java/src/com/liferay/util/log4j/Log4JUtil\.java" />
+	<suppress checks="JavaXMLSecurityCheck" files="util-java/src/com/liferay/util/xml/Dom4jUtil\.java" />
+	<suppress checks="JavaXMLSecurityCheck" files="util-java/src/com/liferay/util/xml/XMLMergerRunner\.java" />
 	<suppress checks="JavaDiamondOperatorCheck" files="osgi-util/.*" />
 	<suppress checks="JavaDiamondOperatorCheck" files="portal-impl/src/com/liferay/portal/jsonwebservice/JSONWebServiceActionsManagerImpl\.java" />
 	<suppress checks="JavaDiamondOperatorCheck" files="portal-impl/src/com/liferay/portlet/messageboards/util/MBMailMessage\.java" />

@@ -1,0 +1,53 @@
+<definition default="assertClickNoError" summary="Click on '${locator1}' that should have a value of '${value1}'">
+	<command name="assertClickNoError">
+		<execute function="WaitForSPARefresh" />
+
+		<if>
+			<contains string="${locator1}" substring="/input" />
+			<then>
+				<execute function="AssertClickNoError#assertValueClick" />
+			</then>
+			<else>
+				<execute function="AssertClickNoError#assertTextClick" />
+			</else>
+		</if>
+	</command>
+
+	<command name="assertPartialTextClickAt">
+		<execute function="WaitForSPARefresh" />
+
+		<execute function="AssertTextEquals#assertPartialText" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="clickAt" />
+	</command>
+
+	<command name="assertTextClick">
+		<execute function="WaitForSPARefresh" />
+
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForText" />
+
+		<execute selenium="assertText" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="click" />
+	</command>
+
+	<command name="assertValueClick">
+		<execute function="WaitForSPARefresh" />
+
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForValue" />
+
+		<execute selenium="assertValue" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="click" />
+	</command>
+</definition>

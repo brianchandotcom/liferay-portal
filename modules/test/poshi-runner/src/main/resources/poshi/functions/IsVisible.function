@@ -1,0 +1,15 @@
+<definition default="isVisible">
+	<command name="isVisible">
+		<execute function="WaitForSPARefresh" />
+
+		<execute selenium="isVisible" />
+	</command>
+
+	<command name="waitForVisible">
+		<execute function="WaitForSPARefresh" />
+
+		<execute selenium="waitForVisible" />
+
+		<execute function="IsVisible#isVisible" />
+	</command>
+</definition>

@@ -29,9 +29,23 @@ import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.reflect.Method;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.text.SimpleDateFormat;
 
@@ -409,6 +423,8 @@ public class PoshiRunnerContext {
 
 		List<String> filePaths = new ArrayList<>();
 
+		filePaths.addAll(_getResourceFilePaths());
+
 		for (String basedir : basedirs) {
 			if (Validator.isNull(basedir)) {
 				continue;
@@ -434,7 +450,7 @@ public class PoshiRunnerContext {
 					filePath = filePath.replace("/", "\\");
 				}
 
-				filePaths.add(filePath);
+				filePaths.add("file:" + filePath);
 			}
 		}
 
@@ -466,6 +482,66 @@ public class PoshiRunnerContext {
 		relatedClassCommandNames.add("BaseLiferay#" + commandName);
 
 		return relatedClassCommandNames;
+	}
+
+	private static List<String> _getResourceFilePaths()
+		throws IOException, URISyntaxException {
+
+		Class<?> clazz = PoshiRunnerContext.class;
+
+		URL url = clazz.getResource("/poshi");
+
+		FileSystem fileSystem = null;
+
+		Path path;
+
+		try {
+			String urlString = url.toString();
+
+			int x = urlString.indexOf("!");
+
+			if (x != -1) {
+				fileSystem = FileSystems.newFileSystem(
+					URI.create(urlString.substring(0, x)),
+					new HashMap<String, String>());
+
+				path = fileSystem.getPath(urlString.substring(x + 1));
+			}
+			else {
+				path = Paths.get(url.toURI());
+			}
+
+			final List<String> filePathsList = new ArrayList<>();
+
+			Files.walkFileTree(
+				path,
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult visitFile(
+							Path filePath,
+							BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						URI uri = filePath.toUri();
+
+						filePathsList.add(uri.toString());
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+
+			return filePathsList;
+		}
+		catch (IOException | URISyntaxException e) {
+			throw e;
+		}
+		finally {
+			if (fileSystem != null) {
+				fileSystem.close();
+			}
+		}
 	}
 
 	private static String _getTestBatchGroups() throws Exception {
@@ -931,9 +1007,9 @@ public class PoshiRunnerContext {
 					className + "#" + commandElement.attributeValue("name");
 
 				if (isCommandElement(classType + "#" + classCommandName)) {
-					throw new Exception(
-						"Duplicate command name\n" + filePath + ":" +
-							commandElement.attributeValue("line-number"));
+					System.out.println(
+						"Overriding command " + className + "#" +
+							commandElement.attributeValue("name"));
 				}
 
 				_commandElements.put(

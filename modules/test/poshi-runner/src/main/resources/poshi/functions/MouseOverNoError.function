@@ -1,0 +1,9 @@
+<definition default="mouseOverNoError" summary="Mouse over '${locator1}'">
+	<command name="mouseOverNoError">
+		<execute function="WaitForSPARefresh" />
+
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+	</command>
+</definition>

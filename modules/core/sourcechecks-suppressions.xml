@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<suppress checks="JavaDiamondOperatorCheck" files="modules/core/registry-impl/src/main/java/com/liferay/registry/internal/RegistryImpl\.java" />
+</suppressions>

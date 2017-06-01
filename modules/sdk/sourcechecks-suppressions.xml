@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<suppress checks="JavaDiamondOperatorCheck" files="modules/sdk/ant-beanshell/.*" />
+	<suppress checks="JavaDiamondOperatorCheck" files="modules/sdk/ant-bnd/.*" />
+	<suppress checks="JavaDiamondOperatorCheck" files="modules/sdk/ant-gradle/.*" />
+	<suppress checks="JavaDiamondOperatorCheck" files="modules/sdk/ant-mirrors-get/.*" />
+</suppressions>

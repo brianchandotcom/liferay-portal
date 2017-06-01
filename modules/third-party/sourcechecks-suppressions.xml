@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<suppress checks="JavaDiamondOperatorCheck" files="modules/third-party/org-gradle/.*" />
+</suppressions>

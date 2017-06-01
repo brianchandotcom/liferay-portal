@@ -123,6 +123,10 @@ public interface WeDeployAuthAppLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WeDeployAuthApp fetchWeDeployAuthApp(java.lang.String redirectURI,
+		java.lang.String clientId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WeDeployAuthApp fetchWeDeployAuthApp(long weDeployAuthAppId);
 
 	/**

@@ -206,9 +206,6 @@ public abstract class BaseFileCheck
 		_bndSettingsMap.put(bndSettings.getFileLocation(), bndSettings);
 	}
 
-	protected static final String LANGUAGE_KEYS_CHECK_EXCLUDES =
-		"language.keys.check.excludes";
-
 	protected static final String METHOD_CALL_SORT_EXCLUDES =
 		"method.call.sort.excludes";
 

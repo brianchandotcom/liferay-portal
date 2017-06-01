@@ -1700,6 +1700,10 @@ to version 2.0.11.
 ## 3.3.23 - 2017-05-31
 
 ### Changed
+- [LPS-72606]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.0.12.
+- [LPS-72606]: Update the [Liferay Source Formatter] dependency to version
+1.0.402.
 - [LPS-72851]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.3.14.
 
@@ -1852,6 +1856,7 @@ version 2.3.14.
 [LPS-72365]: https://issues.liferay.com/browse/LPS-72365
 [LPS-72514]: https://issues.liferay.com/browse/LPS-72514
 [LPS-72572]: https://issues.liferay.com/browse/LPS-72572
+[LPS-72606]: https://issues.liferay.com/browse/LPS-72606
 [LPS-72656]: https://issues.liferay.com/browse/LPS-72656
 [LPS-72705]: https://issues.liferay.com/browse/LPS-72705
 [LPS-72723]: https://issues.liferay.com/browse/LPS-72723

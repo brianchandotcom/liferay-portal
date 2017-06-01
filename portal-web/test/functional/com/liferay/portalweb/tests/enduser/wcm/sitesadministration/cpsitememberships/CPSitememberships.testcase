@@ -719,7 +719,7 @@
 		</execute>
 
 		<execute macro="User#addMultipleCP">
-			<var name="usersEmailsList" value="userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn7@liferay.com,userfn8@liferay.com,userfn9@liferay.com,userfn10@liferay.com" />
+			<var name="numberOfUsers" value="10" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

@@ -18,18 +18,17 @@
 package com.liferay.tasks.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.tasks.exception.TasksEntryDueDateException;
 import com.liferay.tasks.exception.TasksEntryTitleException;
 import com.liferay.tasks.model.TasksEntry;
@@ -53,7 +52,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 			int dueDateMonth, int dueDateDay, int dueDateYear, int dueDateHour,
 			int dueDateMinute, boolean addDueDate,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Tasks entry
 
@@ -122,7 +121,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 
 	@Override
 	public TasksEntry deleteTasksEntry(long tasksEntryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		TasksEntry tasksEntry = tasksEntryPersistence.findByPrimaryKey(
 			tasksEntryId);
@@ -132,7 +131,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 
 	@Override
 	public TasksEntry deleteTasksEntry(TasksEntry tasksEntry)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Tasks entry
 
@@ -157,96 +156,76 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 	}
 
 	public List<TasksEntry> getAssigneeTasksEntries(
-			long userId, int start, int end)
-		throws SystemException {
+		long userId, int start, int end) {
 
 		return tasksEntryPersistence.findByAssigneeUserId(userId, start, end);
 	}
 
-	public int getAssigneeTasksEntriesCount(long userId)
-		throws SystemException {
-
+	public int getAssigneeTasksEntriesCount(long userId) {
 		return tasksEntryPersistence.countByAssigneeUserId(userId);
 	}
 
 	public List<TasksEntry> getGroupAssigneeTasksEntries(
-			long groupId, long userId, int start, int end)
-		throws SystemException {
+		long groupId, long userId, int start, int end) {
 
 		return tasksEntryPersistence.findByG_A(groupId, userId, start, end);
 	}
 
-	public int getGroupAssigneeTasksEntriesCount(long groupId, long userId)
-		throws SystemException {
-
+	public int getGroupAssigneeTasksEntriesCount(long groupId, long userId) {
 		return tasksEntryPersistence.countByG_A(groupId, userId);
 	}
 
 	public List<TasksEntry> getGroupResolverTasksEntries(
-			long groupId, long userId, int start, int end)
-		throws SystemException {
+		long groupId, long userId, int start, int end) {
 
 		return tasksEntryPersistence.findByG_R(groupId, userId, start, end);
 	}
 
-	public int getGroupResolverTasksEntriesCount(long groupId, long userId)
-		throws SystemException {
-
+	public int getGroupResolverTasksEntriesCount(long groupId, long userId) {
 		return tasksEntryPersistence.countByG_R(groupId, userId);
 	}
 
 	public List<TasksEntry> getGroupUserTasksEntries(
-			long groupId, long userId, int start, int end)
-		throws SystemException {
+		long groupId, long userId, int start, int end) {
 
 		return tasksEntryPersistence.findByG_U(groupId, userId, start, end);
 	}
 
-	public int getGroupUserTasksEntriesCount(long groupId, long userId)
-		throws SystemException {
-
+	public int getGroupUserTasksEntriesCount(long groupId, long userId) {
 		return tasksEntryPersistence.countByG_U(groupId, userId);
 	}
 
 	public List<TasksEntry> getResolverTasksEntries(
-			long userId, int start, int end)
-		throws SystemException {
+		long userId, int start, int end) {
 
 		return tasksEntryPersistence.findByResolverUserId(userId, start, end);
 	}
 
-	public int getResolverTasksEntriesCount(long userId)
-		throws SystemException {
-
+	public int getResolverTasksEntriesCount(long userId) {
 		return tasksEntryPersistence.countByResolverUserId(userId);
 	}
 
-	public List<TasksEntry> getTasksEntries(long groupId, int start, int end)
-		throws SystemException {
-
+	public List<TasksEntry> getTasksEntries(long groupId, int start, int end) {
 		return tasksEntryPersistence.findByGroupId(groupId, start, end);
 	}
 
 	public List<TasksEntry> getTasksEntries(
-			long groupId, int priority, long assigneeUserId,
-			long reporterUserId, int status, long[] assetTagIds,
-			long[] notAssetTagIds, int start, int end)
-		throws SystemException {
+		long groupId, int priority, long assigneeUserId, long reporterUserId,
+		int status, long[] assetTagIds, long[] notAssetTagIds, int start,
+		int end) {
 
 		return tasksEntryFinder.findByG_P_A_R_S_T_N(
 			groupId, priority, assigneeUserId, reporterUserId, status,
 			assetTagIds, notAssetTagIds, start, end);
 	}
 
-	public int getTasksEntriesCount(long groupId) throws SystemException {
+	public int getTasksEntriesCount(long groupId) {
 		return tasksEntryPersistence.countByGroupId(groupId);
 	}
 
 	public int getTasksEntriesCount(
-			long groupId, int priority, long assigneeUserId,
-			long reporterUserId, int status, long[] tagsEntryIds,
-			long[] notTagsEntryIds)
-		throws SystemException {
+		long groupId, int priority, long assigneeUserId, long reporterUserId,
+		int status, long[] tagsEntryIds, long[] notTagsEntryIds) {
 
 		return tasksEntryFinder.countByG_P_A_R_S_T_N(
 			groupId, priority, assigneeUserId, reporterUserId, status,
@@ -254,26 +233,24 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public TasksEntry getTasksEntry(long tasksEntryId)
-		throws PortalException, SystemException {
-
+	public TasksEntry getTasksEntry(long tasksEntryId) throws PortalException {
 		return tasksEntryPersistence.findByPrimaryKey(tasksEntryId);
 	}
 
-	public List<TasksEntry> getUserTasksEntries(long userId, int start, int end)
-		throws SystemException {
+	public List<TasksEntry> getUserTasksEntries(
+		long userId, int start, int end) {
 
 		return tasksEntryPersistence.findByUserId(userId, start, end);
 	}
 
-	public int getUserTasksEntriesCount(long userId) throws SystemException {
+	public int getUserTasksEntriesCount(long userId) {
 		return tasksEntryPersistence.countByUserId(userId);
 	}
 
 	public void updateAsset(
 			long userId, TasksEntry tasksEntry, long[] assetCategoryIds,
 			String[] assetTagNames)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		assetEntryLocalService.updateEntry(
 			userId, tasksEntry.getGroupId(), TasksEntry.class.getName(),
@@ -285,7 +262,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 			long resolverUserId, int dueDateMonth, int dueDateDay,
 			int dueDateYear, int dueDateHour, int dueDateMinute,
 			boolean addDueDate, int status, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Tasks entry
 
@@ -351,7 +328,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 	public TasksEntry updateTasksEntryStatus(
 			long tasksEntryId, long resolverUserId, int status,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Tasks entry
 
@@ -392,7 +369,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 
 	protected void addSocialActivity(
 			int status, TasksEntry tasksEntry, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		int activity = TasksActivityKeys.UPDATE_ENTRY;
 
@@ -416,9 +393,9 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 	protected void sendNotificationEvent(
 			TasksEntry tasksEntry, int oldStatus, long oldAssigneeUserId,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		HashSet<Long> receiverUserIds = new HashSet<Long>(3);
+		HashSet<Long> receiverUserIds = new HashSet<>(3);
 
 		receiverUserIds.add(oldAssigneeUserId);
 		receiverUserIds.add(tasksEntry.getUserId());

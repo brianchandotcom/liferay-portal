@@ -90,7 +90,7 @@ if ((tasksEntry != null) && (tasksEntry.getDueDate() != null)) {
 						LinkedHashMap userParams = new LinkedHashMap();
 
 						userParams.put("inherit", Boolean.TRUE);
-						userParams.put("usersGroups", new Long(themeDisplay.getScopeGroupId()));
+						userParams.put("usersGroups", Long.valueOf(themeDisplay.getScopeGroupId()));
 
 						users = UserLocalServiceUtil.search(company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_APPROVED, userParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new UserFirstNameComparator(true));
 					}
@@ -122,9 +122,9 @@ if ((tasksEntry != null) && (tasksEntry.getDueDate() != null)) {
 				String taglibAddDueDateOnClick = renderResponse.getNamespace() + "displayInputDate();";
 				%>
 
-				<label class="field-label due-date-label"><%= LanguageUtil.get(pageContext, "due-date") %></label>
+				<label class="due-date-label field-label"><%= LanguageUtil.get(pageContext, "due-date") %></label>
 
-				<a class="field-content due-date-toggle" href="#" id="toggleDueDate" onClick="<%= taglibAddDueDateOnClick %>"><%= dueDateToggleText %></a>
+				<a class="due-date-toggle field-content" href="#" id="toggleDueDate" onClick="<%= taglibAddDueDateOnClick %>"><%= dueDateToggleText %></a>
 
 				<aui:input id="addDueDate" name="addDueDate" type="hidden" value="<%= addDueDate %>" />
 

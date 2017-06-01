@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<suppress checks="JavaDeserializationSecurityCheck" files="portal-impl/src/com/liferay/portal/bean/BeanPropertiesImpl\.java" />
+	<suppress checks="JavaDeserializationSecurityCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/AnnotatedObjectInputStream\.java" />
+	<suppress checks="JavaDeserializationSecurityCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/ProtectedObjectInputStream\.java" />
+	<suppress checks="JavaDeserializationSecurityCheck" files="portal-kernel/src/com/liferay/portal/kernel/process/local/LocalProcessExecutor\.java" />
+	<suppress checks="JavaDeserializationSecurityCheck" files="portal-kernel/src/com/liferay/portal/kernel/process/local/LocalProcessLauncher\.java" />
+	<suppress checks="JavaDeserializationSecurityCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ClassLoaderObjectInputStream\.java" />
+	<suppress checks="JavaDeserializationSecurityCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ClassLoaderProxy\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="portal-impl/test/unit/com/liferay/portal/json/One\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="portal-impl/test/unit/com/liferay/portal/json/Two\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/PathHolder\.java" />

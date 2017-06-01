@@ -118,13 +118,9 @@ if ((tasksEntry != null) && (tasksEntry.getDueDate() != null)) {
 					<aui:option label="low" selected="<%= (priority == 3) %>" value="3" />
 				</aui:select>
 
-				<%
-				String taglibAddDueDateOnClick = renderResponse.getNamespace() + "displayInputDate();";
-				%>
-
 				<label class="due-date-label field-label"><%= LanguageUtil.get(pageContext, "due-date") %></label>
 
-				<a class="due-date-toggle field-content" href="#" id="toggleDueDate" onClick="<%= taglibAddDueDateOnClick %>"><%= dueDateToggleText %></a>
+				<a class="due-date-toggle field-content" href="#" id="toggleDueDate" onClick="<%= renderResponse.getNamespace() + "displayInputDate();"; %>"><%= dueDateToggleText %></a>
 
 				<aui:input id="addDueDate" name="addDueDate" type="hidden" value="<%= addDueDate %>" />
 

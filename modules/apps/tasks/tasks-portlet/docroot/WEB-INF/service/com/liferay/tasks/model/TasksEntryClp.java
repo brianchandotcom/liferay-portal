@@ -797,66 +797,67 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(60);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.tasks.model.TasksEntry");
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>tasksEntryId</column-name><column-value><![CDATA[");
+		sb.append("<column><column-name>tasksEntryId</column-name>");
+		sb.append("<column-value><![CDATA[");
 		sb.append(getTasksEntryId());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append("<column><column-name>groupId</column-name><column-value>");
+		sb.append("<![CDATA[");
 		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append("<column><column-name>companyId</column-name><column-value>");
+		sb.append("<![CDATA[");
 		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
+		sb.append("<column><column-name>userId</column-name><column-value>");
+		sb.append("<![CDATA[");
 		sb.append(getUserId());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
+		sb.append("<column><column-name>userName</column-name><column-value>");
+		sb.append("<![CDATA[");
 		sb.append(getUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+			"<column><column-name>createDate</column-name><column-value>");
+		sb.append("<![CDATA[");
 		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
+		sb.append("<column><column-name>modifiedDate</column-name>");
+		sb.append("<column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
+		sb.append("<column><column-name>title</column-name><column-value>");
+		sb.append("<![CDATA[");
 		sb.append(getTitle());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>priority</column-name><column-value><![CDATA[");
+		sb.append("<column><column-name>priority</column-name><column-value>");
+		sb.append("<![CDATA[");
 		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assigneeUserId</column-name><column-value><![CDATA[");
+		sb.append("<column><column-name>assigneeUserId</column-name>");
+		sb.append("<column-value><![CDATA[");
 		sb.append(getAssigneeUserId());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>resolverUserId</column-name><column-value><![CDATA[");
+		sb.append("<column><column-name>resolverUserId</column-name>");
+		sb.append("<column-value><![CDATA[");
 		sb.append(getResolverUserId());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>dueDate</column-name><column-value><![CDATA[");
+		sb.append("<column><column-name>dueDate</column-name><column-value>");
+		sb.append("<![CDATA[");
 		sb.append(getDueDate());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>finishDate</column-name><column-value><![CDATA[");
+		sb.append("<column><column-name>finishDate</column-name>");
+		sb.append("<column-value><![CDATA[");
 		sb.append(getFinishDate());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
+		sb.append("<column><column-name>status</column-name><column-value>");
+		sb.append("<![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
 

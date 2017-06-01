@@ -44,8 +44,8 @@ public class TasksEntryFinderUtil {
 			_finder = (TasksEntryFinder)PortletBeanLocatorUtil.locate(com.liferay.tasks.service.ClpSerializer.getServletContextName(),
 					TasksEntryFinder.class.getName());
 
-			ReferenceRegistry.registerReference(TasksEntryFinderUtil.class,
-				"_finder");
+			ReferenceRegistry.registerReference(
+				TasksEntryFinderUtil.class, "_finder");
 		}
 
 		return _finder;
@@ -54,8 +54,8 @@ public class TasksEntryFinderUtil {
 	public void setFinder(TasksEntryFinder finder) {
 		_finder = finder;
 
-		ReferenceRegistry.registerReference(TasksEntryFinderUtil.class,
-			"_finder");
+		ReferenceRegistry.registerReference(
+			TasksEntryFinderUtil.class, "_finder");
 	}
 
 	private static TasksEntryFinder _finder;

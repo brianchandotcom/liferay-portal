@@ -58,15 +58,11 @@ public class GZipResponse extends HttpServletResponseWrapper {
 	}
 
 	public void finishResponse() throws IOException {
-		try {
-			if (_printWriter != null) {
-				_printWriter.close();
-			}
-			else if (_servletOutputStream != null) {
-				_servletOutputStream.close();
-			}
+		if (_printWriter != null) {
+			_printWriter.close();
 		}
-		catch (IOException ioe) {
+		else if (_servletOutputStream != null) {
+			_servletOutputStream.close();
 		}
 	}
 

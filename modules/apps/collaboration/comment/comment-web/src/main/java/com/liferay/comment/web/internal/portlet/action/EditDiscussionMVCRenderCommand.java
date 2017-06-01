@@ -16,7 +16,7 @@ package com.liferay.comment.web.internal.portlet.action;
 
 import com.liferay.comment.web.constants.CommentPortletKeys;
 import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -26,6 +26,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lino Alves
@@ -46,11 +47,14 @@ public class EditDiscussionMVCRenderCommand implements MVCRenderCommand {
 
 		long commentId = ParamUtil.getLong(renderRequest, "commentId");
 
-		Comment comment = CommentManagerUtil.fetchComment(commentId);
+		Comment comment = _commentManager.fetchComment(commentId);
 
 		renderRequest.setAttribute(WebKeys.COMMENT, comment);
 
 		return "/edit_discussion.jsp";
 	}
+
+	@Reference
+	private CommentManager _commentManager;
 
 }

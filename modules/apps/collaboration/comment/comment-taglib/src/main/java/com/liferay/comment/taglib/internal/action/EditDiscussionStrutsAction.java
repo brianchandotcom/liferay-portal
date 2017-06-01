@@ -19,7 +19,7 @@ import com.liferay.message.boards.kernel.exception.MessageBodyException;
 import com.liferay.message.boards.kernel.exception.NoSuchMessageException;
 import com.liferay.message.boards.kernel.exception.RequiredMessageException;
 import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -135,7 +135,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 
 		discussionPermission.checkDeletePermission(commentId);
 
-		CommentManagerUtil.deleteComment(commentId);
+		_commentManager.deleteComment(commentId);
 	}
 
 	@Reference(unbind = "-")
@@ -154,12 +154,12 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 		long classPK = ParamUtil.getLong(request, "classPK");
 
 		if (subscribe) {
-			CommentManagerUtil.subscribeDiscussion(
+			_commentManager.subscribeDiscussion(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				className, classPK);
 		}
 		else {
-			CommentManagerUtil.unsubscribeDiscussion(
+			_commentManager.unsubscribeDiscussion(
 				themeDisplay.getUserId(), className, classPK);
 		}
 	}
@@ -214,7 +214,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					className, classPK);
 
-				commentId = CommentManagerUtil.addComment(
+				commentId = _commentManager.addComment(
 					user.getUserId(), className, classPK, user.getFullName(),
 					parentCommentId, subject, body, serviceContextFunction);
 			}
@@ -227,7 +227,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 			// Update message
 
 			if (Validator.isNull(className) || (classPK == 0)) {
-				Comment comment = CommentManagerUtil.fetchComment(commentId);
+				Comment comment = _commentManager.fetchComment(commentId);
 
 				if (comment != null) {
 					className = comment.getClassName();
@@ -237,7 +237,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 
 			discussionPermission.checkUpdatePermission(commentId);
 
-			commentId = CommentManagerUtil.updateComment(
+			commentId = _commentManager.updateComment(
 				themeDisplay.getUserId(), className, classPK, commentId,
 				subject, body, serviceContextFunction);
 		}
@@ -247,7 +247,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 		boolean subscribe = ParamUtil.getBoolean(request, "subscribe");
 
 		if (subscribe) {
-			CommentManagerUtil.subscribeDiscussion(
+			_commentManager.subscribeDiscussion(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				className, classPK);
 		}
@@ -272,7 +272,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 		throws PrincipalException {
 
 		DiscussionPermission discussionPermission =
-			CommentManagerUtil.getDiscussionPermission(
+			_commentManager.getDiscussionPermission(
 				themeDisplay.getPermissionChecker());
 
 		if (discussionPermission == null) {
@@ -281,6 +281,9 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 
 		return discussionPermission;
 	}
+
+	@Reference
+	private CommentManager _commentManager;
 
 	@Reference
 	private Portal _portal;

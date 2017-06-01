@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.comment.web.constants.CommentPortletKeys;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentConstants;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -63,7 +63,7 @@ public class CommentAssetRendererFactory
 			long classPK, int type)
 		throws PortalException {
 
-		Comment comment = CommentManagerUtil.fetchComment(classPK);
+		Comment comment = _commentManager.fetchComment(classPK);
 
 		if (!(comment instanceof WorkflowableComment)) {
 			return null;
@@ -114,7 +114,7 @@ public class CommentAssetRendererFactory
 		throws Exception {
 
 		DiscussionPermission discussionPermission =
-			CommentManagerUtil.getDiscussionPermission(permissionChecker);
+			_commentManager.getDiscussionPermission(permissionChecker);
 
 		return discussionPermission.hasPermission(classPK, actionId);
 	}
@@ -132,6 +132,9 @@ public class CommentAssetRendererFactory
 	}
 
 	private static final boolean _SELECTABLE = false;
+
+	@Reference
+	private CommentManager _commentManager;
 
 	private ServletContext _servletContext;
 

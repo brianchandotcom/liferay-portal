@@ -17,7 +17,6 @@
 
 package com.liferay.tasks.service.impl;
 
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -30,12 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 import com.liferay.tasks.TasksEntryDueDateException;
 import com.liferay.tasks.TasksEntryTitleException;
 import com.liferay.tasks.model.TasksEntry;
@@ -63,7 +57,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 
 		// Tasks entry
 
-		User user = UserLocalServiceUtil.getUserById(userId);
+		User user = userLocalService.getUserById(userId);
 		long groupId = serviceContext.getScopeGroupId();
 		Date now = new Date();
 
@@ -78,7 +72,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 				TasksEntryDueDateException.class);
 		}
 
-		long tasksEntryId = CounterLocalServiceUtil.increment();
+		long tasksEntryId = counterLocalService.increment();
 
 		TasksEntry tasksEntry = tasksEntryPersistence.create(tasksEntryId);
 
@@ -112,7 +106,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 
 		extraDataJSONObject.put("title", tasksEntry.getTitle());
 
-		SocialActivityLocalServiceUtil.addActivity(
+		socialActivityLocalService.addActivity(
 			userId, groupId, TasksEntry.class.getName(), tasksEntryId,
 			TasksActivityKeys.ADD_ENTRY, extraDataJSONObject.toString(),
 			assigneeUserId);
@@ -146,17 +140,17 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 
 		// Asset
 
-		AssetEntryLocalServiceUtil.deleteEntry(
+		assetEntryLocalService.deleteEntry(
 			TasksEntry.class.getName(), tasksEntry.getTasksEntryId());
 
 		// Message boards
 
-		MBMessageLocalServiceUtil.deleteDiscussionMessages(
+		mbMessageLocalService.deleteDiscussionMessages(
 			TasksEntry.class.getName(), tasksEntry.getTasksEntryId());
 
 		// Social
 
-		SocialActivityLocalServiceUtil.deleteActivities(
+		socialActivityLocalService.deleteActivities(
 			TasksEntry.class.getName(), tasksEntry.getTasksEntryId());
 
 		return tasksEntry;
@@ -281,7 +275,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 			String[] assetTagNames)
 		throws PortalException, SystemException {
 
-		AssetEntryLocalServiceUtil.updateEntry(
+		assetEntryLocalService.updateEntry(
 			userId, tasksEntry.getGroupId(), TasksEntry.class.getName(),
 			tasksEntry.getTasksEntryId(), assetCategoryIds, assetTagNames);
 	}
@@ -300,7 +294,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 		TasksEntry tasksEntry = tasksEntryPersistence.findByPrimaryKey(
 			tasksEntryId);
 
-		User user = UserLocalServiceUtil.getUserById(tasksEntry.getUserId());
+		User user = userLocalService.getUserById(tasksEntry.getUserId());
 
 		validate(title);
 
@@ -413,7 +407,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 
 		extraDataJSONObject.put("title", tasksEntry.getTitle());
 
-		SocialActivityLocalServiceUtil.addActivity(
+		socialActivityLocalService.addActivity(
 			serviceContext.getUserId(), tasksEntry.getGroupId(),
 			TasksEntry.class.getName(), tasksEntry.getTasksEntryId(), activity,
 			extraDataJSONObject.toString(), tasksEntry.getAssigneeUserId());
@@ -491,7 +485,7 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 
 			notificationEvent.setDeliveryRequired(0);
 
-			UserNotificationEventLocalServiceUtil.addUserNotificationEvent(
+			userNotificationEventLocalService.addUserNotificationEvent(
 				receiverUserId, notificationEvent);
 		}
 	}

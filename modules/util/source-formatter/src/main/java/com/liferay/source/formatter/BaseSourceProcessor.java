@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.configuration.SourceChecksResult;
+import com.liferay.source.formatter.checks.configuration.SourceChecksSuppressions;
+import com.liferay.source.formatter.checks.configuration.SuppressionsLoader;
 import com.liferay.source.formatter.checks.util.SourceChecksUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -88,6 +90,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			getPluginsInsideModulesDirectoryNames();
 
 		_sourceChecks = _getSourceChecks(_containsModuleFile(fileNames));
+
+		_sourceChecksSuppressions = SuppressionsLoader.loadSuppressions(
+			getSuppressionsFiles("sourcechecks-suppressions.xml"));
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceFormatterArgs.getProcessorThreadCount());
@@ -445,7 +450,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		SourceChecksResult sourceChecksResult =
 			SourceChecksUtil.processSourceChecks(
 				file, fileName, absolutePath, content,
-				_isModulesFile(absolutePath), _sourceChecks);
+				_isModulesFile(absolutePath), _sourceChecks,
+				_sourceChecksSuppressions);
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				sourceChecksResult.getSourceFormatterMessages()) {
@@ -688,6 +694,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private Properties _properties;
 	private List<SourceCheck> _sourceChecks = new ArrayList<>();
+	private SourceChecksSuppressions _sourceChecksSuppressions;
 	private Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 

@@ -23,6 +23,7 @@ import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.configuration.ConfigurationLoader;
 import com.liferay.source.formatter.checks.configuration.SourceCheckConfiguration;
 import com.liferay.source.formatter.checks.configuration.SourceChecksResult;
+import com.liferay.source.formatter.checks.configuration.SourceChecksSuppressions;
 import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
@@ -65,7 +66,8 @@ public class SourceChecksUtil {
 
 	public static SourceChecksResult processSourceChecks(
 			File file, String fileName, String absolutePath, String content,
-			boolean modulesFile, List<SourceCheck> sourceChecks)
+			boolean modulesFile, List<SourceCheck> sourceChecks,
+			SourceChecksSuppressions sourceChecksSuppressions)
 		throws Exception {
 
 		SourceChecksResult sourceChecksResult = new SourceChecksResult(content);
@@ -79,6 +81,14 @@ public class SourceChecksUtil {
 
 		for (SourceCheck sourceCheck : sourceChecks) {
 			if (sourceCheck.isModulesCheck() && !modulesFile) {
+				continue;
+			}
+
+			Class<?> clazz = sourceCheck.getClass();
+
+			if (sourceChecksSuppressions.isSuppressed(
+					clazz.getSimpleName(), absolutePath)) {
+
 				continue;
 			}
 

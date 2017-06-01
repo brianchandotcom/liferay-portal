@@ -18,6 +18,8 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.PortletFileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.PortletFileEntryURLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
@@ -92,27 +94,6 @@ public class KBAttachmentEditorConfigContributor
 			return;
 		}
 
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			new ArrayList<>();
-
-		desiredItemSelectorReturnTypes.add(
-			new FileEntryItemSelectorReturnType());
-		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
-
-		ItemSelectorCriterion kbAttachmentsItemSelectorCriterion =
-			getKBAttachmentItemSelectorCriterion(
-				resourcePrimKey, desiredItemSelectorReturnTypes);
-
-		ItemSelectorCriterion imageItemSelectorCriterion =
-			getImageItemSelectorCriterion(desiredItemSelectorReturnTypes);
-
-		ItemSelectorCriterion urlItemSelectorCriterion =
-			getURLItemSelectorCriterion();
-
-		ItemSelectorCriterion uploadItemSelectorCriterion =
-			getUploadItemSelectorCriterion(
-				resourcePrimKey, themeDisplay, requestBackedPortletURLFactory);
-
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:namespace"));
@@ -121,8 +102,10 @@ public class KBAttachmentEditorConfigContributor
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, namespace + name + "selectItem",
-			kbAttachmentsItemSelectorCriterion, imageItemSelectorCriterion,
-			urlItemSelectorCriterion, uploadItemSelectorCriterion);
+			getKBAttachmentItemSelectorCriterion(resourcePrimKey),
+			getImageItemSelectorCriterion(), getURLItemSelectorCriterion(),
+			getUploadItemSelectorCriterion(
+				resourcePrimKey, themeDisplay, requestBackedPortletURLFactory));
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
@@ -134,11 +117,17 @@ public class KBAttachmentEditorConfigContributor
 		_itemSelector = itemSelector;
 	}
 
-	protected ItemSelectorCriterion getImageItemSelectorCriterion(
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
-
+	protected ItemSelectorCriterion getImageItemSelectorCriterion() {
 		ItemSelectorCriterion imageItemSelectorCriterion =
 			new ImageItemSelectorCriterion();
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(
+			new FileEntryItemSelectorReturnType());
+
+		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
 
 		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
@@ -147,11 +136,19 @@ public class KBAttachmentEditorConfigContributor
 	}
 
 	protected ItemSelectorCriterion getKBAttachmentItemSelectorCriterion(
-		long resourcePrimKey,
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
+		long resourcePrimKey) {
 
 		ItemSelectorCriterion kbAttachmentItemSelectorCriterion =
 			new KBAttachmentItemSelectorCriterion(resourcePrimKey);
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(
+			new PortletFileEntryItemSelectorReturnType());
+
+		desiredItemSelectorReturnTypes.add(
+			new PortletFileEntryURLItemSelectorReturnType());
 
 		kbAttachmentItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);

@@ -15,16 +15,10 @@
 package com.liferay.wiki.editor.configuration.internal;
 
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.wiki.constants.WikiPortletKeys;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -54,36 +48,21 @@ public class WikiAttachmentImageCreoleEditorConfigContributor
 		String itemSelectedEventName, long wikiPageResourcePrimKey,
 		ThemeDisplay themeDisplay) {
 
-		ItemSelectorCriterion urlItemSelectorCriterion =
-			getURLItemSelectorCriterion();
-
 		PortletURL itemSelectorURL = null;
 
 		if (wikiPageResourcePrimKey == 0) {
 			itemSelectorURL = _itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, itemSelectedEventName,
-				urlItemSelectorCriterion);
+				getURLItemSelectorCriterion());
 		}
 		else {
-			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-				new ArrayList<>();
-
-			desiredItemSelectorReturnTypes.add(
-				new FileEntryItemSelectorReturnType());
-
-			ItemSelectorCriterion attachmentItemSelectorCriterion =
-				getWikiAttachmentItemSelectorCriterion(
-					wikiPageResourcePrimKey, desiredItemSelectorReturnTypes);
-
-			ItemSelectorCriterion uploadItemSelectorCriterion =
-				getUploadItemSelectorCriterion(
-					wikiPageResourcePrimKey, themeDisplay,
-					requestBackedPortletURLFactory);
-
 			itemSelectorURL = _itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, itemSelectedEventName,
-				attachmentItemSelectorCriterion, urlItemSelectorCriterion,
-				uploadItemSelectorCriterion);
+				getWikiAttachmentItemSelectorCriterion(wikiPageResourcePrimKey),
+				getURLItemSelectorCriterion(),
+				getUploadItemSelectorCriterion(
+					wikiPageResourcePrimKey, themeDisplay,
+					requestBackedPortletURLFactory));
 		}
 
 		return itemSelectorURL.toString();

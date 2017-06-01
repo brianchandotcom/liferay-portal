@@ -14,6 +14,10 @@
 
 package com.liferay.portal.servlet.filters.gzip;
 
+import com.google.common.base.Objects;
+
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedOutputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -23,6 +27,7 @@ import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import java.util.zip.GZIPOutputStream;
@@ -112,11 +117,18 @@ public class GZipResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void setContentLength(int contentLength) {
+		if (contentLength == 0) {
+			super.setContentLength(0);
+		}
 	}
 
 	@Override
 	public void setHeader(String name, String value) {
 		if (HttpHeaders.CONTENT_LENGTH.equals(name)) {
+			if (Objects.equal("0", value)) {
+				super.setContentLength(0);
+			}
+
 			return;
 		}
 
@@ -131,8 +143,11 @@ public class GZipResponse extends HttpServletResponseWrapper {
 			return servletOutputStream;
 		}
 
+		EmptyGZipBufferedOutputStream emptyGZipBufferedOutputStream =
+			new EmptyGZipBufferedOutputStream(servletOutputStream);
+
 		GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
-			servletOutputStream) {
+			emptyGZipBufferedOutputStream) {
 
 			{
 				def.setLevel(PropsValues.GZIP_COMPRESSION_LEVEL);
@@ -140,7 +155,78 @@ public class GZipResponse extends HttpServletResponseWrapper {
 
 		};
 
-		return new ServletOutputStreamAdapter(gzipOutputStream);
+		return new ServletOutputStreamAdapter(gzipOutputStream) {
+
+			@Override
+			public void write(int b) throws IOException {
+				emptyGZipBufferedOutputStream.setFlush(true);
+
+				super.write(b);
+			}
+
+			@Override
+			public void write(byte[] bytes, int offset, int length)
+				throws IOException {
+
+				if (length > 0) {
+					emptyGZipBufferedOutputStream.setFlush(true);
+				}
+
+				super.write(bytes, offset, length);
+			}
+
+			@Override
+			public void write(byte[] bytes) throws IOException {
+				write(bytes, 0, bytes.length);
+			}
+
+		};
+	}
+
+	private static final int _EMPTY_GZIP_OUTPUT_SIZE;
+
+	static {
+		try {
+			UnsyncByteArrayOutputStream ubaos =
+				new UnsyncByteArrayOutputStream();
+
+			GZIPOutputStream gzipOutputStream = new GZIPOutputStream(ubaos) {
+
+				{
+					def.setLevel(PropsValues.GZIP_COMPRESSION_LEVEL);
+				}
+
+			};
+
+			gzipOutputStream.close();
+
+			_EMPTY_GZIP_OUTPUT_SIZE = ubaos.size();
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
+	}
+
+	private static class EmptyGZipBufferedOutputStream
+		extends UnsyncBufferedOutputStream {
+
+		private EmptyGZipBufferedOutputStream(OutputStream outputStream) {
+			super(outputStream, _EMPTY_GZIP_OUTPUT_SIZE);
+		}
+
+		@Override
+		public void flush() throws IOException {
+			if (_flush) {
+				super.flush();
+			}
+		}
+
+		public void setFlush(boolean flush) {
+			_flush = flush;
+		}
+
+		private boolean _flush;
+
 	}
 
 	private boolean _isGZipContentType() {

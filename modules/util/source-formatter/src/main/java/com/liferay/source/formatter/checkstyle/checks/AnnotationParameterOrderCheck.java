@@ -27,9 +27,6 @@ import java.util.List;
  */
 public class AnnotationParameterOrderCheck extends AbstractCheck {
 
-	public static final String MSG_UNSORTED_ANNOTATION_PARAMETER =
-		"annotation.unsortedParameter";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.ANNOTATION};
@@ -56,11 +53,14 @@ public class AnnotationParameterOrderCheck extends AbstractCheck {
 
 				log(
 					annotationMemberValuePairAST.getLineNo(),
-					MSG_UNSORTED_ANNOTATION_PARAMETER, name);
+					_MSG_UNSORTED_ANNOTATION_PARAMETER, name);
 			}
 
 			previousName = name;
 		}
 	}
+
+	private static final String _MSG_UNSORTED_ANNOTATION_PARAMETER =
+		"annotation.unsortedParameter";
 
 }

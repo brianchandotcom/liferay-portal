@@ -33,8 +33,6 @@ import java.util.List;
  */
 public class ArquillianCheck extends AbstractCheck {
 
-	public static final String MSG_INVALID_IMPORT = "import.invalid";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.PACKAGE_DEF};
@@ -67,7 +65,7 @@ public class ArquillianCheck extends AbstractCheck {
 				"/testIntegration/resources/arquillian.xml");
 
 		if (!xmlFile.exists()) {
-			log(detailAST.getLineNo(), MSG_INVALID_IMPORT);
+			log(detailAST.getLineNo(), _MSG_INVALID_IMPORT);
 		}
 	}
 
@@ -91,5 +89,7 @@ public class ArquillianCheck extends AbstractCheck {
 
 		return importASTList;
 	}
+
+	private static final String _MSG_INVALID_IMPORT = "import.invalid";
 
 }

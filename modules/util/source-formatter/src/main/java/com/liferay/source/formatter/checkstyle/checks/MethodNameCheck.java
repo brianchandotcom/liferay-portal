@@ -31,8 +31,6 @@ import java.util.regex.Pattern;
 public class MethodNameCheck
 	extends com.puppycrawl.tools.checkstyle.checks.naming.MethodNameCheck {
 
-	public static final String MSG_RENAME_METHOD = "method.rename";
-
 	public void setCheckDoMethodName(boolean checkDoMethodName) {
 		_checkDoMethodName = checkDoMethodName;
 	}
@@ -85,7 +83,7 @@ public class MethodNameCheck
 			}
 		}
 
-		log(detailAST.getLineNo(), MSG_RENAME_METHOD, name, noDoName);
+		log(detailAST.getLineNo(), _MSG_RENAME_METHOD, name, noDoName);
 	}
 
 	private String _getMethodName(DetailAST detailAST) {
@@ -93,6 +91,8 @@ public class MethodNameCheck
 
 		return nameAST.getText();
 	}
+
+	private static final String _MSG_RENAME_METHOD = "method.rename";
 
 	private boolean _checkDoMethodName;
 	private final Pattern _doMethodNamePattern = Pattern.compile(

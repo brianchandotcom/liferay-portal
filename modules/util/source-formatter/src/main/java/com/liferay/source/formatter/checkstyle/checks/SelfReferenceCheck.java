@@ -28,9 +28,6 @@ import java.util.List;
  */
 public class SelfReferenceCheck extends AbstractCheck {
 
-	public static final String MSG_UNNEEDED_SELF_REFERENCE =
-		"self.reference.unneeded";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.CLASS_DEF};
@@ -71,7 +68,7 @@ public class SelfReferenceCheck extends AbstractCheck {
 
 				if (secondChild.getType() == TokenTypes.IDENT) {
 					log(
-						methodCallAST.getLineNo(), MSG_UNNEEDED_SELF_REFERENCE,
+						methodCallAST.getLineNo(), _MSG_UNNEEDED_SELF_REFERENCE,
 						secondChild.getText(),
 						firstChild.getText() + StringPool.PERIOD);
 				}
@@ -128,5 +125,8 @@ public class SelfReferenceCheck extends AbstractCheck {
 			parentAST = parentAST.getParent();
 		}
 	}
+
+	private static final String _MSG_UNNEEDED_SELF_REFERENCE =
+		"self.reference.unneeded";
 
 }

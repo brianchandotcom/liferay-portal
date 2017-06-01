@@ -34,12 +34,6 @@ import java.util.Set;
  */
 public class IndentationCheck extends AbstractCheck {
 
-	public static final String MSG_INCORRECT_INDENTATION =
-		"indentation.incorrect";
-
-	public static final String MSG_INCORRECT_INDENTATION_INSIDE_CHAIN =
-		"indentation.inside.chain.incorrect";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {
@@ -106,11 +100,11 @@ public class IndentationCheck extends AbstractCheck {
 			if (_isInsideChain(detailAST)) {
 				log(
 					detailAST.getLineNo(),
-					MSG_INCORRECT_INDENTATION_INSIDE_CHAIN);
+					_MSG_INCORRECT_INDENTATION_INSIDE_CHAIN);
 			}
 			else {
 				log(
-					detailAST.getLineNo(), MSG_INCORRECT_INDENTATION,
+					detailAST.getLineNo(), _MSG_INCORRECT_INDENTATION,
 					leadingTabCount, expectedTabCount);
 			}
 		}
@@ -896,5 +890,11 @@ public class IndentationCheck extends AbstractCheck {
 		TokenTypes.DIV, TokenTypes.MINUS, TokenTypes.MOD, TokenTypes.PLUS,
 		TokenTypes.STAR
 	};
+
+	private static final String _MSG_INCORRECT_INDENTATION =
+		"indentation.incorrect";
+
+	private static final String _MSG_INCORRECT_INDENTATION_INSIDE_CHAIN =
+		"indentation.inside.chain.incorrect";
 
 }

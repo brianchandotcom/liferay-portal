@@ -27,8 +27,6 @@ import java.util.List;
  */
 public class UnusedParameterCheck extends AbstractCheck {
 
-	public static final String MSG_UNUSED_PARAMETER = "parameter.unused";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.CLASS_DEF};
@@ -91,7 +89,9 @@ public class UnusedParameterCheck extends AbstractCheck {
 			}
 
 			if (!_isReferencedMethod(classAST, detailAST)) {
-				log(detailAST.getLineNo(), MSG_UNUSED_PARAMETER, parameterName);
+				log(
+					detailAST.getLineNo(), _MSG_UNUSED_PARAMETER,
+					parameterName);
 			}
 		}
 	}
@@ -124,5 +124,7 @@ public class UnusedParameterCheck extends AbstractCheck {
 
 		return false;
 	}
+
+	private static final String _MSG_UNUSED_PARAMETER = "parameter.unused";
 
 }

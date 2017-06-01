@@ -27,15 +27,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public class TestClassCheck extends AbstractCheck {
 
-	public static final String MSG_INCORRECT_ABSTRACT_TEST_CASE_CLASS =
-		"test.case.class.incorrect.abstract";
-
-	public static final String MSG_INCORRECT_ABSTRACT_TEST_CLASS =
-		"test.class.incorrect.abstract";
-
-	public static final String MSG_INVALID_BASE_CLASS_NAME =
-		"test.base.class.invalidName";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.CLASS_DEF};
@@ -74,16 +65,27 @@ public class TestClassCheck extends AbstractCheck {
 			if (!modifiersAST.branchContains(TokenTypes.ABSTRACT)) {
 				log(
 					detailAST.getLineNo(),
-					MSG_INCORRECT_ABSTRACT_TEST_CASE_CLASS,
+					_MSG_INCORRECT_ABSTRACT_TEST_CASE_CLASS,
 					name.substring(0, name.length() - 4));
 			}
 			else if (name.contains("Base") && !name.startsWith("Base")) {
-				log(detailAST.getLineNo(), MSG_INVALID_BASE_CLASS_NAME, name);
+				log(detailAST.getLineNo(), _MSG_INVALID_BASE_CLASS_NAME, name);
 			}
 		}
 		else if (modifiersAST.branchContains(TokenTypes.ABSTRACT)) {
-			log(detailAST.getLineNo(), MSG_INCORRECT_ABSTRACT_TEST_CLASS, name);
+			log(
+				detailAST.getLineNo(), _MSG_INCORRECT_ABSTRACT_TEST_CLASS,
+				name);
 		}
 	}
+
+	private static final String _MSG_INCORRECT_ABSTRACT_TEST_CASE_CLASS =
+		"test.case.class.incorrect.abstract";
+
+	private static final String _MSG_INCORRECT_ABSTRACT_TEST_CLASS =
+		"test.class.incorrect.abstract";
+
+	private static final String _MSG_INVALID_BASE_CLASS_NAME =
+		"test.base.class.invalidName";
 
 }

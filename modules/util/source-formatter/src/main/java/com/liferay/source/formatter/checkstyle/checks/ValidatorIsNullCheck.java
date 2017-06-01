@@ -27,8 +27,6 @@ import java.util.List;
  */
 public class ValidatorIsNullCheck extends AbstractCheck {
 
-	public static final String MSG_METHOD_INVALID_NAME = "method.invalidName";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF};
@@ -55,7 +53,7 @@ public class ValidatorIsNullCheck extends AbstractCheck {
 
 			if (child.getType() == TokenTypes.NUM_INT) {
 				log(
-					methodCallAST.getLineNo(), MSG_METHOD_INVALID_NAME,
+					methodCallAST.getLineNo(), _MSG_METHOD_INVALID_NAME,
 					className + "." + methodName + "(long)");
 
 				continue;
@@ -78,10 +76,12 @@ public class ValidatorIsNullCheck extends AbstractCheck {
 				(child.getType() == TokenTypes.LITERAL_LONG)) {
 
 				log(
-					methodCallAST.getLineNo(), MSG_METHOD_INVALID_NAME,
+					methodCallAST.getLineNo(), _MSG_METHOD_INVALID_NAME,
 					className + "." + methodName + "(long)");
 			}
 		}
 	}
+
+	private static final String _MSG_METHOD_INVALID_NAME = "method.invalidName";
 
 }

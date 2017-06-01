@@ -32,14 +32,6 @@ import java.util.List;
  */
 public class ChainingCheck extends AbstractCheck {
 
-	public static final String MSG_AVOID_CHAINING = "chaining.avoid";
-
-	public static final String MSG_AVOID_CHAINING_MULTIPLE =
-		"chaining.avoid.multiple";
-
-	public static final String MSG_AVOID_TOO_MANY_CONCAT =
-		"concat.avoid.too.many";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF};
@@ -101,7 +93,7 @@ public class ChainingCheck extends AbstractCheck {
 				chainedMethodNames, "concat");
 
 			if (concatsCount > 2) {
-				log(methodCallAST.getLineNo(), MSG_AVOID_TOO_MANY_CONCAT);
+				log(methodCallAST.getLineNo(), _MSG_AVOID_TOO_MANY_CONCAT);
 
 				continue;
 			}
@@ -138,7 +130,7 @@ public class ChainingCheck extends AbstractCheck {
 			}
 
 			log(
-				methodCallAST.getLineNo(), MSG_AVOID_CHAINING_MULTIPLE,
+				methodCallAST.getLineNo(), _MSG_AVOID_CHAINING_MULTIPLE,
 				DetailASTUtil.getMethodName(methodCallAST));
 		}
 	}
@@ -152,7 +144,7 @@ public class ChainingCheck extends AbstractCheck {
 		if (firstMethodName.equals(methodName) &&
 			!_isInsideConstructorThisCall(methodCallAST, detailAST)) {
 
-			log(methodCallAST.getLineNo(), MSG_AVOID_CHAINING, methodName);
+			log(methodCallAST.getLineNo(), _MSG_AVOID_CHAINING, methodName);
 		}
 	}
 
@@ -255,6 +247,14 @@ public class ChainingCheck extends AbstractCheck {
 
 		return false;
 	}
+
+	private static final String _MSG_AVOID_CHAINING = "chaining.avoid";
+
+	private static final String _MSG_AVOID_CHAINING_MULTIPLE =
+		"chaining.avoid.multiple";
+
+	private static final String _MSG_AVOID_TOO_MANY_CONCAT =
+		"concat.avoid.too.many";
 
 	private String[] _allowedClassNames = new String[0];
 	private String[] _allowedMethodNames = new String[0];

@@ -51,8 +51,6 @@ import java.util.List;
  */
 public class MissingOverrideCheck extends AbstractCheck {
 
-	public static final String MSG_MISSING_OVERRIDE = "override.missing";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.PACKAGE_DEF};
@@ -93,7 +91,7 @@ public class MissingOverrideCheck extends AbstractCheck {
 				_isOverrideMethod(
 					javaClass, javaMethod, ancestorJavaClassTuples)) {
 
-				log(javaMethod.getLineNumber(), MSG_MISSING_OVERRIDE);
+				log(javaMethod.getLineNumber(), _MSG_MISSING_OVERRIDE);
 			}
 		}
 	}
@@ -405,6 +403,8 @@ public class MissingOverrideCheck extends AbstractCheck {
 	};
 
 	private static final double _LOWEST_SUPPORTED_JAVA_VERSION = 1.7;
+
+	private static final String _MSG_MISSING_OVERRIDE = "override.missing";
 
 	private JavaDocBuilder _javaDocBuilder;
 

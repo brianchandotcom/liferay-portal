@@ -1,0 +1,17 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "latest.release"
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+configure(subprojects.findAll {!it.childProjects}) {
+	apply plugin: "com.liferay.defaults.plugin"
+}

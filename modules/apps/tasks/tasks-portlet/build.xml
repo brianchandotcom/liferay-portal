@@ -2,5 +2,5 @@
 <!DOCTYPE project>
 
 <project name="tasks-portlet" basedir="." default="deploy">
-	<import file="../build-common-portlet.xml" />
+	<import file="../../../../tools/sdk/portlets/build-common-portlet.xml" />
 </project>

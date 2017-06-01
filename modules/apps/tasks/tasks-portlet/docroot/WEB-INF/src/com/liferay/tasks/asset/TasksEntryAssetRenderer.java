@@ -17,15 +17,15 @@
 
 package com.liferay.tasks.asset;
 
+import com.liferay.asset.kernel.model.BaseAssetRenderer;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.asset.kernel.model.BaseAssetRenderer;
 import com.liferay.tasks.model.TasksEntry;
 import com.liferay.tasks.service.permission.TasksEntryPermission;
 import com.liferay.tasks.util.PortletKeys;
@@ -72,14 +72,14 @@ public class TasksEntryAssetRenderer extends BaseAssetRenderer {
 	}
 
 	@Override
-	public String getSummary(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
+	public String getSummary(Locale locale) {
 		return _entry.getTitle();
 	}
 
 	@Override
-	public String getSummary(Locale locale) {
+	public String getSummary(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		return _entry.getTitle();
 	}
 
@@ -164,6 +164,6 @@ public class TasksEntryAssetRenderer extends BaseAssetRenderer {
 		}
 	}
 
-	private TasksEntry _entry;
+	private final TasksEntry _entry;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.app.docker;
 
+import com.liferay.gradle.plugins.app.docker.internal.util.ExecStandardOutputCallable;
 import com.liferay.gradle.util.GradleUtil;
 
 import groovy.lang.Closure;
@@ -76,6 +77,15 @@ public class AppDockerExtension {
 				}
 
 			});
+
+		_imageTags.add(
+			new ExecStandardOutputCallable(
+				_project, "git", "show", "--date=format-local:%Y%m%dT%H%M%SZ",
+				"--format=%cd", "--no-patch", "--quiet", "HEAD"));
+
+		_imageTags.add(
+			new ExecStandardOutputCallable(
+				_project, "git", "rev-parse", "HEAD"));
 	}
 
 	public String getImageName() {

@@ -268,7 +268,7 @@
 			<name>getBody</name>
 			<param>
 				<name>userNotificationEvent</name>
-				<type>com.liferay.portal.model.UserNotificationEvent</type>
+				<type>com.liferay.portal.kernel.model.UserNotificationEvent</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -289,7 +289,7 @@
 			<name>getLink</name>
 			<param>
 				<name>userNotificationEvent</name>
-				<type>com.liferay.portal.model.UserNotificationEvent</type>
+				<type>com.liferay.portal.kernel.model.UserNotificationEvent</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.repository.registry;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
@@ -149,7 +150,9 @@ public class RepositoryClassDefinition
 
 		initializedRepository.setDocumentRepository(capabilityRepository);
 
-		_repositories.put(repositoryId, capabilityRepository);
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			_repositories.put(repositoryId, capabilityRepository);
+		}
 
 		return capabilityRepository;
 	}

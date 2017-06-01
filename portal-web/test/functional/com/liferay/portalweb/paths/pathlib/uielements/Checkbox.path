@@ -185,7 +185,7 @@
 </tr>
 <tr>
 	<td>ENABLE_SOCIAL_BOOKMARKS</td>
-	<td>//label[contains(.,'Enable Social Bookmarks')]/input[@type='checkbox']</td>
+	<td>//input[@type='checkbox' and contains(@name,'enableSocialBookmarks')]</td>
 	<td></td>
 </tr>
 <tr>

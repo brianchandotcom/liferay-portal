@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.configuration.SourceChecksResult;
-import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceChecksUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -273,7 +273,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			pluginBuildFileName = StringUtil.replace(
 				pluginBuildFileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
-			String absolutePath = JavaSourceUtil.getAbsolutePath(
+			String absolutePath = SourceUtil.getAbsolutePath(
 				pluginBuildFileName);
 
 			int x = absolutePath.indexOf("/modules/apps/");
@@ -484,7 +484,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				continue;
 			}
 
-			String absolutePath = JavaSourceUtil.getAbsolutePath(fileName);
+			String absolutePath = SourceUtil.getAbsolutePath(fileName);
 
 			if (_isModulesFile(absolutePath, true)) {
 				return true;
@@ -520,7 +520,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		fileName = StringUtil.replace(
 			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
-		String absolutePath = JavaSourceUtil.getAbsolutePath(fileName);
+		String absolutePath = SourceUtil.getAbsolutePath(fileName);
 
 		File file = new File(absolutePath);
 
@@ -638,7 +638,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private boolean _isSubrepository() {
-		String baseDirAbsolutePath = JavaSourceUtil.getAbsolutePath(
+		String baseDirAbsolutePath = SourceUtil.getAbsolutePath(
 			sourceFormatterArgs.getBaseDirName());
 
 		int x = baseDirAbsolutePath.length();

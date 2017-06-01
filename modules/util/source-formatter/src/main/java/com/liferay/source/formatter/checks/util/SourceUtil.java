@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.dom4j.Document;
 import org.dom4j.io.SAXReader;
 
@@ -29,6 +32,17 @@ import org.dom4j.io.SAXReader;
  * @author Hugo Huijser
  */
 public class SourceUtil {
+
+	public static String getAbsolutePath(String fileName) {
+		Path filePath = Paths.get(fileName);
+
+		filePath = filePath.toAbsolutePath();
+
+		filePath = filePath.normalize();
+
+		return StringUtil.replace(
+			filePath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
+	}
 
 	public static String getIndent(String s) {
 		StringBundler sb = new StringBundler(s.length());

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 
@@ -188,7 +188,7 @@ public class MissingOverrideCheck extends AbstractCheck {
 		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(
 			new DefaultDocletTagFactory(), new ThreadSafeClassLibrary());
 
-		String absolutePath = JavaSourceUtil.getAbsolutePath(fileName);
+		String absolutePath = SourceUtil.getAbsolutePath(fileName);
 
 		while (true) {
 			int x = absolutePath.lastIndexOf("/");
@@ -215,7 +215,7 @@ public class MissingOverrideCheck extends AbstractCheck {
 
 			try {
 				javaDocBuilder.addSource(
-					new File(JavaSourceUtil.getAbsolutePath(curFileName)));
+					new File(SourceUtil.getAbsolutePath(curFileName)));
 			}
 			catch (Exception e) {
 			}

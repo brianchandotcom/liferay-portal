@@ -42,12 +42,12 @@
 		</constructor-arg>
 	</bean>
 	<bean id="accessControlAdvice" class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" factory-method="newBean">
-		<constructor-arg value="com.liferay.portal.security.ac.AccessControlAdvice" />
+		<constructor-arg value="com.liferay.portal.kernel.security.ac.AccessControlAdvice" />
 		<constructor-arg>
 			<map>
 				<entry key="accessControlAdvisor">
 					<bean class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" factory-method="newBean">
-						<constructor-arg value="com.liferay.portal.security.ac.AccessControlAdvisorImpl" />
+						<constructor-arg value="com.liferay.portal.kernel.security.ac.AccessControlAdvisorImpl" />
 					</bean>
 				</entry>
 				<entry key="nextMethodInterceptor" value-ref="portalResiliencyAdvice" />

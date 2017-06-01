@@ -1,4 +1,5 @@
 dependencies {
+	compileInclude group: "com.github.yuchi", name: "npm-semver", version: "1.0.0"
 	compileInclude group: "org.json", name: "json", version: "20140107"
 
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"

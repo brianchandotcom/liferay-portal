@@ -200,7 +200,7 @@
 			<name>getIconPath</name>
 			<param>
 				<name>themeDisplay</name>
-				<type>com.liferay.portal.theme.ThemeDisplay</type>
+				<type>com.liferay.portal.kernel.theme.ThemeDisplay</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>

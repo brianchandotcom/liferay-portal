@@ -242,7 +242,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-category") %>' url="<%= addCategoryURL.toString() %>" />
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, (assetCategoriesDisplayContext.getCategoryId() > 0) ? "add-subcategory" : "add-category") %>' url="<%= addCategoryURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

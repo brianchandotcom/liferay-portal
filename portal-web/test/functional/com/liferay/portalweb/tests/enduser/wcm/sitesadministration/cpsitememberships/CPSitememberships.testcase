@@ -749,7 +749,7 @@
 		</execute>
 
 		<execute macro="Site#viewMemberListCP">
-			<var name="usersEmailsList" value="userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn7@liferay.com,userfn8@liferay.com,userfn9@liferay.com,userfn10@liferay.com" />
+			<var name="usersEmailsList" value="userea1@liferay.com,userea2@liferay.com,userea3@liferay.com,userea4@liferay.com,userea5@liferay.com,userea6@liferay.com,userea7@liferay.com,userea8@liferay.com,userea9@liferay.com,userea10@liferay.com" />
 		</execute>
 
 		<execute macro="Site#viewMemberCP">
@@ -777,11 +777,11 @@
 		</execute>
 
 		<execute macro="Site#viewMemberListCP">
-			<var name="usersEmailsList" value="userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn7@liferay.com,userfn8@liferay.com" />
+			<var name="usersEmailsList" value="userea4@liferay.com,userea5@liferay.com,userea6@liferay.com,userea7@liferay.com,userea8@liferay.com" />
 		</execute>
 
 		<execute macro="Site#assertMemberListNotVisibleCP">
-			<var name="usersEmailsList" value="userfn9@liferay.com" />
+			<var name="usersEmailsList" value="userea9@liferay.com" />
 		</execute>
 
 		<execute function="Click" locator1="Pagination#FIRST_LINK" />
@@ -789,15 +789,11 @@
 		<execute function="AssertTextEquals" locator1="Pagination#CURRENT_PAGE_SELECT" value1="Showing 1 to 5 of 11 entries." />
 
 		<execute macro="Site#viewMemberListCP">
-			<var name="usersEmailsList" value="userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn10@liferay.com" />
+			<var name="usersEmailsList" value="userea1@liferay.com,userea2@liferay.com,userea3@liferay.com,userea10@liferay.com" />
 		</execute>
 
 		<execute macro="Site#assertMemberListNotVisibleCP">
-			<var name="usersEmailsList" value="userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn7@liferay.com,userfn8@liferay.com" />
-		</execute>
-
-		<execute macro="Site#assertMemberListNotVisibleCP">
-			<var name="usersEmailsList" value="userfn9@liferay.com" />
+			<var name="usersEmailsList" value="userea4@liferay.com,userea5@liferay.com,userea6@liferay.com,userea7@liferay.com,userea8@liferay.com,userea9@liferay.com" />
 		</execute>
 
 		<execute macro="Site#viewMemberCP">
@@ -810,15 +806,11 @@
 		<execute function="AssertTextEquals" locator1="Pagination#CURRENT_PAGE_SELECT" value1="Showing 11 to 11 of 11 entries." />
 
 		<execute macro="Site#assertMemberListNotVisibleCP">
-			<var name="usersEmailsList" value="userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn10@liferay.com" />
-		</execute>
-
-		<execute macro="Site#assertMemberListNotVisibleCP">
-			<var name="usersEmailsList" value="userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn7@liferay.com,userfn8@liferay.com" />
+			<var name="usersEmailsList" value="userea1@liferay.com,userea2@liferay.com,userea3@liferay.com,userea4@liferay.com,userea5@liferay.com,userea6@liferay.com,userea7@liferay.com,userea8@liferay.com,userea10@liferay.com" />
 		</execute>
 
 		<execute macro="Site#viewMemberListCP">
-			<var name="usersEmailsList" value="userfn9@liferay.com" />
+			<var name="usersEmailsList" value="userea9@liferay.com" />
 		</execute>
 
 		<execute function="Click" locator1="Pagination#PREVIOUS_LINK" />
@@ -826,15 +818,11 @@
 		<execute function="AssertTextEquals" locator1="Pagination#CURRENT_PAGE_SELECT" value1="Showing 6 to 10 of 11 entries." />
 
 		<execute macro="Site#assertMemberListNotVisibleCP">
-			<var name="usersEmailsList" value="userfn1@liferay.com,userfn2@liferay.com,userfn3@liferay.com,userfn10@liferay.com" />
+			<var name="usersEmailsList" value="userea1@liferay.com,userea2@liferay.com,userea3@liferay.com,userea9@liferay.com,userea10@liferay.com" />
 		</execute>
 
 		<execute macro="Site#viewMemberListCP">
-			<var name="usersEmailsList" value="userfn4@liferay.com,userfn5@liferay.com,userfn6@liferay.com,userfn7@liferay.com,userfn8@liferay.com" />
-		</execute>
-
-		<execute macro="Site#assertMemberListNotVisibleCP">
-			<var name="usersEmailsList" value="userfn9@liferay.com" />
+			<var name="usersEmailsList" value="userea4@liferay.com,userea5@liferay.com,userea6@liferay.com,userea7@liferay.com,userea8@liferay.com" />
 		</execute>
 	</command>
 

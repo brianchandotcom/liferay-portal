@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutorUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -112,6 +113,14 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 		String extension, String mimeType, File file) {
 
 		Metadata metadata = super.extractMetadata(extension, mimeType, file);
+
+		if (metadata == null) {
+			metadata = new Metadata();
+		}
+
+		metadata.set(
+			Metadata.RESOURCE_NAME_KEY,
+			file.getName() + StringPool.PERIOD + extension);
 
 		boolean forkProcess = false;
 

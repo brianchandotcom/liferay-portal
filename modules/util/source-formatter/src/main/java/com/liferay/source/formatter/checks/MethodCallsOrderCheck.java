@@ -136,10 +136,6 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 	}
 
 	private String _sortMethodCalls(String absolutePath, String content) {
-		if (isExcludedPath(METHOD_CALL_SORT_EXCLUDES, absolutePath)) {
-			return content;
-		}
-
 		content = _sortMethodCall(
 			content, "add", "ConcurrentSkipListSet<.*>", "HashSet<.*>",
 			"TreeSet<.*>");

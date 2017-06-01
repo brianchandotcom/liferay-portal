@@ -10,4 +10,5 @@
 	<suppress checks="JavaDiamondOperatorCheck" files="portal-kernel/src/com/liferay/portal/kernel/repository/BaseRepositoryImpl\.java" />
 	<suppress checks="JavaDiamondOperatorCheck" files="portal-kernel/src/com/liferay/portal/kernel/search/generic/BooleanClauseFactoryImpl\.java" />
 	<suppress checks="JavaDiamondOperatorCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ListUtil\.java" />
+	<suppress checks="MethodCallsOrderCheck" files="portal-impl/src/com/liferay/portal/util/PortalImpl\.java" />
 </suppressions>

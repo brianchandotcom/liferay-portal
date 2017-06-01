@@ -32,22 +32,6 @@ import java.util.Set;
  */
 public class PlusStatementCheck extends AbstractCheck {
 
-	public static final String MSG_COMBINE_LITERAL_STRINGS =
-		"literal.string.combine";
-
-	public static final String MSG_INCORRECT_TABBING = "tabbing.incorrect";
-
-	public static final String MSG_INVALID_END_CHARACTER =
-		"end.character.invalid";
-
-	public static final String MSG_INVALID_START_CHARACTER =
-		"start.character.invalid";
-
-	public static final String MSG_MOVE_LITERAL_STRING = "literal.string.move";
-
-	public static final String MSG_STATEMENT_TOO_LONG =
-		"plus.statement.too.long";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.PLUS};
@@ -84,7 +68,7 @@ public class PlusStatementCheck extends AbstractCheck {
 
 		if (firstChild.getLineNo() == lastChild.getLineNo()) {
 			log(
-				firstChild.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
+				firstChild.getLineNo(), _MSG_COMBINE_LITERAL_STRINGS,
 				literalString1, literalString2);
 
 			return;
@@ -96,7 +80,7 @@ public class PlusStatementCheck extends AbstractCheck {
 
 		if (literalString1.endsWith(StringPool.SLASH)) {
 			log(
-				detailAST.getLineNo(), MSG_INVALID_END_CHARACTER,
+				detailAST.getLineNo(), _MSG_INVALID_END_CHARACTER,
 				literalString1.charAt(literalString1.length() - 1));
 		}
 
@@ -105,7 +89,7 @@ public class PlusStatementCheck extends AbstractCheck {
 			 literalString2.matches("^[-:;.].*"))) {
 
 			log(
-				lastChild.getLineNo(), MSG_INVALID_START_CHARACTER,
+				lastChild.getLineNo(), _MSG_INVALID_START_CHARACTER,
 				literalString2.charAt(0));
 
 			return;
@@ -125,7 +109,7 @@ public class PlusStatementCheck extends AbstractCheck {
 
 		if ((lineLength1 + trimmedLine2.length() - 4) <= _maxLineLength) {
 			log(
-				lastChild.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
+				lastChild.getLineNo(), _MSG_COMBINE_LITERAL_STRINGS,
 				literalString1, literalString2);
 
 			return;
@@ -137,7 +121,7 @@ public class PlusStatementCheck extends AbstractCheck {
 			((lineLength1 + literalString2.length()) <= _maxLineLength)) {
 
 			log(
-				detailAST.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
+				detailAST.getLineNo(), _MSG_COMBINE_LITERAL_STRINGS,
 				literalString1, literalString2);
 
 			return;
@@ -148,7 +132,7 @@ public class PlusStatementCheck extends AbstractCheck {
 
 		if (pos != -1) {
 			log(
-				lastChild.getLineNo(), MSG_MOVE_LITERAL_STRING,
+				lastChild.getLineNo(), _MSG_MOVE_LITERAL_STRING,
 				literalString2.substring(0, pos + 1));
 		}
 	}
@@ -187,7 +171,7 @@ public class PlusStatementCheck extends AbstractCheck {
 		}
 
 		if (lineNumbers.size() > 3) {
-			log(detailAST.getLineNo(), MSG_STATEMENT_TOO_LONG);
+			log(detailAST.getLineNo(), _MSG_STATEMENT_TOO_LONG);
 		}
 	}
 
@@ -212,7 +196,7 @@ public class PlusStatementCheck extends AbstractCheck {
 		int tabCount = _getLeadingTabCount(line1);
 
 		if ((tabCount + 1) != _getLeadingTabCount(line2)) {
-			log(afterPlusLineNo, MSG_INCORRECT_TABBING, tabCount + 1);
+			log(afterPlusLineNo, _MSG_INCORRECT_TABBING, tabCount + 1);
 		}
 	}
 
@@ -321,6 +305,23 @@ public class PlusStatementCheck extends AbstractCheck {
 
 		return false;
 	}
+
+	private static final String _MSG_COMBINE_LITERAL_STRINGS =
+		"literal.string.combine";
+
+	private static final String _MSG_INCORRECT_TABBING = "tabbing.incorrect";
+
+	private static final String _MSG_INVALID_END_CHARACTER =
+		"end.character.invalid";
+
+	private static final String _MSG_INVALID_START_CHARACTER =
+		"start.character.invalid";
+
+	private static final String _MSG_MOVE_LITERAL_STRING =
+		"literal.string.move";
+
+	private static final String _MSG_STATEMENT_TOO_LONG =
+		"plus.statement.too.long";
 
 	private int _maxLineLength = 80;
 

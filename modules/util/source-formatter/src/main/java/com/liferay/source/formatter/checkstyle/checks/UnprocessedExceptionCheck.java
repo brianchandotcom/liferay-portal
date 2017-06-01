@@ -44,9 +44,6 @@ import java.util.Set;
  */
 public class UnprocessedExceptionCheck extends AbstractCheck {
 
-	public static final String MSG_UNPROCESSED_EXCEPTION =
-		"exception.unprocessed";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.LITERAL_CATCH, TokenTypes.LITERAL_NEW};
@@ -142,7 +139,7 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 				exceptionClassName.equals("SystemException")) {
 
 				log(
-					parameterDefAST.getLineNo(), MSG_UNPROCESSED_EXCEPTION,
+					parameterDefAST.getLineNo(), _MSG_UNPROCESSED_EXCEPTION,
 					originalExceptionClassName);
 
 				break;
@@ -207,7 +204,7 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 			(parentAST.getType() == TokenTypes.SLIST)) {
 
 			log(
-				detailAST.getLineNo(), MSG_UNPROCESSED_EXCEPTION,
+				detailAST.getLineNo(), _MSG_UNPROCESSED_EXCEPTION,
 				exceptionVariableName);
 		}
 	}
@@ -294,6 +291,9 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 
 		return javaPackage.getName();
 	}
+
+	private static final String _MSG_UNPROCESSED_EXCEPTION =
+		"exception.unprocessed";
 
 	private boolean _checkUnprocessedThrownExceptions;
 

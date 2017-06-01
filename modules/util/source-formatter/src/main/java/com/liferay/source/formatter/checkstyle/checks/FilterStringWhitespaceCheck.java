@@ -27,9 +27,6 @@ import java.util.List;
  */
 public class FilterStringWhitespaceCheck extends AbstractCheck {
 
-	public static final String MSG_INCORRECT_WHITESPACE =
-		"whitespace.incorrect";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.METHOD_DEF};
@@ -68,7 +65,7 @@ public class FilterStringWhitespaceCheck extends AbstractCheck {
 			String literalStringValue = literalStringAST.getText();
 
 			if (literalStringValue.contains(" = ")) {
-				log(nameAST.getLineNo(), MSG_INCORRECT_WHITESPACE, name);
+				log(nameAST.getLineNo(), _MSG_INCORRECT_WHITESPACE, name);
 
 				return;
 			}
@@ -118,5 +115,8 @@ public class FilterStringWhitespaceCheck extends AbstractCheck {
 
 		return firstChildAST.getText();
 	}
+
+	private static final String _MSG_INCORRECT_WHITESPACE =
+		"whitespace.incorrect";
 
 }

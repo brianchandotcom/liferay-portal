@@ -25,8 +25,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public class NumberSuffixCheck extends AbstractCheck {
 
-	public static final String MSG_INCORRECT_SUFFIX = "suffix.incorrect";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {
@@ -52,9 +50,11 @@ public class NumberSuffixCheck extends AbstractCheck {
 
 		if (text.endsWith(suffix)) {
 			log(
-				detailAST.getLineNo(), MSG_INCORRECT_SUFFIX,
+				detailAST.getLineNo(), _MSG_INCORRECT_SUFFIX,
 				StringUtil.toUpperCase(suffix), type);
 		}
 	}
+
+	private static final String _MSG_INCORRECT_SUFFIX = "suffix.incorrect";
 
 }

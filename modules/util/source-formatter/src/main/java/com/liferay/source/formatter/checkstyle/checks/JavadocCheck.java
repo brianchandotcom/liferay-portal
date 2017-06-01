@@ -28,16 +28,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public class JavadocCheck extends AbstractCheck {
 
-	public static final String MSG_EMPTY_LINE = "javadoc.empty.line";
-
-	public static final String MSG_INCORRECT_FIRST_LINE =
-		"javadoc.incorrect.first.line";
-
-	public static final String MSG_INCORRECT_LAST_LINE =
-		"javadoc.incorrect.last.line";
-
-	public static final String MSG_MULTIPLE_JAVADOC = "javadoc.multiple";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {
@@ -67,20 +57,22 @@ public class JavadocCheck extends AbstractCheck {
 		if (javadoc != null) {
 			DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
-			log(detailAST.getLineNo(), MSG_MULTIPLE_JAVADOC, nameAST.getText());
+			log(
+				detailAST.getLineNo(), _MSG_MULTIPLE_JAVADOC,
+				nameAST.getText());
 		}
 	}
 
 	private void _checkJavadoc(TextBlock javadoc) {
 		String[] text = javadoc.getText();
 
-		_checkLine(javadoc, text, 1, "/**", MSG_INCORRECT_FIRST_LINE, true);
-		_checkLine(javadoc, text, 2, StringPool.STAR, MSG_EMPTY_LINE, false);
+		_checkLine(javadoc, text, 1, "/**", _MSG_INCORRECT_FIRST_LINE, true);
+		_checkLine(javadoc, text, 2, StringPool.STAR, _MSG_EMPTY_LINE, false);
 		_checkLine(
-			javadoc, text, text.length - 1, StringPool.STAR, MSG_EMPTY_LINE,
+			javadoc, text, text.length - 1, StringPool.STAR, _MSG_EMPTY_LINE,
 			false);
 		_checkLine(
-			javadoc, text, text.length, "*/", MSG_INCORRECT_LAST_LINE, true);
+			javadoc, text, text.length, "*/", _MSG_INCORRECT_LAST_LINE, true);
 	}
 
 	private void _checkLine(
@@ -95,5 +87,15 @@ public class JavadocCheck extends AbstractCheck {
 			log(javadoc.getStartLineNo() + lineNumber - 1, message);
 		}
 	}
+
+	private static final String _MSG_EMPTY_LINE = "javadoc.empty.line";
+
+	private static final String _MSG_INCORRECT_FIRST_LINE =
+		"javadoc.incorrect.first.line";
+
+	private static final String _MSG_INCORRECT_LAST_LINE =
+		"javadoc.incorrect.last.line";
+
+	private static final String _MSG_MULTIPLE_JAVADOC = "javadoc.multiple";
 
 }

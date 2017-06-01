@@ -24,9 +24,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public class UnwrappedVariableInfoCheck extends AbstractCheck {
 
-	public static final String MSG_UNWRAPPED_VARIABLE_INFO =
-		"variable.info.unwrapped";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.VARIABLE_DEF};
@@ -73,8 +70,11 @@ public class UnwrappedVariableInfoCheck extends AbstractCheck {
 		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
 		log(
-			detailAST.getLineNo(), MSG_UNWRAPPED_VARIABLE_INFO,
+			detailAST.getLineNo(), _MSG_UNWRAPPED_VARIABLE_INFO,
 			nameAST.getText());
 	}
+
+	private static final String _MSG_UNWRAPPED_VARIABLE_INFO =
+		"variable.info.unwrapped";
 
 }

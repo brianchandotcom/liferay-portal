@@ -26,11 +26,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public class JSONNamingCheck extends AbstractCheck {
 
-	public static final String MSG_RENAME_VARIABLE = "variable.rename";
-
-	public static final String MSG_RESERVED_VARIABLE_NAME =
-		"variable.name.reserved";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {
@@ -78,7 +73,7 @@ public class JSONNamingCheck extends AbstractCheck {
 
 			if (!lowerCaseTypeName.endsWith(StringUtil.toLowerCase(type))) {
 				log(
-					lineNo, MSG_RESERVED_VARIABLE_NAME, tokenTypeName,
+					lineNo, _MSG_RESERVED_VARIABLE_NAME, tokenTypeName,
 					reservedNameEnding, type);
 			}
 
@@ -87,7 +82,7 @@ public class JSONNamingCheck extends AbstractCheck {
 
 		if (name.endsWith(incorrectNameEnding)) {
 			log(
-				lineNo, MSG_RENAME_VARIABLE,
+				lineNo, _MSG_RENAME_VARIABLE,
 				StringUtil.toLowerCase(tokenTypeName), name,
 				StringUtil.replaceLast(
 					name, incorrectNameEnding, reservedNameEnding));
@@ -111,5 +106,10 @@ public class JSONNamingCheck extends AbstractCheck {
 
 		return "Variable";
 	}
+
+	private static final String _MSG_RENAME_VARIABLE = "variable.rename";
+
+	private static final String _MSG_RESERVED_VARIABLE_NAME =
+		"variable.name.reserved";
 
 }

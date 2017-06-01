@@ -27,12 +27,6 @@ import java.util.List;
  */
 public class MissingEmptyLineCheck extends AbstractCheck {
 
-	public static final String MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE =
-		"empty.line.missing.after.variable.reference";
-
-	public static final String MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE =
-		"empty.line.missing.before.variable.use";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.ASSIGN};
@@ -113,7 +107,7 @@ public class MissingEmptyLineCheck extends AbstractCheck {
 					if ((endLine + 1) == startLineNextExpression) {
 						log(
 							startLineNextExpression,
-							MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
+							_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
 							startLineNextExpression, name);
 					}
 				}
@@ -165,7 +159,7 @@ public class MissingEmptyLineCheck extends AbstractCheck {
 			if (identName.equals(name)) {
 				log(
 					startLineNextExpression,
-					MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE, name);
+					_MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE, name);
 			}
 		}
 	}
@@ -197,5 +191,12 @@ public class MissingEmptyLineCheck extends AbstractCheck {
 
 		return false;
 	}
+
+	private static final String
+		_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE =
+			"empty.line.missing.after.variable.reference";
+
+	private static final String _MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE =
+		"empty.line.missing.before.variable.use";
 
 }

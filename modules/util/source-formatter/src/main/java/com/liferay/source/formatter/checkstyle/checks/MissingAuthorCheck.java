@@ -25,8 +25,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public class MissingAuthorCheck extends AbstractCheck {
 
-	public static final String MSG_MISSING_AUTHOR = "author.missing";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {
@@ -48,7 +46,7 @@ public class MissingAuthorCheck extends AbstractCheck {
 			detailAST.getLineNo());
 
 		if (javadoc == null) {
-			log(detailAST.getLineNo(), MSG_MISSING_AUTHOR);
+			log(detailAST.getLineNo(), _MSG_MISSING_AUTHOR);
 
 			return;
 		}
@@ -61,7 +59,9 @@ public class MissingAuthorCheck extends AbstractCheck {
 			}
 		}
 
-		log(detailAST.getLineNo(), MSG_MISSING_AUTHOR);
+		log(detailAST.getLineNo(), _MSG_MISSING_AUTHOR);
 	}
+
+	private static final String _MSG_MISSING_AUTHOR = "author.missing";
 
 }

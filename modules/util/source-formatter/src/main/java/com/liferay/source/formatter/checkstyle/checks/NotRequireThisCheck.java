@@ -27,9 +27,6 @@ import java.util.List;
  */
 public class NotRequireThisCheck extends AbstractCheck {
 
-	public static final String MSG_VARIABLE_THIS_NOT_REQUIRED =
-		"variable.not.require.this";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF};
@@ -71,7 +68,7 @@ public class NotRequireThisCheck extends AbstractCheck {
 				}
 			}
 
-			log(thisAST.getLineNo(), MSG_VARIABLE_THIS_NOT_REQUIRED, name);
+			log(thisAST.getLineNo(), _MSG_VARIABLE_THIS_NOT_REQUIRED, name);
 		}
 	}
 
@@ -90,5 +87,8 @@ public class NotRequireThisCheck extends AbstractCheck {
 			parentAST = parentAST.getParent();
 		}
 	}
+
+	private static final String _MSG_VARIABLE_THIS_NOT_REQUIRED =
+		"variable.not.require.this";
 
 }

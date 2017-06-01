@@ -24,8 +24,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public class TransactionalTestRuleCheck extends AbstractCheck {
 
-	public static final String MSG_INVALID_IMPORT = "import.invalid";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.IMPORT};
@@ -46,8 +44,10 @@ public class TransactionalTestRuleCheck extends AbstractCheck {
 		String fileName = fileContents.getFileName();
 
 		if (fileName.endsWith("StagedModelDataHandlerTest.java")) {
-			log(detailAST.getLineNo(), MSG_INVALID_IMPORT);
+			log(detailAST.getLineNo(), _MSG_INVALID_IMPORT);
 		}
 	}
+
+	private static final String _MSG_INVALID_IMPORT = "import.invalid";
 
 }

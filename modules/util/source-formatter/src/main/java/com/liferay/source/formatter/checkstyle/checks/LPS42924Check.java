@@ -28,8 +28,6 @@ import java.util.List;
  */
 public class LPS42924Check extends AbstractCheck {
 
-	public static final String MSG_LPS_42924 = "lps42924";
-
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.CLASS_DEF};
@@ -49,8 +47,10 @@ public class LPS42924Check extends AbstractCheck {
 			detailAST, "PortalUtil", "getClassNameId");
 
 		for (DetailAST methodCallAST : methodCallASTList) {
-			log(methodCallAST.getLineNo(), MSG_LPS_42924);
+			log(methodCallAST.getLineNo(), _MSG_LPS_42924);
 		}
 	}
+
+	private static final String _MSG_LPS_42924 = "lps42924";
 
 }

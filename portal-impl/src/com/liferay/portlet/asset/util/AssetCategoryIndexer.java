@@ -170,6 +170,8 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 			assetCategory.getParentCategoryId());
 		document.addKeyword(
 			Field.ASSET_VOCABULARY_ID, assetCategory.getVocabularyId());
+		document.addKeyword(
+			"leftCategoryId", assetCategory.getLeftCategoryId());
 
 		Locale siteDefaultLocale = PortalUtil.getSiteDefaultLocale(
 			assetCategory.getGroupId());

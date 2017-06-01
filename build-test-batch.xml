@@ -2772,10 +2772,6 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="upstream-functional-tomcat80-mysql56-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="mysql" />
-	</target>
-
 	<target name="wsdd-builder-jdk8">
 		<run-batch-test>
 			<test-action>

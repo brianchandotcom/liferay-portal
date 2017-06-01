@@ -494,6 +494,10 @@ public class DLFileEntryIndexer
 
 		Summary summary = createSummary(document, Field.TITLE, Field.CONTENT);
 
+		if (Validator.isNull(summary.getContent())) {
+			summary = createSummary(document, Field.TITLE, Field.DESCRIPTION);
+		}
+
 		summary.setMaxContentLength(200);
 
 		return summary;

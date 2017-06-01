@@ -1507,7 +1507,7 @@
 			<name>getBody</name>
 			<param>
 				<name>activity</name>
-				<type>com.liferay.portlet.social.model.SocialActivity</type>
+				<type>com.liferay.social.kernel.model.SocialActivity</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1528,7 +1528,7 @@
 			<name>getLink</name>
 			<param>
 				<name>activity</name>
-				<type>com.liferay.portlet.social.model.SocialActivity</type>
+				<type>com.liferay.social.kernel.model.SocialActivity</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1549,7 +1549,7 @@
 			</param>
 			<param>
 				<name>activity</name>
-				<type>com.liferay.portlet.social.model.SocialActivity</type>
+				<type>com.liferay.social.kernel.model.SocialActivity</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1585,7 +1585,7 @@
 			</param>
 			<param>
 				<name>activity</name>
-				<type>com.liferay.portlet.social.model.SocialActivity</type>
+				<type>com.liferay.social.kernel.model.SocialActivity</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -1601,7 +1601,7 @@
 			</param>
 			<param>
 				<name>activity</name>
-				<type>com.liferay.portlet.social.model.SocialActivity</type>
+				<type>com.liferay.social.kernel.model.SocialActivity</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>

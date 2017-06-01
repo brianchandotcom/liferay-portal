@@ -16,7 +16,7 @@ package com.liferay.tasks.model.impl;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.kernel.model.CacheModel;
 
 import com.liferay.tasks.model.TasksEntry;
 

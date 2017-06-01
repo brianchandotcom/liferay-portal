@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<suppress checks="JavaVariableTypeCheck" files="modules/util/source-formatter/src/main/java/com/liferay/source/formatter/checks/XMLSpringFileCheck\.java" />
+</suppressions>

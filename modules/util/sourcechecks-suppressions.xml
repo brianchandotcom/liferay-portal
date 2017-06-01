@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<suppress checks="JavaVariableTypeCheck" files="modules/util/css-builder/src/main/java/com/liferay/css/builder/maven/BuildCSSMojo\.java" />
+	<suppress checks="JavaVariableTypeCheck" files="modules/util/portal-tools-soy-builder/src/main/java/com/liferay/portal/tools/soy/builder/maven/BaseSoyJsMojo\.java" />
+	<suppress checks="JavaVariableTypeCheck" files="modules/util/portal-tools-soy-builder/src/main/java/com/liferay/portal/tools/soy/builder/maven/BuildSoyMojo\.java" />
+	<suppress checks="JavaVariableTypeCheck" files="modules/util/portal-tools-theme-builder/src/main/java/com/liferay/portal/tools/theme/builder/maven/BuildThemeMojo\.java" />
+</suppressions>

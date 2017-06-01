@@ -803,6 +803,7 @@
 		</execute>
 
 		<execute function="Click" locator1="Pagination#LAST_LINK" />
+
 		<execute function="AssertTextEquals" locator1="Pagination#CURRENT_PAGE_SELECT" value1="Showing 11 to 11 of 11 entries." />
 
 		<execute macro="Site#assertMemberListNotVisibleCP">

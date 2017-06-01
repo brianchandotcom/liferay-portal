@@ -273,7 +273,7 @@
 			</param>
 			<param>
 				<name>serviceContext</name>
-				<type>com.liferay.portal.service.ServiceContext</type>
+				<type>com.liferay.portal.kernel.service.ServiceContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -294,7 +294,7 @@
 			</param>
 			<param>
 				<name>serviceContext</name>
-				<type>com.liferay.portal.service.ServiceContext</type>
+				<type>com.liferay.portal.kernel.service.ServiceContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -466,7 +466,7 @@
 			</param>
 			<param>
 				<name>serviceContext</name>
-				<type>com.liferay.portal.service.ServiceContext</type>
+				<type>com.liferay.portal.kernel.service.ServiceContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -1069,7 +1069,7 @@
 			</param>
 			<param>
 				<name>serviceContext</name>
-				<type>com.liferay.portal.service.ServiceContext</type>
+				<type>com.liferay.portal.kernel.service.ServiceContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -1105,7 +1105,7 @@
 			</param>
 			<param>
 				<name>serviceContext</name>
-				<type>com.liferay.portal.service.ServiceContext</type>
+				<type>com.liferay.portal.kernel.service.ServiceContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -1136,7 +1136,7 @@
 			</param>
 			<param>
 				<name>serviceContext</name>
-				<type>com.liferay.portal.service.ServiceContext</type>
+				<type>com.liferay.portal.kernel.service.ServiceContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
@@ -1169,7 +1169,7 @@
 			</param>
 			<param>
 				<name>serviceContext</name>
-				<type>com.liferay.portal.service.ServiceContext</type>
+				<type>com.liferay.portal.kernel.service.ServiceContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
@@ -1250,7 +1250,7 @@
 			</param>
 			<param>
 				<name>serviceContext</name>
-				<type>com.liferay.portal.service.ServiceContext</type>
+				<type>com.liferay.portal.kernel.service.ServiceContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -1352,7 +1352,7 @@
 			</param>
 			<param>
 				<name>serviceContext</name>
-				<type>com.liferay.portal.service.ServiceContext</type>
+				<type>com.liferay.portal.kernel.service.ServiceContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -1512,7 +1512,7 @@
 			</param>
 			<param>
 				<name>serviceContext</name>
-				<type>com.liferay.portal.service.ServiceContext</type>
+				<type>com.liferay.portal.kernel.service.ServiceContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -1533,7 +1533,7 @@
 			</param>
 			<param>
 				<name>serviceContext</name>
-				<type>com.liferay.portal.service.ServiceContext</type>
+				<type>com.liferay.portal.kernel.service.ServiceContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -1564,7 +1564,7 @@
 			</param>
 			<param>
 				<name>serviceContext</name>
-				<type>com.liferay.portal.service.ServiceContext</type>
+				<type>com.liferay.portal.kernel.service.ServiceContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>
@@ -1611,7 +1611,7 @@
 			</param>
 			<param>
 				<name>serviceContext</name>
-				<type>com.liferay.portal.service.ServiceContext</type>
+				<type>com.liferay.portal.kernel.service.ServiceContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<return>

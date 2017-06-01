@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.asset.kernel.model.BaseAssetRenderer;
 import com.liferay.tasks.model.TasksEntry;
 import com.liferay.tasks.service.permission.TasksEntryPermission;
 import com.liferay.tasks.util.PortletKeys;

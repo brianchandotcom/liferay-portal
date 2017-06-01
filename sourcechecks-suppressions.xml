@@ -17,6 +17,12 @@
 	<suppress checks="JavaVariableTypeCheck" files="portal-impl/test/unit/com/liferay/portal/json/One\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="portal-impl/test/unit/com/liferay/portal/json/Two\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/PathHolder\.java" />
+	<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-impl/src/com/liferay/portal/upgrade/util/BaseUpgradeTableImpl.java" />
+	<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-impl/src/com/liferay/portal/upgrade/util/UpgradeCompanyId.java" />
+	<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-impl/src/com/liferay/portal/verify/VerifyProcess.java" />
+	<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-kernel/src/com/liferay/portal/kernel/upgrade/BaseUpgradeCompanyId.java" />
+	<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-kernel/src/com/liferay/portal/kernel/upgrade/UpgradeProcess.java" />
+	<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-kernel/src/com/liferay/portal/kernel/upgrade/util/UpgradeProcessUtil.java" />
 	<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/security/xml/SecureXMLFactoryProviderImpl\.java" />
 	<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/tools/JavadocBuilder\.java" />
 	<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/tools/PluginsEnvironmentBuilder\.java" />

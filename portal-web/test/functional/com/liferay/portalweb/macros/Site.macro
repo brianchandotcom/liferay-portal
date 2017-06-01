@@ -255,12 +255,16 @@
 
 	<command name="assertMemberListNotVisibleCP">
 		<for list="${usersEmailsList}" param="userEmail" >
-			<var method="StringUtil#replace('${userEmail}', '@liferay.com', '')" name="userName" />
+			<var method="StringUtil#replace('${userEmail}', '@liferay.com', '')" name="baseName" />
+
+			<var method="StringUtil#replace('${baseName}', 'ea', fn')" name="userFirstName" />
+			<var method="StringUtil#replace('${baseName}', 'ea', ln')" name="userLastName" />
+			<var method="StringUtil#replace('${baseName}', 'ea', sn')" name="userScreenName" />
 
 			<execute macro="Site#assertMemberNotVisibleCP">
-				<var name="userFirstName" value="${userName}" />
-				<var name="userLastName" value="${userName}" />
-				<var name="userScreenName" value="${userName}" />
+				<var name="userFirstName" value="${userFirstName}" />
+				<var name="userLastName" value="${userLastName}" />
+				<var name="userScreenName" value="${userScreenName}" />
 			</execute>
 		</for>
 	</command>
@@ -1141,12 +1145,16 @@
 
 	<command name="viewMemberListCP">
 		<for list="${usersEmailsList}" param="userEmail" >
-			<var method="StringUtil#replace('${userEmail}', '@liferay.com', '')" name="userName" />
+			<var method="StringUtil#replace('${userEmail}', '@liferay.com', '')" name="baseName" />
+
+			<var method="StringUtil#replace('${baseName}', 'ea', fn')" name="userFirstName" />
+			<var method="StringUtil#replace('${baseName}', 'ea', ln')" name="userLastName" />
+			<var method="StringUtil#replace('${baseName}', 'ea', sn')" name="userScreenName" />
 
 			<execute macro="Site#viewMemberCP">
-				<var name="userFirstName" value="${userName}" />
-				<var name="userLastName" value="${userName}" />
-				<var name="userScreenName" value="${userName}" />
+				<var name="userFirstName" value="${userFirstName}" />
+				<var name="userLastName" value="${userLastName}" />
+				<var name="userScreenName" value="${userScreenName}" />
 			</execute>
 		</for>
 	</command>

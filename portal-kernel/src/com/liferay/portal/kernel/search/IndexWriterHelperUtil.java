@@ -176,7 +176,8 @@ public class IndexWriterHelperUtil {
 	 */
 	@Deprecated
 	public static boolean isIndexReadOnly() {
-		return _indexWriterHelper.isIndexReadOnly();
+		return IndexStatusManagerThreadLocal.isIndexReadOnly() ||
+			_indexWriterHelper.isIndexReadOnly();
 	}
 
 	/**

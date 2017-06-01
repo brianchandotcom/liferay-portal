@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.RemoteAuthException;
@@ -149,6 +150,10 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	public void cleanUpStagingRequest(long stagingRequestId)
 		throws PortalException {
 
+		boolean indexReadOnly = IndexStatusManagerThreadLocal.isIndexReadOnly();
+
+		IndexStatusManagerThreadLocal.setIndexReadOnly(true);
+
 		try {
 			PortletFileRepositoryUtil.deletePortletFolder(stagingRequestId);
 		}
@@ -159,23 +164,36 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 					nsfe);
 			}
 		}
+		finally {
+			IndexStatusManagerThreadLocal.setIndexReadOnly(indexReadOnly);
+		}
 	}
 
 	@Override
 	public long createStagingRequest(long userId, long groupId, String checksum)
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
+		boolean indexReadOnly = IndexStatusManagerThreadLocal.isIndexReadOnly();
 
-		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			groupId, _PORTLET_REPOSITORY_ID, serviceContext);
+		IndexStatusManagerThreadLocal.setIndexReadOnly(true);
 
-		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
-			userId, repository.getRepositoryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, checksum,
-			serviceContext);
+		try {
+			ServiceContext serviceContext = new ServiceContext();
 
-		return folder.getFolderId();
+			Repository repository =
+				PortletFileRepositoryUtil.addPortletRepository(
+					groupId, _PORTLET_REPOSITORY_ID, serviceContext);
+
+			Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+				userId, repository.getRepositoryId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, checksum,
+				serviceContext);
+
+			return folder.getFolderId();
+		}
+		finally {
+			IndexStatusManagerThreadLocal.setIndexReadOnly(indexReadOnly);
+		}
 	}
 
 	@Override
@@ -482,11 +500,20 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
 			stagingRequestId);
 
-		PortletFileRepositoryUtil.addPortletFileEntry(
-			folder.getGroupId(), userId, Group.class.getName(),
-			folder.getGroupId(), _PORTLET_REPOSITORY_ID, folder.getFolderId(),
-			new UnsyncByteArrayInputStream(bytes), fileName,
-			ContentTypes.APPLICATION_ZIP, false);
+		boolean indexReadOnly = IndexStatusManagerThreadLocal.isIndexReadOnly();
+
+		IndexStatusManagerThreadLocal.setIndexReadOnly(true);
+
+		try {
+			PortletFileRepositoryUtil.addPortletFileEntry(
+				folder.getGroupId(), userId, Group.class.getName(),
+				folder.getGroupId(), _PORTLET_REPOSITORY_ID,
+				folder.getFolderId(), new UnsyncByteArrayInputStream(bytes),
+				fileName, ContentTypes.APPLICATION_ZIP, false);
+		}
+		finally {
+			IndexStatusManagerThreadLocal.setIndexReadOnly(indexReadOnly);
+		}
 	}
 
 	/**
@@ -860,6 +887,10 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			return stagingRequestFileEntry;
 		}
 
+		boolean indexReadOnly = IndexStatusManagerThreadLocal.isIndexReadOnly();
+
+		IndexStatusManagerThreadLocal.setIndexReadOnly(true);
+
 		FileOutputStream fileOutputStream = null;
 
 		File tempFile = null;
@@ -920,6 +951,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				ioe);
 		}
 		finally {
+			IndexStatusManagerThreadLocal.setIndexReadOnly(indexReadOnly);
+
 			StreamUtil.cleanUp(fileOutputStream);
 
 			FileUtil.delete(tempFile);

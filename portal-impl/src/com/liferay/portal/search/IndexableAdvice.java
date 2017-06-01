@@ -55,7 +55,7 @@ public class IndexableAdvice
 				}
 				else if (IndexWriterHelperUtil.isIndexReadOnly()) {
 					_log.debug(
-						"Skip indexing because index writer is read only");
+						"Skip indexing because the index is read only");
 				}
 			}
 

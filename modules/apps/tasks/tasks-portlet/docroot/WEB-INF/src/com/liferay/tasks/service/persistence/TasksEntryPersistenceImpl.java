@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.tasks.NoSuchTasksEntryException;
 import com.liferay.tasks.model.TasksEntry;

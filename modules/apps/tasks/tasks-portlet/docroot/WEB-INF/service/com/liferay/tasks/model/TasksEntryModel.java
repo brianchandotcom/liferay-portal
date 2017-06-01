@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 

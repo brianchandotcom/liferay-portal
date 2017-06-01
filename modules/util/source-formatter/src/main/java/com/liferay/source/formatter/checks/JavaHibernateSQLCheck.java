@@ -25,8 +25,7 @@ public class JavaHibernateSQLCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!isExcludedPath(_HIBERNATE_SQL_QUERY_EXCLUDES, absolutePath) &&
-			content.contains("= session.createSynchronizedSQLQuery(") &&
+		if (content.contains("= session.createSynchronizedSQLQuery(") &&
 			content.contains("com.liferay.portal.kernel.dao.orm.Session")) {
 
 			content = StringUtil.replace(
@@ -37,7 +36,5 @@ public class JavaHibernateSQLCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String _HIBERNATE_SQL_QUERY_EXCLUDES =
-		"hibernate.sql.query.excludes";
 
 }

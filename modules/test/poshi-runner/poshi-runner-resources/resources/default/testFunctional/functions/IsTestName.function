@@ -1,0 +1,5 @@
+<definition default="isTestName" summary="Evaluate the current test name.">
+	<command name="isTestName">
+		<execute argument1="${value1}" selenium="isTestName" />
+	</command>
+</definition>

@@ -1,0 +1,5 @@
+<definition default="isNotChecked">
+	<command name="isNotChecked">
+		<execute selenium="isNotChecked" />
+	</command>
+</definition>

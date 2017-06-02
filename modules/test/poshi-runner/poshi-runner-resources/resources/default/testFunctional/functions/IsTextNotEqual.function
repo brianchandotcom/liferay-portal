@@ -1,0 +1,31 @@
+<definition default="isTextNotEqual">
+	<command name="isNotPartialText">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="isNotPartialText" />
+	</command>
+
+	<command name="isNotText">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="isNotText" />
+	</command>
+
+	<command name="isNotValue">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="isNotValue" />
+	</command>
+
+	<command name="isTextNotEqual">
+		<if>
+			<contains string="${locator1}" substring="/input" />
+			<then>
+				<execute function="IsTextNotEqual#isNotValue" />
+			</then>
+			<else>
+				<execute function="IsTextNotEqual#isNotText" />
+			</else>
+		</if>
+	</command>
+</definition>

@@ -1,0 +1,79 @@
+<definition default="assertClick" summary="Click on '${locator1}' that should have a value of '${value1}'">
+	<command name="assertClick">
+		<if>
+			<contains string="${locator1}" substring="/input" />
+			<then>
+				<execute function="AssertClick#assertValueClickAt" />
+			</then>
+			<else>
+				<execute function="AssertClick#assertTextClickAt" />
+			</else>
+		</if>
+	</command>
+
+	<command name="assertPartialTextClickAt">
+		<execute function="AssertTextEquals#assertPartialText" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="clickAt" />
+	</command>
+
+	<command name="assertTextClick">
+		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="click" />
+	</command>
+
+	<command name="assertTextClickAt">
+		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="clickAt" />
+	</command>
+
+	<command name="assertTextClickAtAndPause">
+		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="clickAt" />
+	</command>
+
+	<command name="assertTextClickNoMouseOver">
+		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="click" />
+	</command>
+
+	<command name="assertValueClickAt">
+		<execute function="AssertTextEquals#assertValue" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="clickAt" />
+	</command>
+
+	<command name="pauseAssertPartialTextClickAt">
+		<execute function="AssertClick#assertPartialTextClickAt" />
+	</command>
+
+	<command name="pauseAssertTextClickAt">
+		<execute function="AssertClick#assertTextClickAt" />
+	</command>
+
+	<command name="pauseMakeVisibleAssertTextEqualsClickAt">
+		<execute selenium="makeVisible" />
+
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForText" />
+
+		<execute selenium="mouseDown" />
+
+		<execute selenium="mouseUp" />
+	</command>
+</definition>

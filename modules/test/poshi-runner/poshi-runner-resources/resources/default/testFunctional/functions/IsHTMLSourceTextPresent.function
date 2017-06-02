@@ -1,0 +1,5 @@
+<definition default="isHTMLSourceTextPresent">
+	<command name="isHTMLSourceTextPresent">
+		<execute selenium="isHTMLSourceTextPresent" />
+	</command>
+</definition>

@@ -34,9 +34,13 @@ import com.liferay.tasks.util.WebKeys;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Matthew Kong
@@ -45,6 +49,11 @@ public class TasksEntryAssetRenderer extends BaseAssetRenderer {
 
 	public TasksEntryAssetRenderer(TasksEntry entry) {
 		_entry = entry;
+	}
+
+	@Override
+	public TasksEntry getAssetObject() {
+		return _entry;
 	}
 
 	@Override
@@ -60,6 +69,13 @@ public class TasksEntryAssetRenderer extends BaseAssetRenderer {
 	@Override
 	public long getGroupId() {
 		return _entry.getGroupId();
+	}
+
+	@Override
+	public String getSummary(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		return _entry.getTitle();
 	}
 
 	@Override
@@ -124,6 +140,14 @@ public class TasksEntryAssetRenderer extends BaseAssetRenderer {
 	}
 
 	@Override
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
+			String template)
+		throws Exception {
+
+			return false;
+	}
+
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		String template) {

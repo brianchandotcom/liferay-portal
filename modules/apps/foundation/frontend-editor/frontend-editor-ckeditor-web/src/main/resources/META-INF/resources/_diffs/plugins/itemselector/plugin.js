@@ -417,13 +417,12 @@
 					var eventName = editor.name + 'selectItem';
 
 					var linkUrl = selectedItem.value;
-					var title = selectedItem.title;
 
 					Liferay.Util.getWindow(eventName).onceAfter(
 						'destroy',
 						function() {
 							if (callback) {
-								callback(linkUrl, title);
+								callback(linkUrl, selectedItem);
 							}
 						}
 					);

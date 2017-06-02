@@ -1,0 +1,15 @@
+{namespace TagSelector}
+
+/**
+ * This renders the main element.
+ * @param divId
+ * @param hiddenInput
+ * @param inputId
+ */
+{template .render}
+	<div id="{$divId}">
+		<input name="{$hiddenInput}" id="{$hiddenInput}" type="hidden" />
+
+		<input class="form-control lfr-tag-selector-input" id="{$inputId}" size="15" title="Add tags" type="text" />
+	</div>
+{/template}

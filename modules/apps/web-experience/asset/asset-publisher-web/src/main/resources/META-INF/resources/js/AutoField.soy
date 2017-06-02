@@ -1,0 +1,229 @@
+{namespace AutoField}
+
+/**
+ * This renders the main element.
+ *
+ * @param id
+ * @param? addNewRule
+ * @param? changeSelector
+ * @param groupIds
+ * @param? logicIndexes
+ * @param? namespace
+ * @param? removeRule
+ * @param rules
+ * @param portletURLCategorySelector
+ * @param portletURLTagSelector
+ * @param vocabularyIds
+ */
+{template .render}
+	<div id="{$id}">
+		{call .rules}
+			{param changeSelector: $changeSelector /}
+			{param namespace: $namespace /}
+			{param groupIds: $groupIds /}
+			{param logicIndexes: $logicIndexes /}
+			{param portletURLCategorySelector: $portletURLCategorySelector /}
+			{param portletURLTagSelector: $portletURLTagSelector /}
+			{param removeRule: $removeRule /}
+			{param rules: $rules /}
+			{param vocabularyIds: $vocabularyIds /}
+		{/call}
+		{call .addButtonTimeLine}
+			{param addNewRule: $addNewRule /}
+		{/call}
+	</div>
+{/template}
+
+/**
+* @param? addNewRule
+**/
+{template .addButtonTimeLine}
+	<div class="addbutton-timeline-item">
+		<div class="add-condition timeline-increment-icon">
+			<a aria-role="button" data-onclick="{$addNewRule}" class="btn btn-primary btn-xs form-builder-timeline-add-item form-builder-rule-add-condition" href="javascript:;">
+				<svg class="lexicon-icon lexicon-icon-plus icon-monospaced" focusable="false" role="image" viewBox="0 0 512 512">
+					<path class="lexicon-icon-outline" d="M479.82 224.002h-192.41v-191.91c0-17.6-14.4-32-32-32v0c-17.6 0-32 14.4-32 32v191.91h-191.41c-17.6 0-32 14.4-32 32v0c0 17.6 14.4 32 32 32h191.41v191.91c0 17.6 14.4 32 32 32v0c17.6 0 32-14.4 32-32v-191.909h192.41c17.6 0 32-14.4 32-32v0c0-17.6-14.4-32-32-32z"></path>
+				</svg>
+			</a>
+		</div>
+	</div>
+{/template}
+
+/**
+* @param? changeSelector
+* @param groupIds
+* @param? queryLogicIndexes
+* @param? namespace
+* @param? removeRule
+* @param rules
+* @param portletURLCategorySelector
+* @param portletURLTagSelector
+* @param vocabularyIds
+**/
+{template .rules}
+	<input name="{$namespace}queryLogicIndexes" value="{$queryLogicIndexes}" type="hidden">
+	<ul class="timeline">
+		<li class="timeline-item">
+			<div class="panel panel-default">
+				<div class="flex-container panel-body">
+		 			<div class="h4 panel-title">Rules</div>
+					<div class="timeline-increment-icon">
+						<span class="timeline-icon"></span>
+					</div>
+				</div>
+			</div>
+		</li>
+		{call .listRules}
+			{param changeSelector: $changeSelector /}
+			{param groupIds: $groupIds /}
+			{param namespace: $namespace /}
+			{param portletURLCategorySelector: $portletURLCategorySelector /}
+			{param portletURLTagSelector: $portletURLTagSelector /}
+			{param removeRule: $removeRule /}
+			{param rules: $rules /}
+			{param vocabularyIds: $vocabularyIds /}
+		{/call}
+	</ul>
+{/template}
+
+/**
+* @param? changeSelector
+* @param groupIds
+* @param? namespace
+* @param? removeRule
+* @param rules
+* @param portletURLCategorySelector
+* @param portletURLTagSelector
+* @param vocabularyIds
+**/
+{template .listRules}
+	{if $rules and $namespace}
+		{foreach $rule in $rules}
+			{let $index: index($rule) /}
+			<li class="timeline-item">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="form-group">
+							<select class="form-control" id="{$namespace}queryContains{$index}" name="{$namespace}queryContains{$index}" title="Query Contains">
+								<option class="" selected="{$rule.queryContains}" value="true"> Contains </option>
+								<option class="" selected="{not $rule.queryContains}" value="false"> Does not Contain </option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<select class="form-control" id="{$namespace}queryAndOperator{$index}" name="{$namespace}queryAndOperator{$index}" title="And Operator">
+								<option class="" selected="{$rule.queryAndOperator}" value="true"> All </option>
+								<option class="" selected="{not $rule.queryAndOperator}" value="false"> Any </option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label" for="{$namespace + 'queryName' + $index}">
+								of the following
+							</label>
+						</div>
+						<div class="form-group">
+							<select class="form-control asset-query-name" data-item-index="{$index}" data-onchange="{$changeSelector}" id="{$namespace + 'queryName' + $index}" name="{$namespace + 'queryName' + $index}">
+								<option class="" selected="{$rule.type == 'assetTags' ? true : false}" value="assetTags"> Tags </option>
+								<option class="" selected="{$rule.type == 'assetCategories' ? true : false}" value="assetCategories"> Categories </option>
+							</select>
+						</div>
+						{if $rule.type == 'assetTags'}
+							{call .selectorTags}
+								{param groupIds: $groupIds /}
+								{param index: $index /}
+								{param namespace: $namespace /}
+								{param portletURLTagSelector: $portletURLTagSelector /}
+								{param rule: $rule /}
+							{/call}
+						{/if}
+						{if $rule.type == 'assetCategories'}
+							{call .selectorCategories}
+								{param groupIds: $groupIds /}
+								{param index: $index /}
+								{param namespace: $namespace /}
+								{param portletURLCategorySelector: $portletURLCategorySelector /}
+								{param rule: $rule /}
+								{param vocabularyIds: $vocabularyIds /}
+							{/call}
+						{/if}
+						<div class="timeline-increment-icon">
+							<span class="timeline-icon"></span>
+						</div>
+					</div>
+				</div>
+				{call .trashContainer}
+					{param removeRule: $removeRule /}
+					{param index: $index /}
+				{/call}
+			</li>
+		{/foreach}
+	{/if}
+{/template}
+
+/**
+* @param groupIds
+* @param index
+* @param? namespace
+* @param portletURLTagSelector
+* @param rule
+**/
+{template .selectorTags}
+	{call TagSelector.render}
+		{param divId: $namespace + $index + 'assetTagsSelector' /}
+		{param eventName: $namespace + 'selectTag' /}
+	 	{param groupIds: $groupIds /}
+	 	{param hiddenInput: $namespace + 'queryTagNames' + $index /}
+		{param index: $index /}
+		{param inputId: $index + 'assetTagName' /}
+		{param namespace: $namespace /}
+		{param portletURLTagSelector: $portletURLTagSelector /}
+		{param rule: $rule /}
+	{/call}
+{/template}
+
+/**
+* @param groupIds
+* @param index
+* @param? namespace
+* @param portletURLCategorySelector
+* @param rule
+* @param vocabularyIds
+**/
+{template .selectorCategories}
+	{call CategorySelector.render}
+		{param divId: $namespace + $index + 'assetCategoriesSelector' /}
+		{param eventName: $namespace + 'selectCategory' /}
+	 	{param groupIds: $groupIds /}
+	 	{param hiddenInput: $namespace + 'queryCategoryIds' + $index /}
+		{param index: $index /}
+		{param namespace: $namespace /}
+		{param portletURLCategorySelector: $portletURLCategorySelector /}
+		{param rule: $rule /}
+		{param vocabularyIds: $vocabularyIds /}
+	{/call}
+{/template}
+
+/**
+* @param index
+* @param? removeRule
+**/
+{template .trashContainer}
+	<div class="container-trash">
+		<button
+			class="btn btn-link condition-card-delete icon-monospaced"
+			data-card-id="{$index}"
+			data-onclick="{$removeRule}"
+			href="javascript:;"
+			type="button">
+			<svg class="lexicon-icon lexicon-icon-trash icon-monospaced" focusable="false" role="image" viewBox="0 0 384 513">
+				<path class="lexicon-icon-body" fill="none" d="M0,441.6C0,481,32,513,71.4,513h241.1c39.4,0,71.4-32,71.4-71.4V129H0V441.6z"></path>
+				<path class="lexicon-icon-outline" d="M0,441.6C0,481,32,513,71.4,513h241.1c39.4,0,71.4-32,71.4-71.4V129H0V441.6z M64,193h256v232.2c0,13.1-10.7,23.8-23.8,23.8
+					H87.8C74.7,449,64,438.3,64,425.2V193z"></path>
+				<polygon class="lexicon-icon-outline" points="288,33 288,0 96,0 96,33 0,33 0,96.3 384,96.3 384,33 "></polygon>
+				<rect class="lexicon-icon-outline" x="224" y="224" width="64" height="192"></rect>
+				<rect class="lexicon-icon-outline" x="96" y="224" width="64" height="192"></rect>
+			</svg>
+		</button>
+	</div>
+{/template}

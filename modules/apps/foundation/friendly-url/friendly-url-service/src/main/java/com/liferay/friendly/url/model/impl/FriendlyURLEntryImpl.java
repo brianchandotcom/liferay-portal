@@ -16,9 +16,27 @@ package com.liferay.friendly.url.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Pavel Savinov
  */
 @ProviderType
 public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
+
+	@Override
+	public boolean isMain() throws PortalException {
+		FriendlyURLEntry friendlyURLEntry =
+			FriendlyURLEntryLocalServiceUtil.getMainFriendlyURLEntry(
+				getGroupId(), getCompanyId(), getClassNameId(), getClassPK());
+
+		if (friendlyURLEntry.getPrimaryKey() == getPrimaryKey()) {
+			return true;
+		}
+
+		return false;
+	}
+
 }

@@ -31,6 +31,11 @@ portletURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_SITE));
 if (selUser != null) {
 	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
 }
+else {
+	portletURL.setParameter("step", "2");
+	long groupId = ParamUtil.getLong(request, "groupId", 0);
+	portletURL.setParameter("groupId", String.valueOf(groupId));
+}
 
 portletURL.setParameter("eventName", eventName);
 

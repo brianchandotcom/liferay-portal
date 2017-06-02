@@ -23,6 +23,7 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -80,8 +81,9 @@ public class AppDockerExtension {
 
 		_imageTags.add(
 			new ExecStandardOutputCallable(
-				_project, "git", "show", "--date=format-local:%Y%m%dT%H%M%SZ",
-				"--format=%cd", "--no-patch", "--quiet", "HEAD"));
+				_project, Collections.singletonMap("TZ", "UTC"), "git", "show",
+				"--date=format-local:%Y%m%dT%H%M%SZ", "--format=%cd",
+				"--no-patch", "--quiet", "HEAD"));
 
 		_imageTags.add(
 			new ExecStandardOutputCallable(

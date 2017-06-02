@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.app.docker.internal.util;
 
 import java.io.ByteArrayOutputStream;
 
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -27,9 +28,16 @@ import org.gradle.process.ExecSpec;
  */
 public class ExecStandardOutputCallable implements Callable<String> {
 
-	public ExecStandardOutputCallable(Project project, Object... commandLine) {
+	public ExecStandardOutputCallable(
+		Project project, Map<String, ?> environment, Object... commandLine) {
+
 		_project = project;
+		_environment = environment;
 		_commandLine = commandLine;
+	}
+
+	public ExecStandardOutputCallable(Project project, Object... commandLine) {
+		this(project, null, commandLine);
 	}
 
 	@Override
@@ -42,6 +50,10 @@ public class ExecStandardOutputCallable implements Callable<String> {
 
 				@Override
 				public void execute(ExecSpec execSpec) {
+					if (_environment != null) {
+						execSpec.environment(_environment);
+					}
+
 					execSpec.setCommandLine(_commandLine);
 					execSpec.setStandardOutput(byteArrayOutputStream);
 				}
@@ -54,6 +66,7 @@ public class ExecStandardOutputCallable implements Callable<String> {
 	}
 
 	private final Object[] _commandLine;
+	private final Map<String, ?> _environment;
 	private final Project _project;
 
 }

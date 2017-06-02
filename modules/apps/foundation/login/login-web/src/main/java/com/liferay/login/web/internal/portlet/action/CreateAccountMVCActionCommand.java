@@ -444,13 +444,6 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference(unbind = "-")
-	protected void setListTypeLocalService(
-		ListTypeLocalService listTypeLocalService) {
-
-		_listTypeLocalService = listTypeLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
@@ -591,6 +584,8 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 	private ConfigurationProvider _configurationProvider;
 
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference

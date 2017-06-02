@@ -38,12 +38,10 @@
 				<finder-column name="urlTitle" />
 			</finder>
 		</localized-entity>
-		<finder name="G_C" return-type="Collection">
+
+		<finder name="G_C_C_C" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-		</finder>
-		<finder name="G_C_C" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>

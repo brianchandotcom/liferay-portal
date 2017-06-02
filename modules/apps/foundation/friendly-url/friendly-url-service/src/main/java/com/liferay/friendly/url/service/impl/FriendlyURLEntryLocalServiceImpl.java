@@ -399,7 +399,8 @@ public class FriendlyURLEntryLocalServiceImpl
 			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
 
 		if (urlTitle.length() > maxLength) {
-			throw new FriendlyURLLengthException();
+			throw new FriendlyURLLengthException(
+				urlTitle + " is longer than " + maxLength);
 		}
 
 		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
@@ -416,7 +417,8 @@ public class FriendlyURLEntryLocalServiceImpl
 		if ((classPK <= 0) ||
 			(friendlyURLEntryLocalization.getClassPK() != classPK)) {
 
-			throw new DuplicateFriendlyURLEntryException();
+			throw new DuplicateFriendlyURLEntryException(
+				friendlyURLEntryLocalization.toString());
 		}
 	}
 

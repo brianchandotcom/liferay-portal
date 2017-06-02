@@ -305,10 +305,6 @@ public class InstrumentationAgent {
 		List<AssertionError> assertionErrors, Class<?> clazz,
 		ClassData classData) {
 
-		if (clazz.isInterface()) {
-			return;
-		}
-
 		if ((classData.getBranchCoverageRate() != 1.0) ||
 			(classData.getLineCoverageRate() != 1.0)) {
 

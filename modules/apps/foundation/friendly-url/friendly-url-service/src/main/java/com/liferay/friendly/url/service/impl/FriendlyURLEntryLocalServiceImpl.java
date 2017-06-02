@@ -80,9 +80,8 @@ public class FriendlyURLEntryLocalServiceImpl
 				urlTitle);
 
 			FriendlyURLEntryLocalization oldFriendlyURLEntryLocalization =
-				friendlyURLEntryLocalizationPersistence.fetchByG_C_C_C_U(
-					groupId, companyId, classNameId, classPK,
-					normalizedUrlTitle);
+				friendlyURLEntryLocalizationPersistence.fetchByG_C_C_U(
+					groupId, companyId, classNameId, normalizedUrlTitle);
 
 			FriendlyURLEntry oldFriendlyURLEntry = null;
 
@@ -208,8 +207,12 @@ public class FriendlyURLEntryLocalServiceImpl
 		throws PortalException {
 
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			friendlyURLEntryLocalizationPersistence.fetchByG_C_C_C_U(
-				groupId, companyId, classNameId, classPK, urlTitle);
+			friendlyURLEntryLocalizationPersistence.fetchByG_C_C_U(
+				groupId, companyId, classNameId, urlTitle);
+
+		if (friendlyURLEntryLocalization == null) {
+			return;
+		}
 
 		friendlyURLEntryLocalizationPersistence.removeByFriendlyURLEntryId(
 			friendlyURLEntryLocalization.getFriendlyURLEntryId());
@@ -402,21 +405,17 @@ public class FriendlyURLEntryLocalServiceImpl
 		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
 			urlTitle);
 
-		if (classPK > 0) {
-			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-				friendlyURLEntryLocalizationPersistence.fetchByG_C_C_C_U(
-					groupId, companyId, classNameId, classPK,
-					normalizedUrlTitle);
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			friendlyURLEntryLocalizationPersistence.fetchByG_C_C_U(
+				groupId, companyId, classNameId, normalizedUrlTitle);
 
-			if (friendlyURLEntryLocalization != null) {
-				return;
-			}
+		if (friendlyURLEntryLocalization == null) {
+			return;
 		}
 
-		int count = friendlyURLEntryLocalizationPersistence.countByG_C_C_U(
-			groupId, companyId, classNameId, normalizedUrlTitle);
+		if ((classPK <= 0) ||
+			(friendlyURLEntryLocalization.getClassPK() != classPK)) {
 
-		if (count > 0) {
 			throw new DuplicateFriendlyURLEntryException();
 		}
 	}

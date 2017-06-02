@@ -127,21 +127,16 @@ public class TasksPortlet extends MVCPortlet {
 			MBMessage.class.getName(), actionRequest);
 
 		if (cmd.equals(Constants.DELETE)) {
-			MBMessageServiceUtil.deleteDiscussionMessage(
-				groupId, className, classPK, className, classPK,
-				themeDisplay.getUserId(), messageId);
+			MBMessageServiceUtil.deleteDiscussionMessage(messageId);
 		}
 		else if (messageId <= 0) {
 			MBMessageServiceUtil.addDiscussionMessage(
-				groupId, className, classPK, className, classPK,
-				themeDisplay.getUserId(), threadId, parentMessageId, subject,
+				groupId, className, classPK, threadId, parentMessageId, subject,
 				body, serviceContext);
 		}
 		else {
 			MBMessageServiceUtil.updateDiscussionMessage(
-				className, classPK, className, classPK,
-				themeDisplay.getUserId(), messageId, subject, body,
-				serviceContext);
+				className, classPK, messageId, subject, body, serviceContext);
 		}
 	}
 

@@ -1,0 +1,86 @@
+import com.bmuschko.gradle.docker.tasks.image.DockerListImages
+import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage
+import com.bmuschko.gradle.docker.tasks.image.DockerTagImage
+
+apply plugin: "com.liferay.app.docker"
+
+task runGradleTest(type: DockerListImages)
+
+List<DockerRemoveImage> removeAppDockerImageTasks = (0 .. 3).collect {
+	tasks.create name: "removeAppDockerImage${it}", type: DockerRemoveImage
+}
+
+allprojects {
+	group = "com.example.sample"
+	version = "1.0.0"
+
+	repositories {
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+appDocker {
+	imageTags "foo"
+	imageUser = "example"
+
+	onlyIf {
+		!it.name.endsWith("-test")
+	}
+}
+
+runGradleTest {
+	dependsOn tasks.withType(DockerTagImage)
+
+	doLast {
+		File inputDir = new File(buildDir, "docker")
+
+		String[] inputDirFileNames = inputDir.list()
+
+		assert inputDirFileNames.length == 3
+
+		assert inputDirFileNames.contains("Dockerfile")
+		assert inputDirFileNames.contains("sample-api-1.0.0.jar")
+		assert inputDirFileNames.contains("sample-service-1.0.0.jar")
+	}
+
+	finalizedBy removeAppDockerImageTasks
+
+	onNext {
+		List images ->
+
+		for (image in images) {
+			if (image.repoTags.contains("example/sample:foo") && image.repoTags.contains("example/sample:latest")) {
+				assert image.repoTags.length == removeAppDockerImageTasks.size()
+			}
+
+			for (i in 0 .. (removeAppDockerImageTasks.size() - 1)) {
+				DockerRemoveImage dockerRemoveImage = tasks["removeAppDockerImage${i}"]
+
+				dockerRemoveImage.imageId = image.repoTags[i]
+			}
+
+			return
+		}
+
+		throw new GradleException("Unable to find image")
+	}
+}
+
+subprojects {
+	apply plugin: "java"
+}
+
+project(":sample-service") {
+	dependencies {
+		compile project(":sample-api")
+	}
+}
+
+project(":sample-test") {
+	dependencies {
+		testCompile group: "junit", name: "junit", version: "4.12"
+		testCompile project(":sample-service")
+	}
+}

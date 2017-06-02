@@ -1,0 +1,5 @@
+include "sample-api"
+include "sample-service"
+include "sample-test"
+
+rootProject.name = "sample"

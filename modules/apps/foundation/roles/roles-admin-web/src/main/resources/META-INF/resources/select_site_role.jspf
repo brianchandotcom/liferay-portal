@@ -52,10 +52,9 @@ if (step == 1) {
 	}
 }
 
-if (step == 2) {
-	portletURL.setParameter("groupId", ParamUtil.getString(request, "groupId", String.valueOf(uniqueGroupId)));
-}
+long groupId = ParamUtil.getLong(request, "groupId", uniqueGroupId);
 
+portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("step", String.valueOf(step));
 %>
 
@@ -96,10 +95,6 @@ portletURL.setParameter("step", String.valueOf(step));
 			<div class="alert alert-info">
 				<liferay-ui:message key="please-select-a-site-to-which-you-will-assign-a-site-role" />
 			</div>
-
-			<%
-			portletURL.setParameter("step", "1");
-			%>
 
 			<liferay-ui:search-container
 				searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
@@ -163,11 +158,6 @@ portletURL.setParameter("step", String.valueOf(step));
 			</aui:script>
 		</c:when>
 		<c:when test="<%= step == 2 %>">
-
-			<%
-			long groupId = ParamUtil.getLong(request, "groupId", uniqueGroupId);
-			%>
-
 			<aui:input name="step" type="hidden" value="2" />
 			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 
@@ -190,7 +180,6 @@ portletURL.setParameter("step", String.valueOf(step));
 
 			<%
 			portletURL.setParameter("step", "2");
-			portletURL.setParameter("groupId", String.valueOf(groupId));
 			%>
 
 			<liferay-ui:search-container

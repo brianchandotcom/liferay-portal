@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.model.PortletWrapper;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletJSONUtil;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletParameterUtil;
@@ -166,13 +166,12 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			}
 		}
 
-		PortletInstance portletInstance =
-			PortletInstance.fromPortletInstanceKey(portletName);
+		String portletInstanceKey = portletName;
 
 		if (Validator.isNotNull(instanceId)) {
-			portletInstance = new PortletInstance(
-				portletInstance.getPortletName(), portletInstance.getUserId(),
-				instanceId);
+			portletInstanceKey = PortletIdCodec.encode(
+				PortletIdCodec.decodePortletName(portletName),
+				PortletIdCodec.decodeUserId(portletName), instanceId);
 		}
 
 		RestrictPortletServletRequest restrictPortletServletRequest =
@@ -180,13 +179,12 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 				PortalUtil.getOriginalServletRequest(request));
 
 		queryString = PortletParameterUtil.addNamespace(
-			portletInstance.getPortletInstanceKey(), queryString);
+			portletInstanceKey, queryString);
 
 		Map<String, String[]> parameterMap = request.getParameterMap();
 
 		if (!Objects.equals(
-				portletInstance.getPortletInstanceKey(),
-				request.getParameter("p_p_id"))) {
+				portletInstanceKey, request.getParameter("p_p_id"))) {
 
 			parameterMap = MapUtil.filterByKeys(
 				parameterMap, (key) -> !key.startsWith("p_p_"));
@@ -202,8 +200,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 				WebKeys.THEME_DISPLAY);
 
 			Portlet portlet = getPortlet(
-				themeDisplay.getCompanyId(),
-				portletInstance.getPortletInstanceKey());
+				themeDisplay.getCompanyId(), portletInstanceKey);
 
 			Stack<String> embeddedPortletIds = _embeddedPortletIds.get();
 
@@ -230,7 +227,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 					themeDisplay.getLayoutTypePortlet();
 
 				if (layoutTypePortlet.hasStateMaxPortletId(
-						portletInstance.getPortletInstanceKey())) {
+						portletInstanceKey)) {
 
 					// A portlet in the maximized state has already been
 					// processed
@@ -256,8 +253,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-					PortletKeys.PREFS_PLID_SHARED,
-					portletInstance.getPortletInstanceKey(),
+					PortletKeys.PREFS_PLID_SHARED, portletInstanceKey,
 					defaultPreferences);
 
 				writeObject = true;
@@ -265,22 +261,19 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 
 			if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
-					portletInstance.getPortletInstanceKey()) < 1) {
+					portletInstanceKey) < 1) {
 
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-					layout, portletInstance.getPortletInstanceKey(),
-					defaultPreferences);
+					layout, portletInstanceKey, defaultPreferences);
 				PortletPreferencesFactoryUtil.getPortletSetup(
-					request, portletInstance.getPortletInstanceKey(),
-					defaultPreferences);
+					request, portletInstanceKey, defaultPreferences);
 
 				PortletLayoutListener portletLayoutListener =
 					portlet.getPortletLayoutListenerInstance();
 
 				if (portletLayoutListener != null) {
 					portletLayoutListener.onAddToLayout(
-						portletInstance.getPortletInstanceKey(),
-						themeDisplay.getPlid());
+						portletInstanceKey, themeDisplay.getPlid());
 				}
 
 				writeObject = true;
@@ -297,7 +290,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 				PortletJSONUtil.writeHeaderPaths(response, jsonObject);
 			}
 
-			embeddedPortletIds.push(portletInstance.getPortletInstanceKey());
+			embeddedPortletIds.push(portletInstanceKey);
 
 			PortletContainerUtil.render(request, response, portlet);
 

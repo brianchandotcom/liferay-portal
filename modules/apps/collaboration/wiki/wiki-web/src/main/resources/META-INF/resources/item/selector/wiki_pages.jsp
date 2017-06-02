@@ -124,16 +124,23 @@ else {
 	searchContainerContentBox.delegate(
 		'click',
 		function(event) {
+			var selectedItem = event.currentTarget;
+
+			var linkItem = selectedItem.one('.wiki-page');
+
 			Util.getOpener().Liferay.fire(
 				'<%= wikiPageItemSelectorViewDisplayContext.getItemSelectedEventName() %>',
 				{
 					data: {
-						title: event.currentTarget.attr('data-title'),
-						value: event.currentTarget.attr('data-value')
+						title: linkItem.attr('data-title'),
+						value: linkItem.attr('data-value')
 					}
 				}
 			);
+
+			selectedItem.siblings().removeClass('active');
+			selectedItem.addClass('active');
 		},
-		'.wiki-page'
+		'.list-group-item'
 	);
 </aui:script>

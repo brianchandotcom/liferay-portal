@@ -33,7 +33,6 @@ if (selUser != null) {
 }
 else {
 	portletURL.setParameter("groupId", ParamUtil.getString(request, "groupId", "0"));
-	portletURL.setParameter("step", "2");
 }
 
 portletURL.setParameter("eventName", eventName);
@@ -55,6 +54,8 @@ if (step == 1) {
 		uniqueGroupId = groups.get(0).getGroupId();
 	}
 }
+
+portletURL.setParameter("step", String.valueOf(step));
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">

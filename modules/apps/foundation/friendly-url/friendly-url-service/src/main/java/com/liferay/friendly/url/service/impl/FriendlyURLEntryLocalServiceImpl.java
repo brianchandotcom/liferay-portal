@@ -192,10 +192,9 @@ public class FriendlyURLEntryLocalServiceImpl
 		for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
 			friendlyURLEntryLocalizationPersistence.removeByFriendlyURLEntryId(
 				friendlyURLEntry.getFriendlyURLEntryId());
-		}
 
-		friendlyURLEntryPersistence.removeByG_C_C(
-			groupId, classNameId, classPK);
+			friendlyURLEntryPersistence.remove(friendlyURLEntry);
+		}
 	}
 
 	@Override

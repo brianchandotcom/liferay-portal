@@ -93,9 +93,9 @@ CKEDITOR.dialog.add(
 
 										editor.execCommand(
 											'linkselector',
-											function(newVal, title) {
-												if (title) {
-													urlField.setValue(title)
+											function(newVal, selectedItem) {
+												if (selectedItem && selectedItem.title) {
+													urlField.setValue(selectedItem.title);
 												}
 												else {
 													urlField.setValue(location.origin + newVal);

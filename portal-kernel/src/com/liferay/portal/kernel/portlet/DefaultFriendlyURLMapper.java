@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -340,8 +339,9 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 		String instanceId = routeParameters.remove("instanceId");
 
 		if (Validator.isNotNull(instanceId)) {
-			return PortletConstants.assemblePortletId(
-				getPortletId(), instanceId);
+			PortletIdCodec.validatePortletName(getPortletId());
+
+			return PortletIdCodec.encode(getPortletId(), instanceId);
 		}
 
 		if (!isAllPublicRenderParameters(routeParameters)) {

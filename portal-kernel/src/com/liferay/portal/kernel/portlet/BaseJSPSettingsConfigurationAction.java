@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -100,7 +99,7 @@ public class BaseJSPSettingsConfigurationAction
 			request, "portletResource");
 
 		if (Validator.isNotNull(portletResource)) {
-			String rootPortletId = PortletConstants.getRootPortletId(
+			String rootPortletId = PortletIdCodec.decodePortletName(
 				portletResource);
 
 			PortletBag portletBag = PortletBagPool.get(rootPortletId);

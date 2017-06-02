@@ -59,7 +59,6 @@ import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Phone;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
@@ -68,6 +67,7 @@ import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -431,7 +431,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			String portletId = portal.getPortletId(actionRequest);
 
 			extraDataJSONObject.put(
-				"portletId", PortletConstants.getRootPortletId(portletId));
+				"portletId", PortletIdCodec.decodePortletName(portletId));
 
 			SocialRequest socialRequest = socialRequestLocalService.addRequest(
 				themeDisplay.getUserId(), 0, User.class.getName(),

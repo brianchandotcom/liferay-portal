@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -146,7 +145,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		LayoutTypePortlet layoutTypePortlet, String portletId) {
 
 		for (String curPortletId : layoutTypePortlet.getPortletIds()) {
-			String curRootPortletId = PortletConstants.getRootPortletId(
+			String curRootPortletId = PortletIdCodec.decodePortletName(
 				curPortletId);
 
 			if (portletId.equals(curRootPortletId)) {

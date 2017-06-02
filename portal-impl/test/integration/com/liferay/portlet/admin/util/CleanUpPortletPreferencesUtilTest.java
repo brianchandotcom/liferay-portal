@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
@@ -87,9 +87,8 @@ public class CleanUpPortletPreferencesUtilTest {
 	public void testCleanUpProperPortletPreferences() throws Exception {
 		LayoutRevision layoutRevision = getLayoutRevision();
 
-		String portletId = PortletConstants.assemblePortletId(
-			com.liferay.portlet.util.test.PortletKeys.TEST,
-			PortletConstants.generateInstanceId());
+		String portletId = PortletIdCodec.encode(
+			com.liferay.portlet.util.test.PortletKeys.TEST);
 
 		UnicodeProperties typeSettingProperties =
 			layoutRevision.getTypeSettingsProperties();

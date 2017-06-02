@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -92,7 +92,7 @@ public class PermissionImporter {
 		Element permissionsElement = portletElement.element("permissions");
 
 		if ((layout != null) && (permissionsElement != null)) {
-			String resourceName = PortletConstants.getRootPortletId(portletId);
+			String resourceName = PortletIdCodec.decodePortletName(portletId);
 
 			String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
 				layout.getPlid(), portletId);

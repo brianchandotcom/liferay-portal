@@ -242,7 +242,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public void deletePortlet(long companyId, String portletId, long plid)
 		throws PortalException {
 
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
 		resourceLocalService.deleteResource(
 			companyId, rootPortletId, ResourceConstants.SCOPE_INDIVIDUAL,
@@ -410,7 +410,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		Map<String, Portlet> companyPortletsMap = getPortletsMap(companyId);
 
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
 		if (portletId.equals(rootPortletId)) {
 			return companyPortletsMap.get(portletId);
@@ -580,7 +580,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			portlet.setPortletInfo(
 				new PortletInfo(portletId, portletId, portletId, portletId));
 
-			if (PortletConstants.hasInstanceId(portletId)) {
+			if (PortletIdCodec.hasInstanceId(portletId)) {
 				portlet.setInstanceable(true);
 			}
 
@@ -594,7 +594,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	@Skip
 	public Portlet getPortletById(String portletId) {
-		return _portletsMap.get(PortletConstants.getRootPortletId(portletId));
+		return _portletsMap.get(PortletIdCodec.decodePortletName(portletId));
 	}
 
 	@Override
@@ -695,7 +695,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		Map<String, Portlet> companyPortletsMap = getPortletsMap(companyId);
 
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
 		if (portletId.equals(rootPortletId)) {
 			portlet = companyPortletsMap.get(portletId);
@@ -2700,7 +2700,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			if (propertyValue instanceof String) {
 				String portletId = (String)propertyValue;
 
-				String rootPortletId = PortletConstants.getRootPortletId(
+				String rootPortletId = PortletIdCodec.decodePortletName(
 					portletId);
 
 				while (true) {
@@ -2730,7 +2730,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				String[] rootPortletIds = new String[portletIds.length];
 
 				for (int i = 0; i < portletIds.length; i++) {
-					String rootPortletId = PortletConstants.getRootPortletId(
+					String rootPortletId = PortletIdCodec.decodePortletName(
 						portletIds[i]);
 
 					rootPortletIds[i] = rootPortletId;

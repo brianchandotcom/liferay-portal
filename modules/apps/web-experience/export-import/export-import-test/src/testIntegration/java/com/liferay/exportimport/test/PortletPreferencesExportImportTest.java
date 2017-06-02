@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
@@ -63,7 +64,7 @@ public class PortletPreferencesExportImportTest
 	public void testExportImportGroupEmbeddedPortletPreferences()
 		throws Exception {
 
-		String portletInstanceId = PortletConstants.assemblePortletId(
+		String portletInstanceId = PortletIdCodec.encode(
 			JournalContentPortletKeys.JOURNAL_CONTENT, "1234");
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(

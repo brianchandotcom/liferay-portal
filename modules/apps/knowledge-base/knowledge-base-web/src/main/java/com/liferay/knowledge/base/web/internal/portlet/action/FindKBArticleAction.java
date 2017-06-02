@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
@@ -231,7 +231,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 			List<Portlet> portlets = layoutTypePortlet.getAllPortlets();
 
 			for (Portlet portlet : portlets) {
-				String rootPortletId = PortletConstants.getRootPortletId(
+				String rootPortletId = PortletIdCodec.decodePortletName(
 					portlet.getPortletId());
 
 				if (rootPortletId.equals(
@@ -360,7 +360,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 
 		String mvcPath = null;
 
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
 		if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
 			mvcPath = "/article/view_article.jsp";

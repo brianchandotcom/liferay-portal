@@ -31,6 +31,7 @@ import java.util.Map;
 
 /**
  * @author Michael Bowerman
+ * @author Amadea Fejes
  */
 public class UpgradePostgreSQL extends UpgradeProcess {
 
@@ -42,13 +43,17 @@ public class UpgradePostgreSQL extends UpgradeProcess {
 			return;
 		}
 
-		Map<String, String> oidColumnNames = getOidColumnNames();
+		Map<String, String> oidColumnNames = new HashMap<>();
+
+		oidColumnNames.put("dlcontent", "data_");
 
 		updatePostgreSQLRules(oidColumnNames);
-
-		updateOrphanedLargeObjects(oidColumnNames);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected String getCurrentSchema() throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select current_schema();");
@@ -62,6 +67,10 @@ public class UpgradePostgreSQL extends UpgradeProcess {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected Map<String, String> getOidColumnNames() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			Map<String, String> columnsWithOids = new HashMap<>();
@@ -97,6 +106,10 @@ public class UpgradePostgreSQL extends UpgradeProcess {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void updateOrphanedLargeObjects(
 			Map<String, String> oidColumnNames)
 		throws Exception {

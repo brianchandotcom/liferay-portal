@@ -16,8 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+JSONArray rules = JSONFactoryUtil.createJSONArray();
+%>
+
 <div id="<portlet:namespace />queryRules">
-	<aui:fieldset label="displayed-assets-must-match-these-rules">
+	<aui:fieldset label="displayed-assets-must-match-these-rules" markupView="lexicon">
 		<liferay-ui:asset-tags-error />
 
 		<%
@@ -72,11 +76,37 @@
 		int index = 0;
 
 		for (int queryLogicIndex : queryLogicIndexes) {
-			String queryValues = StringUtil.merge(portletPreferences.getValues("queryValues" + queryLogicIndex, new String[0]));
-			String tagNames = ParamUtil.getString(request, "queryTagNames" + queryLogicIndex, queryValues);
-			String categoryIds = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);
+			JSONObject logic = JSONFactoryUtil.createJSONObject();
 
-			if (Validator.isNotNull(tagNames) || Validator.isNotNull(categoryIds) || (queryLogicIndexes.length == 1)) {
+			String queryValues = StringUtil.merge(portletPreferences.getValues("queryValues" + queryLogicIndex, new String[0]));
+			String queryName = PrefsParamUtil.getString(portletPreferences, request, "queryName" + queryLogicIndex, "assetTags");
+
+			boolean queryAndOperator = false;
+			boolean queryContains = true;
+
+			queryAndOperator = PrefsParamUtil.getBoolean(portletPreferences, request, "queryAndOperator" + queryLogicIndex);
+
+			queryContains = PrefsParamUtil.getBoolean(portletPreferences, request, "queryContains" + queryLogicIndex, true);
+
+			if (Objects.equals(queryName, "assetTags")) {
+				queryValues = ParamUtil.getString(request, "queryTagNames" + queryLogicIndex, queryValues);
+
+				queryValues = AssetPublisherUtil.filterAssetTagNames(scopeGroupId, queryValues);
+			}
+			else {
+				queryValues = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);
+
+				String[] categoryIdsTitles = AssetCategoryUtil.getCategoryIdsTitles(queryValues, StringPool.BLANK, 0, themeDisplay);
+
+				logic.put("categoryIdsTitles", categoryIdsTitles);
+			}
+
+			logic.put("queryAndOperator", queryAndOperator);
+			logic.put("queryContains", queryContains);
+			logic.put("queryValues", queryValues);
+			logic.put("type", queryName);
+
+			/*if (Validator.isNotNull(tagNames) || Validator.isNotNull(categoryIds) || (queryLogicIndexes.length == 1)) {
 				request.setAttribute("configuration.jsp-categorizableGroupIds", assetPublisherDisplayContext.getReferencedModelsGroupIds());
 				request.setAttribute("configuration.jsp-index", String.valueOf(index));
 				request.setAttribute("configuration.jsp-queryLogicIndex", String.valueOf(queryLogicIndex));
@@ -85,8 +115,7 @@
 
 				if (dqre != null) {
 					boolean queryContains = PrefsParamUtil.getBoolean(portletPreferences, request, "queryContains" + queryLogicIndex, true);
-					boolean queryAndOperator = PrefsParamUtil.getBoolean(portletPreferences, request, "queryAndOperator" + queryLogicIndex);
-					String queryName = PrefsParamUtil.getString(portletPreferences, request, "queryName" + queryLogicIndex, "assetTags");
+					queryAndOperator = PrefsParamUtil.getBoolean(portletPreferences, request, "queryAndOperator" + queryLogicIndex);
 
 					String dqreQueryName = dqre.getName();
 
@@ -94,16 +123,10 @@
 						cssClass = "asset-query-rule-error";
 					}
 				}
-		%>
 
-				<div class="lfr-form-row <%= cssClass %>">
-					<div class="row-fields">
-						<liferay-util:include page="/edit_query_rule.jsp" servletContext="<%= application %>" />
-					</div>
-				</div>
+			}*/
 
-		<%
-			}
+			rules.put(logic);
 
 			index++;
 		}
@@ -112,13 +135,33 @@
 	</aui:fieldset>
 </div>
 
-<aui:script use="liferay-auto-fields">
-	var autoFields = new Liferay.AutoFields(
-		{
-			contentBox: '#<portlet:namespace />queryRules',
-			fieldIndexes: '<portlet:namespace />queryLogicIndexes',
-			namespace: '<portlet:namespace />',
-			url: '<liferay-portlet:renderURL portletConfiguration="<%= true %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="<%= Constants.CMD %>" value="edit_query_rule" /><portlet:param name="categorizableGroupIds" value="<%= StringUtil.merge(assetPublisherDisplayContext.getReferencedModelsGroupIds()) %>" /></liferay-portlet:renderURL>'
-		}
-	).render();
-</aui:script>
+<div id="<portlet:namespace />ConditionForm">
+</div>
+<!-- contentBox: '#<portlet:namespace />queryRules',
+fieldIndexes: '<portlet:namespace />queryLogicIndexes',
+namespace: '<portlet:namespace />',
+url: '<liferay-portlet:renderURL portletConfiguration="<%= true %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="<%= Constants.CMD %>" value="edit_query_rule" /><portlet:param name="categorizableGroupIds" value="<%= StringUtil.merge(assetPublisherDisplayContext.getReferencedModelsGroupIds()) %>" /></liferay-portlet:renderURL>' -->
+
+<%
+long[] categorizableGroupIds = (long[])request.getAttribute("configuration.jsp-categorizableGroupIds");
+
+if (categorizableGroupIds == null) {
+	categorizableGroupIds = StringUtil.split(ParamUtil.getString(request, "categorizableGroupIds"), 0l);
+}
+
+Map<String, Object> autoField = new HashMap<>();
+
+autoField.put("rules", rules);
+autoField.put("namespace", liferayPortletResponse.getNamespace());
+autoField.put("groupIds", StringUtil.merge(categorizableGroupIds));
+autoField.put("id", "autofield");
+autoField.put("portletURLCategorySelector", assetPublisherDisplayContext.getPortletURLCategorySelector().toString());
+autoField.put("portletURLTagSelector", assetPublisherDisplayContext.getPortletURLTagSelector().toString());
+autoField.put("vocabularyIds", assetPublisherDisplayContext.getVocabularyIds());
+%>
+
+<soy:template-renderer
+	context="<%= autoField %>"
+	module="asset-publisher-web/js/AutoField.es"
+	templateNamespace="AutoField.render"
+/>

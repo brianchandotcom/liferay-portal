@@ -356,11 +356,12 @@ public class FriendlyURLEntryLocalServiceImpl
 			0, Math.min(maxLength, normalizedUrlTitle.length()));
 
 		for (int i = 1;; i++) {
-			FriendlyURLEntry curFriendlyURLEntry = fetchFriendlyURLEntry(
-				groupId, classNameId, curUrlTitle);
+			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+				friendlyURLEntryLocalizationPersistence.fetchByG_C_C_U(
+					groupId, companyId, classNameId, curUrlTitle);
 
-			if ((curFriendlyURLEntry == null) ||
-				(curFriendlyURLEntry.getClassPK() == classPK)) {
+			if ((friendlyURLEntryLocalization == null) ||
+				(friendlyURLEntryLocalization.getClassPK() == classPK)) {
 
 				break;
 			}

@@ -217,19 +217,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			sourceFormatterArgs.getBaseDirName(), fileName, level);
 	}
 
-	protected List<String> getFileNames(
-			String basedir, String[] excludes, String[] includes)
-		throws Exception {
-
-		if (_excludes != null) {
-			excludes = ArrayUtil.append(excludes, _excludes);
-		}
-
-		return SourceFormatterUtil.scanForFiles(
-			basedir, excludes, includes,
-			sourceFormatterArgs.isIncludeSubrepositories());
-	}
-
 	protected List<String> getFileNames(String[] excludes, String[] includes)
 		throws Exception {
 
@@ -462,8 +449,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return sourceChecksResult.getContent();
 	}
 
-	protected static Pattern javaSourceInsideJSPLinePattern = Pattern.compile(
-		"<%=(.+?)%>");
 	protected static boolean portalSource;
 	protected static boolean subrepository;
 

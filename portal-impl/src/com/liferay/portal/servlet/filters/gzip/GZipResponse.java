@@ -46,17 +46,15 @@ public class GZipResponse extends HttpServletResponseWrapper {
 	public GZipResponse(HttpServletResponse response) {
 		super(response);
 
-		_response = response;
-
 		// Clear previous content length setting. GZip response does not buffer
 		// output to get final content length. The response will be chunked
 		// unless an outer filter calculates the content length.
 
-		_response.setContentLength(-1);
+		response.setContentLength(-1);
 
 		// Setting the header after finishResponse is too late
 
-		_response.addHeader(HttpHeaders.CONTENT_ENCODING, _GZIP);
+		response.addHeader(HttpHeaders.CONTENT_ENCODING, _GZIP);
 	}
 
 	public void finishResponse() throws IOException {
@@ -87,7 +85,7 @@ public class GZipResponse extends HttpServletResponseWrapper {
 
 		if (_servletOutputStream == null) {
 			_servletOutputStream = _createGZipServletOutputStream(
-				_response.getOutputStream());
+				super.getOutputStream());
 		}
 
 		return _servletOutputStream;
@@ -248,7 +246,6 @@ public class GZipResponse extends HttpServletResponseWrapper {
 	private static final Log _log = LogFactoryUtil.getLog(GZipResponse.class);
 
 	private PrintWriter _printWriter;
-	private final HttpServletResponse _response;
 	private ServletOutputStream _servletOutputStream;
 
 }

@@ -61,7 +61,7 @@ public class FriendlyURLEntryLocalServiceImpl
 	@Override
 	public FriendlyURLEntry addFriendlyURLEntry(
 			long groupId, long companyId, long classNameId, long classPK,
-			Map<Locale, String> urlTitleMap, ServiceContext serviceContext)
+			Map<String, String> urlTitleMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		validate(groupId, companyId, classNameId, classPK, urlTitleMap);
@@ -123,15 +123,16 @@ public class FriendlyURLEntryLocalServiceImpl
 		friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
 		friendlyURLEntry.setMain(true);
 
-		for (Locale locale : urlTitleMap.keySet()) {
+		for (Map.Entry<String, String> entry : urlTitleMap.entrySet()) {
+			String languageId = entry.getKey();
+			String urlTitle = entry.getValue();
+
 			String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
-				urlTitleMap.get(locale));
+				urlTitle);
 
 			if (Validator.isNull(normalizedUrlTitle)) {
 				continue;
 			}
-
-			String languageId = LocaleUtil.toLanguageId(locale);
 
 			long friendlyURLEntryLocalizationId =
 				counterLocalService.increment();
@@ -162,9 +163,11 @@ public class FriendlyURLEntryLocalServiceImpl
 			String urlTitle, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> urlTitleMap = new HashMap<>();
+		Map<String, String> urlTitleMap = new HashMap<>();
 
-		urlTitleMap.put(LocaleUtil.getSiteDefault(), urlTitle);
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+
+		urlTitleMap.put(LocaleUtil.toLanguageId(siteDefaultLocale), urlTitle);
 
 		return addFriendlyURLEntry(
 			groupId, companyId, classNameId, classPK, urlTitleMap,
@@ -375,7 +378,7 @@ public class FriendlyURLEntryLocalServiceImpl
 	@Override
 	public void validate(
 			long groupId, long companyId, long classNameId, long classPK,
-			Map<Locale, String> urlTitleMap)
+			Map<String, String> urlTitleMap)
 		throws PortalException {
 
 		for (String urlTitle : urlTitleMap.values()) {

@@ -45,7 +45,7 @@ public class SourceFormatterArgs {
 
 	public static final int PROCESSOR_THREAD_COUNT = 5;
 
-	public static final boolean SHOW_DOCUMENTATION = true;
+	public static final boolean SHOW_DOCUMENTATION = false;
 
 	public static final boolean THROW_EXCEPTION = false;
 

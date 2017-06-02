@@ -45,7 +45,7 @@ public class UpgradePostgreSQL extends UpgradeProcess {
 
 		Map<String, String> oidColumnNames = new HashMap<>();
 
-		oidColumnNames.put("dlcontent", "data_");
+		oidColumnNames.put("DLContent", "data_");
 
 		updatePostgreSQLRules(oidColumnNames);
 	}

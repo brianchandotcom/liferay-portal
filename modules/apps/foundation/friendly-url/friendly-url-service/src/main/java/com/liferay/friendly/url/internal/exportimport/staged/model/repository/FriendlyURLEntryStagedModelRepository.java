@@ -146,15 +146,16 @@ public class FriendlyURLEntryStagedModelRepository
 		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
 				friendlyURLEntryLocalizations) {
 
-			_friendlyURLEntryLocalService.updateFriendlyURLLocalization(
-				friendlyURLEntryLocalization.
-					getFriendlyURLEntryLocalizationId(),
+			friendlyURLEntryLocalization.setUrlTitle(
 				_friendlyURLEntryLocalService.getUniqueUrlTitle(
 					friendlyURLEntry.getGroupId(),
 					friendlyURLEntry.getCompanyId(),
 					friendlyURLEntry.getClassNameId(),
 					friendlyURLEntry.getClassPK(),
 					friendlyURLEntryLocalization.getUrlTitle()));
+
+			_friendlyURLEntryLocalService.updateFriendlyURLLocalization(
+				friendlyURLEntryLocalization);
 		}
 
 		return _friendlyURLEntryLocalService.updateFriendlyURLEntry(

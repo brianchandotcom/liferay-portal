@@ -405,14 +405,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						continue;
 					}
 
-					String markdownFileName =
-						sourceFormatterMessage.getMarkdownFileName();
+					String markdownFilePath =
+						sourceFormatterMessage.getMarkdownFilePath();
 
-					if (Validator.isNotNull(markdownFileName)) {
+					if (Validator.isNotNull(markdownFilePath)) {
 						Desktop desktop = Desktop.getDesktop();
 
-						desktop.browse(
-							new URI(_DOCUMENTATION_URL + markdownFileName));
+						desktop.browse(new URI(markdownFilePath));
 
 						_browserStarted = true;
 					}
@@ -678,10 +677,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		return pattern;
 	}
-
-	private static final String _DOCUMENTATION_URL =
-		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
-			"/source-formatter/documentation/";
 
 	private static final int _SUBREPOSITORY_MAX_DIR_LEVEL = 3;
 

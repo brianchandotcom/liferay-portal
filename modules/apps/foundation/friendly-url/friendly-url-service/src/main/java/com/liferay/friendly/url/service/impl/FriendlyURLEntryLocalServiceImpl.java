@@ -35,9 +35,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -163,14 +162,12 @@ public class FriendlyURLEntryLocalServiceImpl
 			String urlTitle, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<String, String> urlTitleMap = new HashMap<>();
-
-		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
-
-		urlTitleMap.put(LocaleUtil.toLanguageId(siteDefaultLocale), urlTitle);
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
 
 		return addFriendlyURLEntry(
-			groupId, companyId, classNameId, classPK, urlTitleMap,
+			groupId, companyId, classNameId, classPK,
+			Collections.singletonMap(defaultLanguageId, urlTitle),
 			serviceContext);
 	}
 

@@ -15,19 +15,39 @@
 package com.liferay.document.library.webdav.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.kernel.DDMForm;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
+import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
+import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
+import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
@@ -37,7 +57,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -54,6 +78,7 @@ import org.junit.runner.RunWith;
  * </p>
  *
  * @author Alexander Chow
+ * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)
 @Sync
@@ -382,6 +407,243 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			servicePropFind(_TEMP_FILE_NAME_2));
 	}
 
+	@Test
+	public void testPutFileWithDDMFormValuesKeepsDDMFormValues()
+		throws Exception {
+
+		FileEntry fileEntry = null;
+
+		try {
+			Group group = GroupLocalServiceUtil.getFriendlyURLGroup(
+				PortalUtil.getDefaultCompanyId(), getGroupFriendlyURL());
+
+			Folder folder = DLAppLocalServiceUtil.getFolder(
+				TestPropsValues.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, getFolderName());
+
+			DDMStructure ddmStructure = addDDMStructure(group);
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId());
+
+			DLFileEntryType dlFileEntryType =
+				DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+					TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					new long[] {ddmStructure.getStructureId()}, serviceContext);
+
+			serviceContext.setAttribute(
+				"fileEntryTypeId", dlFileEntryType.getFileEntryTypeId());
+
+			DDMFormValues expectedDDDMFormValues = getDDMFormValues();
+
+			serviceContext.setAttribute(
+				DDMFormValues.class.getName() + ddmStructure.getStructureId(),
+				expectedDDDMFormValues);
+
+			fileEntry = DLAppLocalServiceUtil.addFileEntry(
+				TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				folder.getFolderId(), _TEST_FILE_NAME_2,
+				ContentTypes.APPLICATION_TEXT, _TEST_FILE_NAME_2,
+				StringPool.BLANK, StringPool.BLANK, _testFileBytes,
+				serviceContext);
+
+			servicePut(_TEST_FILE_NAME_2, _testDeltaBytes);
+
+			FileEntry finalFileEntry = DLAppLocalServiceUtil.getFileEntry(
+				fileEntry.getFileEntryId());
+
+			DLFileEntry finalDLFileEntryModel =
+				(DLFileEntry)finalFileEntry.getModel();
+
+			DLFileEntryType finalDLFileEntryModelDLFileEntryType =
+				finalDLFileEntryModel.getDLFileEntryType();
+
+			List<DDMStructure> ddmStructures =
+				finalDLFileEntryModelDLFileEntryType.getDDMStructures();
+
+			if (ListUtil.isEmpty(ddmStructures)) {
+				Assert.fail();
+			}
+
+			for (DDMStructure structure : ddmStructures) {
+				String structureKey = structure.getStructureKey();
+
+				if (structureKey.equals("TIKARAWMETADATA")) {
+					continue;
+				}
+
+				FileVersion fileVersion = finalFileEntry.getLatestFileVersion();
+
+				DLFileEntryMetadata fileEntryMetadata =
+					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+						structure.getStructureId(),
+						fileVersion.getFileVersionId());
+
+				DDMFormValues finalDDMFormValues =
+					StorageEngineManagerUtil.getDDMFormValues(
+						fileEntryMetadata.getDDMStorageId());
+
+				Assert.assertTrue(
+					expectedDDDMFormValues.equals(finalDDMFormValues));
+			}
+		}
+		finally {
+			if (fileEntry != null) {
+				DLAppLocalServiceUtil.deleteFileEntry(
+					fileEntry.getFileEntryId());
+			}
+		}
+	}
+
+	@Test
+	public void testPutFileWithFileEntryTypeKeepsFileEntryType()
+		throws Exception {
+
+		FileEntry fileEntry = null;
+
+		try {
+			Group group = GroupLocalServiceUtil.getFriendlyURLGroup(
+				PortalUtil.getDefaultCompanyId(), getGroupFriendlyURL());
+
+			Folder folder = DLAppLocalServiceUtil.getFolder(
+				TestPropsValues.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, getFolderName());
+
+			DDMStructure ddmStructure = addDDMStructure(group);
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId());
+
+			DLFileEntryType initialDLFileEntryType =
+				DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+					TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					new long[] {ddmStructure.getStructureId()}, serviceContext);
+
+			serviceContext.setAttribute(
+				"fileEntryTypeId", initialDLFileEntryType.getFileEntryTypeId());
+
+			DDMFormValues expectedDDDMFormValues = getDDMFormValues();
+
+			serviceContext.setAttribute(
+				DDMFormValues.class.getName() + ddmStructure.getStructureId(),
+				expectedDDDMFormValues);
+
+			fileEntry = DLAppLocalServiceUtil.addFileEntry(
+				TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				folder.getFolderId(), _TEST_FILE_NAME_2,
+				ContentTypes.APPLICATION_TEXT, _TEST_FILE_NAME_2,
+				StringPool.BLANK, StringPool.BLANK, _testFileBytes,
+				serviceContext);
+
+			servicePut(_TEST_FILE_NAME_2, _testDeltaBytes);
+
+			FileEntry finalFileEntry = DLAppLocalServiceUtil.getFileEntry(
+				fileEntry.getFileEntryId());
+
+			DLFileEntry finalDLFileEntryModel =
+				(DLFileEntry)finalFileEntry.getModel();
+
+			DLFileEntryType finalFileEntryType =
+				finalDLFileEntryModel.getDLFileEntryType();
+
+			List<DDMStructure> ddmStructures =
+				finalFileEntryType.getDDMStructures();
+
+			Assert.assertTrue(ListUtil.isNotEmpty(ddmStructures));
+
+			Assert.assertEquals(
+				initialDLFileEntryType.getFileEntryTypeId(),
+				finalFileEntryType.getFileEntryTypeId());
+		}
+		finally {
+			if (fileEntry != null) {
+				DLAppLocalServiceUtil.deleteFileEntry(
+					fileEntry.getFileEntryId());
+			}
+		}
+	}
+
+	protected static DDMForm createDDMForm() {
+		DDMForm ddmForm = new DDMForm();
+
+		Set<Locale> availableLocales = new LinkedHashSet<>();
+
+		availableLocales.add(Locale.US);
+
+		ddmForm.setAvailableLocales(availableLocales);
+
+		ddmForm.setDefaultLocale(Locale.US);
+
+		return ddmForm;
+	}
+
+	protected DDMStructure addDDMStructure(Group group) throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		DDMFormField ddmFormField = createLocalizableTextDDMFormField("Text");
+
+		ddmFormField.setIndexType("text");
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(ddmForm.getDefaultLocale(), "Test Structure");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		return DDMStructureManagerUtil.addStructure(
+			TestPropsValues.getUserId(), group.getGroupId(), null,
+			PortalUtil.getClassNameId(DLFileEntryMetadata.class.getName()),
+			null, nameMap, null, ddmForm,
+			StorageEngineManager.STORAGE_TYPE_DEFAULT,
+			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, serviceContext);
+	}
+
+	protected DDMFormField createLocalizableTextDDMFormField(String name) {
+		DDMFormField ddmFormField = new DDMFormField(name, "separator");
+
+		ddmFormField.setDataType("string");
+		ddmFormField.setLocalizable(true);
+		ddmFormField.setRepeatable(false);
+		ddmFormField.setRequired(false);
+
+		LocalizedValue localizedValue = ddmFormField.getLabel();
+
+		localizedValue.addString(LocaleUtil.US, name);
+
+		return ddmFormField;
+	}
+
+	protected DDMFormValues getDDMFormValues() {
+		DDMForm ddmForm = createDDMForm();
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		DDMFormField ddmFormField = createLocalizableTextDDMFormField("Text");
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.setAvailableLocales(ddmForm.getAvailableLocales());
+		ddmFormValues.setDefaultLocale(ddmForm.getDefaultLocale());
+
+		return ddmFormValues;
+	}
+
 	protected String getLock(String fileName) {
 		return _lockMap.get(fileName);
 	}
@@ -432,6 +694,8 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	private static final String _TEMP_META_NAME_2 = "._Word Work File L_2.tmp";
 
 	private static final String _TEST_FILE_NAME = "Test.docx";
+
+	private static final String _TEST_FILE_NAME_2 = "Test2.docx";
 
 	private static final String _TEST_FILE_NAME_ILLEGAL_CHARACTERS =
 		"Test/0.docx";

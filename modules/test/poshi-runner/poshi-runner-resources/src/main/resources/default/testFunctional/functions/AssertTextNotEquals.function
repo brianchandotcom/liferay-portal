@@ -1,0 +1,37 @@
+<definition default="assertTextNotEquals" summary="Assert that '${locator1}' does not equal the value '${value1}'">
+	<command name="assertNotPartialText" summary="Assert that '${locator1}' does not contain the value '${value1}'">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForNotPartialText" />
+
+		<execute selenium="assertNotPartialText" />
+	</command>
+
+	<command name="assertNotText">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForNotText" />
+
+		<execute selenium="assertNotText" />
+	</command>
+
+	<command name="assertNotValue">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForNotValue" />
+
+		<execute selenium="assertNotValue" />
+	</command>
+
+	<command name="assertTextNotEquals">
+		<if>
+			<contains string="${locator1}" substring="/input" />
+			<then>
+				<execute function="AssertTextNotEquals#assertNotValue" />
+			</then>
+			<else>
+				<execute function="AssertTextNotEquals#assertNotText" />
+			</else>
+		</if>
+	</command>
+</definition>

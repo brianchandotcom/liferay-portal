@@ -1,0 +1,46 @@
+<definition default="clickAt">
+	<command name="checkToggleSwitch">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="mouseOver" />
+
+		<if>
+			<condition selenium="isNotChecked" />
+			<then>
+				<execute selenium="clickAt" />
+			</then>
+		</if>
+
+		<execute function="AssertChecked#assertCheckedToggleSwitch" />
+	</command>
+
+	<command name="clickAt">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<if>
+			<condition selenium="isNotChecked" />
+			<then>
+				<execute selenium="clickAt" />
+			</then>
+		</if>
+
+		<execute function="AssertChecked#assertChecked" />
+	</command>
+
+	<command name="toggleSwitch">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="mouseOver" />
+
+		<if>
+			<condition selenium="isNotChecked" />
+			<then>
+				<execute selenium="clickAt" />
+			</then>
+		</if>
+
+		<execute function="AssertElementPresent" />
+	</command>
+</definition>

@@ -1,0 +1,25 @@
+<definition default="keyPress">
+	<command name="keyDown">
+		<execute selenium="mouseOver" />
+
+		<execute selenium="keyDown" />
+	</command>
+
+	<command name="keyPress">
+		<execute selenium="mouseOver" />
+
+		<execute selenium="keyPress" />
+	</command>
+
+	<command name="keyPressNoError">
+		<execute selenium="mouseOver" />
+
+		<execute selenium="keyPress" />
+	</command>
+
+	<command name="keyUp">
+		<execute selenium="mouseOver" />
+
+		<execute selenium="keyUp" />
+	</command>
+</definition>

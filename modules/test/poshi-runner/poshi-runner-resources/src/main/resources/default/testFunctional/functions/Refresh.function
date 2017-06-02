@@ -1,0 +1,5 @@
+<definition default="refresh">
+	<command name="refresh">
+		<execute selenium="refresh" />
+	</command>
+</definition>

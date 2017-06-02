@@ -1,0 +1,19 @@
+<definition default="assertChecked">
+	<command name="assertChecked">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="assertChecked" />
+	</command>
+
+	<command name="assertCheckedToggleSwitch">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="assertChecked" />
+	</command>
+
+	<command name="waitForElementPresentAssertChecked">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="assertChecked" />
+	</command>
+</definition>

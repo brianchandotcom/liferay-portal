@@ -1,0 +1,17 @@
+<definition default="doubleClick">
+	<command name="doubleClick">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="doubleClick" />
+	</command>
+
+	<command name="doubleClickAt">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="doubleClickAt" />
+	</command>
+</definition>

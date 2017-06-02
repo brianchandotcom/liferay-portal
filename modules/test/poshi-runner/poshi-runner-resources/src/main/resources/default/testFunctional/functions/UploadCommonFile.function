@@ -1,0 +1,15 @@
+<definition default="uploadCommonFile">
+	<command name="uploadCommonFile">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="uploadCommonFile" />
+	</command>
+
+	<command name="uploadCommonFileHidden">
+		<execute selenium="mouseOver" />
+
+		<execute selenium="uploadCommonFile" />
+	</command>
+</definition>

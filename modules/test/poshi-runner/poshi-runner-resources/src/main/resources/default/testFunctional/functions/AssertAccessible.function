@@ -1,0 +1,5 @@
+<definition default="assertAccessible">
+	<command name="assertAccessible">
+		<execute selenium="assertAccessible" />
+	</command>
+</definition>

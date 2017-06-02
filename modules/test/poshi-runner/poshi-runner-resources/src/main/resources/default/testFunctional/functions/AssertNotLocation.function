@@ -1,0 +1,5 @@
+<definition default="assertNotLocation">
+	<command name="assertNotLocation">
+		<execute selenium="assertNotLocation" />
+	</command>
+</definition>

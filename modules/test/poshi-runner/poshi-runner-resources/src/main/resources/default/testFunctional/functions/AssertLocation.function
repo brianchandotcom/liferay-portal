@@ -1,0 +1,9 @@
+<definition default="assertLocation">
+	<command name="assertLocation">
+		<execute selenium="assertLocation" />
+	</command>
+
+	<command name="assertPartialLocation">
+		<execute selenium="assertPartialLocation" />
+	</command>
+</definition>

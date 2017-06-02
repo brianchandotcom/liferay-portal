@@ -567,7 +567,8 @@ public class DLFileEntryLocalServiceTest {
 		DDMFormValues ddmFormValues = createDDMFormValues();
 
 		serviceContext.setAttribute(
-			DDMFormValues.class.getName() + ddmStructure.getStructureId(),
+			DDMFormValues.class.getName() + StringPool.POUND +
+				ddmStructure.getStructureId(),
 			ddmFormValues);
 
 		return dlFileEntryType.getFileEntryTypeId();

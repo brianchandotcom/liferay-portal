@@ -139,21 +139,6 @@ public class FriendlyURLEntryStagedModelRepository
 	public FriendlyURLEntry saveStagedModel(FriendlyURLEntry friendlyURLEntry)
 		throws PortalException {
 
-		if (friendlyURLEntry.isMain()) {
-			FriendlyURLEntry mainFriendlyURLEntry =
-				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-					friendlyURLEntry.getGroupId(),
-					friendlyURLEntry.getClassNameId(),
-					friendlyURLEntry.getClassPK());
-
-			if (!mainFriendlyURLEntry.equals(friendlyURLEntry)) {
-				mainFriendlyURLEntry.setMain(false);
-
-				_friendlyURLEntryLocalService.updateFriendlyURLEntry(
-					mainFriendlyURLEntry);
-			}
-		}
-
 		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations =
 			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
 				friendlyURLEntry.getFriendlyURLEntryId());

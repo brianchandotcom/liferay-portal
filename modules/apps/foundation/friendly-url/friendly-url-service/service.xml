@@ -23,7 +23,6 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="main" type="boolean" />
 		<localized-entity>
 			<column name="groupId" type="long" />
 			<column name="classNameId" type="long" />
@@ -48,12 +47,17 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="G_C_C_M" return-type="FriendlyURLEntry">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-			<finder-column name="main" />
-		</finder>
+	</entity>
+	<entity local-service="false" name="FriendlyURLMapping" remote-service="false" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="classNameId" primary="true" type="long" />
+		<column name="classPK" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="friendlyURLId" type="long" />
 	</entity>
 	<exceptions>
 		<exception>DuplicateFriendlyURLEntry</exception>

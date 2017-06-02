@@ -65,9 +65,4 @@ public class TasksEntryAssetRendererFactory extends BaseAssetRendererFactory {
 			permissionChecker, classPK, actionId);
 	}
 
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/tasks/icon.png";
-	}
-
 }

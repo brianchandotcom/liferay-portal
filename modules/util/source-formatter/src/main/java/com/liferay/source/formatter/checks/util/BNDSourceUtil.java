@@ -69,7 +69,7 @@ public class BNDSourceUtil {
 		fileSpecificDefinitionKeysMap.put(
 			"bnd.bnd",
 			_populateDefinitionKeysMap(
-				"-metatype-inherit", "Can-Redefine-Classes",
+				"-jsp", "-metatype-inherit", "-sass", "Can-Redefine-Classes",
 				"Can-Retransform-Classes", "Implementation-Version",
 				"JPM-Command", "Liferay-Configuration-Path",
 				"Liferay-Export-JS-Submodules", "Liferay-JS-Config",

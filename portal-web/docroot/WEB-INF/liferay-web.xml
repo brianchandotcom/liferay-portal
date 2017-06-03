@@ -178,6 +178,18 @@
 		</init-param>
 	</filter>
 	<filter>
+		<filter-name>Header Filter - Lexicon Icons</filter-name>
+		<filter-class>com.liferay.portal.servlet.filters.header.HeaderFilter</filter-class>
+		<init-param>
+			<param-name>url-regex-pattern</param-name>
+			<param-value>.+/lexicon/icons.svg</param-value>
+		</init-param>
+		<init-param>
+			<param-name>Access-Control-Allow-Origin</param-name>
+			<param-value>*</param-value>
+		</init-param>
+	</filter>
+	<filter>
 		<filter-name>Header Filter - No Cache</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.header.HeaderFilter</filter-class>
 		<init-param>
@@ -594,6 +606,10 @@
 	<filter-mapping>
 		<filter-name>Header Filter - JSP</filter-name>
 		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Header Filter - Lexicon Icons</filter-name>
+		<url-pattern>*.svg</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Header Filter - No Cache</filter-name>

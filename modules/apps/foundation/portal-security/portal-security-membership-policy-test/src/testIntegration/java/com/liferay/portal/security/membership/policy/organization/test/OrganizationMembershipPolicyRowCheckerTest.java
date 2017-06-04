@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.security.membership.policy.organization.BaseOrganizationMembershipPolicyTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.RenderResponseImpl;
 import com.liferay.portlet.sites.search.OrganizationRoleUserChecker;
 import com.liferay.portlet.usersadmin.search.UserOrganizationChecker;
 
@@ -35,8 +37,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Roberto Díaz
@@ -54,8 +54,6 @@ public class OrganizationMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenSettingForbiddenOrganizationToUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long forbiddenOrganizationId = addForbiddenOrganizations()[0];
 
 		Organization forbiddenOrganization =
@@ -63,7 +61,7 @@ public class OrganizationMembershipPolicyRowCheckerTest
 				forbiddenOrganizationId);
 
 		UserOrganizationChecker userOrganizationChecker =
-			new UserOrganizationChecker(renderResponse, forbiddenOrganization);
+			new UserOrganizationChecker(_renderResponse, forbiddenOrganization);
 
 		User user = UserTestUtil.addUser();
 
@@ -74,14 +72,13 @@ public class OrganizationMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenSettingForbiddenRoleToUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long forbiddenRoleId = addForbiddenRoles()[0];
 
 		Role role = RoleLocalServiceUtil.getRole(forbiddenRoleId);
 
 		OrganizationRoleUserChecker organizationRoleUserChecker =
-			new OrganizationRoleUserChecker(renderResponse, organization, role);
+			new OrganizationRoleUserChecker(
+				_renderResponse, organization, role);
 
 		User user = UserTestUtil.addUser();
 
@@ -92,8 +89,6 @@ public class OrganizationMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenSettingRequiredOrganizationToUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long requiredOrganizationId = addRequiredOrganizations()[0];
 
 		Organization requiredOrganization =
@@ -101,7 +96,7 @@ public class OrganizationMembershipPolicyRowCheckerTest
 				requiredOrganizationId);
 
 		UserOrganizationChecker userOrganizationChecker =
-			new UserOrganizationChecker(renderResponse, requiredOrganization);
+			new UserOrganizationChecker(_renderResponse, requiredOrganization);
 
 		User user = UserTestUtil.addUser();
 
@@ -112,14 +107,13 @@ public class OrganizationMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenSettingRequiredRoleToUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long requiredRoleId = addRequiredRoles()[0];
 
 		Role role = RoleLocalServiceUtil.getRole(requiredRoleId);
 
 		OrganizationRoleUserChecker organizationRoleUserChecker =
-			new OrganizationRoleUserChecker(renderResponse, organization, role);
+			new OrganizationRoleUserChecker(
+				_renderResponse, organization, role);
 
 		User user = UserTestUtil.addUser();
 
@@ -130,8 +124,6 @@ public class OrganizationMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenUnsettingForbiddenOrganizationToUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long forbiddenOrganizationId = addForbiddenOrganizations()[0];
 
 		Organization forbiddenOrganization =
@@ -139,7 +131,7 @@ public class OrganizationMembershipPolicyRowCheckerTest
 				forbiddenOrganizationId);
 
 		UserOrganizationChecker userOrganizationChecker =
-			new UserOrganizationChecker(renderResponse, forbiddenOrganization);
+			new UserOrganizationChecker(_renderResponse, forbiddenOrganization);
 
 		User user = UserTestUtil.addUser();
 
@@ -153,14 +145,13 @@ public class OrganizationMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenUnsettingForbiddenRoleToUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long forbiddenRoleId = addForbiddenRoles()[0];
 
 		Role role = RoleLocalServiceUtil.getRole(forbiddenRoleId);
 
 		OrganizationRoleUserChecker organizationRoleUserChecker =
-			new OrganizationRoleUserChecker(renderResponse, organization, role);
+			new OrganizationRoleUserChecker(
+				_renderResponse, organization, role);
 
 		User user = UserTestUtil.addUser();
 
@@ -175,8 +166,6 @@ public class OrganizationMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenUnsettingRequiredOrganizationToUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long requiredOrganizationId = addRequiredOrganizations()[0];
 
 		Organization requiredOrganization =
@@ -184,7 +173,7 @@ public class OrganizationMembershipPolicyRowCheckerTest
 				requiredOrganizationId);
 
 		UserOrganizationChecker userOrganizationChecker =
-			new UserOrganizationChecker(renderResponse, requiredOrganization);
+			new UserOrganizationChecker(_renderResponse, requiredOrganization);
 
 		User user = UserTestUtil.addUser();
 
@@ -198,14 +187,13 @@ public class OrganizationMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenUnsettingRequiredRoleToUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long requiredRoleId = addRequiredRoles()[0];
 
 		Role role = RoleLocalServiceUtil.getRole(requiredRoleId);
 
 		OrganizationRoleUserChecker organizationRoleUserChecker =
-			new OrganizationRoleUserChecker(renderResponse, organization, role);
+			new OrganizationRoleUserChecker(
+				_renderResponse, organization, role);
 
 		User user = UserTestUtil.addUser();
 
@@ -215,5 +203,15 @@ public class OrganizationMembershipPolicyRowCheckerTest
 
 		Assert.assertTrue(organizationRoleUserChecker.isDisabled(user));
 	}
+
+	private static final RenderResponse _renderResponse =
+		new RenderResponseImpl() {
+
+			@Override
+			public String getNamespace() {
+				return RandomTestUtil.randomString();
+			}
+
+		};
 
 }

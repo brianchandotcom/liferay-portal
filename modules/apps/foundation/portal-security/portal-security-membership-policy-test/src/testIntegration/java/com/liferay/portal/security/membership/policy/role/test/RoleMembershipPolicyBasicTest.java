@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyU
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.security.membership.policy.role.BaseRoleMembershipPolicyTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -36,7 +37,9 @@ public class RoleMembershipPolicyBasicTest
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerTestRule.INSTANCE);
 
 	@Test
 	public void testIsRoleAllowed() throws Exception {

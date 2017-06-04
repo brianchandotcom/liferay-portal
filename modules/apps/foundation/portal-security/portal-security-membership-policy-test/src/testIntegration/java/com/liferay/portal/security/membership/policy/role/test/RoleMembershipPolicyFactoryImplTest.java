@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.model.impl.RoleImpl;
 import com.liferay.portal.security.membership.policy.role.bundle.rolemembershippolicyfactoryimpl.TestRoleMembershipPolicy;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portal.util.test.AtomicState;
 
 import java.io.Serializable;
@@ -46,7 +47,9 @@ public class RoleMembershipPolicyFactoryImplTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() {

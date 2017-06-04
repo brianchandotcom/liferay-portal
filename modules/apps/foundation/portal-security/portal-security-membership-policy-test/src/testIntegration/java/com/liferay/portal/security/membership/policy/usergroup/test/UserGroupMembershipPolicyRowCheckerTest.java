@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.membership.policy.usergroup.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
@@ -30,12 +31,14 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 public class UserGroupMembershipPolicyRowCheckerTest
 	extends BaseUserGroupMembershipPolicyTestCase {
 

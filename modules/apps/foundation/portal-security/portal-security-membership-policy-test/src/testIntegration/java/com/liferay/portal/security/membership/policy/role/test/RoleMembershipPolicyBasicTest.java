@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.membership.policy.role.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.security.membership.policy.role.BaseRoleMembershipPolicyTestCase;
@@ -23,10 +24,12 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 public class RoleMembershipPolicyBasicTest
 	extends BaseRoleMembershipPolicyTestCase {
 

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershi
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.security.membership.policy.organization.bundle.organizationmembershippolicyfactory.TestOrganizationMembershipPolicy;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -34,10 +33,7 @@ public class OrganizationMembershipPolicyFactoryTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			new SyntheticBundleRule(
-				"bundle.organizationmembershippolicyfactory"));
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testGetOrganizationMembershipPolicy() {

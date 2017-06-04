@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.security.membership.policy.organization.BaseOrganizationMembershipPolicyTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portlet.RenderResponseImpl;
 import com.liferay.portlet.sites.search.OrganizationRoleUserChecker;
 import com.liferay.portlet.usersadmin.search.UserOrganizationChecker;
@@ -48,7 +49,9 @@ public class OrganizationMembershipPolicyRowCheckerTest
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerTestRule.INSTANCE);
 
 	@Test
 	public void testIsCheckerDisabledWhenSettingForbiddenOrganizationToUser()

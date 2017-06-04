@@ -1281,6 +1281,7 @@ rerun your task.
 					<propertyref name="liferay.releng.product.display.name" />
 					<propertyref name="liferay.releng.public" />
 					<propertyref name="liferay.releng.supported" />
+					<propertyref name="org.gradle.daemon" />
 					<propertyref name="release.versions.test.other.dir" />
 					<propertyref name="sass.compiler.class.name" />
 					<propertyref name="sass.generate.source.map" />

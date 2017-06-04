@@ -533,7 +533,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	protected static void configureRepositories(Project project) {
 		RepositoryHandler repositoryHandler = project.getRepositories();
 
-		if (!_MAVEN_LOCAL_IGNORE) {
+		if (!Boolean.getBoolean("maven.local.ignore")) {
 			repositoryHandler.mavenLocal();
 		}
 
@@ -544,14 +544,24 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				public void execute(
 					MavenArtifactRepository mavenArtifactRepository) {
 
-					mavenArtifactRepository.setUrl(_REPOSITORY_URL);
+					String url = System.getProperty(
+						"repository.url", DEFAULT_REPOSITORY_URL);
+
+					mavenArtifactRepository.setUrl(url);
 				}
 
 			});
 
-		if (Validator.isNotNull(_REPOSITORY_PRIVATE_PASSWORD) &&
-			Validator.isNotNull(_REPOSITORY_PRIVATE_URL) &&
-			Validator.isNotNull(_REPOSITORY_PRIVATE_USERNAME)) {
+		final String repositoryPrivatePassword = System.getProperty(
+			"repository.private.password");
+		final String repositoryPrivateUrl = System.getProperty(
+			"repository.private.url");
+		final String repositoryPrivateUsername = System.getProperty(
+			"repository.private.username");
+
+		if (Validator.isNotNull(repositoryPrivatePassword) &&
+			Validator.isNotNull(repositoryPrivateUrl) &&
+			Validator.isNotNull(repositoryPrivateUsername)) {
 
 			MavenArtifactRepository mavenArtifactRepository =
 				repositoryHandler.maven(
@@ -562,7 +572,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							MavenArtifactRepository mavenArtifactRepository) {
 
 							mavenArtifactRepository.setUrl(
-								_REPOSITORY_PRIVATE_URL);
+								repositoryPrivateUrl);
 						}
 
 					});
@@ -588,9 +598,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						PasswordCredentials passwordCredentials) {
 
 						passwordCredentials.setPassword(
-							_REPOSITORY_PRIVATE_PASSWORD);
+							repositoryPrivatePassword);
 						passwordCredentials.setUsername(
-							_REPOSITORY_PRIVATE_USERNAME);
+							repositoryPrivateUsername);
 					}
 
 				});
@@ -4087,25 +4097,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final JavaVersion _JAVA_VERSION = JavaVersion.VERSION_1_7;
 
-	private static final boolean _MAVEN_LOCAL_IGNORE = Boolean.getBoolean(
-		"maven.local.ignore");
-
 	private static final String _PMD_PORTAL_TOOL_NAME = "com.liferay.pmd";
 
 	private static final Duration _PORTAL_TOOL_MAX_AGE = TimeCategory.getDays(
 		30);
-
-	private static final String _REPOSITORY_PRIVATE_PASSWORD =
-		System.getProperty("repository.private.password");
-
-	private static final String _REPOSITORY_PRIVATE_URL = System.getProperty(
-		"repository.private.url");
-
-	private static final String _REPOSITORY_PRIVATE_USERNAME =
-		System.getProperty("repository.private.username");
-
-	private static final String _REPOSITORY_URL = System.getProperty(
-		"repository.url", DEFAULT_REPOSITORY_URL);
 
 	private static final String _SERVICE_BUILDER_PORTAL_TOOL_NAME =
 		"com.liferay.portal.tools.service.builder";

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.membershippolicy.util.test;
+package com.liferay.portal.security.membership.policy.test.util;
 
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.asset.kernel.model.AssetCategory;

@@ -14,9 +14,11 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.io.DummyOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -351,15 +353,27 @@ public class RestrictedByteBufferCacheServletResponseTest {
 	@Test
 	public void testSetBufferSize() throws IOException {
 
-		// Normal
+		// Set smaller buffer size has no affect
 
 		StubHttpServletResponse stubHttpServletResponse =
 			new StubHttpServletResponse() {
 
 				@Override
+				public int getBufferSize() {
+					return _bufferSize;
+				}
+
+				@Override
 				public boolean isCommitted() {
 					return false;
 				}
+
+				@Override
+				public void setBufferSize(int bufferSize) {
+					_bufferSize = bufferSize;
+				}
+
+				private int _bufferSize;
 
 			};
 
@@ -368,7 +382,21 @@ public class RestrictedByteBufferCacheServletResponseTest {
 				new RestrictedByteBufferCacheServletResponse(
 					stubHttpServletResponse, 1024);
 
+		restrictedByteBufferCacheServletResponse.setBufferSize(512);
+
+		Assert.assertFalse(
+			restrictedByteBufferCacheServletResponse.isOverflowed());
+		Assert.assertEquals(
+			1024, restrictedByteBufferCacheServletResponse.getBufferSize());
+
+		// Set larger buffer size causing overflow
+
 		restrictedByteBufferCacheServletResponse.setBufferSize(2048);
+
+		Assert.assertTrue(
+			restrictedByteBufferCacheServletResponse.isOverflowed());
+		Assert.assertEquals(
+			2048, restrictedByteBufferCacheServletResponse.getBufferSize());
 
 		// Set after commit
 
@@ -380,6 +408,62 @@ public class RestrictedByteBufferCacheServletResponseTest {
 			Assert.fail();
 		}
 		catch (IllegalStateException ise) {
+		}
+
+		// Set larger buffer size causing overflow with flushing failure
+
+		IOException ioe = new IOException();
+
+		stubHttpServletResponse = new StubHttpServletResponse() {
+
+			@Override
+			public int getBufferSize() {
+				return _bufferSize;
+			}
+
+			@Override
+			public ServletOutputStream getOutputStream() {
+				return new ServletOutputStreamAdapter(
+					new DummyOutputStream() {
+
+						@Override
+						public void write(
+							byte[] bytes, int offset, int length) {
+
+							ReflectionUtil.throwException(ioe);
+						}
+
+					});
+			}
+
+			@Override
+			public boolean isCommitted() {
+				return false;
+			}
+
+			@Override
+			public void setBufferSize(int bufferSize) {
+				_bufferSize = bufferSize;
+			}
+
+			private int _bufferSize;
+
+		};
+
+		restrictedByteBufferCacheServletResponse =
+			new RestrictedByteBufferCacheServletResponse(
+				stubHttpServletResponse, 1024);
+
+		Assert.assertNotNull(
+			restrictedByteBufferCacheServletResponse.getOutputStream());
+
+		try {
+			restrictedByteBufferCacheServletResponse.setBufferSize(2048);
+
+			Assert.fail();
+		}
+		catch (IllegalStateException ise) {
+			Assert.assertSame(ioe, ise.getCause());
 		}
 	}
 

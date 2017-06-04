@@ -49,12 +49,12 @@ public class RestrictedByteBufferCacheServletResponse
 
 	@Override
 	public int getBufferSize() {
-		if (_restrictedByteArrayCacheOutputStream == null) {
-			return _cacheCapacity;
+		if (isOverflowed()) {
+			return super.getBufferSize();
 		}
 
-		if (_restrictedByteArrayCacheOutputStream.isOverflowed()) {
-			return 0;
+		if (_restrictedByteArrayCacheOutputStream == null) {
+			return _cacheCapacity;
 		}
 
 		return _restrictedByteArrayCacheOutputStream.getCacheCapacity();
@@ -122,7 +122,11 @@ public class RestrictedByteBufferCacheServletResponse
 
 	public boolean isOverflowed() {
 		if (_restrictedByteArrayCacheOutputStream == null) {
-			return false;
+			if (_cacheCapacity >= super.getBufferSize()) {
+				return false;
+			}
+
+			return true;
 		}
 
 		return _restrictedByteArrayCacheOutputStream.isOverflowed();
@@ -134,9 +138,19 @@ public class RestrictedByteBufferCacheServletResponse
 			throw new IllegalStateException("Set buffer size after commit");
 		}
 
-		// Restricted byte buffer cache response cannot accept buffer size
-		// because it has an fixed size internal buffer.
+		if (bufferSize > getBufferSize()) {
+			super.setBufferSize(bufferSize);
 
+			try {
+				flushCache();
+			}
+			catch (IOException ioe) {
+				throw new IllegalStateException(
+					"Unable to transfer restricted byte buffer to underneath" +
+						"response's buffer",
+					ioe);
+			}
+		}
 	}
 
 	@Override

@@ -174,7 +174,7 @@ public class StubHttpServletResponse implements HttpServletResponse {
 	}
 
 	@Override
-	public void setBufferSize(int bufferSzie) {
+	public void setBufferSize(int bufferSize) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.membership.policy.organization.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -33,12 +34,14 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 public class OrganizationMembershipPolicyRowCheckerTest
 	extends BaseOrganizationMembershipPolicyTestCase {
 

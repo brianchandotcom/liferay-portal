@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.security.membership.policy.site.BaseSiteMembershipPolicyTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.RenderResponseImpl;
 import com.liferay.portlet.sites.search.UserGroupRoleRoleChecker;
 import com.liferay.portlet.sites.search.UserGroupRoleUserChecker;
 import com.liferay.portlet.sitesadmin.search.SiteMembershipChecker;
@@ -36,8 +38,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Roberto Díaz
@@ -55,14 +55,12 @@ public class SiteMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenSettingForbiddenGroupToUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long forbiddenGroupId = addForbiddenGroups()[0];
 
 		Group forbiddenGroup = GroupLocalServiceUtil.getGroup(forbiddenGroupId);
 
 		SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(
-			renderResponse, forbiddenGroup);
+			_renderResponse, forbiddenGroup);
 
 		User user = UserTestUtil.addUser();
 
@@ -73,14 +71,12 @@ public class SiteMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenSettingForbiddenRoleToUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long forbiddenRoleId = addForbiddenRoles()[0];
 
 		Role role = RoleLocalServiceUtil.getRole(forbiddenRoleId);
 
 		UserGroupRoleUserChecker userGroupRoleUserChecker =
-			new UserGroupRoleUserChecker(renderResponse, group, role);
+			new UserGroupRoleUserChecker(_renderResponse, group, role);
 
 		User user = UserTestUtil.addUser();
 
@@ -91,14 +87,12 @@ public class SiteMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenSettingRequiredGroupToUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long requiredGroupId = addRequiredGroups()[0];
 
 		Group requiredGroup = GroupLocalServiceUtil.getGroup(requiredGroupId);
 
 		SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(
-			renderResponse, requiredGroup);
+			_renderResponse, requiredGroup);
 
 		User user = UserTestUtil.addUser();
 
@@ -109,14 +103,12 @@ public class SiteMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenSettingRequiredRoleToUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long requiredRoleId = addRequiredRoles()[0];
 
 		Role role = RoleLocalServiceUtil.getRole(requiredRoleId);
 
 		UserGroupRoleUserChecker userGroupRoleUserChecker =
-			new UserGroupRoleUserChecker(renderResponse, group, role);
+			new UserGroupRoleUserChecker(_renderResponse, group, role);
 
 		User user = UserTestUtil.addUser();
 
@@ -127,12 +119,10 @@ public class SiteMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenSettingUserToForbiddenRole()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		User user = UserTestUtil.addUser();
 
 		UserGroupRoleRoleChecker userGroupRoleRoleChecker =
-			new UserGroupRoleRoleChecker(renderResponse, user, group);
+			new UserGroupRoleRoleChecker(_renderResponse, user, group);
 
 		Role role = RoleLocalServiceUtil.getRole(addForbiddenRoles()[0]);
 
@@ -143,12 +133,10 @@ public class SiteMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenSettingUserToRequiredRole()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		User user = UserTestUtil.addUser();
 
 		UserGroupRoleRoleChecker userGroupRoleRoleChecker =
-			new UserGroupRoleRoleChecker(renderResponse, user, group);
+			new UserGroupRoleRoleChecker(_renderResponse, user, group);
 
 		Role role = RoleLocalServiceUtil.getRole(addRequiredRoles()[0]);
 
@@ -159,14 +147,12 @@ public class SiteMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenUnsettingForbiddenGroupFromUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long forbiddenGroupId = addForbiddenGroups()[0];
 
 		Group forbiddenGroup = GroupLocalServiceUtil.getGroup(forbiddenGroupId);
 
 		SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(
-			renderResponse, forbiddenGroup);
+			_renderResponse, forbiddenGroup);
 
 		User user = UserTestUtil.addUser(forbiddenGroupId);
 
@@ -177,14 +163,12 @@ public class SiteMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenUnsettingForbiddenRoleFromUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long forbiddenRoleId = addForbiddenRoles()[0];
 
 		Role role = RoleLocalServiceUtil.getRole(forbiddenRoleId);
 
 		UserGroupRoleUserChecker userGroupRoleUserChecker =
-			new UserGroupRoleUserChecker(renderResponse, group, role);
+			new UserGroupRoleUserChecker(_renderResponse, group, role);
 
 		User user = UserTestUtil.addUser();
 
@@ -198,14 +182,12 @@ public class SiteMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenUnsettingRequiredGroupFromUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long requiredGroupId = addRequiredGroups()[0];
 
 		Group requiredGroup = GroupLocalServiceUtil.getGroup(requiredGroupId);
 
 		SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(
-			renderResponse, requiredGroup);
+			_renderResponse, requiredGroup);
 
 		User user = UserTestUtil.addUser(requiredGroupId);
 
@@ -216,14 +198,12 @@ public class SiteMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenUnsettingRequiredRoleFromUser()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		long requiredRoleId = addRequiredRoles()[0];
 
 		Role role = RoleLocalServiceUtil.getRole(requiredRoleId);
 
 		UserGroupRoleUserChecker userGroupRoleUserChecker =
-			new UserGroupRoleUserChecker(renderResponse, group, role);
+			new UserGroupRoleUserChecker(_renderResponse, group, role);
 
 		User user = UserTestUtil.addUser();
 
@@ -237,12 +217,10 @@ public class SiteMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenUnsettingUserFromForbiddenRole()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		User user = UserTestUtil.addUser();
 
 		UserGroupRoleRoleChecker userGroupRoleRoleChecker =
-			new UserGroupRoleRoleChecker(renderResponse, user, group);
+			new UserGroupRoleRoleChecker(_renderResponse, user, group);
 
 		long forbiddenRoleId = addForbiddenRoles()[0];
 
@@ -258,12 +236,10 @@ public class SiteMembershipPolicyRowCheckerTest
 	public void testIsCheckerDisabledWhenUnsettingUserFromRequiredRole()
 		throws Exception {
 
-		RenderResponse renderResponse = PowerMockito.mock(RenderResponse.class);
-
 		User user = UserTestUtil.addUser();
 
 		UserGroupRoleRoleChecker userGroupRoleRoleChecker =
-			new UserGroupRoleRoleChecker(renderResponse, user, group);
+			new UserGroupRoleRoleChecker(_renderResponse, user, group);
 
 		long requiredRoleId = addRequiredRoles()[0];
 
@@ -274,5 +250,15 @@ public class SiteMembershipPolicyRowCheckerTest
 
 		Assert.assertTrue(userGroupRoleRoleChecker.isDisabled(role));
 	}
+
+	private static final RenderResponse _renderResponse =
+		new RenderResponseImpl() {
+
+			@Override
+			public String getNamespace() {
+				return RandomTestUtil.randomString();
+			}
+
+		};
 
 }

@@ -19,9 +19,7 @@
 <%
 CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFINITION);
 
-CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-List<CPType> cpTypes = cpDefinitionsDisplayContext.getCPTypes();
+String productTypeName = ParamUtil.getString(request, "productTypeName");
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="base-information" />
@@ -29,23 +27,7 @@ List<CPType> cpTypes = cpDefinitionsDisplayContext.getCPTypes();
 <aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
 <aui:fieldset cssClass="col-md-4">
-	<aui:select label="product-type" name="productTypeName">
-
-		<%
-		for (CPType cpType : cpTypes) {
-		%>
-
-			<aui:option
-				label="<%= cpType.getLabel(locale) %>"
-				selected="<%= (cpDefinition != null) && cpDefinition.getProductTypeName().equals(cpType.getName()) %>"
-				value="<%= cpType.getName() %>"
-			/>
-
-		<%
-		}
-		%>
-
-	</aui:select>
+	<aui:input label="product-type" name="productTypeName" readOnly="readOnly" type="text" value="<%= (cpDefinition == null) ? productTypeName : cpDefinition.getProductTypeName() %>" />
 
 	<aui:input label="SKU" name="baseSKU" />
 </aui:fieldset>

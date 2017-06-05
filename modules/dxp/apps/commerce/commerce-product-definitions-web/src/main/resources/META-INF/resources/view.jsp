@@ -25,6 +25,8 @@ SearchContainer productDefinitionSearchContainer = cpDefinitionsDisplayContext.g
 
 String displayStyle = cpDefinitionsDisplayContext.getDisplayStyle();
 
+List<CPType> cpTypes = cpDefinitionsDisplayContext.getCPTypes();
+
 PortletURL portletURL = cpDefinitionsDisplayContext.getPortletURL();
 
 portletURL.setParameter("toolbarItem", toolbarItem);
@@ -170,32 +172,24 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	</div>
 </div>
 
-<liferay-portlet:renderURL var="addSimpleProductDefinitionURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
-	<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
-	<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
-	<portlet:param name="productTypeName" value="simple" />
-	<portlet:param name="toolbarItem" value="view-product-definition-details" />
-</liferay-portlet:renderURL>
-
-<liferay-portlet:renderURL var="addGroupProductDefinitionURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
-	<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
-	<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
-	<portlet:param name="productTypeName" value="group" />
-	<portlet:param name="toolbarItem" value="view-product-definition-details" />
-</liferay-portlet:renderURL>
-
-<liferay-portlet:renderURL var="addVirtualProductDefinitionURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
-	<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
-	<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
-	<portlet:param name="productTypeName" value="virtual" />
-	<portlet:param name="toolbarItem" value="view-product-definition-details" />
-</liferay-portlet:renderURL>
-
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-simple-product") %>' url="<%= addSimpleProductDefinitionURL.toString() %>" />
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-group-product") %>' url="<%= addGroupProductDefinitionURL.toString() %>" />
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-virtual-product") %>' url="<%= addVirtualProductDefinitionURL.toString() %>" />
+
+	<%
+	for (CPType cpType1 : cpTypes) {
+	%>
+
+		<liferay-portlet:renderURL var="addProductDefinitionURL">
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+			<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
+			<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
+			<portlet:param name="productTypeName" value="<%= cpType1.getName() %>" />
+			<portlet:param name="toolbarItem" value="view-product-definition-details" />
+		</liferay-portlet:renderURL>
+
+		<liferay-frontend:add-menu-item title="<%= cpType1.getLabel(locale) %>" url="<%= addProductDefinitionURL.toString() %>" />
+
+	<%
+	}
+	%>
+
 </liferay-frontend:add-menu>

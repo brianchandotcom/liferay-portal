@@ -684,10 +684,10 @@
 	</command>
 
 	<command name="RedirectLocalizedFriendlyURL" priority="5">
-
 		<description message="This is a use case for LPS-59345" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -727,6 +727,7 @@
 		<execute macro="Page#hideFromNavigationMenu" />
 
 		<execute macro="User#logoutPG" />
+
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${portalURL}/hu/web/site-name/test" />
 		</execute>

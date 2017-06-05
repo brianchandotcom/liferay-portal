@@ -95,15 +95,16 @@ public class SourceChecksUtil {
 			if (sourceCheck instanceof FileCheck) {
 				sourceChecksResult = _processFileCheck(
 					sourceChecksResult, (FileCheck)sourceCheck, fileName,
-					absolutePath, content);
+					absolutePath);
 			}
 			else {
 				if (javaClass == null) {
 					try {
 						anonymousClasses =
-							JavaClassParser.parseAnonymousClasses(content);
+							JavaClassParser.parseAnonymousClasses(
+								sourceChecksResult.getContent());
 						javaClass = JavaClassParser.parseJavaClass(
-							fileName, content);
+							fileName, sourceChecksResult.getContent());
 					}
 					catch (ParseException pe) {
 						sourceChecksResult.addSourceFormatterMessage(
@@ -116,7 +117,7 @@ public class SourceChecksUtil {
 
 				sourceChecksResult = _processJavaTermCheck(
 					sourceChecksResult, (JavaTermCheck)sourceCheck, javaClass,
-					anonymousClasses, fileName, absolutePath, content);
+					anonymousClasses, fileName, absolutePath);
 			}
 
 			if (!content.equals(sourceChecksResult.getContent())) {
@@ -201,11 +202,12 @@ public class SourceChecksUtil {
 
 	private static SourceChecksResult _processFileCheck(
 			SourceChecksResult sourceChecksResult, FileCheck fileCheck,
-			String fileName, String absolutePath, String content)
+			String fileName, String absolutePath)
 		throws Exception {
 
 		sourceChecksResult.setContent(
-			fileCheck.process(fileName, absolutePath, content));
+			fileCheck.process(
+				fileName, absolutePath, sourceChecksResult.getContent()));
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				fileCheck.getSourceFormatterMessages(fileName)) {
@@ -220,11 +222,13 @@ public class SourceChecksUtil {
 	private static SourceChecksResult _processJavaTermCheck(
 			SourceChecksResult sourceChecksResult, JavaTermCheck javaTermCheck,
 			JavaClass javaClass, List<JavaClass> anonymousClasses,
-			String fileName, String absolutePath, String content)
+			String fileName, String absolutePath)
 		throws Exception {
 
 		sourceChecksResult.setContent(
-			javaTermCheck.process(fileName, absolutePath, javaClass, content));
+			javaTermCheck.process(
+				fileName, absolutePath, javaClass,
+				sourceChecksResult.getContent()));
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				javaTermCheck.getSourceFormatterMessages(fileName)) {
@@ -236,7 +240,8 @@ public class SourceChecksUtil {
 		for (JavaClass anonymousClass : anonymousClasses) {
 			sourceChecksResult.setContent(
 				javaTermCheck.process(
-					fileName, absolutePath, anonymousClass, content));
+					fileName, absolutePath, anonymousClass,
+					sourceChecksResult.getContent()));
 
 			for (SourceFormatterMessage sourceFormatterMessage :
 					javaTermCheck.getSourceFormatterMessages(fileName)) {

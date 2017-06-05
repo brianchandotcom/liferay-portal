@@ -36,7 +36,6 @@ dependencies {
 	provided project(":apps:static:portal-configuration:portal-configuration-persistence")
 
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.0.0"
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 
 	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.3"
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.framework", version: "5.4.0"

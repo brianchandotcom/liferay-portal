@@ -31,6 +31,19 @@ The App Docker plugin automatically applies the
 [`com.bmuschko.docker-remote-api`](https://github.com/bmuschko/gradle-docker-plugin)
 plugin.
 
+Since the plugin automatically resolves the [Java Docker API Client](https://github.com/docker-java/docker-java)
+library as a dependency, you have to configure a repository that hosts the
+library and its transitive dependencies. The Liferay CDN repository hosts them
+all:
+
+```gradle
+repositories {
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+```
+
 ## Project Extension
 
 The App Docker plugin exposes the following properties through the

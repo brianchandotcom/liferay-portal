@@ -122,6 +122,12 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 				   .fetchCPDefinitionVirtualSetting(CPDefinitionVirtualSettingId);
 	}
 
+	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting fetchCPDefinitionVirtualSettingByCPDefinitionId(
+		long cpDefinitionId) {
+		return getService()
+				   .fetchCPDefinitionVirtualSettingByCPDefinitionId(cpDefinitionId);
+	}
+
 	/**
 	* Returns the cp definition virtual setting matching the UUID and group.
 	*

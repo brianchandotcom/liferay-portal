@@ -114,6 +114,12 @@ public class CPDefinitionVirtualSettingLocalServiceWrapper
 		return _cpDefinitionVirtualSettingLocalService.fetchCPDefinitionVirtualSetting(CPDefinitionVirtualSettingId);
 	}
 
+	@Override
+	public com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting fetchCPDefinitionVirtualSettingByCPDefinitionId(
+		long cpDefinitionId) {
+		return _cpDefinitionVirtualSettingLocalService.fetchCPDefinitionVirtualSettingByCPDefinitionId(cpDefinitionId);
+	}
+
 	/**
 	* Returns the cp definition virtual setting matching the UUID and group.
 	*

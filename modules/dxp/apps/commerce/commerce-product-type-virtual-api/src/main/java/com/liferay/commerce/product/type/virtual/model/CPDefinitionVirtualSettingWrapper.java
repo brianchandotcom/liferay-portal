@@ -287,13 +287,52 @@ public class CPDefinitionVirtualSettingWrapper
 	}
 
 	@Override
+	public boolean isUseSampleUrl() {
+		return _cpDefinitionVirtualSetting.isUseSampleUrl();
+	}
+
+	@Override
+	public boolean isUseTermsOfUseJournal() {
+		return _cpDefinitionVirtualSetting.isUseTermsOfUseJournal();
+	}
+
+	@Override
+	public boolean isUseUrl() {
+		return _cpDefinitionVirtualSetting.isUseUrl();
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionVirtualSetting.getCPDefinition();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _cpDefinitionVirtualSetting.getExpandoBridge();
 	}
 
 	@Override
+	public com.liferay.journal.model.JournalArticle getTermsOfUseJournalArticle()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionVirtualSetting.getTermsOfUseJournalArticle();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionVirtualSetting> toCacheModel() {
 		return _cpDefinitionVirtualSetting.toCacheModel();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionVirtualSetting.getFileEntry();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry getSampleFileEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionVirtualSetting.getSampleFileEntry();
 	}
 
 	@Override

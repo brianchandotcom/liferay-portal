@@ -124,6 +124,10 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 	public CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
 		long CPDefinitionVirtualSettingId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionVirtualSetting fetchCPDefinitionVirtualSettingByCPDefinitionId(
+		long cpDefinitionId);
+
 	/**
 	* Returns the cp definition virtual setting matching the UUID and group.
 	*

@@ -56,4 +56,22 @@ public interface CPDefinitionVirtualSetting
 				return CPDefinitionVirtualSetting.class;
 			}
 		};
+
+	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portal.kernel.repository.model.FileEntry getSampleFileEntry()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.journal.model.JournalArticle getTermsOfUseJournalArticle()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public boolean isUseSampleUrl();
+
+	public boolean isUseTermsOfUseJournal();
+
+	public boolean isUseUrl();
 }

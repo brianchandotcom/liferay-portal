@@ -121,8 +121,7 @@
 								var selectedItem = event.newVal;
 
 								if (selectedItem) {
-						            instance._updateLink(selectedItem.value, linkTarget,
-                                        selectedItem.title);
+						            instance._updateLink(selectedItem.value, linkTarget, selectedItem.title);
 								}
 							}
 						},

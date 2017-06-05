@@ -302,10 +302,6 @@
 	<command name="AddCustomTitleViaAP" priority="3">
 		<property name="testray.component.names" value="Asset Publisher" />
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Look and Feel Configuration" />
 		</execute>

@@ -301,6 +301,16 @@
 		<execute function="Open" locator1="${adminURL}" />
 	</command>
 
+	<command name="selectTreeNode">
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Treeview#NODE_UNSELECTED" value1="${nodeName}">
+			<var name="key_nodeName" value="${nodeName}" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="Treeview#NODE_SELECTED">
+			<var name="key_nodeName" value="${nodeName}" />
+		</execute>
+	</command>
+
 	<command name="shutdownServer" summary="Shutdown the current Liferay Portal instance.">
 		<execute function="AntCommand" locator1="build-test.xml" value1="stop-app-server" />
 	</command>

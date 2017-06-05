@@ -31,6 +31,7 @@ import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
+import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -390,11 +391,8 @@ public class AssetCategoriesDisplayContext {
 
 		AssetCategory category = getCategory();
 
-		long parentCategoryId = 0;
-
-		if (category != null) {
-			parentCategoryId = category.getParentCategoryId();
-		}
+		long parentCategoryId = BeanParamUtil.getLong(
+			category, _request, "parentCategoryId");
 
 		backURL.setParameter("mvcPath", "/view_categories.jsp");
 

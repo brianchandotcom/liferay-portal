@@ -37,11 +37,9 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<for list="${categoryNameList}" param="categoryName">
-			<var name="key_categoryName" value="${categoryName}" />
-
-			<execute function="Click" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX" />
-
-			<execute function="AssertVisible" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX_CHECKED" />
+			<execute macro="Portlet#selectTreeNode">
+				<var name="nodeName" value="${categoryName}" />
+			</execute>
 		</for>
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -82,15 +80,9 @@
 		<if>
 			<condition function="IsElementPresent" locator1="IFrame#SELECT_CATEGORY" />
 			<then>
-				<execute macro="IFrame#selectCategoryFrame" />
-			</then>
-		</if>
-
-		<var name="key_categoryName" value="${categoryName}" />
-
-		<execute function="Click" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX" />
-
-		<execute function="AssertVisible" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX_CHECKED" />
+		<execute macro="Portlet#selectTreeNode">
+			<var name="nodeName" value="${categoryName}" />
+		</execute>
 
 		<execute function="SelectFrameTop" />
 

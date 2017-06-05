@@ -489,10 +489,8 @@
 
 				<execute macro="Portlet#expandTree" />
 
-				<execute function="AssertElementPresent" locator1="PagesConfiguration#PAGE_TREE_NODE_EXPANDED" />
-
-				<execute function="Click#mouseOverClick" locator1="PagesConfiguration#PAGE_TREE_LINK">
-					<var name="key_pageName" value="${pageLinkName}" />
+				<execute macro="Portlet#selectTreeNode">
+					<var name="nodeName" value="${pageLinkName}" />
 				</execute>
 
 				<execute function="SelectFrameTop" />

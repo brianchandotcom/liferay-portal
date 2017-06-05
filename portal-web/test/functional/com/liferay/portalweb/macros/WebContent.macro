@@ -815,10 +815,8 @@
 
 		<execute macro="Portlet#expandTree" />
 
-		<execute function="AssertElementPresent" locator1="PagesConfiguration#PAGE_TREE_NODE_EXPANDED" />
-
-		<execute function="Click#mouseOverClick" locator1="PagesConfiguration#PAGE_TREE_LINK">
-			<var name="key_pageName" value="${pageName}" />
+		<execute macro="Portlet#selectTreeNode">
+			<var name="nodeName" value="${pageName}" />
 		</execute>
 
 		<execute function="SelectFrameTop" />
@@ -1039,8 +1037,8 @@
 
 		<execute macro="Portlet#expandTree" />
 
-		<execute function="Click" locator1="WC#SELECT_FOLDER">
-			<var name="key_folderName" value="${folderName}" />
+		<execute macro="Portlet#selectTreeNode">
+			<var name="nodeName" value="${folderName}" />
 		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -1070,8 +1068,8 @@
 
 		<execute macro="Portlet#expandTree" />
 
-		<execute function="Click" locator1="WC#SELECT_FOLDER">
-			<var name="key_folderName" value="${folderName}" />
+		<execute macro="Portlet#selectTreeNode">
+			<var name="nodeName" value="${folderName}" />
 		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />

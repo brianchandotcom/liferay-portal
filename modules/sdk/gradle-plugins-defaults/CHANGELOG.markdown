@@ -1560,6 +1560,9 @@ Gradle Daemon:
 
 ## 3.7.3 - 2017-06-08
 
+### Changed
+- [LPS-72914]: Update the [Liferay Gradle Plugins] dependency to version 3.3.25.
+
 ### Fixed
 - [LPS-72989]: Fix [Find Security Bugs] custom configuration loading on Windows.
 
@@ -1727,6 +1730,7 @@ Gradle Daemon:
 [LPS-72830]: https://issues.liferay.com/browse/LPS-72830
 [LPS-72851]: https://issues.liferay.com/browse/LPS-72851
 [LPS-72868]: https://issues.liferay.com/browse/LPS-72868
+[LPS-72914]: https://issues.liferay.com/browse/LPS-72914
 [LPS-72989]: https://issues.liferay.com/browse/LPS-72989
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

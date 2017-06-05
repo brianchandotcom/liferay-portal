@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-
 import com.liferay.tasks.service.ClpSerializer;
 import com.liferay.tasks.service.TasksEntryLocalServiceUtil;
 import com.liferay.tasks.service.TasksEntryServiceUtil;
@@ -28,6 +27,7 @@ import com.liferay.tasks.service.TasksEntryServiceUtil;
  */
 @ProviderType
 public class ClpMessageListener extends BaseMessageListener {
+
 	public static String getServletContextName() {
 		return ClpSerializer.getServletContextName();
 	}
@@ -38,10 +38,12 @@ public class ClpMessageListener extends BaseMessageListener {
 		String servletContextName = message.getString("servletContextName");
 
 		if (command.equals("undeploy") &&
-				servletContextName.equals(getServletContextName())) {
+			servletContextName.equals(getServletContextName())) {
+
 			TasksEntryLocalServiceUtil.clearService();
 
 			TasksEntryServiceUtil.clearService();
 		}
 	}
+
 }

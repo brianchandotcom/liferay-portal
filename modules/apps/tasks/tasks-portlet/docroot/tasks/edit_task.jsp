@@ -29,12 +29,12 @@ long assigneeUserId = BeanParamUtil.getLong(tasksEntry, request, "assigneeUserId
 
 boolean addDueDate = false;
 String dueDateClassName = "hide";
-String dueDateToggleText = LanguageUtil.get(pageContext, "add-due-date");
+String dueDateToggleText = LanguageUtil.get(request, "add-due-date");
 
 if ((tasksEntry != null) && (tasksEntry.getDueDate() != null)) {
 	addDueDate = true;
 	dueDateClassName = StringPool.BLANK;
-	dueDateToggleText = LanguageUtil.get(pageContext, "remove-due-date");
+	dueDateToggleText = LanguageUtil.get(request, "remove-due-date");
 }
 %>
 
@@ -186,11 +186,11 @@ if ((tasksEntry != null) && (tasksEntry.getDueDate() != null)) {
 
 				if (checkboxValue == 'true') {
 					checkbox.set('value', false);
-					dueDateToggle.html('<%= LanguageUtil.get(pageContext, "add-due-date") %>');
+					dueDateToggle.html('<%= LanguageUtil.get(request, "add-due-date") %>');
 				}
 				else {
 					checkbox.set('value', true);
-					dueDateToggle.html('<%= LanguageUtil.get(pageContext, "remove-due-date") %>');
+					dueDateToggle.html('<%= LanguageUtil.get(request, "remove-due-date") %>');
 				}
 			}
 

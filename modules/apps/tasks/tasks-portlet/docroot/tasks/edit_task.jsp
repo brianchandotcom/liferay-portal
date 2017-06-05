@@ -120,7 +120,7 @@ if ((tasksEntry != null) && (tasksEntry.getDueDate() != null)) {
 
 				<label class="due-date-label field-label"><%= LanguageUtil.get(pageContext, "due-date") %></label>
 
-				<a class="due-date-toggle field-content" href="#" id="toggleDueDate" onClick="<%= renderResponse.getNamespace() + "displayInputDate();"; %>"><%= dueDateToggleText %></a>
+				<a class="due-date-toggle field-content" href="#" id="toggleDueDate" onClick="<%= renderResponse.getNamespace() + "displayInputDate();" %>"><%= dueDateToggleText %></a>
 
 				<aui:input id="addDueDate" name="addDueDate" type="hidden" value="<%= addDueDate %>" />
 

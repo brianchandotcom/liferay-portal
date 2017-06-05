@@ -20,7 +20,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.wsdl.builder", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xml.formatter", version: "1.0.7"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xsd.builder", version: "1.0.5"
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.26"
+	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.27"
 	compile group: "org.dm.gradle", name: "gradle-bundle-plugin", version: "0.9.0"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))

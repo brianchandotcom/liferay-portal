@@ -1544,10 +1544,24 @@ the deployed OSGi bundle is not `ACTIVE`.
 ### Changed
 - [LPS-72851]: Update the [Liferay Gradle Plugins] dependency to version 3.3.23.
 
-## 3.7.2 - 2017-06-01
+## 3.7.2 - 2017-06-04
 
 ### Changed
 - [LPS-72868]: Update the [Liferay Gradle Plugins] dependency to version 3.3.24.
+
+### Fixed
+- [LPS-72465]: Avoid caching the values of the following system properties when
+using the Gradle Daemon:
+	- `maven.local.ignore`
+	- `repository.private.password`
+	- `repository.private.url`
+	- `repository.private.username`
+	- `repository.url`
+
+## 3.7.3 - 2017-06-05
+
+### Changed
+- [LPS-72914]: Update the [Liferay Gradle Plugins] dependency to version 3.3.25.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -1702,6 +1716,7 @@ the deployed OSGi bundle is not `ACTIVE`.
 [LPS-72252]: https://issues.liferay.com/browse/LPS-72252
 [LPS-72340]: https://issues.liferay.com/browse/LPS-72340
 [LPS-72456]: https://issues.liferay.com/browse/LPS-72456
+[LPS-72465]: https://issues.liferay.com/browse/LPS-72465
 [LPS-72514]: https://issues.liferay.com/browse/LPS-72514
 [LPS-72562]: https://issues.liferay.com/browse/LPS-72562
 [LPS-72572]: https://issues.liferay.com/browse/LPS-72572
@@ -1712,6 +1727,7 @@ the deployed OSGi bundle is not `ACTIVE`.
 [LPS-72830]: https://issues.liferay.com/browse/LPS-72830
 [LPS-72851]: https://issues.liferay.com/browse/LPS-72851
 [LPS-72868]: https://issues.liferay.com/browse/LPS-72868
+[LPS-72914]: https://issues.liferay.com/browse/LPS-72914
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

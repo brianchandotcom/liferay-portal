@@ -160,6 +160,6 @@ public class TasksEntryAssetRenderer extends BaseJSPAssetRenderer<TasksEntry> {
 		return super.include(request, response, template);
 	}
 
-	private TasksEntry _entry;
+	private final TasksEntry _entry;
 
 }

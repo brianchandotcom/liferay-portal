@@ -1,6 +1,5 @@
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.document.library.api", version: "3.2.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"

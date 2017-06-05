@@ -1707,7 +1707,7 @@ to version 2.0.12.
 - [LPS-72851]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.3.14.
 
-## 3.3.24 - 2017-06-01
+## 3.3.24 - 2017-06-04
 
 ### Added
 - [LPS-72868]: Automatically exclude [`CN_IDIOM_NO_SUPER_CALL`](http://findbugs.sourceforge.net/bugDescriptions.html#CN_IDIOM_NO_SUPER_CALL)

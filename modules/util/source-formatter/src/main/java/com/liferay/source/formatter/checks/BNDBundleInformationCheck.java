@@ -42,7 +42,9 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 				content, "Bundle-Version");
 
 			if (bundleVersion == null) {
-				addMessage(fileName, "Missing Bundle-Version");
+				addMessage(
+					fileName, "Missing Bundle-Version",
+					"bnd_bundle_information.markdown");
 			}
 		}
 
@@ -73,11 +75,14 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 					strippedBundleName, expectedBundleName)) {
 
 				addMessage(
-					fileName, "Incorrect Bundle-Name '" + bundleName + "'");
+					fileName, "Incorrect Bundle-Name '" + bundleName + "'",
+					"bnd_bundle_information.markdown");
 			}
 		}
 		else {
-			addMessage(fileName, "Missing Bundle-Name");
+			addMessage(
+				fileName, "Missing Bundle-Name",
+				"bnd_bundle_information.markdown");
 		}
 
 		if (moduleName.contains("-import-") ||
@@ -99,11 +104,14 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					"Incorrect Bundle-SymbolicName '" + bundleSymbolicName +
-						"'");
+						"'",
+					"bnd_bundle_information.markdown");
 			}
 		}
 		else {
-			addMessage(fileName, "Missing Bundle-SymbolicName");
+			addMessage(
+				fileName, "Missing Bundle-SymbolicName",
+				"bnd_bundle_information.markdown");
 		}
 	}
 

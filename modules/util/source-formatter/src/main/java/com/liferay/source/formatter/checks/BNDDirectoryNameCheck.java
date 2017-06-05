@@ -57,7 +57,8 @@ public class BNDDirectoryNameCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					"Module '" + moduleName + "' should start with '" +
-						applicationName + "'");
+						applicationName + "'",
+					"module_directory_structure.markdown");
 			}
 		}
 
@@ -68,7 +69,8 @@ public class BNDDirectoryNameCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				"Rename module '" + moduleName + "' to '" + newModuleName +
-					"'");
+					"'",
+				"module_directory_structure.markdown");
 		}
 	}
 

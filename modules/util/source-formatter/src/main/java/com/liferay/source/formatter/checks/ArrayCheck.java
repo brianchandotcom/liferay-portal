@@ -40,7 +40,7 @@ public class ArrayCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			if (!ToolsUtil.isInsideQuotes(content, matcher.start())) {
 				addMessage(
-					fileName, "Use Collections.addAll, see LPS-72429",
+					fileName, "Use Collections.addAll", "collections.markdown",
 					getLineCount(content, matcher.start()));
 			}
 		}

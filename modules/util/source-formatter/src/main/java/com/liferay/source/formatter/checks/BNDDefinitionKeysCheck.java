@@ -94,7 +94,9 @@ public class BNDDefinitionKeysCheck extends DefinitionKeysCheck {
 		}
 
 		if (correctKey == null) {
-			addMessage(fileName, "Unknown key \"" + definitionKey + "\"");
+			addMessage(
+				fileName, "Unknown key \"" + definitionKey + "\"",
+				"bnd_definition_keys.markdown");
 
 			return content;
 		}

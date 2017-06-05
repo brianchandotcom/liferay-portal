@@ -148,8 +148,8 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					"Initial value for '" + variableName +
-						"' differs from value in cleanUp method, see " +
-							"LPS-66242");
+						"' differs from value in cleanUp method",
+					"cleanup.markdown");
 			}
 		}
 	}

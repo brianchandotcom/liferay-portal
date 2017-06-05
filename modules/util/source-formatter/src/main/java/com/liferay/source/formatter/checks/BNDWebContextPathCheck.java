@@ -58,7 +58,8 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 			!webContextPath.equals("/" + moduleName)) {
 
 			addMessage(
-				fileName, "Incorrect Web-ContextPath '" + webContextPath + "'");
+				fileName, "Incorrect Web-ContextPath '" + webContextPath + "'",
+				"bnd_bundle_information.markdown");
 		}
 	}
 

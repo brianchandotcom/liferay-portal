@@ -279,11 +279,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
 				cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-				descriptionMap, productTypeName, null, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, serviceContext);
+				descriptionMap, null, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				serviceContext);
 		}
 
 		return cpDefinition;

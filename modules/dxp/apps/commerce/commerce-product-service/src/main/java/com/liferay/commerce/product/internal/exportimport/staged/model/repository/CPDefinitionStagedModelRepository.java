@@ -287,12 +287,11 @@ public class CPDefinitionStagedModelRepository
 		return _cpDefinitionLocalService.updateCPDefinition(
 			cpDefinition.getCPDefinitionId(), cpDefinition.getBaseSKU(),
 			cpDefinition.getTitleMap(), cpDefinition.getShortDescriptionMap(),
-			cpDefinition.getDescriptionMap(), cpDefinition.getProductTypeName(),
-			cpDefinition.getDDMStructureKey(), displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			cpDefinition.getDescriptionMap(), cpDefinition.getDDMStructureKey(),
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Reference

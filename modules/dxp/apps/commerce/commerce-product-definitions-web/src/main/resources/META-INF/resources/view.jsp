@@ -170,13 +170,32 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	</div>
 </div>
 
-<liferay-portlet:renderURL var="addProductDefinitionURL">
+<liferay-portlet:renderURL var="addSimpleProductDefinitionURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 	<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
 	<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
+	<portlet:param name="productTypeName" value="simple" />
+	<portlet:param name="toolbarItem" value="view-product-definition-details" />
+</liferay-portlet:renderURL>
+
+<liferay-portlet:renderURL var="addGroupProductDefinitionURL">
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+	<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
+	<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
+	<portlet:param name="productTypeName" value="group" />
+	<portlet:param name="toolbarItem" value="view-product-definition-details" />
+</liferay-portlet:renderURL>
+
+<liferay-portlet:renderURL var="addVirtualProductDefinitionURL">
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+	<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
+	<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
+	<portlet:param name="productTypeName" value="virtual" />
 	<portlet:param name="toolbarItem" value="view-product-definition-details" />
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-product") %>' url="<%= addProductDefinitionURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-simple-product") %>' url="<%= addSimpleProductDefinitionURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-group-product") %>' url="<%= addGroupProductDefinitionURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-virtual-product") %>' url="<%= addVirtualProductDefinitionURL.toString() %>" />
 </liferay-frontend:add-menu>

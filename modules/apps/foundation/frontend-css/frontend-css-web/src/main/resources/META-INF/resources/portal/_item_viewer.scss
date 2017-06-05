@@ -129,6 +129,8 @@
 	.image-viewer-caption {
 		line-height: 32px;
 		position: absolute;
+		text-align: left;
+		width: 33%;
 
 		@include media-query(null, $screen-xs-max) {
 			@include flex(0 1 100%);

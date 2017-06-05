@@ -1,9 +1,9 @@
 # App Docker Gradle Plugin
 
-The App Docker Gradle plugin lets you build a single Docker image for an
-application that spans different subprojects, each one representing a different
-component of the same application. The Docker image can then be pushed to a
-registry.
+The App Docker Gradle plugin lets you build a single [Docker](https://www.docker.com/)
+image for an application that spans different subprojects, each one representing
+a different component of the same application. The Docker image can then be
+pushed to a registry.
 
 The plugin has been successfully tested with Gradle 2.5 up to 3.3.
 

@@ -174,6 +174,10 @@ AUI.add(
 
 						formValidator.validateField(instance._fileNameNode);
 
+						if (instance._fileNameNode.val() === '') {
+							return;
+						}
+
 						if (!formValidator.hasErrors()) {
 							var imageCropper = instance._imageCropper;
 							var portraitPreviewImg = instance._portraitPreviewImg;

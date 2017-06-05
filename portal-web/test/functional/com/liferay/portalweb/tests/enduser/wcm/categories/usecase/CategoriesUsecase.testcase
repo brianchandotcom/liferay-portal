@@ -1431,8 +1431,6 @@
 	<command name="SearchEditedCategory" priority="4">
 		<property name="testray.component.names" value="Categories,Documents Management" />
 
-		<execute macro="Navigator#openURL" />
-
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />
 		</execute>
@@ -1446,8 +1444,6 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -1459,8 +1455,6 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 			<var name="vocabularyName" value="Topic" />
 		</execute>
-
-		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />

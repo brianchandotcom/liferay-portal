@@ -197,7 +197,7 @@ taskListURL.setParameter("tabs2", tabs2);
 				buffer.append("</div>");
 
 				if (tasksEntry.getDueDate() != null) {
-					if (DateUtil.compareTo(new Date(), tasksEntry.getDueDate(), true) >= 0) {
+					if (DateUtil.compareTo(new Date(), tasksEntry.getDueDate()) >= 0) {
 						buffer.append("<div class=\"due-date past-due\">");
 					}
 					else {

@@ -17,7 +17,7 @@ class CategorySelector extends Component {
 
 			let config = {
 				categoryIds: instance.rule.queryValues || '',
-				categoryTitles: instance.rule.categoryIdsTitles ? instance.rule.categoryIdsTitles[1] : '',
+				categoryTitles: instance.rule.categoryIdsTitles ? instance.rule.categoryIdsTitles : [],
 				contentBox: '#' + instance.divId,
 				eventName: instance.eventName,
 				groupIds: instance.groupIds,
@@ -26,12 +26,26 @@ class CategorySelector extends Component {
 				vocabularyIds: instance.vocabularyIds,
 			};
 
-			instance.AssetTaglibCategoriesSelector = new Liferay.AssetTaglibCategoriesSelector(
+			instance._categoriesSelector = new Liferay.AssetTaglibCategoriesSelector(
 				config
 			).render();
 
+			let entries = instance._categoriesSelector.entries;
+
+			entries.after('add', instance._updateQueryValues, instance);
+			entries.after('remove', instance._updateQueryValues, instance);
 		});
 
+	}
+
+	_updateQueryValues() {
+		let instance = this;
+
+		let categoriesSelector = instance._categoriesSelector;
+
+		instance.rule.categoryIdsTitles = categoriesSelector.entries.values.map((element) => element.value);
+
+		instance.rule.queryValues = categoriesSelector.entries.keys.join(',');
 	}
 
 }

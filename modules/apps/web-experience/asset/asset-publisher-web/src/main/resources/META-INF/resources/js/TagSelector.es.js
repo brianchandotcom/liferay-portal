@@ -13,8 +13,6 @@ class TagSelector extends Component {
 	rendered() {
 		let instance = this;
 
-		let parentNode = document.getElementById('#' + instance.divId);
-
 		AUI().use('liferay-asset-taglib-tags-selector', function(A) {
 			let config = {
 				allowAddEntry: true,
@@ -31,8 +29,19 @@ class TagSelector extends Component {
 				config
 			).render();
 
-		});
+			let entries = instance._tagSelector.entries;
 
+			entries.after('add', instance._updateQueryValues, instance);
+			entries.after('remove', instance._updateQueryValues, instance);
+		});
+	}
+
+	_updateQueryValues() {
+		let instance = this;
+
+		let tagSelector = instance._tagSelector;
+
+		instance.rule.queryValues = tagSelector.entries.keys.join();
 	}
 }
 

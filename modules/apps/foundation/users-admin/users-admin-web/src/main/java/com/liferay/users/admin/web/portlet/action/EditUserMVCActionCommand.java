@@ -285,20 +285,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DynamicActionRequest dynamicActionRequest = new DynamicActionRequest(
-			actionRequest);
-
-		long prefixId = getListTypeId(
-			actionRequest, "prefixValue", ListTypeConstants.CONTACT_PREFIX);
-
-		dynamicActionRequest.setParameter("prefixId", String.valueOf(prefixId));
-
-		long suffixId = getListTypeId(
-			actionRequest, "suffixValue", ListTypeConstants.CONTACT_SUFFIX);
-
-		dynamicActionRequest.setParameter("suffixId", String.valueOf(suffixId));
-
-		actionRequest = dynamicActionRequest;
+		actionRequest = _wrapActionRequest(actionRequest);
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -827,6 +814,25 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 	protected Portal portal;
 
 	protected UserLocalService userLocalService;
+
+	private ActionRequest _wrapActionRequest(ActionRequest actionRequest)
+		throws Exception {
+
+		DynamicActionRequest dynamicActionRequest = new DynamicActionRequest(
+			actionRequest);
+
+		long prefixId = getListTypeId(
+			actionRequest, "prefixValue", ListTypeConstants.CONTACT_PREFIX);
+
+		dynamicActionRequest.setParameter("prefixId", String.valueOf(prefixId));
+
+		long suffixId = getListTypeId(
+			actionRequest, "suffixValue", ListTypeConstants.CONTACT_SUFFIX);
+
+		dynamicActionRequest.setParameter("suffixId", String.valueOf(suffixId));
+
+		return dynamicActionRequest;
+	}
 
 	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;

@@ -584,8 +584,15 @@
 	</command>
 
 	<command name="gotoConfigurationPG">
+		<if>
+			<contains string="${portletName}" substring="{portletName}" />
+			<then>
+				<var name="portletName" value="Asset Publisher" />
+			</then>
+		</if>
+
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Asset Publisher" />
+			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

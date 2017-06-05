@@ -55,7 +55,7 @@ public class SemanticVersioningFailureMessageGenerator
 
 		end = consoleOutput.indexOf("\n", end);
 
-		int start = consoleOutput.indexOf(_BASELINE_LOG_STRING);
+		int start = consoleOutput.lastIndexOf(_BASELINE_CHECK_STRING, end);
 
 		start = consoleOutput.indexOf(_SEMVER_START_STRING, start);
 
@@ -80,7 +80,7 @@ public class SemanticVersioningFailureMessageGenerator
 
 		end = consoleText.indexOf("\n", end);
 
-		int start = consoleText.indexOf(_BASELINE_LOG_STRING);
+		int start = consoleText.lastIndexOf(_BASELINE_CHECK_STRING, end);
 
 		start = consoleText.indexOf(_SEMVER_START_STRING, start);
 
@@ -99,7 +99,7 @@ public class SemanticVersioningFailureMessageGenerator
 						consoleText, true, start, end))));
 	}
 
-	private static final String _BASELINE_LOG_STRING =
+	private static final String _BASELINE_CHECK_STRING =
 		"Checking for baseline log files";
 
 	private static final String _SEMVER_END_STRING =

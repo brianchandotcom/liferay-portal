@@ -59,7 +59,6 @@ public class ChainingCheck extends AbstractCheck {
 		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_CALL);
 
-		outerLoop:
 		for (DetailAST methodCallAST : methodCallASTList) {
 			DetailAST dotAST = methodCallAST.findFirstToken(TokenTypes.DOT);
 
@@ -79,6 +78,14 @@ public class ChainingCheck extends AbstractCheck {
 				methodCallAST);
 
 			if (chainedMethodNames.size() == 1) {
+				continue;
+			}
+
+			if (_isAllowedChainingMethodCall(
+					detailAST, methodCallAST, chainedMethodNames)) {
+
+				_checkStyling(methodCallAST);
+
 				continue;
 			}
 
@@ -102,33 +109,6 @@ public class ChainingCheck extends AbstractCheck {
 				continue;
 			}
 
-			for (String allowedMethodName : _allowedMethodNames) {
-				if (chainedMethodNames.contains(allowedMethodName)) {
-					continue outerLoop;
-				}
-			}
-
-			if (dotAST != null) {
-				DetailAST nameAST = dotAST.findFirstToken(TokenTypes.IDENT);
-
-				String classOrVariableName = nameAST.getText();
-
-				if (classOrVariableName.matches(".*[Bb]uilder")) {
-					continue outerLoop;
-				}
-
-				String variableType = _getVariableType(
-					detailAST, classOrVariableName);
-
-				if (variableType != null) {
-					for (String allowedClassName : _allowedClassNames) {
-						if (variableType.matches(allowedClassName)) {
-							continue outerLoop;
-						}
-					}
-				}
-			}
-
 			log(
 				methodCallAST.getLineNo(), _MSG_AVOID_CHAINING_MULTIPLE,
 				DetailASTUtil.getMethodName(methodCallAST));
@@ -146,6 +126,24 @@ public class ChainingCheck extends AbstractCheck {
 
 			log(methodCallAST.getLineNo(), _MSG_AVOID_CHAINING, methodName);
 		}
+	}
+
+	private void _checkStyling(DetailAST methodCallAST) {
+		FileContents fileContents = getFileContents();
+
+		for (int i = DetailASTUtil.getStartLine(methodCallAST) + 1;
+			 i <= DetailASTUtil.getEndLine(methodCallAST); i++) {
+
+			String line = StringUtil.trim(fileContents.getLine(i - 1));
+
+			if (line.startsWith(").")) {
+				return;
+			}
+		}
+
+		log(
+			methodCallAST.getLineNo(), _MSG_INCORRECT_STYLING,
+			DetailASTUtil.getMethodName(methodCallAST));
 	}
 
 	private List<String> _getChainedMethodNames(DetailAST methodCallAST) {
@@ -224,6 +222,43 @@ public class ChainingCheck extends AbstractCheck {
 		return null;
 	}
 
+	private boolean _isAllowedChainingMethodCall(
+		DetailAST detailAST, DetailAST methodCallAST,
+		List<String> chainedMethodNames) {
+
+		for (String allowedMethodName : _allowedMethodNames) {
+			if (chainedMethodNames.contains(allowedMethodName)) {
+				return true;
+			}
+		}
+
+		DetailAST dotAST = methodCallAST.findFirstToken(TokenTypes.DOT);
+
+		if (dotAST == null) {
+			return false;
+		}
+
+		DetailAST nameAST = dotAST.findFirstToken(TokenTypes.IDENT);
+
+		String classOrVariableName = nameAST.getText();
+
+		if (classOrVariableName.matches(".*[Bb]uilder")) {
+			return true;
+		}
+
+		String variableType = _getVariableType(detailAST, classOrVariableName);
+
+		if (variableType != null) {
+			for (String allowedClassName : _allowedClassNames) {
+				if (variableType.matches(allowedClassName)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _isInsideConstructorThisCall(
 		DetailAST methodCallAST, DetailAST detailAST) {
 
@@ -255,6 +290,8 @@ public class ChainingCheck extends AbstractCheck {
 
 	private static final String _MSG_AVOID_TOO_MANY_CONCAT =
 		"concat.avoid.too.many";
+
+	private static final String _MSG_INCORRECT_STYLING = "styling.incorrect";
 
 	private String[] _allowedClassNames = new String[0];
 	private String[] _allowedMethodNames = new String[0];

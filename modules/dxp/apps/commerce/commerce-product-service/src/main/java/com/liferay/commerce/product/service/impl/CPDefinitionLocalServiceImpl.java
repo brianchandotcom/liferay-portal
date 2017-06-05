@@ -23,6 +23,8 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.service.base.CPDefinitionLocalServiceBaseImpl;
+import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -199,6 +201,15 @@ public class CPDefinitionLocalServiceImpl
 
 		cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntries(
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+
+		// Commerce product type
+
+		CPType cpType = cpTypeServicesTracker.getCPType(
+			cpDefinition.getProductTypeName());
+
+		if (cpType != null) {
+			cpType.deleteCPDefinition(cpDefinition.getCPDefinitionId());
+		}
 
 		// Resources
 
@@ -782,6 +793,9 @@ public class CPDefinitionLocalServiceImpl
 			}
 		}
 	}
+
+	@ServiceReference(type = CPTypeServicesTracker.class)
+	protected CPTypeServicesTracker cpTypeServicesTracker;
 
 	@ServiceReference(type = DDMStructureLocalService.class)
 	protected DDMStructureLocalService ddmStructureLocalService;

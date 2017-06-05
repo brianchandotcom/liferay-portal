@@ -38,6 +38,10 @@ import org.osgi.service.component.annotations.Component;
 public class GroupCPType implements CPType {
 
 	@Override
+	public void deleteCPDefinition(long cpDefinitionId) throws PortalException {
+	}
+
+	@Override
 	public String getCPDefinitionEditUrl(
 			long cpDefinitionId, HttpServletRequest httpServletRequest)
 		throws PortalException {

@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface CPType {
 
+	public void deleteCPDefinition(long cpDefinitionId) throws PortalException;
+
 	public String getCPDefinitionEditUrl(
 			long cpDefinitionId, HttpServletRequest httpServletRequest)
 		throws PortalException;

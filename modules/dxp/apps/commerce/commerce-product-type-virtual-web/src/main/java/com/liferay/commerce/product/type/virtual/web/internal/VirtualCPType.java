@@ -16,6 +16,7 @@ package com.liferay.commerce.product.type.virtual.web.internal;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -32,6 +33,7 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -45,6 +47,12 @@ import org.osgi.service.component.annotations.Component;
 	service = CPType.class
 )
 public class VirtualCPType implements CPType {
+
+	@Override
+	public void deleteCPDefinition(long cpDefinitionId) throws PortalException {
+		_cpDefinitionVirtualSettingLocalService.
+			deleteCPDefinitionVirtualSettingByCPDefinitionId(cpDefinitionId);
+	}
 
 	@Override
 	public String getCPDefinitionEditUrl(
@@ -79,5 +87,9 @@ public class VirtualCPType implements CPType {
 	public String getName() {
 		return "virtual";
 	}
+
+	@Reference
+	private CPDefinitionVirtualSettingLocalService
+		_cpDefinitionVirtualSettingLocalService;
 
 }

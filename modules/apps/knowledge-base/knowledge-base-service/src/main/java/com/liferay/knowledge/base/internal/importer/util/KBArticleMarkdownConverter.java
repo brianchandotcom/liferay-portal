@@ -145,7 +145,7 @@ public class KBArticleMarkdownConverter {
 				sb.append(text);
 			}
 
-			int pos = _html.indexOf("/>", curIndex);
+			int pos = _html.indexOf(">", curIndex);
 
 			if (pos < 0) {
 				if (_log.isDebugEnabled()) {

@@ -52,7 +52,7 @@ public class CPDefinitionVirtualSettingLocalServiceWrapper
 		java.lang.String url, java.lang.String activationStatus, long duration,
 		int maxUsages, boolean useSample, boolean useSampleUrl,
 		long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired, boolean useWebContent,
+		boolean termsOfUseRequired, boolean useJournal,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -60,7 +60,7 @@ public class CPDefinitionVirtualSettingLocalServiceWrapper
 		return _cpDefinitionVirtualSettingLocalService.addCPDefinitionVirtualSetting(cpDefinitionId,
 			useUrl, fileEntryId, url, activationStatus, duration, maxUsages,
 			useSample, useSampleUrl, sampleFileEntryId, sampleUrl,
-			termsOfUseRequired, useWebContent, termsOfUseContentMap,
+			termsOfUseRequired, useJournal, termsOfUseContentMap,
 			termsOfUseJournalArticleResourcePK, serviceContext);
 	}
 
@@ -170,7 +170,7 @@ public class CPDefinitionVirtualSettingLocalServiceWrapper
 		java.lang.String url, java.lang.String activationStatus, long duration,
 		int maxUsages, boolean useSample, boolean useSampleUrl,
 		long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired, boolean useWebContent,
+		boolean termsOfUseRequired, boolean useJournal,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -178,7 +178,7 @@ public class CPDefinitionVirtualSettingLocalServiceWrapper
 		return _cpDefinitionVirtualSettingLocalService.updateCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId,
 			useUrl, fileEntryId, url, activationStatus, duration, maxUsages,
 			useSample, useSampleUrl, sampleFileEntryId, sampleUrl,
-			termsOfUseRequired, useWebContent, termsOfUseContentMap,
+			termsOfUseRequired, useJournal, termsOfUseContentMap,
 			termsOfUseJournalArticleResourcePK, serviceContext);
 	}
 

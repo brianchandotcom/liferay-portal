@@ -59,7 +59,7 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 		java.lang.String url, java.lang.String activationStatus, long duration,
 		int maxUsages, boolean useSample, boolean useSampleUrl,
 		long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired, boolean useWebContent,
+		boolean termsOfUseRequired, boolean useJournal,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -68,7 +68,7 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 				   .addCPDefinitionVirtualSetting(cpDefinitionId, useUrl,
 			fileEntryId, url, activationStatus, duration, maxUsages, useSample,
 			useSampleUrl, sampleFileEntryId, sampleUrl, termsOfUseRequired,
-			useWebContent, termsOfUseContentMap,
+			useJournal, termsOfUseContentMap,
 			termsOfUseJournalArticleResourcePK, serviceContext);
 	}
 
@@ -176,7 +176,7 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 		java.lang.String url, java.lang.String activationStatus, long duration,
 		int maxUsages, boolean useSample, boolean useSampleUrl,
 		long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired, boolean useWebContent,
+		boolean termsOfUseRequired, boolean useJournal,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -185,7 +185,7 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 				   .updateCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId,
 			useUrl, fileEntryId, url, activationStatus, duration, maxUsages,
 			useSample, useSampleUrl, sampleFileEntryId, sampleUrl,
-			termsOfUseRequired, useWebContent, termsOfUseContentMap,
+			termsOfUseRequired, useJournal, termsOfUseContentMap,
 			termsOfUseJournalArticleResourcePK, serviceContext);
 	}
 

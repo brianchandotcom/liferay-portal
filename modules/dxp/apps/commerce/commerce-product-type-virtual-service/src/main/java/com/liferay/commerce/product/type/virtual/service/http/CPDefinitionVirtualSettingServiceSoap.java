@@ -74,7 +74,7 @@ public class CPDefinitionVirtualSettingServiceSoap {
 		java.lang.String url, java.lang.String activationStatus, long duration,
 		int maxUsages, boolean useSample, boolean useSampleUrl,
 		long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired, boolean useWebContent,
+		boolean termsOfUseRequired, boolean useJournal,
 		java.lang.String[] termsOfUseContentMapLanguageIds,
 		java.lang.String[] termsOfUseContentMapValues,
 		long termsOfUseJournalArticleResourcePK,
@@ -88,7 +88,7 @@ public class CPDefinitionVirtualSettingServiceSoap {
 				CPDefinitionVirtualSettingServiceUtil.addCPDefinitionVirtualSetting(cpDefinitionId,
 					useUrl, fileEntryId, url, activationStatus, duration,
 					maxUsages, useSample, useSampleUrl, sampleFileEntryId,
-					sampleUrl, termsOfUseRequired, useWebContent,
+					sampleUrl, termsOfUseRequired, useJournal,
 					termsOfUseContentMap, termsOfUseJournalArticleResourcePK,
 					serviceContext);
 
@@ -138,7 +138,7 @@ public class CPDefinitionVirtualSettingServiceSoap {
 		java.lang.String url, java.lang.String activationStatus, long duration,
 		int maxUsages, boolean useSample, boolean useSampleUrl,
 		long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired, boolean useWebContent,
+		boolean termsOfUseRequired, boolean useJournal,
 		java.lang.String[] termsOfUseContentMapLanguageIds,
 		java.lang.String[] termsOfUseContentMapValues,
 		long termsOfUseJournalArticleResourcePK,
@@ -152,7 +152,7 @@ public class CPDefinitionVirtualSettingServiceSoap {
 				CPDefinitionVirtualSettingServiceUtil.updateCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId,
 					useUrl, fileEntryId, url, activationStatus, duration,
 					maxUsages, useSample, useSampleUrl, sampleFileEntryId,
-					sampleUrl, termsOfUseRequired, useWebContent,
+					sampleUrl, termsOfUseRequired, useJournal,
 					termsOfUseContentMap, termsOfUseJournalArticleResourcePK,
 					serviceContext);
 

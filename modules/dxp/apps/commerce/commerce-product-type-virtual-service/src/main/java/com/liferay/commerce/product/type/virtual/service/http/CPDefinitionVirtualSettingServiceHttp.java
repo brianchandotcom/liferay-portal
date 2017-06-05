@@ -61,7 +61,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 		java.lang.String activationStatus, long duration, int maxUsages,
 		boolean useSample, boolean useSampleUrl, long sampleFileEntryId,
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
-		boolean useWebContent,
+		boolean useJournal,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -75,7 +75,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 					cpDefinitionId, useUrl, fileEntryId, url, activationStatus,
 					duration, maxUsages, useSample, useSampleUrl,
 					sampleFileEntryId, sampleUrl, termsOfUseRequired,
-					useWebContent, termsOfUseContentMap,
+					useJournal, termsOfUseContentMap,
 					termsOfUseJournalArticleResourcePK, serviceContext);
 
 			Object returnObj = null;
@@ -173,7 +173,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 		java.lang.String activationStatus, long duration, int maxUsages,
 		boolean useSample, boolean useSampleUrl, long sampleFileEntryId,
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
-		boolean useWebContent,
+		boolean useJournal,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -187,7 +187,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 					cpDefinitionVirtualSettingId, useUrl, fileEntryId, url,
 					activationStatus, duration, maxUsages, useSample,
 					useSampleUrl, sampleFileEntryId, sampleUrl,
-					termsOfUseRequired, useWebContent, termsOfUseContentMap,
+					termsOfUseRequired, useJournal, termsOfUseContentMap,
 					termsOfUseJournalArticleResourcePK, serviceContext);
 
 			Object returnObj = null;

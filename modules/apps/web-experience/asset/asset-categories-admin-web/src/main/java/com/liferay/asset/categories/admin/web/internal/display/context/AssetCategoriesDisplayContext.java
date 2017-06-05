@@ -389,10 +389,8 @@ public class AssetCategoriesDisplayContext {
 	public String getEditCategoryRedirect() throws PortalException {
 		PortletURL backURL = _renderResponse.createRenderURL();
 
-		AssetCategory category = getCategory();
-
 		long parentCategoryId = BeanParamUtil.getLong(
-			category, _request, "parentCategoryId");
+			getCategory(), _request, "parentCategoryId");
 
 		backURL.setParameter("mvcPath", "/view_categories.jsp");
 

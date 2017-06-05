@@ -36,6 +36,7 @@ CPType cpType = cpDefinitionsDisplayContext.getCPType(cpDefinition.getProductTyp
 	<c:otherwise>
 		<liferay-ui:search-container-column-icon
 			icon="documents-and-media"
+			name="image"
 			toggleRowChecker="<%= true %>"
 		/>
 	</c:otherwise>

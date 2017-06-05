@@ -522,13 +522,12 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition updateCPDefinition(
 			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
-			Map<Locale, String> descriptionMap, String productTypeName,
-			String ddmStructureKey, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, String ddmStructureKey,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -557,7 +556,6 @@ public class CPDefinitionLocalServiceImpl
 		validateReferences(groupId, ddmStructureKey);
 
 		cpDefinition.setBaseSKU(baseSKU);
-		cpDefinition.setProductTypeName(productTypeName);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
 		cpDefinition.setDisplayDate(displayDate);
 		cpDefinition.setExpirationDate(expirationDate);

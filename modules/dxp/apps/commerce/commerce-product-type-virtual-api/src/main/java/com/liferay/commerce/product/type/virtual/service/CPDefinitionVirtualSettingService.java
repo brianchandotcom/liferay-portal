@@ -61,13 +61,9 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 		java.lang.String url, java.lang.String activationStatus, long duration,
 		int maxUsages, boolean useSample, boolean useSampleUrl,
 		long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired, boolean useJournal,
+		boolean termsOfUseRequired, boolean useTermsOfUseJournal,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK, ServiceContext serviceContext)
-		throws PortalException;
-
-	public CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -79,7 +75,7 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 		java.lang.String url, java.lang.String activationStatus, long duration,
 		int maxUsages, boolean useSample, boolean useSampleUrl,
 		long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired, boolean useJournal,
+		boolean termsOfUseRequired, boolean useTermsOfUseJournal,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK, ServiceContext serviceContext)
 		throws PortalException;

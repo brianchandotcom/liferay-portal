@@ -46,7 +46,7 @@ public class CPDefinitionVirtualSettingServiceUtil {
 		java.lang.String url, java.lang.String activationStatus, long duration,
 		int maxUsages, boolean useSample, boolean useSampleUrl,
 		long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired, boolean useJournal,
+		boolean termsOfUseRequired, boolean useTermsOfUseJournal,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -55,15 +55,8 @@ public class CPDefinitionVirtualSettingServiceUtil {
 				   .addCPDefinitionVirtualSetting(cpDefinitionId, useUrl,
 			fileEntryId, url, activationStatus, duration, maxUsages, useSample,
 			useSampleUrl, sampleFileEntryId, sampleUrl, termsOfUseRequired,
-			useJournal, termsOfUseContentMap,
+			useTermsOfUseJournal, termsOfUseContentMap,
 			termsOfUseJournalArticleResourcePK, serviceContext);
-	}
-
-	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
-		com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting cpDefinitionVirtualSetting)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .deleteCPDefinitionVirtualSetting(cpDefinitionVirtualSetting);
 	}
 
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
@@ -78,7 +71,7 @@ public class CPDefinitionVirtualSettingServiceUtil {
 		java.lang.String url, java.lang.String activationStatus, long duration,
 		int maxUsages, boolean useSample, boolean useSampleUrl,
 		long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired, boolean useJournal,
+		boolean termsOfUseRequired, boolean useTermsOfUseJournal,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePK,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -87,7 +80,7 @@ public class CPDefinitionVirtualSettingServiceUtil {
 				   .updateCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId,
 			useUrl, fileEntryId, url, activationStatus, duration, maxUsages,
 			useSample, useSampleUrl, sampleFileEntryId, sampleUrl,
-			termsOfUseRequired, useJournal, termsOfUseContentMap,
+			termsOfUseRequired, useTermsOfUseJournal, termsOfUseContentMap,
 			termsOfUseJournalArticleResourcePK, serviceContext);
 	}
 

@@ -263,6 +263,17 @@
 		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_${columnNumberTo}_PORTLET_TITLE" value1="${portletName}" />
 	</command>
 
+	<command name="expandTree">
+		<while>
+			<condition function="IsElementPresent" locator1="Treeview#NODE_COLLAPSED" />
+			<then>
+				<execute function="Click" locator1="Treeview#NODE_COLLAPSED" />
+			</then>
+		</while>
+
+		<execute function="AssertElementNotPresent" locator1="Treeview#NODE_COLLAPSED" />
+	</command>
+
 	<command name="gotoPortletOptions">
 		<if>
 			<isset var="portletName" />

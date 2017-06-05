@@ -57,12 +57,12 @@ public class CPDefinitionVirtualSettingServiceImpl
 
 	@Override
 	public CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
-			long cpDefinitionVirtualSettingId)
+			long cpDefinitionId)
 		throws PortalException {
 
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			cpDefinitionVirtualSettingPersistence.fetchByCPDefinitionId(
-				cpDefinitionVirtualSettingId);
+				cpDefinitionId);
 
 		if (cpDefinitionVirtualSetting != null) {
 			CPDefinitionPermission.check(

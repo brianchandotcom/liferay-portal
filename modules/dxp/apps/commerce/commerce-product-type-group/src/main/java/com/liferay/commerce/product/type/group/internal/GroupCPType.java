@@ -14,7 +14,9 @@
 
 package com.liferay.commerce.product.type.group.internal;
 
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
@@ -39,6 +41,12 @@ public class GroupCPType implements CPType {
 
 	@Override
 	public void deleteCPDefinition(long cpDefinitionId) throws PortalException {
+	}
+
+	@Override
+	public void exportCPDefinition(
+			CPDefinition cpDefinition, PortletDataContext portletDataContext)
+		throws Exception {
 	}
 
 	@Override

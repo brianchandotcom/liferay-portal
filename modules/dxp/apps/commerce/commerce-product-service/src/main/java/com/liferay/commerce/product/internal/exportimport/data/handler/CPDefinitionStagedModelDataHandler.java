@@ -17,6 +17,8 @@ package com.liferay.commerce.product.internal.exportimport.data.handler;
 import com.liferay.commerce.product.internal.exportimport.content.processor.CPDefinitionExportImportContentProcessor;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
@@ -71,6 +73,13 @@ public class CPDefinitionStagedModelDataHandler
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, cpDefinition, cpDefinitionOptionRel,
 				PortletDataContext.REFERENCE_TYPE_STRONG);
+		}
+
+		CPType cpType = _cpTypeServicesTracker.getCPType(
+			cpDefinition.getProductTypeName());
+
+		if (cpType != null) {
+			cpType.exportCPDefinition(cpDefinition, portletDataContext);
 		}
 
 		Element element = portletDataContext.getExportDataElement(cpDefinition);
@@ -214,6 +223,9 @@ public class CPDefinitionStagedModelDataHandler
 	@Reference
 	private CPDefinitionExportImportContentProcessor
 		_cpDefinitionExportImportContentProcessor;
+
+	@Reference
+	private CPTypeServicesTracker _cpTypeServicesTracker;
 
 	private StagedModelRepository<CPDefinition> _stagedModelRepository;
 

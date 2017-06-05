@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.product.type;
 
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Locale;
@@ -26,6 +28,10 @@ import javax.servlet.http.HttpServletRequest;
 public interface CPType {
 
 	public void deleteCPDefinition(long cpDefinitionId) throws PortalException;
+
+	public void exportCPDefinition(
+			CPDefinition cpDefinition, PortletDataContext portletDataContext)
+		throws Exception;
 
 	public String getCPDefinitionEditUrl(
 			long cpDefinitionId, HttpServletRequest httpServletRequest)

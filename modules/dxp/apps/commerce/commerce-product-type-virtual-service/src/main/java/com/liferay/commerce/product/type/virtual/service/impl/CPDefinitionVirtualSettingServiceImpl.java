@@ -56,19 +56,6 @@ public class CPDefinitionVirtualSettingServiceImpl
 	}
 
 	@Override
-	public CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
-			CPDefinitionVirtualSetting cpDefinitionVirtualSetting)
-		throws PortalException {
-
-		CPDefinitionPermission.check(
-			getPermissionChecker(),
-			cpDefinitionVirtualSetting.getCPDefinitionId(), ActionKeys.UPDATE);
-
-		return cpDefinitionVirtualSettingLocalService.
-			deleteCPDefinitionVirtualSetting(cpDefinitionVirtualSetting);
-	}
-
-	@Override
 	public CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
 			long cpDefinitionVirtualSettingId)
 		throws PortalException {

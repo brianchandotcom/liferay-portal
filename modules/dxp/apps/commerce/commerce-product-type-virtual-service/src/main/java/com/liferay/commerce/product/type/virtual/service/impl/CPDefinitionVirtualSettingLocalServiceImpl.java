@@ -128,15 +128,6 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 	}
 
 	@Override
-	public CPDefinitionVirtualSetting getCPDefinitionVirtualSetting(
-			long cpDefinitionId)
-		throws PortalException {
-
-		return cpDefinitionVirtualSettingPersistence.findByCPDefinitionId(
-			cpDefinitionId);
-	}
-
-	@Override
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 			long cpDefinitionVirtualSettingId, boolean useUrl, long fileEntryId,
 			String url, String activationStatus, long duration, int maxUsages,

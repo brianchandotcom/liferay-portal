@@ -101,6 +101,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			cpDefinitionVirtualSettingPersistence.create(
 				cpDefinitionVirtualSettingId);
 
+		cpDefinitionVirtualSetting.setUuid(serviceContext.getUuid());
 		cpDefinitionVirtualSetting.setGroupId(groupId);
 		cpDefinitionVirtualSetting.setCompanyId(user.getCompanyId());
 		cpDefinitionVirtualSetting.setUserId(user.getUserId());

@@ -186,7 +186,7 @@
 			<var name="portletName" value="Related Assets" />
 		</execute>
 
-		<execute macro="RelatedAssets#configureFilterByCategories">
+		<execute macro="AssetPublisherPortlet#configureFilterByCategories">
 			<var name="categoryName" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>

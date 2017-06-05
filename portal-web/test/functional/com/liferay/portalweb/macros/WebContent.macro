@@ -813,12 +813,7 @@
 
 		<execute function="SelectFrame" locator1="WCSelectDisplayPage#DISPLAY_PAGE_CONFIGURATION_IFRAME" />
 
-		<while>
-			<condition function="IsElementPresent" locator1="PagesConfiguration#PAGE_TREE_NODE_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="PagesConfiguration#PAGE_TREE_NODE_COLLAPSED" />
-			</then>
-		</while>
+		<execute macro="Portlet#expandTree" />
 
 		<execute function="AssertElementPresent" locator1="PagesConfiguration#PAGE_TREE_NODE_EXPANDED" />
 
@@ -1042,7 +1037,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute macro="WebContent#expandFolderTreeCP" />
+		<execute macro="Portlet#expandTree" />
 
 		<execute function="Click" locator1="WC#SELECT_FOLDER">
 			<var name="key_folderName" value="${folderName}" />
@@ -1073,7 +1068,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute macro="WebContent#expandFolderTreeCP" />
+		<execute macro="Portlet#expandTree" />
 
 		<execute function="Click" locator1="WC#SELECT_FOLDER">
 			<var name="key_folderName" value="${folderName}" />

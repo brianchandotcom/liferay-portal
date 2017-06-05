@@ -72,8 +72,7 @@ public class WikiPageItemSelectorViewDisplayContext {
 		PortletURL portletURL = PortletURLUtil.clone(
 			_portletURL, liferayPortletResponse);
 
-		portletURL.setParameter(
-			"selectedTab", getTitle(request.getLocale()));
+		portletURL.setParameter("selectedTab", getTitle(request.getLocale()));
 
 		return portletURL;
 	}

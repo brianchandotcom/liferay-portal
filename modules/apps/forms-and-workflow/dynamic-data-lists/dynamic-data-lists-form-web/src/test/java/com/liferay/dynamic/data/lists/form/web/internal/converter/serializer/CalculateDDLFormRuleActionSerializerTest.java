@@ -77,6 +77,12 @@ public class CalculateDDLFormRuleActionSerializerTest extends PowerMockito {
 				new CalculateDDLFormRuleActionSerializer(
 					_calculateDDLFormRuleAction);
 
+		PowerMockito.when(
+			_ddlFormRuleSerializerContext.getAttribute("form")
+		).thenReturn(
+			ddmForm
+		);
+
 		String result = calculateDDLFormRuleActionSerializer.serialize(
 			_ddlFormRuleSerializerContext);
 

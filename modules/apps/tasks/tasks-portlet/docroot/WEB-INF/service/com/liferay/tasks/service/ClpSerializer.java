@@ -1,15 +1,18 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * This file is part of Liferay Social Office. Liferay Social Office is free
+ * software: you can redistribute it and/or modify it under the terms of the GNU
+ * Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * Liferay Social Office is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Liferay Social Office. If not, see http://www.gnu.org/licenses/agpl-3.0.html.
  */
 
 package com.liferay.tasks.service;
@@ -56,11 +59,12 @@ public class ClpSerializer {
 				Class<?> portletPropsClass = classLoader.loadClass(
 					"com.liferay.util.portlet.PortletProps");
 
-				Method getMethod = portletPropsClass.getMethod("get",
-					new Class<?>[] {String.class});
+				Method getMethod = portletPropsClass.getMethod(
+					"get", new Class<?>[] {String.class});
 
-				String portletPropsServletContextName = (String)getMethod.invoke(null,
-					"tasks-portlet-deployment-context");
+				String portletPropsServletContextName =
+					(String)getMethod.invoke(
+						null, "tasks-portlet-deployment-context");
 
 				if (Validator.isNotNull(portletPropsServletContextName)) {
 					_servletContextName = portletPropsServletContextName;
@@ -69,7 +73,8 @@ public class ClpSerializer {
 			catch (Throwable t) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Unable to locate deployment context from portlet properties");
+						"Unable to locate deployment context from portlet " +
+							"properties");
 				}
 			}
 
@@ -85,7 +90,8 @@ public class ClpSerializer {
 				catch (Throwable t) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Unable to locate deployment context from portal properties");
+							"Unable to locate deployment context from portal " +
+								"properties");
 					}
 				}
 			}
@@ -167,18 +173,19 @@ public class ClpSerializer {
 				Class<?> newClpSerializerClass = classLoader.loadClass(
 					oldClpSerializerClass.getName());
 
-				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
-					BaseModel.class);
+				Method translateOutputMethod = newClpSerializerClass.getMethod(
+					"translateOutput", BaseModel.class);
 
 				Class<?> oldModelModelClass = oldModel.getModelClass();
 
-				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
-					oldModelModelClass.getSimpleName() + "RemoteModel");
+				Method getRemoteModelMethod = oldModelClass.getMethod(
+					"get" + oldModelModelClass.getSimpleName() + "RemoteModel");
 
 				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
 
-				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
-					oldRemoteModel);
+				BaseModel<?> newModel =
+					(BaseModel<?>)translateOutputMethod.invoke(
+						null, oldRemoteModel);
 
 				return newModel;
 			}
@@ -229,11 +236,13 @@ public class ClpSerializer {
 	public static Throwable translateThrowable(Throwable throwable) {
 		if (_useReflectionToTranslateThrowable) {
 			ObjectInputStream objectInputStream = null;
+
 			ObjectOutputStream objectOutputStream = null;
 
 			try {
 				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 					new UnsyncByteArrayOutputStream();
+
 				objectOutputStream = new ObjectOutputStream(
 					unsyncByteArrayOutputStream);
 
@@ -241,16 +250,18 @@ public class ClpSerializer {
 
 				objectOutputStream.flush();
 
-				UnsyncByteArrayInputStream unsyncByteArrayInputStream = new UnsyncByteArrayInputStream(unsyncByteArrayOutputStream.unsafeGetByteArray(),
-					0, unsyncByteArrayOutputStream.size());
+				UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+					new UnsyncByteArrayInputStream(
+						unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
+						unsyncByteArrayOutputStream.size());
 
 				Thread currentThread = Thread.currentThread();
 
 				ClassLoader contextClassLoader =
 					currentThread.getContextClassLoader();
 
-				objectInputStream = new ClassLoaderObjectInputStream(unsyncByteArrayInputStream,
-					contextClassLoader);
+				objectInputStream = new ClassLoaderObjectInputStream(
+					unsyncByteArrayInputStream, contextClassLoader);
 
 				throwable = (Throwable)objectInputStream.readObject();
 
@@ -307,22 +318,22 @@ public class ClpSerializer {
 		if (className.equals(
 				"com.liferay.tasks.exception.TasksEntryDueDateException")) {
 
-			return new com.liferay.tasks.exception.TasksEntryDueDateException(throwable.getMessage(),
-				throwable.getCause());
+			return new com.liferay.tasks.exception.TasksEntryDueDateException(
+				throwable.getMessage(), throwable.getCause());
 		}
 
 		if (className.equals(
 				"com.liferay.tasks.exception.TasksEntryTitleException")) {
 
-			return new com.liferay.tasks.exception.TasksEntryTitleException(throwable.getMessage(),
-				throwable.getCause());
+			return new com.liferay.tasks.exception.TasksEntryTitleException(
+				throwable.getMessage(), throwable.getCause());
 		}
 
 		if (className.equals(
 				"com.liferay.tasks.exception.NoSuchTasksEntryException")) {
 
-			return new com.liferay.tasks.exception.NoSuchTasksEntryException(throwable.getMessage(),
-				throwable.getCause());
+			return new com.liferay.tasks.exception.NoSuchTasksEntryException(
+				throwable.getMessage(), throwable.getCause());
 		}
 
 		return throwable;

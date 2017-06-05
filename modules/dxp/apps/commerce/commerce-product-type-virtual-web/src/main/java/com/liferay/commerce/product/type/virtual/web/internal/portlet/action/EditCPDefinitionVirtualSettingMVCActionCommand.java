@@ -159,7 +159,8 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 		String sampleUrl = ParamUtil.getString(actionRequest, "sampleUrl");
 		boolean termsOfUseRequired = ParamUtil.getBoolean(
 			actionRequest, "termsOfUseRequired");
-		boolean useJournal = ParamUtil.getBoolean(actionRequest, "useJournal");
+		boolean useTermsOfUseJournal = ParamUtil.getBoolean(
+			actionRequest, "useTermsOfUseJournal");
 		Map<Locale, String> termsOfUseContentMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "termsOfUseContent");
@@ -183,7 +184,8 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 						cpDefinitionId, useUrl, fileEntryId, url,
 						activationStatus, duration, maxUsages, useSample,
 						useSampleUrl, sampleFileEntryId, sampleUrl,
-						termsOfUseRequired, useJournal, termsOfUseContentMap,
+						termsOfUseRequired, useTermsOfUseJournal,
+						termsOfUseContentMap,
 						termsOfUseJournalArticleResourcePK, serviceContext);
 		}
 		else {
@@ -196,7 +198,8 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 						cpDefinitionVirtualSettingId, useUrl, fileEntryId, url,
 						activationStatus, duration, maxUsages, useSample,
 						useSampleUrl, sampleFileEntryId, sampleUrl,
-						termsOfUseRequired, useJournal, termsOfUseContentMap,
+						termsOfUseRequired, useTermsOfUseJournal,
+						termsOfUseContentMap,
 						termsOfUseJournalArticleResourcePK, serviceContext);
 		}
 

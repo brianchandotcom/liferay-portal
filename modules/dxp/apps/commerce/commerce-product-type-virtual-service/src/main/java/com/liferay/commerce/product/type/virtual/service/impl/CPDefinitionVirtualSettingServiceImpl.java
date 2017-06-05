@@ -36,7 +36,8 @@ public class CPDefinitionVirtualSettingServiceImpl
 			long cpDefinitionId, boolean useUrl, long fileEntryId, String url,
 			String activationStatus, long duration, int maxUsages,
 			boolean useSample, boolean useSampleUrl, long sampleFileEntryId,
-			String sampleUrl, boolean termsOfUseRequired, boolean useJournal,
+			String sampleUrl, boolean termsOfUseRequired,
+			boolean useTermsOfUseJournal,
 			Map<Locale, String> termsOfUseContentMap,
 			long termsOfUseJournalArticleResourcePK,
 			ServiceContext serviceContext)
@@ -49,8 +50,9 @@ public class CPDefinitionVirtualSettingServiceImpl
 			addCPDefinitionVirtualSetting(
 				cpDefinitionId, useUrl, fileEntryId, url, activationStatus,
 				duration, maxUsages, useSample, useSampleUrl, sampleFileEntryId,
-				sampleUrl, termsOfUseRequired, useJournal, termsOfUseContentMap,
-				termsOfUseJournalArticleResourcePK, serviceContext);
+				sampleUrl, termsOfUseRequired, useTermsOfUseJournal,
+				termsOfUseContentMap, termsOfUseJournalArticleResourcePK,
+				serviceContext);
 	}
 
 	@Override
@@ -90,7 +92,8 @@ public class CPDefinitionVirtualSettingServiceImpl
 			long cpDefinitionVirtualSettingId, boolean useUrl, long fileEntryId,
 			String url, String activationStatus, long duration, int maxUsages,
 			boolean useSample, boolean useSampleUrl, long sampleFileEntryId,
-			String sampleUrl, boolean termsOfUseRequired, boolean useJournal,
+			String sampleUrl, boolean termsOfUseRequired,
+			boolean useTermsOfUseJournal,
 			Map<Locale, String> termsOfUseContentMap,
 			long termsOfUseJournalArticleResourcePK,
 			ServiceContext serviceContext)
@@ -102,9 +105,9 @@ public class CPDefinitionVirtualSettingServiceImpl
 			updateCPDefinitionVirtualSetting(
 				cpDefinitionVirtualSettingId, useUrl, fileEntryId, url,
 				activationStatus, duration, maxUsages, useSample, useSampleUrl,
-				sampleFileEntryId, sampleUrl, termsOfUseRequired, useJournal,
-				termsOfUseContentMap, termsOfUseJournalArticleResourcePK,
-				serviceContext);
+				sampleFileEntryId, sampleUrl, termsOfUseRequired,
+				useTermsOfUseJournal, termsOfUseContentMap,
+				termsOfUseJournalArticleResourcePK, serviceContext);
 	}
 
 }

@@ -102,8 +102,11 @@ public class StagedLayoutSetStagedModelRepository
 
 		Stream<Layout> layoutsStream = layouts.stream();
 
-		return layoutsStream.map((layout) -> (StagedModel)layout).collect(
-			Collectors.toList());
+		return layoutsStream.map(
+			(layout) -> (StagedModel)layout
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	public Optional<StagedLayoutSet> fetchExistingLayoutSet(

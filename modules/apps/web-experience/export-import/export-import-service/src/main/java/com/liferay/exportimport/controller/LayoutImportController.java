@@ -620,7 +620,11 @@ public class LayoutImportController implements ImportController {
 
 		Stream<Node> nodesStream = nodes.stream();
 
-		nodesStream.map((node) -> (Element)node).forEach(portletElements::add);
+		nodesStream.map(
+			(node) -> (Element)node
+		).forEach(
+			portletElements::add
+		);
 
 		return portletElements;
 	}

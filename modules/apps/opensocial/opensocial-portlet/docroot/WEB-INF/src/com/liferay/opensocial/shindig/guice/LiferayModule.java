@@ -50,15 +50,46 @@ public class LiferayModule extends AbstractModule {
 		).toInstance(
 			"sampledata/canonicaldb.json"
 		);
-
-		bind(ActivityService.class).to(LiferayActivityService.class);
-		bind(AlbumService.class).to(LiferayAlbumService.class);
-		bind(AppDataService.class).to(LiferayAppDataService.class);
-		bind(ContainerConfig.class).to(LiferayJsonContainerConfig.class);
-		bind(MediaItemService.class).to(LiferayMediaItemService.class);
-		bind(MessageService.class).to(NotImplementedMessageService.class);
-		bind(OAuthDataStore.class).to(SampleOAuthDataStore.class);
-		bind(PersonService.class).to(LiferayPersonService.class);
+		bind(
+			ActivityService.class
+		).to(
+			LiferayActivityService.class
+		);
+		bind(
+			AlbumService.class
+		).to(
+			LiferayAlbumService.class
+		);
+		bind(
+			AppDataService.class
+		).to(
+			LiferayAppDataService.class
+		);
+		bind(
+			ContainerConfig.class
+		).to(
+			LiferayJsonContainerConfig.class
+		);
+		bind(
+			MediaItemService.class
+		).to(
+			LiferayMediaItemService.class
+		);
+		bind(
+			MessageService.class
+		).to(
+			NotImplementedMessageService.class
+		);
+		bind(
+			OAuthDataStore.class
+		).to(
+			SampleOAuthDataStore.class
+		);
+		bind(
+			PersonService.class
+		).to(
+			LiferayPersonService.class
+		);
 
 		requestStaticInjection(ShindigUtil.class);
 	}

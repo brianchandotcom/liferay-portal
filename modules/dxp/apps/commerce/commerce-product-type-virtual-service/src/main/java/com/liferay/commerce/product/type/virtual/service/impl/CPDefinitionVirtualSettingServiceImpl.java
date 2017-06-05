@@ -27,6 +27,7 @@ import java.util.Map;
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 public class CPDefinitionVirtualSettingServiceImpl
 	extends CPDefinitionVirtualSettingServiceBaseImpl {
@@ -56,8 +57,9 @@ public class CPDefinitionVirtualSettingServiceImpl
 	}
 
 	@Override
-	public CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
-			long cpDefinitionId)
+	public CPDefinitionVirtualSetting
+			fetchCPDefinitionVirtualSettingByCPDefinitionId(
+				long cpDefinitionId)
 		throws PortalException {
 
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
@@ -86,7 +88,8 @@ public class CPDefinitionVirtualSettingServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		fetchCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId);
+		fetchCPDefinitionVirtualSettingByCPDefinitionId(
+			cpDefinitionVirtualSettingId);
 
 		return cpDefinitionVirtualSettingLocalService.
 			updateCPDefinitionVirtualSetting(

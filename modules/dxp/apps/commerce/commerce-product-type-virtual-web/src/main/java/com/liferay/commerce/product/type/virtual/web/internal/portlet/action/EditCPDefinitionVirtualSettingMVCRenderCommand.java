@@ -75,7 +75,8 @@ public class EditCPDefinitionVirtualSettingMVCRenderCommand
 
 			CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 				_cpDefinitionVirtualSettingService.
-					fetchCPDefinitionVirtualSetting(cpDefinitionId);
+					fetchCPDefinitionVirtualSettingByCPDefinitionId(
+						cpDefinitionId);
 
 			renderRequest.setAttribute(
 				CPDefinitionVirtualSettingWebKeys.CP_DEFINITION_VIRTUAL_SETTING,

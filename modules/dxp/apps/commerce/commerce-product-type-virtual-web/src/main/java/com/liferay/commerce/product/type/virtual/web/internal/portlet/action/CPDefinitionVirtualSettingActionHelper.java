@@ -50,7 +50,7 @@ public class CPDefinitionVirtualSettingActionHelper {
 		if (cpDefinitionVirtualSettingId > 0) {
 			cpDefinitionVirtualSetting =
 				_cpDefinitionVirtualSettingService.
-					fetchCPDefinitionVirtualSetting(
+					fetchCPDefinitionVirtualSettingByCPDefinitionId(
 						cpDefinitionVirtualSettingId);
 		}
 

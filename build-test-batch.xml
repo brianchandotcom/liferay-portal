@@ -1321,6 +1321,18 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<target name="blade-samples-jdk8">
+		<run-batch-test>
+			<test-action>
+				<execute dir="${blade.samples.dir}">
+					<![CDATA[
+						/bin/bash build.sh
+					]]>
+				</execute>
+			</test-action>
+		</run-batch-test>
+	</target>
+
 	<target name="central-requirements-jdk8">
 		<fail message="Please set the property ${central.requirements.tests}." unless="central.requirements.tests" />
 

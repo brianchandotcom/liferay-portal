@@ -6011,6 +6011,9 @@ go]]></replacevalue>
 				<fileset dir="util-java/test-results" erroronmissingdir="false">
 					<include name="**/TEST-*.xml" />
 				</fileset>
+				<fileset dir="${blade.samples.dir}/liferay-workspace/tests" erroronmissingdir="false">
+					<include name="**/TEST-*.xml" />
+				</fileset>
 				<report format="frames" todir="test-results/html" />
 			</junitreport>
 		</parallel>

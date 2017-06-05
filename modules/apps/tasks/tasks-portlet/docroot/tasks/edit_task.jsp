@@ -29,12 +29,12 @@ long assigneeUserId = BeanParamUtil.getLong(tasksEntry, request, "assigneeUserId
 
 boolean addDueDate = false;
 String dueDateClassName = "hide";
-String dueDateToggleText = LanguageUtil.get(pageContext, "add-due-date");
+String dueDateToggleText = LanguageUtil.get(request, "add-due-date");
 
 if ((tasksEntry != null) && (tasksEntry.getDueDate() != null)) {
 	addDueDate = true;
 	dueDateClassName = StringPool.BLANK;
-	dueDateToggleText = LanguageUtil.get(pageContext, "remove-due-date");
+	dueDateToggleText = LanguageUtil.get(request, "remove-due-date");
 }
 %>
 
@@ -118,7 +118,7 @@ if ((tasksEntry != null) && (tasksEntry.getDueDate() != null)) {
 					<aui:option label="low" selected="<%= (priority == 3) %>" value="3" />
 				</aui:select>
 
-				<label class="due-date-label field-label"><%= LanguageUtil.get(pageContext, "due-date") %></label>
+				<label class="due-date-label field-label"><%= LanguageUtil.get(request, "due-date") %></label>
 
 				<a class="due-date-toggle field-content" href="#" id="toggleDueDate" onClick="<%= renderResponse.getNamespace() + "displayInputDate();" %>"><%= dueDateToggleText %></a>
 
@@ -182,11 +182,11 @@ if ((tasksEntry != null) && (tasksEntry.getDueDate() != null)) {
 
 				if (checkboxValue == 'true') {
 					checkbox.set('value', false);
-					dueDateToggle.html('<%= LanguageUtil.get(pageContext, "add-due-date") %>');
+					dueDateToggle.html('<%= LanguageUtil.get(request, "add-due-date") %>');
 				}
 				else {
 					checkbox.set('value', true);
-					dueDateToggle.html('<%= LanguageUtil.get(pageContext, "remove-due-date") %>');
+					dueDateToggle.html('<%= LanguageUtil.get(request, "remove-due-date") %>');
 				}
 			}
 

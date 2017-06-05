@@ -35,7 +35,6 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.service.metatype", version: "1.3.0"
 
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.0.0"
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 
 	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.3"
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.framework", version: "5.4.0"

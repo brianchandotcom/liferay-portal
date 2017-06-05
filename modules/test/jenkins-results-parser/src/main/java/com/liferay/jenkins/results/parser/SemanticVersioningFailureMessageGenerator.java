@@ -30,8 +30,8 @@ public class SemanticVersioningFailureMessageGenerator
 	public String getMessage(
 		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
 
-		if (!consoleOutput.contains(_SEMVER_END_STRING) ||
-			!consoleOutput.contains(_SEMVER_START_STRING)) {
+		if (!consoleOutput.contains(_SEMVER_INCORRECT_STRING) ||
+			!consoleOutput.contains(_SEMVER_PACKAGE_STRING)) {
 
 			return null;
 		}
@@ -51,13 +51,13 @@ public class SemanticVersioningFailureMessageGenerator
 		sb.append(properties.get("github.sender.branch.name"));
 		sb.append("</a></strong>.</p>");
 
-		int end = consoleOutput.indexOf(_SEMVER_END_STRING);
+		int end = consoleOutput.indexOf(_SEMVER_INCORRECT_STRING);
 
 		end = consoleOutput.indexOf("\n", end);
 
 		int start = consoleOutput.lastIndexOf(_BASELINE_CHECK_STRING, end);
 
-		start = consoleOutput.indexOf(_SEMVER_START_STRING, start);
+		start = consoleOutput.indexOf(_SEMVER_PACKAGE_STRING, start);
 
 		start = consoleOutput.lastIndexOf("\n", start);
 
@@ -70,19 +70,19 @@ public class SemanticVersioningFailureMessageGenerator
 	public Element getMessageElement(Build build) {
 		String consoleText = build.getConsoleText();
 
-		if (!consoleText.contains(_SEMVER_END_STRING) ||
-			!consoleText.contains(_SEMVER_START_STRING)) {
+		if (!consoleText.contains(_SEMVER_INCORRECT_STRING) ||
+			!consoleText.contains(_SEMVER_PACKAGE_STRING)) {
 
 			return null;
 		}
 
-		int end = consoleText.indexOf(_SEMVER_END_STRING);
+		int end = consoleText.indexOf(_SEMVER_INCORRECT_STRING);
 
 		end = consoleText.indexOf("\n", end);
 
 		int start = consoleText.lastIndexOf(_BASELINE_CHECK_STRING, end);
 
-		start = consoleText.indexOf(_SEMVER_START_STRING, start);
+		start = consoleText.indexOf(_SEMVER_PACKAGE_STRING, start);
 
 		start = consoleText.lastIndexOf("\n", start);
 
@@ -102,9 +102,9 @@ public class SemanticVersioningFailureMessageGenerator
 	private static final String _BASELINE_CHECK_STRING =
 		"Checking for baseline log files";
 
-	private static final String _SEMVER_END_STRING =
+	private static final String _SEMVER_INCORRECT_STRING =
 		"Semantic versioning is incorrect";
 
-	private static final String _SEMVER_START_STRING = "PACKAGE_NAME";
+	private static final String _SEMVER_PACKAGE_STRING = "PACKAGE_NAME";
 
 }

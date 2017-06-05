@@ -44,14 +44,14 @@ public class CPDefinitionVirtualSettingActionHelper {
 			return cpDefinitionVirtualSetting;
 		}
 
-		long cpDefinitionVirtualSettingId = ParamUtil.getLong(
-			renderRequest, "cpDefinitionVirtualSettingId");
+		long cpDefinitionId = ParamUtil.getLong(
+			renderRequest, "cpDefinitionId");
 
-		if (cpDefinitionVirtualSettingId > 0) {
+		if (cpDefinitionId > 0) {
 			cpDefinitionVirtualSetting =
 				_cpDefinitionVirtualSettingService.
 					fetchCPDefinitionVirtualSettingByCPDefinitionId(
-						cpDefinitionVirtualSettingId);
+						cpDefinitionId);
 		}
 
 		if (cpDefinitionVirtualSetting != null) {

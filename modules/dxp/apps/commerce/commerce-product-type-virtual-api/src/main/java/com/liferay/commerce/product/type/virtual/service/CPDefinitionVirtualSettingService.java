@@ -67,8 +67,8 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId) throws PortalException;
+	public CPDefinitionVirtualSetting fetchCPDefinitionVirtualSettingByCPDefinitionId(
+		long cpDefinitionId) throws PortalException;
 
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 		long cpDefinitionVirtualSettingId, boolean useUrl, long fileEntryId,

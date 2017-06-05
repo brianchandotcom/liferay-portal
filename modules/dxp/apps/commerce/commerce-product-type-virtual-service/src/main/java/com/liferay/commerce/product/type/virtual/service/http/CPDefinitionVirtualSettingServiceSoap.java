@@ -101,11 +101,11 @@ public class CPDefinitionVirtualSettingServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettingSoap fetchCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId) throws RemoteException {
+	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettingSoap fetchCPDefinitionVirtualSettingByCPDefinitionId(
+		long cpDefinitionId) throws RemoteException {
 		try {
 			com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting returnValue =
-				CPDefinitionVirtualSettingServiceUtil.fetchCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId);
+				CPDefinitionVirtualSettingServiceUtil.fetchCPDefinitionVirtualSettingByCPDefinitionId(cpDefinitionId);
 
 			return com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettingSoap.toSoapModel(returnValue);
 		}

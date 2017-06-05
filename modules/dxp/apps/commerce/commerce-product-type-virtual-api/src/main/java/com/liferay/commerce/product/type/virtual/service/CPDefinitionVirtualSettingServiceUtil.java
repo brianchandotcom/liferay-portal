@@ -59,11 +59,11 @@ public class CPDefinitionVirtualSettingServiceUtil {
 			termsOfUseJournalArticleResourcePK, serviceContext);
 	}
 
-	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId)
+	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting fetchCPDefinitionVirtualSettingByCPDefinitionId(
+		long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .fetchCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId);
+				   .fetchCPDefinitionVirtualSettingByCPDefinitionId(cpDefinitionId);
 	}
 
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(

@@ -53,10 +53,10 @@ public class CPDefinitionVirtualSettingServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId)
+	public com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting fetchCPDefinitionVirtualSettingByCPDefinitionId(
+		long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionVirtualSettingService.fetchCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId);
+		return _cpDefinitionVirtualSettingService.fetchCPDefinitionVirtualSettingByCPDefinitionId(cpDefinitionId);
 	}
 
 	@Override

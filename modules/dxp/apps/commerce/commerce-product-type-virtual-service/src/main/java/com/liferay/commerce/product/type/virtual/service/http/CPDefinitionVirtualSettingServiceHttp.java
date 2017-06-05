@@ -100,16 +100,16 @@ public class CPDefinitionVirtualSettingServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
-		HttpPrincipal httpPrincipal, long cpDefinitionVirtualSettingId)
+	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting fetchCPDefinitionVirtualSettingByCPDefinitionId(
+		HttpPrincipal httpPrincipal, long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionVirtualSettingServiceUtil.class,
-					"fetchCPDefinitionVirtualSetting",
-					_fetchCPDefinitionVirtualSettingParameterTypes1);
+					"fetchCPDefinitionVirtualSettingByCPDefinitionId",
+					_fetchCPDefinitionVirtualSettingByCPDefinitionIdParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionVirtualSettingId);
+					cpDefinitionId);
 
 			Object returnObj = null;
 
@@ -188,7 +188,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 			boolean.class, java.util.Map.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _fetchCPDefinitionVirtualSettingParameterTypes1 =
+	private static final Class<?>[] _fetchCPDefinitionVirtualSettingByCPDefinitionIdParameterTypes1 =
 		new Class[] { long.class };
 	private static final Class<?>[] _updateCPDefinitionVirtualSettingParameterTypes2 =
 		new Class[] {

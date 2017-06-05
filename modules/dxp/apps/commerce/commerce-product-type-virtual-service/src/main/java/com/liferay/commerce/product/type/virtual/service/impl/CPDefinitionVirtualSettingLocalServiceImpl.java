@@ -128,6 +128,22 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 	}
 
 	@Override
+	public CPDefinitionVirtualSetting
+		deleteCPDefinitionVirtualSettingByCPDefinitionId(long cpDefinitionId) {
+
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+			cpDefinitionVirtualSettingPersistence.fetchByCPDefinitionId(
+				cpDefinitionId);
+
+		if (cpDefinitionVirtualSetting != null) {
+			cpDefinitionVirtualSettingLocalService.
+				deleteCPDefinitionVirtualSetting(cpDefinitionVirtualSetting);
+		}
+
+		return cpDefinitionVirtualSetting;
+	}
+
+	@Override
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 			long cpDefinitionVirtualSettingId, boolean useUrl, long fileEntryId,
 			String url, String activationStatus, long duration, int maxUsages,

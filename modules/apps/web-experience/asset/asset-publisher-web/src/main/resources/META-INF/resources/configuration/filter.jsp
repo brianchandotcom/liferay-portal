@@ -23,67 +23,9 @@ if (categorizableGroupIds == null) {
 	categorizableGroupIds = StringUtil.split(ParamUtil.getString(request, "categorizableGroupIds"), 0L);
 }
 
-String queryLogicIndexesParam = ParamUtil.getString(request, "queryLogicIndexes");
-
-int[] queryLogicIndexes = null;
-
-if (Validator.isNotNull(queryLogicIndexesParam)) {
-	queryLogicIndexes = StringUtil.split(queryLogicIndexesParam, 0);
-}
-else {
-	queryLogicIndexes = new int[0];
-
-	for (int i = 0; true; i++) {
-		String queryValues = PrefsParamUtil.getString(portletPreferences, request, "queryValues" + i);
-
-		if (Validator.isNull(queryValues)) {
-			break;
-		}
-
-		queryLogicIndexes = ArrayUtil.append(queryLogicIndexes, i);
-	}
-
-	if (queryLogicIndexes.length == 0) {
-		queryLogicIndexes = ArrayUtil.append(queryLogicIndexes, -1);
-	}
-}
-
-JSONArray rulesJSONArray = JSONFactoryUtil.createJSONArray();
-
-for (int queryLogicIndex : queryLogicIndexes) {
-	JSONObject rulesJSONObject = JSONFactoryUtil.createJSONObject();
-
-	boolean queryAndOperator = PrefsParamUtil.getBoolean(portletPreferences, request, "queryAndOperator" + queryLogicIndex);
-
-	rulesJSONObject.put("queryAndOperator", queryAndOperator);
-
-	boolean queryContains = PrefsParamUtil.getBoolean(portletPreferences, request, "queryContains" + queryLogicIndex, true);
-
-	rulesJSONObject.put("queryContains", queryContains);
-
-	String queryValues = StringUtil.merge(portletPreferences.getValues("queryValues" + queryLogicIndex, new String[0]));
-	String queryName = PrefsParamUtil.getString(portletPreferences, request, "queryName" + queryLogicIndex, "assetTags");
-
-	if (Objects.equals(queryName, "assetTags")) {
-		queryValues = ParamUtil.getString(request, "queryTagNames" + queryLogicIndex, queryValues);
-
-		queryValues = AssetPublisherUtil.filterAssetTagNames(scopeGroupId, queryValues);
-	}
-	else {
-		queryValues = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);
-
-		rulesJSONObject.put("categoryIdsTitles", AssetCategoryUtil.getCategoryIdsTitles(queryValues, StringPool.BLANK, 0, themeDisplay));
-	}
-
-	rulesJSONObject.put("queryValues", queryValues);
-	rulesJSONObject.put("type", queryName);
-
-	rulesJSONArray.put(rulesJSONObject);
-}
-
 Map<String, Object> context = new HashMap<>();
 
-context.put("rules", rulesJSONArray);
+context.put("rules", assetPublisherDisplayContext.getAutoFieldRulesJSONArray());
 context.put("namespace", liferayPortletResponse.getNamespace());
 context.put("groupIds", StringUtil.merge(categorizableGroupIds));
 context.put("id", "autofield");

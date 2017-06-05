@@ -6,15 +6,19 @@ When possible, we should declare new variables instead of chaining.
 
 Incorrect formatting:
 
-    String lowerCaseName = UserLocalServiceUtil.getUserById(12345).getFirstName().toLowerCase();
+```java
+String lowerCaseName = UserLocalServiceUtil.getUserById(12345).getFirstName().toLowerCase();
+```
 
 Correct formatting:
 
-    User user = UserLocalServiceUtil.getUserById(12345);
+```java
+User user = UserLocalServiceUtil.getUserById(12345);
 
-    String name = user.getFirstName();
+String name = user.getFirstName();
 
-    String lowerCaseName = name.toLowerCase();
+String lowerCaseName = name.toLowerCase();
+```
 
 ### **Exceptions** ###
 
@@ -22,28 +26,32 @@ We do allow chaining on Mockito methods in our test classes and on variables
 that are a builder, optional or stream. In these cases we apply the following
 formatting rules:
 
-    Stream<User> usersStream = users.stream();
+```java
+Stream<User> usersStream = users.stream();
 
-    usersStream.filter(
-        relations -> isFieldIncluded(types, relation.getName())
-    ).filter(
-        relation -> representorManager.isPresent(relation.getType())
-    ).filter(
-        relation -> {
-            Creator creator = relation.getCreator();
+usersStream.filter(
+    relations -> isFieldIncluded(types, relation.getName())
+).filter(
+    relation -> representorManager.isPresent(relation.getType())
+).filter(
+    relation -> {
+        Creator creator = relation.getCreator();
 
-            Optional<V> relationResource = creator.apply(resource);
-        }
-    );
+        Optional<V> relationResource = creator.apply(resource);
+    }
+);
+```
 
 or
 
-    Mockito.doReturn(
-        summary
-    ).when(
-        _indexer
-    ).getSummary(
-        (Document)Matchers.any(), Matchers.anyString(),
-        (PortletRequest)Matchers.isNull(),
-        (PortletResponse)Matchers.isNull()
-    );
+```java
+Mockito.doReturn(
+    summary
+).when(
+    _indexer
+).getSummary(
+    (Document)Matchers.any(), Matchers.anyString(),
+    (PortletRequest)Matchers.isNull(),
+    (PortletResponse)Matchers.isNull()
+);
+```

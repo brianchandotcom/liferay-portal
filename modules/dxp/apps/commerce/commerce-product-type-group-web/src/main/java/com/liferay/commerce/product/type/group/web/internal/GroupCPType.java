@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.type.group.internal;
+package com.liferay.commerce.product.type.group.web.internal;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.CPType;

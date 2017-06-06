@@ -33,14 +33,14 @@ public class SourceFormatFailureMessageGenerator
 			return null;
 		}
 
-		int start = consoleOutput.lastIndexOf("format-source:");
+		int start = consoleOutput.lastIndexOf(_FORMAT_SOURCE_STRING);
 
 		start = consoleOutput.indexOf(
 			_UTIL_SYSTEM_EXT_PROPERTIES_STRING, start);
 
 		start = consoleOutput.indexOf("\n", start);
 
-		int end = consoleOutput.indexOf("merge-test-results:", start);
+		int end = consoleOutput.indexOf(_MERGE_TEST_RESULTS_STRING, start);
 
 		end = consoleOutput.lastIndexOf(_SOURCE_FORMAT_STRING, end);
 
@@ -57,13 +57,13 @@ public class SourceFormatFailureMessageGenerator
 			return null;
 		}
 
-		int start = consoleText.lastIndexOf("format-source:");
+		int start = consoleText.lastIndexOf(_FORMAT_SOURCE_STRING);
 
 		start = consoleText.indexOf(_UTIL_SYSTEM_EXT_PROPERTIES_STRING, start);
 
 		start = consoleText.indexOf("\n", start);
 
-		int end = consoleText.indexOf("merge-test-results:", start);
+		int end = consoleText.indexOf(_MERGE_TEST_RESULTS_STRING, start);
 
 		end = consoleText.lastIndexOf(_SOURCE_FORMAT_STRING, end);
 
@@ -71,6 +71,11 @@ public class SourceFormatFailureMessageGenerator
 
 		return getConsoleOutputSnippetElement(consoleText, true, start, end);
 	}
+
+	private static final String _FORMAT_SOURCE_STRING = "format-source:";
+
+	private static final String _MERGE_TEST_RESULTS_STRING =
+		"merge-test-results:";
 
 	private static final String _SOURCE_FORMAT_STRING =
 		"at com.liferay.source.formatter";

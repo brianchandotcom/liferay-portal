@@ -1550,8 +1550,8 @@ the deployed OSGi bundle is not `ACTIVE`.
 - [LPS-72868]: Update the [Liferay Gradle Plugins] dependency to version 3.3.24.
 
 ### Fixed
-- [LPS-72465]: Avoid caching the values of the following system properties when
-using the Gradle Daemon:
+- [LPS-72465]: Avoid caching the following system property values when using the
+Gradle Daemon:
 	- `maven.local.ignore`
 	- `repository.private.password`
 	- `repository.private.url`

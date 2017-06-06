@@ -352,6 +352,28 @@
                 <li>
                   <div>
                     <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(master)_generic-failure/test-1-12/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=0,label_exp=!master/32411//testReport/com.liferay.portal.lpkg/LPKGVersionChangeLogAssertorTest/testUpgradeLog">LPKGVersionChangeLogAssertorTest.testUpgradeLog</a>
+                    <pre>
+                      <code>java.lang.AssertionError: Liferay CE JavaScript Scripting was not uninstalled for upgrade
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at com.liferay.portal.lpkg.LPKGVersionChangeLogAssertorTest.assertUpgrade(LPKGVersionChangeLogAssertorTest.java:98)
+	at com.liferay.portal.lpkg.LPKGVersionChangeLogAssertorTest.testUpgradeLog(LPKGVersionChangeLogAssertorTest.java:83)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at...</code>
+                    </pre>
                   </div>
                 </li>
               </ol>

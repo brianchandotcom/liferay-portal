@@ -1533,8 +1533,8 @@ version 1.1.7.
 ## 3.7.0 - 2017-05-30
 
 ### Added
-- [LPS-72830]: Add task `checkOSGiBundleState` to fail the build if the state of
-the deployed OSGi bundle is not `ACTIVE`.
+- [LPS-72830]: Add the `checkOSGiBundleState` task to fail the build if the
+deployed OSGi bundle's state is not `ACTIVE`.
 
 ### Changed
 - [LPS-69661]: Update the [Liferay Gradle Plugins] dependency to version 3.3.22.

@@ -59,7 +59,6 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
-import jdk.nashorn.internal.ir.annotations.Reference;
 
 import java.io.Serializable;
 
@@ -117,8 +116,7 @@ public class CPDefinitionLocalServiceImpl
 				CPDefinitionExpirationDateException.class);
 		}
 
-		validateCPType(productTypeName);
-		validateReferences(groupId, ddmStructureKey);
+		validateReferences(groupId, ddmStructureKey, productTypeName);
 
 		long cpDefinitionId = counterLocalService.increment();
 
@@ -556,7 +554,8 @@ public class CPDefinitionLocalServiceImpl
 				CPDefinitionExpirationDateException.class);
 		}
 
-		validateReferences(groupId, ddmStructureKey);
+		validateReferences(
+			groupId, ddmStructureKey, cpDefinition.getProductTypeName());
 
 		cpDefinition.setBaseSKU(baseSKU);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
@@ -776,17 +775,8 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinition, serviceContext, workflowContext);
 	}
 
-	protected void validateCPType(String productTypeName)
-		throws PortalException {
-
-		CPType cpType = _cpTypeServicesTracker.getCPType(productTypeName);
-
-		if (Validator.isNull(cpType)) {
-			throw new NoSuchCPTypeException();
-		}
-	}
-
-	protected void validateReferences(long groupId, String ddmStructureKey)
+	protected void validateReferences(
+			long groupId, String ddmStructureKey, String productTypeName)
 		throws PortalException {
 
 		if (Validator.isNotNull(ddmStructureKey)) {
@@ -799,6 +789,12 @@ public class CPDefinitionLocalServiceImpl
 			if (ddmStructure == null) {
 				throw new NoSuchStructureException();
 			}
+		}
+
+		CPType cpType = cpTypeServicesTracker.getCPType(productTypeName);
+
+		if (Validator.isNull(cpType)) {
+			throw new NoSuchCPTypeException();
 		}
 	}
 

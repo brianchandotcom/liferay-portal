@@ -94,9 +94,8 @@ public class SemanticVersioningFailureMessageGenerator
 				" on ",
 				Dom4JUtil.getNewElement(
 					"strong", null,
-					getBaseBranchAnchorElement(build.getTopLevelBuild()),
-					getConsoleOutputSnippetElement(
-						consoleText, true, start, end))));
+					getBaseBranchAnchorElement(build.getTopLevelBuild())),
+				getConsoleOutputSnippetElement(consoleText, true, start, end)));
 	}
 
 	private static final String _BASELINE_CHECK_STRING =

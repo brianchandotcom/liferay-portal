@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.liferay.powwow.service.PowwowMeetingLocalService" class="com.liferay.powwow.service.impl.PowwowMeetingLocalServiceImpl" />
+	<bean id="com.liferay.powwow.service.PowwowMeetingService" class="com.liferay.powwow.service.impl.PowwowMeetingServiceImpl" />
+	<bean id="com.liferay.powwow.service.persistence.PowwowMeetingPersistence" class="com.liferay.powwow.service.persistence.PowwowMeetingPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.powwow.service.persistence.PowwowMeetingFinder" class="com.liferay.powwow.service.persistence.PowwowMeetingFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.powwow.service.PowwowParticipantLocalService" class="com.liferay.powwow.service.impl.PowwowParticipantLocalServiceImpl" />
+	<bean id="com.liferay.powwow.service.PowwowParticipantService" class="com.liferay.powwow.service.impl.PowwowParticipantServiceImpl" />
+	<bean id="com.liferay.powwow.service.persistence.PowwowParticipantPersistence" class="com.liferay.powwow.service.persistence.PowwowParticipantPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.powwow.service.PowwowServerLocalService" class="com.liferay.powwow.service.impl.PowwowServerLocalServiceImpl" />
+	<bean id="com.liferay.powwow.service.persistence.PowwowServerPersistence" class="com.liferay.powwow.service.persistence.PowwowServerPersistenceImpl" parent="basePersistence" />
+</beans>

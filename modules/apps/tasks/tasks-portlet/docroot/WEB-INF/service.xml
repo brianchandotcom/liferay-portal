@@ -66,6 +66,24 @@
 			<finder-column name="groupId" />
 			<finder-column name="resolverUserId" />
 		</finder>
+		<finder name="U_S" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column arrayable-operator="OR" name="status" />
+		</finder>
+		<finder name="A_S" return-type="Collection">
+			<finder-column name="assigneeUserId" />
+			<finder-column arrayable-operator="OR" name="status" />
+		</finder>
+		<finder name="G_U_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column arrayable-operator="OR" name="status" />
+		</finder>
+		<finder name="G_A_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="assigneeUserId" />
+			<finder-column arrayable-operator="OR" name="status" />
+		</finder>
 
 		<!-- References -->
 

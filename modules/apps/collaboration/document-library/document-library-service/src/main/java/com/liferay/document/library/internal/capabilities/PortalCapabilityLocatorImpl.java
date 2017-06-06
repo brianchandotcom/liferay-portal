@@ -16,7 +16,6 @@ package com.liferay.document.library.internal.capabilities;
 
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLSyncEventLocalService;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
@@ -51,9 +50,13 @@ import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 import com.liferay.trash.kernel.service.TrashEntryLocalService;
 import com.liferay.trash.kernel.service.TrashVersionLocalService;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(service = PortalCapabilityLocator.class)
 public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 
 	@Override
@@ -155,16 +158,16 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 			DLFileVersionServiceAdapter.create(documentRepository));
 	}
 
-	@BeanReference(type = DLAppHelperLocalService.class)
+	@Reference
 	protected DLAppHelperLocalService dlAppHelperLocalService;
 
-	@BeanReference(type = DLSyncEventLocalService.class)
+	@Reference
 	protected DLSyncEventLocalService dlSyncEventLocalService;
 
-	@BeanReference(type = TrashEntryLocalService.class)
+	@Reference
 	protected TrashEntryLocalService trashEntryLocalService;
 
-	@BeanReference(type = TrashVersionLocalService.class)
+	@Reference
 	protected TrashVersionLocalService trashVersionLocalService;
 
 	private final CommentCapability _commentCapability =

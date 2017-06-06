@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.capabilities;
+package com.liferay.document.library.internal.capabilities;
 
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLSyncEventLocalService;
@@ -29,6 +29,17 @@ import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCap
 import com.liferay.portal.kernel.repository.capabilities.ThumbnailCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
+import com.liferay.portal.repository.capabilities.ConfigurationCapabilityImpl;
+import com.liferay.portal.repository.capabilities.LiferayBulkOperationCapability;
+import com.liferay.portal.repository.capabilities.LiferayCommentCapability;
+import com.liferay.portal.repository.capabilities.LiferayProcessorCapability;
+import com.liferay.portal.repository.capabilities.LiferayRelatedModelCapability;
+import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
+import com.liferay.portal.repository.capabilities.LiferayThumbnailCapability;
+import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
+import com.liferay.portal.repository.capabilities.LiferayWorkflowCapability;
+import com.liferay.portal.repository.capabilities.MinimalWorkflowCapability;
+import com.liferay.portal.repository.capabilities.TemporaryFileEntriesCapabilityImpl;
 import com.liferay.portal.repository.capabilities.util.DLAppServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFileVersionServiceAdapter;

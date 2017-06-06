@@ -85,8 +85,9 @@ class SelectCategory extends PortletBase {
 			newVal.forEach(
 				(node) => {
 					data[node.name] = {
-						categoryId: node.id,
-						value: node.name
+						categoryId: node.vocabulary ? 0 : node.id,
+						value: node.name,
+						vocabularyId: node.vocabulary ? node.id : 0
 					};
 				}
 			);
@@ -95,8 +96,9 @@ class SelectCategory extends PortletBase {
 				(node) => {
 					if (newVal.indexOf(node) === -1) {
 						data[node.name] = {
-							categoryId: node.id,
+							categoryId: node.vocabulary ? 0 : node.id,
 							value: node.name,
+							vocabularyId: node.vocabulary ? node.id : 0,
 							unchecked: true
 						};
 					}

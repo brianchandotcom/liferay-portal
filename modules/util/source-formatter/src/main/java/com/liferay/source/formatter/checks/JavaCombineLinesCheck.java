@@ -841,20 +841,6 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 				null, false, false, 0);
 		}
 
-		if (((line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
-			  !trimmedLine.startsWith("new ")) ||
-			 line.endsWith(StringPool.CLOSE_PARENTHESIS)) &&
-			(trimmedPreviousLine.startsWith("else ") ||
-			 trimmedPreviousLine.startsWith("if ") ||
-			 trimmedPreviousLine.startsWith("private ") ||
-			 trimmedPreviousLine.startsWith("protected ") ||
-			 trimmedPreviousLine.startsWith("public "))) {
-
-			return _getCombinedLinesContent(
-				content, line, trimmedLine, lineLength, lineCount, previousLine,
-				null, false, false, 0);
-		}
-
 		return null;
 	}
 

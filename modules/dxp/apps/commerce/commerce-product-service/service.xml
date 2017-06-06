@@ -451,6 +451,7 @@
 		<exception>CPDefinitionExpirationDate</exception>
 		<exception>CPInstanceDisplayDate</exception>
 		<exception>CPInstanceExpirationDate</exception>
+		<exception>NoSuchCPType</exception>
 		<exception>NoSuchSkuContributorCPDefinitionOptionRel</exception>
 	</exceptions>
 </service-builder>

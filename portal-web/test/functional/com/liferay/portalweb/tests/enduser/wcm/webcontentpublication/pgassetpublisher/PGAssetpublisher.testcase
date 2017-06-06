@@ -76,8 +76,8 @@
 			<var name="portletOption" value="Look and Feel Configuration" />
 		</execute>
 
-		<execute macro="Portlet#configureApplicationDecoratorsViaLookandfeelPG">
-			<var name="applicationDecorators" value="Barebone" />
+		<execute macro="Portlet#selectApplicationDecorator">
+			<var name="decorator" value="Barebone" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

@@ -197,15 +197,19 @@ public class AssetCategoriesSelectorDisplayContext {
 	private JSONArray _getCategoriesJSONArray() throws Exception {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		boolean allowedSelectVocabularies = ParamUtil.getBoolean(
+			_request, "allowedSelectVocabularies");
+
 		for (long vocabularyId : getVocabularyIds()) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put(
 				"children", _getCategoriesJSONArray(vocabularyId, 0));
-			jsonObject.put("disabled", true);
+			jsonObject.put("disabled", !allowedSelectVocabularies);
 			jsonObject.put("icon", "folder");
-			jsonObject.put("id", "vocabulary" + vocabularyId);
+			jsonObject.put("id", vocabularyId);
 			jsonObject.put("name", getVocabularyTitle(vocabularyId));
+			jsonObject.put("vocabulary", true);
 
 			jsonArray.put(jsonObject);
 		}

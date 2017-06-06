@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -265,7 +266,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 
 		portletURL.setParameter("groupId", String.valueOf(getScopeGroupId()));
 		portletURL.setParameter(
-			"selectedGroupIds", String.valueOf(getScopeGroupId()));
+			"selectedGroupIds", StringUtil.merge(getSelectedGroupIds()));
 		portletURL.setParameter(
 			"typeSelection", JournalArticle.class.getName());
 		portletURL.setParameter(
@@ -276,6 +277,17 @@ public class CPDefinitionVirtualSettingDisplayContext
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
+	}
+
+	protected long[] getSelectedGroupIds() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long[] selectedGroupIds =
+			{getScopeGroupId(), themeDisplay.getCompanyGroupId()};
+
+		return selectedGroupIds;
 	}
 
 	private CPDefinitionVirtualSetting _cpDefinitionVirtualSetting;

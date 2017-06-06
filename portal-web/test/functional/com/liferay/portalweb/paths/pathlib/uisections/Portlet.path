@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_BORDER_DECORATOR</td>
+	<td>//div[@id='main-content']//div[contains(@class,'portlet-${key_decorator}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_CONTENT</td>
 	<td>//section[@id='content']//div[contains(@class,'portlet-content')]</td>
 	<td></td>

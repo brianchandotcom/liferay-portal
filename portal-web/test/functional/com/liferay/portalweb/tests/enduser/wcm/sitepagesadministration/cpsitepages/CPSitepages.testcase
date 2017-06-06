@@ -487,7 +487,7 @@
 
 	<command name="EditSitePage" priority="5">
 		<property name="portal.acceptance" value="true" />
-		<property name="testray.component.names" value="Site Pages Administration" />
+		<property name="testray.component.names" value="Site Pages Administration,Training" />
 
 		<execute macro="SitePageNavigator#gotoPages" >
 			<var name="page" value="Public Pages" />
@@ -511,6 +511,26 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Site Page Edit" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Welcome" />
+		</execute>
+
+		<execute macro="Page#viewSelectedLayoutColumn">
+			<var name="columnName" value="1 Column" />
+		</execute>
+
+		<execute macro="Page#editName">
+			<var name="pageNameEdit" value="Home" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoPages">
+			<var name="page" value="Public Pages" />
+		</execute>
+
+		<execute macro="Page#view">
+			<var name="pageName" value="Home" />
 		</execute>
 	</command>
 

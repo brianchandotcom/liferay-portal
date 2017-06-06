@@ -1105,6 +1105,12 @@
 		</for>
 	</command>
 
+	<command name="viewSelectedLayoutColumn">
+		<execute function="AssertElementPresent" locator1="SitePagesEditPage#LAYOUT_CARD_SELECTED">
+			<var name="key_columnName" value="${columnName}" />
+		</execute>
+	</command>
+
 	<command name="viewSiteNameTranslationsPG">
 		<execute function="Click" locator1="Language#SELECT_LANGUAGE">
 			<var name="key_language" value="${language}" />

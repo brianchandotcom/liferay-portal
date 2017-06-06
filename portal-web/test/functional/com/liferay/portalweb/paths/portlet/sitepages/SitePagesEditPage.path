@@ -50,6 +50,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LAYOUT_CARD_SELECTED</td>
+	<td>//div[label[contains(.,'${key_columnName}')]]//img[contains(@class,'layout-selected')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TEMPLATE_INHERIT_CHANGES_TOGGLE</td>
 	<td>//div[@class='layout-type']//label[contains(.,'Inherit Changes')]/input[contains(@class,'toggle-switch')]</td>
 	<td></td>

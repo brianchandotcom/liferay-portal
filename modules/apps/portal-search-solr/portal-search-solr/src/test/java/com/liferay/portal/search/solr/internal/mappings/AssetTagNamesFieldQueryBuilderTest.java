@@ -39,6 +39,11 @@ public class AssetTagNamesFieldQueryBuilderTest
 	}
 
 	@Override
+	public void testLuceneUnfriendlyTerms() throws Exception {
+		super.testLuceneUnfriendlyTerms();
+	}
+
+	@Override
 	@Test
 	public void testMultiwordPhrasePrefixes() throws Exception {
 		super.testMultiwordPhrasePrefixes();
@@ -78,6 +83,11 @@ public class AssetTagNamesFieldQueryBuilderTest
 	@Test
 	public void testStopwords() throws Exception {
 		super.testStopwords();
+	}
+
+	@Override
+	public void testWhitespace() throws Exception {
+		super.testWhitespace();
 	}
 
 	@Override

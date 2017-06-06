@@ -61,6 +61,21 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 		_siteMemberUserDemoDataCreator.create(
 			acmeCorpGroup.getGroupId(), "joe@liferay.com",
 			new long[] {webContentAuthor.getRoleId()});
+
+		// Forum moderator
+
+		Group petLoversGroup = _siteDemoDataCreator.create(
+			companyId, "Pet Lovers");
+
+		String forumModeratorXml = StringUtil.read(
+			UsersDemo.class, "dependencies/forum-moderator.xml");
+
+		Role forumModerator = _siteRoleDemoDataCreator.create(
+			companyId, "Forum Moderator", forumModeratorXml);
+
+		_siteMemberUserDemoDataCreator.create(
+			petLoversGroup.getGroupId(), "maria@liferay.com",
+			new long[] {forumModerator.getRoleId()});
 	}
 
 	@Deactivate

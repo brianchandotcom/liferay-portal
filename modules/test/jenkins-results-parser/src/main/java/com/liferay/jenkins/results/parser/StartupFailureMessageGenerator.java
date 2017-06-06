@@ -71,13 +71,8 @@ public class StartupFailureMessageGenerator
 			Dom4JUtil.getNewElement(
 				"p", null, "Startup error: ",
 				Dom4JUtil.getNewElement(
-					"strong", null, "Unresolved Requirement(s)"),
-				" on ",
-				Dom4JUtil.getNewElement(
-					"strong", null,
-					getBaseBranchAnchorElement(build.getTopLevelBuild()),
-					getConsoleOutputSnippetElement(
-						consoleText, true, start, end))));
+					"strong", null, "Unresolved Requirement(s)")),
+			getConsoleOutputSnippetElement(consoleText, true, start, end));
 	}
 
 	private static final String _DELETING_STRING = "Deleting:";

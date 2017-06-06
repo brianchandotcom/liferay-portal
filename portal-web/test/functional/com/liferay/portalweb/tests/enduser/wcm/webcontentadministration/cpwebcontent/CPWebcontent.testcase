@@ -2033,6 +2033,66 @@
 		</execute>
 	</command>
 
+	<command name="ImportTrainingLAR" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="space-content-7.0.lar" />
+			<var name="siteName" value="Site Name" />
+			<var name="uploadFrom" value="dependencies" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Web Content Display" />
+			<var name="portletOption" value="Look and Feel Configuration" />
+		</execute>
+
+		<execute macro="Portlet#selectApplicationDecorator">
+			<var name="decorator" value="Barebone" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#viewApplicationDecorator">
+			<var name="decorator" value="Barebone" />
+		</execute>
+	</command>
+
 	<command name="MoveWebContentToFolder" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 

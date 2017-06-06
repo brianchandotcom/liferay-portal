@@ -1,7 +1,7 @@
 <toggles>
- 	<toggle name="JIRA_TICKET">
- 		<date>2017-05-24</date>
- 		<description>Toggle Description</description>
- 		<owner>Clarissa Tampoya</owner>
- 	</toggle>
+	<toggle name="JIRA_TICKET">
+		<date>2017-05-24</date>
+		<description>Toggle Description</description>
+		<owner>Clarissa Tampoya</owner>
+	</toggle>
 </toggles>

@@ -47,6 +47,7 @@ page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionException"
 page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionRelException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPInstanceException" %><%@
+page import="com.liferay.commerce.product.exception.NoSuchCPTypeException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException" %><%@
 page import="com.liferay.commerce.product.model.CPAttachmentFileEntry" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@

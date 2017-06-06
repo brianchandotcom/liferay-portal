@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.powwow.model.PowwowMeeting">
+		<field name="powwowMeetingId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="powwowServerId" type="long" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="providerType" type="String" />
+		<field name="providerTypeMetadata" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="languageId" type="String" />
+		<field name="calendarBookingId" type="long" />
+		<field name="status" type="int" />
+	</model>
+	<model name="com.liferay.powwow.model.PowwowParticipant">
+		<field name="powwowParticipantId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="powwowMeetingId" type="long" />
+		<field name="name" type="String" />
+		<field name="participantUserId" type="long" />
+		<field name="emailAddress" type="String">
+			<hint name="display-width">150</hint>
+			<validator name="email" />
+		</field>
+		<field name="type" type="int">
+			<validator name="required" />
+		</field>
+		<field name="status" type="int" />
+	</model>
+	<model name="com.liferay.powwow.model.PowwowServer">
+		<field name="powwowServerId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="providerType" type="String" />
+		<field name="url" type="String">
+			<hint-collection name="URL" />
+			<validator name="url" />
+		</field>
+		<field name="apiKey" type="String" />
+		<field name="secret" type="String" />
+		<field name="active" type="boolean" />
+	</model>
+</model-hints>

@@ -32,9 +32,8 @@ The App Docker plugin automatically applies the
 plugin.
 
 Since the plugin automatically resolves the [Java Docker API Client](https://github.com/docker-java/docker-java)
-library as a dependency, you have to configure a repository that hosts the
-library and its transitive dependencies. The Liferay CDN repository hosts them
-all:
+library as a dependency, you must configure a repository that hosts the library
+and its transitive dependencies. The Liferay CDN repository hosts them all:
 
 ```gradle
 repositories {
@@ -51,11 +50,11 @@ extension named `appDocker`:
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-`imageName` | `String` | `project.name` | The name of the Docker image of the app (e.g., `foo` in the image named `liferay/foo`).
-`imageTags` | `List<String>` | `[`committer date of the latest Git commit`, ` hash of the latest Git commit`]` | The list of tags for the Docker image of the app to push to the registry.
-`imageUser` | `String` | `project.group` | The user repository of the Docker image of the app (e.g., `liferay` in the image named `liferay/foo`).
-`inputDir` | `File` | `"${project.projectDir}/${project.name}-docker"` | The directory that contains the `Dockerfile` and other resources to copy into the context path used to build the Docker image of the app.
-`subprojects` | `Set<Project>` | `project.subprojects` | The subprojects to include in the Docker image of the app.
+`imageName` | `String` | `project.name` | The name of the app's Docker image (e.g., `foo` in the image named `liferay/foo`).
+`imageTags` | `List<String>` | `[`The latest Git commit's committer date`, ` The latest Git commit's hash`]` | The list of tags for the Docker image of the app to push to the registry.
+`imageUser` | `String` | `project.group` | The user repository of the app's Docker image (e.g., `liferay` in the image named `liferay/foo`).
+`inputDir` | `File` | `"${project.projectDir}/${project.name}-docker"` | The directory that contains the `Dockerfile` and other resources to copy into the context path used to build the app's Docker image.
+`subprojects` | `Set<Project>` | `project.subprojects` | The subprojects to include in the app's Docker image.
 
 The same extension exposes the following methods:
 
@@ -63,10 +62,10 @@ Method | Description
 ------ | -----------
 `AppDockerExtension imageTags(Iterable<?> imageTags)` | Adds tags for the Docker image of the app to push to the registry.
 `AppDockerExtension imageTags(Object... imageTags)` | Adds tags for the Docker image of the app to push to the registry.
-`AppDockerExtension onlyIf(Closure<Boolean> onlyIfClosure)` | Includes a subproject in the Docker image if the given closure returns `true`. The closure is evaluated at the end of the subproject configuration phase and is passed a single parameter: the subproject. If the closure returns `false`, the subproject is not included in the Docker image.
+`AppDockerExtension onlyIf(Closure<Boolean> onlyIfClosure)` | Includes a subproject in the Docker image if the given closure returns `true`. The closure is evaluated at the end of the subproject configuration phase and is passed the subproject as a single parameter. If the closure returns `false`, the subproject is not included in the Docker image.
 `AppDockerExtension onlyIf(Spec<Project> onlyIfSpec)` | Includes a subproject in the Docker image if the given spec is satisfied. The spec is evaluated at the end of the subproject configuration phase. If the spec is not satisfied, the subproject is not included in the Docker image.
-`AppDockerExtension subprojects(Iterable<Project> subprojects)` | Include additional projects in the Docker image of the app.
-`AppDockerExtension subprojects(Project... subprojects)` | Include additional projects in the Docker image of the app.
+`AppDockerExtension subprojects(Iterable<Project> subprojects)` | Includes additional projects in the app's Docker image.
+`AppDockerExtension subprojects(Project... subprojects)` | Includes additional projects in the app's Docker image.
 
 ## Tasks
 
@@ -74,11 +73,11 @@ The plugin adds a series of tasks to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
-[`buildAppDockerImage`](#task-buildappdockerimage) | `prepareAppDockerImageInputDir` | [`DockerBuildImage`](http://bmuschko.github.io/gradle-docker-plugin/docs/groovydoc/com/bmuschko/gradle/docker/tasks/image/DockerBuildImage.html) | Builds the Docker image of the app.
-[`prepareAppDockerImageInputDir`](#task-prepareappdockerimageinputdir) | \- | [`Sync`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Sync.html) | Copies all the subproject artifacts and other resources to a temporary directory that will be used to build the Docker image of the app.
-[`pushAppDockerImage`](#task-pushappdockerimage) | `[buildAppDockerImage, pushAppDockerImage_tag1, pushAppDockerImage_tag2, `...`]` | [`DockerPushImage`](http://bmuschko.github.io/gradle-docker-plugin/docs/groovydoc/com/bmuschko/gradle/docker/tasks/image/DockerPushImage.html) | Pushes the Docker image of the app to the registry.
+[`buildAppDockerImage`](#task-buildappdockerimage) | `prepareAppDockerImageInputDir` | [`DockerBuildImage`](http://bmuschko.github.io/gradle-docker-plugin/docs/groovydoc/com/bmuschko/gradle/docker/tasks/image/DockerBuildImage.html) | Builds the app's Docker image.
+[`prepareAppDockerImageInputDir`](#task-prepareappdockerimageinputdir) | \- | [`Sync`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Sync.html) | Copies the subproject artifacts and other resources to a temporary directory that will be used to build the app's Docker image.
+[`pushAppDockerImage`](#task-pushappdockerimage) | `[buildAppDockerImage, pushAppDockerImage_tag1, pushAppDockerImage_tag2, `...`]` | [`DockerPushImage`](http://bmuschko.github.io/gradle-docker-plugin/docs/groovydoc/com/bmuschko/gradle/docker/tasks/image/DockerPushImage.html) | Pushes the app's Docker image to the registry.
 [`pushAppDockerImage_${tag}`](#tasks-pushappdockerimage_tag) | `tagAppDockerImage_${tag}` | [`DockerPushImage`](http://bmuschko.github.io/gradle-docker-plugin/docs/groovydoc/com/bmuschko/gradle/docker/tasks/image/DockerPushImage.html) | Pushes the Docker image `${tag}` to the registry.
-[`tagAppDockerImage_${tag}`](tasks-tagappdockerimage_tag) | `buildAppDockerImage` | [`DockerTagImage`](http://bmuschko.github.io/gradle-docker-plugin/docs/groovydoc/com/bmuschko/gradle/docker/tasks/image/DockerTagImage.html) | Creates the tag `${tag}` which refers to the Docker image of the app.
+[`tagAppDockerImage_${tag}`](#tasks-tagappdockerimage_tag) | `buildAppDockerImage` | [`DockerTagImage`](http://bmuschko.github.io/gradle-docker-plugin/docs/groovydoc/com/bmuschko/gradle/docker/tasks/image/DockerTagImage.html) | Creates the tag `${tag}`, which refers to the app's Docker image.
 
 ### Task `buildAppDockerImage`
 
@@ -98,7 +97,7 @@ sensible defaults:
 Property Name | Default Value
 ------------- | -------------
 [`destinationDir`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Sync.html#org.gradle.api.tasks.Sync:destinationDir) | `"${project.buildDir}/docker"`
-[`from`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Sync.html#org.gradle.api.tasks.Sync:from%28java.lang.Object,%20groovy.lang.Closure%29) | `appDocker.inputDir`, `appDocker.subprojects*.allArtifacts.files` (only the subprojects that respect the `appDocker.onlyIf` conditions).
+[`from`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Sync.html#org.gradle.api.tasks.Sync:from%28java.lang.Object,%20groovy.lang.Closure%29) | `appDocker.inputDir`, `appDocker.subprojects*.allArtifacts.files` (only the subprojects that respect the `appDocker.onlyIf` conditions are included in the `appDocker.subprojects*.allArtifacts.files` parameter).
 
 ### Task `pushAppDockerImage`
 
@@ -111,10 +110,11 @@ Property Name | Default Value
 
 ### Tasks `pushAppDockerImage_${tag}`
 
-For each entry `imageTag` in the `appDocker.imageTags` collection, one task
+For each `imageTag` entry in the `appDocker.imageTags` collection, one task
 `pushAppDockerImage_${appDocker.imageUser}/${appDocker.imageName}:${imageTag}`
-of this type is created at the end of the project evaluation. Each one of these
-task is automatically configured with sensible defaults:
+of type [DockerPushImage](http://bmuschko.github.io/gradle-docker-plugin/docs/groovydoc/com/bmuschko/gradle/docker/tasks/image/DockerPushImage.html)
+is created at the end of the project evaluation. Each one of these tasks are
+automatically configured with sensible defaults:
 
 Property Name | Default Value
 ------------- | -------------
@@ -123,10 +123,11 @@ Property Name | Default Value
 
 ### Tasks `tagAppDockerImage_${tag}`
 
-For each entry `imageTag` in the `appDocker.imageTags` collection, one task
+For each `imageTag` entry in the `appDocker.imageTags` collection, one task
 `tagAppDockerImage_${appDocker.imageUser}/${appDocker.imageName}:${imageTag}` of
-this type is created at the end of the project evaluation. Each one of these
-task is automatically configured with sensible defaults:
+type [DockerTagImage](http://bmuschko.github.io/gradle-docker-plugin/docs/groovydoc/com/bmuschko/gradle/docker/tasks/image/DockerTagImage.html)
+is created at the end of the project evaluation. Each one of these tasks are
+automatically configured with sensible defaults:
 
 Property Name | Default Value
 ------------- | -------------

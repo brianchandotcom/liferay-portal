@@ -145,6 +145,14 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 	}
 
 	@Override
+	public CPDefinitionVirtualSetting
+		fetchCPDefinitionVirtualSettingByCPDefinitionId(long cpDefinitionId) {
+
+		return cpDefinitionVirtualSettingPersistence.fetchByCPDefinitionId(
+			cpDefinitionId);
+	}
+
+	@Override
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 			long cpDefinitionVirtualSettingId, boolean useUrl, long fileEntryId,
 			String url, String activationStatus, long duration, int maxUsages,

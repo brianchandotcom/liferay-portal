@@ -62,8 +62,8 @@ public class CPDefinitionVirtualSettingServiceImpl
 		throws PortalException {
 
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-			cpDefinitionVirtualSettingPersistence.fetchByCPDefinitionId(
-				cpDefinitionId);
+			cpDefinitionVirtualSettingLocalService.
+				fetchCPDefinitionVirtualSettingByCPDefinitionId(cpDefinitionId);
 
 		if (cpDefinitionVirtualSetting != null) {
 			CPDefinitionPermission.check(

@@ -16,6 +16,7 @@ package com.liferay.commerce.product.type.grouped.web.internal;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.grouped.constants.GroupedCPTypeConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -33,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"commerce.product.type.display.order:Integer=10",
-		"commerce.product.type.name=grouped"
+		"commerce.product.type.name=" + GroupedCPTypeConstants.NAME
 	},
 	service = CPType.class
 )
@@ -59,12 +60,12 @@ public class GroupedCPType implements CPType {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "grouped");
+		return LanguageUtil.get(locale, GroupedCPTypeConstants.NAME);
 	}
 
 	@Override
 	public String getName() {
-		return "grouped";
+		return GroupedCPTypeConstants.NAME;
 	}
 
 }

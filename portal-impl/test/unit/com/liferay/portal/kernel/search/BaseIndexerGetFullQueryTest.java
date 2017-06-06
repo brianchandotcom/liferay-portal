@@ -177,15 +177,13 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		mockStatic(SearchEngineHelperUtil.class, Mockito.CALLS_REAL_METHODS);
 
 		stub(
-			method(
-				SearchEngineHelperUtil.class, "getDefaultSearchEngineId")
+			method(SearchEngineHelperUtil.class, "getDefaultSearchEngineId")
 		).toReturn(
 			SearchEngineHelper.SYSTEM_ENGINE_ID
 		);
 
 		stub(
-			method(
-				SearchEngineHelperUtil.class, "getEntryClassNames")
+			method(SearchEngineHelperUtil.class, "getEntryClassNames")
 		).toReturn(
 			new String[0]
 		);

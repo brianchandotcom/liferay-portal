@@ -445,8 +445,7 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		new KeyValuePair(
 			"-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN",
 			"web-facesconfig_1_1.dtd"),
-		new KeyValuePair(
-			"-//W3C//DTD XMLSCHEMA 200102//EN", "XMLSchema.dtd")
+		new KeyValuePair("-//W3C//DTD XMLSCHEMA 200102//EN", "XMLSchema.dtd")
 	};
 
 	private static final KeyValuePair[] _SYSTEM_IDS = {
@@ -519,8 +518,7 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		new KeyValuePair(
 			"http://www.liferay.com/dtd/liferay-workflow-definition_7_0_0.xsd",
 			"liferay-workflow-definition_7_0_0.xsd"),
-		new KeyValuePair(
-			"http://www.w3.org/2001/xml.xsd", "xml.xsd")
+		new KeyValuePair("http://www.w3.org/2001/xml.xsd", "xml.xsd")
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(EntityResolver.class);

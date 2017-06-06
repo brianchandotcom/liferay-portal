@@ -23,16 +23,19 @@ import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability
 import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
+import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.capabilities.ThumbnailCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.repository.capabilities.ConfigurationCapabilityImpl;
 import com.liferay.portal.repository.capabilities.LiferayBulkOperationCapability;
 import com.liferay.portal.repository.capabilities.LiferayCommentCapability;
 import com.liferay.portal.repository.capabilities.LiferayProcessorCapability;
 import com.liferay.portal.repository.capabilities.LiferayRelatedModelCapability;
+import com.liferay.portal.repository.capabilities.LiferayRepositoryEventTriggerCapability;
 import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
 import com.liferay.portal.repository.capabilities.LiferayThumbnailCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
@@ -110,6 +113,15 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 
 		return new LiferayRelatedModelCapability(
 			_repositoryEntryConverter, repositoryEntryChecker);
+	}
+
+	@Override
+	public RepositoryEventTriggerCapability getRepositoryEventTriggerCapability(
+		DocumentRepository documentRepository,
+		RepositoryEventTrigger repositoryEventTrigger) {
+
+		return new LiferayRepositoryEventTriggerCapability(
+			repositoryEventTrigger);
 	}
 
 	@Override

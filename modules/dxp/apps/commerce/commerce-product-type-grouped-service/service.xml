@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.product.type.grouped">
+	<author>Andrea Di Giorgi</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CPDefinitionGroupedEntry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPDefinitionGroupedEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPDefinitionId" type="long" />
+		<column name="entryCPDefinitionId" type="long" />
+		<column name="priority" type="double" />
+		<column name="quantity" type="int" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CPDefinitionId" return-type="Collection">
+			<finder-column name="CPDefinitionId" />
+		</finder>
+		<finder name="C_E" return-type="CPDefinitionGroupedEntry" unique="true">
+			<finder-column name="CPDefinitionId" />
+			<finder-column name="entryCPDefinitionId" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>CPDefinitionGroupedEntryQuantity</exception>
+	</exceptions>
+</service-builder>

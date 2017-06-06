@@ -31,7 +31,9 @@ public interface PortalCapabilityLocator {
 		DocumentRepository documentRepository);
 
 	public ProcessorCapability getProcessorCapability(
-		DocumentRepository documentRepository);
+		DocumentRepository documentRepository,
+		ProcessorCapability.ResourceGenerationStrategy
+			resourceGenerationStrategy);
 
 	public RelatedModelCapability getRelatedModelCapability(
 		DocumentRepository documentRepository);

@@ -87,7 +87,16 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 
 	@Override
 	public ProcessorCapability getProcessorCapability(
-		DocumentRepository documentRepository) {
+		DocumentRepository documentRepository,
+		ProcessorCapability.ResourceGenerationStrategy
+			resourceGenerationStrategy) {
+
+		if (resourceGenerationStrategy ==
+				ProcessorCapability.
+					ResourceGenerationStrategy.ALWAYS_GENERATE) {
+
+			return new LiferayProcessorCapability(resourceGenerationStrategy);
+		}
 
 		return _processorCapability;
 	}

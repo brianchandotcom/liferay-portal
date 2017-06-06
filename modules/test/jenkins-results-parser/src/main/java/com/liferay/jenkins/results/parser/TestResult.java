@@ -74,6 +74,13 @@ public class TestResult {
 		testName = caseJSONObject.getString("name");
 
 		status = caseJSONObject.getString("status");
+
+		if (status.equals("FAILED")) {
+			errorStackTrace = caseJSONObject.getString("errorStackTrace");
+		}
+		else {
+			errorStackTrace = null;
+		}
 	}
 
 	public AxisBuild getAxisBuild() {
@@ -226,6 +233,7 @@ public class TestResult {
 	protected AxisBuild axisBuild;
 	protected String className;
 	protected long duration;
+	protected String errorStackTrace;
 	protected String packageName;
 	protected String simpleClassName;
 	protected String status;

@@ -17,24 +17,8 @@ package com.liferay.commerce.product.type.grouped.service.impl;
 import com.liferay.commerce.product.type.grouped.service.base.CPDefinitionGroupedEntryServiceBaseImpl;
 
 /**
- * The implementation of the cp definition grouped entry remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Andrea Di Giorgi
- * @see CPDefinitionGroupedEntryServiceBaseImpl
- * @see com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryServiceUtil
  */
 public class CPDefinitionGroupedEntryServiceImpl
 	extends CPDefinitionGroupedEntryServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryServiceUtil} to access the cp definition grouped entry remote service.
-	 */
 }

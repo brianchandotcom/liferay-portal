@@ -17,24 +17,8 @@ package com.liferay.commerce.product.type.grouped.service.impl;
 import com.liferay.commerce.product.type.grouped.service.base.CPDefinitionGroupedEntryLocalServiceBaseImpl;
 
 /**
- * The implementation of the cp definition grouped entry local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Andrea Di Giorgi
- * @see CPDefinitionGroupedEntryLocalServiceBaseImpl
- * @see com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryLocalServiceUtil
  */
 public class CPDefinitionGroupedEntryLocalServiceImpl
 	extends CPDefinitionGroupedEntryLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryLocalServiceUtil} to access the cp definition grouped entry local service.
-	 */
 }

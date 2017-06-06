@@ -225,7 +225,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 				company.getCompanyId(), PropsKeys.COMPANY_SECURITY_STRANGERS);
 		}
 
-		actionRequest = wrapActionRequest(actionRequest);
+		actionRequest = _wrapActionRequest(actionRequest);
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -559,7 +559,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, themeDisplay, user, password1);
 	}
 
-	protected ActionRequest wrapActionRequest(ActionRequest actionRequest)
+	private ActionRequest _wrapActionRequest(ActionRequest actionRequest)
 		throws Exception {
 
 		DynamicActionRequest dynamicActionRequest = new DynamicActionRequest(

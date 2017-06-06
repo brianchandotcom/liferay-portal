@@ -24,6 +24,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
@@ -31,6 +32,7 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -95,6 +97,44 @@ public class WikiPageLocalServiceTest {
 		_group = GroupTestUtil.addGroup();
 
 		_node = WikiTestUtil.addNode(_group.getGroupId());
+	}
+
+	@Test
+	public void testAddFrontPageWithoutRequeiredCategory() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		AssetVocabulary assetVocabulary =
+			AssetVocabularyLocalServiceUtil.addDefaultVocabulary(
+				_group.getGroupId());
+
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+			WikiPage.class.getName());
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("multiValued=true\n");
+		sb.append("requiredClassNameIds=");
+		sb.append(classNameId);
+		sb.append(":-1\nselectedClassNameIds=");
+		sb.append(classNameId);
+		sb.append(":-1");
+
+		String settings = sb.toString();
+
+		assetVocabulary.setSettings(settings);
+
+		AssetVocabularyLocalServiceUtil.updateAssetVocabulary(assetVocabulary);
+
+		AssetCategoryLocalServiceUtil.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(), "category 1",
+			assetVocabulary.getVocabularyId(), serviceContext);
+
+		WikiPage frontPage = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(), "FrontPage",
+			RandomTestUtil.randomString(), true, serviceContext);
+
+		Assert.assertNotNull(frontPage);
 	}
 
 	@Test

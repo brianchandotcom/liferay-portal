@@ -51,7 +51,7 @@ extension named `appDocker`:
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `imageName` | `String` | `project.name` | The name of the app's Docker image (e.g., `foo` in the image named `liferay/foo`).
-`imageTags` | `List<String>` | `[`The latest Git commit's committer date`, ` The latest Git commit's hash`]` | The list of tags for the Docker image of the app to push to the registry.
+`imageTags` | `List<String>` | `[`The latest Git commit's committer date`, ` The latest Git commit's hash`]` | The list of tags for the app's Docker image to push to the registry.
 `imageUser` | `String` | `project.group` | The user repository of the app's Docker image (e.g., `liferay` in the image named `liferay/foo`).
 `inputDir` | `File` | `"${project.projectDir}/${project.name}-docker"` | The directory that contains the `Dockerfile` and other resources to copy into the context path used to build the app's Docker image.
 `subprojects` | `Set<Project>` | `project.subprojects` | The subprojects to include in the app's Docker image.
@@ -60,8 +60,8 @@ The same extension exposes the following methods:
 
 Method | Description
 ------ | -----------
-`AppDockerExtension imageTags(Iterable<?> imageTags)` | Adds tags for the Docker image of the app to push to the registry.
-`AppDockerExtension imageTags(Object... imageTags)` | Adds tags for the Docker image of the app to push to the registry.
+`AppDockerExtension imageTags(Iterable<?> imageTags)` | Adds tags for the app's Docker image to push to the registry.
+`AppDockerExtension imageTags(Object... imageTags)` | Adds tags for the app's Docker image to push to the registry.
 `AppDockerExtension onlyIf(Closure<Boolean> onlyIfClosure)` | Includes a subproject in the Docker image if the given closure returns `true`. The closure is evaluated at the end of the subproject configuration phase and is passed the subproject as a single parameter. If the closure returns `false`, the subproject is not included in the Docker image.
 `AppDockerExtension onlyIf(Spec<Project> onlyIfSpec)` | Includes a subproject in the Docker image if the given spec is satisfied. The spec is evaluated at the end of the subproject configuration phase. If the spec is not satisfied, the subproject is not included in the Docker image.
 `AppDockerExtension subprojects(Iterable<Project> subprojects)` | Includes additional projects in the app's Docker image.

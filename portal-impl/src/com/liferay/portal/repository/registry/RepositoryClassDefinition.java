@@ -216,8 +216,8 @@ public class RepositoryClassDefinition
 
 			capabilityRegistry.addExportedCapability(
 				RepositoryEventTriggerCapability.class,
-				new LiferayRepositoryEventTriggerCapability(
-					repositoryEventTrigger));
+				_portalCapabilityLocator.getRepositoryEventTriggerCapability(
+					documentRepository, repositoryEventTrigger));
 		}
 
 		capabilityRegistry.addSupportedCapability(

@@ -25,7 +25,10 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 
 /**
  * @author Iván Zaera
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.document.library.internal.capabilities.LiferayThumbnailCapability}
  */
+@Deprecated
 public class LiferayThumbnailCapability implements ThumbnailCapability {
 
 	public LiferayThumbnailCapability(

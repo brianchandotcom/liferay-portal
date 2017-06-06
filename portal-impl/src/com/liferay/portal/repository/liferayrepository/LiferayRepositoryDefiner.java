@@ -78,7 +78,8 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 				documentRepository));
 		capabilityRegistry.addExportedCapability(
 			ThumbnailCapability.class,
-			_portalCapabilityLocator.getThumbnailCapability(documentRepository));
+			_portalCapabilityLocator.getThumbnailCapability(
+				documentRepository));
 		capabilityRegistry.addExportedCapability(
 			TrashCapability.class,
 			_portalCapabilityLocator.getTrashCapability(documentRepository));

@@ -167,6 +167,9 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 			DLFileVersionServiceAdapter.create(documentRepository));
 	}
 
+	private final ProcessorCapability _alwaysGeneratingProcessorCapability =
+		new LiferayProcessorCapability(
+			ProcessorCapability.ResourceGenerationStrategy.ALWAYS_GENERATE);
 	private final CommentCapability _commentCapability =
 		new LiferayCommentCapability();
 
@@ -176,13 +179,10 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 	@Reference
 	private DLSyncEventLocalService _dlSyncEventLocalService;
 
-	private final ProcessorCapability _reusingProcessorCapability =
-		new LiferayProcessorCapability();
-	private final ProcessorCapability _alwaysGeneratingProcessorCapability =
-		new LiferayProcessorCapability(
-			ProcessorCapability.ResourceGenerationStrategy.ALWAYS_GENERATE);
 	private final RepositoryEntryConverter _repositoryEntryConverter =
 		new RepositoryEntryConverter();
+	private final ProcessorCapability _reusingProcessorCapability =
+		new LiferayProcessorCapability();
 
 	@Reference
 	private TrashEntryLocalService _trashEntryLocalService;

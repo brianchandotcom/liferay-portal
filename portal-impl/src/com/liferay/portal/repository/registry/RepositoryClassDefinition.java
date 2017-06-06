@@ -37,7 +37,6 @@ import com.liferay.portal.repository.InitializedLocalRepository;
 import com.liferay.portal.repository.InitializedRepository;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
-import com.liferay.portal.repository.capabilities.LiferayRepositoryEventTriggerCapability;
 
 import java.util.Locale;
 import java.util.Map;

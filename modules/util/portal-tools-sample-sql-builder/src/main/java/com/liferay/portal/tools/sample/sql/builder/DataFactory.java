@@ -80,8 +80,10 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationModel;
 import com.liferay.friendly.url.model.FriendlyURLEntryModel;
+import com.liferay.friendly.url.model.FriendlyURLMappingModel;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationModelImpl;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl;
+import com.liferay.friendly.url.model.impl.FriendlyURLMappingModelImpl;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -1879,9 +1881,21 @@ public class DataFactory {
 		friendlyURLEntryModel.setModifiedDate(new Date());
 		friendlyURLEntryModel.setClassNameId(getClassNameId(BlogsEntry.class));
 		friendlyURLEntryModel.setClassPK(blogsEntryModel.getEntryId());
-		friendlyURLEntryModel.setMain(true);
 
 		return friendlyURLEntryModel;
+	}
+
+	public FriendlyURLMappingModel newFriendlyURLMapping(
+		FriendlyURLEntryModel friendlyURLEntryModel) {
+
+		FriendlyURLMappingModel friendlyURLMappingModel =
+			new FriendlyURLMappingModelImpl();
+
+		friendlyURLMappingModel.setClassNameId(
+			friendlyURLEntryModel.getClassNameId());
+		friendlyURLMappingModel.setClassPK(friendlyURLEntryModel.getClassPK());
+
+		return friendlyURLMappingModel;
 	}
 
 	public GroupModel newGroupModel(UserModel userModel) throws Exception {

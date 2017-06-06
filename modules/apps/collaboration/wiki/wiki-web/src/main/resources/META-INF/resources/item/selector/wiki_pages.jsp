@@ -58,6 +58,12 @@ else {
 }
 %>
 
+<style type="text/css">
+	.portlet-item-selector .wiki-page-item {
+		cursor: pointer;
+	}
+</style>
+
 <div class="container-fluid-1280 lfr-item-viewer" id="<portlet:namespace />wikiPagesSelectorContainer">
 	<liferay-ui:search-container
 		id="wikiPagesSearchContainer"
@@ -70,6 +76,7 @@ else {
 
 		<liferay-ui:search-container-row
 			className="com.liferay.wiki.model.WikiPage"
+			cssClass="wiki-page-item"
 			keyProperty="pageId"
 			modelVar="curPage"
 		>

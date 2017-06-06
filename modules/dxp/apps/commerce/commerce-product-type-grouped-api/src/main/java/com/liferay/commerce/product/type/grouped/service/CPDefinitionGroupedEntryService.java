@@ -16,14 +16,21 @@ package com.liferay.commerce.product.type.grouped.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for CPDefinitionGroupedEntry. Methods of this
@@ -49,6 +56,20 @@ public interface CPDefinitionGroupedEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionGroupedEntryServiceUtil} to access the cp definition grouped entry remote service. Add custom service methods to {@link com.liferay.commerce.product.type.grouped.service.impl.CPDefinitionGroupedEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CPDefinitionGroupedEntry deleteCPDefinitionGroupedEntry(
+		long cpDefinitionGroupedEntryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionGroupedEntry getCPDefinitionGroupedEntry(
+		long cpDefinitionGroupedEntryId) throws PortalException;
+
+	public CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
+		long cpDefinitionGroupedEntryId, double priority, int quantity)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionGroupedEntriesCount(long cpDefinitionId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +77,14 @@ public interface CPDefinitionGroupedEntryService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+		long cpDefinitionId, int start, int end,
+		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
+		throws PortalException;
+
+	public void addCPDefinitionGroupedEntries(long cpDefinitionId,
+		long[] entryCPDefinitionIds, ServiceContext serviceContext)
+		throws PortalException;
 }

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -73,6 +74,10 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionGroupedEntry addCPDefinitionGroupedEntry(
 		CPDefinitionGroupedEntry cpDefinitionGroupedEntry);
+
+	public CPDefinitionGroupedEntry addCPDefinitionGroupedEntry(
+		long cpDefinitionId, long entryCPDefinitionId, double priority,
+		int quantity, ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new cp definition grouped entry with the primary key. Does not add the cp definition grouped entry to the database.
@@ -152,6 +157,10 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	public CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
 		CPDefinitionGroupedEntry cpDefinitionGroupedEntry);
 
+	public CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
+		long cpDefinitionGroupedEntryId, double priority, int quantity)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -183,6 +192,9 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionGroupedEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionGroupedEntriesCount(long cpDefinitionId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -245,6 +257,15 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	public List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+		long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+		long cpDefinitionId, int start, int end,
+		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator);
+
 	/**
 	* Returns all the cp definition grouped entries matching the UUID and company.
 	*
@@ -288,4 +309,10 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void addCPDefinitionGroupedEntries(long cpDefinitionId,
+		long[] entryCPDefinitionIds, ServiceContext serviceContext)
+		throws PortalException;
+
+	public void deleteCPDefinitionGroupedEntries(long cpDefinitionId);
 }

@@ -9,6 +9,6 @@ create table CPDefinitionGroupedEntry (
 	modifiedDate DATE null,
 	CPDefinitionId LONG,
 	entryCPDefinitionId LONG,
-	quantity INTEGER,
-	priority INTEGER
+	priority DOUBLE,
+	quantity INTEGER
 );

@@ -88,10 +88,10 @@ public class CPDefinitionGroupedEntryCacheModel implements CacheModel<CPDefiniti
 		sb.append(CPDefinitionId);
 		sb.append(", entryCPDefinitionId=");
 		sb.append(entryCPDefinitionId);
-		sb.append(", quantity=");
-		sb.append(quantity);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", quantity=");
+		sb.append(quantity);
 		sb.append("}");
 
 		return sb.toString();
@@ -136,8 +136,8 @@ public class CPDefinitionGroupedEntryCacheModel implements CacheModel<CPDefiniti
 
 		cpDefinitionGroupedEntryImpl.setCPDefinitionId(CPDefinitionId);
 		cpDefinitionGroupedEntryImpl.setEntryCPDefinitionId(entryCPDefinitionId);
-		cpDefinitionGroupedEntryImpl.setQuantity(quantity);
 		cpDefinitionGroupedEntryImpl.setPriority(priority);
+		cpDefinitionGroupedEntryImpl.setQuantity(quantity);
 
 		cpDefinitionGroupedEntryImpl.resetOriginalValues();
 
@@ -163,9 +163,9 @@ public class CPDefinitionGroupedEntryCacheModel implements CacheModel<CPDefiniti
 
 		entryCPDefinitionId = objectInput.readLong();
 
-		quantity = objectInput.readInt();
+		priority = objectInput.readDouble();
 
-		priority = objectInput.readInt();
+		quantity = objectInput.readInt();
 	}
 
 	@Override
@@ -200,9 +200,9 @@ public class CPDefinitionGroupedEntryCacheModel implements CacheModel<CPDefiniti
 
 		objectOutput.writeLong(entryCPDefinitionId);
 
-		objectOutput.writeInt(quantity);
+		objectOutput.writeDouble(priority);
 
-		objectOutput.writeInt(priority);
+		objectOutput.writeInt(quantity);
 	}
 
 	public String uuid;
@@ -215,6 +215,6 @@ public class CPDefinitionGroupedEntryCacheModel implements CacheModel<CPDefiniti
 	public long modifiedDate;
 	public long CPDefinitionId;
 	public long entryCPDefinitionId;
+	public double priority;
 	public int quantity;
-	public int priority;
 }

@@ -12,7 +12,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="CPDefinitionId" type="long" />
 		<field name="entryCPDefinitionId" type="long" />
+		<field name="priority" type="double" />
 		<field name="quantity" type="int" />
-		<field name="priority" type="int" />
 	</model>
 </model-hints>

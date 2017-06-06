@@ -239,6 +239,20 @@ public interface CPDefinitionGroupedEntryModel extends BaseModel<CPDefinitionGro
 	public void setEntryCPDefinitionId(long entryCPDefinitionId);
 
 	/**
+	 * Returns the priority of this cp definition grouped entry.
+	 *
+	 * @return the priority of this cp definition grouped entry
+	 */
+	public double getPriority();
+
+	/**
+	 * Sets the priority of this cp definition grouped entry.
+	 *
+	 * @param priority the priority of this cp definition grouped entry
+	 */
+	public void setPriority(double priority);
+
+	/**
 	 * Returns the quantity of this cp definition grouped entry.
 	 *
 	 * @return the quantity of this cp definition grouped entry
@@ -251,20 +265,6 @@ public interface CPDefinitionGroupedEntryModel extends BaseModel<CPDefinitionGro
 	 * @param quantity the quantity of this cp definition grouped entry
 	 */
 	public void setQuantity(int quantity);
-
-	/**
-	 * Returns the priority of this cp definition grouped entry.
-	 *
-	 * @return the priority of this cp definition grouped entry
-	 */
-	public int getPriority();
-
-	/**
-	 * Sets the priority of this cp definition grouped entry.
-	 *
-	 * @param priority the priority of this cp definition grouped entry
-	 */
-	public void setPriority(int priority);
 
 	@Override
 	public boolean isNew();

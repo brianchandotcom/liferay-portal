@@ -41,6 +41,32 @@ public class CPDefinitionGroupedEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.type.grouped.service.impl.CPDefinitionGroupedEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry deleteCPDefinitionGroupedEntry(
+		long cpDefinitionGroupedEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteCPDefinitionGroupedEntry(cpDefinitionGroupedEntryId);
+	}
+
+	public static com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry getCPDefinitionGroupedEntry(
+		long cpDefinitionGroupedEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPDefinitionGroupedEntry(cpDefinitionGroupedEntryId);
+	}
+
+	public static com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
+		long cpDefinitionGroupedEntryId, double priority, int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCPDefinitionGroupedEntry(cpDefinitionGroupedEntryId,
+			priority, quantity);
+	}
+
+	public static int getCPDefinitionGroupedEntriesCount(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPDefinitionGroupedEntriesCount(cpDefinitionId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +75,24 @@ public class CPDefinitionGroupedEntryServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+		long cpDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPDefinitionGroupedEntries(cpDefinitionId, start, end,
+			orderByComparator);
+	}
+
+	public static void addCPDefinitionGroupedEntries(long cpDefinitionId,
+		long[] entryCPDefinitionIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addCPDefinitionGroupedEntries(cpDefinitionId,
+			entryCPDefinitionIds, serviceContext);
 	}
 
 	public static CPDefinitionGroupedEntryService getService() {

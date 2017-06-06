@@ -45,8 +45,8 @@ public class CPDefinitionGroupedEntrySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCPDefinitionId(model.getCPDefinitionId());
 		soapModel.setEntryCPDefinitionId(model.getEntryCPDefinitionId());
-		soapModel.setQuantity(model.getQuantity());
 		soapModel.setPriority(model.getPriority());
+		soapModel.setQuantity(model.getQuantity());
 
 		return soapModel;
 	}
@@ -182,20 +182,20 @@ public class CPDefinitionGroupedEntrySoap implements Serializable {
 		_entryCPDefinitionId = entryCPDefinitionId;
 	}
 
+	public double getPriority() {
+		return _priority;
+	}
+
+	public void setPriority(double priority) {
+		_priority = priority;
+	}
+
 	public int getQuantity() {
 		return _quantity;
 	}
 
 	public void setQuantity(int quantity) {
 		_quantity = quantity;
-	}
-
-	public int getPriority() {
-		return _priority;
-	}
-
-	public void setPriority(int priority) {
-		_priority = priority;
 	}
 
 	private String _uuid;
@@ -208,6 +208,6 @@ public class CPDefinitionGroupedEntrySoap implements Serializable {
 	private Date _modifiedDate;
 	private long _CPDefinitionId;
 	private long _entryCPDefinitionId;
+	private double _priority;
 	private int _quantity;
-	private int _priority;
 }

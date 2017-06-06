@@ -72,8 +72,8 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("entryCPDefinitionId", getEntryCPDefinitionId());
-		attributes.put("quantity", getQuantity());
 		attributes.put("priority", getPriority());
+		attributes.put("quantity", getQuantity());
 
 		return attributes;
 	}
@@ -141,16 +141,16 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 			setEntryCPDefinitionId(entryCPDefinitionId);
 		}
 
+		Double priority = (Double)attributes.get("priority");
+
+		if (priority != null) {
+			setPriority(priority);
+		}
+
 		Integer quantity = (Integer)attributes.get("quantity");
 
 		if (quantity != null) {
 			setQuantity(quantity);
-		}
-
-		Integer priority = (Integer)attributes.get("priority");
-
-		if (priority != null) {
-			setPriority(priority);
 		}
 	}
 
@@ -180,6 +180,18 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionGroupedEntry.getCPDefinition();
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition getEntryCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionGroupedEntry.getEntryCPDefinition();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _cpDefinitionGroupedEntry.getExpandoBridge();
 	}
@@ -189,19 +201,19 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 		return _cpDefinitionGroupedEntry.toCacheModel();
 	}
 
-	@Override
-	public int compareTo(CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
-		return _cpDefinitionGroupedEntry.compareTo(cpDefinitionGroupedEntry);
-	}
-
 	/**
 	* Returns the priority of this cp definition grouped entry.
 	*
 	* @return the priority of this cp definition grouped entry
 	*/
 	@Override
-	public int getPriority() {
+	public double getPriority() {
 		return _cpDefinitionGroupedEntry.getPriority();
+	}
+
+	@Override
+	public int compareTo(CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
+		return _cpDefinitionGroupedEntry.compareTo(cpDefinitionGroupedEntry);
 	}
 
 	/**
@@ -481,7 +493,7 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	* @param priority the priority of this cp definition grouped entry
 	*/
 	@Override
-	public void setPriority(int priority) {
+	public void setPriority(double priority) {
 		_cpDefinitionGroupedEntry.setPriority(priority);
 	}
 

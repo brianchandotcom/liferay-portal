@@ -83,8 +83,8 @@ public class CPDefinitionGroupedEntryModelImpl extends BaseModelImpl<CPDefinitio
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "CPDefinitionId", Types.BIGINT },
 			{ "entryCPDefinitionId", Types.BIGINT },
-			{ "quantity", Types.INTEGER },
-			{ "priority", Types.INTEGER }
+			{ "priority", Types.DOUBLE },
+			{ "quantity", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -99,11 +99,11 @@ public class CPDefinitionGroupedEntryModelImpl extends BaseModelImpl<CPDefinitio
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("entryCPDefinitionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionGroupedEntry (uuid_ VARCHAR(75) null,CPDefinitionGroupedEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,entryCPDefinitionId LONG,quantity INTEGER,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionGroupedEntry (uuid_ VARCHAR(75) null,CPDefinitionGroupedEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,entryCPDefinitionId LONG,priority DOUBLE,quantity INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionGroupedEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionGroupedEntry.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionGroupedEntry.priority ASC";
@@ -150,8 +150,8 @@ public class CPDefinitionGroupedEntryModelImpl extends BaseModelImpl<CPDefinitio
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCPDefinitionId(soapModel.getCPDefinitionId());
 		model.setEntryCPDefinitionId(soapModel.getEntryCPDefinitionId());
-		model.setQuantity(soapModel.getQuantity());
 		model.setPriority(soapModel.getPriority());
+		model.setQuantity(soapModel.getQuantity());
 
 		return model;
 	}
@@ -228,8 +228,8 @@ public class CPDefinitionGroupedEntryModelImpl extends BaseModelImpl<CPDefinitio
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("entryCPDefinitionId", getEntryCPDefinitionId());
-		attributes.put("quantity", getQuantity());
 		attributes.put("priority", getPriority());
+		attributes.put("quantity", getQuantity());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -300,16 +300,16 @@ public class CPDefinitionGroupedEntryModelImpl extends BaseModelImpl<CPDefinitio
 			setEntryCPDefinitionId(entryCPDefinitionId);
 		}
 
+		Double priority = (Double)attributes.get("priority");
+
+		if (priority != null) {
+			setPriority(priority);
+		}
+
 		Integer quantity = (Integer)attributes.get("quantity");
 
 		if (quantity != null) {
 			setQuantity(quantity);
-		}
-
-		Integer priority = (Integer)attributes.get("priority");
-
-		if (priority != null) {
-			setPriority(priority);
 		}
 	}
 
@@ -513,6 +513,19 @@ public class CPDefinitionGroupedEntryModelImpl extends BaseModelImpl<CPDefinitio
 
 	@JSON
 	@Override
+	public double getPriority() {
+		return _priority;
+	}
+
+	@Override
+	public void setPriority(double priority) {
+		_columnBitmask = -1L;
+
+		_priority = priority;
+	}
+
+	@JSON
+	@Override
 	public int getQuantity() {
 		return _quantity;
 	}
@@ -520,19 +533,6 @@ public class CPDefinitionGroupedEntryModelImpl extends BaseModelImpl<CPDefinitio
 	@Override
 	public void setQuantity(int quantity) {
 		_quantity = quantity;
-	}
-
-	@JSON
-	@Override
-	public int getPriority() {
-		return _priority;
-	}
-
-	@Override
-	public void setPriority(int priority) {
-		_columnBitmask = -1L;
-
-		_priority = priority;
 	}
 
 	@Override
@@ -582,8 +582,8 @@ public class CPDefinitionGroupedEntryModelImpl extends BaseModelImpl<CPDefinitio
 		cpDefinitionGroupedEntryImpl.setModifiedDate(getModifiedDate());
 		cpDefinitionGroupedEntryImpl.setCPDefinitionId(getCPDefinitionId());
 		cpDefinitionGroupedEntryImpl.setEntryCPDefinitionId(getEntryCPDefinitionId());
-		cpDefinitionGroupedEntryImpl.setQuantity(getQuantity());
 		cpDefinitionGroupedEntryImpl.setPriority(getPriority());
+		cpDefinitionGroupedEntryImpl.setQuantity(getQuantity());
 
 		cpDefinitionGroupedEntryImpl.resetOriginalValues();
 
@@ -725,9 +725,9 @@ public class CPDefinitionGroupedEntryModelImpl extends BaseModelImpl<CPDefinitio
 
 		cpDefinitionGroupedEntryCacheModel.entryCPDefinitionId = getEntryCPDefinitionId();
 
-		cpDefinitionGroupedEntryCacheModel.quantity = getQuantity();
-
 		cpDefinitionGroupedEntryCacheModel.priority = getPriority();
+
+		cpDefinitionGroupedEntryCacheModel.quantity = getQuantity();
 
 		return cpDefinitionGroupedEntryCacheModel;
 	}
@@ -756,10 +756,10 @@ public class CPDefinitionGroupedEntryModelImpl extends BaseModelImpl<CPDefinitio
 		sb.append(getCPDefinitionId());
 		sb.append(", entryCPDefinitionId=");
 		sb.append(getEntryCPDefinitionId());
-		sb.append(", quantity=");
-		sb.append(getQuantity());
 		sb.append(", priority=");
 		sb.append(getPriority());
+		sb.append(", quantity=");
+		sb.append(getQuantity());
 		sb.append("}");
 
 		return sb.toString();
@@ -815,12 +815,12 @@ public class CPDefinitionGroupedEntryModelImpl extends BaseModelImpl<CPDefinitio
 		sb.append(getEntryCPDefinitionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>quantity</column-name><column-value><![CDATA[");
-		sb.append(getQuantity());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
 		sb.append(getPriority());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>quantity</column-name><column-value><![CDATA[");
+		sb.append(getQuantity());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -852,8 +852,8 @@ public class CPDefinitionGroupedEntryModelImpl extends BaseModelImpl<CPDefinitio
 	private long _entryCPDefinitionId;
 	private long _originalEntryCPDefinitionId;
 	private boolean _setOriginalEntryCPDefinitionId;
+	private double _priority;
 	private int _quantity;
-	private int _priority;
 	private long _columnBitmask;
 	private CPDefinitionGroupedEntry _escapedModel;
 }

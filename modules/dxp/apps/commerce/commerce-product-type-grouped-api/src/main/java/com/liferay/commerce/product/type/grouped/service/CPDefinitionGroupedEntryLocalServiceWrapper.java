@@ -46,6 +46,16 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 		return _cpDefinitionGroupedEntryLocalService.addCPDefinitionGroupedEntry(cpDefinitionGroupedEntry);
 	}
 
+	@Override
+	public com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry addCPDefinitionGroupedEntry(
+		long cpDefinitionId, long entryCPDefinitionId, double priority,
+		int quantity,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionGroupedEntryLocalService.addCPDefinitionGroupedEntry(cpDefinitionId,
+			entryCPDefinitionId, priority, quantity, serviceContext);
+	}
+
 	/**
 	* Creates a new cp definition grouped entry with the primary key. Does not add the cp definition grouped entry to the database.
 	*
@@ -147,6 +157,14 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
+		long cpDefinitionGroupedEntryId, double priority, int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionGroupedEntryLocalService.updateCPDefinitionGroupedEntry(cpDefinitionGroupedEntryId,
+			priority, quantity);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _cpDefinitionGroupedEntryLocalService.getActionableDynamicQuery();
 	}
@@ -192,6 +210,11 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 	@Override
 	public int getCPDefinitionGroupedEntriesCount() {
 		return _cpDefinitionGroupedEntryLocalService.getCPDefinitionGroupedEntriesCount();
+	}
+
+	@Override
+	public int getCPDefinitionGroupedEntriesCount(long cpDefinitionId) {
+		return _cpDefinitionGroupedEntryLocalService.getCPDefinitionGroupedEntriesCount(cpDefinitionId);
 	}
 
 	/**
@@ -276,6 +299,20 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 			end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+		long cpDefinitionId) {
+		return _cpDefinitionGroupedEntryLocalService.getCPDefinitionGroupedEntries(cpDefinitionId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+		long cpDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry> orderByComparator) {
+		return _cpDefinitionGroupedEntryLocalService.getCPDefinitionGroupedEntries(cpDefinitionId,
+			start, end, orderByComparator);
+	}
+
 	/**
 	* Returns all the cp definition grouped entries matching the UUID and company.
 	*
@@ -333,6 +370,20 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _cpDefinitionGroupedEntryLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void addCPDefinitionGroupedEntries(long cpDefinitionId,
+		long[] entryCPDefinitionIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpDefinitionGroupedEntryLocalService.addCPDefinitionGroupedEntries(cpDefinitionId,
+			entryCPDefinitionIds, serviceContext);
+	}
+
+	@Override
+	public void deleteCPDefinitionGroupedEntries(long cpDefinitionId) {
+		_cpDefinitionGroupedEntryLocalService.deleteCPDefinitionGroupedEntries(cpDefinitionId);
 	}
 
 	@Override

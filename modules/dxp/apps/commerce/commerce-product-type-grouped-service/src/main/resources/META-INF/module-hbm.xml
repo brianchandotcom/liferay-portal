@@ -16,7 +16,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="CPDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="entryCPDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 </hibernate-mapping>

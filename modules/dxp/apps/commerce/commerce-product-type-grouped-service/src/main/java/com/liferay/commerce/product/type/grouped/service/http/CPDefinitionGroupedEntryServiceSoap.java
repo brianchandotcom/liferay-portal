@@ -16,9 +16,16 @@ package com.liferay.commerce.product.type.grouped.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryServiceUtil} service utility. The
+ * {@link CPDefinitionGroupedEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,104 @@ import aQute.bnd.annotation.ProviderType;
  * @author Andrea Di Giorgi
  * @see CPDefinitionGroupedEntryServiceHttp
  * @see com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntrySoap
- * @see com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryServiceUtil
+ * @see CPDefinitionGroupedEntryServiceUtil
  * @generated
  */
 @ProviderType
 public class CPDefinitionGroupedEntryServiceSoap {
+	public static void addCPDefinitionGroupedEntries(long cpDefinitionId,
+		long[] entryCPDefinitionIds,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			CPDefinitionGroupedEntryServiceUtil.addCPDefinitionGroupedEntries(cpDefinitionId,
+				entryCPDefinitionIds, serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntrySoap deleteCPDefinitionGroupedEntry(
+		long cpDefinitionGroupedEntryId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry returnValue =
+				CPDefinitionGroupedEntryServiceUtil.deleteCPDefinitionGroupedEntry(cpDefinitionGroupedEntryId);
+
+			return com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntrySoap[] getCPDefinitionGroupedEntries(
+		long cpDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry> returnValue =
+				CPDefinitionGroupedEntryServiceUtil.getCPDefinitionGroupedEntries(cpDefinitionId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCPDefinitionGroupedEntriesCount(long cpDefinitionId)
+		throws RemoteException {
+		try {
+			int returnValue = CPDefinitionGroupedEntryServiceUtil.getCPDefinitionGroupedEntriesCount(cpDefinitionId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntrySoap getCPDefinitionGroupedEntry(
+		long cpDefinitionGroupedEntryId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry returnValue =
+				CPDefinitionGroupedEntryServiceUtil.getCPDefinitionGroupedEntry(cpDefinitionGroupedEntryId);
+
+			return com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntrySoap updateCPDefinitionGroupedEntry(
+		long cpDefinitionGroupedEntryId, double priority, int quantity)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry returnValue =
+				CPDefinitionGroupedEntryServiceUtil.updateCPDefinitionGroupedEntry(cpDefinitionGroupedEntryId,
+					priority, quantity);
+
+			return com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CPDefinitionGroupedEntryServiceSoap.class);
 }

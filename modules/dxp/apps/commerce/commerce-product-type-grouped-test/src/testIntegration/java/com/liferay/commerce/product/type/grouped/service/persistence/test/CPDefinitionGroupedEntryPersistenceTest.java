@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -143,9 +144,9 @@ public class CPDefinitionGroupedEntryPersistenceTest {
 
 		newCPDefinitionGroupedEntry.setEntryCPDefinitionId(RandomTestUtil.nextLong());
 
-		newCPDefinitionGroupedEntry.setQuantity(RandomTestUtil.nextInt());
+		newCPDefinitionGroupedEntry.setPriority(RandomTestUtil.nextDouble());
 
-		newCPDefinitionGroupedEntry.setPriority(RandomTestUtil.nextInt());
+		newCPDefinitionGroupedEntry.setQuantity(RandomTestUtil.nextInt());
 
 		_cpDefinitionGroupedEntries.add(_persistence.update(
 				newCPDefinitionGroupedEntry));
@@ -175,10 +176,10 @@ public class CPDefinitionGroupedEntryPersistenceTest {
 			newCPDefinitionGroupedEntry.getCPDefinitionId());
 		Assert.assertEquals(existingCPDefinitionGroupedEntry.getEntryCPDefinitionId(),
 			newCPDefinitionGroupedEntry.getEntryCPDefinitionId());
+		AssertUtils.assertEquals(existingCPDefinitionGroupedEntry.getPriority(),
+			newCPDefinitionGroupedEntry.getPriority());
 		Assert.assertEquals(existingCPDefinitionGroupedEntry.getQuantity(),
 			newCPDefinitionGroupedEntry.getQuantity());
-		Assert.assertEquals(existingCPDefinitionGroupedEntry.getPriority(),
-			newCPDefinitionGroupedEntry.getPriority());
 	}
 
 	@Test
@@ -251,7 +252,7 @@ public class CPDefinitionGroupedEntryPersistenceTest {
 			"uuid", true, "CPDefinitionGroupedEntryId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "CPDefinitionId", true,
-			"entryCPDefinitionId", true, "quantity", true, "priority", true);
+			"entryCPDefinitionId", true, "priority", true, "quantity", true);
 	}
 
 	@Test
@@ -510,9 +511,9 @@ public class CPDefinitionGroupedEntryPersistenceTest {
 
 		cpDefinitionGroupedEntry.setEntryCPDefinitionId(RandomTestUtil.nextLong());
 
-		cpDefinitionGroupedEntry.setQuantity(RandomTestUtil.nextInt());
+		cpDefinitionGroupedEntry.setPriority(RandomTestUtil.nextDouble());
 
-		cpDefinitionGroupedEntry.setPriority(RandomTestUtil.nextInt());
+		cpDefinitionGroupedEntry.setQuantity(RandomTestUtil.nextInt());
 
 		_cpDefinitionGroupedEntries.add(_persistence.update(
 				cpDefinitionGroupedEntry));

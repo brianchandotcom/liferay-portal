@@ -55,4 +55,10 @@ public interface CPDefinitionGroupedEntry extends CPDefinitionGroupedEntryModel,
 				return CPDefinitionGroupedEntry.class;
 			}
 		};
+
+	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.commerce.product.model.CPDefinition getEntryCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

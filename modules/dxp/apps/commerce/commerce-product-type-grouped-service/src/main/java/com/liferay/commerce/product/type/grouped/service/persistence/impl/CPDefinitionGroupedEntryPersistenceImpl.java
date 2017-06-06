@@ -2748,8 +2748,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl extends BasePersistenceImpl
 		cpDefinitionGroupedEntryImpl.setModifiedDate(cpDefinitionGroupedEntry.getModifiedDate());
 		cpDefinitionGroupedEntryImpl.setCPDefinitionId(cpDefinitionGroupedEntry.getCPDefinitionId());
 		cpDefinitionGroupedEntryImpl.setEntryCPDefinitionId(cpDefinitionGroupedEntry.getEntryCPDefinitionId());
-		cpDefinitionGroupedEntryImpl.setQuantity(cpDefinitionGroupedEntry.getQuantity());
 		cpDefinitionGroupedEntryImpl.setPriority(cpDefinitionGroupedEntry.getPriority());
+		cpDefinitionGroupedEntryImpl.setQuantity(cpDefinitionGroupedEntry.getQuantity());
 
 		return cpDefinitionGroupedEntryImpl;
 	}

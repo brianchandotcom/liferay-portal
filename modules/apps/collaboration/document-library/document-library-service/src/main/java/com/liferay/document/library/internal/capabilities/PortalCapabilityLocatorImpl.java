@@ -95,10 +95,10 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 				ProcessorCapability.
 					ResourceGenerationStrategy.ALWAYS_GENERATE) {
 
-			return new LiferayProcessorCapability(resourceGenerationStrategy);
+			return _alwaysGeneratingProcessorCapability;
 		}
 
-		return _processorCapability;
+		return _reusingProcessorCapability;
 	}
 
 	@Override
@@ -176,8 +176,11 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 	@Reference
 	private DLSyncEventLocalService _dlSyncEventLocalService;
 
-	private final ProcessorCapability _processorCapability =
+	private final ProcessorCapability _reusingProcessorCapability =
 		new LiferayProcessorCapability();
+	private final ProcessorCapability _alwaysGeneratingProcessorCapability =
+		new LiferayProcessorCapability(
+			ProcessorCapability.ResourceGenerationStrategy.ALWAYS_GENERATE);
 	private final RepositoryEntryConverter _repositoryEntryConverter =
 		new RepositoryEntryConverter();
 

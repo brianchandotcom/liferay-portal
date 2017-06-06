@@ -14,7 +14,6 @@
 
 package com.liferay.portal.repository.portletrepository;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Adolfo Pérez
@@ -49,21 +49,21 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 
 		capabilityRegistry.addExportedCapability(
 			RelatedModelCapability.class,
-			portalCapabilityLocator.getRelatedModelCapability(
+			_portalCapabilityLocator.getRelatedModelCapability(
 				documentRepository));
 
 		capabilityRegistry.addExportedCapability(
 			TrashCapability.class,
-			portalCapabilityLocator.getTrashCapability(documentRepository));
+			_portalCapabilityLocator.getTrashCapability(documentRepository));
 
 		capabilityRegistry.addExportedCapability(
 			WorkflowCapability.class,
-			portalCapabilityLocator.getWorkflowCapability(
+			_portalCapabilityLocator.getWorkflowCapability(
 				documentRepository, WorkflowCapability.OperationMode.MINIMAL));
 
 		capabilityRegistry.addSupportedCapability(
 			ProcessorCapability.class,
-			portalCapabilityLocator.getProcessorCapability(documentRepository));
+			_portalCapabilityLocator.getProcessorCapability(documentRepository));
 	}
 
 	@Override
@@ -77,8 +77,16 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 		_repositoryFactory = repositoryFactory;
 	}
 
-	@BeanReference(type = PortalCapabilityLocator.class)
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected PortalCapabilityLocator portalCapabilityLocator;
+
+	private static PortalCapabilityLocator _portalCapabilityLocator =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			PortalCapabilityLocator.class, PortletRepositoryDefiner.class,
+			"_portalCapabilityLocator", false);
 
 	private RepositoryFactory _repositoryFactory;
 

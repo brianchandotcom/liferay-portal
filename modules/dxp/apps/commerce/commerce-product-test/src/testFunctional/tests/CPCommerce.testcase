@@ -1,5 +1,7 @@
 <definition component-name="portal-commerce">
 	<property name="testray.main.component.name" value="Commerce" />
+	<property name="portal.upstream" value="true" />
+	<property name="test.run.environment" value="EE" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

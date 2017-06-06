@@ -109,7 +109,7 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 
 		return new LiferaySyncCapability(
 			GroupServiceAdapter.create(documentRepository),
-			dlSyncEventLocalService);
+			_dlSyncEventLocalService);
 	}
 
 	@Override
@@ -135,12 +135,12 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 		DocumentRepository documentRepository) {
 
 		return new LiferayTrashCapability(
-			dlAppHelperLocalService,
+			_dlAppHelperLocalService,
 			DLAppServiceAdapter.create(documentRepository),
 			DLFileEntryServiceAdapter.create(documentRepository),
 			DLFolderServiceAdapter.create(documentRepository),
 			RepositoryServiceAdapter.create(documentRepository),
-			trashEntryLocalService, trashVersionLocalService);
+			_trashEntryLocalService, _trashVersionLocalService);
 	}
 
 	@Override
@@ -159,16 +159,16 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 	}
 
 	@Reference
-	protected DLAppHelperLocalService dlAppHelperLocalService;
+	private DLAppHelperLocalService _dlAppHelperLocalService;
 
 	@Reference
-	protected DLSyncEventLocalService dlSyncEventLocalService;
+	private DLSyncEventLocalService _dlSyncEventLocalService;
 
 	@Reference
-	protected TrashEntryLocalService trashEntryLocalService;
+	private TrashEntryLocalService _trashEntryLocalService;
 
 	@Reference
-	protected TrashVersionLocalService trashVersionLocalService;
+	private TrashVersionLocalService _trashVersionLocalService;
 
 	private final CommentCapability _commentCapability =
 		new LiferayCommentCapability();

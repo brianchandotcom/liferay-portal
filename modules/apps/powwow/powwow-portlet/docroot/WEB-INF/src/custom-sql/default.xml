@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.powwow.service.persistence.PowwowMeetingFinder.countByU_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT PowwowMeeting.powwowMeetingId) AS COUNT_VALUE
+			FROM
+				PowwowMeeting
+			LEFT JOIN
+				PowwowParticipant ON
+					PowwowMeeting.powwowMeetingId = PowwowParticipant.powwowMeetingId
+			WHERE
+				(
+					(PowwowMeeting.userId = ?) OR
+					(PowwowParticipant.participantUserId = ?) OR
+					(PowwowParticipant.emailAddress = ?)
+				)
+				[$STATUSES$]
+		]]>
+	</sql>
+	<sql id="com.liferay.powwow.service.persistence.PowwowMeetingFinder.findByU_S">
+		<![CDATA[
+			SELECT
+				DISTINCT {PowwowMeeting.*}
+			FROM
+				PowwowMeeting
+			LEFT JOIN
+				PowwowParticipant ON
+					PowwowMeeting.powwowMeetingId = PowwowParticipant.powwowMeetingId
+			WHERE
+				(
+					(PowwowMeeting.userId = ?) OR
+					(PowwowParticipant.participantUserId = ?) OR
+					(PowwowParticipant.emailAddress = ?)
+				)
+				[$STATUSES$]
+			[$ORDER_BY$]
+		]]>
+	</sql>
+</custom-sql>

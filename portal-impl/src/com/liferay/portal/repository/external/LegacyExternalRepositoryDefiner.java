@@ -20,12 +20,13 @@ import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.RepositoryConfigurationBuilder;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.repository.capabilities.LiferayProcessorCapability;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
 
 /**
@@ -96,7 +97,11 @@ public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
 
 		capabilityRegistry.addSupportedCapability(
-			ProcessorCapability.class, _processorCapability);
+			ProcessorCapability.class,
+			_portalCapabilityLocator.getProcessorCapability(
+				capabilityRegistry.getTarget(),
+				ProcessorCapability.
+					ResourceGenerationStrategy.ALWAYS_GENERATE));
 	}
 
 	@Override
@@ -106,11 +111,13 @@ public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 		repositoryFactoryRegistry.setRepositoryFactory(_repositoryFactory);
 	}
 
+	private static PortalCapabilityLocator _portalCapabilityLocator =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			PortalCapabilityLocator.class,
+			LegacyExternalRepositoryDefiner.class, "_portalCapabilityLocator",
+			false);
+
 	private final String _className;
-	private final LiferayProcessorCapability _processorCapability =
-		new LiferayProcessorCapability(
-			LiferayProcessorCapability.ResourceGenerationStrategy.
-				ALWAYS_GENERATE);
 	private RepositoryConfiguration _repositoryConfiguration;
 	private final RepositoryFactory _repositoryFactory;
 	private final ResourceBundleLoader _resourceBundleLoader;

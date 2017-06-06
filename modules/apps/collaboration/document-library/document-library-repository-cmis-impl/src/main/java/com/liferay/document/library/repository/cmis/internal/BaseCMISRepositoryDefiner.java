@@ -65,7 +65,8 @@ public abstract class BaseCMISRepositoryDefiner extends BaseRepositoryDefiner {
 			ProcessorCapability.class,
 			new RefreshingProcessorCapability(
 				portalCapabilityLocator.getProcessorCapability(
-					documentRepository)));
+					documentRepository,
+					ProcessorCapability.ResourceGenerationStrategy.REUSE)));
 	}
 
 	protected PortalCapabilityLocator getPortalCapabilityLocator() {

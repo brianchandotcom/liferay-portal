@@ -63,7 +63,9 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 
 		capabilityRegistry.addSupportedCapability(
 			ProcessorCapability.class,
-			_portalCapabilityLocator.getProcessorCapability(documentRepository));
+			_portalCapabilityLocator.getProcessorCapability(
+				documentRepository,
+				ProcessorCapability.ResourceGenerationStrategy.REUSE));
 	}
 
 	@Override

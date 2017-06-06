@@ -88,7 +88,9 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 				documentRepository, WorkflowCapability.OperationMode.FULL));
 		capabilityRegistry.addSupportedCapability(
 			ProcessorCapability.class,
-			_portalCapabilityLocator.getProcessorCapability(documentRepository));
+			_portalCapabilityLocator.getProcessorCapability(
+				documentRepository,
+				ProcessorCapability.ResourceGenerationStrategy.REUSE));
 		capabilityRegistry.addSupportedCapability(
 			SyncCapability.class,
 			_portalCapabilityLocator.getSyncCapability(documentRepository));

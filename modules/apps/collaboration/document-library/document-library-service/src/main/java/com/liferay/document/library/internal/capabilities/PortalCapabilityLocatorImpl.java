@@ -158,23 +158,24 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 			DLFileVersionServiceAdapter.create(documentRepository));
 	}
 
+	private final CommentCapability _commentCapability =
+		new LiferayCommentCapability();
+
 	@Reference
 	private DLAppHelperLocalService _dlAppHelperLocalService;
 
 	@Reference
 	private DLSyncEventLocalService _dlSyncEventLocalService;
 
+	private final ProcessorCapability _processorCapability =
+		new LiferayProcessorCapability();
+	private final RepositoryEntryConverter _repositoryEntryConverter =
+		new RepositoryEntryConverter();
+
 	@Reference
 	private TrashEntryLocalService _trashEntryLocalService;
 
 	@Reference
 	private TrashVersionLocalService _trashVersionLocalService;
-
-	private final CommentCapability _commentCapability =
-		new LiferayCommentCapability();
-	private final ProcessorCapability _processorCapability =
-		new LiferayProcessorCapability();
-	private final RepositoryEntryConverter _repositoryEntryConverter =
-		new RepositoryEntryConverter();
 
 }

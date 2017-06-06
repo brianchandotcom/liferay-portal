@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Commerce Product Type Group Web
-Bundle-SymbolicName: com.liferay.commerce.product.type.group.web
-Bundle-Version: 1.0.0
-Web-ContextPath: /commerce-product-type-group-web

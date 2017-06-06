@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.type.group.web.internal;
+package com.liferay.commerce.product.type.grouped.web.internal;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.CPType;
@@ -33,11 +33,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"commerce.product.type.display.order:Integer=10",
-		"commerce.product.type.name=group"
+		"commerce.product.type.name=grouped"
 	},
 	service = CPType.class
 )
-public class GroupCPType implements CPType {
+public class GroupedCPType implements CPType {
 
 	@Override
 	public void deleteCPDefinition(long cpDefinitionId) throws PortalException {
@@ -59,12 +59,12 @@ public class GroupCPType implements CPType {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "group");
+		return LanguageUtil.get(locale, "grouped");
 	}
 
 	@Override
 	public String getName() {
-		return "group";
+		return "grouped";
 	}
 
 }

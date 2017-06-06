@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
+import com.liferay.commerce.product.exception.NoSuchCPTypeException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
@@ -58,6 +59,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
+import jdk.nashorn.internal.ir.annotations.Reference;
 
 import java.io.Serializable;
 
@@ -115,6 +117,7 @@ public class CPDefinitionLocalServiceImpl
 				CPDefinitionExpirationDateException.class);
 		}
 
+		validateCPType(productTypeName);
 		validateReferences(groupId, ddmStructureKey);
 
 		long cpDefinitionId = counterLocalService.increment();
@@ -771,6 +774,16 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinition.getCompanyId(), cpDefinition.getGroupId(), userId,
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
 			cpDefinition, serviceContext, workflowContext);
+	}
+
+	protected void validateCPType(String productTypeName)
+		throws PortalException {
+
+		CPType cpType = _cpTypeServicesTracker.getCPType(productTypeName);
+
+		if (Validator.isNull(cpType)) {
+			throw new NoSuchCPTypeException();
+		}
 	}
 
 	protected void validateReferences(long groupId, String ddmStructureKey)

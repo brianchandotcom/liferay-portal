@@ -14,7 +14,15 @@
 
 package com.liferay.poshi.runner.elements;
 
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.BACKGROUND;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.DESCRIPTION;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.FEATURE;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.PRIORITY;
 import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.SCENARIO;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.SETUP;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.TEARDOWN;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THESE_PROPERTIES;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THESE_VARIABLES;
 import static com.liferay.poshi.runner.util.StringPool.COLON;
 
 import com.liferay.poshi.runner.util.StringUtil;
@@ -46,10 +54,43 @@ public class CommandElement extends PoshiElement {
 
 	@Override
 	public void addAttributes(String readableSyntax) {
+		if (readableSyntax.contains("Description:")) {
+			_addDescriptionAttribute(readableSyntax);
+		}
+
+		addAttribute("name", _getCommandName(readableSyntax));
+
+		_addPriorityAttribute(readableSyntax);
 	}
 
 	@Override
 	public void addElements(String readableSyntax) {
+		List<String> readableBlocks = StringUtil.split(
+			readableSyntax, READABLE_EXECUTE_BLOCK_KEYS);
+
+		for (String readableBlock : readableBlocks) {
+			if (readableBlock.contains(BACKGROUND) ||
+				readableBlock.contains(FEATURE) ||
+				readableBlock.contains(SCENARIO) ||
+				readableBlock.contains(SETUP) ||
+				readableBlock.contains(TEARDOWN)) {
+
+				continue;
+			}
+
+			if (readableBlock.contains(THESE_PROPERTIES) ||
+				readableBlock.contains(THESE_VARIABLES)) {
+
+				addVariableElements(readableBlock);
+
+				continue;
+			}
+
+			Element element = PoshiElementFactory.newPoshiElement(
+				readableBlock);
+
+			add(element);
+		}
 	}
 
 	@Override
@@ -89,6 +130,25 @@ public class CommandElement extends PoshiElement {
 
 	protected String getReadableCommandTitle() {
 		return SCENARIO + COLON;
+	}
+
+	private void _addDescriptionAttribute(String readableSyntax) {
+		String description = getAttributeValue(
+			DESCRIPTION + COLON, readableSyntax);
+
+		addAttribute("description", description);
+	}
+
+	private void _addPriorityAttribute(String readableSyntax) {
+		String priority = getAttributeValue(PRIORITY + COLON, readableSyntax);
+
+		addAttribute("priority", priority);
+	}
+
+	private String _getCommandName(String readableSyntax) {
+		String scenario = getAttributeValue(SCENARIO + COLON, readableSyntax);
+
+		return StringUtil.removeSpaces(scenario);
 	}
 
 }

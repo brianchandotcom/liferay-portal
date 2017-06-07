@@ -17,7 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JSONArray rules = JSONFactoryUtil.createJSONArray();
+long[] categorizableGroupIds = (long[])request.getAttribute("configuration.jsp-categorizableGroupIds");
+
+if (categorizableGroupIds == null) {
+	categorizableGroupIds = StringUtil.split(ParamUtil.getString(request, "categorizableGroupIds"), 0L);
+}
 
 String queryLogicIndexesParam = ParamUtil.getString(request, "queryLogicIndexes");
 
@@ -44,20 +48,21 @@ else {
 	}
 }
 
-int index = 0;
+JSONArray rulesJSONArray = JSONFactoryUtil.createJSONArray();
 
 for (int queryLogicIndex : queryLogicIndexes) {
-	JSONObject logic = JSONFactoryUtil.createJSONObject();
+	JSONObject rulesJSONObject = JSONFactoryUtil.createJSONObject();
+
+	boolean queryAndOperator = PrefsParamUtil.getBoolean(portletPreferences, request, "queryAndOperator" + queryLogicIndex);
+
+	rulesJSONObject.put("queryAndOperator", queryAndOperator);
+
+	boolean queryContains = PrefsParamUtil.getBoolean(portletPreferences, request, "queryContains" + queryLogicIndex, true);
+
+	rulesJSONObject.put("queryContains", queryContains);
 
 	String queryValues = StringUtil.merge(portletPreferences.getValues("queryValues" + queryLogicIndex, new String[0]));
 	String queryName = PrefsParamUtil.getString(portletPreferences, request, "queryName" + queryLogicIndex, "assetTags");
-
-	boolean queryAndOperator = false;
-	boolean queryContains = true;
-
-	queryAndOperator = PrefsParamUtil.getBoolean(portletPreferences, request, "queryAndOperator" + queryLogicIndex);
-
-	queryContains = PrefsParamUtil.getBoolean(portletPreferences, request, "queryContains" + queryLogicIndex, true);
 
 	if (Objects.equals(queryName, "assetTags")) {
 		queryValues = ParamUtil.getString(request, "queryTagNames" + queryLogicIndex, queryValues);
@@ -67,72 +72,57 @@ for (int queryLogicIndex : queryLogicIndexes) {
 	else {
 		queryValues = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);
 
-		String[] categoryIdsTitles = AssetCategoryUtil.getCategoryIdsTitles(queryValues, StringPool.BLANK, 0, themeDisplay);
-
-		logic.put("categoryIdsTitles", categoryIdsTitles);
+		rulesJSONObject.put("categoryIdsTitles", AssetCategoryUtil.getCategoryIdsTitles(queryValues, StringPool.BLANK, 0, themeDisplay));
 	}
 
-	logic.put("queryAndOperator", queryAndOperator);
-	logic.put("queryContains", queryContains);
-	logic.put("queryValues", queryValues);
-	logic.put("type", queryName);
+	rulesJSONObject.put("queryValues", queryValues);
+	rulesJSONObject.put("type", queryName);
 
-	rules.put(logic);
-
-	index++;
+	rulesJSONArray.put(rulesJSONObject);
 }
 
-long[] categorizableGroupIds = (long[])request.getAttribute("configuration.jsp-categorizableGroupIds");
+Map<String, Object> context = new HashMap<>();
 
-if (categorizableGroupIds == null) {
-	categorizableGroupIds = StringUtil.split(ParamUtil.getString(request, "categorizableGroupIds"), 0l);
-}
-
-Map<String, Object> autoField = new HashMap<>();
-
-autoField.put("rules", rules);
-autoField.put("namespace", liferayPortletResponse.getNamespace());
-autoField.put("groupIds", StringUtil.merge(categorizableGroupIds));
-autoField.put("id", "autofield");
-autoField.put("portletURLCategorySelector", assetPublisherDisplayContext.getCategorySelectorURL());
-autoField.put("portletURLTagSelector", assetPublisherDisplayContext.getTagSelectorURL());
-autoField.put("vocabularyIds", assetPublisherDisplayContext.getVocabularyIds());
+context.put("rules", rulesJSONArray);
+context.put("namespace", liferayPortletResponse.getNamespace());
+context.put("groupIds", StringUtil.merge(categorizableGroupIds));
+context.put("id", "autofield");
+context.put("categorySelectorURL", assetPublisherDisplayContext.getCategorySelectorURL());
+context.put("tagSelectorURL", assetPublisherDisplayContext.getTagSelectorURL());
+context.put("vocabularyIds", assetPublisherDisplayContext.getVocabularyIds());
 %>
 
-<div id="<portlet:namespace />queryRules">
-	<aui:fieldset label="displayed-assets-must-match-these-rules" markupView="lexicon">
-		<liferay-ui:asset-tags-error />
+<aui:fieldset label="displayed-assets-must-match-these-rules" markupView="lexicon">
+	<liferay-ui:asset-tags-error />
+
+	<%
+	DuplicateQueryRuleException dqre = null;
+	%>
+
+	<liferay-ui:error exception="<%= DuplicateQueryRuleException.class %>">
 
 		<%
-		DuplicateQueryRuleException dqre = null;
+		dqre = (DuplicateQueryRuleException)errorException;
+
+		String name = dqre.getName();
 		%>
 
-		<liferay-ui:error exception="<%= DuplicateQueryRuleException.class %>">
+		<liferay-util:buffer var="messageArgument">
+			<em>(<liferay-ui:message key='<%= dqre.isContains() ? "contains" : "does-not-contain" %>' /> - <liferay-ui:message key='<%= dqre.isAndOperator() ? "all" : "any" %>' /> - <liferay-ui:message key='<%= name.equals(("assetTags")) ? "tags" : "categories" %>' />)</em>
+		</liferay-util:buffer>
 
-			<%
-			dqre = (DuplicateQueryRuleException)errorException;
+		<liferay-ui:message arguments="<%= messageArgument %>" key="only-one-rule-with-the-combination-x-is-supported" translateArguments="<%= false %>" />
+	</liferay-ui:error>
 
-			String name = dqre.getName();
-			%>
+	<aui:input label='<%= LanguageUtil.format(request, "show-only-assets-with-x-as-its-display-page", HtmlUtil.escape(layout.getName(locale)), false) %>' name="preferences--showOnlyLayoutAssets--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowOnlyLayoutAssets() %>" />
 
-			<liferay-util:buffer var="messageArgument">
-				<em>(<liferay-ui:message key='<%= dqre.isContains() ? "contains" : "does-not-contain" %>' /> - <liferay-ui:message key='<%= dqre.isAndOperator() ? "all" : "any" %>' /> - <liferay-ui:message key='<%= name.equals(("assetTags")) ? "tags" : "categories" %>' />)</em>
-			</liferay-util:buffer>
+	<aui:input label="include-tags-specified-in-the-url" name="preferences--mergeUrlTags--" type="checkbox" value="<%= assetPublisherDisplayContext.isMergeURLTags() %>" />
+</aui:fieldset>
 
-			<liferay-ui:message arguments="<%= messageArgument %>" key="only-one-rule-with-the-combination-x-is-supported" translateArguments="<%= false %>" />
-		</liferay-ui:error>
-
-		<aui:input label='<%= LanguageUtil.format(request, "show-only-assets-with-x-as-its-display-page", HtmlUtil.escape(layout.getName(locale)), false) %>' name="preferences--showOnlyLayoutAssets--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowOnlyLayoutAssets() %>" />
-
-		<aui:input label="include-tags-specified-in-the-url" name="preferences--mergeUrlTags--" type="checkbox" value="<%= assetPublisherDisplayContext.isMergeURLTags() %>" />
-	</aui:fieldset>
-</div>
-
-<div id="<portlet:namespace />ConditionForm">
-</div>
+<div id="<portlet:namespace />ConditionForm"></div>
 
 <soy:template-renderer
-	context="<%= autoField %>"
+	context="<%= context %>"
 	module="asset-publisher-web/js/AutoField.es"
 	templateNamespace="AutoField.render"
 />

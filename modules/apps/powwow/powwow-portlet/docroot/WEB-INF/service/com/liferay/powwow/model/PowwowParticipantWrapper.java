@@ -508,7 +508,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _powwowParticipant.getExpandoBridge();
 	}
 
@@ -520,7 +520,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_powwowParticipant.setExpandoBridgeAttributes(expandoBridge);
 	}
 

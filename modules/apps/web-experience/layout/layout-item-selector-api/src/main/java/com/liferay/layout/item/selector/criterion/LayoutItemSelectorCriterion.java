@@ -34,6 +34,14 @@ public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _enableCurrentPage;
 	}
 
+	public boolean isFollowURLOnTitleClick() {
+		return _followURLOnTitleClick;
+	}
+
+	public boolean isShowActionsMenu() {
+		return _showActionsMenu;
+	}
+
 	public boolean isShowPrivatePages() {
 		return _showPrivatePages;
 	}
@@ -50,6 +58,14 @@ public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_enableCurrentPage = enableCurrentPage;
 	}
 
+	public void setFollowURLOnTitleClick(boolean followURLOnTitleClick) {
+		_followURLOnTitleClick = followURLOnTitleClick;
+	}
+
+	public void setShowActionsMenu(boolean showActionsMenu) {
+		_showActionsMenu = showActionsMenu;
+	}
+
 	public void setShowPrivatePages(boolean showPrivatePages) {
 		_showPrivatePages = showPrivatePages;
 	}
@@ -60,6 +76,8 @@ public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	private boolean _checkDisplayPage;
 	private boolean _enableCurrentPage;
+	private boolean _followURLOnTitleClick;
+	private boolean _showActionsMenu;
 	private boolean _showPrivatePages;
 	private boolean _showPublicPages;
 

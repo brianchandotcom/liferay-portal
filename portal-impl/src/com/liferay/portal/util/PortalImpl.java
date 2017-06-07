@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapperThreadLocal;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
+import com.liferay.portal.kernel.portlet.LayoutFriendlyURLSeparatorComposite;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -308,6 +309,7 @@ import org.apache.struts.Globals;
  * @author Wesley Gong
  * @author Hugo Huijser
  * @author Juan Fernández
+ * @author Marco Leo
  */
 @DoPrivileged
 public class PortalImpl implements Portal {
@@ -2815,13 +2817,36 @@ public class PortalImpl implements Portal {
 			themeDisplay.getLayoutFriendlyURL(layout));
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getLayoutFriendlyURLSeparatorComposite(long, boolean, String, Map<String, String[]>, Map<String, Object>)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
 			long groupId, boolean privateLayout, String friendlyURL,
 			Map<String, String[]> params, Map<String, Object> requestContext)
 		throws PortalException {
 
-		LayoutFriendlyURLComposite layoutFriendlyURLComposite = null;
+		LayoutFriendlyURLSeparatorComposite
+			layoutFriendlyURLSeparatorComposite =
+				getLayoutFriendlyURLSeparatorComposite(
+					groupId, privateLayout, friendlyURL, params,
+					requestContext);
+
+		return (LayoutFriendlyURLComposite)layoutFriendlyURLSeparatorComposite;
+	}
+
+	@Override
+	public LayoutFriendlyURLSeparatorComposite
+			getLayoutFriendlyURLSeparatorComposite(
+				long groupId, boolean privateLayout, String friendlyURL,
+				Map<String, String[]> params,
+				Map<String, Object> requestContext)
+		throws PortalException {
+
+		LayoutFriendlyURLSeparatorComposite
+			layoutFriendlyURLSeparatorComposite = null;
 
 		if (friendlyURL != null) {
 			HttpServletRequest request = (HttpServletRequest)requestContext.get(
@@ -2843,10 +2868,11 @@ public class PortalImpl implements Portal {
 				}
 
 				try {
-					layoutFriendlyURLComposite =
-						friendlyURLResolver.getLayoutFriendlyURLComposite(
-							companyId, groupId, privateLayout, friendlyURL,
-							params, requestContext);
+					layoutFriendlyURLSeparatorComposite =
+						friendlyURLResolver.
+							getLayoutFriendlyURLSeparatorComposite(
+								companyId, groupId, privateLayout, friendlyURL,
+								params, requestContext);
 
 					break;
 				}
@@ -2856,17 +2882,18 @@ public class PortalImpl implements Portal {
 			}
 		}
 
-		if (layoutFriendlyURLComposite != null) {
-			return layoutFriendlyURLComposite;
+		if (layoutFriendlyURLSeparatorComposite != null) {
+			return layoutFriendlyURLSeparatorComposite;
 		}
 
 		LayoutQueryStringComposite layoutQueryStringComposite =
 			getActualLayoutQueryStringComposite(
 				groupId, privateLayout, friendlyURL, params, requestContext);
 
-		return new LayoutFriendlyURLComposite(
+		return new LayoutFriendlyURLSeparatorComposite(
 			layoutQueryStringComposite.getLayout(),
-			layoutQueryStringComposite.getFriendlyURL());
+			layoutQueryStringComposite.getFriendlyURL(),
+			FRIENDLY_URL_SEPARATOR);
 	}
 
 	@Override

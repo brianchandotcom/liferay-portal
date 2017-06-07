@@ -1,0 +1,42 @@
+{namespace Flags}
+
+/**
+ * Prints the Flag component.
+ *
+ * @param cssClass
+ * @param enabled
+ * @param label
+ * @param id
+ * @param message
+ * @param pathThemeImages
+ * @param title
+ */
+{template .render}
+	{let $tooltip: not $label and $message!='' /}
+	<div class="taglib-flags" id="{$id}" title="{$title}">
+		<span class="{$cssClass} {if $tooltip}lfr-portal-tooltip{/if}" {if $tooltip}title="{$message}"{/if}>
+			{if $enabled}
+				<a class="taglib-icon" href="javascript:;" data-onclick="openReportDialog" >
+					{call .icon data="all" /}
+				</a>
+			{else}
+				{call .icon data="all" /}
+			{/if}
+		</span>
+	</div>
+{/template}
+
+/**
+ * Prints the flag icon and the text message.
+ *
+ * @param label
+ * @param message
+ * @param pathThemeImages
+ */
+{template .icon}
+	<svg class="lexicon-icon">
+		<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#flag-full"></use>
+	</svg>
+
+	<span class="taglib-text {if not $label}hide-accessible{/if}">{$message}</span>
+{/template}

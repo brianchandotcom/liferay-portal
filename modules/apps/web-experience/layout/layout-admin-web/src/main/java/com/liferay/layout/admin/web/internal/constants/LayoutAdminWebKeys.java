@@ -21,4 +21,6 @@ public class LayoutAdminWebKeys {
 
 	public static final String CONTROL_MENU_ENTRY = "CONTROL_MENU_ENTRY";
 
+	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
+
 }

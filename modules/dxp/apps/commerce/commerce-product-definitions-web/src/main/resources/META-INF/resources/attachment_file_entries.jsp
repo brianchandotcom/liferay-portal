@@ -31,12 +31,24 @@ SearchContainer<CPAttachmentFileEntry> cpAttachmentFileEntrySearchContainer = cp
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-definition-images");
 
+String addMenuTitle = LanguageUtil.get(request, "add-image");
+
+if (toolbarItem.equals("view-product-definition-attachments")) {
+	addMenuTitle = LanguageUtil.get(request, "add-attachment");
+}
+
 PortletURL portletURL = cpAttachmentFileEntriesDisplayContext.getPortletURL();
 
-renderResponse.setTitle(cpDefinition.getTitle(languageId));
+PortletURL backUrl = liferayPortletResponse.createRenderURL();
+
+backUrl.setParameter("mvcPath", "/view.jsp");
+
+String backURLString = backUrl.toString();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(backURLString);
+
+renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
 request.setAttribute("view.jsp-cpDefinition", cpDefinition);
 request.setAttribute("view.jsp-cpType", cpAttachmentFileEntriesDisplayContext.getCPType());
@@ -214,42 +226,8 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-single-attachment") %>' url="<%= addAttachmentFileEntryURL.toString() %>" />
-	<liferay-frontend:add-menu-item id="addAttachmentFileEntry" title='<%= LanguageUtil.get(request, "add-multiple-attachments") %>' url="javascript:;" />
+	<liferay-frontend:add-menu-item title="<%= addMenuTitle %>" url="<%= addAttachmentFileEntryURL.toString() %>" />
 </liferay-frontend:add-menu>
-
-<aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />addAttachmentFileEntry').on(
-		'click',
-		function(event) {
-			event.preventDefault();
-
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: 'addCPAttachmentFileEntry',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItems = event.newVal;
-
-							if (selectedItems) {
-
-								$('#<portlet:namespace />cpOptionIds').val(selectedItems);
-
-								var addCPDefinitionOptionRelFm = $('#<portlet:namespace />addCPDefinitionOptionRelFm');
-
-								submitForm(addCPDefinitionOptionRelFm);
-							}
-						}
-					},
-					title: '<liferay-ui:message arguments="<%= cpDefinition.getTitle(languageId) %>" key="add-new-option-to-x" />',
-					url: '<%= cpAttachmentFileEntriesDisplayContext.getItemSelectorUrl() %>'
-				}
-			);
-
-			itemSelectorDialog.open();
-		}
-	);
-</aui:script>
 
 <aui:script>
 	function <portlet:namespace />deleteCPAttachmentFileEntries() {

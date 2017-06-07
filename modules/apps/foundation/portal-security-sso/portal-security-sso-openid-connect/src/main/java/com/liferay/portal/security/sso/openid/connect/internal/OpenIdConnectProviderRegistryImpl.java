@@ -72,6 +72,7 @@ public class OpenIdConnectProviderRegistryImpl
 		return "OpenId Connect Provider Factory";
 	}
 
+	@Override
 	public OpenIdConnectProvider getOpenIdConnectProvider(String name) {
 		return _openIdConnectProvidersPerName.get(name);
 	}

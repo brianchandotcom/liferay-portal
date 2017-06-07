@@ -4,5 +4,5 @@
 <project name="powwow-portlet" basedir="." default="deploy">
 	<property name="import.shared" value="powwow-shared" />
 
-	<import file="../build-common-portlet.xml" />
+	<import file="../../../../../tools/sdk/portlets/build-common-portlet.xml" />
 </project>

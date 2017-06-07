@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.internal.xstream.configurator;
 
-import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.impl.CPAttachmentFileEntryImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionOptionRelImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionOptionValueRelImpl;
@@ -58,7 +58,7 @@ public class CPXStreamConfigurator implements XStreamConfigurator {
 	protected void activate() {
 		_xStreamAliases = new XStreamAlias[] {
 			new XStreamAlias(
-				CPAttachmentFileEntry.class, "CPAttachmentFileEntry"),
+				CPAttachmentFileEntryImpl.class, "CPAttachmentFileEntry"),
 			new XStreamAlias(CPDefinitionImpl.class, "CPDefinition"),
 			new XStreamAlias(
 				CPDefinitionOptionRelImpl.class, "CPDefinitionOptionRel"),

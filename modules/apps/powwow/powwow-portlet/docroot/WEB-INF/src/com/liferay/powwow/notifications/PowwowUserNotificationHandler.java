@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.service.PowwowMeetingLocalServiceUtil;
-import com.liferay.powwow.util.PortletKeys;
+import com.liferay.powwow.util.PowwowPortletKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -42,7 +42,7 @@ import javax.portlet.PortletURL;
 public class PowwowUserNotificationHandler extends BaseUserNotificationHandler {
 
 	public PowwowUserNotificationHandler() {
-		setPortletId(PortletKeys.POWWOW_MEETINGS);
+		setPortletId(PowwowPortletKeys.POWWOW_MEETINGS);
 	}
 
 	@Override
@@ -100,11 +100,11 @@ public class PowwowUserNotificationHandler extends BaseUserNotificationHandler {
 		User user = themeDisplay.getUser();
 
 		long portletPlid = PortalUtil.getPlidFromPortletId(
-			user.getGroupId(), true, PortletKeys.POWWOW_MEETINGS);
+			user.getGroupId(), true, PowwowPortletKeys.POWWOW_MEETINGS);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			serviceContext.getLiferayPortletRequest(),
-			PortletKeys.POWWOW_MEETINGS, portletPlid,
+			PowwowPortletKeys.POWWOW_MEETINGS, portletPlid,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/meetings/view_meeting.jsp");

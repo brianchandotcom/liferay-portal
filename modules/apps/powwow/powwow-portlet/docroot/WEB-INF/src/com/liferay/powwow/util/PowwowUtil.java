@@ -268,8 +268,8 @@ public class PowwowUtil {
 		PortletPreferences portletPreferences =
 			PortletPreferencesLocalServiceUtil.getPreferences(
 				powwowMeeting.getCompanyId(), powwowMeeting.getGroupId(),
-				PortletKeys.PREFS_OWNER_TYPE_GROUP,
-				LayoutConstants.DEFAULT_PLID, PortletKeys.POWWOW_MEETINGS);
+				PowwowPortletKeys.PREFS_OWNER_TYPE_GROUP,
+				LayoutConstants.DEFAULT_PLID, PowwowPortletKeys.POWWOW_MEETINGS);
 
 		if (powwowMeeting.getCalendarBookingId() > 0) {
 			powwowSubscriptionSender.addFileAttachment(
@@ -348,7 +348,7 @@ public class PowwowUtil {
 					PortletPropsValues.POWWOW_INVITATION_EMAIL_SUBJECT)));
 		powwowSubscriptionSender.setMailId(
 			"powwowMeeting", powwowMeeting.getPowwowMeetingId());
-		powwowSubscriptionSender.setPortletId(PortletKeys.POWWOW_MEETINGS);
+		powwowSubscriptionSender.setPortletId(PowwowPortletKeys.POWWOW_MEETINGS);
 		powwowSubscriptionSender.setReplyToAddress(fromAddress);
 		powwowSubscriptionSender.setScopeGroupId(powwowMeeting.getGroupId());
 		powwowSubscriptionSender.setServiceContext(serviceContext);
@@ -432,7 +432,7 @@ public class PowwowUtil {
 
 		if (!UserNotificationManagerUtil.isDeliver(
 				powwowParticipant.getParticipantUserId(),
-				PortletKeys.POWWOW_MEETINGS, 0,
+				PowwowPortletKeys.POWWOW_MEETINGS, 0,
 				PowwowParticipantConstants.STATUS_INVITED,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
 
@@ -449,7 +449,7 @@ public class PowwowUtil {
 
 		NotificationEvent notificationEvent =
 			NotificationEventFactoryUtil.createNotificationEvent(
-				System.currentTimeMillis(), PortletKeys.POWWOW_MEETINGS,
+				System.currentTimeMillis(), PowwowPortletKeys.POWWOW_MEETINGS,
 				notificationEventJSONObject);
 
 		notificationEvent.setDeliveryRequired(0);

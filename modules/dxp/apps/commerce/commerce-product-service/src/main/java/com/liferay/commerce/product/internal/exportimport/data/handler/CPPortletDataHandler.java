@@ -255,7 +255,7 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "attachments")) {
 			Element cpAttachmentFileEntriesElement =
 				portletDataContext.getImportDataGroupElement(
-					CPOptionValue.class);
+					CPAttachmentFileEntry.class);
 
 			List<Element> cpAttachmentFileEntryElements =
 				cpAttachmentFileEntriesElement.elements();

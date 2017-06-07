@@ -17,7 +17,7 @@ package com.liferay.commerce.product.internal.exportimport.data.handler.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionLocalServiceUtil;
-import com.liferay.commerce.product.util.test.CPTestUtil;
+import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

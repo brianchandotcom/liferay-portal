@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.util.test;
+package com.liferay.commerce.product.test.util;
 
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;

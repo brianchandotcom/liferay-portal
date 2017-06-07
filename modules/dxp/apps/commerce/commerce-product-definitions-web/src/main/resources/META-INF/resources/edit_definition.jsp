@@ -32,14 +32,8 @@ long cpDefinitionId = cpDefinitionsDisplayContext.getCPDefinitionId();
 
 long groupId = BeanParamUtil.getLong(cpDefinition, request, "groupId", scopeGroupId);
 
-PortletURL backUrl = liferayPortletResponse.createRenderURL();
-
-backUrl.setParameter("mvcPath", "/view.jsp");
-
-String backURLString = backUrl.toString();
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURLString);
+portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-product") : cpDefinition.getTitle(languageId));
 
@@ -66,7 +60,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 <aui:form action="<%= editProductDefinitionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpDefinition == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURLString %>" />
+	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= String.valueOf(cpDefinitionId) %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
@@ -91,7 +85,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
-			backURL="<%= backURLString %>"
+			backURL="<%= backURL %>"
 			formModelBean="<%= cpDefinition %>"
 			id="<%= CPDefinitionFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION %>"
 			markupView="lexicon"

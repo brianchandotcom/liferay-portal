@@ -31,14 +31,8 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-d
 
 portletURL.setParameter("toolbarItem", toolbarItem);
 
-PortletURL backUrl = liferayPortletResponse.createRenderURL();
-
-backUrl.setParameter("mvcPath", "/view.jsp");
-
-String backURLString = backUrl.toString();
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURLString);
+portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
 

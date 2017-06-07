@@ -32,14 +32,8 @@ CPOption cpOption = cpOptionDisplayContext.getCPOption();
 
 long cpOptionId = cpOptionDisplayContext.getCPOptionId();
 
-PortletURL backUrl = liferayPortletResponse.createRenderURL();
-
-backUrl.setParameter("mvcPath", "/view.jsp");
-
-String backURLString = backUrl.toString();
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURLString);
+portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-option") : cpOption.getTitle(locale));
 
@@ -60,7 +54,7 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 <aui:form action="<%= editProductOptionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpOption == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURLString %>" />
+	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="cpOptionId" type="hidden" value="<%= String.valueOf(cpOptionId) %>" />
 
 	<aui:translation-manager
@@ -71,7 +65,7 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
-			backURL="<%= backURLString %>"
+			backURL="<%= backURL %>"
 			formModelBean="<%= cpOption %>"
 			id="<%= CPOptionFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_OPTION %>"
 			markupView="lexicon"

@@ -19,6 +19,7 @@
 		<liferay-portlet:renderURL varImpl="viewProductOptionDetailsURL">
 			<portlet:param name="mvcRenderCommandName" value="editProductOption" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="backURL" value="<%= backURL %>" />
 			<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOptionId) %>" />
 			<portlet:param name="toolbarItem" value="view-product-option-details" />
 		</liferay-portlet:renderURL>
@@ -33,6 +34,7 @@
 			<liferay-portlet:renderURL varImpl="viewProductOptionValuesURL">
 				<portlet:param name="mvcRenderCommandName" value="viewProductOptionValues" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="backURL" value="<%= backURL %>" />
 				<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOptionId) %>" />
 				<portlet:param name="toolbarItem" value="view-product-option-values" />
 			</liferay-portlet:renderURL>

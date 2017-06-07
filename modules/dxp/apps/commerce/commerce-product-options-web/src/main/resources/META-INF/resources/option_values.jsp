@@ -33,14 +33,8 @@ portletURL.setParameter("toolbarItem", toolbarItem);
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
-PortletURL backUrl = liferayPortletResponse.createRenderURL();
-
-backUrl.setParameter("mvcPath", "/view.jsp");
-
-String backURLString = backUrl.toString();
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURLString);
+portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-option") : cpOption.getTitle(locale));
 %>

@@ -31,14 +31,8 @@ long cpDefinitionId = cpDefinitionVirtualSettingDisplayContext.getCPDefinitionId
 
 PortletURL portletURL = cpDefinitionVirtualSettingDisplayContext.getPortletURL();
 
-PortletURL backUrl = liferayPortletResponse.createRenderURL();
-
-backUrl.setParameter("mvcPath", "/view.jsp");
-
-String backURLString = backUrl.toString();
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURLString);
+portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
@@ -64,7 +58,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 	<div class="lfr-form-content" id="<portlet:namespace />fileEntryContainer">
 		<liferay-ui:form-navigator
-			backURL="<%= backURLString %>"
+			backURL="<%= backURL %>"
 			formModelBean="<%= cpDefinitionVirtualSetting %>"
 			id="<%= CPDefinitionVirtualSettingFormNavigatorConstants.FORM_NAVIGATOR_ID_CP_DEFINITION_VIRTUAL_SETTING %>"
 			markupView="lexicon"

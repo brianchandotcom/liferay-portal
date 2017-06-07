@@ -36,6 +36,7 @@ if (cpDefinition != null) {
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 			<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="backURL" value="<%= backURL %>" />
 			<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 			<portlet:param name="toolbarItem" value="view-product-definition-details" />
 		</liferay-portlet:renderURL>
@@ -58,6 +59,7 @@ if (cpDefinition != null) {
 			<liferay-portlet:renderURL varImpl="viewProductDefinitionImagesURL">
 				<portlet:param name="mvcRenderCommandName" value="viewAttachmentFileEntries" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="backURL" value="<%= backURL %>" />
 				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 				<portlet:param name="type" value="<%= String.valueOf(CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE) %>" />
 				<portlet:param name="toolbarItem" value="view-product-definition-images" />
@@ -72,6 +74,7 @@ if (cpDefinition != null) {
 			<liferay-portlet:renderURL varImpl="viewProductDefinitionOptionRelsURL">
 				<portlet:param name="mvcRenderCommandName" value="viewProductDefinitionOptionRels" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="backURL" value="<%= backURL %>" />
 				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 				<portlet:param name="toolbarItem" value="view-product-definition-options" />
 			</liferay-portlet:renderURL>
@@ -85,6 +88,7 @@ if (cpDefinition != null) {
 			<liferay-portlet:renderURL varImpl="viewProductDefinitionInstancesURL">
 				<portlet:param name="mvcRenderCommandName" value="viewProductInstances" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="backURL" value="<%= backURL %>" />
 				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 				<portlet:param name="toolbarItem" value="view-product-instances" />
 			</liferay-portlet:renderURL>
@@ -98,6 +102,7 @@ if (cpDefinition != null) {
 			<liferay-portlet:renderURL varImpl="viewProductDefinitionAttachmentsURL">
 				<portlet:param name="mvcRenderCommandName" value="viewAttachmentFileEntries" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="backURL" value="<%= backURL %>" />
 				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 				<portlet:param name="type" value="<%= String.valueOf(CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER) %>" />
 				<portlet:param name="toolbarItem" value="view-product-definition-attachments" />

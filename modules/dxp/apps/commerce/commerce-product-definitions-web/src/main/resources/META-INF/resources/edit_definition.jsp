@@ -30,6 +30,8 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 
 long cpDefinitionId = cpDefinitionsDisplayContext.getCPDefinitionId();
 
+long groupId = BeanParamUtil.getLong(cpDefinition, request, "groupId", scopeGroupId);
+
 PortletURL backUrl = liferayPortletResponse.createRenderURL();
 
 backUrl.setParameter("mvcPath", "/view.jsp");
@@ -66,6 +68,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURLString %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= String.valueOf(cpDefinitionId) %>" />
+	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<c:if test="<%= (cpDefinition != null) && !cpDefinition.isNew() %>">
 		<liferay-frontend:info-bar>
@@ -92,6 +95,53 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 			formModelBean="<%= cpDefinition %>"
 			id="<%= CPDefinitionFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_DEFINITION %>"
 			markupView="lexicon"
+			showButtons="<%= false %>"
 		/>
 	</div>
+
+	<aui:button-row cssClass="product-definition-button-row">
+
+		<%
+		boolean pending = false;
+
+		if (cpDefinition != null) {
+			pending = cpDefinition.isPending();
+		}
+
+		String saveButtonLabel = "save";
+
+		if ((cpDefinition == null) || cpDefinition.isDraft() || cpDefinition.isApproved()) {
+			saveButtonLabel = "save-as-draft";
+		}
+
+		String publishButtonLabel = "publish";
+
+		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, CPDefinition.class.getName())) {
+			publishButtonLabel = "submit-for-publication";
+		}
+		%>
+
+		<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+
+		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
 </aui:form>
+
+<aui:script use="aui-base,event-input">
+	var form = A.one('#<portlet:namespace />fm');
+
+	var publishButton = form.one('#<portlet:namespace />publishButton');
+
+	publishButton.on(
+		'click',
+		function() {
+			var workflowActionInput = form.one('#<portlet:namespace />workflowAction');
+
+			if (workflowActionInput) {
+				workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
+			}
+		}
+	);
+</aui:script>

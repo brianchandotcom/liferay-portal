@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE project>
-
-<project name="powwow-shared" basedir="." default="deploy">
-	<property name="plugin.version" value="1" />
-
-	<import file="../../../../../tools/sdk/shared/build-common-shared.xml" />
-</project>

@@ -43,6 +43,7 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import javax.servlet.ServletContext;
 
@@ -370,4 +371,7 @@ public interface PortletLocalService extends BaseLocalService,
 	@Clusterable
 	@Transactional(enabled = false)
 	public void removeCompanyPortletsPool(long companyId);
+
+	@Skip
+	public void visitPortlets(long companyId, Consumer<Portlet> consumer);
 }

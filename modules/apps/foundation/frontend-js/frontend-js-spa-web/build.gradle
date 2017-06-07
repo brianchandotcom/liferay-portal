@@ -1,5 +1,8 @@
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 task buildSenna(type: Copy)
 
 buildSenna {
@@ -26,7 +29,7 @@ dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.20.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"

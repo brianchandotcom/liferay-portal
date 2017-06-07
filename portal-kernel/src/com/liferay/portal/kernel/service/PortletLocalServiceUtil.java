@@ -441,6 +441,11 @@ public class PortletLocalServiceUtil {
 		getService().removeCompanyPortletsPool(companyId);
 	}
 
+	public static void visitPortlets(long companyId,
+		java.util.function.Consumer<com.liferay.portal.kernel.model.Portlet> consumer) {
+		getService().visitPortlets(companyId, consumer);
+	}
+
 	public static PortletLocalService getService() {
 		if (_service == null) {
 			_service = (PortletLocalService)PortalBeanLocatorUtil.locate(PortletLocalService.class.getName());

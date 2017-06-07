@@ -112,11 +112,13 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PreferencesValidator;
@@ -1018,6 +1020,16 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		portletLocalService.removeCompanyPortletsPool(companyId);
 
 		return portlet;
+	}
+
+	@Override
+	@Skip
+	public void visitPortlets(long companyId, Consumer<Portlet> consumer) {
+		Map<String, Portlet> portletsMap = getPortletsMap(companyId);
+
+		for (Entry<String, Portlet> entry : portletsMap.entrySet()) {
+			consumer.accept(entry.getValue());
+		}
 	}
 
 	protected String getPortletId(String securityPath) {

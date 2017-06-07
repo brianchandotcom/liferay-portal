@@ -483,6 +483,12 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	}
 
 	@Override
+	public void visitPortlets(long companyId,
+		java.util.function.Consumer<com.liferay.portal.kernel.model.Portlet> consumer) {
+		_portletLocalService.visitPortlets(companyId, consumer);
+	}
+
+	@Override
 	public PortletLocalService getWrappedService() {
 		return _portletLocalService;
 	}

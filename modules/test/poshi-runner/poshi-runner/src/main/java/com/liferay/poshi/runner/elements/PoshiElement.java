@@ -96,6 +96,16 @@ public abstract class PoshiElement extends DefaultElement {
 		return sb.toString();
 	}
 
+	protected static String toPhrase(String s) {
+		String phrase = s.replaceAll(_PHRASE_REGEX, " $0");
+
+		if (phrase.startsWith(" ")) {
+			return phrase.substring(1);
+		}
+
+		return phrase;
+	}
+
 	protected String getAttributeValue(String startKey, String readableSyntax) {
 		return getAttributeValue(startKey, "\n", readableSyntax);
 	}
@@ -137,16 +147,6 @@ public abstract class PoshiElement extends DefaultElement {
 		Element parentElement = getParent();
 
 		return parentElement.elements();
-	}
-
-	protected static String toPhrase(String s) {
-		String phrase = s.replaceAll(_PHRASE_REGEX, " $0");
-
-		if (phrase.startsWith(" ")) {
-			return phrase.substring(1);
-		}
-
-		return phrase;
 	}
 
 	protected static final String[] READABLE_COMMAND_BLOCK_KEYS = {

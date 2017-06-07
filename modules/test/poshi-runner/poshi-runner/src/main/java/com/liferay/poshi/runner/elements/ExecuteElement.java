@@ -147,8 +147,7 @@ public class ExecuteElement extends PoshiElement {
 	private void _addFunctionAttributes(String readableSyntax) {
 		String[] keys = {AT_LOCATOR, THE_VALUE};
 
-		List<String> functionItems = StringUtil.split(
-			readableSyntax, keys);
+		List<String> functionItems = StringUtil.split(readableSyntax, keys);
 
 		for (String functionItem : functionItems) {
 			if (functionItem.contains(AT_LOCATOR)) {

@@ -201,6 +201,7 @@
 		<check name="LanguageKeysCheck" />
 	</source-processor>
 	<source-processor name="MarkdownSourceProcessor">
+		<check name="MarkdownFileExtensionCheck" />
 		<check name="MarkdownStylingCheck" />
 		<check name="WhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />

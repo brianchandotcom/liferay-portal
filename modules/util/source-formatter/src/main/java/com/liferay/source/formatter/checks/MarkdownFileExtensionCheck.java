@@ -12,27 +12,22 @@
  * details.
  */
 
-package com.liferay.source.formatter;
-
-import java.util.List;
+package com.liferay.source.formatter.checks;
 
 /**
  * @author Hugo Huijser
  */
-public class MarkdownSourceProcessor extends BaseSourceProcessor {
+public class MarkdownFileExtensionCheck extends BaseFileCheck {
 
 	@Override
-	protected List<String> doGetFileNames() throws Exception {
-		return getFileNames(
-			new String[] {"**/build_gradle/node/**"}, getIncludes());
-	}
+	protected String doProcess(
+		String fileName, String absolutePath, String content) {
 
-	@Override
-	protected String[] doGetIncludes() {
-		return _INCLUDES;
-	}
+		if (fileName.endsWith(".md")) {
+			addMessage(fileName, "Use extension 'markdown' instead of 'md'");
+		}
 
-	private static final String[] _INCLUDES =
-		new String[] {"**/*.markdown", "**/*.md"};
+		return content;
+	}
 
 }

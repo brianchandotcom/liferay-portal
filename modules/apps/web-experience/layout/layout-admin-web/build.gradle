@@ -2,6 +2,8 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.application.list.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.expando.taglib", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.layout.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.mobile.device.rules.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.mobile.device.rules.service", version: "1.0.0"
@@ -20,4 +22,5 @@ dependencies {
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:export-import:export-import-service")
 	provided project(":apps:web-experience:journal:journal-api")
+	provided project(":apps:web-experience:layout:layout-item-selector-api")
 }

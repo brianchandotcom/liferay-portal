@@ -40,7 +40,6 @@ import com.liferay.powwow.model.PowwowParticipant;
 import com.liferay.powwow.provider.PowwowServiceProviderUtil;
 import com.liferay.powwow.service.PowwowMeetingLocalServiceUtil;
 import com.liferay.powwow.service.PowwowParticipantLocalServiceUtil;
-import com.liferay.powwow.service.persistence.PowwowMeetingActionableDynamicQuery;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -253,34 +252,6 @@ public class PowwowMeetingIndexer extends BaseIndexer {
 		throws PortalException, SystemException {
 
 		final Collection<Document> documents = new ArrayList<Document>();
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			new PowwowMeetingActionableDynamicQuery() {
-
-			@Override
-			protected void performAction(Object object) {
-				PowwowMeeting powwowMeeting = (PowwowMeeting)object;
-
-				try {
-					Document document = getDocument(powwowMeeting);
-
-					documents.add(document);
-				}
-				catch (PortalException pe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to index powwow meeting " +
-								powwowMeeting.getPowwowMeetingId(),
-							pe);
-					}
-				}
-			}
-
-		};
-
-		actionableDynamicQuery.setCompanyId(companyId);
-
-		actionableDynamicQuery.performActions();
 
 		SearchEngineUtil.updateDocuments(
 			getSearchEngineId(), companyId, documents);

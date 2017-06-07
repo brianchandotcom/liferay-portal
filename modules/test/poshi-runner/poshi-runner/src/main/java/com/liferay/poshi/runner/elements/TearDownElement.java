@@ -25,6 +25,10 @@ public class TearDownElement extends CommandElement {
 		super("tear-down", element);
 	}
 
+	public TearDownElement(String readableSyntax) {
+		super("tear-down", readableSyntax);
+	}
+
 	protected String getReadableCommandTitle() {
 		return "Teardown: This executes after each scenario";
 	}

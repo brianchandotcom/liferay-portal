@@ -27,6 +27,10 @@ public class PropertyElement extends VarElement {
 		super("property", element);
 	}
 
+	public PropertyElement(String readableSyntax) {
+		super("property", readableSyntax);
+	}
+
 	@Override
 	protected String getReadableVariableKey() {
 		return THESE_PROPERTIES;

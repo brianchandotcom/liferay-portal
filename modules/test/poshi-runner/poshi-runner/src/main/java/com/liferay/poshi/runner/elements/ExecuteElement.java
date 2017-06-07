@@ -33,6 +33,10 @@ public class ExecuteElement extends PoshiElement {
 		super("execute", element);
 	}
 
+	public ExecuteElement(String readableSyntax) {
+		super("execute", readableSyntax);
+	}
+
 	@Override
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();

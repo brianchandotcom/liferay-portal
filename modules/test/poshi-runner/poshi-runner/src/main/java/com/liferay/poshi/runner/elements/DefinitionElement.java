@@ -38,6 +38,10 @@ public class DefinitionElement extends PoshiElement {
 		super("definition", element);
 	}
 
+	public DefinitionElement(String readableSyntax) {
+		super("definition", readableSyntax);
+	}
+
 	@Override
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();

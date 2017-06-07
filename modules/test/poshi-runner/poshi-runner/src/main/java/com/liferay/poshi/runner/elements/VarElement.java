@@ -27,8 +27,16 @@ public class VarElement extends PoshiElement {
 		this("var", element);
 	}
 
+	public VarElement(String readableSyntax) {
+		this("var", readableSyntax);
+	}
+
 	public VarElement(String name, Element element) {
 		super(name, element);
+	}
+
+	public VarElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
 	}
 
 	@Override

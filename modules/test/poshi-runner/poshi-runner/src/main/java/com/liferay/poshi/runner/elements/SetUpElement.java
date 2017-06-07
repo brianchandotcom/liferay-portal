@@ -25,6 +25,10 @@ public class SetUpElement extends CommandElement {
 		super("set-up", element);
 	}
 
+	public SetUpElement(String readableSyntax) {
+		super("set-up", readableSyntax);
+	}
+
 	@Override
 	protected String getReadableCommandTitle() {
 		return "Setup: This executes before each scenario";

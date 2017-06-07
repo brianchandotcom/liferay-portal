@@ -25,6 +25,10 @@ public class UnsupportedElement extends PoshiElement {
 		super(element.getName(), element);
 	}
 
+	public UnsupportedElement(String readableSyntax) {
+		super("unsupported", readableSyntax);
+	}
+
 	@Override
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();

@@ -32,8 +32,16 @@ public class CommandElement extends PoshiElement {
 		this("command", element);
 	}
 
+	public CommandElement(String readableSyntax) {
+		this("command", readableSyntax);
+	}
+
 	public CommandElement(String name, Element element) {
 		super(name, element);
+	}
+
+	public CommandElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
 	}
 
 	@Override

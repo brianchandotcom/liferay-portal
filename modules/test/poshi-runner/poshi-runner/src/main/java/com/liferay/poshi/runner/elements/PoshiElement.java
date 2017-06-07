@@ -40,6 +40,10 @@ public abstract class PoshiElement extends DefaultElement {
 		_addElements(element);
 	}
 
+	public PoshiElement(String name, String readableSyntax) {
+		super(name);
+	}
+
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();
 

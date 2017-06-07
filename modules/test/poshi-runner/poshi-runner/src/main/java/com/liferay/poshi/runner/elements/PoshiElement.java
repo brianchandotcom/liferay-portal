@@ -15,9 +15,18 @@
 package com.liferay.poshi.runner.elements;
 
 import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.AND;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.BACKGROUND;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.FEATURE;
 import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.GIVEN;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.SCENARIO;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.SETUP;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.TEARDOWN;
 import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THEN;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THESE_PROPERTIES;
 import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.WHEN;
+import static com.liferay.poshi.runner.util.StringPool.COLON;
+import static com.liferay.poshi.runner.util.StringPool.PIPE;
+import static com.liferay.poshi.runner.util.StringPool.TAB;
 
 import com.liferay.poshi.runner.util.StringUtil;
 
@@ -44,6 +53,30 @@ public abstract class PoshiElement extends DefaultElement {
 		super(name);
 	}
 
+	public void addVariableElements(String readableSyntax) {
+		List<String> readableVariableBlocks = StringUtil.split(
+			readableSyntax, READABLE_VARIABLE_BLOCK_KEYS);
+
+		for (String readableVariableBlock : readableVariableBlocks) {
+			if (!readableVariableBlock.contains(PIPE)) {
+				continue;
+			}
+
+			if (readableSyntax.contains(THESE_PROPERTIES)) {
+				Element element = new PropertyElement(readableVariableBlock);
+
+				add(element);
+
+				continue;
+			}
+
+			Element element = PoshiElementFactory.newPoshiElement(
+				readableVariableBlock);
+
+			add(element);
+		}
+	}
+
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();
 
@@ -54,6 +87,23 @@ public abstract class PoshiElement extends DefaultElement {
 		}
 
 		return sb.toString();
+	}
+
+	protected String getAttributeValue(String startKey, String readableSyntax) {
+		return getAttributeValue(startKey, "\n", readableSyntax);
+	}
+
+	protected String getAttributeValue(
+		String startKey, String endKey, String readableSyntax) {
+
+		int start = readableSyntax.indexOf(startKey);
+
+		int end = readableSyntax.indexOf(endKey, start + startKey.length());
+
+		String substring = readableSyntax.substring(
+			start + startKey.length(), end);
+
+		return substring.trim();
 	}
 
 	protected String getReadableExecuteKey() {
@@ -91,6 +141,19 @@ public abstract class PoshiElement extends DefaultElement {
 
 		return phrase;
 	}
+
+	protected static final String[] READABLE_COMMAND_BLOCK_KEYS = {
+		BACKGROUND + COLON, FEATURE + COLON, SCENARIO + COLON, SETUP + COLON,
+		TEARDOWN + COLON
+	};
+
+	protected static final String[] READABLE_EXECUTE_BLOCK_KEYS = {
+		TAB + AND, TAB + GIVEN, TAB + THEN, TAB + WHEN
+	};
+
+	protected static final String[] READABLE_VARIABLE_BLOCK_KEYS = {
+		TAB + TAB + PIPE
+	};
 
 	private void _addAttributes(Element element) {
 		for (Iterator i = element.attributeIterator(); i.hasNext();) {

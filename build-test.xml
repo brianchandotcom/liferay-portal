@@ -1397,6 +1397,8 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 		<attribute name="task" />
 
 		<sequential>
+			<update-gradle-properties />
+
 			<if>
 				<equals arg1="${test.poshi.runner.local.release}" arg2="true" />
 				<then>

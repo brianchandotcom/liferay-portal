@@ -29,7 +29,7 @@ String termsOfUseButtonCssClass = "lfr-definition-virtual-setting-terms-of-use-v
 
 boolean useTermsOfUseJournal = ParamUtil.getBoolean(request, "useTermsOfUseJournal", false);
 
-if ((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePrimKey())) {
+if ((cpDefinitionVirtualSetting != null) && (cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePrimKey() > 0)) {
 	useTermsOfUseJournal = true;
 }
 

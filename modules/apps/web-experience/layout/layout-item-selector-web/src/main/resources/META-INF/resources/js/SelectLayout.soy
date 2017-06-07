@@ -1,0 +1,211 @@
+{namespace SelectLayout}
+
+/**
+ * This renders the main element.
+ */
+{template .render}
+	{@param nodes: list<?>}
+	{@param pathThemeImages: string}
+	{@param? namespace: string}
+	{@param? viewType: string}
+
+	<div class="select-layout">
+		<nav class="collapse-basic-search navbar navbar-default navbar-no-collapse">
+			<div class="container-fluid-1280">
+				<div class="basic-search input-group">
+					<div class="input-group-input">
+						<div class="basic-search-slider">
+							<button class="basic-search-close btn btn-default" type="button"><span class="icon-remove"></span></button>
+
+							<input class="form-control" data-oninput="searchNodes_" name="{$namespace}filterKeywords" placeholder="Search" type="text"/>
+						</div>
+					</div>
+
+					<div class="input-group-btn">
+						<button class="btn btn-default" type="button"><span class="icon-search"></span></button>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<form class="container-fluid-1280 layouts-selector" name="{$namespace}selectLayoutFm">
+			<fieldset class="panel-body">
+				<div class="layout-tree" id="{$namespace}layoutContainer">
+					<div class="treeview" role="tree">
+						{call .nodes}
+							{param nodes: $nodes /}
+							{param pathThemeImages: $pathThemeImages /}
+							{param viewType: $viewType /}
+						{/call}
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+{/template}
+
+/**
+ * Renders the list of tree nodes. Uses the same markup as the parent Treeview component
+ */
+{template .nodes}
+	{@param nodes: list<?>}
+	{@param? parentPath: string}
+	{@param pathThemeImages: string}
+	{@param? viewType: string}
+
+	{if $nodes}
+		<ul class="treeview-nodes">
+			{foreach $node in $nodes}
+				{let $index: index($node) /}
+				{call .node}
+					{param node: $node /}
+					{param path: isNonnull($parentPath) ? ($parentPath + '-' + $index) : '' + $index /}
+					{param pathThemeImages: $pathThemeImages /}
+					{param viewType: $viewType /}
+				{/call}
+			{/foreach}
+		</ul>
+	{/if}
+{/template}
+
+/**
+ * Overrides the parent Treeview node template to show a Lexicon card instead of the simple label
+ */
+{template .node}
+	{@param node: [
+		actions: list<?>,
+		children: list<?>,
+		disabled: bool,
+		expanded: bool,
+		icon: string,
+		id: string,
+		name: string,
+		selected: bool,
+		url: string,
+		value: string
+	]}
+	{@param path: string}
+	{@param pathThemeImages: string}
+	{@param? viewType: string}
+
+	<li class="treeview-node" data-treeview-path="{$path}">
+		{if $node}
+			<div class="treeview-node-wrapper{$node.expanded ? ' expanded' : ''}">
+				{let $nodeAttributes kind="attributes"}
+					class="treeview-node-main clearfix col-md-4
+					{$node.children ? ' hasChildren' : ''}
+					{$node.disabled ? ' disabled' : ''}
+					{$node.selected ? ' selected' : ''}
+					"
+					data-treeitemid="{$node.id}"
+					data-treeitemname="{$node.name}"
+
+					{if $node.value}
+						data-treeitemvalue="{$node.value}"
+					{/if}
+
+					aria-expanded="{$node.expanded ? 'true' : 'false'}"
+					role="treeitem"
+				{/let}
+
+				<div {$nodeAttributes}>
+					{if $viewType == 'tree' and $node.children}
+						<div
+							class="treeview-node-toggler"
+							data-onclick="handleNodeTogglerClicked_">
+						</div>
+					{/if}
+
+					{call .card}
+						{param actions: $node.actions /}
+						{param disabled: $node.disabled /}
+						{param icon: $node.icon /}
+						{param path: $path /}
+						{param pathThemeImages: $pathThemeImages /}
+						{param title: $node.name /}
+					{/call}
+				</div>
+
+				{if $viewType == 'tree' and $node.expanded}
+					{call .nodes}
+						{param nodes: $node.children /}
+						{param parentPath: $path /}
+						{param pathThemeImages: $pathThemeImages /}
+						{param viewType: $viewType /}
+					{/call}
+				{/if}
+			</div>
+		{/if}
+	</li>
+{/template}
+
+/**
+ * Renders a Lexicon Horizontal Card with or without dropdown menu
+ */
+{template .card}
+	{@param icon: string}
+	{@param path: string}
+	{@param pathThemeImages: string}
+	{@param title: string}
+	{@param? actions: list<?>}
+	{@param? disabled: bool}
+
+	{let $nodeAttributes kind="attributes"}
+		class="card card-horizontal"
+		{if not $disabled}
+			data-onclick="handleNodeClicked_"
+		{/if}
+		data-onkeyup="handleNodeKeyUp_"
+		tabindex="{$path == 0 ? '0' : '-1'}"
+	{/let}
+	<div {$nodeAttributes}>
+		<div class="card-row card-row-padded">
+			{if $icon}
+				<div class="card-col-field">
+					<div class="sticker sticker-default sticker-lg sticker-static">
+						<svg class="lexicon-icon lexicon-icon-{$icon}" role="img" title="{$title}">
+							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$icon}"></use>
+						</svg>
+					</div>
+				</div>
+			{/if}
+
+			<div class="card-col-content card-col-gutters">
+				<span class="lfr-card-title-text text-default treeview-node-name truncate-text">
+					<div data-treeview-path="{$path}" data-onclick="handleNodeTitleClicked_">
+						{$title}
+					</div>
+				</span>
+			</div>
+
+			{if isNonnull($actions) and length($actions) > 0}
+				<div class="card-col-field">
+					<div class="dropdown">
+						<a class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="#1">
+							<svg class="lexicon-icon">
+							   <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#ellipsis-v"></use>
+							</svg>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-right">
+							{foreach $action in $actions}
+								<li>
+									<a
+										href="#1"
+
+										{if $action.confirmMessage}
+											onclick="event.preventDefault(); if (confirm('{$action.confirmMessage}')) Liferay.Util.getOpener().document.location.href='{$action.url}';"
+										{else}
+											onclick="event.preventDefault(); Liferay.Util.getOpener().document.location.href='{$action.url}';"
+										{/if}
+									>
+										{$action.label}
+									</a>
+								</li>
+							{/foreach}
+						</ul>
+					</div>
+				</div>
+			{/if}
+		</div>
+	</div>
+{/template}

@@ -14,7 +14,7 @@
 
 package com.liferay.powwow.service;
 
-import com.liferay.portal.service.InvokableLocalService;
+import com.liferay.portal.kernel.service.InvokableLocalService;
 
 /**
  * @author Shinn Lok
@@ -121,7 +121,7 @@ public class PowwowParticipantLocalServiceClp
 		_methodParameterTypes19 = new String[] {
 				"long", "long", "long", "java.lang.String", "long",
 				"java.lang.String", "int", "int",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName20 = "fetchPowwowParticipant";
@@ -152,7 +152,7 @@ public class PowwowParticipantLocalServiceClp
 
 		_methodParameterTypes26 = new String[] {
 				"long", "long", "java.lang.String", "long", "java.lang.String",
-				"int", "int", "com.liferay.portal.service.ServiceContext"
+				"int", "int", "com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName27 = "updateStatus";
@@ -543,7 +543,7 @@ public class PowwowParticipantLocalServiceClp
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -574,7 +574,7 @@ public class PowwowParticipantLocalServiceClp
 			}
 		}
 
-		return (com.liferay.portal.model.PersistedModel)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.portal.kernel.model.PersistedModel)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -719,7 +719,7 @@ public class PowwowParticipantLocalServiceClp
 	public com.liferay.powwow.model.PowwowParticipant addPowwowParticipant(
 		long userId, long groupId, long powwowMeetingId, java.lang.String name,
 		long participantUserId, java.lang.String emailAddress, int type,
-		int status, com.liferay.portal.service.ServiceContext serviceContext)
+		int status, com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -954,7 +954,7 @@ public class PowwowParticipantLocalServiceClp
 	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
 		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
 		long participantUserId, java.lang.String emailAddress, int type,
-		int status, com.liferay.portal.service.ServiceContext serviceContext)
+		int status, com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;

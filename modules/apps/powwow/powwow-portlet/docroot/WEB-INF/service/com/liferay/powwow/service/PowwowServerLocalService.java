@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.service.BaseLocalService;
-import com.liferay.portal.service.InvokableLocalService;
-import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.BaseLocalService;
+import com.liferay.portal.kernel.service.InvokableLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 
 /**
  * Provides the local service interface for PowwowServer. Methods of this
@@ -191,7 +191,7 @@ public interface PowwowServerLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -257,7 +257,7 @@ public interface PowwowServerLocalService extends BaseLocalService,
 	public com.liferay.powwow.model.PowwowServer addPowwowServer(long userId,
 		java.lang.String name, java.lang.String providerType,
 		java.lang.String url, java.lang.String apiKey, java.lang.String secret,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -283,7 +283,7 @@ public interface PowwowServerLocalService extends BaseLocalService,
 		long powwowServerId, java.lang.String name,
 		java.lang.String providerType, java.lang.String url,
 		java.lang.String apiKey, java.lang.String secret,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

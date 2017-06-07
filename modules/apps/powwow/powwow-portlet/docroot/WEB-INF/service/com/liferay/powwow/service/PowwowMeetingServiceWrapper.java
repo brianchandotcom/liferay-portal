@@ -14,7 +14,7 @@
 
 package com.liferay.powwow.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link PowwowMeetingService}.
@@ -66,7 +66,7 @@ public class PowwowMeetingServiceWrapper implements PowwowMeetingService,
 		java.util.Map<java.lang.String, java.io.Serializable> providerTypeMetadataMap,
 		java.lang.String languageId, long calendarBookingId, int status,
 		java.util.List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _powwowMeetingService.addPowwowMeeting(groupId, portletId,
@@ -112,7 +112,7 @@ public class PowwowMeetingServiceWrapper implements PowwowMeetingService,
 		java.util.Map<java.lang.String, java.io.Serializable> providerTypeMetadataMap,
 		java.lang.String languageId, long calendarBookingId, int status,
 		java.util.List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _powwowMeetingService.updatePowwowMeeting(powwowMeetingId,

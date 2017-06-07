@@ -14,6 +14,16 @@
 
 package com.liferay.poshi.runner.elements;
 
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.AND;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.FEATURE;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.GIVEN;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.SCENARIO;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.SETUP;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.TEARDOWN;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THEN;
+import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.WHEN;
+import static com.liferay.poshi.runner.util.StringPool.PIPE;
+
 import org.dom4j.Element;
 
 /**
@@ -53,6 +63,55 @@ public class PoshiElementFactory {
 		}
 
 		return new UnsupportedElement(element);
+	}
+
+	public static Element newPoshiElement(String readableSyntax) {
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new StringReader(readableSyntax))) {
+
+			String line = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				line = line.trim();
+
+				if (line.length() == 0) {
+					continue;
+				}
+
+				if (line.startsWith(FEATURE)) {
+					return new DefinitionElement(readableSyntax);
+				}
+
+				if (line.startsWith(SCENARIO)) {
+					return new CommandElement(readableSyntax);
+				}
+
+				if (line.startsWith(SETUP)) {
+					return new SetUpElement(readableSyntax);
+				}
+
+				if (line.startsWith(TEARDOWN)) {
+					return new TearDownElement(readableSyntax);
+				}
+
+				if (line.startsWith(AND) || line.startsWith(GIVEN) ||
+					line.startsWith(THEN) || line.startsWith(WHEN)) {
+
+					return new ExecuteElement(readableSyntax);
+				}
+
+				if (line.startsWith(PIPE)) {
+					return new VarElement(readableSyntax);
+				}
+			}
+		}
+		catch (Exception e) {
+			System.out.println("The Poshi element could not be generated.");
+
+			e.printStackTrace();
+		}
+
+		return new UnsupportedElement(readableSyntax);
 	}
 
 }

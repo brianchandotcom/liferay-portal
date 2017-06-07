@@ -17,6 +17,8 @@ package com.liferay.commerce.product.internal.exportimport.data.handler;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionCategory;
@@ -57,7 +59,14 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 	@Activate
 	protected void activate() {
 		setDeletionSystemEventStagedModelTypes(
-			new StagedModelType(CPOption.class));
+			new StagedModelType(CPAttachmentFileEntry.class),
+			new StagedModelType(CPDefinition.class),
+			new StagedModelType(CPDefinitionOptionRel.class),
+			new StagedModelType(CPDefinitionOptionValueRel.class),
+			new StagedModelType(CPInstance.class),
+			new StagedModelType(CPOption.class),
+			new StagedModelType(CPOptionCategory.class),
+			new StagedModelType(CPOptionValue.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "products", true, false,

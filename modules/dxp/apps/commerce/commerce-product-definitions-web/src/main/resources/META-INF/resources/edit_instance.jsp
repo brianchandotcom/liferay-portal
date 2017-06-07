@@ -25,6 +25,8 @@ CPInstance cpInstance = cpInstanceDisplayContext.getCPInstance();
 
 long cpInstanceId = cpInstanceDisplayContext.getCPInstanceId();
 
+long groupId = BeanParamUtil.getLong(cpInstance, request, "groupId", scopeGroupId);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sku") : cpDefinition.getTitle(languageId) + " - " + cpInstance.getSku());
@@ -38,6 +40,7 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
 	<aui:input name="cpInstanceId" type="hidden" value="<%= String.valueOf(cpInstanceId) %>" />
+	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
@@ -45,16 +48,67 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 			formModelBean="<%= cpInstance %>"
 			id="<%= CPInstanceFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRODUCT_INSTANCE %>"
 			markupView="lexicon"
+			showButtons="<%= false %>"
 		/>
 	</div>
+
+	<aui:button-row cssClass="product-instance-button-row">
+
+		<%
+		boolean pending = false;
+
+		if (cpInstance != null) {
+			pending = cpInstance.isPending();
+		}
+
+		String saveButtonLabel = "save";
+
+		if ((cpInstance == null) || cpInstance.isDraft() || cpInstance.isApproved()) {
+			saveButtonLabel = "save-as-draft";
+		}
+
+		String publishButtonLabel = "publish";
+
+		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, CPInstance.class.getName())) {
+			publishButtonLabel = "submit-for-publication";
+		}
+		%>
+
+		<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+
+		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script>
 	function <portlet:namespace />saveInstance(forceDisable) {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		form.fm('ddmFormValues').val(JSON.stringify(Liferay.component("cpDefinitionOptionsRenderDDMForm").toJSON()));
+		var cpDefinitionOptionsRenderDDMForm = Liferay.component("cpDefinitionOptionsRenderDDMForm");
+
+		if(cpDefinitionOptionsRenderDDMForm){
+			form.fm('ddmFormValues').val(JSON.stringify(cpDefinitionOptionsRenderDDMForm.toJSON()));
+		}
 
 		submitForm(form);
 	}
+</aui:script>
+
+<aui:script use="aui-base,event-input">
+	var form = A.one('#<portlet:namespace />fm');
+
+	var publishButton = form.one('#<portlet:namespace />publishButton');
+
+	publishButton.on(
+		'click',
+		function() {
+			var workflowActionInput = form.one('#<portlet:namespace />workflowAction');
+
+			if (workflowActionInput) {
+				workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
+			}
+		}
+	);
 </aui:script>

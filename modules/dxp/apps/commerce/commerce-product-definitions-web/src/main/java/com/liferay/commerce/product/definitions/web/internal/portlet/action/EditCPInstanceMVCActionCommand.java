@@ -35,6 +35,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -90,15 +91,29 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		CPInstance cpInstance = null;
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		int workflowAction = ParamUtil.getInteger(
+			actionRequest, "workflowAction",
+			WorkflowConstants.ACTION_SAVE_DRAFT);
+
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCPInstance(actionRequest);
+				cpInstance = updateCPInstance(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
 				buildCPInstances(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCPInstances(actionRequest);
+			}
+
+			if ((cpInstance != null) &&
+				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
 		catch (Exception e) {
@@ -121,7 +136,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void updateCPInstance(ActionRequest actionRequest)
+	protected CPInstance updateCPInstance(ActionRequest actionRequest)
 		throws Exception {
 
 		Locale locale = actionRequest.getLocale();
@@ -173,8 +188,10 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPInstance.class.getName(), actionRequest);
 
+		CPInstance cpInstance = null;
+
 		if (cpInstanceId > 0) {
-			_cpInstanceService.updateCPInstance(
+			cpInstance = _cpInstanceService.updateCPInstance(
 				cpInstanceId, sku, displayDateMonth, displayDateDay,
 				displayDateYear, displayDateHour, displayDateMinute,
 				expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -188,13 +205,15 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			String ddmContent = _cpInstanceHelper.toJSON(
 				cpDefinitionId, locale, ddmFormValues);
 
-			_cpInstanceService.addCPInstance(
+			cpInstance = _cpInstanceService.addCPInstance(
 				cpDefinitionId, sku, ddmContent, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,
 				neverExpire, serviceContext);
 		}
+
+		return cpInstance;
 	}
 
 	@Reference

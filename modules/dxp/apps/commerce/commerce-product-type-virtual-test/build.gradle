@@ -1,6 +1,11 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.7"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.0.0"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.1.0"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.api", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testIntegrationCompile project(":private:apps:commerce:commerce-product-api")
+	testIntegrationCompile project(":private:apps:commerce:commerce-product-test-util")
 	testIntegrationCompile project(":private:apps:commerce:commerce-product-type-virtual-api")
 	testIntegrationCompile project(":private:apps:commerce:commerce-product-type-virtual-service")
 }

@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.type.simple.internal;
 
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
@@ -31,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"commerce.product.type.display.order:Integer=5",
-		"commerce.product.type.name=simple"
+		"commerce.product.type.name=" + SimpleCPTypeConstants.NAME
 	},
 	service = CPType.class
 )
@@ -51,12 +52,12 @@ public class SimpleCPType implements CPType {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "simple");
+		return LanguageUtil.get(locale, SimpleCPTypeConstants.NAME);
 	}
 
 	@Override
 	public String getName() {
-		return "simple";
+		return SimpleCPTypeConstants.NAME;
 	}
 
 }

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<!--
+Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+
+This library is free software; you can redistribute it and/or modify it under
+the terms of the GNU Lesser General Public License as published by the Free
+Software Foundation; either version 2.1 of the License, or (at your option)
+any later version.
+
+This library is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+details.
+-->
+
+<html>
+<body>
+<p>
+	This package defines the interfaces and utilities for the NPM registry
+	facility.
+</p>
+<p>
+	Interfaces and classes here define a model for describing NPM packages and
+	modules so that they can be tracked by the {@link com.liferay.frontend.js.loader.modules.extender.internal.npm.NPMRegistry}.
+</p>
+<p>
+	In addition, the {@link com.liferay.frontend.js.loader.modules.extender.npm.JSBundleProcessor}
+	interface provides a way to extend the portal by deploying OSGi components
+	that analyze bundles in search for NPM packages and modules.
+</p>
+<p>
+	A brief overview of the NPM model is provided defining the following
+	concepts:
+</p>
+<ul>
+	<li>
+		<b>bundle:</b>
+		an OSGi bundle containing one or more NPM packages. Bundles have a
+		symbolic name and an id given by OSGi (usually a number).
+	</li>
+	<li>
+		<b>package</b>:
+		an NPM package contains several JS modules and is described by a
+		`package.json` file. Packages may depend on other packages. Packages
+		have a name and a version that uniquely identifies them.
+	</li>
+	<li>
+		<b>module</b>:
+		a JS module is a self contained executable unit that may depend on other
+		modules. Modules always live inside packages. Modules have name, but
+		they depend on their owner package to be accessed.
+	</li>
+	<li>
+		<b>dependency</b>:
+		a directed relation between two modules or between two packages. Note
+		that all module dependencies are resolved in the context of the package
+		that contains the depending module. For example, if package P1 at
+		version 1.0.0 depends on package P2 at version 2.1.0, and the module
+		M1 in package P1 depends on module M2 on package P2, the reference to M2
+		from M1 will be resolved traversing the dependency from P1 version 1.0.0
+		to P2 version 2.1.0.
+	</li>
+</ul>
+<p>
+	In addition to the previous concepts, defined by NPM, the portal adds some
+	more on top of them:
+</p>
+<ul>
+	<li>
+		<b>package id</b>:
+		the string that univocally identifies an NPM package deployed inside the
+		Portal. It is composed by the id of the bundle containing the package
+		and the package name and version. Example: `625/isarray@1.0.0`.
+	</li>
+	<li>
+		<b>module id:</b>
+		the string that univocally identifies an NPM module deployed inside the
+		Portal. It is composed by the id of the package containing the module
+		and the module name itself. Example: `625/isarray@1.0.0/lib/index`.
+	</li>
+	<li>
+		<b>resolved module</b>:
+		given that more than one copy of a specific NPM module can be deployed
+		to the Portal in different OSGi bundles, we need to resolve all copies
+		of the same NPM module to one unique reference module (selected among
+		the several ones available). Thus, we name that reference module the
+		`resolved module`.
+	</li>
+	<li>
+		<b>resolved module id</b>:
+		once that several copies of the same module are resolved to a unique
+		reference module, its id can be simplified and does not need to contain
+		the bundle id any more (because we don't need to distinguish between
+		different bundles any more). Thus, we define the resolved module id
+		based on the package name, version, and package name. Example:
+		`isarray@1.0.0/lib/index`.
+	</li>
+</ul>
+
+</body>
+</html>

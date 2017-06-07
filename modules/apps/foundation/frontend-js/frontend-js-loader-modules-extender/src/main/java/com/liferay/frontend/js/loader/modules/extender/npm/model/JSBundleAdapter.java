@@ -21,16 +21,26 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * A basic incomplete implementation of {@link JSBundle} that can be reused by
+ * real implementations.
  * @author Iván Zaera
  */
 public abstract class JSBundleAdapter implements JSBundle {
 
+	/**
+	 * @param id the OSGi bundle id
+	 * @param name the OSGi name for this bundle
+	 * @param version the OSGi version of this bundle
+	 */
 	public JSBundleAdapter(String id, String name, String version) {
 		_id = id;
 		_name = name;
 		_version = version;
 	}
 
+	/**
+	 * Add an NPM package description to this bundle.
+	 */
 	public void addJSPackage(JSPackage jsPackage) {
 		_jsPackages.add(jsPackage);
 	}

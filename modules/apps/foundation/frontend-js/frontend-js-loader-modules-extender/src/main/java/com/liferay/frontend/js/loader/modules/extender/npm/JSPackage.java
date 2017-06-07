@@ -19,24 +19,53 @@ import java.net.URL;
 import java.util.Collection;
 
 /**
+ * A description of an NPM package inside a {@link JSBundle}.
  * @author Iván Zaera
  */
 public interface JSPackage extends JSBundleObject {
 
+	/**
+	 * Get the bundle where this package belongs.
+	 */
 	public JSBundle getJSBundle();
 
 	public Collection<JSModuleAlias> getJSModuleAliases();
 
+	/**
+	 * Get the list of NPM modules contained inside the NPM package described by
+	 * this object.
+	 */
 	public Collection<JSModule> getJSModules();
 
+	/**
+	 * Get the list of dependencies (other NPM packages) declared by this
+	 * package.
+	 */
 	public Collection<JSPackageDependency> getJSPackageDependencies();
 
+	/**
+	 * Get a dependency of this package (another NPM package) looked up by its
+	 * name.
+	 * @param packageName the package name
+	 * @return a {@link JSPackageDependency} or null if no dependency with the
+	 *         given name exists
+	 */
 	public JSPackageDependency getJSPackageDependency(String packageName);
 
+	/**
+	 * Get the name of the default module declared by this package.
+	 */
 	public String getMainModuleName();
 
+	/**
+	 * Get the URL of a resource living inside this package.
+	 * @param location the path to the resource
+	 */
 	public URL getResourceURL(String location);
 
+	/**
+	 * Get the NPM version of this package.
+	 */
 	public String getVersion();
 
 }

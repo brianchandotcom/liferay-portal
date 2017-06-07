@@ -29,10 +29,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * A base abstract class to implement servlets that return Javascript modules
+ * tracked by the {@link com.liferay.frontend.js.loader.modules.extender.internal.npm.NPMRegistry}.
  * @author Adolfo Pérez
  */
 public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 
+	/**
+	 * This is a template method that must be implemented by subclasses to
+	 * lookup the requested module.
+	 * @param moduleName the name of a module
+	 * @return the {@link JSModule} object describing the module
+	 */
 	protected abstract JSModule getJSModule(String moduleName);
 
 	@Override

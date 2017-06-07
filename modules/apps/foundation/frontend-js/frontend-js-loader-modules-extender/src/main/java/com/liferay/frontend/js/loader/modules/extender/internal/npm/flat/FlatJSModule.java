@@ -26,10 +26,16 @@ import java.net.URL;
 import java.util.Collection;
 
 /**
+ * A complete implementation of {@link com.liferay.frontend.js.loader.modules.extender.npm.JSModule}.
  * @author Iván Zaera
  */
 public class FlatJSModule extends BuiltInJSModule {
 
+	/**
+	 * @param jsPackage the package where this module belongs
+	 * @param name the name of the module
+	 * @param dependencies the names of the modules on which this one depends
+	 */
 	public FlatJSModule(
 		JSPackage jsPackage, String name, Collection<String> dependencies) {
 

@@ -45,27 +45,52 @@ import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
+ * <p>
+ * This is the central class for the NPM packages support of Liferay Portal.
+ * </p>
+ * <p>
+ * It features a central registry where all NPM packages and modules deployed
+ * accross OSGi bundles are tracked.
+ * </p>
  * @author Iván Zaera
  */
 @Component(immediate = true, service = NPMRegistry.class)
 public class NPMRegistry {
 
+	/**
+	 * Get the list of OSGi bundles containing NPM packages that have been
+	 * deployed to the portal.
+	 */
 	public Collection<JSBundle> getJSBundles() {
 		return _jsBundles;
 	}
 
+	/**
+	 * Get an NPM module descriptor given its id.
+	 * @param identifier the id of the NPM module.
+	 */
 	public JSModule getJSModule(String identifier) {
 		return _jsModules.get(identifier);
 	}
 
+	/**
+	 * Get the list of all deployed NPM packages.
+	 */
 	public Collection<JSPackage> getJSPackages() {
 		return _jsPackages.values();
 	}
 
+	/**
+	 * Get a resolved module given its id.
+	 * @param identifier the id of a resolved module
+	 */
 	public JSModule getResolvedJSModule(String identifier) {
 		return _resolvedJSModules.get(identifier);
 	}
 
+	/**
+	 * Get the list of all resolved modules deployed to the portal.
+	 */
 	public Collection<JSModule> getResolvedJSModules() {
 		return _resolvedJSModules.values();
 	}

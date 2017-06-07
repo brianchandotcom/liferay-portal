@@ -19,10 +19,47 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 /**
+ * <p>
+ * An utility class to manipulate module names.
+ * </p>
+ * <p>
+ * There are several concepts that must be understood when using this class:
+ * <ul>
+ *     <li>
+ *         <b>module name</b>:
+ *		   the name of an NPM module deployed to the portal.
+ *         Syntax: {module name}
+ *         Example: lib/index
+ *     </li>
+ *     <li>
+ *         <b>module file name</b>:
+ *		   the name file implementing an NPM module deployed to the portal.
+ *         Syntax: {module file name}
+ *         Example: lib/index.js
+ *     </li>
+ *     <li>
+ *         <b>package id:</b>
+ *         the unique id of an NPM package deployed to the portal.
+ *         Syntax: {bundle id}/{package name}@{package version}.
+ *         Example: 625/isarray@1.0.0
+ *     </li>
+ *     <li>
+ *         <b>module id</b>:
+ *		   the unique id of an NPM module deployed to the portal.
+ *         Syntax: {bundle id}/{package name}@{package version}/{module name}.
+ *         Example: 625/isarray@1.0.0/lib/index
+ *     </li>
+ * </ul>
+ * </p>
  * @author Iván Zaera
  */
 public class ModuleNameUtil {
 
+	/**
+	 * Get a module id given an NPM package and the name of a module inside it.
+	 * @param jsPackage an NPM package
+	 * @param moduleName a module name
+	 */
 	public static String getModuleId(JSPackage jsPackage, String moduleName) {
 		StringBundler sb = new StringBundler(3);
 
@@ -33,6 +70,10 @@ public class ModuleNameUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * Get the package name portion of a full module name. For instance,
+	 * given `isarray/lib/index` return `isarray`.
+	 */
 	public static String getPackageName(String moduleName) {
 		int i = moduleName.indexOf(StringPool.SLASH);
 
@@ -43,6 +84,10 @@ public class ModuleNameUtil {
 		return moduleName.substring(0, i);
 	}
 
+	/**
+	 * Get the path portion of a full module name. For instance,
+	 * given `isarray/lib/index` return `lib/index`.
+	 */
 	public static String getPackagePath(String moduleName) {
 		int i = moduleName.indexOf(StringPool.SLASH);
 
@@ -53,10 +98,17 @@ public class ModuleNameUtil {
 		return moduleName.substring(i + 1);
 	}
 
+	/**
+	 * Get the file name implementing a module.
+	 * @param moduleName the module name
+	 */
 	public static String toFileName(String moduleName) {
 		return moduleName + ".js";
 	}
 
+	/**
+	 * Get the name of a module given the file name implementing it.
+	 */
 	public static String toModuleName(String fileName) {
 		int i = fileName.lastIndexOf(CharPool.PERIOD);
 

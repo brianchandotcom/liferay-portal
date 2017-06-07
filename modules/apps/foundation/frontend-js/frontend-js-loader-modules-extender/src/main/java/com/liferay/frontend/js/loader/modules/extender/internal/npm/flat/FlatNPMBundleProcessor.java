@@ -43,6 +43,13 @@ import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * <p>
+ * An implementation of {@link JSBundleProcessor} that assumes `flat` format for
+ * the OSGi bundles containing NPM packages.
+ * </p>
+ * <p>
+ * See this package's summary for an explanation of the `flat` format.
+ * </p>
  * @author Iván Zaera
  */
 @Component(immediate = true, service = JSBundleProcessor.class)
@@ -69,6 +76,12 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		return flatJSBundle;
 	}
 
+	/**
+	 * Get the contents of a resource insinde a {@link FlatJSBundle}.
+	 * @param flatJSBundle the bundle
+	 * @param location the path to the resource
+	 * @return the contents of the resource as a {@link String} object
+	 */
 	private String _getResourceContent(
 		FlatJSBundle flatJSBundle, String location) {
 
@@ -86,6 +99,12 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		}
 	}
 
+	/**
+	 * Get the dependencies of a module given its URL. The dependencies are
+	 * parsed reading the Javascript code of the module.
+	 * @param url the {@link URL} of the module
+	 * @return the list of dependencies of the module
+	 */
 	private Collection<String> _parseModuleDependencies(URL url)
 		throws IOException {
 
@@ -108,6 +127,13 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		return Arrays.asList(dependencies);
 	}
 
+	/**
+	 * Process a dependencies type entry of a package.json file adding them to
+	 * the given {@link FlatJSPackage}.
+	 * @param flatJSPackage an NPM package descriptor
+	 * @param jsonObject the parsed package.json
+	 * @param key the key of the dependencies type property
+	 */
 	private void _processDependencies(
 		FlatJSPackage flatJSPackage, JSONObject jsonObject, String key) {
 
@@ -129,6 +155,12 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		}
 	}
 
+	/**
+	 * Process the modules of a package adding them to their
+	 * {@link FlatJSPackage} descriptor.
+	 * @param flatJSPackage an NPM package descriptor
+	 * @param location the bundle relative path of the package folder
+	 */
 	private void _processModules(FlatJSPackage flatJSPackage, String location) {
 		String nodeModulesPath = StringPool.SLASH + location + "/node_modules/";
 
@@ -172,6 +204,10 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		}
 	}
 
+	/**
+	 * Process the packages of a bundle adding them to their
+	 * {@link FlatJSBundle} descriptor.
+	 */
 	private void _processNodePackages(FlatJSBundle flatJSBundle) {
 		Enumeration<URL> urls = flatJSBundle.findEntries(
 			"META-INF/resources", "package.json", true);
@@ -191,6 +227,12 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		}
 	}
 
+	/**
+	 * Process a package of a bundle adding it to its {@link FlatJSBundle}
+	 * descriptor.
+	 * @param flatJSBundle the bundle where package is contained
+	 * @param location the bundle relative path to a package.json file
+	 */
 	private void _processPackage(
 		FlatJSBundle flatJSBundle, String location, boolean root) {
 
@@ -241,6 +283,11 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		flatJSBundle.addJSPackage(flatJSPackage);
 	}
 
+	/**
+	 * Process the root package (the one located in the bundle's
+	 * META-INF/resources folder, as opposed to the node_modules folder) of a
+	 * bundle and add it to its {@link FlatJSBundle} descriptor.
+	 */
 	private void _processRootPackage(FlatJSBundle flatJSBundle) {
 		String location = "META-INF/resources";
 

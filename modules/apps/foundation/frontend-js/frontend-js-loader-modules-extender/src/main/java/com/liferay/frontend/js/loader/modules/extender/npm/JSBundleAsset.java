@@ -18,12 +18,26 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
+ * A {@link JSBundleObject} which contents can be requested from the outside
+ * world using a portal URL or by means of an {@link InputStream}.
  * @author Iván Zaera
  */
 public interface JSBundleAsset extends JSBundleObject {
 
+	/**
+	 * Retrieve the contents of the asset.
+	 * @return an {@link InputStream} that allows reading the bytes inside the
+	 *         asset
+	 * @throws IOException
+	 */
 	public InputStream getInputStream() throws IOException;
 
+	/**
+	 * Get the public URL of the asset. This URL can be used to retrieve the
+	 * asset's contents from the outside world by making an HTTP request to the
+	 * portal.
+	 * @return a standard URL
+	 */
 	public String getURL();
 
 }

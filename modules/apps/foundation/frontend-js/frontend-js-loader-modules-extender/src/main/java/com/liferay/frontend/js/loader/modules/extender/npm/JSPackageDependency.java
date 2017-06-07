@@ -15,10 +15,18 @@
 package com.liferay.frontend.js.loader.modules.extender.npm;
 
 /**
+ * A description of an NPM package dependency (another NPM package).
  * @author Iván Zaera
  */
 public class JSPackageDependency {
 
+	/**
+	 *
+	 * @param jsPackage the package declaring this dependency
+	 * @param packageName the package name of the dependency
+	 * @param versionConstraints an NPM semantic version expression defining the
+	 *                           suitable versions for this dependency
+	 */
 	public JSPackageDependency(
 		JSPackage jsPackage, String packageName, String versionConstraints) {
 
@@ -27,14 +35,24 @@ public class JSPackageDependency {
 		_versionConstraints = versionConstraints;
 	}
 
+	/**
+	 * Get the NPM package declaring this dependency.
+	 */
 	public JSPackage getJSPackage() {
 		return _jsPackage;
 	}
 
+	/**
+	 * Get the package name of the dependency.
+	 */
 	public String getPackageName() {
 		return _packageName;
 	}
 
+	/**
+	 * Get the NPM semantic version expression defining the suitable versions
+	 * for this dependency.
+	 */
 	public String getVersionConstraints() {
 		return _versionConstraints;
 	}

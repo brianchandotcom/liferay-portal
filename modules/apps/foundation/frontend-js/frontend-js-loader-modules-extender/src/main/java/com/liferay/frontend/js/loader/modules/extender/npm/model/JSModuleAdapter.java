@@ -23,10 +23,24 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * A basic incomplete implementation of {@link JSModule} that can be reused by
+ * real implementations.
  * @author Iván Zaera
  */
 public abstract class JSModuleAdapter implements JSModule {
 
+	/**
+	 *
+	 * @param jsPackage the package where this module belongs
+	 * @param name the name of the module
+	 * @param url the canonical URL of this module
+	 * @param resolvedURL the URL that gives access to the module to which this
+	 *                    module is resolved (in the end, that can be this same
+	 *                    module or another copy of this module contained in a
+	 *                    different bundle)
+	 * @param resolvedId the id of the resolved module
+	 * @param dependencies the list of dependencies declared by this module
+	 */
 	public JSModuleAdapter(
 		JSPackage jsPackage, String name, String url, String resolvedURL,
 		String resolvedId, Collection<String> dependencies) {

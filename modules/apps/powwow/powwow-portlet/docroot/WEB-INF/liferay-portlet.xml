@@ -31,7 +31,7 @@
 			</trigger>
 		</scheduler-entry>
 		<control-panel-entry-category>configuration</control-panel-entry-category>
-		<control-panel-entry-class>com.liferay.portlet.OmniadminControlPanelEntry</control-panel-entry-class>
+		<control-panel-entry-class>com.liferay.portal.kernel.portlet.OmniadminControlPanelEntry</control-panel-entry-class>
 		<css-class-wrapper>powwow-portlet</css-class-wrapper>
 	</portlet>
 	<role-mapper>

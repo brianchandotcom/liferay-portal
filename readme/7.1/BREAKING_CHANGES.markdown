@@ -317,3 +317,37 @@ behavior is controlled by the *Buffered Increment* mechanism. You can find
 more information about this in the `portal.properties` file.
 
 ---------------------------------------
+### Moved Upload Servlet Request Portal Properties to OSGi Configuration
+- **Date:** 2017-May-30
+- **JIRA Ticket:** LPS-69102
+
+#### What changed?
+
+The Upload Servlet Request properties have been moved from `portal.properties`
+and Server Administration to an OSGi configuration named
+`UploadServletRequestConfiguration.java` in the `portal-upload` module.
+
+#### Who is affected?
+
+This affects anyone who is using the following portal properties:
+
+- `com.liferay.portal.upload.UploadServletRequestImpl.max.size`
+- `com.liferay.portal.upload.UploadServletRequestImpl.temp.dir`
+
+#### How should I update my code?
+
+Instead of overriding the `portal.properties` file, you can manage the
+properties from Portal's configuration administrator. This can be accessed by
+navigating to Liferay Portal's *Control Panel* &rarr; *Configuration* &rarr;
+*System Settings* &rarr; *Upload Servlet Request* and editing the settings there.
+
+If you would like to include the new configuration in your application, follow
+the instructions for
+[making your applications configurable in Liferay 7.0](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/making-your-applications-configurable).
+
+#### Why was this change made?
+
+This change was made as part of the modularization efforts to ease portal
+configuration changes.
+
+---------------------------------------

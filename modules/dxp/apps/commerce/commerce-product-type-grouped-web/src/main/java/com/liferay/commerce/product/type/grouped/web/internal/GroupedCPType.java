@@ -21,10 +21,16 @@ import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntr
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -62,7 +68,20 @@ public class GroupedCPType implements CPType {
 			long cpDefinitionId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		return null;
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			httpServletRequest, themeDisplay.getScopeGroup(),
+			CPDefinition.class.getName(), PortletProvider.Action.EDIT);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "viewCPDefinitionGroupedEntries");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(cpDefinitionId));
+
+		return portletURL.toString();
 	}
 
 	@Override

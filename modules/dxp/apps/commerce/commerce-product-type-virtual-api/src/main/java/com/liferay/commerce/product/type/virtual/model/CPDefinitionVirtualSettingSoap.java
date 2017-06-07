@@ -54,7 +54,7 @@ public class CPDefinitionVirtualSettingSoap implements Serializable {
 		soapModel.setSampleUrl(model.getSampleUrl());
 		soapModel.setTermsOfUseRequired(model.getTermsOfUseRequired());
 		soapModel.setTermsOfUseContent(model.getTermsOfUseContent());
-		soapModel.setTermsOfUseJournalArticleResourcePK(model.getTermsOfUseJournalArticleResourcePK());
+		soapModel.setTermsOfUseJournalArticleResourcePrimKey(model.getTermsOfUseJournalArticleResourcePrimKey());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
@@ -272,13 +272,13 @@ public class CPDefinitionVirtualSettingSoap implements Serializable {
 		_termsOfUseContent = termsOfUseContent;
 	}
 
-	public long getTermsOfUseJournalArticleResourcePK() {
-		return _termsOfUseJournalArticleResourcePK;
+	public long getTermsOfUseJournalArticleResourcePrimKey() {
+		return _termsOfUseJournalArticleResourcePrimKey;
 	}
 
-	public void setTermsOfUseJournalArticleResourcePK(
-		long termsOfUseJournalArticleResourcePK) {
-		_termsOfUseJournalArticleResourcePK = termsOfUseJournalArticleResourcePK;
+	public void setTermsOfUseJournalArticleResourcePrimKey(
+		long termsOfUseJournalArticleResourcePrimKey) {
+		_termsOfUseJournalArticleResourcePrimKey = termsOfUseJournalArticleResourcePrimKey;
 	}
 
 	public Date getLastPublishDate() {
@@ -308,6 +308,6 @@ public class CPDefinitionVirtualSettingSoap implements Serializable {
 	private String _sampleUrl;
 	private boolean _termsOfUseRequired;
 	private String _termsOfUseContent;
-	private long _termsOfUseJournalArticleResourcePK;
+	private long _termsOfUseJournalArticleResourcePrimKey;
 	private Date _lastPublishDate;
 }

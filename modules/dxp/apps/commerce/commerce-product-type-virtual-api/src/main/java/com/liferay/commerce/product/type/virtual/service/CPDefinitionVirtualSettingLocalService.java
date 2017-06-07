@@ -84,8 +84,8 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 		long sampleFileEntryId, java.lang.String sampleUrl,
 		boolean termsOfUseRequired, boolean useTermsOfUseJournal,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
-		long termsOfUseJournalArticleResourcePK, ServiceContext serviceContext)
-		throws PortalException;
+		long termsOfUseJournalArticleResourcePrimKey,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new cp definition virtual setting with the primary key. Does not add the cp definition virtual setting to the database.
@@ -175,8 +175,8 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 		long sampleFileEntryId, java.lang.String sampleUrl,
 		boolean termsOfUseRequired, boolean useTermsOfUseJournal,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
-		long termsOfUseJournalArticleResourcePK, ServiceContext serviceContext)
-		throws PortalException;
+		long termsOfUseJournalArticleResourcePrimKey,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

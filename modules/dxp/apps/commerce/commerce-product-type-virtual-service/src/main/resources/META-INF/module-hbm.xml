@@ -25,7 +25,7 @@
 		<property name="sampleUrl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="termsOfUseRequired" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="termsOfUseContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property column="termsOfUseArticleResourcePK" name="termsOfUseJournalArticleResourcePK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property column="termsOfUseArticleResourcePK" name="termsOfUseJournalArticleResourcePrimKey" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 </hibernate-mapping>

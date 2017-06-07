@@ -61,7 +61,7 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 		long sampleFileEntryId, java.lang.String sampleUrl,
 		boolean termsOfUseRequired, boolean useTermsOfUseJournal,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
-		long termsOfUseJournalArticleResourcePK,
+		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -69,7 +69,7 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 			fileEntryId, url, activationStatus, duration, maxUsages, useSample,
 			useSampleUrl, sampleFileEntryId, sampleUrl, termsOfUseRequired,
 			useTermsOfUseJournal, termsOfUseContentMap,
-			termsOfUseJournalArticleResourcePK, serviceContext);
+			termsOfUseJournalArticleResourcePrimKey, serviceContext);
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 		long sampleFileEntryId, java.lang.String sampleUrl,
 		boolean termsOfUseRequired, boolean useTermsOfUseJournal,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
-		long termsOfUseJournalArticleResourcePK,
+		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -192,7 +192,7 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 			useUrl, fileEntryId, url, activationStatus, duration, maxUsages,
 			useSample, useSampleUrl, sampleFileEntryId, sampleUrl,
 			termsOfUseRequired, useTermsOfUseJournal, termsOfUseContentMap,
-			termsOfUseJournalArticleResourcePK, serviceContext);
+			termsOfUseJournalArticleResourcePrimKey, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

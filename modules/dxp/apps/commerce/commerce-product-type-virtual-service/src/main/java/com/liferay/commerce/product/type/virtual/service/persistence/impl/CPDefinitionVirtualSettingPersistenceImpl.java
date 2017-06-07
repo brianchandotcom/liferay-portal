@@ -1725,7 +1725,7 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 			dbColumnNames.put("uuid", "uuid_");
-			dbColumnNames.put("termsOfUseJournalArticleResourcePK",
+			dbColumnNames.put("termsOfUseJournalArticleResourcePrimKey",
 				"termsOfUseArticleResourcePK");
 
 			field.set(this, dbColumnNames);
@@ -2185,7 +2185,7 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 		cpDefinitionVirtualSettingImpl.setSampleUrl(cpDefinitionVirtualSetting.getSampleUrl());
 		cpDefinitionVirtualSettingImpl.setTermsOfUseRequired(cpDefinitionVirtualSetting.isTermsOfUseRequired());
 		cpDefinitionVirtualSettingImpl.setTermsOfUseContent(cpDefinitionVirtualSetting.getTermsOfUseContent());
-		cpDefinitionVirtualSettingImpl.setTermsOfUseJournalArticleResourcePK(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK());
+		cpDefinitionVirtualSettingImpl.setTermsOfUseJournalArticleResourcePrimKey(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePrimKey());
 		cpDefinitionVirtualSettingImpl.setLastPublishDate(cpDefinitionVirtualSetting.getLastPublishDate());
 
 		return cpDefinitionVirtualSettingImpl;
@@ -2616,6 +2616,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CPDefinitionVirtualSetting exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CPDefinitionVirtualSettingPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid", "termsOfUseJournalArticleResourcePK"
+				"uuid", "termsOfUseJournalArticleResourcePrimKey"
 			});
 }

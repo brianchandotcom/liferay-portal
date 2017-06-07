@@ -161,7 +161,7 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 
 		newCPDefinitionVirtualSetting.setTermsOfUseContent(RandomTestUtil.randomString());
 
-		newCPDefinitionVirtualSetting.setTermsOfUseJournalArticleResourcePK(RandomTestUtil.nextLong());
+		newCPDefinitionVirtualSetting.setTermsOfUseJournalArticleResourcePrimKey(RandomTestUtil.nextLong());
 
 		newCPDefinitionVirtualSetting.setLastPublishDate(RandomTestUtil.nextDate());
 
@@ -212,8 +212,8 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 			newCPDefinitionVirtualSetting.getTermsOfUseRequired());
 		Assert.assertEquals(existingCPDefinitionVirtualSetting.getTermsOfUseContent(),
 			newCPDefinitionVirtualSetting.getTermsOfUseContent());
-		Assert.assertEquals(existingCPDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK(),
-			newCPDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK());
+		Assert.assertEquals(existingCPDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePrimKey(),
+			newCPDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePrimKey());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPDefinitionVirtualSetting.getLastPublishDate()),
 			Time.getShortTimestamp(
@@ -286,7 +286,8 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 			"duration", true, "maxUsages", true, "useSample", true,
 			"sampleFileEntryId", true, "sampleUrl", true, "termsOfUseRequired",
 			true, "termsOfUseContent", true,
-			"termsOfUseJournalArticleResourcePK", true, "lastPublishDate", true);
+			"termsOfUseJournalArticleResourcePrimKey", true, "lastPublishDate",
+			true);
 	}
 
 	@Test
@@ -566,7 +567,7 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 
 		cpDefinitionVirtualSetting.setTermsOfUseContent(RandomTestUtil.randomString());
 
-		cpDefinitionVirtualSetting.setTermsOfUseJournalArticleResourcePK(RandomTestUtil.nextLong());
+		cpDefinitionVirtualSetting.setTermsOfUseJournalArticleResourcePrimKey(RandomTestUtil.nextLong());
 
 		cpDefinitionVirtualSetting.setLastPublishDate(RandomTestUtil.nextDate());
 

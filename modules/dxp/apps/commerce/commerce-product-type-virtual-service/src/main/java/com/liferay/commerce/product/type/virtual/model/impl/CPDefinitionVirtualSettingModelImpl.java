@@ -183,7 +183,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		model.setSampleUrl(soapModel.getSampleUrl());
 		model.setTermsOfUseRequired(soapModel.getTermsOfUseRequired());
 		model.setTermsOfUseContent(soapModel.getTermsOfUseContent());
-		model.setTermsOfUseJournalArticleResourcePK(soapModel.getTermsOfUseJournalArticleResourcePK());
+		model.setTermsOfUseJournalArticleResourcePrimKey(soapModel.getTermsOfUseJournalArticleResourcePrimKey());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
@@ -270,8 +270,8 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		attributes.put("sampleUrl", getSampleUrl());
 		attributes.put("termsOfUseRequired", getTermsOfUseRequired());
 		attributes.put("termsOfUseContent", getTermsOfUseContent());
-		attributes.put("termsOfUseJournalArticleResourcePK",
-			getTermsOfUseJournalArticleResourcePK());
+		attributes.put("termsOfUseJournalArticleResourcePrimKey",
+			getTermsOfUseJournalArticleResourcePrimKey());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -398,11 +398,11 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 			setTermsOfUseContent(termsOfUseContent);
 		}
 
-		Long termsOfUseJournalArticleResourcePK = (Long)attributes.get(
-				"termsOfUseJournalArticleResourcePK");
+		Long termsOfUseJournalArticleResourcePrimKey = (Long)attributes.get(
+				"termsOfUseJournalArticleResourcePrimKey");
 
-		if (termsOfUseJournalArticleResourcePK != null) {
-			setTermsOfUseJournalArticleResourcePK(termsOfUseJournalArticleResourcePK);
+		if (termsOfUseJournalArticleResourcePrimKey != null) {
+			setTermsOfUseJournalArticleResourcePrimKey(termsOfUseJournalArticleResourcePrimKey);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -823,14 +823,14 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 
 	@JSON
 	@Override
-	public long getTermsOfUseJournalArticleResourcePK() {
-		return _termsOfUseJournalArticleResourcePK;
+	public long getTermsOfUseJournalArticleResourcePrimKey() {
+		return _termsOfUseJournalArticleResourcePrimKey;
 	}
 
 	@Override
-	public void setTermsOfUseJournalArticleResourcePK(
-		long termsOfUseJournalArticleResourcePK) {
-		_termsOfUseJournalArticleResourcePK = termsOfUseJournalArticleResourcePK;
+	public void setTermsOfUseJournalArticleResourcePrimKey(
+		long termsOfUseJournalArticleResourcePrimKey) {
+		_termsOfUseJournalArticleResourcePrimKey = termsOfUseJournalArticleResourcePrimKey;
 	}
 
 	@JSON
@@ -963,7 +963,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		cpDefinitionVirtualSettingImpl.setSampleUrl(getSampleUrl());
 		cpDefinitionVirtualSettingImpl.setTermsOfUseRequired(getTermsOfUseRequired());
 		cpDefinitionVirtualSettingImpl.setTermsOfUseContent(getTermsOfUseContent());
-		cpDefinitionVirtualSettingImpl.setTermsOfUseJournalArticleResourcePK(getTermsOfUseJournalArticleResourcePK());
+		cpDefinitionVirtualSettingImpl.setTermsOfUseJournalArticleResourcePrimKey(getTermsOfUseJournalArticleResourcePrimKey());
 		cpDefinitionVirtualSettingImpl.setLastPublishDate(getLastPublishDate());
 
 		cpDefinitionVirtualSettingImpl.resetOriginalValues();
@@ -1139,7 +1139,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 			cpDefinitionVirtualSettingCacheModel.termsOfUseContent = null;
 		}
 
-		cpDefinitionVirtualSettingCacheModel.termsOfUseJournalArticleResourcePK = getTermsOfUseJournalArticleResourcePK();
+		cpDefinitionVirtualSettingCacheModel.termsOfUseJournalArticleResourcePrimKey = getTermsOfUseJournalArticleResourcePrimKey();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -1195,8 +1195,8 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		sb.append(getTermsOfUseRequired());
 		sb.append(", termsOfUseContent=");
 		sb.append(getTermsOfUseContent());
-		sb.append(", termsOfUseJournalArticleResourcePK=");
-		sb.append(getTermsOfUseJournalArticleResourcePK());
+		sb.append(", termsOfUseJournalArticleResourcePrimKey=");
+		sb.append(getTermsOfUseJournalArticleResourcePrimKey());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
 		sb.append("}");
@@ -1290,8 +1290,8 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		sb.append(getTermsOfUseContent());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>termsOfUseJournalArticleResourcePK</column-name><column-value><![CDATA[");
-		sb.append(getTermsOfUseJournalArticleResourcePK());
+			"<column><column-name>termsOfUseJournalArticleResourcePrimKey</column-name><column-value><![CDATA[");
+		sb.append(getTermsOfUseJournalArticleResourcePrimKey());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
@@ -1335,7 +1335,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 	private boolean _termsOfUseRequired;
 	private String _termsOfUseContent;
 	private String _termsOfUseContentCurrentLanguageId;
-	private long _termsOfUseJournalArticleResourcePK;
+	private long _termsOfUseJournalArticleResourcePrimKey;
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CPDefinitionVirtualSetting _escapedModel;

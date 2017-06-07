@@ -474,19 +474,19 @@ public interface CPDefinitionVirtualSettingModel extends BaseModel<CPDefinitionV
 		Map<Locale, String> termsOfUseContentMap, Locale defaultLocale);
 
 	/**
-	 * Returns the terms of use journal article resource pk of this cp definition virtual setting.
+	 * Returns the terms of use journal article resource prim key of this cp definition virtual setting.
 	 *
-	 * @return the terms of use journal article resource pk of this cp definition virtual setting
+	 * @return the terms of use journal article resource prim key of this cp definition virtual setting
 	 */
-	public long getTermsOfUseJournalArticleResourcePK();
+	public long getTermsOfUseJournalArticleResourcePrimKey();
 
 	/**
-	 * Sets the terms of use journal article resource pk of this cp definition virtual setting.
+	 * Sets the terms of use journal article resource prim key of this cp definition virtual setting.
 	 *
-	 * @param termsOfUseJournalArticleResourcePK the terms of use journal article resource pk of this cp definition virtual setting
+	 * @param termsOfUseJournalArticleResourcePrimKey the terms of use journal article resource prim key of this cp definition virtual setting
 	 */
-	public void setTermsOfUseJournalArticleResourcePK(
-		long termsOfUseJournalArticleResourcePK);
+	public void setTermsOfUseJournalArticleResourcePrimKey(
+		long termsOfUseJournalArticleResourcePrimKey);
 
 	/**
 	 * Returns the last publish date of this cp definition virtual setting.

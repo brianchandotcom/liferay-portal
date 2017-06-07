@@ -63,8 +63,8 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 		long sampleFileEntryId, java.lang.String sampleUrl,
 		boolean termsOfUseRequired, boolean useTermsOfUseJournal,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
-		long termsOfUseJournalArticleResourcePK, ServiceContext serviceContext)
-		throws PortalException;
+		long termsOfUseJournalArticleResourcePrimKey,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionVirtualSetting fetchCPDefinitionVirtualSettingByCPDefinitionId(
@@ -77,8 +77,8 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 		long sampleFileEntryId, java.lang.String sampleUrl,
 		boolean termsOfUseRequired, boolean useTermsOfUseJournal,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
-		long termsOfUseJournalArticleResourcePK, ServiceContext serviceContext)
-		throws PortalException;
+		long termsOfUseJournalArticleResourcePrimKey,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

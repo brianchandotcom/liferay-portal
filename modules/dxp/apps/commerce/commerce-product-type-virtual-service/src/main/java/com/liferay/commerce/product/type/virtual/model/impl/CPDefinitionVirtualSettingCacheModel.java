@@ -107,8 +107,8 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 		sb.append(termsOfUseRequired);
 		sb.append(", termsOfUseContent=");
 		sb.append(termsOfUseContent);
-		sb.append(", termsOfUseJournalArticleResourcePK=");
-		sb.append(termsOfUseJournalArticleResourcePK);
+		sb.append(", termsOfUseJournalArticleResourcePrimKey=");
+		sb.append(termsOfUseJournalArticleResourcePrimKey);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -192,7 +192,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 			cpDefinitionVirtualSettingImpl.setTermsOfUseContent(termsOfUseContent);
 		}
 
-		cpDefinitionVirtualSettingImpl.setTermsOfUseJournalArticleResourcePK(termsOfUseJournalArticleResourcePK);
+		cpDefinitionVirtualSettingImpl.setTermsOfUseJournalArticleResourcePrimKey(termsOfUseJournalArticleResourcePrimKey);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			cpDefinitionVirtualSettingImpl.setLastPublishDate(null);
@@ -240,7 +240,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 		termsOfUseRequired = objectInput.readBoolean();
 		termsOfUseContent = objectInput.readUTF();
 
-		termsOfUseJournalArticleResourcePK = objectInput.readLong();
+		termsOfUseJournalArticleResourcePrimKey = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -314,7 +314,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 			objectOutput.writeUTF(termsOfUseContent);
 		}
 
-		objectOutput.writeLong(termsOfUseJournalArticleResourcePK);
+		objectOutput.writeLong(termsOfUseJournalArticleResourcePrimKey);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -337,6 +337,6 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 	public String sampleUrl;
 	public boolean termsOfUseRequired;
 	public String termsOfUseContent;
-	public long termsOfUseJournalArticleResourcePK;
+	public long termsOfUseJournalArticleResourcePrimKey;
 	public long lastPublishDate;
 }

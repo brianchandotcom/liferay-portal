@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
-import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LayoutFriendlyURLSeparatorComposite;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -70,6 +70,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Shuyang Zhou
+ * @author Marco Leo
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated
@@ -312,32 +313,36 @@ public class FriendlyURLServlet extends HttpServlet {
 		Map<String, String[]> params = request.getParameterMap();
 
 		try {
-			LayoutFriendlyURLComposite layoutFriendlyURLComposite =
-				PortalUtil.getLayoutFriendlyURLComposite(
-					group.getGroupId(), _private, friendlyURL, params,
-					requestContext);
+			LayoutFriendlyURLSeparatorComposite
+				layoutFriendlyURLSeparatorComposite =
+					PortalUtil.getLayoutFriendlyURLSeparatorComposite(
+						group.getGroupId(), _private, friendlyURL, params,
+						requestContext);
 
-			Layout layout = layoutFriendlyURLComposite.getLayout();
+			Layout layout = layoutFriendlyURLSeparatorComposite.getLayout();
 
 			request.setAttribute(WebKeys.LAYOUT, layout);
 
 			Locale locale = PortalUtil.getLocale(request);
 
-			String layoutFriendlyURLCompositeFriendlyURL =
-				layoutFriendlyURLComposite.getFriendlyURL();
+			String layoutFriendlyURLSeparatorCompositeFriendlyURL =
+				layoutFriendlyURLSeparatorComposite.getFriendlyURL();
 
-			if (Validator.isNull(layoutFriendlyURLCompositeFriendlyURL)) {
-				layoutFriendlyURLCompositeFriendlyURL = layout.getFriendlyURL(
-					locale);
+			if (Validator.isNull(
+					layoutFriendlyURLSeparatorCompositeFriendlyURL)) {
+
+				layoutFriendlyURLSeparatorCompositeFriendlyURL =
+					layout.getFriendlyURL(locale);
 			}
 
-			pos = layoutFriendlyURLCompositeFriendlyURL.indexOf(
-				Portal.FRIENDLY_URL_SEPARATOR);
+			pos = layoutFriendlyURLSeparatorCompositeFriendlyURL.indexOf(
+				layoutFriendlyURLSeparatorComposite.getURLSeparator());
 
 			if (pos != 0) {
 				if (pos != -1) {
-					layoutFriendlyURLCompositeFriendlyURL =
-						layoutFriendlyURLCompositeFriendlyURL.substring(0, pos);
+					layoutFriendlyURLSeparatorCompositeFriendlyURL =
+						layoutFriendlyURLSeparatorCompositeFriendlyURL.
+							substring(0, pos);
 				}
 
 				String i18nLanguageId = (String)request.getAttribute(
@@ -347,11 +352,12 @@ public class FriendlyURLServlet extends HttpServlet {
 					 !LanguageUtil.isAvailableLocale(
 						 group.getGroupId(), i18nLanguageId)) ||
 					!StringUtil.equalsIgnoreCase(
-						layoutFriendlyURLCompositeFriendlyURL,
+						layoutFriendlyURLSeparatorCompositeFriendlyURL,
 						layout.getFriendlyURL(locale))) {
 
 					Locale originalLocale = setAlternativeLayoutFriendlyURL(
-						request, layout, layoutFriendlyURLCompositeFriendlyURL);
+						request, layout,
+						layoutFriendlyURLSeparatorCompositeFriendlyURL);
 
 					String redirect = PortalUtil.getLocalizedFriendlyURL(
 						request, layout, locale, originalLocale);

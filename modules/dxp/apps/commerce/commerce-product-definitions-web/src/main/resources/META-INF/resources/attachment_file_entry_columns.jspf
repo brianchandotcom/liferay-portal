@@ -39,6 +39,12 @@
 
 <liferay-ui:search-container-column-text
 	cssClass="table-cell-content"
+	name="extension"
+	value="<%= HtmlUtil.escape(fileEntry.getExtension()) %>"
+/>
+
+<liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
 	property="priority"
 />
 

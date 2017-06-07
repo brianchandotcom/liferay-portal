@@ -39,6 +39,10 @@
 			<liferay-ui:message arguments="<%= messageArgument %>" key="only-one-rule-with-the-combination-x-is-supported" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
+		<aui:input label='<%= LanguageUtil.format(request, "show-only-assets-with-x-as-its-display-page", HtmlUtil.escape(layout.getName(locale)), false) %>' name="preferences--showOnlyLayoutAssets--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowOnlyLayoutAssets() %>" />
+
+		<aui:input label="include-tags-specified-in-the-url" name="preferences--mergeUrlTags--" type="checkbox" value="<%= assetPublisherDisplayContext.isMergeURLTags() %>" />
+
 		<%
 		String queryLogicIndexesParam = ParamUtil.getString(request, "queryLogicIndexes");
 
@@ -107,10 +111,6 @@
 
 	</aui:fieldset>
 </div>
-
-<aui:input label='<%= LanguageUtil.format(request, "show-only-assets-with-x-as-its-display-page", HtmlUtil.escape(layout.getName(locale)), false) %>' name="preferences--showOnlyLayoutAssets--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowOnlyLayoutAssets() %>" />
-
-<aui:input label="include-tags-specified-in-the-url" name="preferences--mergeUrlTags--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isMergeURLTags() %>" />
 
 <aui:script use="liferay-auto-fields">
 	var autoFields = new Liferay.AutoFields(

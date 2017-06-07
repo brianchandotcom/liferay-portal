@@ -15,19 +15,25 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.CPAttachmentFileEntryFileEntryIdException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -35,6 +41,7 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -87,12 +94,52 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-			updateCPAttachmentFileEntry(actionRequest);
+		String redirect = getSaveAndContinueRedirect(
+			actionRequest, actionResponse);
+
+		try {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				updateCPAttachmentFileEntry(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteCPAttachmentFileEntry(actionRequest);
+			}
 		}
-		else if (cmd.equals(Constants.DELETE)) {
-			deleteCPAttachmentFileEntry(actionRequest);
+		catch (Exception e) {
+			if (e instanceof CPAttachmentFileEntryFileEntryIdException) {
+				hideDefaultErrorMessage(actionRequest);
+				hideDefaultSuccessMessage(actionRequest);
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
 		}
+	}
+
+	protected String getSaveAndContinueRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			actionRequest, themeDisplay.getScopeGroup(),
+			CPDefinition.class.getName(), PortletProvider.Action.EDIT);
+
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+		String toolbarItem = ParamUtil.getString(actionRequest, "toolbarItem");
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editCPAttachmentFileEntry");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(cpDefinitionId));
+		portletURL.setParameter("toolbarItem", toolbarItem);
+		portletURL.setWindowState(actionRequest.getWindowState());
+
+		return portletURL.toString();
 	}
 
 	protected void updateCPAttachmentFileEntry(ActionRequest actionRequest)

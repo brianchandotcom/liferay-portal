@@ -223,7 +223,7 @@ public class RepositoryClassDefinition
 			CacheCapability.class, new CacheCapability());
 	}
 
-	private static PortalCapabilityLocator _portalCapabilityLocator =
+	private static volatile PortalCapabilityLocator _portalCapabilityLocator =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			PortalCapabilityLocator.class, RepositoryClassDefinition.class,
 			"_portalCapabilityLocator", false);

@@ -24,6 +24,14 @@ import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THEN;
 import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.WHEN;
 import static com.liferay.poshi.runner.util.StringPool.PIPE;
 
+import com.liferay.poshi.runner.util.Dom4JUtil;
+import com.liferay.poshi.runner.util.FileUtil;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.StringReader;
+
+import org.dom4j.Document;
 import org.dom4j.Element;
 
 /**
@@ -112,6 +120,31 @@ public class PoshiElementFactory {
 		}
 
 		return new UnsupportedElement(readableSyntax);
+	}
+
+	public static Element newPoshiElementFromFile(String filePath) {
+		File file = new File(filePath);
+
+		try {
+			String fileContent = FileUtil.read(file);
+
+			if (fileContent.contains("<definition")) {
+				Document document = Dom4JUtil.parse(fileContent);
+
+				Element rootElement = document.getRootElement();
+
+				return newPoshiElement(rootElement);
+			}
+
+			return newPoshiElement(fileContent);
+		}
+		catch (Exception e) {
+			System.out.println("The Poshi element could not be generated.");
+
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 }

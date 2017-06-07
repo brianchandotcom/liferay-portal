@@ -30,7 +30,9 @@ public class CPAttachmentFileEntryFileEntryIdException extends PortalException {
 		super(msg);
 	}
 
-	public CPAttachmentFileEntryFileEntryIdException(String msg, Throwable cause) {
+	public CPAttachmentFileEntryFileEntryIdException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

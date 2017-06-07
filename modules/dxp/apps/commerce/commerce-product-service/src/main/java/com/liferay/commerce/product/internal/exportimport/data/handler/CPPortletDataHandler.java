@@ -31,6 +31,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -183,89 +184,31 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 		portletDataContext.importPortletPermissions(CPPermission.RESOURCE_NAME);
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "products")) {
-			Element cpDefinitionsElement =
-				portletDataContext.getImportDataGroupElement(
-					CPDefinition.class);
-
-			List<Element> cpDefinitionElements =
-				cpDefinitionsElement.elements();
-
-			for (Element cpDefinitionElement : cpDefinitionElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, cpDefinitionElement);
-			}
+			importModels(portletDataContext, CPDefinition.class);
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "skus")) {
-			Element cpInstancesElement =
-				portletDataContext.getImportDataGroupElement(CPInstance.class);
-
-			List<Element> cpInstanceElements = cpInstancesElement.elements();
-
-			for (Element cpInstanceElement : cpInstanceElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, cpInstanceElement);
-			}
+			importModels(portletDataContext, CPInstance.class);
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "options")) {
-			Element cpOptionsElement =
-				portletDataContext.getImportDataGroupElement(CPOption.class);
-
-			List<Element> cpOptionElements = cpOptionsElement.elements();
-
-			for (Element cpOptionElement : cpOptionElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, cpOptionElement);
-			}
+			importModels(portletDataContext, CPOption.class);
 		}
 
 		if (portletDataContext.getBooleanParameter(
 				NAMESPACE, "option-categories")) {
 
-			Element cpOptionCategoriesElement =
-				portletDataContext.getImportDataGroupElement(
-					CPOptionCategory.class);
-
-			List<Element> cpOptionCategoryElements =
-				cpOptionCategoriesElement.elements();
-
-			for (Element cpOptionCategoryElement : cpOptionCategoryElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, cpOptionCategoryElement);
-			}
+			importModels(portletDataContext, CPOptionCategory.class);
 		}
 
 		if (portletDataContext.getBooleanParameter(
 				NAMESPACE, "option-values")) {
 
-			Element cpOptionValuesElement =
-				portletDataContext.getImportDataGroupElement(
-					CPOptionValue.class);
-
-			List<Element> cpOptionValueElements =
-				cpOptionValuesElement.elements();
-
-			for (Element cpOptionValueElement : cpOptionValueElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, cpOptionValueElement);
-			}
+			importModels(portletDataContext, CPOptionValue.class);
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "attachments")) {
-			Element cpAttachmentFileEntriesElement =
-				portletDataContext.getImportDataGroupElement(
-					CPAttachmentFileEntry.class);
-
-			List<Element> cpAttachmentFileEntryElements =
-				cpAttachmentFileEntriesElement.elements();
-
-			for (Element cpAttachmentFileEntryElement :
-					cpAttachmentFileEntryElements) {
-
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, cpAttachmentFileEntryElement);
-			}
+			importModels(portletDataContext, CPAttachmentFileEntry.class);
 		}
 
 		return portletPreferences;
@@ -312,6 +255,22 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 				getExportActionableDynamicQuery(portletDataContext);
 
 		cpAttachmentFileEntryActionableDynamicQuery.performCount();
+	}
+
+	protected void importModels(
+			PortletDataContext portletDataContext,
+			Class<? extends StagedModel> clazz)
+		throws Exception {
+
+		Element modelsElement = portletDataContext.getImportDataGroupElement(
+			clazz);
+
+		List<Element> modelElements = modelsElement.elements();
+
+		for (Element modelElement : modelElements) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, modelElement);
+		}
 	}
 
 	@Reference(

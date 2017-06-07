@@ -55,6 +55,7 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-
 		<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 		<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
 		<aui:input name="cpAttachmentFileEntryId" type="hidden" value="<%= cpAttachmentFileEntryId %>" />
+		<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
 		<aui:input name="type" type="hidden" value="<%= type %>" />
 
 		<div class="lfr-form-content">

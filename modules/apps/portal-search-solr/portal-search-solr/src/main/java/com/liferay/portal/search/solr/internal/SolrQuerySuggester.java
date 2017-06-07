@@ -140,11 +140,11 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 			return querySuggestions;
 		}
 		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to execute Solr query", e);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to execute Solr query", e);
 			}
 
-			throw new SearchException(e.getMessage());
+			return new String[0];
 		}
 	}
 

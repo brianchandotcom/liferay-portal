@@ -16,7 +16,7 @@ package com.liferay.powwow.util;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.SubscriptionSender;
+import com.liferay.portal.kernel.util.SubscriptionSender;
 
 import java.util.Locale;
 

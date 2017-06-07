@@ -14,7 +14,7 @@
 
 package com.liferay.powwow.service;
 
-import com.liferay.portal.service.InvokableLocalService;
+import com.liferay.portal.kernel.service.InvokableLocalService;
 
 /**
  * @author Shinn Lok
@@ -120,7 +120,7 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 		_methodParameterTypes19 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName20 = "checkPowwowServers";
@@ -146,7 +146,7 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 		_methodParameterTypes24 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 	}
 
@@ -529,7 +529,7 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -560,7 +560,7 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 			}
 		}
 
-		return (com.liferay.portal.model.PersistedModel)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.portal.kernel.model.PersistedModel)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -704,7 +704,7 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 	public com.liferay.powwow.model.PowwowServer addPowwowServer(long userId,
 		java.lang.String name, java.lang.String providerType,
 		java.lang.String url, java.lang.String apiKey, java.lang.String secret,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -878,7 +878,7 @@ public class PowwowServerLocalServiceClp implements PowwowServerLocalService {
 		long powwowServerId, java.lang.String name,
 		java.lang.String providerType, java.lang.String url,
 		java.lang.String apiKey, java.lang.String secret,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;

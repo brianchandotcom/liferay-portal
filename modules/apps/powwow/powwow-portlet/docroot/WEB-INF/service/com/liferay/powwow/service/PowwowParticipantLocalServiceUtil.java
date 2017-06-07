@@ -16,7 +16,7 @@ package com.liferay.powwow.service;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import com.liferay.portal.kernel.service.InvokableLocalService;
 
 /**
  * Provides the local service utility for PowwowParticipant. This utility wraps
@@ -202,7 +202,7 @@ public class PowwowParticipantLocalServiceUtil {
 		return getService().getPowwowParticipant(powwowParticipantId);
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -278,7 +278,7 @@ public class PowwowParticipantLocalServiceUtil {
 	public static com.liferay.powwow.model.PowwowParticipant addPowwowParticipant(
 		long userId, long groupId, long powwowMeetingId, java.lang.String name,
 		long participantUserId, java.lang.String emailAddress, int type,
-		int status, com.liferay.portal.service.ServiceContext serviceContext)
+		int status, com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
@@ -324,7 +324,7 @@ public class PowwowParticipantLocalServiceUtil {
 	public static com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
 		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
 		long participantUserId, java.lang.String emailAddress, int type,
-		int status, com.liferay.portal.service.ServiceContext serviceContext)
+		int status, com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()

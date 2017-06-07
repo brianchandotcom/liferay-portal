@@ -14,7 +14,7 @@
 
 package com.liferay.powwow.service;
 
-import com.liferay.portal.service.InvokableLocalService;
+import com.liferay.portal.kernel.service.InvokableLocalService;
 
 /**
  * @author Shinn Lok
@@ -121,7 +121,7 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 				"long", "long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Map", "java.lang.String", "long",
 				"int", "java.util.List",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName20 = "checkPowwowMeetings";
@@ -182,7 +182,7 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Map", "java.lang.String", "long",
 				"int", "java.util.List",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName31 = "updateStatus";
@@ -574,7 +574,7 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -605,7 +605,7 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 			}
 		}
 
-		return (com.liferay.portal.model.PersistedModel)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.portal.kernel.model.PersistedModel)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -752,7 +752,7 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 		java.util.Map<java.lang.String, java.io.Serializable> providerTypeMetadataMap,
 		java.lang.String languageId, long calendarBookingId, int status,
 		java.util.List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1163,7 +1163,7 @@ public class PowwowMeetingLocalServiceClp implements PowwowMeetingLocalService {
 		java.util.Map<java.lang.String, java.io.Serializable> providerTypeMetadataMap,
 		java.lang.String languageId, long calendarBookingId, int status,
 		java.util.List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;

@@ -17,7 +17,7 @@ package com.liferay.powwow.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.model.PowwowParticipant;
 import com.liferay.powwow.service.base.PowwowMeetingServiceBaseImpl;

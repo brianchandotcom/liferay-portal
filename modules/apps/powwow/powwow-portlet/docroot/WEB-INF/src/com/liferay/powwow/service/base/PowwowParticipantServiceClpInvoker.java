@@ -50,7 +50,7 @@ public class PowwowParticipantServiceClpInvoker {
 
 		_methodParameterTypes45 = new String[] {
 				"long", "long", "java.lang.String", "long", "java.lang.String",
-				"int", "int", "com.liferay.portal.service.ServiceContext"
+				"int", "int", "com.liferay.portal.kernel.service.ServiceContext"
 			};
 	}
 
@@ -92,7 +92,7 @@ public class PowwowParticipantServiceClpInvoker {
 				(java.lang.String)arguments[4],
 				((Integer)arguments[5]).intValue(),
 				((Integer)arguments[6]).intValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[7]);
+				(com.liferay.portal.kernel.service.ServiceContext)arguments[7]);
 		}
 
 		throw new UnsupportedOperationException();

@@ -120,7 +120,7 @@ public class PowwowMeetingLocalServiceClpInvoker {
 				"long", "long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Map", "java.lang.String", "long",
 				"int", "java.util.List",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName59 = "checkPowwowMeetings";
@@ -195,7 +195,7 @@ public class PowwowMeetingLocalServiceClpInvoker {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Map", "java.lang.String", "long",
 				"int", "java.util.List",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName73 = "updateStatus";
@@ -316,7 +316,7 @@ public class PowwowMeetingLocalServiceClpInvoker {
 				((Long)arguments[8]).longValue(),
 				((Integer)arguments[9]).intValue(),
 				(java.util.List<com.liferay.powwow.model.PowwowParticipant>)arguments[10],
-				(com.liferay.portal.service.ServiceContext)arguments[11]);
+				(com.liferay.portal.kernel.service.ServiceContext)arguments[11]);
 		}
 
 		if (_methodName59.equals(name) &&
@@ -417,7 +417,7 @@ public class PowwowMeetingLocalServiceClpInvoker {
 				((Long)arguments[7]).longValue(),
 				((Integer)arguments[8]).intValue(),
 				(java.util.List<com.liferay.powwow.model.PowwowParticipant>)arguments[9],
-				(com.liferay.portal.service.ServiceContext)arguments[10]);
+				(com.liferay.portal.kernel.service.ServiceContext)arguments[10]);
 		}
 
 		if (_methodName73.equals(name) &&

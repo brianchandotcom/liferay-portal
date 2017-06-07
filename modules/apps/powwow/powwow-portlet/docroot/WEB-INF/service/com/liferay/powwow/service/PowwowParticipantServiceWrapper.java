@@ -14,7 +14,7 @@
 
 package com.liferay.powwow.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link PowwowParticipantService}.
@@ -85,7 +85,7 @@ public class PowwowParticipantServiceWrapper implements PowwowParticipantService
 	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
 		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
 		long participantUserId, java.lang.String emailAddress, int type,
-		int status, com.liferay.portal.service.ServiceContext serviceContext)
+		int status, com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _powwowParticipantService.updatePowwowParticipant(powwowParticipantId,

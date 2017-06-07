@@ -51,7 +51,14 @@ public abstract class PoshiElement extends DefaultElement {
 
 	public PoshiElement(String name, String readableSyntax) {
 		super(name);
+
+		addAttributes(readableSyntax);
+		addElements(readableSyntax);
 	}
+
+	public abstract void addAttributes(String readableSyntax);
+
+	public abstract void addElements(String readableSyntax);
 
 	public void addVariableElements(String readableSyntax) {
 		List<String> readableVariableBlocks = StringUtil.split(

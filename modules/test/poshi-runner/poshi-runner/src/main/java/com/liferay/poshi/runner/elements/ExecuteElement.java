@@ -38,6 +38,14 @@ public class ExecuteElement extends PoshiElement {
 	}
 
 	@Override
+	public void addAttributes(String readableSyntax) {
+	}
+
+	@Override
+	public void addElements(String readableSyntax) {
+	}
+
+	@Override
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();
 

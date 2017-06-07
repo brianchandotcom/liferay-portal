@@ -32,9 +32,15 @@ public class MarkdownStylingCheck extends BaseFileCheck {
 	private String _formatHeaders(String content) {
 		Matcher matcher = _incorrectHeaderNotationPattern.matcher(content);
 
-		return matcher.replaceAll("$1$2$4");
+		content = matcher.replaceAll("$1$2$4");
+
+		matcher = _boldHeaderPattern.matcher(content);
+
+		return matcher.replaceAll("$1$2$4$6");
 	}
 
+	private final Pattern _boldHeaderPattern = Pattern.compile(
+		"(\\A|\n)(#+ ?)(\\*+)([^\\*\n]+)(\\*+)(\n)");
 	private final Pattern _incorrectHeaderNotationPattern = Pattern.compile(
 		"(\\A|\n)(#+[^#\n]+)(#+)(\n)");
 

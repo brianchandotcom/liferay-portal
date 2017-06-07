@@ -29,20 +29,19 @@ public class SourceFormatFailureMessageGenerator
 	public String getMessage(
 		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
 
-		if (!consoleOutput.contains(_SOURCE_FORMAT_STRING)) {
+		if (!consoleOutput.contains(_TOKEN_SOURCE_FORMAT)) {
 			return null;
 		}
 
-		int start = consoleOutput.lastIndexOf(_FORMAT_SOURCE_STRING);
+		int start = consoleOutput.lastIndexOf(_TOKEN_FORMAT_SOURCE);
 
-		start = consoleOutput.indexOf(
-			_UTIL_SYSTEM_EXT_PROPERTIES_STRING, start);
+		start = consoleOutput.indexOf(_TOKEN_UTIL_SYSTEM_EXT_PROPERTIES, start);
 
 		start = consoleOutput.indexOf("\n", start);
 
-		int end = consoleOutput.indexOf(_MERGE_TEST_RESULTS_STRING, start);
+		int end = consoleOutput.indexOf(_TOKEN_MERGE_TEST_RESULTS, start);
 
-		end = consoleOutput.lastIndexOf(_SOURCE_FORMAT_STRING, end);
+		end = consoleOutput.lastIndexOf(_TOKEN_SOURCE_FORMAT, end);
 
 		end = consoleOutput.indexOf("\n", end);
 
@@ -53,34 +52,34 @@ public class SourceFormatFailureMessageGenerator
 	public Element getMessageElement(Build build) {
 		String consoleText = build.getConsoleText();
 
-		if (!consoleText.contains(_SOURCE_FORMAT_STRING)) {
+		if (!consoleText.contains(_TOKEN_SOURCE_FORMAT)) {
 			return null;
 		}
 
-		int start = consoleText.lastIndexOf(_FORMAT_SOURCE_STRING);
+		int start = consoleText.lastIndexOf(_TOKEN_FORMAT_SOURCE);
 
-		start = consoleText.indexOf(_UTIL_SYSTEM_EXT_PROPERTIES_STRING, start);
+		start = consoleText.indexOf(_TOKEN_UTIL_SYSTEM_EXT_PROPERTIES, start);
 
 		start = consoleText.indexOf("\n", start);
 
-		int end = consoleText.indexOf(_MERGE_TEST_RESULTS_STRING, start);
+		int end = consoleText.indexOf(_TOKEN_MERGE_TEST_RESULTS, start);
 
-		end = consoleText.lastIndexOf(_SOURCE_FORMAT_STRING, end);
+		end = consoleText.lastIndexOf(_TOKEN_SOURCE_FORMAT, end);
 
 		end = consoleText.indexOf("\n", end);
 
 		return getConsoleOutputSnippetElement(consoleText, true, start, end);
 	}
 
-	private static final String _FORMAT_SOURCE_STRING = "format-source:";
+	private static final String _TOKEN_FORMAT_SOURCE = "format-source:";
 
-	private static final String _MERGE_TEST_RESULTS_STRING =
+	private static final String _TOKEN_MERGE_TEST_RESULTS =
 		"merge-test-results:";
 
-	private static final String _SOURCE_FORMAT_STRING =
+	private static final String _TOKEN_SOURCE_FORMAT =
 		"at com.liferay.source.formatter";
 
-	private static final String _UTIL_SYSTEM_EXT_PROPERTIES_STRING =
+	private static final String _TOKEN_UTIL_SYSTEM_EXT_PROPERTIES =
 		"util-java/test-classes/unit/system-ext.properties";
 
 }

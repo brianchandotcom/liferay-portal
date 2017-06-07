@@ -1,4 +1,4 @@
-## **Comparing localized values** ##
+## **Comparing localized values**
 
 When we compare localized values, we have to use ```java.text.Collator``` to
 compare those values. If we compare the values using regular String comparison
@@ -9,7 +9,7 @@ For example, the character &Aacute; in Spanish, should be considered as next to
 A, but regular String comparison would give incorrect results, as &Aacute; comes
 lexicographically after Z.
 
-### **Example** ###
+### **Example**
 
 Incorrect:
 

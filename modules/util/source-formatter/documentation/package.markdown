@@ -1,6 +1,6 @@
-## Java package formatting ##
+## Java package formatting
 
-### Naming ###
+### Naming
 
 The java package name should match the directory structure of the location of
 the java file.

@@ -1,4 +1,4 @@
-## **BND Definition Keys** ##
+## **BND Definition Keys**
 
 Definition keys in *.bnd files have to match either:
 

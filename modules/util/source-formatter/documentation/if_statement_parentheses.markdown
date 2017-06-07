@@ -1,10 +1,10 @@
-## **Using parentheses in if-statements** ##
+## **Using parentheses in if-statements**
 
 In if-statements we use parentheses in the following cases:
 
 * Around expressions that use arithmetic or relational operators.
 
-#### **Example** ####
+#### **Example**
 
 ```java
 if ((s == null) || ((a + b) > 0)) {
@@ -14,7 +14,7 @@ if ((s == null) || ((a + b) > 0)) {
 
 * Grouping expressions when we use different logical operators.
 
-#### **Example** ####
+#### **Example**
 
 ```java
 if (a || (b && c)) {
@@ -25,7 +25,7 @@ if (a || (b && c)) {
 When we break one of the above rules, it will result in either missing or
 redundant parentheses
 
-#### **Examples of missing parentheses** ####
+#### **Examples of missing parentheses**
 
 Incorrect:
 
@@ -59,7 +59,7 @@ if (a || (b && c)) {
 }
 ```
 
-#### **Examples of redundant parentheses** ####
+#### **Examples of redundant parentheses**
 
 Incorrect:
 

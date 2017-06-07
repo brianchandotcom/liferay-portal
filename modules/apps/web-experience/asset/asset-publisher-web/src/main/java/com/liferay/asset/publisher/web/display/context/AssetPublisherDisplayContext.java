@@ -39,12 +39,12 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -303,6 +303,34 @@ public class AssetPublisherDisplayContext {
 		return _availableClassNameIds;
 	}
 
+	public String getCategorySelectorURL() {
+		try {
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				_request, AssetCategory.class.getName(),
+				PortletProvider.Action.BROWSE);
+
+			if (portletURL == null) {
+				return null;
+			}
+
+			portletURL.setParameter(
+				"eventName",
+				_portletResponse.getNamespace() + "selectCategory");
+			portletURL.setParameter(
+				"selectedCategories", "{selectedCategories}");
+			portletURL.setParameter("singleSelect", "{singleSelect}");
+			portletURL.setParameter("vocabularyIds", "{vocabularyIds}");
+
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			return portletURL.toString();
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
 	public long[] getClassNameIds() {
 		if (_classNameIds == null) {
 			_classNameIds = AssetPublisherUtil.getClassNameIds(
@@ -555,58 +583,6 @@ public class AssetPublisherDisplayContext {
 		return _portletResource;
 	}
 
-	public PortletURL getPortletURLCategorySelector() {
-		try {
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				_request, AssetCategory.class.getName(),
-				PortletProvider.Action.BROWSE);
-
-			if (portletURL == null) {
-				return null;
-			}
-
-			portletURL.setParameter(
-				"eventName",
-				_portletResponse.getNamespace() + "selectCategory");
-			portletURL.setParameter(
-				"selectedCategories", "{selectedCategories}");
-			portletURL.setParameter("singleSelect", "{singleSelect}");
-			portletURL.setParameter("vocabularyIds", "{vocabularyIds}");
-
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			return portletURL;
-		}
-		catch (Exception e) {
-		}
-
-		return null;
-	}
-
-	public PortletURL getPortletURLTagSelector() {
-		try {
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				_request, AssetTag.class.getName(),
-				PortletProvider.Action.BROWSE);
-
-			if (portletURL == null) {
-				return null;
-			}
-
-			portletURL.setParameter(
-				"eventName", _portletResponse.getNamespace() + "selectTag");
-			portletURL.setParameter("selectedTags", "{selectedTags}");
-
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			return portletURL;
-		}
-		catch (Exception e) {
-		}
-
-		return null;
-	}
-
 	public long[] getReferencedModelsGroupIds() throws PortalException {
 
 		// Referenced models are asset subtypes, tags or categories that
@@ -808,6 +784,30 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return _socialBookmarksDisplayStyle;
+	}
+
+	public String getTagSelectorURL() {
+		try {
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				_request, AssetTag.class.getName(),
+				PortletProvider.Action.BROWSE);
+
+			if (portletURL == null) {
+				return null;
+			}
+
+			portletURL.setParameter(
+				"eventName", _portletResponse.getNamespace() + "selectTag");
+			portletURL.setParameter("selectedTags", "{selectedTags}");
+
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			return portletURL.toString();
+		}
+		catch (Exception e) {
+		}
+
+		return null;
 	}
 
 	public TimeZone getTimeZone() {

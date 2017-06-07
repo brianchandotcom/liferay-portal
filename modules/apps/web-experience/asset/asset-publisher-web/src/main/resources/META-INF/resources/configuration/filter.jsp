@@ -131,8 +131,8 @@ autoField.put("rules", rules);
 autoField.put("namespace", liferayPortletResponse.getNamespace());
 autoField.put("groupIds", StringUtil.merge(categorizableGroupIds));
 autoField.put("id", "autofield");
-autoField.put("portletURLCategorySelector", assetPublisherDisplayContext.getPortletURLCategorySelector().toString());
-autoField.put("portletURLTagSelector", assetPublisherDisplayContext.getPortletURLTagSelector().toString());
+autoField.put("portletURLCategorySelector", assetPublisherDisplayContext.getCategorySelectorURL());
+autoField.put("portletURLTagSelector", assetPublisherDisplayContext.getTagSelectorURL());
 autoField.put("vocabularyIds", assetPublisherDisplayContext.getVocabularyIds());
 %>
 

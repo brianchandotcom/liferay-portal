@@ -11,8 +11,8 @@
  * @param? namespace
  * @param? removeRule
  * @param rules
- * @param portletURLCategorySelector
- * @param portletURLTagSelector
+ * @param categorySelectorURL
+ * @param tagSelectorURL
  * @param vocabularyIds
  */
 {template .render}
@@ -22,8 +22,8 @@
 			{param namespace: $namespace /}
 			{param groupIds: $groupIds /}
 			{param logicIndexes: $logicIndexes /}
-			{param portletURLCategorySelector: $portletURLCategorySelector /}
-			{param portletURLTagSelector: $portletURLTagSelector /}
+			{param categorySelectorURL: $categorySelectorURL /}
+			{param tagSelectorURL: $tagSelectorURL /}
 			{param removeRule: $removeRule /}
 			{param rules: $rules /}
 			{param vocabularyIds: $vocabularyIds /}
@@ -56,8 +56,8 @@
 * @param? namespace
 * @param? removeRule
 * @param rules
-* @param portletURLCategorySelector
-* @param portletURLTagSelector
+* @param categorySelectorURL
+* @param tagSelectorURL
 * @param vocabularyIds
 **/
 {template .rules}
@@ -77,8 +77,8 @@
 			{param changeSelector: $changeSelector /}
 			{param groupIds: $groupIds /}
 			{param namespace: $namespace /}
-			{param portletURLCategorySelector: $portletURLCategorySelector /}
-			{param portletURLTagSelector: $portletURLTagSelector /}
+			{param categorySelectorURL: $categorySelectorURL /}
+			{param tagSelectorURL: $tagSelectorURL /}
 			{param removeRule: $removeRule /}
 			{param rules: $rules /}
 			{param vocabularyIds: $vocabularyIds /}
@@ -92,8 +92,8 @@
 * @param? namespace
 * @param? removeRule
 * @param rules
-* @param portletURLCategorySelector
-* @param portletURLTagSelector
+* @param categorySelectorURL
+* @param tagSelectorURL
 * @param vocabularyIds
 **/
 {template .listRules}
@@ -133,7 +133,7 @@
 								{param groupIds: $groupIds /}
 								{param index: $index /}
 								{param namespace: $namespace /}
-								{param portletURLTagSelector: $portletURLTagSelector /}
+								{param tagSelectorURL: $tagSelectorURL /}
 								{param rule: $rule /}
 							{/call}
 						{/if}
@@ -142,7 +142,7 @@
 								{param groupIds: $groupIds /}
 								{param index: $index /}
 								{param namespace: $namespace /}
-								{param portletURLCategorySelector: $portletURLCategorySelector /}
+								{param categorySelectorURL: $categorySelectorURL /}
 								{param rule: $rule /}
 								{param vocabularyIds: $vocabularyIds /}
 							{/call}
@@ -165,7 +165,7 @@
 * @param groupIds
 * @param index
 * @param? namespace
-* @param portletURLTagSelector
+* @param tagSelectorURL
 * @param rule
 **/
 {template .selectorTags}
@@ -177,7 +177,7 @@
 		{param index: $index /}
 		{param inputId: $index + 'assetTagName' /}
 		{param namespace: $namespace /}
-		{param portletURLTagSelector: $portletURLTagSelector /}
+		{param tagSelectorURL: $tagSelectorURL /}
 		{param rule: $rule /}
 	{/call}
 {/template}
@@ -186,7 +186,7 @@
 * @param groupIds
 * @param index
 * @param? namespace
-* @param portletURLCategorySelector
+* @param categorySelectorURL
 * @param rule
 * @param vocabularyIds
 **/
@@ -198,7 +198,7 @@
 	 	{param hiddenInput: $namespace + 'queryCategoryIds' + $index /}
 		{param index: $index /}
 		{param namespace: $namespace /}
-		{param portletURLCategorySelector: $portletURLCategorySelector /}
+		{param categorySelectorURL: $categorySelectorURL /}
 		{param rule: $rule /}
 		{param vocabularyIds: $vocabularyIds /}
 	{/call}

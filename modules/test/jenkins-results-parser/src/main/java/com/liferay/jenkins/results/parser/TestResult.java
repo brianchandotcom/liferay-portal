@@ -81,9 +81,6 @@ public class TestResult {
 		if (status.equals("FAILED")) {
 			errorStackTrace = caseJSONObject.getString("errorStackTrace");
 		}
-		else {
-			errorStackTrace = null;
-		}
 	}
 
 	public AxisBuild getAxisBuild() {

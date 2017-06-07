@@ -57,7 +57,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 						defaultLogo="<%= selUser.getPortraitId() == 0 %>"
 						defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
 						logoDisplaySelector=".user-logo"
-						maxFileSize="<%= userFileUploadsConfiguration.imageMaxSize() / 1024 %>"
+						maxFileSize="<%= userFileUploadsConfiguration.imageMaxSize() %>"
 						showBackground="<%= false %>"
 						tempImageFileName="<%= String.valueOf(selUser.getUserId()) %>"
 					/>

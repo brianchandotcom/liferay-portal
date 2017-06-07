@@ -106,26 +106,6 @@ JSONArray rules = JSONFactoryUtil.createJSONArray();
 			logic.put("queryValues", queryValues);
 			logic.put("type", queryName);
 
-			/*if (Validator.isNotNull(tagNames) || Validator.isNotNull(categoryIds) || (queryLogicIndexes.length == 1)) {
-				request.setAttribute("configuration.jsp-categorizableGroupIds", assetPublisherDisplayContext.getReferencedModelsGroupIds());
-				request.setAttribute("configuration.jsp-index", String.valueOf(index));
-				request.setAttribute("configuration.jsp-queryLogicIndex", String.valueOf(queryLogicIndex));
-
-				String cssClass = StringPool.BLANK;
-
-				if (dqre != null) {
-					boolean queryContains = PrefsParamUtil.getBoolean(portletPreferences, request, "queryContains" + queryLogicIndex, true);
-					queryAndOperator = PrefsParamUtil.getBoolean(portletPreferences, request, "queryAndOperator" + queryLogicIndex);
-
-					String dqreQueryName = dqre.getName();
-
-					if ((dqre.isContains() == queryContains) && (dqre.isAndOperator() == queryAndOperator) && dqreQueryName.equals(queryName)) {
-						cssClass = "asset-query-rule-error";
-					}
-				}
-
-			}*/
-
 			rules.put(logic);
 
 			index++;
@@ -137,10 +117,6 @@ JSONArray rules = JSONFactoryUtil.createJSONArray();
 
 <div id="<portlet:namespace />ConditionForm">
 </div>
-<!-- contentBox: '#<portlet:namespace />queryRules',
-fieldIndexes: '<portlet:namespace />queryLogicIndexes',
-namespace: '<portlet:namespace />',
-url: '<liferay-portlet:renderURL portletConfiguration="<%= true %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="<%= Constants.CMD %>" value="edit_query_rule" /><portlet:param name="categorizableGroupIds" value="<%= StringUtil.merge(assetPublisherDisplayContext.getReferencedModelsGroupIds()) %>" /></liferay-portlet:renderURL>' -->
 
 <%
 long[] categorizableGroupIds = (long[])request.getAttribute("configuration.jsp-categorizableGroupIds");

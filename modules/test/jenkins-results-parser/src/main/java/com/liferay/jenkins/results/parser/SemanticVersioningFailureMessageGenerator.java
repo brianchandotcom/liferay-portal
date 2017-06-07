@@ -30,8 +30,8 @@ public class SemanticVersioningFailureMessageGenerator
 	public String getMessage(
 		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
 
-		if (!consoleOutput.contains(_SEMVER_INCORRECT_STRING) ||
-			!consoleOutput.contains(_SEMVER_PACKAGE_STRING)) {
+		if (!consoleOutput.contains(_TOKEN_SEMVER_INCORRECT) ||
+			!consoleOutput.contains(_TOKEN_SEMVER_PACKAGE)) {
 
 			return null;
 		}
@@ -51,13 +51,13 @@ public class SemanticVersioningFailureMessageGenerator
 		sb.append(properties.get("github.sender.branch.name"));
 		sb.append("</a></strong>.</p>");
 
-		int end = consoleOutput.indexOf(_SEMVER_INCORRECT_STRING);
+		int end = consoleOutput.indexOf(_TOKEN_SEMVER_INCORRECT);
 
 		end = consoleOutput.indexOf("\n", end);
 
-		int start = consoleOutput.lastIndexOf(_BASELINE_CHECK_STRING, end);
+		int start = consoleOutput.lastIndexOf(_TOKEN_BASELINE_CHECK, end);
 
-		start = consoleOutput.indexOf(_SEMVER_PACKAGE_STRING, start);
+		start = consoleOutput.indexOf(_TOKEN_SEMVER_PACKAGE, start);
 
 		start = consoleOutput.lastIndexOf("\n", start);
 
@@ -70,19 +70,19 @@ public class SemanticVersioningFailureMessageGenerator
 	public Element getMessageElement(Build build) {
 		String consoleText = build.getConsoleText();
 
-		if (!consoleText.contains(_SEMVER_INCORRECT_STRING) ||
-			!consoleText.contains(_SEMVER_PACKAGE_STRING)) {
+		if (!consoleText.contains(_TOKEN_SEMVER_INCORRECT) ||
+			!consoleText.contains(_TOKEN_SEMVER_PACKAGE)) {
 
 			return null;
 		}
 
-		int end = consoleText.indexOf(_SEMVER_INCORRECT_STRING);
+		int end = consoleText.indexOf(_TOKEN_SEMVER_INCORRECT);
 
 		end = consoleText.indexOf("\n", end);
 
-		int start = consoleText.lastIndexOf(_BASELINE_CHECK_STRING, end);
+		int start = consoleText.lastIndexOf(_TOKEN_BASELINE_CHECK, end);
 
-		start = consoleText.indexOf(_SEMVER_PACKAGE_STRING, start);
+		start = consoleText.indexOf(_TOKEN_SEMVER_PACKAGE, start);
 
 		start = consoleText.lastIndexOf("\n", start);
 
@@ -98,12 +98,12 @@ public class SemanticVersioningFailureMessageGenerator
 				getConsoleOutputSnippetElement(consoleText, true, start, end)));
 	}
 
-	private static final String _BASELINE_CHECK_STRING =
+	private static final String _TOKEN_BASELINE_CHECK =
 		"Checking for baseline log files";
 
-	private static final String _SEMVER_INCORRECT_STRING =
+	private static final String _TOKEN_SEMVER_INCORRECT =
 		"Semantic versioning is incorrect";
 
-	private static final String _SEMVER_PACKAGE_STRING = "PACKAGE_NAME";
+	private static final String _TOKEN_SEMVER_PACKAGE = "PACKAGE_NAME";
 
 }

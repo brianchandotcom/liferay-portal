@@ -28,8 +28,8 @@ public class LocalGitMirrorFailureMessageGenerator
 	public String getMessage(
 		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
 
-		if (!consoleOutput.contains(_LOCAL_GIT_FAILURE_END_STRING) ||
-			!consoleOutput.contains(_LOCAL_GIT_FAILURE_START_STRING)) {
+		if (!consoleOutput.contains(_TOKEN_LOCAL_GIT_FAILURE_END) ||
+			!consoleOutput.contains(_TOKEN_LOCAL_GIT_FAILURE_START)) {
 
 			return null;
 		}
@@ -39,10 +39,10 @@ public class LocalGitMirrorFailureMessageGenerator
 		sb.append("<p>Unable to synchronize with <strong>local Git mirror");
 		sb.append("</strong>.</p>");
 
-		int end = consoleOutput.indexOf(_LOCAL_GIT_FAILURE_END_STRING);
+		int end = consoleOutput.indexOf(_TOKEN_LOCAL_GIT_FAILURE_END);
 
 		int start = consoleOutput.lastIndexOf(
-			_LOCAL_GIT_FAILURE_START_STRING, end);
+			_TOKEN_LOCAL_GIT_FAILURE_START, end);
 
 		consoleOutput = consoleOutput.substring(start, end);
 
@@ -77,8 +77,8 @@ public class LocalGitMirrorFailureMessageGenerator
 	public Element getMessageElement(Build build) {
 		String consoleText = build.getConsoleText();
 
-		if (!consoleText.contains(_LOCAL_GIT_FAILURE_END_STRING) ||
-			!consoleText.contains(_LOCAL_GIT_FAILURE_START_STRING)) {
+		if (!consoleText.contains(_TOKEN_LOCAL_GIT_FAILURE_END) ||
+			!consoleText.contains(_TOKEN_LOCAL_GIT_FAILURE_START)) {
 
 			return null;
 		}
@@ -89,10 +89,10 @@ public class LocalGitMirrorFailureMessageGenerator
 			"p", messageElement, "Unable to synchronize with ",
 			Dom4JUtil.getNewElement("strong", null, "local Git mirror"), ".");
 
-		int end = consoleText.indexOf(_LOCAL_GIT_FAILURE_END_STRING);
+		int end = consoleText.indexOf(_TOKEN_LOCAL_GIT_FAILURE_END);
 
 		int start = consoleText.lastIndexOf(
-			_LOCAL_GIT_FAILURE_START_STRING, end);
+			_TOKEN_LOCAL_GIT_FAILURE_START, end);
 
 		consoleText = consoleText.substring(start, end);
 
@@ -124,9 +124,9 @@ public class LocalGitMirrorFailureMessageGenerator
 		return messageElement;
 	}
 
-	private static final String _LOCAL_GIT_FAILURE_END_STRING = "BUILD FAILED";
+	private static final String _TOKEN_LOCAL_GIT_FAILURE_END = "BUILD FAILED";
 
-	private static final String _LOCAL_GIT_FAILURE_START_STRING =
+	private static final String _TOKEN_LOCAL_GIT_FAILURE_START =
 		"Too many retries while synchronizing GitHub pull request.";
 
 }

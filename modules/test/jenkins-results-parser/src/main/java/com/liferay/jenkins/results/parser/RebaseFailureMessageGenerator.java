@@ -27,8 +27,8 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 	public String getMessage(
 		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
 
-		if (!consoleOutput.contains(_REBASE_END_STRING) ||
-			!consoleOutput.contains(_REBASE_START_STRING)) {
+		if (!consoleOutput.contains(_TOKEN_REBASE_END) ||
+			!consoleOutput.contains(_TOKEN_REBASE_START)) {
 
 			return null;
 		}
@@ -48,11 +48,11 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 		sb.append(properties.get("github.sender.branch.name"));
 		sb.append("</a></strong>.</p>");
 
-		int end = consoleOutput.indexOf(_REBASE_END_STRING);
+		int end = consoleOutput.indexOf(_TOKEN_REBASE_END);
 
 		end = consoleOutput.lastIndexOf("\n", end);
 
-		int start = consoleOutput.lastIndexOf(_REBASE_START_STRING, end);
+		int start = consoleOutput.lastIndexOf(_TOKEN_REBASE_START, end);
 
 		start = consoleOutput.lastIndexOf("\n", start);
 
@@ -65,17 +65,17 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 	public Element getMessageElement(Build build) {
 		String consoleText = build.getConsoleText();
 
-		if (!consoleText.contains(_REBASE_END_STRING) ||
-			!consoleText.contains(_REBASE_START_STRING)) {
+		if (!consoleText.contains(_TOKEN_REBASE_END) ||
+			!consoleText.contains(_TOKEN_REBASE_START)) {
 
 			return null;
 		}
 
-		int end = consoleText.indexOf(_REBASE_END_STRING);
+		int end = consoleText.indexOf(_TOKEN_REBASE_END);
 
 		end = consoleText.lastIndexOf("\n", end);
 
-		int start = consoleText.lastIndexOf(_REBASE_START_STRING, end);
+		int start = consoleText.lastIndexOf(_TOKEN_REBASE_START, end);
 
 		start = consoleText.lastIndexOf("\n", start);
 
@@ -91,8 +91,8 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 				getConsoleOutputSnippetElement(consoleText, true, start, end)));
 	}
 
-	private static final String _REBASE_END_STRING = "Aborting rebase ABORT";
+	private static final String _TOKEN_REBASE_END = "Aborting rebase ABORT";
 
-	private static final String _REBASE_START_STRING = "Unable to rebase";
+	private static final String _TOKEN_REBASE_START = "Unable to rebase";
 
 }

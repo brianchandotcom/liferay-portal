@@ -16,6 +16,7 @@ package com.liferay.commerce.product.type.virtual.web.internal;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -45,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"commerce.product.type.display.order:Integer=15",
-		"commerce.product.type.name=virtual"
+		"commerce.product.type.name=" + VirtualCPTypeConstants.NAME
 	},
 	service = CPType.class
 )
@@ -99,12 +100,12 @@ public class VirtualCPType implements CPType {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "virtual");
+		return LanguageUtil.get(resourceBundle, VirtualCPTypeConstants.NAME);
 	}
 
 	@Override
 	public String getName() {
-		return "virtual";
+		return VirtualCPTypeConstants.NAME;
 	}
 
 	@Reference

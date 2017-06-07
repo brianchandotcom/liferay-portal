@@ -26,46 +26,20 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<div class="container-fluid-1280 layouts-selector">
-	<aui:form cssClass="container-fluid-1280" name="selectDisplayPageFm">
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<div class="portlet-journal-tree" id="<portlet:namespace />displayPageContainer">
-				</div>
-			</aui:fieldset>
-		</aui:fieldset-group>
-	</aui:form>
+<%
+Map<String, Object> context = new HashMap<>();
 
-	<aui:script require="journal-web/js/CardsTreeView.es">
-		var CardsTreeView = journalWebJsCardsTreeViewEs.default;
+context.put("followURLOnTitleClick", layoutItemSelectorViewDisplayContext.isFollowURLOnTitleClick());
+context.put("itemSelectorSaveEvent", HtmlUtil.escapeJS(layoutItemSelectorViewDisplayContext.getItemSelectedEventName()));
+context.put("multiSelection", false);
+context.put("namespace", liferayPortletResponse.getNamespace());
+context.put("nodes", layoutItemSelectorViewDisplayContext.getLayoutsJSONArray());
+context.put("pathThemeImages", themeDisplay.getPathThemeImages());
+context.put("viewType", "tree");
+%>
 
-		new CardsTreeView(
-			{
-				events: {
-					selectedNodesChanged: function(event) {
-						var node = event.newVal[0];
-
-						var data = {
-							groupId: node.groupId,
-							id: node.id,
-							layoutId: node.layoutId,
-							name: node.value,
-							privateLayout: node.privateLayout,
-							value: node.url
-						};
-
-						Liferay.Util.getOpener().Liferay.fire(
-							'<%= HtmlUtil.escapeJS(layoutItemSelectorViewDisplayContext.getItemSelectedEventName()) %>',
-							{
-								data: data
-							}
-						);
-					}
-				},
-				nodes: [<%= layoutItemSelectorViewDisplayContext.getLayoutsJSONObject() %>],
-				pathThemeImages: '<%= themeDisplay.getPathThemeImages() %>'
-			},
-			'#<portlet:namespace />displayPageContainer'
-		);
-	</aui:script>
-</div>
+<soy:template-renderer
+	context="<%= context %>"
+	module="layout-item-selector-web/js/SelectLayout.es"
+	templateNamespace="SelectLayout.render"
+/>

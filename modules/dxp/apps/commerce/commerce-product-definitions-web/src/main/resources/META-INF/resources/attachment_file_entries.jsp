@@ -210,6 +210,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 	<portlet:param name="mvcRenderCommandName" value="editCPAttachmentFileEntry" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
+	<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>

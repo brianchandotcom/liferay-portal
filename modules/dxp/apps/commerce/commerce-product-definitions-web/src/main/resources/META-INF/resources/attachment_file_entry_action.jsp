@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String toolbarItem = ParamUtil.getString(request, "toolbarItem");
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CPAttachmentFileEntry cpAttachmentFileEntry = null;
@@ -36,6 +38,7 @@ else {
 		<portlet:param name="backURL" value="<%= currentURL %>" />
 		<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpAttachmentFileEntry.getClassPK()) %>" />
 		<portlet:param name="cpAttachmentFileEntryId" value="<%= String.valueOf(cpAttachmentFileEntry.getCPAttachmentFileEntryId()) %>" />
+		<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon

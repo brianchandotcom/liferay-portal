@@ -199,7 +199,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 		if (cpDefinitionVirtualSetting != null) {
 			long journalArticleResourcePK =
 				cpDefinitionVirtualSetting.
-					getTermsOfUseJournalArticleResourcePK();
+					getTermsOfUseJournalArticleResourcePrimKey();
 
 			if (journalArticleResourcePK > 0) {
 				JournalArticle journalArticle =

@@ -40,7 +40,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 			String sampleUrl, boolean termsOfUseRequired,
 			boolean useTermsOfUseJournal,
 			Map<Locale, String> termsOfUseContentMap,
-			long termsOfUseJournalArticleResourcePK,
+			long termsOfUseJournalArticleResourcePrimKey,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -52,7 +52,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 				cpDefinitionId, useUrl, fileEntryId, url, activationStatus,
 				duration, maxUsages, useSample, useSampleUrl, sampleFileEntryId,
 				sampleUrl, termsOfUseRequired, useTermsOfUseJournal,
-				termsOfUseContentMap, termsOfUseJournalArticleResourcePK,
+				termsOfUseContentMap, termsOfUseJournalArticleResourcePrimKey,
 				serviceContext);
 	}
 
@@ -84,7 +84,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 			String sampleUrl, boolean termsOfUseRequired,
 			boolean useTermsOfUseJournal,
 			Map<Locale, String> termsOfUseContentMap,
-			long termsOfUseJournalArticleResourcePK,
+			long termsOfUseJournalArticleResourcePrimKey,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -97,7 +97,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 				activationStatus, duration, maxUsages, useSample, useSampleUrl,
 				sampleFileEntryId, sampleUrl, termsOfUseRequired,
 				useTermsOfUseJournal, termsOfUseContentMap,
-				termsOfUseJournalArticleResourcePK, serviceContext);
+				termsOfUseJournalArticleResourcePrimKey, serviceContext);
 	}
 
 }

@@ -49,7 +49,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			String sampleUrl, boolean termsOfUseRequired,
 			boolean useTermsOfUseJournal,
 			Map<Locale, String> termsOfUseContentMap,
-			long termsOfUseJournalArticleResourcePK,
+			long termsOfUseJournalArticleResourcePrimKey,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -81,19 +81,19 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 				termsOfUseContentMap = Collections.emptyMap();
 			}
 			else {
-				termsOfUseJournalArticleResourcePK = 0;
+				termsOfUseJournalArticleResourcePrimKey = 0;
 			}
 		}
 		else {
 			termsOfUseContentMap = Collections.emptyMap();
-			termsOfUseJournalArticleResourcePK = 0;
+			termsOfUseJournalArticleResourcePrimKey = 0;
 		}
 
 		validate(
 			useUrl, fileEntryId, url, useSample, useSampleUrl,
 			sampleFileEntryId, sampleUrl, termsOfUseRequired,
 			useTermsOfUseJournal, termsOfUseContentMap,
-			termsOfUseJournalArticleResourcePK);
+			termsOfUseJournalArticleResourcePrimKey);
 
 		long cpDefinitionVirtualSettingId = counterLocalService.increment();
 
@@ -117,8 +117,8 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		cpDefinitionVirtualSetting.setTermsOfUseRequired(termsOfUseRequired);
 		cpDefinitionVirtualSetting.setTermsOfUseContentMap(
 			termsOfUseContentMap);
-		cpDefinitionVirtualSetting.setTermsOfUseJournalArticleResourcePK(
-			termsOfUseJournalArticleResourcePK);
+		cpDefinitionVirtualSetting.setTermsOfUseJournalArticleResourcePrimKey(
+			termsOfUseJournalArticleResourcePrimKey);
 		cpDefinitionVirtualSetting.setExpandoBridgeAttributes(serviceContext);
 
 		cpDefinitionVirtualSettingPersistence.update(
@@ -151,7 +151,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			String sampleUrl, boolean termsOfUseRequired,
 			boolean useTermsOfUseJournal,
 			Map<Locale, String> termsOfUseContentMap,
-			long termsOfUseJournalArticleResourcePK,
+			long termsOfUseJournalArticleResourcePrimKey,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -184,19 +184,19 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 				termsOfUseContentMap = Collections.emptyMap();
 			}
 			else {
-				termsOfUseJournalArticleResourcePK = 0;
+				termsOfUseJournalArticleResourcePrimKey = 0;
 			}
 		}
 		else {
 			termsOfUseContentMap = Collections.emptyMap();
-			termsOfUseJournalArticleResourcePK = 0;
+			termsOfUseJournalArticleResourcePrimKey = 0;
 		}
 
 		validate(
 			useUrl, fileEntryId, url, useSample, useSampleUrl,
 			sampleFileEntryId, sampleUrl, termsOfUseRequired,
 			useTermsOfUseJournal, termsOfUseContentMap,
-			termsOfUseJournalArticleResourcePK);
+			termsOfUseJournalArticleResourcePrimKey);
 
 		cpDefinitionVirtualSetting.setFileEntryId(fileEntryId);
 		cpDefinitionVirtualSetting.setUrl(url);
@@ -209,8 +209,8 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		cpDefinitionVirtualSetting.setTermsOfUseRequired(termsOfUseRequired);
 		cpDefinitionVirtualSetting.setTermsOfUseContentMap(
 			termsOfUseContentMap);
-		cpDefinitionVirtualSetting.setTermsOfUseJournalArticleResourcePK(
-			termsOfUseJournalArticleResourcePK);
+		cpDefinitionVirtualSetting.setTermsOfUseJournalArticleResourcePrimKey(
+			termsOfUseJournalArticleResourcePrimKey);
 		cpDefinitionVirtualSetting.setExpandoBridgeAttributes(serviceContext);
 
 		cpDefinitionVirtualSettingPersistence.update(
@@ -224,7 +224,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			boolean useSampleUrl, long sampleFileEntryId, String sampleUrl,
 			boolean termsOfUseRequired, boolean useTermsOfUseJournal,
 			Map<Locale, String> termsOfUseContentMap,
-			long termsOfUseJournalArticleResourcePK)
+			long termsOfUseJournalArticleResourcePrimKey)
 		throws PortalException {
 
 		if (!useUrl) {
@@ -259,7 +259,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			if (useTermsOfUseJournal) {
 				JournalArticle journalArticle =
 					journalArticleLocalService.fetchLatestArticle(
-						termsOfUseJournalArticleResourcePK);
+						termsOfUseJournalArticleResourcePrimKey);
 
 				if (journalArticle == null) {
 					throw new

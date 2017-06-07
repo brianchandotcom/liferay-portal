@@ -35,7 +35,7 @@
 		<column name="sampleUrl" type="String" />
 		<column name="termsOfUseRequired" type="boolean" />
 		<column localized="true" name="termsOfUseContent" type="String" />
-		<column db-name="termsOfUseArticleResourcePK" name="termsOfUseJournalArticleResourcePK" type="long" />
+		<column db-name="termsOfUseArticleResourcePK" name="termsOfUseJournalArticleResourcePrimKey" type="long" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->

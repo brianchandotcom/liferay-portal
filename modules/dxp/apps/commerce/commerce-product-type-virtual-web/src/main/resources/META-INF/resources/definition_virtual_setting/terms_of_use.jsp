@@ -29,7 +29,7 @@ String termsOfUseButtonCssClass = "lfr-definition-virtual-setting-terms-of-use-v
 
 boolean useTermsOfUseJournal = ParamUtil.getBoolean(request, "useTermsOfUseJournal", false);
 
-if ((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePK())) {
+if ((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePrimKey())) {
 	useTermsOfUseJournal = true;
 }
 
@@ -132,7 +132,7 @@ if (journalArticleSearchContainer.hasResults()) {
 					uri: '<%= cpDefinitionVirtualSettingDisplayContext.getTermsOfUseJournalArticleBrowserURL() %>'
 				},
 				function(event) {
-					$('#<portlet:namespace />termsOfUseJournalArticleResourcePK').val(event.assetclasspk);
+					$('#<portlet:namespace />termsOfUseJournalArticleResourcePrimKey').val(event.assetclasspk);
 
 					var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />journalArticleSearchContainer');
 

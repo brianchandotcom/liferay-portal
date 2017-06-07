@@ -16,5 +16,9 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Asset
+Provide-Capability:\
+	soy;\
+		type="asset-publisher-web";\
+		version:Version="${Bundle-Version}"
 Web-ContextPath: /asset-publisher-web
 -dsannotations-options: inherit

@@ -23,6 +23,7 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -74,8 +75,8 @@ public class EditCPAttachmentFileEntryMVCRenderCommand
 						_actionHelper, _attachmentsConfiguration,
 						_cpAttachmentFileEntryService,
 						_cpDefinitionOptionRelService, _cpInstanceHelper,
-						_dlMimeTypeDisplayContext, httpServletRequest,
-						_itemSelector, _portal);
+						_dlAppService, _dlMimeTypeDisplayContext,
+						httpServletRequest, _itemSelector, _portal);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -116,6 +117,9 @@ public class EditCPAttachmentFileEntryMVCRenderCommand
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference
 	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;

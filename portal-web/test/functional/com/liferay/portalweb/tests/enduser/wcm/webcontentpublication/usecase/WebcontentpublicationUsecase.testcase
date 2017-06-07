@@ -1574,6 +1574,148 @@
 		</execute>
 	</command>
 
+	<command name="ViewAssetPaginationAndShowContentAddButtonViaAP" priority="4">
+		<execute macro="AssetPublisherPortlet#configureAssetLinkBehaviorPG">
+			<var name="assetLinkBehavior" value="View in Context" />
+			<var name="toggleSwitchLabel" value="Show Add Content Button" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configurePaginationPG">
+			<var name="paginationNumber" value="5" />
+			<var name="paginationType" value="Regular" />
+			<var name="portletName" value="Asset Publisher Portlet" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAddPlusIconNotPresentPG" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent1 Content" />
+			<var name="webContentTitle" value="WC WebContent Title 1" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent2 Content " />
+			<var name="webContentTitle" value="WC WebContent Title 2" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent3 Content" />
+			<var name="webContentTitle" value="WC WebContent Title 3" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent4 Content" />
+			<var name="webContentTitle" value="WC WebContent Title 4" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent5 Content" />
+			<var name="webContentTitle" value="WC WebContent Title 5" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent6 Content" />
+			<var name="webContentTitle" value="WC WebContent Title 6" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent7 Content" />
+			<var name="webContentTitle" value="WC WebContent Title 7" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="WC WebContent1 Content" />
+			<var name="assetTitle" value="WC WebContent Title 1" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="WC WebContent2 Content" />
+			<var name="assetTitle" value="WC WebContent Title 2" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewPaginatedAssetsPG">
+			<var name="nextPageClick" value="true" />
+			<var name="pageMod" value="1 - 5 of 7" />
+			<var name="pageNumber" value="1 of 2" />
+			<var name="paginationNumber" value="5" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewPaginatedAssetsPG">
+			<var name="pageMod" value="6 - 7 of 7" />
+			<var name="pageNumber" value="2 of 2" />
+			<var name="paginationNumber" value="5" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="WC WebContent3 Content" />
+			<var name="assetTitle" value="WC WebContent Title 3" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="WC WebContent4 Content" />
+			<var name="assetTitle" value="WC WebContent Title 4" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="WC WebContent5 Content" />
+			<var name="assetTitle" value="WC WebContent Title 5" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="WC WebContent6 Content" />
+			<var name="assetTitle" value="WC WebContent Title 6" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="WC WebContent7 Content" />
+			<var name="assetTitle" value="WC WebContent Title 7" />
+		</execute>
+	</command>
+
 	<command name="ViewAuthorChangeViaAP" priority="3">
 		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
 			<var name="addMetadata" value="true" />

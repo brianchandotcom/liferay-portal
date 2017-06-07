@@ -14,7 +14,7 @@
 
 package com.liferay.powwow.service;
 
-import com.liferay.portal.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
  * Provides a wrapper for {@link PowwowServerLocalService}.
@@ -207,7 +207,7 @@ public class PowwowServerLocalServiceWrapper implements PowwowServerLocalService
 	}
 
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -291,7 +291,7 @@ public class PowwowServerLocalServiceWrapper implements PowwowServerLocalService
 	public com.liferay.powwow.model.PowwowServer addPowwowServer(long userId,
 		java.lang.String name, java.lang.String providerType,
 		java.lang.String url, java.lang.String apiKey, java.lang.String secret,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _powwowServerLocalService.addPowwowServer(userId, name,
@@ -331,7 +331,7 @@ public class PowwowServerLocalServiceWrapper implements PowwowServerLocalService
 		long powwowServerId, java.lang.String name,
 		java.lang.String providerType, java.lang.String url,
 		java.lang.String apiKey, java.lang.String secret,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _powwowServerLocalService.updatePowwowServer(powwowServerId,

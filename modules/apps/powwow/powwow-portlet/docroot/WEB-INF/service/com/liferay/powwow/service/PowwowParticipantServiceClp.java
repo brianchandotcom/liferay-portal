@@ -14,7 +14,7 @@
 
 package com.liferay.powwow.service;
 
-import com.liferay.portal.service.InvokableService;
+import com.liferay.portal.kernel.service.InvokableService;
 
 /**
  * @author Shinn Lok
@@ -50,7 +50,7 @@ public class PowwowParticipantServiceClp implements PowwowParticipantService {
 
 		_methodParameterTypes6 = new String[] {
 				"long", "long", "java.lang.String", "long", "java.lang.String",
-				"int", "int", "com.liferay.portal.service.ServiceContext"
+				"int", "int", "com.liferay.portal.kernel.service.ServiceContext"
 			};
 	}
 
@@ -211,7 +211,7 @@ public class PowwowParticipantServiceClp implements PowwowParticipantService {
 	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
 		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
 		long participantUserId, java.lang.String emailAddress, int type,
-		int status, com.liferay.portal.service.ServiceContext serviceContext)
+		int status, com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;

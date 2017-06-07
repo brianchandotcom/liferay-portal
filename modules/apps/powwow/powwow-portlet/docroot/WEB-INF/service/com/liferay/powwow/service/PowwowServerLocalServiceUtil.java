@@ -16,7 +16,7 @@ package com.liferay.powwow.service;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import com.liferay.portal.kernel.service.InvokableLocalService;
 
 /**
  * Provides the local service utility for PowwowServer. This utility wraps
@@ -202,7 +202,7 @@ public class PowwowServerLocalServiceUtil {
 		return getService().getPowwowServer(powwowServerId);
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -278,7 +278,7 @@ public class PowwowServerLocalServiceUtil {
 	public static com.liferay.powwow.model.PowwowServer addPowwowServer(
 		long userId, java.lang.String name, java.lang.String providerType,
 		java.lang.String url, java.lang.String apiKey, java.lang.String secret,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
@@ -313,7 +313,7 @@ public class PowwowServerLocalServiceUtil {
 		long powwowServerId, java.lang.String name,
 		java.lang.String providerType, java.lang.String url,
 		java.lang.String apiKey, java.lang.String secret,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()

@@ -15,7 +15,7 @@
 package com.liferay.powwow.model;
 
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portal.kernel.model.ModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -547,7 +547,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_powwowMeeting.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -559,7 +559,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		_powwowMeeting.setExpandoBridgeAttributes(serviceContext);
 	}
 
@@ -579,7 +579,7 @@ public class PowwowMeetingWrapper implements PowwowMeeting,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.powwow.model.PowwowMeeting> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.powwow.model.PowwowMeeting> toCacheModel() {
 		return _powwowMeeting.toCacheModel();
 	}
 

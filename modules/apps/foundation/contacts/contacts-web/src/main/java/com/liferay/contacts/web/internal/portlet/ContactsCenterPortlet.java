@@ -24,6 +24,7 @@ import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.service.EntryLocalService;
 import com.liferay.contacts.util.ContactsUtil;
 import com.liferay.contacts.web.internal.constants.ContactsPortletKeys;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -70,6 +71,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -79,6 +81,7 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -1189,6 +1192,16 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			userService.deletePortrait(user.getUserId());
 		}
 
+		byte[] portraitBytes = null;
+
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+		if (fileEntryId > 0) {
+			FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
+
+			portraitBytes = FileUtil.getBytes(fileEntry.getContentStream());
+		}
+
 		String comments = BeanParamUtil.getString(
 			user, actionRequest, "comments");
 		String emailAddress = BeanParamUtil.getString(
@@ -1233,7 +1246,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			user.getPasswordUnencrypted(), user.getPasswordUnencrypted(),
 			user.getPasswordReset(), user.getReminderQueryQuestion(),
 			user.getReminderQueryAnswer(), screenName, emailAddress,
-			user.getFacebookId(), user.getOpenId(), true, null,
+			user.getFacebookId(), user.getOpenId(), true, portraitBytes,
 			user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
 			comments, firstName, middleName, lastName, contact.getPrefixId(),
 			contact.getSuffixId(), user.isMale(), birthdayMonth, birthdayDay,
@@ -1261,6 +1274,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 	@Reference
 	protected AnnouncementsDeliveryLocalService
 		announcementsDeliveryLocalService;
+
+	@Reference
+	protected DLAppLocalService dlAppLocalService;
 
 	@Reference
 	protected EntryLocalService entryLocalService;

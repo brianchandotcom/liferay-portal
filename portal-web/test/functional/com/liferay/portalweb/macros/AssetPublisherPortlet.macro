@@ -133,6 +133,15 @@
 			<var name="navTab" value="Display Settings" />
 		</execute>
 
+		<if>
+			<isset var="toggleSwitchLabel" />
+			<then>
+				<execute function="Uncheck#uncheckToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
+					<var name="key_toggleSwitchLabel" value="${toggleSwitchLabel}" />
+				</execute>
+			</then>
+		</if>
+
 		<execute function="Select" locator1="APConfigurationDisplaysettings#ASSET_LINK_BEHAVIOR_SELECT" value1="${assetLinkBehavior}" />
 
 		<execute macro="PortletEntry#save" />
@@ -648,6 +657,10 @@
 		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrameTop" />
+	</command>
+
+	<command name="viewAddPlusIconNotPresentPG">
+		<execute function="AssertElementNotPresent" locator1="AP#ADD_ASSET_PLUS_ICON" />
 	</command>
 
 	<command name="viewAssetDetailsPG">

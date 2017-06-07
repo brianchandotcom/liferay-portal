@@ -31,6 +31,7 @@ import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalServiceUtil;
 import com.liferay.commerce.product.service.CPOptionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPOptionValueLocalServiceUtil;
+import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -122,10 +123,17 @@ public class CPTestUtil {
 	}
 
 	public static CPDefinition addCPDefinition(long groupId) throws Exception {
+		return addCPDefinition(groupId, SimpleCPTypeConstants.NAME);
+	}
+
+	public static CPDefinition addCPDefinition(
+			long groupId, String productTypeName)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		return addCPDefinition(serviceContext);
+		return addCPDefinition(productTypeName, serviceContext);
 	}
 
 	public static CPDefinitionOptionRel addCPDefinitionOptionRel(
@@ -175,7 +183,8 @@ public class CPTestUtil {
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
-			CPDefinition cpDefinition = addCPDefinition(serviceContext);
+			CPDefinition cpDefinition = addCPDefinition(
+				SimpleCPTypeConstants.NAME, serviceContext);
 
 			if (approved) {
 				return updateStatus(cpDefinition, serviceContext);
@@ -317,7 +326,8 @@ public class CPTestUtil {
 		Assert.assertEquals(calendar1, calendar2);
 	}
 
-	protected static CPDefinition addCPDefinition(ServiceContext serviceContext)
+	protected static CPDefinition addCPDefinition(
+			String productTypeName, ServiceContext serviceContext)
 		throws Exception {
 
 		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
@@ -361,7 +371,7 @@ public class CPTestUtil {
 			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), null, null,
+			RandomTestUtil.randomLocaleStringMap(), productTypeName, null,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute, false,

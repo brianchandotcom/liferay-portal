@@ -281,9 +281,13 @@ public class StagingBarPortlet extends MVCPortlet {
 				}
 				catch (AuthException ae) {
 					_log.error(ae.getMessage());
+
+					SessionErrors.add(renderRequest, AuthException.class);
 				}
 				catch (Exception e) {
 					_log.error(e, e);
+
+					SessionErrors.add(renderRequest, Exception.class);
 				}
 			}
 		}

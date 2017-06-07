@@ -124,6 +124,13 @@ if (liveLayout != null) {
 									<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
 								</a>
 							</c:when>
+							<c:when test="<%= SessionErrors.contains(renderRequest, AuthException.class) %>">
+								<a class="control-menu-icon" value="go-to-remote-live">
+									<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
+								</a>
+
+								<liferay-ui:icon icon="exclamation-full" markupView="lexicon" message="an-error-occurred-while-authenticating-user" toolTip="<%= true %>" />
+							</c:when>
 							<c:otherwise>
 								<a class="control-menu-icon" value="go-to-remote-live">
 									<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
@@ -167,6 +174,12 @@ if (liveLayout != null) {
 							<c:choose>
 								<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
 									<c:if test="<%= stagingGroup != null %>">
+										<liferay-ui:error exception="<%= AuthException.class %>">
+											<liferay-ui:message arguments="<%= user.getScreenName() %>" key="an-error-occurred-while-authenticating-user-x-on-the-remote-server" />
+										</liferay-ui:error>
+
+										<liferay-ui:error exception="<%= Exception.class %>" message="an-unexpected-error-occurred" />
+
 										<c:choose>
 											<c:when test="<%= branchingEnabled %>">
 												<c:if test="<%= !layoutRevision.isIncomplete() %>">

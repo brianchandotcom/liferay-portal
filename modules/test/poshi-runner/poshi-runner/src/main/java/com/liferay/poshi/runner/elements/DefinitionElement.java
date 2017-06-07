@@ -44,10 +44,34 @@ public class DefinitionElement extends PoshiElement {
 
 	@Override
 	public void addAttributes(String readableSyntax) {
+		addAttribute("component-name", "portal-acceptance");
 	}
 
 	@Override
 	public void addElements(String readableSyntax) {
+		List<String> readableBlocks = StringUtil.split(
+			readableSyntax, READABLE_COMMAND_BLOCK_KEYS);
+
+		for (String readableBlock : readableBlocks) {
+			if (readableBlock.startsWith(FEATURE)) {
+				continue;
+			}
+			else if (readableBlock.startsWith(BACKGROUND)) {
+				List<String> readableCommandBlocks = StringUtil.split(
+					readableBlock, READABLE_COMMAND_BLOCK_KEYS);
+
+				for (String readableCommandBlock : readableCommandBlocks) {
+					addVariableElements(readableCommandBlock);
+				}
+
+				continue;
+			}
+
+			Element element = PoshiElementFactory.newPoshiElement(
+				readableBlock);
+
+			add(element);
+		}
 	}
 
 	@Override

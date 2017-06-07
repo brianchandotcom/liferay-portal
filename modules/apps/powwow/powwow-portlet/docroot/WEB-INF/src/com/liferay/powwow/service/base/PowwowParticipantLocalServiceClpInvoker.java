@@ -119,7 +119,7 @@ public class PowwowParticipantLocalServiceClpInvoker {
 		_methodParameterTypes58 = new String[] {
 				"long", "long", "long", "java.lang.String", "long",
 				"java.lang.String", "int", "int",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName59 = "deletePowwowParticipant";
@@ -156,7 +156,7 @@ public class PowwowParticipantLocalServiceClpInvoker {
 
 		_methodParameterTypes66 = new String[] {
 				"long", "long", "java.lang.String", "long", "java.lang.String",
-				"int", "int", "com.liferay.portal.service.ServiceContext"
+				"int", "int", "com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName67 = "updateStatus";
@@ -275,7 +275,7 @@ public class PowwowParticipantLocalServiceClpInvoker {
 				(java.lang.String)arguments[5],
 				((Integer)arguments[6]).intValue(),
 				((Integer)arguments[7]).intValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[8]);
+				(com.liferay.portal.kernel.service.ServiceContext)arguments[8]);
 		}
 
 		if (_methodName59.equals(name) &&
@@ -326,7 +326,7 @@ public class PowwowParticipantLocalServiceClpInvoker {
 				(java.lang.String)arguments[4],
 				((Integer)arguments[5]).intValue(),
 				((Integer)arguments[6]).intValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[7]);
+				(com.liferay.portal.kernel.service.ServiceContext)arguments[7]);
 		}
 
 		if (_methodName67.equals(name) &&

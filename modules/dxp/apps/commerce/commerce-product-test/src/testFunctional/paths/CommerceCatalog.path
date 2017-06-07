@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>PRODUCT_TITLE</td>
-	<td>//tr[@data-qa-id='row']//a[contains(.,'${key_productTitle}')]</td>
+	<td>//tr[@data-qa-id='row']//a[contains(.,'${key_productTitle}')] | //div/h5/a[contains(.,'${key_productTitle}')] | //div/span/a[contains(.,'${key_productTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

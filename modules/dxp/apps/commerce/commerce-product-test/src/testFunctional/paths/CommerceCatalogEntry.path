@@ -62,11 +62,13 @@
 	<td>DISPLAY_DATE_TIME_FIELD</td>
 	<td>//span/input[contains(@id,'displayDateTime') and (@placeholder='h:mm am/pm')]</td>
 	<td></td>
-</tr><tr>
+</tr>
+<tr>
 	<td>EXPIRATION_DATE_FIELD</td>
 	<td>//span/input[contains(@id,'expirationDate') and (@placeholder='mm/dd/yyyy')]</td>
 	<td></td>
-</tr><tr>
+</tr>
+<tr>
 	<td>EXPIRATION_TIME_FIELD</td>
 	<td>//span/input[contains(@id,'expirationDateTime') and (@placeholder='h:mm am/pm')]</td>
 	<td></td>
@@ -94,6 +96,11 @@
 <tr>
 	<td>BASE_SKU_FIELD</td>
 	<td>//div/input[contains(@id, 'baseSKU')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASE_INFORMATION_TITLE_BAR</td>
+	<td>//div[contains (@id, 'baseInformationTitle')]/a</td>
 	<td></td>
 </tr>
 </tbody>

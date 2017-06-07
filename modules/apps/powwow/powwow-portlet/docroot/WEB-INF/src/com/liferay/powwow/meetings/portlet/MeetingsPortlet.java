@@ -69,6 +69,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 
 import javax.portlet.ActionRequest;
@@ -574,7 +575,7 @@ public class MeetingsPortlet extends MVCPortlet {
 	}
 
 	protected Map<Locale, String> getLocalizationMap(String key) {
-		Locale[] locales = LanguageUtil.getAvailableLocales();
+		Set<Locale> locales = LanguageUtil.getAvailableLocales();
 
 		Map<Locale, String> map = new HashMap<Locale, String>();
 
@@ -691,8 +692,7 @@ public class MeetingsPortlet extends MVCPortlet {
 					calendarBooking.getCalendarBookingId(),
 					calendarBooking.getCalendarId(), childCalendarIds, titleMap,
 					descriptionMap, StringPool.BLANK, startTime, endTime, false,
-					null, 0, "email", 0, "email",
-					WorkflowConstants.STATUS_INACTIVE, serviceContext);
+					null, 0, "email", 0, "email", serviceContext);
 		}
 		else {
 			calendarBooking =

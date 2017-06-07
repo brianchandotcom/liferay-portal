@@ -101,6 +101,7 @@ import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -1196,10 +1197,12 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
-		if (fileEntryId > 0) {
+		if (!deleteLogo && (fileEntryId > 0)) {
 			FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
 
-			portraitBytes = FileUtil.getBytes(fileEntry.getContentStream());
+			try (InputStream inputStream = fileEntry.getContentStream()) {
+				portraitBytes = FileUtil.getBytes(inputStream);
+			}
 		}
 
 		String comments = BeanParamUtil.getString(

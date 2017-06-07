@@ -10,7 +10,17 @@
 			<var name="productLongDescription" value="${productLongDescription}" />
 		</execute>
 
-		<execute function="Type" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" value1="${baseSku}" />
+		<if>
+			<condition function="IsElementNotPresent" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" />
+			<then>
+				<execute function="Click" locator1="CommerceCatalogEntry#BASE_INFORMATION_TITLE_BAR" />
+
+				<execute function="Type" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" value1="${baseSku}" />
+			</then>
+			<else>
+				<execute function="Type" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" value1="${baseSku}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="addLongDescriptionViaAlloyEditor">
@@ -30,7 +40,17 @@
 	</command>
 
 	<command name="editCatalogEntryBaseSKU">
-		<execute function="Type" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" value1="${baseSku}" />
+		<if>
+			<condition function="IsElementNotPresent" locator1="CommerceCatalogEntry#BASE_INFORMATION_TITLE_BAR" />
+			<then>
+				<execute function="Click" locator1="CommerceCatalogEntry#BASE_INFORMATION_TITLE_BAR" />
+
+				<execute function="Type" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" value1="${baseSku}" />
+			</then>
+			<else>
+				<execute function="Type" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" value1="${baseSku}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="editCatalogEntryLongDescription">

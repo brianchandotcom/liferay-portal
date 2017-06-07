@@ -14,6 +14,9 @@
 
 package com.liferay.poshi.runner.util;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
@@ -389,6 +392,10 @@ public class StringUtil {
 		return sb.substring(0, lengthInt);
 	}
 
+	public static String removeSpaces(String s) {
+		return s.replaceAll(" ", "");
+	}
+
 	public static String replace(String s, String oldSub, String newSub) {
 		if (s == null) {
 			return null;
@@ -499,6 +506,45 @@ public class StringUtil {
 		}
 
 		return s.split(delimiter);
+	}
+
+	public static List<String> split(String s, String[] delimiters) {
+		List delimiterIndexes = new ArrayList<>();
+
+		for (String delimiter : delimiters) {
+			int index = s.indexOf(delimiter);
+
+			while (index >= 0) {
+				delimiterIndexes.add(index);
+
+				index = s.indexOf(delimiter, index + 1);
+			}
+		}
+
+		if (!delimiterIndexes.contains(0)) {
+			delimiterIndexes.add(0);
+		}
+
+		if (!delimiterIndexes.contains(s.length())) {
+			delimiterIndexes.add(s.length());
+		}
+
+		Collections.sort(delimiterIndexes);
+
+		List<String> substrings = new ArrayList<>();
+
+		for (int i = 0; i < delimiterIndexes.size(); i++) {
+			if ((i + 1) == delimiterIndexes.size()) {
+				continue;
+			}
+
+			String substring = s.substring(
+				(int)delimiterIndexes.get(i), (int)delimiterIndexes.get(i + 1));
+
+			substrings.add(substring);
+		}
+
+		return substrings;
 	}
 
 	public static boolean startsWith(String s, String start) {

@@ -74,6 +74,7 @@ public class WeDeployAuthAppLocalServiceImpl
 		return weDeployAuthApp;
 	}
 
+	@Override
 	public WeDeployAuthApp fetchWeDeployAuthApp(
 		String redirectURI, String clientId) {
 

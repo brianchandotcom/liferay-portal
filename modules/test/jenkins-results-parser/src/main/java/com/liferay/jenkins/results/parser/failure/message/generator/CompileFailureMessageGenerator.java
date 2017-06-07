@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser;
+package com.liferay.jenkins.results.parser.failure.message.generator;
+
+import com.liferay.jenkins.results.parser.Build;
 
 import java.util.Hashtable;
 

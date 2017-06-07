@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser;
+package com.liferay.jenkins.results.parser.failure.message.generator;
+
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import org.apache.tools.ant.Project;
 

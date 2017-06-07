@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageUtil;
+
 import java.io.File;
 
 import org.apache.tools.ant.Project;

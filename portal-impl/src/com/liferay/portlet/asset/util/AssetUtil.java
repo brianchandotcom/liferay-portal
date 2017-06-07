@@ -405,7 +405,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getAssetPortletAddURLs(
+	 * @deprecated As of 7.0.0, replaced by {@link #getAssetPortletAddURLHolders(
 	 *             LiferayPortletRequest, LiferayPortletResponse, long, long[],
 	 *             long[], long[], String[], String)}
 	 */
@@ -418,20 +418,20 @@ public class AssetUtil {
 			String redirect)
 		throws Exception {
 
-		List<AssetPortletAddURL> assetPortletResourceURLs =
-			getAssetPortletAddURLs(
+		List<AssetPortletAddURLHolder> assetPortletAddURLHolders =
+			getAssetPortletAddURLHolders(
 				liferayPortletRequest, liferayPortletResponse, groupId,
 				classNameIds, classTypeIds, allAssetCategoryIds,
 				allAssetTagNames, redirect);
 
 		Map<String, PortletURL> addPortletURLs = new LinkedHashMap<>();
 
-		for (AssetPortletAddURL assetPortletResourceURL :
-				assetPortletResourceURLs) {
+		for (AssetPortletAddURLHolder assetPortletAddURLHolder :
+				assetPortletAddURLHolders) {
 
 			addPortletURLs.put(
-				assetPortletResourceURL.getName(),
-				assetPortletResourceURL.getAddPortletURL());
+				assetPortletAddURLHolder.getName(),
+				assetPortletAddURLHolder.getAddPortletURL());
 		}
 
 		return addPortletURLs;
@@ -439,7 +439,7 @@ public class AssetUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getAssetPortletAddURLs(LiferayPortletRequest,
+	 *             #getAssetPortletAddURLHolders(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, long[], long[], long[],
 	 *             String[], String)}
 	 */
@@ -544,7 +544,7 @@ public class AssetUtil {
 		return sb.toString();
 	}
 
-	public static List<AssetPortletAddURL> getAssetPortletAddURLs(
+	public static List<AssetPortletAddURLHolder> getAssetPortletAddURLHolders(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long groupId,
 			long[] classNameIds, long[] classTypeIds,
@@ -558,7 +558,8 @@ public class AssetUtil {
 
 		Locale locale = themeDisplay.getLocale();
 
-		List<AssetPortletAddURL> addPortletURLs = new ArrayList<>();
+		List<AssetPortletAddURLHolder> assetPortletAddURLHolders =
+			new ArrayList<>();
 
 		for (long classNameId : classNameIds) {
 			String className = PortalUtil.getClassName(classNameId);
@@ -603,8 +604,8 @@ public class AssetUtil {
 					redirect);
 
 				if (addPortletURL != null) {
-					addPortletURLs.add(
-						new AssetPortletAddURL(
+					assetPortletAddURLHolders.add(
+						new AssetPortletAddURLHolder(
 							portlet.getPortletId(), className, resourceBundle,
 							locale, addPortletURL));
 				}
@@ -622,8 +623,8 @@ public class AssetUtil {
 						allAssetTagNames, redirect);
 
 					if (addPortletURL != null) {
-						addPortletURLs.add(
-							new AssetPortletAddURL(
+						assetPortletAddURLHolders.add(
+							new AssetPortletAddURLHolder(
 								portlet.getPortletId(), classType.getName(),
 								resourceBundle, locale, addPortletURL));
 					}
@@ -631,13 +632,13 @@ public class AssetUtil {
 			}
 		}
 
-		if (addPortletURLs.size() <= 1) {
-			return addPortletURLs;
+		if (assetPortletAddURLHolders.size() <= 1) {
+			return assetPortletAddURLHolders;
 		}
 
-		addPortletURLs.sort(null);
+		assetPortletAddURLHolders.sort(null);
 
-		return addPortletURLs;
+		return assetPortletAddURLHolders;
 	}
 
 	public static String getClassName(String className) {

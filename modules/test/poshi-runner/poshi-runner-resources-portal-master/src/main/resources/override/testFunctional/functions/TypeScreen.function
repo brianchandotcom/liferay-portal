@@ -1,0 +1,7 @@
+<definition default="typeScreen">
+	<command name="typeScreen">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+</definition>

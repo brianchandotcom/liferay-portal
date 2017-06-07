@@ -1,0 +1,7 @@
+<definition default="isSikuliImagePresent">
+	<command name="isSikuliImagePresent">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+</definition>

@@ -1,0 +1,35 @@
+<definition default="close">
+	<command name="close">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="closeAndSelectWindow">
+		<execute function="WaitForSPARefresh" />
+
+		<execute argument1="1000" selenium="pause" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="closeWindow">
+		<execute function="WaitForSPARefresh" />
+
+		<execute argument1="1000" selenium="pause" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+</definition>

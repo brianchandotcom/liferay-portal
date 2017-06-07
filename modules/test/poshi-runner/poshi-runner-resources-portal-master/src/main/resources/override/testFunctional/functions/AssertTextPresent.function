@@ -1,0 +1,11 @@
+<definition default="assertTextPresent">
+	<command name="assertTextPresent">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+</definition>

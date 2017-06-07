@@ -1,0 +1,13 @@
+<definition default="sikuliLeftMouseDown">
+	<command name="sikuliLeftMouseDown">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+
+		<execute argument1="1000" selenium="pause" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+</definition>

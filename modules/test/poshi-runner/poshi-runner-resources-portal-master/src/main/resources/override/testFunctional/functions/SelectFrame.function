@@ -1,0 +1,17 @@
+<definition default="selectFrame">
+	<command name="selectFrame">
+		<super />
+
+		<execute function="WaitForSPARefresh" />
+	</command>
+
+	<command name="selectFrameTop">
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+
+		<execute function="WaitForSPARefresh" />
+	</command>
+</definition>

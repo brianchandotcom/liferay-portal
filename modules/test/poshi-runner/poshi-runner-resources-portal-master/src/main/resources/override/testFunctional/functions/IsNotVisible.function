@@ -1,0 +1,7 @@
+<definition default="isNotVisible">
+	<command name="isNotVisible">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+</definition>

@@ -1,0 +1,185 @@
+<definition default="assertClick" summary="Click on '${locator1}' that should have a value of '${value1}'">
+	<command name="assertClick">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+
+	<command name="assertPartialTextClickAt">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="assertPartialTextClickAtCPNavigation">
+		<execute function="WaitForSPARefresh" />
+
+		<execute argument1="//script[contains(@src,'/liferay/message.js')]" selenium="waitForElementPresent" />
+
+		<execute function="AssertClick#assertPartialTextClickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="assertTextClick">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="assertTextClickAt">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="assertTextClickAtAddApplication">
+		<execute function="WaitForSPARefresh" />
+
+		<execute argument1="//script[contains(@src,'/liferay/dockbar_add_application.js')] | //script[contains(@src,'/liferay/dockbar_add_page.js')] | //script[contains(@src,'liferay/toggler_interaction.js')]" selenium="waitForElementPresent" />
+
+		<execute argument1="1000" selenium="pause" />
+
+		<execute function="AssertClick#assertTextClickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="assertTextClickAtAndPause">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+
+		<execute argument1="1000" selenium="pause" />
+	</command>
+
+	<command name="assertTextClickAtWaitForLastScript">
+		<execute function="WaitForSPARefresh" />
+
+		<execute selenium="waitForVisible" />
+
+		<execute function="AssertClick#assertTextClickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+
+		<execute argument1="xpath=(//script)[last()]" selenium="waitForElementPresent" />
+	</command>
+
+	<command name="assertTextClickNoMouseOver">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="assertTextClickTagSelector">
+		<execute function="WaitForSPARefresh" />
+
+		<execute function="AssertClick#assertTextClick" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute argument1="//div[contains(@class,'lfr-tag-selector-popup')]" selenium="waitForVisible" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="assertValueClickAt">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="pauseAssertPartialTextClickAt">
+		<execute function="WaitForSPARefresh" />
+
+		<execute argument1="1000" selenium="pause" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="pauseAssertTextClickAt">
+		<execute function="WaitForSPARefresh" />
+
+		<execute argument1="1000" selenium="pause" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="pauseMakeVisibleAssertTextEqualsClickAt">
+		<execute function="WaitForSPARefresh" />
+
+		<execute argument1="1000" selenium="pause" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="waitForDMHomeAssertTextEqualsClick">
+		<execute function="WaitForSPARefresh" />
+
+		<execute argument1="//div[contains(@id,'documentLibraryContainer')]" selenium="waitForElementPresent" />
+
+		<execute argument1="1500" selenium="pause" />
+
+		<execute function="AssertClick#assertTextClickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="waitForNodeScriptAssertTextEqualsClick">
+		<execute function="WaitForSPARefresh" />
+
+		<execute argument1="//script[contains(@src,'/liferay/node.js')]" selenium="waitForElementPresent" />
+
+		<execute function="AssertClick#assertTextClickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+</definition>

@@ -1,0 +1,25 @@
+<definition default="isTextEqual">
+	<command name="isPartialText">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+
+	<command name="isText">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+
+	<command name="isTextEqual">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+
+	<command name="isValue">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+</definition>

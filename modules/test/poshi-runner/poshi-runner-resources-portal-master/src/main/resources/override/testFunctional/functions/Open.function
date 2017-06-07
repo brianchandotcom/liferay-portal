@@ -1,0 +1,29 @@
+<definition default="open" summary="Open browser to '${locator1}'">
+	<command name="open">
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+
+		<execute function="WaitForSPARefresh" />
+	</command>
+
+	<command name="openNoError">
+		<super />
+
+		<execute function="WaitForSPARefresh" />
+	</command>
+
+	<command name="openWindow">
+		<execute argument1="15000" selenium="pause" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+
+		<execute function="WaitForSPARefresh" />
+	</command>
+</definition>

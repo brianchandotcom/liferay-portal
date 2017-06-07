@@ -1,0 +1,7 @@
+<definition default="pause">
+	<command name="pause" summary-ignore="true">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+</definition>

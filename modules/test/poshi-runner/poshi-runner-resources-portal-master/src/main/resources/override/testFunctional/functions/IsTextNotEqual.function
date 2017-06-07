@@ -1,0 +1,25 @@
+<definition default="isTextNotEqual">
+	<command name="isNotPartialText">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+
+	<command name="isNotText">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+
+	<command name="isNotValue">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+
+	<command name="isTextNotEqual">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+</definition>

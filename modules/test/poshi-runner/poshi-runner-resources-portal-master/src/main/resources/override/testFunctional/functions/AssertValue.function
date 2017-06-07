@@ -1,0 +1,7 @@
+<definition default="assertValue">
+	<command name="assertValue">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+</definition>

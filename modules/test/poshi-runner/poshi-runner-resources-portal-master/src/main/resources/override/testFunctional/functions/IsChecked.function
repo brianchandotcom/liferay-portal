@@ -1,0 +1,7 @@
+<definition default="isChecked">
+	<command name="isChecked">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+</definition>

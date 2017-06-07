@@ -1,0 +1,19 @@
+<definition default="select">
+	<command name="pauseSelect">
+		<execute function="WaitForSPARefresh" />
+
+		<execute argument1="5000" selenium="pause" />
+
+		<execute function="SelectNoError#select" />
+	</command>
+
+	<command name="select">
+		<execute function="WaitForSPARefresh" />
+
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="select" />
+	</command>
+</definition>

@@ -1,0 +1,63 @@
+<definition default="dragAndDropToObject">
+	<command name="dragAndDrop">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="dragAndDropPortletToObject">
+		<execute function="WaitForSPARefresh" />
+
+		<execute argument1="${locator1}" selenium="waitForElementPresent" />
+
+		<execute argument1="${locator1}" selenium="mouseOver" />
+
+		<execute argument1="${locator1}" selenium="waitForVisible" />
+
+		<execute argument1="${locator1}" argument2="${value1}" selenium="waitForText" />
+
+		<execute argument1="${locator2}" selenium="waitForVisible" />
+
+		<execute argument1="${locator2}" selenium="mouseOver" />
+
+		<execute argument1="${locator1}" selenium="mouseDown" />
+
+		<execute argument1="${locator2}" argument2="0,50" selenium="mouseMoveAt" />
+
+		<execute argument1="${locator2}" argument2="0,-50" selenium="mouseMoveAt" />
+
+		<execute argument1="${locator2}" argument2="0,50" selenium="mouseMoveAt" />
+
+		<execute argument1="${locator2}" selenium="mouseMove" />
+
+		<execute argument1="${locator2}" selenium="mouseRelease" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="dragAndDropToObject">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="dragAndDropToObjectNotVisible">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+</definition>

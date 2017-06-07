@@ -1,0 +1,7 @@
+<definition default="assertHTMLSourceTextNotPresent">
+	<command name="assertHTMLSourceTextNotPresent">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+</definition>

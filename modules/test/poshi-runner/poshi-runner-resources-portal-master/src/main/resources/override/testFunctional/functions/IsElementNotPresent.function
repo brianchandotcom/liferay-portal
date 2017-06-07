@@ -1,0 +1,13 @@
+<definition default="isElementNotPresent">
+	<command name="isElementNotPresent">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+
+	<command name="isNotVisible">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+</definition>

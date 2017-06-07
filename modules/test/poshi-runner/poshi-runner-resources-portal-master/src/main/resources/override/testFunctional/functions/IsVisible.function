@@ -1,0 +1,13 @@
+<definition default="isVisible">
+	<command name="isVisible">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+
+	<command name="waitForVisible">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+</definition>

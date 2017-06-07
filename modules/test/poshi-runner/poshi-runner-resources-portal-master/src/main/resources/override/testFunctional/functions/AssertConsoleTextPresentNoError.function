@@ -1,0 +1,7 @@
+<definition default="assertConsoleTextPresent">
+	<command name="assertConsoleTextPresent">
+		<execute function="WaitForSPARefresh" />
+
+		<execute selenium="assertConsoleTextPresent" />
+	</command>
+</definition>

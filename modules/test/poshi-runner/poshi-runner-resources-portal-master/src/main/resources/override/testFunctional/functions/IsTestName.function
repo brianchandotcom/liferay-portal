@@ -1,0 +1,7 @@
+<definition default="isTestName" summary="Evaluate the current test name.">
+	<command name="isTestName">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+</definition>

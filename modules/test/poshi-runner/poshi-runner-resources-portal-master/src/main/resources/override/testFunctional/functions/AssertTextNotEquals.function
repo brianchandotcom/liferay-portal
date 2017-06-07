@@ -1,0 +1,37 @@
+<definition default="assertTextNotEquals" summary="Assert that '${locator1}' does not equal the value '${value1}'">
+	<command name="assertNotPartialText" summary="Assert that '${locator1}' does not contain the value '${value1}'">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="assertNotText">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="assertNotValue">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
+	<command name="assertTextNotEquals">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+</definition>

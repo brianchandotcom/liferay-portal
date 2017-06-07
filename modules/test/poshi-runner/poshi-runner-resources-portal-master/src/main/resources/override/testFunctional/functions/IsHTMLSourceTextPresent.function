@@ -1,0 +1,7 @@
+<definition default="isHTMLSourceTextPresent">
+	<command name="isHTMLSourceTextPresent">
+		<execute function="WaitForSPARefresh" />
+
+		<super />
+	</command>
+</definition>

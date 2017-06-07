@@ -197,8 +197,6 @@ if (journalArticleSearchContainer.hasResults()) {
 </aui:script>
 
 <aui:script use="liferay-search-container">
-	var Util = Liferay.Util;
-
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />journalArticleSearchContainer');
 
 	var searchContainerContentBox = searchContainer.get('contentBox');

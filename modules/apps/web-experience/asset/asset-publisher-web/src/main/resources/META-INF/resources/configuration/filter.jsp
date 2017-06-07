@@ -18,6 +18,85 @@
 
 <%
 JSONArray rules = JSONFactoryUtil.createJSONArray();
+
+String queryLogicIndexesParam = ParamUtil.getString(request, "queryLogicIndexes");
+
+int[] queryLogicIndexes = null;
+
+if (Validator.isNotNull(queryLogicIndexesParam)) {
+	queryLogicIndexes = StringUtil.split(queryLogicIndexesParam, 0);
+}
+else {
+	queryLogicIndexes = new int[0];
+
+	for (int i = 0; true; i++) {
+		String queryValues = PrefsParamUtil.getString(portletPreferences, request, "queryValues" + i);
+
+		if (Validator.isNull(queryValues)) {
+			break;
+		}
+
+		queryLogicIndexes = ArrayUtil.append(queryLogicIndexes, i);
+	}
+
+	if (queryLogicIndexes.length == 0) {
+		queryLogicIndexes = ArrayUtil.append(queryLogicIndexes, -1);
+	}
+}
+
+int index = 0;
+
+for (int queryLogicIndex : queryLogicIndexes) {
+	JSONObject logic = JSONFactoryUtil.createJSONObject();
+
+	String queryValues = StringUtil.merge(portletPreferences.getValues("queryValues" + queryLogicIndex, new String[0]));
+	String queryName = PrefsParamUtil.getString(portletPreferences, request, "queryName" + queryLogicIndex, "assetTags");
+
+	boolean queryAndOperator = false;
+	boolean queryContains = true;
+
+	queryAndOperator = PrefsParamUtil.getBoolean(portletPreferences, request, "queryAndOperator" + queryLogicIndex);
+
+	queryContains = PrefsParamUtil.getBoolean(portletPreferences, request, "queryContains" + queryLogicIndex, true);
+
+	if (Objects.equals(queryName, "assetTags")) {
+		queryValues = ParamUtil.getString(request, "queryTagNames" + queryLogicIndex, queryValues);
+
+		queryValues = AssetPublisherUtil.filterAssetTagNames(scopeGroupId, queryValues);
+	}
+	else {
+		queryValues = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);
+
+		String[] categoryIdsTitles = AssetCategoryUtil.getCategoryIdsTitles(queryValues, StringPool.BLANK, 0, themeDisplay);
+
+		logic.put("categoryIdsTitles", categoryIdsTitles);
+	}
+
+	logic.put("queryAndOperator", queryAndOperator);
+	logic.put("queryContains", queryContains);
+	logic.put("queryValues", queryValues);
+	logic.put("type", queryName);
+
+	rules.put(logic);
+
+	index++;
+}
+
+long[] categorizableGroupIds = (long[])request.getAttribute("configuration.jsp-categorizableGroupIds");
+
+if (categorizableGroupIds == null) {
+	categorizableGroupIds = StringUtil.split(ParamUtil.getString(request, "categorizableGroupIds"), 0l);
+}
+
+Map<String, Object> autoField = new HashMap<>();
+
+autoField.put("rules", rules);
+autoField.put("namespace", liferayPortletResponse.getNamespace());
+autoField.put("groupIds", StringUtil.merge(categorizableGroupIds));
+autoField.put("id", "autofield");
+autoField.put("portletURLCategorySelector", assetPublisherDisplayContext.getCategorySelectorURL());
+autoField.put("portletURLTagSelector", assetPublisherDisplayContext.getTagSelectorURL());
+autoField.put("vocabularyIds", assetPublisherDisplayContext.getVocabularyIds());
 %>
 
 <div id="<portlet:namespace />queryRules">
@@ -46,95 +125,11 @@ JSONArray rules = JSONFactoryUtil.createJSONArray();
 		<aui:input label='<%= LanguageUtil.format(request, "show-only-assets-with-x-as-its-display-page", HtmlUtil.escape(layout.getName(locale)), false) %>' name="preferences--showOnlyLayoutAssets--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowOnlyLayoutAssets() %>" />
 
 		<aui:input label="include-tags-specified-in-the-url" name="preferences--mergeUrlTags--" type="checkbox" value="<%= assetPublisherDisplayContext.isMergeURLTags() %>" />
-
-		<%
-		String queryLogicIndexesParam = ParamUtil.getString(request, "queryLogicIndexes");
-
-		int[] queryLogicIndexes = null;
-
-		if (Validator.isNotNull(queryLogicIndexesParam)) {
-			queryLogicIndexes = StringUtil.split(queryLogicIndexesParam, 0);
-		}
-		else {
-			queryLogicIndexes = new int[0];
-
-			for (int i = 0; true; i++) {
-				String queryValues = PrefsParamUtil.getString(portletPreferences, request, "queryValues" + i);
-
-				if (Validator.isNull(queryValues)) {
-					break;
-				}
-
-				queryLogicIndexes = ArrayUtil.append(queryLogicIndexes, i);
-			}
-
-			if (queryLogicIndexes.length == 0) {
-				queryLogicIndexes = ArrayUtil.append(queryLogicIndexes, -1);
-			}
-		}
-
-		int index = 0;
-
-		for (int queryLogicIndex : queryLogicIndexes) {
-			JSONObject logic = JSONFactoryUtil.createJSONObject();
-
-			String queryValues = StringUtil.merge(portletPreferences.getValues("queryValues" + queryLogicIndex, new String[0]));
-			String queryName = PrefsParamUtil.getString(portletPreferences, request, "queryName" + queryLogicIndex, "assetTags");
-
-			boolean queryAndOperator = false;
-			boolean queryContains = true;
-
-			queryAndOperator = PrefsParamUtil.getBoolean(portletPreferences, request, "queryAndOperator" + queryLogicIndex);
-
-			queryContains = PrefsParamUtil.getBoolean(portletPreferences, request, "queryContains" + queryLogicIndex, true);
-
-			if (Objects.equals(queryName, "assetTags")) {
-				queryValues = ParamUtil.getString(request, "queryTagNames" + queryLogicIndex, queryValues);
-
-				queryValues = AssetPublisherUtil.filterAssetTagNames(scopeGroupId, queryValues);
-			}
-			else {
-				queryValues = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);
-
-				String[] categoryIdsTitles = AssetCategoryUtil.getCategoryIdsTitles(queryValues, StringPool.BLANK, 0, themeDisplay);
-
-				logic.put("categoryIdsTitles", categoryIdsTitles);
-			}
-
-			logic.put("queryAndOperator", queryAndOperator);
-			logic.put("queryContains", queryContains);
-			logic.put("queryValues", queryValues);
-			logic.put("type", queryName);
-
-			rules.put(logic);
-
-			index++;
-		}
-		%>
-
 	</aui:fieldset>
 </div>
 
 <div id="<portlet:namespace />ConditionForm">
 </div>
-
-<%
-long[] categorizableGroupIds = (long[])request.getAttribute("configuration.jsp-categorizableGroupIds");
-
-if (categorizableGroupIds == null) {
-	categorizableGroupIds = StringUtil.split(ParamUtil.getString(request, "categorizableGroupIds"), 0l);
-}
-
-Map<String, Object> autoField = new HashMap<>();
-
-autoField.put("rules", rules);
-autoField.put("namespace", liferayPortletResponse.getNamespace());
-autoField.put("groupIds", StringUtil.merge(categorizableGroupIds));
-autoField.put("id", "autofield");
-autoField.put("portletURLCategorySelector", assetPublisherDisplayContext.getCategorySelectorURL());
-autoField.put("portletURLTagSelector", assetPublisherDisplayContext.getTagSelectorURL());
-autoField.put("vocabularyIds", assetPublisherDisplayContext.getVocabularyIds());
-%>
 
 <soy:template-renderer
 	context="<%= autoField %>"

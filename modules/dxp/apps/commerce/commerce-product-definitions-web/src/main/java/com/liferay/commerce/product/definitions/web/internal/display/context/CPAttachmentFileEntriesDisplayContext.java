@@ -27,6 +27,7 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -63,7 +64,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 			AttachmentsConfiguration attachmentsConfiguration,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPDefinitionOptionRelService cpDefinitionOptionRelService,
-			CPInstanceHelper cpInstanceHelper,
+			CPInstanceHelper cpInstanceHelper, DLAppService dlAppService,
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 			HttpServletRequest httpServletRequest, ItemSelector itemSelector,
 			Portal portal)
@@ -78,6 +79,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
 		_cpInstanceHelper = cpInstanceHelper;
+		_dlAppService = dlAppService;
 		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 		_itemSelector = itemSelector;
 		_portal = portal;
@@ -132,6 +134,21 @@ public class CPAttachmentFileEntriesDisplayContext extends
 			fileEntry.getMimeType());
 	}
 
+	public String getFileEntryName() throws PortalException {
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			getCPAttachmentFileEntry();
+
+		long fileEntryId = cpAttachmentFileEntry.getFileEntryId();
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+		if (fileEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return fileEntry.getFileName();
+	}
+
 	public String[] getImageExtensions() {
 		return _attachmentsConfiguration.imageExtensions();
 	}
@@ -168,10 +185,16 @@ public class CPAttachmentFileEntriesDisplayContext extends
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
 
+		String toolbarItem = ParamUtil.getString(
+			httpServletRequest, "toolbarItem");
+		int type = ParamUtil.getInteger(httpServletRequest, "type");
+		
 		portletURL.setParameter(
 			"mvcRenderCommandName", "viewAttachmentFileEntries");
 		portletURL.setParameter(
 			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+		portletURL.setParameter("toolbarItem", toolbarItem);
+		portletURL.setParameter("type", String.valueOf(type));
 
 		return portletURL;
 	}
@@ -277,6 +300,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 	private final CPInstanceHelper _cpInstanceHelper;
+	private final DLAppService _dlAppService;
 	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private final ItemSelector _itemSelector;
 	private final Portal _portal;

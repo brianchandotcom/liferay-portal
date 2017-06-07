@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.exception.CPAttachmentFileEntryFileEntryIdException;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
@@ -75,6 +76,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
 				CPDefinitionExpirationDateException.class);
 		}
+
+		validate(fileEntryId);
 
 		long cpAttachmentFileEntryId = counterLocalService.increment();
 
@@ -235,6 +238,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				CPDefinitionExpirationDateException.class);
 		}
 
+		validate(fileEntryId);
+
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
 		cpAttachmentFileEntry.setDisplayDate(displayDate);
 		cpAttachmentFileEntry.setExpirationDate(expirationDate);
@@ -247,6 +252,12 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntryPersistence.update(cpAttachmentFileEntry);
 
 		return cpAttachmentFileEntry;
+	}
+
+	protected void validate(long fileEntryId) throws PortalException {
+		if (fileEntryId <= 0) {
+			throw new CPAttachmentFileEntryFileEntryIdException();
+		}
 	}
 
 }

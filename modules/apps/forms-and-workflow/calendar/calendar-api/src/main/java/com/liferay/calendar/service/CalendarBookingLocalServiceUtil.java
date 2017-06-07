@@ -41,6 +41,13 @@ public class CalendarBookingLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.calendar.service.impl.CalendarBookingLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean hasExclusiveCalendarBooking(
+		com.liferay.calendar.model.Calendar calendar, long startTime,
+		long endTime)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .hasExclusiveCalendarBooking(calendar, startTime, endTime);
+	}
 
 	/**
 	* Adds the calendar booking to the database. Also notifies the appropriate model listeners.

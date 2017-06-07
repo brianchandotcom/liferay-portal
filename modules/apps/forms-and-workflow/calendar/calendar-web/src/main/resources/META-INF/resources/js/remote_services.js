@@ -186,6 +186,32 @@ AUI.add(
 					);
 				},
 
+				hasExclusiveCalendarBooking: function(calendarId, startDate, endDate, callback) {
+					var instance = this;
+
+					instance._invokeResourceURL(
+						{
+							callback: function(result) {
+								callback(result.hasExclusiveCalendarBooking);
+							},
+							queryParameters: {
+								calendarId: calendarId,
+								endTimeDay: endDate.getDate(),
+								endTimeHour: endDate.getHours(),
+								endTimeMinute: endDate.getMinutes(),
+								endTimeMonth: endDate.getMonth(),
+								endTimeYear: endDate.getFullYear(),
+								startTimeDay: startDate.getDate(),
+								startTimeHour: startDate.getHours(),
+								startTimeMinute: startDate.getMinutes(),
+								startTimeMonth: startDate.getMonth(),
+								startTimeYear: startDate.getFullYear()
+							},
+							resourceId: 'hasExclusiveCalendarBooking'
+						}
+					);
+				},
+
 				invokeTransition: function(schedulerEvent, instanceIndex, status, updateInstance, allFollowing) {
 					var instance = this;
 

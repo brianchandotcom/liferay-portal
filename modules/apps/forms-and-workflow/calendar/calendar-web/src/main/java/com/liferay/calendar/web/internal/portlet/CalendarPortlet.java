@@ -351,6 +351,10 @@ public class CalendarPortlet extends MVCPortlet {
 			else if (resourceID.equals("exportCalendar")) {
 				serveExportCalendar(resourceRequest, resourceResponse);
 			}
+			else if (resourceID.equals("hasExclusiveCalendarBooking")) {
+				serveHasExclusiveCalendarBooking(
+					resourceRequest, resourceResponse);
+			}
 			else if (resourceID.equals("resourceCalendars")) {
 				serveResourceCalendars(resourceRequest, resourceResponse);
 			}
@@ -1435,6 +1439,32 @@ public class CalendarPortlet extends MVCPortlet {
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse, fileName, data.getBytes(),
 			contentType);
+	}
+
+	protected void serveHasExclusiveCalendarBooking(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		long calendarId = ParamUtil.getLong(resourceRequest, "calendarId");
+
+		Calendar calendar = _calendarService.getCalendar(calendarId);
+
+		java.util.Calendar endTimeJCalendar = getJCalendar(
+			resourceRequest, "endTime");
+
+		java.util.Calendar startTimeJCalendar = getJCalendar(
+			resourceRequest, "startTime");
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		boolean result =
+			_calendarBookingLocalService.hasExclusiveCalendarBooking(
+				calendar, startTimeJCalendar.getTimeInMillis(),
+				endTimeJCalendar.getTimeInMillis());
+
+		jsonObject.put("hasExclusiveCalendarBooking", result);
+
+		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
 
 	protected void serveResourceCalendars(

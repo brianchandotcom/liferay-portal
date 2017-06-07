@@ -135,26 +135,49 @@ public class NotificationUtil {
 			NotificationSenderFactory.getNotificationSender(
 				notificationType.toString());
 
-		List<NotificationRecipient> notificationRecipients =
-			_getNotificationRecipients(calendarBooking);
+		if (notificationTemplateType == NotificationTemplateType.DECLINE) {
+			User recipient = sender;
 
-		for (NotificationRecipient notificationRecipient :
-				notificationRecipients) {
+			Calendar calendar = calendarBooking.getCalendar();
 
-			User user = notificationRecipient.getUser();
+			sender = getDefaultSenderUser(calendar);
 
-			if (user.equals(sender)) {
-				continue;
-			}
+			String resourceName = calendar.getName(recipient.getLanguageId());
+
+			NotificationRecipient notificationRecipient =
+				new NotificationRecipient(recipient);
 
 			NotificationTemplateContext notificationTemplateContext =
 				NotificationTemplateContextFactory.getInstance(
 					notificationType, notificationTemplateType, calendarBooking,
-					user);
+					recipient);
 
 			notificationSender.sendNotification(
-				sender.getEmailAddress(), sender.getFullName(),
-				notificationRecipient, notificationTemplateContext);
+				sender.getEmailAddress(), resourceName, notificationRecipient,
+				notificationTemplateContext);
+		}
+		else {
+			List<NotificationRecipient> notificationRecipients =
+				_getNotificationRecipients(calendarBooking);
+
+			for (NotificationRecipient notificationRecipient :
+					notificationRecipients) {
+
+				User user = notificationRecipient.getUser();
+
+				if (user.equals(sender)) {
+					continue;
+				}
+
+				NotificationTemplateContext notificationTemplateContext =
+					NotificationTemplateContextFactory.getInstance(
+						notificationType, notificationTemplateType,
+						calendarBooking, user);
+
+				notificationSender.sendNotification(
+					sender.getEmailAddress(), sender.getFullName(),
+					notificationRecipient, notificationTemplateContext);
+			}
 		}
 	}
 

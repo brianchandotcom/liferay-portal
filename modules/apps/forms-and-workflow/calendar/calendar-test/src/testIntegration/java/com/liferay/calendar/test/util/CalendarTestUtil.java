@@ -17,10 +17,12 @@ package com.liferay.calendar.test.util;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
+import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
@@ -70,6 +72,10 @@ public class CalendarTestUtil {
 		return calendar;
 	}
 
+	public static Calendar addCalendar(User user) throws PortalException {
+		return addCalendar(user, null, createServiceContext(user));
+	}
+
 	public static Calendar addCalendar(User user, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -93,6 +99,31 @@ public class CalendarTestUtil {
 		}
 
 		return calendar;
+	}
+
+	public static Calendar addCalendarResourceCalendar(User user)
+		throws PortalException {
+
+		CalendarResource calendarResource =
+			CalendarResourceLocalServiceUtil.addCalendarResource(
+				user.getUserId(), user.getGroupId(),
+				ClassNameLocalServiceUtil.getClassNameId(
+					CalendarResource.class),
+				0, null, null, RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				createServiceContext(user));
+
+		return calendarResource.getDefaultCalendar();
+	}
+
+	public static ServiceContext createServiceContext(User user) {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(user.getCompanyId());
+
+		serviceContext.setUserId(user.getUserId());
+
+		return serviceContext;
 	}
 
 }

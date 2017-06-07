@@ -16,6 +16,7 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -68,6 +69,9 @@ public interface CalendarBookingLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CalendarBookingLocalServiceUtil} to access the calendar booking local service. Add custom service methods to {@link com.liferay.calendar.service.impl.CalendarBookingLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasExclusiveCalendarBooking(Calendar calendar,
+		long startTime, long endTime) throws PortalException;
 
 	/**
 	* Adds the calendar booking to the database. Also notifies the appropriate model listeners.

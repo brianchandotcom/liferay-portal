@@ -34,6 +34,15 @@ public class CalendarBookingLocalServiceWrapper
 		_calendarBookingLocalService = calendarBookingLocalService;
 	}
 
+	@Override
+	public boolean hasExclusiveCalendarBooking(
+		com.liferay.calendar.model.Calendar calendar, long startTime,
+		long endTime)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _calendarBookingLocalService.hasExclusiveCalendarBooking(calendar,
+			startTime, endTime);
+	}
+
 	/**
 	* Adds the calendar booking to the database. Also notifies the appropriate model listeners.
 	*

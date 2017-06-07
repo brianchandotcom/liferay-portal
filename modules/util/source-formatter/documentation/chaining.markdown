@@ -1,8 +1,8 @@
-## **Chaining**
+## Chaining
 
 When possible, we should declare new variables instead of chaining.
 
-### **Example**
+### Example
 
 Incorrect formatting:
 
@@ -20,7 +20,7 @@ String name = user.getFirstName();
 String lowerCaseName = name.toLowerCase();
 ```
 
-### **Exceptions**
+### Exceptions
 
 We do allow chaining on Mockito methods in our test classes and on variables
 that are a builder, optional or stream. In these cases we apply the following

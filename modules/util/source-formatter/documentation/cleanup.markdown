@@ -1,10 +1,10 @@
-## **Initial values for variables in Tag classes**
+## Initial values for variables in Tag classes
 
 When a *Tag.java contains a ```cleanUp``` method, we have to make sure
 that for all the variables in the ```cleanUp``` method, the value is the same
 as the initial value for the variable.
 
-### **Example**
+### Example
 
 When the class contains the following ```cleanUp``` method:
 

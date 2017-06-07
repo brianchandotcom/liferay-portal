@@ -1,4 +1,4 @@
-## **Liferay-Require-SchemaVersion**
+## Liferay-Require-SchemaVersion
 
 Web modules (modules ending with ```-web```) should not have the header
 ```Liferay-Require-SchemaVersion``` included, because this header is not

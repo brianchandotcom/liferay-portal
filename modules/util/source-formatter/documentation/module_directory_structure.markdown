@@ -1,9 +1,9 @@
-## **Module Directory Structure**
+## Module Directory Structure
 
 When an application has multiple modules, the directory names for the modules
 should always match the directory name of the application.
 
-### **Example**
+### Example
 
 The directories of the modules inside the application ```
 \apps\collaboration\bookmarks``` should all start with

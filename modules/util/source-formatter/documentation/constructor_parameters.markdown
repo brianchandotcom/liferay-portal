@@ -1,4 +1,4 @@
-## **Constructor parameters**
+## Constructor parameters
 
 When assinging values to global variables in a constructor, the variables that
 are assigned with values from the constructor parameters should come first and
@@ -6,7 +6,7 @@ follow the order as they appear in the signature of the constructor.
 
 The other variables should come last.
 
-### **Example**
+### Example
 
 ```java
 public Person(

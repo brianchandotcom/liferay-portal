@@ -1,4 +1,4 @@
-## **Collections**
+## Collections
 
 To avoid creating unnecessary overhead, we want to avoid
 using```Collection.addAll(Arrays.asList(T...))``` when adding all
@@ -6,7 +6,7 @@ elements of an array to a collection.
 
 Instead we should use ```Collections.addAll(Collection, T...)```
 
-### **Example**
+### Example
 
 Incorrect:
 

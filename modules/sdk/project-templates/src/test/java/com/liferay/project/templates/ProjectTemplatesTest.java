@@ -39,10 +39,13 @@ import java.net.URI;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1492,20 +1495,37 @@ public class ProjectTemplatesTest {
 	private static void _executeGradle(File projectDir, String... taskPaths)
 		throws IOException {
 
-		String repositoryUrl = mavenExecutor.getRepositoryUrl();
+		final String repositoryUrl = mavenExecutor.getRepositoryUrl();
 
 		if (Validator.isNotNull(repositoryUrl)) {
-			File buildGradleFile = new File(projectDir, "build.gradle");
+			Files.walkFileTree(
+				projectDir.toPath(),
+				new SimpleFileVisitor<Path>() {
 
-			Path buildGradlePath = buildGradleFile.toPath();
+					@Override
+					public FileVisitResult visitFile(
+							Path path, BasicFileAttributes basicFileAttributes)
+						throws IOException {
 
-			String buildGradle = FileUtil.read(buildGradlePath);
+						String fileName = String.valueOf(path.getFileName());
 
-			buildGradle = buildGradle.replace(
-				"\"" + _REPOSITORY_CDN_URL + "\"", "\"" + repositoryUrl + "\"");
+						if (fileName.equals("build.gradle") ||
+							fileName.equals("settings.gradle")) {
 
-			Files.write(
-				buildGradlePath, buildGradle.getBytes(StandardCharsets.UTF_8));
+							String content = FileUtil.read(path);
+
+							content = content.replace(
+								"\"" + _REPOSITORY_CDN_URL + "\"",
+								"\"" + repositoryUrl + "\"");
+
+							Files.write(
+								path, content.getBytes(StandardCharsets.UTF_8));
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
 		}
 
 		GradleRunner gradleRunner = GradleRunner.create();

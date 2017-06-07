@@ -61,7 +61,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.asset.util.AssetPortletAddURL;
+import com.liferay.portlet.asset.util.AssetPortletAddURLHolder;
 import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.io.Serializable;
@@ -620,7 +620,7 @@ public class AssetPublisherDisplayContext {
 
 	/**
 	 * @deprecated As of 2.0.0, replaced by {@link
-	 *             #getScopeAssetPortletAddURLs(int)}
+	 *             #getScopeAssetPortletAddURLHolders(int)}
 	 */
 	@Deprecated
 	public Map<Long, Map<String, PortletURL>> getScopeAddPortletURLs(int max)
@@ -662,8 +662,8 @@ public class AssetPublisherDisplayContext {
 		return scopeAddPortletURLs;
 	}
 
-	public Map<Long, List<AssetPortletAddURL>> getScopeAssetPortletAddURLs(
-			int max)
+	public Map<Long, List<AssetPortletAddURLHolder>>
+			getScopeAssetPortletAddURLHolders(int max)
 		throws Exception {
 
 		long[] groupIds = getGroupIds();
@@ -672,7 +672,7 @@ public class AssetPublisherDisplayContext {
 			return Collections.emptyMap();
 		}
 
-		Map<Long, List<AssetPortletAddURL>> scopeAddPortletURLs =
+		Map<Long, List<AssetPortletAddURLHolder>> scopeAddPortletURLs =
 			new HashMap<>();
 
 		LiferayPortletRequest liferayPortletRequest =
@@ -684,14 +684,14 @@ public class AssetPublisherDisplayContext {
 			liferayPortletRequest, liferayPortletResponse);
 
 		for (long groupId : groupIds) {
-			List<AssetPortletAddURL> assetPortletAddURLs =
-				AssetUtil.getAssetPortletAddURLs(
+			List<AssetPortletAddURLHolder> assetPortletAddURLHolders =
+				AssetUtil.getAssetPortletAddURLHolders(
 					liferayPortletRequest, liferayPortletResponse, groupId,
 					getClassNameIds(), getClassTypeIds(),
 					getAllAssetCategoryIds(), getAllAssetTagNames(), redirect);
 
-			if (ListUtil.isNotEmpty(assetPortletAddURLs)) {
-				scopeAddPortletURLs.put(groupId, assetPortletAddURLs);
+			if (ListUtil.isNotEmpty(assetPortletAddURLHolders)) {
+				scopeAddPortletURLs.put(groupId, assetPortletAddURLHolders);
 			}
 
 			if (scopeAddPortletURLs.size() > max) {

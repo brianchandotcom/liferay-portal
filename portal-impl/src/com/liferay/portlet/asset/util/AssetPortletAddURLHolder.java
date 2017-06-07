@@ -28,9 +28,10 @@ import javax.portlet.PortletURL;
 /**
  * @author Preston Crary
  */
-public class AssetPortletAddURL implements Comparable<AssetPortletAddURL> {
+public class AssetPortletAddURLHolder
+	implements Comparable<AssetPortletAddURLHolder> {
 
-	public AssetPortletAddURL(
+	public AssetPortletAddURLHolder(
 		String portletId, String name, ResourceBundle resourceBundle,
 		Locale locale, PortletURL addPortletURL) {
 
@@ -45,9 +46,9 @@ public class AssetPortletAddURL implements Comparable<AssetPortletAddURL> {
 	}
 
 	@Override
-	public int compareTo(AssetPortletAddURL assetPortletAddURL) {
+	public int compareTo(AssetPortletAddURLHolder assetPortletAddURLHolder) {
 		return _collator.compare(
-			_modelResource, assetPortletAddURL._modelResource);
+			_modelResource, assetPortletAddURLHolder._modelResource);
 	}
 
 	public PortletURL getAddPortletURL() {

@@ -449,6 +449,7 @@ public class AxisBuild extends BaseBuild {
 			new PluginGitIDFailureMessageGenerator(),
 			new SemanticVersioningFailureMessageGenerator(),
 			new SourceFormatFailureMessageGenerator(),
+			new StartupFailureMessageGenerator(),
 
 			new GenericFailureMessageGenerator()
 		};

@@ -60,7 +60,7 @@ public class PowwowMeetingIndexer extends BaseIndexer {
 		PowwowMeeting.class.getName()
 	};
 
-	public static final String PORTLET_ID = PortletKeys.POWWOW_MEETINGS;
+	public static final String PORTLET_ID = PowwowPortletKeys.POWWOW_MEETINGS;
 
 	@Override
 	public String[] getClassNames() {

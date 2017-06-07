@@ -70,8 +70,8 @@
 			.btn-toolbar-content {
 				position: absolute;
 				bottom: -6px;
-				right: 0px;
-				background-color: #fff;
+				right: 0;
+				background-color: #FFF;
 				padding: 15px 5px;
 			}
 		}
@@ -79,7 +79,7 @@
 		.categoriesselector-content, .tagselector-content {
 			li:not(.textboxlist-input-container) {
 				background-color: #E7F1F9;
-				border: 0px;
+				border: 0;
 				color: #65B6F0;
 
 				.textboxlistentry-remove {
@@ -109,7 +109,7 @@
 			border-radius: 100%;
 			margin-left: 3px;
 			padding: 0;
-			color: #fff;
+			color: #FFF;
 		}
 	}
 }

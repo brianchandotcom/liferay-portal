@@ -326,7 +326,7 @@ public class PowwowUtil {
 				powwowMeeting.getPowwowMeetingId(), null,
 				serviceContext.getRequest()));
 
-		powwowSubscriptionSender.setContextUserPrefix("MEETING");
+		powwowSubscriptionSender.setContextCreatorUserPrefix("MEETING");
 
 		String fromName = PrefsPropsUtil.getString(
 			powwowMeeting.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);

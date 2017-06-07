@@ -48,6 +48,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -60,6 +62,11 @@ public class PowwowMeetingIndexer extends BaseIndexer {
 	};
 
 	public static final String PORTLET_ID = PowwowPortletKeys.POWWOW_MEETINGS;
+
+	@Override
+	public String getClassName() {
+		return PowwowMeeting.class.getName();
+	}
 
 	@Override
 	public String[] getClassNames() {
@@ -119,7 +126,6 @@ public class PowwowMeetingIndexer extends BaseIndexer {
 		}
 	}
 
-	@Override
 	protected void addSearchUserId(
 		BooleanQuery contextQuery, SearchContext searchContext) {
 	}
@@ -202,18 +208,12 @@ public class PowwowMeetingIndexer extends BaseIndexer {
 	@Override
 	protected Summary doGetSummary(
 		Document document, Locale locale, String snippet,
-		PortletURL portletURL) {
-
-		String powwowMeetingId = document.get(Field.ENTRY_CLASS_PK);
-
-		portletURL.setParameter("mvcPath", "/meetings/view_meeting.jsp");
-		portletURL.setParameter("powwowMeetingId", powwowMeetingId);
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		Summary summary = createSummary(
 			document, Field.TITLE, Field.DESCRIPTION);
 
 		summary.setMaxContentLength(200);
-		summary.setPortletURL(portletURL);
 
 		return summary;
 	}

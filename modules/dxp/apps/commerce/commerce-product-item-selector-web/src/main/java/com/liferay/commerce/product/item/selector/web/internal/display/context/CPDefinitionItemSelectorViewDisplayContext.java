@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -81,13 +82,13 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		int total = _cpDefinitionService.getCPDefinitionsCount(
-			getScopeGroupId(), null, themeDisplay.getLanguageId(),
+			getScopeGroupId(), StringPool.BLANK, themeDisplay.getLanguageId(),
 			WorkflowConstants.STATUS_ANY);
 
 		searchContainer.setTotal(total);
 
 		List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
-			getScopeGroupId(), null, themeDisplay.getLanguageId(),
+			getScopeGroupId(), StringPool.BLANK, themeDisplay.getLanguageId(),
 			WorkflowConstants.STATUS_ANY, searchContainer.getStart(),
 			searchContainer.getEnd(), orderByComparator);
 

@@ -127,6 +127,10 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSet = initLayoutSet(layoutSet);
 
 			layoutSet.setLogoId(layoutSet.getLogoId());
+			layoutSet.setLayoutSetPrototypeLinkEnabled(Boolean.FALSE);
+			layoutSet.setLayoutSetPrototypeUuid(StringPool.BLANK);
+			layoutSet.setModifiedDate(new Date());
+			layoutSet.setPageCount(0);
 
 			layoutSetPersistence.update(layoutSet);
 		}

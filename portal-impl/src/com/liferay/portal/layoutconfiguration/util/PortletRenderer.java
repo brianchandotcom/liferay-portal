@@ -120,7 +120,11 @@ public class PortletRenderer {
 		Object portletParallelRender = request.getAttribute(
 			WebKeys.PORTLET_PARALLEL_RENDER);
 
+		Object lock = request.getAttribute(
+			WebKeys.PARALLEL_RENDERING_MERGE_LOCK);
+
 		request.setAttribute(WebKeys.PORTLET_PARALLEL_RENDER, Boolean.FALSE);
+		request.setAttribute(WebKeys.PARALLEL_RENDERING_MERGE_LOCK, null);
 
 		try {
 			PortletContainerUtil.render(
@@ -135,6 +139,7 @@ public class PortletRenderer {
 			request.setAttribute(WebKeys.PARALLEL_RENDERING_MERGE_LOCK, lock);
 			request.setAttribute(
 				WebKeys.PORTLET_PARALLEL_RENDER, portletParallelRender);
+			request.setAttribute(WebKeys.PARALLEL_RENDERING_MERGE_LOCK, lock);
 		}
 	}
 

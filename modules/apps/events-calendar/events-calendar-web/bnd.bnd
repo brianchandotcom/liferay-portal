@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Events Calendar Web
+Bundle-SymbolicName: com.liferay.events.calendar.web
+Bundle-Version: 1.0.0
+Liferay-JS-Config: /META-INF/resources/js/config.js
+Web-ContextPath: /events-calendar

@@ -1,7 +1,9 @@
 <definition component-name="portal-smoke">
 	<property name="portal.release" value="true" />
+	<property name="portal.smoke" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Smoke" />
+	<property name="test.assert.warning.exceptions" value="true" />
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
@@ -26,8 +28,13 @@
 	</tear-down>
 
 	<command description="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." name="Smoke" priority="5">
-		<property name="portal.smoke" value="true" />
-		<property name="test.assert.warning.exceptions" value="true" />
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command name="SmokeWithSPADisabled" priority="5">
+		<property name="custom.properties" value="javascript.single.page.application.enabled=false" />
 
 		<execute macro="Smoke#viewWelcomePage" />
 

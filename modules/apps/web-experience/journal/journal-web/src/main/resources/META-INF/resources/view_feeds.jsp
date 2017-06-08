@@ -113,6 +113,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 			className="com.liferay.journal.model.JournalFeed"
 			escapedModel="<%= true %>"
 			keyProperty="feedId"
+			escapedModel="true"
 			modelVar="feed"
 		>
 			<c:choose>

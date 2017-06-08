@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessi
 import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.WebKeys;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

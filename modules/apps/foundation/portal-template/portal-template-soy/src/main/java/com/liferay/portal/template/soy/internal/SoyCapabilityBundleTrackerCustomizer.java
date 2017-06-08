@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.template.soy.utils.SoyTemplateResourcesCollector;
 import com.liferay.portal.template.soy.utils.SoyTemplateUtil;
 
 import java.util.ArrayList;

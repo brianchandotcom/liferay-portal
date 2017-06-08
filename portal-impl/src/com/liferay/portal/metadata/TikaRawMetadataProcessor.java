@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutorUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -113,6 +114,14 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 
 		Metadata metadata = super.extractMetadata(extension, mimeType, file);
 
+		if (metadata == null) {
+			metadata = new Metadata();
+		}
+
+		metadata.set(
+			Metadata.RESOURCE_NAME_KEY,
+			file.getName() + StringPool.PERIOD + extension);
+
 		boolean forkProcess = false;
 
 		if (PropsValues.TEXT_EXTRACTION_FORK_PROCESS_ENABLED) {
@@ -145,7 +154,12 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 		}
 
 		try {
-			return extractMetadata(file, metadata, _parser);
+			Metadata extractedMetadata = extractMetadata(
+				file, metadata, _parser);
+
+			extractedMetadata.remove(Metadata.RESOURCE_NAME_KEY);
+
+			return extractedMetadata;
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);

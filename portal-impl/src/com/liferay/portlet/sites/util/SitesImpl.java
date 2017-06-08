@@ -803,6 +803,12 @@ public class SitesImpl implements Sites {
 			return 0;
 		}
 
+		if ((layoutSetPrototype == null) ||
+			(layoutSetPrototype.getLayoutSetPrototypeId() == 0)) {
+
+			return 0;
+		}
+
 		LayoutSet layoutSetPrototypeLayoutSet =
 			layoutSetPrototype.getLayoutSet();
 

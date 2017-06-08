@@ -216,7 +216,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 	};
 
 	var switchToView = function() {
-		reloadFormBuilderData(formEditor.get(STR_VALUE));
+		reloadFormBuilderData(getContentValue());
 	};
 
 	<c:if test="<%= Validator.isNotNull(scopeAvailableFields) %>">

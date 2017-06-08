@@ -17,6 +17,7 @@ package com.liferay.exportimport.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
@@ -109,6 +110,9 @@ public class PortletDataContextReferencesTest {
 
 	@Test
 	public void testCleanUpMissingReferences() throws Exception {
+		_portletDataContext.setPortletId(
+			JournalContentPortletKeys.JOURNAL_CONTENT);
+
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			JournalContentPortletKeys.JOURNAL_CONTENT);
 
@@ -153,6 +157,8 @@ public class PortletDataContextReferencesTest {
 			_bookmarksEntry, bookmarksEntryElement, _bookmarksFolder,
 			PortletDataContext.REFERENCE_TYPE_PARENT, false);
 
+		_portletDataContext.setPortletId(BookmarksPortletKeys.BOOKMARKS);
+
 		Element missingReferencesElement =
 			_portletDataContext.getMissingReferencesElement();
 
@@ -195,6 +201,8 @@ public class PortletDataContextReferencesTest {
 
 	@Test
 	public void testMultipleMissingNotMissingReference() throws Exception {
+		_portletDataContext.setPortletId(BookmarksPortletKeys.BOOKMARKS);
+
 		Element bookmarksEntryElement1 =
 			_portletDataContext.getExportDataElement(_bookmarksEntry);
 

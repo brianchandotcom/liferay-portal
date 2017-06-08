@@ -73,7 +73,7 @@ import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -161,7 +161,7 @@ public class StagedGroupStagedModelDataHandler
 			liveGroup = liveGroup.getLiveGroup();
 		}
 
-		Set<String> portletIds = new HashSet<>();
+		Set<String> portletIds = new LinkedHashSet<>();
 
 		for (Portlet portlet : dataSiteLevelPortlets) {
 			String portletId = portlet.getRootPortletId();

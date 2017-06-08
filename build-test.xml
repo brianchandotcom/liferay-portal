@@ -8008,6 +8008,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 	<target name="prepare-so-plugins">
 		<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
 
+		<if>
+			<contains string="${liferay.portal.bundle}" substring="6.2.10" />
+			<then>
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties" append="true">
+
+app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
+			</then>
+		</if>
+
 		<property file="${lp.plugins.dir}/portlets/so-portlet/docroot/WEB-INF/liferay-releng.properties" />
 
 		<property name="plugins.includes" value="so-portlet,${dependent-apps}" />
@@ -8203,6 +8212,22 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				</unzip>
 
 				<delete file="${tstamp.value}.zip" />
+
+				<if>
+					<and>
+						<equals arg1="${app.server.type}" arg2="tomcat" />
+						<contains string="${liferay.portal.bundle}" substring="6.2.10" />
+					</and>
+					<then>
+						<echo file="app.server.${user.name}.properties" append="true">
+							app.server.tomcat.version=7.0.42
+						</echo>
+
+						<var name="test.app.server.bin.dir" unset="true" />
+
+						<var name="test.app.server.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.42/bin" />
+					</then>
+				</if>
 
 				<chmod perm="a+x">
 					<fileset dir="${test.app.server.bin.dir}">

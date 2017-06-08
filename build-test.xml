@@ -9426,6 +9426,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<get-testcase-property property.name="skip.clean-app-server-deploy-dir" />
 
+		<get-testcase-property property.name="skip.clean-app-server-deploy-dir" />
+
 		<if>
 			<not>
 				<equals arg1="${skip.clean-app-server-deploy-dir}" arg2="true" />

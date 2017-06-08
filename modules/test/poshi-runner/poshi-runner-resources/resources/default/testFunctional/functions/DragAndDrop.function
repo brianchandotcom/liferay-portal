@@ -1,0 +1,29 @@
+<definition default="dragAndDropToObject">
+	<command name="dragAndDrop">
+		<execute selenium="dragAndDrop" />
+	</command>
+
+	<command name="dragAndDropToObject">
+		<execute argument1="${locator1}" selenium="waitForVisible" />
+
+		<execute argument1="${locator1}" selenium="mouseOver" />
+
+		<execute argument1="${locator1}" argument2="${value1}" selenium="waitForPartialText" />
+
+		<execute argument1="${locator2}" selenium="waitForVisible" />
+
+		<execute argument1="${locator2}" selenium="mouseOver" />
+
+		<execute argument1="${locator1}" argument2="${locator2}" selenium="dragAndDropToObject" />
+	</command>
+
+	<command name="dragAndDropToObjectNotVisible">
+		<execute argument1="${locator1}" selenium="waitForVisible" />
+
+		<execute argument1="${locator1}" selenium="mouseOver" />
+
+		<execute argument1="${locator1}" argument2="${value1}" selenium="waitForText" />
+
+		<execute argument1="${locator1}" argument2="${locator2}" selenium="dragAndDropToObject" />
+	</command>
+</definition>

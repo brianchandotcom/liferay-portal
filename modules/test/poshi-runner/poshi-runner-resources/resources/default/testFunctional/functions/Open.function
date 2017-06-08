@@ -1,0 +1,29 @@
+<definition default="open" summary="Open browser to '${locator1}'">
+	<command name="open">
+		<execute argument1="null" selenium="selectWindow" />
+
+		<execute argument1="relative=top" selenium="selectFrame" />
+
+		<execute selenium="open" />
+	</command>
+
+	<command name="openNoError">
+		<execute argument1="null" selenium="selectWindow" />
+
+		<execute argument1="relative=top" selenium="selectFrame" />
+
+		<execute selenium="open" />
+	</command>
+
+	<command name="openWindow">
+		<execute argument1="null" selenium="selectWindow" />
+
+		<execute argument1="relative=top" selenium="selectFrame" />
+
+		<execute argument1="${locator1}" argument2="windowName" selenium="openWindow" />
+
+		<execute argument1="windowName" argument2="windowName" selenium="waitForPopUp" />
+
+		<execute argument1="windowName" selenium="selectWindow" />
+	</command>
+</definition>

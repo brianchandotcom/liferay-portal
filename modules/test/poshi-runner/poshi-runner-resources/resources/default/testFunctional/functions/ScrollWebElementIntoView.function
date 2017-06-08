@@ -1,0 +1,5 @@
+<definition default="scrollWebElementIntoView">
+	<command name="scrollWebElementIntoView">
+		<execute selenium="scrollWebElementIntoView" />
+	</command>
+</definition>

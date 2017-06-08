@@ -1,0 +1,7 @@
+<definition default="assertCssValue" >
+	<command name="assertCssValue">
+		<execute selenium="waitForVisible" />
+
+		<execute argument1="${locator1}" argument2="${locator2}" selenium="assertCssValue" />
+	</command>
+</definition>

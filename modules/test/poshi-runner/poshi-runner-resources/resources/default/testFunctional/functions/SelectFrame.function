@@ -1,0 +1,21 @@
+<definition default="selectFrame">
+	<command name="selectFrame">
+		<if>
+			<contains string="${locator1}" substring="/iframe" />
+			<then>
+				<execute selenium="waitForVisible" />
+
+				<execute selenium="mouseOver" />
+
+				<execute selenium="selectFrame" />
+			</then>
+			<else>
+				<execute function="SelectFrame#selectFrameTop" />
+			</else>
+		</if>
+	</command>
+
+	<command name="selectFrameTop">
+		<execute argument1="relative=top" selenium="selectFrame" />
+	</command>
+</definition>

@@ -1,0 +1,62 @@
+<definition default="click" summary="Click on '${locator1}'">
+	<command name="click">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="click" />
+	</command>
+
+	<command name="clickAt">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="clickAt" />
+	</command>
+
+	<command name="clickNoMouseOver">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="click" />
+	</command>
+
+	<command name="clickNoWaitForVisible">
+		<execute selenium="mouseOver" />
+
+		<execute selenium="click" />
+	</command>
+
+	<command name="makeVisibleClickAt">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="makeVisible" />
+
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="clickAt" />
+	</command>
+
+	<command name="mouseOverClick">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="click" />
+	</command>
+
+	<command name="pauseClickAt">
+
+		<execute selenium="mouseOver" />
+
+		<execute function="Click#clickAt" />
+	</command>
+
+	<command name="pauseMakeVisibleClickAt">
+		<execute function="Click#makeVisibleClickAt" />
+	</command>
+</definition>

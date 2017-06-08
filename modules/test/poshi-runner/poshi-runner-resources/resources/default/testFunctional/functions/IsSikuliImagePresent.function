@@ -1,0 +1,5 @@
+<definition default="isSikuliImagePresent">
+	<command name="isSikuliImagePresent">
+		<execute selenium="isSikuliImagePresent" />
+	</command>
+</definition>

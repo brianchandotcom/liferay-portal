@@ -1,0 +1,9 @@
+<definition default="assertValue">
+	<command name="assertValue">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForValue" />
+
+		<execute selenium="assertValue" />
+	</command>
+</definition>

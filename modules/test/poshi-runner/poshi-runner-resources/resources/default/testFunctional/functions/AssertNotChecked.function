@@ -1,0 +1,19 @@
+<definition default="assertNotChecked">
+	<command name="assertNotChecked">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="assertNotChecked" />
+	</command>
+
+	<command name="assertNotCheckedHiddenToggleSwitch">
+		<execute selenium="waitForElementPresent" />
+
+		<execute argument1="xpath=(${locator1})/../../input" selenium="assertNotChecked" />
+	</command>
+
+	<command name="assertNotCheckedToggleSwitch">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="assertNotChecked" />
+	</command>
+</definition>

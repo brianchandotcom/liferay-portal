@@ -1,0 +1,33 @@
+<definition default="mouseOver" summary="Mouse over '${locator1}'">
+	<command name="mouseOver">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+	</command>
+
+	<command name="mouseOverNotVisible">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="waitForVisible" />
+	</command>
+
+	<command name="partialTextMouseOver">
+		<execute function="AssertTextEquals#assertPartialText" />
+
+		<execute selenium="mouseOver" />
+	</command>
+
+	<command name="textMouseOver">
+		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="mouseOver" />
+	</command>
+
+	<command name="valueMouseOver">
+		<execute function="AssertTextEquals#assertValue" />
+
+		<execute selenium="mouseOver" />
+	</command>
+</definition>

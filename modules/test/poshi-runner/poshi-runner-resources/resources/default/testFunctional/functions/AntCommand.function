@@ -1,0 +1,5 @@
+<definition default="antCommand" summary="ant -f ${locator1} ${value1}">
+	<command name="antCommand">
+		<execute selenium="antCommand" />
+	</command>
+</definition>

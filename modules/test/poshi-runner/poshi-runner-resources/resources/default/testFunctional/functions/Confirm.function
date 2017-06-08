@@ -1,0 +1,21 @@
+<definition default="assertConfirmation" summary="Assert that the confirmation window equals the value '${value1}'">
+	<command name="assertConfirmation">
+		<execute selenium="assertConfirmation" />
+	</command>
+
+	<command name="assertConfirmationNoWait">
+		<execute selenium="assertConfirmation" />
+	</command>
+
+	<command name="assertPartialConfirmation">
+		<execute selenium="assertPartialConfirmation" />
+	</command>
+
+	<command name="assertPrompt" summary="Assert that the confirmation window equals the value '${locator1}' and enter '${value1}' for input">
+		<execute selenium="assertPrompt" />
+	</command>
+
+	<command name="waitForConfirmation">
+		<execute selenium="waitForConfirmation" />
+	</command>
+</definition>

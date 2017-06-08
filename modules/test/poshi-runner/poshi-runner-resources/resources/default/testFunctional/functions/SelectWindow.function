@@ -1,0 +1,13 @@
+<definition default="selectWindow">
+	<command name="selectPopUp">
+		<execute selenium="selectPopUp" />
+	</command>
+
+	<command name="selectWindow">
+		<execute selenium="selectWindow" />
+	</command>
+
+	<command name="selectWindowTop">
+		<execute argument1="null" selenium="selectWindow" />
+	</command>
+</definition>

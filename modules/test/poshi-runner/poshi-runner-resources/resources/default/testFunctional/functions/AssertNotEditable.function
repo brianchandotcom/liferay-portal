@@ -1,0 +1,7 @@
+<definition default="assertNotEditable">
+	<command name="assertNotEditable">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="assertNotEditable" />
+	</command>
+</definition>

@@ -1,0 +1,13 @@
+<definition default="selectFieldText" summary="Selecting all text at '${locator1}'">
+	<command name="selectFieldText">
+		<execute function="Click" />
+
+		<execute selenium="selectFieldText" />
+	</command>
+
+	<command name="selectFieldTextNoError">
+		<execute function="Click" />
+
+		<execute selenium="selectFieldText" />
+	</command>
+</definition>

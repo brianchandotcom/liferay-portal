@@ -1,0 +1,5 @@
+<definition default="sikuliUploadTCatFile">
+	<command name="sikuliUploadTCatFile">
+		<execute selenium="sikuliUploadTCatFile" />
+	</command>
+</definition>

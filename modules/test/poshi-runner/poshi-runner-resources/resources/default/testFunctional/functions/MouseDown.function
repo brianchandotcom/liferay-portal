@@ -1,0 +1,13 @@
+<definition default="mouseDown">
+	<command name="javaScriptMouseDown">
+		<execute selenium="javaScriptMouseDown" />
+	</command>
+
+	<command name="mouseDown">
+		<execute selenium="mouseDown" />
+	</command>
+
+	<command name="mouseDownAt">
+		<execute selenium="mouseDownAt" />
+	</command>
+</definition>

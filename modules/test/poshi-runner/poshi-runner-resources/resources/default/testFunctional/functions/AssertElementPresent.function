@@ -1,0 +1,17 @@
+<definition default="assertElementPresent" summary="Assert that '${locator1}' is available">
+	<command name="assertElementPresent">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="assertElementPresent" />
+	</command>
+
+	<command name="assertVisible">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="assertVisible" />
+	</command>
+
+	<command name="pauseAssertVisible">
+		<execute function="AssertElementPresent#assertVisible" />
+	</command>
+</definition>

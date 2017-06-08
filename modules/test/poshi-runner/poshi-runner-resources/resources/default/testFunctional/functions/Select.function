@@ -1,0 +1,21 @@
+<definition default="select">
+	<command name="pauseSelect">
+		<execute selenium="select" />
+	</command>
+
+	<command name="select">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="select" />
+	</command>
+
+	<command name="selectByClick">
+		<execute selenium="waitForVisible" />
+
+		<execute argument1="${locator1}" selenium="click" />
+
+		<execute argument1="//option[contains(.,'${value1}')]" selenium="click" />
+	</command>
+</definition>

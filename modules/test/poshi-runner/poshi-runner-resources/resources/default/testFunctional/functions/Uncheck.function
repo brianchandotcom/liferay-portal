@@ -1,0 +1,59 @@
+<definition default="clickAt">
+	<command name="clickAt">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<if>
+			<condition selenium="isChecked" />
+			<then>
+				<execute selenium="clickAt" />
+			</then>
+		</if>
+
+		<execute function="AssertNotChecked#assertNotChecked" />
+	</command>
+
+	<command name="uncheckNoError">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<if>
+			<condition selenium="isChecked" />
+			<then>
+				<execute selenium="clickAt" />
+			</then>
+		</if>
+
+		<execute function="AssertNotChecked#assertNotChecked" />
+	</command>
+
+	<command name="uncheckToggleSwitch">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="mouseOver" />
+
+		<if>
+			<condition selenium="isChecked" />
+			<then>
+				<execute selenium="clickAt" />
+			</then>
+		</if>
+
+		<execute function="AssertNotChecked#assertNotCheckedToggleSwitch" />
+	</command>
+
+	<command name="uncheckToggleSwitchNoErrorNoAssert">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="mouseOver" />
+
+		<if>
+			<condition selenium="isChecked" />
+			<then>
+				<execute selenium="clickAt" />
+			</then>
+		</if>
+	</command>
+</definition>

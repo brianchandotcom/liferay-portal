@@ -1,0 +1,5 @@
+<definition default="assertAlertNotPresent">
+	<command name="assertAlertNotPresent">
+		<execute selenium="assertAlertNotPresent" />
+	</command>
+</definition>

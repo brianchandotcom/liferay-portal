@@ -1,0 +1,5 @@
+<definition default="sikuliType">
+	<command name="sikuliType">
+		<execute selenium="sikuliType" />
+	</command>
+</definition>

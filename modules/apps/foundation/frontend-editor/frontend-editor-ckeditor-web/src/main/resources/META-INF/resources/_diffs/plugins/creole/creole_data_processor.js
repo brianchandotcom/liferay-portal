@@ -98,8 +98,6 @@
 				}
 
 				instance._creoleParser.parse(div, data);
-
-				data = div.innerHTML;
 			}
 
 			return data || enterModeEmptyValue[instance._editor.enterMode];

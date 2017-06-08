@@ -117,7 +117,7 @@ public class CPTestUtil {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, false,
 			RandomTestUtil.randomLocaleStringMap(), json,
-			RandomTestUtil.randomInt(),
+			RandomTestUtil.randomDouble(),
 			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE, serviceContext);
 	}
 
@@ -139,7 +139,7 @@ public class CPTestUtil {
 			cpDefinitionId, cpOptionId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), null,
-			RandomTestUtil.randomInt(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
 			false, serviceContext);
 	}
@@ -155,7 +155,7 @@ public class CPTestUtil {
 			addCPDefinitionOptionValueRel(
 				cpDefinitionOptionRelId, RandomTestUtil.randomString(),
 				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomInt(), serviceContext);
+				RandomTestUtil.randomDouble(), serviceContext);
 	}
 
 	public static CPDefinition addCPDefinitionWithWorkflow(
@@ -264,8 +264,8 @@ public class CPTestUtil {
 		return CPOptionCategoryLocalServiceUtil.addCPOptionCategory(
 			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), RandomTestUtil.randomInt(),
-			serviceContext);
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomDouble(), serviceContext);
 	}
 
 	public static CPOptionValue addCPOptionValue(long groupId, long cpOptionId)
@@ -276,8 +276,8 @@ public class CPTestUtil {
 
 		return CPOptionValueLocalServiceUtil.addCPOptionValue(
 			cpOptionId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomLocaleStringMap(), RandomTestUtil.randomInt(),
-			serviceContext);
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomDouble(), serviceContext);
 	}
 
 	public static FileEntry addFileEntry(long groupId) throws Exception {

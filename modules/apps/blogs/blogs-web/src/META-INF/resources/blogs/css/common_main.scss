@@ -1,0 +1,72 @@
+.portlet-blogs {
+	.entry-subtitle {
+		color: #2B4259;
+		font-size: 24px;
+		font-weight: 400;
+	}
+
+	.entry-body {
+		font-size: 18px;
+
+		h1 {
+			font-size: 22px;
+			font-weight: bold;
+		}
+
+		h2 {
+			color: #868896;
+			font-size: 20px;
+			font-weight: 400;
+		}
+
+		a, h2 {
+			color: #32A8E6;
+		}
+
+		p {
+			margin-bottom: 30px;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		img {
+			max-width: 100%;
+		}
+
+		.cover-image-container {
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			height: 400px;
+			margin-bottom: 10px;
+		}
+
+		.cover-image-caption {
+			color: #868896;
+			font-size: 12px;
+			margin-bottom: 35px;
+		}
+
+		.uploading-image-container {
+			display: inline-block;
+
+			.progressbar {
+				height: 20px;
+			}
+		}
+
+		.uploading-image {
+			opacity: 0.4;
+		}
+	}
+
+	.entry-date {
+		color: #999;
+		display: block;
+		font-size: 14px;
+		margin-bottom: 32px;
+		margin-top: 24px;
+	}
+}

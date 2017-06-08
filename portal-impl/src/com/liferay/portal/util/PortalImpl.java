@@ -811,6 +811,11 @@ public class PortalImpl implements Portal {
 					url, "doAsGroupId", themeDisplay.getDoAsGroupId());
 			}
 
+			if (Validator.isNotNull(themeDisplay.getPpid())) {
+				url = HttpUtil.setParameter(
+					url, "p_p_id", themeDisplay.getPpid());
+			}
+
 			if (themeDisplay.getRefererGroupId() !=
 					GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 

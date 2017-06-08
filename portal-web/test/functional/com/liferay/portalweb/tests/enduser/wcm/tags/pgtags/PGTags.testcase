@@ -176,7 +176,8 @@
 	</command>
 
 	<command name="AddSelectTagViaBlogs" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance.quarantine" value="true" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -311,7 +312,8 @@
 	</command>
 
 	<command name="DisplayTagCloud" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance.quarantine" value="true" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Tags Navigation Page" />
@@ -818,7 +820,8 @@
 	</command>
 
 	<command name="ViewTagCloudIncrease" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance.quarantine" value="true" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Tags Navigation Page" />

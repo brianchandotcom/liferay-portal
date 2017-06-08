@@ -17,7 +17,7 @@
 <%@ include file="/item/selector/init.jsp" %>
 
 <%
-WikiPageItemSelectorViewDisplayContext wikiPageItemSelectorViewDisplayContext = (WikiPageItemSelectorViewDisplayContext)request.getAttribute(WikiPageItemSelectorView.WIKI_PAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
+WikiPageItemSelectorViewDisplayContext wikiPageItemSelectorViewDisplayContext = (WikiPageItemSelectorViewDisplayContext)request.getAttribute(WikiItemSelectorWebKeys.WIKI_PAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
 WikiNode node = wikiPageItemSelectorViewDisplayContext.getNode();
 

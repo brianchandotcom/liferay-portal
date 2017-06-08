@@ -59,9 +59,6 @@ import org.osgi.service.component.annotations.Reference;
 public class WikiPageItemSelectorView
 	implements ItemSelectorView<WikiPageItemSelectorCriterion> {
 
-	public static final String WIKI_PAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
-		"WIKI_PAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
-
 	@Override
 	public Class<WikiPageItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
@@ -111,7 +108,8 @@ public class WikiPageItemSelectorView
 					itemSelectedEventName, search, portletURL);
 
 		request.setAttribute(
-			WIKI_PAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			WikiItemSelectorWebKeys.
+				WIKI_PAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			wikiPageItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();

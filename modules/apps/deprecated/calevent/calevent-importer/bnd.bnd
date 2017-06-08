@@ -1,0 +1,3 @@
+Bundle-Name: Liferay CalEvent Importer
+Bundle-SymbolicName: com.liferay.calevent.importer
+Bundle-Version: 1.0.0

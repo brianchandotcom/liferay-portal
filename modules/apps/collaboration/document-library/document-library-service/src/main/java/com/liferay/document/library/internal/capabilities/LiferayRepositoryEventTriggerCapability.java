@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.capabilities;
+package com.liferay.document.library.internal.capabilities;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
@@ -21,10 +21,7 @@ import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.document.library.internal.capabilities.LiferayRepositoryEventTriggerCapability}
  */
-@Deprecated
 public class LiferayRepositoryEventTriggerCapability
 	implements RepositoryEventTriggerCapability {
 

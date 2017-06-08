@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.repository.capabilities;
+package com.liferay.document.library.internal.capabilities;
 
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLSyncEventLocalService;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
@@ -24,11 +23,13 @@ import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability
 import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
+import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.capabilities.ThumbnailCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.repository.capabilities.util.DLAppServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFileVersionServiceAdapter;
@@ -40,9 +41,13 @@ import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 import com.liferay.trash.kernel.service.TrashEntryLocalService;
 import com.liferay.trash.kernel.service.TrashVersionLocalService;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(service = PortalCapabilityLocator.class)
 public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 
 	@Override
@@ -73,9 +78,18 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 
 	@Override
 	public ProcessorCapability getProcessorCapability(
-		DocumentRepository documentRepository) {
+		DocumentRepository documentRepository,
+		ProcessorCapability.ResourceGenerationStrategy
+			resourceGenerationStrategy) {
 
-		return _processorCapability;
+		if (resourceGenerationStrategy ==
+				ProcessorCapability.
+					ResourceGenerationStrategy.ALWAYS_GENERATE) {
+
+			return _alwaysGeneratingProcessorCapability;
+		}
+
+		return _reusingProcessorCapability;
 	}
 
 	@Override
@@ -90,12 +104,21 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 	}
 
 	@Override
+	public RepositoryEventTriggerCapability getRepositoryEventTriggerCapability(
+		DocumentRepository documentRepository,
+		RepositoryEventTrigger repositoryEventTrigger) {
+
+		return new LiferayRepositoryEventTriggerCapability(
+			repositoryEventTrigger);
+	}
+
+	@Override
 	public SyncCapability getSyncCapability(
 		DocumentRepository documentRepository) {
 
 		return new LiferaySyncCapability(
 			GroupServiceAdapter.create(documentRepository),
-			dlSyncEventLocalService);
+			_dlSyncEventLocalService);
 	}
 
 	@Override
@@ -121,12 +144,12 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 		DocumentRepository documentRepository) {
 
 		return new LiferayTrashCapability(
-			dlAppHelperLocalService,
+			_dlAppHelperLocalService,
 			DLAppServiceAdapter.create(documentRepository),
 			DLFileEntryServiceAdapter.create(documentRepository),
 			DLFolderServiceAdapter.create(documentRepository),
 			RepositoryServiceAdapter.create(documentRepository),
-			trashEntryLocalService, trashVersionLocalService);
+			_trashEntryLocalService, _trashVersionLocalService);
 	}
 
 	@Override
@@ -144,23 +167,27 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 			DLFileVersionServiceAdapter.create(documentRepository));
 	}
 
-	@BeanReference(type = DLAppHelperLocalService.class)
-	protected DLAppHelperLocalService dlAppHelperLocalService;
-
-	@BeanReference(type = DLSyncEventLocalService.class)
-	protected DLSyncEventLocalService dlSyncEventLocalService;
-
-	@BeanReference(type = TrashEntryLocalService.class)
-	protected TrashEntryLocalService trashEntryLocalService;
-
-	@BeanReference(type = TrashVersionLocalService.class)
-	protected TrashVersionLocalService trashVersionLocalService;
-
+	private final ProcessorCapability _alwaysGeneratingProcessorCapability =
+		new LiferayProcessorCapability(
+			ProcessorCapability.ResourceGenerationStrategy.ALWAYS_GENERATE);
 	private final CommentCapability _commentCapability =
 		new LiferayCommentCapability();
-	private final ProcessorCapability _processorCapability =
-		new LiferayProcessorCapability();
+
+	@Reference
+	private DLAppHelperLocalService _dlAppHelperLocalService;
+
+	@Reference
+	private DLSyncEventLocalService _dlSyncEventLocalService;
+
 	private final RepositoryEntryConverter _repositoryEntryConverter =
 		new RepositoryEntryConverter();
+	private final ProcessorCapability _reusingProcessorCapability =
+		new LiferayProcessorCapability();
+
+	@Reference
+	private TrashEntryLocalService _trashEntryLocalService;
+
+	@Reference
+	private TrashVersionLocalService _trashVersionLocalService;
 
 }

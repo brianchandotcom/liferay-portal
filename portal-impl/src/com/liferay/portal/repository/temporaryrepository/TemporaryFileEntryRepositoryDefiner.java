@@ -14,7 +14,6 @@
 
 package com.liferay.portal.repository.temporaryrepository;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
@@ -24,6 +23,7 @@ import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Iván Zaera
@@ -51,16 +51,16 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 
 		capabilityRegistry.addExportedCapability(
 			BulkOperationCapability.class,
-			portalCapabilityLocator.getBulkOperationCapability(
+			_portalCapabilityLocator.getBulkOperationCapability(
 				documentRepository));
 		capabilityRegistry.addExportedCapability(
 			TemporaryFileEntriesCapability.class,
-			portalCapabilityLocator.getTemporaryFileEntriesCapability(
+			_portalCapabilityLocator.getTemporaryFileEntriesCapability(
 				documentRepository));
 
 		capabilityRegistry.addSupportedCapability(
 			WorkflowCapability.class,
-			portalCapabilityLocator.getWorkflowCapability(
+			_portalCapabilityLocator.getWorkflowCapability(
 				documentRepository, WorkflowCapability.OperationMode.MINIMAL));
 	}
 
@@ -75,8 +75,17 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 		_repositoryFactory = repositoryFactory;
 	}
 
-	@BeanReference(type = PortalCapabilityLocator.class)
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected PortalCapabilityLocator portalCapabilityLocator;
+
+	private static volatile PortalCapabilityLocator _portalCapabilityLocator =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			PortalCapabilityLocator.class,
+			TemporaryFileEntryRepositoryDefiner.class,
+			"_portalCapabilityLocator", false);
 
 	private RepositoryFactory _repositoryFactory;
 

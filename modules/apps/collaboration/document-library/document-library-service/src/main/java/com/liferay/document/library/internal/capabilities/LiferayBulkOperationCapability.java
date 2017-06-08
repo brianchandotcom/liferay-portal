@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.capabilities;
+package com.liferay.document.library.internal.capabilities;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
@@ -35,10 +35,7 @@ import java.util.Map;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of 7.0.0, @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.document.library.internal.capabilities.LiferayBulkOperationCapability}
  */
-@Deprecated
 public class LiferayBulkOperationCapability implements BulkOperationCapability {
 
 	public LiferayBulkOperationCapability(
@@ -53,8 +50,7 @@ public class LiferayBulkOperationCapability implements BulkOperationCapability {
 
 	@Override
 	public void execute(
-			BulkOperationCapability.Filter<?> filter,
-			RepositoryModelOperation repositoryModelOperation)
+			Filter<?> filter, RepositoryModelOperation repositoryModelOperation)
 		throws PortalException {
 
 		executeOnAllFileEntries(filter, repositoryModelOperation);

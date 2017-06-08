@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.capabilities;
+package com.liferay.document.library.internal.capabilities;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+import com.liferay.portal.repository.capabilities.WorkflowSupport;
 import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFileVersionServiceAdapter;
 import com.liferay.portal.repository.liferayrepository.LiferayWorkflowLocalRepositoryWrapper;
@@ -37,10 +38,7 @@ import com.liferay.portal.repository.util.RepositoryWrapperAware;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.document.library.internal.capabilities.LiferayWorkflowCapability}
  */
-@Deprecated
 public class LiferayWorkflowCapability
 	implements RepositoryWrapperAware, WorkflowCapability, WorkflowSupport {
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.capabilities;
+package com.liferay.document.library.internal.capabilities;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -48,10 +48,7 @@ import java.util.List;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.document.library.internal.capabilities.LiferayTrashCapability}
  */
-@Deprecated
 public class LiferayTrashCapability
 	implements RepositoryEventAware, TrashCapability {
 

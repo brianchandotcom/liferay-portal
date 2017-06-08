@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.capabilities;
+package com.liferay.document.library.internal.capabilities;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -26,10 +26,7 @@ import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 
 /**
  * @author Iván Zaera
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.document.library.internal.capabilities.ConfigurationCapabilityImpl}
  */
-@Deprecated
 public class ConfigurationCapabilityImpl implements ConfigurationCapability {
 
 	public ConfigurationCapabilityImpl(

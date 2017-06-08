@@ -15,7 +15,6 @@
 	<bean class="com.liferay.portal.kernel.repository.RepositoryProviderUtil" id="com.liferay.portal.kernel.repository.RepositoryProviderUtil" >
 		<property name="repositoryProvider" ref="com.liferay.portal.kernel.repository.RepositoryProvider" />
 	</bean>
-	<bean class="com.liferay.portal.repository.capabilities.PortalCapabilityLocatorImpl" id="com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator" />
 	<bean class="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityManager" id="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityManager" />
 	<bean class="com.liferay.portal.repository.liferayrepository.social.LiferayFileShortcutSocialActivityManager" id="com.liferay.portal.repository.liferayrepository.social.LiferayFileShortcutSocialActivityManager" />
 	<bean class="com.liferay.portal.repository.liferayrepository.social.LiferayFolderSocialActivityManager" id="com.liferay.portal.repository.liferayrepository.social.LiferayFolderSocialActivityManager" />

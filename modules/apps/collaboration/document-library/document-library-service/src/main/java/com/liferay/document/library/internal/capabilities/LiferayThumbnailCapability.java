@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.capabilities;
+package com.liferay.document.library.internal.capabilities;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -25,10 +25,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 
 /**
  * @author Iván Zaera
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.document.library.internal.capabilities.LiferayThumbnailCapability}
  */
-@Deprecated
 public class LiferayThumbnailCapability implements ThumbnailCapability {
 
 	public LiferayThumbnailCapability(

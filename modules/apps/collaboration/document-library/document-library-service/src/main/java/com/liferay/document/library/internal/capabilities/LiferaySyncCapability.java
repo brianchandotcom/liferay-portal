@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.capabilities;
+package com.liferay.document.library.internal.capabilities;
 
 import com.liferay.document.library.kernel.model.DLSyncConstants;
 import com.liferay.document.library.kernel.model.DLSyncEvent;
@@ -44,10 +44,7 @@ import java.util.concurrent.Callable;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.document.library.internal.capabilities.LiferaySyncCapability}
  */
-@Deprecated
 public class LiferaySyncCapability
 	implements RepositoryEventAware, SyncCapability {
 

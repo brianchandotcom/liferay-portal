@@ -630,7 +630,7 @@ public class PluginsSummaryBuilder {
 		sb.append(value);
 	}
 
-	private static final String[] _TICKET_ID_PREFIXES = {"LPS", "SOS"};
+	private static final String[] _TICKET_ID_PREFIXES = {"CLDSVCS", "LPS", "SOS", "SYNC"};
 
 	private static FileImpl _fileUtil = FileImpl.getInstance();
 

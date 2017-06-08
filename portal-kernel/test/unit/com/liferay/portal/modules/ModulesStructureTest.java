@@ -241,7 +241,7 @@ public class ModulesStructureTest {
 		renameMap.put("src/META-INF/portal-log4j.xml", "module-log4j.xml");
 
 		Files.walkFileTree(
-			Paths.get("modules"),
+			_modulesDirPath,
 			new SimpleFileVisitor<Path>() {
 
 				@Override

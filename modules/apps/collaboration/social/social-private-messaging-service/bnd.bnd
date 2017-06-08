@@ -1,0 +1,26 @@
+Bundle-Name: Liferay Social Private Messaging Service
+Bundle-SymbolicName: com.liferay.privatemessaging.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.privatemessaging.hook,\
+	com.liferay.privatemessaging.hook.listeners,\
+	com.liferay.privatemessaging.model.impl,\
+	com.liferay.privatemessaging.notifications,\
+	com.liferay.privatemessaging.service.base,\
+	com.liferay.privatemessaging.service.http,\
+	com.liferay.privatemessaging.service.impl,\
+	com.liferay.privatemessaging.service.persistance.impl,\
+	com.liferay.privatemessaging.util
+Include-Resource:\
+@../../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
+@../../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
+@../../../../../util-java/util-java.jar!/com/liferay/util/service/ServiceProps.class
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Social Private Messaging
+Liferay-Service: true
+Liferay-Spring-Context: META-INF/spring
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+-include: ../../../../../marketplace/collaboration/bnd.bnd
+-liferay-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

@@ -142,7 +142,42 @@ public class ModulesStructureTest {
 	}
 
 	@Test
-	public void testScanFiles() throws IOException {
+	public void testScanGradleFiles() throws IOException {
+		Files.walkFileTree(
+			_modulesDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					String fileName = String.valueOf(path.getFileName());
+
+					if (StringUtil.endsWith(fileName, ".gradle") &&
+						!_whitelistedGradleFileNames.contains(fileName)) {
+
+						String content = _read(path);
+
+						Assert.assertFalse(
+							"Incorrect repository URL in " + path +
+								", please use " + _REPOSITORY_URL + " instead",
+							content.contains("plugins.gradle.org/m2"));
+
+						Assert.assertFalse(
+							"Plugins DSL forbidden in " + path +
+								", please use \"apply plugin:\" instead",
+							content.contains("plugins {"));
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
+	@Test
+	public void testScanIgnoreFiles() throws IOException {
 		final String gitRepoGitIgnoreTemplate = StringUtil.read(
 			ModulesStructureTest.class, "dependencies/git_repo_gitignore.tmpl");
 		final String themeGitIgnoreTemplate = StringUtil.read(
@@ -198,28 +233,6 @@ public class ModulesStructureTest {
 					if (fileName.equals(".gitignore")) {
 						_testGitIgnoreFile(path);
 					}
-					else if (StringUtil.startsWith(fileName, ".lfrbuild-") ||
-							 StringUtil.startsWith(fileName, ".lfrrelease-")) {
-
-						Assert.assertEquals(
-							"Marker file " + path + " must be empty", 0,
-							basicFileAttributes.size());
-					}
-					else if (StringUtil.endsWith(fileName, ".gradle") &&
-							 !_whitelistedGradleFileNames.contains(fileName)) {
-
-						String content = _read(path);
-
-						Assert.assertFalse(
-							"Incorrect repository URL in " + path +
-								", please use " + _REPOSITORY_URL + " instead",
-							content.contains("plugins.gradle.org/m2"));
-
-						Assert.assertFalse(
-							"Plugins DSL forbidden in " + path +
-								", please use \"apply plugin:\" instead",
-							content.contains("plugins {"));
-					}
 
 					return FileVisitResult.CONTINUE;
 				}
@@ -260,6 +273,33 @@ public class ModulesStructureTest {
 										path.resolveSibling(entry.getValue()));
 							}
 						}
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
+	@Test
+	public void testScanMarkerFiles() throws IOException {
+		Files.walkFileTree(
+			_modulesDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					String fileName = String.valueOf(path.getFileName());
+
+					if (StringUtil.startsWith(fileName, ".lfrbuild-") ||
+						StringUtil.startsWith(fileName, ".lfrrelease-")) {
+
+						Assert.assertEquals(
+							"Marker file " + path + " must be empty", 0,
+							basicFileAttributes.size());
 					}
 
 					return FileVisitResult.CONTINUE;

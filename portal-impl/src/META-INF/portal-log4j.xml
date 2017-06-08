@@ -893,7 +893,7 @@
 	</category>
 
 	<category name="com.liferay.portal.util.PortalImpl">
-		<priority value="INFO" />
+		<priority value="WARN" />
 	</category>
 
 	<category name="com.liferay.portal.util.PortalInstances">

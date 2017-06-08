@@ -242,6 +242,10 @@
 		</init-param>
 	</filter>
 	<filter>
+		<filter-name>Proxy Path Filter</filter-name>
+		<filter-class>com.liferay.portal.servlet.filters.proxypath.ProxyPathFilter</filter-class>
+	</filter>
+	<filter>
 		<filter-name>Remoting Servlet Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter</filter-class>
 		<init-param>
@@ -467,6 +471,10 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Virtual Host Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Proxy Path Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>

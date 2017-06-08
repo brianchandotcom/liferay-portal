@@ -77,6 +77,13 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				expectedDBType = ExpectedDBType.SYBASE,
 				expectedLog = "Unable to process runnable: Invalid column name 'Unknown'.",
 				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_SYBASE,
+				expectedLog =
+					"Unable to process runnable: Invalid column name " +
+						"'Unknown'.",
+				expectedType = ExpectedType.PREFIX
 			)
 		},
 		level = "ERROR", loggerClass = ThrowableAwareRunnable.class
@@ -129,6 +136,12 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.SYBASE,
 				expectedLog = "Unable to process runnable: Unknown not found.",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_SYBASE,
+				expectedLog =
+					"Unable to process runnable: Unknown not found.",
 				expectedType = ExpectedType.PREFIX
 			)
 		},
@@ -193,6 +206,12 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.SYBASE,
 				expectedLog = "Unable to process runnable: Unknown not found.",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_SYBASE,
+				expectedLog =
+					"Unable to process runnable: Unknown not found.",
 				expectedType = ExpectedType.PREFIX
 			)
 		},

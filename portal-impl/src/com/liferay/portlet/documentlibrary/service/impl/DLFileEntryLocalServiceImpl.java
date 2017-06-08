@@ -167,6 +167,10 @@ public class DLFileEntryLocalServiceImpl
 			throw new FileNameException("Title is null");
 		}
 
+		if (size == 0 && Validator.isNull(title)) {
+			throw new FileNameException();
+		}
+
 		// File entry
 
 		User user = userPersistence.findByPrimaryKey(userId);

@@ -32,6 +32,8 @@
 		sb.append(URLCodec.encodeURL(showErrorMessageURL.toString()));
 		sb.append("&entryId=");
 		sb.append(entry.getEntryId());
+		sb.append("&p_l_id=");
+		sb.append(themeDisplay.getPlid());
 
 		String viewEntryURL = sb.toString();
 		%>

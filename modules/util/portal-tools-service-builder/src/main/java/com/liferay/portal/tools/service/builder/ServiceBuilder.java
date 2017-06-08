@@ -1885,6 +1885,11 @@ public class ServiceBuilder {
 			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 	}
 
+	private static String _normalize(String fileName) {
+		return StringUtil.replace(
+			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+	}
+
 	private static String _read(File file) throws IOException {
 		String s = new String(
 			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);

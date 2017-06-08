@@ -134,6 +134,13 @@ public class PACLAggregateTest extends AutoBalanceTestCase {
 		arguments.add("-Dliferay.mode=test");
 		arguments.add("-Dsun.zip.disableMemoryMapping=true");
 
+		boolean junitDebug = Boolean.getBoolean("jvm.debug");
+
+		if (junitDebug) {
+			arguments.add(_JPDA_OPTIONS);
+			arguments.add("-Djvm.debug=true");
+		}
+
 		String aspectjAgent = System.getProperty("aspectj.agent");
 
 		if (aspectjAgent != null) {

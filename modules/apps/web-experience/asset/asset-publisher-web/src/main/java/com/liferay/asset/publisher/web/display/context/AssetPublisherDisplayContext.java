@@ -116,6 +116,12 @@ public class AssetPublisherDisplayContext {
 			(AssetPublisherWebConfiguration)portletRequest.getAttribute(
 				AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION);
 		_request = PortalUtil.getHttpServletRequest(portletRequest);
+
+		_assetPublisherPortletInstanceConfiguration =
+			(AssetPublisherPortletInstanceConfiguration)
+				portletRequest.getAttribute(
+					AssetPublisherWebKeys.
+						ASSET_PUBLISHER_PORTLET_INSTANCE_CONFIGURATION);
 	}
 
 	/**

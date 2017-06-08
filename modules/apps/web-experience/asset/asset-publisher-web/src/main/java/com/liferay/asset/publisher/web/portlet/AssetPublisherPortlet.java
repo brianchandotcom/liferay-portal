@@ -332,6 +332,21 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 			renderRequest.setAttribute(
 				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			AssetPublisherPortletInstanceConfiguration
+				assetPublisherPortletInstanceConfiguration =
+					portletDisplay.getPortletInstanceConfiguration(
+						AssetPublisherPortletInstanceConfiguration.class);
+
+			renderRequest.setAttribute(
+				AssetPublisherWebKeys.
+					ASSET_PUBLISHER_PORTLET_INSTANCE_CONFIGURATION,
+				assetPublisherPortletInstanceConfiguration);
 		}
 		catch (Exception e) {
 			_log.error("Unable to get asset publisher customizer", e);

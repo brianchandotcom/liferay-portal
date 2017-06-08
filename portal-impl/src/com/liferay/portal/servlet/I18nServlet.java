@@ -116,6 +116,14 @@ public class I18nServlet extends HttpServlet {
 
 				LanguageUtil.updateCookie(request, response, locale);
 
+				Locale locale = LocaleUtil.fromLanguageId(i18nLanguageId);
+
+				HttpSession session = request.getSession();
+
+				session.setAttribute(Globals.LOCALE_KEY, locale);
+
+				LanguageUtil.updateCookie(request, response, locale);
+
 				ServletContext servletContext = getServletContext();
 
 				RequestDispatcher requestDispatcher =

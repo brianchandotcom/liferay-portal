@@ -11,7 +11,7 @@
 		</execute>
 
 		<execute function="Type" locator1="TextInput#URL" value1="${entryURL}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${entryContent}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
 
 		<execute function="Uncheck" locator1="Checkbox#DISPLAY_IMMEDIATELY" />
 
@@ -59,7 +59,7 @@
 		</execute>
 
 		<execute function="Type" locator1="TextInput#URL" value1="${entryURL}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${entryContent}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
 
 		<if>
 			<isset var="priority" />
@@ -130,7 +130,7 @@
 		</execute>
 
 		<execute function="Type" locator1="TextInput#URL" value1="${entryURLEdit}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${entryContentEdit}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContentEdit}" />
 
 		<execute macro="Button#clickSave" />
 	</command>

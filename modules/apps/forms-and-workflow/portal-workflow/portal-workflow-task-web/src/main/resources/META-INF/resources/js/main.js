@@ -88,13 +88,11 @@ AUI.add(
 				var comments = A.one('#' + randomId + 'updateComments');
 
 				if (content) {
-					form.append(content);
-					content.show();
+					form.append(content.getContent());
 				}
 
 				if (comments) {
-					form.append(comments);
-					comments.show();
+					form.append(comments.getContent());
 				}
 
 				var dialog = Liferay.Util.Window.getWindow(

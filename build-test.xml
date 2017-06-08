@@ -6347,7 +6347,9 @@ persisted.scheduler.org.quartz.threadPool.threadCount=1
 
 axis.servlet.hosts.allowed=
 
-tunnel.servlet.hosts.allowed=</echo>
+tunnel.servlet.hosts.allowed=
+
+javascript.single.page.application.timeout=300000</echo>
 
 		<if>
 			<equals arg1="${database.type}" arg2="oracle" />

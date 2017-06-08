@@ -1,0 +1,22 @@
+<definition component-name="portal-plugins-osgi">
+	<property name="plugins.deployment.type" value="osgi" />
+	<property name="testray.main.component.name" value="Plugin Installer" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="EmailToMBFilterHookSmoke" priority="4">
+		<property name="hook.plugins.includes" value="email-to-mb-filter-hook" />
+
+		<var name="appName" value="Email to Message Boards Filter" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute function="AssertTextPresent#assertTextPresent" value1="${appName}" />
+
+		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=email-to-mb-filter-hook" />
+	</command>
+</definition>

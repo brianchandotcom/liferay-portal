@@ -22,4 +22,9 @@
 		<from>^/web/guest/community/forums/message_boards(.{0,2000})$</from>
 		<to type="permanent-redirect">%{context-path}/web/guest/community/forums/-/message_boards$1</to>
 	</rule>
+	<rule>
+		<!-- LPS-29295 -->
+		<from>^/api/webdav(.*)</from>
+		<to type="redirect">/webdav$1</to>
+	</rule>
 </urlrewrite>

@@ -293,6 +293,8 @@ public class IconTag extends IncludeTag {
 			sb.append("')");
 
 			onClick = sb.toString();
+
+			_url = "javascript:;";
 		}
 
 		return onClick;

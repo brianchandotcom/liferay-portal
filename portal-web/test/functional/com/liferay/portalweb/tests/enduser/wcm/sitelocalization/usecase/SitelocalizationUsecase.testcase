@@ -683,8 +683,9 @@
 		</execute>
 	</command>
 
-	<command name="RedirectLocalizedFriendlyURL" priority="5">
+	<command name="RedirectLocalizedFriendlyURL" priority="4">
 		<description message="This is a use case for LPS-59345" />
+
 		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#RedirectLocalizedFriendlyURL" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />

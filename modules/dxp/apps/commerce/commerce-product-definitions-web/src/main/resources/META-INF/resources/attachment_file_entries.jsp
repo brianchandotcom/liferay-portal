@@ -156,6 +156,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 							rowURL.setParameter("backURL", backURL);
 							rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
 							rowURL.setParameter("cpAttachmentFileEntryId", String.valueOf(cpAttachmentFileEntry.getCPAttachmentFileEntryId()));
+							rowURL.setParameter("toolbarItem", toolbarItem);
 
 							FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
 

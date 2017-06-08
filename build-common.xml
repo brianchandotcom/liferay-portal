@@ -629,6 +629,8 @@ information.
 					<echo>Skipped unavailable task: @{task}.</echo>
 				</else>
 			</if>
+
+			<delete file="@{artifact.name}/pom.xml" />
 		</sequential>
 	</macrodef>
 

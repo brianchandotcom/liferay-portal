@@ -56,6 +56,12 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="This field is required." />
 	</command>
 
+	<command name="viewSaveWithoutField">
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please add at least one field." />
+	</command>
+
 	<command name="viewSuccessMessage">
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 

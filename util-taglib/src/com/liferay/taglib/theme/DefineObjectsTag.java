@@ -28,6 +28,12 @@ public class DefineObjectsTag extends TagSupport {
 
 	@Override
 	public int doStartTag() {
+		if (!GetterUtil.getBoolean(
+				pageContext.getAttribute(WebKeys.THEME_DEFINE_OBJECTS), true)) {
+
+			return SKIP_BODY;
+		}
+
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 

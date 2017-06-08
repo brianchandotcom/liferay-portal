@@ -19,6 +19,17 @@
 		var Liferay = Liferay || {};
 
 		Liferay.Browser = {
+
+			<%
+				String version = BrowserSnifferUtil.getVersion(request);
+
+				String majorVersion = version;
+
+				if (version.isEmpty()) {
+					majorVersion = "0";
+				}
+			%>
+
 			acceptsGzip: function() {
 				return <%= BrowserSnifferUtil.acceptsGzip(request) %>;
 			},

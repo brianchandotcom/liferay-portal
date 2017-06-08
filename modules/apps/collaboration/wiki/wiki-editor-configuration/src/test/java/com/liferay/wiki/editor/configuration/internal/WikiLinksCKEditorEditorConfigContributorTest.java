@@ -70,12 +70,12 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 		_inputEditorTaglibAttributes.put(
 			"liferay-ui:input-editor:name", "testEditor");
 
-		PortletURL itemSelectorPortletURLOneTab = mock(PortletURL.class);
+		PortletURL oneTabItemSelectorPortletURL = mock(PortletURL.class);
 
 		when(
-			itemSelectorPortletURLOneTab.toString()
+			oneTabItemSelectorPortletURL.toString()
 		).thenReturn(
-			"itemSelectorPortletURLWithUrlSelectionViewsOneTab"
+			"oneTabItemSelectorPortletURL"
 		);
 
 		when(
@@ -83,15 +83,15 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 				Matchers.any(RequestBackedPortletURLFactory.class),
 				Matchers.anyString(), Matchers.any(ItemSelectorCriterion.class))
 		).thenReturn(
-			itemSelectorPortletURLOneTab
+			oneTabItemSelectorPortletURL
 		);
 
-		PortletURL itemSelectorPortletURLTwoTabs = mock(PortletURL.class);
+		PortletURL twoTabsItemSelectorPortletURL = mock(PortletURL.class);
 
 		when(
-			itemSelectorPortletURLTwoTabs.toString()
+			twoTabsItemSelectorPortletURL.toString()
 		).thenReturn(
-			"itemSelectorPortletURLWithUrlSelectionViewsTwoTabs"
+			"twoTabsItemSelectorPortletURL"
 		);
 
 		when(
@@ -100,7 +100,7 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 				Matchers.anyString(), Matchers.any(ItemSelectorCriterion.class),
 				Matchers.any(ItemSelectorCriterion.class))
 		).thenReturn(
-			itemSelectorPortletURLTwoTabs
+			twoTabsItemSelectorPortletURL
 		);
 
 		_wikiLinksCKEditorEditorConfigContributor =
@@ -130,8 +130,7 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
 		expectedJSONObject.put(
-			"filebrowserBrowseUrl",
-			"itemSelectorPortletURLWithUrlSelectionViewsOneTab");
+			"filebrowserBrowseUrl", "oneTabItemSelectorPortletURL");
 		expectedJSONObject.put("removePlugins", "plugin1");
 
 		JSONAssert.assertEquals(
@@ -155,8 +154,7 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
 		expectedJSONObject.put(
-			"filebrowserBrowseUrl",
-			"itemSelectorPortletURLWithUrlSelectionViewsTwoTabs");
+			"filebrowserBrowseUrl", "twoTabsItemSelectorPortletURL");
 		expectedJSONObject.put("removePlugins", "plugin1");
 
 		JSONAssert.assertEquals(
@@ -182,8 +180,7 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
 		expectedJSONObject.put(
-			"filebrowserBrowseUrl",
-			"itemSelectorPortletURLWithUrlSelectionViewsOneTab");
+			"filebrowserBrowseUrl", "oneTabItemSelectorPortletURL");
 		expectedJSONObject.put("removePlugins", "plugin1");
 
 		JSONAssert.assertEquals(

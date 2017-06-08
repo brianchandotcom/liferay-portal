@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.wiki.editor.configuration.internal;
+package com.liferay.wiki.editor.link.browse.web.internal.editor.configuration;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.item.selector.WikiPageURLItemSelectorReturnType;
+import com.liferay.wiki.item.selector.WikiPageTitleItemSelectorReturnType;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,18 +26,19 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"editor.config.key=contentEditor", "editor.name=ckeditor",
+		"editor.config.key=contentEditor", "editor.name=alloyeditor_creole",
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
-		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
+		"service.ranking:Integer=1000"
 	},
 	service = EditorConfigContributor.class
 )
-public class WikiLinksCKEditorConfigContributor
-	extends BaseWikiLinksCKEditorConfigContributor {
+public class WikiContentAlloyEditorCreoleLinkBrowseConfigContributor
+	extends BaseWikiContentAlloyEditorLinkBrowseConfigContributor {
 
 	protected ItemSelectorReturnType getItemSelectorReturnType() {
-		return new WikiPageURLItemSelectorReturnType();
+		return new WikiPageTitleItemSelectorReturnType();
 	}
 
 }

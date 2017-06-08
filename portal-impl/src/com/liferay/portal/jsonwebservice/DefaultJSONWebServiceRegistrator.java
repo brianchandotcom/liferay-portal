@@ -210,6 +210,47 @@ public class DefaultJSONWebServiceRegistrator
 		return service.getClass();
 	}
 
+	protected Class<?> getTargetClass(Object service) throws Exception {
+		while (ProxyUtil.isProxyClass(service.getClass())) {
+			InvocationHandler invocationHandler =
+				ProxyUtil.getInvocationHandler(service);
+
+			if (invocationHandler instanceof AdvisedSupportProxy) {
+				AdvisedSupport advisedSupport =
+					ServiceBeanAopProxy.getAdvisedSupport(service);
+
+				TargetSource targetSource = advisedSupport.getTargetSource();
+
+				service = targetSource.getTarget();
+			}
+			else if (invocationHandler instanceof ClassLoaderBeanHandler) {
+				ClassLoaderBeanHandler classLoaderBeanHandler =
+					(ClassLoaderBeanHandler)invocationHandler;
+
+				Object bean = classLoaderBeanHandler.getBean();
+
+				if (bean instanceof ServiceWrapper) {
+					ServiceWrapper<?> serviceWrapper = (ServiceWrapper<?>)bean;
+
+					service = serviceWrapper.getWrappedService();
+				}
+				else {
+					service = bean;
+				}
+			}
+			else {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to handle proxy of type " + invocationHandler);
+				}
+
+				break;
+			}
+		}
+
+		return service.getClass();
+	}
+
 	protected Class<?> loadUtilClass(Class<?> implementationClass)
 		throws ClassNotFoundException {
 

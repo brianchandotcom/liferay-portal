@@ -101,10 +101,10 @@ public interface CPDefinitionService extends BaseService {
 		java.lang.String baseSKU, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> shortDescriptionMap,
 		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String productTypeName, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 

@@ -251,10 +251,10 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] shortDescriptionMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
-		java.lang.String productTypeName, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -268,11 +268,11 @@ public class CPDefinitionServiceSoap {
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinition(cpDefinitionId,
 					baseSKU, titleMap, shortDescriptionMap, descriptionMap,
-					productTypeName, ddmStructureKey, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
+					ddmStructureKey, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}

@@ -457,10 +457,10 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String productTypeName, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -470,10 +470,10 @@ public class CPDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-					descriptionMap, productTypeName, ddmStructureKey,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
+					descriptionMap, ddmStructureKey, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
@@ -580,9 +580,8 @@ public class CPDefinitionServiceHttp {
 	private static final Class<?>[] _updateCPDefinitionParameterTypes12 = new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.lang.String.class,
-			java.lang.String.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class,
+			int.class, int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateStatusParameterTypes13 = new Class[] {

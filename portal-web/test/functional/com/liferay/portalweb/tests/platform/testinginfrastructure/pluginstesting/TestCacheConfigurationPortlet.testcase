@@ -1,0 +1,25 @@
+<definition component-name="portal-test-plugins">
+	<property name="testray.main.component.name" value="Test Plugins" />
+	<property name="custom.properties" value="hibernate.cache.use_query_cache=true$${line.separator}hibernate.cache.use_second_level_cache=true" />
+	<property name="portlet.plugins.includes" value="test-cache-configuration-portlet" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ViewCacheConfiguration" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Cache Configuration Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Test Cache Configuration" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="PGTestPortlet#TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+	</command>
+</definition>

@@ -1,0 +1,25 @@
+<definition component-name="portal-test-plugins">
+	<property name="testray.main.component.name" value="Test Plugins" />
+	<property name="portlet.plugins.includes" value="test-resources-importer-portlet" />
+	<property name="web.plugins.includes" value="resources-importer-web" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command known-issues="LPS-45835" name="ViewResourcesImporter" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Resources Importer Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Test Resources Importer" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="PGTestPortlet#TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+	</command>
+</definition>

@@ -36,6 +36,10 @@ public class GroovySourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
+	@Override
+	protected void postFormat() throws Exception {
+	}
+
 	private static final String[] _INCLUDES = new String[] {"**/*.groovy"};
 
 }

@@ -85,6 +85,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.jar.Attributes;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
@@ -1389,7 +1390,21 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			bundleTracker.open();
 
-			countDownLatch.await();
+			try {
+				countDownLatch.await(30, TimeUnit.SECONDS);
+			}
+			catch (InterruptedException ie) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(bundle);
+				sb.append(" could not be initialized.");
+				sb.append("Try to delete ${liferay.home}/osgi/state folder ");
+				sb.append("and restart.");
+
+				_log.fatal(sb.toString());
+
+				System.exit(-1);
+			}
 		}
 
 		throwableCollector.rethrow();

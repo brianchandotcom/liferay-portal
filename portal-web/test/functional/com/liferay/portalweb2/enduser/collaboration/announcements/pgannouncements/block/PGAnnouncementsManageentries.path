@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>PGAnnouncementsManageentries</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGAnnouncementsManageentries</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGAnnouncementsManageentries</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISTRIBUTION_SCOPE</td>
+	<td>//select[@id='_84_distributionScope']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ENTRY</td>
+	<td>//input[@value='Add Entry']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULTS</td>
+	<td>//div[@class='search-results']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENTRY-->
+<tr>
+	<td>ENTRY_TITLE_1</td>
+	<td>xpath=(//td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TYPE_1</td>
+	<td>xpath=(//td[2]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_ACTIONS_1</td>
+	<td>xpath=(//td[6]/span[@title='Actions']/ul/li/strong/a/span)[1]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -498,6 +498,39 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		return 0;
 	}
 
+	protected long getMaxFileVersionId(long fileEntryId) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select max(fileVersionId) from DLFileVersion where " +
+					"fileEntryId = " + fileEntryId);
+
+			rs = ps.executeQuery();
+
+			rs.next();
+
+			return rs.getLong(1);
+		}
+		catch (SQLException e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to find max fileVersionId for document " +
+						fileEntryId,
+					e);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return 0;
+	}
+
 	protected List<String> getResourceActionIds(
 		Map<String, Long> bitwiseValues, long actionIdsLong) {
 
@@ -660,6 +693,37 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 			if (_sourceHookClassName.equals(DatabaseHook.class.getName())) {
 				runSQL("update Image set text_ = ''");
+			}
+		}
+	}
+
+	protected void migrateThumbnail(
+			long companyId, long groupId, long fileEntryId, long fileVersionId,
+			long largeImageId, long thumbnailImageId, long custom1ImageId,
+			long custom2ImageId)
+		throws Exception {
+
+		Image thumbnailImage = null;
+
+		try {
+			thumbnailImage = getImage(thumbnailImageId);
+
+			InputStream is = getHookImageAsStream(thumbnailImage);
+
+			ImageProcessorUtil.storeThumbnail(
+				companyId, groupId, fileEntryId, fileVersionId, custom1ImageId,
+				custom2ImageId, is, thumbnailImage.getType());
+
+			if (largeImageId != thumbnailImageId) {
+				_sourceHook.deleteImage(thumbnailImage);
+
+				runSQL("delete from Image where imageId = " + thumbnailImageId);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Ignoring exception for image " + thumbnailImageId, e);
 			}
 		}
 	}

@@ -42,7 +42,7 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all", "simple", "group", "virtual"} %>'
+			navigationKeys='<%= new String[] {"all"} %>'
 			portletURL="<%= cpDefinitionItemSelectorViewDisplayContext.getPortletURL() %>"
 		/>
 

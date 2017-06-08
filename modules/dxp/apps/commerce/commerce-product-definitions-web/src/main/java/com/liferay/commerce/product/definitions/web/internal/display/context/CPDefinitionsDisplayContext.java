@@ -19,6 +19,7 @@ import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsP
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.type.CPType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -58,6 +60,25 @@ public class CPDefinitionsDisplayContext
 		return ParamUtil.getString(httpServletRequest, "navigation", "all");
 	}
 
+	public String[] getNavigationKeys() {
+
+		List<String> navigationKeysList = new ArrayList<>();
+
+		navigationKeysList.add("all");
+
+		List<CPType> cpTypes = getCPTypes();
+
+		for(CPType cpType: cpTypes){
+			navigationKeysList.add(cpType.getName());
+		}
+
+		String[] navigationKeys = new String[navigationKeysList.size()];
+
+		navigationKeys = navigationKeysList.toArray(navigationKeys);
+
+		return navigationKeys;
+	}
+
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
@@ -75,19 +96,11 @@ public class CPDefinitionsDisplayContext
 	public String getProductTypeName() {
 		String navigation = getNavigation();
 
-		String productTypeName = null;
-
-		if (navigation.equals("simple")) {
-			productTypeName = navigation;
-		}
-		else if (navigation.equals("group")) {
-			productTypeName = navigation;
-		}
-		else if (navigation.equals("virtual")) {
-			productTypeName = navigation;
+		if (navigation.equals("all")) {
+			return null;
 		}
 
-		return productTypeName;
+		return navigation;
 	}
 
 	@Override

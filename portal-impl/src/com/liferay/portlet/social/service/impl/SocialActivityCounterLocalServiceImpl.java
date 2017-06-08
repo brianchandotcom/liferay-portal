@@ -759,9 +759,9 @@ public class SocialActivityCounterLocalServiceImpl
 					userId, activityCountersMap);
 
 				for (int i = 0; i < userIds.size(); i++) {
-					long curUserId = userIds.get(i);
+					Number curUserId = (Number)userIds.get(i);
 
-					if (userId == curUserId) {
+					if (userId == curUserId.longValue()) {
 						userActivityCounters[i] = userActivityCounter;
 
 						break;

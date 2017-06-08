@@ -1,0 +1,4 @@
+Bundle-Version: ${plugin.full.version}
+Include-Resource:\
+	classes
+Private-Package: com.liferay.portal.portlet.tracker.internal

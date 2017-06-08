@@ -1,0 +1,247 @@
+@import "bourbon";
+
+.taglib-image-selector {
+	height: 100%;
+	min-height: 100px;
+	position: relative;
+	text-align: center;
+
+	.drop-here-info {
+		font-size: 25px;
+		height: 100%;
+		min-height: 115px;
+		position: absolute;
+		text-align: center;
+		top: 0;
+		visibility: hidden;
+		width: 100%;
+
+		.drop-here-indicator {
+			@include transform(translate(0, -50%));
+
+			height: 115px;
+			left: 0;
+			margin: auto;
+			position: absolute;
+			right: 0;
+			top: 50%;
+		}
+
+		.drop-icons {
+			display: inline-block;
+			position: relative;
+			width: 160px;
+
+			span {
+				position: absolute;
+				text-align: center;
+			}
+
+			span:nth-of-type(1) {
+				font-size: 40px;
+				height: 60px;
+				left: 50px;
+				line-height: 60px;
+				top: 0;
+				width: 60px;
+				z-index: 1;
+			}
+
+			span:nth-of-type(2) {
+				font-size: 50px;
+				height: 80px;
+				left: 40px;
+				line-height: 80px;
+				width: 80px;
+				z-index: 2;
+			}
+
+			span:nth-of-type(3) {
+				display: block;
+				font-size: 45px;
+				height: 70px;
+				left: 50px;
+				line-height: 70px;
+				position: relative;
+				top: 0;
+				width: 70px;
+				z-index: 1;
+			}
+		}
+
+		.drop-text {
+			display: block;
+			font-size: 20px;
+			margin-left: 0;
+			margin-top: 20px;
+		}
+	}
+
+	&.drop-enabled .drop-here-info {
+		.drop-here-indicator {
+			height: 90px;
+		}
+
+		.drop-text {
+			display: inline-block;
+			margin-left: 20px;
+			margin-top: 0;
+		}
+	}
+
+	.glyphicon-ok {
+		left: 50%;
+		padding: 20px;
+		position: absolute;
+		top: 50%;
+
+		@include transform(translate(-50%, -50%));
+	}
+
+	.progress-wrapper {
+		display: none;
+		left: 50%;
+		max-width: 450px;
+		position: absolute;
+		top: 50%;
+
+		@include transform(translate(-50%, -50%));
+
+		width: 50%;
+
+		button {
+			margin-top: 20px;
+		}
+
+		p {
+			font-size: 18px;
+			margin: 0;
+			text-align: left;
+
+			&.size {
+				font-size: 14px;
+			}
+		}
+
+		.progressbar {
+			height: 6px;
+			margin: 5px auto;
+			width: 100%;
+		}
+	}
+
+	&.drop-active {
+		.change-image-controls {
+			display: none;
+		}
+
+		.progress-wrapper {
+			display: none;
+		}
+
+		.drop-here-info {
+			visibility: visible;
+
+			span:nth-of-type(1) {
+				left: 0;
+				top: 10px;
+			}
+
+			span:nth-of-type(3) {
+				left: 90px;
+				top: 8px;
+			}
+		}
+	}
+
+	&.draggable-image {
+		&.vertical .current-image {
+			max-height: inherit;
+			min-width: 100%;
+		}
+
+		&.horizontal .current-image {
+			max-width: inherit;
+		}
+
+		&.both .current-image {
+			max-height: 100%;
+			max-width: 100%;
+		}
+
+		&.drop-enabled {
+			.image-wrapper {
+				height : 100px;
+			}
+		}
+
+		.image-wrapper {
+			height : 400px;
+			overflow: hidden;
+			position: relative;
+			width: 100%;
+		}
+	}
+
+	&.progress-active {
+		.change-image-controls {
+			display: none;
+		}
+
+		.progress-wrapper {
+			display: block;
+		}
+	}
+
+	.browse-image-controls, .current-image {
+		margin: auto;
+		max-height: 100%;
+		max-width: 100%;
+	}
+
+	.browse-image-controls {
+		left: 0;
+		padding: 10px;
+		position: absolute;
+		right: 0;
+		top: 50%;
+
+		@include transform(translate(0, -50%));
+
+		width: 100%;
+		z-index: 1;
+
+		.drag-drop-label, .browse-image {
+			font-size: 16px;
+		}
+
+		.drag-drop-label {
+			line-height: 35px;
+		}
+
+		.file-validation-info {
+			margin-top: 15px;
+		}
+	}
+
+	.change-image-controls {
+		bottom: 10px;
+		position: absolute;
+		right: 10px;
+	}
+
+	.current-image {
+		margin-bottom: 5px;
+	}
+
+	.error-wrapper {
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 2;
+	}
+
+	.yui3-uploader-content {
+		display: none;
+	}
+}

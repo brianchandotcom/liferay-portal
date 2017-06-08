@@ -1,0 +1,18 @@
+.sites-directory-taglib {
+	overflow: hidden;
+
+	.app-view-entry-taglib.entry-display-style {
+		&.display-icon {
+			height: 100%;
+			width: 140px;
+		}
+
+		.entry-thumbnail {
+			max-width: 100px;
+
+			img {
+				max-width: 90px;
+			}
+		}
+	}
+}

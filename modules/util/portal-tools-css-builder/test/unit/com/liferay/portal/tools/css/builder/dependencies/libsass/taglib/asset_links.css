@@ -1,0 +1,16 @@
+.taglib-asset-links {
+	margin-top: 0.5em;
+
+	h2 {
+		margin: 0 1em 0.2em 0;
+	}
+
+	.asset-links-list {
+		list-style-type: none;
+		margin-left: 1.2em;
+	}
+
+	.asset-links-list-item {
+		margin-bottom: 0.4em;
+	}
+}

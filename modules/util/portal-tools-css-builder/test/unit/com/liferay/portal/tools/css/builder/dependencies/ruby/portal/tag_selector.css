@@ -1,0 +1,69 @@
+@import "bourbon";
+
+.lfr-tags-selector-list {
+	border: 0 solid transparent;
+	border-width: 0 1px 1px;
+	margin-bottom: 0.5em;
+
+	li {
+		&.tree-node .tree-node-content {
+			@include ellipsis;
+		}
+	}
+}
+
+.lfr-tags-selector-content {
+	.toolbar {
+		position: static;
+	}
+}
+
+.lfr-tag-selector-popup {
+	width: 250px;
+
+	fieldset {
+		border-width: 0;
+		margin: 0;
+		padding: 0;
+	}
+
+	label {
+		border-bottom: 1px solid transparent;
+		cursor: pointer;
+		display: block;
+
+		@include ellipsis;
+
+		padding: 2px;
+
+		input {
+			margin-right: 5px;
+			vertical-align: middle;
+		}
+	}
+
+	ul {
+		margin: 0;
+	}
+
+	li li {
+		list-style: none;
+		margin-left: 1em;
+	}
+
+	.lfr-tag-selector-search, .lfr-tag-selector-input {
+		margin-bottom: 0;
+	}
+
+	.lfr-tag-message {
+		display: none;
+	}
+
+	.no-matches {
+		padding: 3px;
+
+		.lfr-tag-message {
+			display: block;
+		}
+	}
+}

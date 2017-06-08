@@ -1,0 +1,43 @@
+// Deprecated
+
+@mixin respond-to($types...) {
+	$maxWidth: -1;
+	$minWidth: -1;
+
+	@each $type in $types {
+		@if $type == phone {
+			$maxWidth: if($maxWidth == -1, $breakpoint_phone - 1, $maxWidth);
+			$minWidth: 0;
+		}
+		@else if $type == tablet {
+			@if $maxWidth != 0 {
+				$maxWidth: if($maxWidth == -1, $breakpoint_tablet - 1, max($breakpoint_tablet - 1, $maxWidth));
+			}
+
+			$minWidth: if($minWidth == -1, $breakpoint_phone, min($breakpoint_phone, $minWidth));
+		}
+		@else if $type == desktop {
+			$maxWidth: 0;
+			$minWidth: if($minWidth == -1, $breakpoint_tablet, $minWidth);
+		}
+	}
+
+	@if $maxWidth <= 0 and $minWidth <= 0 {
+		@content;
+	}
+	@else if $maxWidth <= 0 {
+		@media (min-width: $minWidth) {
+			@content;
+		}
+	}
+	@else if $minWidth <= 0 {
+		@media (max-width: $maxWidth) {
+			@content;
+		}
+	}
+	@else {
+		@media (min-width: $minWidth) and (max-width: $maxWidth) {
+			@content;
+		}
+	}
+}

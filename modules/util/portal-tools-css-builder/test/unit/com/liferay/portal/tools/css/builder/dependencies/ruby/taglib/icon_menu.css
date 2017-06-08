@@ -1,0 +1,59 @@
+@import "mixins";
+
+.lfr-icon-menu .lfr-icon-menu-icon {
+	max-width: none;
+}
+
+.lfr-menu-list-overflow {
+	overflow: auto;
+	overflow-x: hidden;
+}
+
+.lfr-menu-list {
+	float: none;
+	overflow-y: auto;
+	position: relative;
+
+	&.direction-left, &.direction-right {
+		margin: 0 2px;
+	}
+
+	&.dropdown-menu {
+		float: none;
+		position: relative;
+
+		@include respond-to(phone, tablet) {
+			> li > a {
+				font-size: 22px;
+				line-height: 40px;
+				white-space: normal;
+
+				img {
+					margin-bottom: 3px;
+				}
+			}
+		}
+
+		.search-panel {
+			margin-bottom: 0;
+
+			.form-group {
+				margin: 0 16px;
+			}
+
+			.menu-item-filter {
+				width: auto;
+			}
+		}
+	}
+}
+
+@include respond-to(phone) {
+	.table-cell.last .lfr-icon-menu .dropdown-toggle {
+		text-align: center;
+
+		> img, .lfr-icon-menu-text {
+			display: none;
+		}
+	}
+}

@@ -1,0 +1,64 @@
+.lfr-search-container .entry-action {
+	width: 1px;
+
+	.taglib-icon {
+		white-space: nowrap;
+	}
+}
+
+.user-info {
+	overflow: hidden;
+
+	&.row, .row {
+		margin-left: 0;
+	}
+
+	.user-avatar {
+		display: inline-block;
+		overflow: hidden;
+
+		.avatar {
+			min-height: 40px;
+			width: 40px;
+		}
+	}
+
+	.user-details {
+		display: inline-block;
+		padding-left: 5px;
+
+		.date-info {
+			font-size: 11px;
+			min-height: 0;
+		}
+
+		.line {
+			padding-bottom: 12px;
+		}
+
+		.user-name {
+			font-size: 14px;
+			min-height: 0;
+		}
+	}
+}
+
+.user-status-tooltip {
+	.user-status-avatar {
+		float: left;
+		margin-right: 5px;
+
+		.user-status-avatar-image {
+			width: 27px;
+		}
+	}
+
+	.user-status-info {
+		display: inline-block;
+		overflow: hidden;
+
+		.user-status-date {
+			font-size: 11px;
+		}
+	}
+}

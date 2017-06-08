@@ -6,4 +6,5 @@ Export-Package:\
 -includeresource:\
 	wsdl=wsdl,\
 	@lib/wsrp-1.0-service-ws.jar,\
-	@lib/wsrp-2.0-service-ws.jar
+	@lib/wsrp-2.0-service-ws.jar,\
+	wsdl=wsdl

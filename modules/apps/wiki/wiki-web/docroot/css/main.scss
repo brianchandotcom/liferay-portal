@@ -1,0 +1,362 @@
+@import "bourbon";
+@import "mixins";
+
+.portlet-wiki {
+	.wiki-body {
+		@include hyphens;
+
+		overflow: auto;
+
+		@include respond-to(phone, tablet) {
+			@include experimental(overflow-scrolling, touch);
+		}
+
+		ol ol {
+			list-style: decimal outside;
+		}
+
+		pre {
+			background : #FFF;
+			border: 1px dashed #2F6FAB;
+			margin: 5px 0;
+			padding: 0.5em;
+		}
+	}
+
+	a.createpage {
+		color: #F00;
+	}
+
+	.toc {
+		background-color: #F9F9F9;
+		border: 1px solid #AAA;
+		padding: 0 1em;
+
+		h4 {
+			margin-bottom: 0.7em;
+		}
+
+		ul {
+			margin-top: 0;
+		}
+
+		li.toclevel-1 {
+			list-style-type: none;
+			margin-left: 0;
+		}
+
+		li.toclevel-2 {
+			list-style-type: none;
+			margin-left: 15px;
+		}
+
+		li.toclevel-3 {
+			list-style-type: none;
+			margin-left: 30px;
+		}
+	}
+
+	.page-categorization {
+		margin: -8px 0 10px;
+	}
+
+	.page-categories {
+		color: #7D7D7D;
+	}
+
+	.taglib-discussion {
+		margin: 1em;
+	}
+
+	.page-tags {
+		color: #7D7D7D;
+	}
+
+	.portlet-body {
+		h1.page-title .return-to-page {
+			background: url(@theme_image_path@/wiki/return_to_page.png) no-repeat 0 50%;
+			padding-left: 20px;
+			text-decoration: none;
+		}
+
+		h2, h3, h4 {
+			a.hashlink {
+				color: #DDE0E1;
+				font-size: 12px;
+				text-decoration: none;
+			}
+
+			&:hover a.hashlink {
+				color: #777;
+			}
+		}
+	}
+
+	.preview {
+		background: #FFC;
+		border: 1px dotted gray;
+		padding: 3px;
+	}
+
+	.taglib-custom-attributes-list {
+		margin-bottom: 1em;
+	}
+
+	.taglib-custom-attributes-list label {
+		display: block;
+	}
+
+	.child-pages {
+		margin: 2em 0;
+
+		h2 {
+			background-color: #DDD;
+			border-width: 0;
+			font-weight: normal;
+			margin: 0 0 0.5em;
+			padding: 0.2em;
+		}
+
+		h3 {
+			font-size: 1.2em;
+			margin-bottom: 0.3em;
+		}
+
+		ul {
+			margin-top: 0;
+		}
+
+		li {
+			font-size: 1.1em;
+			font-weight: bold;
+		}
+	}
+
+	.content-body {
+		.wiki-code {
+			background: #FFF;
+			border: 1px solid #777;
+			font-family: monospace;
+			white-space: pre;
+		}
+
+		.code-lines {
+			border-right: 1px solid #CCC;
+			color: #000;
+			margin-right: 5px;
+			padding: 0 5px;
+		}
+
+		a.external-link {
+			background: transparent url(@theme_image_path@/wiki/external.png) right top no-repeat;
+			padding-right: 10px;
+			text-decoration: none;
+
+			&:hover {
+				background: transparent url(@theme_image_path@/wiki/external.png) right top no-repeat;
+				padding-right: 11px;
+				text-decoration: underline;
+			}
+		}
+	}
+
+	.node-current {
+		font-weight: bold;
+		text-decoration: none;
+	}
+
+	.page-actions {
+		margin-top: 1.5em;
+
+		&:after {
+			clear: both;
+			content: '';
+			display: block;
+			height: 0;
+			visibility: hidden;
+		}
+
+		.article-actions {
+			border-right: 1px solid #999;
+			float: left;
+			margin-right: 10px;
+			padding-right: 10px;
+		}
+
+		.stats {
+			color: #999;
+		}
+
+		&.top-actions {
+			margin-bottom: 15px;
+			margin-top: 0;
+			text-align: right;
+
+			img {
+				margin-left: 5px;
+			}
+		}
+	}
+
+	.page-activities {
+		.activity-status {
+			color: #666;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
+		.activity-summary {
+			color: #999;
+			display: block;
+			margin-left: 3em;
+		}
+	}
+
+	.entry-links h2 {
+		border-width: 0;
+		font-size: 1em;
+		font-weight: bold;
+	}
+
+	.page-info {
+		width: 100%;
+
+		tr {
+			th, td {
+				border: 1px solid #CCC;
+				border-left-width: 0;
+				border-right-width: 0;
+				padding: 0.3em 1em;
+			}
+		}
+	}
+
+	.page-old-version {
+		color: #F93;
+		line-height: 1.2em;
+		margin: -1em 0 1.4em 0;
+		width: auto;
+
+		a {
+			color: #F93;
+		}
+	}
+
+	.page-ratings {
+		margin: 2em 0;
+	}
+
+	.page-redirect {
+		color: #7D7D7D;
+		cursor: pointer;
+		line-height: 1.2em;
+		margin: -1em 0 1.4em 0;
+		width: auto;
+	}
+
+	.page-redirect:hover {
+		text-decoration: underline;
+	}
+
+	.popup-print {
+		float: right;
+	}
+
+	.syntax-help-content {
+		border: 1px dotted gray;
+		padding-left: 10px;
+	}
+
+	.syntax-help {
+		h4 {
+			margin-bottom: 0.5em;
+		}
+
+		pre {
+			margin-bottom: 1em;
+			margin-left: 1em;
+
+			@include word-wrap(normal);
+		}
+	}
+
+	.top-links {
+		padding-bottom: 10px;
+	}
+
+	.top-links-nodes {
+		border: 1px solid #DDD;
+		float: left;
+		list-style-type: none;
+		margin: 0 0.5em 0.5em;
+		padding: 0.2em 0.5em;
+
+		.top-link-node {
+			border-right: 1px solid #AAA;
+			display: inline-block;
+			list-style-type: none;
+			margin: 0.3em;
+			padding-right: 0.2em;
+
+			&.last {
+				border-width: 0;
+			}
+		}
+	}
+
+	.top-links .page-search {
+		float: right;
+		margin: 0 0 0.5em 0.5em;
+	}
+
+	.search-root-entry {
+		color: #999;
+		float: right;
+	}
+
+	.top-links-configuration {
+		float: left;
+	}
+
+	.subscription-info tr td {
+		border-width: 0;
+		padding: 0.1em 10px 0.1em 0;
+	}
+
+	.trash-attachments {
+		float: right;
+	}
+
+	#wikiCommentsPanelContainer {
+		border-width: 0;
+	}
+
+	.wiki-page-toolbar {
+		margin: 0;
+	}
+
+	.app-view-taglib .lfr-header-row-content .form-group {
+		margin: 0;
+	}
+}
+
+.trash-restore-popup {
+	.form {
+		fieldset {
+			margin-bottom: 0;
+			padding: 0 15px;
+		}
+	}
+}
+
+.ie {
+	.portlet-wiki {
+		.child-pages h3 {
+			margin-bottom: 0.2em;
+		}
+
+		.syntax-help h4 {
+			margin-bottom: 0.3em;
+		}
+	}
+}

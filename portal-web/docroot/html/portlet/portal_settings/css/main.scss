@@ -1,0 +1,26 @@
+.portlet-users-admin {
+	.available-languages {
+		margin-top: 1em;
+
+		.fieldset-legend {
+			font-size: 100%;
+		}
+
+		.legend {
+			border-bottom-width: 0;
+		}
+
+		legend {
+			padding: 0;
+			padding-bottom: 0.5em;
+		}
+	}
+
+	.maps-google-maps-api-key {
+		margin-left: 20px;
+	}
+
+	.social-interactions-users, .social-interactions-social-relations {
+		margin-left: 20px;
+	}
+}

@@ -1,0 +1,101 @@
+@import "bourbon";
+
+.portlet-image-gallery-display {
+	.lfr-asset-attributes {
+		clear: both;
+	}
+
+	.carousel.image-viewer-base {
+		margin: 0 auto;
+		max-height: 100%;
+		max-width: 100%;
+	}
+
+	.folder-search {
+		float: right;
+		margin: 0 0 0.5em 0.5em;
+	}
+
+	.image-score {
+		display: block;
+		margin: 0 0 5px 35px;
+		padding-top: 3px;
+	}
+
+	.image-icon {
+		display: block;
+		float: left;
+		height: 170px;
+		margin: 10px 4px;
+		padding: 5px 15px 0;
+		text-align: center;
+		width: 150px;
+
+		&:hover, &.hover {
+			background-color: #D3E8F1;
+		}
+
+		&.error:hover {
+			background-color: #FDD;
+		}
+
+		&:hover .image-thumbnail img {
+			background-color: #B0D2E1;
+			border-color: #7ABFDD;
+		}
+
+		a {
+			color: #5B677D;
+		}
+	}
+
+	.image-link {
+		text-align: center;
+		text-decoration: none;
+	}
+
+	.image-thumbnail {
+		display: inline-block;
+		position: relative;
+
+		img {
+			background: #EAEAEA;
+			border: 1px solid #CCC;
+			margin: 0;
+			padding: 5px;
+		}
+	}
+
+	img.locked-icon, img.shortcut-icon {
+		bottom: 10px;
+		position: absolute;
+		z-index: 10;
+	}
+
+	img.locked-icon {
+		right: -10px;
+	}
+
+	img.shortcut-icon {
+		left: -5px;
+	}
+
+	.taglib-webdav {
+		margin-top: 3em;
+	}
+
+	.image-title {
+		clear: both;
+		display: block;
+
+		@include ellipsis;
+	}
+}
+
+.firefox {
+	.portlet-image-gallery-display {
+		.audio-node {
+			height: 35px;
+		}
+	}
+}

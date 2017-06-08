@@ -53,10 +53,6 @@ import org.osgi.service.component.annotations.Reference;
 public class KBAttachmentItemSelectorView
 	implements ItemSelectorView<KBAttachmentItemSelectorCriterion> {
 
-	public static final String
-		KB_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
-			"KB_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
-
 	@Override
 	public Class<KBAttachmentItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
@@ -107,7 +103,8 @@ public class KBAttachmentItemSelectorView
 					itemSelectedEventName, search, portletURL);
 
 		request.setAttribute(
-			KB_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			KBItemSelectorWebKeys.
+				KB_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			kbAttachmentItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();

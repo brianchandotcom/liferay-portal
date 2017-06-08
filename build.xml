@@ -283,6 +283,9 @@
 		<mkdir dir="${app.server.temp.dir}" />
 		<mkdir dir="${app.server.work.dir}" />
 
+		<mkdir dir="${liferay.home}/osgi/marketplace" />
+		<mkdir dir="${liferay.home}/osgi/war" />
+
 		<if>
 			<and>
 				<equals arg1="${app.server.type}" arg2="glassfish" />

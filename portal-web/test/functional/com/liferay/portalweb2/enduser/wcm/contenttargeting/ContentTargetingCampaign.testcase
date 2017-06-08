@@ -1,0 +1,491 @@
+<definition component-name="extra-apps-content-targeting">
+	<property name="testray.main.component.name" value="WCM" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Test Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Role#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
+	<command name="AddBlankCP" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartTime" value="12:00 AM" />
+			<var name="userSegmentSelect" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#viewCampaignCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPriority" value="3" />
+			<var name="campaignStatus" value="Started" />
+		</execute>
+	</command>
+
+	<command name="AddCampaignContentCP" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.jpg" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartTime" value="12:00 AM" />
+			<var name="userSegmentSelect" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionContentCP">
+			<var name="contentAlias" value="Content Alias" />
+			<var name="contentTitle" value="DM Document Title" />
+			<var name="contentTrackingActionSelect" value="View" />
+			<var name="linkId" value="Content id" />
+			<var name="menulistContent" value="Document" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="contentAlias" value="Content Alias" />
+			<var name="contentTitle" value="DM Document Title" />
+			<var name="contentTrackingActionSelect" value="View" />
+			<var name="viewTrackingActionsList" value="Content" />
+			<var name="youtubeVideoId" value="Content id" />
+		</execute>
+	</command>
+
+	<command name="AddCampaignFormCP" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartTime" value="12:00 AM" />
+			<var name="userSegmentSelect" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionFormCP">
+			<var name="formAlias" value="Form Alias" />
+			<var name="formId" value="Form id" />
+			<var name="formTrackingActionSelect" value="Submit" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="formAlias" value="Form Alias" />
+			<var name="formId" value="Form id" />
+			<var name="formTrackingActionSelect" value="Submit" />
+			<var name="viewTrackingActionsList" value="Form" />
+		</execute>
+	</command>
+
+	<command name="AddCampaignLinkCP" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartTime" value="12:00 AM" />
+			<var name="userSegmentSelect" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionLinkCP">
+			<var name="linkAlias" value="Link Alias" />
+			<var name="linkId" value="Link id" />
+			<var name="linkTrackingActionSelect" value="Click" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="linkAlias" value="Link Alias" />
+			<var name="linkId" value="Link id" />
+			<var name="linkTrackingActionSelect" value="Click" />
+			<var name="viewTrackingActionsList" value="Link" />
+		</execute>
+	</command>
+
+	<command name="AddCampaignPageCP" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartTime" value="12:00 AM" />
+			<var name="userSegmentSelect" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionPageCP">
+			<var name="pageAlias" value="Page Alias" />
+			<var name="pageFriendlyURL" value="/home" />
+			<var name="pageTrackingActionSelect" value="View" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="pageAlias" value="Page Alias" />
+			<var name="pageFriendlyURL" value="/home" />
+			<var name="pageTrackingActionSelect" value="View" />
+			<var name="viewTrackingActionsList" value="Page" />
+		</execute>
+	</command>
+
+	<command name="AddCampaignYoutubeCP" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartTime" value="12:00 AM" />
+			<var name="userSegmentSelect" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionYoutubevideosCP">
+			<var name="youtubeAlias" value="Youtube Alias" />
+			<var name="youtubeTrackingActionSelect" value="Playing" />
+			<var name="youtubeVideoId" value="Youtube id" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="viewTrackingActionsList" value="Youtube" />
+			<var name="youtubeAlias" value="Youtube Alias" />
+			<var name="youtubeTrackingActionSelect" value="Playing" />
+			<var name="youtubeVideoId" value="Youtube id" />
+		</execute>
+	</command>
+
+	<command name="DeleteCampaignCP" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartTime" value="12:00 AM" />
+			<var name="userSegmentSelect" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#deleteCampaignCP">
+			<var name="campaignName" value="Campaign Name" />
+		</execute>
+	</command>
+
+	<command name="EditCampaignCP" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="New US Description" />
+			<var name="userSegmentName" value="New US Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="ContentTargetingCampaign#addCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignEndDate" value="1/1/2015" />
+			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPrioritySelect" value="3" />
+			<var name="campaignStartDate" value="1/1/2014" />
+			<var name="campaignStartTime" value="12:00 AM" />
+			<var name="userSegmentSelect" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionFormCP">
+			<var name="formAlias" value="Form Alias" />
+			<var name="formId" value="Form id" />
+			<var name="formTrackingActionSelect" value="Submit" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="formAlias" value="Form Alias" />
+			<var name="formId" value="Form id" />
+			<var name="formTrackingActionSelect" value="Submit" />
+			<var name="viewTrackingActionsList" value="Form" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#editCampaignCP">
+			<var name="campaignDescriptionEdit" value="Campaign Description Edit" />
+			<var name="campaignEndDateEdit" value="1/1/2016" />
+			<var name="campaignEndTimeEdit" value="12:00 AM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignNameEdit" value="Campaign Name Edit" />
+			<var name="campaignPrioritySelectEdit" value="5" />
+			<var name="campaignStartDateEdit" value="1/1/2013" />
+			<var name="campaignStartTimeEdit" value="12:00 PM" />
+			<var name="linkAlias" value="Link Alias" />
+			<var name="linkId" value="Link id" />
+			<var name="linkTrackingActionSelect" value="Click" />
+			<var name="trackingActionAddList" value="youtube,link" />
+			<var name="trackingActionDeleteList" value="form" />
+			<var name="userSegmentSelectEdit" value="New US Name" />
+			<var name="youtubeAlias" value="Youtube Alias" />
+			<var name="youtubeTrackingActionSelect" value="Playing" />
+			<var name="youtubeVideoId" value="Youtube id" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="linkAlias" value="Link Alias" />
+			<var name="linkId" value="Link id" />
+			<var name="linkTrackingActionSelect" value="Click" />
+			<var name="viewTrackingActionsList" value="Link,Youtube" />
+			<var name="youtubeAlias" value="Youtube Alias" />
+			<var name="youtubeTrackingActionSelect" value="Playing" />
+			<var name="youtubeVideoId" value="Youtube id" />
+		</execute>
+	</command>
+</definition>

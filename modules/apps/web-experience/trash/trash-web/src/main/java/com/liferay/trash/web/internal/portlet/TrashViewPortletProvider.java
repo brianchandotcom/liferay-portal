@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
-import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 
 import javax.portlet.PortletRequest;
@@ -46,7 +46,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.trash.kernel.model.TrashEntry"},
+	property = {
+		"model.class.name=com.liferay.trash.kernel.model.TrashEntry",
+		"model.class.name=com.liferay.trash.model.TrashEntry"
+	},
 	service = ViewPortletProvider.class
 )
 public class TrashViewPortletProvider

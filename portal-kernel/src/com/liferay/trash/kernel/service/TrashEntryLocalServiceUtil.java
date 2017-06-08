@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @see TrashEntryLocalService
  * @see com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl
  * @see com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.trash.service.impl.TrashEntryLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class TrashEntryLocalServiceUtil {
 	/*

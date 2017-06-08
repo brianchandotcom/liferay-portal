@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.model.TrashEntry;
 
 import java.util.List;
 import java.util.Locale;

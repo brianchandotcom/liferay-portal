@@ -62,8 +62,11 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl
  * @see com.liferay.trash.kernel.service.TrashVersionLocalServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.trash.service.impl.TrashVersionLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class TrashVersionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements TrashVersionLocalService,

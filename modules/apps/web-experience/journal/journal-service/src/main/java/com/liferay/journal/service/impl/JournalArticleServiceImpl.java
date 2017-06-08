@@ -16,6 +16,7 @@ package com.liferay.journal.service.impl;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.base.JournalArticleServiceBaseImpl;
 import com.liferay.journal.service.permission.JournalArticlePermission;

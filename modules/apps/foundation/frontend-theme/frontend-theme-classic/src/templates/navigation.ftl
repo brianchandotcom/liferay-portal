@@ -1,5 +1,5 @@
 <div aria-expanded="false" class="collapse navbar-collapse" id="navigationCollapse">
-	<#if has_navigation && is_setup_complete>
+	<#if has_navigation && (is_setup_complete || themeDisplay.isImpersonated())>
 		<nav class="${nav_css_class} site-navigation" id="navigation" role="navigation">
 			<#assign preferences = freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 

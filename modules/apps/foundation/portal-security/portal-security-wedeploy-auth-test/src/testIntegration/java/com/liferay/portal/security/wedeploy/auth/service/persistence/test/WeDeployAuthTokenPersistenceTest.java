@@ -167,6 +167,15 @@ public class WeDeployAuthTokenPersistenceTest {
 	}
 
 	@Test
+	public void testCountByT_T() throws Exception {
+		_persistence.countByT_T(StringPool.BLANK, RandomTestUtil.nextInt());
+
+		_persistence.countByT_T(StringPool.NULL, 0);
+
+		_persistence.countByT_T((String)null, 0);
+	}
+
+	@Test
 	public void testCountByCI_T_T() throws Exception {
 		_persistence.countByCI_T_T(StringPool.BLANK, StringPool.BLANK,
 			RandomTestUtil.nextInt());
@@ -406,6 +415,13 @@ public class WeDeployAuthTokenPersistenceTest {
 		_persistence.clearCache();
 
 		WeDeployAuthToken existingWeDeployAuthToken = _persistence.findByPrimaryKey(newWeDeployAuthToken.getPrimaryKey());
+
+		Assert.assertTrue(Objects.equals(existingWeDeployAuthToken.getToken(),
+				ReflectionTestUtil.invoke(existingWeDeployAuthToken,
+					"getOriginalToken", new Class<?>[0])));
+		Assert.assertEquals(Integer.valueOf(existingWeDeployAuthToken.getType()),
+			ReflectionTestUtil.<Integer>invoke(existingWeDeployAuthToken,
+				"getOriginalType", new Class<?>[0]));
 
 		Assert.assertTrue(Objects.equals(
 				existingWeDeployAuthToken.getClientId(),

@@ -229,6 +229,7 @@
 		<execute macro="Form#editFieldLabel">
 			<var name="fieldName" value="ChooseYourDestiny" />
 			<var name="fieldValue" value="Edit Label" />
+			<var name="fieldName" value="ChooseYourDestiny" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />

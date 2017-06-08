@@ -1,0 +1,88 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SearchSitesDirectoryTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SearchSitesDirectoryTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/div/div/div/ul/li/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div/div/div/div/ul/li/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/div/section/header/h1/span</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form/div[2]/span/span/button[2]</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//form/div[2]/span/span/button[2]</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//h1/span</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1/span</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div/input[1]</td>
+	<td>Search Sites</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div/input[1]</td>
+	<td>Open</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'social-office-enabled')]/span[2]/a</td>
+	<td>Open Site1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'social-office-enabled')]/span[3]</td>
+	<td>Open Site1 Description</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Private Site2 Name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Restricted Site3 Name</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewSitesDirectoryTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewSitesDirectoryTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/div/div/div/ul/li/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div/div/div/div/ul/li/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/div/section/header/h1/span</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form/div[2]/span/span/button[2]</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//form/div[2]/span/span/button[2]</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//h1/span</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1/span</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[2]/a</td>
+	<td>Liferay</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'social-office-enabled')][1]/span[2]/a</td>
+	<td>Open Site1 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'social-office-enabled')][2]/span[2]/a</td>
+	<td>Restricted Site3 Name</td>
+</tr>
+<tr>
+	<td>assertNotPartialText</td>
+	<td>//ul</td>
+	<td>Private Site2 Name</td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AddSitesSite3TypeRestrictedTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AddSitesSite3TypeRestrictedTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/div/div/div/ul/li/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div/div/div/div/ul/li/a</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/div/section/header/h1/span</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//form/div[2]/span/span/button[1]</td>
+	<td>Add Site</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form/div[2]/span/span/button[1]</td>
+	<td>Add Site</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//form/div[2]/span/span/button[1]</td>
+	<td>Add Site</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//h1/span</td>
+	<td>Information</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1/span</td>
+	<td>Information</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input</td>
+	<td>Site Name</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input</td>
+	<td>Restricted Site3 Name</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//textarea</td>
+	<td>Site Description</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//textarea</td>
+	<td>Restricted Site3 Description</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@value='Next']</td>
+	<td>Next</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Next']</td>
+	<td>Next</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[2]/div[1]/h1/span</td>
+	<td>Settings</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div[1]/h1/span</td>
+	<td>Settings</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//select</td>
+	<td>None Default Social Office Site</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select</td>
+	<td>Default Social Office Site</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//span[2]/span/span/select</td>
+	<td>Restricted</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//span[2]/span/span/select</td>
+	<td>Open Restricted Private</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@value='Next']</td>
+	<td>Next</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Next']</td>
+	<td>Next</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[3]/div[1]/h1/span</td>
+	<td>Customization</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/div[1]/h1/span</td>
+	<td>Customization</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//div[4]/span[1]/input</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span[2]/input</td>
+	<td>Calendar</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span[3]/input</td>
+	<td>Documents</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span[4]/input</td>
+	<td>Forums</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span[5]/input</td>
+	<td>Blog</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span[6]/input</td>
+	<td>Wiki</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//span[7]/input</td>
+	<td>Members</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request processed successfully.</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'social-office-enabled')][3]/span[2]/a</td>
+	<td>Restricted Site3 Name</td>
+</tr>
+</tbody></table>
+</body>
+</html>

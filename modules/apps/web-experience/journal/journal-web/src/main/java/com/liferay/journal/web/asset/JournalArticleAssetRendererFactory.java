@@ -271,6 +271,7 @@ public class JournalArticleAssetRendererFactory
 		JournalArticleAssetRenderer journalArticleAssetRenderer =
 			new JournalArticleAssetRenderer(article);
 
+		journalArticleAssetRenderer.setServletContext(_servletContext);
 		journalArticleAssetRenderer.setFieldsToDDMFormValuesConverter(
 			_fieldsToDDMFormValuesConverter);
 		journalArticleAssetRenderer.setJournalContent(_journalContent);

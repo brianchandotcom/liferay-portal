@@ -213,7 +213,7 @@ public class I18nFilter extends BasePortalFilter {
 		}
 
 		if (Validator.isNotNull(queryString)) {
-			redirect += StringPool.QUESTION + request.getQueryString();
+			redirect += StringPool.QUESTION + queryString;
 		}
 
 		return redirect;

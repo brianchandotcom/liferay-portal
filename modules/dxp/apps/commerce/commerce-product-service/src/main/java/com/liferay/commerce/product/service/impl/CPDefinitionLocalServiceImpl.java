@@ -793,7 +793,7 @@ public class CPDefinitionLocalServiceImpl
 
 		CPType cpType = cpTypeServicesTracker.getCPType(productTypeName);
 
-		if (Validator.isNull(cpType)) {
+		if (cpType == null) {
 			throw new CPDefinitionProductTypeNameException();
 		}
 	}

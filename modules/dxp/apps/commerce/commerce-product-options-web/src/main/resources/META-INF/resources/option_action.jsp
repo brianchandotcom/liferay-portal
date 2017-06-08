@@ -48,7 +48,7 @@ else {
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
-		<portlet:param name="facetable" value="<%= (!cpOption.getFacetable()) %>" />
+		<portlet:param name="facetable" value="<%= String.valueOf(!cpOption.getFacetable()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
@@ -61,7 +61,7 @@ else {
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
-		<portlet:param name="required" value="<%= (!cpOption.getRequired()) %>" />
+		<portlet:param name="required" value="<%= String.valueOf(!cpOption.getRequired()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
@@ -74,7 +74,7 @@ else {
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
-		<portlet:param name="skuContributor" value="<%= (!cpOption.getSkuContributor()) %>" />
+		<portlet:param name="skuContributor" value="<%= String.valueOf(!cpOption.getSkuContributor()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

@@ -8202,6 +8202,20 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					<mapper from="[^/]+/(.*)" to="\1" type="regexp" />
 				</unzip>
 
+				<unzip
+					dest="${app.server.parent.dir}"
+					src="${tstamp.value}.zip"
+				>
+					<patternset
+						includes="liferay-*/tools/**"
+					/>
+					<mapper
+						from="[^/]+/(.*)"
+						to="${app.server.parent.dir}//\1"
+						type="regexp"
+					/>
+				</unzip>
+
 				<delete file="${tstamp.value}.zip" />
 
 				<chmod perm="a+x">

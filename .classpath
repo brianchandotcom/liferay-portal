@@ -290,4 +290,5 @@
 	<classpathentry kind="lib" path="lib/portal/xz.jar"/>
 	<classpathentry kind="lib" path="lib/portal/yui-compressor.jar"/>
 	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" path="definitions"/>
 </classpath>

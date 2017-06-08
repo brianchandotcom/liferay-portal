@@ -3393,6 +3393,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			return;
 		}
 
+		List<Portlet> portlets = portletLocalService.getPortlets(
+			group.getCompanyId());
+
+		if (portlets.isEmpty()) {
+
+			// LPS-38457
+
+			return;
+		}
+
 		long defaultUserId = userLocalService.getDefaultUserId(
 			group.getCompanyId());
 		String friendlyURL = getFriendlyURL(

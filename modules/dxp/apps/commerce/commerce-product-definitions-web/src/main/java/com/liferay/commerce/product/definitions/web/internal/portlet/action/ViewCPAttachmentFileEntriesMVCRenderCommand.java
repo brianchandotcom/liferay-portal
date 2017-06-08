@@ -74,8 +74,8 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 						_actionHelper, _attachmentsConfiguration,
 						_cpAttachmentFileEntryService,
 						_cpDefinitionOptionRelService, _cpInstanceHelper,
-						_dlAppService, _dlMimeTypeDisplayContext,
-						httpServletRequest, _itemSelector, _portal);
+						_dlMimeTypeDisplayContext, httpServletRequest,
+						_itemSelector, _portal);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -107,9 +107,6 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
-
-	@Reference
-	private DLAppService _dlAppService;
 
 	@Reference
 	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;

@@ -64,7 +64,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 			AttachmentsConfiguration attachmentsConfiguration,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPDefinitionOptionRelService cpDefinitionOptionRelService,
-			CPInstanceHelper cpInstanceHelper, DLAppService dlAppService,
+			CPInstanceHelper cpInstanceHelper,
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 			HttpServletRequest httpServletRequest, ItemSelector itemSelector,
 			Portal portal)
@@ -79,7 +79,6 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
 		_cpInstanceHelper = cpInstanceHelper;
-		_dlAppService = dlAppService;
 		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 		_itemSelector = itemSelector;
 		_portal = portal;
@@ -138,9 +137,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			getCPAttachmentFileEntry();
 
-		long fileEntryId = cpAttachmentFileEntry.getFileEntryId();
-
-		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+		FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
 
 		if (fileEntry == null) {
 			return StringPool.BLANK;
@@ -188,7 +185,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		String toolbarItem = ParamUtil.getString(
 			httpServletRequest, "toolbarItem");
 		int type = ParamUtil.getInteger(httpServletRequest, "type");
-		
+
 		portletURL.setParameter(
 			"mvcRenderCommandName", "viewAttachmentFileEntries");
 		portletURL.setParameter(
@@ -300,7 +297,6 @@ public class CPAttachmentFileEntriesDisplayContext extends
 	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 	private final CPInstanceHelper _cpInstanceHelper;
-	private final DLAppService _dlAppService;
 	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private final ItemSelector _itemSelector;
 	private final Portal _portal;

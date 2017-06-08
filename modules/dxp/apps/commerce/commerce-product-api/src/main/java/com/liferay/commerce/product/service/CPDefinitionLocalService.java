@@ -261,8 +261,8 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end, Sort sort) throws PortalException;
+		long companyId, long groupId, java.lang.String keywords, int status,
+		int start, int end, Sort sort) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(SearchContext searchContext);

@@ -130,12 +130,12 @@ public class CPDefinitionServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinition> searchCPDefinitions(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end, com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, java.lang.String keywords, int status,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .searchCPDefinitions(companyId, groupId, keywords, start,
-			end, sort);
+				   .searchCPDefinitions(companyId, groupId, keywords, status,
+			start, end, sort);
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(

@@ -419,7 +419,7 @@ public class CPDefinitionServiceHttp {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinition> searchCPDefinitions(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		java.lang.String keywords, int start, int end,
+		java.lang.String keywords, int status, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -427,7 +427,7 @@ public class CPDefinitionServiceHttp {
 					"searchCPDefinitions", _searchCPDefinitionsParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupId, keywords, start, end, sort);
+					companyId, groupId, keywords, status, start, end, sort);
 
 			Object returnObj = null;
 
@@ -575,7 +575,7 @@ public class CPDefinitionServiceHttp {
 		};
 	private static final Class<?>[] _searchCPDefinitionsParameterTypes11 = new Class[] {
 			long.class, long.class, java.lang.String.class, int.class, int.class,
-			com.liferay.portal.kernel.search.Sort.class
+			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateCPDefinitionParameterTypes12 = new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,

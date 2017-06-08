@@ -1,0 +1,109 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ClickTasksProgressBar60PercentCompleteTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ClickTasksProgressBar60PercentCompleteTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//nav/ul/li[1]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[1]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/div[1]/ul/li[5]/a</td>
+	<td>Tasks</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1/span[2]</td>
+	<td>Tasks</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Assigned to Me</td>
+	<td>Assigned to Me</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Assigned to Me</td>
+	<td>Assigned to Me</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[1]/div[1]/a</td>
+	<td>Task Description</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//td[2]/div/div[1]/div[2]</td>
+	<td>3/16/16</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[3]/a[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//div[@style='width: 60%;']</td>
+	<td>60% Complete</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//div[@style='width: 60%;']</td>
+	<td>60% Complete</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//td[1]/div[1]/a</td>
+	<td>Task Description</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//h1/span</td>
+	<td>Task Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1/span</td>
+	<td>Task Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div[2]/div[1]</td>
+	<td>Assigned to Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/div</td>
+	<td>60% Complete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[2]/td[2]/div</td>
+	<td>Normal</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//tr[3]/td[2]/div</td>
+	<td>3/16/16</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

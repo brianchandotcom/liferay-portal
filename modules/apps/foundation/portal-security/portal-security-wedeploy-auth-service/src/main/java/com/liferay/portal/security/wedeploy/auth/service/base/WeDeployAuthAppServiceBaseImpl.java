@@ -130,25 +130,6 @@ public abstract class WeDeployAuthAppServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the we deploy auth token remote service.
-	 *
-	 * @return the we deploy auth token remote service
-	 */
-	public com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenService getWeDeployAuthTokenService() {
-		return weDeployAuthTokenService;
-	}
-
-	/**
-	 * Sets the we deploy auth token remote service.
-	 *
-	 * @param weDeployAuthTokenService the we deploy auth token remote service
-	 */
-	public void setWeDeployAuthTokenService(
-		com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenService weDeployAuthTokenService) {
-		this.weDeployAuthTokenService = weDeployAuthTokenService;
-	}
-
-	/**
 	 * Returns the we deploy auth token persistence.
 	 *
 	 * @return the we deploy auth token persistence
@@ -374,8 +355,6 @@ public abstract class WeDeployAuthAppServiceBaseImpl extends BaseServiceImpl
 	protected WeDeployAuthAppPersistence weDeployAuthAppPersistence;
 	@BeanReference(type = com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenLocalService.class)
 	protected com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenLocalService weDeployAuthTokenLocalService;
-	@BeanReference(type = com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenService.class)
-	protected com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenService weDeployAuthTokenService;
 	@BeanReference(type = WeDeployAuthTokenPersistence.class)
 	protected WeDeployAuthTokenPersistence weDeployAuthTokenPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)

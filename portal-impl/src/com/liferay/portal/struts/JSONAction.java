@@ -103,6 +103,14 @@ public abstract class JSONAction extends Action {
 
 			json = JSONFactoryUtil.serializeThrowable(se);
 		}
+		catch (PrincipalException pe) {
+			_log.error(pe.getMessage());
+
+			PortalUtil.sendError(
+				HttpServletResponse.SC_FORBIDDEN, pe, request, response);
+
+			return null;
+		}
 		catch (Exception e) {
 			_log.error(e.getMessage());
 

@@ -1,0 +1,13 @@
+Liferay-Releng-App-Description: Liferay Vulcan provides a convenient way to create Hypermedia Web APIs that are meant to live long and prosper.
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Vulcan
+Liferay-Releng-Bundle: false
+Liferay-Releng-Category: Utility
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Deprecated: false
+Liferay-Releng-Labs: false
+Liferay-Releng-Marketplace: false
+Liferay-Releng-Portal-Required: false
+Liferay-Releng-Public: ${liferay.releng.public}
+Liferay-Releng-Restart-Required: false
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: ${liferay.releng.supported}

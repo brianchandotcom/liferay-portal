@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Vulcan Core API
+Bundle-SymbolicName: com.liferay.vulcan
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.vulcan.builder,\
+	com.liferay.vulcan.contributor,\
+	com.liferay.vulcan.representation

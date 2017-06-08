@@ -138,6 +138,10 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 			servletContext = resourceServletContext;
 		}
 
+		if (!file.exists()) {
+			return null;
+		}
+
 		String cacheCommonFileName = getCacheFileName(request);
 
 		File cacheContentTypeFile = new File(

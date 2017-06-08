@@ -85,6 +85,12 @@ public class ThemeImporter {
 
 		String css = GetterUtil.getString(headerElement.elementText("css"));
 
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		long importGroupId = groupIds.get(layoutSet.getGroupId());
+
 		LayoutSetLocalServiceUtil.updateLookAndFeel(
 			importGroupId, layoutSet.isPrivateLayout(), themeId, colorSchemeId,
 			css);

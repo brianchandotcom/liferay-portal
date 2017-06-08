@@ -33,8 +33,6 @@ import java.util.ResourceBundle;
 
 import org.apache.chemistry.opencmis.client.api.Document;
 
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Adolfo Pérez
  */
@@ -69,18 +67,13 @@ public abstract class BaseCMISRepositoryDefiner extends BaseRepositoryDefiner {
 					ProcessorCapability.ResourceGenerationStrategy.REUSE)));
 	}
 
-	protected PortalCapabilityLocator getPortalCapabilityLocator() {
-		return _portalCapabilityLocator;
-	}
+	protected abstract PortalCapabilityLocator getPortalCapabilityLocator();
 
 	protected ResourceBundleLoader getResourceBundleLoader() {
 		return _resourceBundleLoader;
 	}
 
 	private static final String _MODEL_RESOURCE_NAME_PREFIX = "model.resource.";
-
-	@Reference
-	private PortalCapabilityLocator _portalCapabilityLocator;
 
 	private final ResourceBundleLoader _resourceBundleLoader =
 		new CacheResourceBundleLoader(

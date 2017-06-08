@@ -654,7 +654,9 @@
 		</execute>
 	</command>
 
-	<command name="SaveAsDraftAndViewCategories" priority="3">
+	<!-- LPS-60870 -->
+
+	<!-- <command name="SaveAsDraftAndViewCategories" priority="3">
 		<description message="This is a use case for LPS-60870." />
 
 		<property name="custom.properties" value="dl.file.entry.drafts.enabled=true" />
@@ -809,5 +811,6 @@
 		<execute macro="DMDocument#viewCategories">
 			<var name="categoryNameList" value="legal,Other" />
 		</execute>
-	</command>
+	</command> -->
+
 </definition>

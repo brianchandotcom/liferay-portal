@@ -1,0 +1,512 @@
+<html>
+<head>
+<title>CPDocumentsandmedia</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPDocumentsandmedia</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPDocumentsandmedia</td>
+</tr>
+<!---->
+<tr>
+	<td>CONFIGURATION_OPTIONS</td>
+	<td>//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ALL_ROWS_CHECKBOX</td>
+	<td>//input[@id='_20_allRowIdsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS</td>
+	<td>//li[@id='_20_actionsButtonContainer']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD</td>
+	<td>//li[@id='_20_addButtonContainer']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORT_BY</td>
+	<td>//li[@id='_20_sortButtonContainer']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE</td>
+	<td>//li[@class=' dropdown']/a[contains(.,'Manage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ICON_VIEW_BUTTON</td>
+	<td>//button[@data-displaystyle='icon']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTIVE_VIEW_BUTTON</td>
+	<td>//button[@data-displaystyle='list']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_VIEW_BUTTON</td>
+	<td>//button[@title='List View']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@id='_20_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTAL_INFO</td>
+	<td>//div[@class='entries-empty alert alert-info']</td>
+	<td> There are no documents or media files in this folder. </td>
+</tr>
+<tr>
+	<td>REQUEST</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td> Your request completed successfully. </td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td>//div[@class='alert alert-success taglib-trash-undo']/form</td>
+	<td>The selected item was moved to the Recycle Bin. Undo</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONFIGURATION_OPTIONS_MENULIST-->
+<tr>
+	<td>CONFIGURATION_OPTIONS_MENULIST_EXPORT_IMPORT</td>
+	<td>//a[contains(@id, 'menu_export-import')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_OPTIONS_MENULIST_CONFIGURATION</td>
+	<td>//a[contains(@id, 'menu_configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIONS_MENULIST-->
+<tr>
+	<td>ACTIONS_MENULIST_CANCEL_CHECKOUT</td>
+	<td>//li[@id='_20_actionsButtonContainer']/ul/li[contains(.,'Cancel Checkout')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_CHECKIN</td>
+	<td>//li[@id='_20_actionsButtonContainer']/ul/li[contains(.,'Checkin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_CHECKOUT</td>
+	<td>//li[@id='_20_actionsButtonContainer']/ul/li[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_MOVE</td>
+	<td>//li[@id='_20_actionsButtonContainer']/ul/li[contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_DELETE</td>
+	<td>//li[@id='_20_moveToTrashAction']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_MENULIST-->
+<tr>
+	<td>ADD_MENULIST_FOLDER</td>
+	<td>//li[@id='_20_addButtonContainer']/ul/li/a[contains(.,'Folder')]</td>
+	<td>Folder</td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_SHORTCUT</td>
+	<td>//li[@id='_20_addButtonContainer']/ul/li/a[contains(.,'Shortcut')]</td>
+	<td>Shortcut</td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_REPOSITORY</td>
+	<td>//li[@id='_20_addButtonContainer']/ul/li/a[contains(.,'Repository')]</td>
+	<td>Repository</td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_MULTIPLE_DOCUMENTS</td>
+	<td>//li[@id='_20_addButtonContainer']/ul/li/a[contains(.,'Multiple Documents')]</td>
+	<td>Multiple Documents</td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_BASIC_DOCUMENT</td>
+	<td>//li[@id='_20_addButtonContainer']/ul/li/a[contains(.,'Basic Document')]</td>
+	<td>Basic Document</td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_BASIC_DOCUMENT</td>
+	<td>//li[@id='_20_addButtonContainer']/ul/li/a[contains(.,'Contract')]</td>
+	<td>Contract</td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_BASIC_DOCUMENT</td>
+	<td>//li[@id='_20_addButtonContainer']/ul/li/a[contains(.,'Marketing Banner')]</td>
+	<td>Marketing Banner</td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_BASIC_DOCUMENT</td>
+	<td>//li[@id='_20_addButtonContainer']/ul/li/a[contains(.,'Online Training')]</td>
+	<td>Online Training</td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_BASIC_DOCUMENT</td>
+	<td>//li[@id='_20_addButtonContainer']/ul/li/a[contains(.,'Sales Presentation')]</td>
+	<td>Sales Presentation</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SORT_BY_MENULIST-->
+<tr>
+	<td>SORT_BY_MENULIST_TITLE</td>
+	<td>//li[@id='_20_sortButtonContainer']/ul/li/a[contains(.,'Title')]</td>
+	<td>Title</td>
+</tr>
+<tr>
+	<td>SORT_BY_MENULIST_CREATE_DATE</td>
+	<td>//li[@id='_20_sortButtonContainer']/ul/li/a[contains(.,'Create Date')]</td>
+	<td>Create Date</td>
+</tr>
+<tr>
+	<td>SORT_BY_MENULIST_MODIFIED_DATE</td>
+	<td>//li[@id='_20_sortButtonContainer']/ul/li/a[contains(.,'Modified Date')]</td>
+	<td>Modified Date</td>
+</tr>
+<tr>
+	<td>SORT_BY_MENULIST_DOWNLOADS</td>
+	<td>//li[@id='_20_sortButtonContainer']/ul/li/a[contains(.,'Downloads')]</td>
+	<td>Downloads</td>
+</tr>
+<tr>
+	<td>SORT_BY_MENULIST_SIZE</td>
+	<td>//li[@id='_20_sortButtonContainer']/ul/li/a[contains(.,'Size')]</td>
+	<td>Size</td>
+</tr>
+<!---->
+<!--MANAGE_MENULIST-->
+<tr>
+	<td>MANAGE_MENULIST_DOCUMENT_TYPES</td>
+	<td>//ul[@class='dropdown-menu ']/li/a[contains(.,'Document Types')]</td>
+	<td>Document Types</td>
+</tr>
+<tr>
+	<td>MANAGE_MENULIST_METADATA_SETS</td>
+	<td>//ul[@class='dropdown-menu ']/li/a[contains(.,'Metadata Sets')]</td>
+	<td>Metadata Sets</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BREADCRUMB-->
+<tr>
+	<td>BREADCRUMB_HOME</td>
+	<td>//div[@id='_20_breadcrumbContainer']/ul/li[contains(.,'Home')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LIFERAY_SYNC-->
+<tr>
+	<td>LIFERAY_SYNC_LINK</td>
+	<td>//div[@id='_20_syncNotificationContent']/a</td>
+	<td>Access these files offline using Liferay Sync</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FILTER-->
+<tr>
+	<td>FILTER_HOME</td>
+	<td>//div[@id='_20_folderContainer']/ul/li/a[contains(.,'Home')]</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>FILTER_HOME_ACTIONS</td>
+	<td>//span[@class='entry-action overlay']/div/a</td>
+	<td>Home Actions</td>
+</tr>
+<tr>
+	<td>FILTER_RECENT</td>
+	<td>//li[@class='app-view-navigation-entry folder']/a[contains(.,'Recent')]</td>
+	<td>Recent</td>
+</tr>
+<tr>
+	<td>FILTER_MINE</td>
+	<td>//li[@class='app-view-navigation-entry folder']/a[contains(.,'Mine')]</td>
+	<td>Mine</td>
+</tr>
+<tr>
+	<td>FILTER_BASIC_DOCUMENT</td>
+	<td>//li[@class='app-view-navigation-entry folder file-entry-type']/a[contains(.,'Basic Document')]</td>
+	<td>Mine</td>
+</tr>
+<!---->
+<!--BREADCRUMB-->
+<tr>
+	<td>BREADCRUMB_FIRST</td>
+	<td>//ul[@class='breadcrumb']/li/a[contains(.,'Home')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BREADCRUMB_LAST</td>
+	<td>//ul[@class='breadcrumb']/li[contains(@class,'active last')]</td>
+	<td></td>
+</tr>
+<!---->
+<!--DOCUMENT_CONTAINER-->
+<tr>
+	<td>DOCUMENT_CONTAINER_DOCUMENT1</td>
+	<td>//div[@id='_20_entriesContainer']/div[2]/a[contains(@data-folder,'false')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_DOCUMENT1_CHECKBOX</td>
+	<td>//div[@id='_20_entriesContainer']/div[2]/input[contains(@id,'_20_rowIdsFileEntryCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_DOCUMENT1_DROPDOWN</td>
+	<td>//div[@id='_20_entriesContainer']/div[2]/span/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_DOCUMENT1_TITLE</td>
+	<td>//div[@id='_20_entriesContainer']/div[2]/a/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_DOCUMENT2</td>
+	<td>//div[@id='_20_entriesContainer']/div[3]/a[contains(@data-folder,'false')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_DOCUMENT2_CHECKBOX</td>
+	<td>//div[@id='_20_entriesContainer']/div[3]/input[contains(@id,'_20_rowIdsFileEntryCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_DOCUMENT2_DROPDOWN</td>
+	<td>//div[@id='_20_entriesContainer']/div[3]/span/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_DOCUMENT2_TITLE</td>
+	<td>//div[@id='_20_entriesContainer']/div[3]/a/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_FOLDER1</td>
+	<td>//div[@id='_20_entriesContainer']/div[2]/a[contains(@data-folder,'true')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_FOLDER1_CHECKBOX</td>
+	<td>//div[@id='_20_entriesContainer']/div[2]/input[contains(@id,'_20_rowIdsFolderCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_FOLDER1_DROPDOWN</td>
+	<td>//div[@id='_20_entriesContainer']/div[2]/span/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_FOLDER1_TITLE</td>
+	<td>//div[@id='_20_entriesContainer']/div[2]/a/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_FOLDER2</td>
+	<td>//div[@id='_20_entriesContainer']/div[3]/a[contains(@data-folder,'true')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_FOLDER2_CHECKBOX</td>
+	<td>//div[@id='_20_entriesContainer']/div[3]/input[contains(@id,'_20_rowIdsFolderCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_FOLDER2_DROPDOWN</td>
+	<td>//div[@id='_20_entriesContainer']/div[3]/span/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_CONTAINER_FOLDER2_TITLE</td>
+	<td>//div[@id='_20_entriesContainer']/div[3]/a/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER_VIEW-->
+<tr>
+	<td>FOLDER_VIEW_FOLDER1</td>
+	<td>//div[@id='_20_entriesContainer']/div[2]/a[contains(@data-folder,'true')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_VIEW_FOLDER1_TITLE</td>
+	<td>//div[@id='_20_entriesContainer']/div[2]/a/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_VIEW_DOCUMENT1</td>
+	<td>//div[@id='_20_entriesContainer']/div[2]/a[contains(@data-folder,'false')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_VIEW_DOCUMENT1_TITLE</td>
+	<td>//div[@id='_20_entriesContainer']/div[2]/a/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER_MENULIST-->
+<tr>
+	<td>FOLDER_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>FOLDER_MENULIST_MOVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>FOLDER_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>FOLDER_MENULIST_RECYCLE_BIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>FOLDER_MENULIST_ADD_SUBFOLDER</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Subfolder')]</td>
+	<td>Add Subfolder</td>
+</tr>
+<tr>
+	<td>FOLDER_MENULIST_ACCESS_FROM_DESKTOP</td>
+	<td>//a[@role='menuitem' and contains(.,'Access from Desktop')]</td>
+	<td>Access from Desktop</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_MENULIST-->
+<tr>
+	<td>DOCUMENT_MENULIST_DOWNLOAD</td>
+	<td>//a[@role='menuitem' and contains(.,'Download')]</td>
+	<td>Download</td>
+</tr>
+<tr>
+	<td>DOCUMENT_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>DOCUMENT_MENULIST_MOVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>DOCUMENT_MENULIST_CHECKOUT</td>
+	<td>//a[@role='menuitem' and contains(.,'Checkout')]</td>
+	<td>Checkout</td>
+</tr>
+<tr>
+	<td>DOCUMENT_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>DOCUMENT_MENULIST_RECYCLE_BIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGINATION-->
+<tr>
+	<td>PAGINATION_FIRST</td>
+	<td>//a[@class='aui-paginator-link aui-paginator-first-link']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_PREVIOUS</td>
+	<td>//ul[@class='pagination-content']/li/a[contains(.,'Prev')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_CURRENT</td>
+	<td>//ul[@class='pagination-content']/li[contains(@class,'active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_NEXT</td>
+	<td>//ul[@class='pagination-content']/li/a[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_LAST</td>
+	<td>//a[@class='aui-paginator-link aui-paginator-last-link']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_ROWS_PER_PAGE_SELECT</td>
+	<td>//div[contains(@class, 'document-entries-paginator')]/select[@class='aui-paginator-rows-per-page']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

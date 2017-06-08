@@ -42,10 +42,6 @@ public class BuildDeploymentHelperMojo extends AbstractMojo {
 		return _deploymentHelperArgs.getDeploymentFileNames();
 	}
 
-	public String getDeploymentPath() {
-		return _deploymentHelperArgs.getDeploymentPath();
-	}
-
 	public String getOutputFileName() {
 		return _deploymentHelperArgs.getOutputFileName();
 	}
@@ -55,13 +51,6 @@ public class BuildDeploymentHelperMojo extends AbstractMojo {
 	 */
 	public void setDeploymentFileNames(String deploymentFileNames) {
 		_deploymentHelperArgs.setDeploymentFileNames(deploymentFileNames);
-	}
-
-	/**
-	 * @parameter
-	 */
-	public void setDeploymentPath(String deploymentPath) {
-		_deploymentHelperArgs.setDeploymentPath(deploymentPath);
 	}
 
 	/**

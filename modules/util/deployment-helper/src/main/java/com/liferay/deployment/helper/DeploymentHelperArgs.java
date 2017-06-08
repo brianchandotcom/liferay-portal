@@ -23,10 +23,6 @@ public class DeploymentHelperArgs {
 		return _deploymentFileNames;
 	}
 
-	public String getDeploymentPath() {
-		return _deploymentPath;
-	}
-
 	public String getOutputFileName() {
 		return _outputFileName;
 	}
@@ -35,16 +31,11 @@ public class DeploymentHelperArgs {
 		_deploymentFileNames = deploymentFileNames;
 	}
 
-	public void setDeploymentPath(String deploymentPath) {
-		_deploymentPath = deploymentPath;
-	}
-
 	public void setOutputFileName(String outputFileName) {
 		_outputFileName = outputFileName;
 	}
 
 	private String _deploymentFileNames;
-	private String _deploymentPath;
 	private String _outputFileName;
 
 }

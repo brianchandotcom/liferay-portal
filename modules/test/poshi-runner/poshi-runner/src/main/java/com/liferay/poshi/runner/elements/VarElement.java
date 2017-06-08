@@ -16,9 +16,6 @@ package com.liferay.poshi.runner.elements;
 
 import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THESE_VARIABLES;
 
-import java.util.Map;
-import java.util.TreeMap;
-
 import org.dom4j.Element;
 
 /**
@@ -43,23 +40,17 @@ public class VarElement extends PoshiElement {
 	}
 
 	public void addAttributes(String readableSyntax) {
-		Map<String, String> attributes = new TreeMap<>();
-
 		String[] items = readableSyntax.split("\\|");
 
-		attributes.put("name", items[1].trim());
+		addAttribute("name", items[1].trim());
 
 		String value = items[2].trim();
 
 		if (value.contains("Util#")) {
-			attributes.put("method", value);
+			addAttribute("method", value);
 		}
 		else {
-			attributes.put("value", value);
-		}
-
-		for (String key : attributes.keySet()) {
-			addAttribute(key, attributes.get(key));
+			addAttribute("value", value);
 		}
 	}
 

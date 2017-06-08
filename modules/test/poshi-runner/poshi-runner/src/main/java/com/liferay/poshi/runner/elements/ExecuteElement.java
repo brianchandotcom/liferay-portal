@@ -25,8 +25,6 @@ import com.liferay.poshi.runner.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,8 +47,6 @@ public class ExecuteElement extends PoshiElement {
 	public void addAttributes(String readableSyntax) {
 		if (readableSyntax.contains(AT_LOCATOR) ||
 			readableSyntax.contains(THE_VALUE)) {
-
-			_attributes = new TreeMap<>();
 
 			_addFunctionAttributes(readableSyntax);
 
@@ -137,12 +133,12 @@ public class ExecuteElement extends PoshiElement {
 		String attributeValue = getAttributeValue("'", "'", readableSyntax);
 
 		if (attributeValue(attributeType + "1") == null) {
-			_attributes.put(attributeType + "1", attributeValue);
+			addAttribute(attributeType + "1", attributeValue);
 
 			return;
 		}
 
-		_attributes.put(attributeType + "2", attributeValue);
+		addAttribute(attributeType + "2", attributeValue);
 	}
 
 	private void _addFunctionAttributes(String readableSyntax) {
@@ -163,11 +159,7 @@ public class ExecuteElement extends PoshiElement {
 				continue;
 			}
 
-			_attributes.put("function", _getClassCommandName(functionItem));
-		}
-
-		for (String key : _attributes.keySet()) {
-			addAttribute(key, _attributes.get(key));
+			addAttribute("function", _getClassCommandName(functionItem));
 		}
 	}
 
@@ -230,7 +222,5 @@ public class ExecuteElement extends PoshiElement {
 
 		return classCommandName;
 	}
-
-	private Map<String, String> _attributes;
 
 }

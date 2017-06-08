@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
@@ -45,10 +46,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 public class DLFileEntryTypeFinderTest {
 
 	@ClassRule

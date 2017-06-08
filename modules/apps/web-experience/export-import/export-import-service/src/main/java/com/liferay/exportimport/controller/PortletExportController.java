@@ -1206,6 +1206,7 @@ public class PortletExportController implements ExportController {
 			portletDataContext, serviceName, ownerId, ownerType);
 
 		serviceElement.addAttribute("path", path);
+		serviceElement.addAttribute("service-name", serviceName);
 
 		serviceElement.addAttribute("service-name", serviceName);
 

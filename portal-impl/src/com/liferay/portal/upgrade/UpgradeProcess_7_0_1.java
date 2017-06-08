@@ -43,6 +43,10 @@ public class UpgradeProcess_7_0_1 extends UpgradeProcess {
 		upgrade(UpgradeLayoutBranch.class);
 		upgrade(UpgradeMessageBoards.class);
 		upgrade(UpgradeModules.class);
+
+		// This upgrade process must be executed before UpgradePortletId.
+		// See LPS-64788.
+
 		upgrade(UpgradeUserNotificationEvent.class);
 
 		clearIndexesCache();

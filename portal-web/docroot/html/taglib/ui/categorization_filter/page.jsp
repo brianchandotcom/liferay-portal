@@ -27,7 +27,7 @@ if (portletURL == null) {
 }
 
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
-String assetTagName = ParamUtil.getString(request, "tag");
+String assetTagName = HtmlUtil.escape(ParamUtil.getString(request, "tag"));
 
 String assetCategoryTitle = null;
 String assetVocabularyTitle = null;

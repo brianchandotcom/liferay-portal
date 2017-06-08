@@ -534,6 +534,21 @@ create table ExportImportConfiguration (
 	statusDate DATE null
 );
 
+create table GroupFriendlyURL (
+	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	groupFriendlyURLId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	friendlyURL VARCHAR(75) null,
+	languageId VARCHAR(75) null,
+	lastPublishDate DATE null
+);
+
 create table Group_ (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,

@@ -14,12 +14,12 @@
  */
 --%>
 
-<aui:script sandbox="<%= true %>">
-	$('body').on(
+<aui:script>
+	AUI.$('body').on(
 		'click',
 		'.compare-to-link a',
 		function(event) {
-			var currentTarget = $(event.currentTarget);
+			var currentTarget = AUI.$(event.currentTarget);
 
 			Liferay.Util.selectEntity(
 				{

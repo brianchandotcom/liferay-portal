@@ -19,6 +19,7 @@ import com.liferay.poshi.runner.util.FileUtil;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
+import org.dom4j.util.NodeComparator;
 
 import org.junit.Test;
 
@@ -29,55 +30,54 @@ public class PoshiElementFactoryTest {
 
 	@Test
 	public void testPoshiToReadableToXML() throws Exception {
-		DefinitionElement element =
-			(DefinitionElement)PoshiElementFactory.newPoshiElementFromFile(
-				_TEST_FILE_PATH);
+		PoshiElement poshiElement = PoshiElementFactory.newPoshiElementFromFile(
+			_TEST_FILE_PATH);
 
-		String dom4JElementString = _getCompressedXMLTest();
+		String readableSyntax = poshiElement.toReadableSyntax();
 
-		String readableSyntax = element.toReadableSyntax();
+		PoshiElement elementFromReadableSyntax =
+			PoshiElementFactory.newPoshiElement(readableSyntax);
 
-		Element fromReadableSyntax = PoshiElementFactory.newPoshiElement(
-			readableSyntax);
+		Element baselineElement = _getBaselineElement();
 
-		String fromReadableSyntaxElementString = Dom4JUtil.format(
-			fromReadableSyntax, false);
-
-		if (!fromReadableSyntaxElementString.equals(dom4JElementString)) {
-			System.out.println("Expected:" + dom4JElementString);
-			System.out.println("Actual:  " + fromReadableSyntaxElementString);
-
+		if (!_areElementsEqual(baselineElement, elementFromReadableSyntax)) {
 			throw new Exception("Readable syntax does not translate to XML");
 		}
 	}
 
 	@Test
 	public void testPoshiToXML() throws Exception {
-		Element element = PoshiElementFactory.newPoshiElementFromFile(
+		Element baselineElement = _getBaselineElement();
+		PoshiElement poshiElement = PoshiElementFactory.newPoshiElementFromFile(
 			_TEST_FILE_PATH);
 
-		String dom4JElementString = _getCompressedXMLTest();
-
-		String poshiElementString = Dom4JUtil.format(element, false);
-
-		if (!poshiElementString.equals(dom4JElementString)) {
-			System.out.println("Expected:" + dom4JElementString);
-			System.out.println("Actual:  " + poshiElementString);
-
+		if (!_areElementsEqual(baselineElement, poshiElement)) {
 			throw new Exception("Poshi syntax does not translate to XML");
 		}
 	}
 
-	private static String _getCompressedXMLTest() throws Exception {
+	private static boolean _areElementsEqual(Element element1, Element element2)
+		throws Exception {
+
+		NodeComparator nodeComparator = new NodeComparator();
+
+		int compare = nodeComparator.compare(element1, element2);
+
+		if (compare == 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static Element _getBaselineElement() throws Exception {
 		String fileContent = FileUtil.read(_TEST_FILE_PATH);
+
+		fileContent = _removeWhitespace(fileContent);
 
 		Document document = Dom4JUtil.parse(fileContent);
 
-		Element dom4JElement = document.getRootElement();
-
-		String dom4JElementString = Dom4JUtil.format(dom4JElement, false);
-
-		return _removeWhitespace(dom4JElementString);
+		return document.getRootElement();
 	}
 
 	private static String _removeWhitespace(String s) {

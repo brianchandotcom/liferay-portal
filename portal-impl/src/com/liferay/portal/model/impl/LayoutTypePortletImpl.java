@@ -837,6 +837,10 @@ public class LayoutTypePortletImpl
 			return;
 		}
 
+		if (!hasPortletId(portletId)) {
+			return;
+		}
+
 		_enablePortletLayoutListener = false;
 
 		try {

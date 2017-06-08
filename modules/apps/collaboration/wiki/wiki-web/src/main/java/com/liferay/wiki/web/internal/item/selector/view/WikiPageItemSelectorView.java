@@ -28,6 +28,7 @@ import com.liferay.wiki.item.selector.WikiPageURLItemSelectorReturnType;
 import com.liferay.wiki.item.selector.constants.WikiItemSelectorViewConstants;
 import com.liferay.wiki.item.selector.criterion.WikiPageItemSelectorCriterion;
 import com.liferay.wiki.service.WikiNodeLocalService;
+import com.liferay.wiki.web.internal.item.selector.constants.WikiItemSelectorWebKeys;
 import com.liferay.wiki.web.internal.item.selector.view.display.context.WikiPageItemSelectorViewDisplayContext;
 
 import java.io.IOException;
@@ -58,9 +59,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class WikiPageItemSelectorView
 	implements ItemSelectorView<WikiPageItemSelectorCriterion> {
-
-	public static final String WIKI_PAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
-		"WIKI_PAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
 
 	@Override
 	public Class<WikiPageItemSelectorCriterion>
@@ -111,7 +109,8 @@ public class WikiPageItemSelectorView
 					itemSelectedEventName, search, portletURL);
 
 		request.setAttribute(
-			WIKI_PAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			WikiItemSelectorWebKeys.
+				WIKI_PAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			wikiPageItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();

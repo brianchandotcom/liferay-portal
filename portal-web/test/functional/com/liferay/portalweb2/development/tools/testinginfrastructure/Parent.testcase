@@ -1,0 +1,15 @@
+<definition component-name="portal-tools">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<var name="parentSetUpVar" value="parent test case set-up var value" />
+	</set-up>
+
+	<tear-down>
+		<var name="parentTearDownVar" value="parent test case tear-down var value" />
+	</tear-down>
+
+	<command name="ParentTestCaseCommand" priority="5">
+		<execute macro="TestUtils#pass" />
+	</command>
+</definition>

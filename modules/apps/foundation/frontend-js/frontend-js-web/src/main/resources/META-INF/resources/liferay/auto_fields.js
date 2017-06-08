@@ -392,6 +392,13 @@ AUI.add(
 						);
 					},
 
+					_clearInputLocalized: function(node) {
+						node.all('.input-localized-input input').attr('placeholder', '');
+						node.all('.lfr-input-localized-state').removeClass('lfr-input-localized-state-error');
+						node.all('.palette-item').removeClass('palette-item-selected');
+						node.one('.lfr-input-localized-default').addClass('palette-item-selected');
+					},
+
 					_clearHiddenRows: function(item, index) {
 						var instance = this;
 
@@ -411,19 +418,21 @@ AUI.add(
 
 						var formValidator = instance._getFormValidator(node);
 
+						var inputLocalized = instance._getInputLocalized(node);
+
 						var clonedRow;
 
 						if (instance.url) {
 							clonedRow = instance._createCloneFromURL(clone, guid);
 						}
 						else {
-							clonedRow = instance._createCloneFromMarkup(clone, guid, formValidator);
+							clonedRow = instance._createCloneFromMarkup(clone, guid, formValidator, inputLocalized);
 						}
 
 						return clonedRow;
 					},
 
-					_createCloneFromMarkup: function(node, guid, formValidator) {
+					_createCloneFromMarkup: function(node, guid, formValidator, inputLocalized) {
 						var instance = this;
 
 						var rules;
@@ -432,16 +441,14 @@ AUI.add(
 							rules = formValidator.get('rules');
 						}
 
-						node.all('input, select, textarea, span').each(
+						node.all('input, select, textarea, span, div').each(
 							function(item, index) {
 								var inputNodeName = item.attr('nodeName');
 								var inputType = item.attr('type');
 
 								var oldName = item.attr('name') || item.attr('id');
 
-								var originalName = oldName.replace(/([0-9]+)$/, '');
-
-								var newName = originalName + guid;
+								var newName = oldName.replace(/([0-9]+)([_A-Za-z]*)$/, guid + '$2');
 
 								if (inputType == 'radio') {
 									oldName = item.attr('id');
@@ -450,7 +457,7 @@ AUI.add(
 									item.attr('value', guid);
 									item.attr('id', newName);
 								}
-								else if (inputNodeName == 'button' || inputNodeName == 'span') {
+								else if (inputNodeName == 'button' || inputNodeName == 'span' || inputNodeName == 'div') {
 									if (oldName) {
 										item.attr('id', newName);
 									}
@@ -464,9 +471,19 @@ AUI.add(
 									rules[newName] = rules[oldName];
 								}
 
+								if (item.attr('aria-describedby')) {
+									item.attr('aria-describedby', newName + '_desc');
+								}
+
 								node.all('label[for=' + oldName + ']').attr('for', newName);
 							}
 						);
+
+						if (inputLocalized) {
+							instance._clearInputLocalized(node);
+
+							instance._registerInputLocalized(node, inputLocalized, guid);
+						}
 
 						node.all('.help-inline').remove();
 
@@ -523,6 +540,31 @@ AUI.add(
 						return formValidator;
 					},
 
+					_getInputLocalized: function(node) {
+						var instance = this;
+
+						var inputLocalized;
+
+						var inputLocalizedInput = node.one('.language-value');
+
+						if (inputLocalizedInput) {
+							var inputLocalizedInputId = inputLocalizedInput.attr('id');
+							
+							if (inputLocalizedInputId) {
+								
+								inputLocalized = Liferay.InputLocalized._registered[inputLocalizedInputId];
+
+								if (inputLocalized) {
+									Liferay.component(inputLocalizedInputId).render();
+								}
+
+								inputLocalized = Liferay.InputLocalized._instances[inputLocalizedInputId];
+							}
+						}
+						
+						return inputLocalized;
+					},
+
 					_isHiddenRow: function(row) {
 						var instance = this;
 
@@ -557,6 +599,29 @@ AUI.add(
 								);
 							}
 						);
+					},
+
+					_registerInputLocalized: function(node, inputLocalized, guid) {
+						var inputLocalizedId = inputLocalized.get('id').replace(/([0-9]+)$/, guid);
+						var inputLocalizedNamespaceId = inputLocalized.get('namespace') + inputLocalizedId;
+						
+						Liferay.InputLocalized.register(inputLocalizedNamespaceId, {
+							boundingBox: '#' + inputLocalizedNamespaceId + 'BoundingBox',
+							columns: inputLocalized.get('columns'),
+							contentBox: '#' + inputLocalizedNamespaceId + 'ContentBox',
+							defaultLanguageId: inputLocalized.get('defaultLanguageId'),
+							fieldPrefix: inputLocalized.get('fieldPrefix'),
+							fieldPrefixSeparator: inputLocalized.get('fieldPrefixSeparator'),
+							id: inputLocalizedId,
+							inputPlaceholder: '#' + inputLocalizedNamespaceId,
+							items: inputLocalized.get('items'),
+							itemsError: inputLocalized.get('itemsError'),
+							lazy: true,
+							name: inputLocalizedId,
+							namespace: inputLocalized.get('namespace'),
+							toggleSelection: inputLocalized.get('toggleSelection'),
+							translatedLanguages: inputLocalized.get('translatedLanguages')
+						});
 					},
 
 					_guid: 0

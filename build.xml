@@ -340,6 +340,8 @@
 					<arg value="-Dbuild.profile=${build.profile}" />
 				</gradle-execute>
 
+				<gradle-execute dir="${project.dir}/modules" task=":apps:foundation:frontend-css:frontend-css-common:buildCssCommon" />
+
 				<pathconvert property="build.app.server.lib.marker.files" setonempty="false">
 					<fileset dir="${project.dir}/modules" includes="**/.lfrbuild-app-server-lib" />
 				</pathconvert>

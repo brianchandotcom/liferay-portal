@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>CPKaleodesignerconfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPKaleodesignerconfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPKaleodesignerconfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_DEFINITION_BUTTON</td>
+	<td>//button[@class='btn btn-primary' and contains(.,'Add New Definition')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DEFINITION_TABLE-->
+<tr>
+	<td>DEFINITION_TABLE_NAME</td>
+	<td>//div[contains(@id,'kaleodesignerportlet_kaleoDraftDefinitionsSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_TABLE_TITLE</td>
+	<td>//div[contains(@id,'kaleodesignerportlet_kaleoDraftDefinitionsSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_TABLE_VERSION</td>
+	<td>//div[contains(@id,'kaleodesignerportlet_kaleoDraftDefinitionsSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_TABLE_DRAFT_VERSION</td>
+	<td>//div[contains(@id,'kaleodesignerportlet_kaleoDraftDefinitionsSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_TABLE_PUBLISHED</td>
+	<td>//div[contains(@id,'kaleodesignerportlet_kaleoDraftDefinitionsSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_TABLE_ACTIONS</td>
+	<td>//div[contains(@id,'kaleodesignerportlet_kaleoDraftDefinitionsSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[6]/div/a[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_TABLE_DEFINITION_DRAFT_ACTIONS</td>
+	<td>//div[contains(@id,'kaleodesignerportlet_kaleoDraftDefinitionsSearchContainerSearchContainer')]//tr[contains(.,'No')]/td[6]/div/a[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_TABLE_ACTIONS_1</td>
+	<td>xpath=(//div[contains(@id,'kaleodesignerportlet_kaleoDraftDefinitionsSearchContainerSearchContainer')]//td[6]/div/a[contains(.,'Actions')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DEFINITION_MENULIST-->
+<tr>
+	<td>DEFINITION_MENULIST_EDIT</td>
+	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_MENULIST_DELETE</td>
+	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

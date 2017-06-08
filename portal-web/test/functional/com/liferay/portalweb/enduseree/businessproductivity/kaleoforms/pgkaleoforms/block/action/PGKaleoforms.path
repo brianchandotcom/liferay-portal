@@ -1,0 +1,339 @@
+<html>
+<head>
+<title>PGKaleoforms</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGKaleoforms</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGKaleoforms</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMIT_NEW</td>
+	<td>//a[@title='Submit New']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INBOX</td>
+	<td>//a[.='Inbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_PENDING_REQUESTS</td>
+	<td>//a[.='My Pending Requests']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_COMPLETED_REQUESTS</td>
+	<td>//a[.='My Completed Requests']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_INFO_MESSAGE</td>
+	<td>//div[@id='workflowMyTasksPanel']//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_INFO_MESSAGE</td>
+	<td>//div[@id='workflowMyRolesTasksPanel']//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_COLLAPSED</td>
+	<td>//div[@class='accordion-heading toggler-header toggler-header-collapsed']//span[contains(.,'Assigned to Me')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_EXPANDED</td>
+	<td>//div[@class='accordion-heading toggler-header toggler-header-expanded']//span[contains(.,'Assigned to Me')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_COLLAPSED</td>
+	<td>//div[@class='accordion-heading toggler-header toggler-header-collapsed']//span[contains(.,'Assigned to My Roles')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_EXPANDED</td>
+	<td>//div[@class='accordion-heading toggler-header toggler-header-expanded']//span[contains(.,'Assigned to My Roles')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SUBMIT_NEW_MENULIST-->
+<tr>
+	<td>SUBMIT_NEW_MENULIST_PROCESS</td>
+	<td>//li/a[contains(.,'${key_kfProcessName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TABLE_GENERIC-->
+<tr>
+	<td>TABLE_GENERIC_PROCESS_NAME</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSIGNED_TO_ME_TABLE-->
+<tr>
+	<td>ASSIGNED_TO_ME_TABLE_TASK</td>
+	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_TABLE_NAME</td>
+	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_TABLE_SUBMISSION_DATE</td>
+	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_TABLE_ACTIONS</td>
+	<td>//div[@id='workflowMyTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[4]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSIGNED_TO_ME_MENULIST-->
+<tr>
+	<td>ASSIGNED_TO_ME_MENULIST_COMPLETE_FORM</td>
+	<td>//a[@role='menuitem' and contains(.,'Complete Form')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_MENULIST_RESUBMIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Resubmit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_MENULIST_APPROVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Approve')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_MENULIST_REJECT</td>
+	<td>//a[@role='menuitem' and contains(.,'Reject')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_MENULIST_UPDATE_DUE_DATE</td>
+	<td>//a[@role='menuitem' and contains(.,'Update Due Date')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSIGNED_TO_MY_ROLES_TABLE-->
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_TABLE_TASK</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_TABLE_NAME</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_TABLE_SUBMISSION_DATE</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_kfProcessName}')]/td[4]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSIGNED_TO_MY_ROLES_MENULIST-->
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_MENULIST_ASSIGN_TO_ME</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign to Me')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_MENULIST_ASSIGN_TO</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign to...')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_MY_ROLES_MENULIST_UPDATE_DUE_DATE</td>
+	<td>//a[@role='menuitem' and contains(.,'Update Due Date')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DIALOG_BOX-->
+<tr>
+	<td>DIALOG_BOX_TITLE</td>
+	<td>//div[contains(@class,'modal-header')]/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIALOG_BOX_UPDATE_DUE_DATE_DATE</td>
+	<td>//input[contains(@id,'kaleoformsportlet_dueDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIALOG_BOX_UPDATE_DUE_DATE_TIME</td>
+	<td>//input[contains(@id,'kaleoformsportlet_dueDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIALOG_BOX_ASSIGN_TO_SELECT</td>
+	<td>//select[contains(@id,'kaleoformsportlet_assigneeUserId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIALOG_BOX_COMMENT_FIELD</td>
+	<td>//textarea[contains(@id,'kaleoformsportlet_comment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIALOG_BOX_OK_BUTTON</td>
+	<td>//button[.='OK']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIALOG_BOX_CANCEL_BUTTON</td>
+	<td>//button[.='Cancel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MY_PENDING_REQUESTS_TABLE-->
+<tr>
+	<td>MY_PENDING_REQUESTS_INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_PENDING_REQUESTS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_PENDING_REQUESTS_TABLE_STATUS</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_PENDING_REQUESTS_TABLE_LAST_ACTIVITY_DATE</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_PENDING_REQUESTS_TABLE_END_DATE</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_PENDING_REQUESTS_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[5]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MY_PENDING_REQUESTS_MENULIST-->
+<tr>
+	<td>MY_PENDING_REQUESTS_MENULIST_WITHDRAW_SUBMISSION</td>
+	<td>//a[@role='menuitem' and contains(.,'Withdraw Submission')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MY_COMPLETED_REQUESTS_TABLE-->
+<tr>
+	<td>MY_COMPLETED_REQUESTS_INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_COMPLETED_REQUESTS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_COMPLETED_REQUESTS_TABLE_STATUS</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_COMPLETED_REQUESTS_TABLE_LAST_ACTIVITY_DATE</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_COMPLETED_REQUESTS_TABLE_END_DATE</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[4]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_COMPLETED_REQUESTS_TABLE_EXTRA_COLUMN</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[5]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

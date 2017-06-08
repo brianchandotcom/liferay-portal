@@ -1,0 +1,113 @@
+<html>
+<head>
+<title>PGKaleoformsInboxProcess</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGKaleoformsInboxProcess</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGKaleoformsInboxProcess</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_STATUS</td>
+	<td>//div[@class='lfr-asset-summary']//div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGN_TO_ME</td>
+	<td>//a/span[contains(.,'Assign to Me')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPDATE_DUE_DATE</td>
+	<td>//a/span[contains(.,'Update Due Date')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSIGNED_TO-->
+<tr>
+	<td>ASSIGNED_TO</td>
+	<td>//div[@class='lfr-asset-assigned']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_LABEL</td>
+	<td>//div[@class='lfr-asset-assigned']//span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ASSIGN_TO_ME_LINK</td>
+	<td>//div[@class='lfr-asset-assigned']//a[.='Assign to Me']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--STATE-->
+<tr>
+	<td>STATE_LABEL</td>
+	<td>//div[@class='lfr-asset-status']//span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATE_STATUS</td>
+	<td>//div[@class='lfr-asset-status']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CREATE_DATE-->
+<tr>
+	<td>CREATE_DATE_LABEL</td>
+	<td>//div[@class='lfr-asset-date']//span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CREATE_DATE_DATE</td>
+	<td>//div[@class='lfr-asset-date']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DUE_DATE-->
+<tr>
+	<td>DUE_DATE_LABEL</td>
+	<td>//div[@class='lfr-asset-due-date']//span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DUE_DATE_DATE</td>
+	<td>//div[@class='lfr-asset-due-date']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

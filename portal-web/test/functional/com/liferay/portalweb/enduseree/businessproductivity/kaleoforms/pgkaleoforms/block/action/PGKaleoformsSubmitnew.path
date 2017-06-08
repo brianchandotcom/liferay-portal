@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>PGKaleoformsSubmitnew</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGKaleoformsSubmitnew</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGKaleoformsSubmitnew</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NEW_PROCESS-->
+<tr>
+	<td>NEW_PROCESS_TITLE</td>
+	<td>//h3[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NEW_PROCESS_FIELDS-->
+<tr>
+	<td>NEW_PROCESS_FIELDS_BOOLEAN</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_FIELDS_HTML_FIELD_EDITOR</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]//iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_LINK_TO_PAGE_SELECT</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(.,'${key_fieldName}')]//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_RADIO_OPTION_RADIO</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]/label[contains(.,'${key_kfProcessFieldData}')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_FIELDS_FIELD</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains (@data-fieldname,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_FIELDS_TEXT_FIELD</td>
+	<td>//div[@class='form-group field-wrapper' and @data-fieldname='${key_fieldName}']/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_FIELDS_TEXT_BOX_FIELD</td>
+	<td>//div[@class='form-group field-wrapper' and @data-fieldname='${key_fieldName}']/textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_FIELDS_DATE_FIELD</td>
+	<td>//div[@class='form-group field-wrapper' and @data-fieldname='${key_fieldName}']/span[contains(@class,'lfr-input-date')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_FIELDS_SELECT_FIELD</td>
+	<td>//div[@class='form-group field-wrapper' and @data-fieldname='${key_fieldName}']//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_FIELD</td>
+	<td>//div[@class='form-group field-wrapper' and @data-fieldname='${key_fieldName}']/input[@readonly='readonly']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_SELECT</td>
+	<td>//div[@class='form-group field-wrapper' and @data-fieldname='${key_fieldName}']//button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_FIELDS_SEPARATOR</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'Separator')]/div[contains(@class,'separator')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_FIELDS_FIELDSET</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]/fieldset/legend</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

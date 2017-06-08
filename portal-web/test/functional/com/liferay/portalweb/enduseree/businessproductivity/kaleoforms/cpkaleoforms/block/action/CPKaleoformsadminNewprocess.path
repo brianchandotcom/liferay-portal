@@ -1,0 +1,353 @@
+<html>
+<head>
+<title>CPKaleoformsadminNewprocess</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPKaleoformsadminNewprocess</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPKaleoformsadminNewprocess</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROCESS_NAME</td>
+	<td>//h3[contains(@class,'header-title')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//a[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEXT_BUTTON</td>
+	<td>//button[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEXT_BUTTON_INACTIVE</td>
+	<td>//button[@disabled='' and contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON_INACTIVE</td>
+	<td>//button[@disabled='' and contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FORM_NAVIGATOR-->
+<tr>
+	<td>FORM_NAVIGATOR_1</td>
+	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_NAVIGATOR_DETAILS</td>
+	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_NAVIGATOR_2</td>
+	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'2')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_NAVIGATOR_FIELD_SET</td>
+	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'Fields')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_NAVIGATOR_3</td>
+	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'3')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_NAVIGATOR_WORKFLOW</td>
+	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'Workflow')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_NAVIGATOR_4</td>
+	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'4')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_NAVIGATOR_FORMS</td>
+	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'Forms')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS-->
+<tr>
+	<td>DETAILS_NAME_FIELD</td>
+	<td>//input[contains(@id,'kaleoformsportlet_name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_NAME_FIELD_ALERT</td>
+	<td>//div[@class='required']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_DESCRIPTION_FIELD</td>
+	<td>//textarea[contains(@id,'kaleoformsportlet_description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FIELD_SET-->
+<tr>
+	<td>SELECTED_FIELD_SET</td>
+	<td>//div[contains(.,'Selected Field Set')]//span[contains(@id,'kaleoformsportlet_ddmStructureDisplay')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTED_FIELD_SET_ALERT</td>
+	<td>//div[@class='required']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FIELD_SET_BUTTON</td>
+	<td>//button[contains(.,'Add Field Set')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FIELD_SET_TABLE-->
+<tr>
+	<td>FIELD_SET_TABLE_NAME</td>
+	<td>xpath=(//div[contains(@id,'kaleoformsportlet_ddmStructures')]//tr[contains(.,'${key_kfFieldSetName}')]/td[1])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_SET_TABLE_ACTIONS</td>
+	<td>xpath=(//div[contains(@id,'kaleoformsportlet_ddmStructures')]//tr[contains(.,'${key_kfFieldSetName}')]/td[4]/div/a[@title='Actions'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FIELD_SET_MENULIST-->
+<tr>
+	<td>FIELD_SET_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_SET_MENULIST_CHOOSE</td>
+	<td>//a[@role='menuitem' and contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FIELD_SET_PAGINATION-->
+<tr>
+	<td>FIELD_SET_PAGINATION_SELECTOR_BUTTON</td>
+	<td>//div[@class='lfr-pagination-delta-selector']/div/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_SET_PAGINATION_PREVIOUS_BUTTON</td>
+	<td>//ul[contains(@class,'pagination-buttons')]/li/a[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_SET_PAGINATION_NEXT_BUTTON</td>
+	<td>//ul[contains(@class,'pagination-buttons')]/li/a[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FIELD_SET_PAGINATION_MENULIST-->
+<tr>
+	<td>FIELD_SET_PAGINATION_MENULIST_NUMBER</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'${key_paginationNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WORKFLOW-->
+<tr>
+	<td>SELECTED_WORKFLOW</td>
+	<td>//div[contains(.,'Selected Workflow')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTED_WORKFLOW_ALERT</td>
+	<td>//div[@class='required']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_WORKFLOW_BUTTON</td>
+	<td>//button[contains(.,'Add Workflow')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_MENULIST_DEACTIVATE</td>
+	<td>//a[@role='menuitem' and contains(.,'Deactivate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WORKFLOW_NAVIGATION-->
+<tr>
+	<td>WORKFLOW_NAVIGATION_PUBLISHED_TAB</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Published')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_NAVIGATION_UNPUBLISHED_TAB</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Unpublished')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WORKFLOW_TABLE-->
+<tr>
+	<td>WORKFLOW_TABLE_TITLE</td>
+	<td>//div[contains(@id,'kaleoformsportlet_workflowDefinitions')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_TABLE_ACTIONS</td>
+	<td>//div[contains(@id,'kaleoformsportlet_workflowDefinitions')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[3]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WORKFLOW_MENULIST-->
+<tr>
+	<td>WORKFLOW_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_MENULIST_CHOOSE</td>
+	<td>//a[@role='menuitem' and contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WORKFLOW_UNPUBLISHED_TABLE-->
+<tr>
+	<td>WORKFLOW_UNPUBLISHED_TABLE_TITLE</td>
+	<td>//div[contains(@id,'kaleoformsportlet_kaleoDraftDefinitionsSearchContainer')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_UNPUBLISHED_TABLE_ACTIONS</td>
+	<td>//div[contains(@id,'kaleoformsportlet_kaleoDraftDefinitionsSearchContainer')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[3]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WORKFLOW_UNPUBLISHED_MENULIST-->
+<tr>
+	<td>WORKFLOW_UNPUBLISHED_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_UNPUBLISHED_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FORMS_TABLE-->
+<tr>
+	<td>FORMS_TABLE_TASK</td>
+	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'${key_workflowTask}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORMS_TABLE_FORM</td>
+	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'${key_workflowTask}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORMS_TABLE_ASSIGN_FORM_BUTTON</td>
+	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'${key_workflowTask}')]/td[3]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,1661 @@
+<definition component-name="portal-business-productivity-ee">
+	<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet" />
+	<property name="web.plugins.includes" value="kaleo-web" />
+	<property name="testray.main.component.name" value="Business Productivity" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Workflow#tearDownSpecificWorkflowDefinition">
+			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
+		</execute>
+
+		<execute macro="Workflow#tearDownWorkflowDefinitionsViaWorkflowCP" />
+		<execute macro="Workflow#tearDownWorkflowDefinitionDraftsViaKDCP" />
+	</tear-down>
+
+	<command name="AddConditionNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="5">
+		<var name="nodeNodeLabel" value="Condition" />
+		<var name="nodeType" value="condition" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
+			<var name="nodeName" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeType">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+	</command>
+
+	<command name="AddEndNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="5">
+		<var name="nodeNodeLabel" value="TestEndNode" />
+		<var name="nodeType" value="end" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
+			<var name="nodeName" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeType">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+	</command>
+
+	<command name="AddForkNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="5">
+		<var name="nodeNodeLabel" value="Fork" />
+		<var name="nodeType" value="fork" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
+			<var name="nodeName" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeType">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+	</command>
+
+	<command name="AddJoinNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="5">
+		<var name="nodeNodeLabel" value="Join" />
+		<var name="nodeType" value="join" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
+			<var name="nodeName" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeType">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+	</command>
+
+	<command name="AddJoinXORNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="5">
+		<var name="nodeNodeLabel" value="Join XOR" />
+		<var name="nodeType" value="join-xor" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
+			<var name="nodeName" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeType">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+	</command>
+
+	<command name="AddJoinXORWorkflowDefinitionViaViewTab" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="Start Node Description" />
+			<var name="nodeName" value="Start" />
+			<var name="nodeNodeLabel" value="Start" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="SubmitToFork" />
+			<var name="newNode" value="Fork" />
+			<var name="newNodeDescription" value="Fork Description" />
+			<var name="newNodeName" value="Fork" />
+			<var name="newNodeType" value="fork" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="SendToTask" />
+			<var name="newNode" value="Task" />
+			<var name="newNodeDescription" value="Task Description" />
+			<var name="newNodeName" value="Task" />
+			<var name="newNodeType" value="task" />
+			<var name="nodeType" value="fork" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Join1" />
+			<var name="newNode" value="Join XOR" />
+			<var name="newNodeDescription" value="JoinXOR Description" />
+			<var name="newNodeName" value="JoinXOR" />
+			<var name="newNodeType" value="join-xor" />
+			<var name="nodeType" value="task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="SendToState" />
+			<var name="down" value="true" />
+			<var name="newNode" value="State" />
+			<var name="newNodeDescription" value="State Description" />
+			<var name="newNodeName" value="State" />
+			<var name="newNodeType" value="state" />
+			<var name="nodeType" value="fork" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorViaViewTab">
+			<var name="connectorName" value="Join2" />
+			<var name="nodeType" value="state" />
+			<var name="nodeTypeDestination" value="join-xor" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Finish" />
+			<var name="newNode" value="End" />
+			<var name="newNodeDescription" value="End Description" />
+			<var name="newNodeName" value="End" />
+			<var name="newNodeType" value="end" />
+			<var name="nodeType" value="join-xor" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
+	</command>
+
+	<command name="AddNewWorkflowDefinitionViaViewTab" priority="5">
+		<var name="nodeNodeLabel" value="Task" />
+		<var name="nodeType" value="task" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="Start Node Description" />
+			<var name="nodeName" value="Start" />
+			<var name="nodeNodeLabel" value="Start" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Submit" />
+			<var name="newNode" value="Task" />
+			<var name="newNodeDescription" value="Task Node Description" />
+			<var name="newNodeName" value="Task" />
+			<var name="newNodeType" value="task" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Approve" />
+			<var name="newNode" value="End" />
+			<var name="newNodeDescription" value="End Node Description" />
+			<var name="newNodeName" value="End" />
+			<var name="newNodeType" value="end" />
+			<var name="nodeType" value="task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="Start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="Task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="End" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewConnectorPresent">
+			<var name="connectorLabel" value="Submit" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewConnectorPresent">
+			<var name="connectorLabel" value="Approve" />
+		</execute>
+	</command>
+
+	<command name="AddStartNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="5">
+		<var name="nodeNodeLabel" value="TestStartNode" />
+		<var name="nodeType" value="start" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
+			<var name="nodeName" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeType">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+	</command>
+
+	<command name="AddStateNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="5">
+		<var name="nodeNodeLabel" value="State" />
+		<var name="nodeType" value="state" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
+			<var name="nodeName" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeType">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+	</command>
+
+	<command name="AddTaskNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="5">
+		<var name="nodeNodeLabel" value="Task" />
+		<var name="nodeType" value="task" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
+			<var name="nodeName" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeType">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+	</command>
+
+	<command name="AddTaskNodeViaSourceTabAndEditNameAndDesciptionAndDeleteViaViewTab" priority="5">
+		<var name="nodeNodeLabel" value="Task" />
+		<var name="nodeType" value="task" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaSourceXML">
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editNodeName">
+			<var name="nodeName" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editNodeDescription">
+			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeType">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeType" value="${nodeType}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+	</command>
+
+	<command name="DeleteConnectors" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="Start Node Description" />
+			<var name="nodeName" value="Start" />
+			<var name="nodeNodeLabel" value="Start" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Submit" />
+			<var name="newNode" value="Task" />
+			<var name="newNodeDescription" value="Task Node Description" />
+			<var name="newNodeName" value="Task" />
+			<var name="newNodeType" value="task" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Approve" />
+			<var name="newNode" value="End" />
+			<var name="newNodeDescription" value="End Node Description" />
+			<var name="newNodeName" value="End" />
+			<var name="newNodeType" value="end" />
+			<var name="nodeType" value="task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteConnector">
+			<var name="connectorLabel" value="Submit" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteConnector">
+			<var name="connectorLabel" value="Approve" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="Start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="Task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="End" />
+		</execute>
+
+		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="Start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="Task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="End" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewConnectorNotPresent">
+			<var name="connectorLabel" value="Submit" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewConnectorNotPresent">
+			<var name="connectorLabel" value="Approve" />
+		</execute>
+	</command>
+
+	<command name="DeleteWorkflowDefinitionDraftViaKDCP" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewTableDefinitionDraftViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteTableDefinitionDraftViaKDCP" />
+
+		<execute macro="KaleoDesigner#viewNoWorkflowDefinitionsViaKDCP" />
+	</command>
+
+	<command name="EditSingleApproverDefinitionDeleteTaskNode" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Single Approver" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionTitleViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="update" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="update" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="Workflow#viewDefinition">
+			<var name="workflowDefinitionName" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
+			<var name="workflowDefinitionVersionNumber" value="2" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeNotPresent">
+			<var name="nodeNodeLabel" value="update" />
+		</execute>
+	</command>
+
+	<command name="PublishDefaultWorkflowDefinition" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
+	</command>
+
+	<command name="PublishFromSourceTabAndViewNameChange" priority="5">
+		<description message="This is a use case for LPS-43214 and LPS-50269." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Test Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editSourceXML">
+			<var name="kdSourceXML"><![CDATA[<name>NAME EDIT]]></var>
+			<var name="line" value="3" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<var name="key_workflowDefinitionName" value="NAME EDIT" />
+
+		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_NAME" value1="NAME EDIT" />
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Test Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLTab" />
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML"><![CDATA[<name>NAME EDIT</name>]]></var>
+			<var name="line" value="3" />
+		</execute>
+	</command>
+
+	<command name="PublishWorkflowDefinitionWithConnectorPointingToStartNodeAndViewErrorMessage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Approve" />
+			<var name="newNode" value="Task" />
+			<var name="newNodeDescription" value="End Node Description" />
+			<var name="newNodeName" value="End" />
+			<var name="newNodeType" value="task" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteConnector">
+			<var name="connectorLabel" value="Approve" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="End" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorViaViewTab">
+			<var name="connectorName" value="Reverse" />
+			<var name="nodeType" value="task" />
+			<var name="nodeTypeDestination" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+	</command>
+
+	<command name="PublishWorkflowDefinitionWithInvalidConditionNodeAndViewErrorMessage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Submit" />
+			<var name="newNode" value="Condition" />
+			<var name="newNodeDescription" value="Condition Node Description" />
+			<var name="newNodeName" value="Condition" />
+			<var name="newNodeType" value="condition" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="Condition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Approve" />
+			<var name="newNode" value="End" />
+			<var name="newNodeDescription" value="End Node Description" />
+			<var name="newNodeName" value="End" />
+			<var name="newNodeType" value="end" />
+			<var name="nodeType" value="condition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+	</command>
+
+	<command known-issues="LIFERAYQA-11686" name="PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage" priority="5">
+		<var name="nodeScript" >
+<![CDATA[
+	import com.liferay.portal.kernel.util.GetterUtil;${line.separator}
+	import com.liferay.portal.kernel.workflow.WorkflowConstants;${line.separator}
+	import com.liferay.portal.model.Role;${line.separator}
+	import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil${line.separator}
+	import com.liferay.portal.service.RoleLocalServiceUtil;${line.separator}
+	import com.liferay.portlet.dynamicdatalists.model.DDLRecord;${line.separator}
+	import com.liferay.portlet.dynamicdatamapping.storage.Field;${line.separator}
+	import com.liferay.portal.service.ServiceContext;${line.separator}
+	import com.liferay.portal.kernel.json.JSONFactoryUtil;${line.separator}
+	import com.liferay.portal.kernel.json.JSONArray;${line.separator}${line.separator}
+
+	long companyId = GetterUtil.getLong String workflowContext.getWorkflowConstants.CONTEXT_COMPANY_ID;${line.separator}${line.separator}
+
+	ServiceContext serviceContext = (ServiceContext) workflowContext.get(WorkflowConstants.CONTEXT_SERVICE_CONTEXT);${line.separator}${line.separator}
+
+	long ddlRecordId = GetterUtil.getLong(serviceContext.getAttribute("ddlRecordId"));${line.separator}${line.separator}
+
+	DDLRecord ddlRecord = DDLRecordLocalServiceUtil.getRecord(ddlRecordId);${line.separator}${line.separator}
+
+	Field field = ddlRecord.getField("status");${line.separator}${line.separator}
+
+	String json = GetterUtil.getString(field.getValue());${line.separator}${line.separator}
+
+	JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json)${line.separator}${line.separator}
+
+	String status = jsonArray.getString(0);${line.separator}${line.separator}
+
+	if (status.equals("closed")) {${line.separator}
+	  returnValue = "Yes"${line.separator}
+	} else {${line.separator}
+	  returnValue = "No"${line.separator}
+	}${line.separator}${line.separator}
+
+]]>
+		</var>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Submit" />
+			<var name="newNode" value="Condition" />
+			<var name="newNodeDescription" value="Condition Node Description" />
+			<var name="newNodeName" value="Condition" />
+			<var name="newNodeType" value="condition" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="Condition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editNodeScript">
+			<var name="nodeScript" value="${nodeScript}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Approve" />
+			<var name="newNode" value="End" />
+			<var name="newNodeDescription" value="End Node Description" />
+			<var name="newNodeName" value="End" />
+			<var name="newNodeType" value="end" />
+			<var name="nodeType" value="condition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+	</command>
+
+	<command name="PublishWorkflowDefinitionWithInvalidForkNodeAndViewErrorMessage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Submit" />
+			<var name="newNode" value="Fork" />
+			<var name="newNodeDescription" value="Fork Node Description" />
+			<var name="newNodeName" value="Fork" />
+			<var name="newNodeType" value="fork" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="Fork" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Approve" />
+			<var name="newNode" value="End" />
+			<var name="newNodeDescription" value="End Node Description" />
+			<var name="newNodeName" value="End" />
+			<var name="newNodeType" value="end" />
+			<var name="nodeType" value="fork" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+	</command>
+
+	<command name="PublishWorkflowDefinitionWithInvalidJoinNodeAndViewErrorMessage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Submit" />
+			<var name="newNode" value="Join" />
+			<var name="newNodeDescription" value="Join Node Description" />
+			<var name="newNodeName" value="Join" />
+			<var name="newNodeType" value="join" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="Join" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Approve" />
+			<var name="newNode" value="End" />
+			<var name="newNodeDescription" value="End Node Description" />
+			<var name="newNodeName" value="End" />
+			<var name="newNodeType" value="end" />
+			<var name="nodeType" value="join" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+	</command>
+
+	<command name="PublishWorkflowDefinitionWithInvalidJoinXORNodeAndViewErrorMessage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Submit" />
+			<var name="newNode" value="Join XOR" />
+			<var name="newNodeDescription" value="JoinXOR Description" />
+			<var name="newNodeName" value="JoinXOR" />
+			<var name="newNodeType" value="join-xor" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="JoinXOR" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Approve" />
+			<var name="newNode" value="End" />
+			<var name="newNodeDescription" value="End Node Description" />
+			<var name="newNodeName" value="End" />
+			<var name="newNodeType" value="end" />
+			<var name="nodeType" value="join-xor" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+	</command>
+
+	<command name="PublishWorkflowDefinitionWithMultipleStartNodesAndViewErrorMessage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="TestStartNode Node Description" />
+			<var name="nodeName" value="TestStartNode" />
+			<var name="nodeNodeLabel" value="TestStartNode" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+	</command>
+
+	<command name="PublishWorkflowDefinitionWithNoConnectorsAndViewErrorMessage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteConnector">
+			<var name="connectorLabel" value="connector" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+	</command>
+
+	<command name="PublishWorkflowDefinitionWithNoEndNodeAndViewErrorMessage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+	</command>
+
+	<command name="PublishWorkflowDefinitionWithNoStartNodeAndViewErrorMessage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+	</command>
+
+	<command name="RedoDraftDefinition" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="Start Node Description" />
+			<var name="nodeName" value="Start" />
+			<var name="nodeNodeLabel" value="Start" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="Start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Submit" />
+			<var name="newNode" value="Task" />
+			<var name="newNodeDescription" value="Task Node Description" />
+			<var name="newNodeName" value="Task" />
+			<var name="newNodeType" value="task" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="Task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Complete" />
+			<var name="newNode" value="End" />
+			<var name="newNodeDescription" value="End Node Description" />
+			<var name="newNodeName" value="End" />
+			<var name="newNodeType" value="end" />
+			<var name="nodeType" value="task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
+
+		<execute macro="KaleoDesigner#undoDraft" />
+		<execute macro="KaleoDesigner#undoDraft" />
+		<execute macro="KaleoDesigner#redoDraft" />
+
+		<execute macro="KaleoDesigner#viewDraftVersion">
+			<var name="draftVersion" value="2" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="Start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="Task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeNotPresent">
+			<var name="nodeNodeLabel" value="End" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewConnectorPresent">
+			<var name="connectorLabel" value="Submit" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewConnectorNotPresent">
+			<var name="connectorLabel" value="Complete" />
+		</execute>
+
+		<execute macro="KaleoDesigner#undoDraft" />
+
+		<execute macro="KaleoDesigner#viewDraftVersion">
+			<var name="draftVersion" value="1" />
+		</execute>
+
+		<execute macro="KaleoDesigner#latestVersionDraft" />
+
+		<execute macro="KaleoDesigner#viewDraftVersion">
+			<var name="draftVersion" value="3" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="Start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="Task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="End" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewConnectorPresent">
+			<var name="connectorLabel" value="Submit" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewConnectorPresent">
+			<var name="connectorLabel" value="Complete" />
+		</execute>
+
+		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
+	</command>
+
+	<command name="SaveInvalidWorkflowDefinitionAsDraft" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
+	</command>
+
+	<command name="UndoDraftDefinition" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="Start Node Description" />
+			<var name="nodeName" value="Start" />
+			<var name="nodeNodeLabel" value="Start" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="Start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Submit" />
+			<var name="newNode" value="Task" />
+			<var name="newNodeDescription" value="Task Node Description" />
+			<var name="newNodeName" value="Task" />
+			<var name="newNodeType" value="task" />
+			<var name="nodeType" value="start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="Task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addConnectorAndNodeViaViewTab">
+			<var name="connectorName" value="Complete" />
+			<var name="newNode" value="End" />
+			<var name="newNodeDescription" value="End Node Description" />
+			<var name="newNodeName" value="End" />
+			<var name="newNodeType" value="end" />
+			<var name="nodeType" value="task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
+
+		<execute macro="KaleoDesigner#undoDraft" />
+
+		<execute macro="KaleoDesigner#viewDraftVersion">
+			<var name="draftVersion" value="2" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="Start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="Task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeNotPresent">
+			<var name="nodeNodeLabel" value="End" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewConnectorPresent">
+			<var name="connectorLabel" value="Submit" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewConnectorNotPresent">
+			<var name="connectorLabel" value="Complete" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewDraftVersion">
+			<var name="draftVersion" value="3" />
+		</execute>
+
+		<execute macro="KaleoDesigner#undoDraft" />
+		<execute macro="KaleoDesigner#undoDraft" />
+
+		<execute macro="KaleoDesigner#viewDraftVersion">
+			<var name="draftVersion" value="1" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="Start" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeNotPresent">
+			<var name="nodeNodeLabel" value="Task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeNotPresent">
+			<var name="nodeNodeLabel" value="End" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewConnectorNotPresent">
+			<var name="connectorLabel" value="Submit" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewConnectorNotPresent">
+			<var name="connectorLabel" value="Complete" />
+		</execute>
+
+		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
+	</command>
+
+	<command name="ViewAndPublishWorkflowDefinitionDraftViaKDCP" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewTableDefinitionDraftViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaKDCP" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewTableDefinitionPublishedViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
+		</execute>
+	</command>
+
+	<command name="ViewAssignmentsForTaskNodeKDCP" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="Task Node Description" />
+			<var name="nodeName" value="Task" />
+			<var name="nodeNodeLabel" value="Task" />
+			<var name="nodeType" value="task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeAssignments">
+			<var name="nodeAssignmentType" value="Asset Creator" />
+		</execute>
+	</command>
+
+	<command name="ViewDefinitionTemplateCDATARemainsWhenViewingSourceTab" priority="5">
+		<description message="This is a use case for LPS-45514." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="Workflow#uploadDefinition">
+			<var name="workflowDefinitionFile" value="workflow_definition_2.xml" />
+			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
+		</execute>
+
+		<execute macro="Workflow#viewDefinition">
+			<var name="workflowDefinitionName" value="Send Content For Posting" />
+			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
+			<var name="workflowDefinitionVersionNumber" value="1" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLTab" />
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML" ><![CDATA[<![CDATA[The file sent by]]></var>
+			<var name="line" value="16" />
+		</execute>
+	</command>
+
+	<command name="ViewInvalidSourceXMLRemainsAfterTabSwitch" priority="5">
+		<description message="This is a use case for LPS-48590." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Single Approver" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editSourceXML">
+			<var name="kdSourceXML" value="INVALID" />
+			<var name="line" value="6" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewViewTab" />
+		<execute macro="KaleoDesigner#viewSourceXMLTab" />
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML" value="INVALID" />
+			<var name="line" value="3" />
+		</execute>
+	</command>
+
+	<command name="ViewNewUploadedDefinitionDoesNotContainDataFromDeletedDefinition" priority="5">
+		<description message="This is a use case for LPS-45676." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="Workflow#uploadDefinition">
+			<var name="workflowDefinitionFile" value="workflow_definition_1.xml" />
+			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
+		</execute>
+
+		<execute macro="Workflow#viewDefinition">
+			<var name="workflowDefinitionName" value="Uploaded Definition" />
+			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
+			<var name="workflowDefinitionVersionNumber" value="1" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLTab" />
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML" ><![CDATA[<![CDATA[A file has been submitted.]]></var>
+			<var name="line" value="15" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="Workflow#deactivateAddedWorkflowDefinition" />
+		<execute macro="Workflow#deleteWorkflowDefinition" />
+
+		<execute macro="Workflow#uploadDefinition">
+			<var name="workflowDefinitionFile" value="workflow_definition_2.xml" />
+			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
+		</execute>
+
+		<execute macro="Workflow#viewDefinition">
+			<var name="workflowDefinitionName" value="Send Content For Posting" />
+			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
+			<var name="workflowDefinitionVersionNumber" value="1" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLTab" />
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML" ><![CDATA[<![CDATA[The file sent by]]></var>
+			<var name="line" value="16" />
+		</execute>
+	</command>
+
+	<command name="ViewNodeNotificationRecipientPersistsAfterSwitchingTabs" priority="5">
+		<description message="This is a use case for LPS-46657." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Single Approver" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="review" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editNodeNotifications">
+			<var name="nodeNotificationsDescription" value="Review Notification Description" />
+			<var name="nodeNotificationsName" value="Review Notification" />
+			<var name="nodeNotificationsRecipientType" value="Role Type" />
+			<var name="roleName" value="Administrator" />
+			<var name="roleType" value="Regular" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLTab" />
+		<execute macro="KaleoDesigner#viewViewTab" />
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="review" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeNotifications">
+			<var name="nodeNotificationsName" value="Review Notification" />
+			<var name="nodeNotificationsRecipientType" value="Role Type" />
+			<var name="roleName" value="Administrator" />
+			<var name="roleType" value="Regular" />
+		</execute>
+	</command>
+
+	<command name="ViewSingleApproverUserNotificationOption" priority="5">
+		<description message="This is a use case for LPS-46605." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Single Approver" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="review" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeNotifications">
+			<var name="nodeNotificationsName" value="Review Notification" />
+			<var name="nodeNotificationsType" value="User Notification" />
+		</execute>
+	</command>
+
+	<command name="ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin" priority="5">
+		<description message="This is a use case for LPS-47352 and LPS-48912." />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Kaleo Forms Admin" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addProcess" />
+
+		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#chooseFieldSet">
+			<var name="kfFieldSetName" value="To Do" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#addWorkflow">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewButtons">
+			<var name="cancelButton" value="true" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewPublishedWorkflowDefinitions" />
+		<execute macro="KaleoFormsAdmin#viewNoUnpublishedWorkflowDefinitions" />
+	</command>
+
+	<command name="ViewWorkflowDefinitionButtonsViaKDCP" priority="5">
+		<description message="This is a use case for LPS-47352 and LPS-48912." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewButtons">
+			<var name="cancelButton" value="true" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNoWorkflowDefinitionsViaKDCP" />
+	</command>
+
+	<command name="ViewWorkflowDefinitionButtonsViaWorkflowCP" priority="5">
+		<description message="This is a use case for LPS-47352 and LPS-48912." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewButtons" />
+	</command>
+</definition>

@@ -65,19 +65,24 @@ portletDisplay.setURLBack(redirect);
 
 			<c:choose>
 				<c:when test="<%= !viewResults && !question.isExpired() && !hasVoted && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
+					<div class="form-group">
 
-					<%
-					for (PollsChoice choice : choices) {
-						choice = choice.toEscapedModel();
-					%>
+						<%
+						for (PollsChoice choice : choices) {
+							choice = choice.toEscapedModel();
+						%>
 
-						<aui:field-wrapper cssClass="radio">
-							<aui:input label='<%= choice.getName() + ". " + choice.getDescription(locale) %>' name="choiceId" type="radio" value="<%= choice.getChoiceId() %>" />
-						</aui:field-wrapper>
+							<aui:field-wrapper cssClass="radio">
+								<aui:input label='<%= choice.getName() + ". " + choice.getDescription(locale) %>' name="choiceId" type="radio" value="<%= choice.getChoiceId() %>">
+									<aui:validator name="required" />
+								</aui:input>
+							</aui:field-wrapper>
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
+
+					</div>
 
 					<c:if test="<%= PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.UPDATE) %>">
 						<portlet:renderURL var="viewResultsURL">
@@ -133,3 +138,16 @@ portletDisplay.setURLBack(redirect);
 		</aui:fieldset>
 	</aui:fieldset-group>
 </aui:form>
+
+<aui:script use="aui-base,selector-css3">
+	var form = A.one('#<portlet:namespace />fm');
+
+	if (form) {
+		form.on(
+			'submit',
+			function(event) {
+				submitForm(form);
+			}
+		);
+	}
+</aui:script>

@@ -1,0 +1,61 @@
+<definition component-name="portal-business-productivity">
+	<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet" />
+	<property name="web.plugins.includes" value="kaleo-web" />
+	<property name="testray.main.component.name" value="Business Productivity" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="KaleoFormsAdmin#tearDownProcess" />
+	</tear-down>
+
+	<command name="AddProcessPredefined" priority="5">
+		<var name="processName" value="Kaleo Forms Process Predefined" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Kaleo Forms Admin" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addProcess" />
+
+		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="processName" value="${processName}" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
+			<var name="fieldsDefinitionName" value="To Do" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#chooseWorkflow">
+			<var name="workflowDefinition" value="Single Approver" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#assignForm">
+			<var name="workflowDefinitionTask" value="create" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addForm">
+			<var name="formName" value="Created Task Form" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveForm" />
+
+		<execute macro="KaleoFormsAdmin#chooseForm">
+			<var name="formName" value="Created Task Form" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveProcess" />
+
+		<execute macro="KaleoFormsAdmin#viewProcess">
+			<var name="processName" value="${processName}" />
+		</execute>
+	</command>
+</definition>

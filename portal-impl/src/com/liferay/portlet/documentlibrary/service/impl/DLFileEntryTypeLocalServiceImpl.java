@@ -304,6 +304,10 @@ public class DLFileEntryTypeLocalServiceImpl
 		fileEntryTypeKey = StringUtil.toUpperCase(
 			StringUtil.trim(fileEntryTypeKey));
 
+		if (fileEntryTypeKey != null) {
+			fileEntryTypeKey = fileEntryTypeKey.trim().toUpperCase();
+		}
+
 		return dlFileEntryTypePersistence.findByG_F(groupId, fileEntryTypeKey);
 	}
 

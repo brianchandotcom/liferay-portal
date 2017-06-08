@@ -215,6 +215,10 @@ AUI.add(
 
 						var readingTimeElement = instance.one('#readingTime');
 
+						if (!readingTimeElement) {
+							return;
+						}
+
 						var data = instance.ns(
 							{
 								'content': content

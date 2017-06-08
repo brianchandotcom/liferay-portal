@@ -32,6 +32,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface BlogsGroupServiceConfiguration {
 
+	@Meta.AD(deflt = "false", required = false)
+	public boolean enableReadingTime();
+
 	@Meta.AD(deflt = "true", required = false)
 	public boolean enableRss();
 

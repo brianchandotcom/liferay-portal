@@ -65,17 +65,19 @@ if (portletTitleBasedNavigation) {
 </liferay-util:buffer>
 
 <liferay-util:buffer var="readingTime">
+	<c:if test="<%= blogsGroupServiceOverriddenConfiguration.enableReadingTime() %>">
 
-	<%
-	int readingTimeInMinutes = (entry == null) ? 0 : com.liferay.blogs.web.internal.util.BlogsUtil.getReadingTimeMinutes(entry.getContent());
-	%>
+		<%
+		int readingTimeInMinutes = (entry == null) ? 0 : com.liferay.blogs.web.internal.util.BlogsUtil.getReadingTimeMinutes(entry.getContent());
+		%>
 
-	<small class="text-capitalize text-muted" id="<portlet:namespace />readingTime">
-		<c:if test="<%= readingTimeInMinutes > 0 %>">
-			&nbsp;-&nbsp;
-			<liferay-ui:message arguments="<%= readingTimeInMinutes %>" key="x-minutes-read" translateArguments="<%= false %>" />
-		</c:if>
-	</small>
+		<small class="text-capitalize text-muted" id="<portlet:namespace />readingTime">
+			<c:if test="<%= readingTimeInMinutes > 0 %>">
+				&nbsp;-&nbsp;
+				<liferay-ui:message arguments="<%= readingTimeInMinutes %>" key="x-minutes-read" translateArguments="<%= false %>" />
+			</c:if>
+		</small>
+	</c:if>
 </liferay-util:buffer>
 
 <c:if test="<%= portletTitleBasedNavigation %>">

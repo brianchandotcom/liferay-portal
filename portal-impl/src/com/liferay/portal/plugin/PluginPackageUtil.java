@@ -891,14 +891,7 @@ public class PluginPackageUtil {
 			properties.getProperty("module-version"));
 
 		if (Validator.isNull(moduleVersion)) {
-			int moduleVersionPos = pos + pluginType.length() + 2;
-
-			if (displayName.length() > moduleVersionPos) {
-				moduleVersion = displayName.substring(moduleVersionPos);
-			}
-			else {
-				moduleVersion = ReleaseInfo.getVersion();
-			}
+			moduleVersion = ReleaseInfo.getVersion();
 		}
 
 		String moduleId =

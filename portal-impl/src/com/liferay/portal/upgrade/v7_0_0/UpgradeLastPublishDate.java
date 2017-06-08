@@ -164,4 +164,8 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 		}
 	}
 
+	protected void upgradeWebSite() throws Exception {
+		runSQL("alter table Website add lastPublishDate DATE null");
+	}
+
 }

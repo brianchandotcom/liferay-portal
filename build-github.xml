@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+
+<project name="portal-github" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build.xml" />
+
+	<fail message="Please set the property ${github.accesstoken}." unless="github.accesstoken" />
+	<fail message="Please set the property ${github.repository}." unless="github.repository" />
+	<fail message="Please set the property ${github.username}." unless="github.username" />
+
+	<macrodef name="post">
+		<attribute default="${github.request.api}" name="github.request.api" />
+		<attribute default="${github.request.data}" name="github.request.data" />
+
+		<sequential>
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("curl ");
+
+					sb.append("--header \"Authorization: token ");
+					sb.append(project.getProperty("github.accesstoken"));
+					sb.append("\" ");
+
+					sb.append(project.getProperty("github.request.api"));
+					sb.append(" ");
+
+					sb.append("--data '");
+					sb.append(project.getProperty("github.request.data"));
+					sb.append("' ");
+
+					sb.append("--request POST");
+
+					project.setProperty("github.request", sb.toString());
+				]]>
+			</script>
+
+			<execute>
+				${github.request}
+			</execute>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="post-report">
+		<attribute name="report.body" />
+
+		<sequential>
+			<fail message="Please set the property ${github.pullrequest.number}." unless="github.pullrequest.number" />
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("https://api.github.com/repos/");
+					sb.append(project.getProperty("github.username"));
+					sb.append("/");
+					sb.append(project.getProperty("github.repository"));
+					sb.append("/issues/");
+					sb.append(project.getProperty("github.pullrequest.number"));
+					sb.append("/comments");
+
+					project.setProperty("github.request.api", sb.toString());
+
+					sb = new StringBuilder();
+
+					sb.append("{");
+					sb.append("\"body\":\"@{report.body}\"");
+					sb.append("}");
+
+					project.setProperty("github.request.data", sb.toString());
+				]]>
+			</script>
+
+			<post />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="post-status">
+		<attribute name="status.description" />
+		<attribute name="status.state" />
+		<attribute name="status.targeturl" />
+
+		<sequential>
+			<fail message="Please set the property ${github.pullrequest.gitid}." unless="github.pullrequest.gitid" />
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("https://api.github.com/repos/");
+					sb.append(project.getProperty("github.username"));
+					sb.append("/");
+					sb.append(project.getProperty("github.repository"));
+					sb.append("/statuses/");
+					sb.append(project.getProperty("github.pullrequest.gitid"));
+
+					project.setProperty("github.request.api", sb.toString());
+
+					sb = new StringBuilder();
+
+					sb.append("{");
+					sb.append("\"description\":\"@{status.description}\",");
+					sb.append("\"state\":\"@{status.state}\",");
+					sb.append("\"target_url\":\"@{status.targeturl}\"");
+					sb.append("}");
+
+					project.setProperty("github.request.data", sb.toString());
+				]]>
+			</script>
+
+			<post />
+		</sequential>
+	</macrodef>
+
+	<target name="post-report-failure">
+		<script classpathref="project.classpath" language="beanshell">
+			<![CDATA[
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("<h1>Some tests have FAILED!</h1>\\n");
+
+				String targetURL = project.getProperty("jenkins.results.url");
+
+				if (targetURL != null) {
+					sb.append("<p>Click <a href='");
+					sb.append(targetURL);
+					sb.append("'>here</a> for more details</p>\\n");
+				}
+
+				project.setProperty("report.body", sb.toString());
+			]]>
+		</script>
+
+		<post-report
+			report.body="${report.body}"
+		/>
+	</target>
+
+	<target name="post-report-success">
+		<script classpathref="project.classpath" language="beanshell">
+			<![CDATA[
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("<h1>All tests have PASSED!</h1>\\n");
+
+				String targetURL = project.getProperty("jenkins.results.url");
+
+				if (targetURL != null) {
+					sb.append("<p>Click <a href='");
+					sb.append(targetURL);
+					sb.append("'>here</a> for more details</p>\\n");
+				}
+
+				project.setProperty("report.body", sb.toString());
+			]]>
+		</script>
+
+		<post-report
+			report.body="${report.body}"
+		/>
+	</target>
+
+	<target name="post-status-failure">
+		<post-status
+			status.description="Some tests have FAILED!"
+			status.state="failure"
+			status.targeturl="${jenkins.results.url}"
+		/>
+	</target>
+
+	<target name="post-status-pending">
+		<post-status
+			status.description="Tests are running on Jenkins."
+			status.state="pending"
+			status.targeturl="${jenkins.results.url}"
+		/>
+	</target>
+
+	<target name="post-status-success">
+		<post-status
+			status.description="All tests have PASSED!"
+			status.state="success"
+			status.targeturl="${jenkins.results.url}"
+		/>
+	</target>
+</project>

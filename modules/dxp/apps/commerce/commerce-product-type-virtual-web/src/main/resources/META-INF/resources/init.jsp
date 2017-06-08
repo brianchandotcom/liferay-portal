@@ -60,5 +60,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <portlet:defineObjects />
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+String backURL = ParamUtil.getString(request, "backURL", redirect);
 String languageId = LanguageUtil.getLanguageId(locale);
 %>

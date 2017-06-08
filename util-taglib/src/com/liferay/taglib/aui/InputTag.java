@@ -208,7 +208,9 @@ public class InputTag extends BaseInputTag {
 		int pos = name.indexOf(StringPool.DOUBLE_DASH);
 
 		if (pos != -1) {
-			name = name.substring(pos + 2, name.length() - 2);
+			if ((name.substring(pos + 2)).endsWith(StringPool.DOUBLE_DASH)) {
+				name = name.substring(pos + 2, name.length() - 2);
+			}
 		}
 
 		String field = getField();

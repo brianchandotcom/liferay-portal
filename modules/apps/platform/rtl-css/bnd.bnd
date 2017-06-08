@@ -1,0 +1,20 @@
+Bundle-Name: Liferay RTL CSS
+Bundle-SymbolicName: com.liferay.rtl.css
+Bundle-Version: 1.0.5
+Export-Package: com.liferay.rtl.css
+Import-Package:\
+	!org.junit,\
+	!org.junit.*,\
+	\
+	!org.slf4j,\
+	!org.slf4j.*,\
+	*
+Include-Resource:\
+	@lib/annotations.jar,\
+	@lib/ph-commons.jar,\
+	@lib/ph-css.jar,\
+	@lib/slf4j-api.jar
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Main-Class: com.liferay.rtl.css.RTLConverter
+-include: ../../../../marketplace/platform/bnd.bnd

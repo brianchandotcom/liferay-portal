@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.demo.data.creator.internal.util;
 
-import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,10 +21,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -39,37 +42,57 @@ public class AssetVocabularyDemoDataCreatorHelper
 			long userId, long groupId, String title)
 		throws PortalException {
 
+		AssetVocabulary assetVocabulary = _assetVocabularies.get(title);
+
+		if (assetVocabulary != null) {
+			return assetVocabulary;
+		}
+
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.addVocabulary(
-				userId, groupId, title, serviceContext);
+		assetVocabulary = _assetVocabularyLocalService.addVocabulary(
+			userId, groupId, title, serviceContext);
 
-		_assetVocabularyIds.add(assetVocabulary.getVocabularyId());
+		_assetVocabularies.put(title, assetVocabulary);
 
 		return assetVocabulary;
 	}
 
 	public void deleteAssetVocabularies() throws PortalException {
-		for (long assetVocabularyId : _assetVocabularyIds) {
-			try {
-				_assetVocabularyLocalService.deleteVocabulary(
-					assetVocabularyId);
-			}
-			catch (NoSuchVocabularyException nsve) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(nsve);
-				}
-			}
+		Set<Map.Entry<String, AssetVocabulary>> entrySet =
+			_assetVocabularies.entrySet();
 
-			_assetVocabularyIds.remove(assetVocabularyId);
+		Iterator<Map.Entry<String, AssetVocabulary>> iterator =
+			entrySet.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, AssetVocabulary> entry = iterator.next();
+
+			_assetVocabularyLocalService.deleteAssetVocabulary(
+				entry.getValue());
+
+			iterator.remove();
 		}
+	}
+
+	public void init() {
+		_assetVocabularies = new HashMap<>();
+	}
+
+	@Activate
+	protected void activate() {
+		init();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_assetVocabularies = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetVocabularyDemoDataCreatorHelper.class);
 
-	private final List<Long> _assetVocabularyIds = new CopyOnWriteArrayList<>();
+	private Map<String, AssetVocabulary> _assetVocabularies;
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

@@ -130,14 +130,12 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 </aui:form>
 
 <aui:script use="aui-base,event-input">
-	var form = A.one('#<portlet:namespace />fm');
-
-	var publishButton = form.one('#<portlet:namespace />publishButton');
+	var publishButton = A.one('#<portlet:namespace />publishButton');
 
 	publishButton.on(
 		'click',
 		function() {
-			var workflowActionInput = form.one('#<portlet:namespace />workflowAction');
+			var workflowActionInput = A.one('#<portlet:namespace />workflowAction');
 
 			if (workflowActionInput) {
 				workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');

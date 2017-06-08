@@ -659,10 +659,6 @@
 		<execute function="SelectFrameTop" />
 	</command>
 
-	<command name="viewAddPlusIconNotPresentPG">
-		<execute function="AssertElementNotPresent" locator1="AP#ADD_ASSET_PLUS_ICON" />
-	</command>
-
 	<command name="viewAssetDetailsPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
@@ -1235,6 +1231,10 @@
 				<execute function="AssertTextEquals" locator1="AP#METADATA_TAGS" value1="${tagName}" />
 			</then>
 		</if>
+	</command>
+
+	<command name="viewPlusIconNotPresentPG">
+		<execute function="AssertElementNotPresent" locator1="AP#ADD_ASSET_PLUS_ICON" />
 	</command>
 
 	<command name="viewReadMoreLinkNotPresentPG">

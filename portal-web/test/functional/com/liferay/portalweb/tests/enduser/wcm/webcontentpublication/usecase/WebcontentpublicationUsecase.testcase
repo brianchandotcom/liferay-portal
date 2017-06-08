@@ -1594,7 +1594,7 @@
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#viewAddPlusIconNotPresentPG" />
+		<execute macro="AssetPublisherPortlet#viewPlusIconNotPresentPG" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />

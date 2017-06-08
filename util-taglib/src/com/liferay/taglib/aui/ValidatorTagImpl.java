@@ -40,8 +40,8 @@ public class ValidatorTagImpl
 	public ValidatorTagImpl(
 		String name, String errorMessage, String body, boolean custom) {
 
-		setName(name);
 		setErrorMessage(errorMessage);
+		setName(name);
 
 		_body = body;
 		_custom = custom;

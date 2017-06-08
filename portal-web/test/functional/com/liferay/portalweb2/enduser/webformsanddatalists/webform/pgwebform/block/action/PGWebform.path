@@ -1,0 +1,117 @@
+<html>
+<head>
+<title>PGWebform</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWebform</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWebform</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEND_BUTTON</td>
+	<td>//button[contains(.,'Send')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FORM_INFORMATION-->
+<tr>
+	<td>FORM_INFORMATION_TITLE</td>
+	<td>//div[@class='portlet-body']/form/fieldset/legend/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_INFORMATION_DESCRIPTION</td>
+	<td>//div[@class='portlet-body']/form/fieldset/div/em</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DEFAULT_FORM_FIELDS-->
+<tr>
+	<td>DEFAULT_FORM_FIELDS_NAME_HEADER</td>
+	<td>xpath=(//label[contains(@for,'webformportlet')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_FORM_FIELDS_NAME</td>
+	<td>//div[@class='control-group' and contains(.,'Name')]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_FORM_FIELDS_RATING_HEADER</td>
+	<td>xpath=(//label[contains(@for,'webformportlet')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_FORM_FIELDS_RATING</td>
+	<td>//div[@class='control-group' and contains(.,'Rating')]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_FORM_FIELDS_COMMENTS_HEADER</td>
+	<td>xpath=(//label[contains(@for,'webformportlet')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_FORM_FIELDS_COMMENTS</td>
+	<td>//div[@class='control-group' and contains(.,'Comments')]/textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EDITED_FORM_FIELDS_1-->
+<tr>
+	<td>EDITED_FORM_FIELDS_1_YOUR_NAME_HEADER_1</td>
+	<td>xpath=(//label[contains(@for,'webformportlet')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDITED_FORM_FIELDS_1_YOUR_NAME</td>
+	<td>//div[@class='control-group' and contains(.,'Your Name')]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDITED_FORM_FIELDS_1_RATE_US_HEADER</td>
+	<td>xpath=(//label[contains(@for,'webformportlet')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDITED_FORM_FIELDS_1_RATE_US</td>
+	<td>//div[@class='control-group' and contains(.,'Rate Us!')]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDITED_FORM_FIELDS_1_ADDTIONAL_COMMENTS_HEADER</td>
+	<td>xpath=(//label[contains(@for,'webformportlet')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDITED_FORM_FIELDS_1_ADDITIONAL_COMMENTS</td>
+	<td>//div[@class='control-group' and contains(.,'Additional Comments')]/textarea</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

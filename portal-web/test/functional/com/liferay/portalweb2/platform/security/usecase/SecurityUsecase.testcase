@@ -1,0 +1,40 @@
+<definition component-name="portal-security">
+	<property name="portlet.plugins.includes" value="opensocial-portlet" />
+
+	<var name="pageName" value="External Webapps Test Page" />
+	<var name="portletName" value="OpenSocial Gadget" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ViewExternalWebappsPG" priority="5">
+		<var name="gadgetName" value="To-Do List" />
+
+		<execute macro="OpensocialGadget#addPG">
+			<var name="opensocialGadgetURL" value="http://www.labpixies.com/campaigns/todo/todo.xml" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGOpensocialgadget#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${gadgetName}" />
+	</command>
+</definition>

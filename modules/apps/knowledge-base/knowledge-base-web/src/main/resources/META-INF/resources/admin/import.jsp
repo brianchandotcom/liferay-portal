@@ -65,7 +65,9 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 				<aui:input id="file" label="upload-your-zip-file" name="file" type="file" />
 
 				<aui:field-wrapper label="prioritization-strategy">
+				   <div class="form-group">
 					<aui:input helpMessage="apply-numerical-prefixes-of-article-files-as-priorities-help" label="apply-numerical-prefixes-of-article-files-as-priorities" name="prioritizeByNumericalPrefix" type="checkbox" value="true" />
+				   </div>	
 				</aui:field-wrapper>
 			</aui:fieldset>
 		</aui:fieldset-group>

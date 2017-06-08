@@ -359,9 +359,7 @@
 	</bean>
 	<bean class="com.liferay.portal.util.FileImpl" id="com.liferay.portal.kernel.util.File" />
 	<bean class="com.liferay.portal.kernel.util.FileUtil" id="com.liferay.portal.kernel.util.FileUtil">
-		<property name="file">
-			<bean class="com.liferay.portal.util.FileImpl" />
-		</property>
+		<property name="file" ref="com.liferay.portal.kernel.util.File" />
 	</bean>
 	<bean class="com.liferay.portal.util.FriendlyURLNormalizerImpl" id="com.liferay.portal.kernel.util.FriendlyURLNormalizer" />
 	<bean class="com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil" id="com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil">

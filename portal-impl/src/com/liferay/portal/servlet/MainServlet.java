@@ -1079,6 +1079,8 @@ public class MainServlet extends ActionServlet {
 
 		session.removeAttribute("j_remoteuser");
 
+		session.removeAttribute("j_remoteuser");
+
 		if (!user.isDefaultUser()) {
 			EventsProcessorUtil.process(
 				PropsKeys.LOGIN_EVENTS_POST, PropsValues.LOGIN_EVENTS_POST,

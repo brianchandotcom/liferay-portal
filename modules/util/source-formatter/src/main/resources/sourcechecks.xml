@@ -261,4 +261,9 @@
 		<check name="XMLTilesDefsFileCheck" />
 		<check name="XMLWebFileCheck" />
 	</source-processor>
+	<source-processor name="YMLSourceProcessor">
+		<check name="WhitespaceCheck">
+			<property name="allowLeadingSpaces" value="true" />
+		</check>
+	</source-processor>
 </source-formatter>

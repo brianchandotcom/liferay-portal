@@ -16,7 +16,9 @@ package com.liferay.portal.upgrade.v7_0_0.util;
 
 /**
  * @author Iván Zaera
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class PortletPreferencesRow {
 
 	public PortletPreferencesRow(

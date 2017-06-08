@@ -52,8 +52,6 @@ public class FriendlyURLNormalizerUtil {
 
 	public void setFriendlyURLNormalizer(
 		FriendlyURLNormalizer friendlyURLNormalizer) {
-
-		_friendlyURLNormalizer = friendlyURLNormalizer;
 	}
 
 	private static volatile FriendlyURLNormalizer _friendlyURLNormalizer =

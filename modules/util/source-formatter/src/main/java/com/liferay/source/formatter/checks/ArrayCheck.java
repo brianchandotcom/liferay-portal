@@ -31,6 +31,8 @@ public class ArrayCheck extends BaseFileCheck {
 
 		_checkInefficientAddAllCalls(
 			fileName, content, _addAllArraysAsListPattern);
+		_checkInefficientAddAllCalls(
+			fileName, content, _addAllListUtilFromArrayPattern);
 
 		return _formatEmptyArray(content);
 	}
@@ -69,6 +71,8 @@ public class ArrayCheck extends BaseFileCheck {
 
 	private final Pattern _addAllArraysAsListPattern = Pattern.compile(
 		"\\.addAll\\(\\s*Arrays\\.asList\\(");
+	private final Pattern _addAllListUtilFromArrayPattern = Pattern.compile(
+		"\\.addAll\\(\\s*ListUtil\\.fromArray\\(");
 	private final Pattern _emptyArrayPattern = Pattern.compile(
 		"((\\[\\])+) \\{\\}");
 

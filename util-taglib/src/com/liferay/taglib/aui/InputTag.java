@@ -44,20 +44,22 @@ public class InputTag extends BaseInputTag {
 
 	@Override
 	public int doEndTag() throws JspException {
-		updateFormCheckboxNames();
-
-		return super.doEndTag();
-	}
-
-	@Override
-	public int doStartTag() throws JspException {
 		addModelValidatorTags();
 
 		if (getRequired()) {
 			addRequiredValidatorTag();
 		}
 
-		return super.doStartTag();
+		updateFormCheckboxNames();
+
+		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+
+		return super.doEndTag();
+	}
+
+	@Override
+	public int doStartTag() throws JspException {
+		return EVAL_BODY_INCLUDE;
 	}
 
 	public String getBaseType() {

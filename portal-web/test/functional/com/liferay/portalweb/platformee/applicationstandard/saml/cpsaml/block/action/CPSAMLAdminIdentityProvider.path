@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>CPSAMLAdminIdentityProvider</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPSAMLAdminIdentityProvider</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPSAMLAdminIdentityProvider</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--IDENTITY_PROVIDER-->
+<tr>
+	<td>IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX</td>
+	<td>//input[@id='_2_WAR_samlportlet_saml.sign.metadataCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_SSL_REQUIRED_CHECKBOX</td>
+	<td>//input[@id='_2_WAR_samlportlet_saml.ssl.requiredCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_AUTH_REQUEST_SIGNATURE_REQUIRED_CHECKBOX</td>
+	<td>//input[@id='_2_WAR_samlportlet_saml.idp.authn.request.signature.requiredCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_NAME_IDENTIFIER_FORMAT_SELECT</td>
+	<td>//select[@id='_2_WAR_samlportlet_saml.idp.metadata.name.id.format']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_NAME_IDENTIFIER_ATTRIBUTE_NAME_FIELD</td>
+	<td>//input[@id='_2_WAR_samlportlet_saml.idp.metadata.name.id.attribute']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_ATTRIBUTES_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_2_WAR_samlportlet_saml.idp.metadata.attributes.enabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_ATTRIBUTES_NAMESPACE_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_2_WAR_samlportlet_saml.idp.metadata.attributes.namespace.enabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_ATTRIBUTES_TEXTAREA</td>
+	<td>//textarea[@id='_2_WAR_samlportlet_saml.idp.metadata.attribute.names']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

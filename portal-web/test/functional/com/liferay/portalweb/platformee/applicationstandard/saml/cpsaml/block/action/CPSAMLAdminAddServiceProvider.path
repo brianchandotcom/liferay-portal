@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>CPSAMLAdminAddServiceProvider</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPSAMLAdminAddServiceProvider</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPSAMLAdminAddServiceProvider</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SERVICE_PROVIDER-->
+<tr>
+	<td>SERVICE_PROVIDER_NAME_FIELD</td>
+	<td>//input[@id='_2_WAR_samlportlet_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_ENTITY_ID_FIELD</td>
+	<td>//input[@id='_2_WAR_samlportlet_samlSpEntityId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_2_WAR_samlportlet_enabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_METADATA_URL_FIELD</td>
+	<td>//input[@id='_2_WAR_samlportlet_metadataUrl']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_NAME_IDENTIFIER_FORMAT_SELECT</td>
+	<td>//select[@id='_2_WAR_samlportlet_nameIdFormat']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_NAME_IDENTIFIER_ATTRIBUTE_NAME_FIELD</td>
+	<td>//input[@id='_2_WAR_samlportlet_nameIdAttribute']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_ATTRIBUTES_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_2_WAR_samlportlet_attributesEnabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_ATTRIBUTES_NAMESPACE_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_2_WAR_samlportlet_attributesNamespaceEnabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_ATTRIBUTES_TEXTAREA</td>
+	<td>//textarea[@id='_2_WAR_samlportlet_attributeNames']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

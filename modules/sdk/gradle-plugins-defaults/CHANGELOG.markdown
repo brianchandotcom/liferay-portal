@@ -1558,6 +1558,11 @@ Gradle Daemon:
 	- `repository.private.username`
 	- `repository.url`
 
+## 3.7.3 - 2017-06-08
+
+### Fixed
+- [LPS-72989]: Fix [Find Security Bugs] custom configuration loading on Windows.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1722,6 +1727,7 @@ Gradle Daemon:
 [LPS-72830]: https://issues.liferay.com/browse/LPS-72830
 [LPS-72851]: https://issues.liferay.com/browse/LPS-72851
 [LPS-72868]: https://issues.liferay.com/browse/LPS-72868
+[LPS-72989]: https://issues.liferay.com/browse/LPS-72989
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

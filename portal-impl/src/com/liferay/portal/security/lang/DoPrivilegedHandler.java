@@ -85,7 +85,7 @@ public class DoPrivilegedHandler
 
 			return _bean.equals(object);
 		}
-		else if (_isNotPrivileged(method)) {
+		else if (!PACLPolicyManager.isActive() || _isNotPrivileged(method)) {
 			return method.invoke(_bean, arguments);
 		}
 

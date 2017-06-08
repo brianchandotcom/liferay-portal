@@ -1,0 +1,6 @@
+Bundle-Name: Crystal Components Bundle
+Bundle-SymbolicName: com.liferay.javascript.crystal
+Bundle-Version: 1.0.0
+Include-Resource:\
+	bower.json,\
+	classes

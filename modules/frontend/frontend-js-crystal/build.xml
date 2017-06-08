@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+
+	<target name="compile">
+		<copy todir="${basedir}/.js-cache/META-INF/resources">
+			<path>
+				<fileset dir="${basedir}/src/META-INF/resources" excludes="**/${transpile.file.pattern},${transpile.file.pattern}" />
+			</path>
+		</copy>
+
+		<compile
+			module.dir="${basedir}"
+		/>
+	</target>
+</project>

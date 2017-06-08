@@ -24,6 +24,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,6 +45,10 @@ public class CPTypeServicesTrackerImpl implements CPTypeServicesTracker {
 
 	@Override
 	public CPType getCPType(String name) {
+		if (Validator.isNull(name)) {
+			return null;
+		}
+
 		ServiceWrapper<CPType> cpTypeServiceWrapper =
 			_cpTypeServiceTrackerMap.getService(name);
 

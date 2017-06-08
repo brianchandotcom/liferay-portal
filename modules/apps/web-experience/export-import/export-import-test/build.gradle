@@ -12,12 +12,13 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.7"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.bookmarks.api", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.0.0"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.exportimport.service", version: "3.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.api", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.content.web", version: "1.0.0"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.xstream.configurator.api", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:web-experience:export-import:export-import-api")
+	testIntegrationCompile project(":apps:web-experience:export-import:export-import-service")
 	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:web-experience:trash:trash-test-util")
 }

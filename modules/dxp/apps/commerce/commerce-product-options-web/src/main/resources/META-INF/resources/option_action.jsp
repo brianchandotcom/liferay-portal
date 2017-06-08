@@ -44,7 +44,7 @@ else {
 	/>
 
 	<portlet:actionURL name="editProductOption" var="setFacetableURL">
-		<portlet:param name="<%= Constants.CMD %>" value="SET_FACETABLE" />
+		<portlet:param name="<%= Constants.CMD %>" value="setFacetable" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
@@ -57,7 +57,7 @@ else {
 	/>
 
 	<portlet:actionURL name="editProductOption" var="setRequiredURL">
-		<portlet:param name="<%= Constants.CMD %>" value="SET_REQUIRED" />
+		<portlet:param name="<%= Constants.CMD %>" value="setRequired" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
@@ -70,7 +70,7 @@ else {
 	/>
 
 	<portlet:actionURL name="editProductOption" var="setSkuContributorURL">
-		<portlet:param name="<%= Constants.CMD %>" value="SET_SKU_CONTRIBUTOR" />
+		<portlet:param name="<%= Constants.CMD %>" value="setSkuContributor" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />

@@ -1,0 +1,543 @@
+<definition component-name="social-office-dashboard">
+	<property name="hook.plugins.includes" value="deploy-listener-hook,portal-compat-hook,so-activities-hook,so-hook" />
+	<property name="portlet.plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
+	<property name="theme.plugins.includes" value="so-theme" />
+	<property name="web.plugins.includes" value="resources-importer-web" />
+
+	<set-up>
+		<execute macro="SOUser#firstLoginPG" />
+	</set-up>
+
+	<var name="adminName" value="Test Test" />
+	<var name="adminFirstName" value="Test" />
+	<var name="adminListName" value="Test, Test" />
+	<var name="adminEmailAddress" value="test@liferay.com" />
+	<var name="contactEmailAddress" value="socialofficecontact01@liferay.com" />
+	<var name="contactName" value="Social01 Office01 Contact01" />
+	<var name="pageName" value="Tasks Page" />
+	<var name="portletName" value="Tasks" />
+	<var name="password" value="test" />
+	<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+	<var name="userFirstName" value="Social01" />
+	<var name="userMiddleName" value="Office01" />
+	<var name="userName" value="Social01 Office01 User01" />
+	<var name="userLastName" value="User01" />
+	<var name="userListName" value="User01, Social01" />
+	<var name="userScreenName" value="socialoffice01" />
+	<var name="roleName" value="Social Office" />
+	<var name="taskDescription" value="Task Description" />
+	<var name="taskDescriptionEdit" value="Task Description Edit" />
+
+	<command name="AddTaskAssignedToConnection" priority="5">
+		<execute macro="SOContactsCenter#addConnection">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="senderName" value="${adminName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${adminName}" />
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#addTask">
+			<var name="taskAssignee" value="${userName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#viewTask">
+			<var name="taskAssignee" value="${userName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${userName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="SOTasks#viewTaskNotification">
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#viewTask">
+			<var name="taskAssignee" value="${userName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+	</command>
+
+	<command name="AddTaskAssignedToFollower" priority="5">
+		<execute macro="SOContactsCenter#addFollower">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminListName" value="${adminListName}" />
+			<var name="adminName" value="${adminName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${adminName}" />
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute action="SOTasks#click" locator-key1="ADD_TASK_BUTTON" />
+
+		<execute action="SOTasksAdd#type" locator-key1="TASK_DESCRIPTION_FIELD" value1="${taskDescription}" />
+		<execute action="SOTasksAdd#assertTextNotEquals" locator-key1="TASK_ASSIGNEE_SELECT_MENU" value1="${userName}" />
+	</command>
+
+	<command name="AddTaskAssignedToMeDueDate" priority="5">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#addTask">
+			<var name="dueDate" value="true" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#viewTask">
+			<var name="dueDate" value="true" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+	</command>
+
+	<command name="AddTaskAssignedToMe" priority="5">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#addTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#viewTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+	</command>
+
+	<command name="AddTaskAssignedToMeTag" priority="5">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#addTask">
+			<var name="numberOfTags" value="3" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#viewTask">
+			<var name="numberOfTags" value="3" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+	</command>
+
+	<command name="CompleteTask100Percent" priority="5">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#addTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#completeTask">
+			<var name="percentCompletion" value="100" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#viewTask">
+			<var name="percentCompletion" value="100" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+	</command>
+
+	<command name="CompleteTask60Percent" priority="5">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#addTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#completeTask">
+			<var name="percentCompletion" value="60" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#viewTask">
+			<var name="percentCompletion" value="60" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+	</command>
+
+	<command name="DeleteTaskAssignedToMeDescription" priority="5">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#addTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#deleteTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+	</command>
+
+	<command name="EditTaskAssignedToMeDescription" priority="5">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#addTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#editTask">
+			<var name="taskDescriptionEdit" value="${taskDescriptionEdit}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#viewTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescriptionEdit}" />
+		</execute>
+	</command>
+
+	<command name="FilterTasksByPlace" priority="5">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#addTask">
+			<var name="tagNumber" value="1" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}01" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="SOTasks#addTask">
+			<var name="tagNumber" value="2" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}02" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute action="SOTasks#assertClick" locator-key1="FILTER_BUTTON" value1="Filter" />
+		<execute action="SOTasks#pause" value1="1000" />
+		<execute action="SOTasks#assertTextEquals" locator-key1="FILTER_PLACE_HEADER" value1="Filter by Place" />
+		<execute action="SOTasks#select" locator-key1="FILTER_PLACE_SELECT_MENU" value1="Liferay" />
+
+		<var name="key_taskDescription" value="${taskDescription}02" />
+
+		<execute action="SOTasks#assertTextEquals" locator-key1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}02" />
+		<execute action="SOTasks#assertTextNotPresent" value1="${taskDescription}01" />
+	</command>
+
+	<command name="FilterTasksByTag" priority="5">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#addTask">
+			<var name="tagNumber" value="1" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}01" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="SOTasks#addTask">
+			<var name="tagNumber" value="2" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}02" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute action="SOTasks#assertClick" locator-key1="FILTER_BUTTON" value1="Filter" />
+		<execute action="SOTasks#pause" value1="1000" />
+		<execute action="SOTasks#assertTextEquals" locator-key1="FILTER_TAG_HEADER" value1="Filter by Tags" />
+
+		<var name="key_taskDescription" value="${taskDescription}01" />
+
+		<execute action="SOTasks#assertTextEquals" locator-key1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}01" />
+
+		<var name="key_taskDescription" value="${taskDescription}02" />
+		<var name="key_tagNumber" value="2" />
+
+		<execute action="SOTasks#assertTextEquals" locator-key1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}02" />
+		<execute action="SOTasks#assertClick" locator-key1="FILTER_TAG_CHECKBOX" value1="tag2" />
+		<execute action="SOTasks#assertTextNotPresent" value1="${taskDescription}01" />
+		<execute action="SOTasks#assertClick" locator-key1="FILTER_TAG_CHECKBOX" value1="tag2" />
+
+		<var name="key_taskDescription" value="${taskDescription}01" />
+		<var name="key_tagNumber" value="1" />
+
+		<execute action="SOTasks#assertClick" locator-key1="FILTER_TAG_CHECKBOX" value1="tag1" />
+		<execute action="SOTasks#assertTextEquals" locator-key1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}01" />
+		<execute action="SOTasks#assertTextNotPresent" value1="${taskDescription}02" />
+	</command>
+
+	<command name="ResolveTaskAssignedToConnection" priority="5">
+		<execute macro="SOContactsCenter#addConnection">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="senderName" value="${adminName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${adminName}" />
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#addTask">
+			<var name="taskAssignee" value="${userName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${userName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="SOTasks#viewTaskNotification">
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#resolveTask">
+			<var name="taskAssignee" value="${userName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#viewTask">
+			<var name="percentCompletion" value="100" />
+			<var name="taskAssignee" value="${userName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${adminName}" />
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+		</execute>
+
+		<execute macro="SOTasks#viewResolveTaskNotification">
+			<var name="taskAssignee" value="${userName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#viewTask">
+			<var name="percentCompletion" value="100" />
+			<var name="taskAssignee" value="${userName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+	</command>
+
+	<command name="ResolveTaskAssignedToMe" priority="5">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#addTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#resolveTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+
+		<execute macro="SOTasks#viewTask">
+			<var name="percentCompletion" value="100" />
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskReporter" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="SOUserBar#tearDownNotifications" />
+
+		<execute macro="SOTasks#tearDownTask" />
+
+		<execute macro="SOUser#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+</definition>

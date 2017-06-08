@@ -1,0 +1,25 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="ASSIGNED_TO_ME_LINK">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="I_HAVE_CREATED_LINK">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="ASSIGNED_TO_ME_LINK">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+
+		<case locator-key1="I_HAVE_CREATED_LINK">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+
+		<case locator-key1="TASK_PROGRESS_BAR_PERCENT_CLICK">
+			<execute function="Click#makeVisibleClickAt" />
+		</case>
+	</command>
+</definition>

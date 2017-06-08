@@ -1,0 +1,7 @@
+<definition>
+	<command name="assertTextNotEquals">
+		<case locator-key1="TASK_ASSIGNEE_SELECT_MENU">
+			<execute function="AssertTextNotEquals#assertNotPartialText" />
+		</case>
+	</command>
+</definition>

@@ -352,3 +352,30 @@ This change was made as part of the modularization efforts to ease portal
 configuration changes.
 
 ---------------------------------------
+
+### Removed indexation of fields 'ratings' and 'viewCount'
+- **Date:** 2017-May-16
+- **JIRA Ticket:** LPS-70724
+
+#### What changed?
+
+Fields 'ratings' and 'viewCount' are no longer indexed in BaseIndexer for AssetEntry objects.
+
+#### Who is affected?
+
+Any search related custom code where these fields are used in queries.
+
+#### How should I update my code?
+
+There are several alternatives:
+ - Use Liferay portlets "Highest rated assets" and "Most viewed assets"
+ - Replace index query with a database query
+ - Implement an IndexerPostProcessor to index these fields in certain documents
+
+#### Why was this change made?
+
+Keeping ratings and view count in the search index in sync with the database has a negative impact on the normal operation due to the significantly increased number of index write requests causing throughput issues and therefore performance degradation.
+
+In addition, the view count is not always up-to-date in the database either. This behavior is controlled by the _Buffered Increment_ mechanism. You can find more information about it in the `portal.properties`.
+
+---------------------------------------

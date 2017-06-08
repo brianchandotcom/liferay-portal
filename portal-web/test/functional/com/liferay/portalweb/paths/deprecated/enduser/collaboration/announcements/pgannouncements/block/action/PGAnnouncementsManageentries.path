@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>PGAnnouncementsManageentries</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGAnnouncementsManageentries</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>DISTRIBUTION_SCOPE_SELECT</td>
+	<td>//select[contains(@id,'distributionScope')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ENTRY_BUTTON</td>
+	<td>//button[contains(.,'Add Entry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_SELECT_BUTTON</td>
+	<td>//div[@class='lfr-pagination-page-selector']/div/a[contains(@title,'Page') and contains(@title,'of')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENULIST_PAGE_SELECT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a/span[contains(.,'${key_pageNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ITEMS_PER_PAGE_BUTTON</td>
+	<td>//div[@class='lfr-pagination-delta-selector']/div/a[contains(@title,'Items per Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENULIST_ITEMS_PER_PAGE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a/span[contains(.,'${key_itemsPerPage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENTRY_TABLE-->
+<tr>
+	<td>ENTRY_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_MODIFIED_DATE</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_DISPLAY_DATE</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_EXPIRATION_DATE</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td[6]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_ACTIONS_GENERIC</td>
+	<td>//td[6]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIONS_MENULIST-->
+<tr>
+	<td>ACTIONS_MENULIST_EDIT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_DELETE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGINATION-->
+<tr>
+	<td>PAGINATION_FIRST</td>
+	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li[contains(.,'First')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_NEXT</td>
+	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li[contains(.,'Next')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_PREVIOUS</td>
+	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li[contains(.,'Previous')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_LAST</td>
+	<td>//ul[contains(@class,'lfr-pagination-buttons')]/li[contains(.,'Last')]/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

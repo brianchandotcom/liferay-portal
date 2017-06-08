@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>MyaccountUploadimage</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MyaccountUploadimage</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>UPLOAD_IMAGE_IFRAME</td>
+	<td>//iframe[contains(@id,'_2_changeLogo_iframe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BROWSE_BUTTON</td>
+	<td>//input[contains(@id,'_2_fileName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--IMAGE_CROPPER-->
+<tr>
+	<td>IMAGE_CROPPER_RIGHT_HANDLE</td>
+	<td>//div[@class='yui3-resize-handles-wrapper']/div/div[contains(@class,'yui3-resize-handle-inner-r')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

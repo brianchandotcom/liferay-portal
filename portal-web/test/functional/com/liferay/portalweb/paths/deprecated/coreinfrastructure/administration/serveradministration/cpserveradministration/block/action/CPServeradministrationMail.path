@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>CPServeradministrationMail</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPServeradministrationMail</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>CPServeradministration</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONFIGURE_MAIL_SERVER-->
+<tr>
+	<td>CONFIGURE_MAIL_SERVER_INCOMING_POP_SERVER</td>
+	<td>//input[contains(@id,'pop3Host')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURE_MAIL_SERVER_INCOMING_PORT</td>
+	<td>//input[contains(@id,'pop3Port')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURE_MAIL_SERVER_INCOMING_SECURE_NETWORK_CONNECTION_CHECKBOX</td>
+	<td>//input[contains(@id,'pop3Secure')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURE_MAIL_SERVER_INCOMING_USER_NAME</td>
+	<td>//input[contains(@id,'pop3User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURE_MAIL_SERVER_INCOMING_PASSWORD</td>
+	<td>//input[contains(@id,'pop3Password')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURE_MAIL_SERVER_OUTGOING_SMTP_SERVER</td>
+	<td>//input[contains(@id,'smtpHost')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURE_MAIL_SERVER_OUTGOING_PORT</td>
+	<td>//input[contains(@id,'smtpPort')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURE_MAIL_SERVER_OUTGOING_SECURE_CONNECTION_CHECKBOX</td>
+	<td>//input[contains(@id,'smtpSecure')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURE_MAIL_SERVER_OUTGOING_USER_NAME</td>
+	<td>//input[contains(@id,'smtpUser')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURE_MAIL_SERVER_OUTGOING_PASSWORD</td>
+	<td>//input[contains(@id,'smtpPassword')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURE_MAIL_SERVER_ADDITIONAL_JAVAMAIL_PROPERTIES</td>
+	<td>//textarea[contains(@id,'advancedProperties')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>PGNotificationsdelivery</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGNotificationsdelivery</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGNotifications</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_CHECKBOX</td>
+	<td>//table[contains(.,'${key_contentType}')]//tr[contains(.,'${key_actionType}')]//label[contains(.,'${key_notificationType}')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_CHECKBOX_1</td>
+	<td>//table[contains(.,'${key_contentType}')]//tr/td[2]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_CHECKBOX_2</td>
+	<td>//table[contains(.,'${key_contentType}')]//div[2]/div/label/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1</td>
+	<td>//table[contains(.,'${key_contentType}')]//tr/td[2]//label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2</td>
+	<td>//table[contains(.,'${key_contentType}')]//div[2]/div/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_CONTACTS_CENTER_WEBSITE_CHECKBOX</td>
+	<td>//table[contains(.,'Contacts Center')]//tr[contains(.,'sends you a social relationship request.')]//label[contains(.,'Website')]/input[@type='checkbox' and contains(@class,'disabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX</td>
+	<td>//table[contains(.,'Invite Members')]//tr[contains(.,'sends you a membership request.')]//label[contains(.,'Website')]/input[@type='checkbox' and contains(@class,'disabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_TEXT_1</td>
+	<td>//table[contains(.,'${key_contentType}')]//tr[1]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_TEXT_2</td>
+	<td>//table[contains(.,'${key_contentType}')]//tr[2]/td</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

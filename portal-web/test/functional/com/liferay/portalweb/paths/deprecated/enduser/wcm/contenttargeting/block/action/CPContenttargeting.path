@@ -1,0 +1,178 @@
+<html>
+<head>
+<title>CPContenttargeting</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPContenttargeting</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>NAVIGATION_USER_SEGMENTS</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'User Segments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_CAMPAIGNS</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Campaigns')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_USER_SEGMENT_BUTTON</td>
+	<td>//ul[@aria-label='Audience Targeting']/li/a[contains(.,'Add User Segment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CAMPAIGN_BUTTON</td>
+	<td>//ul[@aria-label='Audience Targeting']/li/a[contains(.,'Add Campaign')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_CAMPAIGN_BUTTON</td>
+	<td>//li[contains(@id,'deleteCampaigns')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_USER_SEGMENT_BUTTON</td>
+	<td>//li[contains(@id,'deleteUserSegments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKBOX_ALL</td>
+	<td>//input[@title='Select All']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CAMPAIGN_TABLE-->
+<tr>
+	<td>CAMPAIGN_TABLE_CHECKBOX_ALL</td>
+	<td>//th[contains(@id,'campaigns')]/input[@title='Select All'] | //th[contains(@id,'campaigns')]/input[contains(@name,'allRowIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TABLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_campaignName}')]/td[1]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_campaignName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_campaignName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TABLE_PRIORITY</td>
+	<td>//tr[contains(.,'${key_campaignName}')]/td[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TABLE_STATUS</td>
+	<td>//tr[contains(.,'${key_campaignName}')]/td[7]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_campaignName}')]/td[8]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CAMPAIGN_TABLE_ACTIONS_MENULIST-->
+<tr>
+	<td>CAMPAIGN_TABLE_ACTIONS_MENULIST_REPORTS</td>
+	<td>//ul/li/a[contains(.,'Reports')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TABLE_ACTIONS_MENULIST_EDIT</td>
+	<td>//ul/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TABLE_ACTIONS_MENULIST_DELETE</td>
+	<td>//ul/li/a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TABLE_ACTIONS_MENULIST_PERMISSIONS</td>
+	<td>//ul/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_SEGMENT_TABLE-->
+<tr>
+	<td>USER_SEGMENT_TABLE_CHECKBOX_ALL</td>
+	<td>//th[contains(@id,'userSegments')]/input[@title='Select All'] | //th[contains(@id,'userSegments')]/input[contains(@name,'allRowIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_TABLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_userSegmentName}')]/td[1]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_userSegmentName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_userSegmentName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_userSegmentName}')]/td[4]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_SEGMENT_TABLE_ACTIONS_MENULIST-->
+<tr>
+	<td>USER_SEGMENT_TABLE_ACTIONS_MENULIST_REPORTS</td>
+	<td>//ul/li/a[contains(.,'Reports')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_TABLE_ACTIONS_MENULIST_EDIT</td>
+	<td>//ul/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_TABLE_ACTIONS_MENULIST_DELETE</td>
+	<td>//ul/li/a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_TABLE_ACTIONS_MENULIST_PERMISSIONS</td>
+	<td>//ul/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

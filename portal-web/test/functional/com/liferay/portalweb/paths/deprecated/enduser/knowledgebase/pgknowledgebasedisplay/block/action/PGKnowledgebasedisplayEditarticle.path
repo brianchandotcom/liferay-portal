@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>PGKnowledgebasedisplayEditarticle</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGKnowledgebasedisplayEditarticle</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER_TITLE</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD</td>
+	<td>//input[@id='_2_WAR_knowledgebaseportlet_title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD</td>
+	<td>//div[contains(@id,'cke__')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ATTACHMENTS_LINK</td>
+	<td>//a[contains(.,'Add Attachments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SECTIONS_SELECT</td>
+	<td>//select[contains(@id,'_WAR_knowledgebaseportlet_sections')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_BUTTON</td>
+	<td>//button[contains(.,'Publish')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

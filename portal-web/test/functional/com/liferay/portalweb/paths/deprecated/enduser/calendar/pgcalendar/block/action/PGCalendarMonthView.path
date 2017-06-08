@@ -1,0 +1,121 @@
+<html>
+<head>
+<title>PGCalendarMonthView</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGCalendarMonthView</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGCalendar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_MONTH</td>
+	<td>//div[@class='yui3-widget component scheduler-view scheduler-view-table scheduler-view-month scheduler-month-view']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCHEDULER_EVENT_MONTH_VIEW-->
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_ALL_DAY</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'scheduler-event-all-day calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_ALL_DAY_TITLE</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'scheduler-event-all-day calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_GENERIC</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_SPECIFIC</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_SPECIFIC_APPROVED</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[@class='scheduler-event calendar-portlet-event-approved']/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_SPECIFIC_PENDING</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[@class='scheduler-event calendar-portlet-event-pending']/div[contains(.,'Calendar Event All Day Title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_SPECIFIC_BACKGROUND_COLOR</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event') and contains(@style,'${key_backgroundColor}')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_SPECIFIC_BACKGROUND_COLOR_DEFAULT</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event') and contains(@style,'rgb(240, 209, 209)')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_SPECIFIC_FONT_COLOR</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event') and contains(@style,'${key_fontColor}')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_SPECIFIC_FONT_COLOR_DEFAULT</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event') and contains(@style,'rgb(217, 104, 104)')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_REGULAR</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_REGULAR_TITLE</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_REPEAT</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'scheduler-event-repeated calendar-portlet-event') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_REPEAT_TITLE</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'scheduler-event-repeated calendar-portlet-event') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCHEDULER_EVENT_MONTH_VIEW_SHOW_MORE-->
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_SHOW_MORE_LINK</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//a[@class='scheduler-view-table-more' and contains(.,'Show ${key_eventNumber} more')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_SHOW_MORE_DIALOG_BOX</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[@class='scheduler-view-table-events-overlay-node']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_MONTH_VIEW_SHOW_MORE_CLOSE_LINK</td>
+	<td>//div[contains(@class,'scheduler-view-table scheduler-view-month')]//a[@class='scheduler-view-table-events-overlay-node-close' and contains(.,'Close')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

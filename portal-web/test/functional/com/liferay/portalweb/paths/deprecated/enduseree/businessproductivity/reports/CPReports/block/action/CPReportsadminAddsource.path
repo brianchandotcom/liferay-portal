@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>CPReportsadminAddsource</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPReportsadminAddsource</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>DATA_SOURCE_NAME_FIELD</td>
+	<td>//input[contains(@id,'reportsportlet_name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>JDBC_DRIVER_CLASS_NAME_FIELD</td>
+	<td>//input[contains(@id,'reportsportlet_driverClassName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>JDBC_URL_FIELD</td>
+	<td>//input[contains(@id,'reportsportlet_driverUrl')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>JDBC_USER_NAME_FIELD</td>
+	<td>//input[contains(@id,'reportsportlet_driverUserName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>JDBC_PASSWORD_FIELD</td>
+	<td>//input[contains(@id,'reportsportlet_driverPassword')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEST_DATABASE_CONNECTION_BUTTON</td>
+	<td>//button[contains(.,'Test Database Connection')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

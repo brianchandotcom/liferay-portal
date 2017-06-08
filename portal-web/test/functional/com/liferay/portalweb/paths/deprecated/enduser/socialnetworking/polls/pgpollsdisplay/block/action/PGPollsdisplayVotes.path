@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>PGPollsdisplayVotes</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGPollsdisplayVotes</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLLS_CHOICE_VOTES_PERCENTAGE</td>
+	<td>//tr[contains(.,'${key_pollsQuestionChoice}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLLS_CHOICE_VOTES_NUMBER</td>
+	<td>//tr[contains(.,'${key_pollsQuestionChoice}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLLS_TOTAL_VOTES</td>
+	<td>//form[contains(@id,'pollsweb')]/div</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

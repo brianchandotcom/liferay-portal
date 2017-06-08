@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>PGLoginTermsofservice</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGLoginTermsofservice</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>I_AGREE_BUTTON</td>
+	<td>//button[contains(.,'I Agree')]</td>
+	<td>I Agree Button</td>
+</tr>
+<tr>
+	<td>I_DISAGREE_BUTTON</td>
+	<td>//button[contains(.,'I Disagree')]</td>
+	<td>I Disagree Button</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

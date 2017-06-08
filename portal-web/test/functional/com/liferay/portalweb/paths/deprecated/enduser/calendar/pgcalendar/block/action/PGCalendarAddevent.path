@@ -1,0 +1,521 @@
+<html>
+<head>
+<title>PGCalendarAddevent</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGCalendarAddevent</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ADD_EVENT_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node ')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_BUTTON</td>
+	<td>//button[contains(@class, 'btn close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD</td>
+	<td>//input[contains(@id,'CalendarPortlet_title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--START_DATE-->
+<tr>
+	<td>START_DATE</td>
+	<td>//input[contains(@name,'CalendarPortlet_startTime') and @placeholder='mm/dd/yyyy']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>START_DATE_TIME</td>
+	<td>//input[contains(@name,'CalendarPortlet_startTime') and @placeholder='h:mm am/pm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--END_DATE-->
+<tr>
+	<td>END_DATE</td>
+	<td>//input[contains(@name,'CalendarPortlet_endTime') and @placeholder='mm/dd/yyyy']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>END_DATE_TIME</td>
+	<td>//input[contains(@name,'CalendarPortlet_endTime') and @placeholder='h:mm am/pm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MINI_CALENDAR-->
+<tr>
+	<td>MINI_CALENDAR_WEEK_START_DAY_START_DATE</td>
+	<td>xpath=(//div[@class='yui3-widget-bd popover-content']//tr[@class='yui3-calendar-weekdayrow']/th[1])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CALENDAR_WEEK_START_DAY_END_DATE</td>
+	<td>xpath=(//div[@class='yui3-widget-bd popover-content']//tr[@class='yui3-calendar-weekdayrow']/th[1])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ALL_DAY-->
+<tr>
+	<td>ALL_DAY_CHECKBOX</td>
+	<td>//input[contains(@id,'CalendarPortlet_allDay')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REPEAT-->
+<tr>
+	<td>REPEAT_CHECKBOX</td>
+	<td>//input[contains(@id,'CalendarPortlet_repeat')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_SUMMARY</td>
+	<td>//a[@class='calendar-portlet-recurrence-summary']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_REPEATS_DROPDOWN</td>
+	<td>//select[contains(@id,'CalendarPortlet_frequency')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_REPEAT_EVERY_DROPDOWN</td>
+	<td>//select[contains(@id,'CalendarPortlet_interval')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_REPEAT_ON_DAY_OF_THE_MONTH_RADIO</td>
+	<td>//label[@class='radio-inline' and contains(.,'Day of the Month')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_RADIO</td>
+	<td>//label[@class='radio-inline' and contains(.,'Day of the Week')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_POSITION_DROPDOWN</td>
+	<td>//div[contains(@id,'CalendarPortlet_viewPositionalWeekday')]//select[@title='Position']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_DROPDOWN</td>
+	<td>//div[contains(@id,'CalendarPortlet_viewPositionalWeekday')]//select[@title='Weekday']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_WEEK_START_DAY</td>
+	<td>xpath=(//td[contains(@class,'calendar-recurrence-weekday-checkbox')]/div/label)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_ENDS_NEVER_RADIO</td>
+	<td>//input[contains(@name,'CalendarPortlet_ends') and @value='never']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_ENDS_AFTER_RADIO</td>
+	<td>//td[contains(@class,'calendar-portlet-recurrence-content')]//input[contains(@name,'CalendarPortlet_ends') and @value='after']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_ENDS_AFTER_FIELD</td>
+	<td>//input[contains(@id,'CalendarPortlet_count')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_ENDS_ON_RADIO</td>
+	<td>//input[contains(@name,'CalendarPortlet_ends') and @value='on']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_DIALOG_SUMMARY</td>
+	<td>//span[@class='calendar-portlet-recurrence-summary']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_DONE_BUTTON</td>
+	<td>//div[contains(@class,'widget-content-expanded')]/div/div/button[contains(.,'Done')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS-->
+<tr>
+	<td>DETAILS_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingDetailsPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingDetailsPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_CALENDAR_SELECT</td>
+	<td>//select[contains(@id,'calendarId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_CALENDAR_SELECT_OPTION</td>
+	<td>//select[contains(@id,'calendarId')]/option[contains(.,'${key_calendarName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS_PERMISSIONS-->
+<tr>
+	<td>DETAILS_PERMISSIONS_VIEWABLE_BY_SELECT</td>
+	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PERMISSIONS_MORE_OPTIONS_LINK</td>
+	<td>//span[contains(@id,'inputPermissionsShowOptions')]/a[contains(.,'More Options')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PERMISSIONS_HIDE_OPTIONS_LINK</td>
+	<td>//a[contains(@id,'inputPermissionsHideOptions') and contains (.,'Hide Options')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PERMISSIONS_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_roleName}')]//input[@value='${key_permissionDefinitionKey}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--INVITATIONS-->
+<tr>
+	<td>INVITATIONS_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingInvitationPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingInvitationPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_INVITE_RESOURCE_FIELD</td>
+	<td>//input[contains(@id,'inviteResource')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_INVITE_RESOURCE_FIELD_LIST</td>
+	<td>//ul[@role='listbox']/li[@data-text='${key_resource}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_PENDING</td>
+	<td>//div[contains(@id,'calendarListPending')]/div/div[contains(.,'${key_resource}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_ACCEPTED</td>
+	<td>//div[contains(@id,'calendarListAccepted')]/div/div[contains(.,'${key_resource}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_DECLINED</td>
+	<td>//div[contains(@id,'calendarListDeclined')]/div/div[contains(.,'${key_resource}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_MAYBE</td>
+	<td>//div[contains(@id,'calendarListMaybe')]/div/div[contains(.,'${key_resource}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--INVITATIONS_RESOURCES_AVAILABILITY-->
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and contains(@id,'checkAvailability')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and contains(@id,'checkAvailability')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_TODAY_BUTTON</td>
+	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'today btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_PREV_BUTTON</td>
+	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'icon-prev btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_NEXT_BUTTON</td>
+	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'icon-next btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_DAY_BUTTON</td>
+	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'view-day btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_DAY_BUTTON_ACTIVE</td>
+	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'view-day btn active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_WEEK_BUTTON</td>
+	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'view-week btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_WEEK_BUTTON_ACTIVE</td>
+	<td>//div[@class='calendar-portlet-availability']//button[contains(@class,'view-week btn active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_GENERIC</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_ALL_DAY_TITLE</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event-all-day calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-startdate,'12:00 AM') and contains(@data-enddate,'${key_endDate}') and contains(@data-enddate,'11:59 PM')]/div[@class='scheduler-event-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event')]//div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'${key_backgroundColor}')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR_DEFAULT</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'rgb(240, 208, 208)')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_FONT_COLOR</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'${key_fontColor}')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_FONT_COLOR_DEFAULT</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'rgb(217, 104, 104)')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REGULAR</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event scheduler-event-past calendar-portlet-event-pending scheduler-event-disabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REGULAR_TITLE</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REPEAT</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event-repeated calendar-portlet-event') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REPEAT_TITLE</td>
+	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event-repeated calendar-portlet-event') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REMINDERS-->
+<tr>
+	<td>REMINDERS_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingReminderPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingReminderPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_EMAIL_CHECKBOX_1</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//input[@type='checkbox'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_EMAIL_CHECKBOX_2</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//input[@type='checkbox'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_VALUE_INPUT_INACTIVE_1</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//input[contains(@class,'reminder-value') and contains(@disabled,'disabled')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_VALUE_INPUT_INACTIVE_2</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//input[contains(@class,'reminder-value') and contains(@disabled,'disabled')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_VALUE_INPUT_ACTIVE_1</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//input[contains(@class,'reminder-value')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_VALUE_INPUT_ACTIVE_2</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//input[contains(@class,'reminder-value')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_DURATION_SELECT_INACTIVE_1</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//select[contains(@name,'reminderDuration') and contains(@disabled,'disabled')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_DURATION_SELECT_INACTIVE_2</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//select[contains(@name,'reminderDuration') and contains(@disabled,'disabled')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_DURATION_SELECT_ACTIVE_1</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//select[contains(@name,'reminderDuration')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_DURATION_SELECT_ACTIVE_2</td>
+	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//select[contains(@name,'reminderDuration')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CATEGORIZATION-->
+<tr>
+	<td>CATEGORIZATION_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingCategorizationPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingCategorizationPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_TAG_FIELD</td>
+	<td>//input[contains(@title,'Add Tags')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_ADD_TAGS_BUTTON</td>
+	<td>//button[contains(@title,'Add Tags')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_SELECT_BUTTON</td>
+	<td>//button[contains(@type,'button') and contains(@title,'Select Tags')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_SUGGESTIONS_BUTTON</td>
+	<td>//button[contains(@type,'button') and contains(@title,'Suggestions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_TAG_SPECIFIC</td>
+	<td>//li[contains(@class,'textboxlistentry')]//span[contains(@class,'textboxlistentry-text') and contains(.,'${key_tagText}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_REMOVE_TAG_BUTTON_SPECIFIC</td>
+	<td>//li[contains(@class,'textboxlistentry')]//span[contains(@class,'textboxlistentry-text') and contains(.,'${key_tagText}')]/..//i[@class='icon icon-remove']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RELATED_ASSETS-->
+<tr>
+	<td>RELATED_ASSETS_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingAssetLinksPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingAssetLinksPanel']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

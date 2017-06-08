@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>CPAppmanager</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPAppmanager</td></tr>
+</thead>
+<tbody>
+<!--APP-->
+<tr>
+	<td>APP_NAME</td>
+	<td>//div[@class='title' and contains(.,'${key_appName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_ACTIONS</td>
+	<td>//div[@class='title' and contains(.,'${key_appName}')]/../../div[@class='app-actions']/div/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--APP_ACTIONS_MENULIST-->
+<tr>
+	<td>APP_ACTIONS_MENULIST_ACTIVATE</td>
+	<td>//a[contains(@id,'_menu_activate')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_ACTIONS_MENULIST_DEACTIVATE</td>
+	<td>//a[contains(@id,'_menu_deactivate')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_ACTIONS_MENULIST_UNINSTALL</td>
+	<td>//a[contains(@id,'_menu_uninstall')]/span</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

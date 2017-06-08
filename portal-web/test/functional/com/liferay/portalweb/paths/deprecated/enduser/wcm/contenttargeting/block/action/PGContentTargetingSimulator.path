@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>PGContentTargetingSimulator</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGContentTargetingSimulator</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>DOCKBAR_SIMULATOR_BUTTON</td>
+	<td>//a[@id='_145_simulatorPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIMULATE_BUTTON</td>
+	<td>//button[contains(.,'Simulate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STOP_SIMULATION_BUTTON</td>
+	<td>//button[contains(.,'Stop Simulation')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SIMULATOR-->
+<tr>
+	<td>SIMULATOR_USER_SEGMENTS_NAVIGATION</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'User Segments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIMULATOR_CAMPAIGNS_NAVIGATION</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Campaigns')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_SEGMENTS_MATCHED-->
+<tr>
+	<td>USER_SEGMENTS_MATCHED_LABEL</td>
+	<td>//div[@class='category-content']/div/label[contains(.,'${key_userSegmentMatched}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENTS_MATCHED_CHECKBOX</td>
+	<td>//label[contains(.,'${key_userSegmentMatched}')]/input[@class='field element matched']</td>
+	<td></td>
+</tr>
+<!---->
+<!--USER_SEGMENTS_OTHER-->
+<tr>
+	<td>USER_SEGMENTS_OTHER_LABEL</td>
+	<td>//div[@class='category-content']/div/label[contains(.,'${key_userSegmentOther}') and contains(@for,'notMatchedElement')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENTS_OTHER_CHECKBOX</td>
+	<td>//label[contains(.,'${key_userSegmentOther}')]/input[@class='field element not-matched']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CAMPAIGNS_MATCHED-->
+<tr>
+	<td>CAMPAIGNS_MATCHED_LABEL</td>
+	<td>//div[@class='campaign']/div/div[@class='category-content']//label[contains(.,'${key_campaignMatched}')]</td>
+	<td></td>
+</tr>
+<!---->
+<!--CAMPAIGNS_OTHER-->
+<tr>
+	<td>CAMPAIGNS_OTHER_LABEL</td>
+	<td>//label[contains(.,'${key_campaignOther}') and contains(@for,'notMatchedElement')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

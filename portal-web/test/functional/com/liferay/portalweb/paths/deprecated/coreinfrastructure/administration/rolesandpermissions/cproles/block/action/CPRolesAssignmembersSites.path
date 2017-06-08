@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>CPRolesAssignmembersSites</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPRolesAssignmembersSites</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USERS</td>
+	<td>//li[contains(@class,'tab')]//a[contains(.,'Users')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES</td>
+	<td>//li[contains(@class,'tab')]//a[contains(.,'Sites')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT</td>
+	<td>//a[contains(.,'Current')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVAILABLE</td>
+	<td>//a[contains(.,'Available')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPDATE_ASSOCIATIONS_BUTTON</td>
+	<td>//button[contains(.,'Update Associations')]</td>
+	<td></td>
+</tr>
+<!---->
+<!--SEARCH-->
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[contains(@name,'keywords')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_TABLE-->
+<tr>
+	<td>SITE_TABLE_CHECKBOX</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[1]//input[contains(@name,'rowIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_NAME</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_TYPE</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[3]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

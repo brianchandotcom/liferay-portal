@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>CPContenttargetingEditusersegment</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPContenttargetingEditusersegment</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>CPContenttargetingAddusersegment</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_RULE_DELETE</td>
+	<td>//div[contains(@id,'${key_userSegmentRuleDelete}')]/div[2]/div/button/i[@class='icon-trash']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_RULE_APPLIED</td>
+	<td>//div[@class='field-header']//div[@class='row field-info']/div[contains(.,'${key_userSegmentRuleName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_RULE_CONTENT_VISITED_CONTENT_TITLE</td>
+	<td>//div[@class='select-asset-selector']//div[@class='asset-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED-->
+<tr>
+	<td>USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_WEB_CONTENT_TITLE</td>
+	<td>//div[@class='asset-title']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

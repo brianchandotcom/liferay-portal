@@ -1,0 +1,144 @@
+<html>
+<head>
+<title>CPContenttargetingCampaignReports</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPContenttargetingCampaignReports</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CONTENT_VIEWS_REPORT</td>
+	<td>//tr[contains(.,'Content Views')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_VIEWS_REPORT_DESCRIPTION</td>
+	<td>//tr[contains(.,'Content Views')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRACKING_ACTIONS_REPORT</td>
+	<td>//tr[contains(.,'Tracking Actions')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRACKING_ACTIONS_REPORT_DESCRIPTION</td>
+	<td>//tr[contains(.,'Tracking Actions')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_ACTIONS</td>
+	<td>//tr[contains(.,'${key_reportType}')]/td[4]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPDATE_REPORT_BUTTON</td>
+	<td>//span[contains(.,'Update Report')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOT_ENOUGH_DATA_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REPORT_ACTIONS_MENULIST-->
+<tr>
+	<td>REPORT_ACTIONS_MENULIST_VIEW_REPORT</td>
+	<td>//ul/li/a[contains(.,'View Report')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_ACTIONS_MENULIST_UPDATE_REPORT</td>
+	<td>//ul/li/a[contains(.,'Update Report')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT_GRAPH-->
+<tr>
+	<td>CONTENT_GRAPH_CONTENT_TITLE</td>
+	<td>//div[@id='campaignContentChart']//span[contains(.,'${key_contentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT_REPORT_TABLE-->
+<tr>
+	<td>CONTENT_REPORT_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_contentTitle}')]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_REPORT_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${key_contentTitle}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_REPORT_TABLE_EVENT</td>
+	<td>//tr[contains(.,'${key_contentTitle}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_REPORT_TABLE_COUNT</td>
+	<td>//tr[contains(.,'${key_contentTitle}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TRACKING_GRAPH-->
+<tr>
+	<td>TRACKING_GRAPH_ALIAS_USER_SEGMENT</td>
+	<td>//div[@id='campaignTrackingActionChart']//span[contains(.,'${key_trackingAlias}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TRACKING_REPORT_TABLE-->
+<tr>
+	<td>TRACKING_REPORT_TABLE_ALIAS</td>
+	<td>//tr[contains(.,'${key_trackingAlias}')]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRACKING_REPORT_TABLE_EVENT</td>
+	<td>//tr[contains(.,'${key_trackingAlias}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRACKING_REPORT_TABLE_USER_SEGMENT</td>
+	<td>//tr[contains(.,'${key_trackingAlias}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRACKING_REPORT_TABLE_COUNT</td>
+	<td>//tr[contains(.,'${key_trackingAlias}')]/td[3]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

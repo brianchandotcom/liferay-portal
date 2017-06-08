@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>CPCustomfieldsResourceAddcustomfield</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPCustomfieldsResourceAddcustomfield</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>RESOURCE_HEADER_TITLE</td>
+	<td>//h3[@class='header-title']/span[contains(.,'${key_resourceName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_VALUE_SELECT</td>
+	<td>//select[contains(@id,'defaultValue')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

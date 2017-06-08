@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>PGLoginEmailVerificationCode</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGLoginEmailVerificationCode</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ALERT_MESSAGE</td>
+	<td>//div[contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERIFY_BUTTON</td>
+	<td>//div/button[contains(.,'Verify')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_VERIFICATION_CODE_FIELD</td>
+	<td>//input[@id='ticketKey']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEND_NEW_VERIFICATION_CODE</td>
+	<td>//div/a[contains(.,'Send New Verification Code')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGE_EMAIL_ADDRESS</td>
+	<td>//div/a[contains(.,'Change Email Address')]</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

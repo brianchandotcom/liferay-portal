@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>PGKaleoformsMycompletedrequestsProcess</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGKaleoformsMycompletedrequestsProcess</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PROCESS_NAME</td>
+	<td>//h3[@class='header-title']/span[contains(.,'${key_kfProcessName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_STATUS</td>
+	<td>//div[@class='lfr-asset-status']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_DEFINITION</td>
+	<td>//div[@class='lfr-asset-summary']//div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CURRENT_ENTRY-->
+<tr>
+	<td>CURRENT_ENTRY_FIELD</td>
+	<td>//label[contains(.,'${key_fieldName}')]/../../div[contains(.,'${key_fieldName}') and contains(.,'${key_kfProcessFieldData}')] | //span[contains(.,'${key_fieldName}')]/../../div[contains(.,'${key_fieldName}') and contains(.,'${key_kfProcessFieldData}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TASKS_TABLE_REVIEW-->
+<tr>
+	<td>TASKS_TABLE_REVIEW_TASK</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(.,'Review')]/td[1]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASKS_TABLE_REVIEW_COMPLETED</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(.,'Review')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIVITIES-->
+<tr>
+	<td>ACTIVITIES_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed')]/div[contains(.,'Activities')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVITIES_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded')]/div[contains(.,'Activities')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVITIES_COMMENT</td>
+	<td>//div[@class='task-activity-comment' and contains(.,'${key_comment}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

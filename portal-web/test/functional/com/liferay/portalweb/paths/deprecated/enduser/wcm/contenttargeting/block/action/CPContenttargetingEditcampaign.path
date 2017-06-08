@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>CPContenttargetingEditcampaign</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPContenttargetingEditcampaign</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>CPContenttargetingAddcampaign</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRACKING_ACTIONS_DELETE</td>
+	<td>//div[contains(@class,'${key_trackingAction}trackingaction') and contains(@class,'form-builder')]//button/i[@class='icon-trash']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRACKING_ACTIONS_APPLIED</td>
+	<td>//div[contains(@class,'field-header') and contains(.,'${key_trackingAction}')]//div[@class='field-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CAMPAIGN_TRACKING_ACTION_CONTENT-->
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTION_CONTENT_TITLE</td>
+	<td>//div[@class='asset-title']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

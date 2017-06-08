@@ -1,0 +1,337 @@
+<html>
+<head>
+<title>PGKnowledgebasedisplay</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGKnowledgebasedisplay</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_TITLE</td>
+	<td>title=${key_pageName}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_NAVIGATION</td>
+	<td>//div[@class='kbarticle-navigation']/ul[contains(.,'${key_kbArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ARTICLE-->
+<tr>
+	<td>ARTICLE_TITLE</td>
+	<td>//div[@class='kb-article-container']//h1[@class='kb-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_CONTENT</td>
+	<td>//div[@class='kb-article-container']//div[@class='kb-article-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_CONTENT_IMAGE</td>
+	<td>//p/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_CONTENT_IMAGE_CAPTION</td>
+	<td>//p[contains(@class,'caption')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_CHILD_CONTENT</td>
+	<td>//div[@class='kb-article-child']//div[@class='kb-element-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_GITHUB</td>
+	<td>//span[contains(.,'Edit on GitHub')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_READ_MORE</td>
+	<td>//div[@class='kb-article-child']//a[contains(.,'Read More')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_VOTES</td>
+	<td>//div[@class='kb-article-container']//div[contains(@class,'rating-content')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_VOTE_UP</td>
+	<td>//div[@class='kb-article-container']//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-up')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_VOTE_DOWN</td>
+	<td>//div[@class='kb-article-container']//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-down')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_RSS</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_SUBSCRIBE</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_UNSUBSCRIBE</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_HISTORY</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'History')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_PRINT</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Print')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_ACTIONS_BUTTON</td>
+	<td>//div[@class='kb-article-container']//span[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_PREVIOUS</td>
+	<td>//div[@class='kb-article-container']//div/span[@class='kb-article-previous']/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_NEXT</td>
+	<td>//div[@class='kb-article-container']//div/span[@class='kb-article-next']/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_DO_YOU_HAVE_ANY_SUGGESTIONS_LINK</td>
+	<td>//div[@class='kb-article-container']//div/a[contains(.,'Do you have any suggestions?')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_THERE_ARE_SUGGESTIONS_LINK</td>
+	<td>//div[@class='kb-article-container']//div[@class='kb-article-suggestion-actions']/a[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ARTICLE_NAVIGATION-->
+<tr>
+	<td>ARTICLE_NAVIGATION</td>
+	<td>//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'${key_kbArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_NAVIGATION_GENERIC</td>
+	<td>//div[@class='kbarticle-navigation']/ul</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_NAVIGATION_CHILD</td>
+	<td>//div[@class='kbarticle-navigation']/ul/li[contains(.,'${key_kbArticleTitle}')]/ul/li/a[contains(.,'${key_kbChildArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_NAVIGATION_CHILD_GENERIC</td>
+	<td>//div[@class='kbarticle-navigation']/ul/li/ul</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_NAVIGATION_GRANDCHILD</td>
+	<td>//div[@class='kbarticle-navigation']//a[contains(.,'${key_kbGrandchildArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER-->
+<tr>
+	<td>FOLDER_SELECT_DROPDOWN</td>
+	<td>//select[contains(@id,'rootKBFolderId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_SELECT_OPTION</td>
+	<td>//select[contains(@id,'rootKBFolderId')]/option[contains(.,'${key_kbFolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RELATED_ASSETS-->
+<tr>
+	<td>RELATED_ASSETS_HEADER</td>
+	<td>//h2[contains(@class,'asset-links-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_LINKS</td>
+	<td>//ul[@class='asset-links-list']/li/span/a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIONS_MENULIST-->
+<tr>
+	<td>ACTIONS_MENULIST_ADD_CHILD_ARTICLE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(.,'Add Child Article')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_EDIT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_PERMISSIONS</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_MOVE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_DELETE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER_NAVIGATION-->
+<tr>
+	<td>FOLDER_NAVIGATION_MENULIST</td>
+	<td>//div[contains(@class,'form-group')]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SUGGESTION-->
+<tr>
+	<td>SUGGESTION_TITLE</td>
+	<td>//div[@class='kb-article-comment']//h4/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_CONTENT_FIELD</td>
+	<td>//textarea[contains(@id,'knowledgebaseportlet_content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_CONTENT</td>
+	<td>//div[@class='kb-article-comment']//div[contains(.,'${kbSuggestionBody}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_CONTENT_DUPLICATE</td>
+	<td>xpath=(//div[@class='kb-article-comment']//div[contains(.,'${kbSuggestionBody}')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_SUBMIT_BUTTON</td>
+	<td>//button[contains(.,'Submit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_USER_NAME</td>
+	<td>//div[@class='kb-article-comment']//td[contains(.,'${kbSuggestionBody}')]/../td[@class='kb-article-comment-user']/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_STATUS</td>
+	<td>//div[@class='kb-article-comment']//td[contains(.,'${kbSuggestionBody}')]/div[@class='kb-article-comment-date']/span[@class='taglib-workflow-status']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_MOVE_TO_IN_PROGRESS_BUTTON</td>
+	<td>//tr[contains(.,'${key_kbSuggestionBody}')]/td[2]/div[@class='kb-suggestion-actions']/a[contains(.,'Move to in Progress')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_MOVE_TO_NEW_BUTTON</td>
+	<td>//tr[contains(.,'${key_kbSuggestionBody}')]/td[2]/div[@class='kb-suggestion-actions']/a[contains(.,'Move to New')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_RESOLVE_BUTTON</td>
+	<td>//tr[contains(.,'${key_kbSuggestionBody}')]/td[2]/div[@class='kb-suggestion-actions']/a[contains(.,'Resolve')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_DELETE_BUTTON</td>
+	<td>//tr[contains(.,'${key_kbSuggestionBody}')]/td[2]/div[@class='kb-suggestion-actions']/a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SUGGESTION_NAVIGATION-->
+<tr>
+	<td>SUGGESTION_NAVIGATION_BAR</td>
+	<td>//ul[contains(@id,'knowledgebaseportlet') and contains(@class,'navbar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_NAVIGATION_NEW</td>
+	<td>//ul[contains(@class,'navbar')]//a[contains(.,'New')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_NAVIGATION_IN_PROGRESS</td>
+	<td>//ul[contains(@class,'navbar')]//a[contains(.,'In Progress')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_NAVIGATION_RESOLVED</td>
+	<td>//ul[contains(@class,'navbar')]//a[contains(.,'Resolved')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>CPUsergroupsEditusergroup</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPUsergroupsEditusergroup</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PUBLIC_PAGES_SELECT</td>
+	<td>//select[contains(@id,'publicLayoutSetPrototypeId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRIVATE_PAGES_SELECT</td>
+	<td>//select[contains(@id,'privateLayoutSetPrototypeId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLIC_PAGES_OPEN_PAGES</td>
+	<td>//div[contains(@class,'form-group')]//a/span[contains(.,'Open Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX</td>
+	<td>//input[contains(@id,'publicLayoutSetPrototypeLinkEnabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_PROPAGATION_PRIVATE_PAGE_CHECKBOX</td>
+	<td>//input[contains(@id,'privateLayoutSetPrototypeLinkEnabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_GROUP_SITE-->
+<tr>
+	<td>USER_GROUP_SITE_PUBLIC_PAGES_SELECT</td>
+	<td>//select[contains(@id,'publicLayoutSetPrototypeId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_SITE_PRIVATE_PAGES_SELECT</td>
+	<td>//select[contains(@id,'privateLayoutSetPrototypeId')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

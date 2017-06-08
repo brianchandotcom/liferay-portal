@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>DockbarAddpanelpage</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DockbarAddpanelpage</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>DockbarAddpanelcontent</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME_FIELD</td>
+	<td>//span[contains(@class,'input-localized-input')]/input[@id='_145_addLayoutName']</td>
+	<td>New Page Name Field</td>
+</tr>
+<tr>
+	<td>LOCALIZED_FLAG_ICON</td>
+	<td>//li[@role='menuitem' and @data-value='${key_localizationName}']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PAGE_BUTTON</td>
+	<td>//button[contains(.,'Add Page')]</td>
+	<td>Add Page Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_PAGE_TYPE-->
+<tr>
+	<td>TYPE_RADIO</td>
+	<td>//div[contains(@class,'radio')]/label[contains(.,'${key_pageType}')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_PAGE_TYPE_PANEL-->
+<tr>
+	<td>TYPE_PANEL_DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_145_descriptionPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_PANEL_COMPONENT_TREE_ARROW</td>
+	<td>//div[contains(.,'${key_componentName}')]/span[contains(@class,'tree-hitarea')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_PANEL_CHECKBOX</td>
+	<td>//div[contains(.,'${key_componentOrPortletName}')]/span[contains(@class,'tree-node-checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_PANEL_CHECKBOX_INPUT</td>
+	<td>//div[contains(.,'${key_componentOrPortletName}')]/span[contains(@class,'tree-node-checkbox')]/input</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

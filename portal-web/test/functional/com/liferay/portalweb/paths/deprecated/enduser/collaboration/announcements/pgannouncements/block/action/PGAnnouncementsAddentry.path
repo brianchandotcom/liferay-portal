@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>PGAnnouncementsAddentry</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGAnnouncementsAddentry</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>TITLE_FIELD</td>
+	<td>//input[contains(@id,'AnnouncementsPortlet_title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_FIELD</td>
+	<td>//input[contains(@id,'AnnouncementsPortlet_url')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD</td>
+	<td>//div[contains(@id,'cke__')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRIORITY_SELECT</td>
+	<td>//select[contains(@id,'AnnouncementsPortlet_priority')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY_DATE-->
+<tr>
+	<td>DISPLAY_DATE_DATE_INPUT</td>
+	<td>//input[contains(@id,'AnnouncementsPortlet_displayDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_TIME_INPUT</td>
+	<td>//input[contains(@id,'AnnouncementsPortlet_displayDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX</td>
+	<td>//input[contains(@id,'AnnouncementsPortlet_fmdisplayDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EXPIRATION_DATE-->
+<tr>
+	<td>EXPIRATION_DATE_DATE_INPUT</td>
+	<td>//input[contains(@id,'AnnouncementsPortlet_expirationDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRATION_DATE_TIME_INPUT</td>
+	<td>//input[contains(@id,'AnnouncementsPortlet_expirationDateTime')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

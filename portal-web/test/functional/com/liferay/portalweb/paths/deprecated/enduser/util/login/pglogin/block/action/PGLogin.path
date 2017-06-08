@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>PGLogin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGLogin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>AVERAGE_RATING_STAR_ICON_PNG</td>
+	<td>portal/icons/average_rating_star_icon.png</td>
+	<td>Average Rating Star</td>
+</tr>
+<tr>
+	<td>EMAIL_ADDRESS_FIELD</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_login']</td>
+	<td>Email Address Field</td>
+</tr>
+<tr>
+	<td>EMAIL_ADDRESS_FIELD_PNG</td>
+	<td>portal/fields/email_address_field.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREEN_NAME_FIELD</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_login']</td>
+	<td>Screen Name Field</td>
+</tr>
+<tr>
+	<td>PASSWORD_FIELD</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_password']</td>
+	<td>Password Field</td>
+</tr>
+<tr>
+	<td>PASSWORD_FIELD_PNG</td>
+	<td>portal/fields/password_field.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMEMBER_ME_CHECKBOX</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_rememberMe']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_IN_BUTTON</td>
+	<td>//form[contains(@class,'sign-in-form')]/div/button</td>
+	<td>Sign In Button</td>
+</tr>
+<tr>
+	<td>SIGN_IN_BUTTON_PNG</td>
+	<td>portal/buttons/sign_in_button.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CREATE_ACCOUNT_LINK</td>
+	<td>//a[contains(.,'Create Account')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[2]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

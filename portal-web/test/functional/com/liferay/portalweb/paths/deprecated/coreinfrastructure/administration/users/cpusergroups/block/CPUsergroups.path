@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>CPUsergroups</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPUsergroups</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ADD</td>
+	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//a[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_ICON</td>
+	<td>//div[@id='main-content']//menu[@class='portlet-topper-toolbar']/div/a/i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xPath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xPath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADVANCED_SEARCH-->
+<tr>
+	<td>ADVANCED_SEARCH_MATCH</td>
+	<td>//select[contains(@id,'andOperator')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_NAME</td>
+	<td>//input[contains(@id,'name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_DESCRIPTION</td>
+	<td>//input[contains(@id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_GROUP_TABLE-->
+<tr>
+	<td>USER_GROUP_TABLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_NAME_LINK</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[4]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_GROUP_MENULIST-->
+<tr>
+	<td>USER_GROUP_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_MENULIST_SITE_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Site Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_MENULIST_MANAGE_SITE_PAGES</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Site Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_MENULIST_ASSIGN_MEMBERS</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign Members')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>CPUsergroupsAddusergroup</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPUsergroupsAddusergroup</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>NAME_FIELD_ALERT</td>
+	<td>//div[@class='required']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLIC_PAGES_SELECT</td>
+	<td>//select[contains(@id,'publicLayoutSetPrototypeId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRIVATE_PAGES_SELECT</td>
+	<td>//select[contains(@id,'privateLayoutSetPrototypeId')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

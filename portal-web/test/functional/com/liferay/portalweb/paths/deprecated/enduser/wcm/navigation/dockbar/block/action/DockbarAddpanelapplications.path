@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>DockbarAddpanelapplications</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DockbarAddpanelapplications</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>DockbarAddpanelcontent</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_ADDED_SUCCESS_MESSAGE</td>
+	<td>//span[contains(@class,'alert-success') and contains(@class,'message')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[contains(@id,'searchApplication')]</td>
+	<td>Application Search Field</td>
+</tr>
+<tr>
+	<td>COLLAPSED_CATEGORY</td>
+	<td>//div[contains(@class,'toggler-header-collapsed')]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PORTLET_LINK</td>
+	<td>//span[contains(@data-search,'-${portletName}') and contains(@class,'add-content-item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

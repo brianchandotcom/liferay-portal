@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>PGPollsdisplay</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGPollsdisplay</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//h1[@class='portlet-title']/span[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLLS_QUESTION</td>
+	<td>//form[contains(@id,'INSTANCE') and contains(.,'${key_pollsQuestion}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLLS_QUESTION_CHOICE</td>
+	<td>//label[contains(@for,'pollsweb') and contains(.,'${key_pollsQuestionChoice}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOTE_BUTTON</td>
+	<td>//button[contains(.,'Vote')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_QUESTION</td>
+	<td>//span[contains(@class,'lfr-icon-action-edit')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_QUESTION</td>
+	<td>//span[contains(@class,'taglib-text') and contains(.,'Select Poll')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_QUESTION</td>
+	<td>//div[contains(@class,'lfr-icon-actions')]/span[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--POLLS_RESULTS_TABLE-->
+<tr>
+	<td>POLLS_RESULTS_TABLE_TITLE</td>
+	<td>//form[contains(@id,'INSTANCE') and contains(.,'${key_pollsQuestion}')]//td[contains(.,'Votes')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLLS_RESULTS_TABLE_CHOICE</td>
+	<td>//form[contains(@id,'INSTANCE') and contains(.,'${key_pollsQuestion}')]//td[contains(.,'${key_pollsQuestionOption}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

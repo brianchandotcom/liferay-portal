@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>CPPortalinstancesAdd</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPPortalinstancesAdd</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>HEADER_TITLE</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_ID_FIELD</td>
+	<td>//input[contains(@id,'webId') and contains(@class,'input-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIRTUAL_HOST_FIELD</td>
+	<td>//input[contains(@id,'virtualHostname') and contains(@class,'input-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAIL_DOMAIN_FIELD</td>
+	<td>//input[contains(@id,'mx') and contains(@class,'input-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAX_USERS_FIELD</td>
+	<td>//input[contains(@id,'maxUsers') and contains(@class,'input-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVE_CHECKBOX</td>
+	<td>//input[contains(@id,'active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

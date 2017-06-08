@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>CPPollsPoll</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPPollsPoll</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>POLL_TITLE</td>
+	<td>//h3[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLL_QUESTION</td>
+	<td>//fieldset[contains(@class,'fieldset')]/div/span[contains(.,'${key_pollsQuestion}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLLS_QUESTION_CHOICE</td>
+	<td>//label[@class='radio' and contains(.,'${key_pollsQuestionChoice}')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLL_VIEW_RESULTS</td>
+	<td>//a[@target='_self']/span[contains(.,'View Results')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOTE_BUTTON</td>
+	<td>//button[contains(.,'Vote')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//a[contains(@class,'btn-cancel')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

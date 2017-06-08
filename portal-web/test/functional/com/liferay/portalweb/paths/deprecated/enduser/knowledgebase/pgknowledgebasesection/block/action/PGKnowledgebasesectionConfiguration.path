@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>PGKnowledgebasesectionConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGKnowledgebasesectionConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGKnowledgebasearticleConfiguration</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_SECTIONS_TITLE_CHECKBOX</td>
+	<td>//input[@id='_86_showKBArticlesSectionsTitle']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SECTIONS_SELECT</td>
+	<td>//select[@id='_86_kbArticlesSections']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_DISPLAY_STYLE_SELECT</td>
+	<td>//select[@id='_86_kbArticleDisplayStyle']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_WINDOW_STATE_SELECT</td>
+	<td>//select[@id='_86_kbArticleWindowState']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

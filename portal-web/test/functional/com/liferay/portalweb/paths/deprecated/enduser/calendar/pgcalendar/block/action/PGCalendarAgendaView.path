@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>PGCalendarAgendaView</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGCalendarAgendaView</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGCalendar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_AGENDA</td>
+	<td>//div[@class='yui3-widget component scheduler-view scheduler-view-agenda']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMPTY_MESSAGE</td>
+	<td>//div[@class='scheduler-view-agenda-no-events']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCHEDULER_EVENT-->
+<tr>
+	<td>SCHEDULER_EVENT_SPECIFIC</td>
+	<td>//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]//div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_SPECIFIC_1</td>
+	<td>xpath=(//div[contains(@class,'scheduler-view-agenda-event-content') and contains(.,'${key_eventTitle}')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_SPECIFIC_2</td>
+	<td>xpath=(//div[contains(@class,'scheduler-view-agenda-event-content') and contains(.,'${key_eventTitle}')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_GENERIC</td>
+	<td>//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_GENERIC_2</td>
+	<td>//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')][2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_REPEATING</td>
+	<td>//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]/div[contains(.,'Repeating')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_REPEATING_2</td>
+	<td>xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]/div[contains(.,'Repeating')])[2]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

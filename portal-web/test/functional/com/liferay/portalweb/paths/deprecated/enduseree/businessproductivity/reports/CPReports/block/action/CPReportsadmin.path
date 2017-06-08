@@ -1,0 +1,246 @@
+<html>
+<head>
+<title>CPReportsadmin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPReportsadmin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>REPORT_PDF_CLASS_NAME_PNG</td>
+	<td>portal/screenshots/reports/report_pdf_class_name.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_PDF_LIST_TYPE_PNG</td>
+	<td>portal/screenshots/reports/report_pdf_list_type.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xpath=(//div[@class='alert alert-danger'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[@class='alert alert-danger'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_WRENCH_ICON</td>
+	<td>//div[@id='main-content']//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OPTIONS_MENULIST-->
+<tr>
+	<td>OPTIONS_MENULIST_CONFIGURATION</td>
+	<td>//a[contains(@id,'_menu_configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_REPORTS</td>
+	<td>//li[contains(@id,'reportsportlet_tabs')]/a[contains(text(),'Reports')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DEFINITIONS</td>
+	<td>//li[contains(@id,'reportsportlet_tabs')]/a[contains(text(),'Definitions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SOURCES</td>
+	<td>//li[contains(@id,'reportsportlet_tabs')]/a[contains(text(),'Sources')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--INFO_MESSAGE-->
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REPORTS_ENTRY_TABLE-->
+<tr>
+	<td>REPORTS_ENTRY_TABLE_DEFINITION_NAME</td>
+	<td>//tr[contains(.,'${key_reportsDefinitionName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORTS_ENTRY_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_reportsDefinitionName}')]/td[4]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORTS_ENTRY_TABLE_ACTIONS_1</td>
+	<td>xpath=(//tr/td[4]/div/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REPORTS_ENTRY_MENULIST-->
+<tr>
+	<td>REPORTS_ENTRY_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DEFINITIONS-->
+<tr>
+	<td>DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON</td>
+	<td>//a[contains(.,'Add Report Definition')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DEFINITIONS_DEFINITION_TABLE-->
+<tr>
+	<td>DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME</td>
+	<td>//tr[contains(.,'${key_reportsDefinitionName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_DEFINITION_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_reportsDefinitionName}')]/td[4]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_DEFINITION_TABLE_ACTIONS_1</td>
+	<td>xpath=(//tr/td[4]/div/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DEFINITIONS_DEFINITION_MENULIST-->
+<tr>
+	<td>DEFINITIONS_DEFINITION_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Report')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_DEFINITION_MENULIST_ADD_SCHEDULE</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Schedule')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_DEFINITION_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DEFINITIONS_PAGINATION-->
+<tr>
+	<td>DEFINITIONS_PAGINATION_PAGE_NUMBER_DROPDOWN_BUTTON</td>
+	<td>//a[contains(@class,'dropdown-toggle') and contains(.,'of')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON</td>
+	<td>//a[contains(@class,'dropdown-toggle') and contains(.,'Items per')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_MENU_ITEM</td>
+	<td>//ul[contains(@class,'menu-list')]/li/a/span[.='${key_itemsPerPage}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_PAGINATION_PREVIOUS_BUTTON</td>
+	<td>//ul[contains(@class,'pagination-buttons')]/li/a[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_PAGINATION_NEXT_BUTTON</td>
+	<td>//ul[contains(@class,'pagination-buttons')]/li/a[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SOURCES-->
+<tr>
+	<td>SOURCES_ADD_SOURCE_BUTTON</td>
+	<td>//a[contains(.,'Add Source')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SOURCES_SOURCE-->
+<tr>
+	<td>SOURCES_SOURCE_TABLE_ACTIONS_1</td>
+	<td>xpath=(//tr/td[4]/div/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SOURCES_SOURCE_MENULIST-->
+<tr>
+	<td>SOURCES_SOURCE_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

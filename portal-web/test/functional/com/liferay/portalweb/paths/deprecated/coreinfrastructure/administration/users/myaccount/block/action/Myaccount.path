@@ -1,0 +1,554 @@
+<html>
+<head>
+<title>Myaccount</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Myaccount</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALERT_SUCCESS_MESSAGE</td>
+	<td>//fieldset[contains(@class,'fieldset')]//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_NAME</td>
+	<td>//span[@class='user-name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON_LOCALIZED</td>
+	<td>//button[contains(.,'${key_saveButton}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_MY</td>
+	<td>//ul[@class='category-portlets list-unstyled']/li[contains(.,'${key_portletName}')]/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU_USER_INFORMATION-->
+<tr>
+	<td>MENU_USER_INFORMATION_DETAILS</td>
+	<td>//a[@id='_2_detailsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_PASSWORD</td>
+	<td>//a[@id='_2_passwordLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_ORGANIZATIONS</td>
+	<td>//a[@id='_2_organizationsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_SITES</td>
+	<td>//a[@id='_2_sitesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_USER_GROUPS</td>
+	<td>//a[@id='_2_userGroupsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_ROLES</td>
+	<td>//a[@id='_2_rolesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_CATEGORIZATION</td>
+	<td>//a[@id='_2_categorizationLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU_IDENTIFICATION-->
+<tr>
+	<td>MENU_IDENTIFICATION_ADDRESSES</td>
+	<td>//a[@id='_2_addressesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_IDENTIFICATION_PHONE_NUMBERS</td>
+	<td>//a[@id='_2_phoneNumbersLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_IDENTIFICATION_ADDITIONAL_EMAIL_ADDRESSES</td>
+	<td>//a[@id='_2_additionalEmailAddressesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_IDENTIFICATION_WEBSITES</td>
+	<td>//a[@id='_2_websitesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_IDENTIFICATION_INSTANT_MESSENGER</td>
+	<td>//a[@id='_2_instantMessengerLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_IDENTIFICATION_SOCIAL_NETWORK</td>
+	<td>//a[@id='_2_socialNetworkLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_IDENTIFICATION_SMS</td>
+	<td>//a[@id='_2_smsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_IDENTIFICATION_PROJECTS</td>
+	<td>//a[@id='_2_projectsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU_MISCELLANEOUS-->
+<tr>
+	<td>MENU_MISCELLANEOUS_ANNOUNCEMENTS</td>
+	<td>//a[@id='_2_announcementsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_MISCELLANEOUS_COMMENTS</td>
+	<td>//a[@id='_2_commentsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_MISCELLANEOUS_DISPLAY_SETTINGS</td>
+	<td>//a[@id='_2_displaySettingsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS-->
+<tr>
+	<td>DETAILS_SCREEN_NAME_FIELD</td>
+	<td>//input[@id='_2_screenName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_EMAIL_ADDRESS_FIELD</td>
+	<td>//input[@id='_2_emailAddress']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_FIRST_NAME_FIELD</td>
+	<td>//input[@id='_2_firstName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_LAST_NAME_FIELD</td>
+	<td>//input[@id='_2_lastName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_MIDDLE_NAME_FIELD</td>
+	<td>//input[@id='_2_middleName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PICTURE_CHANGE_BUTTON</td>
+	<td>//button[contains(@class,'edit-logo')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PICTURE_DELETE_BUTTON</td>
+	<td>//button[contains(@class,'delete-logo')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PASSWORD-->
+<tr>
+	<td>PASSWORD_CURRENT_PASSWORD_FIELD</td>
+	<td>//input[@id='_2_password0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD_NEW_PASSWORD_FIELD</td>
+	<td>//input[@id='_2_password1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD_ENTER_AGAIN_FIELD</td>
+	<td>//input[@id='_2_password2']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORGANIZATIONS-->
+<tr>
+	<td>ORGANIZATIONS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATIONS_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATIONS_TABLE_ROLES</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITES-->
+<tr>
+	<td>SITES_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_TABLE_ROLES</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_TABLE</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[3]/a/span[contains(.,'Remove')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_GROUPS-->
+<tr>
+	<td>USER_GROUPS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ROLES_REGULAR_ROLES-->
+<tr>
+	<td>ROLES_REGULAR_ROLES_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_roleName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PERSONAL_SITE-->
+<!--CATEGORIZATION-->
+<tr>
+	<td>CATEGORIZATION_TAGS_FIELD</td>
+	<td>//input[contains(@id, 'TagNames')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_ADD_BUTTON</td>
+	<td>//button[@title='Add Tags']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_REMOVE_TAG_BUTTON</td>
+	<td>//span[contains(.,'${key_userTag}')]//i[contains(@class,'remove')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADDRESSES-->
+<tr>
+	<td>ADDRESSES_STREET_1_FIELD</td>
+	<td>//input[contains(@id, 'addressStreet1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_COUNTRY_SELECT</td>
+	<td>//select[contains(@id, 'addressCountry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_REGION_SELECT</td>
+	<td>//select[contains(@id, 'addressRegion')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_POSTAL_CODE_FIELD</td>
+	<td>//input[contains(@id, 'addressZip')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_TYPE_SELECT</td>
+	<td>//select[contains(@id, 'addressType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_CITY_FIELD</td>
+	<td>//input[contains(@id, 'addressCity')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_PRIMARY_RADIO_BUTTON</td>
+	<td>//input[contains(@id, 'addressPrimary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_MAILING_CHECKBOX</td>
+	<td>//input[contains(@id, 'addressMailing0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PHONE_NUMBERS-->
+<tr>
+	<td>PHONE_NUMBERS_NUMBER_FIELD</td>
+	<td>//input[contains(@id, 'phoneNumber')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PHONE_NUMBERS_EXTENSION_FIELD</td>
+	<td>//input[contains(@id, 'phoneExtension')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PHONE_NUMBERS_TYPE_SELECT</td>
+	<td>//select[contains(@id, 'phoneType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PHONE_NUMBERS_PRIMARY_RADIO_BUTTON</td>
+	<td>//input[contains(@id, 'phonePrimary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADDITIONAL_EMAIL_ADDRESSES-->
+<tr>
+	<td>ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD</td>
+	<td>//input[@id='_2_emailAddressAddress0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDITIONAL_EMAIL_ADDRESSES_TYPE_SELECT</td>
+	<td>//select[@id='_2_emailAddressTypeId0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDITIONAL_EMAIL_ADDRESSES_PRIMARY_RADIO_BUTTON</td>
+	<td>//input[@id='_2_emailAddressPrimary0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WEBSITES-->
+<tr>
+	<td>WEBSITES_URL_FIELD</td>
+	<td>//input[contains(@id, 'websiteUrl')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEBSITES_TYPE_SELECT</td>
+	<td>//select[contains(@id, 'websiteType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEBSITES_PRIMARY_RADIO_BUTTON</td>
+	<td>//input[contains(@id, 'websitePrimary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--INSTANT_MESSENGER-->
+<tr>
+	<td>INSTANT_MESSENGER_JABBER_FIELD</td>
+	<td>//input[@id='_2_jabberSn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANT_MESSENGER_SKYPE_FIELD</td>
+	<td>//input[@id='_2_skypeSn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SOCIAL_NETWORK-->
+<tr>
+	<td>SOCIAL_NETWORK_FACEBOOK_FIELD</td>
+	<td>//input[@id='_2_facebookSn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOCIAL_NETWORK_TWITTER_FIELD</td>
+	<td>//input[@id='_2_twitterSn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SMS-->
+<tr>
+	<td>SMS_SMS_FIELD</td>
+	<td>//input[@id='_2_smsSn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OPENID-->
+<!--PROJECTS-->
+<tr>
+	<td>PROJECTS_TITLE_FIELD</td>
+	<td>//input[@id='_2_projectsEntryTitle0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECTS_START_DATE_MONTH_SELECT</td>
+	<td>//select[contains(@id, '_2_projectsEntryStartDateMonth0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECTS_START_DATE_YEAR_SELECT</td>
+	<td>//select[contains(@id, '_2_projectsEntryStartDateYear0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECTS_END_DATE_MONTH_SELECT</td>
+	<td>//select[contains(@id, '_2_projectsEntryEndDateMonth0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECTS_END_DATE_YEAR_SELECT</td>
+	<td>//select[contains(@id, '_2_projectsEntryEndDateYear0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECTS_CURRENT_CHECKBOX</td>
+	<td>//input[@id='_2_projectsEntryCurrent0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECTS_DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_2_projectsEntryDescription0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ANNOUNCEMENTS-->
+<tr>
+	<td>ANNOUNCEMENTS_NOTIFICATION_CHECKBOX</td>
+	<td>//input[contains(@title,'${key_announcementType}') and contains(@id,'${key_notificationType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY_SETTINGS-->
+<tr>
+	<td>LANGUAGE_SELECT</td>
+	<td>//select[@id='_2_languageId']</td>
+	<td></td>
+</tr>
+<!--COMMENTS-->
+<tr>
+	<td>COMMENTS_FIELD</td>
+	<td>//textarea[contains(@id, 'comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CUSTOM_FIELDS-->
+</tbody>
+</table>
+</body>
+</html>

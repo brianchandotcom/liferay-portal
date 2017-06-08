@@ -163,16 +163,18 @@
 
 	<command name="addPGViaAP">
 		<if>
-			<isset var="scopeSiteType" />
+			<isset var="siteScope" />
 			<then>
-				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN_SITE_NAME" value1="Add New in Site Name" />
-				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_IN_SITE_NAME_MENULIST_BLOGS_ENTRY" value1="Blogs Entry" />
+				<var name="key_siteScope" value="${siteScope}" />
+
+				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN_IN_SCOPED_SITE" value1="Add New in ${siteScope}" />
 			</then>
 			<else>
 				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
-				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_BLOGS_ENTRY" value1="Blogs Entry" />
 			</else>
 		</if>
+
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_BLOGS_ENTRY" value1="Blogs Entry" />
 
 		<execute action="PGAssetpublisherAddnewblogsentry#selectFrame" locator-key1="BLOGS_ENTRY_IFRAME" />
 		<execute action="PGAssetpublisherAddnewblogsentry#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
@@ -180,8 +182,10 @@
 		<execute action="PGAssetpublisherAddnewblogsentry#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_TITLE_1" value1="${entryTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_SUMMARY_1" value1="${entryContent}" />
+		<var name="key_assetTitle" value="${entryTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${entryContent}" />
 	</command>
 
 	<command name="addTagCP">
@@ -266,7 +270,7 @@
 
 		<var name="key_assetTitle" value="${entryTitle}" />
 
-		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_TITLE" value1="${entryTitle}" />
+		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
 	</command>
 
 	<command name="editContentCP">
@@ -565,9 +569,9 @@
 	<command name="viewPGViaAP">
 		<var name="key_assetTitle" value="${entryTitle}" />
 
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_TITLE" value1="${entryTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_SUMMARY" value1="${entryContent}" />
-		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_TITLE" value1="${entryTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${entryContent}" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
 
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${entryTitle}" />
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_CONTENT" value1="${entryContent}" />
@@ -703,6 +707,6 @@
 	<command name="viewWithWorkflowPGViaAP">
 		<var name="key_assetTitle" value="${entryTitle}" />
 
-		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_TITLE" value1="${entryTitle}" />
+		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
 	</command>
 </definition>

@@ -1,0 +1,44 @@
+
+Windows IP Configuration
+
+   Host Name . . . . . . . . . . . . : liferay-m7l282f
+   Primary Dns Suffix  . . . . . . . : 
+   Node Type . . . . . . . . . . . . : Unknown
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+   DNS Suffix Search List. . . . . . : lax.liferay.com
+
+Ethernet adapter Local Area Connection:
+
+   Connection-specific DNS Suffix  . : 
+   Description . . . . . . . . . . . : Intel(R) PRO/1000 MT Desktop Adapter
+   Physical Address. . . . . . . . . : 08-00-27-62-4C-9D
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   IP Address. . . . . . . . . . . . : 192.168.56.101
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 
+   DHCP Server . . . . . . . . . . . : 192.168.56.100
+   Lease Obtained. . . . . . . . . . : Tuesday, October 16, 2012 5:19:30 PM
+   Lease Expires . . . . . . . . . . : Tuesday, October 16, 2012 6:19:30 PM
+
+Ethernet adapter Local Area Connection 2:
+
+   Connection-specific DNS Suffix  . : lax.liferay.com
+   Description . . . . . . . . . . . : Intel(R) PRO/1000 MT Desktop Adapter #2
+   Physical Address. . . . . . . . . : 08-00-27-C0-AB-91
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   IP Address. . . . . . . . . . . . : 10.0.3.15
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 10.0.3.2
+   DHCP Server . . . . . . . . . . . : 10.0.3.2
+   DNS Servers . . . . . . . . . . . : 192.168.110.1
+   Lease Obtained. . . . . . . . . . : Tuesday, October 16, 2012 5:19:26 PM
+   Lease Expires . . . . . . . . . . : Wednesday, October 17, 2012 5:19:26 PM
+
+Ethernet adapter Network Connect Adapter:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Description . . . . . . . . . . . : Juniper Network Connect Virtual Adapter - Packet Scheduler Miniport
+   Physical Address. . . . . . . . . : 00-FF-B0-3B-1F-E7

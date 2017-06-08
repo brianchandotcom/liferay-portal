@@ -361,6 +361,315 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 		return iterator.next();
 	}
 
+	@Test
+	public void testMigratedPortalKeys() throws Exception {
+		String[][] originalMigratedPortalKeys =
+			ReflectionTestUtil.getFieldValue(
+				VerifyProperties.class, "_MIGRATED_PORTAL_KEYS");
+
+		String migratedPortalKey = getFirstExistPortalPropertyName();
+
+		ReflectionTestUtil.setFieldValue(
+			VerifyProperties.class, "_MIGRATED_PORTAL_KEYS",
+			new String[][] {
+				new String[] {migratedPortalKey, migratedPortalKey}
+			});
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					VerifyProperties.class.getName(), Level.ERROR)) {
+
+			doVerify();
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(1, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"Portal property \"" + migratedPortalKey +
+					"\" was migrated to the system property \"" +
+						migratedPortalKey + "\"",
+				loggingEvent.getMessage());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				VerifyProperties.class, "_MIGRATED_PORTAL_KEYS",
+				originalMigratedPortalKeys);
+		}
+	}
+
+	@Test
+	public void testMigratedSystemKeys() throws Exception {
+		String[][] originalMigratedSystemKeys =
+			ReflectionTestUtil.getFieldValue(
+				VerifyProperties.class, "_MIGRATED_SYSTEM_KEYS");
+
+		String migratedSystemKey = getFirstExistSystemPropertyName();
+
+		ReflectionTestUtil.setFieldValue(
+			VerifyProperties.class, "_MIGRATED_SYSTEM_KEYS",
+			new String[][] {
+				new String[] {migratedSystemKey, migratedSystemKey}
+			});
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					VerifyProperties.class.getName(), Level.ERROR)) {
+
+			doVerify();
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(1, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"System property \"" + migratedSystemKey +
+					"\" was migrated to the " + "portal property \"" +
+						migratedSystemKey + "\"",
+				loggingEvent.getMessage());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				VerifyProperties.class, "_MIGRATED_SYSTEM_KEYS",
+				originalMigratedSystemKeys);
+		}
+	}
+
+	@Test
+	public void testModularizedPortalKeys() throws Exception {
+		String[][] originalModularizedPortalKeys =
+			ReflectionTestUtil.getFieldValue(
+				VerifyProperties.class, "_MODULARIZED_PORTAL_KEYS");
+
+		String modularizedPortalKey = getFirstExistPortalPropertyName();
+
+		ReflectionTestUtil.setFieldValue(
+			VerifyProperties.class, "_MODULARIZED_PORTAL_KEYS",
+			new String[][] {
+				new String[] {
+					modularizedPortalKey, modularizedPortalKey,
+					modularizedPortalKey
+				}
+			});
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					VerifyProperties.class.getName(), Level.ERROR)) {
+
+			doVerify();
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(1, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"Portal property \"" + modularizedPortalKey +
+					"\" was modularized to " + modularizedPortalKey +
+						" as \"" + modularizedPortalKey,
+				loggingEvent.getMessage());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				VerifyProperties.class, "_MODULARIZED_PORTAL_KEYS",
+				originalModularizedPortalKeys);
+		}
+	}
+
+	@Test
+	public void testObsoletePortalKeys() throws Exception {
+		String[] originalObsoletePortalKeys = ReflectionTestUtil.getFieldValue(
+			VerifyProperties.class, "_OBSOLETE_PORTAL_KEYS");
+
+		String obsoletePortalKey = getFirstExistPortalPropertyName();
+
+		ReflectionTestUtil.setFieldValue(
+			VerifyProperties.class, "_OBSOLETE_PORTAL_KEYS",
+			new String[] {obsoletePortalKey});
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					VerifyProperties.class.getName(), Level.ERROR)) {
+
+			doVerify();
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(1, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"Portal property \"" + obsoletePortalKey +
+					"\" is obsolete",
+				loggingEvent.getMessage());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				VerifyProperties.class, "_OBSOLETE_PORTAL_KEYS",
+				originalObsoletePortalKeys);
+		}
+	}
+
+	@Test
+	public void testObsoleteSystemKeys() throws Exception {
+		String[] originalObsoleteSystemKeys = ReflectionTestUtil.getFieldValue(
+			VerifyProperties.class, "_OBSOLETE_SYSTEM_KEYS");
+
+		String obsoleteSystemKey = getFirstExistSystemPropertyName();
+
+		ReflectionTestUtil.setFieldValue(
+			VerifyProperties.class, "_OBSOLETE_SYSTEM_KEYS",
+			new String[] {obsoleteSystemKey});
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					VerifyProperties.class.getName(), Level.ERROR)) {
+
+			doVerify();
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(1, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"System property \"" + obsoleteSystemKey +
+					"\" is obsolete",
+				loggingEvent.getMessage());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				VerifyProperties.class, "_OBSOLETE_SYSTEM_KEYS",
+				originalObsoleteSystemKeys);
+		}
+	}
+
+	@Test
+	public void testRenamedPortalKeys() throws Exception {
+		String[][] originalRenamedPortalKeys = ReflectionTestUtil.getFieldValue(
+			VerifyProperties.class, "_RENAMED_PORTAL_KEYS");
+
+		String renamedPortalKey = getFirstExistPortalPropertyName();
+
+		ReflectionTestUtil.setFieldValue(
+			VerifyProperties.class, "_RENAMED_PORTAL_KEYS",
+			new String[][] {new String[] {renamedPortalKey, renamedPortalKey}});
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					VerifyProperties.class.getName(), Level.ERROR)) {
+
+			doVerify();
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(1, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"Portal property \"" + renamedPortalKey +
+					"\" was renamed to \"" + renamedPortalKey + "\"",
+				loggingEvent.getMessage());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				VerifyProperties.class, "_RENAMED_PORTAL_KEYS",
+				originalRenamedPortalKeys);
+		}
+	}
+
+	@Test
+	public void testRenamedSystemKeys() throws Exception {
+		String[][] originalRenamedSystemKeys = ReflectionTestUtil.getFieldValue(
+			VerifyProperties.class, "_RENAMED_SYSTEM_KEYS");
+
+		String renamedSystemKey = getFirstExistSystemPropertyName();
+
+		ReflectionTestUtil.setFieldValue(
+			VerifyProperties.class, "_RENAMED_SYSTEM_KEYS",
+			new String[][] {new String[] {renamedSystemKey, renamedSystemKey}});
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					VerifyProperties.class.getName(), Level.ERROR)) {
+
+			doVerify();
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(1, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"System property \"" + renamedSystemKey +
+					"\" was renamed to \"" + renamedSystemKey + "\"",
+				loggingEvent.getMessage());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				VerifyProperties.class, "_RENAMED_SYSTEM_KEYS",
+				originalRenamedSystemKeys);
+		}
+	}
+
+	@Override
+	@Test
+	public void testVerify() throws Exception {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					VerifyProperties.class.getName(), Level.ERROR)) {
+
+			doVerify();
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertTrue(loggingEvents.isEmpty());
+		}
+	}
+
+	protected String getFirstExistPortalPropertyName() {
+		VerifyProperties verifyProperties = getVerifyProcess();
+
+		Properties portalProperties = verifyProperties.loadPortalProperties();
+
+		Set<String> propertyNames = portalProperties.stringPropertyNames();
+
+		Assert.assertFalse(propertyNames.isEmpty());
+
+		Iterator<String> iterator = propertyNames.iterator();
+
+		return iterator.next();
+	}
+
+	protected String getFirstExistSystemPropertyName() {
+		Properties systemProperties = SystemProperties.getProperties();
+
+		Set<String> propertyNames = systemProperties.stringPropertyNames();
+
+		Assert.assertFalse(propertyNames.isEmpty());
+
+		Iterator<String> iterator = propertyNames.iterator();
+
+		return iterator.next();
+	}
+
 	@Override
 	protected VerifyProperties getVerifyProcess() {
 		return new VerifyProperties();

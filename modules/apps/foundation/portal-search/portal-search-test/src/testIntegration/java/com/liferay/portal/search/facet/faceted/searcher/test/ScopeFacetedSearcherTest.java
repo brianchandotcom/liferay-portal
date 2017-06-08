@@ -165,6 +165,13 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		searchContext.addFacet(facet);
 
+		BooleanClause booleanClause = new BooleanClauseImpl(
+			new TermQueryImpl(
+				Field.GROUP_ID, String.valueOf(group1.getGroupId())),
+			BooleanClauseOccur.MUST);
+
+		searchContext.setBooleanClauses(new BooleanClause[] {booleanClause});
+
 		searchContext.setAttribute(
 			"groupId", String.valueOf(group1.getGroupId()));
 

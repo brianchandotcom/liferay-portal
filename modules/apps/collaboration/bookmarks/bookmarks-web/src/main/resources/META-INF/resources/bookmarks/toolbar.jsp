@@ -31,6 +31,12 @@ if (deltaEntry > 0) {
 
 portletURL.setParameter("categoryId", StringPool.BLANK);
 portletURL.setParameter("tag", StringPool.BLANK);
+
+int deltaEntry = ParamUtil.getInteger(request, "deltaEntry");
+
+if (deltaEntry > 0) {
+	portletURL.setParameter("deltaEntry", String.valueOf(deltaEntry));
+}
 %>
 
 <liferay-frontend:management-bar

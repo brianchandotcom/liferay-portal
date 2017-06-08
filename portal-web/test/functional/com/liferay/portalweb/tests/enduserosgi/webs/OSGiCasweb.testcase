@@ -1,0 +1,22 @@
+<definition component-name="portal-plugins-osgi">
+	<property name="plugins.deployment.type" value="osgi" />
+	<property name="testray.main.component.name" value="Plugin Installer" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="CasWebSmoke" priority="4">
+		<property name="web.plugins.includes" value="cas-web" />
+
+		<var name="appName" value="Central Authentication Service" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute function="AssertTextPresent#assertTextPresent" value1="${appName}" />
+
+		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=cas-web" />
+	</command>
+</definition>

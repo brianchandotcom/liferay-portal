@@ -1,0 +1,26 @@
+<definition component-name="portal-plugins-osgi">
+	<property name="plugins.deployment.type" value="osgi" />
+	<property name="testray.main.component.name" value="Plugin Installer" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="AkismetPortletSmoke" priority="4">
+		<property name="portlet.plugins.includes" value="akismet-portlet" />
+
+		<var name="appName" value="Akismet" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Akismet" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute function="AssertTextPresent#assertTextPresent" value1="${appName}" />
+
+		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=calendar-portlet" />
+	</command>
+</definition>

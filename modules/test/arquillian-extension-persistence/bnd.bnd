@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Persistence Arquillian Extension
+Bundle-SymbolicName: com.liferay.arquillian.extension.persistence
+Bundle-Version: 1.0.0
+Include-Resource: classes

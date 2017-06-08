@@ -68,6 +68,21 @@ portletDisplay.setURLBack(backURL.toString());
 renderResponse.setTitle((moduleGroupDisplay != null) ? moduleGroupDisplay.getTitle() : appDisplay.getTitle());
 
 MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, request, renderResponse);
+
+portletDisplay.setShowBackIcon(true);
+
+PortletURL backURL = renderResponse.createRenderURL();
+
+if (Validator.isNotNull(moduleGroup)) {
+	backURL.setParameter("mvcPath", "/view_module_groups.jsp");
+	backURL.setParameter("app", app);
+}
+
+else {
+	backURL.setParameter("mvcPath", "/view.jsp");
+}
+
+portletDisplay.setURLBack(backURL.toString());
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">

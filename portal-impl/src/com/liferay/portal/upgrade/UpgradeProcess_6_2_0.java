@@ -14,6 +14,8 @@
 
 package com.liferay.portal.upgrade;
 
+import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
+import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnablesExecutorUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeAnnouncements;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeAssetPublisher;
@@ -45,6 +47,9 @@ import com.liferay.portal.upgrade.v6_2_0.UpgradeUser;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeWiki;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeWikiAttachments;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Raymond Augé
  * @author Juan Fernández
@@ -60,34 +65,74 @@ public class UpgradeProcess_6_2_0 extends Pre7UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		upgrade(UpgradeSchema.class);
 
-		upgrade(UpgradeAnnouncements.class);
-		upgrade(UpgradeAssetPublisher.class);
-		upgrade(UpgradeBlogs.class);
-		upgrade(UpgradeBlogsAggregator.class);
-		upgrade(UpgradeCalendar.class);
-		upgrade(UpgradeCompany.class);
-		upgrade(UpgradeCustomizablePortlets.class);
-		upgrade(UpgradeDocumentLibrary.class);
-		upgrade(UpgradeDynamicDataListDisplay.class);
-		upgrade(UpgradeDynamicDataMapping.class);
-		upgrade(UpgradeGroup.class);
-		upgrade(UpgradeImageGallery.class);
-		upgrade(UpgradeJournal.class);
-		upgrade(UpgradeLayout.class);
-		upgrade(UpgradeLayoutFriendlyURL.class);
-		upgrade(UpgradeLayoutRevision.class);
-		upgrade(UpgradeLayoutSet.class);
-		upgrade(UpgradeLayoutSetBranch.class);
-		upgrade(UpgradeMessageBoards.class);
-		upgrade(UpgradeMessageBoardsAttachments.class);
-		upgrade(UpgradePortletItem.class);
-		upgrade(UpgradePortletPreferences.class);
-		upgrade(UpgradeRepository.class);
-		upgrade(UpgradeSearch.class);
-		upgrade(UpgradeSocial.class);
-		upgrade(UpgradeUser.class);
-		upgrade(UpgradeWiki.class);
-		upgrade(UpgradeWikiAttachments.class);
+		List<ThrowableAwareRunnable> throwableAwareRunnables =
+			new ArrayList<>();
+
+		throwableAwareRunnables.add(
+			new ThrowableAwareRunnable() {
+
+				@Override
+				protected void doRun() throws Exception {
+					upgrade(UpgradeJournal.class);
+				}
+
+			});
+
+		throwableAwareRunnables.add(
+			new ThrowableAwareRunnable() {
+
+				@Override
+				protected void doRun() throws Exception {
+					upgrade(UpgradePortletPreferences.class);
+				}
+
+			});
+
+		throwableAwareRunnables.add(
+			new ThrowableAwareRunnable() {
+
+				@Override
+				protected void doRun() throws Exception {
+					upgrade(UpgradeSocial.class);
+				}
+
+			});
+
+		throwableAwareRunnables.add(
+			new ThrowableAwareRunnable() {
+
+				@Override
+				protected void doRun() throws Exception {
+					upgrade(UpgradeAnnouncements.class);
+					upgrade(UpgradeAssetPublisher.class);
+					upgrade(UpgradeBlogs.class);
+					upgrade(UpgradeBlogsAggregator.class);
+					upgrade(UpgradeCalendar.class);
+					upgrade(UpgradeCompany.class);
+					upgrade(UpgradeCustomizablePortlets.class);
+					upgrade(UpgradeDocumentLibrary.class);
+					upgrade(UpgradeDynamicDataListDisplay.class);
+					upgrade(UpgradeDynamicDataMapping.class);
+					upgrade(UpgradeGroup.class);
+					upgrade(UpgradeImageGallery.class);
+					upgrade(UpgradeLayout.class);
+					upgrade(UpgradeLayoutFriendlyURL.class);
+					upgrade(UpgradeLayoutRevision.class);
+					upgrade(UpgradeLayoutSet.class);
+					upgrade(UpgradeLayoutSetBranch.class);
+					upgrade(UpgradeMessageBoards.class);
+					upgrade(UpgradeMessageBoardsAttachments.class);
+					upgrade(UpgradePortletItem.class);
+					upgrade(UpgradeRepository.class);
+					upgrade(UpgradeSearch.class);
+					upgrade(UpgradeUser.class);
+					upgrade(UpgradeWiki.class);
+					upgrade(UpgradeWikiAttachments.class);
+				}
+
+			});
+
+		ThrowableAwareRunnablesExecutorUtil.execute(throwableAwareRunnables);
 
 		clearIndexesCache();
 	}

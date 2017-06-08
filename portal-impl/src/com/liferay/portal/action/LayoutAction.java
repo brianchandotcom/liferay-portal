@@ -70,6 +70,9 @@ public class LayoutAction extends Action {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		Boolean layoutDefault = (Boolean)request.getAttribute(
 			WebKeys.LAYOUT_DEFAULT);
 
@@ -143,7 +146,16 @@ public class LayoutAction extends Action {
 			return null;
 		}
 
-		long plid = ParamUtil.getLong(request, "p_l_id");
+		long plid = 0;
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout != null) {
+			plid = layout.getPlid();
+		}
+		else {
+			plid = ParamUtil.getLong(request, "p_l_id");
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("p_l_id is " + plid);

@@ -24,7 +24,6 @@ import static com.liferay.poshi.runner.util.StringPool.COLON;
 
 import com.liferay.poshi.runner.util.StringUtil;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.dom4j.Element;
@@ -88,10 +87,8 @@ public class DefinitionElement extends PoshiElement {
 		sb.append(" ");
 		sb.append(THESE_PROPERTIES);
 
-		for (Iterator<PoshiElement> i =
-			elementIterator("property"); i.hasNext();) {
-
-			PoshiElement poshiElement = i.next();
+		for (PoshiElement poshiElement :
+				toPoshiElementList(elements("property"))) {
 
 			sb.append(poshiElement.toReadableSyntax());
 		}
@@ -102,41 +99,29 @@ public class DefinitionElement extends PoshiElement {
 			sb.append(" ");
 			sb.append(THESE_VARIABLES);
 
-			for (Iterator<PoshiElement> i = elementIterator("var");
-				 i.hasNext();) {
-
-				PoshiElement poshiElement = i.next();
-
+			for (PoshiElement poshiElement : toPoshiElementList(elements())) {
 				sb.append(poshiElement.toReadableSyntax());
 			}
 		}
 
 		sb.append("\n");
 
-		for (Iterator<PoshiElement> i = elementIterator("set-up");
-			 i.hasNext();) {
-
-			PoshiElement poshiElement = i.next();
+		for (PoshiElement poshiElement :
+				toPoshiElementList(elements("set-up"))) {
 
 			sb.append(poshiElement.toReadableSyntax());
 		}
 
 		sb.append("\n");
 
-		for (Iterator<PoshiElement> i = elementIterator("tear-down");
-			 i.hasNext();) {
-
-			PoshiElement poshiElement = i.next();
+		for (PoshiElement poshiElement :
+				toPoshiElementList(elements("tear-down"))) {
 
 			sb.append(poshiElement.toReadableSyntax());
 		}
 
-		for (Iterator<PoshiElement> i = elementIterator("command");
-			 i.hasNext();) {
-
-			sb.append("\n");
-
-			PoshiElement poshiElement = i.next();
+		for (PoshiElement poshiElement :
+				toPoshiElementList(elements("command"))) {
 
 			sb.append(poshiElement.toReadableSyntax());
 		}

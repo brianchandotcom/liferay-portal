@@ -28,9 +28,10 @@ import static com.liferay.poshi.runner.util.StringPool.COLON;
 import static com.liferay.poshi.runner.util.StringPool.PIPE;
 import static com.liferay.poshi.runner.util.StringPool.TAB;
 
+import com.liferay.poshi.runner.util.Dom4JUtil;
 import com.liferay.poshi.runner.util.StringUtil;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.dom4j.Attribute;
@@ -87,9 +88,7 @@ public abstract class PoshiElement extends DefaultElement {
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();
 
-		for (Iterator<PoshiElement> i = elementIterator(); i.hasNext();) {
-			PoshiElement poshiElement = i.next();
-
+		for (PoshiElement poshiElement : toPoshiElementList(elements())) {
 			sb.append(poshiElement.toReadableSyntax());
 		}
 
@@ -146,7 +145,21 @@ public abstract class PoshiElement extends DefaultElement {
 	protected List<Element> getSiblingElements() {
 		Element parentElement = getParent();
 
-		return parentElement.elements();
+		return Dom4JUtil.toElementList(parentElement.elements());
+	}
+
+	protected List<PoshiElement> toPoshiElementList(List<?> list) {
+		if (list == null) {
+			return null;
+		}
+
+		List<PoshiElement> elementList = new ArrayList<>(list.size());
+
+		for (Object object : list) {
+			elementList.add((PoshiElement)object);
+		}
+
+		return elementList;
 	}
 
 	protected static final String[] READABLE_COMMAND_BLOCK_KEYS = {
@@ -163,19 +176,18 @@ public abstract class PoshiElement extends DefaultElement {
 	};
 
 	private void _addAttributes(Element element) {
-		for (Iterator i = element.attributeIterator(); i.hasNext();) {
-			Attribute attribute = (Attribute)i.next();
+		for (Attribute attribute :
+				Dom4JUtil.toAttributeList(element.attributes())) {
 
 			add((Attribute)attribute.clone());
 		}
 	}
 
 	private void _addElements(Element element) {
-		for (Iterator i = element.elementIterator(); i.hasNext();) {
-			Element childElement = PoshiElementFactory.newPoshiElement(
-				(Element)i.next());
+		for (Element childElement :
+				Dom4JUtil.toElementList(element.elements())) {
 
-			add(childElement);
+			add(PoshiElementFactory.newPoshiElement(childElement));
 		}
 	}
 

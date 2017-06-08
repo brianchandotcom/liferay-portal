@@ -30,8 +30,6 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 
 long cpDefinitionId = cpDefinitionsDisplayContext.getCPDefinitionId();
 
-long groupId = BeanParamUtil.getLong(cpDefinition, request, "groupId", scopeGroupId);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
@@ -110,7 +108,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 		String publishButtonLabel = "publish";
 
-		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, CPDefinition.class.getName())) {
+		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, CPDefinition.class.getName())) {
 			publishButtonLabel = "submit-for-publication";
 		}
 		%>

@@ -25,8 +25,6 @@ CPInstance cpInstance = cpInstanceDisplayContext.getCPInstance();
 
 long cpInstanceId = cpInstanceDisplayContext.getCPInstanceId();
 
-long groupId = BeanParamUtil.getLong(cpInstance, request, "groupId", scopeGroupId);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sku") : cpDefinition.getTitle(languageId) + " - " + cpInstance.getSku());
@@ -69,7 +67,7 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 
 		String publishButtonLabel = "publish";
 
-		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, CPInstance.class.getName())) {
+		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, CPInstance.class.getName())) {
 			publishButtonLabel = "submit-for-publication";
 		}
 		%>

@@ -7786,6 +7786,40 @@ public class PortalImpl implements Portal {
 			new String[guestDefaultActions.size()]);
 	}
 
+	protected String[] getGroupPermissions(
+		String[] groupPermissions, String className,
+		String inputPermissionsShowOptions) {
+
+		if ((groupPermissions != null) ||
+			(inputPermissionsShowOptions != null)) {
+
+			return groupPermissions;
+		}
+
+		List<String> groupDefaultActions =
+			ResourceActionsUtil.getModelResourceGroupDefaultActions(className);
+
+		return groupDefaultActions.toArray(
+			new String[groupDefaultActions.size()]);
+	}
+
+	protected String[] getGuestPermissions(
+		String[] guestPermissions, String className,
+		String inputPermissionsShowOptions) {
+
+		if ((guestPermissions != null) ||
+			(inputPermissionsShowOptions != null)) {
+
+			return guestPermissions;
+		}
+
+		List<String> guestDefaultActions =
+			ResourceActionsUtil.getModelResourceGuestDefaultActions(className);
+
+		return guestDefaultActions.toArray(
+			new String[guestDefaultActions.size()]);
+	}
+
 	protected String getPortletParam(HttpServletRequest request, String name) {
 		String portletId = ParamUtil.getString(request, "p_p_id");
 

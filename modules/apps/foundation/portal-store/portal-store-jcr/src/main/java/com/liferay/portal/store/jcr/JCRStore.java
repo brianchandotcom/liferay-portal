@@ -693,8 +693,13 @@ public class JCRStore extends BaseStore {
 			Node newFileNode = newRepositoryNode.addNode(
 				fileName, JCRConstants.NT_FILE);
 
-			String newContentNodePath = newFileNode.getPath().concat(
-				StringPool.SLASH).concat(JCRConstants.JCR_CONTENT);
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(newFileNode.getPath());
+			sb.append(StringPool.SLASH);
+			sb.append(JCRConstants.JCR_CONTENT);
+
+			String newContentNodePath = sb.toString();
 
 			session.move(contentNodePath, newContentNodePath);
 
@@ -757,8 +762,13 @@ public class JCRStore extends BaseStore {
 			Node newFileNode = repositoryNode.addNode(
 				newFileName, JCRConstants.NT_FILE);
 
-			String newContentNodePath = newFileNode.getPath().concat(
-				StringPool.SLASH).concat(JCRConstants.JCR_CONTENT);
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(newFileNode.getPath());
+			sb.append(StringPool.SLASH);
+			sb.append(JCRConstants.JCR_CONTENT);
+
+			String newContentNodePath = sb.toString();
 
 			session.move(contentNodePath, newContentNodePath);
 

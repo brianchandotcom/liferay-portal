@@ -72,8 +72,15 @@ public class UserAssignment extends Assignment {
 
 	@Override
 	public int hashCode() {
-		return _emailAddress.concat(_screenName).concat(
-			String.valueOf(_userId)).hashCode();
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_emailAddress);
+		sb.append(_screenName);
+		sb.append(_userId);
+
+		String hashCodeString = sb.toString();
+
+		return hashCodeString.hashCode();
 	}
 
 	@Override

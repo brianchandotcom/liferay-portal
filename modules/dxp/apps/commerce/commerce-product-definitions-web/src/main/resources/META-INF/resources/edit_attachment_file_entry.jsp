@@ -35,15 +35,17 @@ CPAttachmentFileEntry cpAttachmentFileEntry = cpAttachmentFileEntriesDisplayCont
 long cpAttachmentFileEntryId = cpAttachmentFileEntriesDisplayContext.getCPAttachmentFileEntryId();
 
 int type = CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE;
+String addMenuTitle = LanguageUtil.get(request, "add-image");
 
 if (toolbarItem.equals("view-product-definition-attachments")) {
 	type = CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER;
+	addMenuTitle = LanguageUtil.get(request, "add-attachment");
 }
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-single-attachment") : cpDefinition.getTitle(languageId));
+renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, addMenuTitle) : cpDefinition.getTitle(languageId));
 %>
 
 <portlet:actionURL name="editCPAttachmentFileEntry" var="editProductDefinitionOptionRelActionURL" />

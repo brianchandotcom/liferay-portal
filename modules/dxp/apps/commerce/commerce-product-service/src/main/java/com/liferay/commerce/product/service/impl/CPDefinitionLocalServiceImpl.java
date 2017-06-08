@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
-import com.liferay.commerce.product.exception.NoSuchCPTypeException;
+import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
@@ -794,7 +794,7 @@ public class CPDefinitionLocalServiceImpl
 		CPType cpType = cpTypeServicesTracker.getCPType(productTypeName);
 
 		if (Validator.isNull(cpType)) {
-			throw new NoSuchCPTypeException();
+			throw new CPDefinitionProductTypeNameException();
 		}
 	}
 

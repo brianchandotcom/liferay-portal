@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Build Util
+Bundle-SymbolicName: com.liferay.build.util
+Bundle-Version: 1.0.0
+Include-Resource: classes

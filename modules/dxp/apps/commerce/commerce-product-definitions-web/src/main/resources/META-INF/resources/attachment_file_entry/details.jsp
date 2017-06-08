@@ -26,16 +26,6 @@ CPAttachmentFileEntry cpAttachmentFileEntry = cpAttachmentFileEntriesDisplayCont
 long cpDefinitionId = cpAttachmentFileEntriesDisplayContext.getCPDefinitionId();
 
 long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEntryId");
-
-String fileEntryContainerCssClass = "file-entry-container hidden";
-
-String buttonCssClass = StringPool.BLANK;
-
-if (fileEntryId > 0) {
-	fileEntryContainerCssClass = "file-entry-container";
-
-	buttonCssClass += "hidden";
-}
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
@@ -56,57 +46,43 @@ if (fileEntryId > 0) {
 	<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 </portlet:actionURL>
 
-<%
-if (toolbarItem.equals("view-product-definition-images")) {
-%>
+<c:choose>
+	<c:when test="<%= toolbarItem.equals("view-product-definition-images") %>">
 
-	<div class="lfr-attachment-cover-image-selector">
-		<liferay-item-selector:image-selector
-			draggableImage="vertical"
-			fileEntryId="<%= fileEntryId %>"
-			itemSelectorEventName='<%= "addCPAttachmentFileEntry" %>'
-			itemSelectorURL="<%= cpAttachmentFileEntriesDisplayContext.getItemSelectorUrl() %>"
-			maxFileSize="<%= cpAttachmentFileEntriesDisplayContext.getImageMaxSize() %>"
-			paramName="fileEntry"
-			uploadURL="<%= uploadCoverImageURL %>"
-			validExtensions='<%= StringUtil.merge(cpAttachmentFileEntriesDisplayContext.getImageExtensions(), ", ") %>'
-		/>
-	</div>
+		<div class="lfr-attachment-cover-image-selector">
+			<liferay-item-selector:image-selector
+				draggableImage="vertical"
+				fileEntryId="<%= fileEntryId %>"
+				itemSelectorEventName='<%= "addCPAttachmentFileEntry" %>'
+				itemSelectorURL="<%= cpAttachmentFileEntriesDisplayContext.getItemSelectorUrl() %>"
+				maxFileSize="<%= cpAttachmentFileEntriesDisplayContext.getImageMaxSize() %>"
+				paramName="fileEntry"
+				uploadURL="<%= uploadCoverImageURL %>"
+				validExtensions='<%= StringUtil.merge(cpAttachmentFileEntriesDisplayContext.getImageExtensions(), ", ") %>'
+			/>
+		</div>
 
-<%
-}
-else if (toolbarItem.equals("view-product-definition-attachments")) {
-%>
+	</c:when>
+	<c:when test="<%= toolbarItem.equals("view-product-definition-attachments") %>">
 
-	<aui:input name="fileEntryId" type="hidden" />
+		<aui:input name="fileEntryId" type="hidden" />
 
-	<aui:button cssClass="<%= buttonCssClass %>" name="selectFile" value="select-file" />
+		<div id='<portlet:namespace />file-entry-container <%= (fileEntryId > 0) ? StringPool.BLANK : "hidden" %>'>
 
-	<div class="<%= fileEntryContainerCssClass %>">
+			<h5 id="<portlet:namespace />file-entry-title">
+				<c:if test="<%= (fileEntryId > 0) %>">
+					<%= cpAttachmentFileEntriesDisplayContext.getFileEntryName() %>
+				</c:if>
+			</h5>
 
-		<%
-		if (fileEntryId > 0) {
-		%>
+			<a class="modify-file-entry-link" href="javascript:<portlet:namespace/>modifyFileEntry();"><%= removeFileEntryIcon %></a>
+		</div>
 
-			<h5 class="file-entry-title"><%= cpAttachmentFileEntriesDisplayContext.getFileEntryName() %></h5>
+		<aui:button name="selectFile" value="select-file" />
 
-		<%
-		}
-		else {
-		%>
+	</c:when>
+</c:choose>
 
-			<h5 class="file-entry-title"></h5>
-
-		<%
-		}
-		%>
-
-		<a class="modify-file-entry-link" href="javascript:<portlet:namespace/>modifyFileEntry();"><%= removeFileEntryIcon %></a>
-	</div>
-
-<%
-}
-%>
 
 <aui:input name="title" />
 
@@ -131,11 +107,9 @@ else if (toolbarItem.equals("view-product-definition-attachments")) {
 
 								$('#<portlet:namespace />fileEntryId').val(value.fileEntryId);
 
-								$('.file-entry-title').append(value.title);
+								$('#<portlet:namespace />file-entry-title').html(value.title);
 
-								$('#<portlet:namespace />selectFile').addClass('hidden');
-
-								$('.file-entry-container').removeClass('hidden');
+								$('#<portlet:namespace />file-entry-container').removeClass('hidden');
 							}
 						}
 					},
@@ -154,11 +128,9 @@ else if (toolbarItem.equals("view-product-definition-attachments")) {
 
 		$('#<portlet:namespace />fileEntryId').val(0);
 
-		$('.file-entry-title').html('');
+		$('#<portlet:namespace />file-entry-title').html('');
 
-		$('#<portlet:namespace />selectFile').removeClass('hidden');
-
-		$('.file-entry-container').addClass('hidden');
+		$('#<portlet:namespace />file-entry-container').addClass('hidden');
 
 	}
 

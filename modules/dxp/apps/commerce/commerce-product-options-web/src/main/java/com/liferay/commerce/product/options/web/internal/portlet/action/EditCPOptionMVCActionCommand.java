@@ -88,22 +88,22 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 				updateCPOption(cpOptionId, actionRequest);
 			}
 			else if (cmd.equals("SET_FACETABLE")) {
-				_cpOptionService.setFacetable(cpOptionId, true);
+				boolean facetable = ParamUtil.getBoolean(
+					actionRequest, "facetable");
+
+				_cpOptionService.setFacetable(cpOptionId, facetable);
 			}
 			else if (cmd.equals("SET_REQUIRED")) {
-				_cpOptionService.setRequired(cpOptionId, true);
+				boolean required = ParamUtil.getBoolean(
+					actionRequest, "required");
+
+				_cpOptionService.setRequired(cpOptionId, required);
 			}
 			else if (cmd.equals("SET_SKU_CONTRIBUTOR")) {
-				_cpOptionService.setSkuContributor(cpOptionId, true);
-			}
-			else if (cmd.equals("UNSET_FACETABLE")) {
-				_cpOptionService.setFacetable(cpOptionId, false);
-			}
-			else if (cmd.equals("UNSET_REQUIRED")) {
-				_cpOptionService.setRequired(cpOptionId, false);
-			}
-			else if (cmd.equals("UNSET_SKU_CONTRIBUTOR")) {
-				_cpOptionService.setSkuContributor(cpOptionId, false);
+				boolean skuContributor = ParamUtil.getBoolean(
+					actionRequest, "skuContributor");
+
+				_cpOptionService.setSkuContributor(cpOptionId, skuContributor);
 			}
 		}
 		catch (Exception e) {

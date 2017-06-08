@@ -44,10 +44,11 @@ else {
 	/>
 
 	<portlet:actionURL name="editProductOption" var="setFacetableURL">
-		<portlet:param name="<%= Constants.CMD %>" value='<%= (cpOption.getFacetable()) ? "UNSET_FACETABLE" : "SET_FACETABLE" %>' />
+		<portlet:param name="<%= Constants.CMD %>" value="SET_FACETABLE" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
+		<portlet:param name="facetable" value="<%= (!cpOption.getFacetable()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
@@ -56,10 +57,11 @@ else {
 	/>
 
 	<portlet:actionURL name="editProductOption" var="setRequiredURL">
-		<portlet:param name="<%= Constants.CMD %>" value='<%= (cpOption.getRequired()) ? "UNSET_REQUIRED" : "SET_REQUIRED" %>' />
+		<portlet:param name="<%= Constants.CMD %>" value="SET_REQUIRED" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
+		<portlet:param name="required" value="<%= (!cpOption.getRequired()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
@@ -68,10 +70,11 @@ else {
 	/>
 
 	<portlet:actionURL name="editProductOption" var="setSkuContributorURL">
-		<portlet:param name="<%= Constants.CMD %>" value='<%= (cpOption.getSkuContributor()) ? "UNSET_SKU_CONTRIBUTOR" : "SET_SKU_CONTRIBUTOR" %>' />
+		<portlet:param name="<%= Constants.CMD %>" value="SET_SKU_CONTRIBUTOR" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="backURL" value="<%= backURL %>" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOption.getCPOptionId()) %>" />
+		<portlet:param name="skuContributor" value="<%= (!cpOption.getSkuContributor()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

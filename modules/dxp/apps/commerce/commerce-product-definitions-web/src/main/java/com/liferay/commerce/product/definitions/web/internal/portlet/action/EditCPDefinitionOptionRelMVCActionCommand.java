@@ -121,28 +121,24 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 				cpDefinitionOptionRelId, actionRequest);
 		}
 		else if (cmd.equals("SET_FACETABLE")) {
+			boolean facetable = ParamUtil.getBoolean(
+				actionRequest, "facetable");
+
 			_cpDefinitionOptionRelService.setFacetable(
-				cpDefinitionOptionRelId, true);
+				cpDefinitionOptionRelId, facetable);
 		}
 		else if (cmd.equals("SET_REQUIRED")) {
+			boolean required = ParamUtil.getBoolean(actionRequest, "required");
+
 			_cpDefinitionOptionRelService.setRequired(
-				cpDefinitionOptionRelId, true);
+				cpDefinitionOptionRelId, required);
 		}
 		else if (cmd.equals("SET_SKU_CONTRIBUTOR")) {
+			boolean skuContributor = ParamUtil.getBoolean(
+				actionRequest, "skuContributor");
+
 			_cpDefinitionOptionRelService.setSkuContributor(
-				cpDefinitionOptionRelId, true);
-		}
-		else if (cmd.equals("UNSET_FACETABLE")) {
-			_cpDefinitionOptionRelService.setFacetable(
-				cpDefinitionOptionRelId, false);
-		}
-		else if (cmd.equals("UNSET_REQUIRED")) {
-			_cpDefinitionOptionRelService.setRequired(
-				cpDefinitionOptionRelId, false);
-		}
-		else if (cmd.equals("UNSET_SKU_CONTRIBUTOR")) {
-			_cpDefinitionOptionRelService.setSkuContributor(
-				cpDefinitionOptionRelId, false);
+				cpDefinitionOptionRelId, skuContributor);
 		}
 	}
 

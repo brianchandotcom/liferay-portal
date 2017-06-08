@@ -79,6 +79,14 @@ public class CodeCoverageAssertor implements TestRule {
 					statement.evaluate();
 				}
 				finally {
+					if (whipStaticInstrument == null) {
+						System.clearProperty("whip.static.instrument");
+					}
+					else {
+						System.setProperty(
+							"whip.static.instrument", whipStaticInstrument);
+					}
+
 					afterClass(description, className);
 
 					if (whipStaticInstrument == null) {

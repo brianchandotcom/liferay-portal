@@ -33,10 +33,14 @@
 
 	.drag-handle {
 		cursor: move;
-		left: 3px;
-		margin-left: 15px;
+
+		@include monospace($icon-monospaced-size);
+
+		padding: floor(($icon-monospaced-size - $lexicon-icon-size) / 2);
 		position: absolute;
-		top: 15px;
+		right: 5px;
+		top: 50%;
+		transform: translateY(-50%);
 	}
 }
 
@@ -51,13 +55,13 @@
 }
 
 .touch .modify-pages {
-	.lfr-nav-sortable > a > span {
-		padding-left: 28px;
+	.lfr-nav-sortable > a {
+		padding-right: 42px;
 	}
 
 	@include md {
-		.lfr-nav-sortable > a > span {
-			padding-left: 0;
+		.lfr-nav-sortable > a {
+			padding-right: 15px;
 		}
 
 		.drag-handle {

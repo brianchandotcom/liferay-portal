@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>PGAnnouncements</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGAnnouncements</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGAnnouncements</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_ENTRIES</td>
+	<td>link=Manage Entries</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_1</td>
+	<td>xpath=(//h3[@class='entry-title']/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_1</td>
+	<td>xpath=(//td[@class='edit-entry']/span/a/span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_1</td>
+	<td>xpath=(//td[@class='delete-entry']/span/a/span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARK_AS_READ_1</td>
+	<td>xpath=(//td[@class='control-entry']/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCOPE_1</td>
+	<td>xpath=(//span[@class='entry-scope'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_1</td>
+	<td>xpath=(//div[@class=' entry-content entry-type-general'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -579,6 +579,16 @@ public class PortletPreferencesFactoryImpl
 			return portletRequestWrapper.getPreferences();
 		}
 
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		if (portletRequest instanceof ConfigurationPortletRequest) {
+			PortletRequestWrapper portletRequestWrapper =
+				(PortletRequestWrapper)portletRequest;
+
+			return portletRequestWrapper.getPreferences();
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

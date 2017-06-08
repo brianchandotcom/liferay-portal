@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.axis;
+package com.liferay.petra.axis;
 
 import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
 import com.liferay.portal.kernel.log.Log;
@@ -31,8 +31,6 @@ import org.apache.axis.utils.cache.MethodCache;
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.petra.util.AxisCleanUpFilter)}
  */
 public class AxisCleanUpFilter extends BaseFilter {
 

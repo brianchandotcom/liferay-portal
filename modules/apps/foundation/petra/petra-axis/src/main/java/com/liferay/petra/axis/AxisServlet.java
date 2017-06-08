@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.axis;
+package com.liferay.petra.axis;
 
 import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
 import com.liferay.portal.kernel.log.Log;
@@ -43,7 +43,7 @@ import org.apache.axis.utils.cache.MethodCache;
 
 /**
  * @author Brian Wing Shun Chan
- * @see com.liferay.petra.axis.AxisServlet
+ * @see com.liferay.util.axis.AxisServlet
  */
 public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 

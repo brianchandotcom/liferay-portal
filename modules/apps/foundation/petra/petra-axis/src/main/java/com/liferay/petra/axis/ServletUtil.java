@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.axis;
+package com.liferay.petra.axis;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +25,6 @@ import org.apache.axis.transport.http.HTTPConstants;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.petra.util.ServletUtil)}
  */
 public class ServletUtil {
 

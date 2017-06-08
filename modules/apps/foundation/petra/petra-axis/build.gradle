@@ -1,0 +1,6 @@
+dependencies {
+	provided group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-2"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	provided group: "org.apache.axis", name: "axis-jaxrpc", version: "1.4"
+}

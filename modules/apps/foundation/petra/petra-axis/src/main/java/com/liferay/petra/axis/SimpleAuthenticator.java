@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.util.axis;
+package com.liferay.petra.axis;
 
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.petra.util.SimpleAuthenticator)}
  */
 public class SimpleAuthenticator extends Authenticator {
 

@@ -175,18 +175,18 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 <liferay-frontend:add-menu>
 
 	<%
-	for (CPType cpType1 : cpTypes) {
+	for (CPType curCPType : cpTypes) {
 	%>
 
 		<liferay-portlet:renderURL var="addProductDefinitionURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 			<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
 			<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
-			<portlet:param name="productTypeName" value="<%= cpType1.getName() %>" />
+			<portlet:param name="productTypeName" value="<%= curCPType.getName() %>" />
 			<portlet:param name="toolbarItem" value="view-product-definition-details" />
 		</liferay-portlet:renderURL>
 
-		<liferay-frontend:add-menu-item title="<%= cpType1.getLabel(locale) %>" url="<%= addProductDefinitionURL.toString() %>" />
+		<liferay-frontend:add-menu-item title="<%= curCPType.getLabel(locale) %>" url="<%= addProductDefinitionURL.toString() %>" />
 
 	<%
 	}

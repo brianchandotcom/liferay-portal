@@ -253,6 +253,8 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
+		validate(fileName, false);
+
 		return store.getFile(companyId, repositoryId, fileName);
 	}
 
@@ -266,6 +268,8 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
+		validate(fileName, false);
+
 		return store.getFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
@@ -277,6 +281,8 @@ public class DLStoreImpl implements DLStore {
 		validate(fileName, false);
 
 		Store store = _storeFactory.getStore();
+
+		validate(fileName, false);
 
 		return store.getFileAsBytes(companyId, repositoryId, fileName);
 	}
@@ -291,6 +297,8 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
+		validate(fileName, false);
+
 		return store.getFileAsBytes(
 			companyId, repositoryId, fileName, versionLabel);
 	}
@@ -304,6 +312,8 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
+		validate(fileName, false);
+
 		return store.getFileAsStream(companyId, repositoryId, fileName);
 	}
 
@@ -316,6 +326,8 @@ public class DLStoreImpl implements DLStore {
 		validate(fileName, false, versionLabel);
 
 		Store store = _storeFactory.getStore();
+
+		validate(fileName, false);
 
 		return store.getFileAsStream(
 			companyId, repositoryId, fileName, versionLabel);
@@ -332,6 +344,10 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
+		if (!isValidName(dirName)) {
+			throw new DirectoryNameException(dirName);
+		}
+
 		return store.getFileNames(companyId, repositoryId, dirName);
 	}
 
@@ -342,6 +358,8 @@ public class DLStoreImpl implements DLStore {
 		validate(fileName, false);
 
 		Store store = _storeFactory.getStore();
+
+		validate(fileName, false);
 
 		return store.getFileSize(companyId, repositoryId, fileName);
 	}
@@ -357,6 +375,10 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
+		if (!isValidName(dirName)) {
+			throw new DirectoryNameException(dirName);
+		}
+
 		return store.hasDirectory(companyId, repositoryId, dirName);
 	}
 
@@ -367,6 +389,8 @@ public class DLStoreImpl implements DLStore {
 		validate(fileName, false);
 
 		Store store = _storeFactory.getStore();
+
+		validate(fileName, false);
 
 		return store.hasFile(companyId, repositoryId, fileName);
 	}
@@ -380,6 +404,8 @@ public class DLStoreImpl implements DLStore {
 		validate(fileName, false, versionLabel);
 
 		Store store = _storeFactory.getStore();
+
+		validate(fileName, false);
 
 		return store.hasFile(companyId, repositoryId, fileName, versionLabel);
 	}

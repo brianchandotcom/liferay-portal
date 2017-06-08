@@ -75,6 +75,10 @@ public class StartupHelper {
 		_startupFinished = startupFinished;
 	}
 
+	public void setUpgrading(boolean upgrading) {
+		_upgrading = upgrading;
+	}
+
 	public void updateIndexes() {
 		updateIndexes(_dropIndexes);
 	}

@@ -63,6 +63,10 @@ public class StartupHelperUtil {
 		getStartupHelper().setStartupFinished(startupFinished);
 	}
 
+	public static void setUpgrading(boolean upgrading) {
+		getStartupHelper().setUpgrading(upgrading);
+	}
+
 	public static void updateIndexes() {
 		getStartupHelper().updateIndexes();
 	}

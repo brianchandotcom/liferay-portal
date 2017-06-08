@@ -162,6 +162,8 @@
 		<description message="This is a use case LPS-61197." />
 		<property name="portal.acceptance" value="true" />
 
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

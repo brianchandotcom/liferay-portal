@@ -287,7 +287,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryWithSamePageScope" priority="4">
+	<!-- <command name="AddBlogsEntryWithSamePageScope" priority="4">
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -424,7 +424,7 @@
 		<execute macro="Portlet#viewTitle">
 			<var name="portletName" value="Blogs" />
 		</execute>
-	</command>
+	</command> -->
 
 	<command name="AddBlogsEntryWithSubtitle" priority="4">
 		<execute macro="Navigator#gotoPage">

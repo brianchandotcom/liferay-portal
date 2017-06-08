@@ -2,6 +2,8 @@
 <!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
+	<suppress checks="PersistenceCall" files="modules/apps/collaboration/document-library/document-library-test/src/testIntegration/java/com/liferay/document/library/service/test/DLFileEntryTypeFinderTest\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/collaboration/document-library/document-library-test/src/testIntegration/java/com/liferay/document/library/service/test/DLFolderFinderTest\.java" />
 	<suppress checks="Subname" files="modules/apps/collaboration/document-library/document-library-repository-cmis-impl/src/main/java/com/liferay/document/library/repository/cmis/internal/CMISRepository\.java" />
 	<suppress checks="TestClass" files="modules/apps/collaboration/document-library/document-library-test/src/testIntegration/java/com/liferay/document/library/webdav/test/BaseWebDAVTestCase\.java" />
 </suppressions>

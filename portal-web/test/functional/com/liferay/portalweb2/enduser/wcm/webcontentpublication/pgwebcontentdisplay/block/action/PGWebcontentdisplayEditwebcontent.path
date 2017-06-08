@@ -1,0 +1,100 @@
+<html>
+<head>
+<title>PGWebcontentdisplayEditwebcontent</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWebcontentdisplayEditwebcontent</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWebcontentdisplayEditwebcontent</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_STRUCTURE</td>
+	<td>//fieldset[@class='fieldset article-structure-toolbar']/div/div/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD</td>
+	<td>//input[@id='_15_title_en_US']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCHABLE_CHECKBOX</td>
+	<td>//input[@id='_15_indexableCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_AS_DRAFT_BUTTON</td>
+	<td>//button[@id='_15_saveButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_BUTTON</td>
+	<td>//button[@id='_15_publishButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU-->
+<tr>
+	<td>MENU_CONTENT</td>
+	<td>//a[@id='_15_contentLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_ABSTRACT</td>
+	<td>//a[@id='_15_abstractLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_CATEGORIZATION</td>
+	<td>//a[@id='_15_categorizationLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_SCHEDULE</td>
+	<td>//a[@id='_15_scheduleLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_DISPLAY_PAGE</td>
+	<td>//a[@id='_15_displayPageLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_RELATED_ASSETS</td>
+	<td>//a[@id='_15_relatedAssetsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_CUSTOM_FIELDS</td>
+	<td>//a[@id='_15_customFieldsLink']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

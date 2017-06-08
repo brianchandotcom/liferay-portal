@@ -38,7 +38,11 @@ if ((templateNodeId > 0) && Validator.isNotNull(templateTitle)) {
 	}
 }
 
-int deletedAttachmentsCount = wikiPage.getDeletedAttachmentsFileEntriesCount();
+int deletedAttachmentsCount = 0;
+
+if (wikiPage != null) {
+	deletedAttachmentsCount = wikiPage.getDeletedAttachmentsFileEntriesCount();
+}
 %>
 
 <c:if test="<%= trashHelper.isTrashEnabled(scopeGroupId) && (deletedAttachmentsCount > 0) %>">

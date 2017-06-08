@@ -444,6 +444,7 @@ public class OrganizationLocalServiceTest {
 			organizationA.getOrganizationId(), "Organization AA", false);
 
 		_organizations.add(organizationAA);
+		_organizations.add(organizationA);
 
 		_organizations.add(organizationA);
 

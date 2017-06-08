@@ -27,6 +27,22 @@ import org.junit.Test;
 public class SimpleKeywordTokenizerTest {
 
 	@Test
+	public void testJapaneseIdeographicSpace() {
+		String ideographicSpace = "\u3000";
+
+		assertTokenize(ideographicSpace, "[]");
+		assertTokenize("simple" + ideographicSpace + "test", "[simple, test]");
+		assertTokenize(
+			"\"simple\"" + ideographicSpace + "\"test\"",
+			"[\"simple\", \"test\"]");
+		assertTokenize(
+			"This" + ideographicSpace + "is \"a" + ideographicSpace +
+				"simple\"" + ideographicSpace + "token" + ideographicSpace +
+					"\"test\"",
+			"[This, is, \"a simple\", token, \"test\"]");
+	}
+
+	@Test
 	public void testRequiresTokenization() {
 		Assert.assertTrue(requiresTokenization("This is a simple test"));
 		Assert.assertTrue(requiresTokenization("This \"is a simple\" test"));

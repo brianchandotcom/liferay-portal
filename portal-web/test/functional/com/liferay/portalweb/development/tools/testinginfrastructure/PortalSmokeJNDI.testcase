@@ -1,0 +1,3 @@
+<definition component-name="portal-tools" extends="PortalSmoke">
+	<property name="database.jndi.enabled" value="true" />
+</definition>

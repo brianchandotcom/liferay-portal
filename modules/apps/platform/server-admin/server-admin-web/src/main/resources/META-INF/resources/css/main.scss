@@ -1,0 +1,43 @@
+.portlet-admin {
+	.server-admin-tabs {
+		margin-top: 20px;
+	}
+
+	.meter-wrapper img {
+		margin: 0 70px;
+	}
+
+	.memory-status-table {
+		margin: auto;
+	}
+
+	.progress-percentage {
+		color: black;
+		display: block;
+		position: absolute;
+		width: 100%;
+	}
+
+	.reindex-progress {
+		margin-bottom: 0;
+		position: relative;
+		width: 100px;
+	}
+
+	.server-admin-actions-panel .panel-body {
+		padding: 0;
+	}
+
+	.server-status-container {
+		padding: 20px;
+	}
+
+	.system-action-group {
+		margin-bottom: 0;
+
+		li {
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+	}
+}

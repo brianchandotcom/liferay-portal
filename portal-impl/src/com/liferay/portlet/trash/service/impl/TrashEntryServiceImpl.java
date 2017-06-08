@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.trash.service.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -50,6 +52,7 @@ import java.util.List;
  * @author Julio Camarero
  * @author Zsolt Berentey
  */
+@ProviderType
 public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 
 	/**

@@ -115,6 +115,7 @@
 /lib/development/velocity-tools.jar
 /lib/development/websocket-api.jar
 /lib/development/xmlresolver.jar
+/lib/global/portlet.jar
 /lib/portal/abdera.jar
 /lib/portal/ant.jar
 /lib/portal/antlr2.jar

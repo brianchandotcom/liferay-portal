@@ -947,6 +947,22 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
+	 * Returns true if there is a matching layout for UUID, groupId and
+	 * privateLayout
+	 *
+	 * @param  uuid the layout's UUID
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @return true if the layout is found
+	 */
+	@Override
+	public boolean hasLayout(String uuid, long groupId, boolean privateLayout)
+		throws PortalException {
+
+		return layoutLocalService.hasLayout(uuid, groupId, privateLayout);
+	}
+
+	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             com.liferay.exportimport.kernel.service.ExportImportService#importLayouts(
 	 *             ExportImportConfiguration, File)}

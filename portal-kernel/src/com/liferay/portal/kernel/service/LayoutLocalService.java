@@ -74,6 +74,10 @@ public interface LayoutLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link LayoutLocalServiceUtil} to access the layout local service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLayout(java.lang.String uuid, long groupId,
+		boolean privateLayout) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasLayoutSetPrototypeLayout(
 		java.lang.String layoutSetPrototypeUuid, long companyId,
 		java.lang.String layoutUuid) throws PortalException;

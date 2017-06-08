@@ -28,7 +28,6 @@ import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
-import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -263,23 +262,15 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			Layout parentLayout = LayoutLocalServiceUtil.getLayout(
 				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId);
 
-			try {
-				LayoutServiceHttp.getLayoutByUuidAndGroupId(
+			if (LayoutServiceHttp.hasLayout(
 					httpPrincipal, parentLayout.getUuid(), remoteGroupId,
-					parentLayout.getPrivateLayout());
+					parentLayout.getPrivateLayout())) {
 
 				// If one parent is found, all others are assumed to exist
 
 				break;
 			}
-			catch (NoSuchLayoutException nsle) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(nsle, nsle);
-				}
-
+			else {
 				missingRemoteParentLayouts.add(parentLayout);
 
 				parentLayoutId = parentLayout.getParentLayoutId();

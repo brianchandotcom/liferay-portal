@@ -63,6 +63,18 @@ public interface LayoutService extends BaseService {
 	 */
 
 	/**
+	* Returns true if the layout matching the UUID, group, and privacy.
+	*
+	* @param uuid the layout's UUID
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @return true if the layout is found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasLayout(java.lang.String uuid, long groupId,
+		boolean privateLayout) throws PortalException;
+
+	/**
 	* Exports all layouts that match the criteria as a byte array.
 	*
 	* @param groupId the primary key of the group

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<permissions>
+	<resource>
+		<resource-name>com.liferay.message.boards</resource-name>
+		<action-id>MOVE_THREAD</action-id>
+		<action-id>UPDATE_THREAD_PRIORITY</action-id>
+	</resource>
+	<resource>
+		<resource-name>com.liferay.message.boards.kernel.model.MBCategory</resource-name>
+		<action-id>MOVE_THREAD</action-id>
+		<action-id>UPDATE_THREAD_PRIORITY</action-id>
+	</resource>
+</permissions>

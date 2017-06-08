@@ -42,7 +42,7 @@ public class UpgradeGroup extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(GroupTable.class, new AlterColumnType("name", "STRING null"));
+		alter(GroupTable.class, new AlterColumnType("name", "TEXT null"));
 
 		createIndex();
 

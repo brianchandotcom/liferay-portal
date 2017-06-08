@@ -66,7 +66,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -86,8 +86,6 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(modifiedDate);
 		sb.append(", baseSKU=");
 		sb.append(baseSKU);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", productTypeName=");
 		sb.append(productTypeName);
 		sb.append(", availableIndividually=");
@@ -157,13 +155,6 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 		else {
 			cpDefinitionImpl.setBaseSKU(baseSKU);
-		}
-
-		if (name == null) {
-			cpDefinitionImpl.setName(StringPool.BLANK);
-		}
-		else {
-			cpDefinitionImpl.setName(name);
 		}
 
 		if (productTypeName == null) {
@@ -247,7 +238,6 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		baseSKU = objectInput.readUTF();
-		name = objectInput.readUTF();
 		productTypeName = objectInput.readUTF();
 
 		availableIndividually = objectInput.readBoolean();
@@ -297,13 +287,6 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 		else {
 			objectOutput.writeUTF(baseSKU);
-		}
-
-		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(name);
 		}
 
 		if (productTypeName == null) {
@@ -356,7 +339,6 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public long createDate;
 	public long modifiedDate;
 	public String baseSKU;
-	public String name;
 	public String productTypeName;
 	public boolean availableIndividually;
 	public String DDMStructureKey;

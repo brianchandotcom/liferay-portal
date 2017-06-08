@@ -229,21 +229,6 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setBaseSKU(String baseSKU);
 
 	/**
-	 * Returns the name of this cp definition.
-	 *
-	 * @return the name of this cp definition
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this cp definition.
-	 *
-	 * @param name the name of this cp definition
-	 */
-	public void setName(String name);
-
-	/**
 	 * Returns the product type name of this cp definition.
 	 *
 	 * @return the product type name of this cp definition

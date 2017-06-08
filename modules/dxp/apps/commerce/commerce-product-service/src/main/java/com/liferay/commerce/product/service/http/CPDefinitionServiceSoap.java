@@ -70,8 +70,7 @@ import java.util.Map;
 @ProviderType
 public class CPDefinitionServiceSoap {
 	public static com.liferay.commerce.product.model.CPDefinitionSoap addCPDefinition(
-		java.lang.String baseSKU, java.lang.String name,
-		java.lang.String[] titleMapLanguageIds,
+		java.lang.String baseSKU, java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
 		java.lang.String[] shortDescriptionMapLanguageIds,
 		java.lang.String[] shortDescriptionMapValues,
@@ -93,7 +92,7 @@ public class CPDefinitionServiceSoap {
 					descriptionMapValues);
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.addCPDefinition(baseSKU,
-					name, titleMap, shortDescriptionMap, descriptionMap,
+					titleMap, shortDescriptionMap, descriptionMap,
 					productTypeName, ddmStructureKey, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -243,7 +242,7 @@ public class CPDefinitionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionSoap updateCPDefinition(
-		long cpDefinitionId, java.lang.String baseSKU, java.lang.String name,
+		long cpDefinitionId, java.lang.String baseSKU,
 		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
 		java.lang.String[] shortDescriptionMapLanguageIds,
@@ -266,11 +265,11 @@ public class CPDefinitionServiceSoap {
 					descriptionMapValues);
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinition(cpDefinitionId,
-					baseSKU, name, titleMap, shortDescriptionMap,
-					descriptionMap, productTypeName, ddmStructureKey,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
+					baseSKU, titleMap, shortDescriptionMap, descriptionMap,
+					productTypeName, ddmStructureKey, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);

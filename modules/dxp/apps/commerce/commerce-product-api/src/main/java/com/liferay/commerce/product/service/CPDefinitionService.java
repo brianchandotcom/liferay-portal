@@ -70,7 +70,7 @@ public interface CPDefinitionService extends BaseService {
 		throws PortalException;
 
 	public CPDefinition addCPDefinition(java.lang.String baseSKU,
-		java.lang.String name, Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> shortDescriptionMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
@@ -98,8 +98,7 @@ public interface CPDefinitionService extends BaseService {
 		throws PortalException;
 
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
-		java.lang.String baseSKU, java.lang.String name,
-		Map<Locale, java.lang.String> titleMap,
+		java.lang.String baseSKU, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> shortDescriptionMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,

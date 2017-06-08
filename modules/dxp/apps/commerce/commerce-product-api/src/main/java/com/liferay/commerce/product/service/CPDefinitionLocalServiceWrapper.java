@@ -54,7 +54,7 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition addCPDefinition(
-		java.lang.String baseSKU, java.lang.String name,
+		java.lang.String baseSKU,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -65,8 +65,8 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLocalService.addCPDefinition(baseSKU, name,
-			titleMap, shortDescriptionMap, descriptionMap, productTypeName,
+		return _cpDefinitionLocalService.addCPDefinition(baseSKU, titleMap,
+			shortDescriptionMap, descriptionMap, productTypeName,
 			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
@@ -223,7 +223,7 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition updateCPDefinition(
-		long cpDefinitionId, java.lang.String baseSKU, java.lang.String name,
+		long cpDefinitionId, java.lang.String baseSKU,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -235,7 +235,7 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.updateCPDefinition(cpDefinitionId,
-			baseSKU, name, titleMap, shortDescriptionMap, descriptionMap,
+			baseSKU, titleMap, shortDescriptionMap, descriptionMap,
 			productTypeName, ddmStructureKey, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,

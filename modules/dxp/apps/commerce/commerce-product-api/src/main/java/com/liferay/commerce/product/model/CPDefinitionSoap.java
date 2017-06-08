@@ -43,7 +43,6 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setBaseSKU(model.getBaseSKU());
-		soapModel.setName(model.getName());
 		soapModel.setProductTypeName(model.getProductTypeName());
 		soapModel.setAvailableIndividually(model.getAvailableIndividually());
 		soapModel.setDDMStructureKey(model.getDDMStructureKey());
@@ -179,14 +178,6 @@ public class CPDefinitionSoap implements Serializable {
 		_baseSKU = baseSKU;
 	}
 
-	public String getName() {
-		return _name;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
 	public String getProductTypeName() {
 		return _productTypeName;
 	}
@@ -288,7 +279,6 @@ public class CPDefinitionSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _baseSKU;
-	private String _name;
 	private String _productTypeName;
 	private boolean _availableIndividually;
 	private String _DDMStructureKey;

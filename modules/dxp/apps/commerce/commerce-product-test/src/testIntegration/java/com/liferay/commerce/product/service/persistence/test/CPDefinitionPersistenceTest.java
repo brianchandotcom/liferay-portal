@@ -141,8 +141,6 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setBaseSKU(RandomTestUtil.randomString());
 
-		newCPDefinition.setName(RandomTestUtil.randomString());
-
 		newCPDefinition.setProductTypeName(RandomTestUtil.randomString());
 
 		newCPDefinition.setAvailableIndividually(RandomTestUtil.randomBoolean());
@@ -189,8 +187,6 @@ public class CPDefinitionPersistenceTest {
 			Time.getShortTimestamp(newCPDefinition.getModifiedDate()));
 		Assert.assertEquals(existingCPDefinition.getBaseSKU(),
 			newCPDefinition.getBaseSKU());
-		Assert.assertEquals(existingCPDefinition.getName(),
-			newCPDefinition.getName());
 		Assert.assertEquals(existingCPDefinition.getProductTypeName(),
 			newCPDefinition.getProductTypeName());
 		Assert.assertEquals(existingCPDefinition.getAvailableIndividually(),
@@ -308,12 +304,11 @@ public class CPDefinitionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CPDefinition", "uuid",
 			true, "CPDefinitionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "baseSKU", true, "name", true,
-			"productTypeName", true, "availableIndividually", true,
-			"DDMStructureKey", true, "displayDate", true, "expirationDate",
-			true, "lastPublishDate", true, "status", true, "statusByUserId",
-			true, "statusByUserName", true, "statusDate", true,
-			"defaultLanguageId", true);
+			"modifiedDate", true, "baseSKU", true, "productTypeName", true,
+			"availableIndividually", true, "DDMStructureKey", true,
+			"displayDate", true, "expirationDate", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true, "defaultLanguageId", true);
 	}
 
 	@Test
@@ -546,8 +541,6 @@ public class CPDefinitionPersistenceTest {
 		cpDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
 		cpDefinition.setBaseSKU(RandomTestUtil.randomString());
-
-		cpDefinition.setName(RandomTestUtil.randomString());
 
 		cpDefinition.setProductTypeName(RandomTestUtil.randomString());
 

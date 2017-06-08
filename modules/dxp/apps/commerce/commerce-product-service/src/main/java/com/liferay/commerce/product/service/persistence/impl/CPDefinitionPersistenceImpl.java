@@ -5151,7 +5151,6 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 		cpDefinitionImpl.setCreateDate(cpDefinition.getCreateDate());
 		cpDefinitionImpl.setModifiedDate(cpDefinition.getModifiedDate());
 		cpDefinitionImpl.setBaseSKU(cpDefinition.getBaseSKU());
-		cpDefinitionImpl.setName(cpDefinition.getName());
 		cpDefinitionImpl.setProductTypeName(cpDefinition.getProductTypeName());
 		cpDefinitionImpl.setAvailableIndividually(cpDefinition.isAvailableIndividually());
 		cpDefinitionImpl.setDDMStructureKey(cpDefinition.getDDMStructureKey());

@@ -29,7 +29,6 @@ create table CPDefinition (
 	createDate DATE null,
 	modifiedDate DATE null,
 	baseSKU VARCHAR(75) null,
-	name VARCHAR(75) null,
 	productTypeName VARCHAR(75) null,
 	availableIndividually BOOLEAN,
 	DDMStructureKey VARCHAR(75) null,

@@ -35,9 +35,6 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="baseSKU" type="String" />
-		<field name="name" type="String">
-			<validator name="required" />
-		</field>
 		<field name="productTypeName" type="String" />
 		<field name="availableIndividually" type="boolean" />
 		<field name="DDMStructureKey" type="String" />

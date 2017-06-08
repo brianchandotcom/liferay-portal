@@ -45,7 +45,6 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="baseSKU" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="productTypeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="availableIndividually" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />

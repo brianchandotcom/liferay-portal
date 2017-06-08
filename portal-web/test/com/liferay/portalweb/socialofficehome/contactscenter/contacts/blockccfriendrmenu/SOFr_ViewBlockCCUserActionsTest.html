@@ -1,0 +1,109 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SOFr_ViewBlockCCUserActionsTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SOFr_ViewBlockCCUserActionsTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/socialofficefriendsn/home</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//nav/ul/li[1]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[2]/div/ul/li[2]/a</td>
+	<td>Contacts Center</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/div/ul/li[2]/a</td>
+	<td>Contacts Center</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>You have no contacts.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[3]/a/span</td>
+	<td>Find People</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[3]/a/span</td>
+	<td>Find People</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[1]/span[1]/span/span/input</td>
+	<td>test@liferay.com</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>xPath=(//input[@value='Search'])[3]</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div[1]/a</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/span</td>
+	<td>test@liferay.com</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//strong/a/img</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li[1]/a</td>
+	<td>View Profile</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[1]/a</td>
+	<td>View Profile</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//li[1]/a</td>
+	<td>View Profile</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/h1/span</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Add as Friend</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Add as Coworker</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Follow</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

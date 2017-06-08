@@ -1,0 +1,109 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AddMicroblogsContentViewableByFriendsTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AddMicroblogsContentViewableByFriendsTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//nav/ul/li[1]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//nav/ul/li[1]/a/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[2]/div[1]/ul/li[3]/a</td>
+	<td>Microblogs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1/span[2]</td>
+	<td>Microblogs</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//textarea</td>
+	<td>Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-info'])[1]</td>
+	<td>You have no microblogs entry.</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//textarea</td>
+	<td>Microblogs Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span/select</td>
+	<td>Everyone Friends Coworkers Followers</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@value='Post']</td>
+	<td>Post</td>
+</tr>
+<tr>
+	<td>typeKeys</td>
+	<td>//textarea</td>
+	<td>Microblogs Content</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//span/select</td>
+	<td>label=Friends</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='microblogs-countdown']</td>
+	<td>133</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Post']</td>
+	<td>Post</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='my-entry-bubble ']</td>
+	<td>Microblogs post</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div/span/a/img</td>
+	<td>Thumbnail</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='user-name']</td>
+	<td>Joe Bloggs test@liferay.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='content']</td>
+	<td>Microblogs Content</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Reply</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

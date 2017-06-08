@@ -1,0 +1,74 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewLinkMicroblogsTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewLinkMicroblogsTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/div/div/div[1]/ul/li[3]/a</td>
+	<td>Microblogs</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div/div/div/div[1]/ul/li[3]/a</td>
+	<td>Microblogs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div/div/div/section/header/h1</td>
+	<td>Microblogs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/h1/span</td>
+	<td>What's happening?</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//textarea</td>
+	<td>Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[1]/span/span</td>
+	<td>Timeline</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/div/ul/li[2]/span/a</td>
+	<td>Mentions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>You have no microblogs entry.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/div/section/header/h1/span</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div/input[1]</td>
+	<td>Sites Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[3]/span[2]</td>
+	<td>Liferay</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

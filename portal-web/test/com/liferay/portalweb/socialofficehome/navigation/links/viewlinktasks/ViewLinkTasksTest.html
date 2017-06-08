@@ -1,0 +1,79 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewLinkTasksTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewLinkTasksTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div/div/div/div[1]/ul/li[5]/a</td>
+	<td>Tasks</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div/div/div/div[1]/ul/li[5]/a</td>
+	<td>Tasks</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[2]/div/div/div/section/header/h1/span[2]</td>
+	<td>Tasks</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[1]/span/span</td>
+	<td>Assigned to Me</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div/div/ul/li[2]/span/a</td>
+	<td>I Have Created</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//section/div/div/div/div[1]/a[1]</td>
+	<td>Add Task</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[3]</td>
+	<td>Filter</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No tasks were found.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[4]/table/tbody/tr/td[2]</td>
+	<td>Show Completed Tasks</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[3]/div/section/header/h1/span</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div/input[1]</td>
+	<td>Sites Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[3]/span[2]</td>
+	<td>Liferay</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

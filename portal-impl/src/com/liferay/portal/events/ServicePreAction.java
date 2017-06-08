@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.exception.LayoutPermissionException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
-import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
@@ -447,7 +446,7 @@ public class ServicePreAction extends Action {
 					_log.warn(sb.toString());
 				}
 
-				throw new NoSuchLayoutException(sb.toString());
+				throw new PrincipalException();
 			}
 			else if (loginRequest && !viewableGroup) {
 				layout = null;

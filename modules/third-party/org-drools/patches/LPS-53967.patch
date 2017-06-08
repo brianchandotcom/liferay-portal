@@ -1,0 +1,22 @@
+diff --git a/org/drools/base/ClassFieldAccessorCache.java b/org/drools/base/ClassFieldAccessorCache.java
+index 249c48a..5d75282 100644
+--- a/org/drools/base/ClassFieldAccessorCache.java
++++ b/org/drools/base/ClassFieldAccessorCache.java
+@@ -123,7 +123,7 @@ public class ClassFieldAccessorCache {
+         try {
+             return this.classLoader.loadClass( className );
+         } catch ( ClassNotFoundException e ) {
+-            throw new RuntimeDroolsException( "Unable to resolve class '" + className + "'" );
++            throw new RuntimeDroolsException( "Unable to resolve class '" + className + "'", e );
+         }
+     }
+ 
+@@ -134,7 +134,7 @@ public class ClassFieldAccessorCache {
+         CacheEntry cache = this.cacheByClassLoader.get( cl );
+         if ( cache == null ) {
+             // setup a cache for this ClassLoader
+-            cache = new CacheEntry( this.classLoader );
++            cache = new CacheEntry( com.liferay.portal.kernel.util.AggregateClassLoader.getAggregateClassLoader(new ClassLoader[] {cl, this.classLoader}) );
+             this.cacheByClassLoader.put( cl,
+                                          cache );
+         }

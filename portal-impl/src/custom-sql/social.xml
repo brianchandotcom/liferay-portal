@@ -11,6 +11,8 @@
 				User_ ON
 					(SocialActivityCounter.classPK = User_.userId)
 			WHERE
+				(NOT User_.defaultUser) AND
+				(User_.status = 0) AND
 				(groupId = ?) AND
 				(classNameId = ?) AND
 				(name IN ([$NAME$])) AND
@@ -86,6 +88,8 @@
 				User_ ON
 					(SocialActivityCounter.classPK = User_.userId)
 			WHERE
+				(NOT User_.defaultUser) AND
+				(User_.status = 0) AND
 				(groupId = ?) AND
 				(classNameId = ?) AND
 				(name IN ([$NAME$])) AND

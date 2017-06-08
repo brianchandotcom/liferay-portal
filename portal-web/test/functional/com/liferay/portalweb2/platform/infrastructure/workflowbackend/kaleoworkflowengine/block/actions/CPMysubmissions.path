@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>CPMysubmissions</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPMysubmissions</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPMysubmissions</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_PENDING</td>
+	<td>//span[@class='aui-tab-content']/a[contains(.,'Pending')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_COMPLETED</td>
+	<td>//span[@class='aui-tab-content']/a[contains(.,'Completed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PENDING_TABLE-->
+<tr>
+	<td>PENDING_TABLE_TASK</td>
+	<td>//div[@id='_158_workflowInstancesSearchContainer']//tr/td[contains(@headers,'col-definition')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_ASSET_TITLE</td>
+	<td>//div[@id='_158_workflowInstancesSearchContainer']//tr/td[contains(@headers,'col-asset-title')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_ASSET_TYPE</td>
+	<td>//div[@id='_158_workflowInstancesSearchContainer']//tr/td[contains(@headers,'col-asset-type')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_STATUS</td>
+	<td>//div[@id='_158_workflowInstancesSearchContainer']//tr/td[contains(@headers,'col-status')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_LAST_ACTIVITY_DATE</td>
+	<td>//div[@id='_158_workflowInstancesSearchContainer']//tr/td[contains(@headers,'col-last-activity-date')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_END_DATE</td>
+	<td>//div[@id='_158_workflowInstancesSearchContainer']//tr/td[contains(@headers,'col-end-date')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_TABLE_WITHDRAW_SUBMISSION</td>
+	<td>//div[@id='_158_workflowInstancesSearchContainer']//tr/td/span/a[contains(@id,'menu_withdraw-submission')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

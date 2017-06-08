@@ -1,0 +1,53 @@
+@import "partials/layout";
+@import "partials/buttons";
+@import "partials/fonts";
+@import "partials/footer";
+@import "partials/header";
+@import "partials/modules";
+@import "partials/text-formats";
+
+@import "portlet_decorator";
+
+.img-spacing {
+	margin-bottom: 15px;
+}
+
+.form-control {
+	background-color: transparent;
+}
+
+body {
+	background-color: $main-bg-color;
+}
+
+#wrapper {
+	padding: 0;
+
+	#content .portlet-layout {
+		margin-left: 0;
+		margin-right: 0;
+		min-height: 400px;
+	}
+}
+
+.modify-pages .delete-tab {
+	color: #F00;
+	height: 20px;
+	left: -15px;
+	right: inherit;
+	top: 22px;
+}
+
+.add-page-editor {
+	.input-group {
+		top: 8px;
+	}
+
+	.btn {
+		padding: 3px 10px;
+	}
+}
+
+.lfr-portlet-title-editable .btn {
+	padding: 3px 10px;
+}

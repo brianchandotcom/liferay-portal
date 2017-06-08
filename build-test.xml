@@ -6606,6 +6606,15 @@ upgrade.processes=${upgrade.processes.master}</echo>
 		</if>
 
 		<if>
+			<equals arg1="${hot.deploy.dependency.management.enabled}" arg2="false" />
+			<then>
+				<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+hot.deploy.dependency.management.enabled=false</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="set.permission.algorithm.5" />
 			<then>
 				<replace file="portal-impl/src/portal-ext.properties" token="#permissions.user.check.algorithm=5" value="permissions.user.check.algorithm=5" />

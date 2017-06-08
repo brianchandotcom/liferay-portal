@@ -185,6 +185,9 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 		document.addKeyword(
 			"leftCategoryId", assetCategory.getLeftCategoryId());
 
+		document.addKeyword(
+			"leftCategoryId", assetCategory.getLeftCategoryId());
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + assetCategory + " indexed successfully");
 		}

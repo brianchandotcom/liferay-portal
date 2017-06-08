@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Product Navigation Simulation Theme Contributor
+Bundle-SymbolicName: com.liferay.product.navigation.simulation.theme.contributor
+Bundle-Version: 1.0.0
+Theme-Contributor-Type: simulation-panel
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/main/resources/META-INF/resources
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Product Navigation
+Web-ContextPath: /product-navigation-simulation-theme-contributor
+-include: ../../../../marketplace/web-content-management/bnd.bnd

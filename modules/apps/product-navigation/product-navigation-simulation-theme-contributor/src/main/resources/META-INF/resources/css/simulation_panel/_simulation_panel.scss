@@ -1,0 +1,186 @@
+.lfr-simulation-panel {
+	width: 350px;
+
+	.custom-devices {
+		.form-control {
+			padding: 8px 6px;
+		}
+
+		.form-group {
+			margin-bottom: 0;
+		}
+	}
+
+	.default-devices {
+		margin-bottom: 20px;
+	}
+
+	.lfr-device-item {
+		cursor: pointer;
+
+		&.selected .icon {
+			background-color: #3A4D5A;
+		}
+	}
+
+	.preview-info-message {
+		background-color: #1B2228;
+		margin: 20px;
+		padding: 5px 20px;
+	}
+}
+
+.lfr-device {
+	@include box-sizing(content-box);
+
+	.modal-header {
+		display: none;
+	}
+
+	&.autosize {
+		border-width: 0;
+	}
+
+	.lfr-device-size-status {
+		position: absolute;
+		width: 100%;
+
+		.lfr-device-size-status-content {
+			display: inline-block;
+			font-size: 11px;
+			height: 22px;
+			margin-left: 10px;
+			margin-right: 10px;
+			padding: 4px;
+		}
+
+		&.b, &.bl, &.br {
+			bottom: 10px;
+		}
+
+		&.t, &.tl, &.tr {
+			top: 10px;
+		}
+
+		&.b, &.t {
+			text-align: center;
+		}
+
+		&.r, &.br, &.tr {
+			text-align: right;
+		}
+
+		&.l, &.bl, &.tl {
+			text-align: left;
+		}
+
+		&.r, &.l {
+			margin-top: -15px;
+			top: 50%;
+		}
+	}
+
+	&:after {
+		bottom: 10px;
+		content: '';
+		display: none;
+		height: 30px;
+		left: 0;
+		margin: 0 auto;
+		position: absolute;
+		right: 0;
+		width: 30px;
+	}
+
+	&:before {
+		content: '';
+		display: none;
+		left: 0;
+		margin: 0 auto;
+		position: absolute;
+		right: 0;
+		top: 20px;
+	}
+
+	&.rotated {
+		&:after {
+			bottom: 0;
+			left: 10px;
+			margin: auto;
+			right: auto;
+			top: 0;
+		}
+
+		&:before {
+			bottom: 0;
+			left: auto;
+			margin: auto;
+			right: 20px;
+			top: 0;
+		}
+	}
+
+	&.smartphone, &.tablet {
+		&:after, &:before {
+			display: block;
+		}
+	}
+
+	&.smartphone {
+		padding: 50px 10px;
+
+		&.rotated {
+			padding: 10px 50px;
+
+			&:before {
+				height: 50px;
+				width: 5px;
+			}
+		}
+
+		&:before {
+			height: 5px;
+			width: 50px;
+		}
+	}
+
+	&.tablet {
+		padding: 50px 20px;
+
+		&.rotated {
+			padding: 20px 50px;
+
+			&:before {
+				height: 10px;
+				width: 10px;
+			}
+		}
+
+		&:before {
+			height: 10px;
+			width: 10px;
+		}
+	}
+}
+
+.lfr-simulation-device {
+	bottom: 0;
+	display: none;
+	left: 0;
+	position: fixed;
+	right: 350px;
+	top: 0;
+	z-index: 500;
+
+	.modal-content {
+		border-width: 0;
+	}
+}
+
+.lfr-has-simulation-panel {
+	overflow: hidden;
+
+	.lfr-simulation-device {
+		display: block;
+	}
+}

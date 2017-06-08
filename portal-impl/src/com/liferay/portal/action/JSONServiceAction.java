@@ -210,6 +210,13 @@ public class JSONServiceAction extends JSONAction {
 
 			return cal;
 		}
+		else if (typeNameOrClassDescriptor.equals(Calendar.class.getName())) {
+			Calendar cal = Calendar.getInstance(LocaleUtil.getDefault());
+
+			cal.setTimeInMillis(ParamUtil.getLong(request, parameter));
+
+			return cal;
+		}
 		else if (typeNameOrClassDescriptor.equals(Date.class.getName())) {
 			return new Date(ParamUtil.getLong(request, parameter));
 		}

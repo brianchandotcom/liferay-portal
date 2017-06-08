@@ -14,6 +14,7 @@
 
 package com.liferay.layout.internal.service.permission;
 
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -35,6 +36,10 @@ public class LayoutPermissionUpdateHandler implements PermissionUpdateHandler {
 
 	@Override
 	public void updatedPermission(String primKey) {
+		if (MergeLayoutPrototypesThreadLocal.isInProgress()) {
+			return;
+		}
+
 		Layout layout = _layoutLocalService.fetchLayout(
 			GetterUtil.getLong(primKey));
 

@@ -44,29 +44,6 @@
 		</execute>
 	</command>
 
-	<command name="AddDuplicateEntry" priority="5">
-		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="ProductSKU" />
-			<var name="productLongDescription" value="Product Long Description 1" />
-			<var name="productName" value="Product Name 1" />
-			<var name="productShortDescription" value="Product Short Description 1" />
-			<var name="productTitle" value="Product Title 1" />
-		</execute>
-
-		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="ProductSKU" />
-			<var name="productLongDescription" value="Product Long Description 1" />
-			<var name="productName" value="Product Name 1" />
-			<var name="productShortDescription" value="Product Short Description 1" />
-			<var name="productTitle" value="Product Title 1" />
-		</execute>
-
-		<execute macro="CommerceCatalogEntry#assertDuplicateDenial">
-			<var name="field1" value="name" />
-			<var name="field2" value="title" />
-		</execute>
-	</command>
-
 	<command name="AssertCatalogEntriesSearchResultsNotInTrashBin" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="ProductSKU" />

@@ -1,6 +1,9 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 task buildAlloyEditor(type: Copy)
 
 File editorDestinationDir = file("tmp/META-INF/resources")

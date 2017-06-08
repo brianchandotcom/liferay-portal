@@ -259,6 +259,8 @@ public class ServiceTestUtil {
 			_replaceWithSynchronousDestination(
 				DestinationNames.DOCUMENT_LIBRARY_RAW_METADATA_PROCESSOR);
 			_replaceWithSynchronousDestination(
+				DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
+			_replaceWithSynchronousDestination(
 				DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR);
 		}
 

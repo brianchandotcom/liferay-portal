@@ -1115,6 +1115,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			null, 0, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 			StringPool.SLASH + screenName, false, true, null);
 
+		// Resources
+
+		resourceLocalService.addResources(
+			companyId, 0, creatorUserId, User.class.getName(), user.getUserId(),
+			false, false, false);
+
 		// Groups
 
 		if (!ArrayUtil.isEmpty(groupIds)) {

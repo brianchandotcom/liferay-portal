@@ -111,6 +111,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 							rowURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 							rowURL.setParameter("redirect", currentURL);
+							rowURL.setParameter("backURL", backURL);
 							rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
 							rowURL.setParameter("toolbarItem", "view-product-definition-details");
 							%>

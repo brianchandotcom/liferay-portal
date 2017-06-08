@@ -153,6 +153,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 							rowURL.setParameter("mvcRenderCommandName", "editCPAttachmentFileEntry");
 							rowURL.setParameter("redirect", currentURL);
+							rowURL.setParameter("backURL", backURL);
 							rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
 							rowURL.setParameter("cpAttachmentFileEntryId", String.valueOf(cpAttachmentFileEntry.getCPAttachmentFileEntryId()));
 

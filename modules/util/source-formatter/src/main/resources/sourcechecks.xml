@@ -265,5 +265,6 @@
 		<check name="WhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />
 		</check>
+		<check name="YMLDefintionOrderCheck" />
 	</source-processor>
 </source-formatter>

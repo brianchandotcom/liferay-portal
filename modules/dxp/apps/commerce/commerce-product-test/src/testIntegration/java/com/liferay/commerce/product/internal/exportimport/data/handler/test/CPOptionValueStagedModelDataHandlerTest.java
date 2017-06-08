@@ -133,7 +133,8 @@ public class CPOptionValueStagedModelDataHandlerTest
 		Assert.assertEquals(
 			cpOptionValue.getTitleMap(), importedCPOptionValue.getTitleMap());
 		Assert.assertEquals(
-			cpOptionValue.getPriority(), importedCPOptionValue.getPriority());
+			cpOptionValue.getPriority(), importedCPOptionValue.getPriority(),
+			0.01);
 	}
 
 }

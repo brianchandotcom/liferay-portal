@@ -269,7 +269,7 @@ public class CPAttachmentFileEntryStagedModelDataHandlerTest
 			importedCPAttachmentFileEntry.getExpirationDate());
 		Assert.assertEquals(
 			cpAttachmentFileEntry.getPriority(),
-			importedCPAttachmentFileEntry.getPriority());
+			importedCPAttachmentFileEntry.getPriority(), 0.01);
 		Assert.assertEquals(
 			cpAttachmentFileEntry.getType(),
 			importedCPAttachmentFileEntry.getType());

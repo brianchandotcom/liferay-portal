@@ -193,7 +193,7 @@ public class CPDefinitionOptionValueRelStagedModelDataHandlerTest
 			importedCPDefinitionOptionValueRel.getTitleMap());
 		Assert.assertEquals(
 			cpDefinitionOptionValueRel.getPriority(),
-			importedCPDefinitionOptionValueRel.getPriority());
+			importedCPDefinitionOptionValueRel.getPriority(), 0.01);
 	}
 
 }

@@ -95,7 +95,7 @@ public class CPOptionCategoryStagedModelDataHandlerTest
 			importedCPOptionCategory.getDescriptionMap());
 		Assert.assertEquals(
 			cpOptionCategory.getPriority(),
-			importedCPOptionCategory.getPriority());
+			importedCPOptionCategory.getPriority(), 0.01);
 	}
 
 }

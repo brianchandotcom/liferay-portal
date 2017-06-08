@@ -176,7 +176,7 @@ public class CPDefinitionOptionRelStagedModelDataHandlerTest
 			importedCPDefinitionOptionRel.getDDMFormFieldTypeName());
 		Assert.assertEquals(
 			cpDefinitionOptionRel.getPriority(),
-			importedCPDefinitionOptionRel.getPriority());
+			importedCPDefinitionOptionRel.getPriority(), 0.01);
 		Assert.assertEquals(
 			cpDefinitionOptionRel.isFacetable(),
 			importedCPDefinitionOptionRel.isFacetable());

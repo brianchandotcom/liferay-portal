@@ -74,10 +74,10 @@ public class ExecuteElement extends PoshiElement {
 				continue;
 			}
 
-			Element element = PoshiElementFactory.newPoshiElement(
+			PoshiElement poshiElement = PoshiElementFactory.newPoshiElement(
 				readableBlock);
 
-			add(element);
+			add(poshiElement);
 		}
 	}
 

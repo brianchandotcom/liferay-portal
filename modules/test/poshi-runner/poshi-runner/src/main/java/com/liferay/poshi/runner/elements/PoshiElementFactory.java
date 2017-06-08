@@ -39,7 +39,7 @@ import org.dom4j.Element;
  */
 public class PoshiElementFactory {
 
-	public static Element newPoshiElement(Element element) {
+	public static PoshiElement newPoshiElement(Element element) {
 		String elementName = element.getName();
 
 		if (elementName.equals("command")) {
@@ -122,7 +122,7 @@ public class PoshiElementFactory {
 		return new UnsupportedElement(readableSyntax);
 	}
 
-	public static Element newPoshiElementFromFile(String filePath) {
+	public static PoshiElement newPoshiElementFromFile(String filePath) {
 		File file = new File(filePath);
 
 		try {

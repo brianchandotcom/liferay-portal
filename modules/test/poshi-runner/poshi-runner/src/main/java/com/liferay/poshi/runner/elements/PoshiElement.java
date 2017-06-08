@@ -78,10 +78,10 @@ public abstract class PoshiElement extends DefaultElement {
 				continue;
 			}
 
-			Element element = PoshiElementFactory.newPoshiElement(
+			PoshiElement poshiElement = PoshiElementFactory.newPoshiElement(
 				readableVariableBlock);
 
-			add(element);
+			add(poshiElement);
 		}
 	}
 

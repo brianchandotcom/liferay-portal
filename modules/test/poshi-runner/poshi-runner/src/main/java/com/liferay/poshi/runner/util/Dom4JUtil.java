@@ -19,7 +19,9 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.Writer;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -154,6 +156,20 @@ public class Dom4JUtil {
 				continue;
 			}
 		}
+	}
+
+	public static List<Element> toElementList(List<?> list) {
+		if (list == null) {
+			return null;
+		}
+
+		List<Element> elementList = new ArrayList<>(list.size());
+
+		for (Object object : list) {
+			elementList.add((Element)object);
+		}
+
+		return elementList;
 	}
 
 }

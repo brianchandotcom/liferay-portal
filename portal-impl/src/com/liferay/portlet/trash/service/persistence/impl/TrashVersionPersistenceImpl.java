@@ -62,8 +62,11 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @see TrashVersionPersistence
  * @see com.liferay.trash.kernel.service.persistence.TrashVersionUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.trash.model.impl.TrashVersionImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersion>
 	implements TrashVersionPersistence {

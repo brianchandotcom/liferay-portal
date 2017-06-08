@@ -51,8 +51,11 @@ import java.util.Map;
  * @see TrashVersionImpl
  * @see TrashVersion
  * @see TrashVersionModel
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.trash.model.impl.TrashVersionImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 	implements TrashVersionModel {

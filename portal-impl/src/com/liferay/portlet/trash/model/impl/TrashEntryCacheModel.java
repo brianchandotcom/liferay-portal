@@ -35,8 +35,11 @@ import java.util.Date;
  *
  * @author Brian Wing Shun Chan
  * @see TrashEntry
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.trash.model.impl.TrashEntryImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 	Externalizable {

@@ -2346,6 +2346,18 @@ ${tomcat-gc-log}
 					<echo>Unable to read /tmp/tsant-gc.log</echo>
 				</else>
 			</if>
+
+			<if>
+				<and>
+					<equals arg1="@{app.server.bundle.index}" arg2="0" />
+					<not>
+						<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
+					</not>
+				</and>
+				<then>
+					<record action="stop" name="log" />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 

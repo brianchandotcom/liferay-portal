@@ -664,6 +664,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	private static final int _SUBREPOSITORY_MAX_DIR_LEVEL = 3;
 
+	private static final int _SUBREPOSITORY_MAX_DIR_LEVEL = 3;
+
 	private List<String> _allFileNames;
 	private boolean _browserStarted;
 	private String[] _excludes;

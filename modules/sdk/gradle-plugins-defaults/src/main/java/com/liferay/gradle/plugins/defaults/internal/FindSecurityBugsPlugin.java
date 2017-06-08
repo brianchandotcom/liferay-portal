@@ -314,7 +314,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 		if (derivedSummariesTxtFile.exists()) {
 			customConfigFile =
-				customConfigFile + ":" +
+				customConfigFile + File.pathSeparator +
 					FileUtil.getAbsolutePath(derivedSummariesTxtFile);
 		}
 
@@ -323,7 +323,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 		if (falsePositivesTxtFile.exists()) {
 			customConfigFile =
-				customConfigFile + ":" +
+				customConfigFile + File.pathSeparator +
 					FileUtil.getAbsolutePath(falsePositivesTxtFile);
 		}
 

@@ -158,6 +158,20 @@ public class Dom4JUtil {
 		}
 	}
 
+	public static List<Attribute> toAttributeList(List<?> list) {
+		if (list == null) {
+			return null;
+		}
+
+		List<Attribute> attributeList = new ArrayList<>(list.size());
+
+		for (Object object : list) {
+			attributeList.add((Attribute)object);
+		}
+
+		return attributeList;
+	}
+
 	public static List<Element> toElementList(List<?> list) {
 		if (list == null) {
 			return null;

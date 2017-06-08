@@ -1607,13 +1607,13 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC WebContent1 Content" />
-			<var name="assetTitle" value="WC WebContent Title 1" />
+			<var name="assetContent" value="WC Content 1" />
+			<var name="assetTitle" value="WC Title 1" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC WebContent2 Content" />
-			<var name="assetTitle" value="WC WebContent Title 2" />
+			<var name="assetContent" value="WC Content 2" />
+			<var name="assetTitle" value="WC Title 2" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewPaginatedAssetsPG">
@@ -1630,28 +1630,28 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC WebContent3 Content" />
-			<var name="assetTitle" value="WC WebContent Title 3" />
+			<var name="assetContent" value="WC Content 3" />
+			<var name="assetTitle" value="WC Title 3" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC WebContent4 Content" />
-			<var name="assetTitle" value="WC WebContent Title 4" />
+			<var name="assetContent" value="WC Content 4" />
+			<var name="assetTitle" value="WC Title 4" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC WebContent5 Content" />
-			<var name="assetTitle" value="WC WebContent Title 5" />
+			<var name="assetContent" value="WC Content 5" />
+			<var name="assetTitle" value="WC Title 5" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC WebContent6 Content" />
-			<var name="assetTitle" value="WC WebContent Title 6" />
+			<var name="assetContent" value="WC Content 6" />
+			<var name="assetTitle" value="WC Title 6" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
-			<var name="assetContent" value="WC WebContent7 Content" />
-			<var name="assetTitle" value="WC WebContent Title 7" />
+			<var name="assetContent" value="WC Content 7" />
+			<var name="assetTitle" value="WC Title 7" />
 		</execute>
 	</command>
 

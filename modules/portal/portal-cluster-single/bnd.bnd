@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Cluster Single
+Bundle-SymbolicName: com.liferay.portal.cluster.single
+Bundle-Version: 1.0.0
+Include-Resource: classes

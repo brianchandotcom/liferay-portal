@@ -1747,6 +1747,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 			groupIds = checkGroups(userId, groupIds);
 
+			removeGroupIds = ListUtil.toList(oldGroupIds);
+
 			for (long groupId : groupIds) {
 				if (ArrayUtil.contains(oldGroupIds, groupId)) {
 					removeGroupIds.remove(groupId);
@@ -1774,6 +1776,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			removeOrganizationIds = ListUtil.toList(oldOrganizationIds);
 
 			organizationIds = checkOrganizations(userId, organizationIds);
+
+			removeOrganizationIds = ListUtil.toList(oldOrganizationIds);
 
 			for (long organizationId : organizationIds) {
 				if (ArrayUtil.contains(oldOrganizationIds, organizationId)) {
@@ -1805,6 +1809,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			removeRoleIds = ListUtil.toList(oldRoleIds);
 
 			roleIds = checkRoles(userId, roleIds);
+
+			removeRoleIds = ListUtil.toList(oldRoleIds);
 
 			for (long roleId : roleIds) {
 				if (ArrayUtil.contains(oldRoleIds, roleId)) {
@@ -1900,6 +1906,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			removeUserGroupIds = ListUtil.toList(oldUserGroupIds);
 
 			userGroupIds = checkUserGroupIds(userId, userGroupIds);
+
+			removeUserGroupIds = ListUtil.toList(oldUserGroupIds);
 
 			for (long userGroupId : userGroupIds) {
 				if (ArrayUtil.contains(oldUserGroupIds, userGroupId)) {

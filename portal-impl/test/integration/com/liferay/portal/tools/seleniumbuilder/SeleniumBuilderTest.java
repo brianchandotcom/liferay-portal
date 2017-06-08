@@ -1426,6 +1426,31 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testMacroSpecialCharacter1001() throws Exception {
+		test(
+			"MacroSpecialCharacter1001.macro",
+			"Error 1001: Missing (and|condition|contains|equals|isset|not|or)" +
+				" child element in " + _DIR_NAME +
+				"/MacroSpecialCharacter1001.macro:3");
+	}
+
+	@Test
+	public void testMacroSpecialCharacter1004() throws Exception {
+		test(
+			"MacroSpecialCharacter1004.macro",
+			"Error 1004: Missing (name) attribute in " + _DIR_NAME +
+				"/MacroSpecialCharacter1004.macro:6");
+	}
+
+	@Test
+	public void testMacroSpecialCharacter1007() throws Exception {
+		test(
+			"MacroSpecialCharacter1007.macro",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/MacroSpecialCharacter1007.macro");
+	}
+
+	@Test
 	public void testMacroThenElement1001() throws Exception {
 		test(
 			"MacroThenElement1001.macro",

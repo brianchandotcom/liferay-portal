@@ -106,7 +106,7 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 				name="status"
 				status="<%= cpDefinition.getStatus() %>"
 			/>
-			
+
 			<liferay-ui:search-container-column-date
 				cssClass="table-cell-content"
 				name="modified-date"

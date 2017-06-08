@@ -370,11 +370,16 @@ public class ExpandoColumnLocalServiceImpl
 		ExpandoValue value = validate(
 			columnId, column.getTableId(), name, type, defaultData);
 
-		column.setName(name);
-		column.setType(type);
-		column.setDefaultData(value.getData());
+		if (!Validator.equals(column.getName(), name) ||
+			(column.getType() != type) ||
+			!Validator.equals(column.getDefaultData(), value.getData())) {
 
-		expandoColumnPersistence.update(column);
+			column.setName(name);
+			column.setType(type);
+			column.setDefaultData(value.getData());
+
+			expandoColumnPersistence.update(column);
+		}
 
 		return column;
 	}
@@ -386,9 +391,11 @@ public class ExpandoColumnLocalServiceImpl
 		ExpandoColumn column = expandoColumnPersistence.findByPrimaryKey(
 			columnId);
 
-		column.setTypeSettings(typeSettings);
+		if (!Validator.equals(column.getTypeSettings(), typeSettings)) {
+			column.setTypeSettings(typeSettings);
 
-		expandoColumnPersistence.update(column);
+			expandoColumnPersistence.update(column);
+		}
 
 		return column;
 	}

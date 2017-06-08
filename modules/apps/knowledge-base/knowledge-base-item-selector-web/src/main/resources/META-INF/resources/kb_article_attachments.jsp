@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-KBAttachmentItemSelectorViewDisplayContext kbAttachmentItemSelectorViewDisplayContext = (KBAttachmentItemSelectorViewDisplayContext)request.getAttribute(KBAttachmentItemSelectorView.KB_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
+KBAttachmentItemSelectorViewDisplayContext kbAttachmentItemSelectorViewDisplayContext = (KBAttachmentItemSelectorViewDisplayContext)request.getAttribute(KBItemSelectorWebKeys.KB_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR);
 int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM, SearchContainer.DEFAULT_DELTA);

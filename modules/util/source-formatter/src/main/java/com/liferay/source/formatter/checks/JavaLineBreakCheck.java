@@ -234,7 +234,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 			addMessage(fileName, "Incorrect line break", lineCount);
 		}
 
-		if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+		if (line.matches(".*(\\(|->( \\{)?)")) {
 			int x = line.lastIndexOf(" && ");
 			int y = line.lastIndexOf(" || ");
 
@@ -275,9 +275,12 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 					continue;
 				}
 
-				String linePart = trimmedLine.substring(x);
+				String linePart = trimmedLine.substring(
+					x, trimmedLine.length() - 1);
 
-				if ((getLevel(linePart) == 1) &&
+				linePart = StringUtil.removeSubstring(linePart, "->");
+
+				if ((getLevel(linePart) == 0) &&
 					(getLevel(linePart, "<", ">") == 0)) {
 
 					addMessage(

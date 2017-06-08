@@ -15,26 +15,26 @@ package com.liferay.commerce.product.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Marco Leo
  */
 @ProviderType
-public class NoSuchCPTypeException extends NoSuchModelException {
+public class CPDefinitionProductTypeNameException extends PortalException {
 
-	public NoSuchCPTypeException() {
+	public CPDefinitionProductTypeNameException() {
 	}
 
-	public NoSuchCPTypeException(String msg) {
+	public CPDefinitionProductTypeNameException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchCPTypeException(String msg, Throwable cause) {
+	public CPDefinitionProductTypeNameException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchCPTypeException(Throwable cause) {
+	public CPDefinitionProductTypeNameException(Throwable cause) {
 		super(cause);
 	}
 

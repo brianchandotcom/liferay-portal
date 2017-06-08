@@ -727,6 +727,16 @@ public class PersistenceNestedSetsTreeManagerTest {
 			else if (methodName.equals("openSession") && _failOpenSession) {
 				throw new Exception("Unable to open session");
 			}
+			else if (methodName.equals("closeSession")) {
+				Session session = (Session)args[0];
+
+				if (session == null) {
+					return null;
+				}
+
+				session.flush();
+				session.clear();
+			}
 
 			return method.invoke(_target, args);
 		}

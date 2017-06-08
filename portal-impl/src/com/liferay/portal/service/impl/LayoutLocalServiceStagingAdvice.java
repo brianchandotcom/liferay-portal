@@ -223,6 +223,9 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			catch (NoSuchMethodException nsme) {
 				returnValue = methodInvocation.proceed();
 			}
+			catch (InvocationTargetException ite) {
+				throw ite.getTargetException();
+			}
 		}
 
 		returnValue = wrapReturnValue(returnValue, false);

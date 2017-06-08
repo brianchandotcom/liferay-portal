@@ -1,0 +1,10 @@
+Bundle-ClassPath:\
+	.,\
+	lib/geoip-api.jar
+Bundle-Name: IP Geocoder
+Export-Package:\
+	com.liferay.ip.geocoder.model,\
+	com.liferay.ip.geocoder.service
+Include-Resource:\
+	classes,\
+	{lib/geoip-api.jar=lib/geoip-api.jar}

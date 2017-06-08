@@ -41,6 +41,18 @@ public class WeDeployAuthAppServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthAppServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp addWeDeployAuthApp(
+		java.lang.String name, java.lang.String redirectURI,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addWeDeployAuthApp(name, redirectURI, serviceContext);
+	}
+
+	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp deleteWeDeployAuthApp(
+		long weDeployAuthAppId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteWeDeployAuthApp(weDeployAuthAppId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.

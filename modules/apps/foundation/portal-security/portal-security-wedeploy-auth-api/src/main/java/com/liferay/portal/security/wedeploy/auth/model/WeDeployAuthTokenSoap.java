@@ -23,10 +23,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.portal.security.wedeploy.auth.service.http.WeDeployAuthTokenServiceSoap}.
+ * This class is used by SOAP remote services.
  *
  * @author Supritha Sundaram
- * @see com.liferay.portal.security.wedeploy.auth.service.http.WeDeployAuthTokenServiceSoap
  * @generated
  */
 @ProviderType

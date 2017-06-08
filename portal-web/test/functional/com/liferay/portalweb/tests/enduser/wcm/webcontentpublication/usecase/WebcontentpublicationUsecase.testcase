@@ -686,7 +686,6 @@
 		<execute macro="AssetPublisherPortlet#configurePaginationPG">
 			<var name="paginationNumber" value="3" />
 			<var name="paginationType" value="Regular" />
-			<var name="portletName" value="Asset Publisher Portlet" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1587,7 +1586,6 @@
 		<execute macro="AssetPublisherPortlet#configurePaginationPG">
 			<var name="paginationNumber" value="5" />
 			<var name="paginationType" value="Regular" />
-			<var name="portletName" value="Asset Publisher Portlet" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

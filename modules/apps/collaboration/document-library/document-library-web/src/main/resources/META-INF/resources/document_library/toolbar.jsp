@@ -25,6 +25,8 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
+int count = GetterUtil.getInteger((String)request.getAttribute("view.jsp-count"));
+
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
@@ -35,7 +37,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 %>
 
 <liferay-frontend:management-bar
-	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
+	disabled="<%= count <= 0 %>"
 	includeCheckBox="<%= dlPortletInstanceSettingsHelper.isShowActions() %>"
 	searchContainerId="<%= searchContainerId %>"
 >

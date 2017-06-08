@@ -26,6 +26,8 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
+int count = GetterUtil.getInteger((String)request.getAttribute("view.jsp-count"));
+
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
 String dlFileEntryTypeName = LanguageUtil.get(request, "basic-document");
@@ -164,7 +166,12 @@ else {
 			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 		}
 		else {
-			total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, true);
+			if (status == WorkflowConstants.STATUS_ANY) {
+				total = count;
+			}
+			else {
+				total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, true);
+			}
 
 			dlSearchContainer.setTotal(total);
 

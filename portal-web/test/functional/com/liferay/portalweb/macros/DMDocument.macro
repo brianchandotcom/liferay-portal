@@ -493,6 +493,8 @@
 
 					<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
 
+					<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
+
 					<if>
 						<equals arg1="${uploadTempFile}" arg2="true" />
 						<then>

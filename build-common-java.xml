@@ -189,6 +189,10 @@
 					</then>
 				</if>
 
+				<setup-libs />
+
+				<taskdef classname="com.liferay.ant.bnd.BaselineJarTask" classpathref="lib.classpath" name="baseline-jar" />
+
 				<if>
 					<isset property="jar.compat.file" />
 					<then>
@@ -335,6 +339,10 @@
 			<available file="bnd.bnd" />
 			<then>
 				<bndexpand propertyfile="${project.dir}/common.bnd" />
+
+				<setup-libs />
+
+				<taskdef classname="com.liferay.ant.bnd.ReleaseToRepoTask" classpathref="lib.classpath" name="release-to-repo" />
 
 				<release-to-repo
 					bndRootFile="${project.dir}/common.bnd"

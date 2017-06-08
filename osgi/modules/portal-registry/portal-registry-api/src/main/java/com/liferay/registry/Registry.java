@@ -1,0 +1,93 @@
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.registry;
+
+import java.util.Collection;
+import java.util.Map;
+
+/**
+ * @author Raymond Augé
+ */
+public interface Registry {
+
+	public Filter getFilter(String filterString) throws RuntimeException;
+
+	public Registry getRegistry() throws SecurityException;
+
+	public <T> T getService(Class<T> clazz);
+
+	public <T> T getService(ServiceReference<T> serviceReference);
+
+	public <T> T getService(String className);
+
+	public <T> ServiceReference<T> getServiceReference(Class<T> clazz);
+
+	public <T> ServiceReference<T> getServiceReference(String className);
+
+	public <T> Collection<ServiceReference<T>> getServiceReferences(
+			Class<T> clazz, String filter)
+		throws Exception;
+
+	public <T> ServiceReference<T>[] getServiceReferences(
+			String className, String filter)
+		throws Exception;
+
+	public <T> Collection<T> getServices(Class<T> clazz, String filter)
+		throws Exception;
+
+	public <T> T[] getServices(String className, String filter)
+		throws Exception;
+
+	public <T> ServiceRegistration<T> registerService(
+		Class<T> clazz, T service);
+
+	public <T> ServiceRegistration<T> registerService(
+		Class<T> clazz, T service, Map<String, Object> properties);
+
+	public <T> ServiceRegistration<T> registerService(
+		String className, T service);
+
+	public <T> ServiceRegistration<T> registerService(
+		String className, T service, Map<String, Object> properties);
+
+	public <T> ServiceRegistration<T> registerService(
+		String[] classNames, T service);
+
+	public <T> ServiceRegistration<T> registerService(
+		String[] classNames, T service, Map<String, Object> properties);
+
+	public Registry setRegistry(Registry registry) throws SecurityException;
+
+	public <S, T> ServiceTracker<S, T> trackServices(Class<S> clazz);
+
+	public <S, T> ServiceTracker<S, T> trackServices(
+		Class<S> clazz,
+		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer);
+
+	public <S, T> ServiceTracker<S, T> trackServices(Filter filter);
+
+	public <S, T> ServiceTracker<S, T> trackServices(
+		Filter filter,
+		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer);
+
+	public <S, T> ServiceTracker<S, T> trackServices(String className);
+
+	public <S, T> ServiceTracker<S, T> trackServices(
+		String className,
+		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer);
+
+	public <T> boolean ungetService(ServiceReference<T> serviceReference);
+
+}

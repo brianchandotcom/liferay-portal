@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>CPUsersandorganizationsAddorganization</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPUsersandorganizationsAddorganization</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPUsersandorganizaitonsAddorganization</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS</td>
+	<td>//a[@id='_125_detailsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_SITE</td>
+	<td>//a[@id='_125_organizationSiteLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE</td>
+	<td>//input[@value='Save']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS-->
+<tr>
+	<td>DETAILS_NAME</td>
+	<td>//input[@id='_125_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_TYPE</td>
+	<td>//select[@id='_125_type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORGANIZATION_SITE-->
+<tr>
+	<td>ORGANIZATION_SITE_CREATE_SITE</td>
+	<td>//input[@id='_125_siteCheckbox']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

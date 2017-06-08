@@ -632,6 +632,58 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		}
 	}
 
+	private void _refreshRemovalPendingBundles(
+			BundleContext bundleContext, Bundle bundle)
+		throws Exception {
+
+		Bundle systemBundle = bundleContext.getBundle(0);
+
+		FrameworkWiring frameworkWiring = systemBundle.adapt(
+			FrameworkWiring.class);
+
+		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Starting removal pending bundles freshing for the upgrade " +
+					"of " + bundle);
+		}
+
+		frameworkWiring.refreshBundles(
+			null,
+			new FrameworkListener() {
+
+				@Override
+				public void frameworkEvent(FrameworkEvent frameworkEvent) {
+					if (frameworkEvent.getType() == FrameworkEvent.ERROR) {
+						defaultNoticeableFuture.setException(
+							frameworkEvent.getThrowable());
+					}
+					else {
+						defaultNoticeableFuture.set(frameworkEvent);
+					}
+				}
+
+			});
+
+		FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
+
+		if (frameworkEvent.getType() == FrameworkEvent.PACKAGES_REFRESHED) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Removal pending bundles refreshed for the upgrade of " +
+						bundle);
+			}
+		}
+		else {
+			throw new Exception(
+				"Unexpected FrameworkEvent from removal pending bundles " +
+					"refreshing " + frameworkEvent + " for the upgrade of " +
+						bundle);
+		}
+	}
+
 	private void _writeManifest(
 			ZipFile zipFile, JarOutputStream jarOutputStream)
 		throws IOException {

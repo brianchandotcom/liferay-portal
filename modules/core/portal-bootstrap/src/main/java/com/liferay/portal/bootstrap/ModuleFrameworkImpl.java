@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.module.framework.ModuleFramework;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
@@ -681,7 +682,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			Constants.FRAMEWORK_BUNDLE_PARENT_APP);
 		properties.put(
 			Constants.FRAMEWORK_STORAGE,
-			PropsValues.MODULE_FRAMEWORK_STATE_DIR);
+			_encodeURL(PropsValues.MODULE_FRAMEWORK_STATE_DIR));
 
 		properties.put("eclipse.security", null);
 		properties.put("java.security.manager", null);
@@ -750,6 +751,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		if (!permissionChecker.isOmniadmin()) {
 			throw new PrincipalException.MustBeOmniadmin(permissionChecker);
 		}
+	}
+
+	private String _encodeURL(String url) {
+		String path = StringUtil.replace(
+			url, CharPool.BACK_SLASH, CharPool.SLASH);
+
+		if (!path.startsWith(StringPool.SLASH)) {
+			path = StringPool.SLASH + path;
+		}
+
+		return URLCodec.encodeURL(path, StringPool.UTF8, true);
 	}
 
 	private String _getFelixFileInstallDir() {

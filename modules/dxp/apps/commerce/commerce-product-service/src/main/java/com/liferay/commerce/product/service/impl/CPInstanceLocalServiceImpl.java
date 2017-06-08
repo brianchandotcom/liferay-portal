@@ -331,11 +331,12 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Override
 	public BaseModelSearchResult<CPInstance> searchCPOptions(
 			long companyId, long groupId, long cpDefinitionId, String keywords,
-			int start, int end, Sort sort)
+			int status, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
-			companyId, groupId, cpDefinitionId, keywords, start, end, sort);
+			companyId, groupId, cpDefinitionId, keywords, status, start, end,
+			sort);
 
 		return searchCPInstances(searchContext);
 	}
@@ -490,7 +491,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	protected SearchContext buildSearchContext(
 		long companyId, long groupId, long cpDefinitionId, String keywords,
-		int start, int end, Sort sort) {
+		int status, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -501,6 +502,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put(Field.CONTENT, keywords);
+		attributes.put(Field.STATUS, status);
 		attributes.put("cpDefinitionId", cpDefinitionId);
 		attributes.put("params", params);
 

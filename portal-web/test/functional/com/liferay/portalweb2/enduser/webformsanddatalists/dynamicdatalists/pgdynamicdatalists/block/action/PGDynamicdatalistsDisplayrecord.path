@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>PGDynamicdatalistsDisplayrecord</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGDynamicdatalistsDisplayrecord</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGDynamicdatalistsDisplayrecord</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_1</td>
+	<td>//div[contains(@class,'lfr-forms-field-wrapper field-wrapper-content')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_2</td>
+	<td>//div[contains(@class,'lfr-forms-field-wrapper field-wrapper-content')][2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_3</td>
+	<td>//div[contains(@class,'lfr-forms-field-wrapper field-wrapper-content')][3]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

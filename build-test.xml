@@ -116,6 +116,12 @@ module.framework.properties.osgi.console=11312</echo>
 
 	<macrodef name="check-config">
 		<sequential>
+			<loadresource property="patching.tool.version">
+				<url url="${test.fix.pack.base.url}patching-tool/LATEST.txt" />
+			</loadresource>
+
+			<property name="test.build.patching.tool.zip.url" value="${test.fix.pack.base.url}patching-tool/patching-tool-${patching.tool.version}.zip" />
+
 			<if>
 				<not>
 					<or>

@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>PGCalendarEditevent</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGCalendarEditevent</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td>//iframe</td>
+	<td>PGCalendarEditevent</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>TITLE_FIELD</td>
+	<td>//input[@id='_1_WAR_calendarportlet_title_en_US']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>START_DATE_MONTH_SELECT</td>
+	<td>//select[@id='_1_WAR_calendarportlet_starttimemonth']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>START_DATE_DAY_SELECT</td>
+	<td>//select[@id='_1_WAR_calendarportlet_starttimeday']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>START_DATE_YEAR_SELECT</td>
+	<td>//select[@id='_1_WAR_calendarportlet_starttimeyear']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALL_DAY_CHECKBOX</td>
+	<td>//input[@id='_1_WAR_calendarportlet_allDayCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_CHECKBOX</td>
+	<td>//input[@id='_1_WAR_calendarportlet_repeatCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//input[@value='Save']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_BUTTON</td>
+	<td>//input[@value='Close']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS-->
+<!--REMINDERS-->
+<!--CATEGORIZATION-->
+<!--RELATED_ASSETS-->
+<!--INVITATIONS-->
+</tbody>
+</table>
+</body>
+</html>

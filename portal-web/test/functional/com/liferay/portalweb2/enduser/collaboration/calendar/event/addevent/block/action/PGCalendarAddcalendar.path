@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>PGCalendarAddcalendar</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGCalendarAddcalendar</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGCalendarAddcalendar</td>
+</tr>
+<!---->
+<tr>
+	<td>NAME_FIELD</td>
+	<td>//input[@id='_1_WAR_calendarportlet_name_en_US']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_1_WAR_calendarportlet_description_en_US']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//input[@value='Save']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

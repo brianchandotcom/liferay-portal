@@ -53,7 +53,7 @@ catch (Exception e) {
 				</c:otherwise>
 			</c:choose>
 
-			<span class="error-message"><%= HtmlUtil.escape(jsonObject.getString("message")) %></span>
+			<span class="error-message"><%= HtmlUtil.escape(LanguageUtil.get(request, jsonObject.getString("message"))) %></span>
 
 			<%
 			JSONArray messageListItemsJSONArray = jsonObject.getJSONArray("messageListItems");

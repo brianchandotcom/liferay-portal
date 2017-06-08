@@ -580,6 +580,7 @@ public class PluginsEnvironmentBuilder {
 			}
 		}
 		else {
+			globalJars.add("portal-settings-shared.jar");
 			globalJars.add("portlet.jar");
 
 			portalJars.addAll(dependencyJars);

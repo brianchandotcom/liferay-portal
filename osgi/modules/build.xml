@@ -1,0 +1,34 @@
+<project name="modules" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
+	<property name="project.dir" value="../.." />
+
+	<import file="../../build-common-java.xml" />
+
+	<target name="clean">
+		<gradle-task-executor gradleTask="clean" />
+	</target>
+
+	<target name="compile">
+		<gradle-task-executor gradleTask="compileJava" />
+	</target>
+
+	<target name="deploy">
+		<gradle-task-executor
+			gradleTask="deploy"
+			gradleTaskArgs="-PglobalLibDir=${app.server.lib.global.dir} -PportalLibDir=${app.server.lib.portal.dir}" />
+	</target>
+
+	<target name="jar">
+		<gradle-task-executor gradleTask="jar" />
+	</target>
+
+	<macrodef name="gradle-task-executor">
+		<attribute name="gradleTask" />
+		<attribute name="gradleTaskArgs" default="" />
+
+		<sequential>
+			<exec append="true" dir="." executable="../../tools/gradle/gradlew" >
+				<arg line="@{gradleTask} @{gradleTaskArgs}" />
+			</exec>
+		</sequential>
+	</macrodef>
+</project>

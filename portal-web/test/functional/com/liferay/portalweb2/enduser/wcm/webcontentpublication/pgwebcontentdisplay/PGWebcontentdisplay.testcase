@@ -78,7 +78,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${sitePageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

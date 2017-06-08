@@ -37,8 +37,8 @@
 		<var name="siteName" value="Site Name" />
 
 		<execute macro="Page#gotoConfigurationCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Site Settings" />
 		</execute>
 
@@ -47,8 +47,8 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
@@ -60,8 +60,8 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
@@ -72,8 +72,8 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -82,8 +82,8 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -96,8 +96,8 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -125,7 +125,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Staging#viewStagingLocalLivePG" />
@@ -141,8 +142,8 @@
 		<var name="pageName" value="Blogs Test Page" />
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
@@ -154,8 +155,8 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
@@ -166,8 +167,8 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -177,8 +178,8 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -191,8 +192,8 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -216,8 +217,8 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Site Memberships" />
 		</execute>
 
@@ -229,8 +230,8 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
@@ -242,8 +243,8 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
@@ -254,8 +255,8 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -276,8 +277,8 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
@@ -289,8 +290,8 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
@@ -301,8 +302,8 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -323,8 +324,8 @@
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
-			<var name="pageType" value="Site" />
-			<var name="pageTypeURL" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="portletName" value="Site Settings" />
 		</execute>
 
@@ -351,14 +352,16 @@
 		<execute macro="Page#addPG">
 			<var name="siteName" value="${siteName}" />
 			<var name="PageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 			<var name="pageStaging" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -369,7 +372,8 @@
 		<execute macro="User#logoutUserPG" />
 
 		<execute macro="Page#openURL">
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute action="Home#assertElementNotPresent" locator-key1="PAGE_2_GUEST_VIEW"/>
@@ -382,7 +386,8 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Staging#publishToLiveNowPG"/>
@@ -391,7 +396,8 @@
 
 		<execute macro="Page#openURL">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute action="Home#assertElementPresent" locator-key1="PAGE_2_GUEST_VIEW" />
@@ -404,7 +410,8 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="BlogsEntry#addWithWorkflowPG">
@@ -415,7 +422,8 @@
 		<execute macro="User#logoutUserPG" />
 
 		<execute macro="Page#openURL">
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute action="Home#assertClick" locator-key1="PAGE_2_GUEST_VIEW" value1="${pageName}" />
@@ -448,7 +456,8 @@
 		<execute macro="User#logoutUserPG" />
 
 		<execute macro="Page#openURL">
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute action="Home#assertClick" locator-key1="PAGE_2_GUEST_VIEW" value1="${pageName}" />
@@ -465,7 +474,8 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Staging#publishToLiveNowPG"/>
@@ -473,7 +483,8 @@
 		<execute macro="User#logoutUserPG" />
 
 		<execute macro="Page#openURL">
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute action="Home#click" locator-key1="PAGE_2_GUEST_VIEW" />

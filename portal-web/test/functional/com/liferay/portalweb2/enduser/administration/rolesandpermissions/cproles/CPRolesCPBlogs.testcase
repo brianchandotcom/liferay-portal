@@ -70,7 +70,6 @@
 		<execute macro="PermissionsInline#gotoBlogsEntryCP">
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
-			<var name="pageTypeSite" value="${pageTypeSite}" />
 			<var name="portletName" value="${portletName1}" />
 		</execute>
 
@@ -102,7 +101,6 @@
 		<execute macro="PermissionsInline#gotoBlogsEntryCP">
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
-			<var name="pageTypeSite" value="${pageTypeSite}" />
 			<var name="portletName" value="${portletName1}" />
 		</execute>
 
@@ -223,7 +221,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN" />
@@ -239,7 +238,8 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="BlogsPortlet#viewNoPermissionCP" />
@@ -266,7 +266,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN" />

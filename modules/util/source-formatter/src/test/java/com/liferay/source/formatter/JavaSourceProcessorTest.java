@@ -188,13 +188,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Line starts with '2' tabs, but '3' tabs are expected",
 				"Line starts with '2' tabs, but '3' tabs are expected",
 				"There should be a line break before 'throws'",
+				"There should be a line break after " +
+					"'themeDisplay.getCompanyId(),'",
 				"Line starts with '2' tabs, but '3' tabs are expected",
 				"There should be a line break before 'throws'",
 				"'new String[] {' should be added to previous line"
 			},
 			new Integer[] {
-				31, 35, 43, 47, 47, 52, 55, 58, 61, 65, 68, 73, 77, 82, 86, 93,
-				104, 117, 121, 122, 122, 128, 128, 138
+				33, 37, 45, 49, 49, 54, 57, 60, 63, 67, 70, 75, 79, 84, 88, 95,
+				106, 119, 123, 124, 124, 131, 141, 141, 151
 			});
 		test("IncorrectLineBreaks2.testjava");
 	}

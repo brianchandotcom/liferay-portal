@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Upgrade
+Bundle-SymbolicName: com.liferay.portal.upgrade
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	@lib/jgrapht-core.jar,\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/extender/*,\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*

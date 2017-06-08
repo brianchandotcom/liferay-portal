@@ -382,7 +382,9 @@
 	<command name="configurePaginationPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
-		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Display Settings" />
+		</execute>
 
 		<execute function="Type" locator1="APConfigurationDisplaysettings#NUMBER_OF_ITEMS_TO_DISPLAY_FIELD" value1="${paginationNumber}" />
 

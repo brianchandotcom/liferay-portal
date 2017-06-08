@@ -254,6 +254,8 @@ public class SetupWizardUtil {
 		DataSource dataSource = null;
 		Connection connection = null;
 
+		DataSource dataSource = null;
+
 		try {
 			dataSource = DataSourceFactoryUtil.initDataSource(
 				driverClassName, url, userName, password, jndiName);

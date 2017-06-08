@@ -1,0 +1,13 @@
+<definition component-name="portal-tools">
+	<property name="portal.url" value="" />
+	<property name="testray.main.component.name" value="Tools" />
+
+	<command name="Get" priority="5">
+		<var method="TestPropsUtil#get(&quot;browser.type&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="*chrome" />
+		</execute>
+	</command>
+</definition>

@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>PGWikidisplayAddpage</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWikidisplayAddpage</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWikidisplayAddpage</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGWikiAddpage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORMAT_DROPDOWN</td>
+	<td>//select[@class='aui-field-select']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD</td>
+	<td>//input[contains(@class, 'field lfr-input-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_BUTTON</td>
+	<td>//button[contains(.,'Publish')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
+	<td>//button[contains(@id, 'Submit for Publication')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

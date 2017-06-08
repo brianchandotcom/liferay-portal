@@ -1,0 +1,29 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="ADD_CHILD_PAGE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="ADD_FRONTPAGE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="NAVIGATION_ALL_PAGES">
+			<execute function="AssertClick#assertTextClickAtAndWait"/>
+		</case>
+
+		<case locator-key1="NAVIGATION_DRAFT_PAGES">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="PORTLET_CONFIGURATION_MESSAGE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="isElementPresent">
+		<case locator-key1="PORTLET_CONFIGURATION_MESSAGE">
+			<execute function="IsElementPresent#isVisible" />
+		</case>
+	</command>
+</definition>

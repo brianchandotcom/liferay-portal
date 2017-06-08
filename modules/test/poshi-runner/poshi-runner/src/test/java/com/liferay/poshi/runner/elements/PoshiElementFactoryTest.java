@@ -17,9 +17,6 @@ package com.liferay.poshi.runner.elements;
 import com.liferay.poshi.runner.util.Dom4JUtil;
 import com.liferay.poshi.runner.util.FileUtil;
 
-import java.io.BufferedReader;
-import java.io.StringReader;
-
 import org.dom4j.Document;
 import org.dom4j.Element;
 
@@ -86,22 +83,11 @@ public class PoshiElementFactoryTest {
 	private static String _removeWhitespace(String s) {
 		StringBuilder sb = new StringBuilder();
 
-		try (BufferedReader bufferedReader = new BufferedReader(
-				new StringReader(s))) {
-
-			String line = bufferedReader.readLine();
-
-			while (line != null) {
-				sb.append(line.trim());
-
-				line = bufferedReader.readLine();
-			}
-
-			return sb.toString();
+		for (String line : s.split("\n")) {
+			sb.append(line.trim());
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+
+		return sb.toString();
 	}
 
 	private static final String _TEST_FILE_PATH =

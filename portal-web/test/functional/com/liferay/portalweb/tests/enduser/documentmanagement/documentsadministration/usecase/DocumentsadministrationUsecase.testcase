@@ -816,6 +816,87 @@
 		</execute>
 	</command>
 
+	<command name="AssertFileSizeValidation">
+		<description message="This is a use case for LPS-50760." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description1" />
+			<var name="dmDocumentFile" value="Document_1.mp3" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentSize" value="4.3MB" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="LAR#exportPortlet">
+			<var name="larFileName" value="DM.portlet.lar" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
+		<execute function="AssertClick" locator1="NavBar#FILE_UPLOADS" value1="File Uploads" />
+
+		<execute function="Type" locator1="ServerAdministrationFileUploads#DOCS_AND_MEDIA_MAX_FILE_SIZE_FIELD" value1="300000" />
+
+		<execute function="ScrollWebElementIntoView" locator1="Button#SAVE" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoAddDocumentType">
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Upload documents no larger than 293KB." />
+
+		<execute macro="DMDocument#editCmd">
+			<var name="dmDocumentFileEdit" value="Document_1.mp4" />
+			<var name="dmDocumentTitle" value="Document_1.mp4" />
+		</execute>
+
+		<execute macro="Button#clickPublish" />
+
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a file with a valid file size no larger than 293KB." />
+
+		<execute macro="Button#clickCancel" />
+
+		<execute macro="LAR#_gotoExportImport" />
+
+		<execute function="AssertElementPresent" locator1="IFrame#DIALOG" />
+
+		<execute macro="LAR#_export">
+			<var name="exportPermissions" value="${exportPermissions}" />
+			<var name="larFileName" value="DM.portlet.lar" />
+		</execute>
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
 	<command name="RemoveCurrentDisplayStyleViews" priority="4">
 		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />

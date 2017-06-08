@@ -821,6 +821,10 @@ public class SitesImpl implements Sites {
 			return Collections.emptyList();
 		}
 
+		if (layoutSet == null) {
+			return Collections.emptyList();
+		}
+
 		UnicodeProperties settingsProperties =
 			layoutSet.getSettingsProperties();
 

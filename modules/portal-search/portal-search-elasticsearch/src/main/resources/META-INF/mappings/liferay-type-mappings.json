@@ -1,0 +1,890 @@
+{
+	"LiferayDocumentType": {
+		"dynamic_templates": [
+			{
+				"template_long_sortable": {
+					"mapping": {
+						"index": "not_analyzed",
+						"store": "true",
+						"type": "long"
+					},
+					"match": "*_sortable",
+					"match_mapping_type": "long"
+				}
+			},
+			{
+				"template_string_sortable": {
+					"mapping": {
+						"index": "not_analyzed",
+						"store": "true",
+						"type": "string"
+					},
+					"match": "*_sortable",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_assetCategoryTitles": {
+					"mapping": {
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "assetCategoryTitles*",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_ddm_keyword": {
+					"mapping": {
+						"index": "not_analyzed",
+						"store": "true",
+						"type": "string"
+					},
+					"match": "ddm__keyword__*",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_ar": {
+					"mapping": {
+						"analyzer": "arabic",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_ar\\b|\\w+_ar_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_bg": {
+					"mapping": {
+						"analyzer": "bulgarian",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_bg\\b|\\w+_bg_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_ca": {
+					"mapping": {
+						"analyzer": "catalan",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_ca\\b|\\w+_ca_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_cs": {
+					"mapping": {
+						"analyzer": "czech",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_cs\\b|\\w+_cs_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_da": {
+					"mapping": {
+						"analyzer": "danish",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_da\\b|\\w+_da_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_de": {
+					"mapping": {
+						"analyzer": "german",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_de\\b|\\w+_de_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_el": {
+					"mapping": {
+						"analyzer": "greek",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_el\\b|\\w+_el_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_en": {
+					"mapping": {
+						"analyzer": "english",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_en\\b|\\w+_en_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_es": {
+					"mapping": {
+						"analyzer": "spanish",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_es\\b|\\w+_es_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_eu": {
+					"mapping": {
+						"analyzer": "basque",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_eu\\b|\\w+_eu_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_fi": {
+					"mapping": {
+						"analyzer": "finnish",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_fi\\b|\\w+_fi_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_fr": {
+					"mapping": {
+						"analyzer": "french",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_fr\\b|\\w+_fr_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_hi": {
+					"mapping": {
+						"analyzer": "hindi",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_hi\\b|\\w+_hi_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_hu": {
+					"mapping": {
+						"analyzer": "hungarian",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_hu\\b|\\w+_hu_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_hy": {
+					"mapping": {
+						"analyzer": "armenian",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_hy\\b|\\w+_hy_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_id": {
+					"mapping": {
+						"analyzer": "indonesian",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_id\\b|\\w+_id_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_it": {
+					"mapping": {
+						"analyzer": "italian",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_it\\b|\\w+_it_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_ja": {
+					"mapping": {
+						"analyzer": "kuromoji",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_ja\\b|\\w+_ja_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_ko": {
+					"mapping": {
+						"analyzer": "cjk",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_ko\\b|\\w+_ko_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_nl": {
+					"mapping": {
+						"analyzer": "dutch",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_nl\\b|\\w+_nl_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_no": {
+					"mapping": {
+						"analyzer": "norwegian",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_nb\\b|\\w+_nb_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_pl": {
+					"mapping": {
+						"analyzer": "polish",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_pl\\b|\\w+_pl_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_pt": {
+					"mapping": {
+						"analyzer": "portuguese",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_pt\\b|\\w+_pt_PT\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_pt_br": {
+					"mapping": {
+						"analyzer": "brazilian",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "*_pt_BR",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_ro": {
+					"mapping": {
+						"analyzer": "romanian",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_ro\\b|\\w+_ro_RO\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_ru": {
+					"mapping": {
+						"analyzer": "russian",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_ru\\b|\\w+_ru_RU\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_sv": {
+					"mapping": {
+						"analyzer": "swedish",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_sv\\b|\\w+_sv_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_th": {
+					"mapping": {
+						"analyzer": "thai",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_th\\b|\\w+_th_TH\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_tr": {
+					"mapping": {
+						"analyzer": "turkish",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_tr\\b|\\w+_tr_TR\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_zh": {
+					"mapping": {
+						"analyzer": "smartcn",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "\\w+_zh\\b|\\w+_zh_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_ddm": {
+					"mapping": {
+						"index": "analyzed",
+						"store": "true",
+						"type": "string"
+					},
+					"match": "ddm__*",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_expando": {
+					"mapping": {
+						"index": "not_analyzed",
+						"store": "true",
+						"type": "string"
+					},
+					"match": "expando__*",
+					"match_mapping_type": "string"
+				}
+			}
+		],
+		"properties": {
+			"ancestorOrganizationIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"articleId": {
+				"analyzer": "keyword_lowercase",
+				"store": "yes",
+				"type": "string"
+			},
+			"assetCategoryId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"assetCategoryIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"assetTagId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"assetTagIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"assetTagNames": {
+				"analyzer" : "keyword_lowercase",
+				"search_analyzer" : "asset_tag_name",
+				"store": "yes",
+				"term_vector": "with_positions_offsets",
+				"type": "string"
+			},
+			"assetVocabularyId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"assetVocabularyIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"classTypeId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"companyId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"configurationModelAttributeName": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"configurationModelFactoryPid": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"configurationModelId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"content": {
+				"index": "analyzed",
+				"store": "yes",
+				"term_vector": "with_positions_offsets",
+				"type": "string"
+			},
+			"createDate": {
+				"format": "yyyyMMddHHmmss",
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "date"
+			},
+			"dataRepositoryId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"ddmContent": {
+				"index": "analyzed",
+				"store": "yes",
+				"term_vector": "with_positions_offsets",
+				"type": "string"
+			},
+			"ddmStructureKey": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"ddmTemplateKey": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"description": {
+				"index": "analyzed",
+				"store": "yes",
+				"term_vector": "with_positions_offsets",
+				"type": "string"
+			},
+			"discussion": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"displayDate": {
+				"format": "yyyyMMddHHmmss",
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "date"
+			},
+			"emailAddress": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"endTime": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "long"
+			},
+			"entryClassName": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"entryClassPK": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"expirationDate": {
+				"format": "yyyyMMddHHmmss",
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "date"
+			},
+			"extension": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"fileEntryTypeId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"folderId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"geoLocation": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "geo_point"
+		  	},
+			"groupId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"groupIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"groupRoleId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"head": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"hidden": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"id": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"languageId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"layoutUuid": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"leftOrganizationId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"mimeType": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"modified": {
+				"format": "yyyyMMddHHmmss",
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "date"
+			},
+			"nodeId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"organizationId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"organizationIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"parentCategoryId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"parentCategoryIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"parentOrganizationId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"path": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"properties": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"publishDate": {
+				"format": "yyyyMMddHHmmss",
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "date"
+			},
+			"readCount": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"recordSetId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"removedByUser": {
+				"index": "not_analyzed",
+				"type": "string"
+			},
+			"removedDate": {
+				"format": "yyyyMMddHHmmss",
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "date"
+			},
+			"rightOrganizationId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"roleId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"roleIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"rootEntryClassName": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"rootEntryClassPK": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"scopeGroupId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"size": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"status": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"subtitle": {
+				"index": "analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"teamIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"threadId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"title": {
+				"index": "analyzed",
+				"store": "yes",
+				"term_vector": "with_positions_offsets",
+				"type": "string"
+			},
+			"treePath": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"type": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"uid": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"userGroupId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"userGroupIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"userId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"userName": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"version": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"visible": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			}
+		}
+	}
+}

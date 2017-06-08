@@ -103,12 +103,12 @@ public class CPInstanceServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPOptions(
 		long companyId, long groupId, long cpDefinitionId,
-		java.lang.String keywords, int start, int end,
+		java.lang.String keywords, int status, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchCPOptions(companyId, groupId, cpDefinitionId,
-			keywords, start, end, sort);
+			keywords, status, start, end, sort);
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(

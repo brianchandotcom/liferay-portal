@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.kernel.deploy.auto;
+package com.liferay.portal.kernel.deploy.staging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 /**
- * @author Ivica Cardic
- * @author Brian Wing Shun Chan
+ * @author Ryan Park
  */
-public class AutoDeployScanner extends Thread {
+public class StagingDeployScanner extends Thread {
 
-	public AutoDeployScanner(
-		ThreadGroup threadGroup, String name, AutoDeployDir autoDeployDir) {
+	public StagingDeployScanner(
+		ThreadGroup threadGroup, String name,
+		StagingDeployDir stagingDeployDir) {
 
 		super(threadGroup, name);
 
-		_autoDeployDir = autoDeployDir;
+		_stagingDeployDir = stagingDeployDir;
 
 		Class<?> clazz = getClass();
 
@@ -52,16 +52,16 @@ public class AutoDeployScanner extends Thread {
 
 		while (_started) {
 			try {
-				_autoDeployDir.scanDirectory();
+				_stagingDeployDir.scanDirectory();
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to scan the auto deploy directory", e);
+					_log.warn("Unable to scan the staging deploy directory", e);
 				}
 			}
 
 			try {
-				sleep(_autoDeployDir.getInterval());
+				sleep(_stagingDeployDir.getInterval());
 			}
 			catch (InterruptedException ie) {
 			}
@@ -69,9 +69,9 @@ public class AutoDeployScanner extends Thread {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AutoDeployScanner.class);
+		StagingDeployScanner.class);
 
-	private final AutoDeployDir _autoDeployDir;
+	private final StagingDeployDir _stagingDeployDir;
 	private boolean _started = true;
 
 }

@@ -18,6 +18,7 @@ import com.liferay.portal.events.GlobalStartupAction;
 import com.liferay.portal.kernel.deploy.DeployManager;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
+import com.liferay.portal.kernel.deploy.staging.StagingDeployDir;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
@@ -199,6 +200,11 @@ public class DeployManagerImpl implements DeployManager {
 		else if (ServerDetector.isTomcat()) {
 			DeployUtil.redeployTomcat(context);
 		}
+	}
+
+	@Override
+	public void stage(File file) throws Exception {
+		StagingDeployDir.stage(file);
 	}
 
 	@Override

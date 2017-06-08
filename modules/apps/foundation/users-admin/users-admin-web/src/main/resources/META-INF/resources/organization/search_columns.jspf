@@ -14,12 +14,31 @@
  */
 --%>
 
+<%
+String imageURL = StringPool.BLANK;
+long logoId = organization.getLogoId();
+
+if (logoId > 0) {
+	imageURL = themeDisplay.getPathImage() + "/organization_logo?img_id=" + logoId + "&t=" + WebServerServletTokenUtil.getToken(logoId);
+}
+%>
+
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
-		<liferay-ui:search-container-column-icon
-			icon="users"
-			toggleRowChecker="<%= true %>"
-		/>
+		<c:choose>
+			<c:when test="<%= Validator.isNull(imageURL) %>">
+				<liferay-ui:search-container-column-icon
+					icon="users"
+					toggleRowChecker="<%= true %>"
+				/>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:search-container-column-image
+					src="<%= imageURL %>"
+					toggleRowChecker="<%= true %>"
+				/>
+			</c:otherwise>
+		</c:choose>
 
 		<liferay-ui:search-container-column-text
 			colspan="<%= 2 %>"
@@ -55,17 +74,32 @@
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<liferay-frontend:icon-vertical-card
-				actionJsp="/organization_action.jsp"
-				actionJspServletContext="<%= application %>"
-				cssClass="entry-display-style"
-				icon="users"
-				resultRow="<%= row %>"
-				rowChecker="<%= rowChecker %>"
-				subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"
-				title="<%= organization.getName() %>"
-				url="<%= String.valueOf(rowURL) %>"
-			/>
+			<c:choose>
+				<c:when test="<%= Validator.isNull(imageURL) %>">
+					<liferay-frontend:icon-vertical-card
+						actionJsp="/organization_action.jsp"
+						actionJspServletContext="<%= application %>"
+						icon="users"
+						resultRow="<%= row %>"
+						rowChecker="<%= rowChecker %>"
+						subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"
+						title="<%= organization.getName() %>"
+						url="<%= String.valueOf(rowURL) %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-frontend:vertical-card
+						actionJsp="/organization_action.jsp"
+						actionJspServletContext="<%= application %>"
+						imageUrl="<%= imageURL %>"
+						resultRow="<%= row %>"
+						rowChecker="<%= rowChecker %>"
+						subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"
+						title="<%= organization.getName() %>"
+						url="<%= String.valueOf(rowURL) %>"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:otherwise>

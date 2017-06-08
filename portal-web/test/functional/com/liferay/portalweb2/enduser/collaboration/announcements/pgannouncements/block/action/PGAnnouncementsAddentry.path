@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>PGAnnouncementsAddentry</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGAnnouncementsAddentry</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGAnnouncementsAddentry</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE</td>
+	<td>//input[@id='_84_title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL</td>
+	<td>//input[@id='_84_url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE</td>
+	<td>//input[@value='Save']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

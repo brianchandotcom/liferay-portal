@@ -48,7 +48,7 @@ public class DefinitionElement extends PoshiElement {
 
 	@Override
 	public void addElements(String readableSyntax) {
-		List<String> readableBlocks = StringUtil.split(
+		List<String> readableBlocks = StringUtil.partition(
 			readableSyntax, READABLE_COMMAND_BLOCK_KEYS);
 
 		for (String readableBlock : readableBlocks) {
@@ -56,7 +56,7 @@ public class DefinitionElement extends PoshiElement {
 				continue;
 			}
 			else if (readableBlock.startsWith(BACKGROUND)) {
-				List<String> readableCommandBlocks = StringUtil.split(
+				List<String> readableCommandBlocks = StringUtil.partition(
 					readableBlock, READABLE_COMMAND_BLOCK_KEYS);
 
 				for (String readableCommandBlock : readableCommandBlocks) {

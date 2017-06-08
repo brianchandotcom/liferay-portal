@@ -62,7 +62,7 @@ public class ExecuteElement extends PoshiElement {
 
 	@Override
 	public void addElements(String readableSyntax) {
-		List<String> readableBlocks = StringUtil.split(
+		List<String> readableBlocks = StringUtil.partition(
 			readableSyntax, READABLE_VARIABLE_BLOCK_KEYS);
 
 		for (String readableBlock : readableBlocks) {
@@ -148,7 +148,7 @@ public class ExecuteElement extends PoshiElement {
 	private void _addFunctionAttributes(String readableSyntax) {
 		String[] keys = {AT_LOCATOR, THE_VALUE};
 
-		List<String> functionItems = StringUtil.split(readableSyntax, keys);
+		List<String> functionItems = StringUtil.partition(readableSyntax, keys);
 
 		for (String functionItem : functionItems) {
 			if (functionItem.contains(AT_LOCATOR)) {

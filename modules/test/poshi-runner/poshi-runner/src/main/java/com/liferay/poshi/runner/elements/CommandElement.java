@@ -65,7 +65,7 @@ public class CommandElement extends PoshiElement {
 
 	@Override
 	public void addElements(String readableSyntax) {
-		List<String> readableBlocks = StringUtil.split(
+		List<String> readableBlocks = StringUtil.partition(
 			readableSyntax, READABLE_EXECUTE_BLOCK_KEYS);
 
 		for (String readableBlock : readableBlocks) {

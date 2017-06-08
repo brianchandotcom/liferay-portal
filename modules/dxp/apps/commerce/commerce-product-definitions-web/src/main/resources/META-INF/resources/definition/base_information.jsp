@@ -19,7 +19,7 @@
 <%
 CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFINITION);
 
-String productTypeName = ParamUtil.getString(request, "productTypeName");
+String productTypeName = BeanParamUtil.getString(cpDefinition, request, "productTypeName");
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="base-information" />
@@ -27,7 +27,7 @@ String productTypeName = ParamUtil.getString(request, "productTypeName");
 <aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
 <aui:fieldset cssClass="col-md-4">
-	<aui:input label="product-type" name="productTypeName" readOnly="readOnly" type="text" value="<%= (cpDefinition == null) ? productTypeName : cpDefinition.getProductTypeName() %>" />
+	<aui:input label="product-type" name="productTypeName" readOnly="readOnly" type="text" value="<%= productTypeName %>" />
 
 	<aui:input label="SKU" name="baseSKU" />
 </aui:fieldset>

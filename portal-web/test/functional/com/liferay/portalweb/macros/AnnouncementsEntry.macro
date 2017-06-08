@@ -10,8 +10,11 @@
 			<var name="title" value="${entryTitle}" />
 		</execute>
 
-		<execute function="Type" locator1="TextInput#URL" value1="${entryURL}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${entryContent}" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Configuration" />
+		</execute>
 
 		<execute function="Uncheck" locator1="Checkbox#DISPLAY_IMMEDIATELY" />
 
@@ -58,12 +61,15 @@
 			<var name="title" value="${entryTitle}" />
 		</execute>
 
-		<execute function="Type" locator1="TextInput#URL" value1="${entryURL}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${entryContent}" />
 
 		<if>
 			<isset var="priority" />
 			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Configuration" />
+				</execute>
+
 				<execute function="Select" locator1="Announcements#PRIORITY_SELECT" value1="${priority}" />
 			</then>
 		</if>
@@ -71,6 +77,10 @@
 		<if>
 			<isset var="expirationDate" />
 			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Configuration" />
+				</execute>
+
 				<execute function="Type" locator1="TextInput#EXPIRATION_DATE" value1="${expirationDate}" />
 			</then>
 		</if>
@@ -129,7 +139,6 @@
 			<var name="title" value="${entryTitleEdit}" />
 		</execute>
 
-		<execute function="Type" locator1="TextInput#URL" value1="${entryURLEdit}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${entryContentEdit}" />
 
 		<execute macro="Button#clickSave" />
@@ -196,7 +205,7 @@
 		<var name="key_distributionScope" value="${distributionScope}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Announcements#CARD_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
 
 		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_SCOPE" value1="${distributionScope}" />
 

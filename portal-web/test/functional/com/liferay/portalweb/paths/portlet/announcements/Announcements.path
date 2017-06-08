@@ -42,7 +42,7 @@
 <!--CARD_VIEW_ENTRY-->
 <tr>
 	<td>CARD_VIEW_ENTRY_TITLE</td>
-	<td>//div[contains(@class,'panel')]//h4[@title='${key_entryTitle}']/a</td>
+	<td>//div[contains(@class,'panel')]//h4[@title='${key_entryTitle}']</td>
 	<td></td>
 </tr>
 <tr>

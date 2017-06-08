@@ -8,6 +8,8 @@
 				<execute function="AssertClick" locator1="NavBar#ORGANIZATIONS" value1="Organizations" />
 			</then>
 		</if>
+
+		<execute function="AssertVisible" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_HEADER_PARENT_ORGANIZATION" />
 	</command>
 
 	<command name="gotoUsers">

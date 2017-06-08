@@ -281,6 +281,8 @@ alter table Layout add sourcePrototypeLayoutUuid VARCHAR(75) null;
 
 COMMIT_TRANSACTION;
 
+COMMIT_TRANSACTION;
+
 update Layout set createDate = CURRENT_TIMESTAMP;
 update Layout set modifiedDate = CURRENT_TIMESTAMP;
 

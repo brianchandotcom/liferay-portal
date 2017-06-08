@@ -99,7 +99,10 @@ public class ExecuteElement extends PoshiElement {
 				"value1", "locator1", "value2", "locator2");
 
 			for (String functionAttribute : functionAttributes) {
-				if (attributeValue(functionAttribute) != null) {
+				String functionAttributeValue = attributeValue(
+					functionAttribute);
+
+				if (functionAttributeValue != null) {
 					if (functionAttribute.startsWith("locator")) {
 						sb.append(" ");
 						sb.append(AT_LOCATOR);
@@ -110,9 +113,7 @@ public class ExecuteElement extends PoshiElement {
 					}
 
 					sb.append(" '");
-
-					sb.append(attributeValue(functionAttribute));
-
+					sb.append(functionAttributeValue);
 					sb.append("'");
 				}
 			}

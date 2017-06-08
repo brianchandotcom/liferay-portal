@@ -86,10 +86,7 @@ public class CommandElement extends PoshiElement {
 				continue;
 			}
 
-			Element element = PoshiElementFactory.newPoshiElement(
-				readableBlock);
-
-			add(element);
+			add(PoshiElementFactory.newPoshiElement(readableBlock));
 		}
 	}
 

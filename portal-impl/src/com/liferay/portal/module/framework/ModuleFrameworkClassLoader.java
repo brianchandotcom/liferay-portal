@@ -29,6 +29,10 @@ import java.util.List;
  */
 public class ModuleFrameworkClassLoader extends URLClassLoader {
 
+	static {
+		ClassLoader.registerAsParallelCapable();
+	}
+
 	public ModuleFrameworkClassLoader(URL[] urls, ClassLoader parent) {
 		super(urls, parent);
 	}
@@ -91,11 +95,21 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 			Class<?> clazz = findLoadedClass(name);
 
 			if (clazz == null) {
-				try {
-					clazz = findClass(name);
+				if (_systemClassLoader != null) {
+					try {
+						clazz = _systemClassLoader.loadClass(name);
+					}
+					catch (ClassNotFoundException cnfe) {
+					}
 				}
-				catch (ClassNotFoundException cnfe) {
-					clazz = super.loadClass(name, resolve);
+
+				if (clazz == null) {
+					try {
+						clazz = findClass(name);
+					}
+					catch (ClassNotFoundException cnfe) {
+						clazz = super.loadClass(name, resolve);
+					}
 				}
 			}
 

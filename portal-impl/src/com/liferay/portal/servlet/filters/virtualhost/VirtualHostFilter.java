@@ -330,6 +330,16 @@ public class VirtualHostFilter extends BasePortalFilter {
 					return;
 				}
 
+				if (isDocumentFriendlyURL(
+						request, group.getGroupId(), friendlyURL)) {
+
+					processFilter(
+						VirtualHostFilter.class, request, response,
+						filterChain);
+
+					return;
+				}
+
 				if (group.isGuest() && friendlyURL.equals(StringPool.SLASH) &&
 					!layoutSet.isPrivateLayout()) {
 

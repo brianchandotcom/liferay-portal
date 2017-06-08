@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<!--path id="build.classpath">
+		<fileset dir="${basedir}/classes/" includes="**/*.class" />
+		<fileset dir="${basedir}/lib/" includes="**/*.jar" />
+	</path>
+
+	<target name="compile-r2" depends="compile">
+		<echo>${basedir}</echo>
+
+		<java fork="yes"
+		  classpathref="build.classpath"
+		  classname="org.mozilla.javascript.tools.jsc.Main"
+		  failonerror="true">
+			<arg value="-package" />
+			<arg value="com.liferay.rtl" />
+			<arg value="-implements" />
+			<arg value="com.liferay.rtl.R2" />
+			<arg value="${basedir}/src/com/liferay/rtl/R2Impl.js" />
+		</java>
+
+		<move todir="${basedir}/classes">
+			<fileset dir="${basedir}/src/">
+				<include name="**/*.class" />
+			</fileset>
+		</move>
+
+	</target>
+
+	<target name="jar">
+		<jar destfile="../../../tools/sdk/dist/r2.jar" basedir="${basedir}/classes">
+			<manifest>
+				<attribute name="Main-Class" value="r2" />
+			</manifest>
+		</jar>
+	</target-->
+</project>

@@ -1,0 +1,60 @@
+configurations {
+	servicebuilder
+}
+
+dependencies {
+	servicebuilder files(["${liferayProjectDir}/osgi/modules/gradle/servicebuilder"])
+	servicebuilder files(["${liferayProjectDir}/portal-impl/classes"])
+	servicebuilder files(["${liferayProjectDir}/portal-service/classes"])
+	servicebuilder files(["${liferayProjectDir}/tools/"])
+	servicebuilder files(["${liferayProjectDir}/util-java/classes"])
+	servicebuilder files(["${liferayProjectDir}/util-taglib/classes"])
+
+	servicebuilder fileTree(
+		dir:"${liferayProjectDir}/lib/development",
+		includes: ["**/*.jar"]
+	)
+        servicebuilder fileTree(
+		dir:"${liferayProjectDir}/lib/global",
+		includes: ["**/*.jar"]
+        )
+	servicebuilder fileTree(
+		dir:"${liferayProjectDir}/lib/portal",
+		includes: ["*.jar"]
+	)
+}
+
+ext {
+        liferayProjectDir = "${rootDir}/../../.."
+        resourcesDir = "src/main/resources"
+        sourcesDir = "src/main/java"
+        targetEntityName = ""
+}
+
+task buildService(type: JavaExec) {
+	classpath = configurations.servicebuilder
+	maxHeapSize '1024M'
+	minHeapSize '512M'
+	jvmArgs = ['-Xss2048k', '-XX:MaxPermSize=512m']
+	main = 'com.liferay.portal.tools.servicebuilder.ServiceBuilder'
+	args "-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties"
+	args "-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger"
+	args "service.input.file=${project.ext.resourcesDir}/service.xml"
+	args "service.hbm.file=${project.ext.resourcesDir}/META-INF/module-hbm.xml"
+	args "service.model.hints.file=${project.ext.resourcesDir}/META-INF/portlet-model-hints.xml"
+	args "service.spring.file=${project.ext.resourcesDir}/META-INF/spring/module.xml"
+	args "service.impl.dir=${project.ext.sourcesDir}
+	args "service.resources.dir=${project.ext.resourcesDir}"
+	args "service.api.dir=${project.ext.apiDir}/${project.ext.sourcesDir}"
+	args "service.remoting.file=${project.ext.webDir}/${project.ext.resourcesDir}/WEB-INF/remoting-servlet.xml"
+	args "service.sql.dir=${project.ext.resourcesDir}/WEB-INF/sql"
+	args "service.sql.file=tables.sql"
+	args "service.sql.indexes.file=indexes.sql"
+	args "service.sql.sequences.file=sequences.sql"
+	args "service.bean.locator.util=com.liferay.portal.kernel.bean.PortletBeanLocatorUtil"
+	args "service.props.util=com.liferay.portal.util.PropsUtil"
+	args "service.target.entity.name=${project.ext.targetEntityName}"
+	args "service.test.dir=src/test/java"
+    	args "service.osgi.module=true"
+	args "-Dservice.tpl.spring.extra.namespaces=osgi"
+}

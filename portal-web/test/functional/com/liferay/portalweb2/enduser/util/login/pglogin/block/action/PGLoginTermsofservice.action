@@ -1,0 +1,17 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="I_AGREE_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="I_DISAGREE_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="isElementPresent">
+		<case locator-key1="I_AGREE_BUTTON">
+			<execute function="IsElementPresent#pauseIsElementPresent" />
+		</case>
+	</command>
+</definition>

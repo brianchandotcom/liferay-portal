@@ -31,6 +31,8 @@ public class UpgradeSchema extends UpgradeProcess {
 			"update-6.2.0-7.0.0-layoutsetbranch.sql");
 
 		upgrade(UpgradeMVCCVersion.class);
+		upgrade(UpgradeNVarcharSQLServer.class);
+		upgrade(UpgradeVarcharSybase.class);
 	}
 
 }

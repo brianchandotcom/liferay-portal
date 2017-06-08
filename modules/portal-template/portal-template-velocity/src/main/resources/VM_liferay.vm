@@ -1,0 +1,80 @@
+#set ($css_main_file = "")
+#set ($is_signed_in = false)
+#set ($js_main_file = "")
+
+#if ($themeDisplay)
+	#set ($css_main_file = $htmlUtil.escape($portalUtil.getStaticResourceURL($request, "$themeDisplay.getPathThemeCss()/main.css")))
+	#set ($is_signed_in = $themeDisplay.isSignedIn())
+	#set ($js_main_file = $htmlUtil.escape($portalUtil.getStaticResourceURL($request, "$themeDisplay.getPathThemeCss()/main.js")))
+#end
+
+#set ($is_setup_complete = false)
+
+#if ($user)
+	#set ($is_setup_complete = $user.isSetupComplete())
+#end
+
+#macro (breadcrumbs $default_preferences)
+	$theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", $portletProviderAction.VIEW, "", $!default_preferences)
+#end
+
+#macro (control_menu)
+	#if ($themeDisplay.isImpersonated() || ($is_setup_complete && $is_signed_in))
+		$theme.runtime("com.liferay.portlet.admin.util.PortalControlMenuApplicationType$ControlMenu", $portletProviderAction.VIEW)
+	#end
+#end
+
+#macro (css $file_name)
+	#if ($file_name == $css_main_file)
+		<link class="lfr-css-file" href="$file_name" id="mainLiferayThemeCSS" rel="stylesheet" type="text/css" />
+	#else
+		<link class="lfr-css-file" href="$file_name" rel="stylesheet" type="text/css" />
+	#end
+#end
+
+#macro (date $date_format)
+$dateUtil.getCurrentDate($date_format, $locale)#end
+
+#macro (js $file_name)
+	#if ($file_name == $js_main_file)
+		<script id="mainLiferayThemeJavaScript" src="$file_name" type="text/javascript"></script>
+	#else
+		<script src="$file_name" type="text/javascript"></script>
+	#end
+#end
+
+#macro (language $lang_key)
+$languageUtil.get($locale, $lang_key)#end
+
+#macro (language_format $lang_key $arguments)
+$languageUtil.format($locale, $lang_key, $arguments.toArray())#end
+
+#macro (languages $default_preferences)
+	$theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry", $portletProviderAction.VIEW, "", $!default_preferences)
+#end
+
+#macro (navigation_menu $default_preferences $instance_id)
+	$theme.runtime("com.liferay.portal.theme.NavItem", $portletProviderAction.VIEW, $!instance_id, $!default_preferences)
+#end
+
+#macro (silently $foo)
+	#set ($foo = $foo)
+#end
+
+#macro (search $default_preferences)
+	#if ($is_setup_complete)
+		$theme.runtime("com.liferay.portlet.admin.util.PortalSearchApplicationType$Search", $portletProviderAction.VIEW, "", $!default_preferences)
+	#end
+#end
+
+#macro (user_personal_bar)
+	#if ($themeDisplay.isImpersonated() || $is_setup_complete || !$is_signed_in))
+		#set ($render_portlet_boundary = $request.getAttribute("RENDER_PORTLET_BOUNDARY"))
+
+		$request.setAttribute("RENDER_PORTLET_BOUNDARY", false)
+
+		$theme.runtime("com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType$UserPersonalBar", $portletProviderAction.VIEW)
+
+		$request.setAttribute("RENDER_PORTLET_BOUNDARY", $render_portlet_boundary)
+	#end
+#end

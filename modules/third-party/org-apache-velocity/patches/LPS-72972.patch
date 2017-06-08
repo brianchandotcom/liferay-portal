@@ -1,0 +1,28 @@
+diff --git a/org/apache/velocity/runtime/parser/node/ASTText.java b/org/apache/velocity/runtime/parser/node/ASTText.java
+index e47280d..791d34a 100644
+--- a/org/apache/velocity/runtime/parser/node/ASTText.java
++++ b/org/apache/velocity/runtime/parser/node/ASTText.java
+@@ -32,7 +32,7 @@ import org.apache.velocity.runtime.parser.Token;
+  */
+ public class ASTText extends SimpleNode
+ {
+-    private char[] ctext;
++    private String ctext;
+ 
+     /**
+      * @param id
+@@ -69,7 +69,7 @@ public class ASTText extends SimpleNode
+ 
+         String text = NodeUtils.tokenLiteral( t );
+ 
+-        ctext = text.toCharArray();
++        ctext = text;
+ 
+         return data;
+     }
+@@ -94,3 +94,4 @@ public class ASTText extends SimpleNode
+ 
+ 
+ 
++/* @generated */
+\ No newline at end of file

@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "org.apache.velocity", name: "velocity", version: "1.6.4"
+	compileInclude group: "com.liferay", name: "org.apache.velocity", version: "1.6.4.LIFERAY-PATCHED-1"
 	compileInclude group: "velocity-tools", name: "velocity-tools", version: "1.4"
 
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"

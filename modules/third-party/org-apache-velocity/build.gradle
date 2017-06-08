@@ -1,0 +1,26 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+dependencies {
+	compile group: "org.apache.velocity", name: "velocity", version: "1.6.4"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/apache/velocity/runtime/parser/node/ASTText.java"
+
+	originalLibModuleName = "velocity"
+}

@@ -932,6 +932,8 @@ public class ServicePreAction extends Action {
 				}
 			}
 
+			long controlPanelPlid = PortalUtil.getControlPanelPlid(companyId);;
+
 			if (hasUpdateLayoutPermission) {
 				themeDisplay.setShowPageSettingsIcon(true);
 			}

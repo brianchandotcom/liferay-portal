@@ -502,7 +502,7 @@
 				<copy todir="${app.server.lib.global.dir}">
 					<fileset
 						dir="lib/development"
-						includes="saxpath.jar"
+						includes="junit.jar,saxpath.jar"
 					/>
 				</copy>
 			</then>

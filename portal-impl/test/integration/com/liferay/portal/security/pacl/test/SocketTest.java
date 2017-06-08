@@ -115,11 +115,18 @@ public class SocketTest {
 	}
 
 	@Test
-	public void testConnect1() throws IOException, SecurityException {
+	public void testConnect1() throws SecurityException {
 		try {
 			HttpUtil.URLtoString("http://www.cbs.com");
 		}
-		catch (SocketException se) {
+		catch (IOException ioe) {
+			Throwable throwable = ioe.getCause();
+
+			Assert.assertSame(SocketException.class, throwable.getClass());
+
+			Assert.assertEquals(
+				"Can't connect to SOCKS proxy:Connection refused",
+				throwable.getMessage());
 		}
 	}
 

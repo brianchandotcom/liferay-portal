@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Social Office Listeners
+Bundle-SymbolicName: com.liferay.social.office.listeners
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Social Office Upgrade

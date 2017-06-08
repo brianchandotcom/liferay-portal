@@ -81,16 +81,15 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		int total = _cpDefinitionService.getCPDefinitionsCount(
-			getScopeGroupId(), null,
-			themeDisplay.getLanguageId(), WorkflowConstants.STATUS_ANY);
+			getScopeGroupId(), null, themeDisplay.getLanguageId(),
+			WorkflowConstants.STATUS_ANY);
 
 		searchContainer.setTotal(total);
 
 		List<CPDefinition> results = _cpDefinitionService.getCPDefinitions(
-			getScopeGroupId(), null,
-			themeDisplay.getLanguageId(), WorkflowConstants.STATUS_ANY,
-			searchContainer.getStart(), searchContainer.getEnd(),
-			orderByComparator);
+			getScopeGroupId(), null, themeDisplay.getLanguageId(),
+			WorkflowConstants.STATUS_ANY, searchContainer.getStart(),
+			searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
 

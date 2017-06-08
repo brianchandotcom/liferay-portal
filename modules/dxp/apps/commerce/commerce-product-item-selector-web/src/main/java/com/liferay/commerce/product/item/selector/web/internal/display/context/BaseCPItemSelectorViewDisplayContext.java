@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public abstract class BaseCPItemSelectorViewDisplayContext<T>    {
+public abstract class BaseCPItemSelectorViewDisplayContext<T> {
 
 	public BaseCPItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest, PortletURL portletURL,

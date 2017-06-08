@@ -43,7 +43,7 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= cpDefinitionsDisplayContext.getNavigationKeys() %>'
+			navigationKeys="<%= cpDefinitionsDisplayContext.getNavigationKeys() %>"
 			portletURL="<%= cpDefinitionsDisplayContext.getPortletURL() %>"
 		/>
 

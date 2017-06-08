@@ -61,14 +61,13 @@ public class CPDefinitionsDisplayContext
 	}
 
 	public String[] getNavigationKeys() {
-
 		List<String> navigationKeysList = new ArrayList<>();
 
 		navigationKeysList.add("all");
 
 		List<CPType> cpTypes = getCPTypes();
 
-		for(CPType cpType: cpTypes){
+		for (CPType cpType : cpTypes) {
 			navigationKeysList.add(cpType.getName());
 		}
 

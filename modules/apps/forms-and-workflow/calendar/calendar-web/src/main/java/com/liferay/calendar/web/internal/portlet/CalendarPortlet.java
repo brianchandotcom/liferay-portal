@@ -1342,6 +1342,8 @@ public class CalendarPortlet extends MVCPortlet {
 			themeDisplay.getCompanyId(), name, null, params, true, 0,
 			SearchContainer.DEFAULT_DELTA);
 
+		long groupClassNameId = PortalUtil.getClassNameId(Group.class);
+
 		for (Group group : groups) {
 			long groupClassNameId = _portal.getClassNameId(Group.class);
 

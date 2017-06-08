@@ -1083,6 +1083,24 @@ public class MBUtil {
 		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
+	private static Object _getPartContent(Part part) throws Exception {
+
+		// See LPS-56173
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(Part.class.getClassLoader());
+
+			return part.getContent();
+		}
+		finally {
+			currentThread.setContextClassLoader(classLoader);
+		}
+	}
+
 	private static String[] _findThreadPriority(
 		double value, String[] priorities) {
 

@@ -114,7 +114,7 @@ public class PoshiElementFactory {
 			}
 		}
 		catch (Exception e) {
-			System.out.println("The Poshi element could not be generated.");
+			System.out.println("Unable to generate the Poshi element");
 
 			e.printStackTrace();
 		}
@@ -139,7 +139,7 @@ public class PoshiElementFactory {
 			return newPoshiElement(fileContent);
 		}
 		catch (Exception e) {
-			System.out.println("The Poshi element could not be generated.");
+			System.out.println("Unable to generate the Poshi element");
 
 			e.printStackTrace();
 		}

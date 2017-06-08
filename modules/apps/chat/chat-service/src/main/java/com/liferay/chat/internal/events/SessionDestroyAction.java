@@ -17,6 +17,7 @@ package com.liferay.chat.internal.events;
 import com.liferay.chat.jabber.JabberUtil;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.SessionAction;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpSession;
@@ -35,9 +36,9 @@ public class SessionDestroyAction extends SessionAction {
 
 	@Override
 	public void run(HttpSession session) {
-		Long userId = (Long)session.getAttribute(WebKeys.USER_ID);
+		User user = (User)session.getAttribute(WebKeys.USER);
 
-		JabberUtil.disconnect(userId);
+		JabberUtil.disconnect(user.getUserId());
 	}
 
 }

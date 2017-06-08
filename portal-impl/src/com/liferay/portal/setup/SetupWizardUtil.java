@@ -306,7 +306,10 @@ public class SetupWizardUtil {
 		session.setAttribute(
 			WebKeys.SETUP_WIZARD_PASSWORD_UPDATED, Boolean.TRUE);
 		session.setAttribute(WebKeys.USER, user);
-		session.setAttribute(WebKeys.USER_ID, user.getUserId());
+
+		if (PropsValues.USER_ID_SESSION_ATTRIBUTE_ENABLED) {
+			session.setAttribute(WebKeys.USER_ID, user.getUserId());
+		}
 
 		EventsProcessorUtil.process(
 			PropsKeys.LOGIN_EVENTS_POST, PropsValues.LOGIN_EVENTS_POST, request,

@@ -2370,6 +2370,8 @@ public interface PropsKeys {
 
 	public static final String USER_GROUPS_SEARCH_WITH_INDEX = "user.groups.search.with.index";
 
+	public static final String USER_ID_SESSION_ATTRIBUTE_ENABLED = "user.id.session.attribute.enabled";
+
 	public static final String USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED = "user.notification.event.confirmation.enabled";
 
 	public static final String USERS_ADMIN_ORGANIZATION_COLUMN_LIMIT = "users.admin.organization.column.limit";

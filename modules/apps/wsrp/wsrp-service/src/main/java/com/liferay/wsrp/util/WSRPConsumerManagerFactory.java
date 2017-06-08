@@ -15,7 +15,6 @@
 package com.liferay.wsrp.util;
 
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.wsrp.model.WSRPConsumer;
@@ -81,13 +80,7 @@ public class WSRPConsumerManagerFactory {
 		HttpSession session = getSession();
 
 		if (session != null) {
-			Long userId = (Long)session.getAttribute(WebKeys.USER_ID);
-
-			User user = null;
-
-			if (userId != null) {
-				user = UserLocalServiceUtil.fetchUser(userId);
-			}
+			User user = (User)session.getAttribute(WebKeys.USER);
 
 			if (user != null) {
 				userToken = user.getLogin();

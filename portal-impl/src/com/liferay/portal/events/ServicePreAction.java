@@ -263,15 +263,10 @@ public class ServicePreAction extends Action {
 				HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
 		}
 
-		User realUser = user;
+		User realUser = (User)session.getAttribute(WebKeys.USER);
 
-		Long realUserId = (Long)session.getAttribute(WebKeys.USER_ID);
-
-		if (realUserId != null) {
-			if (user.getUserId() != realUserId.longValue()) {
-				realUser = UserLocalServiceUtil.getUserById(
-					realUserId.longValue());
-			}
+		if (realUser == null) {
+			realUser = user;
 		}
 
 		String doAsUserId = ParamUtil.getString(request, "doAsUserId");

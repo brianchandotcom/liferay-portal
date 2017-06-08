@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.AuthenticatedUserUUIDStoreUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PortalSessionContext;
@@ -69,15 +70,15 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 		PortalSessionContext.remove(_httpSession.getId());
 
 		try {
-			Long userIdObj = (Long)_httpSession.getAttribute(WebKeys.USER_ID);
+			User userObj = (User)_httpSession.getAttribute(WebKeys.USER);
 
-			if (userIdObj == null) {
+			if (userObj == null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn("User id is not in the session");
 				}
 			}
 
-			if (userIdObj == null) {
+			if (userObj == null) {
 				return;
 			}
 
@@ -96,7 +97,7 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 
 				jsonObject.put("command", "signOut");
 
-				long userId = userIdObj.longValue();
+				long userId = userObj.getUserId();
 
 				long companyId = CompanyLocalServiceUtil.getCompanyIdByUserId(
 					userId);

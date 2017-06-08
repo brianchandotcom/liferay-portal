@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.notifications.ChannelException;
 import com.liferay.portal.kernel.notifications.ChannelHubManagerUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpSession;
@@ -45,11 +44,7 @@ public class ChannelSessionDestroyAction extends SessionAction {
 
 		try {
 			if (user == null) {
-				Long userId = (Long)session.getAttribute(WebKeys.USER_ID);
-
-				if (userId != null) {
-					user = UserLocalServiceUtil.getUser(userId);
-				}
+				user = (User)session.getAttribute(WebKeys.USER);
 			}
 
 			if ((user == null) || user.isDefaultUser()) {

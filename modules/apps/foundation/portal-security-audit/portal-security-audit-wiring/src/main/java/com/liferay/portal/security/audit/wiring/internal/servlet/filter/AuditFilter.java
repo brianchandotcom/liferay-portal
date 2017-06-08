@@ -17,6 +17,7 @@ package com.liferay.portal.security.audit.wiring.internal.servlet.filter;
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.TryFilter;
@@ -58,10 +59,10 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 		HttpSession session = request.getSession();
 
-		Long userId = (Long)session.getAttribute(WebKeys.USER_ID);
+		User user = (User)session.getAttribute(WebKeys.USER);
 
-		if (userId != null) {
-			auditRequestThreadLocal.setRealUserId(userId.longValue());
+		if (user != null) {
+			auditRequestThreadLocal.setRealUserId(user.getUserId());
 		}
 
 		auditRequestThreadLocal.setRequestURL(

@@ -83,6 +83,38 @@ public class DDMTemplateStagedModelDataHandlerTest
 			importedStructure.getStructureId(), importedTemplate.getClassPK());
 	}
 
+	@Test
+	public void testPublishTemplateToLiveBeforeStructure() throws Exception {
+		DDMTemplate template = DDMTemplateTestUtil.addTemplate(
+			stagingGroup.getGroupId(), 0,
+			PortalUtil.getClassNameId(_CLASS_NAME));
+
+		DDMStructure structure = DDMStructureTestUtil.addStructure(
+			stagingGroup.getGroupId(), _CLASS_NAME);
+
+		exportImportTemplate(template);
+
+		template.setClassPK(structure.getStructureId());
+
+		DDMTemplateLocalServiceUtil.updateDDMTemplate(template);
+
+		exportImportTemplateAndStructure(template, structure);
+
+		DDMStructure importedStructure =
+			DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
+				structure.getUuid(), liveGroup.getGroupId());
+
+		DDMTemplate importedTemplate = (DDMTemplate)getStagedModel(
+			template.getUuid(), liveGroup);
+
+		Assert.assertNotNull(importedTemplate);
+
+		Assert.assertNotNull(importedStructure);
+
+		Assert.assertEquals(
+			importedStructure.getStructureId(), importedTemplate.getClassPK());
+	}
+
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
 			Group group)

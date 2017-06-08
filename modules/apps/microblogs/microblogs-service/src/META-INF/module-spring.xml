@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<bean id="com.liferay.microblogs.service.MicroblogsEntryLocalService" class="com.liferay.microblogs.service.impl.MicroblogsEntryLocalServiceImpl" />
+	<osgi:service interface="com.liferay.microblogs.service.MicroblogsEntryLocalService" ref="com.liferay.microblogs.service.MicroblogsEntryLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="microblogs" />
+			<entry key="json.web.service.context.path" value="MicroblogsEntry" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.microblogs.service.MicroblogsEntryService" class="com.liferay.microblogs.service.impl.MicroblogsEntryServiceImpl" />
+	<osgi:service interface="com.liferay.microblogs.service.MicroblogsEntryService" ref="com.liferay.microblogs.service.MicroblogsEntryService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="microblogs" />
+			<entry key="json.web.service.context.path" value="MicroblogsEntry" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.microblogs.service.persistence.MicroblogsEntryPersistence" class="com.liferay.microblogs.service.persistence.impl.MicroblogsEntryPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.microblogs.service.persistence.MicroblogsEntryPersistence" ref="com.liferay.microblogs.service.persistence.MicroblogsEntryPersistence" />
+	<bean id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder" class="com.liferay.microblogs.service.persistence.impl.MicroblogsEntryFinderImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder" ref="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder" />
+</beans>

@@ -52,9 +52,8 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.wiki.model.WikiNode" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
 page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %><%@
+page import="com.liferay.wiki.web.internal.item.selector.constants.WikiItemSelectorWebKeys" %><%@
 page import="com.liferay.wiki.web.internal.item.selector.resolver.WikiPageItemSelectorReturnTypeResolver" %><%@
-page import="com.liferay.wiki.web.internal.item.selector.view.WikiAttachmentItemSelectorView" %><%@
-page import="com.liferay.wiki.web.internal.item.selector.view.WikiPageItemSelectorView" %><%@
 page import="com.liferay.wiki.web.internal.item.selector.view.display.context.WikiAttachmentItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.wiki.web.internal.item.selector.view.display.context.WikiPageItemSelectorViewDisplayContext" %>
 

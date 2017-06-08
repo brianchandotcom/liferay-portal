@@ -2851,6 +2851,11 @@ this task.
 		</replace>
 
 		<replace file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml">
+			<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:weld:3.0"/>]]></replacetoken>
+			<replacevalue></replacevalue>
+		</replace>
+
+		<replace file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml">
 			<replacetoken><![CDATA[</extensions>]]></replacetoken>
 			<replacevalue>
 				<![CDATA[

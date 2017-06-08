@@ -27,18 +27,6 @@
 		<execute function="Type#typeEditor" locator1="CommerceCatalogEntry#LONG_DESCRIPTION_FIELD" value1="${productLongDescription}" />
 	</command>
 
-	<command name="assertDuplicateDenial">
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
-
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="The ${field} you requested is already taken.">
-			<var name="field" value="${field1}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="The ${field} you requested is already taken.">
-			<var name="field" value="${field2}" />
-		</execute>
-	</command>
-
 	<command name="editCatalogEntryBaseSKU">
 		<if>
 			<condition function="IsElementNotPresent" locator1="CommerceCatalogEntry#BASE_INFORMATION_TITLE_BAR" />

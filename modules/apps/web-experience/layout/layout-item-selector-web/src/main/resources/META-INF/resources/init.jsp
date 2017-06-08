@@ -21,7 +21,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.layout.item.selector.web.BaseLayoutsItemSelectorView" %><%@
+<%@ page import="com.liferay.layout.item.selector.web.internal.constants.LayoutsItemSelectorWebKeys" %><%@
 page import="com.liferay.layout.item.selector.web.internal.display.context.LayoutItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@

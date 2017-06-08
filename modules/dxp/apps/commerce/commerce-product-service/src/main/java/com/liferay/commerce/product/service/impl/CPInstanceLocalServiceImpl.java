@@ -217,16 +217,15 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			CPInstance cpInstance = cpInstancePersistence.fetchByC_S(
 				cpDefinitionId, sku.toString());
 
-			if (Validator.isNull(cpInstance)) {
-				addCPInstance(
-					cpDefinitionId, sku.toString(), jsonArray.toString(),
-					cpDefinition.getDisplayDate(),
-					cpDefinition.getExpirationDate(), neverExpire,
-					serviceContext);
-			}
-			else {
+			if(cpInstance != null){
 				continue;
 			}
+
+			addCPInstance(
+				cpDefinitionId, sku.toString(), jsonArray.toString(),
+				cpDefinition.getDisplayDate(),
+				cpDefinition.getExpirationDate(), neverExpire,
+				serviceContext);
 		}
 	}
 

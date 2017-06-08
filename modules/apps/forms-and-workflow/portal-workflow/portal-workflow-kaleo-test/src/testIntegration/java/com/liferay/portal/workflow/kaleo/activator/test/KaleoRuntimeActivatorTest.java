@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
  * @author Marcellus Tavares
  */
 @RunWith(Arquillian.class)
-public class KaleoActivatorTest {
+public class KaleoRuntimeActivatorTest {
 
 	@ClassRule
 	@Rule

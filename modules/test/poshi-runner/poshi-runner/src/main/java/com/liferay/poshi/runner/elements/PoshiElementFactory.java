@@ -73,7 +73,7 @@ public class PoshiElementFactory {
 		return new UnsupportedElement(element);
 	}
 
-	public static Element newPoshiElement(String readableSyntax) {
+	public static PoshiElement newPoshiElement(String readableSyntax) {
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new StringReader(readableSyntax))) {
 

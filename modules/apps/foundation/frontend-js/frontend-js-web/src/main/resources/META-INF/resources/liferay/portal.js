@@ -145,6 +145,8 @@
 
 			hideTooltipTask.cancel();
 
+			hideTooltipTask.cancel();
+
 			if (obj.jquery) {
 				obj = obj[0];
 			}

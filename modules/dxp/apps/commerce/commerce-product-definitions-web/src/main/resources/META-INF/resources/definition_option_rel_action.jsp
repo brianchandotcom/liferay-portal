@@ -51,7 +51,7 @@ else {
 	</portlet:actionURL>
 
 	<liferay-ui:icon
-		message='<%= (cpDefinitionOptionRel.getFacetable()) ? LanguageUtil.get(request, "unset-facetable") : LanguageUtil.get(request, "set-facetable") %>'
+		message='<%= (cpDefinitionOptionRel.getFacetable()) ? LanguageUtil.get(request, "unset-as-facetable") : LanguageUtil.get(request, "set-as-facetable") %>'
 		url="<%= setFacetableURL %>"
 	/>
 
@@ -64,7 +64,7 @@ else {
 	</portlet:actionURL>
 
 	<liferay-ui:icon
-		message='<%= (cpDefinitionOptionRel.getRequired()) ? LanguageUtil.get(request, "unset-required") : LanguageUtil.get(request, "set-required") %>'
+		message='<%= (cpDefinitionOptionRel.getRequired()) ? LanguageUtil.get(request, "unset-as-required") : LanguageUtil.get(request, "set-as-required") %>'
 		url="<%= setRequiredURL %>"
 	/>
 
@@ -77,7 +77,7 @@ else {
 	</portlet:actionURL>
 
 	<liferay-ui:icon
-		message='<%= (cpDefinitionOptionRel.getSkuContributor()) ? LanguageUtil.get(request, "unset-sku-contributor") : LanguageUtil.get(request, "set-sku-contributor") %>'
+		message='<%= (cpDefinitionOptionRel.getSkuContributor()) ? LanguageUtil.get(request, "unset-as-sku-contributor") : LanguageUtil.get(request, "set-as-sku-contributor") %>'
 		url="<%= setSkuContributorURL %>"
 	/>
 

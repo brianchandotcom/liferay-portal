@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Export Import Resources Importer
+Bundle-SymbolicName: com.liferay.exportimport.resources.importer
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Data Management
+-include: ../../../../marketplace/web-content-management/bnd.bnd

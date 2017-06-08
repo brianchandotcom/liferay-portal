@@ -723,7 +723,7 @@
 			<var name="rowEntry" value="${webContentTitle}" />
 		</execute>
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="deleteCP">

@@ -50,8 +50,14 @@ public class SecurityManagerUtil {
 			return;
 		}
 
-		_portalSecurityManagerStrategy = PortalSecurityManagerStrategy.parse(
-			PropsValues.PORTAL_SECURITY_MANAGER_STRATEGY);
+		if (!PropsValues.TCK_URL) {
+			_portalSecurityManagerStrategy =
+				PortalSecurityManagerStrategy.parse(
+					PropsValues.PORTAL_SECURITY_MANAGER_STRATEGY);
+		}
+		else {
+			_portalSecurityManagerStrategy = PortalSecurityManagerStrategy.NONE;
+		}
 
 		if (_portalSecurityManagerStrategy ==
 				PortalSecurityManagerStrategy.LIFERAY) {

@@ -379,6 +379,8 @@ public class SitesImpl implements Sites {
 	public void copyPortletPermissions(Layout targetLayout, Layout sourceLayout)
 		throws Exception {
 
+		Group targetGroup = targetLayout.getGroup();
+
 		List<Role> roles = RoleLocalServiceUtil.getGroupRelatedRoles(
 			targetLayout.getGroupId());
 		Group targetGroup = targetLayout.getGroup();

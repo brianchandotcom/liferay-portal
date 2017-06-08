@@ -486,12 +486,12 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
-			long companyId, long groupId, String keywords, int start, int end,
-			Sort sort)
+			long companyId, long groupId, String keywords, int status,
+			int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
-			companyId, groupId, keywords, start, end, sort);
+			companyId, groupId, keywords, status, start, end, sort);
 
 		return searchCPDefinitions(searchContext);
 	}
@@ -686,8 +686,8 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
-		long companyId, long groupId, String keywords, int start, int end,
-		Sort sort) {
+		long companyId, long groupId, String keywords, int status, int start,
+		int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -701,7 +701,7 @@ public class CPDefinitionLocalServiceImpl
 		attributes.put(Field.TITLE, keywords);
 		attributes.put(Field.DESCRIPTION, keywords);
 		attributes.put(Field.CONTENT, keywords);
-		attributes.put(Field.STATUS, WorkflowConstants.STATUS_ANY);
+		attributes.put(Field.STATUS, status);
 		attributes.put("params", params);
 
 		searchContext.setAttributes(attributes);

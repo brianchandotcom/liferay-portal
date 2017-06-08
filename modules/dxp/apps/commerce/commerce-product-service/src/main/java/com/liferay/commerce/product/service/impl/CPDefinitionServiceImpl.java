@@ -185,12 +185,12 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Override
 	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
-			long companyId, long groupId, String keywords, int start, int end,
-			Sort sort)
+			long companyId, long groupId, String keywords, int status,
+			int start, int end, Sort sort)
 		throws PortalException {
 
 		return cpDefinitionLocalService.searchCPDefinitions(
-			companyId, groupId, keywords, start, end, sort);
+			companyId, groupId, keywords, status, start, end, sort);
 	}
 
 	@Override

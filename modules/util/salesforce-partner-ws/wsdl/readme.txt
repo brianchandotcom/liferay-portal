@@ -1,0 +1,1 @@
+http://www.salesforce.com/us/developer/docs/api/Content/sforce_api_partner.htm

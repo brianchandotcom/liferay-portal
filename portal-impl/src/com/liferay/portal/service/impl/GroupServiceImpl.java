@@ -807,6 +807,10 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			params = new String[0];
 		}
 
+		if (params == null) {
+			params = new String[0];
+		}
+
 		LinkedHashMap<String, Object> paramsObj = MapUtil.toLinkedHashMap(
 			params);
 
@@ -836,6 +840,10 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	@Override
 	public int searchCount(
 		long companyId, String name, String description, String[] params) {
+
+		if (params == null) {
+			params = new String[0];
+		}
 
 		if (params == null) {
 			params = new String[0];

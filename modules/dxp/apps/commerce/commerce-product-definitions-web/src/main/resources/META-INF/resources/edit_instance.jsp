@@ -88,7 +88,7 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 
 		var cpDefinitionOptionsRenderDDMForm = Liferay.component("cpDefinitionOptionsRenderDDMForm");
 
-		if(cpDefinitionOptionsRenderDDMForm){
+		if (cpDefinitionOptionsRenderDDMForm) {
 			form.fm('ddmFormValues').val(JSON.stringify(cpDefinitionOptionsRenderDDMForm.toJSON()));
 		}
 

@@ -47,8 +47,7 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 </portlet:actionURL>
 
 <c:choose>
-	<c:when test="<%= toolbarItem.equals("view-product-definition-images") %>">
-
+	<c:when test='<%= toolbarItem.equals("view-product-definition-images") %>'>
 		<div class="lfr-attachment-cover-image-selector">
 			<liferay-item-selector:image-selector
 				draggableImage="vertical"
@@ -61,14 +60,11 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 				validExtensions='<%= StringUtil.merge(cpAttachmentFileEntriesDisplayContext.getImageExtensions(), ", ") %>'
 			/>
 		</div>
-
 	</c:when>
-	<c:when test="<%= toolbarItem.equals("view-product-definition-attachments") %>">
-
+	<c:when test='<%= toolbarItem.equals("view-product-definition-attachments") %>'>
 		<aui:input name="fileEntryId" type="hidden" />
 
 		<div id='<portlet:namespace />file-entry-container <%= (fileEntryId > 0) ? StringPool.BLANK : "hidden" %>'>
-
 			<h5 id="<portlet:namespace />file-entry-title">
 				<c:if test="<%= (fileEntryId > 0) %>">
 					<%= cpAttachmentFileEntriesDisplayContext.getFileEntryName() %>
@@ -79,10 +75,8 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 		</div>
 
 		<aui:button name="selectFile" value="select-file" />
-
 	</c:when>
 </c:choose>
-
 
 <aui:input name="title" />
 

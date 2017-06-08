@@ -1,0 +1,18 @@
+{namespace ImageEditorBrightnessComponent}
+
+/**
+ * Image Editor Brightness Component
+ *
+ * @param key
+ * @param requestEditorPreview
+ */
+{template .render}
+	<div id="{$key}">
+		{call Slider.render}
+			{param key: 'brightnessSlider' /}
+			{param events: [
+				'valueChanged': $requestEditorPreview
+			] /}
+		{/call}
+	</div>
+{/template}

@@ -1,0 +1,7 @@
+{
+	"name": "liferay-image-editor-capability-resize",
+	"version": "1.0.0",
+	"devDependencies": {
+		"metal-components": "^1.0.0-rc.19"
+	}
+}

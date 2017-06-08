@@ -1,0 +1,182 @@
+{namespace ImageEditor}
+
+/**
+ * Image Editor Component
+ *
+ * @param? capabilities
+ * @param? history
+ * @param id
+ * @param? image
+ * @param? imagePreview
+ * @param? selectedControl
+ * @param? selectedTool
+ *
+ * Function References
+ *
+ * @param getEditorImage
+ * @param getEditorImageContainer
+ * @param requestEditorEdit
+ * @param requestEditorPreview
+ */
+{template .render}
+	<div id="{$id}">
+		<div class="lfr-image-editor-image-container" id="{$id}ImageContainer">
+			{if strContains($image, 'data:image')}
+				<img class="img-responsive" src="{$image|filterImageDataUri}">
+			{else}
+				<img class="img-responsive" src="{$image}">
+			{/if}
+
+			<canvas class="image-preview {$imagePreview ? '' : 'hide'}"></canvas>
+		</div>
+
+		<div class="lfr-image-editor-tools-container">
+			{call .tools data="all"}
+				{param getEditorImage: $getEditorImage /}
+				{param getEditorImageContainer: $getEditorImageContainer /}
+				{param requestEditorEdit: $requestEditorEdit /}
+				{param requestEditorPreview: $requestEditorPreview /}
+			{/call}
+		</div>
+
+		<div class="lfr-image-editor-history-container">
+			{if not $selectedTool}
+				<div class="history-controls history-left btn-group" role="group">
+					<a class="btn btn-link {$history and $history.canUndo ? '' : 'disabled'} icon-reply icon-monospaced" data-onclick="undo" href="javascript:;"></a>
+					<a class="btn btn-link {$history and $history.canRedo ? '' : 'disabled'} icon-share-alt icon-monospaced" data-onclick="redo" href="javascript:;"></a>
+				</div>
+
+				<div class="history-controls history-right btn-group" role="group">
+					<a class="btn btn-link icon-undo {$history and $history.canReset ? '' : 'disabled'} icon-monospaced" data-onclick="reset" href="javascript:;"></a>
+				</div>
+			{/if}
+		</div>
+	</div>
+{/template}
+
+/**
+ * Renders the list of tools and associated controls
+ *
+ * @param capabilities
+ * @param? selectedTool
+ */
+{template .tools}
+	<div class="controls text-center">
+		<ul class="list-inline">
+			{foreach $tool in $capabilities.tools}
+				<li class="{$selectedTool == 'tool-' + index($tool) ? 'open' : ''}" style="display:inline">
+					{call .tool data="all"}
+						{param tool: $tool /}
+						{param toolIndex: index($tool) /}
+					{/call}
+				</li>
+			{/foreach}
+		</ul>
+	</div>
+{/template}
+
+/**
+ * Renders the required elements of an Image Editor Tool. This contains:
+ * - Button (dropdown when the tool groups different controls) to enable the control
+ * - Interface with the common Apply/Cancel buttons plus the custom control UI
+ *
+ * @param tool
+ * @param toolIndex
+ */
+{template .tool}
+	{if length($tool.controls) > 1}
+		{call .tool_dropdown data="all"}
+			{param tool: $tool /}
+		{/call}
+	{else}
+		{let $control : $tool.controls[0] /}
+
+		<a class="btn" data-onclick="requestEditorEdit" data-control="{$control.variant}" data-tool="tool-{$toolIndex}" href="javascript:;">
+			<span class="icon-{$tool.icon} icon-monospaced"></span>
+		</a>
+
+		{call .tool_control data="all"}
+			{param control: $control /}
+		{/call}
+	{/if}
+{/template}
+
+/**
+ * Renders a dropdown with all the available controls for this tool category
+ *
+ * @param? requestEditorEdit
+ * @param tool
+ * @param toolIndex
+ */
+{template .tool_dropdown}
+	{call Dropdown.render}
+		{param header kind="html"}
+			<a class="btn" data-onclick="toggle" href="javascript:;">
+				<span class="icon-{$tool.icon} icon-monospaced"></span>
+			</a>
+		{/param}
+
+		{param body kind="html"}
+			{foreach $control in $tool.controls}
+				<li>
+					<a data-onclick="{$requestEditorEdit}" data-control="{$control.variant}" data-tool="tool-{$toolIndex}">{$control.label}</a>
+				</li>
+			{/foreach}
+		{/param}
+	{/call}
+
+	{foreach $control in $tool.controls}
+		{call .tool_control data="all"}
+			{param control: $control /}
+		{/call}
+	{/foreach}
+{/template}
+
+/**
+ * Renders the common Apply/Cancel buttons necessary for completing an image edition plus the
+ * custom UI for the selected control
+ *
+ * @param control
+ * @param selectedControl
+ */
+{template .tool_control}
+	<div class="filters">
+		<div class="col-md-2 col-sm-2 col-xs-2 btn-space">
+			<a class="btn btn-link btn-primary modal-btn-icon icon-ok" data-onclick="accept" href="javascript:;">Apply</a>
+		</div>
+		<div class="col-md-8 col-sm-8 col-xs-8 filters-list">
+			{if $selectedControl and $selectedControl.label == $control.label}
+				{call .active_controls data="all"}
+					{param modulePath: $control.modulePath /}
+					{param variant: $control.variant /}
+				{/call}
+			{/if}
+		</div>
+		<div class="col-md-2 col-sm-2 col-xs-2 btn-space">
+			<a class="btn btn-link close-modal modal-btn-icon icon-remove" data-onclick="discard" href="javascript:;">Cancel</a>
+		</div>
+	</div>
+{/template}
+
+/**
+ * Renders the controls of the tool currently active. All tool controls need
+ * to expose a variant of the ImageEditor.Controls delegated template
+ * with the name of the controls they expose
+ *
+ * @param id
+ * @param variant
+ */
+{template .active_controls}
+	{delcall ImageEditor.Controls allowemptydefault="true" variant="$variant" data="all" }
+		{param key: $id + '_selected_control_' + $variant /}
+	{/delcall}
+{/template}
+
+/**
+ * Default ImageEditor.Controls implementation. This implementation serves
+ * as a mere placeholder for the incr-dom compiler. Tools are expected to
+ * provide their own ImageEditor.Controls implementation to activate their
+ * UIs and components.
+ */
+{deltemplate ImageEditor.Controls}
+{/deltemplate}

@@ -1,0 +1,7 @@
+{
+	"name": "liferay-image-editor-capability-saturation",
+	"version": "1.0.0",
+	"devDependencies": {
+		"metal-components": "^1.0.0-rc.19"
+	}
+}

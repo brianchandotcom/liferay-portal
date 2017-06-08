@@ -1,0 +1,19 @@
+{namespace ImageEditorContrastComponent}
+
+/**
+ * Image Editor Contrast Component
+ *
+ * @param key
+ * @param requestEditorPreview
+ */
+{template .render}
+	<div id="{$key}">
+		{call Slider.render}
+			{param key: 'contrastSlider' /}
+			{param events: [
+				'valueChanged': $requestEditorPreview
+			] /}
+			{param max: 200 /}
+		{/call}
+	</div>
+{/template}

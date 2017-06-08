@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Image Editor Web
+Bundle-SymbolicName: com.liferay.image.editor.web
+Bundle-Version: 1.0.0
+Require-Capability: soy;filter:="(type=metal)"
+-includeresource: package.json

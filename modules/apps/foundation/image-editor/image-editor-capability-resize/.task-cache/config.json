@@ -1,0 +1,11 @@
+{
+    "liferay-image-editor-capability-resize@1.0.0/ResizeComponent.es": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy", "metal/src/async/async", "metal/src/core", "metal-promise/src/promise/Promise", "./ResizeComponent.soy", "./ResizeControls.soy"]
+    },
+    "liferay-image-editor-capability-resize@1.0.0/ResizeComponent.soy": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
+    },
+    "liferay-image-editor-capability-resize@1.0.0/ResizeControls.soy": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
+    }
+}

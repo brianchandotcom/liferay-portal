@@ -1,0 +1,14 @@
+{
+    "liferay-image-editor-web@1.0.0/ImageEditor.es": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy", "metal-promise/src/promise/Promise", "metal-dropdown/src/Dropdown", "./ImageEditorUtils.es", "./ImageEditor.soy"]
+    },
+    "liferay-image-editor-web@1.0.0/ImageEditor.soy": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
+    },
+    "liferay-image-editor-web@1.0.0/ImageEditorUtils.es": {
+        "dependencies": ["exports", "metal-promise/src/promise/Promise"]
+    },
+    "liferay-image-editor-web@1.0.0/metal-dropdown/src/Dropdown.soy": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
+    }
+}

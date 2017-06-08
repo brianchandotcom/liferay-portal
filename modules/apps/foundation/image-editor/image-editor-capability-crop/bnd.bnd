@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Image Editor Capability Crop
+Bundle-SymbolicName: com.liferay.image.editor.capability.crop
+Bundle-Version: 1.0.0
+Provide-Capability: soy;type="image-editor-tool";version:Version="1.0.0"
+Require-Capability: soy;filter:="(type=metal)"
+-includeresource: package.json

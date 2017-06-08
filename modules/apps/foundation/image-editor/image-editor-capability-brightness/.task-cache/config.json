@@ -1,0 +1,14 @@
+{
+    "liferay-image-editor-capability-brightness@1.0.0/BrighntessComponent.es": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy", "metal/src/core", "metal-promise/src/promise/Promise", "metal-slider/src/Slider", "./BrightnessComponent.soy", "./BrightnessControls.soy"]
+    },
+    "liferay-image-editor-capability-brightness@1.0.0/BrightnessComponent.soy": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
+    },
+    "liferay-image-editor-capability-brightness@1.0.0/BrightnessControls.soy": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
+    },
+    "liferay-image-editor-capability-brightness@1.0.0/metal-slider/src/Slider.soy": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
+    }
+}

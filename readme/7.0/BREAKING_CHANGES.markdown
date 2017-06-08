@@ -3540,6 +3540,8 @@ else.
 
 - `com.liferay.portlet.documentlibrary` &rarr; `com.liferay.document.library.kernel`
 
+- `com.liferay.portlet.blogs` &rarr; `com.liferay.blogs.kernel`
+
 - `com.liferay.portlet.dynamicdatamapping` &rarr; `com.liferay.dynamic.data.mapping.kernel`
 
 - `com.liferay.portlet.expando` &rarr; `com.liferay.expando.kernel`

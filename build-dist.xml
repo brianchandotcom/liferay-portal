@@ -3364,6 +3364,29 @@ plugins.includes=</echo>
 		<delete dir="${tstamp.value}" />
 	</target>
 
+	<target name="zip-portal-tools">
+		<tstamp>
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
+		</tstamp>
+
+		<mkdir dir="${tstamp.value}" />
+
+		<copy todir="${tstamp.value}">
+			<fileset
+				dir="${liferay.home}/tools"
+			/>
+		</copy>
+
+		<zip destfile="dist/liferay-portal-tools-${lp.version}.zip">
+			<zipfileset
+				dir="${tstamp.value}"
+				prefix="liferay-portal-tools-${lp.version}"
+			/>
+		</zip>
+
+		<delete dir="${tstamp.value}" />
+	</target>
+
 	<target name="zip-portal-war">
 		<antcall target="zip-portal-war-2.4" />
 		<!--<antcall target="zip-portal-war-2.3" />

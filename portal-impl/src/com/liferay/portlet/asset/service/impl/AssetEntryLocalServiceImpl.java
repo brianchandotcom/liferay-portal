@@ -763,6 +763,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			if (entry.isVisible()) {
 				boolean isNew = entry.isNew();
 
+				assetEntryPersistence.updateImpl(entry, false);
+
 				if (isNew) {
 					for (AssetTag tag : tags) {
 						assetTagLocalService.incrementAssetCount(

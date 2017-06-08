@@ -33,5 +33,6 @@ dependencies {
 	provided project(":core:portal-compat:blogs:portal-kernel-blogs-compat")
 
 	testCompile group: "com.liferay", name: "com.liferay.blogs.web", version: "1.0.0"
+	testCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	testCompile project(":apps:collaboration:blogs:blogs-test-util")
 }

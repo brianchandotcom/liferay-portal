@@ -42,6 +42,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.zip.TrueZIPHelperUtil;
 import com.liferay.util.ThirdPartyThreadLocalRegistry;
 
+import freemarker.debug.impl.DebuggerService;
+
 import java.sql.Connection;
 import java.sql.Statement;
 
@@ -206,6 +208,12 @@ public class GlobalShutdownAction extends SimpleAction {
 	}
 
 	protected void shutdownLevel7() {
+
+		// Freemarker Debugger
+		if (System.getProperty("freemarker.debug.password") != null &&
+			System.getProperty("freemarker.debug.port") != null) {
+			DebuggerService.shutdown();
+		}
 
 		// Programmatically exit
 

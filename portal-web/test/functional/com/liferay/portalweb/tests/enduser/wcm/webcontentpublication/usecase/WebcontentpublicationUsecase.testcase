@@ -1576,7 +1576,7 @@
 	<command name="ViewAssetPaginationAndShowContentAddButtonViaAP" priority="4">
 		<execute macro="AssetPublisherPortlet#configureAssetLinkBehaviorPG">
 			<var name="assetLinkBehavior" value="View in Context" />
-			<var name="toggleSwitchLabel" value="Show Add Content Button" />
+			<var name="disableConfiguration" value="Show Add Content Button" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

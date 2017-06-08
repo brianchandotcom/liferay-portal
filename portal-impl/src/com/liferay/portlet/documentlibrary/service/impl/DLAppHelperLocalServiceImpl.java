@@ -1339,6 +1339,13 @@ public class DLAppHelperLocalServiceImpl
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
+		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =
+			new ArrayList<ObjectValuePair<Long, Integer>>();
+
+		if ((dlFileVersions != null) && !dlFileVersions.isEmpty()) {
+			dlFileVersionStatusOVPs = getDlFileVersionStatuses(dlFileVersions);
+		}
+
 		int oldStatus = fileVersion.getStatus();
 
 		dlFileEntryLocalService.updateStatus(

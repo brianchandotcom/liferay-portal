@@ -95,7 +95,7 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 				itemSelectedEventName, search, portletURL);
 
 		request.setAttribute(
-			DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			DLItemSelectorWebKeys.DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			dlItemSelectorViewDisplayContext);
 
 		requestDispatcher.include(request, response);

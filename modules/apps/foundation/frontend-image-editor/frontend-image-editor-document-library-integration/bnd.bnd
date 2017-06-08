@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Image Editor Document Library Integration
+Bundle-SymbolicName: com.liferay.image.editor.document.library.integration
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Image Editor Document Library Integration
+Web-ContextPath: /image-editor-document-library-integration

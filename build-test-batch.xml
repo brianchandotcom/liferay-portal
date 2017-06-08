@@ -904,6 +904,10 @@ app.server.type=@{app.server.type}]]></echo>
 										<arg value="--tests" />
 										<arg value="*.LPKGRevertOverrideVerifyTest" />
 									</gradle-execute>
+
+									<antcall inheritall="false" target="run-selenium-test">
+										<param name="test.class" value="PortalSmoke#Smoke" />
+									</antcall>
 								</try>
 
 								<finally>

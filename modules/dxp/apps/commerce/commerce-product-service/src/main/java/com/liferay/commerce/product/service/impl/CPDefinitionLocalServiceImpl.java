@@ -116,7 +116,7 @@ public class CPDefinitionLocalServiceImpl
 				CPDefinitionExpirationDateException.class);
 		}
 
-		validateReferences(groupId, ddmStructureKey, productTypeName);
+		validate(groupId, ddmStructureKey, productTypeName);
 
 		long cpDefinitionId = counterLocalService.increment();
 
@@ -554,8 +554,7 @@ public class CPDefinitionLocalServiceImpl
 				CPDefinitionExpirationDateException.class);
 		}
 
-		validateReferences(
-			groupId, ddmStructureKey, cpDefinition.getProductTypeName());
+		validate(groupId, ddmStructureKey, cpDefinition.getProductTypeName());
 
 		cpDefinition.setBaseSKU(baseSKU);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
@@ -775,7 +774,7 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinition, serviceContext, workflowContext);
 	}
 
-	protected void validateReferences(
+	protected void validate(
 			long groupId, String ddmStructureKey, String productTypeName)
 		throws PortalException {
 

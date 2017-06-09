@@ -17,9 +17,9 @@ package com.liferay.login.web.internal.portlet.action;
 import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.login.web.internal.portlet.util.LoginUtil;
+import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
-import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.exception.AddressCityException;
 import com.liferay.portal.kernel.exception.AddressStreetException;
 import com.liferay.portal.kernel.exception.AddressZipException;
@@ -235,7 +235,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 					getCaptchaConfiguration();
 
 				if (captchaConfiguration.createAccountCaptchaEnabled()) {
-					CaptchaUtil.check(actionRequest);
+					_captcha.check(actionRequest);
 				}
 
 				addUser(actionRequest, actionResponse);
@@ -585,6 +585,9 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AuthenticatedSessionManager _authenticatedSessionManager;
+
+	@Reference
+	private Captcha _captcha;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

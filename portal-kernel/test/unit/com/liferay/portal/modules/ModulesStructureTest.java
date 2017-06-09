@@ -30,7 +30,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -346,23 +345,6 @@ public class ModulesStructureTest {
 		}
 	}
 
-	private boolean _contains(Path path, String s) throws IOException {
-		try (FileReader fileReader = new FileReader(path.toFile());
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(fileReader)) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (line.contains(s)) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
 	private GradleDependency _getActiveGradleDependency(
 		List<GradleDependency> gradleDependencies,
 		GradleDependency gradleDependency) {
@@ -623,7 +605,7 @@ public class ModulesStructureTest {
 			return false;
 		}
 
-		String gitRepo = _read(gitRepoPath);
+		String gitRepo = ModulesStructureTestUtil.read(gitRepoPath);
 
 		if (gitRepo.contains("mode = pull")) {
 			return true;
@@ -654,15 +636,6 @@ public class ModulesStructureTest {
 		return false;
 	}
 
-	private String _read(Path path) throws IOException {
-		Assert.assertTrue("Missing " + path, Files.exists(path));
-
-		String s = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
-
-		return StringUtil.replace(
-			s, System.lineSeparator(), StringPool.NEW_LINE);
-	}
-
 	private void _testAntPluginIgnoreFiles(Path dirPath) throws IOException {
 		_testEquals(
 			dirPath.resolve("docroot/WEB-INF/lib/.gitignore"),
@@ -680,7 +653,7 @@ public class ModulesStructureTest {
 	private void _testAppBuildScripts(Path dirPath) throws IOException {
 		Path buildGradlePath = dirPath.resolve("build.gradle");
 
-		String buildGradle = _read(buildGradlePath);
+		String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
 
 		Assert.assertEquals(
 			"Incorrect " + buildGradlePath, _APP_BUILD_GRADLE, buildGradle);
@@ -688,7 +661,7 @@ public class ModulesStructureTest {
 
 	private void _testEquals(Path path, String expected) throws IOException {
 		if (Validator.isNotNull(expected)) {
-			String actual = _read(path);
+			String actual = ModulesStructureTestUtil.read(path);
 
 			Assert.assertEquals("Incorrect " + path, expected, actual);
 		}
@@ -744,13 +717,14 @@ public class ModulesStructureTest {
 		Path gradlePropertiesPath = dirPath.resolve("gradle.properties");
 		Path settingsGradlePath = dirPath.resolve("settings.gradle");
 
-		String buildGradle = _read(buildGradlePath);
+		String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
 
 		Assert.assertEquals(
 			"Incorrect " + buildGradlePath,
 			_getGitRepoBuildGradle(dirPath, buildGradleTemplate), buildGradle);
 
-		String gradleProperties = _read(gradlePropertiesPath);
+		String gradleProperties = ModulesStructureTestUtil.read(
+			gradlePropertiesPath);
 
 		Assert.assertEquals(
 			"Forbidden leading or trailing whitespaces in " +
@@ -898,7 +872,8 @@ public class ModulesStructureTest {
 				repositoryPrivateUsername, "build.repository.private.username");
 		}
 
-		String settingsGradle = _read(settingsGradlePath);
+		String settingsGradle = ModulesStructureTestUtil.read(
+			settingsGradlePath);
 
 		Assert.assertEquals(
 			"Incorrect " + settingsGradlePath, settingsGradleTemplate,
@@ -914,7 +889,7 @@ public class ModulesStructureTest {
 
 		Path gitIgnorePath = dirPath.resolve(".gitignore");
 
-		String gitIgnore = _read(gitIgnorePath);
+		String gitIgnore = ModulesStructureTestUtil.read(gitIgnorePath);
 
 		Assert.assertEquals(
 			"Incorrect " + gitIgnorePath,
@@ -958,7 +933,7 @@ public class ModulesStructureTest {
 	}
 
 	private void _testGradleFile(Path path) throws IOException {
-		String content = _read(path);
+		String content = ModulesStructureTestUtil.read(path);
 
 		Assert.assertFalse(
 			"Incorrect repository URL in " + path + ", please use " +
@@ -986,7 +961,7 @@ public class ModulesStructureTest {
 	}
 
 	private void _testThemeBuildScripts(Path dirPath) throws IOException {
-		if (!_contains(
+		if (!ModulesStructureTestUtil.contains(
 				dirPath.resolve("package.json"), "\"liferay-theme-tasks\":")) {
 
 			return;
@@ -1015,14 +990,14 @@ public class ModulesStructureTest {
 
 		Path gitIgnorePath = dirPath.resolve(".gitignore");
 
-		String gitIgnore = _read(gitIgnorePath);
+		String gitIgnore = ModulesStructureTestUtil.read(gitIgnorePath);
 
 		Assert.assertEquals(
 			"Incorrect " + gitIgnorePath, gitIgnoreTemplate, gitIgnore);
 
 		Path npmIgnorePath = dirPath.resolve(".npmignore");
 
-		String npmIgnore = _read(npmIgnorePath);
+		String npmIgnore = ModulesStructureTestUtil.read(npmIgnorePath);
 
 		Assert.assertEquals(
 			"Incorrect " + npmIgnorePath, npmIgnoreTemplate, npmIgnore);

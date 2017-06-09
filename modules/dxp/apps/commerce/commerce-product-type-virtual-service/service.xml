@@ -50,9 +50,12 @@
 		<reference entity="DLApp" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
 	<exceptions>
+		<exception>CPDefinitionVirtualSetting</exception>
 		<exception>CPDefinitionVirtualSettingFileEntryId</exception>
+		<exception>CPDefinitionVirtualSettingSample</exception>
 		<exception>CPDefinitionVirtualSettingSampleFileEntryId</exception>
 		<exception>CPDefinitionVirtualSettingSampleUrl</exception>
+		<exception>CPDefinitionVirtualSettingTermsOfUse</exception>
 		<exception>CPDefinitionVirtualSettingTermsOfUseArticleResourcePK</exception>
 		<exception>CPDefinitionVirtualSettingTermsOfUseContent</exception>
 		<exception>CPDefinitionVirtualSettingUrl</exception>

@@ -14,6 +14,7 @@
 
 package com.liferay.trash.service.webserver.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -55,12 +56,14 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Eduardo Garcia
  */
+@RunWith(Arquillian.class)
 public class WebServerTrashTest extends BaseWebServerTestCase {
 
 	@ClassRule

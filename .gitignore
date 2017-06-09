@@ -50,6 +50,7 @@
 /lib/development/catalina.jar
 /lib/development/cobertura.jar
 /lib/development/com.liferay.ant.bnd.jar
+/lib/development/com.liferay.util.taglib.compat.jar
 /lib/development/db2jcc.jar
 /lib/development/db2jcc_license_cu.jar
 /lib/development/deployment.jar

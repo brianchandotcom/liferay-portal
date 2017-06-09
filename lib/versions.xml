@@ -57,18 +57,6 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/global/portlet.jar</file-name>
-				<version>2.1</version>
-				<project-name>JSR 286 Portlet 2.0 Specification</project-name>
-				<project-url>http://jcp.org/en/jsr/detail?id=286</project-url>
-				<licenses>
-					<license>
-						<license-name>IBM Java Portlet Specification 2.0 License</license-name>
-						<license-url>http://www.jcp.org/en/jsr/detail?id=286</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/axis.jar</file-name>
 				<version>1.4</version>
 				<project-name>Axis</project-name>

@@ -5,11 +5,14 @@
 		</execute>
 
 		<execute function="Click" locator1="Button#PLUS" />
+		
+		<execute function="AssertClick" locator1="CommerceCatalogEntry#ADD_MENU" value1="${addMenu}">
+			<var name="key_addMenu" value="${addMenu}" />
+		</execute>
 
 		<execute macro="CommerceCatalogEntry#addCatalogEntry">
 			<var name="baseSku" value="${baseSku}" />
 			<var name="productLongDescription" value="${productLongDescription}" />
-			<var name="productName" value="${productName}" />
 			<var name="productShortDescription" value="${productShortDescription}" />
 			<var name="productTitle" value="${productTitle}" />
 		</execute>

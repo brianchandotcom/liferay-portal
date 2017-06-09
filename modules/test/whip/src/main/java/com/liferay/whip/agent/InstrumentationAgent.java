@@ -59,7 +59,7 @@ public class InstrumentationAgent {
 
 				ClassData classData = projectData.getClassData(clazz.getName());
 
-				_assertClassDataCoverage(assertionErrors, clazz, classData);
+				_assertClassDataCoverage(assertionErrors, classData);
 
 				if (includeInnerClasses) {
 					Class<?>[] declaredClasses = clazz.getDeclaredClasses();
@@ -79,8 +79,7 @@ public class InstrumentationAgent {
 						classData = projectData.getClassData(
 							declaredClass.getName());
 
-						_assertClassDataCoverage(
-							assertionErrors, declaredClass, classData);
+						_assertClassDataCoverage(assertionErrors, classData);
 					}
 				}
 			}
@@ -302,8 +301,7 @@ public class InstrumentationAgent {
 	}
 
 	private static void _assertClassDataCoverage(
-		List<AssertionError> assertionErrors, Class<?> clazz,
-		ClassData classData) {
+		List<AssertionError> assertionErrors, ClassData classData) {
 
 		if ((classData.getBranchCoverageRate() != 1.0) ||
 			(classData.getLineCoverageRate() != 1.0)) {

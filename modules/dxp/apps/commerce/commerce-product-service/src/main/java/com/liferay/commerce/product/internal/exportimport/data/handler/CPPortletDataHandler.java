@@ -107,12 +107,16 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 
 		_cpAttachmentFileEntryStagedModelRepository.deleteStagedModels(
 			portletDataContext);
+		_cpDefinitionOptionRelStagedModelRepository.deleteStagedModels(
+			portletDataContext);
+		_cpDefinitionOptionValueRelStagedModelRepository.deleteStagedModels(
+			portletDataContext);
 		_cpDefinitionStagedModelRepository.deleteStagedModels(
 			portletDataContext);
 		_cpInstanceStagedModelRepository.deleteStagedModels(portletDataContext);
-		_cpOptionStagedModelRepository.deleteStagedModels(portletDataContext);
 		_cpOptionCategoryStagedModelRepository.deleteStagedModels(
 			portletDataContext);
+		_cpOptionStagedModelRepository.deleteStagedModels(portletDataContext);
 		_cpOptionValueStagedModelRepository.deleteStagedModels(
 			portletDataContext);
 
@@ -130,55 +134,42 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "products")) {
-			ActionableDynamicQuery cpDefinitionActionableDynamicQuery =
-				_cpDefinitionStagedModelRepository.
-					getExportActionableDynamicQuery(portletDataContext);
-
-			cpDefinitionActionableDynamicQuery.performActions();
+			exportModels(
+				portletDataContext, _cpDefinitionStagedModelRepository);
+			exportModels(
+				portletDataContext,
+				_cpDefinitionOptionRelStagedModelRepository);
+			exportModels(
+				portletDataContext,
+				_cpDefinitionOptionValueRelStagedModelRepository);
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "skus")) {
-			ActionableDynamicQuery cpInstanceActionableDynamicQuery =
-				_cpInstanceStagedModelRepository.
-					getExportActionableDynamicQuery(portletDataContext);
-
-			cpInstanceActionableDynamicQuery.performActions();
+			exportModels(portletDataContext, _cpInstanceStagedModelRepository);
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "options")) {
-			ActionableDynamicQuery cpOptionActionableDynamicQuery =
-				_cpOptionStagedModelRepository.getExportActionableDynamicQuery(
-					portletDataContext);
-
-			cpOptionActionableDynamicQuery.performActions();
+			exportModels(portletDataContext, _cpOptionStagedModelRepository);
 		}
 
 		if (portletDataContext.getBooleanParameter(
 				NAMESPACE, "option-categories")) {
 
-			ActionableDynamicQuery cpOptionCategoryActionableDynamicQuery =
-				_cpOptionCategoryStagedModelRepository.
-					getExportActionableDynamicQuery(portletDataContext);
-
-			cpOptionCategoryActionableDynamicQuery.performActions();
+			exportModels(
+				portletDataContext, _cpOptionCategoryStagedModelRepository);
 		}
 
 		if (portletDataContext.getBooleanParameter(
 				NAMESPACE, "option-values")) {
 
-			ActionableDynamicQuery cpOptionValueActionableDynamicQuery =
-				_cpOptionValueStagedModelRepository.
-					getExportActionableDynamicQuery(portletDataContext);
-
-			cpOptionValueActionableDynamicQuery.performActions();
+			exportModels(
+				portletDataContext, _cpOptionValueStagedModelRepository);
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "attachments")) {
-			ActionableDynamicQuery cpAttachmentFileEntryActionableDynamicQuery =
-				_cpAttachmentFileEntryStagedModelRepository.
-					getExportActionableDynamicQuery(portletDataContext);
-
-			cpAttachmentFileEntryActionableDynamicQuery.performActions();
+			exportModels(
+				portletDataContext,
+				_cpAttachmentFileEntryStagedModelRepository);
 		}
 
 		return getExportDataRootElementString(rootElement);
@@ -194,6 +185,8 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "products")) {
 			importModels(portletDataContext, CPDefinition.class);
+			importModels(portletDataContext, CPDefinitionOptionRel.class);
+			importModels(portletDataContext, CPDefinitionOptionValueRel.class);
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "skus")) {
@@ -229,41 +222,29 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		ActionableDynamicQuery cpDefinitionActionableDynamicQuery =
-			_cpDefinitionStagedModelRepository.getExportActionableDynamicQuery(
+		performModelsCount(
+			portletDataContext, _cpAttachmentFileEntryStagedModelRepository);
+		performModelsCount(
+			portletDataContext, _cpDefinitionStagedModelRepository);
+		performModelsCount(
+			portletDataContext, _cpInstanceStagedModelRepository);
+		performModelsCount(
+			portletDataContext, _cpOptionCategoryStagedModelRepository);
+		performModelsCount(portletDataContext, _cpOptionStagedModelRepository);
+		performModelsCount(
+			portletDataContext, _cpOptionValueStagedModelRepository);
+	}
+
+	protected void exportModels(
+			PortletDataContext portletDataContext,
+			StagedModelRepository<? extends StagedModel> stagedModelRepository)
+		throws Exception {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			stagedModelRepository.getExportActionableDynamicQuery(
 				portletDataContext);
 
-		cpDefinitionActionableDynamicQuery.performCount();
-
-		ActionableDynamicQuery cpInstanceActionableDynamicQuery =
-			_cpInstanceStagedModelRepository.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		cpInstanceActionableDynamicQuery.performCount();
-
-		ActionableDynamicQuery cpOptionActionableDynamicQuery =
-			_cpOptionStagedModelRepository.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		cpOptionActionableDynamicQuery.performCount();
-
-		ActionableDynamicQuery cpOptionCategoryActionableDynamicQuery =
-			_cpOptionCategoryStagedModelRepository.
-				getExportActionableDynamicQuery(portletDataContext);
-
-		cpOptionCategoryActionableDynamicQuery.performCount();
-
-		ActionableDynamicQuery cpOptionValueActionableDynamicQuery =
-			_cpOptionValueStagedModelRepository.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		cpOptionValueActionableDynamicQuery.performCount();
-
-		ActionableDynamicQuery cpAttachmentFileEntryActionableDynamicQuery =
-			_cpAttachmentFileEntryStagedModelRepository.
-				getExportActionableDynamicQuery(portletDataContext);
-
-		cpAttachmentFileEntryActionableDynamicQuery.performCount();
+		actionableDynamicQuery.performActions();
 	}
 
 	protected void importModels(
@@ -282,11 +263,35 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 		}
 	}
 
+	protected void performModelsCount(
+			PortletDataContext portletDataContext,
+			StagedModelRepository<? extends StagedModel> stagedModelRepository)
+		throws Exception {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			stagedModelRepository.getExportActionableDynamicQuery(
+				portletDataContext);
+
+		actionableDynamicQuery.performCount();
+	}
+
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CPAttachmentFileEntry)"
 	)
 	private StagedModelRepository<CPAttachmentFileEntry>
 		_cpAttachmentFileEntryStagedModelRepository;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinitionOptionRel)"
+	)
+	private StagedModelRepository<CPDefinitionOptionRel>
+		_cpDefinitionOptionRelStagedModelRepository;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinitionOptionValueRel)"
+	)
+	private StagedModelRepository<CPDefinitionOptionValueRel>
+		_cpDefinitionOptionValueRelStagedModelRepository;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinition)"

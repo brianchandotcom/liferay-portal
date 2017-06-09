@@ -297,12 +297,26 @@
 	</command>
 
 	<command name="confirmAndViewSucessMessageViaActions">
+		<if>
+			<condition function="IsElementPresent" locator1="IFrame#DIALOG" />
+			<then>
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+			</then>
+		</if>
+
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#DONE" value1="Done" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="confirmAndViewSucessMessageViaDetails">
+		<if>
+			<condition function="IsElementPresent" locator1="IFrame#DIALOG" />
+			<then>
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+			</then>
+		</if>
+
 		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
 
 		<execute macro="Alert#viewSuccessMessage" />

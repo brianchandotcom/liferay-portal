@@ -233,6 +233,10 @@ public class LayoutItemSelectorViewDisplayContext {
 			JSONObject addChildPageJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
+			addChildPageJSONObject.put(
+				"label",
+				LanguageUtil.get(themeDisplay.getLocale(), "add-child-page"));
+
 			PortletURL addLayoutURL = PortalUtil.getControlPanelPortletURL(
 				_request, portletId, PortletRequest.RENDER_PHASE);
 
@@ -244,36 +248,9 @@ public class LayoutItemSelectorViewDisplayContext {
 			addLayoutURL.setParameter(
 				"privateLayout", String.valueOf(_privateLayout));
 
-			addChildPageJSONObject.put(
-				"label",
-				LanguageUtil.get(themeDisplay.getLocale(), "add-child-page"));
 			addChildPageJSONObject.put("url", addLayoutURL.toString());
 
 			jsonArray.put(addChildPageJSONObject);
-		}
-
-		if (LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.UPDATE)) {
-
-			JSONObject configurePageJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			PortletURL editLayoutURL = PortalUtil.getControlPanelPortletURL(
-				_request, portletId, PortletRequest.RENDER_PHASE);
-
-			editLayoutURL.setParameter(
-				"groupId", String.valueOf(layout.getGroupId()));
-			editLayoutURL.setParameter(
-				"selPlid", String.valueOf(layout.getPlid()));
-			editLayoutURL.setParameter(
-				"privateLayout", String.valueOf(_privateLayout));
-
-			configurePageJSONObject.put(
-				"label",
-				LanguageUtil.get(themeDisplay.getLocale(), "configure"));
-			configurePageJSONObject.put("url", editLayoutURL.toString());
-
-			jsonArray.put(configurePageJSONObject);
 		}
 
 		if (LayoutPermissionUtil.contains(
@@ -281,30 +258,6 @@ public class LayoutItemSelectorViewDisplayContext {
 
 			JSONObject deletePageJSONObject =
 				JSONFactoryUtil.createJSONObject();
-
-			PortletURL deleteLayoutURL = PortalUtil.getControlPanelPortletURL(
-				_request, portletId, PortletRequest.ACTION_PHASE);
-
-			long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(
-				themeDisplay.getScopeGroupId(), _privateLayout);
-
-			Layout defaultLayout = LayoutLocalServiceUtil.getLayout(
-				defaultPlid);
-
-			String redirect = PortalUtil.getLayoutURL(
-				defaultLayout, themeDisplay);
-
-			deleteLayoutURL.setParameter(
-				ActionRequest.ACTION_NAME, "deleteLayout");
-			deleteLayoutURL.setParameter("mvcPath", "/edit_layout.jsp");
-
-			deleteLayoutURL.setParameter(
-				"groupId", String.valueOf(layout.getGroupId()));
-			deleteLayoutURL.setParameter(
-				"selPlid", String.valueOf(layout.getPlid()));
-			deleteLayoutURL.setParameter(
-				"privateLayout", String.valueOf(_privateLayout));
-			deleteLayoutURL.setParameter("redirect", redirect);
 
 			ResourceBundle resourceBundle =
 				_resourceBundleLoader.loadResourceBundle(
@@ -318,9 +271,57 @@ public class LayoutItemSelectorViewDisplayContext {
 
 			deletePageJSONObject.put(
 				"label", LanguageUtil.get(themeDisplay.getLocale(), "delete"));
+
+			PortletURL deleteLayoutURL = PortalUtil.getControlPanelPortletURL(
+				_request, portletId, PortletRequest.ACTION_PHASE);
+
+			long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(
+				themeDisplay.getScopeGroupId(), _privateLayout);
+
+			Layout defaultLayout = LayoutLocalServiceUtil.getLayout(
+				defaultPlid);
+
+			deleteLayoutURL.setParameter(
+				ActionRequest.ACTION_NAME, "deleteLayout");
+			deleteLayoutURL.setParameter("mvcPath", "/edit_layout.jsp");
+			deleteLayoutURL.setParameter(
+				"groupId", String.valueOf(layout.getGroupId()));
+			deleteLayoutURL.setParameter(
+				"selPlid", String.valueOf(layout.getPlid()));
+			deleteLayoutURL.setParameter(
+				"privateLayout", String.valueOf(_privateLayout));
+			deleteLayoutURL.setParameter(
+				"redirect",
+				PortalUtil.getLayoutURL(defaultLayout, themeDisplay));
+
 			deletePageJSONObject.put("url", deleteLayoutURL.toString());
 
 			jsonArray.put(deletePageJSONObject);
+		}
+
+		if (LayoutPermissionUtil.contains(
+				permissionChecker, layout, ActionKeys.UPDATE)) {
+
+			JSONObject configurePageJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			configurePageJSONObject.put(
+				"label",
+				LanguageUtil.get(themeDisplay.getLocale(), "configure"));
+
+			PortletURL editLayoutURL = PortalUtil.getControlPanelPortletURL(
+				_request, portletId, PortletRequest.RENDER_PHASE);
+
+			editLayoutURL.setParameter(
+				"groupId", String.valueOf(layout.getGroupId()));
+			editLayoutURL.setParameter(
+				"selPlid", String.valueOf(layout.getPlid()));
+			editLayoutURL.setParameter(
+				"privateLayout", String.valueOf(_privateLayout));
+
+			configurePageJSONObject.put("url", editLayoutURL.toString());
+
+			jsonArray.put(configurePageJSONObject);
 		}
 
 		return jsonArray;

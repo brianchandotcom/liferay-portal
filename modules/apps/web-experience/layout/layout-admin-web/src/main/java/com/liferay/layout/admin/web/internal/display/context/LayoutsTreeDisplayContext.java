@@ -152,8 +152,6 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 	}
 
 	public PortletURL getItemSelectorURL() {
-		String eventName = liferayPortletResponse.getNamespace() + "selectPage";
-
 		ItemSelector itemSelector =
 			(ItemSelector)liferayPortletRequest.getAttribute(
 				LayoutAdminWebKeys.ITEM_SELECTOR);
@@ -172,11 +170,11 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 		layoutItemSelectorCriterion.setFollowURLOnTitleClick(true);
 		layoutItemSelectorCriterion.setShowActionsMenu(true);
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
+		String eventName = liferayPortletResponse.getNamespace() + "selectPage";
+
+		return itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest),
 			eventName, layoutItemSelectorCriterion);
-
-		return itemSelectorURL;
 	}
 
 	public String getLayoutSetBranchCssClass(LayoutSetBranch layoutSetBranch)

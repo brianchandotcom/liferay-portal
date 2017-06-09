@@ -40,7 +40,7 @@ public class VarElement extends PoshiElement {
 	}
 
 	public void addAttributes(String readableSyntax) {
-		String[] items = readableSyntax.split("\\|");
+		String[] items = readableSyntax.split("\\|", -1);
 
 		addAttribute("name", items[1].trim());
 

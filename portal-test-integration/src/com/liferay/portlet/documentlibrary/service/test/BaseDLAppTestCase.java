@@ -17,6 +17,8 @@ package com.liferay.portlet.documentlibrary.service.test;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -54,6 +56,9 @@ public abstract class BaseDLAppTestCase {
 				"Test Folder");
 		}
 		catch (NoSuchFolderException nsfe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfe, nsfe);
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -90,6 +95,9 @@ public abstract class BaseDLAppTestCase {
 
 	@DeleteAfterTestRun
 	protected Group targetGroup;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseDLAppTestCase.class);
 
 	private String _name;
 

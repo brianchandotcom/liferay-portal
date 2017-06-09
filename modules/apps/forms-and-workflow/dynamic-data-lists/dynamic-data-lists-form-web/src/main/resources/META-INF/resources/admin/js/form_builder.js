@@ -485,6 +485,8 @@ AUI.add(
 						var layouts = instance.get('layouts');
 
 						if (!instance._pageManager) {
+							var context = instance.get('context');
+
 							instance._pageManager = new Liferay.DDL.FormBuilderPagesManager(
 								A.merge(
 									{
@@ -493,7 +495,7 @@ AUI.add(
 										editingLanguageId: instance.get('editingLanguageId'),
 										localizedDescriptions: deserializer.get('descriptions'),
 										localizedTitles: deserializer.get('titles'),
-										mode: 'wizard',
+										mode: context.paginationMode,
 										pageHeader: contentBox.one('.' + CSS_PAGE_HEADER),
 										pagesQuantity: layouts.length,
 										paginationContainer: contentBox.one('.' + CSS_PAGES),
@@ -502,8 +504,6 @@ AUI.add(
 									config
 								)
 							);
-
-							var context = instance.get('context');
 
 							instance._pageManager.setSuccessPage(context.successPageSettings);
 

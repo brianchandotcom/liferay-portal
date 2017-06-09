@@ -16,15 +16,19 @@ package com.liferay.portal.modules.util;
 
 import aQute.bnd.osgi.Constants;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
@@ -42,6 +46,23 @@ import org.junit.Assert;
  */
 public class ModulesStructureTestUtil {
 
+	public static boolean contains(Path path, String s) throws IOException {
+		try (FileReader fileReader = new FileReader(path.toFile());
+			UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(fileReader)) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.contains(s)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	public static List<GradleDependency> getGradleDependencies(
 			String gradleContent, Path gradlePath, Path rootDirPath)
 		throws IOException {
@@ -54,6 +75,15 @@ public class ModulesStructureTestUtil {
 			gradleDependencies, gradleContent, gradlePath, rootDirPath);
 
 		return gradleDependencies;
+	}
+
+	public static String read(Path path) throws IOException {
+		Assert.assertTrue("Missing " + path, Files.exists(path));
+
+		String s = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+
+		return StringUtil.replace(
+			s, System.lineSeparator(), StringPool.NEW_LINE);
 	}
 
 	private static void _addGradleModuleDependencies(

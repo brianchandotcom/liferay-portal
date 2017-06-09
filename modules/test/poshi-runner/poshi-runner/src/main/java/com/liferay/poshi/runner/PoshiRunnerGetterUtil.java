@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.elements.PoshiElementFactory;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.ExternalMethod;
 import com.liferay.poshi.runner.util.FileUtil;
@@ -250,12 +251,20 @@ public class PoshiRunnerGetterUtil {
 	public static Element getRootElementFromFilePath(String filePath)
 		throws Exception {
 
+		String fileContent = FileUtil.read(filePath);
+
+		if (!fileContent.contains("<definition") &&
+			filePath.endsWith(".testcase")) {
+
+			return PoshiElementFactory.newPoshiElementFromFile(filePath);
+		}
+
 		boolean cdata = false;
 		int lineNumber = 1;
 		StringBuilder sb = new StringBuilder();
 
 		BufferedReader bufferedReader = new BufferedReader(
-			new StringReader(FileUtil.read(filePath)));
+			new StringReader(fileContent));
 
 		String line = null;
 

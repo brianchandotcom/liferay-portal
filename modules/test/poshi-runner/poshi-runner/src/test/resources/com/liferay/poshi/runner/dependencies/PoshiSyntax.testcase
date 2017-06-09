@@ -1,0 +1,52 @@
+<definition component-name="portal-acceptance">
+    <property name="portal.release" value="true" />
+    <property name="portal.upstream" value="true" />
+    <property name="testray.main.component.name" value="Smoke" />
+
+    <set-up>
+        <execute macro="TestCase#setUpPortalInstance" />
+
+        <execute macro="SignIn#signIn" />
+    </set-up>
+
+    <tear-down>
+        <execute macro="PortalInstances#tearDownCP">
+            <var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+        </execute>
+    </tear-down>
+
+    <command name="AddUser" priority="5">
+        <var name="userEmailAddress" value="userea@liferay.com" />
+        <var name="userFirstName" value="userfn" />
+        <var name="userLastName" value="userln" />
+        <var name="userScreenName" value="usersn" />
+
+        <execute macro="ProductMenu#gotoControlPanelUsers">
+            <var name="portlet" value="Users and Organizations" />
+        </execute>
+
+        <execute macro="User#addCP">
+            <var name="userEmailAddress" value="${userEmailAddress}" />
+            <var name="userFirstName" value="${userFirstName}" />
+            <var name="userLastName" value="${userLastName}" />
+            <var name="userScreenName" value="${userScreenName}" />
+        </execute>
+    </command>
+
+    <command description="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." name="Smoke" priority="5">
+        <property name="portal.smoke" value="true" />
+        <property name="test.assert.warning.exceptions" value="true" />
+
+        <execute macro="Smoke#viewWelcomePage" />
+
+        <execute macro="Smoke#runSmoke" />
+
+        <execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />
+
+        <execute function="Click" locator1="Home#PAGE" />
+
+        <execute function="Type" value1="Welcome" />
+
+        <execute function="AssertElementPresent#assertElementPresent" locator1="Home#PAGE" value1="Welcome" />
+    </command>
+</definition>

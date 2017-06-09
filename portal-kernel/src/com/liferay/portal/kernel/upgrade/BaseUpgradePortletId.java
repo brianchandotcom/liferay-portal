@@ -15,15 +15,10 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
-import com.liferay.portal.kernel.model.PortletConstants;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -453,7 +448,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			boolean updateName)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append("update ResourcePermission set primKey = replace(primKey, ");
 		sb.append("'_LAYOUT_");
@@ -462,8 +457,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		sb.append(newRootPortletId);
 		sb.append("') where primKey like '%_LAYOUT_");
 		sb.append(oldRootPortletId);
-		sb.append("%' and scope = ");
-		sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
+		sb.append("%'");
 
 		runSQL(sb.toString());
 

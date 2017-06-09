@@ -79,6 +79,9 @@ public class PermissionCheckerTestCallback
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 	}
 
+	private PermissionCheckerTestCallback() {
+	}
+
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
 

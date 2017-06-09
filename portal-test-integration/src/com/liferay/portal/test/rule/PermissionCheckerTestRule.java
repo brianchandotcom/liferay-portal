@@ -25,7 +25,7 @@ public class PermissionCheckerTestRule extends BaseTestRule<Void, Void> {
 	public static final PermissionCheckerTestRule INSTANCE =
 		new PermissionCheckerTestRule();
 
-	public PermissionCheckerTestRule() {
+	private PermissionCheckerTestRule() {
 		super(PermissionCheckerTestCallback.INSTANCE);
 	}
 

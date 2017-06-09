@@ -947,7 +947,9 @@ public class ModulesStructureTest {
 				", please use \"apply plugin:\" instead",
 			content.contains("plugins {"));
 
-		if (_isInGitRepoReadOnly(path.getParent())) {
+		Path dirPath = path.getParent();
+
+		if (_isInGitRepoReadOnly(dirPath) || _isInPrivateModulesDir(dirPath)) {
 			return;
 		}
 

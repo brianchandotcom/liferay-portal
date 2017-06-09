@@ -33,6 +33,78 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="addContractCP">
+		<execute macro="DMNavigator#gotoAddDocumentType">
+			<var name="dmDocumentTypeName" value="Contract" />
+		</execute>
+
+		<if>
+			<isset var="dmContractFile" />
+			<then>
+				<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmContractFile}" />
+			</then>
+		</if>
+
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${dmContractTitle}" />
+		</execute>
+
+		<if>
+			<isset var="dmContractDescription" />
+			<then>
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${dmContractDescription}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="effectiveDate" />
+			<then>
+				<execute function="Type#clickAtSendKeys" locator1="DocumentsAndMediaDocument#EFFECTIVE_DATE_FIELD" value1="${effectiveDate}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="expirationDate" />
+			<then>
+				<execute function="Type#clickAtSendKeys" locator1="DocumentsAndMediaDocument#EXPIRATION_DATE_FIELD" value1="${expirationDate}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="contractType" />
+			<then>
+				<execute function="Type#clickAtSendKeys" locator1="DocumentsAndMediaDocument#CONTRACT_TYPE" value1="${contractType}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="dmContractlegalReviewer" />
+			<then>
+				<execute function="Type" locator1="DocumentsAndMediaDocument#LEGALL_REVIEWER" value1="${dmContractlegalReviewer}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="dmContractsigningAuthority" />
+			<then>
+				<execute function="Type" locator1="DocumentsAndMediaDocument#SIGNING_AUTHORITY" value1="${dmContractsigningAuthority}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="dmContractdealName" />
+			<then>
+				<execute function="Type" locator1="DocumentsAndMediaDocument#DEAL_NAME" value1="${dmContractdealName}" />
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="addCP">
 		<execute macro="DMNavigator#gotoAddDocumentType">
 			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />

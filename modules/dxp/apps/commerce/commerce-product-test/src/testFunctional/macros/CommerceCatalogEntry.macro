@@ -1,7 +1,5 @@
 <definition>
 	<command name="addCatalogEntry">
-		<execute function="Type" locator1="CommerceCatalogEntry#NAME_FIELD" value1="${productName}" />
-
 		<execute function="Type" locator1="CommerceCatalogEntry#TITLE_FIELD" value1="${productTitle}" />
 
 		<execute function="Type" locator1="CommerceCatalogEntry#SHORT_DESCRIPTION_FIELD" value1="${productShortDescription}" />
@@ -47,10 +45,6 @@
 		</execute>
 	</command>
 
-	<command name="editCatalogEntryName">
-		<execute function="Type" locator1="CommerceCatalogEntry#NAME_FIELD" value1="${newProductName}" />
-	</command>
-
 	<command name="editCatalogEntryShortDescription">
 		<execute function="Type" locator1="CommerceCatalogEntry#SHORT_DESCRIPTION_FIELD" value1="${newProductShortDescription}" />
 	</command>
@@ -59,9 +53,27 @@
 		<execute function="Type" locator1="CommerceCatalogEntry#TITLE_FIELD" value1="${newProductTitle}" />
 	</command>
 
-	<command name="viewCatalogEntry">
-		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#NAME_FIELD" value1="${productName}" />
+	<command name="gotoCatalogEntryMenu">
+		<execute function="AssertClick" locator1="CommerceCatalogEntry#ENTRY_MENU_TAB" value1="${menuTab}">
+			<var name="key_menuTab" value="${menuTab}" />
+		</execute>
+	</command>
 
+	<command name="uploadCatalogEntrySingleImage">
+		<execute macro="CommerceCatalogEntry#gotoCatalogEntryMenu">
+			<var name="menuTab" value="${menuTab}" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="CommerceCatalogEntry#PRODUCT_IMAGE_SELECT_FILE" value1="Select File" />
+
+		<execute macro="CommerceItemSelector#uploadSingleFile">
+			<var name="uploadFileName" value="${uploadFileName}" />
+		</execute>
+	</command>
+
+	<command name="viewCatalogEntry">
 		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#TITLE_FIELD" value1="${productTitle}" />
 
 		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#SHORT_DESCRIPTION_FIELD" value1="${productShortDescription}" />

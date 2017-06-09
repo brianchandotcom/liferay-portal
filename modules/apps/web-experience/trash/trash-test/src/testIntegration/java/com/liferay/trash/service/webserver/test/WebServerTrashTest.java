@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.webserver;
+package com.liferay.trash.service.webserver.test;
 
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;

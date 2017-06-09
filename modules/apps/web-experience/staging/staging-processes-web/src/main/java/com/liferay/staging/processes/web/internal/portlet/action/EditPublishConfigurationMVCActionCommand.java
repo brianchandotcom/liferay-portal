@@ -21,7 +21,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationService;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
@@ -190,13 +190,13 @@ public class EditPublishConfigurationMVCActionCommand
 		if (exportImportConfiguration.getType() ==
 				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL) {
 
-			StagingUtil.publishLayouts(userId, exportImportConfiguration);
+			_staging.publishLayouts(userId, exportImportConfiguration);
 		}
 		else if (exportImportConfiguration.getType() ==
 					ExportImportConfigurationConstants.
 						TYPE_PUBLISH_LAYOUT_REMOTE) {
 
-			StagingUtil.copyRemoteLayouts(exportImportConfiguration);
+			_staging.copyRemoteLayouts(exportImportConfiguration);
 		}
 	}
 
@@ -311,6 +311,9 @@ public class EditPublishConfigurationMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Staging _staging;
 
 	private TrashEntryService _trashEntryService;
 

@@ -20,7 +20,7 @@ import com.liferay.exportimport.kernel.exception.LARFileException;
 import com.liferay.exportimport.kernel.exception.LARFileNameException;
 import com.liferay.exportimport.kernel.exception.LARFileSizeException;
 import com.liferay.exportimport.kernel.exception.LARTypeException;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortletIdException;
@@ -91,12 +91,12 @@ public class PublishPortletMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals("copy_from_live")) {
-				StagingUtil.copyFromLive(actionRequest, portlet);
+				_staging.copyFromLive(actionRequest, portlet);
 			}
 			else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
 				hideDefaultSuccessMessage(actionRequest);
 
-				StagingUtil.publishToLive(actionRequest, portlet);
+				_staging.publishToLive(actionRequest, portlet);
 			}
 		}
 		catch (Exception e) {
@@ -126,5 +126,8 @@ public class PublishPortletMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Staging _staging;
 
 }

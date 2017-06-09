@@ -28,7 +28,7 @@ import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -669,7 +669,7 @@ public class AssetPublisherConfigurationAction
 
 			long layoutSetBranchId = layoutSetBranch.getLayoutSetBranchId();
 
-			long layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(
+			long layoutRevisionId = staging.getRecentLayoutRevisionId(
 				request, layoutSetBranchId, layout.getPlid());
 
 			LayoutRevision layoutRevision =
@@ -799,5 +799,8 @@ public class AssetPublisherConfigurationAction
 
 	@Reference
 	protected Portal portal;
+
+	@Reference
+	protected Staging staging;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.staging.processes.web.internal.portlet.configuration.icon;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -110,7 +110,7 @@ public class StagingConfigurationPortletConfigurationIcon
 			return false;
 		}
 
-		Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
+		Group liveGroup = _staging.getLiveGroup(group.getGroupId());
 
 		try {
 			return GroupPermissionUtil.contains(
@@ -139,5 +139,8 @@ public class StagingConfigurationPortletConfigurationIcon
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Staging _staging;
 
 }

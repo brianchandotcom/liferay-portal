@@ -16,7 +16,7 @@ package com.liferay.staging.processes.web.internal.portlet.action;
 
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.exception.LayoutPrototypeException;
 import com.liferay.portal.kernel.exception.RemoteOptionsException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -77,45 +77,45 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			if (cmd.equals("copy_from_live")) {
 				setLayoutIdMap(actionRequest);
 
-				StagingUtil.copyFromLive(actionRequest);
+				_staging.copyFromLive(actionRequest);
 			}
 			else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
 				setLayoutIdMap(actionRequest);
 
 				hideDefaultSuccessMessage(actionRequest);
 
-				StagingUtil.publishToLive(actionRequest);
+				_staging.publishToLive(actionRequest);
 			}
 			else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
 				hideDefaultSuccessMessage(actionRequest);
 
 				setLayoutIdMap(actionRequest);
 
-				StagingUtil.publishToRemote(actionRequest);
+				_staging.publishToRemote(actionRequest);
 			}
 			else if (cmd.equals("schedule_copy_from_live")) {
 				setLayoutIdMap(actionRequest);
 
-				StagingUtil.scheduleCopyFromLive(actionRequest);
+				_staging.scheduleCopyFromLive(actionRequest);
 			}
 			else if (cmd.equals("schedule_publish_to_live")) {
 				setLayoutIdMap(actionRequest);
 
-				StagingUtil.schedulePublishToLive(actionRequest);
+				_staging.schedulePublishToLive(actionRequest);
 			}
 			else if (cmd.equals("schedule_publish_to_remote")) {
 				setLayoutIdMap(actionRequest);
 
-				StagingUtil.schedulePublishToRemote(actionRequest);
+				_staging.schedulePublishToRemote(actionRequest);
 			}
 			else if (cmd.equals("unschedule_copy_from_live")) {
-				StagingUtil.unscheduleCopyFromLive(actionRequest);
+				_staging.unscheduleCopyFromLive(actionRequest);
 			}
 			else if (cmd.equals("unschedule_publish_to_live")) {
-				StagingUtil.unschedulePublishToLive(actionRequest);
+				_staging.unschedulePublishToLive(actionRequest);
 			}
 			else if (cmd.equals("unschedule_publish_to_remote")) {
-				StagingUtil.unschedulePublishToRemote(actionRequest);
+				_staging.unschedulePublishToRemote(actionRequest);
 			}
 
 			sendRedirect(actionRequest, actionResponse, redirect);
@@ -175,5 +175,8 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Staging _staging;
 
 }

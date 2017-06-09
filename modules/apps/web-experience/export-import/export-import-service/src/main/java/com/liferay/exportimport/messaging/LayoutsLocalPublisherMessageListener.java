@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -109,7 +109,7 @@ public class LayoutsLocalPublisherMessageListener
 		initThreadLocals(userId, parameterMap);
 
 		try {
-			StagingUtil.publishLayouts(
+			_staging.publishLayouts(
 				userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
 				exportImportConfiguration.getName(), parameterMap);
 		}
@@ -142,5 +142,8 @@ public class LayoutsLocalPublisherMessageListener
 	@Reference
 	private SingleDestinationMessageSenderFactory
 		_singleDestinationMessageSenderFactory;
+
+	@Reference
+	private Staging _staging;
 
 }

@@ -44,7 +44,6 @@ import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.StagingConstants;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.LayoutPrototypeException;
@@ -1221,7 +1220,7 @@ public class StagingImpl implements Staging {
 			stagingGroup.getTypeSettingsProperties();
 
 		HttpPrincipal httpPrincipal = new HttpPrincipal(
-			StagingUtil.buildRemoteURL(typeSettingsProperties), user.getLogin(),
+			buildRemoteURL(typeSettingsProperties), user.getLogin(),
 			user.getPassword(), user.getPasswordEncrypted());
 
 		long remoteGroupId = GetterUtil.getLong(

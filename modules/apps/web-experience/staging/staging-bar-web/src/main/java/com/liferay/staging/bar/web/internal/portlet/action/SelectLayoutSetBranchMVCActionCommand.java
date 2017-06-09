@@ -14,7 +14,7 @@
 
 package com.liferay.staging.bar.web.internal.portlet.action;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -71,7 +71,7 @@ public class SelectLayoutSetBranchMVCActionCommand
 				_layoutSetBranchLocalService.getLayoutSetBranch(
 					layoutSetBranchId);
 
-			StagingUtil.setRecentLayoutSetBranchId(
+			_staging.setRecentLayoutSetBranchId(
 				request, layoutSet.getLayoutSetId(),
 				layoutSetBranch.getLayoutSetBranchId());
 
@@ -104,5 +104,8 @@ public class SelectLayoutSetBranchMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Staging _staging;
 
 }

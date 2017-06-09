@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -123,7 +123,7 @@ public class LayoutsRemotePublisherMessageListener
 		CompanyThreadLocal.setCompanyId(user.getCompanyId());
 
 		try {
-			StagingUtil.copyRemoteLayouts(
+			_staging.copyRemoteLayouts(
 				sourceGroupId, privateLayout, layoutIdMap,
 				exportImportConfiguration.getName(), parameterMap,
 				remoteAddress, remotePort, remotePathContext, secureConnection,
@@ -158,6 +158,9 @@ public class LayoutsRemotePublisherMessageListener
 	@Reference
 	private SingleDestinationMessageSenderFactory
 		_singleDestinationMessageSenderFactory;
+
+	@Reference
+	private Staging _staging;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -18,7 +18,7 @@ import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
@@ -739,7 +739,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		LayoutSetBranch layoutSetBranch =
 			layoutSetBranchLocalService.getLayoutSetBranch(layoutSetBranchId);
 
-		StagingUtil.setRecentLayoutSetBranchId(
+		staging.setRecentLayoutSetBranchId(
 			request, layoutSet.getLayoutSetId(),
 			layoutSetBranch.getLayoutSetBranchId());
 
@@ -1422,6 +1422,10 @@ public class LayoutAdminPortlet extends MVCPortlet {
 
 	protected PortletLocalService portletLocalService;
 	protected PortletPreferencesLocalService portletPreferencesLocalService;
+
+	@Reference
+	protected Staging staging;
+
 	protected ThemeLocalService themeLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -14,7 +14,7 @@
 
 package com.liferay.staging.bar.web.internal.portlet;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.exception.LayoutBranchNameException;
 import com.liferay.portal.kernel.exception.LayoutSetBranchNameException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
@@ -103,7 +103,7 @@ public class StagingBarPortlet extends MVCPortlet {
 			actionRequest, "updateRecentLayoutRevisionId");
 
 		if (updateRecentLayoutRevisionId) {
-			StagingUtil.setRecentLayoutRevisionId(
+			_staging.setRecentLayoutRevisionId(
 				request, layoutRevision.getLayoutSetBranchId(),
 				layoutRevision.getPlid(),
 				layoutRevision.getParentLayoutRevisionId());
@@ -140,7 +140,7 @@ public class StagingBarPortlet extends MVCPortlet {
 				serviceContext);
 
 		if (layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
-			StagingUtil.setRecentLayoutRevisionId(
+			_staging.setRecentLayoutRevisionId(
 				themeDisplay.getUser(), layoutRevision.getLayoutSetBranchId(),
 				layoutRevision.getPlid(), layoutRevision.getLayoutRevisionId());
 
@@ -174,7 +174,7 @@ public class StagingBarPortlet extends MVCPortlet {
 					lastLayoutRevision.getColorSchemeId(),
 					lastLayoutRevision.getCss(), serviceContext);
 
-			StagingUtil.setRecentLayoutRevisionId(
+			_staging.setRecentLayoutRevisionId(
 				themeDisplay.getUser(),
 				newLayoutRevision.getLayoutSetBranchId(),
 				newLayoutRevision.getPlid(),
@@ -292,5 +292,8 @@ public class StagingBarPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Staging _staging;
 
 }

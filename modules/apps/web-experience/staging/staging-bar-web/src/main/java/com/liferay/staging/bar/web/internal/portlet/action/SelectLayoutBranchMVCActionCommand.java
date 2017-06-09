@@ -14,7 +14,7 @@
 
 package com.liferay.staging.bar.web.internal.portlet.action;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -61,7 +61,7 @@ public class SelectLayoutBranchMVCActionCommand extends BaseMVCActionCommand {
 		long layoutBranchId = ParamUtil.getLong(
 			actionRequest, "layoutBranchId");
 
-		StagingUtil.setRecentLayoutBranchId(
+		_staging.setRecentLayoutBranchId(
 			request, layoutSetBranchId, themeDisplay.getPlid(), layoutBranchId);
 
 		ActionUtil.addLayoutBranchSessionMessages(
@@ -70,5 +70,8 @@ public class SelectLayoutBranchMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Staging _staging;
 
 }

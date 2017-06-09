@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.UnsafeConsumer;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -107,25 +108,8 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	}
 
 	public void destroy() throws Exception {
-		Exception exception = null;
-
-		for (DLProcessor dlProcessor : _dlProcessors) {
-			try {
-				dlProcessor.destroy();
-			}
-			catch (Exception e) {
-				if (exception == null) {
-					exception = e;
-				}
-				else {
-					exception.addSuppressed(e);
-				}
-			}
-		}
-
-		if (exception != null) {
-			throw exception;
-		}
+		UnsafeConsumer.accept(
+			_dlProcessors, DLProcessor::destroy, Exception.class);
 	}
 
 	@Override

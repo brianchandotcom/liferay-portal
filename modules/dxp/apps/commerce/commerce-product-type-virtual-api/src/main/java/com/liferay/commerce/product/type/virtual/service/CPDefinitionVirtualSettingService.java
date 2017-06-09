@@ -57,11 +57,10 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionVirtualSettingServiceUtil} to access the cp definition virtual setting remote service. Add custom service methods to {@link com.liferay.commerce.product.type.virtual.service.impl.CPDefinitionVirtualSettingServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
-		long cpDefinitionId, boolean useUrl, long fileEntryId,
-		java.lang.String url, java.lang.String activationStatus, long duration,
-		int maxUsages, boolean useSample, boolean useSampleUrl,
-		long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired, boolean useTermsOfUseJournal,
+		long cpDefinitionId, long fileEntryId, java.lang.String url,
+		java.lang.String activationStatus, long duration, int maxUsages,
+		boolean useSample, long sampleFileEntryId, java.lang.String sampleUrl,
+		boolean termsOfUseRequired,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		ServiceContext serviceContext) throws PortalException;
@@ -71,11 +70,10 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 		long cpDefinitionId) throws PortalException;
 
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId, boolean useUrl, long fileEntryId,
+		long cpDefinitionVirtualSettingId, long fileEntryId,
 		java.lang.String url, java.lang.String activationStatus, long duration,
-		int maxUsages, boolean useSample, boolean useSampleUrl,
-		long sampleFileEntryId, java.lang.String sampleUrl,
-		boolean termsOfUseRequired, boolean useTermsOfUseJournal,
+		int maxUsages, boolean useSample, long sampleFileEntryId,
+		java.lang.String sampleUrl, boolean termsOfUseRequired,
 		Map<Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		ServiceContext serviceContext) throws PortalException;

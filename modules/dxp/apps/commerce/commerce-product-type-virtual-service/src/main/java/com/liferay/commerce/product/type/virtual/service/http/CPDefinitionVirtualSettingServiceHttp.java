@@ -56,12 +56,10 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CPDefinitionVirtualSettingServiceHttp {
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
-		HttpPrincipal httpPrincipal, long cpDefinitionId, boolean useUrl,
-		long fileEntryId, java.lang.String url,
-		java.lang.String activationStatus, long duration, int maxUsages,
-		boolean useSample, boolean useSampleUrl, long sampleFileEntryId,
+		HttpPrincipal httpPrincipal, long cpDefinitionId, long fileEntryId,
+		java.lang.String url, java.lang.String activationStatus, long duration,
+		int maxUsages, boolean useSample, long sampleFileEntryId,
 		java.lang.String sampleUrl, boolean termsOfUseRequired,
-		boolean useTermsOfUseJournal,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -72,10 +70,9 @@ public class CPDefinitionVirtualSettingServiceHttp {
 					_addCPDefinitionVirtualSettingParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId, useUrl, fileEntryId, url, activationStatus,
-					duration, maxUsages, useSample, useSampleUrl,
-					sampleFileEntryId, sampleUrl, termsOfUseRequired,
-					useTermsOfUseJournal, termsOfUseContentMap,
+					cpDefinitionId, fileEntryId, url, activationStatus,
+					duration, maxUsages, useSample, sampleFileEntryId,
+					sampleUrl, termsOfUseRequired, termsOfUseContentMap,
 					termsOfUseJournalArticleResourcePrimKey, serviceContext);
 
 			Object returnObj = null;
@@ -135,11 +132,10 @@ public class CPDefinitionVirtualSettingServiceHttp {
 
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 		HttpPrincipal httpPrincipal, long cpDefinitionVirtualSettingId,
-		boolean useUrl, long fileEntryId, java.lang.String url,
+		long fileEntryId, java.lang.String url,
 		java.lang.String activationStatus, long duration, int maxUsages,
-		boolean useSample, boolean useSampleUrl, long sampleFileEntryId,
-		java.lang.String sampleUrl, boolean termsOfUseRequired,
-		boolean useTermsOfUseJournal,
+		boolean useSample, long sampleFileEntryId, java.lang.String sampleUrl,
+		boolean termsOfUseRequired,
 		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -150,10 +146,9 @@ public class CPDefinitionVirtualSettingServiceHttp {
 					_updateCPDefinitionVirtualSettingParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionVirtualSettingId, useUrl, fileEntryId, url,
+					cpDefinitionVirtualSettingId, fileEntryId, url,
 					activationStatus, duration, maxUsages, useSample,
-					useSampleUrl, sampleFileEntryId, sampleUrl,
-					termsOfUseRequired, useTermsOfUseJournal,
+					sampleFileEntryId, sampleUrl, termsOfUseRequired,
 					termsOfUseContentMap,
 					termsOfUseJournalArticleResourcePrimKey, serviceContext);
 
@@ -182,20 +177,20 @@ public class CPDefinitionVirtualSettingServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CPDefinitionVirtualSettingServiceHttp.class);
 	private static final Class<?>[] _addCPDefinitionVirtualSettingParameterTypes0 =
 		new Class[] {
-			long.class, boolean.class, long.class, java.lang.String.class,
+			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, long.class, int.class, boolean.class,
-			boolean.class, long.class, java.lang.String.class, boolean.class,
-			boolean.class, java.util.Map.class, long.class,
+			long.class, java.lang.String.class, boolean.class,
+			java.util.Map.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _fetchCPDefinitionVirtualSettingByCPDefinitionIdParameterTypes1 =
 		new Class[] { long.class };
 	private static final Class<?>[] _updateCPDefinitionVirtualSettingParameterTypes2 =
 		new Class[] {
-			long.class, boolean.class, long.class, java.lang.String.class,
+			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, long.class, int.class, boolean.class,
-			boolean.class, long.class, java.lang.String.class, boolean.class,
-			boolean.class, java.util.Map.class, long.class,
+			long.class, java.lang.String.class, boolean.class,
+			java.util.Map.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

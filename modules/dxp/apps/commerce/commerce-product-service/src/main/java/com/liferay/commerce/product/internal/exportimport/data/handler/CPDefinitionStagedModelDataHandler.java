@@ -70,9 +70,8 @@ public class CPDefinitionStagedModelDataHandler
 		for (CPDefinitionOptionRel cpDefinitionOptionRel :
 				cpDefinition.getCPDefinitionOptionRels()) {
 
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, cpDefinition, cpDefinitionOptionRel,
-				PortletDataContext.REFERENCE_TYPE_STRONG);
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, cpDefinitionOptionRel);
 		}
 
 		CPType cpType = _cpTypeServicesTracker.getCPType(

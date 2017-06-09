@@ -79,10 +79,8 @@ public class CPDefinitionOptionRelStagedModelDataHandler
 		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 				cpDefinitionOptionRel.getCPDefinitionOptionValueRels()) {
 
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, cpDefinitionOptionRel,
-				cpDefinitionOptionValueRel,
-				PortletDataContext.REFERENCE_TYPE_STRONG);
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, cpDefinitionOptionValueRel);
 		}
 
 		Element cpDefinitionOptionRelElement =

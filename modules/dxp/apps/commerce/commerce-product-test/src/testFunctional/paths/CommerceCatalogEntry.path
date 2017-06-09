@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>NAME_FIELD</td>
-	<td>//div[contains (@class,'input-String-wrapper')]//input[contains(@id,'name')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TITLE_FIELD</td>
 	<td>//div/span/input[contains(@id,'title')]</td>
 	<td></td>
@@ -101,6 +96,21 @@
 <tr>
 	<td>BASE_INFORMATION_TITLE_BAR</td>
 	<td>//div[contains (@id, 'baseInformationTitle')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_MENU_TAB</td>
+	<td>//a[@role="menuitem" and @title="${key_menuTab}"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MENU</td>
+	<td>//div[contains (@class, 'dropdown')]//li/a[contains (.,'${key_addMenu}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_IMAGE_SELECT_FILE</td>
+	<td>//div[contains(@class,'image-selector')]//a[contains(.,'Select File')]</td>
 	<td></td>
 </tr>
 </tbody>

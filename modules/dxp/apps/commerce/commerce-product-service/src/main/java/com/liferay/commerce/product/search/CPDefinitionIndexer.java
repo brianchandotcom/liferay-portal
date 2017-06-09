@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -31,6 +32,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -77,12 +80,29 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		int status = GetterUtil.getInteger(
-			searchContext.getAttribute(Field.STATUS),
-			WorkflowConstants.STATUS_APPROVED);
+		int[] statuses = GetterUtil.getIntegerValues(
+			searchContext.getAttribute(Field.STATUS), null);
 
-		if (status != WorkflowConstants.STATUS_ANY) {
-			contextBooleanFilter.addRequiredTerm(Field.STATUS, status);
+		if (ArrayUtil.isEmpty(statuses)) {
+			int status = GetterUtil.getInteger(
+				searchContext.getAttribute(Field.STATUS),
+				WorkflowConstants.STATUS_APPROVED);
+
+			statuses = new int[] {status};
+		}
+
+		if (!ArrayUtil.contains(statuses, WorkflowConstants.STATUS_ANY)) {
+			TermsFilter statusesTermsFilter = new TermsFilter(Field.STATUS);
+
+			statusesTermsFilter.addValues(ArrayUtil.toStringArray(statuses));
+
+			contextBooleanFilter.add(
+				statusesTermsFilter, BooleanClauseOccur.MUST);
+		}
+		else {
+			contextBooleanFilter.addTerm(
+				Field.STATUS, String.valueOf(WorkflowConstants.STATUS_IN_TRASH),
+				BooleanClauseOccur.MUST_NOT);
 		}
 	}
 

@@ -14,21 +14,26 @@
 
 package com.liferay.portal.search.internal;
 
+import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.dummy.DummyIndexer;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.buffer.IndexerRequestBuffer;
 import com.liferay.portal.search.buffer.IndexerRequestBufferOverflowHandler;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
 import com.liferay.portal.search.index.IndexStatusManager;
 import com.liferay.portal.search.internal.buffer.BufferedIndexerInvocationHandler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -103,6 +108,21 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		_indexers.put(clazz.getName(), indexer);
 
 		_indexers.put(indexer.getClassName(), indexer);
+
+		synchronized (_queuedIndexerPostProcessors) {
+			List<IndexerPostProcessor> indexerPostProcessors =
+				_queuedIndexerPostProcessors.get(indexer.getClassName());
+
+			if (indexerPostProcessors != null) {
+				for (IndexerPostProcessor indexerPostProcessor :
+						indexerPostProcessors) {
+
+					indexer.registerIndexerPostProcessor(indexerPostProcessor);
+				}
+
+				_queuedIndexerPostProcessors.remove(indexer.getClassName());
+			}
+		}
 	}
 
 	@Override
@@ -132,6 +152,54 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 
 			bufferedIndexerInvocationHandler.setIndexerRegistryConfiguration(
 				_indexerRegistryConfiguration);
+		}
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(indexer.class.name=*)", unbind = "removeIndexerPostProcessor"
+	)
+	protected void addIndexerPostProcessor(
+		IndexerPostProcessor indexerPostProcessor,
+		Map<String, Object> properties) {
+
+		List<String> indexerClassNames = StringPlus.asList(
+			properties.get("indexer.class.name"));
+
+		for (String indexerClassName : indexerClassNames) {
+			Indexer<?> indexer = getIndexer(indexerClassName);
+
+			if (indexer != null) {
+				indexer.registerIndexerPostProcessor(indexerPostProcessor);
+			}
+			else {
+				synchronized (_queuedIndexerPostProcessors) {
+					List<IndexerPostProcessor> indexerPostProcessors =
+						_queuedIndexerPostProcessors.get(indexerClassName);
+
+					if (indexerPostProcessors == null) {
+						indexerPostProcessors = new ArrayList<>();
+					}
+
+					indexerPostProcessors.add(indexerPostProcessor);
+
+					_queuedIndexerPostProcessors.put(
+						indexerClassName, indexerPostProcessors);
+
+					if (_log.isDebugEnabled()) {
+						StringBundler sb = new StringBundler();
+
+						sb.append("Registration of IndexerPostProcessor for ");
+						sb.append(indexerClassName);
+						sb.append(" will be completed once the indexer ");
+						sb.append("becomes available.");
+
+						_log.debug(sb.toString());
+					}
+				}
+			}
 		}
 	}
 
@@ -183,6 +251,32 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		}
 
 		return (Indexer<T>)proxiedIndexer;
+	}
+
+	protected void removeIndexerPostProcessor(
+		IndexerPostProcessor indexerPostProcessor,
+		Map<String, Object> properties) {
+
+		List<String> indexerClassNames = StringPlus.asList(
+			properties.get("indexer.class.name"));
+
+		for (String indexerClassName : indexerClassNames) {
+			Indexer<?> indexer = getIndexer(indexerClassName);
+
+			if (indexer == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("No indexer exists for " + indexerClassName);
+				}
+
+				continue;
+			}
+
+			indexer.unregisterIndexerPostProcessor(indexerPostProcessor);
+
+			synchronized (_queuedIndexerPostProcessors) {
+				_queuedIndexerPostProcessors.remove(indexerClassName);
+			}
+		}
 	}
 
 	@Reference(
@@ -247,5 +341,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 
 	private final Map<String, Indexer<? extends Object>> _proxiedIndexers =
 		new ConcurrentHashMap<>();
+	private final Map<String, List<IndexerPostProcessor>>
+		_queuedIndexerPostProcessors = new HashMap<>();
 
 }

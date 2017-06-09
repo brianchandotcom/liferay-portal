@@ -36,9 +36,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -75,6 +77,12 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 
 		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
 			actionRequest, ddmForm);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
+			actionRequest, ddmForm, ddmFormValues, themeDisplay.getLocale());
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecord.class.getName(), actionRequest);
@@ -174,6 +182,9 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 	}
+
+	@Reference
+	private AddRecordMVCCommandHelper _addRecordMVCCommandHelper;
 
 	private DDLFormEmailNotificationSender _ddlFormEmailNotificationSender;
 	private DDLRecordService _ddlRecordService;

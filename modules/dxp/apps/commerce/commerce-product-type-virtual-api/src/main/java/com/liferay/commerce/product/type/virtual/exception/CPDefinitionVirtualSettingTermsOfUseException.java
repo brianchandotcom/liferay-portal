@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Marco Leo
  */
 @ProviderType
-public class CPDefinitionVirtualSettingTermsOfUseException extends PortalException {
+public class CPDefinitionVirtualSettingTermsOfUseException
+	extends PortalException {
 
 	public CPDefinitionVirtualSettingTermsOfUseException() {
 	}
@@ -30,7 +31,9 @@ public class CPDefinitionVirtualSettingTermsOfUseException extends PortalExcepti
 		super(msg);
 	}
 
-	public CPDefinitionVirtualSettingTermsOfUseException(String msg, Throwable cause) {
+	public CPDefinitionVirtualSettingTermsOfUseException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

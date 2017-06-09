@@ -30,7 +30,9 @@ public class CPDefinitionVirtualSettingSampleException extends PortalException {
 		super(msg);
 	}
 
-	public CPDefinitionVirtualSettingSampleException(String msg, Throwable cause) {
+	public CPDefinitionVirtualSettingSampleException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

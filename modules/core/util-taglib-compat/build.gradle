@@ -1,5 +1,6 @@
 import com.liferay.gradle.util.StringUtil
 
+task deployLib(type: Copy)
 task importFiles(type: Copy)
 
 classes {
@@ -8,6 +9,23 @@ classes {
 
 dependencies {
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+}
+
+deploy {
+	finalizedBy deployLib
+}
+
+deployLib {
+	ext {
+		autoClean = false
+	}
+
+	from jar
+	into "../../../lib/development"
+
+	rename {
+		"com.liferay.util.taglib.compat.jar"
+	}
 }
 
 importFiles {

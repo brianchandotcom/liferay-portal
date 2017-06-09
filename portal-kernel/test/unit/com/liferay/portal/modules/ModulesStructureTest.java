@@ -14,12 +14,16 @@
 
 package com.liferay.portal.modules;
 
+import aQute.bnd.version.Version;
+
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.modules.util.GradleDependency;
+import com.liferay.portal.modules.util.ModulesStructureTestUtil;
 
 import java.io.File;
 import java.io.FileReader;
@@ -35,6 +39,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -148,6 +153,21 @@ public class ModulesStructureTest {
 			new SimpleFileVisitor<Path>() {
 
 				@Override
+				public FileVisitResult preVisitDirectory(
+					Path dirPath, BasicFileAttributes basicFileAttributes) {
+
+					String dirName = String.valueOf(dirPath.getFileName());
+
+					if (dirName.equals("archetype-resources") ||
+						dirName.equals("gradleTest")) {
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
 				public FileVisitResult visitFile(
 						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
@@ -155,19 +175,9 @@ public class ModulesStructureTest {
 					String fileName = String.valueOf(path.getFileName());
 
 					if (StringUtil.endsWith(fileName, ".gradle") &&
-						!_whitelistedGradleFileNames.contains(fileName)) {
+						!fileName.equals("licenses.gradle")) {
 
-						String content = _read(path);
-
-						Assert.assertFalse(
-							"Incorrect repository URL in " + path +
-								", please use " + _REPOSITORY_URL + " instead",
-							content.contains("plugins.gradle.org/m2"));
-
-						Assert.assertFalse(
-							"Plugins DSL forbidden in " + path +
-								", please use \"apply plugin:\" instead",
-							content.contains("plugins {"));
+						_testGradleFile(path);
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -351,6 +361,41 @@ public class ModulesStructureTest {
 		}
 
 		return false;
+	}
+
+	private GradleDependency _getActiveGradleDependency(
+		List<GradleDependency> gradleDependencies,
+		GradleDependency gradleDependency) {
+
+		int configurationPos = _gradleConfigurations.indexOf(
+			gradleDependency.getConfiguration());
+		String moduleGroup = gradleDependency.getModuleGroup();
+		String moduleName = gradleDependency.getModuleName();
+		Version moduleVersion = gradleDependency.getModuleVersion();
+
+		for (GradleDependency curGradleDependency : gradleDependencies) {
+			if (!moduleGroup.equals(curGradleDependency.getModuleGroup()) ||
+				!moduleName.equals(curGradleDependency.getModuleName()) ||
+				!_gradleConfigurations.contains(
+					curGradleDependency.getConfiguration())) {
+
+				continue;
+			}
+
+			int curConfigurationPos = _gradleConfigurations.indexOf(
+				curGradleDependency.getConfiguration());
+
+			int value = moduleVersion.compareTo(
+				curGradleDependency.getModuleVersion());
+
+			if (((curConfigurationPos == configurationPos) && (value < 0)) ||
+				(curConfigurationPos < configurationPos) && (value <= 0)) {
+
+				return curGradleDependency;
+			}
+		}
+
+		return gradleDependency;
 	}
 
 	private String _getAntPluginLibGitIgnore(Path dirPath) throws IOException {
@@ -912,6 +957,34 @@ public class ModulesStructureTest {
 		}
 	}
 
+	private void _testGradleFile(Path path) throws IOException {
+		String content = _read(path);
+
+		Assert.assertFalse(
+			"Incorrect repository URL in " + path + ", please use " +
+				_REPOSITORY_URL + " instead",
+			content.contains("plugins.gradle.org/m2"));
+
+		Assert.assertFalse(
+			"Plugins DSL forbidden in " + path +
+				", please use \"apply plugin:\" instead",
+			content.contains("plugins {"));
+
+		List<GradleDependency> gradleDependencies =
+			ModulesStructureTestUtil.getGradleDependencies(
+				content, path, _modulesDirPath);
+
+		for (GradleDependency gradleDependency : gradleDependencies) {
+			GradleDependency activeGradleDependency =
+				_getActiveGradleDependency(
+					gradleDependencies, gradleDependency);
+
+			Assert.assertEquals(
+				"Redundant dependency detected in " + path,
+				activeGradleDependency, gradleDependency);
+		}
+	}
+
 	private void _testThemeBuildScripts(Path dirPath) throws IOException {
 		if (!_contains(
 				dirPath.resolve("package.json"), "\"liferay-theme-tasks\":")) {
@@ -996,8 +1069,9 @@ public class ModulesStructureTest {
 		Pattern.compile("com\\.liferay(?:\\.[a-z]+)+");
 	private static final Set<String> _gitRepoGradlePropertiesKeys =
 		Collections.singleton("com.liferay.source.formatter.version");
+	private static final List<String> _gradleConfigurations = Arrays.asList(
+		"compileOnly", "provided", "compile", "runtime", "testCompile",
+		"testRuntime", "testIntegrationCompile", "testIntegrationRuntime");
 	private static Path _modulesDirPath;
-	private static final Set<String> _whitelistedGradleFileNames =
-		Collections.singleton("licenses.gradle");
 
 }

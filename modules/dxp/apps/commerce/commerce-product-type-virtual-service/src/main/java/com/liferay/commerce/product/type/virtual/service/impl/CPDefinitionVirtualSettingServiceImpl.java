@@ -58,8 +58,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 
 	@Override
 	public CPDefinitionVirtualSetting
-			fetchCPDefinitionVirtualSettingByCPDefinitionId(
-				long cpDefinitionId)
+			fetchCPDefinitionVirtualSettingByCPDefinitionId(long cpDefinitionId)
 		throws PortalException {
 
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =

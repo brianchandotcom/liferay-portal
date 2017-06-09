@@ -232,6 +232,37 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CONTRACT-->
+<tr>
+	<td>CONTRACT_TYPE</td>
+	<td>//div[contains(@class,'ddm-field-group')]//div[contains(.,'Contract Type')]//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEAL_NAME</td>
+	<td>//div[contains(@class,'ddm-field-group')]//div[contains(.,'Deal Name')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EFFECTIVE_DATE_FIELD</td>
+	<td>//div[contains(.,"Effective Date")]/span/input[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRATION_DATE_FIELD</td>
+	<td>//div[contains(.,"Expiration Date")]/span/input[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LEGALL_REVIEWER</td>
+	<td>//div[contains(@class,'ddm-field-group')]//div[contains(.,'Legal Reviewer')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGNING_AUTHORITY</td>
+	<td>//div[contains(@class,'ddm-field-group')]//div[contains(.,'Signing Authority')]//input</td>
+	<td></td>
+</tr>
 <!--MARKETING-->
 <tr>
 	<td>MARKETING_SELECT</td>

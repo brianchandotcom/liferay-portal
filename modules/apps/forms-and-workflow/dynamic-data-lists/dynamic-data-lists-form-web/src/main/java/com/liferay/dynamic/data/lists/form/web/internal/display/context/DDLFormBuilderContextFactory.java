@@ -284,6 +284,7 @@ public class DDLFormBuilderContextFactory {
 
 		formContext.put(
 			"pages", createFormContext(ddmForm, ddmFormLayout).get("pages"));
+		formContext.put("paginationMode", ddmFormLayout.getPaginationMode());
 
 		formContext.put("rules", new ArrayList<>());
 

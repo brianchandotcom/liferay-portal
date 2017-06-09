@@ -14,11 +14,14 @@
 
 package com.liferay.commerce.product.type.virtual.service.impl;
 
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingFileEntryIdException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleFileEntryIdException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleUrlException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseContentException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingUrlException;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.base.CPDefinitionVirtualSettingLocalServiceBaseImpl;
@@ -240,6 +243,9 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 				throw new CPDefinitionVirtualSettingFileEntryIdException(nsfee);
 			}
 		}
+		else if ((fileEntryId <= 0) && Validator.isNull(url)) {
+			throw new CPDefinitionVirtualSettingException();
+		}
 		else if (Validator.isNull(url)) {
 			throw new CPDefinitionVirtualSettingUrlException();
 		}
@@ -254,6 +260,9 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 						CPDefinitionVirtualSettingSampleFileEntryIdException(
 							nsfee);
 				}
+			}
+			else if ((sampleFileEntryId <= 0) && Validator.isNull(sampleUrl)) {
+				throw new CPDefinitionVirtualSettingSampleException();
 			}
 			else if (Validator.isNull(sampleUrl)) {
 				throw new CPDefinitionVirtualSettingSampleUrlException();
@@ -270,6 +279,11 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 					throw new
 						CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException();
 				}
+			}
+			else if ((termsOfUseJournalArticleResourcePrimKey <= 0) &&
+					 MapUtil.isEmpty(termsOfUseContentMap)) {
+
+				throw new CPDefinitionVirtualSettingTermsOfUseException();
 			}
 			else if (MapUtil.isEmpty(termsOfUseContentMap)) {
 				throw new

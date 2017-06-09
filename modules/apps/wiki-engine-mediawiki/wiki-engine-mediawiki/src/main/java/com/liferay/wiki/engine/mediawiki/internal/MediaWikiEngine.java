@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.UnsafeConsumer;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.WikiEngine;
@@ -358,25 +359,7 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 
 		@Override
 		public void close() throws IOException {
-			IOException ioe1 = null;
-
-			for (Path tempPath : _tempPaths) {
-				try {
-					Files.delete(tempPath);
-				}
-				catch (IOException ioe) {
-					if (ioe1 == null) {
-						ioe1 = ioe;
-					}
-					else {
-						ioe1.addSuppressed(ioe);
-					}
-				}
-			}
-
-			if (ioe1 != null) {
-				throw ioe1;
-			}
+			UnsafeConsumer.accept(_tempPaths, Files::delete, IOException.class);
 		}
 
 		@Override

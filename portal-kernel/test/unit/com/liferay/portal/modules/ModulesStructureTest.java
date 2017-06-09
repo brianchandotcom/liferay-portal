@@ -579,6 +579,20 @@ public class ModulesStructureTest {
 			buildGradleTemplate, "[$BUILDSCRIPT_DEPENDENCIES$]", sb.toString());
 	}
 
+	private Path _getGitRepoPath(Path dirPath) {
+		while (dirPath != null) {
+			Path gitRepoPath = dirPath.resolve(_GIT_REPO_FILE_NAME);
+
+			if (Files.exists(gitRepoPath)) {
+				return gitRepoPath;
+			}
+
+			dirPath = dirPath.getParent();
+		}
+
+		return null;
+	}
+
 	private String _getGradleTemplate(String name) throws IOException {
 		String template = StringUtil.read(ModulesStructureTest.class, name);
 
@@ -598,10 +612,10 @@ public class ModulesStructureTest {
 		return projectPathPrefix;
 	}
 
-	private boolean _isGitRepoReadOnly(Path dirPath) throws IOException {
-		Path gitRepoPath = dirPath.resolve(_GIT_REPO_FILE_NAME);
+	private boolean _isInGitRepoReadOnly(Path dirPath) throws IOException {
+		Path gitRepoPath = _getGitRepoPath(dirPath);
 
-		if (Files.notExists(gitRepoPath)) {
+		if (gitRepoPath == null) {
 			return false;
 		}
 
@@ -609,18 +623,6 @@ public class ModulesStructureTest {
 
 		if (gitRepo.contains("mode = pull")) {
 			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isInGitRepo(Path dirPath) {
-		while (dirPath != null) {
-			if (Files.exists(dirPath.resolve(_GIT_REPO_FILE_NAME))) {
-				return true;
-			}
-
-			dirPath = dirPath.getParent();
 		}
 
 		return false;
@@ -641,7 +643,7 @@ public class ModulesStructureTest {
 			dirPath.resolve("docroot/WEB-INF/lib/.gitignore"),
 			_getAntPluginLibGitIgnore(dirPath));
 
-		if (!_isInGitRepo(dirPath)) {
+		if (_getGitRepoPath(dirPath) == null) {
 			Path parentDirPath = dirPath.getParent();
 
 			_testEquals(
@@ -883,7 +885,7 @@ public class ModulesStructureTest {
 	private void _testGitRepoIgnoreFiles(Path dirPath, String gitIgnoreTemplate)
 		throws IOException {
 
-		if (_isGitRepoReadOnly(dirPath)) {
+		if (_isInGitRepoReadOnly(dirPath)) {
 			return;
 		}
 

@@ -2179,7 +2179,7 @@
 			<then>
 				<var name="key_selectOption" value="${selectOption}" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#METADATA_PANEL_SELECT" value1="Select ${selectOption}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#METADATA_PANEL_SELECT" value1="${selectOption}" />
 			</then>
 		</if>
 

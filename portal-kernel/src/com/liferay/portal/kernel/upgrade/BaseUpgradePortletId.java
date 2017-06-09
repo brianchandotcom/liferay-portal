@@ -453,59 +453,19 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			boolean updateName)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(9);
 
-		sb.append("select distinct primKey from ResourcePermission where ");
-		sb.append("name = '");
+		sb.append("update ResourcePermission set primKey = replace(primKey, ");
+		sb.append("'_LAYOUT_");
 		sb.append(oldRootPortletId);
-		sb.append("' and scope = ");
+		sb.append("', '_LAYOUT_");
+		sb.append(newRootPortletId);
+		sb.append("') where primKey like '%_LAYOUT_");
+		sb.append(oldRootPortletId);
+		sb.append("%' and scope = ");
 		sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
 
-		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
-			PreparedStatement ps2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update ResourcePermission set primKey = ? where primKey " +
-						"= ?");
-			ResultSet rs = ps1.executeQuery()) {
-
-			while (rs.next()) {
-				String oldPrimKey = rs.getString("primKey");
-
-				int pos = oldPrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
-
-				if (pos != -1) {
-					long plid = GetterUtil.getLong(
-						oldPrimKey.substring(0, pos));
-
-					String portletId = oldPrimKey.substring(
-						pos + PortletConstants.LAYOUT_SEPARATOR.length());
-
-					String instanceId = PortletIdCodec.decodeInstanceId(
-						portletId);
-					long userId = PortletIdCodec.decodeUserId(portletId);
-
-					String newPortletId = PortletIdCodec.encode(
-						newRootPortletId, userId, instanceId);
-
-					String newPrimKey = PortletPermissionUtil.getPrimaryKey(
-						plid, newPortletId);
-
-					ps2.setString(1, newPrimKey);
-
-					ps2.setString(2, oldPrimKey);
-
-					ps2.addBatch();
-				}
-			}
-
-			ps2.executeBatch();
-		}
-		catch (SQLException sqle) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(sqle, sqle);
-			}
-		}
+		runSQL(sb.toString());
 
 		if (updateName) {
 			runSQL(

@@ -253,8 +253,6 @@ public class PoshiRunnerGetterUtil {
 
 		String fileContent = FileUtil.read(filePath);
 
-		System.out.println(filePath);
-
 		if (!fileContent.contains("<definition") &&
 			filePath.endsWith(".testcase")) {
 

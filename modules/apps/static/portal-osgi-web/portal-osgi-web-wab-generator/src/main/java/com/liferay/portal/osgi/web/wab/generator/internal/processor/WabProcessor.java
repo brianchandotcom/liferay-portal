@@ -124,10 +124,6 @@ public class WabProcessor {
 			ReflectionUtil.throwException(e);
 		}
 
-		if (_file.isDirectory()) {
-			return _file;
-		}
-
 		if (PropsValues.MODULE_FRAMEWORK_WEB_GENERATOR_GENERATED_WABS_STORE) {
 			writeGeneratedWab(outputFile);
 		}

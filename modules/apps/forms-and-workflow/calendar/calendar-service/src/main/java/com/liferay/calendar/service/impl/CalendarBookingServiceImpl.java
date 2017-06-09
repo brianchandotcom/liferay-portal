@@ -408,7 +408,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 
 		CalendarPermission.check(
 			getPermissionChecker(), calendarBooking.getCalendarId(),
-			CalendarActionKeys.MANAGE_BOOKINGS);
+			ActionKeys.VIEW);
 
 		return calendarBookingLocalService.getLastInstanceCalendarBooking(
 			calendarBooking);

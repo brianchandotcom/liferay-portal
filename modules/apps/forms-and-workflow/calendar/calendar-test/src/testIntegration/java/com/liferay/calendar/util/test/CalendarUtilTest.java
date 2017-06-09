@@ -15,10 +15,13 @@
 package com.liferay.calendar.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
+import com.liferay.calendar.test.util.CalendarTestUtil;
+import com.liferay.calendar.test.util.RecurrenceTestUtil;
 import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -109,6 +112,26 @@ public class CalendarUtilTest {
 		Assert.assertNull(recurrence.getUntilJCalendar());
 
 		Assert.assertEquals(0, recurrence.getCount());
+	}
+
+	@Test
+	public void testToCalendarBookingJSONObjectWorksWithoutManageBookingsPermission()
+		throws Exception {
+
+		ServiceContext serviceContext = createServiceContext();
+
+		_privateUser = UserTestUtil.addUser();
+
+		Calendar calendar = CalendarTestUtil.addCalendar(_privateUser);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingTestUtil.addRecurringCalendarBooking(
+				_privateUser, calendar, RecurrenceTestUtil.getDailyRecurrence(),
+				serviceContext);
+
+		CalendarUtil.toCalendarBookingJSONObject(
+			createThemeDisplay(), calendarBooking,
+			calendarBooking.getTimeZone());
 	}
 
 	@Test
@@ -208,6 +231,9 @@ public class CalendarUtilTest {
 	private Group _group;
 
 	private PermissionChecker _permissionChecker;
+
+	@DeleteAfterTestRun
+	private User _privateUser;
 
 	@DeleteAfterTestRun
 	private User _user;

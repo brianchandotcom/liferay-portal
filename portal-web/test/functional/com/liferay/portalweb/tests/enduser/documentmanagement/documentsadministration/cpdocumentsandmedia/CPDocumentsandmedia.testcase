@@ -55,6 +55,31 @@
 		</execute>
 	</command>
 
+	<command name="AddContract">
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addContractCP">
+			<var name="dmContractdealName" value="Deal Name" />
+			<var name="dmContractDescription" value="DM Contract Description" />
+			<var name="dmContractFile" value="Document_1.txt" />
+			<var name="dmContractlegalReviewer" value="Legal Reviewer" />
+			<var name="dmContractsigningAuthority" value="Signing Authority" />
+			<var name="dmContractTitle" value="DM Contract Title" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="DM Contract Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentTypePG">
+			<var name="documentType" value="Contract" />
+			<var name="selectOption" value="NDA" />
+			<var name="textContent" value="Legal Reviewer" />
+		</execute>
+	</command>
+
 	<command name="AddShortcutToSiteDocument" priority="3">
 		<execute macro="Navigator#openURL" />
 

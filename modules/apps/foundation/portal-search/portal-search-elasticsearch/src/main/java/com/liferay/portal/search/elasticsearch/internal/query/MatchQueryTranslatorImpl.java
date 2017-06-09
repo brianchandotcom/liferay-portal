@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch.internal.query;
 
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.query.MatchQueryTranslator;
 
@@ -35,27 +36,7 @@ public class MatchQueryTranslatorImpl
 
 	@Override
 	public QueryBuilder translate(MatchQuery matchQuery) {
-		String value = matchQuery.getValue();
-
-		MatchQuery.Type matchQueryType = matchQuery.getType();
-
-		if (value.startsWith(StringPool.QUOTE) &&
-			value.endsWith(StringPool.QUOTE)) {
-
-			value = value.substring(1, value.length() - 1);
-
-			if (value.endsWith(StringPool.STAR)) {
-				value = value.substring(0, value.length() - 1);
-
-				matchQueryType = MatchQuery.Type.PHRASE_PREFIX;
-			}
-			else {
-				matchQueryType = MatchQuery.Type.PHRASE;
-			}
-		}
-
-		MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery(
-			matchQuery.getField(), value);
+		MatchQueryBuilder matchQueryBuilder = translateMatchQuery(matchQuery);
 
 		if (Validator.isNotNull(matchQuery.getAnalyzer())) {
 			matchQueryBuilder.analyzer(matchQuery.getAnalyzer());
@@ -101,13 +82,6 @@ public class MatchQueryTranslatorImpl
 			matchQueryBuilder.slop(matchQuery.getSlop());
 		}
 
-		if (matchQueryType != null) {
-			MatchQueryBuilder.Type matchQueryBuilderType = translate(
-				matchQueryType);
-
-			matchQueryBuilder.type(matchQueryBuilderType);
-		}
-
 		if (matchQuery.getZeroTermsQuery() != null) {
 			MatchQueryBuilder.ZeroTermsQuery matchQueryBuilderZeroTermsQuery =
 				translate(matchQuery.getZeroTermsQuery());
@@ -144,6 +118,33 @@ public class MatchQueryTranslatorImpl
 
 		throw new IllegalArgumentException(
 			"Invalid match query type: " + matchQueryType);
+	}
+
+	protected MatchQueryBuilder translateMatchQuery(MatchQuery matchQuery) {
+		String field = matchQuery.getField();
+		MatchQuery.Type matchQueryType = matchQuery.getType();
+		String value = matchQuery.getValue();
+
+		if (value.startsWith(StringPool.QUOTE) &&
+			value.endsWith(StringPool.QUOTE)) {
+
+			matchQueryType = MatchQuery.Type.PHRASE;
+
+			value = StringUtil.unquote(value);
+
+			if (value.endsWith(StringPool.STAR)) {
+				matchQueryType = MatchQuery.Type.PHRASE_PREFIX;
+			}
+		}
+
+		MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery(
+			field, value);
+
+		if (matchQueryType != null) {
+			matchQueryBuilder.type(translate(matchQueryType));
+		}
+
+		return matchQueryBuilder;
 	}
 
 }

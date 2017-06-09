@@ -40,7 +40,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 
 			<ul class="<%= (showAssetCount && displayStyle.equals("cloud")) ? "tag-cloud" : "tag-list" %> list-unstyled">
 				<li class="default facet-value">
-					<a data-value="<%= Validator.isNull(fieldParam) ? "text-primary" : "text-default" %>" href="javascript:;"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
+					<a class="<%= Validator.isNull(fieldParam) ? "text-primary" : "text-default" %>" data-value="" href="javascript:;"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 				</li>
 
 				<%

@@ -23,6 +23,10 @@ int height = ParamUtil.getInteger(request, "height", 768);
 int width = ParamUtil.getInteger(request, "width", 1024);
 
 String movie = ParamUtil.getString(request, "movie");
+
+// LPS-72916
+
+movie = HtmlUtil.escapeHREF(movie);
 %>
 
 <html>

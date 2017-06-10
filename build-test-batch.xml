@@ -539,6 +539,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="${app.server.@{app.server.type}.version}" name="app.server.version" />
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
+		<attribute default="true" name="setup.testable.tomcat" />
 		<attribute default="" name="test.build.fix.pack.zip.url" />
 		<attribute default="" name="test.fix.pack.base.url" />
 		<attribute default="" name="test.legacy.database.dump" />
@@ -687,7 +688,10 @@ app.server.type=@{app.server.type}]]></echo>
 							<antcall inheritAll="false" target="setup-sdk" />
 
 							<if>
-								<equals arg1="${app.server.type}" arg2="tomcat" />
+								<and>
+									<equals arg1="${app.server.type}" arg2="tomcat" />
+									<equals arg1="@{setup.testable.tomcat}" arg2="true" />
+								</and>
 								<then>
 									<setup-testable-tomcat />
 								</then>
@@ -719,7 +723,10 @@ app.server.type=@{app.server.type}]]></echo>
 							</if>
 
 							<if>
-								<equals arg1="${app.server.type}" arg2="tomcat" />
+								<and>
+									<equals arg1="${app.server.type}" arg2="tomcat" />
+									<equals arg1="@{setup.testable.tomcat}" arg2="true" />
+								</and>
 								<then>
 									<setup-testable-tomcat />
 								</then>
@@ -806,6 +813,7 @@ app.server.type=@{app.server.type}]]></echo>
 				app.server.type="tomcat"
 				database.type="@{database.type}"
 				database.version="@{database.version}"
+				setup.testable.tomcat="false"
 				test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 				test.fix.pack.base.url="${test.fix.pack.base.url}"
 				test.legacy.database.dump="true"

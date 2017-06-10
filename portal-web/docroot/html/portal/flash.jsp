@@ -19,8 +19,8 @@
 <%
 String title = ParamUtil.getString(request, "title");
 
-String height = ParamUtil.getString(request, "height", "768");
-String width = ParamUtil.getString(request, "width", "1024");
+int height = ParamUtil.getInteger(request, "height", 768);
+int width = ParamUtil.getInteger(request, "width", 1024);
 
 String movie = ParamUtil.getString(request, "movie");
 %>
@@ -39,7 +39,7 @@ String movie = ParamUtil.getString(request, "movie");
 				<div id="flashMovie"></div>
 
 				<script type="text/javascript">
-					var so = new SWFObject('<%= HtmlUtil.escapeJS(movie) %>', 'flashMovie', '<%= HtmlUtil.escapeJS(width) %>', '<%= HtmlUtil.escapeJS(height) %>', '6', '#FFFFFF');
+					var so = new SWFObject('<%= HtmlUtil.escapeJS(movie) %>', 'flashMovie', '<%= width %>', '<%= height %>', '6', '#FFFFFF');
 
 					so.write('flashMovie');
 				</script>

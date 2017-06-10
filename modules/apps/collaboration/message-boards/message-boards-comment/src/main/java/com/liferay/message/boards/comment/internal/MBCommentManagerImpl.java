@@ -46,6 +46,7 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -353,6 +354,13 @@ public class MBCommentManagerImpl implements CommentManager {
 					classPKs.add(curMessage.getMessageId());
 				}
 			}
+		}
+
+		if (classPKs.isEmpty()) {
+			return new MBDiscussionCommentImpl(
+				treeWalker.getRoot(), treeWalker,
+				Collections.<Long, RatingsEntry>emptyMap(),
+				Collections.<Long, RatingsStats>emptyMap());
 		}
 
 		long[] classPKsArray = ArrayUtil.toLongArray(classPKs);

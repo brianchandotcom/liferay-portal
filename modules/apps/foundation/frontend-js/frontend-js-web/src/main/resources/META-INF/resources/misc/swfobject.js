@@ -86,7 +86,7 @@ deconcept.SWFObject.prototype = {
 				this.addVariable("MMplayerType", "PlugIn");
 				this.setAttribute('swf', this.xiSWFPath);
 			}
-			swfNode = '<embed type="application/x-shockwave-flash" src="'+ encodeURI(this.getAttribute('swf')) +'" width="'+ encodeURIComponent(this.getAttribute('width')) +'" height="'+ encodeURIComponent(this.getAttribute('height')) +'" style="'+ (this.getAttribute('style') || "") +'"';
+			swfNode = '<embed type="application/x-shockwave-flash" src="'+ this.getAttribute('swf') +'" width="'+ this.getAttribute('width') +'" height="'+ this.getAttribute('height') +'" style="'+ (this.getAttribute('style') || "") +'"';
 			swfNode += ' id="'+ this.getAttribute('id') +'" name="'+ this.getAttribute('id') +'" ';
 			var params = this.getParams();
 			 for(var key in params){ swfNode += [key] +'="'+ params[key] +'" '; }
@@ -98,8 +98,8 @@ deconcept.SWFObject.prototype = {
 				this.addVariable("MMplayerType", "ActiveX");
 				this.setAttribute('swf', this.xiSWFPath);
 			}
-			swfNode = '<object id="'+ this.getAttribute('id') +'" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="'+ encodeURIComponent(this.getAttribute('width')) +'" height="'+ encodeURIComponent(this.getAttribute('height')) +'" style="'+ (this.getAttribute('style') || "") +'">';
-			swfNode += '<param name="movie" value="'+ encodeURI(this.getAttribute('swf')) +'" />';
+			swfNode = '<object id="'+ this.getAttribute('id') +'" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="'+ this.getAttribute('width') +'" height="'+ this.getAttribute('height') +'" style="'+ (this.getAttribute('style') || "") +'">';
+			swfNode += '<param name="movie" value="'+ this.getAttribute('swf') +'" />';
 			var params = this.getParams();
 			for(var key in params) {
 			 swfNode += '<param name="'+ key +'" value="'+ params[key] +'" />';

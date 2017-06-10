@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceBlockLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 
 import java.util.List;
 import java.util.Map;
@@ -35,16 +35,17 @@ public class StagingPermissionChecker implements PermissionChecker {
 
 	public StagingPermissionChecker(
 		PermissionChecker permissionChecker,
-		ResourceBlockLocalService resourceBlockLocalService) {
+		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry) {
 
 		_permissionChecker = permissionChecker;
-		_resourceBlockLocalService = resourceBlockLocalService;
+		_persistedModelLocalServiceRegistry =
+			persistedModelLocalServiceRegistry;
 	}
 
 	@Override
 	public PermissionChecker clone() {
 		return new StagingPermissionChecker(
-			_permissionChecker.clone(), _resourceBlockLocalService);
+			_permissionChecker.clone(), _persistedModelLocalServiceRegistry);
 	}
 
 	@Override
@@ -128,7 +129,10 @@ public class StagingPermissionChecker implements PermissionChecker {
 	public boolean hasPermission(
 		Group group, String name, long primKey, String actionId) {
 
-		if ((group == null) || _resourceBlockLocalService.isSupported(name)) {
+		if ((group == null) ||
+			_persistedModelLocalServiceRegistry.isPermissionedModelLocalService(
+				name)) {
+
 			return _permissionChecker.hasPermission(
 				group, name, primKey, actionId);
 		}
@@ -149,7 +153,10 @@ public class StagingPermissionChecker implements PermissionChecker {
 	public boolean hasPermission(
 		Group group, String name, String primKey, String actionId) {
 
-		if ((group == null) || _resourceBlockLocalService.isSupported(name)) {
+		if ((group == null) ||
+			_persistedModelLocalServiceRegistry.isPermissionedModelLocalService(
+				name)) {
+
 			return _permissionChecker.hasPermission(
 				group, name, primKey, actionId);
 		}
@@ -251,6 +258,7 @@ public class StagingPermissionChecker implements PermissionChecker {
 	}
 
 	private final PermissionChecker _permissionChecker;
-	private final ResourceBlockLocalService _resourceBlockLocalService;
+	private final PersistedModelLocalServiceRegistry
+		_persistedModelLocalServiceRegistry;
 
 }

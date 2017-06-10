@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
-import com.liferay.portal.kernel.service.ResourceBlockLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -43,7 +43,8 @@ public class StagingPermissionCheckerFactory
 			_serviceTracker.getService();
 
 		return new StagingPermissionChecker(
-			permissionCheckerFactory.create(user), _resourceBlockLocalService);
+			permissionCheckerFactory.create(user),
+			_persistedModelLocalServiceRegistry);
 	}
 
 	@Activate
@@ -67,7 +68,8 @@ public class StagingPermissionCheckerFactory
 				StagingPermissionCheckerFactory.class.getName() + ")))";
 
 	@Reference
-	private ResourceBlockLocalService _resourceBlockLocalService;
+	private PersistedModelLocalServiceRegistry
+		_persistedModelLocalServiceRegistry;
 
 	private ServiceTracker<PermissionCheckerFactory, PermissionCheckerFactory>
 		_serviceTracker;

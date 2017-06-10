@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.UnsafeConsumer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -302,25 +303,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 	@Override
 	public void close() throws IOException {
-		IOException ioe1 = null;
-
-		for (Path tempPath : tempDirPaths) {
-			try {
-				DeployUtil.deletePath(tempPath);
-			}
-			catch (IOException ioe) {
-				if (ioe1 == null) {
-					ioe1 = ioe;
-				}
-				else {
-					ioe1.addSuppressed(ioe);
-				}
-			}
-		}
-
-		if (ioe1 != null) {
-			throw ioe1;
-		}
+		UnsafeConsumer.accept(
+			tempDirPaths, DeployUtil::deletePath, IOException.class);
 	}
 
 	@Override

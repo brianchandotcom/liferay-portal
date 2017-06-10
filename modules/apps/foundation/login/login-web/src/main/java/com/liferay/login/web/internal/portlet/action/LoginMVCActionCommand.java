@@ -103,7 +103,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 			if (doActionAfterLogin) {
 				LiferayPortletResponse liferayPortletResponse =
-					(LiferayPortletResponse)actionResponse;
+					_portal.getLiferayPortletResponse(actionResponse);
 
 				PortletURL renderURL = liferayPortletResponse.createRenderURL();
 

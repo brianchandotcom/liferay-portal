@@ -23,8 +23,6 @@ import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.search.OpenSearchRegistryUtil;
 import com.liferay.portal.kernel.search.OpenSearchUtil;
@@ -33,6 +31,7 @@ import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
@@ -191,8 +190,8 @@ public class SearchUtil {
 					assetRendererFactory.getAssetRenderer(classPK);
 
 				String viewURL = assetRenderer.getURLViewInContext(
-					(LiferayPortletRequest)renderRequest,
-					(LiferayPortletResponse)renderResponse,
+					PortalUtil.getLiferayPortletRequest(renderRequest),
+					PortalUtil.getLiferayPortletResponse(renderResponse),
 					viewContentURL.toString());
 
 				ThemeDisplay themeDisplay =

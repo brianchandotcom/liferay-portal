@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -1884,7 +1885,7 @@ public class ConsumerPortlet extends MVCPortlet {
 		throws Exception {
 
 		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)portletResponse;
+			_portal.getLiferayPortletResponse(portletResponse);
 
 		String lifecycle = parameterMap.get("wsrp-urlType");
 
@@ -2172,6 +2173,9 @@ public class ConsumerPortlet extends MVCPortlet {
 
 	@ServiceReference(type = PhoneLocalService.class)
 	private PhoneLocalService _phoneLocalService;
+
+	@ServiceReference(type = Portal.class)
+	private Portal _portal;
 
 	@ServiceReference(type = WebsiteLocalService.class)
 	private WebsiteLocalService _websiteLocalService;

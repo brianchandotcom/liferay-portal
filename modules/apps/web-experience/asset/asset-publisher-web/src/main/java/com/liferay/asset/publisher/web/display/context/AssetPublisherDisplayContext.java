@@ -627,7 +627,7 @@ public class AssetPublisherDisplayContext {
 		Map<Long, Map<String, PortletURL>> scopeAddPortletURLs = new HashMap();
 
 		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)_portletResponse;
+			PortalUtil.getLiferayPortletResponse(_portletResponse);
 
 		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
@@ -636,7 +636,7 @@ public class AssetPublisherDisplayContext {
 		redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp");
 
 		LiferayPortletRequest liferayPortletRequest =
-			(LiferayPortletRequest)_portletRequest;
+			PortalUtil.getLiferayPortletRequest(_portletRequest);
 
 		PortletURL currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);

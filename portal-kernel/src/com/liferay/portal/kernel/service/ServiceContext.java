@@ -54,6 +54,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.TimeZone;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -489,11 +492,14 @@ public class ServiceContext implements Cloneable, Serializable {
 			return null;
 		}
 
-		LiferayPortletRequest liferayPortletRequest =
-			(LiferayPortletRequest)_request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletRequest portletRequest = (PortletRequest)_request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		return liferayPortletRequest;
+		if (portletRequest == null) {
+			return null;
+		}
+
+		return PortalUtil.getLiferayPortletRequest(portletRequest);
 	}
 
 	@JSON(include = false)
@@ -502,11 +508,15 @@ public class ServiceContext implements Cloneable, Serializable {
 			return null;
 		}
 
-		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)_request.getAttribute(
+		PortletResponse portletResponse =
+			(PortletResponse)_request.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		return liferayPortletResponse;
+		if (portletResponse == null) {
+			return null;
+		}
+
+		return PortalUtil.getLiferayPortletResponse(portletResponse);
 	}
 
 	public Locale getLocale() {

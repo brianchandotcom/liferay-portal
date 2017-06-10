@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -569,9 +570,9 @@ public class InvokerPortletImpl
 		throws IOException, PortletException {
 
 		LiferayPortletRequest portletRequest =
-			(LiferayPortletRequest)actionRequest;
+			PortalUtil.getLiferayPortletRequest(actionRequest);
 		LiferayPortletResponse portletResponse =
-			(LiferayPortletResponse)actionResponse;
+			PortalUtil.getLiferayPortletResponse(actionResponse);
 
 		invoke(
 			portletRequest, portletResponse, PortletRequest.ACTION_PHASE,
@@ -583,9 +584,9 @@ public class InvokerPortletImpl
 		throws IOException, PortletException {
 
 		LiferayPortletRequest portletRequest =
-			(LiferayPortletRequest)eventRequest;
+			PortalUtil.getLiferayPortletRequest(eventRequest);
 		LiferayPortletResponse portletResponse =
-			(LiferayPortletResponse)eventResponse;
+			PortalUtil.getLiferayPortletResponse(eventResponse);
 
 		invoke(
 			portletRequest, portletResponse, PortletRequest.EVENT_PHASE,
@@ -597,9 +598,9 @@ public class InvokerPortletImpl
 		throws IOException, PortletException {
 
 		LiferayPortletRequest portletRequest =
-			(LiferayPortletRequest)renderRequest;
+			PortalUtil.getLiferayPortletRequest(renderRequest);
 		LiferayPortletResponse portletResponse =
-			(LiferayPortletResponse)renderResponse;
+			PortalUtil.getLiferayPortletResponse(renderResponse);
 
 		try {
 			invoke(
@@ -623,9 +624,9 @@ public class InvokerPortletImpl
 		throws IOException, PortletException {
 
 		LiferayPortletRequest portletRequest =
-			(LiferayPortletRequest)resourceRequest;
+			PortalUtil.getLiferayPortletRequest(resourceRequest);
 		LiferayPortletResponse portletResponse =
-			(LiferayPortletResponse)resourceResponse;
+			PortalUtil.getLiferayPortletResponse(resourceResponse);
 
 		invoke(
 			portletRequest, portletResponse, PortletRequest.RESOURCE_PHASE,

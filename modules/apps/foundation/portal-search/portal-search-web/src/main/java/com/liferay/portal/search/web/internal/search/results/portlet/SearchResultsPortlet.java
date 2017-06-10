@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.web.internal.display.context.PortletURLFactory;
 import com.liferay.portal.search.web.internal.display.context.PortletURLFactoryImpl;
@@ -339,7 +340,7 @@ public class SearchResultsPortlet
 		RenderRequest renderRequest) {
 
 		LiferayPortletRequest liferayPortletRequest =
-			(LiferayPortletRequest)renderRequest;
+			_portal.getLiferayPortletRequest(renderRequest);
 
 		return liferayPortletRequest.getHttpServletRequest();
 	}
@@ -459,6 +460,9 @@ public class SearchResultsPortlet
 
 	@Reference
 	protected ResourceActions resourceActions;
+
+	@Reference
+	private Portal _portal;
 
 	private final Set<SearchResultImageContributor>
 		_searchResultImageContributors = new HashSet<>();

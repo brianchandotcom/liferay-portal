@@ -24,8 +24,6 @@ import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayCont
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -308,8 +306,8 @@ public class AssetRSSUtil {
 			assetEntry.getClassPK());
 
 		String viewInContextURL = assetRenderer.getURLViewInContext(
-			(LiferayPortletRequest)portletRequest,
-			(LiferayPortletResponse)portletResponse, null);
+			PortalUtil.getLiferayPortletRequest(portletRequest),
+			PortalUtil.getLiferayPortletResponse(portletResponse), null);
 
 		if (Validator.isNotNull(viewInContextURL) &&
 			!viewInContextURL.startsWith(Http.HTTP_WITH_SLASH) &&

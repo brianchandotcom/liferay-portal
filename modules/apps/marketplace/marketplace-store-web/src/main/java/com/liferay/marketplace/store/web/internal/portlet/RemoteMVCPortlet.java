@@ -104,7 +104,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		oAuthManager.deleteAccessToken(themeDisplay.getUser());
 
 		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)actionResponse;
+			PortalUtil.getLiferayPortletResponse(actionResponse);
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 

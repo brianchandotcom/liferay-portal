@@ -182,7 +182,7 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		long backgroundTaskId) {
 
 		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)actionResponse;
+			_portal.getLiferayPortletResponse(actionResponse);
 
 		PortletURL renderURL = liferayPortletResponse.createRenderURL();
 

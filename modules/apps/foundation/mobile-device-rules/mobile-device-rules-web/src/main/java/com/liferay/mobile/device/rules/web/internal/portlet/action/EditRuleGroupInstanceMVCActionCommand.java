@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -98,7 +99,7 @@ public class EditRuleGroupInstanceMVCActionCommand
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)actionResponse;
+			_portal.getLiferayPortletResponse(actionResponse);
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
@@ -145,5 +146,8 @@ public class EditRuleGroupInstanceMVCActionCommand
 	}
 
 	private MDRRuleGroupInstanceService _mdrRuleGroupInstanceService;
+
+	@Reference
+	private Portal _portal;
 
 }

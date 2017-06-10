@@ -984,7 +984,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		jsonObject.put("redirect", redirect);
 
 		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)portletResponse;
+			portal.getLiferayPortletResponse(portletResponse);
 
 		PortletURL viewSummaryURL = liferayPortletResponse.createRenderURL();
 
@@ -1080,7 +1080,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		jsonObject.put("portraitURL", user.getPortraitURL(themeDisplay));
 
 		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)portletResponse;
+			portal.getLiferayPortletResponse(portletResponse);
 
 		PortletURL viewSummaryURL = liferayPortletResponse.createRenderURL();
 

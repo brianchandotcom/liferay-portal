@@ -16,13 +16,13 @@ package com.liferay.site.item.selector.web.internal.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
@@ -104,7 +104,8 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 	@Override
 	public PortletURL getPortletURL() throws PortletException {
 		return PortletURLUtil.clone(
-			portletURL, (LiferayPortletResponse)getPortletResponse());
+			portletURL,
+			PortalUtil.getLiferayPortletResponse(getPortletResponse()));
 	}
 
 	@Override

@@ -167,7 +167,7 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)resourceResponse;
+			_portal.getLiferayPortletResponse(resourceResponse);
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
 			UsersAdminPortletKeys.USERS_ADMIN);

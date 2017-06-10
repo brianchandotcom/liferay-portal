@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -299,7 +300,7 @@ public class TrashPortlet extends MVCPortlet {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			LiferayPortletResponse liferayPortletResponse =
-				(LiferayPortletResponse)actionResponse;
+				_portal.getLiferayPortletResponse(actionResponse);
 
 			PortletURL renderURL = liferayPortletResponse.createRenderURL();
 
@@ -345,6 +346,9 @@ public class TrashPortlet extends MVCPortlet {
 	protected void setTrashEntryService(TrashEntryService trashEntryService) {
 		_trashEntryService = trashEntryService;
 	}
+
+	@Reference
+	private Portal _portal;
 
 	private TrashEntryLocalService _trashEntryLocalService;
 	private TrashEntryService _trashEntryService;

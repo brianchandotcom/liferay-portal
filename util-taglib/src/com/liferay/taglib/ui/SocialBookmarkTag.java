@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
@@ -56,6 +57,9 @@ public class SocialBookmarkTag extends IncludeTag {
 
 	public void setType(String type) {
 		_type = type;
+
+		_postURL = PropsUtil.get(
+			PropsKeys.SOCIAL_BOOKMARK_POST_URL, new Filter(_type));
 	}
 
 	public void setUrl(String url) {
@@ -105,15 +109,13 @@ public class SocialBookmarkTag extends IncludeTag {
 	}
 
 	protected String getPostUrl() {
-		Map<String, String> vars = new HashMap<>();
-
-		vars.put("liferay:social-bookmark:title", URLCodec.encodeURL(_title));
-		vars.put("liferay:social-bookmark:url", _url);
-
-		String postUrl = PropsUtil.get(
-			PropsKeys.SOCIAL_BOOKMARK_POST_URL, new Filter(_type, vars));
-
-		return postUrl;
+		return StringUtil.replace(
+			_postURL,
+			new String[] {
+				"${liferay:social-bookmark:title}",
+				"${liferay:social-bookmark:url}"
+			},
+			new String[] {URLCodec.encodeURL(_title), _url});
 	}
 
 	@Override
@@ -167,6 +169,7 @@ public class SocialBookmarkTag extends IncludeTag {
 	private String _displayStyle;
 	private String _icon;
 	private String _jspPath;
+	private String _postURL;
 	private String _target;
 	private String _title;
 	private String _type;

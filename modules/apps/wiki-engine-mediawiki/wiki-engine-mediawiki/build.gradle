@@ -9,7 +9,6 @@ String jamWikiVersion = "1.0.7"
 
 copyJAMWiki {
 	eachFile new StripPathSegmentsAction(5)
-
 	from zipTree("jamwiki-${jamWikiVersion}-src.zip")
 
 	include "jamwiki-${jamWikiVersion}/jamwiki-war/src/main/resources/ApplicationResources*.properties"

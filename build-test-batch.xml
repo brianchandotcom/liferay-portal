@@ -1338,6 +1338,62 @@ app.server.type=@{app.server.type}]]></echo>
 					]]>
 				</execute>
 			</test-action>
+
+			<test-set-up>
+				<if>
+					<and>
+						<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
+						<matches pattern="https?://" string="${test.portal.bundle.zip.url}" />
+					</and>
+					<then>
+						<antcall target="prepare-test-bundle">
+							<param name="test.app.server.bin.dir" value="${app.server.bin.dir}" />
+							<param name="test.build.bundle.zip.url" value="${test.portal.bundle.zip.url}" />
+							<param name="test.build.fix.pack.zip.url" value="${test.build.fix.pack.zip.url}" />
+						</antcall>
+					</then>
+					<elseif>
+						<matches pattern="https?://" string="${test.portal.bundle.zip.url}" />
+						<then>
+							<antcall target="prepare-test-bundle">
+								<param name="test.app.server.bin.dir" value="${app.server.bin.dir}" />
+								<param name="test.build.bundle.zip.url" value="${test.portal.bundle.zip.url}" />
+							</antcall>
+						</then>
+					</elseif>
+					<elseif>
+						<isset property="env.DIST_PATH" />
+						<then>
+							<prepare-test-environment />
+						</then>
+					</elseif>
+					<else>
+						<antcall target="compile" />
+
+						<ant antfile="build-dist.xml" target="build-dist-tomcat" />
+					</else>
+				</if>
+
+				<remake-dir dir="tools/zip_tmpl/license" />
+
+				<ant antfile="build-dist.xml" target="zip-tomcat" />
+
+				<propertyfile file="${blade.samples.dir}/liferay-workspace/gradle.properties">
+					<entry key="liferay.workspace.bundle.url" value="file:///${project.dir}/dist/liferay-portal-tomcat-${lp.version}.zip" />
+				</propertyfile>
+
+				<print-file file.name="${blade.samples.dir}/liferay-workspace/gradle.properties" />
+
+				<if>
+					<matches pattern="https?://" string="${test.license.xml.url}" />
+					<then>
+						<mirrors-get
+							dest="${blade.samples.dir}/liferay-workspace/configs/common/deploy/license.xml"
+							src="${test.license.xml.url}"
+						/>
+					</then>
+				</if>
+			</test-set-up>
 		</run-batch-test>
 	</target>
 

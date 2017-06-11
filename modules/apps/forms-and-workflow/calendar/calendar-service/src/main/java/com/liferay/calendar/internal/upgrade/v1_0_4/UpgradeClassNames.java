@@ -16,6 +16,7 @@ package com.liferay.calendar.internal.upgrade.v1_0_4;
 
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 
 import java.sql.PreparedStatement;
@@ -31,6 +32,8 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 		deleteCalEventClassName();
 
 		deleteDuplicateResources();
+
+		deleteDuplicateResourcePermissions();
 
 		super.doUpgrade();
 	}
@@ -59,6 +62,43 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);
+		}
+	}
+
+	protected void deleteDuplicateResourcePermissions() throws UpgradeException {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			String oldName = _RESOURCE_NAMES[0][0];
+			String newName = _RESOURCE_NAMES[0][1];
+
+			StringBundler sb = new StringBundler();
+
+			sb.append("SELECT orp.resourcePermissionId ");
+			sb.append("FROM ResourcePermission orp, ResourcePermission nrp ");
+			sb.append("WHERE orp.companyId = nrp.companyId ");
+			sb.append("AND orp.scope = nrp.scope ");
+			sb.append("AND orp.primkey = nrp.primkey ");
+			sb.append("AND orp.roleId = nrp.roleId ");
+			sb.append("AND orp.name = ? AND nrp.name = ?");
+
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString())) {
+
+				ps.setString(1, oldName);
+				ps.setString(2, newName);
+
+				ResultSet rs = ps.executeQuery();
+
+				while (rs.next()) {
+					String deleteSQL =
+						"delete from ResourcePermission where " +
+							"resourcePermissionId = '" + rs.getString(1) + "'";
+
+					runSQL(deleteSQL);
+				}
+			}
+			catch (Exception e) {
+				throw new UpgradeException(e);
+			}
 		}
 	}
 

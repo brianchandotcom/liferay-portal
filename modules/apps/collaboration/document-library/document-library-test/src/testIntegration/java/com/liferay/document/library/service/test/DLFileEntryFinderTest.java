@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service.persistence;
+package com.liferay.document.library.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -31,6 +32,9 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -51,6 +55,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -66,10 +71,12 @@ import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
  */
+@RunWith(Arquillian.class)
 @Sync
 public class DLFileEntryFinderTest {
 
@@ -82,6 +89,9 @@ public class DLFileEntryFinderTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		setUpPermissionThreadLocal();
+		setUpPrincipalThreadLocal();
+
 		_user = UserTestUtil.addUser();
 
 		long classNameId = PortalUtil.getClassNameId(
@@ -115,6 +125,10 @@ public class DLFileEntryFinderTest {
 		GroupLocalServiceUtil.deleteGroup(_group);
 
 		UserLocalServiceUtil.deleteUser(_user);
+
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -1312,6 +1326,34 @@ public class DLFileEntryFinderTest {
 		return new Object[] {folder, dlFileVersion};
 	}
 
+	protected static void setUpPermissionThreadLocal() throws Exception {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			new SimplePermissionChecker() {
+
+				{
+					init(TestPropsValues.getUser());
+				}
+
+				@Override
+				public boolean hasOwnerPermission(
+					long companyId, String name, String primKey, long ownerId,
+					String actionId) {
+
+					return true;
+				}
+
+			});
+	}
+
+	protected static void setUpPrincipalThreadLocal() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
 	protected int doCountBy_G_U_F_M(
 			long userId, String mimeType,
 			QueryDefinition<DLFileEntry> queryDefinition)
@@ -1506,6 +1548,8 @@ public class DLFileEntryFinderTest {
 	private static Folder _defaultRepositoryFolder;
 	private static Group _group;
 	private static Folder _newRepositoryFolder;
+	private static String _originalName;
+	private static PermissionChecker _originalPermissionChecker;
 	private static Repository _repository;
 	private static User _user;
 

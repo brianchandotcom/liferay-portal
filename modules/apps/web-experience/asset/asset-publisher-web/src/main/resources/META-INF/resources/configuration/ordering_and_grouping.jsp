@@ -46,7 +46,7 @@
 
 		<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
 			<liferay-ui:icon
-				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "ASC") ? "hide icon" : "icon" %>'
+				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "DESC") ? "hide icon" : "icon" %>'
 				icon="angle-up"
 				markupView="lexicon"
 				message="ascending"
@@ -54,7 +54,7 @@
 			/>
 
 			<liferay-ui:icon
-				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "DESC") ? "hide icon" : "icon" %>'
+				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "ASC") ? "hide icon" : "icon" %>'
 				icon="angle-down"
 				markupView="lexicon"
 				message="descending"
@@ -91,7 +91,7 @@
 
 		<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
 			<liferay-ui:icon
-				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "ASC") ? "hide icon" : "icon" %>'
+				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "DESC") ? "hide icon" : "icon" %>'
 				icon="angle-up"
 				markupView="lexicon"
 				message="ascending"
@@ -99,7 +99,7 @@
 			/>
 
 			<liferay-ui:icon
-				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "DESC") ? "hide icon" : "icon" %>'
+				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "ASC") ? "hide icon" : "icon" %>'
 				icon="angle-down"
 				markupView="lexicon"
 				message="descending"

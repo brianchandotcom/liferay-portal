@@ -272,15 +272,17 @@
 
 		<!-- Finder methods -->
 
-		<finder name="G_C_C_C_L_M" return-type="FriendlyURLEntry">
+		<finder name="G_L_U" return-type="CPFriendlyURLEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="languageId" />
+			<finder-column name="urlTitle" />
+		</finder>
+		<finder name="G_C_C_U" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-			<finder-column name="languageId" />
-			<finder-column name="main" />
+			<finder-column name="urlTitle" />
 		</finder>
-
 		<finder name="G_C_C_C_L_U" return-type="FriendlyURLEntry">
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />
@@ -289,18 +291,13 @@
 			<finder-column name="languageId" />
 			<finder-column name="urlTitle" />
 		</finder>
-
-		<finder name="G_C_C_U" return-type="Collection">
+		<finder name="G_C_C_C_L_M" return-type="FriendlyURLEntry">
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
-			<finder-column name="urlTitle" />
-		</finder>
-
-		<finder name="G_U_L" return-type="CPFriendlyURLEntry" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="urlTitle" />
+			<finder-column name="classPK" />
 			<finder-column name="languageId" />
+			<finder-column name="main" />
 		</finder>
 
 		<!-- References -->

@@ -8,21 +8,23 @@
 	</command>
 
 	<command name="unsubscribeViaMySubscriptions">
-		<execute function="AssertClick" locator1="Link#UNSUBSCRIBE" value1="Unsubscribe" />
+		<var name="key_rowNumber" value="${rowNumber}" />
+
+		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER_CHECKBOX" />
+
+		<execute function="AssertClick" locator1="Button#UNSUBSCRIBE" value1="Unsubscribe" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="viewDefaultPG">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="No subscriptions were found." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#EMPTY_INFO" value1="No subscriptions were found." />
 	</command>
 
 	<command name="viewSubscription">
-		<var name="key_assetName" value="${assetName}" />
 		<var name="key_assetTitle" value="${assetTitle}" />
 		<var name="key_assetType" value="${assetType}" />
 
-		<execute function="AssertTextEquals" locator1="MySubscriptions#ASSET_NAME" value1="${assetName}" />
 		<execute function="AssertTextEquals" locator1="MySubscriptions#ASSET_TITLE" value1="${assetTitle}" />
 		<execute function="AssertTextEquals" locator1="MySubscriptions#ASSET_TYPE" value1="${assetType}" />
 	</command>

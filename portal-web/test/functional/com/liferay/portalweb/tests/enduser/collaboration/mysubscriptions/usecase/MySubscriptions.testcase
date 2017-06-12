@@ -64,7 +64,9 @@
 			<var name="assetType" value="Bookmarks Folder" />
 		</execute>
 
-		<execute macro="Subscriptions#unsubscribeViaMySubscriptions" />
+		<execute macro="Subscriptions#unsubscribeViaMySubscriptions">
+			<var name="rowNumber" value="1" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="My Subscriptions Page" />

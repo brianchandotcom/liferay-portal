@@ -759,6 +759,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UNSUBSCRIBE</td>
+	<td>//button[contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UPDATE</td>
 	<td>//button[contains(.,'Update')]</td>
 	<td></td>

@@ -61,16 +61,6 @@ public class FriendlyURLEntryStagedModelDataHandler
 		return CLASS_NAMES;
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.friendly.url.model.FriendlyURLEntry)",
-		unbind = "-"
-	)
-	public void setStagedModelRepository(
-		StagedModelRepository<FriendlyURLEntry> stagedModelRepository) {
-
-		_stagedModelRepository = stagedModelRepository;
-	}
-
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
@@ -146,14 +136,12 @@ public class FriendlyURLEntryStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
-	@Reference(unbind = "-")
-	protected void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
-
-		_classNameLocalService = classNameLocalService;
-	}
-
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.friendly.url.model.FriendlyURLEntry)"
+	)
 	private StagedModelRepository<FriendlyURLEntry> _stagedModelRepository;
 
 }

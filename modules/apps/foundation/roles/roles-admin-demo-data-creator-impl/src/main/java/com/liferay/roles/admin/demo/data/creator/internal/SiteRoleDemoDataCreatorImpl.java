@@ -33,19 +33,21 @@ public class SiteRoleDemoDataCreatorImpl
 	extends BaseRoleDemoDataCreator implements RoleDemoDataCreator {
 
 	@Override
-	public Role create(long companyId, String xml) throws PortalException {
-		return create(companyId, StringUtil.randomString(), xml);
+	public Role create(long companyId, String permissionsXML)
+		throws PortalException {
+
+		return create(companyId, StringUtil.randomString(), permissionsXML);
 	}
 
 	@Override
-	public Role create(long companyId, String roleName, String xml)
+	public Role create(long companyId, String roleName, String permissionsXML)
 		throws PortalException {
 
 		Role role = createRole(companyId, roleName, RoleConstants.TYPE_SITE);
 
-		if (Validator.isNotNull(xml)) {
+		if (Validator.isNotNull(permissionsXML)) {
 			addPermissions(
-				role, xml, ResourceConstants.SCOPE_GROUP_TEMPLATE,
+				role, permissionsXML, ResourceConstants.SCOPE_GROUP_TEMPLATE,
 				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID));
 		}
 

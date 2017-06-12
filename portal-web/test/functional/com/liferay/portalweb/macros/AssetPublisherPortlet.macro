@@ -133,6 +133,15 @@
 			<var name="navTab" value="Display Settings" />
 		</execute>
 
+		<if>
+			<isset var="disableConfiguration" />
+			<then>
+				<execute function="Uncheck#uncheckToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
+					<var name="key_toggleSwitchLabel" value="${disableConfiguration}" />
+				</execute>
+			</then>
+		</if>
+
 		<execute function="Select" locator1="APConfigurationDisplaysettings#ASSET_LINK_BEHAVIOR_SELECT" value1="${assetLinkBehavior}" />
 
 		<execute macro="PortletEntry#save" />
@@ -373,7 +382,9 @@
 	<command name="configurePaginationPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
-		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Display Settings" />
+		</execute>
 
 		<execute function="Type" locator1="APConfigurationDisplaysettings#NUMBER_OF_ITEMS_TO_DISPLAY_FIELD" value1="${paginationNumber}" />
 
@@ -1222,6 +1233,10 @@
 				<execute function="AssertTextEquals" locator1="AP#METADATA_TAGS" value1="${tagName}" />
 			</then>
 		</if>
+	</command>
+
+	<command name="viewPlusIconNotPresentPG">
+		<execute function="AssertElementNotPresent" locator1="AP#ADD_ASSET_PLUS_ICON" />
 	</command>
 
 	<command name="viewReadMoreLinkNotPresentPG">

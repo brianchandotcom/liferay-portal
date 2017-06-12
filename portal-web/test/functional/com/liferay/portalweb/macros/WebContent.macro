@@ -13,6 +13,17 @@
 		<execute function="Type" locator1="TextArea#SUMMARY" value1="${abstractSummary}" />
 	</command>
 
+	<command name="addArticleCP">
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+	</command>
+
 	<command name="addCP">
 		<if>
 			<isset var="webContentTitle" />
@@ -197,6 +208,25 @@
 		<execute function="Click" locator1="Button#PUBLISH_LOCALIZED" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="addMultipleArticlesCP">
+		<var method="MathUtil#sum('${articleCount}', '1')" name="articleCount" />
+		<var name="count" value="1" />
+
+		<while>
+			<not>
+				<equals arg1="${count}" arg2="${articleCount}" />
+			</not>
+			<then>
+				<execute macro="WebContent#addArticleCP">
+					<var name="webContentContent" value="WC Content ${count}" />
+					<var name="webContentTitle" value="WC Title ${count}" />
+				</execute>
+
+				<var method="MathUtil#sum('${count}', '1')" name="count" />
+			</then>
+		</while>
 	</command>
 
 	<command name="addNullCP">

@@ -390,9 +390,13 @@ public class IndentationCheck extends AbstractCheck {
 		return lineNumbers;
 	}
 
-	private int _adjustTabCountForChains(
-		int expectedTabCount, DetailAST detailAST) {
+	private int _adjustTabCount(int tabCount, DetailAST detailAST) {
+		tabCount = _adjustTabCountForChains(tabCount, detailAST);
 
+		return _adjustTabCountForEndOfLineLogicalOperator(tabCount, detailAST);
+	}
+
+	private int _adjustTabCountForChains(int tabCount, DetailAST detailAST) {
 		boolean checkChaining = false;
 		int methodCallLineCount = -1;
 
@@ -404,7 +408,7 @@ public class IndentationCheck extends AbstractCheck {
 				(parentAST.getType() == TokenTypes.OBJBLOCK) ||
 				(parentAST.getType() == TokenTypes.SLIST)) {
 
-				return expectedTabCount;
+				return tabCount;
 			}
 
 			if (checkChaining) {
@@ -416,7 +420,7 @@ public class IndentationCheck extends AbstractCheck {
 				if (line.endsWith("(") &&
 					(parentAST.getLineNo() < methodCallLineCount)) {
 
-					return expectedTabCount - 1;
+					return tabCount - 1;
 				}
 			}
 
@@ -431,6 +435,47 @@ public class IndentationCheck extends AbstractCheck {
 
 					checkChaining = true;
 					methodCallLineCount = parentAST.getLineNo();
+				}
+			}
+
+			parentAST = parentAST.getParent();
+		}
+	}
+
+	private int _adjustTabCountForEndOfLineLogicalOperator(
+		int tabCount, DetailAST detailAST) {
+
+		DetailAST parentAST = detailAST;
+
+		while (true) {
+			if ((parentAST == null) ||
+				(parentAST.getType() == TokenTypes.LABELED_STAT) ||
+				(parentAST.getType() == TokenTypes.OBJBLOCK) ||
+				(parentAST.getType() == TokenTypes.SLIST)) {
+
+				return tabCount;
+			}
+
+			if (((parentAST.getType() == TokenTypes.BAND) ||
+				 (parentAST.getType() == TokenTypes.BOR) ||
+				 (parentAST.getType() == TokenTypes.BXOR) ||
+				 (parentAST.getType() == TokenTypes.LAND) ||
+				 (parentAST.getType() == TokenTypes.LOR)) &&
+				(parentAST.getLineNo() < detailAST.getLineNo())) {
+
+				String text = parentAST.getText();
+
+				FileContents fileContents = getFileContents();
+
+				String line = fileContents.getLine(parentAST.getLineNo() - 1);
+
+				String trimmedLine = StringUtil.trim(line);
+
+				if (!trimmedLine.startsWith("return ") &&
+					(parentAST.getColumnNo() + text.length()) ==
+						line.length()) {
+
+					tabCount--;
 				}
 			}
 
@@ -570,7 +615,7 @@ public class IndentationCheck extends AbstractCheck {
 				(parentAST.getType() == TokenTypes.OBJBLOCK) ||
 				(parentAST.getType() == TokenTypes.SLIST)) {
 
-				return _adjustTabCountForChains(lineNumbers.size(), detailAST);
+				return _adjustTabCount(lineNumbers.size(), detailAST);
 			}
 
 			if ((parentAST.getType() == TokenTypes.ANNOTATION_DEF) ||
@@ -719,8 +764,7 @@ public class IndentationCheck extends AbstractCheck {
 					(_findParent(parentAST, TokenTypes.PARAMETER_DEF) ==
 						null)) {
 
-					return _adjustTabCountForChains(
-						lineNumbers.size(), detailAST);
+					return _adjustTabCount(lineNumbers.size(), detailAST);
 				}
 
 				continue;

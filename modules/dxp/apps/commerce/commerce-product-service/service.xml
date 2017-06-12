@@ -320,7 +320,6 @@
 			<finder-column name="main" />
 		</finder>
 
-
 		<!-- References -->
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />

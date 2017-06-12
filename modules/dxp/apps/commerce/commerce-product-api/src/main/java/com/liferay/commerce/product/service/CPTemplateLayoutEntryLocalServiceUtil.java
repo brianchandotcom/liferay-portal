@@ -53,6 +53,24 @@ public class CPTemplateLayoutEntryLocalServiceUtil {
 		return getService().addCPTemplateLayoutEntry(cpTemplateLayoutEntry);
 	}
 
+	public static com.liferay.commerce.product.model.CPTemplateLayoutEntry addCPTemplateLayoutEntry(
+		long groupId, long companyId, java.lang.Class<?> clazz, long classPK,
+		java.lang.String layoutUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCPTemplateLayoutEntry(groupId, companyId, clazz,
+			classPK, layoutUuid);
+	}
+
+	public static com.liferay.commerce.product.model.CPTemplateLayoutEntry addCPTemplateLayoutEntry(
+		long groupId, long companyId, long classNameId, long classPK,
+		java.lang.String layoutUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCPTemplateLayoutEntry(groupId, companyId, classNameId,
+			classPK, layoutUuid);
+	}
+
 	/**
 	* Creates a new cp template layout entry with the primary key. Does not add the cp template layout entry to the database.
 	*
@@ -117,6 +135,14 @@ public class CPTemplateLayoutEntryLocalServiceUtil {
 		long CPFriendlyURLEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPTemplateLayoutEntry(CPFriendlyURLEntryId);
+	}
+
+	public static com.liferay.commerce.product.model.CPTemplateLayoutEntry getCPTemplateLayoutEntry(
+		long groupId, long companyId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPTemplateLayoutEntry(groupId, companyId, classNameId,
+			classPK);
 	}
 
 	/**
@@ -314,6 +340,13 @@ public class CPTemplateLayoutEntryLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteCPTemplateLayoutEntry(long groupId,
+		long companyId, java.lang.Class<?> clazz, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.deleteCPTemplateLayoutEntry(groupId, companyId, clazz, classPK);
 	}
 
 	public static CPTemplateLayoutEntryLocalService getService() {

@@ -77,11 +77,11 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
 		java.lang.String[] urlTitleMapLanguageIds,
-		java.lang.String[] urlTitleMapValues, java.lang.String productTypeName,
-		java.lang.String ddmStructureKey, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		java.lang.String[] urlTitleMapValues, java.lang.String layoutUuid,
+		java.lang.String productTypeName, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -97,10 +97,10 @@ public class CPDefinitionServiceSoap {
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.addCPDefinition(baseSKU,
 					titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-					productTypeName, ddmStructureKey, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
+					layoutUuid, productTypeName, ddmStructureKey,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
@@ -221,6 +221,22 @@ public class CPDefinitionServiceSoap {
 		}
 	}
 
+	public static java.lang.String getUrlTitleMapAsXML(
+		com.liferay.commerce.product.model.CPDefinitionSoap cpDefinition)
+		throws RemoteException {
+		try {
+			java.lang.String returnValue = CPDefinitionServiceUtil.getUrlTitleMapAsXML(com.liferay.commerce.product.model.impl.CPDefinitionModelImpl.toModel(
+						cpDefinition));
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinitionSoap moveCPDefinitionToTrash(
 		long cpDefinitionId) throws RemoteException {
 		try {
@@ -256,10 +272,11 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues,
 		java.lang.String[] urlTitleMapLanguageIds,
-		java.lang.String[] urlTitleMapValues, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		java.lang.String[] urlTitleMapValues, java.lang.String layoutUuid,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -275,7 +292,7 @@ public class CPDefinitionServiceSoap {
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinition(cpDefinitionId,
 					baseSKU, titleMap, shortDescriptionMap, descriptionMap,
-					urlTitleMap, ddmStructureKey, displayDateMonth,
+					urlTitleMap, layoutUuid, ddmStructureKey, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
 					expirationDateYear, expirationDateHour,
@@ -290,11 +307,11 @@ public class CPDefinitionServiceSoap {
 		}
 	}
 
-	public static java.lang.String getUrlTitleMapAsXML(
+	public static java.lang.String getDisplayPage(
 		com.liferay.commerce.product.model.CPDefinitionSoap cpDefinition)
 		throws RemoteException {
 		try {
-			java.lang.String returnValue = CPDefinitionServiceUtil.getUrlTitleMapAsXML(com.liferay.commerce.product.model.impl.CPDefinitionModelImpl.toModel(
+			java.lang.String returnValue = CPDefinitionServiceUtil.getDisplayPage(com.liferay.commerce.product.model.impl.CPDefinitionModelImpl.toModel(
 						cpDefinition));
 
 			return returnValue;

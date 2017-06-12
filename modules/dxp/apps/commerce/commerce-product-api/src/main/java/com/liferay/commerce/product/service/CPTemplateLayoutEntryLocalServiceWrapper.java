@@ -46,6 +46,24 @@ public class CPTemplateLayoutEntryLocalServiceWrapper
 		return _cpTemplateLayoutEntryLocalService.addCPTemplateLayoutEntry(cpTemplateLayoutEntry);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPTemplateLayoutEntry addCPTemplateLayoutEntry(
+		long groupId, long companyId, java.lang.Class<?> clazz, long classPK,
+		java.lang.String layoutUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpTemplateLayoutEntryLocalService.addCPTemplateLayoutEntry(groupId,
+			companyId, clazz, classPK, layoutUuid);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPTemplateLayoutEntry addCPTemplateLayoutEntry(
+		long groupId, long companyId, long classNameId, long classPK,
+		java.lang.String layoutUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpTemplateLayoutEntryLocalService.addCPTemplateLayoutEntry(groupId,
+			companyId, classNameId, classPK, layoutUuid);
+	}
+
 	/**
 	* Creates a new cp template layout entry with the primary key. Does not add the cp template layout entry to the database.
 	*
@@ -116,6 +134,14 @@ public class CPTemplateLayoutEntryLocalServiceWrapper
 		long CPFriendlyURLEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpTemplateLayoutEntryLocalService.getCPTemplateLayoutEntry(CPFriendlyURLEntryId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPTemplateLayoutEntry getCPTemplateLayoutEntry(
+		long groupId, long companyId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpTemplateLayoutEntryLocalService.getCPTemplateLayoutEntry(groupId,
+			companyId, classNameId, classPK);
 	}
 
 	/**
@@ -333,6 +359,14 @@ public class CPTemplateLayoutEntryLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _cpTemplateLayoutEntryLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void deleteCPTemplateLayoutEntry(long groupId, long companyId,
+		java.lang.Class<?> clazz, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpTemplateLayoutEntryLocalService.deleteCPTemplateLayoutEntry(groupId,
+			companyId, clazz, classPK);
 	}
 
 	@Override

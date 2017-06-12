@@ -61,10 +61,11 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
-		java.lang.String productTypeName, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		java.lang.String layoutUuid, java.lang.String productTypeName,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -74,10 +75,10 @@ public class CPDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, baseSKU,
 					titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-					productTypeName, ddmStructureKey, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
+					layoutUuid, productTypeName, ddmStructureKey,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
@@ -328,13 +329,41 @@ public class CPDefinitionServiceHttp {
 		}
 	}
 
+	public static java.lang.String getUrlTitleMapAsXML(
+		HttpPrincipal httpPrincipal,
+		com.liferay.commerce.product.model.CPDefinition cpDefinition) {
+		try {
+			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
+					"getUrlTitleMapAsXML", _getUrlTitleMapAsXMLParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpDefinition);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.lang.String)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinition moveCPDefinitionToTrash(
 		HttpPrincipal httpPrincipal, long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
 					"moveCPDefinitionToTrash",
-					_moveCPDefinitionToTrashParameterTypes8);
+					_moveCPDefinitionToTrashParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId);
@@ -367,7 +396,7 @@ public class CPDefinitionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
 					"restoreCPDefinitionFromTrash",
-					_restoreCPDefinitionFromTrashParameterTypes9);
+					_restoreCPDefinitionFromTrashParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId);
@@ -395,7 +424,7 @@ public class CPDefinitionServiceHttp {
 		com.liferay.portal.kernel.search.SearchContext searchContext) {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
-					"search", _searchParameterTypes10);
+					"search", _searchParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					searchContext);
@@ -425,7 +454,7 @@ public class CPDefinitionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
-					"searchCPDefinitions", _searchCPDefinitionsParameterTypes11);
+					"searchCPDefinitions", _searchCPDefinitionsParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupId, keywords, status, start, end, sort);
@@ -459,20 +488,20 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
-		java.lang.String ddmStructureKey, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		java.lang.String layoutUuid, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
-					"updateCPDefinition", _updateCPDefinitionParameterTypes12);
+					"updateCPDefinition", _updateCPDefinitionParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-					descriptionMap, urlTitleMap, ddmStructureKey,
+					descriptionMap, urlTitleMap, layoutUuid, ddmStructureKey,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
@@ -508,7 +537,7 @@ public class CPDefinitionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
-					"updateStatus", _updateStatusParameterTypes13);
+					"updateStatus", _updateStatusParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					cpDefinitionId, status, serviceContext, workflowContext);
@@ -535,12 +564,12 @@ public class CPDefinitionServiceHttp {
 		}
 	}
 
-	public static java.lang.String getUrlTitleMapAsXML(
-		HttpPrincipal httpPrincipal,
-		com.liferay.commerce.product.model.CPDefinition cpDefinition) {
+	public static java.lang.String getDisplayPage(HttpPrincipal httpPrincipal,
+		com.liferay.commerce.product.model.CPDefinition cpDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
-					"getUrlTitleMapAsXML", _getUrlTitleMapAsXMLParameterTypes14);
+					"getDisplayPage", _getDisplayPageParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinition);
@@ -551,6 +580,10 @@ public class CPDefinitionServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -567,9 +600,9 @@ public class CPDefinitionServiceHttp {
 	private static final Class<?>[] _addCPDefinitionParameterTypes0 = new Class[] {
 			java.lang.String.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.lang.String.class,
-			java.lang.String.class, int.class, int.class, int.class, int.class,
+			java.lang.String.class, java.lang.String.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class,
+			int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPDefinitionParameterTypes1 = new Class[] {
@@ -596,32 +629,35 @@ public class CPDefinitionServiceHttp {
 	private static final Class<?>[] _getDefaultImageParameterTypes7 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _moveCPDefinitionToTrashParameterTypes8 = new Class[] {
+	private static final Class<?>[] _getUrlTitleMapAsXMLParameterTypes8 = new Class[] {
+			com.liferay.commerce.product.model.CPDefinition.class
+		};
+	private static final Class<?>[] _moveCPDefinitionToTrashParameterTypes9 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _restoreCPDefinitionFromTrashParameterTypes9 =
+	private static final Class<?>[] _restoreCPDefinitionFromTrashParameterTypes10 =
 		new Class[] { long.class };
-	private static final Class<?>[] _searchParameterTypes10 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes11 = new Class[] {
 			com.liferay.portal.kernel.search.SearchContext.class
 		};
-	private static final Class<?>[] _searchCPDefinitionsParameterTypes11 = new Class[] {
+	private static final Class<?>[] _searchCPDefinitionsParameterTypes12 = new Class[] {
 			long.class, long.class, java.lang.String.class, int.class, int.class,
 			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
-	private static final Class<?>[] _updateCPDefinitionParameterTypes12 = new Class[] {
+	private static final Class<?>[] _updateCPDefinitionParameterTypes13 = new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class, int.class, int.class, int.class, int.class,
+			java.lang.String.class, java.lang.String.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class,
+			int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateStatusParameterTypes13 = new Class[] {
+	private static final Class<?>[] _updateStatusParameterTypes14 = new Class[] {
 			long.class, long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class,
 			java.util.Map.class
 		};
-	private static final Class<?>[] _getUrlTitleMapAsXMLParameterTypes14 = new Class[] {
+	private static final Class<?>[] _getDisplayPageParameterTypes15 = new Class[] {
 			com.liferay.commerce.product.model.CPDefinition.class
 		};
 }

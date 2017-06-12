@@ -74,6 +74,14 @@ public interface CPTemplateLayoutEntryLocalService extends BaseLocalService,
 	public CPTemplateLayoutEntry addCPTemplateLayoutEntry(
 		CPTemplateLayoutEntry cpTemplateLayoutEntry);
 
+	public CPTemplateLayoutEntry addCPTemplateLayoutEntry(long groupId,
+		long companyId, java.lang.Class<?> clazz, long classPK,
+		java.lang.String layoutUuid) throws PortalException;
+
+	public CPTemplateLayoutEntry addCPTemplateLayoutEntry(long groupId,
+		long companyId, long classNameId, long classPK,
+		java.lang.String layoutUuid) throws PortalException;
+
 	/**
 	* Creates a new cp template layout entry with the primary key. Does not add the cp template layout entry to the database.
 	*
@@ -129,6 +137,11 @@ public interface CPTemplateLayoutEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPTemplateLayoutEntry getCPTemplateLayoutEntry(
 		long CPFriendlyURLEntryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPTemplateLayoutEntry getCPTemplateLayoutEntry(long groupId,
+		long companyId, long classNameId, long classPK)
+		throws PortalException;
 
 	/**
 	* Returns the cp template layout entry matching the UUID and group.
@@ -288,4 +301,7 @@ public interface CPTemplateLayoutEntryLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteCPTemplateLayoutEntry(long groupId, long companyId,
+		java.lang.Class<?> clazz, long classPK) throws PortalException;
 }

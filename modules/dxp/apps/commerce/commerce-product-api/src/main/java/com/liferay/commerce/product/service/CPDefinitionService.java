@@ -73,7 +73,7 @@ public interface CPDefinitionService extends BaseService {
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> shortDescriptionMap,
 		Map<Locale, java.lang.String> descriptionMap,
-		Map<Locale, java.lang.String> urlTitleMap,
+		Map<Locale, java.lang.String> urlTitleMap, java.lang.String layoutUuid,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -102,7 +102,7 @@ public interface CPDefinitionService extends BaseService {
 		java.lang.String baseSKU, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> shortDescriptionMap,
 		Map<Locale, java.lang.String> descriptionMap,
-		Map<Locale, java.lang.String> urlTitleMap,
+		Map<Locale, java.lang.String> urlTitleMap, java.lang.String layoutUuid,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -127,6 +127,10 @@ public interface CPDefinitionService extends BaseService {
 	public int getCPDefinitionsCount(long groupId,
 		java.lang.String productTypeName, java.lang.String languageId,
 		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getDisplayPage(CPDefinition cpDefinition)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

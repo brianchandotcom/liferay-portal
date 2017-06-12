@@ -795,6 +795,11 @@ public class FileEntryStagedModelDataHandler
 		}
 	}
 
+	@Override
+	protected boolean isStagedModelInTrash(FileEntry fileEntry) {
+		return fileEntry.isInTrash();
+	}
+
 	@Reference(unbind = "-")
 	protected void setDDMFormValuesExportImportContentProcessor(
 		DDMFormValuesExportImportContentProcessor

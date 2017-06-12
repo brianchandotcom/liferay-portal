@@ -38,19 +38,19 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 		<aui:select label="language" name="languageId" onChange='<%= renderResponse.getNamespace() + "updateLanguage(this);" %>'>
 
 			<%
-			Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
+			Set<Locale> locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
-			for (int i = 0; i < locales.length; i++) {
+			for (Locale currentLocale: locales) {
 				String style = StringPool.BLANK;
 
-				if (Validator.isNotNull(portletPreferences.getValue("emailSubject_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK)) ||
-					Validator.isNotNull(portletPreferences.getValue("emailBody_" + LocaleUtil.toLanguageId(locales[i]), StringPool.BLANK))) {
+				if (Validator.isNotNull(portletPreferences.getValue("emailSubject_" + LocaleUtil.toLanguageId(currentLocale), StringPool.BLANK)) ||
+					Validator.isNotNull(portletPreferences.getValue("emailBody_" + LocaleUtil.toLanguageId(currentLocale), StringPool.BLANK))) {
 
 					style = "font-weight: bold;";
 				}
 			%>
 
-				<aui:option label="<%= locales[i].getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(locales[i])) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(locales[i]) %>" />
+				<aui:option label="<%= currentLocale.getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(currentLocale)) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(currentLocale) %>" />
 
 			<%
 			}

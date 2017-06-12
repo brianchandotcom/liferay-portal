@@ -80,7 +80,7 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 			List<String> joinByPhoneDefaultNumbers = PowwowServiceProviderUtil.getJoinByPhoneDefaultNumbers(powwowMeeting.getProviderType());
 
 			if ((joinByPhoneDefaultNumbers != null) && !joinByPhoneDefaultNumbers.isEmpty()) {
-				joinByPhoneDefaultNumbersString = StringUtil.merge(joinByPhoneDefaultNumbers, StringPool.SPACE + LanguageUtil.get(pageContext, "or") + StringPool.SPACE);
+				joinByPhoneDefaultNumbersString = StringUtil.merge(joinByPhoneDefaultNumbers, StringPool.SPACE + LanguageUtil.get(request, "or") + StringPool.SPACE);
 			}
 			%>
 
@@ -90,7 +90,7 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 						<i class="icon-phone"></i><span class="title"><liferay-ui:message key="dial" />:</span> <%= joinByPhoneDefaultNumbersString %>
 					</div>
 					<div class="access-code">
-						<span class="title"><%= LanguageUtil.get(pageContext, PowwowServiceProviderUtil.getJoinByPhoneAccessCodeLabel(powwowMeeting.getProviderType())) %>:</span> <%= PowwowServiceProviderUtil.getJoinByPhoneAccessCode(powwowMeetingId) %>
+						<span class="title"><%= LanguageUtil.get(request, PowwowServiceProviderUtil.getJoinByPhoneAccessCodeLabel(powwowMeeting.getProviderType())) %>:</span> <%= PowwowServiceProviderUtil.getJoinByPhoneAccessCode(powwowMeetingId) %>
 					</div>
 					<div class="international-numbers-toggler" id="<portlet:namespace />internationalNumbersToggler">
 						<div class="international-numbers-header toggler-header-collapsed">
@@ -111,7 +111,7 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 			<liferay-ui:message key="provider" />
 		</dt>
 		<dd>
-			<%= LanguageUtil.get(pageContext, PowwowServiceProviderUtil.getBrandingLabel(powwowMeeting.getProviderType())) %>
+			<%= LanguageUtil.get(request, PowwowServiceProviderUtil.getBrandingLabel(powwowMeeting.getProviderType())) %>
 		</dd>
 	</div>
 
@@ -143,7 +143,7 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 					String displayName = powwowParticipant.getName();
 
 					if (powwowParticipant.getType() == PowwowParticipantConstants.TYPE_HOST) {
-						displayName = LanguageUtil.format(pageContext, "x-host", displayName);
+						displayName = LanguageUtil.format(request, "x-host", displayName);
 					}
 					%>
 

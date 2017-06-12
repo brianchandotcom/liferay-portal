@@ -152,8 +152,8 @@ public class CPTemplateLayoutEntryPersistenceTest {
 
 		Assert.assertEquals(existingCPTemplateLayoutEntry.getUuid(),
 			newCPTemplateLayoutEntry.getUuid());
-		Assert.assertEquals(existingCPTemplateLayoutEntry.getCPFriendlyUrlEntryId(),
-			newCPTemplateLayoutEntry.getCPFriendlyUrlEntryId());
+		Assert.assertEquals(existingCPTemplateLayoutEntry.getCPFriendlyURLEntryId(),
+			newCPTemplateLayoutEntry.getCPFriendlyURLEntryId());
 		Assert.assertEquals(existingCPTemplateLayoutEntry.getGroupId(),
 			newCPTemplateLayoutEntry.getGroupId());
 		Assert.assertEquals(existingCPTemplateLayoutEntry.getCompanyId(),
@@ -236,7 +236,7 @@ public class CPTemplateLayoutEntryPersistenceTest {
 
 	protected OrderByComparator<CPTemplateLayoutEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CPTemplateLayoutEntry",
-			"uuid", true, "CPFriendlyUrlEntryId", true, "groupId", true,
+			"uuid", true, "CPFriendlyURLEntryId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "classNameId", true, "classPK", true,
 			"layoutUuid", true);
@@ -376,8 +376,8 @@ public class CPTemplateLayoutEntryPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CPTemplateLayoutEntry.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("CPFriendlyUrlEntryId",
-				newCPTemplateLayoutEntry.getCPFriendlyUrlEntryId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("CPFriendlyURLEntryId",
+				newCPTemplateLayoutEntry.getCPFriendlyURLEntryId()));
 
 		List<CPTemplateLayoutEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -394,7 +394,7 @@ public class CPTemplateLayoutEntryPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CPTemplateLayoutEntry.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("CPFriendlyUrlEntryId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("CPFriendlyURLEntryId",
 				RandomTestUtil.nextLong()));
 
 		List<CPTemplateLayoutEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -411,21 +411,21 @@ public class CPTemplateLayoutEntryPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"CPFriendlyUrlEntryId"));
+				"CPFriendlyURLEntryId"));
 
-		Object newCPFriendlyUrlEntryId = newCPTemplateLayoutEntry.getCPFriendlyUrlEntryId();
+		Object newCPFriendlyURLEntryId = newCPTemplateLayoutEntry.getCPFriendlyURLEntryId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("CPFriendlyUrlEntryId",
-				new Object[] { newCPFriendlyUrlEntryId }));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("CPFriendlyURLEntryId",
+				new Object[] { newCPFriendlyURLEntryId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		Object existingCPFriendlyUrlEntryId = result.get(0);
+		Object existingCPFriendlyURLEntryId = result.get(0);
 
-		Assert.assertEquals(existingCPFriendlyUrlEntryId,
-			newCPFriendlyUrlEntryId);
+		Assert.assertEquals(existingCPFriendlyURLEntryId,
+			newCPFriendlyURLEntryId);
 	}
 
 	@Test
@@ -434,9 +434,9 @@ public class CPTemplateLayoutEntryPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"CPFriendlyUrlEntryId"));
+				"CPFriendlyURLEntryId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("CPFriendlyUrlEntryId",
+		dynamicQuery.add(RestrictionsFactoryUtil.in("CPFriendlyURLEntryId",
 				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);

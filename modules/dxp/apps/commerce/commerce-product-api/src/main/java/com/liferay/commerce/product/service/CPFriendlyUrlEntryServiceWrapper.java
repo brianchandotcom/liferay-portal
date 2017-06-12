@@ -19,18 +19,18 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
- * Provides a wrapper for {@link CPFriendlyUrlEntryService}.
+ * Provides a wrapper for {@link CPFriendlyURLEntryService}.
  *
  * @author Marco Leo
- * @see CPFriendlyUrlEntryService
+ * @see CPFriendlyURLEntryService
  * @generated
  */
 @ProviderType
-public class CPFriendlyUrlEntryServiceWrapper
-	implements CPFriendlyUrlEntryService,
-		ServiceWrapper<CPFriendlyUrlEntryService> {
-	public CPFriendlyUrlEntryServiceWrapper(
-		CPFriendlyUrlEntryService cpFriendlyUrlEntryService) {
+public class CPFriendlyURLEntryServiceWrapper
+	implements CPFriendlyURLEntryService,
+		ServiceWrapper<CPFriendlyURLEntryService> {
+	public CPFriendlyURLEntryServiceWrapper(
+		CPFriendlyURLEntryService cpFriendlyUrlEntryService) {
 		_cpFriendlyUrlEntryService = cpFriendlyUrlEntryService;
 	}
 
@@ -45,15 +45,15 @@ public class CPFriendlyUrlEntryServiceWrapper
 	}
 
 	@Override
-	public CPFriendlyUrlEntryService getWrappedService() {
+	public CPFriendlyURLEntryService getWrappedService() {
 		return _cpFriendlyUrlEntryService;
 	}
 
 	@Override
 	public void setWrappedService(
-		CPFriendlyUrlEntryService cpFriendlyUrlEntryService) {
+		CPFriendlyURLEntryService cpFriendlyUrlEntryService) {
 		_cpFriendlyUrlEntryService = cpFriendlyUrlEntryService;
 	}
 
-	private CPFriendlyUrlEntryService _cpFriendlyUrlEntryService;
+	private CPFriendlyURLEntryService _cpFriendlyUrlEntryService;
 }

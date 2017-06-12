@@ -52,7 +52,7 @@ public class CPTemplateLayoutEntryCacheModel implements CacheModel<CPTemplateLay
 
 		CPTemplateLayoutEntryCacheModel cpTemplateLayoutEntryCacheModel = (CPTemplateLayoutEntryCacheModel)obj;
 
-		if (CPFriendlyUrlEntryId == cpTemplateLayoutEntryCacheModel.CPFriendlyUrlEntryId) {
+		if (CPFriendlyURLEntryId == cpTemplateLayoutEntryCacheModel.CPFriendlyURLEntryId) {
 			return true;
 		}
 
@@ -61,7 +61,7 @@ public class CPTemplateLayoutEntryCacheModel implements CacheModel<CPTemplateLay
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CPFriendlyUrlEntryId);
+		return HashUtil.hash(0, CPFriendlyURLEntryId);
 	}
 
 	@Override
@@ -70,8 +70,8 @@ public class CPTemplateLayoutEntryCacheModel implements CacheModel<CPTemplateLay
 
 		sb.append("{uuid=");
 		sb.append(uuid);
-		sb.append(", CPFriendlyUrlEntryId=");
-		sb.append(CPFriendlyUrlEntryId);
+		sb.append(", CPFriendlyURLEntryId=");
+		sb.append(CPFriendlyURLEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -106,7 +106,7 @@ public class CPTemplateLayoutEntryCacheModel implements CacheModel<CPTemplateLay
 			cpTemplateLayoutEntryImpl.setUuid(uuid);
 		}
 
-		cpTemplateLayoutEntryImpl.setCPFriendlyUrlEntryId(CPFriendlyUrlEntryId);
+		cpTemplateLayoutEntryImpl.setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
 		cpTemplateLayoutEntryImpl.setGroupId(groupId);
 		cpTemplateLayoutEntryImpl.setCompanyId(companyId);
 		cpTemplateLayoutEntryImpl.setUserId(userId);
@@ -151,7 +151,7 @@ public class CPTemplateLayoutEntryCacheModel implements CacheModel<CPTemplateLay
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 
-		CPFriendlyUrlEntryId = objectInput.readLong();
+		CPFriendlyURLEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -178,7 +178,7 @@ public class CPTemplateLayoutEntryCacheModel implements CacheModel<CPTemplateLay
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(CPFriendlyUrlEntryId);
+		objectOutput.writeLong(CPFriendlyURLEntryId);
 
 		objectOutput.writeLong(groupId);
 
@@ -209,7 +209,7 @@ public class CPTemplateLayoutEntryCacheModel implements CacheModel<CPTemplateLay
 	}
 
 	public String uuid;
-	public long CPFriendlyUrlEntryId;
+	public long CPFriendlyURLEntryId;
 	public long groupId;
 	public long companyId;
 	public long userId;

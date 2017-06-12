@@ -21,28 +21,28 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
- * The extended model interface for the CPFriendlyUrlEntry service. Represents a row in the &quot;CPFriendlyUrlEntry&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the CPFriendlyURLEntry service. Represents a row in the &quot;CPFriendlyURLEntry&quot; database table, with each column mapped to a property of this class.
  *
  * @author Marco Leo
- * @see CPFriendlyUrlEntryModel
- * @see com.liferay.commerce.product.model.impl.CPFriendlyUrlEntryImpl
- * @see com.liferay.commerce.product.model.impl.CPFriendlyUrlEntryModelImpl
+ * @see CPFriendlyURLEntryModel
+ * @see com.liferay.commerce.product.model.impl.CPFriendlyURLEntryImpl
+ * @see com.liferay.commerce.product.model.impl.CPFriendlyURLEntryModelImpl
  * @generated
  */
-@ImplementationClassName("com.liferay.commerce.product.model.impl.CPFriendlyUrlEntryImpl")
+@ImplementationClassName("com.liferay.commerce.product.model.impl.CPFriendlyURLEntryImpl")
 @ProviderType
-public interface CPFriendlyUrlEntry extends CPFriendlyUrlEntryModel,
+public interface CPFriendlyURLEntry extends CPFriendlyURLEntryModel,
 	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.commerce.product.model.impl.CPFriendlyUrlEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.commerce.product.model.impl.CPFriendlyURLEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CPFriendlyUrlEntry, Long> CP_FRIENDLY_URL_ENTRY_ID_ACCESSOR =
-		new Accessor<CPFriendlyUrlEntry, Long>() {
+	public static final Accessor<CPFriendlyURLEntry, Long> CP_FRIENDLY_URL_ENTRY_ID_ACCESSOR =
+		new Accessor<CPFriendlyURLEntry, Long>() {
 			@Override
-			public Long get(CPFriendlyUrlEntry cpFriendlyUrlEntry) {
-				return cpFriendlyUrlEntry.getCPFriendlyUrlEntryId();
+			public Long get(CPFriendlyURLEntry cpFriendlyUrlEntry) {
+				return cpFriendlyUrlEntry.getCPFriendlyURLEntryId();
 			}
 
 			@Override
@@ -51,8 +51,8 @@ public interface CPFriendlyUrlEntry extends CPFriendlyUrlEntryModel,
 			}
 
 			@Override
-			public Class<CPFriendlyUrlEntry> getTypeClass() {
-				return CPFriendlyUrlEntry.class;
+			public Class<CPFriendlyURLEntry> getTypeClass() {
+				return CPFriendlyURLEntry.class;
 			}
 		};
 }

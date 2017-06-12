@@ -236,11 +236,11 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="true" name="CPFriendlyUrlEntry" remote-service="true"  uuid="true">
+	<entity local-service="true" name="CPFriendlyURLEntry" remote-service="true"  uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="CPFriendlyUrlEntryId" primary="true" type="long" />
+		<column name="CPFriendlyURLEntryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -272,7 +272,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="G_U_L" return-type="CPFriendlyUrlEntry" unique="true">
+		<finder name="G_U_L" return-type="CPFriendlyURLEntry" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="urlTitle" />
 			<finder-column name="languageId" />
@@ -493,7 +493,7 @@
 
 		<!-- PK fields -->
 
-		<column name="CPFriendlyUrlEntryId" primary="true" type="long" />
+		<column name="CPFriendlyURLEntryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 

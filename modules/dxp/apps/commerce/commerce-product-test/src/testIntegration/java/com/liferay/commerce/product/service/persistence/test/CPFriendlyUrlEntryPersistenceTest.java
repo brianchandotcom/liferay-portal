@@ -16,11 +16,11 @@ package com.liferay.commerce.product.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import com.liferay.commerce.product.exception.NoSuchCPFriendlyUrlEntryException;
-import com.liferay.commerce.product.model.CPFriendlyUrlEntry;
-import com.liferay.commerce.product.service.CPFriendlyUrlEntryLocalServiceUtil;
-import com.liferay.commerce.product.service.persistence.CPFriendlyUrlEntryPersistence;
-import com.liferay.commerce.product.service.persistence.CPFriendlyUrlEntryUtil;
+import com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException;
+import com.liferay.commerce.product.model.CPFriendlyURLEntry;
+import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalServiceUtil;
+import com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence;
+import com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryUtil;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -64,7 +64,7 @@ import java.util.Set;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class CPFriendlyUrlEntryPersistenceTest {
+public class CPFriendlyURLEntryPersistenceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
@@ -74,7 +74,7 @@ public class CPFriendlyUrlEntryPersistenceTest {
 
 	@Before
 	public void setUp() {
-		_persistence = CPFriendlyUrlEntryUtil.getPersistence();
+		_persistence = CPFriendlyURLEntryUtil.getPersistence();
 
 		Class<?> clazz = _persistence.getClass();
 
@@ -83,7 +83,7 @@ public class CPFriendlyUrlEntryPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<CPFriendlyUrlEntry> iterator = _cpFriendlyUrlEntries.iterator();
+		Iterator<CPFriendlyURLEntry> iterator = _cpFriendlyUrlEntries.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -96,7 +96,7 @@ public class CPFriendlyUrlEntryPersistenceTest {
 	public void testCreate() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		CPFriendlyUrlEntry cpFriendlyUrlEntry = _persistence.create(pk);
+		CPFriendlyURLEntry cpFriendlyUrlEntry = _persistence.create(pk);
 
 		Assert.assertNotNull(cpFriendlyUrlEntry);
 
@@ -105,82 +105,82 @@ public class CPFriendlyUrlEntryPersistenceTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		CPFriendlyUrlEntry newCPFriendlyUrlEntry = addCPFriendlyUrlEntry();
+		CPFriendlyURLEntry newCPFriendlyURLEntry = addCPFriendlyURLEntry();
 
-		_persistence.remove(newCPFriendlyUrlEntry);
+		_persistence.remove(newCPFriendlyURLEntry);
 
-		CPFriendlyUrlEntry existingCPFriendlyUrlEntry = _persistence.fetchByPrimaryKey(newCPFriendlyUrlEntry.getPrimaryKey());
+		CPFriendlyURLEntry existingCPFriendlyURLEntry = _persistence.fetchByPrimaryKey(newCPFriendlyURLEntry.getPrimaryKey());
 
-		Assert.assertNull(existingCPFriendlyUrlEntry);
+		Assert.assertNull(existingCPFriendlyURLEntry);
 	}
 
 	@Test
 	public void testUpdateNew() throws Exception {
-		addCPFriendlyUrlEntry();
+		addCPFriendlyURLEntry();
 	}
 
 	@Test
 	public void testUpdateExisting() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		CPFriendlyUrlEntry newCPFriendlyUrlEntry = _persistence.create(pk);
+		CPFriendlyURLEntry newCPFriendlyURLEntry = _persistence.create(pk);
 
-		newCPFriendlyUrlEntry.setUuid(RandomTestUtil.randomString());
+		newCPFriendlyURLEntry.setUuid(RandomTestUtil.randomString());
 
-		newCPFriendlyUrlEntry.setGroupId(RandomTestUtil.nextLong());
+		newCPFriendlyURLEntry.setGroupId(RandomTestUtil.nextLong());
 
-		newCPFriendlyUrlEntry.setCompanyId(RandomTestUtil.nextLong());
+		newCPFriendlyURLEntry.setCompanyId(RandomTestUtil.nextLong());
 
-		newCPFriendlyUrlEntry.setUserId(RandomTestUtil.nextLong());
+		newCPFriendlyURLEntry.setUserId(RandomTestUtil.nextLong());
 
-		newCPFriendlyUrlEntry.setUserName(RandomTestUtil.randomString());
+		newCPFriendlyURLEntry.setUserName(RandomTestUtil.randomString());
 
-		newCPFriendlyUrlEntry.setCreateDate(RandomTestUtil.nextDate());
+		newCPFriendlyURLEntry.setCreateDate(RandomTestUtil.nextDate());
 
-		newCPFriendlyUrlEntry.setModifiedDate(RandomTestUtil.nextDate());
+		newCPFriendlyURLEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCPFriendlyUrlEntry.setClassNameId(RandomTestUtil.nextLong());
+		newCPFriendlyURLEntry.setClassNameId(RandomTestUtil.nextLong());
 
-		newCPFriendlyUrlEntry.setClassPK(RandomTestUtil.nextLong());
+		newCPFriendlyURLEntry.setClassPK(RandomTestUtil.nextLong());
 
-		newCPFriendlyUrlEntry.setLanguageId(RandomTestUtil.randomString());
+		newCPFriendlyURLEntry.setLanguageId(RandomTestUtil.randomString());
 
-		newCPFriendlyUrlEntry.setUrlTitle(RandomTestUtil.randomString());
+		newCPFriendlyURLEntry.setUrlTitle(RandomTestUtil.randomString());
 
-		newCPFriendlyUrlEntry.setMain(RandomTestUtil.randomBoolean());
+		newCPFriendlyURLEntry.setMain(RandomTestUtil.randomBoolean());
 
-		_cpFriendlyUrlEntries.add(_persistence.update(newCPFriendlyUrlEntry));
+		_cpFriendlyUrlEntries.add(_persistence.update(newCPFriendlyURLEntry));
 
-		CPFriendlyUrlEntry existingCPFriendlyUrlEntry = _persistence.findByPrimaryKey(newCPFriendlyUrlEntry.getPrimaryKey());
+		CPFriendlyURLEntry existingCPFriendlyURLEntry = _persistence.findByPrimaryKey(newCPFriendlyURLEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingCPFriendlyUrlEntry.getUuid(),
-			newCPFriendlyUrlEntry.getUuid());
-		Assert.assertEquals(existingCPFriendlyUrlEntry.getCPFriendlyUrlEntryId(),
-			newCPFriendlyUrlEntry.getCPFriendlyUrlEntryId());
-		Assert.assertEquals(existingCPFriendlyUrlEntry.getGroupId(),
-			newCPFriendlyUrlEntry.getGroupId());
-		Assert.assertEquals(existingCPFriendlyUrlEntry.getCompanyId(),
-			newCPFriendlyUrlEntry.getCompanyId());
-		Assert.assertEquals(existingCPFriendlyUrlEntry.getUserId(),
-			newCPFriendlyUrlEntry.getUserId());
-		Assert.assertEquals(existingCPFriendlyUrlEntry.getUserName(),
-			newCPFriendlyUrlEntry.getUserName());
+		Assert.assertEquals(existingCPFriendlyURLEntry.getUuid(),
+			newCPFriendlyURLEntry.getUuid());
+		Assert.assertEquals(existingCPFriendlyURLEntry.getCPFriendlyURLEntryId(),
+			newCPFriendlyURLEntry.getCPFriendlyURLEntryId());
+		Assert.assertEquals(existingCPFriendlyURLEntry.getGroupId(),
+			newCPFriendlyURLEntry.getGroupId());
+		Assert.assertEquals(existingCPFriendlyURLEntry.getCompanyId(),
+			newCPFriendlyURLEntry.getCompanyId());
+		Assert.assertEquals(existingCPFriendlyURLEntry.getUserId(),
+			newCPFriendlyURLEntry.getUserId());
+		Assert.assertEquals(existingCPFriendlyURLEntry.getUserName(),
+			newCPFriendlyURLEntry.getUserName());
 		Assert.assertEquals(Time.getShortTimestamp(
-				existingCPFriendlyUrlEntry.getCreateDate()),
-			Time.getShortTimestamp(newCPFriendlyUrlEntry.getCreateDate()));
+				existingCPFriendlyURLEntry.getCreateDate()),
+			Time.getShortTimestamp(newCPFriendlyURLEntry.getCreateDate()));
 		Assert.assertEquals(Time.getShortTimestamp(
-				existingCPFriendlyUrlEntry.getModifiedDate()),
-			Time.getShortTimestamp(newCPFriendlyUrlEntry.getModifiedDate()));
-		Assert.assertEquals(existingCPFriendlyUrlEntry.getClassNameId(),
-			newCPFriendlyUrlEntry.getClassNameId());
-		Assert.assertEquals(existingCPFriendlyUrlEntry.getClassPK(),
-			newCPFriendlyUrlEntry.getClassPK());
-		Assert.assertEquals(existingCPFriendlyUrlEntry.getLanguageId(),
-			newCPFriendlyUrlEntry.getLanguageId());
-		Assert.assertEquals(existingCPFriendlyUrlEntry.getUrlTitle(),
-			newCPFriendlyUrlEntry.getUrlTitle());
-		Assert.assertEquals(existingCPFriendlyUrlEntry.getMain(),
-			newCPFriendlyUrlEntry.getMain());
+				existingCPFriendlyURLEntry.getModifiedDate()),
+			Time.getShortTimestamp(newCPFriendlyURLEntry.getModifiedDate()));
+		Assert.assertEquals(existingCPFriendlyURLEntry.getClassNameId(),
+			newCPFriendlyURLEntry.getClassNameId());
+		Assert.assertEquals(existingCPFriendlyURLEntry.getClassPK(),
+			newCPFriendlyURLEntry.getClassPK());
+		Assert.assertEquals(existingCPFriendlyURLEntry.getLanguageId(),
+			newCPFriendlyURLEntry.getLanguageId());
+		Assert.assertEquals(existingCPFriendlyURLEntry.getUrlTitle(),
+			newCPFriendlyURLEntry.getUrlTitle());
+		Assert.assertEquals(existingCPFriendlyURLEntry.getMain(),
+			newCPFriendlyURLEntry.getMain());
 	}
 
 	@Test
@@ -222,14 +222,14 @@ public class CPFriendlyUrlEntryPersistenceTest {
 
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
-		CPFriendlyUrlEntry newCPFriendlyUrlEntry = addCPFriendlyUrlEntry();
+		CPFriendlyURLEntry newCPFriendlyURLEntry = addCPFriendlyURLEntry();
 
-		CPFriendlyUrlEntry existingCPFriendlyUrlEntry = _persistence.findByPrimaryKey(newCPFriendlyUrlEntry.getPrimaryKey());
+		CPFriendlyURLEntry existingCPFriendlyURLEntry = _persistence.findByPrimaryKey(newCPFriendlyURLEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingCPFriendlyUrlEntry, newCPFriendlyUrlEntry);
+		Assert.assertEquals(existingCPFriendlyURLEntry, newCPFriendlyURLEntry);
 	}
 
-	@Test(expected = NoSuchCPFriendlyUrlEntryException.class)
+	@Test(expected = NoSuchCPFriendlyURLEntryException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
@@ -242,9 +242,9 @@ public class CPFriendlyUrlEntryPersistenceTest {
 			getOrderByComparator());
 	}
 
-	protected OrderByComparator<CPFriendlyUrlEntry> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("CPFriendlyUrlEntry",
-			"uuid", true, "CPFriendlyUrlEntryId", true, "groupId", true,
+	protected OrderByComparator<CPFriendlyURLEntry> getOrderByComparator() {
+		return OrderByComparatorFactoryUtil.create("CPFriendlyURLEntry",
+			"uuid", true, "CPFriendlyURLEntryId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "classNameId", true, "classPK", true,
 			"languageId", true, "urlTitle", true, "main", true);
@@ -252,40 +252,40 @@ public class CPFriendlyUrlEntryPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyExisting() throws Exception {
-		CPFriendlyUrlEntry newCPFriendlyUrlEntry = addCPFriendlyUrlEntry();
+		CPFriendlyURLEntry newCPFriendlyURLEntry = addCPFriendlyURLEntry();
 
-		CPFriendlyUrlEntry existingCPFriendlyUrlEntry = _persistence.fetchByPrimaryKey(newCPFriendlyUrlEntry.getPrimaryKey());
+		CPFriendlyURLEntry existingCPFriendlyURLEntry = _persistence.fetchByPrimaryKey(newCPFriendlyURLEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingCPFriendlyUrlEntry, newCPFriendlyUrlEntry);
+		Assert.assertEquals(existingCPFriendlyURLEntry, newCPFriendlyURLEntry);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		CPFriendlyUrlEntry missingCPFriendlyUrlEntry = _persistence.fetchByPrimaryKey(pk);
+		CPFriendlyURLEntry missingCPFriendlyURLEntry = _persistence.fetchByPrimaryKey(pk);
 
-		Assert.assertNull(missingCPFriendlyUrlEntry);
+		Assert.assertNull(missingCPFriendlyURLEntry);
 	}
 
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
 		throws Exception {
-		CPFriendlyUrlEntry newCPFriendlyUrlEntry1 = addCPFriendlyUrlEntry();
-		CPFriendlyUrlEntry newCPFriendlyUrlEntry2 = addCPFriendlyUrlEntry();
+		CPFriendlyURLEntry newCPFriendlyURLEntry1 = addCPFriendlyURLEntry();
+		CPFriendlyURLEntry newCPFriendlyURLEntry2 = addCPFriendlyURLEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		primaryKeys.add(newCPFriendlyUrlEntry1.getPrimaryKey());
-		primaryKeys.add(newCPFriendlyUrlEntry2.getPrimaryKey());
+		primaryKeys.add(newCPFriendlyURLEntry1.getPrimaryKey());
+		primaryKeys.add(newCPFriendlyURLEntry2.getPrimaryKey());
 
-		Map<Serializable, CPFriendlyUrlEntry> cpFriendlyUrlEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CPFriendlyURLEntry> cpFriendlyUrlEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(2, cpFriendlyUrlEntries.size());
-		Assert.assertEquals(newCPFriendlyUrlEntry1,
-			cpFriendlyUrlEntries.get(newCPFriendlyUrlEntry1.getPrimaryKey()));
-		Assert.assertEquals(newCPFriendlyUrlEntry2,
-			cpFriendlyUrlEntries.get(newCPFriendlyUrlEntry2.getPrimaryKey()));
+		Assert.assertEquals(newCPFriendlyURLEntry1,
+			cpFriendlyUrlEntries.get(newCPFriendlyURLEntry1.getPrimaryKey()));
+		Assert.assertEquals(newCPFriendlyURLEntry2,
+			cpFriendlyUrlEntries.get(newCPFriendlyURLEntry2.getPrimaryKey()));
 	}
 
 	@Test
@@ -300,7 +300,7 @@ public class CPFriendlyUrlEntryPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, CPFriendlyUrlEntry> cpFriendlyUrlEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CPFriendlyURLEntry> cpFriendlyUrlEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(cpFriendlyUrlEntries.isEmpty());
 	}
@@ -308,20 +308,20 @@ public class CPFriendlyUrlEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
 		throws Exception {
-		CPFriendlyUrlEntry newCPFriendlyUrlEntry = addCPFriendlyUrlEntry();
+		CPFriendlyURLEntry newCPFriendlyURLEntry = addCPFriendlyURLEntry();
 
 		long pk = RandomTestUtil.nextLong();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		primaryKeys.add(newCPFriendlyUrlEntry.getPrimaryKey());
+		primaryKeys.add(newCPFriendlyURLEntry.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, CPFriendlyUrlEntry> cpFriendlyUrlEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CPFriendlyURLEntry> cpFriendlyUrlEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, cpFriendlyUrlEntries.size());
-		Assert.assertEquals(newCPFriendlyUrlEntry,
-			cpFriendlyUrlEntries.get(newCPFriendlyUrlEntry.getPrimaryKey()));
+		Assert.assertEquals(newCPFriendlyURLEntry,
+			cpFriendlyUrlEntries.get(newCPFriendlyURLEntry.getPrimaryKey()));
 	}
 
 	@Test
@@ -329,7 +329,7 @@ public class CPFriendlyUrlEntryPersistenceTest {
 		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, CPFriendlyUrlEntry> cpFriendlyUrlEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CPFriendlyURLEntry> cpFriendlyUrlEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertTrue(cpFriendlyUrlEntries.isEmpty());
 	}
@@ -337,28 +337,28 @@ public class CPFriendlyUrlEntryPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithOnePrimaryKey()
 		throws Exception {
-		CPFriendlyUrlEntry newCPFriendlyUrlEntry = addCPFriendlyUrlEntry();
+		CPFriendlyURLEntry newCPFriendlyURLEntry = addCPFriendlyURLEntry();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		primaryKeys.add(newCPFriendlyUrlEntry.getPrimaryKey());
+		primaryKeys.add(newCPFriendlyURLEntry.getPrimaryKey());
 
-		Map<Serializable, CPFriendlyUrlEntry> cpFriendlyUrlEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CPFriendlyURLEntry> cpFriendlyUrlEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
 		Assert.assertEquals(1, cpFriendlyUrlEntries.size());
-		Assert.assertEquals(newCPFriendlyUrlEntry,
-			cpFriendlyUrlEntries.get(newCPFriendlyUrlEntry.getPrimaryKey()));
+		Assert.assertEquals(newCPFriendlyURLEntry,
+			cpFriendlyUrlEntries.get(newCPFriendlyURLEntry.getPrimaryKey()));
 	}
 
 	@Test
 	public void testActionableDynamicQuery() throws Exception {
 		final IntegerWrapper count = new IntegerWrapper();
 
-		ActionableDynamicQuery actionableDynamicQuery = CPFriendlyUrlEntryLocalServiceUtil.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery = CPFriendlyURLEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CPFriendlyUrlEntry>() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CPFriendlyURLEntry>() {
 				@Override
-				public void performAction(CPFriendlyUrlEntry cpFriendlyUrlEntry) {
+				public void performAction(CPFriendlyURLEntry cpFriendlyUrlEntry) {
 					Assert.assertNotNull(cpFriendlyUrlEntry);
 
 					count.increment();
@@ -373,32 +373,32 @@ public class CPFriendlyUrlEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByPrimaryKeyExisting()
 		throws Exception {
-		CPFriendlyUrlEntry newCPFriendlyUrlEntry = addCPFriendlyUrlEntry();
+		CPFriendlyURLEntry newCPFriendlyURLEntry = addCPFriendlyURLEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CPFriendlyUrlEntry.class,
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CPFriendlyURLEntry.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("CPFriendlyUrlEntryId",
-				newCPFriendlyUrlEntry.getCPFriendlyUrlEntryId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("CPFriendlyURLEntryId",
+				newCPFriendlyURLEntry.getCPFriendlyURLEntryId()));
 
-		List<CPFriendlyUrlEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<CPFriendlyURLEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		CPFriendlyUrlEntry existingCPFriendlyUrlEntry = result.get(0);
+		CPFriendlyURLEntry existingCPFriendlyURLEntry = result.get(0);
 
-		Assert.assertEquals(existingCPFriendlyUrlEntry, newCPFriendlyUrlEntry);
+		Assert.assertEquals(existingCPFriendlyURLEntry, newCPFriendlyURLEntry);
 	}
 
 	@Test
 	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CPFriendlyUrlEntry.class,
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CPFriendlyURLEntry.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("CPFriendlyUrlEntryId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("CPFriendlyURLEntryId",
 				RandomTestUtil.nextLong()));
 
-		List<CPFriendlyUrlEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<CPFriendlyURLEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -406,38 +406,38 @@ public class CPFriendlyUrlEntryPersistenceTest {
 	@Test
 	public void testDynamicQueryByProjectionExisting()
 		throws Exception {
-		CPFriendlyUrlEntry newCPFriendlyUrlEntry = addCPFriendlyUrlEntry();
+		CPFriendlyURLEntry newCPFriendlyURLEntry = addCPFriendlyURLEntry();
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CPFriendlyUrlEntry.class,
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CPFriendlyURLEntry.class,
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"CPFriendlyUrlEntryId"));
+				"CPFriendlyURLEntryId"));
 
-		Object newCPFriendlyUrlEntryId = newCPFriendlyUrlEntry.getCPFriendlyUrlEntryId();
+		Object newCPFriendlyURLEntryId = newCPFriendlyURLEntry.getCPFriendlyURLEntryId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("CPFriendlyUrlEntryId",
-				new Object[] { newCPFriendlyUrlEntryId }));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("CPFriendlyURLEntryId",
+				new Object[] { newCPFriendlyURLEntryId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		Object existingCPFriendlyUrlEntryId = result.get(0);
+		Object existingCPFriendlyURLEntryId = result.get(0);
 
-		Assert.assertEquals(existingCPFriendlyUrlEntryId,
-			newCPFriendlyUrlEntryId);
+		Assert.assertEquals(existingCPFriendlyURLEntryId,
+			newCPFriendlyURLEntryId);
 	}
 
 	@Test
 	public void testDynamicQueryByProjectionMissing() throws Exception {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CPFriendlyUrlEntry.class,
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CPFriendlyURLEntry.class,
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"CPFriendlyUrlEntryId"));
+				"CPFriendlyURLEntryId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("CPFriendlyUrlEntryId",
+		dynamicQuery.add(RestrictionsFactoryUtil.in("CPFriendlyURLEntryId",
 				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -447,39 +447,39 @@ public class CPFriendlyUrlEntryPersistenceTest {
 
 	@Test
 	public void testResetOriginalValues() throws Exception {
-		CPFriendlyUrlEntry newCPFriendlyUrlEntry = addCPFriendlyUrlEntry();
+		CPFriendlyURLEntry newCPFriendlyURLEntry = addCPFriendlyURLEntry();
 
 		_persistence.clearCache();
 
-		CPFriendlyUrlEntry existingCPFriendlyUrlEntry = _persistence.findByPrimaryKey(newCPFriendlyUrlEntry.getPrimaryKey());
+		CPFriendlyURLEntry existingCPFriendlyURLEntry = _persistence.findByPrimaryKey(newCPFriendlyURLEntry.getPrimaryKey());
 
-		Assert.assertTrue(Objects.equals(existingCPFriendlyUrlEntry.getUuid(),
-				ReflectionTestUtil.invoke(existingCPFriendlyUrlEntry,
+		Assert.assertTrue(Objects.equals(existingCPFriendlyURLEntry.getUuid(),
+				ReflectionTestUtil.invoke(existingCPFriendlyURLEntry,
 					"getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(Long.valueOf(
-				existingCPFriendlyUrlEntry.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingCPFriendlyUrlEntry,
+				existingCPFriendlyURLEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingCPFriendlyURLEntry,
 				"getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(Long.valueOf(
-				existingCPFriendlyUrlEntry.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingCPFriendlyUrlEntry,
+				existingCPFriendlyURLEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingCPFriendlyURLEntry,
 				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Objects.equals(
-				existingCPFriendlyUrlEntry.getUrlTitle(),
-				ReflectionTestUtil.invoke(existingCPFriendlyUrlEntry,
+				existingCPFriendlyURLEntry.getUrlTitle(),
+				ReflectionTestUtil.invoke(existingCPFriendlyURLEntry,
 					"getOriginalUrlTitle", new Class<?>[0])));
 		Assert.assertTrue(Objects.equals(
-				existingCPFriendlyUrlEntry.getLanguageId(),
-				ReflectionTestUtil.invoke(existingCPFriendlyUrlEntry,
+				existingCPFriendlyURLEntry.getLanguageId(),
+				ReflectionTestUtil.invoke(existingCPFriendlyURLEntry,
 					"getOriginalLanguageId", new Class<?>[0])));
 	}
 
-	protected CPFriendlyUrlEntry addCPFriendlyUrlEntry()
+	protected CPFriendlyURLEntry addCPFriendlyURLEntry()
 		throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		CPFriendlyUrlEntry cpFriendlyUrlEntry = _persistence.create(pk);
+		CPFriendlyURLEntry cpFriendlyUrlEntry = _persistence.create(pk);
 
 		cpFriendlyUrlEntry.setUuid(RandomTestUtil.randomString());
 
@@ -510,7 +510,7 @@ public class CPFriendlyUrlEntryPersistenceTest {
 		return cpFriendlyUrlEntry;
 	}
 
-	private List<CPFriendlyUrlEntry> _cpFriendlyUrlEntries = new ArrayList<CPFriendlyUrlEntry>();
-	private CPFriendlyUrlEntryPersistence _persistence;
+	private List<CPFriendlyURLEntry> _cpFriendlyUrlEntries = new ArrayList<CPFriendlyURLEntry>();
+	private CPFriendlyURLEntryPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
 }

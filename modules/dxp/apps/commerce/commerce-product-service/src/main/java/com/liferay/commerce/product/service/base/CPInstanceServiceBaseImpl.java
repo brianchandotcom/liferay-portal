@@ -22,7 +22,7 @@ import com.liferay.commerce.product.service.persistence.CPDefinitionLocalization
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
-import com.liferay.commerce.product.service.persistence.CPFriendlyUrlEntryPersistence;
+import com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionCategoryPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
@@ -341,7 +341,7 @@ public abstract class CPInstanceServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the cp friendly url entry local service
 	 */
-	public com.liferay.commerce.product.service.CPFriendlyUrlEntryLocalService getCPFriendlyUrlEntryLocalService() {
+	public com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService getCPFriendlyURLEntryLocalService() {
 		return cpFriendlyUrlEntryLocalService;
 	}
 
@@ -350,8 +350,8 @@ public abstract class CPInstanceServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param cpFriendlyUrlEntryLocalService the cp friendly url entry local service
 	 */
-	public void setCPFriendlyUrlEntryLocalService(
-		com.liferay.commerce.product.service.CPFriendlyUrlEntryLocalService cpFriendlyUrlEntryLocalService) {
+	public void setCPFriendlyURLEntryLocalService(
+		com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService cpFriendlyUrlEntryLocalService) {
 		this.cpFriendlyUrlEntryLocalService = cpFriendlyUrlEntryLocalService;
 	}
 
@@ -360,7 +360,7 @@ public abstract class CPInstanceServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the cp friendly url entry remote service
 	 */
-	public com.liferay.commerce.product.service.CPFriendlyUrlEntryService getCPFriendlyUrlEntryService() {
+	public com.liferay.commerce.product.service.CPFriendlyURLEntryService getCPFriendlyURLEntryService() {
 		return cpFriendlyUrlEntryService;
 	}
 
@@ -369,8 +369,8 @@ public abstract class CPInstanceServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param cpFriendlyUrlEntryService the cp friendly url entry remote service
 	 */
-	public void setCPFriendlyUrlEntryService(
-		com.liferay.commerce.product.service.CPFriendlyUrlEntryService cpFriendlyUrlEntryService) {
+	public void setCPFriendlyURLEntryService(
+		com.liferay.commerce.product.service.CPFriendlyURLEntryService cpFriendlyUrlEntryService) {
 		this.cpFriendlyUrlEntryService = cpFriendlyUrlEntryService;
 	}
 
@@ -379,7 +379,7 @@ public abstract class CPInstanceServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the cp friendly url entry persistence
 	 */
-	public CPFriendlyUrlEntryPersistence getCPFriendlyUrlEntryPersistence() {
+	public CPFriendlyURLEntryPersistence getCPFriendlyURLEntryPersistence() {
 		return cpFriendlyUrlEntryPersistence;
 	}
 
@@ -388,8 +388,8 @@ public abstract class CPInstanceServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param cpFriendlyUrlEntryPersistence the cp friendly url entry persistence
 	 */
-	public void setCPFriendlyUrlEntryPersistence(
-		CPFriendlyUrlEntryPersistence cpFriendlyUrlEntryPersistence) {
+	public void setCPFriendlyURLEntryPersistence(
+		CPFriendlyURLEntryPersistence cpFriendlyUrlEntryPersistence) {
 		this.cpFriendlyUrlEntryPersistence = cpFriendlyUrlEntryPersistence;
 	}
 
@@ -1148,12 +1148,12 @@ public abstract class CPInstanceServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.commerce.product.service.CPDefinitionOptionValueRelService cpDefinitionOptionValueRelService;
 	@BeanReference(type = CPDefinitionOptionValueRelPersistence.class)
 	protected CPDefinitionOptionValueRelPersistence cpDefinitionOptionValueRelPersistence;
-	@BeanReference(type = com.liferay.commerce.product.service.CPFriendlyUrlEntryLocalService.class)
-	protected com.liferay.commerce.product.service.CPFriendlyUrlEntryLocalService cpFriendlyUrlEntryLocalService;
-	@BeanReference(type = com.liferay.commerce.product.service.CPFriendlyUrlEntryService.class)
-	protected com.liferay.commerce.product.service.CPFriendlyUrlEntryService cpFriendlyUrlEntryService;
-	@BeanReference(type = CPFriendlyUrlEntryPersistence.class)
-	protected CPFriendlyUrlEntryPersistence cpFriendlyUrlEntryPersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService.class)
+	protected com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService cpFriendlyUrlEntryLocalService;
+	@BeanReference(type = com.liferay.commerce.product.service.CPFriendlyURLEntryService.class)
+	protected com.liferay.commerce.product.service.CPFriendlyURLEntryService cpFriendlyUrlEntryService;
+	@BeanReference(type = CPFriendlyURLEntryPersistence.class)
+	protected CPFriendlyURLEntryPersistence cpFriendlyUrlEntryPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPInstanceLocalService.class)
 	protected com.liferay.commerce.product.service.CPInstanceLocalService cpInstanceLocalService;
 	@BeanReference(type = CPInstanceService.class)

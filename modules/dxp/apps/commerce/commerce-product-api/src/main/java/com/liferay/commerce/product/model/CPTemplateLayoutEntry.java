@@ -42,7 +42,7 @@ public interface CPTemplateLayoutEntry extends CPTemplateLayoutEntryModel,
 		new Accessor<CPTemplateLayoutEntry, Long>() {
 			@Override
 			public Long get(CPTemplateLayoutEntry cpTemplateLayoutEntry) {
-				return cpTemplateLayoutEntry.getCPFriendlyUrlEntryId();
+				return cpTemplateLayoutEntry.getCPFriendlyURLEntryId();
 			}
 
 			@Override

@@ -90,9 +90,9 @@ create table CPDefinitionOptionValueRel (
 	priority DOUBLE
 );
 
-create table CPFriendlyUrlEntry (
+create table CPFriendlyURLEntry (
 	uuid_ VARCHAR(75) null,
-	CPFriendlyUrlEntryId LONG not null primary key,
+	CPFriendlyURLEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -180,7 +180,7 @@ create table CPOptionValue (
 
 create table CPTemplateLayoutEntry (
 	uuid_ VARCHAR(75) null,
-	CPFriendlyUrlEntryId LONG not null primary key,
+	CPFriendlyURLEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,

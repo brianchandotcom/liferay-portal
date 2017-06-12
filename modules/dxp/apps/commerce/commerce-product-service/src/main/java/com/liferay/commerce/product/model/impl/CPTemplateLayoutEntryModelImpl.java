@@ -75,7 +75,7 @@ public class CPTemplateLayoutEntryModelImpl extends BaseModelImpl<CPTemplateLayo
 	public static final String TABLE_NAME = "CPTemplateLayoutEntry";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
-			{ "CPFriendlyUrlEntryId", Types.BIGINT },
+			{ "CPFriendlyURLEntryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -90,7 +90,7 @@ public class CPTemplateLayoutEntryModelImpl extends BaseModelImpl<CPTemplateLayo
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("CPFriendlyUrlEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("CPFriendlyURLEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -102,7 +102,7 @@ public class CPTemplateLayoutEntryModelImpl extends BaseModelImpl<CPTemplateLayo
 		TABLE_COLUMNS_MAP.put("layoutUuid", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPTemplateLayoutEntry (uuid_ VARCHAR(75) null,CPFriendlyUrlEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutUuid VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CPTemplateLayoutEntry (uuid_ VARCHAR(75) null,CPFriendlyURLEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutUuid VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CPTemplateLayoutEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpTemplateLayoutEntry.classNameId ASC, cpTemplateLayoutEntry.classPK ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPTemplateLayoutEntry.classNameId ASC, CPTemplateLayoutEntry.classPK ASC";
@@ -139,7 +139,7 @@ public class CPTemplateLayoutEntryModelImpl extends BaseModelImpl<CPTemplateLayo
 		CPTemplateLayoutEntry model = new CPTemplateLayoutEntryImpl();
 
 		model.setUuid(soapModel.getUuid());
-		model.setCPFriendlyUrlEntryId(soapModel.getCPFriendlyUrlEntryId());
+		model.setCPFriendlyURLEntryId(soapModel.getCPFriendlyURLEntryId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -182,17 +182,17 @@ public class CPTemplateLayoutEntryModelImpl extends BaseModelImpl<CPTemplateLayo
 
 	@Override
 	public long getPrimaryKey() {
-		return _CPFriendlyUrlEntryId;
+		return _CPFriendlyURLEntryId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setCPFriendlyUrlEntryId(primaryKey);
+		setCPFriendlyURLEntryId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _CPFriendlyUrlEntryId;
+		return _CPFriendlyURLEntryId;
 	}
 
 	@Override
@@ -215,7 +215,7 @@ public class CPTemplateLayoutEntryModelImpl extends BaseModelImpl<CPTemplateLayo
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("CPFriendlyUrlEntryId", getCPFriendlyUrlEntryId());
+		attributes.put("CPFriendlyURLEntryId", getCPFriendlyURLEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -240,10 +240,10 @@ public class CPTemplateLayoutEntryModelImpl extends BaseModelImpl<CPTemplateLayo
 			setUuid(uuid);
 		}
 
-		Long CPFriendlyUrlEntryId = (Long)attributes.get("CPFriendlyUrlEntryId");
+		Long CPFriendlyURLEntryId = (Long)attributes.get("CPFriendlyURLEntryId");
 
-		if (CPFriendlyUrlEntryId != null) {
-			setCPFriendlyUrlEntryId(CPFriendlyUrlEntryId);
+		if (CPFriendlyURLEntryId != null) {
+			setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -327,13 +327,13 @@ public class CPTemplateLayoutEntryModelImpl extends BaseModelImpl<CPTemplateLayo
 
 	@JSON
 	@Override
-	public long getCPFriendlyUrlEntryId() {
-		return _CPFriendlyUrlEntryId;
+	public long getCPFriendlyURLEntryId() {
+		return _CPFriendlyURLEntryId;
 	}
 
 	@Override
-	public void setCPFriendlyUrlEntryId(long CPFriendlyUrlEntryId) {
-		_CPFriendlyUrlEntryId = CPFriendlyUrlEntryId;
+	public void setCPFriendlyURLEntryId(long CPFriendlyURLEntryId) {
+		_CPFriendlyURLEntryId = CPFriendlyURLEntryId;
 	}
 
 	@JSON
@@ -573,7 +573,7 @@ public class CPTemplateLayoutEntryModelImpl extends BaseModelImpl<CPTemplateLayo
 		CPTemplateLayoutEntryImpl cpTemplateLayoutEntryImpl = new CPTemplateLayoutEntryImpl();
 
 		cpTemplateLayoutEntryImpl.setUuid(getUuid());
-		cpTemplateLayoutEntryImpl.setCPFriendlyUrlEntryId(getCPFriendlyUrlEntryId());
+		cpTemplateLayoutEntryImpl.setCPFriendlyURLEntryId(getCPFriendlyURLEntryId());
 		cpTemplateLayoutEntryImpl.setGroupId(getGroupId());
 		cpTemplateLayoutEntryImpl.setCompanyId(getCompanyId());
 		cpTemplateLayoutEntryImpl.setUserId(getUserId());
@@ -700,7 +700,7 @@ public class CPTemplateLayoutEntryModelImpl extends BaseModelImpl<CPTemplateLayo
 			cpTemplateLayoutEntryCacheModel.uuid = null;
 		}
 
-		cpTemplateLayoutEntryCacheModel.CPFriendlyUrlEntryId = getCPFriendlyUrlEntryId();
+		cpTemplateLayoutEntryCacheModel.CPFriendlyURLEntryId = getCPFriendlyURLEntryId();
 
 		cpTemplateLayoutEntryCacheModel.groupId = getGroupId();
 
@@ -755,8 +755,8 @@ public class CPTemplateLayoutEntryModelImpl extends BaseModelImpl<CPTemplateLayo
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
-		sb.append(", CPFriendlyUrlEntryId=");
-		sb.append(getCPFriendlyUrlEntryId());
+		sb.append(", CPFriendlyURLEntryId=");
+		sb.append(getCPFriendlyURLEntryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -793,8 +793,8 @@ public class CPTemplateLayoutEntryModelImpl extends BaseModelImpl<CPTemplateLayo
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>CPFriendlyUrlEntryId</column-name><column-value><![CDATA[");
-		sb.append(getCPFriendlyUrlEntryId());
+			"<column><column-name>CPFriendlyURLEntryId</column-name><column-value><![CDATA[");
+		sb.append(getCPFriendlyURLEntryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -844,7 +844,7 @@ public class CPTemplateLayoutEntryModelImpl extends BaseModelImpl<CPTemplateLayo
 		};
 	private String _uuid;
 	private String _originalUuid;
-	private long _CPFriendlyUrlEntryId;
+	private long _CPFriendlyURLEntryId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;

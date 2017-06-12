@@ -32,28 +32,28 @@ import java.util.Objects;
 
 /**
  * <p>
- * This class is a wrapper for {@link CPFriendlyUrlEntry}.
+ * This class is a wrapper for {@link CPFriendlyURLEntry}.
  * </p>
  *
  * @author Marco Leo
- * @see CPFriendlyUrlEntry
+ * @see CPFriendlyURLEntry
  * @generated
  */
 @ProviderType
-public class CPFriendlyUrlEntryWrapper implements CPFriendlyUrlEntry,
-	ModelWrapper<CPFriendlyUrlEntry> {
-	public CPFriendlyUrlEntryWrapper(CPFriendlyUrlEntry cpFriendlyUrlEntry) {
+public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
+	ModelWrapper<CPFriendlyURLEntry> {
+	public CPFriendlyURLEntryWrapper(CPFriendlyURLEntry cpFriendlyUrlEntry) {
 		_cpFriendlyUrlEntry = cpFriendlyUrlEntry;
 	}
 
 	@Override
 	public Class<?> getModelClass() {
-		return CPFriendlyUrlEntry.class;
+		return CPFriendlyURLEntry.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return CPFriendlyUrlEntry.class.getName();
+		return CPFriendlyURLEntry.class.getName();
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class CPFriendlyUrlEntryWrapper implements CPFriendlyUrlEntry,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("CPFriendlyUrlEntryId", getCPFriendlyUrlEntryId());
+		attributes.put("CPFriendlyURLEntryId", getCPFriendlyURLEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -85,10 +85,10 @@ public class CPFriendlyUrlEntryWrapper implements CPFriendlyUrlEntry,
 			setUuid(uuid);
 		}
 
-		Long CPFriendlyUrlEntryId = (Long)attributes.get("CPFriendlyUrlEntryId");
+		Long CPFriendlyURLEntryId = (Long)attributes.get("CPFriendlyURLEntryId");
 
-		if (CPFriendlyUrlEntryId != null) {
-			setCPFriendlyUrlEntryId(CPFriendlyUrlEntryId);
+		if (CPFriendlyURLEntryId != null) {
+			setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -159,13 +159,13 @@ public class CPFriendlyUrlEntryWrapper implements CPFriendlyUrlEntry,
 	}
 
 	@Override
-	public CPFriendlyUrlEntry toEscapedModel() {
-		return new CPFriendlyUrlEntryWrapper(_cpFriendlyUrlEntry.toEscapedModel());
+	public CPFriendlyURLEntry toEscapedModel() {
+		return new CPFriendlyURLEntryWrapper(_cpFriendlyUrlEntry.toEscapedModel());
 	}
 
 	@Override
-	public CPFriendlyUrlEntry toUnescapedModel() {
-		return new CPFriendlyUrlEntryWrapper(_cpFriendlyUrlEntry.toUnescapedModel());
+	public CPFriendlyURLEntry toUnescapedModel() {
+		return new CPFriendlyURLEntryWrapper(_cpFriendlyUrlEntry.toUnescapedModel());
 	}
 
 	/**
@@ -209,12 +209,12 @@ public class CPFriendlyUrlEntryWrapper implements CPFriendlyUrlEntry,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPFriendlyUrlEntry> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<CPFriendlyURLEntry> toCacheModel() {
 		return _cpFriendlyUrlEntry.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(CPFriendlyUrlEntry cpFriendlyUrlEntry) {
+	public int compareTo(CPFriendlyURLEntry cpFriendlyUrlEntry) {
 		return _cpFriendlyUrlEntry.compareTo(cpFriendlyUrlEntry);
 	}
 
@@ -230,7 +230,7 @@ public class CPFriendlyUrlEntryWrapper implements CPFriendlyUrlEntry,
 
 	@Override
 	public java.lang.Object clone() {
-		return new CPFriendlyUrlEntryWrapper((CPFriendlyUrlEntry)_cpFriendlyUrlEntry.clone());
+		return new CPFriendlyURLEntryWrapper((CPFriendlyURLEntry)_cpFriendlyUrlEntry.clone());
 	}
 
 	/**
@@ -329,8 +329,8 @@ public class CPFriendlyUrlEntryWrapper implements CPFriendlyUrlEntry,
 	* @return the cp friendly url entry ID of this cp friendly url entry
 	*/
 	@Override
-	public long getCPFriendlyUrlEntryId() {
-		return _cpFriendlyUrlEntry.getCPFriendlyUrlEntryId();
+	public long getCPFriendlyURLEntryId() {
+		return _cpFriendlyUrlEntry.getCPFriendlyURLEntryId();
 	}
 
 	/**
@@ -401,11 +401,11 @@ public class CPFriendlyUrlEntryWrapper implements CPFriendlyUrlEntry,
 	/**
 	* Sets the cp friendly url entry ID of this cp friendly url entry.
 	*
-	* @param CPFriendlyUrlEntryId the cp friendly url entry ID of this cp friendly url entry
+	* @param CPFriendlyURLEntryId the cp friendly url entry ID of this cp friendly url entry
 	*/
 	@Override
-	public void setCPFriendlyUrlEntryId(long CPFriendlyUrlEntryId) {
-		_cpFriendlyUrlEntry.setCPFriendlyUrlEntryId(CPFriendlyUrlEntryId);
+	public void setCPFriendlyURLEntryId(long CPFriendlyURLEntryId) {
+		_cpFriendlyUrlEntry.setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
 	}
 
 	@Override
@@ -590,11 +590,11 @@ public class CPFriendlyUrlEntryWrapper implements CPFriendlyUrlEntry,
 			return true;
 		}
 
-		if (!(obj instanceof CPFriendlyUrlEntryWrapper)) {
+		if (!(obj instanceof CPFriendlyURLEntryWrapper)) {
 			return false;
 		}
 
-		CPFriendlyUrlEntryWrapper cpFriendlyUrlEntryWrapper = (CPFriendlyUrlEntryWrapper)obj;
+		CPFriendlyURLEntryWrapper cpFriendlyUrlEntryWrapper = (CPFriendlyURLEntryWrapper)obj;
 
 		if (Objects.equals(_cpFriendlyUrlEntry,
 					cpFriendlyUrlEntryWrapper._cpFriendlyUrlEntry)) {
@@ -610,7 +610,7 @@ public class CPFriendlyUrlEntryWrapper implements CPFriendlyUrlEntry,
 	}
 
 	@Override
-	public CPFriendlyUrlEntry getWrappedModel() {
+	public CPFriendlyURLEntry getWrappedModel() {
 		return _cpFriendlyUrlEntry;
 	}
 
@@ -629,5 +629,5 @@ public class CPFriendlyUrlEntryWrapper implements CPFriendlyUrlEntry,
 		_cpFriendlyUrlEntry.resetOriginalValues();
 	}
 
-	private final CPFriendlyUrlEntry _cpFriendlyUrlEntry;
+	private final CPFriendlyURLEntry _cpFriendlyUrlEntry;
 }

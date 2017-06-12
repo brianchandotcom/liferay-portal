@@ -20,9 +20,9 @@ import aQute.bnd.annotation.ProviderType;
 * @author Marco Leo
  */
 @ProviderType
-public class CPFriendlyUrlEntryImpl extends CPFriendlyUrlEntryBaseImpl {
+public class CPFriendlyURLEntryImpl extends CPFriendlyURLEntryBaseImpl {
 
-	public CPFriendlyUrlEntryImpl() {
+	public CPFriendlyURLEntryImpl() {
 	}
 
 }

@@ -62,7 +62,7 @@ public class CPTemplateLayoutEntryWrapper implements CPTemplateLayoutEntry,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("CPFriendlyUrlEntryId", getCPFriendlyUrlEntryId());
+		attributes.put("CPFriendlyURLEntryId", getCPFriendlyURLEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -84,10 +84,10 @@ public class CPTemplateLayoutEntryWrapper implements CPTemplateLayoutEntry,
 			setUuid(uuid);
 		}
 
-		Long CPFriendlyUrlEntryId = (Long)attributes.get("CPFriendlyUrlEntryId");
+		Long CPFriendlyURLEntryId = (Long)attributes.get("CPFriendlyURLEntryId");
 
-		if (CPFriendlyUrlEntryId != null) {
-			setCPFriendlyUrlEntryId(CPFriendlyUrlEntryId);
+		if (CPFriendlyURLEntryId != null) {
+			setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -286,8 +286,8 @@ public class CPTemplateLayoutEntryWrapper implements CPTemplateLayoutEntry,
 	* @return the cp friendly url entry ID of this cp template layout entry
 	*/
 	@Override
-	public long getCPFriendlyUrlEntryId() {
-		return _cpTemplateLayoutEntry.getCPFriendlyUrlEntryId();
+	public long getCPFriendlyURLEntryId() {
+		return _cpTemplateLayoutEntry.getCPFriendlyURLEntryId();
 	}
 
 	/**
@@ -358,11 +358,11 @@ public class CPTemplateLayoutEntryWrapper implements CPTemplateLayoutEntry,
 	/**
 	* Sets the cp friendly url entry ID of this cp template layout entry.
 	*
-	* @param CPFriendlyUrlEntryId the cp friendly url entry ID of this cp template layout entry
+	* @param CPFriendlyURLEntryId the cp friendly url entry ID of this cp template layout entry
 	*/
 	@Override
-	public void setCPFriendlyUrlEntryId(long CPFriendlyUrlEntryId) {
-		_cpTemplateLayoutEntry.setCPFriendlyUrlEntryId(CPFriendlyUrlEntryId);
+	public void setCPFriendlyURLEntryId(long CPFriendlyURLEntryId) {
+		_cpTemplateLayoutEntry.setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
 	}
 
 	@Override

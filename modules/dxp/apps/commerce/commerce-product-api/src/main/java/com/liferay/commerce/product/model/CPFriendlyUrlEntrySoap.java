@@ -23,19 +23,19 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.product.service.http.CPFriendlyUrlEntryServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.product.service.http.CPFriendlyURLEntryServiceSoap}.
  *
  * @author Marco Leo
- * @see com.liferay.commerce.product.service.http.CPFriendlyUrlEntryServiceSoap
+ * @see com.liferay.commerce.product.service.http.CPFriendlyURLEntryServiceSoap
  * @generated
  */
 @ProviderType
-public class CPFriendlyUrlEntrySoap implements Serializable {
-	public static CPFriendlyUrlEntrySoap toSoapModel(CPFriendlyUrlEntry model) {
-		CPFriendlyUrlEntrySoap soapModel = new CPFriendlyUrlEntrySoap();
+public class CPFriendlyURLEntrySoap implements Serializable {
+	public static CPFriendlyURLEntrySoap toSoapModel(CPFriendlyURLEntry model) {
+		CPFriendlyURLEntrySoap soapModel = new CPFriendlyURLEntrySoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setCPFriendlyUrlEntryId(model.getCPFriendlyUrlEntryId());
+		soapModel.setCPFriendlyURLEntryId(model.getCPFriendlyURLEntryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -51,9 +51,9 @@ public class CPFriendlyUrlEntrySoap implements Serializable {
 		return soapModel;
 	}
 
-	public static CPFriendlyUrlEntrySoap[] toSoapModels(
-		CPFriendlyUrlEntry[] models) {
-		CPFriendlyUrlEntrySoap[] soapModels = new CPFriendlyUrlEntrySoap[models.length];
+	public static CPFriendlyURLEntrySoap[] toSoapModels(
+		CPFriendlyURLEntry[] models) {
+		CPFriendlyURLEntrySoap[] soapModels = new CPFriendlyURLEntrySoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -62,15 +62,15 @@ public class CPFriendlyUrlEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CPFriendlyUrlEntrySoap[][] toSoapModels(
-		CPFriendlyUrlEntry[][] models) {
-		CPFriendlyUrlEntrySoap[][] soapModels = null;
+	public static CPFriendlyURLEntrySoap[][] toSoapModels(
+		CPFriendlyURLEntry[][] models) {
+		CPFriendlyURLEntrySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new CPFriendlyUrlEntrySoap[models.length][models[0].length];
+			soapModels = new CPFriendlyURLEntrySoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new CPFriendlyUrlEntrySoap[0][0];
+			soapModels = new CPFriendlyURLEntrySoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -80,26 +80,26 @@ public class CPFriendlyUrlEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CPFriendlyUrlEntrySoap[] toSoapModels(
-		List<CPFriendlyUrlEntry> models) {
-		List<CPFriendlyUrlEntrySoap> soapModels = new ArrayList<CPFriendlyUrlEntrySoap>(models.size());
+	public static CPFriendlyURLEntrySoap[] toSoapModels(
+		List<CPFriendlyURLEntry> models) {
+		List<CPFriendlyURLEntrySoap> soapModels = new ArrayList<CPFriendlyURLEntrySoap>(models.size());
 
-		for (CPFriendlyUrlEntry model : models) {
+		for (CPFriendlyURLEntry model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new CPFriendlyUrlEntrySoap[soapModels.size()]);
+		return soapModels.toArray(new CPFriendlyURLEntrySoap[soapModels.size()]);
 	}
 
-	public CPFriendlyUrlEntrySoap() {
+	public CPFriendlyURLEntrySoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _CPFriendlyUrlEntryId;
+		return _CPFriendlyURLEntryId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setCPFriendlyUrlEntryId(pk);
+		setCPFriendlyURLEntryId(pk);
 	}
 
 	public String getUuid() {
@@ -110,12 +110,12 @@ public class CPFriendlyUrlEntrySoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getCPFriendlyUrlEntryId() {
-		return _CPFriendlyUrlEntryId;
+	public long getCPFriendlyURLEntryId() {
+		return _CPFriendlyURLEntryId;
 	}
 
-	public void setCPFriendlyUrlEntryId(long CPFriendlyUrlEntryId) {
-		_CPFriendlyUrlEntryId = CPFriendlyUrlEntryId;
+	public void setCPFriendlyURLEntryId(long CPFriendlyURLEntryId) {
+		_CPFriendlyURLEntryId = CPFriendlyURLEntryId;
 	}
 
 	public long getGroupId() {
@@ -211,7 +211,7 @@ public class CPFriendlyUrlEntrySoap implements Serializable {
 	}
 
 	private String _uuid;
-	private long _CPFriendlyUrlEntryId;
+	private long _CPFriendlyURLEntryId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

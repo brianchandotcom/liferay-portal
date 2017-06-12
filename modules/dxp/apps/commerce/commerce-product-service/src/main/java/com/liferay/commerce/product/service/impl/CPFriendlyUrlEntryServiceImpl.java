@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.product.service.impl;
 
-import com.liferay.commerce.product.service.base.CPFriendlyUrlEntryServiceBaseImpl;
+import com.liferay.commerce.product.service.base.CPFriendlyURLEntryServiceBaseImpl;
 
 /**
  * @author Marco Leo
  */
-public class CPFriendlyUrlEntryServiceImpl
-	extends CPFriendlyUrlEntryServiceBaseImpl {
+public class CPFriendlyURLEntryServiceImpl
+	extends CPFriendlyURLEntryServiceBaseImpl {
 }

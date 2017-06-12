@@ -36,7 +36,7 @@ public class CPTemplateLayoutEntrySoap implements Serializable {
 		CPTemplateLayoutEntrySoap soapModel = new CPTemplateLayoutEntrySoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setCPFriendlyUrlEntryId(model.getCPFriendlyUrlEntryId());
+		soapModel.setCPFriendlyURLEntryId(model.getCPFriendlyURLEntryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -94,11 +94,11 @@ public class CPTemplateLayoutEntrySoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _CPFriendlyUrlEntryId;
+		return _CPFriendlyURLEntryId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setCPFriendlyUrlEntryId(pk);
+		setCPFriendlyURLEntryId(pk);
 	}
 
 	public String getUuid() {
@@ -109,12 +109,12 @@ public class CPTemplateLayoutEntrySoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getCPFriendlyUrlEntryId() {
-		return _CPFriendlyUrlEntryId;
+	public long getCPFriendlyURLEntryId() {
+		return _CPFriendlyURLEntryId;
 	}
 
-	public void setCPFriendlyUrlEntryId(long CPFriendlyUrlEntryId) {
-		_CPFriendlyUrlEntryId = CPFriendlyUrlEntryId;
+	public void setCPFriendlyURLEntryId(long CPFriendlyURLEntryId) {
+		_CPFriendlyURLEntryId = CPFriendlyURLEntryId;
 	}
 
 	public long getGroupId() {
@@ -190,7 +190,7 @@ public class CPTemplateLayoutEntrySoap implements Serializable {
 	}
 
 	private String _uuid;
-	private long _CPFriendlyUrlEntryId;
+	private long _CPFriendlyURLEntryId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

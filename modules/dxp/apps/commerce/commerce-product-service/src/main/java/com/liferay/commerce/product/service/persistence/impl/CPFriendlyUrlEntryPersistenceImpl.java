@@ -16,11 +16,11 @@ package com.liferay.commerce.product.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.product.exception.NoSuchCPFriendlyUrlEntryException;
-import com.liferay.commerce.product.model.CPFriendlyUrlEntry;
-import com.liferay.commerce.product.model.impl.CPFriendlyUrlEntryImpl;
-import com.liferay.commerce.product.model.impl.CPFriendlyUrlEntryModelImpl;
-import com.liferay.commerce.product.service.persistence.CPFriendlyUrlEntryPersistence;
+import com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException;
+import com.liferay.commerce.product.model.CPFriendlyURLEntry;
+import com.liferay.commerce.product.model.impl.CPFriendlyURLEntryImpl;
+import com.liferay.commerce.product.model.impl.CPFriendlyURLEntryModelImpl;
+import com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence;
 
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -67,37 +67,37 @@ import java.util.Set;
  * </p>
  *
  * @author Marco Leo
- * @see CPFriendlyUrlEntryPersistence
- * @see com.liferay.commerce.product.service.persistence.CPFriendlyUrlEntryUtil
+ * @see CPFriendlyURLEntryPersistence
+ * @see com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryUtil
  * @generated
  */
 @ProviderType
-public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFriendlyUrlEntry>
-	implements CPFriendlyUrlEntryPersistence {
+public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFriendlyURLEntry>
+	implements CPFriendlyURLEntryPersistence {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link CPFriendlyUrlEntryUtil} to access the cp friendly url entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use {@link CPFriendlyURLEntryUtil} to access the cp friendly url entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = CPFriendlyUrlEntryImpl.class.getName();
+	public static final String FINDER_CLASS_NAME_ENTITY = CPFriendlyURLEntryImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryModelImpl.FINDER_CACHE_ENABLED,
-			CPFriendlyUrlEntryImpl.class,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
+			CPFriendlyURLEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryModelImpl.FINDER_CACHE_ENABLED,
-			CPFriendlyUrlEntryImpl.class,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
+			CPFriendlyURLEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID = new FinderPath(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryModelImpl.FINDER_CACHE_ENABLED,
-			CPFriendlyUrlEntryImpl.class,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
+			CPFriendlyURLEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(),
@@ -105,17 +105,17 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryModelImpl.FINDER_CACHE_ENABLED,
-			CPFriendlyUrlEntryImpl.class,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
+			CPFriendlyURLEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] { String.class.getName() },
-			CPFriendlyUrlEntryModelImpl.UUID_COLUMN_BITMASK |
-			CPFriendlyUrlEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CPFriendlyUrlEntryModelImpl.CLASSPK_COLUMN_BITMASK |
-			CPFriendlyUrlEntryModelImpl.URLTITLE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			CPFriendlyURLEntryModelImpl.UUID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.CLASSPK_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.URLTITLE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] { String.class.getName() });
 
@@ -126,7 +126,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyUrlEntry> findByUuid(String uuid) {
+	public List<CPFriendlyURLEntry> findByUuid(String uuid) {
 		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -134,7 +134,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * Returns a range of all the cp friendly url entries where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyUrlEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -143,7 +143,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the range of matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyUrlEntry> findByUuid(String uuid, int start, int end) {
+	public List<CPFriendlyURLEntry> findByUuid(String uuid, int start, int end) {
 		return findByUuid(uuid, start, end, null);
 	}
 
@@ -151,7 +151,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * Returns an ordered range of all the cp friendly url entries where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyUrlEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -161,8 +161,8 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the ordered range of matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyUrlEntry> findByUuid(String uuid, int start, int end,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator) {
+	public List<CPFriendlyURLEntry> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return findByUuid(uuid, start, end, orderByComparator, true);
 	}
 
@@ -170,7 +170,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * Returns an ordered range of all the cp friendly url entries where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyUrlEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -181,8 +181,8 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the ordered range of matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyUrlEntry> findByUuid(String uuid, int start, int end,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator,
+	public List<CPFriendlyURLEntry> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -199,14 +199,14 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<CPFriendlyUrlEntry> list = null;
+		List<CPFriendlyURLEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<CPFriendlyUrlEntry>)finderCache.getResult(finderPath,
+			list = (List<CPFriendlyURLEntry>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
-				for (CPFriendlyUrlEntry cpFriendlyUrlEntry : list) {
+				for (CPFriendlyURLEntry cpFriendlyUrlEntry : list) {
 					if (!Objects.equals(uuid, cpFriendlyUrlEntry.getUuid())) {
 						list = null;
 
@@ -249,7 +249,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			}
 			else
 			 if (pagination) {
-				query.append(CPFriendlyUrlEntryModelImpl.ORDER_BY_JPQL);
+				query.append(CPFriendlyURLEntryModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = query.toString();
@@ -268,7 +268,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				}
 
 				if (!pagination) {
-					list = (List<CPFriendlyUrlEntry>)QueryUtil.list(q,
+					list = (List<CPFriendlyURLEntry>)QueryUtil.list(q,
 							getDialect(), start, end, false);
 
 					Collections.sort(list);
@@ -276,7 +276,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CPFriendlyUrlEntry>)QueryUtil.list(q,
+					list = (List<CPFriendlyURLEntry>)QueryUtil.list(q,
 							getDialect(), start, end);
 				}
 
@@ -303,13 +303,13 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cp friendly url entry
-	 * @throws NoSuchCPFriendlyUrlEntryException if a matching cp friendly url entry could not be found
+	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry findByUuid_First(String uuid,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator)
-		throws NoSuchCPFriendlyUrlEntryException {
-		CPFriendlyUrlEntry cpFriendlyUrlEntry = fetchByUuid_First(uuid,
+	public CPFriendlyURLEntry findByUuid_First(String uuid,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+		throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByUuid_First(uuid,
 				orderByComparator);
 
 		if (cpFriendlyUrlEntry != null) {
@@ -325,7 +325,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchCPFriendlyUrlEntryException(msg.toString());
+		throw new NoSuchCPFriendlyURLEntryException(msg.toString());
 	}
 
 	/**
@@ -336,9 +336,9 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry fetchByUuid_First(String uuid,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator) {
-		List<CPFriendlyUrlEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
+	public CPFriendlyURLEntry fetchByUuid_First(String uuid,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
+		List<CPFriendlyURLEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -353,13 +353,13 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching cp friendly url entry
-	 * @throws NoSuchCPFriendlyUrlEntryException if a matching cp friendly url entry could not be found
+	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry findByUuid_Last(String uuid,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator)
-		throws NoSuchCPFriendlyUrlEntryException {
-		CPFriendlyUrlEntry cpFriendlyUrlEntry = fetchByUuid_Last(uuid,
+	public CPFriendlyURLEntry findByUuid_Last(String uuid,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+		throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByUuid_Last(uuid,
 				orderByComparator);
 
 		if (cpFriendlyUrlEntry != null) {
@@ -375,7 +375,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchCPFriendlyUrlEntryException(msg.toString());
+		throw new NoSuchCPFriendlyURLEntryException(msg.toString());
 	}
 
 	/**
@@ -386,15 +386,15 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry fetchByUuid_Last(String uuid,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator) {
+	public CPFriendlyURLEntry fetchByUuid_Last(String uuid,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CPFriendlyUrlEntry> list = findByUuid(uuid, count - 1, count,
+		List<CPFriendlyURLEntry> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -407,25 +407,25 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	/**
 	 * Returns the cp friendly url entries before and after the current cp friendly url entry in the ordered set where uuid = &#63;.
 	 *
-	 * @param CPFriendlyUrlEntryId the primary key of the current cp friendly url entry
+	 * @param CPFriendlyURLEntryId the primary key of the current cp friendly url entry
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next cp friendly url entry
-	 * @throws NoSuchCPFriendlyUrlEntryException if a cp friendly url entry with the primary key could not be found
+	 * @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry[] findByUuid_PrevAndNext(
-		long CPFriendlyUrlEntryId, String uuid,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator)
-		throws NoSuchCPFriendlyUrlEntryException {
-		CPFriendlyUrlEntry cpFriendlyUrlEntry = findByPrimaryKey(CPFriendlyUrlEntryId);
+	public CPFriendlyURLEntry[] findByUuid_PrevAndNext(
+		long CPFriendlyURLEntryId, String uuid,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+		throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyUrlEntry = findByPrimaryKey(CPFriendlyURLEntryId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			CPFriendlyUrlEntry[] array = new CPFriendlyUrlEntryImpl[3];
+			CPFriendlyURLEntry[] array = new CPFriendlyURLEntryImpl[3];
 
 			array[0] = getByUuid_PrevAndNext(session, cpFriendlyUrlEntry, uuid,
 					orderByComparator, true);
@@ -445,9 +445,9 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		}
 	}
 
-	protected CPFriendlyUrlEntry getByUuid_PrevAndNext(Session session,
-		CPFriendlyUrlEntry cpFriendlyUrlEntry, String uuid,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator,
+	protected CPFriendlyURLEntry getByUuid_PrevAndNext(Session session,
+		CPFriendlyURLEntry cpFriendlyUrlEntry, String uuid,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -532,7 +532,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			}
 		}
 		else {
-			query.append(CPFriendlyUrlEntryModelImpl.ORDER_BY_JPQL);
+			query.append(CPFriendlyURLEntryModelImpl.ORDER_BY_JPQL);
 		}
 
 		String sql = query.toString();
@@ -556,7 +556,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			}
 		}
 
-		List<CPFriendlyUrlEntry> list = q.list();
+		List<CPFriendlyURLEntry> list = q.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -573,7 +573,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CPFriendlyUrlEntry cpFriendlyUrlEntry : findByUuid(uuid,
+		for (CPFriendlyURLEntry cpFriendlyUrlEntry : findByUuid(uuid,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(cpFriendlyUrlEntry);
 		}
@@ -647,30 +647,30 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "cpFriendlyUrlEntry.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "cpFriendlyUrlEntry.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(cpFriendlyUrlEntry.uuid IS NULL OR cpFriendlyUrlEntry.uuid = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryModelImpl.FINDER_CACHE_ENABLED,
-			CPFriendlyUrlEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
+			CPFriendlyURLEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] { String.class.getName(), Long.class.getName() },
-			CPFriendlyUrlEntryModelImpl.UUID_COLUMN_BITMASK |
-			CPFriendlyUrlEntryModelImpl.GROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			CPFriendlyURLEntryModelImpl.UUID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.GROUPID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the cp friendly url entry where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCPFriendlyUrlEntryException} if it could not be found.
+	 * Returns the cp friendly url entry where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the matching cp friendly url entry
-	 * @throws NoSuchCPFriendlyUrlEntryException if a matching cp friendly url entry could not be found
+	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry findByUUID_G(String uuid, long groupId)
-		throws NoSuchCPFriendlyUrlEntryException {
-		CPFriendlyUrlEntry cpFriendlyUrlEntry = fetchByUUID_G(uuid, groupId);
+	public CPFriendlyURLEntry findByUUID_G(String uuid, long groupId)
+		throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByUUID_G(uuid, groupId);
 
 		if (cpFriendlyUrlEntry == null) {
 			StringBundler msg = new StringBundler(6);
@@ -689,7 +689,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				_log.debug(msg.toString());
 			}
 
-			throw new NoSuchCPFriendlyUrlEntryException(msg.toString());
+			throw new NoSuchCPFriendlyURLEntryException(msg.toString());
 		}
 
 		return cpFriendlyUrlEntry;
@@ -703,7 +703,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry fetchByUUID_G(String uuid, long groupId) {
+	public CPFriendlyURLEntry fetchByUUID_G(String uuid, long groupId) {
 		return fetchByUUID_G(uuid, groupId, true);
 	}
 
@@ -716,7 +716,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry fetchByUUID_G(String uuid, long groupId,
+	public CPFriendlyURLEntry fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
@@ -727,8 +727,8 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					finderArgs, this);
 		}
 
-		if (result instanceof CPFriendlyUrlEntry) {
-			CPFriendlyUrlEntry cpFriendlyUrlEntry = (CPFriendlyUrlEntry)result;
+		if (result instanceof CPFriendlyURLEntry) {
+			CPFriendlyURLEntry cpFriendlyUrlEntry = (CPFriendlyURLEntry)result;
 
 			if (!Objects.equals(uuid, cpFriendlyUrlEntry.getUuid()) ||
 					(groupId != cpFriendlyUrlEntry.getGroupId())) {
@@ -774,14 +774,14 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 				qPos.add(groupId);
 
-				List<CPFriendlyUrlEntry> list = q.list();
+				List<CPFriendlyURLEntry> list = q.list();
 
 				if (list.isEmpty()) {
 					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
-					CPFriendlyUrlEntry cpFriendlyUrlEntry = list.get(0);
+					CPFriendlyURLEntry cpFriendlyUrlEntry = list.get(0);
 
 					result = cpFriendlyUrlEntry;
 
@@ -809,7 +809,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			return null;
 		}
 		else {
-			return (CPFriendlyUrlEntry)result;
+			return (CPFriendlyURLEntry)result;
 		}
 	}
 
@@ -821,9 +821,9 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the cp friendly url entry that was removed
 	 */
 	@Override
-	public CPFriendlyUrlEntry removeByUUID_G(String uuid, long groupId)
-		throws NoSuchCPFriendlyUrlEntryException {
-		CPFriendlyUrlEntry cpFriendlyUrlEntry = findByUUID_G(uuid, groupId);
+	public CPFriendlyURLEntry removeByUUID_G(String uuid, long groupId)
+		throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyUrlEntry = findByUUID_G(uuid, groupId);
 
 		return remove(cpFriendlyUrlEntry);
 	}
@@ -902,9 +902,9 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "cpFriendlyUrlEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(cpFriendlyUrlEntry.uuid IS NULL OR cpFriendlyUrlEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "cpFriendlyUrlEntry.groupId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryModelImpl.FINDER_CACHE_ENABLED,
-			CPFriendlyUrlEntryImpl.class,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
+			CPFriendlyURLEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -913,18 +913,18 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				OrderByComparator.class.getName()
 			});
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C =
-		new FinderPath(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryModelImpl.FINDER_CACHE_ENABLED,
-			CPFriendlyUrlEntryImpl.class,
+		new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
+			CPFriendlyURLEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] { String.class.getName(), Long.class.getName() },
-			CPFriendlyUrlEntryModelImpl.UUID_COLUMN_BITMASK |
-			CPFriendlyUrlEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPFriendlyUrlEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CPFriendlyUrlEntryModelImpl.CLASSPK_COLUMN_BITMASK |
-			CPFriendlyUrlEntryModelImpl.URLTITLE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			CPFriendlyURLEntryModelImpl.UUID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.COMPANYID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.CLASSPK_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.URLTITLE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] { String.class.getName(), Long.class.getName() });
 
@@ -936,7 +936,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyUrlEntry> findByUuid_C(String uuid, long companyId) {
+	public List<CPFriendlyURLEntry> findByUuid_C(String uuid, long companyId) {
 		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -945,7 +945,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * Returns a range of all the cp friendly url entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyUrlEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -955,7 +955,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the range of matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyUrlEntry> findByUuid_C(String uuid, long companyId,
+	public List<CPFriendlyURLEntry> findByUuid_C(String uuid, long companyId,
 		int start, int end) {
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
@@ -964,7 +964,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * Returns an ordered range of all the cp friendly url entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyUrlEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -975,9 +975,9 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the ordered range of matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyUrlEntry> findByUuid_C(String uuid, long companyId,
+	public List<CPFriendlyURLEntry> findByUuid_C(String uuid, long companyId,
 		int start, int end,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator) {
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
 	}
 
@@ -985,7 +985,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * Returns an ordered range of all the cp friendly url entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyUrlEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -997,9 +997,9 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the ordered range of matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyUrlEntry> findByUuid_C(String uuid, long companyId,
+	public List<CPFriendlyURLEntry> findByUuid_C(String uuid, long companyId,
 		int start, int end,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1020,14 +1020,14 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				};
 		}
 
-		List<CPFriendlyUrlEntry> list = null;
+		List<CPFriendlyURLEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<CPFriendlyUrlEntry>)finderCache.getResult(finderPath,
+			list = (List<CPFriendlyURLEntry>)finderCache.getResult(finderPath,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
-				for (CPFriendlyUrlEntry cpFriendlyUrlEntry : list) {
+				for (CPFriendlyURLEntry cpFriendlyUrlEntry : list) {
 					if (!Objects.equals(uuid, cpFriendlyUrlEntry.getUuid()) ||
 							(companyId != cpFriendlyUrlEntry.getCompanyId())) {
 						list = null;
@@ -1073,7 +1073,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			}
 			else
 			 if (pagination) {
-				query.append(CPFriendlyUrlEntryModelImpl.ORDER_BY_JPQL);
+				query.append(CPFriendlyURLEntryModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = query.toString();
@@ -1094,7 +1094,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<CPFriendlyUrlEntry>)QueryUtil.list(q,
+					list = (List<CPFriendlyURLEntry>)QueryUtil.list(q,
 							getDialect(), start, end, false);
 
 					Collections.sort(list);
@@ -1102,7 +1102,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CPFriendlyUrlEntry>)QueryUtil.list(q,
+					list = (List<CPFriendlyURLEntry>)QueryUtil.list(q,
 							getDialect(), start, end);
 				}
 
@@ -1130,13 +1130,13 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cp friendly url entry
-	 * @throws NoSuchCPFriendlyUrlEntryException if a matching cp friendly url entry could not be found
+	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator)
-		throws NoSuchCPFriendlyUrlEntryException {
-		CPFriendlyUrlEntry cpFriendlyUrlEntry = fetchByUuid_C_First(uuid,
+	public CPFriendlyURLEntry findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+		throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByUuid_C_First(uuid,
 				companyId, orderByComparator);
 
 		if (cpFriendlyUrlEntry != null) {
@@ -1155,7 +1155,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchCPFriendlyUrlEntryException(msg.toString());
+		throw new NoSuchCPFriendlyURLEntryException(msg.toString());
 	}
 
 	/**
@@ -1167,9 +1167,9 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator) {
-		List<CPFriendlyUrlEntry> list = findByUuid_C(uuid, companyId, 0, 1,
+	public CPFriendlyURLEntry fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
+		List<CPFriendlyURLEntry> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1186,13 +1186,13 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching cp friendly url entry
-	 * @throws NoSuchCPFriendlyUrlEntryException if a matching cp friendly url entry could not be found
+	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator)
-		throws NoSuchCPFriendlyUrlEntryException {
-		CPFriendlyUrlEntry cpFriendlyUrlEntry = fetchByUuid_C_Last(uuid,
+	public CPFriendlyURLEntry findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+		throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByUuid_C_Last(uuid,
 				companyId, orderByComparator);
 
 		if (cpFriendlyUrlEntry != null) {
@@ -1211,7 +1211,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchCPFriendlyUrlEntryException(msg.toString());
+		throw new NoSuchCPFriendlyURLEntryException(msg.toString());
 	}
 
 	/**
@@ -1223,15 +1223,15 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator) {
+	public CPFriendlyURLEntry fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CPFriendlyUrlEntry> list = findByUuid_C(uuid, companyId,
+		List<CPFriendlyURLEntry> list = findByUuid_C(uuid, companyId,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1244,26 +1244,26 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	/**
 	 * Returns the cp friendly url entries before and after the current cp friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param CPFriendlyUrlEntryId the primary key of the current cp friendly url entry
+	 * @param CPFriendlyURLEntryId the primary key of the current cp friendly url entry
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next cp friendly url entry
-	 * @throws NoSuchCPFriendlyUrlEntryException if a cp friendly url entry with the primary key could not be found
+	 * @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry[] findByUuid_C_PrevAndNext(
-		long CPFriendlyUrlEntryId, String uuid, long companyId,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator)
-		throws NoSuchCPFriendlyUrlEntryException {
-		CPFriendlyUrlEntry cpFriendlyUrlEntry = findByPrimaryKey(CPFriendlyUrlEntryId);
+	public CPFriendlyURLEntry[] findByUuid_C_PrevAndNext(
+		long CPFriendlyURLEntryId, String uuid, long companyId,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+		throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyUrlEntry = findByPrimaryKey(CPFriendlyURLEntryId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			CPFriendlyUrlEntry[] array = new CPFriendlyUrlEntryImpl[3];
+			CPFriendlyURLEntry[] array = new CPFriendlyURLEntryImpl[3];
 
 			array[0] = getByUuid_C_PrevAndNext(session, cpFriendlyUrlEntry,
 					uuid, companyId, orderByComparator, true);
@@ -1283,9 +1283,9 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		}
 	}
 
-	protected CPFriendlyUrlEntry getByUuid_C_PrevAndNext(Session session,
-		CPFriendlyUrlEntry cpFriendlyUrlEntry, String uuid, long companyId,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator,
+	protected CPFriendlyURLEntry getByUuid_C_PrevAndNext(Session session,
+		CPFriendlyURLEntry cpFriendlyUrlEntry, String uuid, long companyId,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -1372,7 +1372,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			}
 		}
 		else {
-			query.append(CPFriendlyUrlEntryModelImpl.ORDER_BY_JPQL);
+			query.append(CPFriendlyURLEntryModelImpl.ORDER_BY_JPQL);
 		}
 
 		String sql = query.toString();
@@ -1398,7 +1398,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			}
 		}
 
-		List<CPFriendlyUrlEntry> list = q.list();
+		List<CPFriendlyURLEntry> list = q.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -1416,7 +1416,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CPFriendlyUrlEntry cpFriendlyUrlEntry : findByUuid_C(uuid,
+		for (CPFriendlyURLEntry cpFriendlyUrlEntry : findByUuid_C(uuid,
 				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(cpFriendlyUrlEntry);
 		}
@@ -1496,19 +1496,19 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "cpFriendlyUrlEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(cpFriendlyUrlEntry.uuid IS NULL OR cpFriendlyUrlEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "cpFriendlyUrlEntry.companyId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_U_L = new FinderPath(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryModelImpl.FINDER_CACHE_ENABLED,
-			CPFriendlyUrlEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_U_L = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
+			CPFriendlyURLEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByG_U_L",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			CPFriendlyUrlEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			CPFriendlyUrlEntryModelImpl.URLTITLE_COLUMN_BITMASK |
-			CPFriendlyUrlEntryModelImpl.LANGUAGEID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_U_L = new FinderPath(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			CPFriendlyURLEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.URLTITLE_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.LANGUAGEID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_U_L = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_L",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -1516,18 +1516,18 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			});
 
 	/**
-	 * Returns the cp friendly url entry where groupId = &#63; and urlTitle = &#63; and languageId = &#63; or throws a {@link NoSuchCPFriendlyUrlEntryException} if it could not be found.
+	 * Returns the cp friendly url entry where groupId = &#63; and urlTitle = &#63; and languageId = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param urlTitle the url title
 	 * @param languageId the language ID
 	 * @return the matching cp friendly url entry
-	 * @throws NoSuchCPFriendlyUrlEntryException if a matching cp friendly url entry could not be found
+	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry findByG_U_L(long groupId, String urlTitle,
-		String languageId) throws NoSuchCPFriendlyUrlEntryException {
-		CPFriendlyUrlEntry cpFriendlyUrlEntry = fetchByG_U_L(groupId, urlTitle,
+	public CPFriendlyURLEntry findByG_U_L(long groupId, String urlTitle,
+		String languageId) throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByG_U_L(groupId, urlTitle,
 				languageId);
 
 		if (cpFriendlyUrlEntry == null) {
@@ -1550,7 +1550,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				_log.debug(msg.toString());
 			}
 
-			throw new NoSuchCPFriendlyUrlEntryException(msg.toString());
+			throw new NoSuchCPFriendlyURLEntryException(msg.toString());
 		}
 
 		return cpFriendlyUrlEntry;
@@ -1565,7 +1565,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry fetchByG_U_L(long groupId, String urlTitle,
+	public CPFriendlyURLEntry fetchByG_U_L(long groupId, String urlTitle,
 		String languageId) {
 		return fetchByG_U_L(groupId, urlTitle, languageId, true);
 	}
@@ -1580,7 +1580,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry fetchByG_U_L(long groupId, String urlTitle,
+	public CPFriendlyURLEntry fetchByG_U_L(long groupId, String urlTitle,
 		String languageId, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { groupId, urlTitle, languageId };
 
@@ -1591,8 +1591,8 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					finderArgs, this);
 		}
 
-		if (result instanceof CPFriendlyUrlEntry) {
-			CPFriendlyUrlEntry cpFriendlyUrlEntry = (CPFriendlyUrlEntry)result;
+		if (result instanceof CPFriendlyURLEntry) {
+			CPFriendlyURLEntry cpFriendlyUrlEntry = (CPFriendlyURLEntry)result;
 
 			if ((groupId != cpFriendlyUrlEntry.getGroupId()) ||
 					!Objects.equals(urlTitle, cpFriendlyUrlEntry.getUrlTitle()) ||
@@ -1658,14 +1658,14 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					qPos.add(languageId);
 				}
 
-				List<CPFriendlyUrlEntry> list = q.list();
+				List<CPFriendlyURLEntry> list = q.list();
 
 				if (list.isEmpty()) {
 					finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_L,
 						finderArgs, list);
 				}
 				else {
-					CPFriendlyUrlEntry cpFriendlyUrlEntry = list.get(0);
+					CPFriendlyURLEntry cpFriendlyUrlEntry = list.get(0);
 
 					result = cpFriendlyUrlEntry;
 
@@ -1696,7 +1696,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			return null;
 		}
 		else {
-			return (CPFriendlyUrlEntry)result;
+			return (CPFriendlyURLEntry)result;
 		}
 	}
 
@@ -1709,9 +1709,9 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the cp friendly url entry that was removed
 	 */
 	@Override
-	public CPFriendlyUrlEntry removeByG_U_L(long groupId, String urlTitle,
-		String languageId) throws NoSuchCPFriendlyUrlEntryException {
-		CPFriendlyUrlEntry cpFriendlyUrlEntry = findByG_U_L(groupId, urlTitle,
+	public CPFriendlyURLEntry removeByG_U_L(long groupId, String urlTitle,
+		String languageId) throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyUrlEntry = findByG_U_L(groupId, urlTitle,
 				languageId);
 
 		return remove(cpFriendlyUrlEntry);
@@ -1814,8 +1814,8 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	private static final String _FINDER_COLUMN_G_U_L_LANGUAGEID_2 = "cpFriendlyUrlEntry.languageId = ?";
 	private static final String _FINDER_COLUMN_G_U_L_LANGUAGEID_3 = "(cpFriendlyUrlEntry.languageId IS NULL OR cpFriendlyUrlEntry.languageId = '')";
 
-	public CPFriendlyUrlEntryPersistenceImpl() {
-		setModelClass(CPFriendlyUrlEntry.class);
+	public CPFriendlyURLEntryPersistenceImpl() {
+		setModelClass(CPFriendlyURLEntry.class);
 
 		try {
 			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
@@ -1840,9 +1840,9 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @param cpFriendlyUrlEntry the cp friendly url entry
 	 */
 	@Override
-	public void cacheResult(CPFriendlyUrlEntry cpFriendlyUrlEntry) {
-		entityCache.putResult(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryImpl.class, cpFriendlyUrlEntry.getPrimaryKey(),
+	public void cacheResult(CPFriendlyURLEntry cpFriendlyUrlEntry) {
+		entityCache.putResult(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryImpl.class, cpFriendlyUrlEntry.getPrimaryKey(),
 			cpFriendlyUrlEntry);
 
 		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -1866,11 +1866,11 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @param cpFriendlyUrlEntries the cp friendly url entries
 	 */
 	@Override
-	public void cacheResult(List<CPFriendlyUrlEntry> cpFriendlyUrlEntries) {
-		for (CPFriendlyUrlEntry cpFriendlyUrlEntry : cpFriendlyUrlEntries) {
+	public void cacheResult(List<CPFriendlyURLEntry> cpFriendlyUrlEntries) {
+		for (CPFriendlyURLEntry cpFriendlyUrlEntry : cpFriendlyUrlEntries) {
 			if (entityCache.getResult(
-						CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-						CPFriendlyUrlEntryImpl.class,
+						CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+						CPFriendlyURLEntryImpl.class,
 						cpFriendlyUrlEntry.getPrimaryKey()) == null) {
 				cacheResult(cpFriendlyUrlEntry);
 			}
@@ -1889,7 +1889,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 */
 	@Override
 	public void clearCache() {
-		entityCache.clearCache(CPFriendlyUrlEntryImpl.class);
+		entityCache.clearCache(CPFriendlyURLEntryImpl.class);
 
 		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1904,33 +1904,33 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * </p>
 	 */
 	@Override
-	public void clearCache(CPFriendlyUrlEntry cpFriendlyUrlEntry) {
-		entityCache.removeResult(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryImpl.class, cpFriendlyUrlEntry.getPrimaryKey());
+	public void clearCache(CPFriendlyURLEntry cpFriendlyUrlEntry) {
+		entityCache.removeResult(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryImpl.class, cpFriendlyUrlEntry.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((CPFriendlyUrlEntryModelImpl)cpFriendlyUrlEntry,
+		clearUniqueFindersCache((CPFriendlyURLEntryModelImpl)cpFriendlyUrlEntry,
 			true);
 	}
 
 	@Override
-	public void clearCache(List<CPFriendlyUrlEntry> cpFriendlyUrlEntries) {
+	public void clearCache(List<CPFriendlyURLEntry> cpFriendlyUrlEntries) {
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		for (CPFriendlyUrlEntry cpFriendlyUrlEntry : cpFriendlyUrlEntries) {
-			entityCache.removeResult(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-				CPFriendlyUrlEntryImpl.class, cpFriendlyUrlEntry.getPrimaryKey());
+		for (CPFriendlyURLEntry cpFriendlyUrlEntry : cpFriendlyUrlEntries) {
+			entityCache.removeResult(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+				CPFriendlyURLEntryImpl.class, cpFriendlyUrlEntry.getPrimaryKey());
 
-			clearUniqueFindersCache((CPFriendlyUrlEntryModelImpl)cpFriendlyUrlEntry,
+			clearUniqueFindersCache((CPFriendlyURLEntryModelImpl)cpFriendlyUrlEntry,
 				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		CPFriendlyUrlEntryModelImpl cpFriendlyUrlEntryModelImpl) {
+		CPFriendlyURLEntryModelImpl cpFriendlyUrlEntryModelImpl) {
 		Object[] args = new Object[] {
 				cpFriendlyUrlEntryModelImpl.getUuid(),
 				cpFriendlyUrlEntryModelImpl.getGroupId()
@@ -1954,7 +1954,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	protected void clearUniqueFindersCache(
-		CPFriendlyUrlEntryModelImpl cpFriendlyUrlEntryModelImpl,
+		CPFriendlyURLEntryModelImpl cpFriendlyUrlEntryModelImpl,
 		boolean clearCurrent) {
 		if (clearCurrent) {
 			Object[] args = new Object[] {
@@ -2004,15 +2004,15 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	/**
 	 * Creates a new cp friendly url entry with the primary key. Does not add the cp friendly url entry to the database.
 	 *
-	 * @param CPFriendlyUrlEntryId the primary key for the new cp friendly url entry
+	 * @param CPFriendlyURLEntryId the primary key for the new cp friendly url entry
 	 * @return the new cp friendly url entry
 	 */
 	@Override
-	public CPFriendlyUrlEntry create(long CPFriendlyUrlEntryId) {
-		CPFriendlyUrlEntry cpFriendlyUrlEntry = new CPFriendlyUrlEntryImpl();
+	public CPFriendlyURLEntry create(long CPFriendlyURLEntryId) {
+		CPFriendlyURLEntry cpFriendlyUrlEntry = new CPFriendlyURLEntryImpl();
 
 		cpFriendlyUrlEntry.setNew(true);
-		cpFriendlyUrlEntry.setPrimaryKey(CPFriendlyUrlEntryId);
+		cpFriendlyUrlEntry.setPrimaryKey(CPFriendlyURLEntryId);
 
 		String uuid = PortalUUIDUtil.generate();
 
@@ -2026,14 +2026,14 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	/**
 	 * Removes the cp friendly url entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param CPFriendlyUrlEntryId the primary key of the cp friendly url entry
+	 * @param CPFriendlyURLEntryId the primary key of the cp friendly url entry
 	 * @return the cp friendly url entry that was removed
-	 * @throws NoSuchCPFriendlyUrlEntryException if a cp friendly url entry with the primary key could not be found
+	 * @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry remove(long CPFriendlyUrlEntryId)
-		throws NoSuchCPFriendlyUrlEntryException {
-		return remove((Serializable)CPFriendlyUrlEntryId);
+	public CPFriendlyURLEntry remove(long CPFriendlyURLEntryId)
+		throws NoSuchCPFriendlyURLEntryException {
+		return remove((Serializable)CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -2041,17 +2041,17 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 *
 	 * @param primaryKey the primary key of the cp friendly url entry
 	 * @return the cp friendly url entry that was removed
-	 * @throws NoSuchCPFriendlyUrlEntryException if a cp friendly url entry with the primary key could not be found
+	 * @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry remove(Serializable primaryKey)
-		throws NoSuchCPFriendlyUrlEntryException {
+	public CPFriendlyURLEntry remove(Serializable primaryKey)
+		throws NoSuchCPFriendlyURLEntryException {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			CPFriendlyUrlEntry cpFriendlyUrlEntry = (CPFriendlyUrlEntry)session.get(CPFriendlyUrlEntryImpl.class,
+			CPFriendlyURLEntry cpFriendlyUrlEntry = (CPFriendlyURLEntry)session.get(CPFriendlyURLEntryImpl.class,
 					primaryKey);
 
 			if (cpFriendlyUrlEntry == null) {
@@ -2059,13 +2059,13 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchCPFriendlyUrlEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				throw new NoSuchCPFriendlyURLEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
 					primaryKey);
 			}
 
 			return remove(cpFriendlyUrlEntry);
 		}
-		catch (NoSuchCPFriendlyUrlEntryException nsee) {
+		catch (NoSuchCPFriendlyURLEntryException nsee) {
 			throw nsee;
 		}
 		catch (Exception e) {
@@ -2077,8 +2077,8 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	@Override
-	protected CPFriendlyUrlEntry removeImpl(
-		CPFriendlyUrlEntry cpFriendlyUrlEntry) {
+	protected CPFriendlyURLEntry removeImpl(
+		CPFriendlyURLEntry cpFriendlyUrlEntry) {
 		cpFriendlyUrlEntry = toUnwrappedModel(cpFriendlyUrlEntry);
 
 		Session session = null;
@@ -2087,7 +2087,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			session = openSession();
 
 			if (!session.contains(cpFriendlyUrlEntry)) {
-				cpFriendlyUrlEntry = (CPFriendlyUrlEntry)session.get(CPFriendlyUrlEntryImpl.class,
+				cpFriendlyUrlEntry = (CPFriendlyURLEntry)session.get(CPFriendlyURLEntryImpl.class,
 						cpFriendlyUrlEntry.getPrimaryKeyObj());
 			}
 
@@ -2110,12 +2110,12 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	@Override
-	public CPFriendlyUrlEntry updateImpl(CPFriendlyUrlEntry cpFriendlyUrlEntry) {
+	public CPFriendlyURLEntry updateImpl(CPFriendlyURLEntry cpFriendlyUrlEntry) {
 		cpFriendlyUrlEntry = toUnwrappedModel(cpFriendlyUrlEntry);
 
 		boolean isNew = cpFriendlyUrlEntry.isNew();
 
-		CPFriendlyUrlEntryModelImpl cpFriendlyUrlEntryModelImpl = (CPFriendlyUrlEntryModelImpl)cpFriendlyUrlEntry;
+		CPFriendlyURLEntryModelImpl cpFriendlyUrlEntryModelImpl = (CPFriendlyURLEntryModelImpl)cpFriendlyUrlEntry;
 
 		if (Validator.isNull(cpFriendlyUrlEntry.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();
@@ -2158,7 +2158,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				cpFriendlyUrlEntry.setNew(false);
 			}
 			else {
-				cpFriendlyUrlEntry = (CPFriendlyUrlEntry)session.merge(cpFriendlyUrlEntry);
+				cpFriendlyUrlEntry = (CPFriendlyURLEntry)session.merge(cpFriendlyUrlEntry);
 			}
 		}
 		catch (Exception e) {
@@ -2170,7 +2170,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!CPFriendlyUrlEntryModelImpl.COLUMN_BITMASK_ENABLED) {
+		if (!CPFriendlyURLEntryModelImpl.COLUMN_BITMASK_ENABLED) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else
@@ -2235,8 +2235,8 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			}
 		}
 
-		entityCache.putResult(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyUrlEntryImpl.class, cpFriendlyUrlEntry.getPrimaryKey(),
+		entityCache.putResult(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryImpl.class, cpFriendlyUrlEntry.getPrimaryKey(),
 			cpFriendlyUrlEntry, false);
 
 		clearUniqueFindersCache(cpFriendlyUrlEntryModelImpl, false);
@@ -2247,19 +2247,19 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		return cpFriendlyUrlEntry;
 	}
 
-	protected CPFriendlyUrlEntry toUnwrappedModel(
-		CPFriendlyUrlEntry cpFriendlyUrlEntry) {
-		if (cpFriendlyUrlEntry instanceof CPFriendlyUrlEntryImpl) {
+	protected CPFriendlyURLEntry toUnwrappedModel(
+		CPFriendlyURLEntry cpFriendlyUrlEntry) {
+		if (cpFriendlyUrlEntry instanceof CPFriendlyURLEntryImpl) {
 			return cpFriendlyUrlEntry;
 		}
 
-		CPFriendlyUrlEntryImpl cpFriendlyUrlEntryImpl = new CPFriendlyUrlEntryImpl();
+		CPFriendlyURLEntryImpl cpFriendlyUrlEntryImpl = new CPFriendlyURLEntryImpl();
 
 		cpFriendlyUrlEntryImpl.setNew(cpFriendlyUrlEntry.isNew());
 		cpFriendlyUrlEntryImpl.setPrimaryKey(cpFriendlyUrlEntry.getPrimaryKey());
 
 		cpFriendlyUrlEntryImpl.setUuid(cpFriendlyUrlEntry.getUuid());
-		cpFriendlyUrlEntryImpl.setCPFriendlyUrlEntryId(cpFriendlyUrlEntry.getCPFriendlyUrlEntryId());
+		cpFriendlyUrlEntryImpl.setCPFriendlyURLEntryId(cpFriendlyUrlEntry.getCPFriendlyURLEntryId());
 		cpFriendlyUrlEntryImpl.setGroupId(cpFriendlyUrlEntry.getGroupId());
 		cpFriendlyUrlEntryImpl.setCompanyId(cpFriendlyUrlEntry.getCompanyId());
 		cpFriendlyUrlEntryImpl.setUserId(cpFriendlyUrlEntry.getUserId());
@@ -2280,19 +2280,19 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 *
 	 * @param primaryKey the primary key of the cp friendly url entry
 	 * @return the cp friendly url entry
-	 * @throws NoSuchCPFriendlyUrlEntryException if a cp friendly url entry with the primary key could not be found
+	 * @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPFriendlyUrlEntryException {
-		CPFriendlyUrlEntry cpFriendlyUrlEntry = fetchByPrimaryKey(primaryKey);
+	public CPFriendlyURLEntry findByPrimaryKey(Serializable primaryKey)
+		throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByPrimaryKey(primaryKey);
 
 		if (cpFriendlyUrlEntry == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchCPFriendlyUrlEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+			throw new NoSuchCPFriendlyURLEntryException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
 				primaryKey);
 		}
 
@@ -2300,16 +2300,16 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the cp friendly url entry with the primary key or throws a {@link NoSuchCPFriendlyUrlEntryException} if it could not be found.
+	 * Returns the cp friendly url entry with the primary key or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
 	 *
-	 * @param CPFriendlyUrlEntryId the primary key of the cp friendly url entry
+	 * @param CPFriendlyURLEntryId the primary key of the cp friendly url entry
 	 * @return the cp friendly url entry
-	 * @throws NoSuchCPFriendlyUrlEntryException if a cp friendly url entry with the primary key could not be found
+	 * @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry findByPrimaryKey(long CPFriendlyUrlEntryId)
-		throws NoSuchCPFriendlyUrlEntryException {
-		return findByPrimaryKey((Serializable)CPFriendlyUrlEntryId);
+	public CPFriendlyURLEntry findByPrimaryKey(long CPFriendlyURLEntryId)
+		throws NoSuchCPFriendlyURLEntryException {
+		return findByPrimaryKey((Serializable)CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -2319,15 +2319,15 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the cp friendly url entry, or <code>null</code> if a cp friendly url entry with the primary key could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-				CPFriendlyUrlEntryImpl.class, primaryKey);
+	public CPFriendlyURLEntry fetchByPrimaryKey(Serializable primaryKey) {
+		Serializable serializable = entityCache.getResult(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+				CPFriendlyURLEntryImpl.class, primaryKey);
 
 		if (serializable == nullModel) {
 			return null;
 		}
 
-		CPFriendlyUrlEntry cpFriendlyUrlEntry = (CPFriendlyUrlEntry)serializable;
+		CPFriendlyURLEntry cpFriendlyUrlEntry = (CPFriendlyURLEntry)serializable;
 
 		if (cpFriendlyUrlEntry == null) {
 			Session session = null;
@@ -2335,20 +2335,20 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			try {
 				session = openSession();
 
-				cpFriendlyUrlEntry = (CPFriendlyUrlEntry)session.get(CPFriendlyUrlEntryImpl.class,
+				cpFriendlyUrlEntry = (CPFriendlyURLEntry)session.get(CPFriendlyURLEntryImpl.class,
 						primaryKey);
 
 				if (cpFriendlyUrlEntry != null) {
 					cacheResult(cpFriendlyUrlEntry);
 				}
 				else {
-					entityCache.putResult(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-						CPFriendlyUrlEntryImpl.class, primaryKey, nullModel);
+					entityCache.putResult(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+						CPFriendlyURLEntryImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
-				entityCache.removeResult(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-					CPFriendlyUrlEntryImpl.class, primaryKey);
+				entityCache.removeResult(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+					CPFriendlyURLEntryImpl.class, primaryKey);
 
 				throw processException(e);
 			}
@@ -2363,29 +2363,29 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	/**
 	 * Returns the cp friendly url entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param CPFriendlyUrlEntryId the primary key of the cp friendly url entry
+	 * @param CPFriendlyURLEntryId the primary key of the cp friendly url entry
 	 * @return the cp friendly url entry, or <code>null</code> if a cp friendly url entry with the primary key could not be found
 	 */
 	@Override
-	public CPFriendlyUrlEntry fetchByPrimaryKey(long CPFriendlyUrlEntryId) {
-		return fetchByPrimaryKey((Serializable)CPFriendlyUrlEntryId);
+	public CPFriendlyURLEntry fetchByPrimaryKey(long CPFriendlyURLEntryId) {
+		return fetchByPrimaryKey((Serializable)CPFriendlyURLEntryId);
 	}
 
 	@Override
-	public Map<Serializable, CPFriendlyUrlEntry> fetchByPrimaryKeys(
+	public Map<Serializable, CPFriendlyURLEntry> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
 		if (primaryKeys.isEmpty()) {
 			return Collections.emptyMap();
 		}
 
-		Map<Serializable, CPFriendlyUrlEntry> map = new HashMap<Serializable, CPFriendlyUrlEntry>();
+		Map<Serializable, CPFriendlyURLEntry> map = new HashMap<Serializable, CPFriendlyURLEntry>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
 			Serializable primaryKey = iterator.next();
 
-			CPFriendlyUrlEntry cpFriendlyUrlEntry = fetchByPrimaryKey(primaryKey);
+			CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByPrimaryKey(primaryKey);
 
 			if (cpFriendlyUrlEntry != null) {
 				map.put(primaryKey, cpFriendlyUrlEntry);
@@ -2397,8 +2397,8 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-					CPFriendlyUrlEntryImpl.class, primaryKey);
+			Serializable serializable = entityCache.getResult(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+					CPFriendlyURLEntryImpl.class, primaryKey);
 
 			if (serializable != nullModel) {
 				if (serializable == null) {
@@ -2409,7 +2409,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					uncachedPrimaryKeys.add(primaryKey);
 				}
 				else {
-					map.put(primaryKey, (CPFriendlyUrlEntry)serializable);
+					map.put(primaryKey, (CPFriendlyURLEntry)serializable);
 				}
 			}
 		}
@@ -2442,7 +2442,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 			Query q = session.createQuery(sql);
 
-			for (CPFriendlyUrlEntry cpFriendlyUrlEntry : (List<CPFriendlyUrlEntry>)q.list()) {
+			for (CPFriendlyURLEntry cpFriendlyUrlEntry : (List<CPFriendlyURLEntry>)q.list()) {
 				map.put(cpFriendlyUrlEntry.getPrimaryKeyObj(),
 					cpFriendlyUrlEntry);
 
@@ -2452,8 +2452,8 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(CPFriendlyUrlEntryModelImpl.ENTITY_CACHE_ENABLED,
-					CPFriendlyUrlEntryImpl.class, primaryKey, nullModel);
+				entityCache.putResult(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+					CPFriendlyURLEntryImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2472,7 +2472,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyUrlEntry> findAll() {
+	public List<CPFriendlyURLEntry> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2480,7 +2480,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * Returns a range of all the cp friendly url entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyUrlEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of cp friendly url entries
@@ -2488,7 +2488,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the range of cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyUrlEntry> findAll(int start, int end) {
+	public List<CPFriendlyURLEntry> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -2496,7 +2496,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * Returns an ordered range of all the cp friendly url entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyUrlEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of cp friendly url entries
@@ -2505,8 +2505,8 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the ordered range of cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyUrlEntry> findAll(int start, int end,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator) {
+	public List<CPFriendlyURLEntry> findAll(int start, int end,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return findAll(start, end, orderByComparator, true);
 	}
 
@@ -2514,7 +2514,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * Returns an ordered range of all the cp friendly url entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyUrlEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of cp friendly url entries
@@ -2524,8 +2524,8 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the ordered range of cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyUrlEntry> findAll(int start, int end,
-		OrderByComparator<CPFriendlyUrlEntry> orderByComparator,
+	public List<CPFriendlyURLEntry> findAll(int start, int end,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2542,10 +2542,10 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<CPFriendlyUrlEntry> list = null;
+		List<CPFriendlyURLEntry> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<CPFriendlyUrlEntry>)finderCache.getResult(finderPath,
+			list = (List<CPFriendlyURLEntry>)finderCache.getResult(finderPath,
 					finderArgs, this);
 		}
 
@@ -2568,7 +2568,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				sql = _SQL_SELECT_CPFRIENDLYURLENTRY;
 
 				if (pagination) {
-					sql = sql.concat(CPFriendlyUrlEntryModelImpl.ORDER_BY_JPQL);
+					sql = sql.concat(CPFriendlyURLEntryModelImpl.ORDER_BY_JPQL);
 				}
 			}
 
@@ -2580,7 +2580,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<CPFriendlyUrlEntry>)QueryUtil.list(q,
+					list = (List<CPFriendlyURLEntry>)QueryUtil.list(q,
 							getDialect(), start, end, false);
 
 					Collections.sort(list);
@@ -2588,7 +2588,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CPFriendlyUrlEntry>)QueryUtil.list(q,
+					list = (List<CPFriendlyURLEntry>)QueryUtil.list(q,
 							getDialect(), start, end);
 				}
 
@@ -2615,7 +2615,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 */
 	@Override
 	public void removeAll() {
-		for (CPFriendlyUrlEntry cpFriendlyUrlEntry : findAll()) {
+		for (CPFriendlyURLEntry cpFriendlyUrlEntry : findAll()) {
 			remove(cpFriendlyUrlEntry);
 		}
 	}
@@ -2664,7 +2664,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
-		return CPFriendlyUrlEntryModelImpl.TABLE_COLUMNS_MAP;
+		return CPFriendlyURLEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**
@@ -2674,7 +2674,7 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	public void destroy() {
-		entityCache.removeCache(CPFriendlyUrlEntryImpl.class.getName());
+		entityCache.removeCache(CPFriendlyURLEntryImpl.class.getName());
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -2686,15 +2686,15 @@ public class CPFriendlyUrlEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
-	private static final String _SQL_SELECT_CPFRIENDLYURLENTRY = "SELECT cpFriendlyUrlEntry FROM CPFriendlyUrlEntry cpFriendlyUrlEntry";
-	private static final String _SQL_SELECT_CPFRIENDLYURLENTRY_WHERE_PKS_IN = "SELECT cpFriendlyUrlEntry FROM CPFriendlyUrlEntry cpFriendlyUrlEntry WHERE CPFriendlyUrlEntryId IN (";
-	private static final String _SQL_SELECT_CPFRIENDLYURLENTRY_WHERE = "SELECT cpFriendlyUrlEntry FROM CPFriendlyUrlEntry cpFriendlyUrlEntry WHERE ";
-	private static final String _SQL_COUNT_CPFRIENDLYURLENTRY = "SELECT COUNT(cpFriendlyUrlEntry) FROM CPFriendlyUrlEntry cpFriendlyUrlEntry";
-	private static final String _SQL_COUNT_CPFRIENDLYURLENTRY_WHERE = "SELECT COUNT(cpFriendlyUrlEntry) FROM CPFriendlyUrlEntry cpFriendlyUrlEntry WHERE ";
+	private static final String _SQL_SELECT_CPFRIENDLYURLENTRY = "SELECT cpFriendlyUrlEntry FROM CPFriendlyURLEntry cpFriendlyUrlEntry";
+	private static final String _SQL_SELECT_CPFRIENDLYURLENTRY_WHERE_PKS_IN = "SELECT cpFriendlyUrlEntry FROM CPFriendlyURLEntry cpFriendlyUrlEntry WHERE CPFriendlyURLEntryId IN (";
+	private static final String _SQL_SELECT_CPFRIENDLYURLENTRY_WHERE = "SELECT cpFriendlyUrlEntry FROM CPFriendlyURLEntry cpFriendlyUrlEntry WHERE ";
+	private static final String _SQL_COUNT_CPFRIENDLYURLENTRY = "SELECT COUNT(cpFriendlyUrlEntry) FROM CPFriendlyURLEntry cpFriendlyUrlEntry";
+	private static final String _SQL_COUNT_CPFRIENDLYURLENTRY_WHERE = "SELECT COUNT(cpFriendlyUrlEntry) FROM CPFriendlyURLEntry cpFriendlyUrlEntry WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "cpFriendlyUrlEntry.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CPFriendlyUrlEntry exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CPFriendlyUrlEntry exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(CPFriendlyUrlEntryPersistenceImpl.class);
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CPFriendlyURLEntry exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CPFriendlyURLEntry exists with the key {";
+	private static final Log _log = LogFactoryUtil.getLog(CPFriendlyURLEntryPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});

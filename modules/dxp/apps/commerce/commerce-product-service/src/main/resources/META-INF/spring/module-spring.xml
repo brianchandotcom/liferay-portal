@@ -15,9 +15,9 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionValueRelLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionValueRelServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionValueRelService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionOptionValueRelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.product.service.impl.CPFriendlyUrlEntryLocalServiceImpl" id="com.liferay.commerce.product.service.CPFriendlyUrlEntryLocalService" />
-	<bean class="com.liferay.commerce.product.service.impl.CPFriendlyUrlEntryServiceImpl" id="com.liferay.commerce.product.service.CPFriendlyUrlEntryService" />
-	<bean class="com.liferay.commerce.product.service.persistence.impl.CPFriendlyUrlEntryPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPFriendlyUrlEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPFriendlyURLEntryLocalServiceImpl" id="com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPFriendlyURLEntryServiceImpl" id="com.liferay.commerce.product.service.CPFriendlyURLEntryService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPFriendlyURLEntryPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceLocalServiceImpl" id="com.liferay.commerce.product.service.CPInstanceLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPInstanceServiceImpl" id="com.liferay.commerce.product.service.CPInstanceService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPInstancePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPInstancePersistence" parent="basePersistence" />

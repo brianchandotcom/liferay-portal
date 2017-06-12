@@ -148,14 +148,14 @@ public interface CPTemplateLayoutEntryPersistence extends BasePersistence<CPTemp
 	/**
 	* Returns the cp template layout entries before and after the current cp template layout entry in the ordered set where uuid = &#63;.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the current cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key of the current cp template layout entry
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cp template layout entry
 	* @throws NoSuchCPTemplateLayoutEntryException if a cp template layout entry with the primary key could not be found
 	*/
 	public CPTemplateLayoutEntry[] findByUuid_PrevAndNext(
-		long CPFriendlyUrlEntryId, java.lang.String uuid,
+		long CPFriendlyURLEntryId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPTemplateLayoutEntry> orderByComparator)
 		throws NoSuchCPTemplateLayoutEntryException;
 
@@ -344,7 +344,7 @@ public interface CPTemplateLayoutEntryPersistence extends BasePersistence<CPTemp
 	/**
 	* Returns the cp template layout entries before and after the current cp template layout entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the current cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key of the current cp template layout entry
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -352,7 +352,7 @@ public interface CPTemplateLayoutEntryPersistence extends BasePersistence<CPTemp
 	* @throws NoSuchCPTemplateLayoutEntryException if a cp template layout entry with the primary key could not be found
 	*/
 	public CPTemplateLayoutEntry[] findByUuid_C_PrevAndNext(
-		long CPFriendlyUrlEntryId, java.lang.String uuid, long companyId,
+		long CPFriendlyURLEntryId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPTemplateLayoutEntry> orderByComparator)
 		throws NoSuchCPTemplateLayoutEntryException;
 
@@ -447,19 +447,19 @@ public interface CPTemplateLayoutEntryPersistence extends BasePersistence<CPTemp
 	/**
 	* Creates a new cp template layout entry with the primary key. Does not add the cp template layout entry to the database.
 	*
-	* @param CPFriendlyUrlEntryId the primary key for the new cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key for the new cp template layout entry
 	* @return the new cp template layout entry
 	*/
-	public CPTemplateLayoutEntry create(long CPFriendlyUrlEntryId);
+	public CPTemplateLayoutEntry create(long CPFriendlyURLEntryId);
 
 	/**
 	* Removes the cp template layout entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key of the cp template layout entry
 	* @return the cp template layout entry that was removed
 	* @throws NoSuchCPTemplateLayoutEntryException if a cp template layout entry with the primary key could not be found
 	*/
-	public CPTemplateLayoutEntry remove(long CPFriendlyUrlEntryId)
+	public CPTemplateLayoutEntry remove(long CPFriendlyURLEntryId)
 		throws NoSuchCPTemplateLayoutEntryException;
 
 	public CPTemplateLayoutEntry updateImpl(
@@ -468,20 +468,20 @@ public interface CPTemplateLayoutEntryPersistence extends BasePersistence<CPTemp
 	/**
 	* Returns the cp template layout entry with the primary key or throws a {@link NoSuchCPTemplateLayoutEntryException} if it could not be found.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key of the cp template layout entry
 	* @return the cp template layout entry
 	* @throws NoSuchCPTemplateLayoutEntryException if a cp template layout entry with the primary key could not be found
 	*/
-	public CPTemplateLayoutEntry findByPrimaryKey(long CPFriendlyUrlEntryId)
+	public CPTemplateLayoutEntry findByPrimaryKey(long CPFriendlyURLEntryId)
 		throws NoSuchCPTemplateLayoutEntryException;
 
 	/**
 	* Returns the cp template layout entry with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key of the cp template layout entry
 	* @return the cp template layout entry, or <code>null</code> if a cp template layout entry with the primary key could not be found
 	*/
-	public CPTemplateLayoutEntry fetchByPrimaryKey(long CPFriendlyUrlEntryId);
+	public CPTemplateLayoutEntry fetchByPrimaryKey(long CPFriendlyURLEntryId);
 
 	@Override
 	public java.util.Map<java.io.Serializable, CPTemplateLayoutEntry> fetchByPrimaryKeys(

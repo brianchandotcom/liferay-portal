@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * Provides the HTTP utility for the
- * {@link com.liferay.commerce.product.service.CPFriendlyUrlEntryServiceUtil} service utility. The
+ * {@link com.liferay.commerce.product.service.CPFriendlyURLEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
  * {@link com.liferay.portal.kernel.security.auth.HttpPrincipal} parameter.
@@ -39,11 +39,11 @@ import aQute.bnd.annotation.ProviderType;
  * </p>
  *
  * @author Marco Leo
- * @see CPFriendlyUrlEntryServiceSoap
+ * @see CPFriendlyURLEntryServiceSoap
  * @see com.liferay.portal.kernel.security.auth.HttpPrincipal
- * @see com.liferay.commerce.product.service.CPFriendlyUrlEntryServiceUtil
+ * @see com.liferay.commerce.product.service.CPFriendlyURLEntryServiceUtil
  * @generated
  */
 @ProviderType
-public class CPFriendlyUrlEntryServiceHttp {
+public class CPFriendlyURLEntryServiceHttp {
 }

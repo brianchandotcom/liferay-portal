@@ -16,7 +16,7 @@ package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.product.model.CPFriendlyUrlEntry;
+import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -31,14 +31,14 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing CPFriendlyUrlEntry in entity cache.
+ * The cache model class for representing CPFriendlyURLEntry in entity cache.
  *
  * @author Marco Leo
- * @see CPFriendlyUrlEntry
+ * @see CPFriendlyURLEntry
  * @generated
  */
 @ProviderType
-public class CPFriendlyUrlEntryCacheModel implements CacheModel<CPFriendlyUrlEntry>,
+public class CPFriendlyURLEntryCacheModel implements CacheModel<CPFriendlyURLEntry>,
 	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
@@ -46,13 +46,13 @@ public class CPFriendlyUrlEntryCacheModel implements CacheModel<CPFriendlyUrlEnt
 			return true;
 		}
 
-		if (!(obj instanceof CPFriendlyUrlEntryCacheModel)) {
+		if (!(obj instanceof CPFriendlyURLEntryCacheModel)) {
 			return false;
 		}
 
-		CPFriendlyUrlEntryCacheModel cpFriendlyUrlEntryCacheModel = (CPFriendlyUrlEntryCacheModel)obj;
+		CPFriendlyURLEntryCacheModel cpFriendlyUrlEntryCacheModel = (CPFriendlyURLEntryCacheModel)obj;
 
-		if (CPFriendlyUrlEntryId == cpFriendlyUrlEntryCacheModel.CPFriendlyUrlEntryId) {
+		if (CPFriendlyURLEntryId == cpFriendlyUrlEntryCacheModel.CPFriendlyURLEntryId) {
 			return true;
 		}
 
@@ -61,7 +61,7 @@ public class CPFriendlyUrlEntryCacheModel implements CacheModel<CPFriendlyUrlEnt
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CPFriendlyUrlEntryId);
+		return HashUtil.hash(0, CPFriendlyURLEntryId);
 	}
 
 	@Override
@@ -70,8 +70,8 @@ public class CPFriendlyUrlEntryCacheModel implements CacheModel<CPFriendlyUrlEnt
 
 		sb.append("{uuid=");
 		sb.append(uuid);
-		sb.append(", CPFriendlyUrlEntryId=");
-		sb.append(CPFriendlyUrlEntryId);
+		sb.append(", CPFriendlyURLEntryId=");
+		sb.append(CPFriendlyURLEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -100,8 +100,8 @@ public class CPFriendlyUrlEntryCacheModel implements CacheModel<CPFriendlyUrlEnt
 	}
 
 	@Override
-	public CPFriendlyUrlEntry toEntityModel() {
-		CPFriendlyUrlEntryImpl cpFriendlyUrlEntryImpl = new CPFriendlyUrlEntryImpl();
+	public CPFriendlyURLEntry toEntityModel() {
+		CPFriendlyURLEntryImpl cpFriendlyUrlEntryImpl = new CPFriendlyURLEntryImpl();
 
 		if (uuid == null) {
 			cpFriendlyUrlEntryImpl.setUuid(StringPool.BLANK);
@@ -110,7 +110,7 @@ public class CPFriendlyUrlEntryCacheModel implements CacheModel<CPFriendlyUrlEnt
 			cpFriendlyUrlEntryImpl.setUuid(uuid);
 		}
 
-		cpFriendlyUrlEntryImpl.setCPFriendlyUrlEntryId(CPFriendlyUrlEntryId);
+		cpFriendlyUrlEntryImpl.setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
 		cpFriendlyUrlEntryImpl.setGroupId(groupId);
 		cpFriendlyUrlEntryImpl.setCompanyId(companyId);
 		cpFriendlyUrlEntryImpl.setUserId(userId);
@@ -164,7 +164,7 @@ public class CPFriendlyUrlEntryCacheModel implements CacheModel<CPFriendlyUrlEnt
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 
-		CPFriendlyUrlEntryId = objectInput.readLong();
+		CPFriendlyURLEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -194,7 +194,7 @@ public class CPFriendlyUrlEntryCacheModel implements CacheModel<CPFriendlyUrlEnt
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(CPFriendlyUrlEntryId);
+		objectOutput.writeLong(CPFriendlyURLEntryId);
 
 		objectOutput.writeLong(groupId);
 
@@ -234,7 +234,7 @@ public class CPFriendlyUrlEntryCacheModel implements CacheModel<CPFriendlyUrlEnt
 	}
 
 	public String uuid;
-	public long CPFriendlyUrlEntryId;
+	public long CPFriendlyURLEntryId;
 	public long groupId;
 	public long companyId;
 	public long userId;

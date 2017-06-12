@@ -26,28 +26,28 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 /**
- * Provides the remote service interface for CPFriendlyUrlEntry. Methods of this
+ * Provides the remote service interface for CPFriendlyURLEntry. Methods of this
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
  * @author Marco Leo
- * @see CPFriendlyUrlEntryServiceUtil
- * @see com.liferay.commerce.product.service.base.CPFriendlyUrlEntryServiceBaseImpl
- * @see com.liferay.commerce.product.service.impl.CPFriendlyUrlEntryServiceImpl
+ * @see CPFriendlyURLEntryServiceUtil
+ * @see com.liferay.commerce.product.service.base.CPFriendlyURLEntryServiceBaseImpl
+ * @see com.liferay.commerce.product.service.impl.CPFriendlyURLEntryServiceImpl
  * @generated
  */
 @AccessControlled
 @JSONWebService
 @OSGiBeanProperties(property =  {
-	"json.web.service.context.name=commerce", "json.web.service.context.path=CPFriendlyUrlEntry"}, service = CPFriendlyUrlEntryService.class)
+	"json.web.service.context.name=commerce", "json.web.service.context.path=CPFriendlyURLEntry"}, service = CPFriendlyURLEntryService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface CPFriendlyUrlEntryService extends BaseService {
+public interface CPFriendlyURLEntryService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link CPFriendlyUrlEntryServiceUtil} to access the cp friendly url entry remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPFriendlyUrlEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link CPFriendlyURLEntryServiceUtil} to access the cp friendly url entry remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPFriendlyURLEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**

@@ -7,7 +7,7 @@
 	<import class="com.liferay.commerce.product.model.CPDefinitionLocalization" />
 	<import class="com.liferay.commerce.product.model.CPDefinitionOptionRel" />
 	<import class="com.liferay.commerce.product.model.CPDefinitionOptionValueRel" />
-	<import class="com.liferay.commerce.product.model.CPFriendlyUrlEntry" />
+	<import class="com.liferay.commerce.product.model.CPFriendlyURLEntry" />
 	<import class="com.liferay.commerce.product.model.CPInstance" />
 	<import class="com.liferay.commerce.product.model.CPOption" />
 	<import class="com.liferay.commerce.product.model.CPOptionCategory" />
@@ -110,8 +110,8 @@
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
-	<class name="com.liferay.commerce.product.model.impl.CPFriendlyUrlEntryImpl" table="CPFriendlyUrlEntry">
-		<id name="CPFriendlyUrlEntryId" type="long">
+	<class name="com.liferay.commerce.product.model.impl.CPFriendlyURLEntryImpl" table="CPFriendlyURLEntry">
+		<id name="CPFriendlyURLEntryId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -204,7 +204,7 @@
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.commerce.product.model.impl.CPTemplateLayoutEntryImpl" table="CPTemplateLayoutEntry">
-		<id name="CPFriendlyUrlEntryId" type="long">
+		<id name="CPFriendlyURLEntryId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />

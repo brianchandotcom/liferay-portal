@@ -77,11 +77,11 @@ public interface CPTemplateLayoutEntryLocalService extends BaseLocalService,
 	/**
 	* Creates a new cp template layout entry with the primary key. Does not add the cp template layout entry to the database.
 	*
-	* @param CPFriendlyUrlEntryId the primary key for the new cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key for the new cp template layout entry
 	* @return the new cp template layout entry
 	*/
 	public CPTemplateLayoutEntry createCPTemplateLayoutEntry(
-		long CPFriendlyUrlEntryId);
+		long CPFriendlyURLEntryId);
 
 	/**
 	* Deletes the cp template layout entry from the database. Also notifies the appropriate model listeners.
@@ -96,17 +96,17 @@ public interface CPTemplateLayoutEntryLocalService extends BaseLocalService,
 	/**
 	* Deletes the cp template layout entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key of the cp template layout entry
 	* @return the cp template layout entry that was removed
 	* @throws PortalException if a cp template layout entry with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CPTemplateLayoutEntry deleteCPTemplateLayoutEntry(
-		long CPFriendlyUrlEntryId) throws PortalException;
+		long CPFriendlyURLEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPTemplateLayoutEntry fetchCPTemplateLayoutEntry(
-		long CPFriendlyUrlEntryId);
+		long CPFriendlyURLEntryId);
 
 	/**
 	* Returns the cp template layout entry matching the UUID and group.
@@ -122,13 +122,13 @@ public interface CPTemplateLayoutEntryLocalService extends BaseLocalService,
 	/**
 	* Returns the cp template layout entry with the primary key.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key of the cp template layout entry
 	* @return the cp template layout entry
 	* @throws PortalException if a cp template layout entry with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPTemplateLayoutEntry getCPTemplateLayoutEntry(
-		long CPFriendlyUrlEntryId) throws PortalException;
+		long CPFriendlyURLEntryId) throws PortalException;
 
 	/**
 	* Returns the cp template layout entry matching the UUID and group.

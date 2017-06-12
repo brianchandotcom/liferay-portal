@@ -408,7 +408,7 @@ public class CPTemplateLayoutEntryPersistenceImpl extends BasePersistenceImpl<CP
 	/**
 	 * Returns the cp template layout entries before and after the current cp template layout entry in the ordered set where uuid = &#63;.
 	 *
-	 * @param CPFriendlyUrlEntryId the primary key of the current cp template layout entry
+	 * @param CPFriendlyURLEntryId the primary key of the current cp template layout entry
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next cp template layout entry
@@ -416,10 +416,10 @@ public class CPTemplateLayoutEntryPersistenceImpl extends BasePersistenceImpl<CP
 	 */
 	@Override
 	public CPTemplateLayoutEntry[] findByUuid_PrevAndNext(
-		long CPFriendlyUrlEntryId, String uuid,
+		long CPFriendlyURLEntryId, String uuid,
 		OrderByComparator<CPTemplateLayoutEntry> orderByComparator)
 		throws NoSuchCPTemplateLayoutEntryException {
-		CPTemplateLayoutEntry cpTemplateLayoutEntry = findByPrimaryKey(CPFriendlyUrlEntryId);
+		CPTemplateLayoutEntry cpTemplateLayoutEntry = findByPrimaryKey(CPFriendlyURLEntryId);
 
 		Session session = null;
 
@@ -1248,7 +1248,7 @@ public class CPTemplateLayoutEntryPersistenceImpl extends BasePersistenceImpl<CP
 	/**
 	 * Returns the cp template layout entries before and after the current cp template layout entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param CPFriendlyUrlEntryId the primary key of the current cp template layout entry
+	 * @param CPFriendlyURLEntryId the primary key of the current cp template layout entry
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1257,10 +1257,10 @@ public class CPTemplateLayoutEntryPersistenceImpl extends BasePersistenceImpl<CP
 	 */
 	@Override
 	public CPTemplateLayoutEntry[] findByUuid_C_PrevAndNext(
-		long CPFriendlyUrlEntryId, String uuid, long companyId,
+		long CPFriendlyURLEntryId, String uuid, long companyId,
 		OrderByComparator<CPTemplateLayoutEntry> orderByComparator)
 		throws NoSuchCPTemplateLayoutEntryException {
-		CPTemplateLayoutEntry cpTemplateLayoutEntry = findByPrimaryKey(CPFriendlyUrlEntryId);
+		CPTemplateLayoutEntry cpTemplateLayoutEntry = findByPrimaryKey(CPFriendlyURLEntryId);
 
 		Session session = null;
 
@@ -1946,15 +1946,15 @@ public class CPTemplateLayoutEntryPersistenceImpl extends BasePersistenceImpl<CP
 	/**
 	 * Creates a new cp template layout entry with the primary key. Does not add the cp template layout entry to the database.
 	 *
-	 * @param CPFriendlyUrlEntryId the primary key for the new cp template layout entry
+	 * @param CPFriendlyURLEntryId the primary key for the new cp template layout entry
 	 * @return the new cp template layout entry
 	 */
 	@Override
-	public CPTemplateLayoutEntry create(long CPFriendlyUrlEntryId) {
+	public CPTemplateLayoutEntry create(long CPFriendlyURLEntryId) {
 		CPTemplateLayoutEntry cpTemplateLayoutEntry = new CPTemplateLayoutEntryImpl();
 
 		cpTemplateLayoutEntry.setNew(true);
-		cpTemplateLayoutEntry.setPrimaryKey(CPFriendlyUrlEntryId);
+		cpTemplateLayoutEntry.setPrimaryKey(CPFriendlyURLEntryId);
 
 		String uuid = PortalUUIDUtil.generate();
 
@@ -1968,14 +1968,14 @@ public class CPTemplateLayoutEntryPersistenceImpl extends BasePersistenceImpl<CP
 	/**
 	 * Removes the cp template layout entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param CPFriendlyUrlEntryId the primary key of the cp template layout entry
+	 * @param CPFriendlyURLEntryId the primary key of the cp template layout entry
 	 * @return the cp template layout entry that was removed
 	 * @throws NoSuchCPTemplateLayoutEntryException if a cp template layout entry with the primary key could not be found
 	 */
 	@Override
-	public CPTemplateLayoutEntry remove(long CPFriendlyUrlEntryId)
+	public CPTemplateLayoutEntry remove(long CPFriendlyURLEntryId)
 		throws NoSuchCPTemplateLayoutEntryException {
-		return remove((Serializable)CPFriendlyUrlEntryId);
+		return remove((Serializable)CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -2204,7 +2204,7 @@ public class CPTemplateLayoutEntryPersistenceImpl extends BasePersistenceImpl<CP
 		cpTemplateLayoutEntryImpl.setPrimaryKey(cpTemplateLayoutEntry.getPrimaryKey());
 
 		cpTemplateLayoutEntryImpl.setUuid(cpTemplateLayoutEntry.getUuid());
-		cpTemplateLayoutEntryImpl.setCPFriendlyUrlEntryId(cpTemplateLayoutEntry.getCPFriendlyUrlEntryId());
+		cpTemplateLayoutEntryImpl.setCPFriendlyURLEntryId(cpTemplateLayoutEntry.getCPFriendlyURLEntryId());
 		cpTemplateLayoutEntryImpl.setGroupId(cpTemplateLayoutEntry.getGroupId());
 		cpTemplateLayoutEntryImpl.setCompanyId(cpTemplateLayoutEntry.getCompanyId());
 		cpTemplateLayoutEntryImpl.setUserId(cpTemplateLayoutEntry.getUserId());
@@ -2245,14 +2245,14 @@ public class CPTemplateLayoutEntryPersistenceImpl extends BasePersistenceImpl<CP
 	/**
 	 * Returns the cp template layout entry with the primary key or throws a {@link NoSuchCPTemplateLayoutEntryException} if it could not be found.
 	 *
-	 * @param CPFriendlyUrlEntryId the primary key of the cp template layout entry
+	 * @param CPFriendlyURLEntryId the primary key of the cp template layout entry
 	 * @return the cp template layout entry
 	 * @throws NoSuchCPTemplateLayoutEntryException if a cp template layout entry with the primary key could not be found
 	 */
 	@Override
-	public CPTemplateLayoutEntry findByPrimaryKey(long CPFriendlyUrlEntryId)
+	public CPTemplateLayoutEntry findByPrimaryKey(long CPFriendlyURLEntryId)
 		throws NoSuchCPTemplateLayoutEntryException {
-		return findByPrimaryKey((Serializable)CPFriendlyUrlEntryId);
+		return findByPrimaryKey((Serializable)CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -2306,12 +2306,12 @@ public class CPTemplateLayoutEntryPersistenceImpl extends BasePersistenceImpl<CP
 	/**
 	 * Returns the cp template layout entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param CPFriendlyUrlEntryId the primary key of the cp template layout entry
+	 * @param CPFriendlyURLEntryId the primary key of the cp template layout entry
 	 * @return the cp template layout entry, or <code>null</code> if a cp template layout entry with the primary key could not be found
 	 */
 	@Override
-	public CPTemplateLayoutEntry fetchByPrimaryKey(long CPFriendlyUrlEntryId) {
-		return fetchByPrimaryKey((Serializable)CPFriendlyUrlEntryId);
+	public CPTemplateLayoutEntry fetchByPrimaryKey(long CPFriendlyURLEntryId) {
+		return fetchByPrimaryKey((Serializable)CPFriendlyURLEntryId);
 	}
 
 	@Override
@@ -2630,7 +2630,7 @@ public class CPTemplateLayoutEntryPersistenceImpl extends BasePersistenceImpl<CP
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_CPTEMPLATELAYOUTENTRY = "SELECT cpTemplateLayoutEntry FROM CPTemplateLayoutEntry cpTemplateLayoutEntry";
-	private static final String _SQL_SELECT_CPTEMPLATELAYOUTENTRY_WHERE_PKS_IN = "SELECT cpTemplateLayoutEntry FROM CPTemplateLayoutEntry cpTemplateLayoutEntry WHERE CPFriendlyUrlEntryId IN (";
+	private static final String _SQL_SELECT_CPTEMPLATELAYOUTENTRY_WHERE_PKS_IN = "SELECT cpTemplateLayoutEntry FROM CPTemplateLayoutEntry cpTemplateLayoutEntry WHERE CPFriendlyURLEntryId IN (";
 	private static final String _SQL_SELECT_CPTEMPLATELAYOUTENTRY_WHERE = "SELECT cpTemplateLayoutEntry FROM CPTemplateLayoutEntry cpTemplateLayoutEntry WHERE ";
 	private static final String _SQL_COUNT_CPTEMPLATELAYOUTENTRY = "SELECT COUNT(cpTemplateLayoutEntry) FROM CPTemplateLayoutEntry cpTemplateLayoutEntry";
 	private static final String _SQL_COUNT_CPTEMPLATELAYOUTENTRY_WHERE = "SELECT COUNT(cpTemplateLayoutEntry) FROM CPTemplateLayoutEntry cpTemplateLayoutEntry WHERE ";

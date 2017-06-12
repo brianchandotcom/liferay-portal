@@ -24,7 +24,7 @@ import com.liferay.commerce.product.service.persistence.CPDefinitionLocalization
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
-import com.liferay.commerce.product.service.persistence.CPFriendlyUrlEntryPersistence;
+import com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionCategoryPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
@@ -113,27 +113,27 @@ public abstract class CPTemplateLayoutEntryLocalServiceBaseImpl
 	/**
 	 * Creates a new cp template layout entry with the primary key. Does not add the cp template layout entry to the database.
 	 *
-	 * @param CPFriendlyUrlEntryId the primary key for the new cp template layout entry
+	 * @param CPFriendlyURLEntryId the primary key for the new cp template layout entry
 	 * @return the new cp template layout entry
 	 */
 	@Override
 	public CPTemplateLayoutEntry createCPTemplateLayoutEntry(
-		long CPFriendlyUrlEntryId) {
-		return cpTemplateLayoutEntryPersistence.create(CPFriendlyUrlEntryId);
+		long CPFriendlyURLEntryId) {
+		return cpTemplateLayoutEntryPersistence.create(CPFriendlyURLEntryId);
 	}
 
 	/**
 	 * Deletes the cp template layout entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param CPFriendlyUrlEntryId the primary key of the cp template layout entry
+	 * @param CPFriendlyURLEntryId the primary key of the cp template layout entry
 	 * @return the cp template layout entry that was removed
 	 * @throws PortalException if a cp template layout entry with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CPTemplateLayoutEntry deleteCPTemplateLayoutEntry(
-		long CPFriendlyUrlEntryId) throws PortalException {
-		return cpTemplateLayoutEntryPersistence.remove(CPFriendlyUrlEntryId);
+		long CPFriendlyURLEntryId) throws PortalException {
+		return cpTemplateLayoutEntryPersistence.remove(CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -234,8 +234,8 @@ public abstract class CPTemplateLayoutEntryLocalServiceBaseImpl
 
 	@Override
 	public CPTemplateLayoutEntry fetchCPTemplateLayoutEntry(
-		long CPFriendlyUrlEntryId) {
-		return cpTemplateLayoutEntryPersistence.fetchByPrimaryKey(CPFriendlyUrlEntryId);
+		long CPFriendlyURLEntryId) {
+		return cpTemplateLayoutEntryPersistence.fetchByPrimaryKey(CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -254,14 +254,14 @@ public abstract class CPTemplateLayoutEntryLocalServiceBaseImpl
 	/**
 	 * Returns the cp template layout entry with the primary key.
 	 *
-	 * @param CPFriendlyUrlEntryId the primary key of the cp template layout entry
+	 * @param CPFriendlyURLEntryId the primary key of the cp template layout entry
 	 * @return the cp template layout entry
 	 * @throws PortalException if a cp template layout entry with the primary key could not be found
 	 */
 	@Override
 	public CPTemplateLayoutEntry getCPTemplateLayoutEntry(
-		long CPFriendlyUrlEntryId) throws PortalException {
-		return cpTemplateLayoutEntryPersistence.findByPrimaryKey(CPFriendlyUrlEntryId);
+		long CPFriendlyURLEntryId) throws PortalException {
+		return cpTemplateLayoutEntryPersistence.findByPrimaryKey(CPFriendlyURLEntryId);
 	}
 
 	@Override
@@ -272,7 +272,7 @@ public abstract class CPTemplateLayoutEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CPTemplateLayoutEntry.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("CPFriendlyUrlEntryId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("CPFriendlyURLEntryId");
 
 		return actionableDynamicQuery;
 	}
@@ -286,7 +286,7 @@ public abstract class CPTemplateLayoutEntryLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setModelClass(CPTemplateLayoutEntry.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"CPFriendlyUrlEntryId");
+			"CPFriendlyURLEntryId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -297,7 +297,7 @@ public abstract class CPTemplateLayoutEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CPTemplateLayoutEntry.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("CPFriendlyUrlEntryId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("CPFriendlyURLEntryId");
 	}
 
 	@Override
@@ -663,7 +663,7 @@ public abstract class CPTemplateLayoutEntryLocalServiceBaseImpl
 	 *
 	 * @return the cp friendly url entry local service
 	 */
-	public com.liferay.commerce.product.service.CPFriendlyUrlEntryLocalService getCPFriendlyUrlEntryLocalService() {
+	public com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService getCPFriendlyURLEntryLocalService() {
 		return cpFriendlyUrlEntryLocalService;
 	}
 
@@ -672,8 +672,8 @@ public abstract class CPTemplateLayoutEntryLocalServiceBaseImpl
 	 *
 	 * @param cpFriendlyUrlEntryLocalService the cp friendly url entry local service
 	 */
-	public void setCPFriendlyUrlEntryLocalService(
-		com.liferay.commerce.product.service.CPFriendlyUrlEntryLocalService cpFriendlyUrlEntryLocalService) {
+	public void setCPFriendlyURLEntryLocalService(
+		com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService cpFriendlyUrlEntryLocalService) {
 		this.cpFriendlyUrlEntryLocalService = cpFriendlyUrlEntryLocalService;
 	}
 
@@ -682,7 +682,7 @@ public abstract class CPTemplateLayoutEntryLocalServiceBaseImpl
 	 *
 	 * @return the cp friendly url entry persistence
 	 */
-	public CPFriendlyUrlEntryPersistence getCPFriendlyUrlEntryPersistence() {
+	public CPFriendlyURLEntryPersistence getCPFriendlyURLEntryPersistence() {
 		return cpFriendlyUrlEntryPersistence;
 	}
 
@@ -691,8 +691,8 @@ public abstract class CPTemplateLayoutEntryLocalServiceBaseImpl
 	 *
 	 * @param cpFriendlyUrlEntryPersistence the cp friendly url entry persistence
 	 */
-	public void setCPFriendlyUrlEntryPersistence(
-		CPFriendlyUrlEntryPersistence cpFriendlyUrlEntryPersistence) {
+	public void setCPFriendlyURLEntryPersistence(
+		CPFriendlyURLEntryPersistence cpFriendlyUrlEntryPersistence) {
 		this.cpFriendlyUrlEntryPersistence = cpFriendlyUrlEntryPersistence;
 	}
 
@@ -1108,10 +1108,10 @@ public abstract class CPTemplateLayoutEntryLocalServiceBaseImpl
 	protected com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService cpDefinitionOptionValueRelLocalService;
 	@BeanReference(type = CPDefinitionOptionValueRelPersistence.class)
 	protected CPDefinitionOptionValueRelPersistence cpDefinitionOptionValueRelPersistence;
-	@BeanReference(type = com.liferay.commerce.product.service.CPFriendlyUrlEntryLocalService.class)
-	protected com.liferay.commerce.product.service.CPFriendlyUrlEntryLocalService cpFriendlyUrlEntryLocalService;
-	@BeanReference(type = CPFriendlyUrlEntryPersistence.class)
-	protected CPFriendlyUrlEntryPersistence cpFriendlyUrlEntryPersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService.class)
+	protected com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService cpFriendlyUrlEntryLocalService;
+	@BeanReference(type = CPFriendlyURLEntryPersistence.class)
+	protected CPFriendlyURLEntryPersistence cpFriendlyUrlEntryPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPInstanceLocalService.class)
 	protected com.liferay.commerce.product.service.CPInstanceLocalService cpInstanceLocalService;
 	@BeanReference(type = CPInstancePersistence.class)

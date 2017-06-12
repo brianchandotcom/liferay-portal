@@ -21,25 +21,25 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * Provides the remote service utility for CPFriendlyUrlEntry. This utility wraps
- * {@link com.liferay.commerce.product.service.impl.CPFriendlyUrlEntryServiceImpl} and is the
+ * Provides the remote service utility for CPFriendlyURLEntry. This utility wraps
+ * {@link com.liferay.commerce.product.service.impl.CPFriendlyURLEntryServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on a remote server. Methods of this service are expected to have security
  * checks based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
  * @author Marco Leo
- * @see CPFriendlyUrlEntryService
- * @see com.liferay.commerce.product.service.base.CPFriendlyUrlEntryServiceBaseImpl
- * @see com.liferay.commerce.product.service.impl.CPFriendlyUrlEntryServiceImpl
+ * @see CPFriendlyURLEntryService
+ * @see com.liferay.commerce.product.service.base.CPFriendlyURLEntryServiceBaseImpl
+ * @see com.liferay.commerce.product.service.impl.CPFriendlyURLEntryServiceImpl
  * @generated
  */
 @ProviderType
-public class CPFriendlyUrlEntryServiceUtil {
+public class CPFriendlyURLEntryServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPFriendlyUrlEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPFriendlyURLEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -51,10 +51,10 @@ public class CPFriendlyUrlEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static CPFriendlyUrlEntryService getService() {
+	public static CPFriendlyURLEntryService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPFriendlyUrlEntryService, CPFriendlyUrlEntryService> _serviceTracker =
-		ServiceTrackerFactory.open(CPFriendlyUrlEntryService.class);
+	private static ServiceTracker<CPFriendlyURLEntryService, CPFriendlyURLEntryService> _serviceTracker =
+		ServiceTrackerFactory.open(CPFriendlyURLEntryService.class);
 }

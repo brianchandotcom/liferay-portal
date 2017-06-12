@@ -21,25 +21,25 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * Provides the local service utility for CPFriendlyUrlEntry. This utility wraps
- * {@link com.liferay.commerce.product.service.impl.CPFriendlyUrlEntryLocalServiceImpl} and is the
+ * Provides the local service utility for CPFriendlyURLEntry. This utility wraps
+ * {@link com.liferay.commerce.product.service.impl.CPFriendlyURLEntryLocalServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on the local server. Methods of this service will not have security checks
  * based on the propagated JAAS credentials because this service can only be
  * accessed from within the same VM.
  *
  * @author Marco Leo
- * @see CPFriendlyUrlEntryLocalService
- * @see com.liferay.commerce.product.service.base.CPFriendlyUrlEntryLocalServiceBaseImpl
- * @see com.liferay.commerce.product.service.impl.CPFriendlyUrlEntryLocalServiceImpl
+ * @see CPFriendlyURLEntryLocalService
+ * @see com.liferay.commerce.product.service.base.CPFriendlyURLEntryLocalServiceBaseImpl
+ * @see com.liferay.commerce.product.service.impl.CPFriendlyURLEntryLocalServiceImpl
  * @generated
  */
 @ProviderType
-public class CPFriendlyUrlEntryLocalServiceUtil {
+public class CPFriendlyURLEntryLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPFriendlyUrlEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPFriendlyURLEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -48,20 +48,20 @@ public class CPFriendlyUrlEntryLocalServiceUtil {
 	* @param cpFriendlyUrlEntry the cp friendly url entry
 	* @return the cp friendly url entry that was added
 	*/
-	public static com.liferay.commerce.product.model.CPFriendlyUrlEntry addCPFriendlyUrlEntry(
-		com.liferay.commerce.product.model.CPFriendlyUrlEntry cpFriendlyUrlEntry) {
-		return getService().addCPFriendlyUrlEntry(cpFriendlyUrlEntry);
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry addCPFriendlyURLEntry(
+		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyUrlEntry) {
+		return getService().addCPFriendlyURLEntry(cpFriendlyUrlEntry);
 	}
 
 	/**
 	* Creates a new cp friendly url entry with the primary key. Does not add the cp friendly url entry to the database.
 	*
-	* @param CPFriendlyUrlEntryId the primary key for the new cp friendly url entry
+	* @param CPFriendlyURLEntryId the primary key for the new cp friendly url entry
 	* @return the new cp friendly url entry
 	*/
-	public static com.liferay.commerce.product.model.CPFriendlyUrlEntry createCPFriendlyUrlEntry(
-		long CPFriendlyUrlEntryId) {
-		return getService().createCPFriendlyUrlEntry(CPFriendlyUrlEntryId);
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry createCPFriendlyURLEntry(
+		long CPFriendlyURLEntryId) {
+		return getService().createCPFriendlyURLEntry(CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -70,27 +70,27 @@ public class CPFriendlyUrlEntryLocalServiceUtil {
 	* @param cpFriendlyUrlEntry the cp friendly url entry
 	* @return the cp friendly url entry that was removed
 	*/
-	public static com.liferay.commerce.product.model.CPFriendlyUrlEntry deleteCPFriendlyUrlEntry(
-		com.liferay.commerce.product.model.CPFriendlyUrlEntry cpFriendlyUrlEntry) {
-		return getService().deleteCPFriendlyUrlEntry(cpFriendlyUrlEntry);
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry deleteCPFriendlyURLEntry(
+		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyUrlEntry) {
+		return getService().deleteCPFriendlyURLEntry(cpFriendlyUrlEntry);
 	}
 
 	/**
 	* Deletes the cp friendly url entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the cp friendly url entry
+	* @param CPFriendlyURLEntryId the primary key of the cp friendly url entry
 	* @return the cp friendly url entry that was removed
 	* @throws PortalException if a cp friendly url entry with the primary key could not be found
 	*/
-	public static com.liferay.commerce.product.model.CPFriendlyUrlEntry deleteCPFriendlyUrlEntry(
-		long CPFriendlyUrlEntryId)
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry deleteCPFriendlyURLEntry(
+		long CPFriendlyURLEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPFriendlyUrlEntry(CPFriendlyUrlEntryId);
+		return getService().deleteCPFriendlyURLEntry(CPFriendlyURLEntryId);
 	}
 
-	public static com.liferay.commerce.product.model.CPFriendlyUrlEntry fetchCPFriendlyUrlEntry(
-		long CPFriendlyUrlEntryId) {
-		return getService().fetchCPFriendlyUrlEntry(CPFriendlyUrlEntryId);
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntry(
+		long CPFriendlyURLEntryId) {
+		return getService().fetchCPFriendlyURLEntry(CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -100,23 +100,23 @@ public class CPFriendlyUrlEntryLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
-	public static com.liferay.commerce.product.model.CPFriendlyUrlEntry fetchCPFriendlyUrlEntryByUuidAndGroupId(
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntryByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
 		return getService()
-				   .fetchCPFriendlyUrlEntryByUuidAndGroupId(uuid, groupId);
+				   .fetchCPFriendlyURLEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
 	* Returns the cp friendly url entry with the primary key.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the cp friendly url entry
+	* @param CPFriendlyURLEntryId the primary key of the cp friendly url entry
 	* @return the cp friendly url entry
 	* @throws PortalException if a cp friendly url entry with the primary key could not be found
 	*/
-	public static com.liferay.commerce.product.model.CPFriendlyUrlEntry getCPFriendlyUrlEntry(
-		long CPFriendlyUrlEntryId)
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntry(
+		long CPFriendlyURLEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPFriendlyUrlEntry(CPFriendlyUrlEntryId);
+		return getService().getCPFriendlyURLEntry(CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -127,10 +127,10 @@ public class CPFriendlyUrlEntryLocalServiceUtil {
 	* @return the matching cp friendly url entry
 	* @throws PortalException if a matching cp friendly url entry could not be found
 	*/
-	public static com.liferay.commerce.product.model.CPFriendlyUrlEntry getCPFriendlyUrlEntryByUuidAndGroupId(
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntryByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPFriendlyUrlEntryByUuidAndGroupId(uuid, groupId);
+		return getService().getCPFriendlyURLEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -139,9 +139,9 @@ public class CPFriendlyUrlEntryLocalServiceUtil {
 	* @param cpFriendlyUrlEntry the cp friendly url entry
 	* @return the cp friendly url entry that was updated
 	*/
-	public static com.liferay.commerce.product.model.CPFriendlyUrlEntry updateCPFriendlyUrlEntry(
-		com.liferay.commerce.product.model.CPFriendlyUrlEntry cpFriendlyUrlEntry) {
-		return getService().updateCPFriendlyUrlEntry(cpFriendlyUrlEntry);
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry updateCPFriendlyURLEntry(
+		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyUrlEntry) {
+		return getService().updateCPFriendlyURLEntry(cpFriendlyUrlEntry);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -209,7 +209,7 @@ public class CPFriendlyUrlEntryLocalServiceUtil {
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.commerce.product.model.impl.CPFriendlyUrlEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.commerce.product.model.impl.CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -227,7 +227,7 @@ public class CPFriendlyUrlEntryLocalServiceUtil {
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.commerce.product.model.impl.CPFriendlyUrlEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.commerce.product.model.impl.CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -248,14 +248,14 @@ public class CPFriendlyUrlEntryLocalServiceUtil {
 	* Returns a range of all the cp friendly url entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.commerce.product.model.impl.CPFriendlyUrlEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.commerce.product.model.impl.CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of cp friendly url entries
 	* @param end the upper bound of the range of cp friendly url entries (not inclusive)
 	* @return the range of cp friendly url entries
 	*/
-	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyUrlEntry> getCPFriendlyUrlEntries(
+	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyUrlEntries(
 		int start, int end) {
 		return getService().getCPFriendlyUrlEntries(start, end);
 	}
@@ -267,7 +267,7 @@ public class CPFriendlyUrlEntryLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching cp friendly url entries, or an empty list if no matches were found
 	*/
-	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyUrlEntry> getCPFriendlyUrlEntriesByUuidAndCompanyId(
+	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyUrlEntriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
 		return getService()
 				   .getCPFriendlyUrlEntriesByUuidAndCompanyId(uuid, companyId);
@@ -283,9 +283,9 @@ public class CPFriendlyUrlEntryLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the range of matching cp friendly url entries, or an empty list if no matches were found
 	*/
-	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyUrlEntry> getCPFriendlyUrlEntriesByUuidAndCompanyId(
+	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyUrlEntriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPFriendlyUrlEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPFriendlyURLEntry> orderByComparator) {
 		return getService()
 				   .getCPFriendlyUrlEntriesByUuidAndCompanyId(uuid, companyId,
 			start, end, orderByComparator);
@@ -315,10 +315,10 @@ public class CPFriendlyUrlEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static CPFriendlyUrlEntryLocalService getService() {
+	public static CPFriendlyURLEntryLocalService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPFriendlyUrlEntryLocalService, CPFriendlyUrlEntryLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CPFriendlyUrlEntryLocalService.class);
+	private static ServiceTracker<CPFriendlyURLEntryLocalService, CPFriendlyURLEntryLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(CPFriendlyURLEntryLocalService.class);
 }

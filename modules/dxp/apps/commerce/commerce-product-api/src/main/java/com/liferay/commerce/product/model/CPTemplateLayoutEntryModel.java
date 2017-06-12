@@ -90,14 +90,14 @@ public interface CPTemplateLayoutEntryModel extends AttachedModel,
 	 *
 	 * @return the cp friendly url entry ID of this cp template layout entry
 	 */
-	public long getCPFriendlyUrlEntryId();
+	public long getCPFriendlyURLEntryId();
 
 	/**
 	 * Sets the cp friendly url entry ID of this cp template layout entry.
 	 *
-	 * @param CPFriendlyUrlEntryId the cp friendly url entry ID of this cp template layout entry
+	 * @param CPFriendlyURLEntryId the cp friendly url entry ID of this cp template layout entry
 	 */
-	public void setCPFriendlyUrlEntryId(long CPFriendlyUrlEntryId);
+	public void setCPFriendlyURLEntryId(long CPFriendlyURLEntryId);
 
 	/**
 	 * Returns the group ID of this cp template layout entry.

@@ -240,18 +240,18 @@ public class CPTemplateLayoutEntryUtil {
 	/**
 	* Returns the cp template layout entries before and after the current cp template layout entry in the ordered set where uuid = &#63;.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the current cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key of the current cp template layout entry
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cp template layout entry
 	* @throws NoSuchCPTemplateLayoutEntryException if a cp template layout entry with the primary key could not be found
 	*/
 	public static CPTemplateLayoutEntry[] findByUuid_PrevAndNext(
-		long CPFriendlyUrlEntryId, java.lang.String uuid,
+		long CPFriendlyURLEntryId, java.lang.String uuid,
 		OrderByComparator<CPTemplateLayoutEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPTemplateLayoutEntryException {
 		return getPersistence()
-				   .findByUuid_PrevAndNext(CPFriendlyUrlEntryId, uuid,
+				   .findByUuid_PrevAndNext(CPFriendlyURLEntryId, uuid,
 			orderByComparator);
 	}
 
@@ -479,7 +479,7 @@ public class CPTemplateLayoutEntryUtil {
 	/**
 	* Returns the cp template layout entries before and after the current cp template layout entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the current cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key of the current cp template layout entry
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -487,11 +487,11 @@ public class CPTemplateLayoutEntryUtil {
 	* @throws NoSuchCPTemplateLayoutEntryException if a cp template layout entry with the primary key could not be found
 	*/
 	public static CPTemplateLayoutEntry[] findByUuid_C_PrevAndNext(
-		long CPFriendlyUrlEntryId, java.lang.String uuid, long companyId,
+		long CPFriendlyURLEntryId, java.lang.String uuid, long companyId,
 		OrderByComparator<CPTemplateLayoutEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPTemplateLayoutEntryException {
 		return getPersistence()
-				   .findByUuid_C_PrevAndNext(CPFriendlyUrlEntryId, uuid,
+				   .findByUuid_C_PrevAndNext(CPFriendlyURLEntryId, uuid,
 			companyId, orderByComparator);
 	}
 
@@ -608,23 +608,23 @@ public class CPTemplateLayoutEntryUtil {
 	/**
 	* Creates a new cp template layout entry with the primary key. Does not add the cp template layout entry to the database.
 	*
-	* @param CPFriendlyUrlEntryId the primary key for the new cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key for the new cp template layout entry
 	* @return the new cp template layout entry
 	*/
-	public static CPTemplateLayoutEntry create(long CPFriendlyUrlEntryId) {
-		return getPersistence().create(CPFriendlyUrlEntryId);
+	public static CPTemplateLayoutEntry create(long CPFriendlyURLEntryId) {
+		return getPersistence().create(CPFriendlyURLEntryId);
 	}
 
 	/**
 	* Removes the cp template layout entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key of the cp template layout entry
 	* @return the cp template layout entry that was removed
 	* @throws NoSuchCPTemplateLayoutEntryException if a cp template layout entry with the primary key could not be found
 	*/
-	public static CPTemplateLayoutEntry remove(long CPFriendlyUrlEntryId)
+	public static CPTemplateLayoutEntry remove(long CPFriendlyURLEntryId)
 		throws com.liferay.commerce.product.exception.NoSuchCPTemplateLayoutEntryException {
-		return getPersistence().remove(CPFriendlyUrlEntryId);
+		return getPersistence().remove(CPFriendlyURLEntryId);
 	}
 
 	public static CPTemplateLayoutEntry updateImpl(
@@ -635,25 +635,25 @@ public class CPTemplateLayoutEntryUtil {
 	/**
 	* Returns the cp template layout entry with the primary key or throws a {@link NoSuchCPTemplateLayoutEntryException} if it could not be found.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key of the cp template layout entry
 	* @return the cp template layout entry
 	* @throws NoSuchCPTemplateLayoutEntryException if a cp template layout entry with the primary key could not be found
 	*/
 	public static CPTemplateLayoutEntry findByPrimaryKey(
-		long CPFriendlyUrlEntryId)
+		long CPFriendlyURLEntryId)
 		throws com.liferay.commerce.product.exception.NoSuchCPTemplateLayoutEntryException {
-		return getPersistence().findByPrimaryKey(CPFriendlyUrlEntryId);
+		return getPersistence().findByPrimaryKey(CPFriendlyURLEntryId);
 	}
 
 	/**
 	* Returns the cp template layout entry with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key of the cp template layout entry
 	* @return the cp template layout entry, or <code>null</code> if a cp template layout entry with the primary key could not be found
 	*/
 	public static CPTemplateLayoutEntry fetchByPrimaryKey(
-		long CPFriendlyUrlEntryId) {
-		return getPersistence().fetchByPrimaryKey(CPFriendlyUrlEntryId);
+		long CPFriendlyURLEntryId) {
+		return getPersistence().fetchByPrimaryKey(CPFriendlyURLEntryId);
 	}
 
 	public static java.util.Map<java.io.Serializable, CPTemplateLayoutEntry> fetchByPrimaryKeys(

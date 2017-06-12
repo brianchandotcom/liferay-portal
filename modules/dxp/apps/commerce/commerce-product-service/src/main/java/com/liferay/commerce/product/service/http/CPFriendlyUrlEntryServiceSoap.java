@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.product.service.CPFriendlyUrlEntryServiceUtil} service utility. The
+ * {@link com.liferay.commerce.product.service.CPFriendlyURLEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -26,10 +26,10 @@ import aQute.bnd.annotation.ProviderType;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.commerce.product.model.CPFriendlyUrlEntrySoap}.
+ * is translated to an array of {@link com.liferay.commerce.product.model.CPFriendlyURLEntrySoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.commerce.product.model.CPFriendlyUrlEntry}, that is translated to a
- * {@link com.liferay.commerce.product.model.CPFriendlyUrlEntrySoap}. Methods that SOAP cannot
+ * {@link com.liferay.commerce.product.model.CPFriendlyURLEntry}, that is translated to a
+ * {@link com.liferay.commerce.product.model.CPFriendlyURLEntrySoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -51,11 +51,11 @@ import aQute.bnd.annotation.ProviderType;
  * </p>
  *
  * @author Marco Leo
- * @see CPFriendlyUrlEntryServiceHttp
- * @see com.liferay.commerce.product.model.CPFriendlyUrlEntrySoap
- * @see com.liferay.commerce.product.service.CPFriendlyUrlEntryServiceUtil
+ * @see CPFriendlyURLEntryServiceHttp
+ * @see com.liferay.commerce.product.model.CPFriendlyURLEntrySoap
+ * @see com.liferay.commerce.product.service.CPFriendlyURLEntryServiceUtil
  * @generated
  */
 @ProviderType
-public class CPFriendlyUrlEntryServiceSoap {
+public class CPFriendlyURLEntryServiceSoap {
 }

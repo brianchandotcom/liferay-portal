@@ -21,20 +21,20 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Marco Leo
  */
 @ProviderType
-public class NoSuchCPFriendlyUrlEntryException extends NoSuchModelException {
+public class NoSuchCPFriendlyURLEntryException extends NoSuchModelException {
 
-	public NoSuchCPFriendlyUrlEntryException() {
+	public NoSuchCPFriendlyURLEntryException() {
 	}
 
-	public NoSuchCPFriendlyUrlEntryException(String msg) {
+	public NoSuchCPFriendlyURLEntryException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchCPFriendlyUrlEntryException(String msg, Throwable cause) {
+	public NoSuchCPFriendlyURLEntryException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchCPFriendlyUrlEntryException(Throwable cause) {
+	public NoSuchCPFriendlyURLEntryException(Throwable cause) {
 		super(cause);
 	}
 

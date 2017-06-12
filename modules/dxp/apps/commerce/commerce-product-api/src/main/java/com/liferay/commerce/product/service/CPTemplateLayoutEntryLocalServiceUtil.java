@@ -56,12 +56,12 @@ public class CPTemplateLayoutEntryLocalServiceUtil {
 	/**
 	* Creates a new cp template layout entry with the primary key. Does not add the cp template layout entry to the database.
 	*
-	* @param CPFriendlyUrlEntryId the primary key for the new cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key for the new cp template layout entry
 	* @return the new cp template layout entry
 	*/
 	public static com.liferay.commerce.product.model.CPTemplateLayoutEntry createCPTemplateLayoutEntry(
-		long CPFriendlyUrlEntryId) {
-		return getService().createCPTemplateLayoutEntry(CPFriendlyUrlEntryId);
+		long CPFriendlyURLEntryId) {
+		return getService().createCPTemplateLayoutEntry(CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -78,19 +78,19 @@ public class CPTemplateLayoutEntryLocalServiceUtil {
 	/**
 	* Deletes the cp template layout entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key of the cp template layout entry
 	* @return the cp template layout entry that was removed
 	* @throws PortalException if a cp template layout entry with the primary key could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPTemplateLayoutEntry deleteCPTemplateLayoutEntry(
-		long CPFriendlyUrlEntryId)
+		long CPFriendlyURLEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPTemplateLayoutEntry(CPFriendlyUrlEntryId);
+		return getService().deleteCPTemplateLayoutEntry(CPFriendlyURLEntryId);
 	}
 
 	public static com.liferay.commerce.product.model.CPTemplateLayoutEntry fetchCPTemplateLayoutEntry(
-		long CPFriendlyUrlEntryId) {
-		return getService().fetchCPTemplateLayoutEntry(CPFriendlyUrlEntryId);
+		long CPFriendlyURLEntryId) {
+		return getService().fetchCPTemplateLayoutEntry(CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -109,14 +109,14 @@ public class CPTemplateLayoutEntryLocalServiceUtil {
 	/**
 	* Returns the cp template layout entry with the primary key.
 	*
-	* @param CPFriendlyUrlEntryId the primary key of the cp template layout entry
+	* @param CPFriendlyURLEntryId the primary key of the cp template layout entry
 	* @return the cp template layout entry
 	* @throws PortalException if a cp template layout entry with the primary key could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPTemplateLayoutEntry getCPTemplateLayoutEntry(
-		long CPFriendlyUrlEntryId)
+		long CPFriendlyURLEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPTemplateLayoutEntry(CPFriendlyUrlEntryId);
+		return getService().getCPTemplateLayoutEntry(CPFriendlyURLEntryId);
 	}
 
 	/**

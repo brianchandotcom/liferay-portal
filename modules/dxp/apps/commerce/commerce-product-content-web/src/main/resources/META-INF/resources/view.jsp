@@ -1,6 +1,4 @@
-<%@ page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
-page import="com.liferay.commerce.product.model.CPDefinition" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%--
 /**
@@ -25,3 +23,9 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFI
 
 long cpDefinitionId = ParamUtil.getLong(request, "cpDefinitionId");
 %>
+
+<c:if test="<%= cpDefinition != null %>">
+<h1><%= cpDefinition.getTitle(languageId) %></h1>
+<img src="<%= cpDefinition.getDefaultImageThumbnailSrc(themeDisplay) %>">
+<p><%= cpDefinition.getDescription(languageId) %></p>
+</c:if>

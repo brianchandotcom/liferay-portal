@@ -22,9 +22,7 @@
 		<execute macro="User#logoutPG" />
 	</tear-down>
 
-	<command name="AddSimpleCatalogEntry" priority="5">
-		<property name="portal.acceptance" value="true" />
-
+	<command name="AddCatalogEntryWithSingleImage" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="addMenu" value="Simple" />
 			<var name="baseSku" value="ProductSKU" />
@@ -39,15 +37,15 @@
 			<var name="productTitle" value="Product Title 1" />
 		</execute>
 
-		<execute macro="CommerceCatalogEntry#viewCatalogEntry">
-			<var name="baseSku" value="ProductSKU" />
-			<var name="productLongDescription" value="Product Long Description 1" />
-			<var name="productShortDescription" value="Product Short Description 1" />
-			<var name="productTitle" value="Product Title 1" />
+		<execute macro="CommerceCatalogEntry#uploadCatalogEntrySingleImage">
+			<var name="menuTab" value="Images" />
+			<var name="uploadFileName" value="high_resolution_photo.jpg" />
 		</execute>
 	</command>
 
-	<command name="AddCatalogEntryWithSingleImage" priority="5">
+	<command name="AddSimpleCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="addMenu" value="Simple" />
 			<var name="baseSku" value="ProductSKU" />
@@ -60,9 +58,11 @@
 			<var name="productTitle" value="Product Title 1" />
 		</execute>
 
-		<execute macro="CommerceCatalogEntry#uploadCatalogEntrySingleImage">
-			<var name="menuTab" value="Images" />
-			<var name="uploadFileName" value="high_resolution_photo.jpg" />
+		<execute macro="CommerceCatalogEntry#viewCatalogEntry">
+			<var name="baseSku" value="ProductSKU" />
+			<var name="productLongDescription" value="Product Long Description 1" />
+			<var name="productShortDescription" value="Product Short Description 1" />
+			<var name="productTitle" value="Product Title 1" />
 		</execute>
 	</command>
 

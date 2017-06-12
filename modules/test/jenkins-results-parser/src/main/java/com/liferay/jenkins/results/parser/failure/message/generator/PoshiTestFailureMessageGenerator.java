@@ -54,7 +54,7 @@ public class PoshiTestFailureMessageGenerator
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("<p>POSHI Validation Failure: </p><strong>");
+		sb.append("<p>POSHI Test Failure: </p><strong>");
 
 		sb.append(failedPoshiTaskToken);
 
@@ -93,7 +93,7 @@ public class PoshiTestFailureMessageGenerator
 		return Dom4JUtil.getNewElement(
 			"div", null,
 			Dom4JUtil.getNewElement(
-				"p", null, "POSHI Validation Failure: ",
+				"p", null, "POSHI Test Failure: ",
 				Dom4JUtil.getNewElement("strong", null, failedPoshiTaskToken)),
 			getConsoleOutputSnippetElement(consoleText, true, start, end));
 	}

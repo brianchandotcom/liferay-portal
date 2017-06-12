@@ -510,6 +510,205 @@ public class CPFriendlyURLEntryUtil {
 	}
 
 	/**
+	* Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param languageId the language ID
+	* @param main the main
+	* @return the matching cp friendly url entry
+	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry findByG_C_C_C_L_M(long groupId,
+		long companyId, long classNameId, long classPK,
+		java.lang.String languageId, boolean main)
+		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
+		return getPersistence()
+				   .findByG_C_C_C_L_M(groupId, companyId, classNameId, classPK,
+			languageId, main);
+	}
+
+	/**
+	* Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param languageId the language ID
+	* @param main the main
+	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry fetchByG_C_C_C_L_M(long groupId,
+		long companyId, long classNameId, long classPK,
+		java.lang.String languageId, boolean main) {
+		return getPersistence()
+				   .fetchByG_C_C_C_L_M(groupId, companyId, classNameId,
+			classPK, languageId, main);
+	}
+
+	/**
+	* Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param languageId the language ID
+	* @param main the main
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry fetchByG_C_C_C_L_M(long groupId,
+		long companyId, long classNameId, long classPK,
+		java.lang.String languageId, boolean main, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByG_C_C_C_L_M(groupId, companyId, classNameId,
+			classPK, languageId, main, retrieveFromCache);
+	}
+
+	/**
+	* Removes the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param languageId the language ID
+	* @param main the main
+	* @return the cp friendly url entry that was removed
+	*/
+	public static CPFriendlyURLEntry removeByG_C_C_C_L_M(long groupId,
+		long companyId, long classNameId, long classPK,
+		java.lang.String languageId, boolean main)
+		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
+		return getPersistence()
+				   .removeByG_C_C_C_L_M(groupId, companyId, classNameId,
+			classPK, languageId, main);
+	}
+
+	/**
+	* Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63;.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param languageId the language ID
+	* @param main the main
+	* @return the number of matching cp friendly url entries
+	*/
+	public static int countByG_C_C_C_L_M(long groupId, long companyId,
+		long classNameId, long classPK, java.lang.String languageId,
+		boolean main) {
+		return getPersistence()
+				   .countByG_C_C_C_L_M(groupId, companyId, classNameId,
+			classPK, languageId, main);
+	}
+
+	/**
+	* Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param languageId the language ID
+	* @param urlTitle the url title
+	* @return the matching cp friendly url entry
+	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry findByG_C_C_C_L_U(long groupId,
+		long companyId, long classNameId, long classPK,
+		java.lang.String languageId, java.lang.String urlTitle)
+		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
+		return getPersistence()
+				   .findByG_C_C_C_L_U(groupId, companyId, classNameId, classPK,
+			languageId, urlTitle);
+	}
+
+	/**
+	* Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param languageId the language ID
+	* @param urlTitle the url title
+	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry fetchByG_C_C_C_L_U(long groupId,
+		long companyId, long classNameId, long classPK,
+		java.lang.String languageId, java.lang.String urlTitle) {
+		return getPersistence()
+				   .fetchByG_C_C_C_L_U(groupId, companyId, classNameId,
+			classPK, languageId, urlTitle);
+	}
+
+	/**
+	* Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param languageId the language ID
+	* @param urlTitle the url title
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry fetchByG_C_C_C_L_U(long groupId,
+		long companyId, long classNameId, long classPK,
+		java.lang.String languageId, java.lang.String urlTitle,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByG_C_C_C_L_U(groupId, companyId, classNameId,
+			classPK, languageId, urlTitle, retrieveFromCache);
+	}
+
+	/**
+	* Removes the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param languageId the language ID
+	* @param urlTitle the url title
+	* @return the cp friendly url entry that was removed
+	*/
+	public static CPFriendlyURLEntry removeByG_C_C_C_L_U(long groupId,
+		long companyId, long classNameId, long classPK,
+		java.lang.String languageId, java.lang.String urlTitle)
+		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
+		return getPersistence()
+				   .removeByG_C_C_C_L_U(groupId, companyId, classNameId,
+			classPK, languageId, urlTitle);
+	}
+
+	/**
+	* Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63;.
+	*
+	* @param groupId the group ID
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param languageId the language ID
+	* @param urlTitle the url title
+	* @return the number of matching cp friendly url entries
+	*/
+	public static int countByG_C_C_C_L_U(long groupId, long companyId,
+		long classNameId, long classPK, java.lang.String languageId,
+		java.lang.String urlTitle) {
+		return getPersistence()
+				   .countByG_C_C_C_L_U(groupId, companyId, classNameId,
+			classPK, languageId, urlTitle);
+	}
+
+	/**
 	* Returns the cp friendly url entry where groupId = &#63; and urlTitle = &#63; and languageId = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
 	*
 	* @param groupId the group ID

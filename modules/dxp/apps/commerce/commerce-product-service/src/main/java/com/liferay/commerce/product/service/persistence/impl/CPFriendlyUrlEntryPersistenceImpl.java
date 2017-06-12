@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -1496,6 +1497,775 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "cpFriendlyURLEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(cpFriendlyURLEntry.uuid IS NULL OR cpFriendlyURLEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "cpFriendlyURLEntry.companyId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_C_C_L_M = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
+			CPFriendlyURLEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_C_C_C_L_M",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			},
+			CPFriendlyURLEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.COMPANYID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.CLASSPK_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.LANGUAGEID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.MAIN_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_C_L_M = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_C_L_M",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			});
+
+	/**
+	 * Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param languageId the language ID
+	 * @param main the main
+	 * @return the matching cp friendly url entry
+	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
+	 */
+	@Override
+	public CPFriendlyURLEntry findByG_C_C_C_L_M(long groupId, long companyId,
+		long classNameId, long classPK, String languageId, boolean main)
+		throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_C_L_M(groupId,
+				companyId, classNameId, classPK, languageId, main);
+
+		if (cpFriendlyURLEntry == null) {
+			StringBundler msg = new StringBundler(14);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", companyId=");
+			msg.append(companyId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", classPK=");
+			msg.append(classPK);
+
+			msg.append(", languageId=");
+			msg.append(languageId);
+
+			msg.append(", main=");
+			msg.append(main);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchCPFriendlyURLEntryException(msg.toString());
+		}
+
+		return cpFriendlyURLEntry;
+	}
+
+	/**
+	 * Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param languageId the language ID
+	 * @param main the main
+	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	 */
+	@Override
+	public CPFriendlyURLEntry fetchByG_C_C_C_L_M(long groupId, long companyId,
+		long classNameId, long classPK, String languageId, boolean main) {
+		return fetchByG_C_C_C_L_M(groupId, companyId, classNameId, classPK,
+			languageId, main, true);
+	}
+
+	/**
+	 * Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param languageId the language ID
+	 * @param main the main
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	 */
+	@Override
+	public CPFriendlyURLEntry fetchByG_C_C_C_L_M(long groupId, long companyId,
+		long classNameId, long classPK, String languageId, boolean main,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] {
+				groupId, companyId, classNameId, classPK, languageId, main
+			};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M,
+					finderArgs, this);
+		}
+
+		if (result instanceof CPFriendlyURLEntry) {
+			CPFriendlyURLEntry cpFriendlyURLEntry = (CPFriendlyURLEntry)result;
+
+			if ((groupId != cpFriendlyURLEntry.getGroupId()) ||
+					(companyId != cpFriendlyURLEntry.getCompanyId()) ||
+					(classNameId != cpFriendlyURLEntry.getClassNameId()) ||
+					(classPK != cpFriendlyURLEntry.getClassPK()) ||
+					!Objects.equals(languageId,
+						cpFriendlyURLEntry.getLanguageId()) ||
+					(main != cpFriendlyURLEntry.getMain())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(8);
+
+			query.append(_SQL_SELECT_CPFRIENDLYURLENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_M_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_M_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_M_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_M_CLASSPK_2);
+
+			boolean bindLanguageId = false;
+
+			if (languageId == null) {
+				query.append(_FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_1);
+			}
+			else if (languageId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_3);
+			}
+			else {
+				bindLanguageId = true;
+
+				query.append(_FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_M_MAIN_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(companyId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				if (bindLanguageId) {
+					qPos.add(languageId);
+				}
+
+				qPos.add(main);
+
+				List<CPFriendlyURLEntry> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"CPFriendlyURLEntryPersistenceImpl.fetchByG_C_C_C_L_M(long, long, long, long, String, boolean, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					CPFriendlyURLEntry cpFriendlyURLEntry = list.get(0);
+
+					result = cpFriendlyURLEntry;
+
+					cacheResult(cpFriendlyURLEntry);
+
+					if ((cpFriendlyURLEntry.getGroupId() != groupId) ||
+							(cpFriendlyURLEntry.getCompanyId() != companyId) ||
+							(cpFriendlyURLEntry.getClassNameId() != classNameId) ||
+							(cpFriendlyURLEntry.getClassPK() != classPK) ||
+							(cpFriendlyURLEntry.getLanguageId() == null) ||
+							!cpFriendlyURLEntry.getLanguageId()
+												   .equals(languageId) ||
+							(cpFriendlyURLEntry.getMain() != main)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M,
+							finderArgs, cpFriendlyURLEntry);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CPFriendlyURLEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param languageId the language ID
+	 * @param main the main
+	 * @return the cp friendly url entry that was removed
+	 */
+	@Override
+	public CPFriendlyURLEntry removeByG_C_C_C_L_M(long groupId, long companyId,
+		long classNameId, long classPK, String languageId, boolean main)
+		throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyURLEntry = findByG_C_C_C_L_M(groupId,
+				companyId, classNameId, classPK, languageId, main);
+
+		return remove(cpFriendlyURLEntry);
+	}
+
+	/**
+	 * Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param languageId the language ID
+	 * @param main the main
+	 * @return the number of matching cp friendly url entries
+	 */
+	@Override
+	public int countByG_C_C_C_L_M(long groupId, long companyId,
+		long classNameId, long classPK, String languageId, boolean main) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_C_L_M;
+
+		Object[] finderArgs = new Object[] {
+				groupId, companyId, classNameId, classPK, languageId, main
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(7);
+
+			query.append(_SQL_COUNT_CPFRIENDLYURLENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_M_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_M_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_M_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_M_CLASSPK_2);
+
+			boolean bindLanguageId = false;
+
+			if (languageId == null) {
+				query.append(_FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_1);
+			}
+			else if (languageId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_3);
+			}
+			else {
+				bindLanguageId = true;
+
+				query.append(_FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_M_MAIN_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(companyId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				if (bindLanguageId) {
+					qPos.add(languageId);
+				}
+
+				qPos.add(main);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_C_C_L_M_GROUPID_2 = "cpFriendlyURLEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_M_COMPANYID_2 = "cpFriendlyURLEntry.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_M_CLASSNAMEID_2 = "cpFriendlyURLEntry.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_M_CLASSPK_2 = "cpFriendlyURLEntry.classPK = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_1 = "cpFriendlyURLEntry.languageId IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_2 = "cpFriendlyURLEntry.languageId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_3 = "(cpFriendlyURLEntry.languageId IS NULL OR cpFriendlyURLEntry.languageId = '') AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_M_MAIN_2 = "cpFriendlyURLEntry.main = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_C_C_L_U = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
+			CPFriendlyURLEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_C_C_C_L_U",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
+			},
+			CPFriendlyURLEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.COMPANYID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.CLASSPK_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.LANGUAGEID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.URLTITLE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_C_L_U = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_C_L_U",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
+			});
+
+	/**
+	 * Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param languageId the language ID
+	 * @param urlTitle the url title
+	 * @return the matching cp friendly url entry
+	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
+	 */
+	@Override
+	public CPFriendlyURLEntry findByG_C_C_C_L_U(long groupId, long companyId,
+		long classNameId, long classPK, String languageId, String urlTitle)
+		throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_C_L_U(groupId,
+				companyId, classNameId, classPK, languageId, urlTitle);
+
+		if (cpFriendlyURLEntry == null) {
+			StringBundler msg = new StringBundler(14);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", companyId=");
+			msg.append(companyId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", classPK=");
+			msg.append(classPK);
+
+			msg.append(", languageId=");
+			msg.append(languageId);
+
+			msg.append(", urlTitle=");
+			msg.append(urlTitle);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchCPFriendlyURLEntryException(msg.toString());
+		}
+
+		return cpFriendlyURLEntry;
+	}
+
+	/**
+	 * Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param languageId the language ID
+	 * @param urlTitle the url title
+	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	 */
+	@Override
+	public CPFriendlyURLEntry fetchByG_C_C_C_L_U(long groupId, long companyId,
+		long classNameId, long classPK, String languageId, String urlTitle) {
+		return fetchByG_C_C_C_L_U(groupId, companyId, classNameId, classPK,
+			languageId, urlTitle, true);
+	}
+
+	/**
+	 * Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param languageId the language ID
+	 * @param urlTitle the url title
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	 */
+	@Override
+	public CPFriendlyURLEntry fetchByG_C_C_C_L_U(long groupId, long companyId,
+		long classNameId, long classPK, String languageId, String urlTitle,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] {
+				groupId, companyId, classNameId, classPK, languageId, urlTitle
+			};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U,
+					finderArgs, this);
+		}
+
+		if (result instanceof CPFriendlyURLEntry) {
+			CPFriendlyURLEntry cpFriendlyURLEntry = (CPFriendlyURLEntry)result;
+
+			if ((groupId != cpFriendlyURLEntry.getGroupId()) ||
+					(companyId != cpFriendlyURLEntry.getCompanyId()) ||
+					(classNameId != cpFriendlyURLEntry.getClassNameId()) ||
+					(classPK != cpFriendlyURLEntry.getClassPK()) ||
+					!Objects.equals(languageId,
+						cpFriendlyURLEntry.getLanguageId()) ||
+					!Objects.equals(urlTitle, cpFriendlyURLEntry.getUrlTitle())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(8);
+
+			query.append(_SQL_SELECT_CPFRIENDLYURLENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_U_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_U_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_U_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_U_CLASSPK_2);
+
+			boolean bindLanguageId = false;
+
+			if (languageId == null) {
+				query.append(_FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_1);
+			}
+			else if (languageId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_3);
+			}
+			else {
+				bindLanguageId = true;
+
+				query.append(_FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_2);
+			}
+
+			boolean bindUrlTitle = false;
+
+			if (urlTitle == null) {
+				query.append(_FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_1);
+			}
+			else if (urlTitle.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_3);
+			}
+			else {
+				bindUrlTitle = true;
+
+				query.append(_FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(companyId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				if (bindLanguageId) {
+					qPos.add(languageId);
+				}
+
+				if (bindUrlTitle) {
+					qPos.add(urlTitle);
+				}
+
+				List<CPFriendlyURLEntry> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"CPFriendlyURLEntryPersistenceImpl.fetchByG_C_C_C_L_U(long, long, long, long, String, String, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					CPFriendlyURLEntry cpFriendlyURLEntry = list.get(0);
+
+					result = cpFriendlyURLEntry;
+
+					cacheResult(cpFriendlyURLEntry);
+
+					if ((cpFriendlyURLEntry.getGroupId() != groupId) ||
+							(cpFriendlyURLEntry.getCompanyId() != companyId) ||
+							(cpFriendlyURLEntry.getClassNameId() != classNameId) ||
+							(cpFriendlyURLEntry.getClassPK() != classPK) ||
+							(cpFriendlyURLEntry.getLanguageId() == null) ||
+							!cpFriendlyURLEntry.getLanguageId()
+												   .equals(languageId) ||
+							(cpFriendlyURLEntry.getUrlTitle() == null) ||
+							!cpFriendlyURLEntry.getUrlTitle().equals(urlTitle)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U,
+							finderArgs, cpFriendlyURLEntry);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CPFriendlyURLEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param languageId the language ID
+	 * @param urlTitle the url title
+	 * @return the cp friendly url entry that was removed
+	 */
+	@Override
+	public CPFriendlyURLEntry removeByG_C_C_C_L_U(long groupId, long companyId,
+		long classNameId, long classPK, String languageId, String urlTitle)
+		throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyURLEntry = findByG_C_C_C_L_U(groupId,
+				companyId, classNameId, classPK, languageId, urlTitle);
+
+		return remove(cpFriendlyURLEntry);
+	}
+
+	/**
+	 * Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param languageId the language ID
+	 * @param urlTitle the url title
+	 * @return the number of matching cp friendly url entries
+	 */
+	@Override
+	public int countByG_C_C_C_L_U(long groupId, long companyId,
+		long classNameId, long classPK, String languageId, String urlTitle) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_C_L_U;
+
+		Object[] finderArgs = new Object[] {
+				groupId, companyId, classNameId, classPK, languageId, urlTitle
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(7);
+
+			query.append(_SQL_COUNT_CPFRIENDLYURLENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_U_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_U_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_U_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_C_L_U_CLASSPK_2);
+
+			boolean bindLanguageId = false;
+
+			if (languageId == null) {
+				query.append(_FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_1);
+			}
+			else if (languageId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_3);
+			}
+			else {
+				bindLanguageId = true;
+
+				query.append(_FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_2);
+			}
+
+			boolean bindUrlTitle = false;
+
+			if (urlTitle == null) {
+				query.append(_FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_1);
+			}
+			else if (urlTitle.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_3);
+			}
+			else {
+				bindUrlTitle = true;
+
+				query.append(_FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(companyId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				if (bindLanguageId) {
+					qPos.add(languageId);
+				}
+
+				if (bindUrlTitle) {
+					qPos.add(urlTitle);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_C_C_L_U_GROUPID_2 = "cpFriendlyURLEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_U_COMPANYID_2 = "cpFriendlyURLEntry.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_U_CLASSNAMEID_2 = "cpFriendlyURLEntry.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_U_CLASSPK_2 = "cpFriendlyURLEntry.classPK = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_1 = "cpFriendlyURLEntry.languageId IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_2 = "cpFriendlyURLEntry.languageId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_3 = "(cpFriendlyURLEntry.languageId IS NULL OR cpFriendlyURLEntry.languageId = '') AND ";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_1 = "cpFriendlyURLEntry.urlTitle IS NULL";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_2 = "cpFriendlyURLEntry.urlTitle = ?";
+	private static final String _FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_3 = "(cpFriendlyURLEntry.urlTitle IS NULL OR cpFriendlyURLEntry.urlTitle = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_U_L = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPFriendlyURLEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -1850,6 +2620,25 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				cpFriendlyURLEntry.getUuid(), cpFriendlyURLEntry.getGroupId()
 			}, cpFriendlyURLEntry);
 
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M,
+			new Object[] {
+				cpFriendlyURLEntry.getGroupId(),
+				cpFriendlyURLEntry.getCompanyId(),
+				cpFriendlyURLEntry.getClassNameId(),
+				cpFriendlyURLEntry.getClassPK(),
+				cpFriendlyURLEntry.getLanguageId(), cpFriendlyURLEntry.getMain()
+			}, cpFriendlyURLEntry);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U,
+			new Object[] {
+				cpFriendlyURLEntry.getGroupId(),
+				cpFriendlyURLEntry.getCompanyId(),
+				cpFriendlyURLEntry.getClassNameId(),
+				cpFriendlyURLEntry.getClassPK(),
+				cpFriendlyURLEntry.getLanguageId(),
+				cpFriendlyURLEntry.getUrlTitle()
+			}, cpFriendlyURLEntry);
+
 		finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_L,
 			new Object[] {
 				cpFriendlyURLEntry.getGroupId(),
@@ -1943,6 +2732,34 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 		args = new Object[] {
 				cpFriendlyURLEntryModelImpl.getGroupId(),
+				cpFriendlyURLEntryModelImpl.getCompanyId(),
+				cpFriendlyURLEntryModelImpl.getClassNameId(),
+				cpFriendlyURLEntryModelImpl.getClassPK(),
+				cpFriendlyURLEntryModelImpl.getLanguageId(),
+				cpFriendlyURLEntryModelImpl.getMain()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_C_C_L_M, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M, args,
+			cpFriendlyURLEntryModelImpl, false);
+
+		args = new Object[] {
+				cpFriendlyURLEntryModelImpl.getGroupId(),
+				cpFriendlyURLEntryModelImpl.getCompanyId(),
+				cpFriendlyURLEntryModelImpl.getClassNameId(),
+				cpFriendlyURLEntryModelImpl.getClassPK(),
+				cpFriendlyURLEntryModelImpl.getLanguageId(),
+				cpFriendlyURLEntryModelImpl.getUrlTitle()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_C_C_L_U, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U, args,
+			cpFriendlyURLEntryModelImpl, false);
+
+		args = new Object[] {
+				cpFriendlyURLEntryModelImpl.getGroupId(),
 				cpFriendlyURLEntryModelImpl.getUrlTitle(),
 				cpFriendlyURLEntryModelImpl.getLanguageId()
 			};
@@ -1975,6 +2792,64 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					cpFriendlyURLEntryModelImpl.getGroupId(),
+					cpFriendlyURLEntryModelImpl.getCompanyId(),
+					cpFriendlyURLEntryModelImpl.getClassNameId(),
+					cpFriendlyURLEntryModelImpl.getClassPK(),
+					cpFriendlyURLEntryModelImpl.getLanguageId(),
+					cpFriendlyURLEntryModelImpl.getMain()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_L_M, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M, args);
+		}
+
+		if ((cpFriendlyURLEntryModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_G_C_C_C_L_M.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					cpFriendlyURLEntryModelImpl.getOriginalGroupId(),
+					cpFriendlyURLEntryModelImpl.getOriginalCompanyId(),
+					cpFriendlyURLEntryModelImpl.getOriginalClassNameId(),
+					cpFriendlyURLEntryModelImpl.getOriginalClassPK(),
+					cpFriendlyURLEntryModelImpl.getOriginalLanguageId(),
+					cpFriendlyURLEntryModelImpl.getOriginalMain()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_L_M, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					cpFriendlyURLEntryModelImpl.getGroupId(),
+					cpFriendlyURLEntryModelImpl.getCompanyId(),
+					cpFriendlyURLEntryModelImpl.getClassNameId(),
+					cpFriendlyURLEntryModelImpl.getClassPK(),
+					cpFriendlyURLEntryModelImpl.getLanguageId(),
+					cpFriendlyURLEntryModelImpl.getUrlTitle()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_L_U, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U, args);
+		}
+
+		if ((cpFriendlyURLEntryModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_G_C_C_C_L_U.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					cpFriendlyURLEntryModelImpl.getOriginalGroupId(),
+					cpFriendlyURLEntryModelImpl.getOriginalCompanyId(),
+					cpFriendlyURLEntryModelImpl.getOriginalClassNameId(),
+					cpFriendlyURLEntryModelImpl.getOriginalClassPK(),
+					cpFriendlyURLEntryModelImpl.getOriginalLanguageId(),
+					cpFriendlyURLEntryModelImpl.getOriginalUrlTitle()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_L_U, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U, args);
 		}
 
 		if (clearCurrent) {

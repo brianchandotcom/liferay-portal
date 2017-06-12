@@ -122,13 +122,14 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.product.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CPFriendlyURLEntry"),
 			true);
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long LANGUAGEID_COLUMN_BITMASK = 4L;
-	public static final long URLTITLE_COLUMN_BITMASK = 8L;
-	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long CLASSNAMEID_COLUMN_BITMASK = 32L;
-	public static final long CLASSPK_COLUMN_BITMASK = 64L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long LANGUAGEID_COLUMN_BITMASK = 16L;
+	public static final long MAIN_COLUMN_BITMASK = 32L;
+	public static final long URLTITLE_COLUMN_BITMASK = 64L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -504,7 +505,17 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 	public void setClassNameId(long classNameId) {
 		_columnBitmask = -1L;
 
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
 		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@JSON
@@ -517,7 +528,17 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 	public void setClassPK(long classPK) {
 		_columnBitmask = -1L;
 
+		if (!_setOriginalClassPK) {
+			_setOriginalClassPK = true;
+
+			_originalClassPK = _classPK;
+		}
+
 		_classPK = classPK;
+	}
+
+	public long getOriginalClassPK() {
+		return _originalClassPK;
 	}
 
 	@JSON
@@ -586,7 +607,19 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 
 	@Override
 	public void setMain(boolean main) {
+		_columnBitmask |= MAIN_COLUMN_BITMASK;
+
+		if (!_setOriginalMain) {
+			_setOriginalMain = true;
+
+			_originalMain = _main;
+		}
+
 		_main = main;
+	}
+
+	public boolean getOriginalMain() {
+		return _originalMain;
 	}
 
 	@Override
@@ -739,9 +772,21 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 
 		cpFriendlyURLEntryModelImpl._setModifiedDate = false;
 
+		cpFriendlyURLEntryModelImpl._originalClassNameId = cpFriendlyURLEntryModelImpl._classNameId;
+
+		cpFriendlyURLEntryModelImpl._setOriginalClassNameId = false;
+
+		cpFriendlyURLEntryModelImpl._originalClassPK = cpFriendlyURLEntryModelImpl._classPK;
+
+		cpFriendlyURLEntryModelImpl._setOriginalClassPK = false;
+
 		cpFriendlyURLEntryModelImpl._originalLanguageId = cpFriendlyURLEntryModelImpl._languageId;
 
 		cpFriendlyURLEntryModelImpl._originalUrlTitle = cpFriendlyURLEntryModelImpl._urlTitle;
+
+		cpFriendlyURLEntryModelImpl._originalMain = cpFriendlyURLEntryModelImpl._main;
+
+		cpFriendlyURLEntryModelImpl._setOriginalMain = false;
 
 		cpFriendlyURLEntryModelImpl._columnBitmask = 0;
 	}
@@ -937,12 +982,18 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private long _classPK;
+	private long _originalClassPK;
+	private boolean _setOriginalClassPK;
 	private String _languageId;
 	private String _originalLanguageId;
 	private String _urlTitle;
 	private String _originalUrlTitle;
 	private boolean _main;
+	private boolean _originalMain;
+	private boolean _setOriginalMain;
 	private long _columnBitmask;
 	private CPFriendlyURLEntry _escapedModel;
 }

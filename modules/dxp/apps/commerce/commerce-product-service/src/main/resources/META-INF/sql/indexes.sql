@@ -21,6 +21,8 @@ create index IX_695AE8C7 on CPDefinitionOptionValueRel (groupId);
 create index IX_CD95E77 on CPDefinitionOptionValueRel (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_34516B9 on CPDefinitionOptionValueRel (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_71874AE8 on CPFriendlyURLEntry (groupId, companyId, classNameId, classPK, languageId[$COLUMN_LENGTH:75$], main);
+create index IX_393BFCD8 on CPFriendlyURLEntry (groupId, companyId, classNameId, classPK, languageId[$COLUMN_LENGTH:75$], urlTitle[$COLUMN_LENGTH:255$]);
 create unique index IX_A05A30D on CPFriendlyURLEntry (groupId, urlTitle[$COLUMN_LENGTH:255$], languageId[$COLUMN_LENGTH:75$]);
 create index IX_BD972D55 on CPFriendlyURLEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_FA808117 on CPFriendlyURLEntry (uuid_[$COLUMN_LENGTH:75$], groupId);

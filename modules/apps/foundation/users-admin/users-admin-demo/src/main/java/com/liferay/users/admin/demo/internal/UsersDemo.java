@@ -53,7 +53,7 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 		// Web content author
 
 		String webContentAuthorXml = StringUtil.read(
-			UsersDemo.class, "dependencies/web-content-author.xml");
+			UsersDemo.class, "dependencies/permissions-web-content-author.xml");
 
 		Role webContentAuthor = _siteRoleDemoDataCreator.create(
 			companyId, "Web Content Author", webContentAuthorXml);
@@ -68,7 +68,7 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 			companyId, "Pet Lovers");
 
 		String forumModeratorXml = StringUtil.read(
-			UsersDemo.class, "dependencies/forum-moderator.xml");
+			UsersDemo.class, "dependencies/permissions-forum-moderator.xml");
 
 		Role forumModerator = _siteRoleDemoDataCreator.create(
 			companyId, "Forum Moderator", forumModeratorXml);

@@ -34,9 +34,13 @@ public class AddressFormatterHelper {
 	public static String format(Address address) {
 		Country country = address.getCountry();
 
-		String a2 = country.getA2();
+		AddressFormatter addressFormatter = null;
 
-		AddressFormatter addressFormatter = getAddressFormatter(a2);
+		if (country != null) {
+			String a2 = country.getA2();
+
+			addressFormatter = getAddressFormatter(a2);
+		}
 
 		if (addressFormatter == null) {
 			addressFormatter = getAddressFormatter("US");

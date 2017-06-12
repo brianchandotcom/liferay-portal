@@ -238,6 +238,17 @@ public class CPFriendlyURLEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C_C_U() throws Exception {
+		_persistence.countByG_C_C_U(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			StringPool.BLANK);
+
+		_persistence.countByG_C_C_U(0L, 0L, 0L, StringPool.NULL);
+
+		_persistence.countByG_C_C_U(0L, 0L, 0L, (String)null);
+	}
+
+	@Test
 	public void testCountByG_U_L() throws Exception {
 		_persistence.countByG_U_L(RandomTestUtil.nextLong(), StringPool.BLANK,
 			StringPool.BLANK);

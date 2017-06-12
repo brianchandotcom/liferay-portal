@@ -54,6 +54,8 @@
 			<var name="productTitle" value="Product Title 1" />
 		</execute>
 
+		<execute macro="CommerceCatalog#publishEntry" />
+
 		<execute macro="CommerceNavigator#gotoCatalogEntry">
 			<var name="productTitle" value="Product Title 1" />
 		</execute>
@@ -232,5 +234,30 @@
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="TextInput#EXPIRATION_DATE" value1="01/02/3000" />
+	</command>
+
+	<command name="AddSimpleDraftCatalogEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="CommerceCatalog#addEntry">
+			<var name="addMenu" value="Simple" />
+			<var name="baseSku" value="ProductSKU" />
+			<var name="productLongDescription" value="Product Long Description 1" />
+			<var name="productShortDescription" value="Product Short Description 1" />
+			<var name="productTitle" value="Product Title 1" />
+		</execute>
+
+		<execute macro="CommerceCatalog#saveEntryAsDraft" />
+
+		<execute macro="CommerceNavigator#gotoCatalogEntry">
+			<var name="productTitle" value="Product Title 1" />
+		</execute>
+
+		<execute macro="CommerceCatalogEntry#viewCatalogEntry">
+			<var name="baseSku" value="ProductSKU" />
+			<var name="productLongDescription" value="Product Long Description 1" />
+			<var name="productShortDescription" value="Product Short Description 1" />
+			<var name="productTitle" value="Product Title 1" />
+		</execute>
 	</command>
 </definition>

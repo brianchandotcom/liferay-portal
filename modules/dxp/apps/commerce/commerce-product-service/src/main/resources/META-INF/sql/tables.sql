@@ -102,7 +102,7 @@ create table CPFriendlyUrlEntry (
 	classNameId LONG,
 	classPK LONG,
 	languageId VARCHAR(75) null,
-	urlTitle VARCHAR(75) null,
+	urlTitle VARCHAR(255) null,
 	main BOOLEAN
 );
 

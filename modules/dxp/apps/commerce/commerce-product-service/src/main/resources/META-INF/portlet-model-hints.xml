@@ -120,7 +120,7 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="languageId" type="String" />
-		<field name="urlTitle" type="String" >
+		<field name="urlTitle" type="String">
 			<hint name="max-length">255</hint>
 		</field>
 		<field name="main" type="boolean" />

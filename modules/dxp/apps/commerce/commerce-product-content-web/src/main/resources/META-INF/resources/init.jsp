@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,11 +12,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.commerce.product.internal.constants;
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-/**
- * @author Andrea Di Giorgi
- */
-public class CPConstants {
-}
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+
+<liferay-frontend:defineObjects />
+
+<liferay-theme:defineObjects />
+
+<portlet:defineObjects />

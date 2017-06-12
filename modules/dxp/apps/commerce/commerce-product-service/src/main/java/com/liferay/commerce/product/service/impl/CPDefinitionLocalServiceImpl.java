@@ -23,6 +23,7 @@ import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameExcepti
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
+import com.liferay.commerce.product.model.CPTemplateLayoutEntry;
 import com.liferay.commerce.product.service.base.CPDefinitionLocalServiceBaseImpl;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
@@ -88,7 +89,7 @@ public class CPDefinitionLocalServiceImpl
 			String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-			String productTypeName, String ddmStructureKey,
+			String layoutUuid, String productTypeName, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -148,10 +149,6 @@ public class CPDefinitionLocalServiceImpl
 
 		cpDefinitionPersistence.update(cpDefinition);
 
-		if (Validator.isNull(urlTitleMap)) {
-			urlTitleMap = getUniqueUrlTitles(cpDefinition);
-		}
-
 		// Commerce product definition localization
 
 		_addCPDefinitionLocalizedFields(
@@ -160,9 +157,19 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product friendly URL
 
+		if (Validator.isNull(urlTitleMap)) {
+			urlTitleMap = getUniqueUrlTitles(cpDefinition);
+		}
+
 		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntry(
 			groupId, serviceContext.getCompanyId(), CPDefinition.class,
 			cpDefinitionId, urlTitleMap);
+
+		// Commerce product template layout entry
+
+		cpTemplateLayoutEntryLocalService.addCPTemplateLayoutEntry(
+			groupId, serviceContext.getCompanyId(), CPDefinition.class,
+			cpDefinitionId, layoutUuid);
 
 		// Resources
 
@@ -225,6 +232,12 @@ public class CPDefinitionLocalServiceImpl
 		// Commerce product friendly URL
 
 		cpFriendlyURLEntryLocalService.deleteCPFriendlyURLEntry(
+			cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
+			CPDefinition.class, cpDefinition.getCPDefinitionId());
+
+		// Commerce product template layout entry
+
+		cpTemplateLayoutEntryLocalService.deleteCPTemplateLayoutEntry(
 			cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
 			CPDefinition.class, cpDefinition.getCPDefinitionId());
 
@@ -381,6 +394,31 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return cpAttachmentFileEntries.get(0);
+	}
+
+	@Override
+	public String getDisplayPage(CPDefinition cpDefinition)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(
+			CPDefinition.class);
+
+		String layoutUuid = null;
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultLanguageId = LanguageUtil.getLanguageId(defaultLocale);
+
+		CPTemplateLayoutEntry cpTemplateLayoutEntry =
+			cpTemplateLayoutEntryLocalService.getCPTemplateLayoutEntry(
+				cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
+				classNameId, cpDefinition.getCPDefinitionId());
+
+		if (cpTemplateLayoutEntry != null) {
+			layoutUuid = cpTemplateLayoutEntry.getLayoutUuid();
+		}
+
+		return layoutUuid;
 	}
 
 	@Override
@@ -594,12 +632,12 @@ public class CPDefinitionLocalServiceImpl
 			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-			String ddmStructureKey, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			String layoutUuid, String ddmStructureKey, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -660,6 +698,12 @@ public class CPDefinitionLocalServiceImpl
 		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntry(
 			groupId, serviceContext.getCompanyId(), CPDefinition.class,
 			cpDefinitionId, urlTitleMap);
+
+		// Commerce product template layout entry
+
+		cpTemplateLayoutEntryLocalService.addCPTemplateLayoutEntry(
+			groupId, serviceContext.getCompanyId(), CPDefinition.class,
+			cpDefinitionId, layoutUuid);
 
 		// Asset
 

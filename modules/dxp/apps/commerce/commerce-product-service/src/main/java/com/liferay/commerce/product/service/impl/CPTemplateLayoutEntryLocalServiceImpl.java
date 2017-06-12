@@ -14,11 +14,76 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.model.CPTemplateLayoutEntry;
 import com.liferay.commerce.product.service.base.CPTemplateLayoutEntryLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Marco Leo
  */
 public class CPTemplateLayoutEntryLocalServiceImpl
 	extends CPTemplateLayoutEntryLocalServiceBaseImpl {
+
+	@Override
+	public CPTemplateLayoutEntry addCPTemplateLayoutEntry(
+			long groupId, long companyId, Class<?> clazz, long classPK,
+			String layoutUuid)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(clazz);
+
+		return addCPTemplateLayoutEntry(
+			groupId, companyId, classNameId, classPK, layoutUuid);
+	}
+
+	@Override
+	public CPTemplateLayoutEntry addCPTemplateLayoutEntry(
+			long groupId, long companyId, long classNameId, long classPK,
+			String layoutUuid)
+		throws PortalException {
+
+		CPTemplateLayoutEntry oldCPTemplateLayoutEntry =
+			cpTemplateLayoutEntryPersistence.fetchByG_C_C(
+				groupId, classNameId, classPK);
+
+		if ((oldCPTemplateLayoutEntry != null)) {
+			oldCPTemplateLayoutEntry.setLayoutUuid(layoutUuid);
+			return cpTemplateLayoutEntryPersistence.update(
+				oldCPTemplateLayoutEntry);
+		}
+
+		long cpTemplateLayoutEntryId = counterLocalService.increment();
+
+		CPTemplateLayoutEntry cpTemplateLayoutEntry =
+			createCPTemplateLayoutEntry(cpTemplateLayoutEntryId);
+
+		cpTemplateLayoutEntry.setCompanyId(companyId);
+		cpTemplateLayoutEntry.setGroupId(groupId);
+		cpTemplateLayoutEntry.setClassNameId(classNameId);
+		cpTemplateLayoutEntry.setClassPK(classPK);
+		cpTemplateLayoutEntry.setLayoutUuid(layoutUuid);
+
+		return cpTemplateLayoutEntryPersistence.update(cpTemplateLayoutEntry);
+	}
+
+	@Override
+	public void deleteCPTemplateLayoutEntry(
+			long groupId, long companyId, Class<?> clazz, long classPK)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(clazz);
+
+		cpTemplateLayoutEntryPersistence.removeByG_C_C(
+			groupId, classNameId, classPK);
+	}
+
+	@Override
+	public CPTemplateLayoutEntry getCPTemplateLayoutEntry(
+			long groupId, long companyId, long classNameId, long classPK)
+		throws PortalException {
+
+		return cpTemplateLayoutEntryPersistence.findByG_C_C(
+			groupId, classNameId, classPK);
+	}
+
 }

@@ -236,6 +236,52 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
+	<entity local-service="true" name="CPFriendlyUrlEntry" remote-service="true"  uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPFriendlyUrlEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="languageId" type="String" />
+		<column name="urlTitle" type="String" />
+		<column name="main" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="classNameId" />
+			<order-column name="classPK" />
+			<order-column name="urlTitle" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="G_U_L" return-type="CPFriendlyUrlEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="urlTitle" />
+			<finder-column name="languageId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
 	<entity local-service="true" name="CPInstance" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->

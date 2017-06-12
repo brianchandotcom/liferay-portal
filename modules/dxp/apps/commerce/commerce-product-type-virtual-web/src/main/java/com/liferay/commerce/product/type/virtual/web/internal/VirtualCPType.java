@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
@@ -91,6 +93,18 @@ public class VirtualCPType implements CPType {
 			"mvcRenderCommandName", "editProductDefinitionVirtualSetting");
 		portletURL.setParameter(
 			"cpDefinitionId", String.valueOf(cpDefinitionId));
+
+		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter("redirect", redirect);
+		}
+
+		String backURL = ParamUtil.getString(httpServletRequest, "backURL");
+
+		if (Validator.isNotNull(backURL)) {
+			portletURL.setParameter("backURL", backURL);
+		}
 
 		return portletURL.toString();
 	}

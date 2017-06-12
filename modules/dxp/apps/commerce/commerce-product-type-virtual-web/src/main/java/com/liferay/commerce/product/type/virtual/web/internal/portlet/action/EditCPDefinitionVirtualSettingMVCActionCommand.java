@@ -16,11 +16,14 @@ package com.liferay.commerce.product.type.virtual.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingFileEntryIdException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleFileEntryIdException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleUrlException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseContentException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingUrlException;
 import com.liferay.commerce.product.type.virtual.exception.NoSuchCPDefinitionVirtualSettingException;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
@@ -34,11 +37,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.*;
 
 import java.util.Locale;
 import java.util.Map;
@@ -82,7 +81,9 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
-			if (e instanceof CPDefinitionVirtualSettingFileEntryIdException ||
+			if (e instanceof CPDefinitionVirtualSettingException ||
+				e instanceof CPDefinitionVirtualSettingFileEntryIdException ||
+				e instanceof CPDefinitionVirtualSettingSampleException ||
 				e instanceof
 					CPDefinitionVirtualSettingSampleFileEntryIdException ||
 				e instanceof CPDefinitionVirtualSettingSampleUrlException ||
@@ -90,6 +91,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 					CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException ||
 				e instanceof
 					CPDefinitionVirtualSettingTermsOfUseContentException ||
+				e instanceof CPDefinitionVirtualSettingTermsOfUseException ||
 				e instanceof CPDefinitionVirtualSettingUrlException ||
 				e instanceof NoSuchCPDefinitionVirtualSettingException ||
 				e instanceof PrincipalException) {
@@ -131,6 +133,18 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 			"cpDefinitionId", String.valueOf(cpDefinitionId));
 		portletURL.setWindowState(actionRequest.getWindowState());
 
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter("redirect", redirect);
+		}
+
+		String backURL = ParamUtil.getString(actionRequest, "backURL");
+
+		if (Validator.isNotNull(backURL)) {
+			portletURL.setParameter("backURL", backURL);
+		}
+
 		return portletURL.toString();
 	}
 
@@ -144,7 +158,6 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 
-		boolean useUrl = ParamUtil.getBoolean(actionRequest, "useUrl");
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 		String url = ParamUtil.getString(actionRequest, "url");
 		String activationStatus = ParamUtil.getString(
@@ -152,15 +165,11 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 		long durationDays = ParamUtil.getLong(actionRequest, "durationDays");
 		int maxUsages = ParamUtil.getInteger(actionRequest, "maxUsages");
 		boolean useSample = ParamUtil.getBoolean(actionRequest, "useSample");
-		boolean useSampleUrl = ParamUtil.getBoolean(
-			actionRequest, "useSampleUrl");
 		long sampleFileEntryId = ParamUtil.getLong(
 			actionRequest, "sampleFileEntryId");
 		String sampleUrl = ParamUtil.getString(actionRequest, "sampleUrl");
 		boolean termsOfUseRequired = ParamUtil.getBoolean(
 			actionRequest, "termsOfUseRequired");
-		boolean useTermsOfUseJournal = ParamUtil.getBoolean(
-			actionRequest, "useTermsOfUseJournal");
 		Map<Locale, String> termsOfUseContentMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "termsOfUseContent");
@@ -181,11 +190,9 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 			cpDefinitionVirtualSetting =
 				_cpDefinitionVirtualSettingService.
 					addCPDefinitionVirtualSetting(
-						cpDefinitionId, useUrl, fileEntryId, url,
-						activationStatus, duration, maxUsages, useSample,
-						useSampleUrl, sampleFileEntryId, sampleUrl,
-						termsOfUseRequired, useTermsOfUseJournal,
-						termsOfUseContentMap,
+						cpDefinitionId, fileEntryId, url, activationStatus,
+						duration, maxUsages, useSample, sampleFileEntryId,
+						sampleUrl, termsOfUseRequired, termsOfUseContentMap,
 						termsOfUseJournalArticleResourcePrimKey,
 						serviceContext);
 		}
@@ -196,10 +203,9 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 			cpDefinitionVirtualSetting =
 				_cpDefinitionVirtualSettingService.
 					updateCPDefinitionVirtualSetting(
-						cpDefinitionVirtualSettingId, useUrl, fileEntryId, url,
+						cpDefinitionVirtualSettingId, fileEntryId, url,
 						activationStatus, duration, maxUsages, useSample,
-						useSampleUrl, sampleFileEntryId, sampleUrl,
-						termsOfUseRequired, useTermsOfUseJournal,
+						sampleFileEntryId, sampleUrl, termsOfUseRequired,
 						termsOfUseContentMap,
 						termsOfUseJournalArticleResourcePrimKey,
 						serviceContext);

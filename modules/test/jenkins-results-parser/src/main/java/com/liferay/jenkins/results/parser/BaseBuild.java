@@ -1742,7 +1742,8 @@ public abstract class BaseBuild implements Build {
 				String archiveMarkerContent = JenkinsResultsParserUtil.toString(
 					buildURL + "/archive-marker", false, 0, 0, 0);
 
-				fromArchive = (archiveMarkerContent != null) &&
+				fromArchive =
+					(archiveMarkerContent != null) &&
 					!archiveMarkerContent.isEmpty();
 			}
 		}

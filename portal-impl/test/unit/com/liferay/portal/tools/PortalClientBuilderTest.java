@@ -58,7 +58,7 @@ public class PortalClientBuilderTest {
 				Assert.assertTrue(
 					"Unexpected output " + output,
 					line.startsWith("Loading ") ||
-						line.startsWith("WSDL2Java "));
+					line.startsWith("WSDL2Java "));
 			}
 		}
 	}

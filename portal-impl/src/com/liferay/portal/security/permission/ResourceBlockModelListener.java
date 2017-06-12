@@ -69,7 +69,7 @@ public class ResourceBlockModelListener
 
 	private static final long _CLEAR_ON_BEFORE_BITMASK =
 		ResourceBlockModelImpl.COMPANYID_COLUMN_BITMASK |
-			ResourceBlockModelImpl.GROUPID_COLUMN_BITMASK |
-				ResourceBlockModelImpl.NAME_COLUMN_BITMASK;
+		ResourceBlockModelImpl.GROUPID_COLUMN_BITMASK |
+		ResourceBlockModelImpl.NAME_COLUMN_BITMASK;
 
 }

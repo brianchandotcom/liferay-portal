@@ -64,6 +64,6 @@ public class ResourcePermissionModelListener
 
 	private static final long _CLEAR_ON_BEFORE_BITMASK =
 		ResourcePermissionModelImpl.NAME_COLUMN_BITMASK |
-			ResourcePermissionModelImpl.PRIMKEY_COLUMN_BITMASK;
+		ResourcePermissionModelImpl.PRIMKEY_COLUMN_BITMASK;
 
 }

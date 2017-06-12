@@ -261,8 +261,10 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 						lineCount);
 				}
 			}
+		}
 
-			x = trimmedLine.length() + 1;
+		if (line.matches(".*(\\(|\\^|\\&|\\||->( \\{)?)")) {
+			int x = trimmedLine.length() + 1;
 
 			while (true) {
 				x = trimmedLine.lastIndexOf(StringPool.COMMA, x - 1);

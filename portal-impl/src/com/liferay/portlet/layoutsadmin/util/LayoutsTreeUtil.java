@@ -538,7 +538,7 @@ public class LayoutsTreeUtil {
 			jsonObject.put(
 				"sortable",
 				hasManageLayoutsPermission &&
-					SitesUtil.isLayoutSortable(layout));
+				SitesUtil.isLayoutSortable(layout));
 			jsonObject.put("type", layout.getType());
 			jsonObject.put(
 				"updateable",

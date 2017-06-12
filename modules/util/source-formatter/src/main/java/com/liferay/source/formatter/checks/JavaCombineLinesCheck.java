@@ -656,6 +656,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 
 		if (previousLine.endsWith(StringPool.COMMA) &&
 			(previousLineTabCount == lineTabCount) &&
+			!line.matches(".*[\\^\\|\\&]") &&
 			!trimmedPreviousLine.equals("},")) {
 
 			String nextLine = getLine(content, lineCount + 1);

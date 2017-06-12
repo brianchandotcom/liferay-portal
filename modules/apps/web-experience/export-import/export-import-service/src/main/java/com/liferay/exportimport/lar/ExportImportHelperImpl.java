@@ -1301,29 +1301,29 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		else if (rootPortletId != null) {
 			exportCurPortletConfiguration =
 				exportPortletConfiguration &&
-					MapUtil.getBoolean(
-						parameterMap,
-						PortletDataHandlerKeys.PORTLET_CONFIGURATION +
-							StringPool.UNDERLINE + rootPortletId);
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_CONFIGURATION +
+						StringPool.UNDERLINE + rootPortletId);
 
 			exportCurPortletArchivedSetups =
 				exportCurPortletConfiguration &&
-					MapUtil.getBoolean(
-						parameterMap,
-						PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS +
-							StringPool.UNDERLINE + rootPortletId);
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS +
+						StringPool.UNDERLINE + rootPortletId);
 			exportCurPortletSetup =
 				exportCurPortletConfiguration &&
-					MapUtil.getBoolean(
-						parameterMap,
-						PortletDataHandlerKeys.PORTLET_SETUP +
-							StringPool.UNDERLINE + rootPortletId);
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_SETUP +
+						StringPool.UNDERLINE + rootPortletId);
 			exportCurPortletUserPreferences =
 				exportCurPortletConfiguration &&
-					MapUtil.getBoolean(
-						parameterMap,
-						PortletDataHandlerKeys.PORTLET_USER_PREFERENCES +
-							StringPool.UNDERLINE + rootPortletId);
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES +
+						StringPool.UNDERLINE + rootPortletId);
 		}
 
 		Map<String, Boolean> exportPortletSetupControlsMap = new HashMap<>();
@@ -1416,45 +1416,45 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			importCurPortletArchivedSetups =
 				importCurPortletConfiguration &&
-					MapUtil.getBoolean(
-						parameterMap,
-						PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL);
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL);
 			importCurPortletSetup =
 				importCurPortletConfiguration &&
-					MapUtil.getBoolean(
-						parameterMap, PortletDataHandlerKeys.PORTLET_SETUP_ALL);
+				MapUtil.getBoolean(
+					parameterMap, PortletDataHandlerKeys.PORTLET_SETUP_ALL);
 			importCurPortletUserPreferences =
 				importCurPortletConfiguration &&
-					MapUtil.getBoolean(
-						parameterMap,
-						PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
 		}
 		else if (rootPortletId != null) {
 			importCurPortletConfiguration =
 				importPortletConfiguration &&
-					MapUtil.getBoolean(
-						parameterMap,
-						PortletDataHandlerKeys.PORTLET_CONFIGURATION +
-							StringPool.UNDERLINE + rootPortletId);
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_CONFIGURATION +
+						StringPool.UNDERLINE + rootPortletId);
 
 			importCurPortletArchivedSetups =
 				importCurPortletConfiguration &&
-					MapUtil.getBoolean(
-						parameterMap,
-						PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS +
-							StringPool.UNDERLINE + rootPortletId);
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS +
+						StringPool.UNDERLINE + rootPortletId);
 			importCurPortletSetup =
 				importCurPortletConfiguration &&
-					MapUtil.getBoolean(
-						parameterMap,
-						PortletDataHandlerKeys.PORTLET_SETUP +
-							StringPool.UNDERLINE + rootPortletId);
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_SETUP +
+						StringPool.UNDERLINE + rootPortletId);
 			importCurPortletUserPreferences =
 				importCurPortletConfiguration &&
-					MapUtil.getBoolean(
-						parameterMap,
-						PortletDataHandlerKeys.PORTLET_USER_PREFERENCES +
-							StringPool.UNDERLINE + rootPortletId);
+				MapUtil.getBoolean(
+					parameterMap,
+					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES +
+						StringPool.UNDERLINE + rootPortletId);
 		}
 
 		Map<String, Boolean> importPortletSetupMap = new HashMap<>();

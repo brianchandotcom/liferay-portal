@@ -84,11 +84,10 @@ public class JCIFSEngine implements NTLMEngine {
 	}
 
 	private static final int _TYPE_1_FLAGS =
-		NtlmFlags.NTLMSSP_NEGOTIATE_56 |
-			NtlmFlags.NTLMSSP_NEGOTIATE_128 |
-			NtlmFlags.NTLMSSP_NEGOTIATE_NTLM2 |
-			NtlmFlags.NTLMSSP_NEGOTIATE_ALWAYS_SIGN |
-			NtlmFlags.NTLMSSP_REQUEST_TARGET;
+		NtlmFlags.NTLMSSP_NEGOTIATE_56 | NtlmFlags.NTLMSSP_NEGOTIATE_128 |
+		NtlmFlags.NTLMSSP_NEGOTIATE_NTLM2 |
+		NtlmFlags.NTLMSSP_NEGOTIATE_ALWAYS_SIGN |
+		NtlmFlags.NTLMSSP_REQUEST_TARGET;
 
 	private final String _domain;
 	private final String _workstation;

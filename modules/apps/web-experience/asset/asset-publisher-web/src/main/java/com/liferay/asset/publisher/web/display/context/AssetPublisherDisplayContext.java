@@ -828,7 +828,7 @@ public class AssetPublisherDisplayContext {
 		if (_enableConversions == null) {
 			_enableConversions =
 				isOpenOfficeServerEnabled() &&
-					ArrayUtil.isNotEmpty(getExtensions());
+				ArrayUtil.isNotEmpty(getExtensions());
 		}
 
 		return _enableConversions;

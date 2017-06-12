@@ -157,14 +157,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 		return itemSelectorURL.toString();
 	}
 
-	public SearchContainer<FileEntry> getFileEntrySearchContainer()
-		throws PortalException {
-
-		SearchContainer<FileEntry> searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null, null);
-
-		List<FileEntry> results = new ArrayList<>();
-
+	public FileEntry getFileEntry() throws PortalException {
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			getCPDefinitionVirtualSetting();
 
@@ -172,28 +165,14 @@ public class CPDefinitionVirtualSettingDisplayContext
 			long fileEntryId = cpDefinitionVirtualSetting.getFileEntryId();
 
 			if (fileEntryId > 0) {
-				FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
-
-				results.add(fileEntry);
+				return _dlAppService.getFileEntry(fileEntryId);
 			}
 		}
 
-		int total = results.size();
-
-		searchContainer.setResults(results);
-		searchContainer.setTotal(total);
-
-		return searchContainer;
+		return null;
 	}
 
-	public SearchContainer<JournalArticle> getJournalArticleSearchContainer()
-		throws PortalException {
-
-		SearchContainer<JournalArticle> searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null, null);
-
-		List<JournalArticle> results = new ArrayList<>();
-
+	public JournalArticle getJournalArticle() throws PortalException {
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			getCPDefinitionVirtualSetting();
 
@@ -203,20 +182,12 @@ public class CPDefinitionVirtualSettingDisplayContext
 					getTermsOfUseJournalArticleResourcePrimKey();
 
 			if (journalArticleResourcePK > 0) {
-				JournalArticle journalArticle =
-					_journalArticleService.getLatestArticle(
-						journalArticleResourcePK);
-
-				results.add(journalArticle);
+				return _journalArticleService.getLatestArticle(
+					journalArticleResourcePK);
 			}
 		}
 
-		int total = results.size();
-
-		searchContainer.setResults(results);
-		searchContainer.setTotal(total);
-
-		return searchContainer;
+		return null;
 	}
 
 	@Override
@@ -229,14 +200,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 		return portletURL;
 	}
 
-	public SearchContainer<FileEntry> getSampleFileEntrySearchContainer()
-		throws PortalException {
-
-		SearchContainer<FileEntry> searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null, null);
-
-		List<FileEntry> results = new ArrayList<>();
-
+	public FileEntry getSampleFileEntry() throws PortalException {
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			getCPDefinitionVirtualSetting();
 
@@ -245,18 +209,11 @@ public class CPDefinitionVirtualSettingDisplayContext
 				cpDefinitionVirtualSetting.getSampleFileEntryId();
 
 			if (fileEntryId > 0) {
-				FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
-
-				results.add(fileEntry);
+				return _dlAppService.getFileEntry(fileEntryId);
 			}
 		}
 
-		int total = results.size();
-
-		searchContainer.setResults(results);
-		searchContainer.setTotal(total);
-
-		return searchContainer;
+		return null;
 	}
 
 	public String getTermsOfUseJournalArticleBrowserURL() throws Exception {

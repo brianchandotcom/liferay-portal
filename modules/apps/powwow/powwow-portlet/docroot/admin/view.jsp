@@ -60,7 +60,7 @@
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="branding-name"
-			value="<%= LanguageUtil.get(pageContext, PowwowServiceProviderUtil.getBrandingLabel(powwowServer.getProviderType())) %>"
+			value="<%= LanguageUtil.get(request, PowwowServiceProviderUtil.getBrandingLabel(powwowServer.getProviderType())) %>"
 		/>
 
 		<liferay-ui:search-container-column-text

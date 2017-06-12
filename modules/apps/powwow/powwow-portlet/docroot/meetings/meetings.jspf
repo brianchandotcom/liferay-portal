@@ -139,7 +139,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 			<%
 			PowwowParticipant powwowParticipant = PowwowParticipantLocalServiceUtil.fetchPowwowParticipant(powwowMeeting.getPowwowMeetingId(), user.getUserId());
 
-			String powwowParticipantTypeLabel = LanguageUtil.get(pageContext, "creator");
+			String powwowParticipantTypeLabel = LanguageUtil.get(request, "creator");
 
 			if (powwowParticipant != null) {
 				powwowParticipantTypeLabel = PowwowParticipantConstants.getTypeLabel(powwowParticipant.getType());
@@ -149,7 +149,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="participant-type"
-				value="<%= LanguageUtil.get(pageContext, powwowParticipantTypeLabel) %>"
+				value="<%= LanguageUtil.get(request, powwowParticipantTypeLabel) %>"
 			/>
 
 			<%
@@ -173,7 +173,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 				href="<%= rowURL %>"
 				name="status"
 				translate="<%= true %>"
-				value="<%= LanguageUtil.get(pageContext, PowwowMeetingConstants.getStatusLabel(powwowMeeting.getStatus())) %>"
+				value="<%= LanguageUtil.get(request, PowwowMeetingConstants.getStatusLabel(powwowMeeting.getStatus())) %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp path="/meetings/meeting_row_action.jsp" />

@@ -206,7 +206,7 @@ if (powwowMeeting != null) {
 				if (PowwowServerLocalServiceUtil.getPowwowServersCount(providerType, true) > 0) {
 			%>
 
-					<aui:option value="<%= providerType %>"><%= LanguageUtil.get(pageContext, PowwowServiceProviderUtil.getBrandingLabel(providerType)) %></aui:option>
+					<aui:option value="<%= providerType %>"><%= LanguageUtil.get(request, PowwowServiceProviderUtil.getBrandingLabel(providerType)) %></aui:option>
 
 			<%
 				}
@@ -305,13 +305,13 @@ if (powwowMeeting != null) {
 			StringBundler sb = new StringBundler();
 
 			sb.append("<strong>");
-			sb.append(LanguageUtil.get(pageContext, "features"));
+			sb.append(LanguageUtil.get(request, "features"));
 			sb.append("</strong>");
 			sb.append("<ul>");
 
 			for (String brandingFeature : PowwowServiceProviderUtil.getBrandingFeatures(providerType)) {
 				sb.append("<li>");
-				sb.append(UnicodeLanguageUtil.get(pageContext, brandingFeature));
+				sb.append(UnicodeLanguageUtil.get(request, brandingFeature));
 				sb.append("</li>");
 			}
 

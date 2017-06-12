@@ -31,6 +31,8 @@
 			<var name="productTitle" value="Product Title 1" />
 		</execute>
 
+		<execute macro="CommerceCatalog#publishEntry" />
+
 		<execute macro="CommerceNavigator#gotoCatalogEntry">
 			<var name="productTitle" value="Product Title 1" />
 		</execute>
@@ -52,6 +54,8 @@
 			<var name="productShortDescription" value="Product_Short_Description_1" />
 			<var name="productTitle" value="Product_Title_1" />
 		</execute>
+
+		<execute macro="CommerceCatalog#publishEntry" />
 
 		<execute macro="CommerceNavigator#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
@@ -77,6 +81,8 @@
 				<var name="productShortDescription" value="Product Short Description ${entryNumber}" />
 				<var name="productTitle" value="Product Title ${entryNumber}" />
 			</execute>
+
+			<execute macro="CommerceCatalog#publishEntry" />
 		</for>
 
 		<execute macro="CommerceNavigator#gotoSitesCommerce">
@@ -101,6 +107,8 @@
 			<var name="productTitle" value="Product Title 1" />
 		</execute>
 
+		<execute macro="CommerceCatalog#publishEntry" />
+
 		<execute macro="CommerceNavigator#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>
@@ -118,6 +126,8 @@
 			<var name="productShortDescription" value="Product Short Description" />
 			<var name="productTitle" value="Product Title" />
 		</execute>
+
+		<execute macro="CommerceCatalog#publishEntry" />
 
 		<execute macro="CommerceNavigator#gotoCatalogEntry">
 			<var name="productTitle" value="Product Title" />
@@ -143,7 +153,7 @@
 			<var name="baseSku" value="New Product BaseSKU" />
 		</execute>
 
-		<execute macro="Button#clickSave" />
+		<execute macro="CommerceCatalog#publishEntry" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="Message#SUCCESS" />
@@ -186,6 +196,8 @@
 			<var name="productTitle" value="Product Title 1" />
 		</execute>
 
+		<execute macro="CommerceCatalog#publishEntry" />
+
 		<execute macro="CommerceNavigator#gotoCatalogEntry">
 			<var name="productTitle" value="Product Title 1" />
 		</execute>
@@ -194,7 +206,7 @@
 			<var name="expirationDate" value="01/02/3000" />
 		</execute>
 
-		<execute macro="Button#clickSave" />
+		<execute macro="CommerceCatalog#publishEntry" />
 
 		<execute macro="CommerceNavigator#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />

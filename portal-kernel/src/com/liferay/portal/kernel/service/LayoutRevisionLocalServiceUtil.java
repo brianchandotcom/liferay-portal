@@ -134,6 +134,10 @@ public class LayoutRevisionLocalServiceUtil {
 		return getService().fetchLayoutRevision(layoutRevisionId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	public static com.liferay.portal.kernel.model.LayoutRevision fetchLayoutRevision(
 		long layoutSetBranchId, boolean head, long plid) {
 		return getService().fetchLayoutRevision(layoutSetBranchId, head, plid);
@@ -166,6 +170,10 @@ public class LayoutRevisionLocalServiceUtil {
 				   .getLayoutRevision(layoutSetBranchId, layoutBranchId, plid);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	public static com.liferay.portal.kernel.model.LayoutRevision getLayoutRevision(
 		long layoutSetBranchId, long plid, boolean head)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -359,6 +367,11 @@ public class LayoutRevisionLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutRevision> getLayoutRevisions(
 		long layoutSetBranchId, long plid) {
 		return getService().getLayoutRevisions(layoutSetBranchId, plid);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.LayoutRevision> getLayoutRevisions(
+		long layoutSetBranchId, long plid, boolean head) {
+		return getService().getLayoutRevisions(layoutSetBranchId, plid, head);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutRevision> getLayoutRevisions(

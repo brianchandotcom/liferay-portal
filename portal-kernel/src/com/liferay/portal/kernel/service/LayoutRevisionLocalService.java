@@ -125,6 +125,10 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutRevision fetchLayoutRevision(long layoutRevisionId);
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutRevision fetchLayoutRevision(long layoutSetBranchId,
 		boolean head, long plid);
@@ -148,6 +152,10 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 	public LayoutRevision getLayoutRevision(long layoutSetBranchId,
 		long layoutBranchId, long plid) throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutRevision getLayoutRevision(long layoutSetBranchId, long plid,
 		boolean head) throws PortalException;
@@ -286,6 +294,10 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutRevision> getLayoutRevisions(long layoutSetBranchId,
 		long plid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutRevision> getLayoutRevisions(long layoutSetBranchId,
+		long plid, boolean head);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutRevision> getLayoutRevisions(long layoutSetBranchId,

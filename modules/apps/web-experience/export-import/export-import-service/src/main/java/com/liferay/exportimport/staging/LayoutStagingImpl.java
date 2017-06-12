@@ -39,6 +39,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -210,8 +212,13 @@ public class LayoutStagingImpl implements LayoutStaging {
 				layout.getPlid());
 		}
 		else {
-			layoutRevision = _layoutRevisionLocalService.fetchLayoutRevision(
-				layoutSetBranchId, true, layout.getPlid());
+			List<LayoutRevision> layoutRevisions =
+				_layoutRevisionLocalService.getLayoutRevisions(
+					layoutSetBranchId, layout.getPlid(), true);
+
+			if (!layoutRevisions.isEmpty()) {
+				layoutRevision = layoutRevisions.get(0);
+			}
 		}
 
 		if (layoutRevision == null) {

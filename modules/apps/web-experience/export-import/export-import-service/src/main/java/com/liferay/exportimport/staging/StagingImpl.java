@@ -1448,21 +1448,21 @@ public class StagingImpl implements Staging {
 			layout);
 
 		if (layoutRevision == null) {
-			try {
-				layoutRevision = _layoutRevisionLocalService.getLayoutRevision(
+			List<LayoutRevision> layoutRevisions =
+				_layoutRevisionLocalService.getLayoutRevisions(
 					layoutSetBranchId, layout.getPlid(), true);
 
+			if (!layoutRevisions.isEmpty()) {
 				return false;
-			}
-			catch (Exception e) {
 			}
 		}
 
-		try {
-			layoutRevision = _layoutRevisionLocalService.getLayoutRevision(
+		List<LayoutRevision> layoutRevisions =
+			_layoutRevisionLocalService.getLayoutRevisions(
 				layoutSetBranchId, layout.getPlid(), false);
-		}
-		catch (Exception e) {
+
+		if (!layoutRevisions.isEmpty()) {
+			layoutRevision = layoutRevisions.get(0);
 		}
 
 		if ((layoutRevision == null) ||

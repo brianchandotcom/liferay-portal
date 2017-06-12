@@ -264,12 +264,16 @@ public class LayoutRevisionLocalServiceImpl
 			new LayoutRevisionCreateDateComparator(false));
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public LayoutRevision fetchLayoutRevision(
 		long layoutSetBranchId, boolean head, long plid) {
 
-		return layoutRevisionPersistence.fetchByL_H_P(
-			layoutSetBranchId, head, plid);
+		return layoutRevisionPersistence.fetchByL_H_P_All_First(
+			layoutSetBranchId, head, plid, null);
 	}
 
 	@Override
@@ -306,13 +310,17 @@ public class LayoutRevisionLocalServiceImpl
 			layoutSetBranchId, parentLayoutRevision, plid);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public LayoutRevision getLayoutRevision(
 			long layoutSetBranchId, long plid, boolean head)
 		throws PortalException {
 
-		return layoutRevisionPersistence.findByL_H_P(
-			layoutSetBranchId, head, plid);
+		return layoutRevisionPersistence.findByL_H_P_All_First(
+			layoutSetBranchId, head, plid, null);
 	}
 
 	@Override
@@ -366,6 +374,14 @@ public class LayoutRevisionLocalServiceImpl
 		long layoutSetBranchId, long plid) {
 
 		return layoutRevisionPersistence.findByL_P(layoutSetBranchId, plid);
+	}
+
+	@Override
+	public List<LayoutRevision> getLayoutRevisions(
+		long layoutSetBranchId, long plid, boolean head) {
+
+		return layoutRevisionPersistence.findByL_H_P_All(
+			layoutSetBranchId, head, plid);
 	}
 
 	@Override

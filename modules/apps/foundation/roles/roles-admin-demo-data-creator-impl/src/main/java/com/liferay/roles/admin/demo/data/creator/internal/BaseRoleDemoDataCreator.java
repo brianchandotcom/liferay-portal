@@ -38,11 +38,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseRoleDemoDataCreator implements RoleDemoDataCreator {
 
-	public void addPermissions(Role role, String xml, int scope, String primKey)
+	public void addPermissions(
+			Role role, String permissionsXML, int scope, String primKey)
 		throws PortalException {
 
 		try {
-			Document document = SAXReaderUtil.read(xml);
+			Document document = SAXReaderUtil.read(permissionsXML);
 
 			Element rootElement = document.getRootElement();
 

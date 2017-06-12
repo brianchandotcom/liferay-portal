@@ -108,6 +108,21 @@
 			<validator name="number" />
 		</field>
 	</model>
+	<model name="com.liferay.commerce.product.model.CPFriendlyUrlEntry">
+		<field name="uuid" type="String" />
+		<field name="CPFriendlyUrlEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="languageId" type="String" />
+		<field name="urlTitle" type="String" />
+		<field name="main" type="boolean" />
+	</model>
 	<model name="com.liferay.commerce.product.model.CPInstance">
 		<field name="uuid" type="String" />
 		<field name="CPInstanceId" type="long" />
@@ -195,5 +210,18 @@
 			<validator name="number" />
 		</field>
 		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.product.model.CPTemplateLayoutEntry">
+		<field name="uuid" type="String" />
+		<field name="CPFriendlyUrlEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="layoutUuid" type="String" />
 	</model>
 </model-hints>

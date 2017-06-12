@@ -90,6 +90,22 @@ create table CPDefinitionOptionValueRel (
 	priority DOUBLE
 );
 
+create table CPFriendlyUrlEntry (
+	uuid_ VARCHAR(75) null,
+	CPFriendlyUrlEntryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	classNameId LONG,
+	classPK LONG,
+	languageId VARCHAR(75) null,
+	urlTitle VARCHAR(75) null,
+	main BOOLEAN
+);
+
 create table CPInstance (
 	uuid_ VARCHAR(75) null,
 	CPInstanceId LONG not null primary key,
@@ -160,4 +176,18 @@ create table CPOptionValue (
 	title STRING null,
 	priority DOUBLE,
 	lastPublishDate DATE null
+);
+
+create table CPTemplateLayoutEntry (
+	uuid_ VARCHAR(75) null,
+	CPFriendlyUrlEntryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	classNameId LONG,
+	classPK LONG,
+	layoutUuid VARCHAR(75) null
 );

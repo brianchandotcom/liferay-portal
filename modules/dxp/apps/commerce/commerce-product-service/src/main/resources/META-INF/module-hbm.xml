@@ -7,10 +7,12 @@
 	<import class="com.liferay.commerce.product.model.CPDefinitionLocalization" />
 	<import class="com.liferay.commerce.product.model.CPDefinitionOptionRel" />
 	<import class="com.liferay.commerce.product.model.CPDefinitionOptionValueRel" />
+	<import class="com.liferay.commerce.product.model.CPFriendlyUrlEntry" />
 	<import class="com.liferay.commerce.product.model.CPInstance" />
 	<import class="com.liferay.commerce.product.model.CPOption" />
 	<import class="com.liferay.commerce.product.model.CPOptionCategory" />
 	<import class="com.liferay.commerce.product.model.CPOptionValue" />
+	<import class="com.liferay.commerce.product.model.CPTemplateLayoutEntry" />
 	<class name="com.liferay.commerce.product.model.impl.CPAttachmentFileEntryImpl" table="CPAttachmentFileEntry">
 		<id name="CPAttachmentFileEntryId" type="long">
 			<generator class="assigned" />
@@ -108,6 +110,23 @@
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
+	<class name="com.liferay.commerce.product.model.impl.CPFriendlyUrlEntryImpl" table="CPFriendlyUrlEntry">
+		<id name="CPFriendlyUrlEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="urlTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="main" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
 	<class name="com.liferay.commerce.product.model.impl.CPInstanceImpl" table="CPInstance">
 		<id name="CPInstanceId" type="long">
 			<generator class="assigned" />
@@ -183,5 +202,20 @@
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.commerce.product.model.impl.CPTemplateLayoutEntryImpl" table="CPTemplateLayoutEntry">
+		<id name="CPFriendlyUrlEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="layoutUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

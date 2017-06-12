@@ -49,19 +49,21 @@ public class FriendlyURLEntryLocalServiceWrapper
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURLEntry addFriendlyURLEntry(
 		long groupId, long companyId, java.lang.Class<?> clazz, long classPK,
-		java.lang.String urlTitle)
+		java.lang.String urlTitle,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _friendlyURLEntryLocalService.addFriendlyURLEntry(groupId,
-			companyId, clazz, classPK, urlTitle);
+			companyId, clazz, classPK, urlTitle, serviceContext);
 	}
 
 	@Override
 	public com.liferay.friendly.url.model.FriendlyURLEntry addFriendlyURLEntry(
 		long groupId, long companyId, long classNameId, long classPK,
-		java.lang.String urlTitle)
+		java.lang.String urlTitle,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _friendlyURLEntryLocalService.addFriendlyURLEntry(groupId,
-			companyId, classNameId, classPK, urlTitle);
+			companyId, classNameId, classPK, urlTitle, serviceContext);
 	}
 
 	/**

@@ -55,20 +55,22 @@ public class FriendlyURLEntryLocalServiceUtil {
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntry addFriendlyURLEntry(
 		long groupId, long companyId, java.lang.Class<?> clazz, long classPK,
-		java.lang.String urlTitle)
+		java.lang.String urlTitle,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFriendlyURLEntry(groupId, companyId, clazz, classPK,
-			urlTitle);
+			urlTitle, serviceContext);
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntry addFriendlyURLEntry(
 		long groupId, long companyId, long classNameId, long classPK,
-		java.lang.String urlTitle)
+		java.lang.String urlTitle,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addFriendlyURLEntry(groupId, companyId, classNameId,
-			classPK, urlTitle);
+			classPK, urlTitle, serviceContext);
 	}
 
 	/**

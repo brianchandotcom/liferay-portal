@@ -174,13 +174,7 @@ public class FriendlyURLEntryStagedModelRepository
 		return saveStagedModel(friendlyURLEntry);
 	}
 
-	@Reference(unbind = "-")
-	protected void setFriendlyURLEntryLocalService(
-		FriendlyURLEntryLocalService friendlyURLEntryLocalService) {
-
-		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
-	}
-
+	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference

@@ -120,7 +120,7 @@ public class CPDefinitionStagedModelRepository
 		return _cpDefinitionLocalService.addCPDefinition(
 			cpDefinition.getBaseSKU(), cpDefinition.getTitleMap(),
 			cpDefinition.getShortDescriptionMap(),
-			cpDefinition.getDescriptionMap(), null,
+			cpDefinition.getDescriptionMap(), null, null,
 			cpDefinition.getProductTypeName(),
 			cpDefinition.getDDMStructureKey(), displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
@@ -288,7 +288,7 @@ public class CPDefinitionStagedModelRepository
 		return _cpDefinitionLocalService.updateCPDefinition(
 			cpDefinition.getCPDefinitionId(), cpDefinition.getBaseSKU(),
 			cpDefinition.getTitleMap(), cpDefinition.getShortDescriptionMap(),
-			cpDefinition.getDescriptionMap(), null,
+			cpDefinition.getDescriptionMap(), null, null,
 			cpDefinition.getDDMStructureKey(), displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,

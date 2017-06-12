@@ -52,30 +52,30 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 
 		// Web content author
 
-		String webContentAuthorXml = StringUtil.read(
+		String webContentAuthorPermissionsXML = StringUtil.read(
 			UsersDemo.class, "dependencies/permissions-web-content-author.xml");
 
-		Role webContentAuthor = _siteRoleDemoDataCreator.create(
-			companyId, "Web Content Author", webContentAuthorXml);
+		Role webContentAuthorRole = _siteRoleDemoDataCreator.create(
+			companyId, "Web Content Author", webContentAuthorPermissionsXML);
 
 		_siteMemberUserDemoDataCreator.create(
 			acmeCorpGroup.getGroupId(), "joe@liferay.com",
-			new long[] {webContentAuthor.getRoleId()});
+			new long[] {webContentAuthorRole.getRoleId()});
 
 		// Forum moderator
 
 		Group petLoversGroup = _siteDemoDataCreator.create(
 			companyId, "Pet Lovers");
 
-		String forumModeratorXml = StringUtil.read(
+		String forumModeratorPermissionsXML = StringUtil.read(
 			UsersDemo.class, "dependencies/permissions-forum-moderator.xml");
 
-		Role forumModerator = _siteRoleDemoDataCreator.create(
-			companyId, "Forum Moderator", forumModeratorXml);
+		Role forumModeratorRole = _siteRoleDemoDataCreator.create(
+			companyId, "Forum Moderator", forumModeratorPermissionsXML);
 
 		_siteMemberUserDemoDataCreator.create(
 			petLoversGroup.getGroupId(), "maria@liferay.com",
-			new long[] {forumModerator.getRoleId()});
+			new long[] {forumModeratorRole.getRoleId()});
 	}
 
 	@Deactivate

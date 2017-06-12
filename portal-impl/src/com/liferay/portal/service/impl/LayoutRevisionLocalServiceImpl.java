@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutRevisionException;
 import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.comparator.LayoutRevisionCreateDateComparator;
+import com.liferay.portal.kernel.util.comparator.LayoutRevisionModifiedDateComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.service.base.LayoutRevisionLocalServiceBaseImpl;
@@ -554,6 +556,8 @@ public class LayoutRevisionLocalServiceImpl
 		LayoutRevision layoutRevision =
 			layoutRevisionPersistence.findByPrimaryKey(layoutRevisionId);
 
+		boolean head = layoutRevision.isHead();
+
 		layoutRevision.setStatus(status);
 		layoutRevision.setStatusByUserId(user.getUserId());
 		layoutRevision.setStatusByUserName(user.getFullName());
@@ -585,12 +589,13 @@ public class LayoutRevisionLocalServiceImpl
 				}
 			}
 		}
-		else {
+		else if (head) {
 			List<LayoutRevision> layoutRevisions =
 				layoutRevisionPersistence.findByL_P_S(
 					layoutRevision.getLayoutSetBranchId(),
-					layoutRevision.getPlid(),
-					WorkflowConstants.STATUS_APPROVED);
+					layoutRevision.getPlid(), WorkflowConstants.STATUS_APPROVED,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					new LayoutRevisionModifiedDateComparator(false));
 
 			for (LayoutRevision curLayoutRevision : layoutRevisions) {
 				if (curLayoutRevision.getLayoutRevisionId() !=

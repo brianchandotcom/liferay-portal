@@ -32,7 +32,6 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 		deleteCalEventClassName();
 
 		deleteDuplicateResources();
-
 		deleteDuplicateResourcePermissions();
 
 		super.doUpgrade();

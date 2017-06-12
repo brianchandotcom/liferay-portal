@@ -1,3 +1,14 @@
+
+
+<%@ page import="com.liferay.portal.kernel.model.Layout" %><%@
+page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
+
+<%@ page import="java.util.List" %>
+
+<%@ page import="javax.portlet.PortletURL" %>
+
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -17,12 +28,30 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFINITION);
+CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 
 String productTypeName = BeanParamUtil.getString(cpDefinition, request, "productTypeName");
+String layoutUuid = cpDefinitionsDisplayContext.getLayoutUuid();
+
+String layoutBreadcrumb = StringPool.BLANK;
+
+if (Validator.isNotNull(layoutUuid)) {
+	Layout selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), false);
+
+	if (selLayout == null) {
+		selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), true);
+	}
+
+	if (selLayout != null) {
+		layoutBreadcrumb = cpDefinitionsDisplayContext.getLayoutBreadcrumb(selLayout);
+	}
+}
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="base-information" />
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="display-page" />
 
 <aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
@@ -30,4 +59,76 @@ String productTypeName = BeanParamUtil.getString(cpDefinition, request, "product
 	<aui:input label="product-type" name="productTypeName" readOnly="readOnly" type="text" value="<%= productTypeName %>" />
 
 	<aui:input label="SKU" name="baseSKU" />
+
+	<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
+
+	<p class="text-muted">
+		<liferay-ui:message key="default-display-page-help" />
+	</p>
+
+	<p class="text-default">
+			<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
+				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+			</span>
+		<span id="<portlet:namespace />displayPageNameInput">
+				<c:choose>
+					<c:when test="<%= Validator.isNull(layoutBreadcrumb) %>">
+						<span class="text-muted"><liferay-ui:message key="none" /></span>
+					</c:when>
+					<c:otherwise>
+						<%= layoutBreadcrumb %>
+					</c:otherwise>
+				</c:choose>
+			</span>
+	</p>
+
+	<aui:button name="chooseDisplayPage" value="choose" />
 </aui:fieldset>
+
+<aui:script use="liferay-item-selector-dialog">
+	var displayPageItemContainer = $('#<portlet:namespace />displayPageItemContainer');
+	var displayPageItemRemove = $('#<portlet:namespace />displayPageItemRemove');
+	var displayPageNameInput = $('#<portlet:namespace />displayPageNameInput');
+	var pagesContainerInput = $('#<portlet:namespace />pagesContainerInput');
+
+	$('#<portlet:namespace />chooseDisplayPage').on(
+		'click',
+		function(event) {
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: 'selectDisplayPage',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
+
+							if (selectedItem) {
+
+								pagesContainerInput.val(selectedItem.value);
+
+								displayPageNameInput.html(selectedItem.layoutpath);
+
+								displayPageItemRemove.removeClass('hide');
+							}
+						}
+					},
+					'strings.add': '<liferay-ui:message key="done" />',
+					title: '<liferay-ui:message key="select-page" />',
+					url: '<%= cpDefinitionsDisplayContext.getItemSelectorUrl() %>'
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
+
+	displayPageItemRemove.on(
+		'click',
+		function(event) {
+			displayPageNameInput.html('<liferay-ui:message key="none" />');
+
+			pagesContainerInput.val('');
+
+			displayPageItemRemove.addClass('hide');
+		}
+	);
+</aui:script>

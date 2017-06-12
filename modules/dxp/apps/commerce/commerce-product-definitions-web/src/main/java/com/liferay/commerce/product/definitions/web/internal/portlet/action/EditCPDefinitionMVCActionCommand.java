@@ -234,6 +234,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		String productTypeName = ParamUtil.getString(
 			actionRequest, "productTypeName");
 		String baseSKU = ParamUtil.getString(actionRequest, "baseSKU");
+		String layoutUuid = ParamUtil.getString(actionRequest, "layoutUuid");
 
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
@@ -283,11 +284,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.addCPDefinition(
 				baseSKU, titleMap, shortDescriptionMap, descriptionMap,
-				urlTitleMap, productTypeName, null, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, serviceContext);
+				urlTitleMap, layoutUuid, productTypeName, null,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 		}
 		else {
 
@@ -295,7 +296,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
 				cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-				descriptionMap, urlTitleMap, null, displayDateMonth,
+				descriptionMap, urlTitleMap, layoutUuid, null, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,

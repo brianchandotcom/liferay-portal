@@ -22,6 +22,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.List;
@@ -49,10 +50,15 @@ public class FriendlyURLEntryStagedModelRepository
 			FriendlyURLEntry friendlyURLEntry)
 		throws PortalException {
 
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			friendlyURLEntry);
+
+		serviceContext.setUuid(friendlyURLEntry.getUuid());
+
 		return _friendlyURLEntryLocalService.addFriendlyURLEntry(
 			friendlyURLEntry.getCompanyId(), friendlyURLEntry.getGroupId(),
 			friendlyURLEntry.getClassNameId(), friendlyURLEntry.getClassPK(),
-			friendlyURLEntry.getUrlTitle());
+			friendlyURLEntry.getUrlTitle(), serviceContext);
 	}
 
 	@Override

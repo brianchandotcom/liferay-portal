@@ -19,12 +19,15 @@ import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -66,7 +69,7 @@ public class FriendlyURLEntryLocalServiceTest {
 
 		FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
 			_group.getGroupId(), _group.getCompanyId(), classNameId,
-			TestPropsValues.getUserId(), urlTitle);
+			TestPropsValues.getUserId(), urlTitle, _getServiceContext());
 
 		String uniqueUrlTitle =
 			FriendlyURLEntryLocalServiceUtil.getUniqueUrlTitle(
@@ -83,7 +86,7 @@ public class FriendlyURLEntryLocalServiceTest {
 
 		FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
 			_group.getGroupId(), _group.getCompanyId(), classNameId,
-			TestPropsValues.getUserId(), urlTitle);
+			TestPropsValues.getUserId(), urlTitle, _getServiceContext());
 
 		String uniqueUrlTitle =
 			FriendlyURLEntryLocalServiceUtil.getUniqueUrlTitle(
@@ -121,7 +124,7 @@ public class FriendlyURLEntryLocalServiceTest {
 
 		FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
 			_group.getGroupId(), _group.getCompanyId(), classNameId,
-			TestPropsValues.getUserId(), urlTitle);
+			TestPropsValues.getUserId(), urlTitle, _getServiceContext());
 
 		FriendlyURLEntryLocalServiceUtil.validate(
 			_group.getGroupId(), _group.getCompanyId(), classNameId, urlTitle);
@@ -138,7 +141,7 @@ public class FriendlyURLEntryLocalServiceTest {
 
 		FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
 			_group.getGroupId(), _group.getCompanyId(), classNameId,
-			TestPropsValues.getUserId(), urlTitle);
+			TestPropsValues.getUserId(), urlTitle, _getServiceContext());
 
 		FriendlyURLEntryLocalServiceUtil.validate(
 			_group.getGroupId(), _group.getCompanyId(), classNameId,
@@ -156,7 +159,7 @@ public class FriendlyURLEntryLocalServiceTest {
 
 		FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
 			_group.getGroupId(), _group.getCompanyId(), classNameId,
-			TestPropsValues.getUserId(), urlTitle);
+			TestPropsValues.getUserId(), urlTitle, _getServiceContext());
 
 		FriendlyURLEntryLocalServiceUtil.validate(
 			_group.getGroupId(), _group.getCompanyId(), classNameId,
@@ -187,6 +190,11 @@ public class FriendlyURLEntryLocalServiceTest {
 
 		FriendlyURLEntryLocalServiceUtil.validate(
 			_group.getGroupId(), _group.getCompanyId(), classNameId, urlTitle);
+	}
+
+	private ServiceContext _getServiceContext() throws PortalException {
+		return ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), _user.getUserId());
 	}
 
 	@DeleteAfterTestRun

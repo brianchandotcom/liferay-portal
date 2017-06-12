@@ -549,9 +549,9 @@ AUI.add(
 
 						if (inputLocalizedInput) {
 							var inputLocalizedInputId = inputLocalizedInput.attr('id');
-							
+
 							if (inputLocalizedInputId) {
-								
+
 								inputLocalized = Liferay.InputLocalized._registered[inputLocalizedInputId];
 
 								if (inputLocalized) {
@@ -561,7 +561,7 @@ AUI.add(
 								inputLocalized = Liferay.InputLocalized._instances[inputLocalizedInputId];
 							}
 						}
-						
+
 						return inputLocalized;
 					},
 
@@ -604,7 +604,7 @@ AUI.add(
 					_registerInputLocalized: function(node, inputLocalized, guid) {
 						var inputLocalizedId = inputLocalized.get('id').replace(/([0-9]+)$/, guid);
 						var inputLocalizedNamespaceId = inputLocalized.get('namespace') + inputLocalizedId;
-						
+
 						Liferay.InputLocalized.register(inputLocalizedNamespaceId, {
 							boundingBox: '#' + inputLocalizedNamespaceId + 'BoundingBox',
 							columns: inputLocalized.get('columns'),

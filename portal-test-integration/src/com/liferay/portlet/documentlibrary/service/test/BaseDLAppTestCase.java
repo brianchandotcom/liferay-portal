@@ -12,15 +12,18 @@
  * details.
  */
 
-package com.liferay.document.library.service.test;
+package com.liferay.portlet.documentlibrary.service.test;
 
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -49,6 +52,8 @@ public abstract class BaseDLAppTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		_name = PrincipalThreadLocal.getName();
+
 		group = GroupTestUtil.addGroup();
 
 		targetGroup = GroupTestUtil.addGroup();
@@ -59,6 +64,9 @@ public abstract class BaseDLAppTestCase {
 				"Test Folder");
 		}
 		catch (NoSuchFolderException nsfe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfe, nsfe);
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -77,6 +85,8 @@ public abstract class BaseDLAppTestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		PrincipalThreadLocal.setName(_name);
+
 		RoleTestUtil.removeResourcePermission(
 			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
 			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
@@ -93,5 +103,10 @@ public abstract class BaseDLAppTestCase {
 
 	@DeleteAfterTestRun
 	protected Group targetGroup;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseDLAppTestCase.class);
+
+	private String _name;
 
 }

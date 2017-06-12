@@ -34,9 +34,11 @@ public class AddressTextLocalizerHelper {
 	public static String format(Address address) {
 		Country country = address.getCountry();
 
-		String a2 = country.getA2();
+		AddressTextLocalizer addressTextLocalizer = null;
 
-		AddressTextLocalizer addressTextLocalizer = getAddressTextLocalizer(a2);
+		if (country != null) {
+			addressTextLocalizer = getAddressTextLocalizer(country.getA2());
+		}
 
 		if (addressTextLocalizer == null) {
 			addressTextLocalizer = getAddressTextLocalizer("US");

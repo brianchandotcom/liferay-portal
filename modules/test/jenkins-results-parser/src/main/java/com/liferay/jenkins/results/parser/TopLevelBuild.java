@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import com.liferay.jenkins.results.parser.failure.message.generator.DownstreamFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.PoshiTestFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.PoshiValidationFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailureMessageGenerator;
 
@@ -561,6 +562,7 @@ public class TopLevelBuild extends BaseBuild {
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{
 			new PoshiValidationFailureMessageGenerator(),
+			new PoshiTestFailureMessageGenerator(),
 			new RebaseFailureMessageGenerator(),
 
 			new DownstreamFailureMessageGenerator(),

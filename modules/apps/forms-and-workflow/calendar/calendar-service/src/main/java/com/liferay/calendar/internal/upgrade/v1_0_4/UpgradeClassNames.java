@@ -69,24 +69,20 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 		throws UpgradeException {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			String oldName = _RESOURCE_NAMES[0][0];
-			String newName = _RESOURCE_NAMES[0][1];
+			StringBundler sb = new StringBundler(6);
 
-			StringBundler sb = new StringBundler();
-
-			sb.append("SELECT orp.resourcePermissionId ");
-			sb.append("FROM ResourcePermission orp, ResourcePermission nrp ");
-			sb.append("WHERE orp.companyId = nrp.companyId ");
-			sb.append("AND orp.scope = nrp.scope ");
-			sb.append("AND orp.primkey = nrp.primkey ");
-			sb.append("AND orp.roleId = nrp.roleId ");
-			sb.append("AND orp.name = ? AND nrp.name = ?");
+			sb.append("SELECT orp.resourcePermissionId FROM ");
+			sb.append("ResourcePermission orp, ResourcePermission nrp WHERE ");
+			sb.append("orp.companyId = nrp.companyId AND orp.scope = ");
+			sb.append("nrp.scope AND orp.primkey = nrp.primkey AND ");
+			sb.append("orp.roleId = nrp.roleId AND orp.name = ? AND nrp.name ");
+			sb.append("= ?");
 
 			try (PreparedStatement ps = connection.prepareStatement(
 					sb.toString())) {
 
-				ps.setString(1, oldName);
-				ps.setString(2, newName);
+				ps.setString(1, _RESOURCE_NAMES[0][0]);
+				ps.setString(2, _RESOURCE_NAMES[0][1]);
 
 				ResultSet rs = ps.executeQuery();
 

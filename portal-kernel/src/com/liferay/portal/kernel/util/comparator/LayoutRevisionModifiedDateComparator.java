@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util.comparator;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -21,6 +23,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Akos Thurzo
  */
+@ProviderType
 public class LayoutRevisionModifiedDateComparator
 	extends OrderByComparator<LayoutRevision> {
 

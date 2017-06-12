@@ -25,6 +25,38 @@ public class MathUtil {
 		return value1 - value2;
 	}
 
+	public static boolean isGreaterThan(Integer value1, Integer value2) {
+		if (value1 > value2) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isGreaterThanOrEqual(Integer value1, Integer value2) {
+		if (value1 >= value2) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isLessThan(Integer value1, Integer value2) {
+		if (value1 < value2) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isLessThanOrEqual(Integer value1, Integer value2) {
+		if (value1 <= value2) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static int percent(Integer percent, Integer value) {
 		return quotient(product(percent, value), 100, true);
 	}

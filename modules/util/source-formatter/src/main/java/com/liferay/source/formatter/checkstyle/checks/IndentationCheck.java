@@ -88,8 +88,7 @@ public class IndentationCheck extends AbstractCheck {
 		if (!_isAtLineStart(detailAST) ||
 			_isCatchStatementParameter(detailAST) ||
 			_isInsideChainedConcatMethod(detailAST) ||
-			_isInsideDoIfOrWhileStatementCriterium(detailAST) ||
-			_isInsideOperatorCriterium(detailAST)) {
+			_isInsideDoIfOrWhileStatementCriterium(detailAST)) {
 
 			return;
 		}
@@ -894,19 +893,6 @@ public class IndentationCheck extends AbstractCheck {
 				return true;
 			}
 		}
-	}
-
-	private boolean _isInsideOperatorCriterium(DetailAST detailAST) {
-		if ((_findParent(detailAST, TokenTypes.BAND) != null) ||
-			(_findParent(detailAST, TokenTypes.BOR) != null) ||
-			(_findParent(detailAST, TokenTypes.BXOR) != null) ||
-			(_findParent(detailAST, TokenTypes.LAND) != null) ||
-			(_findParent(detailAST, TokenTypes.LOR) != null)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final int[] _ARITHMETIC_OPERATORS = {

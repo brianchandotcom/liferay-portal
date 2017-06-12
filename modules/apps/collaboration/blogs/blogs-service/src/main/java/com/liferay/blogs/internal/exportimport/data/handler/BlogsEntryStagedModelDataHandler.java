@@ -603,7 +603,6 @@ public class BlogsEntryStagedModelDataHandler
 
 			friendlyURLEntry.setClassNameId(
 				_portal.getClassNameId(BlogsEntry.class));
-			friendlyURLEntry.setClassPK(importedBlogsEntry.getPrimaryKey());
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, friendlyURLEntry);

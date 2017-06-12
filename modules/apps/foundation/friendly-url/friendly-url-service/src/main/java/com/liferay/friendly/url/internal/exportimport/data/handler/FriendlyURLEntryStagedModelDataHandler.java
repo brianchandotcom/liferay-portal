@@ -41,6 +41,14 @@ public class FriendlyURLEntryStagedModelDataHandler
 		{FriendlyURLEntry.class.getName()};
 
 	@Override
+	public FriendlyURLEntry fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return _stagedModelRepository.fetchStagedModelByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	public List<FriendlyURLEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 

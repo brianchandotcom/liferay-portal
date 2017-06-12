@@ -181,6 +181,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 			<liferay-ui:ratings
 				className="<%= BookmarksEntry.class.getName() %>"
 				classPK="<%= entry.getEntryId() %>"
+				inTrash="<%= entry.isInTrash() %>"
 			/>
 
 			<liferay-expando:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">

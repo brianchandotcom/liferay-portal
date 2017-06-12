@@ -203,6 +203,15 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 		return getService().getCPFriendlyURLEntriesCount();
 	}
 
+	public static java.lang.String buildUrlTitle(long groupId, long companyId,
+		long classNameId, long classPK, java.lang.String languageId,
+		java.lang.String newTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .buildUrlTitle(groupId, companyId, classNameId, classPK,
+			languageId, newTitle);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -210,6 +219,22 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.lang.String getUniqueUrlTitle(long groupId,
+		long companyId, long classNameId, long classPK,
+		java.lang.String languageId, java.lang.String urlTitle) {
+		return getService()
+				   .getUniqueUrlTitle(groupId, companyId, classNameId, classPK,
+			languageId, urlTitle);
+	}
+
+	public static java.lang.String getUrlTitleMapAsXML(long groupId,
+		long companyId, long classNameId, long classPK,
+		java.lang.String defaultLanguageId) {
+		return getService()
+				   .getUrlTitleMapAsXML(groupId, companyId, classNameId,
+			classPK, defaultLanguageId);
 	}
 
 	/**
@@ -316,6 +341,24 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 			start, end, orderByComparator);
 	}
 
+	public static java.util.Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap(
+		long groupId, long companyId, long classNameId, long classPK) {
+		return getService()
+				   .getLanguageIdToUrlTitleMap(groupId, companyId, classNameId,
+			classPK);
+	}
+
+	public static java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap(
+		long groupId, long companyId, java.lang.Class<?> clazz, long classPK) {
+		return getService().getUrlTitleMap(groupId, companyId, clazz, classPK);
+	}
+
+	public static java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap(
+		long groupId, long companyId, long classNameId, long classPK) {
+		return getService()
+				   .getUrlTitleMap(groupId, companyId, classNameId, classPK);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -338,6 +381,24 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void addCPFriendlyURLEntry(long groupId, long companyId,
+		java.lang.Class<?> clazz, long classPK,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addCPFriendlyURLEntry(groupId, companyId, clazz, classPK,
+			urlTitleMap);
+	}
+
+	public static void addCPFriendlyURLEntry(long groupId, long companyId,
+		long classNameId, long classPK,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addCPFriendlyURLEntry(groupId, companyId, classNameId, classPK,
+			urlTitleMap);
 	}
 
 	public static void deleteCPFriendlyURLEntry(long groupId, long companyId,

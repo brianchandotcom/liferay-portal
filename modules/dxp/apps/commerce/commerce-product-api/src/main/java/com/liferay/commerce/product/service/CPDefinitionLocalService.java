@@ -92,6 +92,7 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> shortDescriptionMap,
 		Map<Locale, java.lang.String> descriptionMap,
+		Map<Locale, java.lang.String> urlTitleMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -213,6 +214,7 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		java.lang.String baseSKU, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> shortDescriptionMap,
 		Map<Locale, java.lang.String> descriptionMap,
+		Map<Locale, java.lang.String> urlTitleMap,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -281,6 +283,13 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getUniqueUrlTitle(CPDefinition cpDefinition,
+		java.lang.String languageId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getUrlTitleMapAsXML(CPDefinition cpDefinition);
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -380,6 +389,10 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Locale, java.lang.String> getCPDefinitionTitleMap(
 		long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Locale, java.lang.String> getUniqueUrlTitles(
+		CPDefinition cpDefinition) throws PortalException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.

@@ -45,6 +45,7 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -53,7 +54,7 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionService.addCPDefinition(baseSKU, titleMap,
-			shortDescriptionMap, descriptionMap, productTypeName,
+			shortDescriptionMap, descriptionMap, urlTitleMap, productTypeName,
 			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
@@ -101,6 +102,7 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -109,11 +111,11 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionService.updateCPDefinition(cpDefinitionId, baseSKU,
-			titleMap, shortDescriptionMap, descriptionMap, ddmStructureKey,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Override
@@ -157,6 +159,12 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _cpDefinitionService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.lang.String getUrlTitleMapAsXML(
+		com.liferay.commerce.product.model.CPDefinition cpDefinition) {
+		return _cpDefinitionService.getUrlTitleMapAsXML(cpDefinition);
 	}
 
 	@Override

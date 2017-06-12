@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for CPFriendlyURLEntry. Methods of this
@@ -193,12 +195,25 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPFriendlyURLEntriesCount();
 
+	public java.lang.String buildUrlTitle(long groupId, long companyId,
+		long classNameId, long classPK, java.lang.String languageId,
+		java.lang.String newTitle) throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getUniqueUrlTitle(long groupId, long companyId,
+		long classNameId, long classPK, java.lang.String languageId,
+		java.lang.String urlTitle);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getUrlTitleMapAsXML(long groupId, long companyId,
+		long classNameId, long classPK, java.lang.String defaultLanguageId);
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -283,6 +298,18 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap(
+		long groupId, long companyId, long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Locale, java.lang.String> getUrlTitleMap(long groupId,
+		long companyId, java.lang.Class<?> clazz, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Locale, java.lang.String> getUrlTitleMap(long groupId,
+		long companyId, long classNameId, long classPK);
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -300,6 +327,14 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void addCPFriendlyURLEntry(long groupId, long companyId,
+		java.lang.Class<?> clazz, long classPK,
+		Map<Locale, java.lang.String> urlTitleMap) throws PortalException;
+
+	public void addCPFriendlyURLEntry(long groupId, long companyId,
+		long classNameId, long classPK,
+		Map<Locale, java.lang.String> urlTitleMap) throws PortalException;
 
 	public void deleteCPFriendlyURLEntry(long groupId, long companyId,
 		java.lang.Class<?> clazz, long classPK);

@@ -23,6 +23,8 @@ create unique index IX_34516B9 on CPDefinitionOptionValueRel (uuid_[$COLUMN_LENG
 
 create index IX_71874AE8 on CPFriendlyURLEntry (groupId, companyId, classNameId, classPK, languageId[$COLUMN_LENGTH:75$], main);
 create index IX_393BFCD8 on CPFriendlyURLEntry (groupId, companyId, classNameId, classPK, languageId[$COLUMN_LENGTH:75$], urlTitle[$COLUMN_LENGTH:255$]);
+create index IX_C13D69E1 on CPFriendlyURLEntry (groupId, companyId, classNameId, classPK, main);
+create index IX_3E26073 on CPFriendlyURLEntry (groupId, companyId, classNameId, languageId[$COLUMN_LENGTH:75$], urlTitle[$COLUMN_LENGTH:255$]);
 create index IX_C7AAAB6C on CPFriendlyURLEntry (groupId, companyId, classNameId, urlTitle[$COLUMN_LENGTH:255$]);
 create unique index IX_4BAE95CD on CPFriendlyURLEntry (groupId, languageId[$COLUMN_LENGTH:75$], urlTitle[$COLUMN_LENGTH:255$]);
 create unique index IX_A05A30D on CPFriendlyURLEntry (groupId, urlTitle[$COLUMN_LENGTH:255$], languageId[$COLUMN_LENGTH:75$]);

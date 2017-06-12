@@ -58,6 +58,7 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
 		java.lang.String productTypeName, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -66,7 +67,7 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.addCPDefinition(baseSKU, titleMap,
-			shortDescriptionMap, descriptionMap, productTypeName,
+			shortDescriptionMap, descriptionMap, urlTitleMap, productTypeName,
 			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
@@ -227,6 +228,7 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -236,10 +238,11 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.updateCPDefinition(cpDefinitionId,
 			baseSKU, titleMap, shortDescriptionMap, descriptionMap,
-			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			urlTitleMap, ddmStructureKey, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override
@@ -338,6 +341,21 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _cpDefinitionLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.lang.String getUniqueUrlTitle(
+		com.liferay.commerce.product.model.CPDefinition cpDefinition,
+		java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLocalService.getUniqueUrlTitle(cpDefinition,
+			languageId);
+	}
+
+	@Override
+	public java.lang.String getUrlTitleMapAsXML(
+		com.liferay.commerce.product.model.CPDefinition cpDefinition) {
+		return _cpDefinitionLocalService.getUrlTitleMapAsXML(cpDefinition);
 	}
 
 	/**
@@ -470,6 +488,13 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 	public java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionTitleMap(
 		long cpDefinitionId) {
 		return _cpDefinitionLocalService.getCPDefinitionTitleMap(cpDefinitionId);
+	}
+
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getUniqueUrlTitles(
+		com.liferay.commerce.product.model.CPDefinition cpDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLocalService.getUniqueUrlTitles(cpDefinition);
 	}
 
 	/**

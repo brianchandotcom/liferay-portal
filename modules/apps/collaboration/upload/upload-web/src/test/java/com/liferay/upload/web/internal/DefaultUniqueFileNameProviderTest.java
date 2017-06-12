@@ -32,7 +32,9 @@ public class DefaultUniqueFileNameProviderTest {
 
 	@Before
 	public void setUp() {
-		new FileUtil().setFile(new FileImpl());
+		FileUtil fileUtil = new FileUtil();
+
+		fileUtil.setFile(new FileImpl());
 	}
 
 	@Test
@@ -116,9 +118,9 @@ public class DefaultUniqueFileNameProviderTest {
 	}
 
 	private Predicate<String> _existsUntil(int n) {
-		AtomicInteger i = new AtomicInteger(0);
+		AtomicInteger atomicInteger = new AtomicInteger(0);
 
-		return fileName -> i.addAndGet(1) <= n;
+		return fileName -> atomicInteger.addAndGet(1) <= n;
 	}
 
 	private final DefaultUniqueFileNameProvider _defaultUniqueFileNameProvider =

@@ -5,7 +5,7 @@
 		</execute>
 
 		<execute function="Click" locator1="Button#PLUS" />
-		
+
 		<execute function="AssertClick" locator1="CommerceCatalogEntry#ADD_MENU" value1="${addMenu}">
 			<var name="key_addMenu" value="${addMenu}" />
 		</execute>

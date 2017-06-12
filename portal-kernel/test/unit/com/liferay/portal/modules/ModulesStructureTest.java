@@ -947,12 +947,6 @@ public class ModulesStructureTest {
 				", please use \"apply plugin:\" instead",
 			content.contains("plugins {"));
 
-		Path dirPath = path.getParent();
-
-		if (_isInGitRepoReadOnly(dirPath) || _isInPrivateModulesDir(dirPath)) {
-			return;
-		}
-
 		List<GradleDependency> gradleDependencies =
 			ModulesStructureTestUtil.getGradleDependencies(
 				content, path, _modulesDirPath);

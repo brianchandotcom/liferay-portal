@@ -108,7 +108,9 @@ public class FriendlyURLEntryStagedModelRepository
 	public FriendlyURLEntry fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return null;
+		return
+			_friendlyURLEntryLocalService.fetchFriendlyURLEntryByUuidAndGroupId(
+				uuid, groupId);
 	}
 
 	@Override

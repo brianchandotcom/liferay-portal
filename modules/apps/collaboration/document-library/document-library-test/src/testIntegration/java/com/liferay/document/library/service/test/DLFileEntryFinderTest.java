@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service.persistence;
+package com.liferay.document.library.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -25,17 +26,15 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -54,22 +53,24 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
  */
+@RunWith(Arquillian.class)
 @Sync
 public class DLFileEntryFinderTest {
 
@@ -78,10 +79,11 @@ public class DLFileEntryFinderTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			SynchronousDestinationTestRule.INSTANCE);
+			SynchronousDestinationTestRule.INSTANCE,
+			PermissionCheckerTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		_user = UserTestUtil.addUser();
 
 		long classNameId = PortalUtil.getClassNameId(
@@ -108,13 +110,6 @@ public class DLFileEntryFinderTest {
 			_repository.getRepositoryId(), "-NewRepository", serviceContext);
 
 		_newRepositoryFolder = (Folder)objects[0];
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws PortalException {
-		GroupLocalServiceUtil.deleteGroup(_group);
-
-		UserLocalServiceUtil.deleteUser(_user);
 	}
 
 	@Test
@@ -1224,7 +1219,7 @@ public class DLFileEntryFinderTest {
 		Assert.assertEquals("FE1.txt", dlFileEntry.getTitle());
 	}
 
-	protected static FileEntry addFileEntry(
+	protected FileEntry addFileEntry(
 			long userId, long repositoryId, long folderId, String fileName,
 			String titleSuffix, String contentType, long fileEntryTypeId)
 		throws Exception {
@@ -1239,77 +1234,6 @@ public class DLFileEntryFinderTest {
 			userId, repositoryId, folderId, fileName, contentType,
 			fileName.concat(titleSuffix), StringPool.BLANK, StringPool.BLANK,
 			(byte[])null, serviceContext);
-	}
-
-	protected static Object[] setUp(
-			long repositoryId, String titleSuffix,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		Folder folder = DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), repositoryId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A",
-			StringPool.BLANK, serviceContext);
-
-		DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), repositoryId, folder.getFolderId(),
-			"Folder B", StringPool.BLANK, serviceContext);
-
-		Folder folderC = DLAppLocalServiceUtil.addFolder(
-			TestPropsValues.getUserId(), repositoryId, folder.getFolderId(),
-			"Folder C", StringPool.BLANK, serviceContext);
-
-		DLTrashServiceUtil.moveFolderToTrash(folderC.getFolderId());
-
-		FileEntry fileEntry = addFileEntry(
-			_user.getUserId(), repositoryId, folder.getFolderId(), "FE1.txt",
-			titleSuffix, ContentTypes.TEXT_PLAIN,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-
-		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
-
-		DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
-
-		dlFileEntry.setExtraSettings("hello=world");
-		dlFileEntry.setSmallImageId(_SMALL_IMAGE_ID);
-
-		dlFileEntry = DLFileEntryLocalServiceUtil.updateDLFileEntry(
-			dlFileEntry);
-
-		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-		addFileEntry(
-			TestPropsValues.getUserId(), repositoryId, folder.getFolderId(),
-			"FE2.pdf", titleSuffix, ContentTypes.APPLICATION_PDF,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
-
-		fileEntry = addFileEntry(
-			TestPropsValues.getUserId(), repositoryId, folder.getFolderId(),
-			"FE3.txt", titleSuffix, ContentTypes.TEXT_PLAIN,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
-
-		fileEntry = DLAppServiceUtil.updateFileEntry(
-			fileEntry.getFileEntryId(), "FE3.txt", ContentTypes.TEXT_PLAIN,
-			"FE3.txt".concat(titleSuffix), StringPool.BLANK, StringPool.BLANK,
-			false,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
-			serviceContext);
-
-		dlFileEntry = ((LiferayFileEntry)fileEntry).getDLFileEntry();
-
-		dlFileEntry.setDescription("FE3.txt");
-
-		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
-
-		DLFileVersion dlFileVersion3 = dlFileEntry.getFileVersion();
-
-		dlFileVersion3.setExtraSettings("hello=world");
-
-		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion3);
-
-		DLTrashServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
-
-		return new Object[] {folder, dlFileVersion};
 	}
 
 	protected int doCountBy_G_U_F_M(
@@ -1500,13 +1424,89 @@ public class DLFileEntryFinderTest {
 			userId, repositoryIds, folderIds, mimeType, queryDefinition);
 	}
 
+	protected Object[] setUp(
+			long repositoryId, String titleSuffix,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Folder folder = DLAppLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), repositoryId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A",
+			StringPool.BLANK, serviceContext);
+
+		DLAppLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), repositoryId, folder.getFolderId(),
+			"Folder B", StringPool.BLANK, serviceContext);
+
+		Folder folderC = DLAppLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), repositoryId, folder.getFolderId(),
+			"Folder C", StringPool.BLANK, serviceContext);
+
+		DLTrashServiceUtil.moveFolderToTrash(folderC.getFolderId());
+
+		FileEntry fileEntry = addFileEntry(
+			_user.getUserId(), repositoryId, folder.getFolderId(), "FE1.txt",
+			titleSuffix, ContentTypes.TEXT_PLAIN,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+
+		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
+
+		DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
+
+		dlFileEntry.setExtraSettings("hello=world");
+		dlFileEntry.setSmallImageId(_SMALL_IMAGE_ID);
+
+		dlFileEntry = DLFileEntryLocalServiceUtil.updateDLFileEntry(
+			dlFileEntry);
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		addFileEntry(
+			TestPropsValues.getUserId(), repositoryId, folder.getFolderId(),
+			"FE2.pdf", titleSuffix, ContentTypes.APPLICATION_PDF,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
+
+		fileEntry = addFileEntry(
+			TestPropsValues.getUserId(), repositoryId, folder.getFolderId(),
+			"FE3.txt", titleSuffix, ContentTypes.TEXT_PLAIN,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
+
+		fileEntry = DLAppServiceUtil.updateFileEntry(
+			fileEntry.getFileEntryId(), "FE3.txt", ContentTypes.TEXT_PLAIN,
+			"FE3.txt".concat(titleSuffix), StringPool.BLANK, StringPool.BLANK,
+			false,
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			serviceContext);
+
+		dlFileEntry = ((LiferayFileEntry)fileEntry).getDLFileEntry();
+
+		dlFileEntry.setDescription("FE3.txt");
+
+		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+
+		DLFileVersion dlFileVersion3 = dlFileEntry.getFileVersion();
+
+		dlFileVersion3.setExtraSettings("hello=world");
+
+		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion3);
+
+		DLTrashServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
+
+		return new Object[] {folder, dlFileVersion};
+	}
+
 	private static final long _SMALL_IMAGE_ID = 1234L;
 
-	private static DLFileVersion _defaultRepositoryDLFileVersion;
-	private static Folder _defaultRepositoryFolder;
-	private static Group _group;
-	private static Folder _newRepositoryFolder;
-	private static Repository _repository;
-	private static User _user;
+	private DLFileVersion _defaultRepositoryDLFileVersion;
+	private Folder _defaultRepositoryFolder;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	private Folder _newRepositoryFolder;
+	private Repository _repository;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

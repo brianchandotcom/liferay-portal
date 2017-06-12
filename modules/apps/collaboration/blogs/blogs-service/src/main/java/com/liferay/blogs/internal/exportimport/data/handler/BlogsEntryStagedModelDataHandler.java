@@ -589,7 +589,7 @@ public class BlogsEntryStagedModelDataHandler
 	private void _importFriendlyURLEntries(
 			PortletDataContext portletDataContext, BlogsEntry blogsEntry,
 			BlogsEntry importedBlogsEntry)
-		throws PortletDataException {
+		throws PortalException {
 
 		List<Element> friendlyURLEntryElements =
 			portletDataContext.getReferenceDataElements(
@@ -607,6 +607,16 @@ public class BlogsEntryStagedModelDataHandler
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, friendlyURLEntry);
 		}
+
+		FriendlyURLEntry mainFriendlyURLEntry =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				importedBlogsEntry.getGroupId(),
+				importedBlogsEntry.getCompanyId(), BlogsEntry.class,
+				importedBlogsEntry.getEntryId());
+
+		importedBlogsEntry.setUrlTitle(mainFriendlyURLEntry.getUrlTitle());
+
+		_blogsEntryLocalService.updateBlogsEntry(importedBlogsEntry);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -319,8 +319,7 @@ public class DLFolderFinderTest {
 			Assert.assertTrue(
 				String.valueOf(result.getClass()),
 				result instanceof DLFileEntry ||
-					result instanceof DLFileShortcut ||
-						result instanceof DLFolder);
+				result instanceof DLFileShortcut || result instanceof DLFolder);
 
 			if (result instanceof DLFileEntry) {
 				DLFileEntry dlFileEntry = (DLFileEntry)result;

@@ -318,13 +318,13 @@ public class GroupServicePermissionTest {
 			Assert.assertTrue(
 				"The user should not be able to update this site",
 				hasManageSubsitePermisionOnGroup1 || hasManageSite1 ||
-					hasManageSite11);
+				hasManageSite11);
 		}
 		catch (PrincipalException pe) {
 			Assert.assertFalse(
 				"The user should be able to update this site",
 				hasManageSubsitePermisionOnGroup1 || hasManageSite1 ||
-					hasManageSite11);
+				hasManageSite11);
 		}
 
 		try {

@@ -193,7 +193,7 @@ public class EditLayoutAction extends JSONAction {
 		boolean sortable = GroupPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), layout.getGroupId(),
 			ActionKeys.MANAGE_LAYOUTS) &&
-		SitesUtil.isLayoutSortable(layout);
+			SitesUtil.isLayoutSortable(layout);
 		boolean updateable = LayoutPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 

@@ -16,63 +16,63 @@ package com.liferay.jenkins.results.parser.failure.message.generator;
 
 import com.liferay.jenkins.results.parser.Build;
 
-import org.dom4j.Element;
-
 import java.util.Hashtable;
+
+import org.dom4j.Element;
 
 /**
  * @author Yi-Chen Tsai
  */
 public class ModulesCompilationFailureMessageGenerator
-    extends BaseFailureMessageGenerator{
-    @Override
-    public String getMessage(
-            String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
+	extends BaseFailureMessageGenerator {
 
-        if (!consoleOutput.contains(_TOKEN_WHAT_WENT_WRONG)) {
-            return null;
-        }
+	@Override
+	public String getMessage(
+		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
 
-        int end = consoleOutput.lastIndexOf(_TOKEN_MERGE_TEST_RESULTS);
+		if (!consoleOutput.contains(_TOKEN_WHAT_WENT_WRONG)) {
+			return null;
+		}
 
-        end = consoleOutput.lastIndexOf(_TOKEN_TRY, end);
+		int end = consoleOutput.lastIndexOf(_TOKEN_MERGE_TEST_RESULTS);
 
-        end = consoleOutput.lastIndexOf("\n", end);
+		end = consoleOutput.lastIndexOf(_TOKEN_TRY, end);
 
-        int start = consoleOutput.lastIndexOf(_TOKEN_WHAT_WENT_WRONG, end);
+		end = consoleOutput.lastIndexOf("\n", end);
 
-        start = consoleOutput.lastIndexOf("\n", start);
+		int start = consoleOutput.lastIndexOf(_TOKEN_WHAT_WENT_WRONG, end);
 
-        return getConsoleOutputSnippet(consoleOutput, true, start, end);
-    }
+		start = consoleOutput.lastIndexOf("\n", start);
 
-    @Override
-    public Element getMessageElement(Build build) {
-        String consoleText = build.getConsoleText();
+		return getConsoleOutputSnippet(consoleOutput, true, start, end);
+	}
 
-        if (!consoleText.contains(_TOKEN_WHAT_WENT_WRONG)) {
-            return null;
-        }
+	@Override
+	public Element getMessageElement(Build build) {
+		String consoleText = build.getConsoleText();
 
-        int end = consoleText.lastIndexOf(_TOKEN_MERGE_TEST_RESULTS);
+		if (!consoleText.contains(_TOKEN_WHAT_WENT_WRONG)) {
+			return null;
+		}
 
-        end = consoleText.lastIndexOf(_TOKEN_TRY, end);
+		int end = consoleText.lastIndexOf(_TOKEN_MERGE_TEST_RESULTS);
 
-        end = consoleText.lastIndexOf("\n", end);
+		end = consoleText.lastIndexOf(_TOKEN_TRY, end);
 
-        int start = consoleText.lastIndexOf(_TOKEN_WHAT_WENT_WRONG, end);
+		end = consoleText.lastIndexOf("\n", end);
 
-        start = consoleText.lastIndexOf("\n", start);
+		int start = consoleText.lastIndexOf(_TOKEN_WHAT_WENT_WRONG, end);
 
-        return getConsoleOutputSnippetElement(consoleText, true, start, end);
-    }
+		start = consoleText.lastIndexOf("\n", start);
 
-    private static final String _TOKEN_MERGE_TEST_RESULTS =
-            "merge-test-results:";
+		return getConsoleOutputSnippetElement(consoleText, true, start, end);
+	}
 
-    private static final String _TOKEN_TRY =
-            "Try: ";
+	private static final String _TOKEN_MERGE_TEST_RESULTS =
+		"merge-test-results:";
 
-    private static final String _TOKEN_WHAT_WENT_WRONG = "What went wrong:";
+	private static final String _TOKEN_TRY = "Try: ";
+
+	private static final String _TOKEN_WHAT_WENT_WRONG = "What went wrong:";
 
 }

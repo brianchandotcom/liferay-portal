@@ -74,6 +74,16 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	public CPFriendlyURLEntry addCPFriendlyURLEntry(
 		CPFriendlyURLEntry cpFriendlyURLEntry);
 
+	public CPFriendlyURLEntry addCPFriendlyURLEntry(long groupId,
+		long companyId, java.lang.Class<?> clazz, long classPK,
+		java.lang.String languageId, java.lang.String urlTitle)
+		throws PortalException;
+
+	public CPFriendlyURLEntry addCPFriendlyURLEntry(long groupId,
+		long companyId, long classNameId, long classPK,
+		java.lang.String languageId, java.lang.String urlTitle)
+		throws PortalException;
+
 	/**
 	* Creates a new cp friendly url entry with the primary key. Does not add the cp friendly url entry to the database.
 	*
@@ -243,6 +253,10 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPFriendlyURLEntry> getCPFriendlyURLEntries(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPFriendlyURLEntry> getCPFriendlyURLEntries(long groupId,
+		long companyId, long classNameId, long classPK);
+
 	/**
 	* Returns all the cp friendly url entries matching the UUID and company.
 	*
@@ -286,4 +300,11 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteCPFriendlyURLEntry(long groupId, long companyId,
+		java.lang.Class<?> clazz, long classPK);
+
+	public void validate(long groupId, long companyId, long classNameId,
+		long classPK, java.lang.String languageId, java.lang.String urlTitle)
+		throws PortalException;
 }

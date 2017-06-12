@@ -53,6 +53,24 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 		return getService().addCPFriendlyURLEntry(cpFriendlyURLEntry);
 	}
 
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry addCPFriendlyURLEntry(
+		long groupId, long companyId, java.lang.Class<?> clazz, long classPK,
+		java.lang.String languageId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCPFriendlyURLEntry(groupId, companyId, clazz, classPK,
+			languageId, urlTitle);
+	}
+
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry addCPFriendlyURLEntry(
+		long groupId, long companyId, long classNameId, long classPK,
+		java.lang.String languageId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCPFriendlyURLEntry(groupId, companyId, classNameId,
+			classPK, languageId, urlTitle);
+	}
+
 	/**
 	* Creates a new cp friendly url entry with the primary key. Does not add the cp friendly url entry to the database.
 	*
@@ -260,6 +278,13 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 		return getService().getCPFriendlyURLEntries(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyURLEntries(
+		long groupId, long companyId, long classNameId, long classPK) {
+		return getService()
+				   .getCPFriendlyURLEntries(groupId, companyId, classNameId,
+			classPK);
+	}
+
 	/**
 	* Returns all the cp friendly url entries matching the UUID and company.
 	*
@@ -313,6 +338,19 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteCPFriendlyURLEntry(long groupId, long companyId,
+		java.lang.Class<?> clazz, long classPK) {
+		getService().deleteCPFriendlyURLEntry(groupId, companyId, clazz, classPK);
+	}
+
+	public static void validate(long groupId, long companyId, long classNameId,
+		long classPK, java.lang.String languageId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.validate(groupId, companyId, classNameId, classPK, languageId,
+			urlTitle);
 	}
 
 	public static CPFriendlyURLEntryLocalService getService() {

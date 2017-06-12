@@ -38,6 +38,10 @@ public class AddressFormatterHelper {
 
 		AddressFormatter addressFormatter = getAddressFormatter(a2);
 
+		if (addressFormatter == null) {
+			addressFormatter = getAddressFormatter("US");
+		}
+
 		return addressFormatter.format(address);
 	}
 

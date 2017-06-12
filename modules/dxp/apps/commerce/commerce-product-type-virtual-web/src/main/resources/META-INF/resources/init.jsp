@@ -25,18 +25,20 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.product.model.CPDefinition" %><%@
-page import="com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants" %><%@
 page import="com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingFileEntryIdException" %><%@
+page import="com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleException" %><%@
 page import="com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleFileEntryIdException" %><%@
 page import="com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleUrlException" %><%@
 page import="com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException" %><%@
 page import="com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseContentException" %><%@
+page import="com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseException" %><%@
 page import="com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingUrlException" %><%@
 page import="com.liferay.commerce.product.type.virtual.exception.NoSuchCPDefinitionVirtualSettingException" %><%@
 page import="com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting" %><%@
 page import="com.liferay.commerce.product.type.virtual.web.internal.display.context.CPDefinitionVirtualSettingDisplayContext" %><%@
 page import="com.liferay.commerce.product.type.virtual.web.internal.servlet.taglib.ui.CPDefinitionVirtualSettingFormNavigatorConstants" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@
+page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -64,5 +66,6 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
+
 String languageId = LanguageUtil.getLanguageId(locale);
 %>

@@ -65,7 +65,7 @@ if (sampleFileEntryId > 0) {
 				</c:if>
 			</div>
 
-			<h4 id="lfr-definition-virtual-sample-button-row-message" class="<%= textCssClass %>"><liferay-ui:message key="or" /></h4>
+			<h4 class="<%= textCssClass %>" id="lfr-definition-virtual-sample-button-row-message"><liferay-ui:message key="or" /></h4>
 
 			<aui:button name="selectSampleFile" value="select-file" />
 

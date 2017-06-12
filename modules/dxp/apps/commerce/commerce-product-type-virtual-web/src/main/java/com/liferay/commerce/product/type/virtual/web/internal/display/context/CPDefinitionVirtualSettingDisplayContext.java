@@ -26,7 +26,6 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -133,6 +132,21 @@ public class CPDefinitionVirtualSettingDisplayContext
 		return downloadUrl;
 	}
 
+	public FileEntry getFileEntry() throws PortalException {
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
+			getCPDefinitionVirtualSetting();
+
+		if (cpDefinitionVirtualSetting != null) {
+			long fileEntryId = cpDefinitionVirtualSetting.getFileEntryId();
+
+			if (fileEntryId > 0) {
+				return _dlAppService.getFileEntry(fileEntryId);
+			}
+		}
+
+		return null;
+	}
+
 	public String getFileEntryItemSelectorURL() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(
@@ -155,21 +169,6 @@ public class CPDefinitionVirtualSettingDisplayContext
 			fileItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
-	}
-
-	public FileEntry getFileEntry() throws PortalException {
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-			getCPDefinitionVirtualSetting();
-
-		if (cpDefinitionVirtualSetting != null) {
-			long fileEntryId = cpDefinitionVirtualSetting.getFileEntryId();
-
-			if (fileEntryId > 0) {
-				return _dlAppService.getFileEntry(fileEntryId);
-			}
-		}
-
-		return null;
 	}
 
 	public JournalArticle getJournalArticle() throws PortalException {

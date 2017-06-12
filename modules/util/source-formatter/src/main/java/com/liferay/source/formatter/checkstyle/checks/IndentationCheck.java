@@ -86,6 +86,7 @@ public class IndentationCheck extends AbstractCheck {
 		// automatically fix incorrect indentations inside those.
 
 		if (!_isAtLineStart(detailAST) ||
+			_isCatchStatementParameter(detailAST) ||
 			_isInsideChainedConcatMethod(detailAST) ||
 			_isInsideDoIfOrWhileStatementCriterium(detailAST) ||
 			_isInsideOperatorCriterium(detailAST)) {
@@ -772,6 +773,28 @@ public class IndentationCheck extends AbstractCheck {
 		}
 
 		return true;
+	}
+
+	private boolean _isCatchStatementParameter(DetailAST detailAST) {
+		DetailAST parentAST = detailAST.getParent();
+
+		while (true) {
+			if (parentAST == null) {
+				return false;
+			}
+
+			if (parentAST.getType() != TokenTypes.PARAMETER_DEF) {
+				parentAST = parentAST.getParent();
+
+				continue;
+			}
+
+			parentAST = parentAST.getParent();
+
+			if (parentAST.getType() == TokenTypes.LITERAL_CATCH) {
+				return true;
+			}
+		}
 	}
 
 	private boolean _isConcatMethod(DetailAST detailAST) {

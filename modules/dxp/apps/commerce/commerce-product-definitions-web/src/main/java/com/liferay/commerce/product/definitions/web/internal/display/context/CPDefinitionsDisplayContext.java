@@ -162,13 +162,10 @@ public class CPDefinitionsDisplayContext
 		return searchContainer;
 	}
 
-
-	public String getUrlTitleMapAsXML()
-		throws PortalException{
-
+	public String getUrlTitleMapAsXML() throws PortalException {
 		CPDefinition cpDefinition = getCPDefinition();
 
-		if(cpDefinition == null){
+		if (cpDefinition == null) {
 			return StringPool.BLANK;
 		}
 

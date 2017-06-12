@@ -157,6 +157,11 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
+	public String getUrlTitleMapAsXML(CPDefinition cpDefinition) {
+		return cpDefinitionLocalService.getUrlTitleMapAsXML(cpDefinition);
+	}
+
+	@Override
 	public CPDefinition moveCPDefinitionToTrash(long cpDefinitionId)
 		throws PortalException {
 
@@ -230,13 +235,6 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.updateStatus(
 			userId, cpDefinitionId, status, serviceContext, workflowContext);
-	}
-
-	@Override
-	public String getUrlTitleMapAsXML(
-		CPDefinition cpDefinition) {
-
-		return cpDefinitionLocalService.getUrlTitleMapAsXML(cpDefinition);
 	}
 
 }

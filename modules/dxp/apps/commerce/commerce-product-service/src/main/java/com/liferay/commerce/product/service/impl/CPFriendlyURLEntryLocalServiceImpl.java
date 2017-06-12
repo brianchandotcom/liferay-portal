@@ -16,9 +16,7 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.exception.CPFriendlyURLLengthException;
 import com.liferay.commerce.product.exception.DuplicateCPFriendlyURLEntryException;
-import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
-import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.base.CPFriendlyURLEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -75,7 +73,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 			String languageId = LanguageUtil.getLanguageId(
 				urlTitleEntry.getKey());
 
-			if(Validator.isNull(urlTitleEntry.getValue())){
+			if (Validator.isNull(urlTitleEntry.getValue())) {
 				continue;
 			}
 
@@ -181,6 +179,46 @@ public class CPFriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
+	public CPFriendlyURLEntry getCPFriendlyURLEntry(
+			long groupId, long companyId, long classNameId, long classPK,
+			String languageId, boolean main)
+		throws PortalException
+	{
+
+		return cpFriendlyURLEntryPersistence.fetchByG_C_C_C_L_M(
+			groupId, companyId, classNameId, classPK, languageId, main);
+	}
+
+	@Override
+	public CPFriendlyURLEntry getCPFriendlyURLEntry(
+			long groupId, long companyId, long classNameId, String languageId,
+			String urlTitle)
+		throws PortalException
+	{
+
+		return cpFriendlyURLEntryPersistence.findByG_C_C_L_U(
+			groupId, companyId, classNameId, languageId, urlTitle);
+	}
+
+	@Override
+	public Map<String, String> getLanguageIdToUrlTitleMap(
+		long groupId, long companyId, long classNameId, long classPK) {
+
+		Map<String, String> languageIdToUrlTitleMap = new HashMap<>();
+
+		List<CPFriendlyURLEntry> cpFriendlyURLEntries =
+			cpFriendlyURLEntryPersistence.findByG_C_C_C_M(
+				groupId, companyId, classNameId, classPK, true);
+
+		for (CPFriendlyURLEntry cpFriendlyURLEntry : cpFriendlyURLEntries) {
+			languageIdToUrlTitleMap.put(cpFriendlyURLEntry.getLanguageId(),
+				cpFriendlyURLEntry.getUrlTitle());
+		}
+
+		return languageIdToUrlTitleMap;
+	}
+
+	@Override
 	public String getUniqueUrlTitle(
 		long groupId, long companyId, long classNameId, long classPK,
 		String languageId, String urlTitle) {
@@ -219,6 +257,48 @@ public class CPFriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
+	public Map<Locale, String> getUrlTitleMap(
+		long groupId, long companyId, Class<?> clazz, long classPK) {
+
+		long classNameId = classNameLocalService.getClassNameId(clazz);
+
+		return getUrlTitleMap(groupId, companyId, classNameId, classPK);
+	}
+
+	@Override
+	public Map<Locale, String> getUrlTitleMap(
+		long groupId, long companyId, long classNameId, long classPK) {
+
+		Map<Locale, String> urlTitleMap = new HashMap<>();
+
+		List<CPFriendlyURLEntry> cpFriendlyURLEntries =
+			cpFriendlyURLEntryPersistence.findByG_C_C_C_M(
+				groupId, companyId, classNameId, classPK, true);
+
+		for (CPFriendlyURLEntry cpFriendlyURLEntry : cpFriendlyURLEntries) {
+			Locale locale = LocaleUtil.fromLanguageId(
+				cpFriendlyURLEntry.getLanguageId());
+
+			urlTitleMap.put(locale, cpFriendlyURLEntry.getUrlTitle());
+		}
+
+		return urlTitleMap;
+	}
+
+	@Override
+	public String getUrlTitleMapAsXML(
+		long groupId, long companyId, long classNameId, long classPK,
+		String defaultLanguageId) {
+
+		Map<String, String> languageIdToUrlTitleMap =
+			getLanguageIdToUrlTitleMap(
+				groupId, companyId, classNameId, classPK);
+
+		return LocalizationUtil.getXml(languageIdToUrlTitleMap,
+			defaultLanguageId, "urlTitle");
+	}
+
+	@Override
 	public void validate(
 			long groupId, long companyId, long classNameId, long classPK,
 			String languageId, String urlTitle)
@@ -252,65 +332,5 @@ public class CPFriendlyURLEntryLocalServiceImpl
 			throw new DuplicateCPFriendlyURLEntryException();
 		}
 	}
-
-	@Override
-	public Map<Locale, String> getUrlTitleMap(
-		long groupId, long companyId, Class<?> clazz,  long classPK){
-
-		long classNameId = classNameLocalService.getClassNameId(clazz);
-
-		return getUrlTitleMap(groupId,companyId,classNameId,classPK);
-	}
-
-	@Override
-	public Map<Locale, String> getUrlTitleMap(
-		long groupId, long companyId, long classNameId, long classPK){
-
-		Map<Locale, String> urlTitleMap = new HashMap<>();
-
-		List<CPFriendlyURLEntry> cpFriendlyURLEntries =
-			cpFriendlyURLEntryPersistence.findByG_C_C_C_M(
-				groupId,companyId,classNameId,classPK,true);
-
-		for(CPFriendlyURLEntry cpFriendlyURLEntry : cpFriendlyURLEntries){
-			Locale locale = LocaleUtil.fromLanguageId(
-				cpFriendlyURLEntry.getLanguageId());
-
-			urlTitleMap.put(locale, cpFriendlyURLEntry.getUrlTitle());
-		}
-
-		return urlTitleMap;
-	}
-
-	@Override
-	public String getUrlTitleMapAsXML(
-		long groupId, long companyId, long classNameId, long classPK,
-		String defaultLanguageId) {
-
-		Map<String, String> languageIdToUrlTitleMap =
-			getLanguageIdToUrlTitleMap(groupId,companyId,classNameId,classPK);
-
-		return LocalizationUtil.getXml(languageIdToUrlTitleMap,
-			defaultLanguageId, "urlTitle");
-	}
-
-	@Override
-	public Map<String, String> getLanguageIdToUrlTitleMap(
-		long groupId, long companyId, long classNameId, long classPK) {
-
-		Map<String, String> languageIdToUrlTitleMap = new HashMap<String, String>();
-
-		List<CPFriendlyURLEntry> cpFriendlyURLEntries =
-			cpFriendlyURLEntryPersistence.findByG_C_C_C_M(
-				groupId,companyId,classNameId,classPK,true);
-
-		for(CPFriendlyURLEntry cpFriendlyURLEntry : cpFriendlyURLEntries){
-			languageIdToUrlTitleMap.put(cpFriendlyURLEntry.getLanguageId(),
-				cpFriendlyURLEntry.getUrlTitle());
-		}
-
-		return languageIdToUrlTitleMap;
-	}
-
 
 }

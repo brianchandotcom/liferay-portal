@@ -23,7 +23,6 @@ import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameExcepti
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
-import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.base.CPDefinitionLocalServiceBaseImpl;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
@@ -421,6 +420,20 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return urlTitleMap;
+	}
+
+	@Override
+	public String getUrlTitleMapAsXML(CPDefinition cpDefinition) {
+		long classNameId = classNameLocalService.getClassNameId(
+			CPDefinition.class);
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String defaultLanguageId = LanguageUtil.getLanguageId(defaultLocale);
+
+		return cpFriendlyURLEntryLocalService.getUrlTitleMapAsXML(
+			cpDefinition.getGroupId(), cpDefinition.getCompanyId(), classNameId,
+			cpDefinition.getCPDefinitionId(), defaultLanguageId);
 	}
 
 	@Override
@@ -982,22 +995,6 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return newCPDefinitionLocalizations;
-	}
-
-	@Override
-	public String getUrlTitleMapAsXML(
-		CPDefinition cpDefinition) {
-
-		long classNameId = classNameLocalService.getClassNameId(
-			CPDefinition.class);
-
-		Locale defaultLocale =  LocaleUtil.getSiteDefault();
-
-		String defaultLanguageId = LanguageUtil.getLanguageId(defaultLocale);
-
-		return cpFriendlyURLEntryLocalService.getUrlTitleMapAsXML(
-			cpDefinition.getGroupId(),cpDefinition.getCompanyId(),classNameId,
-			cpDefinition.getCPDefinitionId(),defaultLanguageId);
 	}
 
 }

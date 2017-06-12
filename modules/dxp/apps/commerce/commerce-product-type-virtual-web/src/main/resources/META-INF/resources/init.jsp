@@ -37,7 +37,6 @@ page import="com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtual
 page import="com.liferay.commerce.product.type.virtual.web.internal.display.context.CPDefinitionVirtualSettingDisplayContext" %><%@
 page import="com.liferay.commerce.product.type.virtual.web.internal.servlet.taglib.ui.CPDefinitionVirtualSettingFormNavigatorConstants" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@
-page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -51,6 +50,7 @@ page import="com.liferay.portal.kernel.util.Time" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
+<%@ page import="com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingException" %><%@ page import="com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleException" %><%@ page import="com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseException" %><%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

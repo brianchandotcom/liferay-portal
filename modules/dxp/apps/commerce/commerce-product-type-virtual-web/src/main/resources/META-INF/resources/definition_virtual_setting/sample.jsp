@@ -21,20 +21,18 @@ CPDefinitionVirtualSettingDisplayContext cpDefinitionVirtualSettingDisplayContex
 
 CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSettingDisplayContext.getCPDefinitionVirtualSetting();
 
-SearchContainer<FileEntry> sampleFileEntrySearchContainer = cpDefinitionVirtualSettingDisplayContext.getSampleFileEntrySearchContainer();
+FileEntry sampleFileEntry = cpDefinitionVirtualSettingDisplayContext.getSampleFileEntry();
 
-boolean useSample = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting, request, "useSample");
+long sampleFileEntryId = BeanParamUtil.getLong(cpDefinitionVirtualSetting, request, "sampleFileEntryId");
 
-String sampleButtonCssClass = "modify-sample-file-entry-link ";
+String textCssClass = "text-default ";
 
-boolean useSampleUrl = ParamUtil.getBoolean(request, "useSampleUrl", false);
+boolean useSampleFileEntry = false;
 
-if ((cpDefinitionVirtualSetting != null) && Validator.isNotNull(cpDefinitionVirtualSetting.getSampleUrl())) {
-	useSampleUrl = true;
-}
+if (sampleFileEntryId > 0) {
+	textCssClass += "hidden";
 
-if (sampleFileEntrySearchContainer.hasResults()) {
-	sampleButtonCssClass += "hidden";
+	useSampleFileEntry = true;
 }
 %>
 
@@ -42,74 +40,36 @@ if (sampleFileEntrySearchContainer.hasResults()) {
 
 <aui:model-context bean="<%= cpDefinitionVirtualSetting %>" model="<%= CPDefinitionVirtualSetting.class %>" />
 
+<liferay-ui:error exception="<%= CPDefinitionVirtualSettingSampleException.class %>" message="please-enter-a-valid-sample-url-or-select-an-existing-sample-file" />
 <liferay-ui:error exception="<%= CPDefinitionVirtualSettingSampleFileEntryIdException.class %>" message="please-select-an-existing-sample-file" />
 <liferay-ui:error exception="<%= CPDefinitionVirtualSettingSampleUrlException.class %>" message="please-enter-a-valid-sample-url" />
 
-<liferay-util:buffer var="removeSampleFileEntryIcon">
-	<liferay-ui:icon
-		icon="times"
-		markupView="lexicon"
-		message="remove"
-	/>
-</liferay-util:buffer>
+<aui:fieldset>
+	<aui:input name="useSample" />
+</aui:fieldset>
 
-<div class="lfr-definition-virtual-setting-use-sample-header">
-	<aui:fieldset>
-		<aui:input name="useSample" />
-	</aui:fieldset>
+<div class="col-md-3">
+	<h4 class="text-default"><liferay-ui:message key="insert-the-url-or-select-a-file-of-your-sample" /></h4>
 </div>
 
-<div class="lfr-definition-virtual-setting-use-sample-content">
+<div class="col-md-9">
 	<aui:fieldset>
-		<aui:input checked="<%= useSampleUrl %>" cssClass="lfr-definition-virtual-setting-sample-type" label="use-sample-url" name="useSampleUrl" type="checkbox" />
+		<aui:input disabled="<%= useSampleFileEntry %>" name="sampleUrl" />
 
 		<div class="lfr-definition-virtual-setting-sample-file-selector">
-			<liferay-ui:search-container
-				cssClass="lfr-definition-virtual-setting-sample-file-entry"
-				curParam="curSampleFileEntry"
-				headerNames="title,null"
-				id="sampleFileEntrySearchContainer"
-				iteratorURL="<%= currentURLObj %>"
-				searchContainer="<%= sampleFileEntrySearchContainer %>"
-			>
-				<liferay-ui:search-container-row
-					className="com.liferay.portal.kernel.repository.model.FileEntry"
-					keyProperty="fileEntryId"
-					modelVar="sampleFileEntry"
-				>
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						name="title"
-					>
-						<liferay-ui:icon
-							iconCssClass="icon-ok-sign"
-							label="<%= true %>"
-							message="<%= HtmlUtil.escape(sampleFileEntry.getTitle()) %>"
-							url="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadSampleFileEntryURL() %>"
-						/>
-					</liferay-ui:search-container-column-text>
+			<div id="lfr-definition-virtual-setting-sample-file-entry">
+				<c:if test="<%= sampleFileEntry != null %>">
+					<a href="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadSampleFileEntryURL() %>">
+						<%= sampleFileEntry.getFileName() %>
+					</a>
+				</c:if>
+			</div>
 
-					<c:if test="<%= Validator.isNotNull(cpDefinitionVirtualSetting) %>">
-						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
-							name="size"
-							value="<%= TextFormatter.formatStorageSize(sampleFileEntry.getSize(), locale) %>"
-						/>
-					</c:if>
+			<h4 id="lfr-definition-virtual-sample-button-row-message" class="<%= textCssClass %>"><liferay-ui:message key="or" /></h4>
 
-					<liferay-ui:search-container-column-text>
-						<a class="modify-sample-file-entry-link" data-rowId="<%= sampleFileEntry.getFileEntryId() %>" href="javascript:;"><%= removeSampleFileEntryIcon %></a>
-					</liferay-ui:search-container-column-text>
-				</liferay-ui:search-container-row>
+			<aui:button name="selectSampleFile" value="select-file" />
 
-				<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= sampleFileEntrySearchContainer %>" />
-			</liferay-ui:search-container>
-
-			<aui:button cssClass="<%= sampleButtonCssClass %>" name="selectSampleFile" value="select-file" />
-		</div>
-
-		<div class="hidden lfr-definition-virtual-sample-url">
-			<aui:input name="sampleUrl" />
+			<aui:button name="deleteSampleFile" value="delete" />
 		</div>
 	</aui:fieldset>
 </div>
@@ -134,19 +94,13 @@ if (sampleFileEntrySearchContainer.hasResults()) {
 
 								$('#<portlet:namespace />sampleFileEntryId').val(value.fileEntryId);
 
-								var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />sampleFileEntrySearchContainer');
+								$('#lfr-definition-virtual-setting-sample-file-entry').html('');
 
-								var rowColumns = [];
+								$('#lfr-definition-virtual-setting-sample-file-entry').append('<a>' + value.title + '</a>');
 
-								rowColumns.push(value.title);
+								$('#lfr-definition-virtual-sample-button-row-message').addClass('hidden');
 
-								rowColumns.push('<a class="modify-sample-file-entry-link" data-rowId="' + value.fileEntryId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeSampleFileEntryIcon) %></a>');
-
-								searchContainer.addRow(rowColumns, value.fileEntryId);
-
-								searchContainer.updateDataStore();
-
-								$('#<portlet:namespace />selectSampleFile').addClass('hidden');
+								$('#<portlet:namespace />sampleUrl').attr('disabled', true);
 							}
 						}
 					},
@@ -160,69 +114,46 @@ if (sampleFileEntrySearchContainer.hasResults()) {
 	);
 </aui:script>
 
-<aui:script use="aui-toggler">
-	new A.Toggler(
-		{
-			animated: true,
-			content: '#<portlet:namespace />fileEntryContainer .lfr-definition-virtual-setting-use-sample-content',
-			expanded: <%= useSample %>,
-			header: '#<portlet:namespace />fileEntryContainer .lfr-definition-virtual-setting-use-sample-header',
-			on: {
-				animatingChange: function(event) {
-					var instance = this;
-
-					var expanded = !instance.get('expanded');
-
-					A.one('#<portlet:namespace />useSample').attr('checked', expanded);
-				}
-			}
-		}
-	);
-</aui:script>
-
 <aui:script>
 	AUI().ready('node', 'event', function(A) {
 		selectSampleFileType(A);
 
-		A.one('#<portlet:namespace/>useSampleUrl').on('click',function(b) {
+		A.one('#<portlet:namespace/>useSample').on('click',function(b) {
 			selectSampleFileType(A);
 		})
 	});
 
 	function selectSampleFileType(A) {
-		var sampleUrlCheckbox = A.one('#<portlet:namespace/>useSampleUrl');
+		var useSampleCheckbox = A.one('#<portlet:namespace/>useSample');
 
-		if (sampleUrlCheckbox.attr('checked')) {
-			A.one('.lfr-definition-virtual-setting-sample-file-selector').addClass('hidden');
-			A.one('.lfr-definition-virtual-sample-url').removeClass('hidden');
+		var isSampleFileSelected = A.one('#lfr-definition-virtual-sample-button-row-message').hasClass('hidden');
+
+		if (useSampleCheckbox.attr('checked')) {
+			A.one('#<portlet:namespace />deleteSampleFile').attr('disabled', false);
+			A.one('#<portlet:namespace />sampleUrl').attr('disabled', isSampleFileSelected);
+			A.one('#<portlet:namespace />selectSampleFile').attr('disabled', false);
 		}
 		else {
-			A.one('.lfr-definition-virtual-setting-sample-file-selector').removeClass('hidden');
-			A.one('.lfr-definition-virtual-sample-url').addClass('hidden');
+			A.one('#<portlet:namespace />deleteSampleFile').attr('disabled', true);
+			A.one('#<portlet:namespace />sampleUrl').attr('disabled', true);
+			A.one('#<portlet:namespace />selectSampleFile').attr('disabled', true);
 		}
 	}
 </aui:script>
 
-<aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />sampleFileEntrySearchContainer');
-
-	var searchContainerContentBox = searchContainer.get('contentBox');
-
-	searchContainerContentBox.delegate(
+<aui:script>
+	$('#<portlet:namespace />deleteSampleFile').on(
 		'click',
 		function(event) {
-			var link = event.currentTarget;
+			event.preventDefault();
 
-			var rowId = link.attr('data-rowId');
+			$('#<portlet:namespace />sampleFileEntryId').val(0);
 
-			var tr = link.ancestor('tr');
+			$('#lfr-definition-virtual-setting-sample-file-entry').html('');
 
-			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
+			$('#lfr-definition-virtual-sample-button-row').removeClass('hidden');
 
-			searchContainer.updateDataStore();
-
-			$('#<portlet:namespace />selectSampleFile').removeClass('hidden');
-		},
-		'.modify-sample-file-entry-link'
+			$('#<portlet:namespace />sampleUrl').attr('disabled', false);
+		}
 	);
 </aui:script>

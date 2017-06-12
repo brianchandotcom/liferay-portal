@@ -21,20 +21,18 @@ CPDefinitionVirtualSettingDisplayContext cpDefinitionVirtualSettingDisplayContex
 
 CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSettingDisplayContext.getCPDefinitionVirtualSetting();
 
-SearchContainer<JournalArticle> journalArticleSearchContainer = cpDefinitionVirtualSettingDisplayContext.getJournalArticleSearchContainer();
+JournalArticle journalArticle = cpDefinitionVirtualSettingDisplayContext.getJournalArticle();
 
-boolean termsOfUseRequired = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting, request, "termsOfUseRequired");
+long termsOfUseJournalArticleResourcePrimKey = BeanParamUtil.getLong(cpDefinitionVirtualSetting, request, "termsOfUseJournalArticleResourcePrimKey");
 
-String termsOfUseButtonCssClass = "lfr-definition-virtual-setting-terms-of-use-value modify-journal-article-link ";
+String selectArticleButtonCssClass = StringPool.BLANK;
 
-boolean useTermsOfUseJournal = ParamUtil.getBoolean(request, "useTermsOfUseJournal", false);
+boolean useTermsOfUseJournal = false;
 
-if ((cpDefinitionVirtualSetting != null) && (cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePrimKey() > 0)) {
+if (termsOfUseJournalArticleResourcePrimKey > 0) {
+	selectArticleButtonCssClass += "article-selected";
+
 	useTermsOfUseJournal = true;
-}
-
-if (journalArticleSearchContainer.hasResults()) {
-	termsOfUseButtonCssClass += "hidden";
 }
 %>
 
@@ -44,29 +42,39 @@ if (journalArticleSearchContainer.hasResults()) {
 
 <liferay-ui:error exception="<%= CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException.class %>" message="please-select-an-existing-web-content" />
 <liferay-ui:error exception="<%= CPDefinitionVirtualSettingTermsOfUseContentException.class %>" message="please-enter-terms-of-use-content" />
+<liferay-ui:error exception="<%= CPDefinitionVirtualSettingTermsOfUseException.class %>" message="please-select-an-existing-web-content-or-enter-terms-of-use-content" />
 
-<liferay-util:buffer var="removeJournalArticleIcon">
-	<liferay-ui:icon
-		icon="times"
-		markupView="lexicon"
-		message="remove"
-	/>
-</liferay-util:buffer>
+<aui:fieldset>
+	<aui:input name="termsOfUseRequired" />
+</aui:fieldset>
 
-<div class="lfr-definition-virtual-setting-terms-of-use-header">
-	<aui:fieldset>
-		<aui:input name="termsOfUseRequired" />
-	</aui:fieldset>
+<div class="col-md-3">
+	<h4 class="text-default"><liferay-ui:message key="select-a-web-content-or-write-a-new-content-for-terms-of-use" /></h4>
 </div>
 
-<div class="lfr-definition-virtual-setting-terms-of-use-content toggler-content-collapsed">
+<div class="col-md-9">
 	<aui:fieldset>
-		<aui:input checked="<%= useTermsOfUseJournal %>" cssClass="lfr-definition-virtual-setting-terms-of-use-type" label="use-web-content" name="useTermsOfUseJournal" type="checkbox" />
+		<div class="lfr-definition-virtual-setting-web-content-selector">
+			<div id="lfr-definition-virtual-setting-journal-article">
+				<c:if test="<%= journalArticle != null %>">
+					<a href="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadSampleFileEntryURL() %>">
+						<%= journalArticle.getTitle() %>
+					</a>
+				</c:if>
+			</div>
+
+			<aui:button cssClass="<%= selectArticleButtonCssClass %>" name="selectArticle" value="select-web-content" />
+
+			<aui:button name="deleteArticle" value="delete" />
+		</div>
 
 		<aui:field-wrapper cssClass="lfr-definition-virtual-setting-content">
+			<h4 class="text-default"><liferay-ui:message key="or" /></h4>
+
 			<div class="entry-content form-group">
 				<liferay-ui:input-localized
 					cssClass="form-control"
+					disabled="<%= useTermsOfUseJournal %>"
 					editorName="alloyeditor"
 					name="termsOfUseContent"
 					type="editor"
@@ -74,42 +82,6 @@ if (journalArticleSearchContainer.hasResults()) {
 				/>
 			</div>
 		</aui:field-wrapper>
-
-		<div class="hidden lfr-definition-virtual-setting-web-content-selector">
-			<liferay-ui:search-container
-				cssClass="lfr-definition-virtual-setting-journal-article"
-				curParam="curJournalArticle"
-				headerNames="title,null"
-				id="journalArticleSearchContainer"
-				iteratorURL="<%= currentURLObj %>"
-				searchContainer="<%= journalArticleSearchContainer %>"
-			>
-				<liferay-ui:search-container-row
-					className="com.liferay.journal.model.JournalArticle"
-					keyProperty="id"
-					modelVar="journalArticle"
-				>
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						name="title"
-					>
-						<liferay-ui:icon
-							iconCssClass="icon-ok-sign"
-							label="<%= true %>"
-							message="<%= HtmlUtil.escape(journalArticle.getTitle(languageId)) %>"
-						/>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text>
-						<a class="modify-journal-article-link" data-rowId="<%= journalArticle.getResourcePrimKey() %>" href="javascript:;"><%= removeJournalArticleIcon %></a>
-					</liferay-ui:search-container-column-text>
-				</liferay-ui:search-container-row>
-
-				<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= journalArticleSearchContainer %>" />
-			</liferay-ui:search-container>
-
-			<aui:button cssClass="<%= termsOfUseButtonCssClass %>" name="selectArticle" value="select-web-content" />
-		</div>
 	</aui:fieldset>
 </div>
 
@@ -134,41 +106,15 @@ if (journalArticleSearchContainer.hasResults()) {
 				function(event) {
 					$('#<portlet:namespace />termsOfUseJournalArticleResourcePrimKey').val(event.assetclasspk);
 
-					var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />journalArticleSearchContainer');
+					$('#lfr-definition-virtual-setting-journal-article').html('');
 
-					var rowColumns = [];
+					$('#lfr-definition-virtual-setting-journal-article').append(event.assettitle);
 
-					rowColumns.push(event.assettitle);
+					$('#<portlet:namespace />selectArticle').addClass('article-selected');
 
-					rowColumns.push('<a class="modify-journal-article-link" data-rowId="' + event.assetclasspk + '" href="javascript:;"><%= UnicodeFormatter.toString(removeJournalArticleIcon) %></a>');
-
-					searchContainer.addRow(rowColumns, event.assetclasspk);
-
-					searchContainer.updateDataStore();
-
-					$('#<portlet:namespace />selectArticle').addClass('hidden');
+					$('#<portlet:namespace />termsOfUseContent').attr('disabled', true);
 				}
 			);
-		}
-	);
-</aui:script>
-
-<aui:script use="aui-toggler">
-	new A.Toggler(
-		{
-			animated: true,
-			content: '#<portlet:namespace />fileEntryContainer .lfr-definition-virtual-setting-terms-of-use-content',
-			expanded: <%= termsOfUseRequired %>,
-			header: '#<portlet:namespace />fileEntryContainer .lfr-definition-virtual-setting-terms-of-use-header',
-			on: {
-				animatingChange: function(event) {
-					var instance = this;
-
-					var expanded = !instance.get('expanded');
-
-					A.one('#<portlet:namespace />termsOfUseRequired').attr('checked', expanded);
-				}
-			}
 		}
 	);
 </aui:script>
@@ -177,45 +123,40 @@ if (journalArticleSearchContainer.hasResults()) {
 	AUI().ready('node', 'event', function(A) {
 		selectContentType(A);
 
-		A.one('#<portlet:namespace/>useTermsOfUseJournal').on('click',function(b) {
+		A.one('#<portlet:namespace/>termsOfUseRequired').on('click',function(b) {
 			selectContentType(A);
 		})
 	});
 
 	function selectContentType(A) {
-		var contentCheckbox = A.one('#<portlet:namespace/>useTermsOfUseJournal');
+		var contentCheckbox = A.one('#<portlet:namespace/>termsOfUseRequired');
+
+		var isJournalArticleSelected = A.one('#<portlet:namespace />selectArticle').hasClass('article-selected');
 
 		if (contentCheckbox.attr('checked')) {
-			A.one('.lfr-definition-virtual-setting-web-content-selector').removeClass('hidden');
-			A.one('.lfr-definition-virtual-setting-content').addClass('hidden');
+			A.one('#<portlet:namespace />deleteArticle').attr('disabled', false);
+			A.one('#<portlet:namespace />selectArticle').attr('disabled', false);
+			A.one('#<portlet:namespace />termsOfUseContent').attr('disabled', isJournalArticleSelected);
 		}
 		else {
-			A.one('.lfr-definition-virtual-setting-web-content-selector').addClass('hidden');
-			A.one('.lfr-definition-virtual-setting-content').removeClass('hidden');
+			A.one('#<portlet:namespace />deleteArticle').attr('disabled', true);
+			A.one('#<portlet:namespace />selectArticle').attr('disabled', true);
+			A.one('#<portlet:namespace />termsOfUseContent').attr('disabled', true);
 		}
 	}
 </aui:script>
 
-<aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />journalArticleSearchContainer');
-
-	var searchContainerContentBox = searchContainer.get('contentBox');
-
-	searchContainerContentBox.delegate(
+<aui:script>
+	$('#<portlet:namespace />deleteArticle').on(
 		'click',
 		function(event) {
-			var link = event.currentTarget;
+			$('#<portlet:namespace />termsOfUseJournalArticleResourcePrimKey').val(0);
 
-			var rowId = link.attr('data-rowId');
+			$('#lfr-definition-virtual-setting-journal-article').html('');
 
-			var tr = link.ancestor('tr');
+			$('#<portlet:namespace />selectArticle').removeClass('article-selected');
 
-			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
-
-			searchContainer.updateDataStore();
-
-			$('#<portlet:namespace />selectArticle').removeClass('hidden');
-		},
-		'.modify-journal-article-link'
+			$('#<portlet:namespace />termsOfUseContent').attr('disabled', false);
+		}
 	);
 </aui:script>

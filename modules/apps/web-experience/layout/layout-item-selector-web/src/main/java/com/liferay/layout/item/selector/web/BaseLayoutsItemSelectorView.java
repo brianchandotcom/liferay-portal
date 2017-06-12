@@ -81,7 +81,8 @@ public abstract class BaseLayoutsItemSelectorView
 					itemSelectedEventName, isPrivateLayout());
 
 		request.setAttribute(
-			LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			LayoutsItemSelectorWebKeys.
+				LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			layoutItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();

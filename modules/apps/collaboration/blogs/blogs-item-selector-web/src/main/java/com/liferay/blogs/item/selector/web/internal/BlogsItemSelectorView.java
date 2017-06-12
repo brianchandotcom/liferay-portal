@@ -55,9 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 public class BlogsItemSelectorView
 	implements ItemSelectorView<BlogsItemSelectorCriterion> {
 
-	public static final String BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
-		"BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
-
 	@Override
 	public Class<BlogsItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return BlogsItemSelectorCriterion.class;
@@ -103,7 +100,7 @@ public class BlogsItemSelectorView
 					_blogsEntryLocalService);
 
 		request.setAttribute(
-			BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			BlogsItemSelectorWebKeys.BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			blogsItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();

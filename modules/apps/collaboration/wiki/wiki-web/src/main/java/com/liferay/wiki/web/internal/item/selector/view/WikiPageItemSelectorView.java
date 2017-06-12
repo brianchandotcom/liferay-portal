@@ -12,21 +12,23 @@
  * details.
  */
 
-package com.liferay.knowledge.base.item.selector.web.internal;
+package com.liferay.wiki.web.internal.item.selector.view;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.criteria.PortletFileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.PortletFileEntryURLItemSelectorReturnType;
-import com.liferay.knowledge.base.item.selector.criterion.KBAttachmentItemSelectorCriterion;
-import com.liferay.knowledge.base.item.selector.web.internal.display.context.KBAttachmentItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.wiki.item.selector.WikiPageTitleItemSelectorReturnType;
+import com.liferay.wiki.item.selector.WikiPageURLItemSelectorReturnType;
+import com.liferay.wiki.item.selector.constants.WikiItemSelectorViewConstants;
+import com.liferay.wiki.item.selector.criterion.WikiPageItemSelectorCriterion;
+import com.liferay.wiki.service.WikiNodeLocalService;
+import com.liferay.wiki.web.internal.item.selector.view.display.context.WikiPageItemSelectorViewDisplayContext;
 
 import java.io.IOException;
 
@@ -49,15 +51,19 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Roberto Díaz
  */
-@Component
-public class KBAttachmentItemSelectorView
-	implements ItemSelectorView<KBAttachmentItemSelectorCriterion> {
+@Component(
+	property = {
+		"item.selector.view.key=" + WikiItemSelectorViewConstants.ITEM_SELECTOR_VIEW_KEY
+	}
+)
+public class WikiPageItemSelectorView
+	implements ItemSelectorView<WikiPageItemSelectorCriterion> {
 
 	@Override
-	public Class<KBAttachmentItemSelectorCriterion>
+	public Class<WikiPageItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
-		return KBAttachmentItemSelectorCriterion.class;
+		return WikiPageItemSelectorCriterion.class;
 	}
 
 	public ServletContext getServletContext() {
@@ -74,8 +80,7 @@ public class KBAttachmentItemSelectorView
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 
-		return ResourceBundleUtil.getString(
-			resourceBundle, "article-attachments");
+		return ResourceBundleUtil.getString(resourceBundle, "wiki-pages");
 	}
 
 	@Override
@@ -91,26 +96,27 @@ public class KBAttachmentItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
-			KBAttachmentItemSelectorCriterion kbAttachmentItemSelectorCriterion,
+			WikiPageItemSelectorCriterion wikiPageItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		KBAttachmentItemSelectorViewDisplayContext
-			kbAttachmentItemSelectorViewDisplayContext =
-				new KBAttachmentItemSelectorViewDisplayContext(
-					kbAttachmentItemSelectorCriterion, this,
+		WikiPageItemSelectorViewDisplayContext
+			wikiPageItemSelectorViewDisplayContext =
+				new WikiPageItemSelectorViewDisplayContext(
+					wikiPageItemSelectorCriterion, this, _wikiNodeLocalService,
 					_itemSelectorReturnTypeResolverHandler,
 					itemSelectedEventName, search, portletURL);
 
 		request.setAttribute(
-			KBItemSelectorWebKeys.
-				KB_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
-			kbAttachmentItemSelectorViewDisplayContext);
+			WikiItemSelectorWebKeys.
+				WIKI_PAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			wikiPageItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher("/kb_article_attachments.jsp");
+			servletContext.getRequestDispatcher(
+				"/item/selector/wiki_pages.jsp");
 
 		requestDispatcher.include(request, response);
 	}
@@ -125,16 +131,14 @@ public class KBAttachmentItemSelectorView
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.knowledge.base.item.selector.web)",
-		unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.wiki.web)", unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.knowledge.base.item.selector.web)",
-		unbind = "-"
+		target = "(bundle.symbolic.name=com.liferay.wiki.web)", unbind = "-"
 	)
 	protected void setResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader) {
@@ -143,17 +147,25 @@ public class KBAttachmentItemSelectorView
 			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiNodeLocalService(
+		WikiNodeLocalService wikiNodeLocalService) {
+
+		_wikiNodeLocalService = wikiNodeLocalService;
+	}
+
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
 				new ItemSelectorReturnType[] {
-					new PortletFileEntryItemSelectorReturnType(),
-					new PortletFileEntryURLItemSelectorReturnType()
+					new WikiPageURLItemSelectorReturnType(),
+					new WikiPageTitleItemSelectorReturnType()
 				}));
 
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
 	private ResourceBundleLoader _resourceBundleLoader;
 	private ServletContext _servletContext;
+	private WikiNodeLocalService _wikiNodeLocalService;
 
 }

@@ -443,6 +443,49 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
+	<entity local-service="true" name="CPTemplateLayoutEntry" remote-service="true"  uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPFriendlyUrlEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="layoutUuid" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="classNameId" />
+			<order-column name="classPK" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="G_C_C" return-type="CPTemplateLayoutEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
 	<exceptions>
 		<exception>CPAttachmentFileEntryExpirationDate</exception>
 		<exception>CPAttachmentFileEntryFileEntryId</exception>

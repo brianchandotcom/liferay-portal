@@ -65,7 +65,9 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 		}
 	}
 
-	protected void deleteDuplicateResourcePermissions() throws UpgradeException {
+	protected void deleteDuplicateResourcePermissions()
+		throws UpgradeException {
+
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			String oldName = _RESOURCE_NAMES[0][0];
 			String newName = _RESOURCE_NAMES[0][1];

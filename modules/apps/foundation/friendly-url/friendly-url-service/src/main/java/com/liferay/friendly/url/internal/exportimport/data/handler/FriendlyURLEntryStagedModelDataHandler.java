@@ -112,7 +112,8 @@ public class FriendlyURLEntryStagedModelDataHandler
 
 		FriendlyURLEntry existingFriendlyURLEntry =
 			fetchStagedModelByUuidAndGroupId(
-				friendlyURLEntry.getUuid(), friendlyURLEntry.getGroupId());
+				friendlyURLEntry.getUuid(),
+				portletDataContext.getScopeGroupId());
 
 		if ((existingFriendlyURLEntry == null) ||
 			!portletDataContext.isDataStrategyMirror()) {

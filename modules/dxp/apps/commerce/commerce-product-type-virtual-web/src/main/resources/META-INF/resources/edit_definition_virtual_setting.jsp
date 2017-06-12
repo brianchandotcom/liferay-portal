@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "virtual");
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", VirtualCPTypeConstants.NAME);
 
 ServletContext cpDefinitionServletContext = (ServletContext)request.getAttribute("cpDefinitionServletContext");
 

@@ -38,6 +38,10 @@ public class AddressTextLocalizerHelper {
 
 		AddressTextLocalizer addressTextLocalizer = getAddressTextLocalizer(a2);
 
+		if (addressTextLocalizer == null) {
+			addressTextLocalizer = getAddressTextLocalizer("US");
+		}
+
 		return addressTextLocalizer.format(address);
 	}
 

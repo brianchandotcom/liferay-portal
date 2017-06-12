@@ -127,7 +127,7 @@ String taglibOnClickViewInvitation = renderResponse.getNamespace() + "viewInvita
 		function(meetingId) {
 			var A = AUI();
 
-			if (confirm('<%= UnicodeLanguageUtil.get(pageContext,"are-you-sure-you-want-to-delete-the-selected-meeting") %>')) {
+			if (confirm('<%= UnicodeLanguageUtil.get(request,"are-you-sure-you-want-to-delete-the-selected-meeting") %>')) {
 				var uri = '<portlet:actionURL name="deletePowwowMeeting"></portlet:actionURL>';
 
 				uri = Liferay.Util.addParams('<portlet:namespace />powwowMeetingId=' + meetingId, uri);

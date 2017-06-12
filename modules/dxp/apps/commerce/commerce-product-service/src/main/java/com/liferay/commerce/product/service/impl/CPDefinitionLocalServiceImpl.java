@@ -23,6 +23,7 @@ import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameExcepti
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
+import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.base.CPDefinitionLocalServiceBaseImpl;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
@@ -31,6 +32,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -86,13 +88,13 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition addCPDefinition(
 			String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
-			Map<Locale, String> descriptionMap, String productTypeName,
-			String ddmStructureKey, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+			String productTypeName, String ddmStructureKey,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -147,11 +149,21 @@ public class CPDefinitionLocalServiceImpl
 
 		cpDefinitionPersistence.update(cpDefinition);
 
+		if (Validator.isNull(urlTitleMap)) {
+			urlTitleMap = getUniqueUrlTitles(cpDefinition);
+		}
+
 		// Commerce product definition localization
 
 		_addCPDefinitionLocalizedFields(
 			user.getCompanyId(), cpDefinitionId, titleMap, shortDescriptionMap,
 			descriptionMap);
+
+		// Commerce product friendly URL
+
+		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntry(
+			groupId, serviceContext.getCompanyId(), CPDefinition.class,
+			cpDefinitionId, urlTitleMap);
 
 		// Resources
 
@@ -210,6 +222,12 @@ public class CPDefinitionLocalServiceImpl
 		if (cpType != null) {
 			cpType.deleteCPDefinition(cpDefinition.getCPDefinitionId());
 		}
+
+		// Commerce product friendly URL
+
+		cpFriendlyURLEntryLocalService.deleteCPFriendlyURLEntry(
+			cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
+			CPDefinition.class, cpDefinition.getCPDefinitionId());
 
 		// Resources
 
@@ -364,6 +382,45 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return cpAttachmentFileEntries.get(0);
+	}
+
+	@Override
+	public String getUniqueUrlTitle(
+			CPDefinition cpDefinition, String languageId)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(
+			CPDefinition.class);
+
+		return cpFriendlyURLEntryLocalService.buildUrlTitle(
+			cpDefinition.getGroupId(), cpDefinition.getCompanyId(), classNameId,
+			cpDefinition.getCPDefinitionId(), languageId,
+			cpDefinition.getTitle(languageId));
+	}
+
+	@Override
+	public Map<Locale, String> getUniqueUrlTitles(CPDefinition cpDefinition)
+		throws PortalException {
+
+		Map<Locale, String> urlTitleMap = new HashMap<>();
+
+		Map<Locale, String> titleMap = cpDefinition.getTitleMap();
+
+		long classNameId = classNameLocalService.getClassNameId(
+			CPDefinition.class);
+
+		for (Map.Entry<Locale, String> titleEntry : titleMap.entrySet()) {
+			String languageId = LanguageUtil.getLanguageId(titleEntry.getKey());
+
+			String urlTitle = cpFriendlyURLEntryLocalService.buildUrlTitle(
+				cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
+				classNameId, cpDefinition.getCPDefinitionId(), languageId,
+				titleEntry.getValue());
+
+			urlTitleMap.put(titleEntry.getKey(), urlTitle);
+		}
+
+		return urlTitleMap;
 	}
 
 	@Override
@@ -523,12 +580,13 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition updateCPDefinition(
 			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
-			Map<Locale, String> descriptionMap, String ddmStructureKey,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+			String ddmStructureKey, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -574,11 +632,21 @@ public class CPDefinitionLocalServiceImpl
 
 		cpDefinitionPersistence.update(cpDefinition);
 
+		if (Validator.isNull(urlTitleMap)) {
+			urlTitleMap = getUniqueUrlTitles(cpDefinition);
+		}
+
 		// Commerce product definition localization
 
 		_updateCPDefinitionLocalizedFields(
 			cpDefinition.getCompanyId(), cpDefinition.getCPDefinitionId(),
 			titleMap, shortDescriptionMap, descriptionMap);
+
+		// Commerce product friendly URL
+
+		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntry(
+			groupId, serviceContext.getCompanyId(), CPDefinition.class,
+			cpDefinitionId, urlTitleMap);
 
 		// Asset
 
@@ -914,6 +982,22 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return newCPDefinitionLocalizations;
+	}
+
+	@Override
+	public String getUrlTitleMapAsXML(
+		CPDefinition cpDefinition) {
+
+		long classNameId = classNameLocalService.getClassNameId(
+			CPDefinition.class);
+
+		Locale defaultLocale =  LocaleUtil.getSiteDefault();
+
+		String defaultLanguageId = LanguageUtil.getLanguageId(defaultLocale);
+
+		return cpFriendlyURLEntryLocalService.getUrlTitleMapAsXML(
+			cpDefinition.getGroupId(),cpDefinition.getCompanyId(),classNameId,
+			cpDefinition.getCPDefinitionId(),defaultLanguageId);
 	}
 
 }

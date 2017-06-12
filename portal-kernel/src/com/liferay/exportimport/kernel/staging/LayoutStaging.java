@@ -44,6 +44,10 @@ public interface LayoutStaging {
 
 	public boolean isBranchingLayoutSet(Group group, boolean privateLayout);
 
+	public Layout mergeLayoutRevisionIntoLayout(Layout layout);
+
+	public LayoutSet mergeLayoutSetRevisionIntoLayoutSet(LayoutSet layoutSet);
+
 	public boolean prepareLayoutStagingHandler(
 		PortletDataContext portletDataContext, Layout layout);
 

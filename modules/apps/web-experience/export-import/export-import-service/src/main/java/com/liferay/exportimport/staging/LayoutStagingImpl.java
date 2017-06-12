@@ -186,6 +186,62 @@ public class LayoutStagingImpl implements LayoutStaging {
 		}
 	}
 
+	public Layout mergeLayoutRevisionIntoLayout(Layout layout) {
+		LayoutStagingHandler layoutStagingHandler = getLayoutStagingHandler(
+			layout);
+
+		if (layoutStagingHandler == null) {
+			return (Layout)layout.clone();
+		}
+
+		layout = layoutStagingHandler.getLayout();
+		layout = (Layout)layout.clone();
+
+		LayoutRevision layoutRevision =
+			layoutStagingHandler.getLayoutRevision();
+
+		layout.setName(layoutRevision.getName());
+		layout.setTitle(layoutRevision.getTitle());
+		layout.setDescription(layoutRevision.getDescription());
+		layout.setKeywords(layoutRevision.getKeywords());
+		layout.setRobots(layoutRevision.getRobots());
+		layout.setTypeSettings(layoutRevision.getTypeSettings());
+		layout.setIconImageId(layoutRevision.getIconImageId());
+		layout.setThemeId(layoutRevision.getThemeId());
+		layout.setColorSchemeId(layoutRevision.getColorSchemeId());
+		layout.setCss(layoutRevision.getCss());
+
+		return layout;
+	}
+
+	@Override
+	public LayoutSet mergeLayoutSetRevisionIntoLayoutSet(LayoutSet layoutSet) {
+		LayoutSetStagingHandler layoutSetStagingHandler =
+			getLayoutSetStagingHandler(layoutSet);
+
+		if (layoutSetStagingHandler == null) {
+			return (LayoutSet)layoutSet.clone();
+		}
+
+		layoutSet = layoutSetStagingHandler.getLayoutSet();
+		layoutSet = (LayoutSet)layoutSet.clone();
+
+		LayoutSetBranch layoutSetBranch =
+			layoutSetStagingHandler.getLayoutSetBranch();
+
+		layoutSet.setLogoId(layoutSetBranch.getLogoId());
+		layoutSet.setThemeId(layoutSetBranch.getThemeId());
+		layoutSet.setColorSchemeId(layoutSetBranch.getColorSchemeId());
+		layoutSet.setCss(layoutSetBranch.getCss());
+		layoutSet.setSettings(layoutSetBranch.getSettings());
+		layoutSet.setLayoutSetPrototypeUuid(
+			layoutSetBranch.getLayoutSetPrototypeUuid());
+		layoutSet.setLayoutSetPrototypeLinkEnabled(
+			layoutSetBranch.isLayoutSetPrototypeLinkEnabled());
+
+		return layoutSet;
+	}
+
 	@Override
 	public boolean prepareLayoutStagingHandler(
 		PortletDataContext portletDataContext, Layout layout) {

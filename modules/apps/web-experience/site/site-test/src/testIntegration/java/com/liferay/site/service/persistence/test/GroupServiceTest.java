@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
@@ -59,8 +57,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.ArrayList;
@@ -95,7 +93,8 @@ public class GroupServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			SynchronousDestinationTestRule.INSTANCE);
+			SynchronousDestinationTestRule.INSTANCE,
+			PermissionCheckerTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -131,8 +130,6 @@ public class GroupServiceTest {
 	public void testDeleteGroupWithStagingGroupRemovesStagingResource()
 		throws Exception {
 
-		setUpPermissionThreadLocal();
-
 		Group group = GroupTestUtil.addGroup();
 
 		GroupTestUtil.enableLocalStaging(group);
@@ -146,23 +143,15 @@ public class GroupServiceTest {
 		Role role = RoleLocalServiceUtil.getRole(
 			stagingGroup.getCompanyId(), RoleConstants.OWNER);
 
-		try {
-			ResourcePermissionLocalServiceUtil.getResourcePermission(
-				stagingGroup.getCompanyId(), Group.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(stagingGroup.getGroupId()), role.getRoleId());
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				_originalPermissionChecker);
-		}
+		ResourcePermissionLocalServiceUtil.getResourcePermission(
+			stagingGroup.getCompanyId(), Group.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(stagingGroup.getGroupId()), role.getRoleId());
 	}
 
 	@Test
 	public void testDeleteGroupWithStagingGroupRemovesStagingUserGroupRoles()
 		throws Exception {
-
-		setUpPermissionThreadLocal();
 
 		Group group = GroupTestUtil.addGroup();
 
@@ -189,8 +178,6 @@ public class GroupServiceTest {
 		stagingUserGroupRolesCount = stagingUserGroupRoles.size();
 
 		Assert.assertEquals(0, stagingUserGroupRolesCount);
-
-		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 
 	@Test
@@ -858,28 +845,6 @@ public class GroupServiceTest {
 		return themeDisplay.getLocale();
 	}
 
-	protected void setUpPermissionThreadLocal() throws Exception {
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		PermissionThreadLocal.setPermissionChecker(
-			new SimplePermissionChecker() {
-
-				{
-					init(TestPropsValues.getUser());
-				}
-
-				@Override
-				public boolean hasOwnerPermission(
-					long companyId, String name, String primKey, long ownerId,
-					String actionId) {
-
-					return true;
-				}
-
-			});
-	}
-
 	protected void testSelectableParentSites(boolean staging) throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
@@ -959,7 +924,5 @@ public class GroupServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	private PermissionChecker _originalPermissionChecker;
 
 }

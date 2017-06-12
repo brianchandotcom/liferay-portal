@@ -56,7 +56,7 @@ public class FriendlyURLEntryStagedModelRepository
 		serviceContext.setUuid(friendlyURLEntry.getUuid());
 
 		return _friendlyURLEntryLocalService.addFriendlyURLEntry(
-			friendlyURLEntry.getCompanyId(), friendlyURLEntry.getGroupId(),
+			friendlyURLEntry.getGroupId(), friendlyURLEntry.getCompanyId(),
 			friendlyURLEntry.getClassNameId(), friendlyURLEntry.getClassPK(),
 			friendlyURLEntry.getUrlTitle(), serviceContext);
 	}
@@ -66,7 +66,7 @@ public class FriendlyURLEntryStagedModelRepository
 		throws PortalException {
 
 		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-			friendlyURLEntry.getCompanyId(), friendlyURLEntry.getGroupId(),
+			friendlyURLEntry.getGroupId(), friendlyURLEntry.getCompanyId(),
 			friendlyURLEntry.getClassNameId(), friendlyURLEntry.getClassPK(),
 			friendlyURLEntry.getUrlTitle());
 	}
@@ -142,8 +142,8 @@ public class FriendlyURLEntryStagedModelRepository
 		if (friendlyURLEntry.isMain()) {
 			FriendlyURLEntry mainFriendlyURLEntry =
 				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-					friendlyURLEntry.getCompanyId(),
 					friendlyURLEntry.getGroupId(),
+					friendlyURLEntry.getCompanyId(),
 					friendlyURLEntry.getClassNameId(),
 					friendlyURLEntry.getClassPK());
 
@@ -157,7 +157,7 @@ public class FriendlyURLEntryStagedModelRepository
 
 		friendlyURLEntry.setUrlTitle(
 			_friendlyURLEntryLocalService.getUniqueUrlTitle(
-				friendlyURLEntry.getCompanyId(), friendlyURLEntry.getGroupId(),
+				friendlyURLEntry.getGroupId(), friendlyURLEntry.getCompanyId(),
 				friendlyURLEntry.getClassNameId(),
 				friendlyURLEntry.getClassPK(), friendlyURLEntry.getUrlTitle()));
 

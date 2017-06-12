@@ -29,7 +29,7 @@ if (layout.isTypeControlPanel()) {
 	if (layoutsAdminDisplayContext.getSelPlid() != 0) {
 		selLayout = LayoutLocalServiceUtil.getLayout(layoutsAdminDisplayContext.getSelPlid());
 
-		selThemeId = selLayout.getThemeId();
+		selThemeId = selLayout.getTheme().getThemeId();
 	}
 	else {
 		LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
@@ -40,7 +40,7 @@ if (layout.isTypeControlPanel()) {
 else {
 	selLayout = layout;
 
-	selThemeId = layout.getThemeId();
+	selThemeId = layout.getTheme().getThemeId();
 }
 
 String layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;

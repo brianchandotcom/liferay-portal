@@ -53,7 +53,10 @@ public class MavenDefaultsPlugin extends BaseDefaultsPlugin<MavenPlugin> {
 			public void execute(Task task) {
 				Project project = task.getProject();
 
-				if (GradleUtil.isSnapshot(project)) {
+				if (GradleUtil.isSnapshot(project) ||
+					FileUtil.exists(
+						project, LiferayRelengPlugin.RELENG_IGNORE_FILE_NAME)) {
+
 					return;
 				}
 

@@ -30,20 +30,20 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	implements CPFriendlyURLEntryLocalService,
 		ServiceWrapper<CPFriendlyURLEntryLocalService> {
 	public CPFriendlyURLEntryLocalServiceWrapper(
-		CPFriendlyURLEntryLocalService cpFriendlyUrlEntryLocalService) {
-		_cpFriendlyUrlEntryLocalService = cpFriendlyUrlEntryLocalService;
+		CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService) {
+		_cpFriendlyURLEntryLocalService = cpFriendlyURLEntryLocalService;
 	}
 
 	/**
 	* Adds the cp friendly url entry to the database. Also notifies the appropriate model listeners.
 	*
-	* @param cpFriendlyUrlEntry the cp friendly url entry
+	* @param cpFriendlyURLEntry the cp friendly url entry
 	* @return the cp friendly url entry that was added
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPFriendlyURLEntry addCPFriendlyURLEntry(
-		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		return _cpFriendlyUrlEntryLocalService.addCPFriendlyURLEntry(cpFriendlyUrlEntry);
+		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyURLEntry) {
+		return _cpFriendlyURLEntryLocalService.addCPFriendlyURLEntry(cpFriendlyURLEntry);
 	}
 
 	/**
@@ -55,19 +55,19 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPFriendlyURLEntry createCPFriendlyURLEntry(
 		long CPFriendlyURLEntryId) {
-		return _cpFriendlyUrlEntryLocalService.createCPFriendlyURLEntry(CPFriendlyURLEntryId);
+		return _cpFriendlyURLEntryLocalService.createCPFriendlyURLEntry(CPFriendlyURLEntryId);
 	}
 
 	/**
 	* Deletes the cp friendly url entry from the database. Also notifies the appropriate model listeners.
 	*
-	* @param cpFriendlyUrlEntry the cp friendly url entry
+	* @param cpFriendlyURLEntry the cp friendly url entry
 	* @return the cp friendly url entry that was removed
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPFriendlyURLEntry deleteCPFriendlyURLEntry(
-		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		return _cpFriendlyUrlEntryLocalService.deleteCPFriendlyURLEntry(cpFriendlyUrlEntry);
+		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyURLEntry) {
+		return _cpFriendlyURLEntryLocalService.deleteCPFriendlyURLEntry(cpFriendlyURLEntry);
 	}
 
 	/**
@@ -81,13 +81,13 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	public com.liferay.commerce.product.model.CPFriendlyURLEntry deleteCPFriendlyURLEntry(
 		long CPFriendlyURLEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpFriendlyUrlEntryLocalService.deleteCPFriendlyURLEntry(CPFriendlyURLEntryId);
+		return _cpFriendlyURLEntryLocalService.deleteCPFriendlyURLEntry(CPFriendlyURLEntryId);
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntry(
 		long CPFriendlyURLEntryId) {
-		return _cpFriendlyUrlEntryLocalService.fetchCPFriendlyURLEntry(CPFriendlyURLEntryId);
+		return _cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntryByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
-		return _cpFriendlyUrlEntryLocalService.fetchCPFriendlyURLEntryByUuidAndGroupId(uuid,
+		return _cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntryByUuidAndGroupId(uuid,
 			groupId);
 	}
 
@@ -115,7 +115,7 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	public com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntry(
 		long CPFriendlyURLEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpFriendlyUrlEntryLocalService.getCPFriendlyURLEntry(CPFriendlyURLEntryId);
+		return _cpFriendlyURLEntryLocalService.getCPFriendlyURLEntry(CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -130,41 +130,41 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	public com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntryByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpFriendlyUrlEntryLocalService.getCPFriendlyURLEntryByUuidAndGroupId(uuid,
+		return _cpFriendlyURLEntryLocalService.getCPFriendlyURLEntryByUuidAndGroupId(uuid,
 			groupId);
 	}
 
 	/**
 	* Updates the cp friendly url entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param cpFriendlyUrlEntry the cp friendly url entry
+	* @param cpFriendlyURLEntry the cp friendly url entry
 	* @return the cp friendly url entry that was updated
 	*/
 	@Override
 	public com.liferay.commerce.product.model.CPFriendlyURLEntry updateCPFriendlyURLEntry(
-		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		return _cpFriendlyUrlEntryLocalService.updateCPFriendlyURLEntry(cpFriendlyUrlEntry);
+		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyURLEntry) {
+		return _cpFriendlyURLEntryLocalService.updateCPFriendlyURLEntry(cpFriendlyURLEntry);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _cpFriendlyUrlEntryLocalService.getActionableDynamicQuery();
+		return _cpFriendlyURLEntryLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _cpFriendlyUrlEntryLocalService.dynamicQuery();
+		return _cpFriendlyURLEntryLocalService.dynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _cpFriendlyUrlEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
+		return _cpFriendlyURLEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _cpFriendlyUrlEntryLocalService.getIndexableActionableDynamicQuery();
+		return _cpFriendlyURLEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -174,14 +174,14 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpFriendlyUrlEntryLocalService.deletePersistedModel(persistedModel);
+		return _cpFriendlyURLEntryLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpFriendlyUrlEntryLocalService.getPersistedModel(primaryKeyObj);
+		return _cpFriendlyURLEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -190,8 +190,8 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	* @return the number of cp friendly url entries
 	*/
 	@Override
-	public int getCPFriendlyUrlEntriesCount() {
-		return _cpFriendlyUrlEntryLocalService.getCPFriendlyUrlEntriesCount();
+	public int getCPFriendlyURLEntriesCount() {
+		return _cpFriendlyURLEntryLocalService.getCPFriendlyURLEntriesCount();
 	}
 
 	/**
@@ -201,7 +201,7 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	*/
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
-		return _cpFriendlyUrlEntryLocalService.getOSGiServiceIdentifier();
+		return _cpFriendlyURLEntryLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -213,7 +213,7 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _cpFriendlyUrlEntryLocalService.dynamicQuery(dynamicQuery);
+		return _cpFriendlyURLEntryLocalService.dynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -232,7 +232,7 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
-		return _cpFriendlyUrlEntryLocalService.dynamicQuery(dynamicQuery,
+		return _cpFriendlyURLEntryLocalService.dynamicQuery(dynamicQuery,
 			start, end);
 	}
 
@@ -254,7 +254,7 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return _cpFriendlyUrlEntryLocalService.dynamicQuery(dynamicQuery,
+		return _cpFriendlyURLEntryLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
 
@@ -270,9 +270,9 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	* @return the range of cp friendly url entries
 	*/
 	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyUrlEntries(
+	public java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyURLEntries(
 		int start, int end) {
-		return _cpFriendlyUrlEntryLocalService.getCPFriendlyUrlEntries(start,
+		return _cpFriendlyURLEntryLocalService.getCPFriendlyURLEntries(start,
 			end);
 	}
 
@@ -284,9 +284,9 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	* @return the matching cp friendly url entries, or an empty list if no matches were found
 	*/
 	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyUrlEntriesByUuidAndCompanyId(
+	public java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyURLEntriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
-		return _cpFriendlyUrlEntryLocalService.getCPFriendlyUrlEntriesByUuidAndCompanyId(uuid,
+		return _cpFriendlyURLEntryLocalService.getCPFriendlyURLEntriesByUuidAndCompanyId(uuid,
 			companyId);
 	}
 
@@ -301,10 +301,10 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	* @return the range of matching cp friendly url entries, or an empty list if no matches were found
 	*/
 	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyUrlEntriesByUuidAndCompanyId(
+	public java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyURLEntriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPFriendlyURLEntry> orderByComparator) {
-		return _cpFriendlyUrlEntryLocalService.getCPFriendlyUrlEntriesByUuidAndCompanyId(uuid,
+		return _cpFriendlyURLEntryLocalService.getCPFriendlyURLEntriesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
 	}
 
@@ -317,7 +317,7 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _cpFriendlyUrlEntryLocalService.dynamicQueryCount(dynamicQuery);
+		return _cpFriendlyURLEntryLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
@@ -331,20 +331,20 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _cpFriendlyUrlEntryLocalService.dynamicQueryCount(dynamicQuery,
+		return _cpFriendlyURLEntryLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public CPFriendlyURLEntryLocalService getWrappedService() {
-		return _cpFriendlyUrlEntryLocalService;
+		return _cpFriendlyURLEntryLocalService;
 	}
 
 	@Override
 	public void setWrappedService(
-		CPFriendlyURLEntryLocalService cpFriendlyUrlEntryLocalService) {
-		_cpFriendlyUrlEntryLocalService = cpFriendlyUrlEntryLocalService;
+		CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService) {
+		_cpFriendlyURLEntryLocalService = cpFriendlyURLEntryLocalService;
 	}
 
-	private CPFriendlyURLEntryLocalService _cpFriendlyUrlEntryLocalService;
+	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
 }

@@ -41,8 +41,8 @@ public interface CPFriendlyURLEntry extends CPFriendlyURLEntryModel,
 	public static final Accessor<CPFriendlyURLEntry, Long> CP_FRIENDLY_URL_ENTRY_ID_ACCESSOR =
 		new Accessor<CPFriendlyURLEntry, Long>() {
 			@Override
-			public Long get(CPFriendlyURLEntry cpFriendlyUrlEntry) {
-				return cpFriendlyUrlEntry.getCPFriendlyURLEntryId();
+			public Long get(CPFriendlyURLEntry cpFriendlyURLEntry) {
+				return cpFriendlyURLEntry.getCPFriendlyURLEntryId();
 			}
 
 			@Override

@@ -341,7 +341,7 @@ public interface CPFriendlyURLEntryModel extends AttachedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(CPFriendlyURLEntry cpFriendlyUrlEntry);
+	public int compareTo(CPFriendlyURLEntry cpFriendlyURLEntry);
 
 	@Override
 	public int hashCode();

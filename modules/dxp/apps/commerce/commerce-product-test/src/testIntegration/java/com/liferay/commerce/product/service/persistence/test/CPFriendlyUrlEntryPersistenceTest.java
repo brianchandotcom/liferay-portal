@@ -83,7 +83,7 @@ public class CPFriendlyURLEntryPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Iterator<CPFriendlyURLEntry> iterator = _cpFriendlyUrlEntries.iterator();
+		Iterator<CPFriendlyURLEntry> iterator = _cpFriendlyURLEntries.iterator();
 
 		while (iterator.hasNext()) {
 			_persistence.remove(iterator.next());
@@ -96,11 +96,11 @@ public class CPFriendlyURLEntryPersistenceTest {
 	public void testCreate() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		CPFriendlyURLEntry cpFriendlyUrlEntry = _persistence.create(pk);
+		CPFriendlyURLEntry cpFriendlyURLEntry = _persistence.create(pk);
 
-		Assert.assertNotNull(cpFriendlyUrlEntry);
+		Assert.assertNotNull(cpFriendlyURLEntry);
 
-		Assert.assertEquals(cpFriendlyUrlEntry.getPrimaryKey(), pk);
+		Assert.assertEquals(cpFriendlyURLEntry.getPrimaryKey(), pk);
 	}
 
 	@Test
@@ -149,7 +149,7 @@ public class CPFriendlyURLEntryPersistenceTest {
 
 		newCPFriendlyURLEntry.setMain(RandomTestUtil.randomBoolean());
 
-		_cpFriendlyUrlEntries.add(_persistence.update(newCPFriendlyURLEntry));
+		_cpFriendlyURLEntries.add(_persistence.update(newCPFriendlyURLEntry));
 
 		CPFriendlyURLEntry existingCPFriendlyURLEntry = _persistence.findByPrimaryKey(newCPFriendlyURLEntry.getPrimaryKey());
 
@@ -279,13 +279,13 @@ public class CPFriendlyURLEntryPersistenceTest {
 		primaryKeys.add(newCPFriendlyURLEntry1.getPrimaryKey());
 		primaryKeys.add(newCPFriendlyURLEntry2.getPrimaryKey());
 
-		Map<Serializable, CPFriendlyURLEntry> cpFriendlyUrlEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CPFriendlyURLEntry> cpFriendlyURLEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertEquals(2, cpFriendlyUrlEntries.size());
+		Assert.assertEquals(2, cpFriendlyURLEntries.size());
 		Assert.assertEquals(newCPFriendlyURLEntry1,
-			cpFriendlyUrlEntries.get(newCPFriendlyURLEntry1.getPrimaryKey()));
+			cpFriendlyURLEntries.get(newCPFriendlyURLEntry1.getPrimaryKey()));
 		Assert.assertEquals(newCPFriendlyURLEntry2,
-			cpFriendlyUrlEntries.get(newCPFriendlyURLEntry2.getPrimaryKey()));
+			cpFriendlyURLEntries.get(newCPFriendlyURLEntry2.getPrimaryKey()));
 	}
 
 	@Test
@@ -300,9 +300,9 @@ public class CPFriendlyURLEntryPersistenceTest {
 		primaryKeys.add(pk1);
 		primaryKeys.add(pk2);
 
-		Map<Serializable, CPFriendlyURLEntry> cpFriendlyUrlEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CPFriendlyURLEntry> cpFriendlyURLEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(cpFriendlyUrlEntries.isEmpty());
+		Assert.assertTrue(cpFriendlyURLEntries.isEmpty());
 	}
 
 	@Test
@@ -317,11 +317,11 @@ public class CPFriendlyURLEntryPersistenceTest {
 		primaryKeys.add(newCPFriendlyURLEntry.getPrimaryKey());
 		primaryKeys.add(pk);
 
-		Map<Serializable, CPFriendlyURLEntry> cpFriendlyUrlEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CPFriendlyURLEntry> cpFriendlyURLEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertEquals(1, cpFriendlyUrlEntries.size());
+		Assert.assertEquals(1, cpFriendlyURLEntries.size());
 		Assert.assertEquals(newCPFriendlyURLEntry,
-			cpFriendlyUrlEntries.get(newCPFriendlyURLEntry.getPrimaryKey()));
+			cpFriendlyURLEntries.get(newCPFriendlyURLEntry.getPrimaryKey()));
 	}
 
 	@Test
@@ -329,9 +329,9 @@ public class CPFriendlyURLEntryPersistenceTest {
 		throws Exception {
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
-		Map<Serializable, CPFriendlyURLEntry> cpFriendlyUrlEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CPFriendlyURLEntry> cpFriendlyURLEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertTrue(cpFriendlyUrlEntries.isEmpty());
+		Assert.assertTrue(cpFriendlyURLEntries.isEmpty());
 	}
 
 	@Test
@@ -343,11 +343,11 @@ public class CPFriendlyURLEntryPersistenceTest {
 
 		primaryKeys.add(newCPFriendlyURLEntry.getPrimaryKey());
 
-		Map<Serializable, CPFriendlyURLEntry> cpFriendlyUrlEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
+		Map<Serializable, CPFriendlyURLEntry> cpFriendlyURLEntries = _persistence.fetchByPrimaryKeys(primaryKeys);
 
-		Assert.assertEquals(1, cpFriendlyUrlEntries.size());
+		Assert.assertEquals(1, cpFriendlyURLEntries.size());
 		Assert.assertEquals(newCPFriendlyURLEntry,
-			cpFriendlyUrlEntries.get(newCPFriendlyURLEntry.getPrimaryKey()));
+			cpFriendlyURLEntries.get(newCPFriendlyURLEntry.getPrimaryKey()));
 	}
 
 	@Test
@@ -358,8 +358,8 @@ public class CPFriendlyURLEntryPersistenceTest {
 
 		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CPFriendlyURLEntry>() {
 				@Override
-				public void performAction(CPFriendlyURLEntry cpFriendlyUrlEntry) {
-					Assert.assertNotNull(cpFriendlyUrlEntry);
+				public void performAction(CPFriendlyURLEntry cpFriendlyURLEntry) {
+					Assert.assertNotNull(cpFriendlyURLEntry);
 
 					count.increment();
 				}
@@ -479,38 +479,38 @@ public class CPFriendlyURLEntryPersistenceTest {
 		throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		CPFriendlyURLEntry cpFriendlyUrlEntry = _persistence.create(pk);
+		CPFriendlyURLEntry cpFriendlyURLEntry = _persistence.create(pk);
 
-		cpFriendlyUrlEntry.setUuid(RandomTestUtil.randomString());
+		cpFriendlyURLEntry.setUuid(RandomTestUtil.randomString());
 
-		cpFriendlyUrlEntry.setGroupId(RandomTestUtil.nextLong());
+		cpFriendlyURLEntry.setGroupId(RandomTestUtil.nextLong());
 
-		cpFriendlyUrlEntry.setCompanyId(RandomTestUtil.nextLong());
+		cpFriendlyURLEntry.setCompanyId(RandomTestUtil.nextLong());
 
-		cpFriendlyUrlEntry.setUserId(RandomTestUtil.nextLong());
+		cpFriendlyURLEntry.setUserId(RandomTestUtil.nextLong());
 
-		cpFriendlyUrlEntry.setUserName(RandomTestUtil.randomString());
+		cpFriendlyURLEntry.setUserName(RandomTestUtil.randomString());
 
-		cpFriendlyUrlEntry.setCreateDate(RandomTestUtil.nextDate());
+		cpFriendlyURLEntry.setCreateDate(RandomTestUtil.nextDate());
 
-		cpFriendlyUrlEntry.setModifiedDate(RandomTestUtil.nextDate());
+		cpFriendlyURLEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		cpFriendlyUrlEntry.setClassNameId(RandomTestUtil.nextLong());
+		cpFriendlyURLEntry.setClassNameId(RandomTestUtil.nextLong());
 
-		cpFriendlyUrlEntry.setClassPK(RandomTestUtil.nextLong());
+		cpFriendlyURLEntry.setClassPK(RandomTestUtil.nextLong());
 
-		cpFriendlyUrlEntry.setLanguageId(RandomTestUtil.randomString());
+		cpFriendlyURLEntry.setLanguageId(RandomTestUtil.randomString());
 
-		cpFriendlyUrlEntry.setUrlTitle(RandomTestUtil.randomString());
+		cpFriendlyURLEntry.setUrlTitle(RandomTestUtil.randomString());
 
-		cpFriendlyUrlEntry.setMain(RandomTestUtil.randomBoolean());
+		cpFriendlyURLEntry.setMain(RandomTestUtil.randomBoolean());
 
-		_cpFriendlyUrlEntries.add(_persistence.update(cpFriendlyUrlEntry));
+		_cpFriendlyURLEntries.add(_persistence.update(cpFriendlyURLEntry));
 
-		return cpFriendlyUrlEntry;
+		return cpFriendlyURLEntry;
 	}
 
-	private List<CPFriendlyURLEntry> _cpFriendlyUrlEntries = new ArrayList<CPFriendlyURLEntry>();
+	private List<CPFriendlyURLEntry> _cpFriendlyURLEntries = new ArrayList<CPFriendlyURLEntry>();
 	private CPFriendlyURLEntryPersistence _persistence;
 	private ClassLoader _dynamicQueryClassLoader;
 }

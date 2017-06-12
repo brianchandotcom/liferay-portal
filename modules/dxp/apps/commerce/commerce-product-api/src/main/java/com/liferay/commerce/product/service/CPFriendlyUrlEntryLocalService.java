@@ -67,12 +67,12 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	/**
 	* Adds the cp friendly url entry to the database. Also notifies the appropriate model listeners.
 	*
-	* @param cpFriendlyUrlEntry the cp friendly url entry
+	* @param cpFriendlyURLEntry the cp friendly url entry
 	* @return the cp friendly url entry that was added
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public CPFriendlyURLEntry addCPFriendlyURLEntry(
-		CPFriendlyURLEntry cpFriendlyUrlEntry);
+		CPFriendlyURLEntry cpFriendlyURLEntry);
 
 	/**
 	* Creates a new cp friendly url entry with the primary key. Does not add the cp friendly url entry to the database.
@@ -86,12 +86,12 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	/**
 	* Deletes the cp friendly url entry from the database. Also notifies the appropriate model listeners.
 	*
-	* @param cpFriendlyUrlEntry the cp friendly url entry
+	* @param cpFriendlyURLEntry the cp friendly url entry
 	* @return the cp friendly url entry that was removed
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CPFriendlyURLEntry deleteCPFriendlyURLEntry(
-		CPFriendlyURLEntry cpFriendlyUrlEntry);
+		CPFriendlyURLEntry cpFriendlyURLEntry);
 
 	/**
 	* Deletes the cp friendly url entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -144,12 +144,12 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	/**
 	* Updates the cp friendly url entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param cpFriendlyUrlEntry the cp friendly url entry
+	* @param cpFriendlyURLEntry the cp friendly url entry
 	* @return the cp friendly url entry that was updated
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public CPFriendlyURLEntry updateCPFriendlyURLEntry(
-		CPFriendlyURLEntry cpFriendlyUrlEntry);
+		CPFriendlyURLEntry cpFriendlyURLEntry);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -181,7 +181,7 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	* @return the number of cp friendly url entries
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPFriendlyUrlEntriesCount();
+	public int getCPFriendlyURLEntriesCount();
 
 	/**
 	* Returns the OSGi service identifier.
@@ -241,7 +241,7 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	* @return the range of cp friendly url entries
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPFriendlyURLEntry> getCPFriendlyUrlEntries(int start, int end);
+	public List<CPFriendlyURLEntry> getCPFriendlyURLEntries(int start, int end);
 
 	/**
 	* Returns all the cp friendly url entries matching the UUID and company.
@@ -251,7 +251,7 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	* @return the matching cp friendly url entries, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPFriendlyURLEntry> getCPFriendlyUrlEntriesByUuidAndCompanyId(
+	public List<CPFriendlyURLEntry> getCPFriendlyURLEntriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -265,7 +265,7 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	* @return the range of matching cp friendly url entries, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPFriendlyURLEntry> getCPFriendlyUrlEntriesByUuidAndCompanyId(
+	public List<CPFriendlyURLEntry> getCPFriendlyURLEntriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 

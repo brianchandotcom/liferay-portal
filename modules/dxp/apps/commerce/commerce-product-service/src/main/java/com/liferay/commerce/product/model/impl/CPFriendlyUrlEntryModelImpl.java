@@ -108,7 +108,7 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 
 	public static final String TABLE_SQL_CREATE = "create table CPFriendlyURLEntry (uuid_ VARCHAR(75) null,CPFriendlyURLEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,languageId VARCHAR(75) null,urlTitle VARCHAR(255) null,main BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CPFriendlyURLEntry";
-	public static final String ORDER_BY_JPQL = " ORDER BY cpFriendlyUrlEntry.classNameId ASC, cpFriendlyUrlEntry.classPK ASC, cpFriendlyUrlEntry.urlTitle ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY cpFriendlyURLEntry.classNameId ASC, cpFriendlyURLEntry.classPK ASC, cpFriendlyURLEntry.urlTitle ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPFriendlyURLEntry.classNameId ASC, CPFriendlyURLEntry.classPK ASC, CPFriendlyURLEntry.urlTitle ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -624,35 +624,35 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 
 	@Override
 	public Object clone() {
-		CPFriendlyURLEntryImpl cpFriendlyUrlEntryImpl = new CPFriendlyURLEntryImpl();
+		CPFriendlyURLEntryImpl cpFriendlyURLEntryImpl = new CPFriendlyURLEntryImpl();
 
-		cpFriendlyUrlEntryImpl.setUuid(getUuid());
-		cpFriendlyUrlEntryImpl.setCPFriendlyURLEntryId(getCPFriendlyURLEntryId());
-		cpFriendlyUrlEntryImpl.setGroupId(getGroupId());
-		cpFriendlyUrlEntryImpl.setCompanyId(getCompanyId());
-		cpFriendlyUrlEntryImpl.setUserId(getUserId());
-		cpFriendlyUrlEntryImpl.setUserName(getUserName());
-		cpFriendlyUrlEntryImpl.setCreateDate(getCreateDate());
-		cpFriendlyUrlEntryImpl.setModifiedDate(getModifiedDate());
-		cpFriendlyUrlEntryImpl.setClassNameId(getClassNameId());
-		cpFriendlyUrlEntryImpl.setClassPK(getClassPK());
-		cpFriendlyUrlEntryImpl.setLanguageId(getLanguageId());
-		cpFriendlyUrlEntryImpl.setUrlTitle(getUrlTitle());
-		cpFriendlyUrlEntryImpl.setMain(getMain());
+		cpFriendlyURLEntryImpl.setUuid(getUuid());
+		cpFriendlyURLEntryImpl.setCPFriendlyURLEntryId(getCPFriendlyURLEntryId());
+		cpFriendlyURLEntryImpl.setGroupId(getGroupId());
+		cpFriendlyURLEntryImpl.setCompanyId(getCompanyId());
+		cpFriendlyURLEntryImpl.setUserId(getUserId());
+		cpFriendlyURLEntryImpl.setUserName(getUserName());
+		cpFriendlyURLEntryImpl.setCreateDate(getCreateDate());
+		cpFriendlyURLEntryImpl.setModifiedDate(getModifiedDate());
+		cpFriendlyURLEntryImpl.setClassNameId(getClassNameId());
+		cpFriendlyURLEntryImpl.setClassPK(getClassPK());
+		cpFriendlyURLEntryImpl.setLanguageId(getLanguageId());
+		cpFriendlyURLEntryImpl.setUrlTitle(getUrlTitle());
+		cpFriendlyURLEntryImpl.setMain(getMain());
 
-		cpFriendlyUrlEntryImpl.resetOriginalValues();
+		cpFriendlyURLEntryImpl.resetOriginalValues();
 
-		return cpFriendlyUrlEntryImpl;
+		return cpFriendlyURLEntryImpl;
 	}
 
 	@Override
-	public int compareTo(CPFriendlyURLEntry cpFriendlyUrlEntry) {
+	public int compareTo(CPFriendlyURLEntry cpFriendlyURLEntry) {
 		int value = 0;
 
-		if (getClassNameId() < cpFriendlyUrlEntry.getClassNameId()) {
+		if (getClassNameId() < cpFriendlyURLEntry.getClassNameId()) {
 			value = -1;
 		}
-		else if (getClassNameId() > cpFriendlyUrlEntry.getClassNameId()) {
+		else if (getClassNameId() > cpFriendlyURLEntry.getClassNameId()) {
 			value = 1;
 		}
 		else {
@@ -663,10 +663,10 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 			return value;
 		}
 
-		if (getClassPK() < cpFriendlyUrlEntry.getClassPK()) {
+		if (getClassPK() < cpFriendlyURLEntry.getClassPK()) {
 			value = -1;
 		}
-		else if (getClassPK() > cpFriendlyUrlEntry.getClassPK()) {
+		else if (getClassPK() > cpFriendlyURLEntry.getClassPK()) {
 			value = 1;
 		}
 		else {
@@ -677,7 +677,7 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 			return value;
 		}
 
-		value = getUrlTitle().compareTo(cpFriendlyUrlEntry.getUrlTitle());
+		value = getUrlTitle().compareTo(cpFriendlyURLEntry.getUrlTitle());
 
 		if (value != 0) {
 			return value;
@@ -696,9 +696,9 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 			return false;
 		}
 
-		CPFriendlyURLEntry cpFriendlyUrlEntry = (CPFriendlyURLEntry)obj;
+		CPFriendlyURLEntry cpFriendlyURLEntry = (CPFriendlyURLEntry)obj;
 
-		long primaryKey = cpFriendlyUrlEntry.getPrimaryKey();
+		long primaryKey = cpFriendlyURLEntry.getPrimaryKey();
 
 		if (getPrimaryKey() == primaryKey) {
 			return true;
@@ -725,96 +725,96 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 
 	@Override
 	public void resetOriginalValues() {
-		CPFriendlyURLEntryModelImpl cpFriendlyUrlEntryModelImpl = this;
+		CPFriendlyURLEntryModelImpl cpFriendlyURLEntryModelImpl = this;
 
-		cpFriendlyUrlEntryModelImpl._originalUuid = cpFriendlyUrlEntryModelImpl._uuid;
+		cpFriendlyURLEntryModelImpl._originalUuid = cpFriendlyURLEntryModelImpl._uuid;
 
-		cpFriendlyUrlEntryModelImpl._originalGroupId = cpFriendlyUrlEntryModelImpl._groupId;
+		cpFriendlyURLEntryModelImpl._originalGroupId = cpFriendlyURLEntryModelImpl._groupId;
 
-		cpFriendlyUrlEntryModelImpl._setOriginalGroupId = false;
+		cpFriendlyURLEntryModelImpl._setOriginalGroupId = false;
 
-		cpFriendlyUrlEntryModelImpl._originalCompanyId = cpFriendlyUrlEntryModelImpl._companyId;
+		cpFriendlyURLEntryModelImpl._originalCompanyId = cpFriendlyURLEntryModelImpl._companyId;
 
-		cpFriendlyUrlEntryModelImpl._setOriginalCompanyId = false;
+		cpFriendlyURLEntryModelImpl._setOriginalCompanyId = false;
 
-		cpFriendlyUrlEntryModelImpl._setModifiedDate = false;
+		cpFriendlyURLEntryModelImpl._setModifiedDate = false;
 
-		cpFriendlyUrlEntryModelImpl._originalLanguageId = cpFriendlyUrlEntryModelImpl._languageId;
+		cpFriendlyURLEntryModelImpl._originalLanguageId = cpFriendlyURLEntryModelImpl._languageId;
 
-		cpFriendlyUrlEntryModelImpl._originalUrlTitle = cpFriendlyUrlEntryModelImpl._urlTitle;
+		cpFriendlyURLEntryModelImpl._originalUrlTitle = cpFriendlyURLEntryModelImpl._urlTitle;
 
-		cpFriendlyUrlEntryModelImpl._columnBitmask = 0;
+		cpFriendlyURLEntryModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<CPFriendlyURLEntry> toCacheModel() {
-		CPFriendlyURLEntryCacheModel cpFriendlyUrlEntryCacheModel = new CPFriendlyURLEntryCacheModel();
+		CPFriendlyURLEntryCacheModel cpFriendlyURLEntryCacheModel = new CPFriendlyURLEntryCacheModel();
 
-		cpFriendlyUrlEntryCacheModel.uuid = getUuid();
+		cpFriendlyURLEntryCacheModel.uuid = getUuid();
 
-		String uuid = cpFriendlyUrlEntryCacheModel.uuid;
+		String uuid = cpFriendlyURLEntryCacheModel.uuid;
 
 		if ((uuid != null) && (uuid.length() == 0)) {
-			cpFriendlyUrlEntryCacheModel.uuid = null;
+			cpFriendlyURLEntryCacheModel.uuid = null;
 		}
 
-		cpFriendlyUrlEntryCacheModel.CPFriendlyURLEntryId = getCPFriendlyURLEntryId();
+		cpFriendlyURLEntryCacheModel.CPFriendlyURLEntryId = getCPFriendlyURLEntryId();
 
-		cpFriendlyUrlEntryCacheModel.groupId = getGroupId();
+		cpFriendlyURLEntryCacheModel.groupId = getGroupId();
 
-		cpFriendlyUrlEntryCacheModel.companyId = getCompanyId();
+		cpFriendlyURLEntryCacheModel.companyId = getCompanyId();
 
-		cpFriendlyUrlEntryCacheModel.userId = getUserId();
+		cpFriendlyURLEntryCacheModel.userId = getUserId();
 
-		cpFriendlyUrlEntryCacheModel.userName = getUserName();
+		cpFriendlyURLEntryCacheModel.userName = getUserName();
 
-		String userName = cpFriendlyUrlEntryCacheModel.userName;
+		String userName = cpFriendlyURLEntryCacheModel.userName;
 
 		if ((userName != null) && (userName.length() == 0)) {
-			cpFriendlyUrlEntryCacheModel.userName = null;
+			cpFriendlyURLEntryCacheModel.userName = null;
 		}
 
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
-			cpFriendlyUrlEntryCacheModel.createDate = createDate.getTime();
+			cpFriendlyURLEntryCacheModel.createDate = createDate.getTime();
 		}
 		else {
-			cpFriendlyUrlEntryCacheModel.createDate = Long.MIN_VALUE;
+			cpFriendlyURLEntryCacheModel.createDate = Long.MIN_VALUE;
 		}
 
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
-			cpFriendlyUrlEntryCacheModel.modifiedDate = modifiedDate.getTime();
+			cpFriendlyURLEntryCacheModel.modifiedDate = modifiedDate.getTime();
 		}
 		else {
-			cpFriendlyUrlEntryCacheModel.modifiedDate = Long.MIN_VALUE;
+			cpFriendlyURLEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		cpFriendlyUrlEntryCacheModel.classNameId = getClassNameId();
+		cpFriendlyURLEntryCacheModel.classNameId = getClassNameId();
 
-		cpFriendlyUrlEntryCacheModel.classPK = getClassPK();
+		cpFriendlyURLEntryCacheModel.classPK = getClassPK();
 
-		cpFriendlyUrlEntryCacheModel.languageId = getLanguageId();
+		cpFriendlyURLEntryCacheModel.languageId = getLanguageId();
 
-		String languageId = cpFriendlyUrlEntryCacheModel.languageId;
+		String languageId = cpFriendlyURLEntryCacheModel.languageId;
 
 		if ((languageId != null) && (languageId.length() == 0)) {
-			cpFriendlyUrlEntryCacheModel.languageId = null;
+			cpFriendlyURLEntryCacheModel.languageId = null;
 		}
 
-		cpFriendlyUrlEntryCacheModel.urlTitle = getUrlTitle();
+		cpFriendlyURLEntryCacheModel.urlTitle = getUrlTitle();
 
-		String urlTitle = cpFriendlyUrlEntryCacheModel.urlTitle;
+		String urlTitle = cpFriendlyURLEntryCacheModel.urlTitle;
 
 		if ((urlTitle != null) && (urlTitle.length() == 0)) {
-			cpFriendlyUrlEntryCacheModel.urlTitle = null;
+			cpFriendlyURLEntryCacheModel.urlTitle = null;
 		}
 
-		cpFriendlyUrlEntryCacheModel.main = getMain();
+		cpFriendlyURLEntryCacheModel.main = getMain();
 
-		return cpFriendlyUrlEntryCacheModel;
+		return cpFriendlyURLEntryCacheModel;
 	}
 
 	@Override

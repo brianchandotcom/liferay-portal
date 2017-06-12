@@ -206,8 +206,8 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
-				for (CPFriendlyURLEntry cpFriendlyUrlEntry : list) {
-					if (!Objects.equals(uuid, cpFriendlyUrlEntry.getUuid())) {
+				for (CPFriendlyURLEntry cpFriendlyURLEntry : list) {
+					if (!Objects.equals(uuid, cpFriendlyURLEntry.getUuid())) {
 						list = null;
 
 						break;
@@ -309,11 +309,11 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	public CPFriendlyURLEntry findByUuid_First(String uuid,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByUuid_First(uuid,
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByUuid_First(uuid,
 				orderByComparator);
 
-		if (cpFriendlyUrlEntry != null) {
-			return cpFriendlyUrlEntry;
+		if (cpFriendlyURLEntry != null) {
+			return cpFriendlyURLEntry;
 		}
 
 		StringBundler msg = new StringBundler(4);
@@ -359,11 +359,11 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	public CPFriendlyURLEntry findByUuid_Last(String uuid,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByUuid_Last(uuid,
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByUuid_Last(uuid,
 				orderByComparator);
 
-		if (cpFriendlyUrlEntry != null) {
-			return cpFriendlyUrlEntry;
+		if (cpFriendlyURLEntry != null) {
+			return cpFriendlyURLEntry;
 		}
 
 		StringBundler msg = new StringBundler(4);
@@ -418,7 +418,7 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		long CPFriendlyURLEntryId, String uuid,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyUrlEntry = findByPrimaryKey(CPFriendlyURLEntryId);
+		CPFriendlyURLEntry cpFriendlyURLEntry = findByPrimaryKey(CPFriendlyURLEntryId);
 
 		Session session = null;
 
@@ -427,12 +427,12 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 			CPFriendlyURLEntry[] array = new CPFriendlyURLEntryImpl[3];
 
-			array[0] = getByUuid_PrevAndNext(session, cpFriendlyUrlEntry, uuid,
+			array[0] = getByUuid_PrevAndNext(session, cpFriendlyURLEntry, uuid,
 					orderByComparator, true);
 
-			array[1] = cpFriendlyUrlEntry;
+			array[1] = cpFriendlyURLEntry;
 
-			array[2] = getByUuid_PrevAndNext(session, cpFriendlyUrlEntry, uuid,
+			array[2] = getByUuid_PrevAndNext(session, cpFriendlyURLEntry, uuid,
 					orderByComparator, false);
 
 			return array;
@@ -446,7 +446,7 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	protected CPFriendlyURLEntry getByUuid_PrevAndNext(Session session,
-		CPFriendlyURLEntry cpFriendlyUrlEntry, String uuid,
+		CPFriendlyURLEntry cpFriendlyURLEntry, String uuid,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
@@ -549,7 +549,7 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(cpFriendlyUrlEntry);
+			Object[] values = orderByComparator.getOrderByConditionValues(cpFriendlyURLEntry);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -573,9 +573,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CPFriendlyURLEntry cpFriendlyUrlEntry : findByUuid(uuid,
+		for (CPFriendlyURLEntry cpFriendlyURLEntry : findByUuid(uuid,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(cpFriendlyUrlEntry);
+			remove(cpFriendlyURLEntry);
 		}
 	}
 
@@ -644,9 +644,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "cpFriendlyUrlEntry.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "cpFriendlyUrlEntry.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(cpFriendlyUrlEntry.uuid IS NULL OR cpFriendlyUrlEntry.uuid = '')";
+	private static final String _FINDER_COLUMN_UUID_UUID_1 = "cpFriendlyURLEntry.uuid IS NULL";
+	private static final String _FINDER_COLUMN_UUID_UUID_2 = "cpFriendlyURLEntry.uuid = ?";
+	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(cpFriendlyURLEntry.uuid IS NULL OR cpFriendlyURLEntry.uuid = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPFriendlyURLEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -670,9 +670,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	@Override
 	public CPFriendlyURLEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByUUID_G(uuid, groupId);
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByUUID_G(uuid, groupId);
 
-		if (cpFriendlyUrlEntry == null) {
+		if (cpFriendlyURLEntry == null) {
 			StringBundler msg = new StringBundler(6);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
@@ -692,7 +692,7 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			throw new NoSuchCPFriendlyURLEntryException(msg.toString());
 		}
 
-		return cpFriendlyUrlEntry;
+		return cpFriendlyURLEntry;
 	}
 
 	/**
@@ -728,10 +728,10 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		}
 
 		if (result instanceof CPFriendlyURLEntry) {
-			CPFriendlyURLEntry cpFriendlyUrlEntry = (CPFriendlyURLEntry)result;
+			CPFriendlyURLEntry cpFriendlyURLEntry = (CPFriendlyURLEntry)result;
 
-			if (!Objects.equals(uuid, cpFriendlyUrlEntry.getUuid()) ||
-					(groupId != cpFriendlyUrlEntry.getGroupId())) {
+			if (!Objects.equals(uuid, cpFriendlyURLEntry.getUuid()) ||
+					(groupId != cpFriendlyURLEntry.getGroupId())) {
 				result = null;
 			}
 		}
@@ -781,17 +781,17 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 						finderArgs, list);
 				}
 				else {
-					CPFriendlyURLEntry cpFriendlyUrlEntry = list.get(0);
+					CPFriendlyURLEntry cpFriendlyURLEntry = list.get(0);
 
-					result = cpFriendlyUrlEntry;
+					result = cpFriendlyURLEntry;
 
-					cacheResult(cpFriendlyUrlEntry);
+					cacheResult(cpFriendlyURLEntry);
 
-					if ((cpFriendlyUrlEntry.getUuid() == null) ||
-							!cpFriendlyUrlEntry.getUuid().equals(uuid) ||
-							(cpFriendlyUrlEntry.getGroupId() != groupId)) {
+					if ((cpFriendlyURLEntry.getUuid() == null) ||
+							!cpFriendlyURLEntry.getUuid().equals(uuid) ||
+							(cpFriendlyURLEntry.getGroupId() != groupId)) {
 						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, cpFriendlyUrlEntry);
+							finderArgs, cpFriendlyURLEntry);
 					}
 				}
 			}
@@ -823,9 +823,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	@Override
 	public CPFriendlyURLEntry removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyUrlEntry = findByUUID_G(uuid, groupId);
+		CPFriendlyURLEntry cpFriendlyURLEntry = findByUUID_G(uuid, groupId);
 
-		return remove(cpFriendlyUrlEntry);
+		return remove(cpFriendlyURLEntry);
 	}
 
 	/**
@@ -898,10 +898,10 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "cpFriendlyUrlEntry.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "cpFriendlyUrlEntry.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(cpFriendlyUrlEntry.uuid IS NULL OR cpFriendlyUrlEntry.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "cpFriendlyUrlEntry.groupId = ?";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "cpFriendlyURLEntry.uuid IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "cpFriendlyURLEntry.uuid = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(cpFriendlyURLEntry.uuid IS NULL OR cpFriendlyURLEntry.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "cpFriendlyURLEntry.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPFriendlyURLEntryImpl.class,
@@ -1027,9 +1027,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
-				for (CPFriendlyURLEntry cpFriendlyUrlEntry : list) {
-					if (!Objects.equals(uuid, cpFriendlyUrlEntry.getUuid()) ||
-							(companyId != cpFriendlyUrlEntry.getCompanyId())) {
+				for (CPFriendlyURLEntry cpFriendlyURLEntry : list) {
+					if (!Objects.equals(uuid, cpFriendlyURLEntry.getUuid()) ||
+							(companyId != cpFriendlyURLEntry.getCompanyId())) {
 						list = null;
 
 						break;
@@ -1136,11 +1136,11 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	public CPFriendlyURLEntry findByUuid_C_First(String uuid, long companyId,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByUuid_C_First(uuid,
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByUuid_C_First(uuid,
 				companyId, orderByComparator);
 
-		if (cpFriendlyUrlEntry != null) {
-			return cpFriendlyUrlEntry;
+		if (cpFriendlyURLEntry != null) {
+			return cpFriendlyURLEntry;
 		}
 
 		StringBundler msg = new StringBundler(6);
@@ -1192,11 +1192,11 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	public CPFriendlyURLEntry findByUuid_C_Last(String uuid, long companyId,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByUuid_C_Last(uuid,
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByUuid_C_Last(uuid,
 				companyId, orderByComparator);
 
-		if (cpFriendlyUrlEntry != null) {
-			return cpFriendlyUrlEntry;
+		if (cpFriendlyURLEntry != null) {
+			return cpFriendlyURLEntry;
 		}
 
 		StringBundler msg = new StringBundler(6);
@@ -1256,7 +1256,7 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		long CPFriendlyURLEntryId, String uuid, long companyId,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyUrlEntry = findByPrimaryKey(CPFriendlyURLEntryId);
+		CPFriendlyURLEntry cpFriendlyURLEntry = findByPrimaryKey(CPFriendlyURLEntryId);
 
 		Session session = null;
 
@@ -1265,12 +1265,12 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 			CPFriendlyURLEntry[] array = new CPFriendlyURLEntryImpl[3];
 
-			array[0] = getByUuid_C_PrevAndNext(session, cpFriendlyUrlEntry,
+			array[0] = getByUuid_C_PrevAndNext(session, cpFriendlyURLEntry,
 					uuid, companyId, orderByComparator, true);
 
-			array[1] = cpFriendlyUrlEntry;
+			array[1] = cpFriendlyURLEntry;
 
-			array[2] = getByUuid_C_PrevAndNext(session, cpFriendlyUrlEntry,
+			array[2] = getByUuid_C_PrevAndNext(session, cpFriendlyURLEntry,
 					uuid, companyId, orderByComparator, false);
 
 			return array;
@@ -1284,7 +1284,7 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	protected CPFriendlyURLEntry getByUuid_C_PrevAndNext(Session session,
-		CPFriendlyURLEntry cpFriendlyUrlEntry, String uuid, long companyId,
+		CPFriendlyURLEntry cpFriendlyURLEntry, String uuid, long companyId,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
@@ -1391,7 +1391,7 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(cpFriendlyUrlEntry);
+			Object[] values = orderByComparator.getOrderByConditionValues(cpFriendlyURLEntry);
 
 			for (Object value : values) {
 				qPos.add(value);
@@ -1416,9 +1416,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CPFriendlyURLEntry cpFriendlyUrlEntry : findByUuid_C(uuid,
+		for (CPFriendlyURLEntry cpFriendlyURLEntry : findByUuid_C(uuid,
 				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(cpFriendlyUrlEntry);
+			remove(cpFriendlyURLEntry);
 		}
 	}
 
@@ -1492,10 +1492,10 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "cpFriendlyUrlEntry.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "cpFriendlyUrlEntry.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(cpFriendlyUrlEntry.uuid IS NULL OR cpFriendlyUrlEntry.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "cpFriendlyUrlEntry.companyId = ?";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "cpFriendlyURLEntry.uuid IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "cpFriendlyURLEntry.uuid = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(cpFriendlyURLEntry.uuid IS NULL OR cpFriendlyURLEntry.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "cpFriendlyURLEntry.companyId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_U_L = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPFriendlyURLEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -1527,10 +1527,10 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	@Override
 	public CPFriendlyURLEntry findByG_U_L(long groupId, String urlTitle,
 		String languageId) throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByG_U_L(groupId, urlTitle,
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_U_L(groupId, urlTitle,
 				languageId);
 
-		if (cpFriendlyUrlEntry == null) {
+		if (cpFriendlyURLEntry == null) {
 			StringBundler msg = new StringBundler(8);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
@@ -1553,7 +1553,7 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			throw new NoSuchCPFriendlyURLEntryException(msg.toString());
 		}
 
-		return cpFriendlyUrlEntry;
+		return cpFriendlyURLEntry;
 	}
 
 	/**
@@ -1592,12 +1592,12 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		}
 
 		if (result instanceof CPFriendlyURLEntry) {
-			CPFriendlyURLEntry cpFriendlyUrlEntry = (CPFriendlyURLEntry)result;
+			CPFriendlyURLEntry cpFriendlyURLEntry = (CPFriendlyURLEntry)result;
 
-			if ((groupId != cpFriendlyUrlEntry.getGroupId()) ||
-					!Objects.equals(urlTitle, cpFriendlyUrlEntry.getUrlTitle()) ||
+			if ((groupId != cpFriendlyURLEntry.getGroupId()) ||
+					!Objects.equals(urlTitle, cpFriendlyURLEntry.getUrlTitle()) ||
 					!Objects.equals(languageId,
-						cpFriendlyUrlEntry.getLanguageId())) {
+						cpFriendlyURLEntry.getLanguageId())) {
 				result = null;
 			}
 		}
@@ -1665,20 +1665,20 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 						finderArgs, list);
 				}
 				else {
-					CPFriendlyURLEntry cpFriendlyUrlEntry = list.get(0);
+					CPFriendlyURLEntry cpFriendlyURLEntry = list.get(0);
 
-					result = cpFriendlyUrlEntry;
+					result = cpFriendlyURLEntry;
 
-					cacheResult(cpFriendlyUrlEntry);
+					cacheResult(cpFriendlyURLEntry);
 
-					if ((cpFriendlyUrlEntry.getGroupId() != groupId) ||
-							(cpFriendlyUrlEntry.getUrlTitle() == null) ||
-							!cpFriendlyUrlEntry.getUrlTitle().equals(urlTitle) ||
-							(cpFriendlyUrlEntry.getLanguageId() == null) ||
-							!cpFriendlyUrlEntry.getLanguageId()
+					if ((cpFriendlyURLEntry.getGroupId() != groupId) ||
+							(cpFriendlyURLEntry.getUrlTitle() == null) ||
+							!cpFriendlyURLEntry.getUrlTitle().equals(urlTitle) ||
+							(cpFriendlyURLEntry.getLanguageId() == null) ||
+							!cpFriendlyURLEntry.getLanguageId()
 												   .equals(languageId)) {
 						finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_L,
-							finderArgs, cpFriendlyUrlEntry);
+							finderArgs, cpFriendlyURLEntry);
 					}
 				}
 			}
@@ -1711,10 +1711,10 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	@Override
 	public CPFriendlyURLEntry removeByG_U_L(long groupId, String urlTitle,
 		String languageId) throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyUrlEntry = findByG_U_L(groupId, urlTitle,
+		CPFriendlyURLEntry cpFriendlyURLEntry = findByG_U_L(groupId, urlTitle,
 				languageId);
 
-		return remove(cpFriendlyUrlEntry);
+		return remove(cpFriendlyURLEntry);
 	}
 
 	/**
@@ -1806,13 +1806,13 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_U_L_GROUPID_2 = "cpFriendlyUrlEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_U_L_URLTITLE_1 = "cpFriendlyUrlEntry.urlTitle IS NULL AND ";
-	private static final String _FINDER_COLUMN_G_U_L_URLTITLE_2 = "cpFriendlyUrlEntry.urlTitle = ? AND ";
-	private static final String _FINDER_COLUMN_G_U_L_URLTITLE_3 = "(cpFriendlyUrlEntry.urlTitle IS NULL OR cpFriendlyUrlEntry.urlTitle = '') AND ";
-	private static final String _FINDER_COLUMN_G_U_L_LANGUAGEID_1 = "cpFriendlyUrlEntry.languageId IS NULL";
-	private static final String _FINDER_COLUMN_G_U_L_LANGUAGEID_2 = "cpFriendlyUrlEntry.languageId = ?";
-	private static final String _FINDER_COLUMN_G_U_L_LANGUAGEID_3 = "(cpFriendlyUrlEntry.languageId IS NULL OR cpFriendlyUrlEntry.languageId = '')";
+	private static final String _FINDER_COLUMN_G_U_L_GROUPID_2 = "cpFriendlyURLEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_U_L_URLTITLE_1 = "cpFriendlyURLEntry.urlTitle IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_U_L_URLTITLE_2 = "cpFriendlyURLEntry.urlTitle = ? AND ";
+	private static final String _FINDER_COLUMN_G_U_L_URLTITLE_3 = "(cpFriendlyURLEntry.urlTitle IS NULL OR cpFriendlyURLEntry.urlTitle = '') AND ";
+	private static final String _FINDER_COLUMN_G_U_L_LANGUAGEID_1 = "cpFriendlyURLEntry.languageId IS NULL";
+	private static final String _FINDER_COLUMN_G_U_L_LANGUAGEID_2 = "cpFriendlyURLEntry.languageId = ?";
+	private static final String _FINDER_COLUMN_G_U_L_LANGUAGEID_3 = "(cpFriendlyURLEntry.languageId IS NULL OR cpFriendlyURLEntry.languageId = '')";
 
 	public CPFriendlyURLEntryPersistenceImpl() {
 		setModelClass(CPFriendlyURLEntry.class);
@@ -1837,45 +1837,45 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	/**
 	 * Caches the cp friendly url entry in the entity cache if it is enabled.
 	 *
-	 * @param cpFriendlyUrlEntry the cp friendly url entry
+	 * @param cpFriendlyURLEntry the cp friendly url entry
 	 */
 	@Override
-	public void cacheResult(CPFriendlyURLEntry cpFriendlyUrlEntry) {
+	public void cacheResult(CPFriendlyURLEntry cpFriendlyURLEntry) {
 		entityCache.putResult(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyURLEntryImpl.class, cpFriendlyUrlEntry.getPrimaryKey(),
-			cpFriendlyUrlEntry);
+			CPFriendlyURLEntryImpl.class, cpFriendlyURLEntry.getPrimaryKey(),
+			cpFriendlyURLEntry);
 
 		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
-				cpFriendlyUrlEntry.getUuid(), cpFriendlyUrlEntry.getGroupId()
-			}, cpFriendlyUrlEntry);
+				cpFriendlyURLEntry.getUuid(), cpFriendlyURLEntry.getGroupId()
+			}, cpFriendlyURLEntry);
 
 		finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_L,
 			new Object[] {
-				cpFriendlyUrlEntry.getGroupId(),
-				cpFriendlyUrlEntry.getUrlTitle(),
-				cpFriendlyUrlEntry.getLanguageId()
-			}, cpFriendlyUrlEntry);
+				cpFriendlyURLEntry.getGroupId(),
+				cpFriendlyURLEntry.getUrlTitle(),
+				cpFriendlyURLEntry.getLanguageId()
+			}, cpFriendlyURLEntry);
 
-		cpFriendlyUrlEntry.resetOriginalValues();
+		cpFriendlyURLEntry.resetOriginalValues();
 	}
 
 	/**
 	 * Caches the cp friendly url entries in the entity cache if it is enabled.
 	 *
-	 * @param cpFriendlyUrlEntries the cp friendly url entries
+	 * @param cpFriendlyURLEntries the cp friendly url entries
 	 */
 	@Override
-	public void cacheResult(List<CPFriendlyURLEntry> cpFriendlyUrlEntries) {
-		for (CPFriendlyURLEntry cpFriendlyUrlEntry : cpFriendlyUrlEntries) {
+	public void cacheResult(List<CPFriendlyURLEntry> cpFriendlyURLEntries) {
+		for (CPFriendlyURLEntry cpFriendlyURLEntry : cpFriendlyURLEntries) {
 			if (entityCache.getResult(
 						CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 						CPFriendlyURLEntryImpl.class,
-						cpFriendlyUrlEntry.getPrimaryKey()) == null) {
-				cacheResult(cpFriendlyUrlEntry);
+						cpFriendlyURLEntry.getPrimaryKey()) == null) {
+				cacheResult(cpFriendlyURLEntry);
 			}
 			else {
-				cpFriendlyUrlEntry.resetOriginalValues();
+				cpFriendlyURLEntry.resetOriginalValues();
 			}
 		}
 	}
@@ -1904,73 +1904,73 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * </p>
 	 */
 	@Override
-	public void clearCache(CPFriendlyURLEntry cpFriendlyUrlEntry) {
+	public void clearCache(CPFriendlyURLEntry cpFriendlyURLEntry) {
 		entityCache.removeResult(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyURLEntryImpl.class, cpFriendlyUrlEntry.getPrimaryKey());
+			CPFriendlyURLEntryImpl.class, cpFriendlyURLEntry.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((CPFriendlyURLEntryModelImpl)cpFriendlyUrlEntry,
+		clearUniqueFindersCache((CPFriendlyURLEntryModelImpl)cpFriendlyURLEntry,
 			true);
 	}
 
 	@Override
-	public void clearCache(List<CPFriendlyURLEntry> cpFriendlyUrlEntries) {
+	public void clearCache(List<CPFriendlyURLEntry> cpFriendlyURLEntries) {
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		for (CPFriendlyURLEntry cpFriendlyUrlEntry : cpFriendlyUrlEntries) {
+		for (CPFriendlyURLEntry cpFriendlyURLEntry : cpFriendlyURLEntries) {
 			entityCache.removeResult(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
-				CPFriendlyURLEntryImpl.class, cpFriendlyUrlEntry.getPrimaryKey());
+				CPFriendlyURLEntryImpl.class, cpFriendlyURLEntry.getPrimaryKey());
 
-			clearUniqueFindersCache((CPFriendlyURLEntryModelImpl)cpFriendlyUrlEntry,
+			clearUniqueFindersCache((CPFriendlyURLEntryModelImpl)cpFriendlyURLEntry,
 				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		CPFriendlyURLEntryModelImpl cpFriendlyUrlEntryModelImpl) {
+		CPFriendlyURLEntryModelImpl cpFriendlyURLEntryModelImpl) {
 		Object[] args = new Object[] {
-				cpFriendlyUrlEntryModelImpl.getUuid(),
-				cpFriendlyUrlEntryModelImpl.getGroupId()
+				cpFriendlyURLEntryModelImpl.getUuid(),
+				cpFriendlyURLEntryModelImpl.getGroupId()
 			};
 
 		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 			Long.valueOf(1), false);
 		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-			cpFriendlyUrlEntryModelImpl, false);
+			cpFriendlyURLEntryModelImpl, false);
 
 		args = new Object[] {
-				cpFriendlyUrlEntryModelImpl.getGroupId(),
-				cpFriendlyUrlEntryModelImpl.getUrlTitle(),
-				cpFriendlyUrlEntryModelImpl.getLanguageId()
+				cpFriendlyURLEntryModelImpl.getGroupId(),
+				cpFriendlyURLEntryModelImpl.getUrlTitle(),
+				cpFriendlyURLEntryModelImpl.getLanguageId()
 			};
 
 		finderCache.putResult(FINDER_PATH_COUNT_BY_G_U_L, args,
 			Long.valueOf(1), false);
 		finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_L, args,
-			cpFriendlyUrlEntryModelImpl, false);
+			cpFriendlyURLEntryModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
-		CPFriendlyURLEntryModelImpl cpFriendlyUrlEntryModelImpl,
+		CPFriendlyURLEntryModelImpl cpFriendlyURLEntryModelImpl,
 		boolean clearCurrent) {
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					cpFriendlyUrlEntryModelImpl.getUuid(),
-					cpFriendlyUrlEntryModelImpl.getGroupId()
+					cpFriendlyURLEntryModelImpl.getUuid(),
+					cpFriendlyURLEntryModelImpl.getGroupId()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		if ((cpFriendlyUrlEntryModelImpl.getColumnBitmask() &
+		if ((cpFriendlyURLEntryModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
-					cpFriendlyUrlEntryModelImpl.getOriginalUuid(),
-					cpFriendlyUrlEntryModelImpl.getOriginalGroupId()
+					cpFriendlyURLEntryModelImpl.getOriginalUuid(),
+					cpFriendlyURLEntryModelImpl.getOriginalGroupId()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -1979,21 +1979,21 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					cpFriendlyUrlEntryModelImpl.getGroupId(),
-					cpFriendlyUrlEntryModelImpl.getUrlTitle(),
-					cpFriendlyUrlEntryModelImpl.getLanguageId()
+					cpFriendlyURLEntryModelImpl.getGroupId(),
+					cpFriendlyURLEntryModelImpl.getUrlTitle(),
+					cpFriendlyURLEntryModelImpl.getLanguageId()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_L, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_U_L, args);
 		}
 
-		if ((cpFriendlyUrlEntryModelImpl.getColumnBitmask() &
+		if ((cpFriendlyURLEntryModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_U_L.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
-					cpFriendlyUrlEntryModelImpl.getOriginalGroupId(),
-					cpFriendlyUrlEntryModelImpl.getOriginalUrlTitle(),
-					cpFriendlyUrlEntryModelImpl.getOriginalLanguageId()
+					cpFriendlyURLEntryModelImpl.getOriginalGroupId(),
+					cpFriendlyURLEntryModelImpl.getOriginalUrlTitle(),
+					cpFriendlyURLEntryModelImpl.getOriginalLanguageId()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_L, args);
@@ -2009,18 +2009,18 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 */
 	@Override
 	public CPFriendlyURLEntry create(long CPFriendlyURLEntryId) {
-		CPFriendlyURLEntry cpFriendlyUrlEntry = new CPFriendlyURLEntryImpl();
+		CPFriendlyURLEntry cpFriendlyURLEntry = new CPFriendlyURLEntryImpl();
 
-		cpFriendlyUrlEntry.setNew(true);
-		cpFriendlyUrlEntry.setPrimaryKey(CPFriendlyURLEntryId);
+		cpFriendlyURLEntry.setNew(true);
+		cpFriendlyURLEntry.setPrimaryKey(CPFriendlyURLEntryId);
 
 		String uuid = PortalUUIDUtil.generate();
 
-		cpFriendlyUrlEntry.setUuid(uuid);
+		cpFriendlyURLEntry.setUuid(uuid);
 
-		cpFriendlyUrlEntry.setCompanyId(companyProvider.getCompanyId());
+		cpFriendlyURLEntry.setCompanyId(companyProvider.getCompanyId());
 
-		return cpFriendlyUrlEntry;
+		return cpFriendlyURLEntry;
 	}
 
 	/**
@@ -2051,10 +2051,10 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		try {
 			session = openSession();
 
-			CPFriendlyURLEntry cpFriendlyUrlEntry = (CPFriendlyURLEntry)session.get(CPFriendlyURLEntryImpl.class,
+			CPFriendlyURLEntry cpFriendlyURLEntry = (CPFriendlyURLEntry)session.get(CPFriendlyURLEntryImpl.class,
 					primaryKey);
 
-			if (cpFriendlyUrlEntry == null) {
+			if (cpFriendlyURLEntry == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
@@ -2063,7 +2063,7 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					primaryKey);
 			}
 
-			return remove(cpFriendlyUrlEntry);
+			return remove(cpFriendlyURLEntry);
 		}
 		catch (NoSuchCPFriendlyURLEntryException nsee) {
 			throw nsee;
@@ -2078,21 +2078,21 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 	@Override
 	protected CPFriendlyURLEntry removeImpl(
-		CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		cpFriendlyUrlEntry = toUnwrappedModel(cpFriendlyUrlEntry);
+		CPFriendlyURLEntry cpFriendlyURLEntry) {
+		cpFriendlyURLEntry = toUnwrappedModel(cpFriendlyURLEntry);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			if (!session.contains(cpFriendlyUrlEntry)) {
-				cpFriendlyUrlEntry = (CPFriendlyURLEntry)session.get(CPFriendlyURLEntryImpl.class,
-						cpFriendlyUrlEntry.getPrimaryKeyObj());
+			if (!session.contains(cpFriendlyURLEntry)) {
+				cpFriendlyURLEntry = (CPFriendlyURLEntry)session.get(CPFriendlyURLEntryImpl.class,
+						cpFriendlyURLEntry.getPrimaryKeyObj());
 			}
 
-			if (cpFriendlyUrlEntry != null) {
-				session.delete(cpFriendlyUrlEntry);
+			if (cpFriendlyURLEntry != null) {
+				session.delete(cpFriendlyURLEntry);
 			}
 		}
 		catch (Exception e) {
@@ -2102,47 +2102,47 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			closeSession(session);
 		}
 
-		if (cpFriendlyUrlEntry != null) {
-			clearCache(cpFriendlyUrlEntry);
+		if (cpFriendlyURLEntry != null) {
+			clearCache(cpFriendlyURLEntry);
 		}
 
-		return cpFriendlyUrlEntry;
+		return cpFriendlyURLEntry;
 	}
 
 	@Override
-	public CPFriendlyURLEntry updateImpl(CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		cpFriendlyUrlEntry = toUnwrappedModel(cpFriendlyUrlEntry);
+	public CPFriendlyURLEntry updateImpl(CPFriendlyURLEntry cpFriendlyURLEntry) {
+		cpFriendlyURLEntry = toUnwrappedModel(cpFriendlyURLEntry);
 
-		boolean isNew = cpFriendlyUrlEntry.isNew();
+		boolean isNew = cpFriendlyURLEntry.isNew();
 
-		CPFriendlyURLEntryModelImpl cpFriendlyUrlEntryModelImpl = (CPFriendlyURLEntryModelImpl)cpFriendlyUrlEntry;
+		CPFriendlyURLEntryModelImpl cpFriendlyURLEntryModelImpl = (CPFriendlyURLEntryModelImpl)cpFriendlyURLEntry;
 
-		if (Validator.isNull(cpFriendlyUrlEntry.getUuid())) {
+		if (Validator.isNull(cpFriendlyURLEntry.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();
 
-			cpFriendlyUrlEntry.setUuid(uuid);
+			cpFriendlyURLEntry.setUuid(uuid);
 		}
 
 		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
 		Date now = new Date();
 
-		if (isNew && (cpFriendlyUrlEntry.getCreateDate() == null)) {
+		if (isNew && (cpFriendlyURLEntry.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				cpFriendlyUrlEntry.setCreateDate(now);
+				cpFriendlyURLEntry.setCreateDate(now);
 			}
 			else {
-				cpFriendlyUrlEntry.setCreateDate(serviceContext.getCreateDate(
+				cpFriendlyURLEntry.setCreateDate(serviceContext.getCreateDate(
 						now));
 			}
 		}
 
-		if (!cpFriendlyUrlEntryModelImpl.hasSetModifiedDate()) {
+		if (!cpFriendlyURLEntryModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				cpFriendlyUrlEntry.setModifiedDate(now);
+				cpFriendlyURLEntry.setModifiedDate(now);
 			}
 			else {
-				cpFriendlyUrlEntry.setModifiedDate(serviceContext.getModifiedDate(
+				cpFriendlyURLEntry.setModifiedDate(serviceContext.getModifiedDate(
 						now));
 			}
 		}
@@ -2152,13 +2152,13 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		try {
 			session = openSession();
 
-			if (cpFriendlyUrlEntry.isNew()) {
-				session.save(cpFriendlyUrlEntry);
+			if (cpFriendlyURLEntry.isNew()) {
+				session.save(cpFriendlyURLEntry);
 
-				cpFriendlyUrlEntry.setNew(false);
+				cpFriendlyURLEntry.setNew(false);
 			}
 			else {
-				cpFriendlyUrlEntry = (CPFriendlyURLEntry)session.merge(cpFriendlyUrlEntry);
+				cpFriendlyURLEntry = (CPFriendlyURLEntry)session.merge(cpFriendlyURLEntry);
 			}
 		}
 		catch (Exception e) {
@@ -2175,15 +2175,15 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		}
 		else
 		 if (isNew) {
-			Object[] args = new Object[] { cpFriendlyUrlEntryModelImpl.getUuid() };
+			Object[] args = new Object[] { cpFriendlyURLEntryModelImpl.getUuid() };
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 				args);
 
 			args = new Object[] {
-					cpFriendlyUrlEntryModelImpl.getUuid(),
-					cpFriendlyUrlEntryModelImpl.getCompanyId()
+					cpFriendlyURLEntryModelImpl.getUuid(),
+					cpFriendlyURLEntryModelImpl.getCompanyId()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -2196,28 +2196,28 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		}
 
 		else {
-			if ((cpFriendlyUrlEntryModelImpl.getColumnBitmask() &
+			if ((cpFriendlyURLEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						cpFriendlyUrlEntryModelImpl.getOriginalUuid()
+						cpFriendlyURLEntryModelImpl.getOriginalUuid()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
-				args = new Object[] { cpFriendlyUrlEntryModelImpl.getUuid() };
+				args = new Object[] { cpFriendlyURLEntryModelImpl.getUuid() };
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
-			if ((cpFriendlyUrlEntryModelImpl.getColumnBitmask() &
+			if ((cpFriendlyURLEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						cpFriendlyUrlEntryModelImpl.getOriginalUuid(),
-						cpFriendlyUrlEntryModelImpl.getOriginalCompanyId()
+						cpFriendlyURLEntryModelImpl.getOriginalUuid(),
+						cpFriendlyURLEntryModelImpl.getOriginalCompanyId()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -2225,8 +2225,8 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					args);
 
 				args = new Object[] {
-						cpFriendlyUrlEntryModelImpl.getUuid(),
-						cpFriendlyUrlEntryModelImpl.getCompanyId()
+						cpFriendlyURLEntryModelImpl.getUuid(),
+						cpFriendlyURLEntryModelImpl.getCompanyId()
 					};
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
@@ -2236,43 +2236,43 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		}
 
 		entityCache.putResult(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyURLEntryImpl.class, cpFriendlyUrlEntry.getPrimaryKey(),
-			cpFriendlyUrlEntry, false);
+			CPFriendlyURLEntryImpl.class, cpFriendlyURLEntry.getPrimaryKey(),
+			cpFriendlyURLEntry, false);
 
-		clearUniqueFindersCache(cpFriendlyUrlEntryModelImpl, false);
-		cacheUniqueFindersCache(cpFriendlyUrlEntryModelImpl);
+		clearUniqueFindersCache(cpFriendlyURLEntryModelImpl, false);
+		cacheUniqueFindersCache(cpFriendlyURLEntryModelImpl);
 
-		cpFriendlyUrlEntry.resetOriginalValues();
+		cpFriendlyURLEntry.resetOriginalValues();
 
-		return cpFriendlyUrlEntry;
+		return cpFriendlyURLEntry;
 	}
 
 	protected CPFriendlyURLEntry toUnwrappedModel(
-		CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		if (cpFriendlyUrlEntry instanceof CPFriendlyURLEntryImpl) {
-			return cpFriendlyUrlEntry;
+		CPFriendlyURLEntry cpFriendlyURLEntry) {
+		if (cpFriendlyURLEntry instanceof CPFriendlyURLEntryImpl) {
+			return cpFriendlyURLEntry;
 		}
 
-		CPFriendlyURLEntryImpl cpFriendlyUrlEntryImpl = new CPFriendlyURLEntryImpl();
+		CPFriendlyURLEntryImpl cpFriendlyURLEntryImpl = new CPFriendlyURLEntryImpl();
 
-		cpFriendlyUrlEntryImpl.setNew(cpFriendlyUrlEntry.isNew());
-		cpFriendlyUrlEntryImpl.setPrimaryKey(cpFriendlyUrlEntry.getPrimaryKey());
+		cpFriendlyURLEntryImpl.setNew(cpFriendlyURLEntry.isNew());
+		cpFriendlyURLEntryImpl.setPrimaryKey(cpFriendlyURLEntry.getPrimaryKey());
 
-		cpFriendlyUrlEntryImpl.setUuid(cpFriendlyUrlEntry.getUuid());
-		cpFriendlyUrlEntryImpl.setCPFriendlyURLEntryId(cpFriendlyUrlEntry.getCPFriendlyURLEntryId());
-		cpFriendlyUrlEntryImpl.setGroupId(cpFriendlyUrlEntry.getGroupId());
-		cpFriendlyUrlEntryImpl.setCompanyId(cpFriendlyUrlEntry.getCompanyId());
-		cpFriendlyUrlEntryImpl.setUserId(cpFriendlyUrlEntry.getUserId());
-		cpFriendlyUrlEntryImpl.setUserName(cpFriendlyUrlEntry.getUserName());
-		cpFriendlyUrlEntryImpl.setCreateDate(cpFriendlyUrlEntry.getCreateDate());
-		cpFriendlyUrlEntryImpl.setModifiedDate(cpFriendlyUrlEntry.getModifiedDate());
-		cpFriendlyUrlEntryImpl.setClassNameId(cpFriendlyUrlEntry.getClassNameId());
-		cpFriendlyUrlEntryImpl.setClassPK(cpFriendlyUrlEntry.getClassPK());
-		cpFriendlyUrlEntryImpl.setLanguageId(cpFriendlyUrlEntry.getLanguageId());
-		cpFriendlyUrlEntryImpl.setUrlTitle(cpFriendlyUrlEntry.getUrlTitle());
-		cpFriendlyUrlEntryImpl.setMain(cpFriendlyUrlEntry.isMain());
+		cpFriendlyURLEntryImpl.setUuid(cpFriendlyURLEntry.getUuid());
+		cpFriendlyURLEntryImpl.setCPFriendlyURLEntryId(cpFriendlyURLEntry.getCPFriendlyURLEntryId());
+		cpFriendlyURLEntryImpl.setGroupId(cpFriendlyURLEntry.getGroupId());
+		cpFriendlyURLEntryImpl.setCompanyId(cpFriendlyURLEntry.getCompanyId());
+		cpFriendlyURLEntryImpl.setUserId(cpFriendlyURLEntry.getUserId());
+		cpFriendlyURLEntryImpl.setUserName(cpFriendlyURLEntry.getUserName());
+		cpFriendlyURLEntryImpl.setCreateDate(cpFriendlyURLEntry.getCreateDate());
+		cpFriendlyURLEntryImpl.setModifiedDate(cpFriendlyURLEntry.getModifiedDate());
+		cpFriendlyURLEntryImpl.setClassNameId(cpFriendlyURLEntry.getClassNameId());
+		cpFriendlyURLEntryImpl.setClassPK(cpFriendlyURLEntry.getClassPK());
+		cpFriendlyURLEntryImpl.setLanguageId(cpFriendlyURLEntry.getLanguageId());
+		cpFriendlyURLEntryImpl.setUrlTitle(cpFriendlyURLEntry.getUrlTitle());
+		cpFriendlyURLEntryImpl.setMain(cpFriendlyURLEntry.isMain());
 
-		return cpFriendlyUrlEntryImpl;
+		return cpFriendlyURLEntryImpl;
 	}
 
 	/**
@@ -2285,9 +2285,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	@Override
 	public CPFriendlyURLEntry findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByPrimaryKey(primaryKey);
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByPrimaryKey(primaryKey);
 
-		if (cpFriendlyUrlEntry == null) {
+		if (cpFriendlyURLEntry == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
@@ -2296,7 +2296,7 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				primaryKey);
 		}
 
-		return cpFriendlyUrlEntry;
+		return cpFriendlyURLEntry;
 	}
 
 	/**
@@ -2327,19 +2327,19 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			return null;
 		}
 
-		CPFriendlyURLEntry cpFriendlyUrlEntry = (CPFriendlyURLEntry)serializable;
+		CPFriendlyURLEntry cpFriendlyURLEntry = (CPFriendlyURLEntry)serializable;
 
-		if (cpFriendlyUrlEntry == null) {
+		if (cpFriendlyURLEntry == null) {
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				cpFriendlyUrlEntry = (CPFriendlyURLEntry)session.get(CPFriendlyURLEntryImpl.class,
+				cpFriendlyURLEntry = (CPFriendlyURLEntry)session.get(CPFriendlyURLEntryImpl.class,
 						primaryKey);
 
-				if (cpFriendlyUrlEntry != null) {
-					cacheResult(cpFriendlyUrlEntry);
+				if (cpFriendlyURLEntry != null) {
+					cacheResult(cpFriendlyURLEntry);
 				}
 				else {
 					entityCache.putResult(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -2357,7 +2357,7 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			}
 		}
 
-		return cpFriendlyUrlEntry;
+		return cpFriendlyURLEntry;
 	}
 
 	/**
@@ -2385,10 +2385,10 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 			Serializable primaryKey = iterator.next();
 
-			CPFriendlyURLEntry cpFriendlyUrlEntry = fetchByPrimaryKey(primaryKey);
+			CPFriendlyURLEntry cpFriendlyURLEntry = fetchByPrimaryKey(primaryKey);
 
-			if (cpFriendlyUrlEntry != null) {
-				map.put(primaryKey, cpFriendlyUrlEntry);
+			if (cpFriendlyURLEntry != null) {
+				map.put(primaryKey, cpFriendlyURLEntry);
 			}
 
 			return map;
@@ -2442,13 +2442,13 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 			Query q = session.createQuery(sql);
 
-			for (CPFriendlyURLEntry cpFriendlyUrlEntry : (List<CPFriendlyURLEntry>)q.list()) {
-				map.put(cpFriendlyUrlEntry.getPrimaryKeyObj(),
-					cpFriendlyUrlEntry);
+			for (CPFriendlyURLEntry cpFriendlyURLEntry : (List<CPFriendlyURLEntry>)q.list()) {
+				map.put(cpFriendlyURLEntry.getPrimaryKeyObj(),
+					cpFriendlyURLEntry);
 
-				cacheResult(cpFriendlyUrlEntry);
+				cacheResult(cpFriendlyURLEntry);
 
-				uncachedPrimaryKeys.remove(cpFriendlyUrlEntry.getPrimaryKeyObj());
+				uncachedPrimaryKeys.remove(cpFriendlyURLEntry.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
@@ -2615,8 +2615,8 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 */
 	@Override
 	public void removeAll() {
-		for (CPFriendlyURLEntry cpFriendlyUrlEntry : findAll()) {
-			remove(cpFriendlyUrlEntry);
+		for (CPFriendlyURLEntry cpFriendlyURLEntry : findAll()) {
+			remove(cpFriendlyURLEntry);
 		}
 	}
 
@@ -2686,12 +2686,12 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
-	private static final String _SQL_SELECT_CPFRIENDLYURLENTRY = "SELECT cpFriendlyUrlEntry FROM CPFriendlyURLEntry cpFriendlyUrlEntry";
-	private static final String _SQL_SELECT_CPFRIENDLYURLENTRY_WHERE_PKS_IN = "SELECT cpFriendlyUrlEntry FROM CPFriendlyURLEntry cpFriendlyUrlEntry WHERE CPFriendlyURLEntryId IN (";
-	private static final String _SQL_SELECT_CPFRIENDLYURLENTRY_WHERE = "SELECT cpFriendlyUrlEntry FROM CPFriendlyURLEntry cpFriendlyUrlEntry WHERE ";
-	private static final String _SQL_COUNT_CPFRIENDLYURLENTRY = "SELECT COUNT(cpFriendlyUrlEntry) FROM CPFriendlyURLEntry cpFriendlyUrlEntry";
-	private static final String _SQL_COUNT_CPFRIENDLYURLENTRY_WHERE = "SELECT COUNT(cpFriendlyUrlEntry) FROM CPFriendlyURLEntry cpFriendlyUrlEntry WHERE ";
-	private static final String _ORDER_BY_ENTITY_ALIAS = "cpFriendlyUrlEntry.";
+	private static final String _SQL_SELECT_CPFRIENDLYURLENTRY = "SELECT cpFriendlyURLEntry FROM CPFriendlyURLEntry cpFriendlyURLEntry";
+	private static final String _SQL_SELECT_CPFRIENDLYURLENTRY_WHERE_PKS_IN = "SELECT cpFriendlyURLEntry FROM CPFriendlyURLEntry cpFriendlyURLEntry WHERE CPFriendlyURLEntryId IN (";
+	private static final String _SQL_SELECT_CPFRIENDLYURLENTRY_WHERE = "SELECT cpFriendlyURLEntry FROM CPFriendlyURLEntry cpFriendlyURLEntry WHERE ";
+	private static final String _SQL_COUNT_CPFRIENDLYURLENTRY = "SELECT COUNT(cpFriendlyURLEntry) FROM CPFriendlyURLEntry cpFriendlyURLEntry";
+	private static final String _SQL_COUNT_CPFRIENDLYURLENTRY_WHERE = "SELECT COUNT(cpFriendlyURLEntry) FROM CPFriendlyURLEntry cpFriendlyURLEntry WHERE ";
+	private static final String _ORDER_BY_ENTITY_ALIAS = "cpFriendlyURLEntry.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CPFriendlyURLEntry exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CPFriendlyURLEntry exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CPFriendlyURLEntryPersistenceImpl.class);

@@ -30,8 +30,8 @@ public class CPFriendlyURLEntryServiceWrapper
 	implements CPFriendlyURLEntryService,
 		ServiceWrapper<CPFriendlyURLEntryService> {
 	public CPFriendlyURLEntryServiceWrapper(
-		CPFriendlyURLEntryService cpFriendlyUrlEntryService) {
-		_cpFriendlyUrlEntryService = cpFriendlyUrlEntryService;
+		CPFriendlyURLEntryService cpFriendlyURLEntryService) {
+		_cpFriendlyURLEntryService = cpFriendlyURLEntryService;
 	}
 
 	/**
@@ -41,19 +41,19 @@ public class CPFriendlyURLEntryServiceWrapper
 	*/
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
-		return _cpFriendlyUrlEntryService.getOSGiServiceIdentifier();
+		return _cpFriendlyURLEntryService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public CPFriendlyURLEntryService getWrappedService() {
-		return _cpFriendlyUrlEntryService;
+		return _cpFriendlyURLEntryService;
 	}
 
 	@Override
 	public void setWrappedService(
-		CPFriendlyURLEntryService cpFriendlyUrlEntryService) {
-		_cpFriendlyUrlEntryService = cpFriendlyUrlEntryService;
+		CPFriendlyURLEntryService cpFriendlyURLEntryService) {
+		_cpFriendlyURLEntryService = cpFriendlyURLEntryService;
 	}
 
-	private CPFriendlyURLEntryService _cpFriendlyUrlEntryService;
+	private CPFriendlyURLEntryService _cpFriendlyURLEntryService;
 }

@@ -342,17 +342,17 @@ public abstract class CPInstanceServiceBaseImpl extends BaseServiceImpl
 	 * @return the cp friendly url entry local service
 	 */
 	public com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService getCPFriendlyURLEntryLocalService() {
-		return cpFriendlyUrlEntryLocalService;
+		return cpFriendlyURLEntryLocalService;
 	}
 
 	/**
 	 * Sets the cp friendly url entry local service.
 	 *
-	 * @param cpFriendlyUrlEntryLocalService the cp friendly url entry local service
+	 * @param cpFriendlyURLEntryLocalService the cp friendly url entry local service
 	 */
 	public void setCPFriendlyURLEntryLocalService(
-		com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService cpFriendlyUrlEntryLocalService) {
-		this.cpFriendlyUrlEntryLocalService = cpFriendlyUrlEntryLocalService;
+		com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService) {
+		this.cpFriendlyURLEntryLocalService = cpFriendlyURLEntryLocalService;
 	}
 
 	/**
@@ -361,17 +361,17 @@ public abstract class CPInstanceServiceBaseImpl extends BaseServiceImpl
 	 * @return the cp friendly url entry remote service
 	 */
 	public com.liferay.commerce.product.service.CPFriendlyURLEntryService getCPFriendlyURLEntryService() {
-		return cpFriendlyUrlEntryService;
+		return cpFriendlyURLEntryService;
 	}
 
 	/**
 	 * Sets the cp friendly url entry remote service.
 	 *
-	 * @param cpFriendlyUrlEntryService the cp friendly url entry remote service
+	 * @param cpFriendlyURLEntryService the cp friendly url entry remote service
 	 */
 	public void setCPFriendlyURLEntryService(
-		com.liferay.commerce.product.service.CPFriendlyURLEntryService cpFriendlyUrlEntryService) {
-		this.cpFriendlyUrlEntryService = cpFriendlyUrlEntryService;
+		com.liferay.commerce.product.service.CPFriendlyURLEntryService cpFriendlyURLEntryService) {
+		this.cpFriendlyURLEntryService = cpFriendlyURLEntryService;
 	}
 
 	/**
@@ -380,17 +380,17 @@ public abstract class CPInstanceServiceBaseImpl extends BaseServiceImpl
 	 * @return the cp friendly url entry persistence
 	 */
 	public CPFriendlyURLEntryPersistence getCPFriendlyURLEntryPersistence() {
-		return cpFriendlyUrlEntryPersistence;
+		return cpFriendlyURLEntryPersistence;
 	}
 
 	/**
 	 * Sets the cp friendly url entry persistence.
 	 *
-	 * @param cpFriendlyUrlEntryPersistence the cp friendly url entry persistence
+	 * @param cpFriendlyURLEntryPersistence the cp friendly url entry persistence
 	 */
 	public void setCPFriendlyURLEntryPersistence(
-		CPFriendlyURLEntryPersistence cpFriendlyUrlEntryPersistence) {
-		this.cpFriendlyUrlEntryPersistence = cpFriendlyUrlEntryPersistence;
+		CPFriendlyURLEntryPersistence cpFriendlyURLEntryPersistence) {
+		this.cpFriendlyURLEntryPersistence = cpFriendlyURLEntryPersistence;
 	}
 
 	/**
@@ -1149,11 +1149,11 @@ public abstract class CPInstanceServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = CPDefinitionOptionValueRelPersistence.class)
 	protected CPDefinitionOptionValueRelPersistence cpDefinitionOptionValueRelPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService.class)
-	protected com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService cpFriendlyUrlEntryLocalService;
+	protected com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService;
 	@BeanReference(type = com.liferay.commerce.product.service.CPFriendlyURLEntryService.class)
-	protected com.liferay.commerce.product.service.CPFriendlyURLEntryService cpFriendlyUrlEntryService;
+	protected com.liferay.commerce.product.service.CPFriendlyURLEntryService cpFriendlyURLEntryService;
 	@BeanReference(type = CPFriendlyURLEntryPersistence.class)
-	protected CPFriendlyURLEntryPersistence cpFriendlyUrlEntryPersistence;
+	protected CPFriendlyURLEntryPersistence cpFriendlyURLEntryPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPInstanceLocalService.class)
 	protected com.liferay.commerce.product.service.CPInstanceLocalService cpInstanceLocalService;
 	@BeanReference(type = CPInstanceService.class)

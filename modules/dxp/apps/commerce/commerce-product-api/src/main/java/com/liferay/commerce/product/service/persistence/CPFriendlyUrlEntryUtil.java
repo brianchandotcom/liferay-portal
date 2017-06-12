@@ -58,8 +58,8 @@ public class CPFriendlyURLEntryUtil {
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
-	public static void clearCache(CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		getPersistence().clearCache(cpFriendlyUrlEntry);
+	public static void clearCache(CPFriendlyURLEntry cpFriendlyURLEntry) {
+		getPersistence().clearCache(cpFriendlyURLEntry);
 	}
 
 	/**
@@ -100,16 +100,16 @@ public class CPFriendlyURLEntryUtil {
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static CPFriendlyURLEntry update(
-		CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		return getPersistence().update(cpFriendlyUrlEntry);
+		CPFriendlyURLEntry cpFriendlyURLEntry) {
+		return getPersistence().update(cpFriendlyURLEntry);
 	}
 
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static CPFriendlyURLEntry update(
-		CPFriendlyURLEntry cpFriendlyUrlEntry, ServiceContext serviceContext) {
-		return getPersistence().update(cpFriendlyUrlEntry, serviceContext);
+		CPFriendlyURLEntry cpFriendlyURLEntry, ServiceContext serviceContext) {
+		return getPersistence().update(cpFriendlyURLEntry, serviceContext);
 	}
 
 	/**
@@ -584,20 +584,20 @@ public class CPFriendlyURLEntryUtil {
 	/**
 	* Caches the cp friendly url entry in the entity cache if it is enabled.
 	*
-	* @param cpFriendlyUrlEntry the cp friendly url entry
+	* @param cpFriendlyURLEntry the cp friendly url entry
 	*/
-	public static void cacheResult(CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		getPersistence().cacheResult(cpFriendlyUrlEntry);
+	public static void cacheResult(CPFriendlyURLEntry cpFriendlyURLEntry) {
+		getPersistence().cacheResult(cpFriendlyURLEntry);
 	}
 
 	/**
 	* Caches the cp friendly url entries in the entity cache if it is enabled.
 	*
-	* @param cpFriendlyUrlEntries the cp friendly url entries
+	* @param cpFriendlyURLEntries the cp friendly url entries
 	*/
 	public static void cacheResult(
-		List<CPFriendlyURLEntry> cpFriendlyUrlEntries) {
-		getPersistence().cacheResult(cpFriendlyUrlEntries);
+		List<CPFriendlyURLEntry> cpFriendlyURLEntries) {
+		getPersistence().cacheResult(cpFriendlyURLEntries);
 	}
 
 	/**
@@ -623,8 +623,8 @@ public class CPFriendlyURLEntryUtil {
 	}
 
 	public static CPFriendlyURLEntry updateImpl(
-		CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		return getPersistence().updateImpl(cpFriendlyUrlEntry);
+		CPFriendlyURLEntry cpFriendlyURLEntry) {
+		return getPersistence().updateImpl(cpFriendlyURLEntry);
 	}
 
 	/**

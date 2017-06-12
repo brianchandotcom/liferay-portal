@@ -98,16 +98,16 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	/**
 	 * Adds the cp friendly url entry to the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param cpFriendlyUrlEntry the cp friendly url entry
+	 * @param cpFriendlyURLEntry the cp friendly url entry
 	 * @return the cp friendly url entry that was added
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPFriendlyURLEntry addCPFriendlyURLEntry(
-		CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		cpFriendlyUrlEntry.setNew(true);
+		CPFriendlyURLEntry cpFriendlyURLEntry) {
+		cpFriendlyURLEntry.setNew(true);
 
-		return cpFriendlyUrlEntryPersistence.update(cpFriendlyUrlEntry);
+		return cpFriendlyURLEntryPersistence.update(cpFriendlyURLEntry);
 	}
 
 	/**
@@ -119,7 +119,7 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	@Override
 	public CPFriendlyURLEntry createCPFriendlyURLEntry(
 		long CPFriendlyURLEntryId) {
-		return cpFriendlyUrlEntryPersistence.create(CPFriendlyURLEntryId);
+		return cpFriendlyURLEntryPersistence.create(CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -133,20 +133,20 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	@Override
 	public CPFriendlyURLEntry deleteCPFriendlyURLEntry(
 		long CPFriendlyURLEntryId) throws PortalException {
-		return cpFriendlyUrlEntryPersistence.remove(CPFriendlyURLEntryId);
+		return cpFriendlyURLEntryPersistence.remove(CPFriendlyURLEntryId);
 	}
 
 	/**
 	 * Deletes the cp friendly url entry from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param cpFriendlyUrlEntry the cp friendly url entry
+	 * @param cpFriendlyURLEntry the cp friendly url entry
 	 * @return the cp friendly url entry that was removed
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CPFriendlyURLEntry deleteCPFriendlyURLEntry(
-		CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		return cpFriendlyUrlEntryPersistence.remove(cpFriendlyUrlEntry);
+		CPFriendlyURLEntry cpFriendlyURLEntry) {
+		return cpFriendlyURLEntryPersistence.remove(cpFriendlyURLEntry);
 	}
 
 	@Override
@@ -165,7 +165,7 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	 */
 	@Override
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
-		return cpFriendlyUrlEntryPersistence.findWithDynamicQuery(dynamicQuery);
+		return cpFriendlyURLEntryPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -183,7 +183,7 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	@Override
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end) {
-		return cpFriendlyUrlEntryPersistence.findWithDynamicQuery(dynamicQuery,
+		return cpFriendlyURLEntryPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
 
@@ -203,7 +203,7 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	@Override
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator) {
-		return cpFriendlyUrlEntryPersistence.findWithDynamicQuery(dynamicQuery,
+		return cpFriendlyURLEntryPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
 
@@ -215,7 +215,7 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
-		return cpFriendlyUrlEntryPersistence.countWithDynamicQuery(dynamicQuery);
+		return cpFriendlyURLEntryPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -228,13 +228,13 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection) {
-		return cpFriendlyUrlEntryPersistence.countWithDynamicQuery(dynamicQuery,
+		return cpFriendlyURLEntryPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public CPFriendlyURLEntry fetchCPFriendlyURLEntry(long CPFriendlyURLEntryId) {
-		return cpFriendlyUrlEntryPersistence.fetchByPrimaryKey(CPFriendlyURLEntryId);
+		return cpFriendlyURLEntryPersistence.fetchByPrimaryKey(CPFriendlyURLEntryId);
 	}
 
 	/**
@@ -247,7 +247,7 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	@Override
 	public CPFriendlyURLEntry fetchCPFriendlyURLEntryByUuidAndGroupId(
 		String uuid, long groupId) {
-		return cpFriendlyUrlEntryPersistence.fetchByUUID_G(uuid, groupId);
+		return cpFriendlyURLEntryPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -260,14 +260,14 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	@Override
 	public CPFriendlyURLEntry getCPFriendlyURLEntry(long CPFriendlyURLEntryId)
 		throws PortalException {
-		return cpFriendlyUrlEntryPersistence.findByPrimaryKey(CPFriendlyURLEntryId);
+		return cpFriendlyURLEntryPersistence.findByPrimaryKey(CPFriendlyURLEntryId);
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(cpFriendlyUrlEntryLocalService);
+		actionableDynamicQuery.setBaseLocalService(cpFriendlyURLEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CPFriendlyURLEntry.class);
 
@@ -280,7 +280,7 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(cpFriendlyUrlEntryLocalService);
+		indexableActionableDynamicQuery.setBaseLocalService(cpFriendlyURLEntryLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(CPFriendlyURLEntry.class);
 
@@ -292,7 +292,7 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(cpFriendlyUrlEntryLocalService);
+		actionableDynamicQuery.setBaseLocalService(cpFriendlyURLEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CPFriendlyURLEntry.class);
 
@@ -354,10 +354,10 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CPFriendlyURLEntry>() {
 				@Override
-				public void performAction(CPFriendlyURLEntry cpFriendlyUrlEntry)
+				public void performAction(CPFriendlyURLEntry cpFriendlyURLEntry)
 					throws PortalException {
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						cpFriendlyUrlEntry);
+						cpFriendlyURLEntry);
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
@@ -373,13 +373,13 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return cpFriendlyUrlEntryLocalService.deleteCPFriendlyURLEntry((CPFriendlyURLEntry)persistedModel);
+		return cpFriendlyURLEntryLocalService.deleteCPFriendlyURLEntry((CPFriendlyURLEntry)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
-		return cpFriendlyUrlEntryPersistence.findByPrimaryKey(primaryKeyObj);
+		return cpFriendlyURLEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
@@ -390,9 +390,9 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	 * @return the matching cp friendly url entries, or an empty list if no matches were found
 	 */
 	@Override
-	public List<CPFriendlyURLEntry> getCPFriendlyUrlEntriesByUuidAndCompanyId(
+	public List<CPFriendlyURLEntry> getCPFriendlyURLEntriesByUuidAndCompanyId(
 		String uuid, long companyId) {
-		return cpFriendlyUrlEntryPersistence.findByUuid_C(uuid, companyId);
+		return cpFriendlyURLEntryPersistence.findByUuid_C(uuid, companyId);
 	}
 
 	/**
@@ -406,10 +406,10 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	 * @return the range of matching cp friendly url entries, or an empty list if no matches were found
 	 */
 	@Override
-	public List<CPFriendlyURLEntry> getCPFriendlyUrlEntriesByUuidAndCompanyId(
+	public List<CPFriendlyURLEntry> getCPFriendlyURLEntriesByUuidAndCompanyId(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
-		return cpFriendlyUrlEntryPersistence.findByUuid_C(uuid, companyId,
+		return cpFriendlyURLEntryPersistence.findByUuid_C(uuid, companyId,
 			start, end, orderByComparator);
 	}
 
@@ -424,7 +424,7 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	@Override
 	public CPFriendlyURLEntry getCPFriendlyURLEntryByUuidAndGroupId(
 		String uuid, long groupId) throws PortalException {
-		return cpFriendlyUrlEntryPersistence.findByUUID_G(uuid, groupId);
+		return cpFriendlyURLEntryPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -439,8 +439,8 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	 * @return the range of cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyURLEntry> getCPFriendlyUrlEntries(int start, int end) {
-		return cpFriendlyUrlEntryPersistence.findAll(start, end);
+	public List<CPFriendlyURLEntry> getCPFriendlyURLEntries(int start, int end) {
+		return cpFriendlyURLEntryPersistence.findAll(start, end);
 	}
 
 	/**
@@ -449,21 +449,21 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	 * @return the number of cp friendly url entries
 	 */
 	@Override
-	public int getCPFriendlyUrlEntriesCount() {
-		return cpFriendlyUrlEntryPersistence.countAll();
+	public int getCPFriendlyURLEntriesCount() {
+		return cpFriendlyURLEntryPersistence.countAll();
 	}
 
 	/**
 	 * Updates the cp friendly url entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
-	 * @param cpFriendlyUrlEntry the cp friendly url entry
+	 * @param cpFriendlyURLEntry the cp friendly url entry
 	 * @return the cp friendly url entry that was updated
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPFriendlyURLEntry updateCPFriendlyURLEntry(
-		CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		return cpFriendlyUrlEntryPersistence.update(cpFriendlyUrlEntry);
+		CPFriendlyURLEntry cpFriendlyURLEntry) {
+		return cpFriendlyURLEntryPersistence.update(cpFriendlyURLEntry);
 	}
 
 	/**
@@ -661,17 +661,17 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	 * @return the cp friendly url entry local service
 	 */
 	public CPFriendlyURLEntryLocalService getCPFriendlyURLEntryLocalService() {
-		return cpFriendlyUrlEntryLocalService;
+		return cpFriendlyURLEntryLocalService;
 	}
 
 	/**
 	 * Sets the cp friendly url entry local service.
 	 *
-	 * @param cpFriendlyUrlEntryLocalService the cp friendly url entry local service
+	 * @param cpFriendlyURLEntryLocalService the cp friendly url entry local service
 	 */
 	public void setCPFriendlyURLEntryLocalService(
-		CPFriendlyURLEntryLocalService cpFriendlyUrlEntryLocalService) {
-		this.cpFriendlyUrlEntryLocalService = cpFriendlyUrlEntryLocalService;
+		CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService) {
+		this.cpFriendlyURLEntryLocalService = cpFriendlyURLEntryLocalService;
 	}
 
 	/**
@@ -680,17 +680,17 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	 * @return the cp friendly url entry persistence
 	 */
 	public CPFriendlyURLEntryPersistence getCPFriendlyURLEntryPersistence() {
-		return cpFriendlyUrlEntryPersistence;
+		return cpFriendlyURLEntryPersistence;
 	}
 
 	/**
 	 * Sets the cp friendly url entry persistence.
 	 *
-	 * @param cpFriendlyUrlEntryPersistence the cp friendly url entry persistence
+	 * @param cpFriendlyURLEntryPersistence the cp friendly url entry persistence
 	 */
 	public void setCPFriendlyURLEntryPersistence(
-		CPFriendlyURLEntryPersistence cpFriendlyUrlEntryPersistence) {
-		this.cpFriendlyUrlEntryPersistence = cpFriendlyUrlEntryPersistence;
+		CPFriendlyURLEntryPersistence cpFriendlyURLEntryPersistence) {
+		this.cpFriendlyURLEntryPersistence = cpFriendlyURLEntryPersistence;
 	}
 
 	/**
@@ -1035,7 +1035,7 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.commerce.product.model.CPFriendlyURLEntry",
-			cpFriendlyUrlEntryLocalService);
+			cpFriendlyURLEntryLocalService);
 	}
 
 	public void destroy() {
@@ -1068,7 +1068,7 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	 */
 	protected void runSQL(String sql) {
 		try {
-			DataSource dataSource = cpFriendlyUrlEntryPersistence.getDataSource();
+			DataSource dataSource = cpFriendlyURLEntryPersistence.getDataSource();
 
 			DB db = DBManagerUtil.getDB();
 
@@ -1106,9 +1106,9 @@ public abstract class CPFriendlyURLEntryLocalServiceBaseImpl
 	@BeanReference(type = CPDefinitionOptionValueRelPersistence.class)
 	protected CPDefinitionOptionValueRelPersistence cpDefinitionOptionValueRelPersistence;
 	@BeanReference(type = CPFriendlyURLEntryLocalService.class)
-	protected CPFriendlyURLEntryLocalService cpFriendlyUrlEntryLocalService;
+	protected CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService;
 	@BeanReference(type = CPFriendlyURLEntryPersistence.class)
-	protected CPFriendlyURLEntryPersistence cpFriendlyUrlEntryPersistence;
+	protected CPFriendlyURLEntryPersistence cpFriendlyURLEntryPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPInstanceLocalService.class)
 	protected com.liferay.commerce.product.service.CPInstanceLocalService cpInstanceLocalService;
 	@BeanReference(type = CPInstancePersistence.class)

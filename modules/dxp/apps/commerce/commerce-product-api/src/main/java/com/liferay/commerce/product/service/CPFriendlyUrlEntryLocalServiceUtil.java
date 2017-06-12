@@ -45,12 +45,12 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	/**
 	* Adds the cp friendly url entry to the database. Also notifies the appropriate model listeners.
 	*
-	* @param cpFriendlyUrlEntry the cp friendly url entry
+	* @param cpFriendlyURLEntry the cp friendly url entry
 	* @return the cp friendly url entry that was added
 	*/
 	public static com.liferay.commerce.product.model.CPFriendlyURLEntry addCPFriendlyURLEntry(
-		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		return getService().addCPFriendlyURLEntry(cpFriendlyUrlEntry);
+		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyURLEntry) {
+		return getService().addCPFriendlyURLEntry(cpFriendlyURLEntry);
 	}
 
 	/**
@@ -67,12 +67,12 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	/**
 	* Deletes the cp friendly url entry from the database. Also notifies the appropriate model listeners.
 	*
-	* @param cpFriendlyUrlEntry the cp friendly url entry
+	* @param cpFriendlyURLEntry the cp friendly url entry
 	* @return the cp friendly url entry that was removed
 	*/
 	public static com.liferay.commerce.product.model.CPFriendlyURLEntry deleteCPFriendlyURLEntry(
-		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		return getService().deleteCPFriendlyURLEntry(cpFriendlyUrlEntry);
+		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyURLEntry) {
+		return getService().deleteCPFriendlyURLEntry(cpFriendlyURLEntry);
 	}
 
 	/**
@@ -136,12 +136,12 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	/**
 	* Updates the cp friendly url entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param cpFriendlyUrlEntry the cp friendly url entry
+	* @param cpFriendlyURLEntry the cp friendly url entry
 	* @return the cp friendly url entry that was updated
 	*/
 	public static com.liferay.commerce.product.model.CPFriendlyURLEntry updateCPFriendlyURLEntry(
-		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyUrlEntry) {
-		return getService().updateCPFriendlyURLEntry(cpFriendlyUrlEntry);
+		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyURLEntry) {
+		return getService().updateCPFriendlyURLEntry(cpFriendlyURLEntry);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -181,8 +181,8 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	*
 	* @return the number of cp friendly url entries
 	*/
-	public static int getCPFriendlyUrlEntriesCount() {
-		return getService().getCPFriendlyUrlEntriesCount();
+	public static int getCPFriendlyURLEntriesCount() {
+		return getService().getCPFriendlyURLEntriesCount();
 	}
 
 	/**
@@ -255,9 +255,9 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	* @param end the upper bound of the range of cp friendly url entries (not inclusive)
 	* @return the range of cp friendly url entries
 	*/
-	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyUrlEntries(
+	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyURLEntries(
 		int start, int end) {
-		return getService().getCPFriendlyUrlEntries(start, end);
+		return getService().getCPFriendlyURLEntries(start, end);
 	}
 
 	/**
@@ -267,10 +267,10 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching cp friendly url entries, or an empty list if no matches were found
 	*/
-	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyUrlEntriesByUuidAndCompanyId(
+	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyURLEntriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
 		return getService()
-				   .getCPFriendlyUrlEntriesByUuidAndCompanyId(uuid, companyId);
+				   .getCPFriendlyURLEntriesByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**
@@ -283,11 +283,11 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the range of matching cp friendly url entries, or an empty list if no matches were found
 	*/
-	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyUrlEntriesByUuidAndCompanyId(
+	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyURLEntriesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPFriendlyURLEntry> orderByComparator) {
 		return getService()
-				   .getCPFriendlyUrlEntriesByUuidAndCompanyId(uuid, companyId,
+				   .getCPFriendlyURLEntriesByUuidAndCompanyId(uuid, companyId,
 			start, end, orderByComparator);
 	}
 

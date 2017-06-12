@@ -434,17 +434,17 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	/**
 	* Caches the cp friendly url entry in the entity cache if it is enabled.
 	*
-	* @param cpFriendlyUrlEntry the cp friendly url entry
+	* @param cpFriendlyURLEntry the cp friendly url entry
 	*/
-	public void cacheResult(CPFriendlyURLEntry cpFriendlyUrlEntry);
+	public void cacheResult(CPFriendlyURLEntry cpFriendlyURLEntry);
 
 	/**
 	* Caches the cp friendly url entries in the entity cache if it is enabled.
 	*
-	* @param cpFriendlyUrlEntries the cp friendly url entries
+	* @param cpFriendlyURLEntries the cp friendly url entries
 	*/
 	public void cacheResult(
-		java.util.List<CPFriendlyURLEntry> cpFriendlyUrlEntries);
+		java.util.List<CPFriendlyURLEntry> cpFriendlyURLEntries);
 
 	/**
 	* Creates a new cp friendly url entry with the primary key. Does not add the cp friendly url entry to the database.
@@ -464,7 +464,7 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	public CPFriendlyURLEntry remove(long CPFriendlyURLEntryId)
 		throws NoSuchCPFriendlyURLEntryException;
 
-	public CPFriendlyURLEntry updateImpl(CPFriendlyURLEntry cpFriendlyUrlEntry);
+	public CPFriendlyURLEntry updateImpl(CPFriendlyURLEntry cpFriendlyURLEntry);
 
 	/**
 	* Returns the cp friendly url entry with the primary key or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.

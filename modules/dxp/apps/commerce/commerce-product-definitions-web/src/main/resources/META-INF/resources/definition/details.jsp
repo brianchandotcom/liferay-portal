@@ -17,7 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFINITION);
+CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
+
+StringBuilder friendlyURLBase = new StringBuilder();
+friendlyURLBase.append(themeDisplay.getPortalURL());
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
@@ -44,6 +49,19 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFI
 			<liferay-ui:input-localized editorName="alloyeditor" name="descriptionMapAsXML" type="editor" xml="<%= descriptionMapAsXML %>" />
 		</div>
 	</aui:field-wrapper>
+
+	<div class="form-group commerce-product-definition-url-title">
+		<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false) %>' /></label>
+
+		<div class="input-group lfr-friendly-url-input-group">
+			<span class="input-group-addon" id="<portlet:namespace />urlBase">
+				<span class="input-group-constrain"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
+			</span>
+
+			<liferay-ui:input-localized  defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="urlTitleMapAsXML" xml="<%= HttpUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML()) %>" />
+		</div>
+	</div>
+
 </aui:fieldset>
 
 <aui:script use="aui-base">
@@ -54,6 +72,8 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFI
 
 		var titleInputLocalized = Liferay.component('<portlet:namespace />titleMapAsXML');
 
+		var urlTitleInputLocalized = Liferay.component('<portlet:namespace />urlTitleMapAsXML');
+
 		var locale = event.locale;
 
 		descriptionInputLocalized.removeInputLanguage(locale);
@@ -61,6 +81,8 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFI
 		shortDescriptionInputLocalized.removeInputLanguage(locale);
 
 		titleInputLocalized.removeInputLanguage(locale);
+
+		urlTitleInputLocalized.removeInputLanguage(locale);
 	}
 
 	function afterEditingLocaleChange(event) {
@@ -69,6 +91,8 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFI
 		var shortDescriptionInputLocalized = Liferay.component('<portlet:namespace />shortDescriptionMapAsXML');
 
 		var titleInputLocalized = Liferay.component('<portlet:namespace />titleMapAsXML');
+
+		var urlTitleInputLocalized = Liferay.component('<portlet:namespace />urlTitleMapAsXML');
 
 		var items = descriptionInputLocalized.get('items');
 
@@ -84,6 +108,9 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFI
 
 		titleInputLocalized.set('selected', selectedIndex);
 		titleInputLocalized.selectFlag(editingLocale);
+
+		urlTitleInputLocalized.set('selected', selectedIndex);
+		urlTitleInputLocalized.selectFlag(editingLocale);
 	}
 
 	var translationManager = Liferay.component('<portlet:namespace />translationManager');

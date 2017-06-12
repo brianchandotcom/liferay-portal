@@ -229,6 +229,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "descriptionMapAsXML");
+		Map<Locale, String> urlTitleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "urlTitleMapAsXML");
 		String productTypeName = ParamUtil.getString(
 			actionRequest, "productTypeName");
 		String baseSKU = ParamUtil.getString(actionRequest, "baseSKU");
@@ -281,11 +283,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.addCPDefinition(
 				baseSKU, titleMap, shortDescriptionMap, descriptionMap,
-				productTypeName, null, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+				urlTitleMap, productTypeName, null, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 		}
 		else {
 
@@ -293,11 +295,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
 				cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-				descriptionMap, null, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+				descriptionMap, urlTitleMap, null, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 		}
 
 		return cpDefinition;

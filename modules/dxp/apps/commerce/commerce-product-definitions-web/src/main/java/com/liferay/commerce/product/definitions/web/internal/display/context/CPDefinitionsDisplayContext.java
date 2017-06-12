@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -159,6 +160,19 @@ public class CPDefinitionsDisplayContext
 		}
 
 		return searchContainer;
+	}
+
+
+	public String getUrlTitleMapAsXML()
+		throws PortalException{
+
+		CPDefinition cpDefinition = getCPDefinition();
+
+		if(cpDefinition == null){
+			return StringPool.BLANK;
+		}
+
+		return _cpDefinitionService.getUrlTitleMapAsXML(cpDefinition);
 	}
 
 	private final CPDefinitionService _cpDefinitionService;

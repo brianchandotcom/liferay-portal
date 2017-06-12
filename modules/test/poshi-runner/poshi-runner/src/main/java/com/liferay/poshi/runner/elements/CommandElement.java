@@ -24,6 +24,7 @@ import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.TEAR_DOWN;
 import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THESE_PROPERTIES;
 import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THESE_VARIABLES;
 import static com.liferay.poshi.runner.util.StringPool.COLON;
+import static com.liferay.poshi.runner.util.StringPool.SPACE;
 
 import com.liferay.poshi.runner.util.StringUtil;
 
@@ -96,7 +97,6 @@ public class CommandElement extends PoshiElement {
 
 		sb.append("\n");
 		sb.append(getReadableCommandTitle());
-		sb.append(" ");
 
 		if (attributeValue("name") != null) {
 			String name = attributeValue("name");
@@ -128,7 +128,7 @@ public class CommandElement extends PoshiElement {
 	}
 
 	protected String getReadableCommandTitle() {
-		return SCENARIO + COLON;
+		return SCENARIO + COLON + SPACE;
 	}
 
 	private void _addDescriptionAttribute(String readableSyntax) {

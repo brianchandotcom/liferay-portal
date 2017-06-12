@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -65,7 +65,7 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 			Map<Locale, String> titleMap = Collections.singletonMap(
 				Locale.US, fileName);
 
-			String uniqueFileName = PortletFileRepositoryUtil.getUniqueFileName(
+			String uniqueFileName = _portletFileRepository.getUniqueFileName(
 				groupId, folder.getFolderId(), fileName);
 
 			try (InputStream inputStream = classLoader.getResourceAsStream(
@@ -73,7 +73,7 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 						"/dependencies/images/" + fileName)) {
 
 				FileEntry fileEntry =
-					PortletFileRepositoryUtil.addPortletFileEntry(
+					_portletFileRepository.addPortletFileEntry(
 						groupId, userId, CPDefinition.class.getName(),
 						cpDefinitionId, CPConstants.SERVICE_NAME,
 						folder.getFolderId(), inputStream, uniqueFileName,
@@ -137,6 +137,9 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private Portal _portal;

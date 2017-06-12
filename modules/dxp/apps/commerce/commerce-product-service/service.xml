@@ -272,6 +272,24 @@
 
 		<!-- Finder methods -->
 
+		<finder name="G_C_C_C_L_M" return-type="FriendlyURLEntry">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="languageId" />
+			<finder-column name="main" />
+		</finder>
+
+		<finder name="G_C_C_C_L_U" return-type="FriendlyURLEntry">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="languageId" />
+			<finder-column name="urlTitle" />
+		</finder>
+
 		<finder name="G_U_L" return-type="CPFriendlyURLEntry" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="urlTitle" />

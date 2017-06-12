@@ -540,8 +540,10 @@
 		<exception>CPDefinitionDisplayDate</exception>
 		<exception>CPDefinitionExpirationDate</exception>
 		<exception>CPDefinitionProductTypeName</exception>
+		<exception>CPFriendlyURLLength</exception>
 		<exception>CPInstanceDisplayDate</exception>
 		<exception>CPInstanceExpirationDate</exception>
+		<exception>DuplicateCPFriendlyURLEntry</exception>
 		<exception>NoSuchSkuContributorCPDefinitionOptionRel</exception>
 	</exceptions>
 </service-builder>

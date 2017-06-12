@@ -357,21 +357,23 @@ public class HtmlImpl implements Html {
 			return StringPool.BLANK;
 		}
 
+		char ch = href.charAt(0);
+
+		if (ch == CharPool.SLASH) {
+			return escapeAttribute(href);
+		}
+
+		if ((ch >= CharPool.LOWER_CASE_A) && (ch <= CharPool.LOWER_CASE_Z) &&
+			(ch != CharPool.LOWER_CASE_D) && (ch != CharPool.LOWER_CASE_J)) {
+
+			return escapeAttribute(href);
+		}
+
 		int index = href.indexOf(StringPool.COLON);
 
-		if (index == 4) {
-			String protocol = StringUtil.toLowerCase(href.substring(0, 4));
-
-			if (protocol.equals("data")) {
-				href = StringUtil.replaceFirst(href, CharPool.COLON, "%3a");
-			}
-		}
-		else if (index == 10) {
-			String protocol = StringUtil.toLowerCase(href.substring(0, 10));
-
-			if (protocol.equals("javascript")) {
-				href = StringUtil.replaceFirst(href, CharPool.COLON, "%3a");
-			}
+		if (index > -1) {
+			href = StringUtil.replaceFirst(
+				href, StringPool.COLON, "%3a", index);
 		}
 
 		return escapeAttribute(href);

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Tools Bundle Support
 Bundle-SymbolicName: com.liferay.portal.tools.bundle.support
-Bundle-Version: 2.1.0
+Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.portal.tools.bundle.support,\
 	com.liferay.portal.tools.bundle.support.ant,\

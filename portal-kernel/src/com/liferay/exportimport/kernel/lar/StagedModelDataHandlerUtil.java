@@ -25,7 +25,12 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Attribute;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.io.Serializable;
 
@@ -461,6 +466,48 @@ public class StagedModelDataHandlerUtil {
 				portletDataContext, referenceElement);
 
 			return;
+		}
+
+		Attribute missingAttribute = referenceElement.attribute("missing");
+
+		if ((missingAttribute != null) &&
+			GetterUtil.getBoolean(missingAttribute.getValue())) {
+
+			StagedModel stagedModel = _getReferenceStagedModel(
+				portletDataContext, referenceElement);
+
+			Element missingReferenceElement =
+				portletDataContext.getMissingReferenceElement(stagedModel);
+
+			if (missingReferenceElement != null) {
+				String elementPath = missingReferenceElement.attributeValue(
+					"element-path");
+
+				if (Validator.isNotNull(elementPath)) {
+					Element importDataRootElement =
+						portletDataContext.getImportDataRootElement();
+
+					try {
+						Document document = SAXReaderUtil.read(
+							portletDataContext.getZipEntryAsString(
+								elementPath));
+
+						portletDataContext.setImportDataRootElement(
+							document.getRootElement());
+
+						importStagedModel(portletDataContext, referenceElement);
+					}
+					catch (DocumentException de) {
+						throw new RuntimeException(de);
+					}
+					finally {
+						portletDataContext.setImportDataRootElement(
+							importDataRootElement);
+					}
+
+					return;
+				}
+			}
 		}
 
 		importStagedModel(portletDataContext, referenceElement);

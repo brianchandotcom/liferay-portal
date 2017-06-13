@@ -32,6 +32,7 @@ import com.liferay.poshi.runner.util.Dom4JUtil;
 import com.liferay.poshi.runner.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.dom4j.Attribute;
@@ -164,7 +165,7 @@ public abstract class PoshiElement extends DefaultElement {
 		Element parentElement = getParent();
 
 		if (parentElement == null) {
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
 
 		return Dom4JUtil.toElementList(parentElement.elements());

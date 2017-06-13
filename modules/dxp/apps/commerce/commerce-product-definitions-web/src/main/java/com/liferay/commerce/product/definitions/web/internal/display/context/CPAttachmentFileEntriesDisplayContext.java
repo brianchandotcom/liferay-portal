@@ -31,6 +31,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -85,6 +86,30 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		_type = ParamUtil.get(
 			httpServletRequest, "type",
 			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
+	}
+
+	public String getAttachmentItemSelectorUrl() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(
+				cpRequestHelper.getRenderRequest());
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(
+			new FileEntryItemSelectorReturnType());
+
+		FileItemSelectorCriterion fileItemSelectorCriterion =
+			new FileItemSelectorCriterion();
+
+		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, "addCPAttachmentFileEntry",
+			fileItemSelectorCriterion);
+
+		return itemSelectorURL.toString();
 	}
 
 	public CPAttachmentFileEntry getCPAttachmentFileEntry()
@@ -149,11 +174,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		return _attachmentsConfiguration.imageExtensions();
 	}
 
-	public long getImageMaxSize() {
-		return _attachmentsConfiguration.imageMaxSize();
-	}
-
-	public String getItemSelectorUrl() {
+	public String getImageItemSelectorUrl() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(
 				cpRequestHelper.getRenderRequest());
@@ -164,17 +185,21 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		desiredItemSelectorReturnTypes.add(
 			new FileEntryItemSelectorReturnType());
 
-		FileItemSelectorCriterion fileItemSelectorCriterion =
-			new FileItemSelectorCriterion();
+		ImageItemSelectorCriterion imageItemSelectorCriterion =
+			new ImageItemSelectorCriterion();
 
-		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, "addCPAttachmentFileEntry",
-			fileItemSelectorCriterion);
+			imageItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
+	}
+
+	public long getImageMaxSize() {
+		return _attachmentsConfiguration.imageMaxSize();
 	}
 
 	@Override

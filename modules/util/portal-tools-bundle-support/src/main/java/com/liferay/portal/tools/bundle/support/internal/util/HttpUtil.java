@@ -55,7 +55,6 @@ import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.client.utils.DateUtils;
-import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -85,15 +84,6 @@ public class HttpUtil {
 				uri, userName, password)) {
 
 			HttpPost httpPost = new HttpPost(uri);
-
-			UsernamePasswordCredentials usernamePasswordCredentials =
-				new UsernamePasswordCredentials(userName, password);
-
-			BasicScheme basicScheme = new BasicScheme();
-
-			httpPost.addHeader(
-				basicScheme.authenticate(
-					usernamePasswordCredentials, httpPost, null));
 
 			List<NameValuePair> parameters = new ArrayList<>();
 

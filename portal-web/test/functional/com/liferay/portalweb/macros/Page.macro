@@ -433,6 +433,12 @@
 		<execute function="Uncheck#uncheckHiddenToggleSwitch" locator1="ToggleSwitch#INHERIT_MOBILE_DEVICE_RULES_FROM_PAGE" />
 	</command>
 
+	<command name="disablePageTemplateInheritChanges">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="SitePagesEditPage#PAGE_TEMPLATE_INHERIT_CHANGES_TOGGLE_1" />
+
+		<execute macro="Button#clickSave" />
+	</command>
+
 	<command name="disallowEditViaSiteAdminEditCP">
 		<var name="key_page" value="${pageName}" />
 

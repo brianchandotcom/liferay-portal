@@ -149,12 +149,12 @@ public abstract class PoshiElement extends DefaultElement {
 			return GIVEN;
 		}
 
-		if (index == 1) {
-			return WHEN;
-		}
-
 		if (index == (siblingElements.size() - 1)) {
 			return THEN;
+		}
+
+		if (index == 1) {
+			return WHEN;
 		}
 
 		return AND;

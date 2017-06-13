@@ -44,26 +44,28 @@ public class PortletIdCodec {
 
 	public static String decodePortletName(String portletId) {
 		int x = portletId.indexOf(_USER_SEPARATOR);
-		int y = portletId.indexOf(_INSTANCE_SEPARATOR);
-
-		if ((x == -1) && (y == -1)) {
-			return portletId;
-		}
 
 		if (x != -1) {
 			return portletId.substring(0, x);
 		}
 
-		return portletId.substring(0, y);
+		int y = portletId.indexOf(_INSTANCE_SEPARATOR);
+
+		if (y != -1) {
+			return portletId.substring(0, y);
+		}
+
+		return portletId;
 	}
 
 	public static long decodeUserId(String portletId) {
 		int x = portletId.indexOf(_USER_SEPARATOR);
-		int y = portletId.indexOf(_INSTANCE_SEPARATOR);
 
 		if (x == -1) {
 			return 0;
 		}
+
+		int y = portletId.indexOf(_INSTANCE_SEPARATOR);
 
 		if (y != -1) {
 			return GetterUtil.getLong(
@@ -86,9 +88,7 @@ public class PortletIdCodec {
 			return new ObjectValuePair<>(0L, null);
 		}
 
-		int slashCount = StringUtil.count(userIdAndInstanceId, CharPool.SLASH);
-
-		if (slashCount > 0) {
+		if (userIdAndInstanceId.indexOf(CharPool.SLASH) != -1) {
 			throw new InvalidParameterException(
 				"User ID and instance ID contain slashes");
 		}

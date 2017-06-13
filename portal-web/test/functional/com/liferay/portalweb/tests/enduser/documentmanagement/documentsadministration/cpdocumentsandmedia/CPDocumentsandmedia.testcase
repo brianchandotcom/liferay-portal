@@ -55,17 +55,19 @@
 		</execute>
 	</command>
 
-	<command name="AddContract">
+	<command name="AddContract" priority="4">
+		<description message="This is a use case for LPS-42515" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
 		<execute macro="DMDocument#addContractCP">
-			<var name="dmContractdealName" value="Deal Name" />
+			<var name="dmContractDealName" value="Deal Name" />
 			<var name="dmContractDescription" value="DM Contract Description" />
 			<var name="dmContractFile" value="Document_1.txt" />
-			<var name="dmContractlegalReviewer" value="Legal Reviewer" />
-			<var name="dmContractsigningAuthority" value="Signing Authority" />
+			<var name="dmContractLegalReviewer" value="Legal Reviewer" />
+			<var name="dmContractSigningAuthority" value="Signing Authority" />
 			<var name="dmContractTitle" value="DM Contract Title" />
 		</execute>
 

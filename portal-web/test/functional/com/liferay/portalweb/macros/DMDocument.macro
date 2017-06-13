@@ -80,23 +80,23 @@
 		</if>
 
 		<if>
-			<isset var="dmContractlegalReviewer" />
+			<isset var="dmContractLegalReviewer" />
 			<then>
-				<execute function="Type" locator1="DocumentsAndMediaDocument#LEGALL_REVIEWER" value1="${dmContractlegalReviewer}" />
+				<execute function="Type" locator1="DocumentsAndMediaDocument#LEGALL_REVIEWER" value1="${dmContractLegalReviewer}" />
 			</then>
 		</if>
 
 		<if>
-			<isset var="dmContractsigningAuthority" />
+			<isset var="dmContractSigningAuthority" />
 			<then>
-				<execute function="Type" locator1="DocumentsAndMediaDocument#SIGNING_AUTHORITY" value1="${dmContractsigningAuthority}" />
+				<execute function="Type" locator1="DocumentsAndMediaDocument#SIGNING_AUTHORITY" value1="${dmContractSigningAuthority}" />
 			</then>
 		</if>
 
 		<if>
-			<isset var="dmContractdealName" />
+			<isset var="dmContractDealName" />
 			<then>
-				<execute function="Type" locator1="DocumentsAndMediaDocument#DEAL_NAME" value1="${dmContractdealName}" />
+				<execute function="Type" locator1="DocumentsAndMediaDocument#DEAL_NAME" value1="${dmContractDealName}" />
 			</then>
 		</if>
 

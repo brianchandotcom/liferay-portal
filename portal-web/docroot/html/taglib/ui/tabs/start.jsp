@@ -123,7 +123,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 						<c:if test="<%= names.length > 1 %>">
 							<li class="active dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
-									<span id="<%= namespace + param + "dropdownTitle" %>"><%= LanguageUtil.get(resourceBundle, name) %></span>
+									<span id="<%= namespace + param + "dropdownTitle" %>"><%= LanguageUtil.get(resourceBundle, HtmlUtil.escape(name)) %></span>
 
 									<span class="caret"></span>
 								</a>
@@ -201,7 +201,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 
 		<li class="<%= cssClassName %>" id="<%= namespace %><%= param %><%= StringUtil.toCharCode(values[i]) %>TabsId">
 			<a href="<%= Validator.isNotNull(curURL) ? HtmlUtil.escapeAttribute(curURL) : "javascript:;" %>" onClick="<%= Validator.isNotNull(curOnClick) ? curOnClick : StringPool.BLANK %>">
-				<%= LanguageUtil.get(resourceBundle, names[i]) %>
+				<%= LanguageUtil.get(resourceBundle, HtmlUtil.escape(names[i])) %>
 			</a>
 		</li>
 

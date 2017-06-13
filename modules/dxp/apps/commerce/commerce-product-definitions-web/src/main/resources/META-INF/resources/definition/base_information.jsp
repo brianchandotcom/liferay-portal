@@ -62,25 +62,23 @@ if (Validator.isNotNull(layoutUuid)) {
 
 	<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
 
-	<p class="text-muted">
-		<liferay-ui:message key="default-display-page-help" />
-	</p>
-
-	<p class="text-default">
-			<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
-				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
-			</span>
-		<span id="<portlet:namespace />displayPageNameInput">
-				<c:choose>
-					<c:when test="<%= Validator.isNull(layoutBreadcrumb) %>">
-						<span class="text-muted"><liferay-ui:message key="none" /></span>
-					</c:when>
-					<c:otherwise>
-						<%= layoutBreadcrumb %>
-					</c:otherwise>
-				</c:choose>
-			</span>
-	</p>
+	<aui:field-wrapper label="display-page" helpMessage="display-page-help">
+		<p class="text-default">
+				<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
+					<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+				</span>
+			<span id="<portlet:namespace />displayPageNameInput">
+					<c:choose>
+						<c:when test="<%= Validator.isNull(layoutBreadcrumb) %>">
+							<span class="text-muted"><liferay-ui:message key="none" /></span>
+						</c:when>
+						<c:otherwise>
+							<%= layoutBreadcrumb %>
+						</c:otherwise>
+					</c:choose>
+				</span>
+		</p>
+	</aui:field-wrapper>
 
 	<aui:button name="chooseDisplayPage" value="choose" />
 </aui:fieldset>

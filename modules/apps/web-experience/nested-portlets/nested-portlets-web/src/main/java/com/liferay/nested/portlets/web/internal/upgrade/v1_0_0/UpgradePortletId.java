@@ -18,10 +18,7 @@ import com.liferay.nested.portlets.web.internal.constants.NestedPortletsPortletK
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Jürgen Kappler
@@ -48,61 +45,25 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	protected void updateNestedPortletLayoutRevisionTypeSettings()
 		throws Exception {
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select layoutRevisionId, typeSettings from LayoutRevision " +
-					"where typeSettings LIKE '%nested-column-ids%'");
+		StringBundler sb = new StringBundler(4);
 
-			ResultSet rs = ps.executeQuery()) {
+		sb.append("update LayoutRevision set typeSettings = replace(");
+		sb.append("typeSettings, '_118_INSTANCE_', '_");
+		sb.append(NestedPortletsPortletKeys.NESTED_PORTLETS);
+		sb.append("_INSTANCE_') where typeSettings LIKE '%nested-column-ids%'");
 
-			while (rs.next()) {
-				long layoutRevisionId = rs.getLong("layoutRevisionId");
-				String typeSettings = rs.getString("typeSettings");
-
-				String oldPortletId = "_118_INSTANCE_";
-				String newPortletId =
-					"_" + NestedPortletsPortletKeys.NESTED_PORTLETS +
-						"_INSTANCE_";
-
-				String newTypeSettings = StringUtil.replace(
-					typeSettings, oldPortletId, newPortletId);
-
-				updateLayoutRevision(layoutRevisionId, newTypeSettings);
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-		}
+		runSQL(sb.toString());
 	}
 
 	protected void updateNestedPortletLayoutTypeSettings() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select plid, typeSettings from Layout where typeSettings " +
-					"LIKE '%nested-column-ids%'");
+		StringBundler sb = new StringBundler(4);
 
-			ResultSet rs = ps.executeQuery()) {
+		sb.append("update Layout set typeSettings = replace(typeSettings, ");
+		sb.append("'_118_INSTANCE_', '_");
+		sb.append(NestedPortletsPortletKeys.NESTED_PORTLETS);
+		sb.append("_INSTANCE_') where typeSettings LIKE '%nested-column-ids%'");
 
-			while (rs.next()) {
-				long plid = rs.getLong("plid");
-				String typeSettings = rs.getString("typeSettings");
-
-				String oldPortletId = "_118_INSTANCE_";
-				String newPortletId =
-					"_" + NestedPortletsPortletKeys.NESTED_PORTLETS +
-						"_INSTANCE_";
-
-				String newTypeSettings = StringUtil.replace(
-					typeSettings, oldPortletId, newPortletId);
-
-				updateLayout(plid, newTypeSettings);
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-		}
+		runSQL(sb.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

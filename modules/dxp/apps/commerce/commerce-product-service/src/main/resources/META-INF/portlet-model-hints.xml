@@ -55,7 +55,9 @@
 		<field name="companyId" type="long" />
 		<field name="CPDefinitionId" type="long" />
 		<field name="languageId" type="String" />
-		<field name="title" type="String" />
+		<field name="title" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="urlTitle" type="String" />
 		<field name="shortDescription" type="String">
 			<hint-collection name="TEXTAREA" />

@@ -35,6 +35,8 @@ public class DefinitionElement extends PoshiElement {
 
 	public DefinitionElement(Element element) {
 		super("definition", element);
+
+		setPadLengths();
 	}
 
 	public DefinitionElement(String readableSyntax) {

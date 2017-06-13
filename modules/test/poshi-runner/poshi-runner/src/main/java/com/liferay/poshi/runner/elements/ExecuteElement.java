@@ -37,6 +37,8 @@ public class ExecuteElement extends PoshiElement {
 
 	public ExecuteElement(Element element) {
 		super("execute", element);
+
+		setPadLengths();
 	}
 
 	public ExecuteElement(String readableSyntax) {

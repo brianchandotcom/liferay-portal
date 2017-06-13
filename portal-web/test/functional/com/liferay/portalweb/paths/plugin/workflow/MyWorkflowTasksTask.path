@@ -61,12 +61,12 @@
 <!--MENU-->
 <tr>
 	<td>MENU_ASSIGN_TO_ME</td>
-	<td>//a[contains(@id,'taskAssignToMeLink')]</td>
+	<td>//a[contains(@id,'taskAssignToMeLink')] | //span[contains(text(),'Assign to Me')]/../../a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_ASSIGN</td>
-	<td>//a[contains(@id,'taskAssignLink')]</td>
+	<td>//a[contains(@id,'taskAssignLink')] | //span[contains(text(),'Assign to...')]/../../a</td>
 	<td></td>
 </tr>
 <tr>

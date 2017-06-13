@@ -70,10 +70,22 @@ public class VarElement extends PoshiElement {
 			parentElementName.equals("set-up") ||
 			parentElementName.equals("tear-down")) {
 
-			sb.append("\n\t");
-			sb.append(getReadableExecuteKey());
-			sb.append(" ");
-			sb.append(getReadableVariableKey());
+			String previousSiblingElementName = null;
+
+			Element previousSiblingElement = getPreviousSibling();
+
+			if (previousSiblingElement != null) {
+				previousSiblingElementName = getPreviousSibling().getName();
+			}
+
+			if (previousSiblingElement == null ||
+				!previousSiblingElementName.equals(getName())) {
+
+				sb.append("\n\t");
+				sb.append(getReadableExecuteKey());
+				sb.append(" ");
+				sb.append(getReadableVariableKey());
+			}
 		}
 
 		sb.append("\n\t\t");

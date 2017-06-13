@@ -126,6 +126,20 @@ public abstract class PoshiElement extends DefaultElement {
 		return _namePadLength;
 	}
 
+	protected Element getPreviousSibling() {
+		Element parentElement = getParent();
+
+		if (parentElement != null) {
+			int index = parentElement.indexOf(this);
+
+			if (index > 0) {
+				return (Element)parentElement.node(index - 1);
+			}
+		}
+
+		return null;
+	}
+
 	protected String getReadableExecuteKey() {
 		List<Element> siblingElements = getSiblings();
 

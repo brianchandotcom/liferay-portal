@@ -59,8 +59,8 @@ public class DLFileEntryTypeFinderTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE,
-			PermissionCheckerTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerTestRule.INSTANCE, TransactionalTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {

@@ -28,7 +28,7 @@
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="addMenu" value="Simple" />
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productLongDescription" value="Product Long Description 1" />
+			<var name="productFullDescription" value="Product Full Description 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
 		</execute>
@@ -51,7 +51,7 @@
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="addMenu" value="Simple" />
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productLongDescription" value="Product Long Description 1" />
+			<var name="productFullDescription" value="Product Full Description 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
 		</execute>
@@ -64,7 +64,7 @@
 
 		<execute macro="CommerceCatalogEntry#viewCatalogEntry">
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productLongDescription" value="Product Long Description 1" />
+			<var name="productFullDescription" value="Product Full Description 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
 		</execute>
@@ -76,7 +76,7 @@
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="addMenu" value="Simple" />
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productLongDescription" value="Product Long Description 1" />
+			<var name="productFullDescription" value="Product Full Description 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
 		</execute>
@@ -89,7 +89,7 @@
 
 		<execute macro="CommerceCatalogEntry#viewCatalogEntry">
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productLongDescription" value="Product Long Description 1" />
+			<var name="productFullDescription" value="Product Full Description 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
 		</execute>
@@ -99,7 +99,7 @@
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="addMenu" value="Simple" />
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productLongDescription" value="Product_Long_Description_1" />
+			<var name="productFullDescription" value="Product_Full_Description_1" />
 			<var name="productShortDescription" value="Product_Short_Description_1" />
 			<var name="productTitle" value="Product_Title_1" />
 		</execute>
@@ -126,7 +126,7 @@
 			<execute macro="CommerceCatalog#addEntry">
 				<var name="addMenu" value="Simple" />
 				<var name="baseSku" value="ProductSKU ${entryNumber}" />
-				<var name="productLongDescription" value="Product Long Description ${entryNumber}" />
+				<var name="productFullDescription" value="Product Full Description ${entryNumber}" />
 				<var name="productShortDescription" value="Product Short Description ${entryNumber}" />
 				<var name="productTitle" value="Product Title ${entryNumber}" />
 			</execute>
@@ -151,7 +151,7 @@
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="addMenu" value="Simple" />
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productLongDescription" value="Product Long Description 1" />
+			<var name="productFullDescription" value="Product Full Description 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
 		</execute>
@@ -171,7 +171,7 @@
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="addMenu" value="Simple" />
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productLongDescription" value="Product Long Description" />
+			<var name="productFullDescription" value="Product Full Description" />
 			<var name="productShortDescription" value="Product Short Description" />
 			<var name="productTitle" value="Product Title" />
 		</execute>
@@ -190,8 +190,8 @@
 			<var name="newProductShortDescription" value="New Product Short Description" />
 		</execute>
 
-		<execute macro="CommerceCatalogEntry#editCatalogEntryLongDescription">
-			<var name="newProductLongDescription" value="New Product Long Description" />
+		<execute macro="CommerceCatalogEntry#editCatalogEntryFullDescription">
+			<var name="newProductFullDescription" value="New Product Full Description" />
 		</execute>
 
 		<execute macro="CommerceCatalogEntry#editCatalogEntryBaseSKU">
@@ -225,7 +225,7 @@
 
 		<execute macro="CommerceCatalogEntry#viewCatalogEntry">
 			<var name="baseSku" value="New Product BaseSKU" />
-			<var name="productLongDescription" value="New Product Long Description" />
+			<var name="productFullDescription" value="New Product Full Description" />
 			<var name="productShortDescription" value="New Product Short Description" />
 			<var name="productTitle" value="New Product Title" />
 		</execute>
@@ -235,7 +235,7 @@
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="addMenu" value="Simple" />
 			<var name="baseSku" value="ProductSKU" />
-			<var name="productLongDescription" value="Product Long Description 1" />
+			<var name="productFullDescription" value="Product Full Description 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
 		</execute>

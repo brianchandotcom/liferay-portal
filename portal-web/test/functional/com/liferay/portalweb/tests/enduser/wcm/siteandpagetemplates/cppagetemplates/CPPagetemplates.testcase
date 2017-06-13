@@ -29,6 +29,7 @@
 
 	<command name="AddSitePageTemplate" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Page Templates" />
@@ -66,6 +67,71 @@
 		<execute macro="Page#viewPageTemplate" >
 			<var name="page" value="Site Page" />
 			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#gotoPageTemplateViaEdit">
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute function="SelectWindow" locator1="title=Page Template Name - ${siteName}" />
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute function="Close#closeWindow" locator1="title=Page Template Name - ${siteName}" />
+		<execute function="SelectWindow" locator1="title=Page Templates - Control Panel - ${siteName}" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Site Page" />
+		</execute>
+
+		<execute macro="Page#disablePageTemplateInheritChanges" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#gotoPageTemplateViaEdit">
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute function="SelectWindow" locator1="title=Page Template Name - ${siteName}" />
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute function="Close#closeWindow" locator1="title=Page Template Name - ${siteName}" />
+		<execute function="SelectWindow" locator1="title=Page Templates - Control Panel - ${siteName}" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#viewNoSpecificPG">
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 	</command>
 

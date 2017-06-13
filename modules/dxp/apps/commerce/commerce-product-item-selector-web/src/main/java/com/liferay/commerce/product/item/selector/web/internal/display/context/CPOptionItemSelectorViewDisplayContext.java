@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alessio Antonio Rendina
  */
 public class CPOptionItemSelectorViewDisplayContext
-	extends BaseCPItemSelectorViewDisplayContext {
+	extends BaseCPItemSelectorViewDisplayContext<CPOption> {
 
 	public CPOptionItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest, PortletURL portletURL,

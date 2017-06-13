@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alessio Antonio Rendina
  */
 public class CPDefinitionItemSelectorViewDisplayContext
-	extends BaseCPItemSelectorViewDisplayContext {
+	extends BaseCPItemSelectorViewDisplayContext<CPDefinition> {
 
 	public CPDefinitionItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest, PortletURL portletURL,

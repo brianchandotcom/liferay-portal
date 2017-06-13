@@ -44,11 +44,11 @@ public class CreateTokenCommand implements Command {
 
 		Console console = System.console();
 
-		while ((_emailAddress == null) || _emailAddress.equals("")) {
+		while ((_emailAddress == null) || _emailAddress.isEmpty()) {
 			_emailAddress = console.readLine("Email Address: ");
 		}
 
-		while ((_password == null) || _password.equals("")) {
+		while ((_password == null) || _password.isEmpty()) {
 			char[] characters = console.readPassword("Password: ");
 
 			if (characters != null) {

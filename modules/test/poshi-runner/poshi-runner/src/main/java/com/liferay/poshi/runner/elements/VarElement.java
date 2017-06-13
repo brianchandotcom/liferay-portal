@@ -78,7 +78,7 @@ public class VarElement extends PoshiElement {
 				previousSiblingElementName = getPreviousSibling().getName();
 			}
 
-			if (previousSiblingElement == null ||
+			if ((previousSiblingElement == null) ||
 				!previousSiblingElementName.equals(getName())) {
 
 				sb.append("\n\t");

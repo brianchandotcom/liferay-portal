@@ -599,7 +599,7 @@
 		<if>
 			<isset var="nodeNotificationsTemplateLanguage" />
 			<then>
-				<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_TEMPLATE_LANGUAGE_SELECT" value1="${nodeNotificationsTemplateLanguage}" />
+				<execute function="AssertSelectedLabel" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_TEMPLATE_LANGUAGE_SELECT" value1="${nodeNotificationsTemplateLanguage}" />
 			</then>
 		</if>
 

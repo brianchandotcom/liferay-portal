@@ -284,7 +284,7 @@ public class DDLFormAdminDisplayContext {
 				recordSetOptional, _ddmFormFieldTypeServicesTracker,
 				_ddmFormTemplateContextFactory, themeDisplay.getRequest(),
 				themeDisplay.getResponse(), _jsonFactory,
-				_ddlFormAdminRequestHelper.getLocale());
+				_ddlFormAdminRequestHelper.getLocale(), true);
 
 		Map<String, Object> formBuilderContext =
 			ddlFormBuilderContextFactory.create();

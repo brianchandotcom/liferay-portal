@@ -67,7 +67,7 @@ public class DDLFormBuilderContextFactory {
 		DDMFormTemplateContextFactory ddmFormTemplateContextFactory,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, JSONFactory jsonFactory,
-		Locale locale) {
+		Locale locale, boolean readOnly) {
 
 		_recordSetOptional = recordSetOptional;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
@@ -76,6 +76,7 @@ public class DDLFormBuilderContextFactory {
 		_httpServletResponse = httpServletResponse;
 		_jsonFactory = jsonFactory;
 		_locale = locale;
+		_readOnly = readOnly;
 	}
 
 	public Map<String, Object> create() {
@@ -124,6 +125,7 @@ public class DDLFormBuilderContextFactory {
 		ddmFormRenderingContext.setHttpServletResponse(_httpServletResponse);
 		ddmFormRenderingContext.setLocale(_locale);
 		ddmFormRenderingContext.setPortletNamespace(StringPool.BLANK);
+		ddmFormRenderingContext.setReadOnly(_readOnly);
 
 		Map<String, Object> ddmFormTemplateContext =
 			_ddmFormTemplateContextFactory.create(
@@ -343,6 +345,7 @@ public class DDLFormBuilderContextFactory {
 	private final HttpServletResponse _httpServletResponse;
 	private final JSONFactory _jsonFactory;
 	private final Locale _locale;
+	private final boolean _readOnly;
 	private final Optional<DDLRecordSet> _recordSetOptional;
 
 	private static class DDLFormBuilderContextFieldVisitor {

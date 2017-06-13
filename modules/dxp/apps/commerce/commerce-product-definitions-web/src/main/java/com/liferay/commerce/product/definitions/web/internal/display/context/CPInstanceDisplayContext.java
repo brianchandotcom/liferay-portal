@@ -128,6 +128,8 @@ public class CPInstanceDisplayContext
 		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
+		searchContainer.setEmptyResultsMessage("no-skus-were-found");
+
 		OrderByComparator<CPInstance> orderByComparator =
 			CPDefinitionsPortletUtil.getCPInstanceOrderByComparator(
 				getOrderByCol(), getOrderByType());
@@ -135,7 +137,6 @@ public class CPInstanceDisplayContext
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setEmptyResultsMessage("no-skus-were-found");
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (isSearch()) {

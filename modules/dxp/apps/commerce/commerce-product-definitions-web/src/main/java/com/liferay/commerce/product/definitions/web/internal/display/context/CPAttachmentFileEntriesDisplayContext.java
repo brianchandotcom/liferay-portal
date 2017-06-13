@@ -235,6 +235,8 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
+		searchContainer.setEmptyResultsMessage("no-attachments-were-found");
+
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator =
 			CPDefinitionsPortletUtil.getCPAttachmentFileEntryOrderByComparator(
 				getOrderByCol(), getOrderByType());
@@ -242,7 +244,6 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setEmptyResultsMessage("no-attachments-were-found");
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (!isSearch()) {

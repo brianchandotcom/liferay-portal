@@ -160,6 +160,8 @@ public class CPDefinitionOptionRelDisplayContext extends
 		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
+		searchContainer.setEmptyResultsMessage("no-options-were-found");
+
 		OrderByComparator<CPDefinitionOptionRel> orderByComparator =
 			CPDefinitionsPortletUtil.getCPDefinitionOptionRelOrderByComparator(
 				getOrderByCol(), getOrderByType());
@@ -167,7 +169,6 @@ public class CPDefinitionOptionRelDisplayContext extends
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setEmptyResultsMessage("no-options-were-found");
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (isSearch()) {

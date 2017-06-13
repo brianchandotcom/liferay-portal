@@ -30,6 +30,22 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		_layoutLocalService = layoutLocalService;
 	}
 
+	/**
+	* Returns true if there is a matching layout for UUID, groupId and
+	* privateLayout
+	*
+	* @param uuid the layout's UUID
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @return true if the layout is found
+	*/
+	@Override
+	public boolean hasLayout(java.lang.String uuid, long groupId,
+		boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutLocalService.hasLayout(uuid, groupId, privateLayout);
+	}
+
 	@Override
 	public boolean hasLayoutSetPrototypeLayout(
 		java.lang.String layoutSetPrototypeUuid, long companyId,

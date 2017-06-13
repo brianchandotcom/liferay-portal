@@ -22,7 +22,6 @@ import java.io.OutputStream;
 
 import java.net.InetAddress;
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -68,13 +67,13 @@ import org.apache.http.util.EntityUtils;
  */
 public class HttpUtil {
 
-	public static String createToken(String userName, String password)
+	public static String createToken(URI uri, String userName, String password)
 		throws IOException {
 
 		try (CloseableHttpClient closeableHttpClient = _getHttpClient(
-				_CREATE_TOKEN_URI, userName, password)) {
+				uri, userName, password)) {
 
-			HttpPost httpPost = new HttpPost(_CREATE_TOKEN_URI);
+			HttpPost httpPost = new HttpPost(uri);
 
 			InetAddress localHost = InetAddress.getLocalHost();
 
@@ -328,19 +327,6 @@ public class HttpUtil {
 		httpClientBuilder.useSystemProperties();
 
 		return httpClientBuilder;
-	}
-
-	private static final URI _CREATE_TOKEN_URI;
-
-	static {
-		try {
-			_CREATE_TOKEN_URI = new URI(
-				"https://web.liferay.com/token-auth-portlet/api/secure/jsonws" +
-					"/tokenauthentry/add-token-auth-entry");
-		}
-		catch (URISyntaxException urise) {
-			throw new ExceptionInInitializerError(urise);
-		}
 	}
 
 }

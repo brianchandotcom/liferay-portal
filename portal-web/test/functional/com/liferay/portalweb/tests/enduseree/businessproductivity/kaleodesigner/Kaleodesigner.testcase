@@ -382,7 +382,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTaskNodeEditNameAndDesciptionAndRecipientsAndDeleteViaViewTab" priority="4">
+	<command name="AddTaskNodeEditNameAndDesciptionAndNotificationsAndDeleteViaViewTab" priority="4">
 		<description message="This is a use case for LPS-53992." />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -413,6 +413,9 @@
 			<var name="nodeNotificationsDescription" value="Update Notification Description" />
 			<var name="nodeNotificationsName" value="Update Notification" />
 			<var name="nodeNotificationsRecipientType" value="Role Type" />
+			<var name="nodeNotificationsTemplate" value="A new entry needs your review" />
+			<var name="nodeNotificationsTemplateLanguage" value="Text" />
+			<var name="nodeNotificationsType" value="User Notification" />
 			<var name="roleName" value="Administrator" />
 			<var name="roleType" value="Regular" />
 		</execute>
@@ -424,6 +427,8 @@
 		<execute macro="KaleoDesigner#viewNodeNotifications">
 			<var name="nodeNotificationsName" value="Update Notification" />
 			<var name="nodeNotificationsRecipientType" value="Role Type" />
+			<var name="nodeNotificationsTemplateLanguage" value="Text" />
+			<var name="nodeNotificationsType" value="User Notification" />
 			<var name="roleName" value="Administrator" />
 			<var name="roleType" value="Regular" />
 		</execute>

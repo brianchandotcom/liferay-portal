@@ -552,7 +552,8 @@ public class LayoutServiceSoap {
 	}
 
 	/**
-	* Returns true if the layout matching the UUID, group, and privacy.
+	* Returns true if there is a matching layout for UUID, groupId and
+	* privateLayout
 	*
 	* @param uuid the layout's UUID
 	* @param groupId the primary key of the group

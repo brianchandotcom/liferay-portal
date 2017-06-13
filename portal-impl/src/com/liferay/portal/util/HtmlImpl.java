@@ -359,9 +359,11 @@ public class HtmlImpl implements Html {
 
 		char ch = href.charAt(0);
 
-		if (ch == CharPool.SLASH) {
+		if ((ch == CharPool.BACK_SLASH) || (ch == CharPool.SLASH)) {
 			return escapeAttribute(href);
 		}
+
+		ch = Character.toLowerCase(ch);
 
 		if ((ch >= CharPool.LOWER_CASE_A) && (ch <= CharPool.LOWER_CASE_Z) &&
 			(ch != CharPool.LOWER_CASE_D) && (ch != CharPool.LOWER_CASE_J)) {

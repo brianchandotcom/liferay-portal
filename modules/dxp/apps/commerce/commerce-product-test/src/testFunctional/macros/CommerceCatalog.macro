@@ -12,7 +12,7 @@
 
 		<execute macro="CommerceCatalogEntry#addCatalogEntry">
 			<var name="baseSku" value="${baseSku}" />
-			<var name="productLongDescription" value="${productLongDescription}" />
+			<var name="productFullDescription" value="${productFullDescription}" />
 			<var name="productShortDescription" value="${productShortDescription}" />
 			<var name="productTitle" value="${productTitle}" />
 		</execute>

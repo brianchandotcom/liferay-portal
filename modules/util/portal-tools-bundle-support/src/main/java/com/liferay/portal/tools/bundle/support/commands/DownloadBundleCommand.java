@@ -26,8 +26,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -53,10 +51,10 @@ public class DownloadBundleCommand extends BaseCommand implements StreamLogger {
 			bundlePath = Paths.get(uri);
 		}
 		else if (token) {
-			String token = new String(
-				Files.readAllBytes(tokenFile.toPath()), StandardCharsets.UTF_8);
+			String tokenContent = FileUtil.read(tokenFile);
 
-			bundlePath = HttpUtil.downloadFile(uri, token, cacheDirPath, this);
+			bundlePath = HttpUtil.downloadFile(
+				uri, tokenContent, cacheDirPath, this);
 		}
 		else {
 			bundlePath = HttpUtil.downloadFile(

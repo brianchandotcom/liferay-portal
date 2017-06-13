@@ -38,6 +38,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -330,7 +331,7 @@ public class PortletPreferencesFinderImpl
 		String portletName = PortletIdCodec.decodePortletName(
 			portletPreferencesPortletId);
 
-		return PortletIdCodec.hasIdenticalPortletName(portletName, portletId);
+		return Objects.equals(portletName, portletId);
 	}
 
 	private static final String _OWNER_ID_SQL =

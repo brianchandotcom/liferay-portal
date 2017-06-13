@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.model;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -174,7 +176,7 @@ public class PortletConstants {
 	public static boolean hasIdenticalRootPortletId(
 		String portletId1, String portletId2) {
 
-		return PortletIdCodec.hasIdenticalPortletName(
+		return Objects.equals(
 			PortletIdCodec.decodePortletName(portletId1),
 			PortletIdCodec.decodePortletName(portletId2));
 	}

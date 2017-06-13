@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
@@ -90,8 +92,7 @@ public class PortletInstance {
 	}
 
 	public boolean hasIdenticalPortletName(String portletName) {
-		return PortletIdCodec.hasIdenticalPortletName(
-			_portletName, portletName);
+		return Objects.equals(_portletName, portletName);
 	}
 
 	public boolean hasInstanceId() {

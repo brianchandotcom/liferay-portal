@@ -179,12 +179,6 @@ public class PortletIdCodec {
 		return StringUtil.randomString(12);
 	}
 
-	public static boolean hasIdenticalPortletName(
-		String portletName1, String portletName2) {
-
-		return portletName1.equals(portletName2);
-	}
-
 	public static boolean hasInstanceId(String portletId) {
 		return portletId.contains(_INSTANCE_SEPARATOR);
 	}

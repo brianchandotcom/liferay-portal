@@ -61,8 +61,18 @@ public class BundleSupportMavenTest extends BundleSupportCommandsTest {
 		throws Exception {
 
 		_execute(
-			"clean", null, null, null, null, fileName, liferayHomeDir, null,
-			null, 0, null, null);
+			"clean", null, null, null, null, null, fileName, liferayHomeDir,
+			null, null, 0, null, null, null, null);
+	}
+
+	@Override
+	protected void createToken(
+			String emailAddress, String password, File tokenFile, URL tokenUrl)
+		throws Exception {
+
+		_execute(
+			"create-token", null, null, null, emailAddress, null, null, null,
+			null, password, 0, tokenFile, tokenUrl, null, null);
 	}
 
 	@Override
@@ -70,8 +80,8 @@ public class BundleSupportMavenTest extends BundleSupportCommandsTest {
 		throws Exception {
 
 		_execute(
-			"deploy", null, null, file, null, null, liferayHomeDir,
-			outputFileName, null, 0, null, null);
+			"deploy", null, null, file, null, null, null, liferayHomeDir,
+			outputFileName, null, 0, null, null, null, null);
 	}
 
 	@Override
@@ -82,8 +92,9 @@ public class BundleSupportMavenTest extends BundleSupportCommandsTest {
 		throws Exception {
 
 		_execute(
-			"init", cacheDir, configsDir, null, environment, null,
-			liferayHomeDir, null, password, stripComponents, url, userName);
+			"init", cacheDir, configsDir, null, null, environment, null,
+			liferayHomeDir, null, password, stripComponents, null, null, url,
+			userName);
 	}
 
 	private static String _replace(String s, String key, File file) {
@@ -106,9 +117,10 @@ public class BundleSupportMavenTest extends BundleSupportCommandsTest {
 
 	private void _execute(
 			String goalName, File cacheDir, File configsDir, File deployFile,
-			String environment, String fileName, File liferayHomeDir,
-			String outputFileName, String password, int stripComponents,
-			URL url, String userName)
+			String emailAddress, String environment, String fileName,
+			File liferayHomeDir, String outputFileName, String password,
+			int stripComponents, File tokenFile, URL tokenUrl, URL url,
+			String userName)
 		throws Exception {
 
 		File projectDir = temporaryFolder.newFolder("maven");
@@ -124,6 +136,8 @@ public class BundleSupportMavenTest extends BundleSupportCommandsTest {
 		pomXml = _replace(pomXml, "[$BUNDLE_SUPPORT_CONFIGS$]", configs);
 		pomXml = _replace(pomXml, "[$BUNDLE_SUPPORT_DEPLOY_FILE$]", deployFile);
 		pomXml = _replace(
+			pomXml, "[$BUNDLE_SUPPORT_EMAIL_ADDRESS$]", emailAddress);
+		pomXml = _replace(
 			pomXml, "[$BUNDLE_SUPPORT_ENVIRONMENT$]", environment);
 		pomXml = _replace(pomXml, "[$BUNDLE_SUPPORT_FILE_NAME$]", fileName);
 		pomXml = _replace(
@@ -133,6 +147,8 @@ public class BundleSupportMavenTest extends BundleSupportCommandsTest {
 		pomXml = _replace(pomXml, "[$BUNDLE_SUPPORT_PASSWORD$]", password);
 		pomXml = _replace(
 			pomXml, "[$BUNDLE_SUPPORT_STRIP_COMPONENTS$]", stripComponents);
+		pomXml = _replace(pomXml, "[$BUNDLE_SUPPORT_TOKEN_FILE$]", tokenFile);
+		pomXml = _replace(pomXml, "[$BUNDLE_SUPPORT_TOKEN_URL$]", tokenUrl);
 		pomXml = _replace(pomXml, "[$BUNDLE_SUPPORT_URL$]", url);
 		pomXml = _replace(pomXml, "[$BUNDLE_SUPPORT_USER_NAME$]", userName);
 

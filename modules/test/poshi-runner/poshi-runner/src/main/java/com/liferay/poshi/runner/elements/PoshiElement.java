@@ -123,7 +123,7 @@ public abstract class PoshiElement extends DefaultElement {
 	}
 
 	protected String getReadableExecuteKey() {
-		List<Element> siblingElements = getSiblingElements();
+		List<Element> siblingElements = getSiblings();
 
 		int index = siblingElements.indexOf(this);
 
@@ -142,7 +142,7 @@ public abstract class PoshiElement extends DefaultElement {
 		return AND;
 	}
 
-	protected List<Element> getSiblingElements() {
+	protected List<Element> getSiblings() {
 		Element parentElement = getParent();
 
 		return Dom4JUtil.toElementList(parentElement.elements());

@@ -6,4 +6,5 @@ Export-Package:\
 	com.liferay.commerce.product.type.grouped.exception,\
 	com.liferay.commerce.product.type.grouped.model,\
 	com.liferay.commerce.product.type.grouped.service,\
-	com.liferay.commerce.product.type.grouped.service.persistence
+	com.liferay.commerce.product.type.grouped.service.persistence,\
+	com.liferay.commerce.product.type.grouped.util.comparator

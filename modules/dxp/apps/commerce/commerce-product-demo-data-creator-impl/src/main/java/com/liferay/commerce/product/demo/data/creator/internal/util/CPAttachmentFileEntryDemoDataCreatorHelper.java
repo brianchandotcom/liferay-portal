@@ -139,9 +139,9 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 		_cpAttachmentFileEntryLocalService;
 
 	@Reference
-	private PortletFileRepository _portletFileRepository;
+	private Portal _portal;
 
 	@Reference
-	private Portal _portal;
+	private PortletFileRepository _portletFileRepository;
 
 }

@@ -119,6 +119,10 @@ public class ModuleNameUtil {
 	public static String getPackageName(String moduleName) {
 		int i = moduleName.indexOf(StringPool.SLASH);
 
+		if ((moduleName.charAt(0) == CharPool.AT) && (i != -1)) {
+			i = moduleName.indexOf(StringPool.SLASH, i + 1);
+		}
+
 		if (i == -1) {
 			return moduleName;
 		}
@@ -146,6 +150,10 @@ public class ModuleNameUtil {
 	 */
 	public static String getPackagePath(String moduleName) {
 		int i = moduleName.indexOf(StringPool.SLASH);
+
+		if ((moduleName.charAt(0) == CharPool.AT) && (i != -1)) {
+			i = moduleName.indexOf(StringPool.SLASH, i + 1);
+		}
 
 		if (i == -1) {
 			return null;

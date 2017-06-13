@@ -54,7 +54,14 @@ public class FlatJSPackage extends JSPackageAdapter {
 			StringBundler basePath = new StringBundler(5);
 
 			basePath.append("META-INF/resources/node_modules/");
-			basePath.append(getName());
+
+			if (name.startsWith(StringPool.AT)) {
+				basePath.append(name.replace(StringPool.SLASH, "%2F"));
+			}
+			else {
+				basePath.append(name);
+			}
+
 			basePath.append(StringPool.AT);
 			basePath.append(getVersion());
 			basePath.append(StringPool.SLASH);

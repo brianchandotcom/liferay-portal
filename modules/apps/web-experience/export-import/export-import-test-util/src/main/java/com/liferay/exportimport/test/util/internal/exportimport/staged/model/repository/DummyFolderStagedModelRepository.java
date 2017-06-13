@@ -131,7 +131,7 @@ public class DummyFolderStagedModelRepository
 		List<DummyFolder> dummyFolders = _dummyFolders.stream().filter(
 			dummyFolder ->
 				dummyFolder.getUuid().equals(uuid) &&
-					dummyFolder.getGroupId() == groupId).collect(
+				dummyFolder.getGroupId() == groupId).collect(
 				Collectors.toList());
 
 		if (dummyFolders.isEmpty()) {
@@ -148,7 +148,7 @@ public class DummyFolderStagedModelRepository
 		return _dummyFolders.stream().filter(
 			dummyFolder ->
 				dummyFolder.getUuid().equals(uuid) &&
-					dummyFolder.getCompanyId() == companyId).collect(
+				dummyFolder.getCompanyId() == companyId).collect(
 				Collectors.toList());
 	}
 

@@ -123,7 +123,7 @@ AUI.add(
 
 						var selected = '';
 
-						if (selectVal.indexOf(value) > -1) {
+						if (selectVal.indexOf(key) > -1) {
 							selected = 'selected="selected"';
 						}
 

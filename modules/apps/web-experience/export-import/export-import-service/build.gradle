@@ -8,7 +8,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.portal.background.task.service", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.xstream.configurator.api", version: "2.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.4.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	provided group: "com.thoughtworks.xstream", name: "xstream", version: "1.4.7"

@@ -141,7 +141,7 @@ public class DummyStagedModelRepository
 		List<Dummy> dummies = _dummies.stream().filter(
 			dummy ->
 				dummy.getUuid().equals(uuid) &&
-					dummy.getGroupId() == groupId).collect(Collectors.toList());
+				dummy.getGroupId() == groupId).collect(Collectors.toList());
 
 		if (dummies.isEmpty()) {
 			return null;

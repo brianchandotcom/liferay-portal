@@ -111,7 +111,7 @@ public class DummyReferenceStagedModelRepository
 		_dummyReferences.removeIf(
 			dummyReference ->
 				dummyReference.getUuid().equals(uuid) &&
-					dummyReference.getGroupId() == groupId);
+				dummyReference.getGroupId() == groupId);
 	}
 
 	@Override
@@ -133,7 +133,7 @@ public class DummyReferenceStagedModelRepository
 		List<DummyReference> dummies = _dummyReferences.stream().filter(
 			dummyReference ->
 				dummyReference.getUuid().equals(uuid) &&
-					dummyReference.getGroupId() == groupId).collect(
+				dummyReference.getGroupId() == groupId).collect(
 				Collectors.toList());
 
 		if (dummies.isEmpty()) {
@@ -150,7 +150,7 @@ public class DummyReferenceStagedModelRepository
 		return _dummyReferences.stream().filter(
 			dummyReference ->
 				dummyReference.getUuid().equals(uuid) &&
-					dummyReference.getCompanyId() == companyId).collect(
+				dummyReference.getCompanyId() == companyId).collect(
 				Collectors.toList());
 	}
 

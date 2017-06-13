@@ -78,9 +78,9 @@ public class VarElement extends PoshiElement {
 
 		sb.append("\n\t\t");
 		sb.append("|");
-		sb.append(attributeValue("name"));
+		sb.append(_pad(attributeValue("name"), getNamePadLength()));
 		sb.append("|");
-		sb.append(getVariableValueAttribute());
+		sb.append(_pad(getVariableValueAttribute(), getValuePadLength()));
 		sb.append("|");
 
 		return sb.toString();
@@ -100,6 +100,31 @@ public class VarElement extends PoshiElement {
 		PoshiElement parentElement = (PoshiElement)getParent();
 
 		return parentElement.getValuePadLength();
+	}
+
+	private String _pad(String s, int padLength) {
+		if (s == null) {
+			s = "";
+		}
+
+		int length = s.length();
+
+		if (length <= padLength) {
+			int pad = 1 + padLength - length;
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(" ");
+			sb.append(s);
+
+			for (int i = 0; i < pad; i++) {
+				sb.append(" ");
+			}
+
+			return sb.toString();
+		}
+
+		return s;
 	}
 
 }

@@ -49,7 +49,11 @@ public class CreateTokenCommand implements Command {
 		}
 
 		while ((_password == null) || _password.equals("")) {
-			_password = console.readPassword("Password: ");
+			char[] characters = console.readPassword("Password: ");
+
+			if (characters != null) {
+				_password = new String(characters);
+			}
 		}
 
 		HttpUtil.createToken(
@@ -64,7 +68,7 @@ public class CreateTokenCommand implements Command {
 		return _emailAddress;
 	}
 
-	public char[] getPassword() {
+	public String getPassword() {
 		return _password;
 	}
 
@@ -76,7 +80,7 @@ public class CreateTokenCommand implements Command {
 		_emailAddress = emailAddress;
 	}
 
-	public void setPassword(char[] password) {
+	public void setPassword(String password) {
 		_password = password;
 	}
 
@@ -96,6 +100,6 @@ public class CreateTokenCommand implements Command {
 	@Parameter(
 		description = "Your Liferay.com password.", names = {"-p", "--password"}
 	)
-	private char[] _password;
+	private String _password;
 
 }

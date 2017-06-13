@@ -11,7 +11,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
 package com.liferay.commerce.product.exception;
 
 import aQute.bnd.annotation.ProviderType;
@@ -22,8 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Marco Leo
  */
 @ProviderType
-public class CPAttachmentFileEntryExpirationDateException
-	extends PortalException {
+public class CPAttachmentFileEntryExpirationDateException extends PortalException {
 
 	public CPAttachmentFileEntryExpirationDateException() {
 	}
@@ -32,9 +30,7 @@ public class CPAttachmentFileEntryExpirationDateException
 		super(msg);
 	}
 
-	public CPAttachmentFileEntryExpirationDateException(
-		String msg, Throwable cause) {
-
+	public CPAttachmentFileEntryExpirationDateException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 

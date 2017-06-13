@@ -221,6 +221,22 @@ public class CPDefinitionServiceSoap {
 		}
 	}
 
+	public static java.lang.String getDisplayPage(
+		com.liferay.commerce.product.model.CPDefinitionSoap cpDefinition)
+		throws RemoteException {
+		try {
+			java.lang.String returnValue = CPDefinitionServiceUtil.getDisplayPage(com.liferay.commerce.product.model.impl.CPDefinitionModelImpl.toModel(
+						cpDefinition));
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static java.lang.String getUrlTitleMapAsXML(
 		com.liferay.commerce.product.model.CPDefinitionSoap cpDefinition)
 		throws RemoteException {
@@ -299,22 +315,6 @@ public class CPDefinitionServiceSoap {
 					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static java.lang.String getDisplayPage(
-		com.liferay.commerce.product.model.CPDefinitionSoap cpDefinition)
-		throws RemoteException {
-		try {
-			java.lang.String returnValue = CPDefinitionServiceUtil.getDisplayPage(com.liferay.commerce.product.model.impl.CPDefinitionModelImpl.toModel(
-						cpDefinition));
-
-			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -189,6 +189,11 @@ public class FileUtil {
 		return supportedFileAttributeViews.contains("posix");
 	}
 
+	public static String read(File file) throws IOException {
+		return new String(
+			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+	}
+
 	public static void tar(Path sourcePath, File tarFile, boolean includeFolder)
 		throws Exception {
 

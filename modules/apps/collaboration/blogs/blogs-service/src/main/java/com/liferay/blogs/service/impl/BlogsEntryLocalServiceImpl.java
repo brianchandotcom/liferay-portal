@@ -35,6 +35,7 @@ import com.liferay.blogs.util.BlogsUtil;
 import com.liferay.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.blogs.util.comparator.EntryIdComparator;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
@@ -327,13 +328,16 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			urlTitle = _getUniqueUrlTitle(entry);
 		}
 
-		FriendlyURLEntry friendlyURLEntry =
-			friendlyURLEntryLocalService.addFriendlyURLEntry(
-				groupId, user.getCompanyId(), BlogsEntry.class, entryId,
-				urlTitle);
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			FriendlyURLEntry friendlyURLEntry =
+				friendlyURLEntryLocalService.addFriendlyURLEntry(
+					groupId, user.getCompanyId(), BlogsEntry.class, entryId,
+					urlTitle, serviceContext);
 
-		entry.setUrlTitle(friendlyURLEntry.getUrlTitle());
+			urlTitle = friendlyURLEntry.getUrlTitle();
+		}
 
+		entry.setUrlTitle(urlTitle);
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -1272,7 +1276,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			FriendlyURLEntry friendlyURLEntry =
 				friendlyURLEntryLocalService.addFriendlyURLEntry(
 					entry.getGroupId(), entry.getCompanyId(), BlogsEntry.class,
-					entry.getEntryId(), urlTitle);
+					entry.getEntryId(), urlTitle, serviceContext);
 
 			entry.setUrlTitle(friendlyURLEntry.getUrlTitle());
 		}
@@ -1493,7 +1497,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			FriendlyURLEntry friendlyURLEntry =
 				friendlyURLEntryLocalService.addFriendlyURLEntry(
 					entry.getGroupId(), entry.getCompanyId(), BlogsEntry.class,
-					entry.getEntryId(), uniqueUrlTitle);
+					entry.getEntryId(), uniqueUrlTitle, serviceContext);
 
 			entry.setUrlTitle(friendlyURLEntry.getUrlTitle());
 		}

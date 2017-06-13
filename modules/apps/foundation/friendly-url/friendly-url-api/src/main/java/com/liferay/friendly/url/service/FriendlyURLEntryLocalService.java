@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -76,12 +77,12 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 		FriendlyURLEntry friendlyURLEntry);
 
 	public FriendlyURLEntry addFriendlyURLEntry(long groupId, long companyId,
-		java.lang.Class<?> clazz, long classPK, java.lang.String urlTitle)
-		throws PortalException;
+		java.lang.Class<?> clazz, long classPK, java.lang.String urlTitle,
+		ServiceContext serviceContext) throws PortalException;
 
 	public FriendlyURLEntry addFriendlyURLEntry(long groupId, long companyId,
-		long classNameId, long classPK, java.lang.String urlTitle)
-		throws PortalException;
+		long classNameId, long classPK, java.lang.String urlTitle,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new friendly url entry with the primary key. Does not add the friendly url entry to the database.

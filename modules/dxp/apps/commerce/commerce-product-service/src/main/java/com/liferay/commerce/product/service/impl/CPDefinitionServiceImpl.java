@@ -121,7 +121,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 		throws PortalException {
 
 		QueryDefinition<CPDefinition> queryDefinition = new QueryDefinition<>(
-			status);
+			status, start, end, orderByComparator);
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);

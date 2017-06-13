@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.servlet.context.helper.internal;
 
 import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
@@ -267,10 +268,13 @@ public class ServletContextHelperRegistrationImpl
 			_servletContextName);
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, contextPath);
-		properties.put("rtl.required", Boolean.TRUE.toString());
 
 		Map<String, String> contextParameters =
 			_webXMLDefinition.getContextParameters();
+
+		boolean rtlRequiredValue = isRTLRequired(contextParameters);
+
+		properties.put("rtl.required", Boolean.toString(rtlRequiredValue));
 
 		for (Map.Entry<String, String> entry : contextParameters.entrySet()) {
 			String key =
@@ -324,6 +328,28 @@ public class ServletContextHelperRegistrationImpl
 		}
 
 		return contextPath.substring(1);
+	}
+
+	protected boolean isRTLRequired(Map<String, String> contextParameters) {
+		boolean rtlRequiredValue = true;
+
+		if (contextParameters.containsKey("rtl.required")) {
+			rtlRequiredValue = GetterUtil.getBoolean(
+				contextParameters.get("rtl.required"));
+		}
+		else {
+			Dictionary<String, String> headers = _bundle.getHeaders();
+
+			String rtlSupportRequiredHeader = headers.get(
+				"Liferay-RTL-Support-Required");
+
+			if (Validator.isNotNull(rtlSupportRequiredHeader)) {
+				rtlRequiredValue = GetterUtil.getBoolean(
+					rtlSupportRequiredHeader);
+			}
+		}
+
+		return rtlRequiredValue;
 	}
 
 	protected void registerServletContext() {

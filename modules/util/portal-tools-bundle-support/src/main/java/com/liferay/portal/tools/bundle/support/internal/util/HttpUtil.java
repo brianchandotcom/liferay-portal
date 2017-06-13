@@ -14,27 +14,23 @@
 
 package com.liferay.portal.tools.bundle.support.internal.util;
 
-import com.beust.jcommander.internal.Lists;
-
 import com.liferay.portal.tools.bundle.support.util.StreamLogger;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import java.net.InetAddress;
 import java.net.URI;
+import java.net.URISyntaxException;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -64,75 +60,47 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class HttpUtil {
 
-	public static final String LIFERAY_TOKEN_URL =
-		"https://web.liferay.com/token-auth-portlet/api/secure/jsonws" +
-			"/tokenauthentry/add-token-auth-entry";
-
-	public static void createToken(
-			String userName, String password, Path cacheDirPath)
-		throws Exception {
-
-		URI uri = new URI(LIFERAY_TOKEN_URL);
+	public static String createToken(String userName, String password)
+		throws IOException {
 
 		try (CloseableHttpClient closeableHttpClient = _getHttpClient(
-				uri, userName, password)) {
+				_CREATE_TOKEN_URI, userName, password)) {
 
-			HttpPost httpPost = new HttpPost(uri);
-
-			List<NameValuePair> parameters = new ArrayList<>();
+			HttpPost httpPost = new HttpPost(_CREATE_TOKEN_URI);
 
 			InetAddress localHost = InetAddress.getLocalHost();
 
-			parameters.add(
-				new BasicNameValuePair(
-					"device",
-					"portal-tools-bundle-support-" + localHost.getHostName()));
+			NameValuePair deviceNameValuePair = new BasicNameValuePair(
+				"device",
+				"portal-tools-bundle-support-" + localHost.getHostName());
 
-			httpPost.setEntity(new UrlEncodedFormEntity(parameters));
+			httpPost.setEntity(
+				new UrlEncodedFormEntity(
+					Collections.singleton(deviceNameValuePair)));
 
-			HttpResponse httpResponse = closeableHttpClient.execute(httpPost);
+			try (CloseableHttpResponse closeableHttpResponse =
+					closeableHttpClient.execute(httpPost)) {
 
-			StatusLine statusLine = httpResponse.getStatusLine();
+				_checkResponseStatus(closeableHttpResponse);
 
-			int statusCode = statusLine.getStatusCode();
+				HttpEntity httpEntity = closeableHttpResponse.getEntity();
 
-			if (statusCode != 200) {
-				throw new RuntimeException(
-					"Failed : HTTP error code : " + statusCode);
-			}
+				String json = EntityUtils.toString(
+					httpEntity, StandardCharsets.UTF_8);
 
-			HttpEntity httpEntity = httpResponse.getEntity();
+				int start = json.indexOf("token\":\"") + 8;
 
-			try (BufferedReader bufferedReader = new BufferedReader(
-					new InputStreamReader(httpEntity.getContent()))) {
+				int end = json.indexOf("\"", start);
 
-				File tokenFile = new File(cacheDirPath.toFile(), ".token");
-
-				Files.createDirectories(cacheDirPath);
-
-				StringBuilder sb = new StringBuilder();
-
-				String line;
-
-				while ((line = bufferedReader.readLine()) != null) {
-					sb.append(line);
-				}
-
-				String output = sb.toString();
-
-				int start = output.indexOf("token\":\"") + 8;
-
-				int end = output.indexOf("\"", start);
-
-				String token = output.substring(start, end);
-
-				Files.write(tokenFile.toPath(), token.getBytes());
+				return json.substring(start, end);
 			}
 		}
 	}
@@ -305,9 +273,7 @@ public class HttpUtil {
 		Header header = new BasicHeader(
 			HttpHeaders.AUTHORIZATION, "Bearer " + token);
 
-		List<Header> headers = Lists.newArrayList(header);
-
-		httpClientBuilder.setDefaultHeaders(headers);
+		httpClientBuilder.setDefaultHeaders(Collections.singleton(header));
 
 		return httpClientBuilder.build();
 	}
@@ -362,6 +328,19 @@ public class HttpUtil {
 		httpClientBuilder.useSystemProperties();
 
 		return httpClientBuilder;
+	}
+
+	private static final URI _CREATE_TOKEN_URI;
+
+	static {
+		try {
+			_CREATE_TOKEN_URI = new URI(
+				"https://web.liferay.com/token-auth-portlet/api/secure/jsonws" +
+					"/tokenauthentry/add-token-auth-entry");
+		}
+		catch (URISyntaxException urise) {
+			throw new ExceptionInInitializerError(urise);
+		}
 	}
 
 }

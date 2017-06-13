@@ -22,8 +22,12 @@ import com.liferay.portal.tools.bundle.support.internal.util.HttpUtil;
 import java.io.Console;
 import java.io.File;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 @Parameters(
 	commandDescription = "Create a Liferay.com download token.",
@@ -33,9 +37,7 @@ public class CreateTokenCommand implements Command {
 
 	@Override
 	public void execute() throws Exception {
-		File tokenFile = new File(_cacheDir, ".token");
-
-		if (tokenFile.exists()) {
+		if (_tokenFile.exists()) {
 			System.out.println(
 				"The Liferay.com download token already exists.");
 
@@ -56,12 +58,10 @@ public class CreateTokenCommand implements Command {
 			}
 		}
 
-		HttpUtil.createToken(
-			_emailAddress, new String(_password), _cacheDir.toPath());
-	}
+		String token = HttpUtil.createToken(_emailAddress, _password);
 
-	public File getCacheDir() {
-		return _cacheDir;
+		Files.write(
+			_tokenFile.toPath(), token.getBytes(StandardCharsets.UTF_8));
 	}
 
 	public String getEmailAddress() {
@@ -72,8 +72,8 @@ public class CreateTokenCommand implements Command {
 		return _password;
 	}
 
-	public void setCacheDir(File cacheDir) {
-		_cacheDir = cacheDir;
+	public File getTokenFile() {
+		return _tokenFile;
 	}
 
 	public void setEmailAddress(String emailAddress) {
@@ -84,12 +84,12 @@ public class CreateTokenCommand implements Command {
 		_password = password;
 	}
 
-	@Parameter(
-		description = "The directory where to store your Liferay.com download tokens.",
-		names = "--cache-dir"
-	)
-	private File _cacheDir = new File(
-		System.getProperty("user.home"), ".liferay");
+	public void setTokenFile(File tokenFile) {
+		_tokenFile = tokenFile;
+	}
+
+	protected static final File DEFAULT_TOKEN_FILE = new File(
+		System.getProperty("user.home"), ".liferay/token");
 
 	@Parameter(
 		description = "Your Liferay.com email address.",
@@ -101,5 +101,11 @@ public class CreateTokenCommand implements Command {
 		description = "Your Liferay.com password.", names = {"-p", "--password"}
 	)
 	private String _password;
+
+	@Parameter(
+		description = "The file where to store your Liferay.com download token.",
+		names = "--token-file"
+	)
+	private File _tokenFile = DEFAULT_TOKEN_FILE;
 
 }

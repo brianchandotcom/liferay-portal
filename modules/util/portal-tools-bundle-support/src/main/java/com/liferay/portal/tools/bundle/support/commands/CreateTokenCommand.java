@@ -36,7 +36,8 @@ public class CreateTokenCommand implements Command {
 		File tokenFile = new File(_cacheDir, ".token");
 
 		if (tokenFile.exists()) {
-			System.out.println("Token already exists.");
+			System.out.println(
+				"The Liferay.com download token already exists.");
 
 			return;
 		}
@@ -80,19 +81,20 @@ public class CreateTokenCommand implements Command {
 	}
 
 	@Parameter(
-		description = "The directory where to store your liferay tokens.",
+		description = "The directory where to store your Liferay.com download tokens.",
 		names = "--cache-dir"
 	)
 	private File _cacheDir = new File(
 		System.getProperty("user.home"), ".liferay");
 
 	@Parameter(
-		description = "Your liferay.com email", names = {"-e", "--email"}
+		description = "Your Liferay.com email address.",
+		names = {"-e", "--email"}
 	)
 	private String _emailAddress;
 
 	@Parameter(
-		description = "Your liferay.com password", names = {"-p", "--password"}
+		description = "Your Liferay.com password.", names = {"-p", "--password"}
 	)
 	private char[] _password;
 

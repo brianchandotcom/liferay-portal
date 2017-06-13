@@ -22,6 +22,9 @@ import com.liferay.portal.tools.bundle.support.internal.util.HttpUtil;
 import java.io.Console;
 import java.io.File;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
@@ -58,7 +61,8 @@ public class CreateTokenCommand implements Command {
 			}
 		}
 
-		String token = HttpUtil.createToken(_emailAddress, _password);
+		String token = HttpUtil.createToken(
+			_tokenUrl.toURI(), _emailAddress, _password);
 
 		Files.write(
 			_tokenFile.toPath(), token.getBytes(StandardCharsets.UTF_8));
@@ -76,6 +80,10 @@ public class CreateTokenCommand implements Command {
 		return _tokenFile;
 	}
 
+	public URL getTokenUrl() {
+		return _tokenUrl;
+	}
+
 	public void setEmailAddress(String emailAddress) {
 		_emailAddress = emailAddress;
 	}
@@ -88,8 +96,25 @@ public class CreateTokenCommand implements Command {
 		_tokenFile = tokenFile;
 	}
 
+	public void setTokenUrl(URL tokenUrl) {
+		_tokenUrl = tokenUrl;
+	}
+
 	protected static final File DEFAULT_TOKEN_FILE = new File(
 		System.getProperty("user.home"), ".liferay/token");
+
+	private static final URL _DEFAULT_TOKEN_URL;
+
+	static {
+		try {
+			_DEFAULT_TOKEN_URL = new URL(
+				"https://web.liferay.com/token-auth-portlet/api/secure/jsonws" +
+					"/tokenauthentry/add-token-auth-entry");
+		}
+		catch (MalformedURLException murle) {
+			throw new ExceptionInInitializerError(murle);
+		}
+	}
 
 	@Parameter(
 		description = "Your Liferay.com email address.",
@@ -107,5 +132,7 @@ public class CreateTokenCommand implements Command {
 		names = "--token-file"
 	)
 	private File _tokenFile = DEFAULT_TOKEN_FILE;
+
+	private URL _tokenUrl = _DEFAULT_TOKEN_URL;
 
 }

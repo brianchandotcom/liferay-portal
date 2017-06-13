@@ -16,8 +16,10 @@ package com.liferay.exportimport.kernel.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -301,6 +303,36 @@ public class ExportImportPathUtil {
 				stagedModelType.getClassName(), stagedModel.getPrimaryKeyObj(),
 				dependentFileName);
 		}
+	}
+
+	public static String getPortletDataPath(
+		PortletDataContext portletDataContext) {
+
+		return getPortletDataPath(
+			portletDataContext, portletDataContext.getPortletId(),
+			portletDataContext.getPlid());
+	}
+
+	public static String getPortletDataPath(
+		PortletDataContext portletDataContext, String portletId, long plid) {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(getPortletPath(portletDataContext, portletId));
+		sb.append(StringPool.SLASH);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+		if (portlet.isPreferencesUniquePerLayout()) {
+			sb.append(plid);
+		}
+		else {
+			sb.append(portletDataContext.getScopeGroupId());
+		}
+
+		sb.append("/portlet-data.xml");
+
+		return sb.toString();
 	}
 
 	/**

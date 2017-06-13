@@ -548,22 +548,8 @@ public class PortletExportController implements ExportController {
 			_log.debug("Exporting data for " + portletId);
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(
-			ExportImportPathUtil.getPortletPath(portletDataContext, portletId));
-		sb.append(StringPool.SLASH);
-
-		if (portlet.isPreferencesUniquePerLayout()) {
-			sb.append(plid);
-		}
-		else {
-			sb.append(portletDataContext.getScopeGroupId());
-		}
-
-		sb.append("/portlet-data.xml");
-
-		String path = sb.toString();
+		String path = ExportImportPathUtil.getPortletDataPath(
+			portletDataContext);
 
 		if (portletDataContext.hasPrimaryKey(String.class, path)) {
 			return;

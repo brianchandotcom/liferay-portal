@@ -23,13 +23,17 @@ String type = ParamUtil.getString(request, "type", "portlet");
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
+Theme selTheme = null;
+
 String selThemeId = null;
 
 if (layout.isTypeControlPanel()) {
 	if (layoutsAdminDisplayContext.getSelPlid() != 0) {
 		selLayout = LayoutLocalServiceUtil.getLayout(layoutsAdminDisplayContext.getSelPlid());
 
-		selThemeId = selLayout.getTheme().getThemeId();
+		selTheme = selLayout.getTheme();
+
+		selThemeId = selTheme.getThemeId();
 	}
 	else {
 		LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
@@ -40,7 +44,9 @@ if (layout.isTypeControlPanel()) {
 else {
 	selLayout = layout;
 
-	selThemeId = layout.getTheme().getThemeId();
+	selTheme = selLayout.getTheme();
+
+	selThemeId = selTheme.getThemeId();
 }
 
 String layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;

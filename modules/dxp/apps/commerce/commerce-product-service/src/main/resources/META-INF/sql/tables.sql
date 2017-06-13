@@ -48,7 +48,7 @@ create table CPDefinitionLocalization (
 	companyId LONG,
 	CPDefinitionId LONG,
 	languageId VARCHAR(75) null,
-	title VARCHAR(75) null,
+	title STRING null,
 	urlTitle VARCHAR(75) null,
 	shortDescription STRING null,
 	description TEXT null

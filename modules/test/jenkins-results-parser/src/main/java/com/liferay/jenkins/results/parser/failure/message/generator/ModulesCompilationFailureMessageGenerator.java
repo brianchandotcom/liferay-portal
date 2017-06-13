@@ -30,11 +30,11 @@ public class ModulesCompilationFailureMessageGenerator
 	public String getMessage(
 		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
 
-		if (!consoleOutput.contains(_TOKEN_WHAT_WENT_WRONG)) {
+		if (!consoleOutput.contains(_TOKEN_COULD_NOT_RESOLVE_CONFIG)) {
 			return null;
 		}
 
-		int end = consoleOutput.lastIndexOf(_TOKEN_MERGE_TEST_RESULTS);
+		int end = consoleOutput.indexOf(_TOKEN_MERGE_TEST_RESULTS);
 
 		end = consoleOutput.lastIndexOf(_TOKEN_TRY, end);
 
@@ -51,11 +51,11 @@ public class ModulesCompilationFailureMessageGenerator
 	public Element getMessageElement(Build build) {
 		String consoleText = build.getConsoleText();
 
-		if (!consoleText.contains(_TOKEN_WHAT_WENT_WRONG)) {
+		if (!consoleText.contains(_TOKEN_COULD_NOT_RESOLVE_CONFIG)) {
 			return null;
 		}
 
-		int end = consoleText.lastIndexOf(_TOKEN_MERGE_TEST_RESULTS);
+		int end = consoleText.indexOf(_TOKEN_MERGE_TEST_RESULTS);
 
 		end = consoleText.lastIndexOf(_TOKEN_TRY, end);
 
@@ -68,10 +68,13 @@ public class ModulesCompilationFailureMessageGenerator
 		return getConsoleOutputSnippetElement(consoleText, true, start, end);
 	}
 
+	private static final String _TOKEN_COULD_NOT_RESOLVE_CONFIG =
+        "Could not resolve all files for configuration";
+
 	private static final String _TOKEN_MERGE_TEST_RESULTS =
 		"merge-test-results:";
 
-	private static final String _TOKEN_TRY = "Try: ";
+	private static final String _TOKEN_TRY = "Try:";
 
 	private static final String _TOKEN_WHAT_WENT_WRONG = "What went wrong:";
 

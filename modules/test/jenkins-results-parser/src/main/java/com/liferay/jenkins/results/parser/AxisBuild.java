@@ -455,6 +455,7 @@ public class AxisBuild extends BaseBuild {
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{
 			new ModulesCompilationFailureMessageGenerator(),
+
 			new CompileFailureMessageGenerator(),
 			new IntegrationTestTimeoutFailureMessageGenerator(),
 			new LocalGitMirrorFailureMessageGenerator(),

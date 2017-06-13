@@ -18,7 +18,7 @@
 
 <c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) %>">
 	<div class="alert alert-info hide" id="<portlet:namespace />nested-portlets-msg">
-		<liferay-ui:message key="drag-portlets-below-to-nest-them" />
+		<liferay-ui:message key="drag-applications-below-to-nest-them" />
 	</div>
 
 	<aui:script sandbox="<%= true %>">

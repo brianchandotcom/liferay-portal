@@ -25,4 +25,6 @@ public class CPConstants {
 
 	public static final String SERVICE_NAME = "com.liferay.commerce.product";
 
+	public static final String PRODUCT_URL_SEPARATOR = "/p/";
+
 }

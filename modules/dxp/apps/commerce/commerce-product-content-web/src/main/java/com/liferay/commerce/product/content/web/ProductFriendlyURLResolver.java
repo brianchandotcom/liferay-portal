@@ -16,6 +16,7 @@ package com.liferay.commerce.product.content.web;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -69,7 +70,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		Locale locale = _portal.getLocale(request);
 		String languageId = LanguageUtil.getLanguageId(locale);
 
-		String urlTitle = friendlyURL.substring("/p/".length());
+		String urlTitle = friendlyURL.substring(getURLSeparator().length());
 
 		long classNameId = _portal.getClassNameId(CPDefinition.class);
 
@@ -111,8 +112,6 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		actualParams.put(
 			namespace + "cpDefinitionId",
 			new String[] {String.valueOf(cpDefinition.getCPDefinitionId())});
-
-		actualParams.put(namespace + "mvcPath", new String[] {"/view.jsp"});
 
 		actualParams.put(
 			namespace + "urlTitle",
@@ -160,7 +159,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		Locale locale = _portal.getLocale(request);
 		String languageId = LanguageUtil.getLanguageId(locale);
-		urlTitle = urlTitle.substring("/p/".length());
+		urlTitle = urlTitle.substring(getURLSeparator().length());
 		long classNameId = _portal.getClassNameId(CPDefinition.class);
 
 		CPFriendlyURLEntry cpFriendlyURLEntry =
@@ -185,7 +184,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 	@Override
 	public String getURLSeparator() {
-		return "/p/";
+		return CPConstants.PRODUCT_URL_SEPARATOR;
 	}
 
 	protected Layout getProductLayout(

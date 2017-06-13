@@ -68,6 +68,14 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
+	@Override
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		return super.processAction(actionRequest, actionResponse);
+	}
+
 	protected void deleteCPDefinitions(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
@@ -112,11 +120,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Override
-	public boolean processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException {
-		return super.processAction(actionRequest, actionResponse);
-	}
-
-	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -139,8 +142,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 					 cmd.equals(Constants.UPDATE)) {
 
 				cpDefinition = updateCPDefinition(actionRequest);
+
 				redirect = getSaveAndContinueRedirect(
-						actionRequest, cpDefinition, redirect);
+					actionRequest, cpDefinition, redirect);
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}

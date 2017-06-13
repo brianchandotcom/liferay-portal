@@ -106,7 +106,7 @@ else {
 						String label = null;
 
 						if (layoutRevision.isIncomplete()) {
-							label = LanguageUtil.format(request, "enable-in-x", layoutSetBranch.getName(), false);
+							label = LanguageUtil.format(request, "enable-in-x", layoutSetBranchName, false);
 						}
 						else if (workflowEnabled) {
 							label = "submit-for-publication";

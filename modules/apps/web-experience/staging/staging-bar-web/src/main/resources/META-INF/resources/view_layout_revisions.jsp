@@ -49,7 +49,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 					LayoutBranch layoutBranch = rootLayoutRevision.getLayoutBranch();
 				%>
 
-					<aui:option label="<%= HtmlUtil.escape(layoutBranch.getName()) %>" selected="<%= recentLayoutRevision.getLayoutBranchId() == rootLayoutRevision.getLayoutBranchId() %>" value="<%= rootLayoutRevision.getLayoutRevisionId() %>" />
+					<aui:option label="<%= HtmlUtil.escape(layoutBranchDisplayContext.getLayoutBranchDisplayName(layoutBranch)) %>" localizeLabel="<%= false %>" selected="<%= recentLayoutRevision.getLayoutBranchId() == rootLayoutRevision.getLayoutBranchId() %>" value="<%= rootLayoutRevision.getLayoutRevisionId() %>" />
 
 				<%
 				}
@@ -72,7 +72,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 						LayoutBranch layoutBranch = rootLayoutRevision.getLayoutBranch();
 						%>
 
-						<h3 class="layout-variation-name"><liferay-ui:message key="<%= HtmlUtil.escape(layoutBranch.getName()) %>" /></h3>
+						<h3 class="layout-variation-name"><liferay-ui:message key="<%= HtmlUtil.escape(layoutBranchDisplayContext.getLayoutBranchDisplayName(layoutBranch)) %>" translateArguments="<%= false %>"/></h3>
 					</c:if>
 
 					<liferay-ui:search-container

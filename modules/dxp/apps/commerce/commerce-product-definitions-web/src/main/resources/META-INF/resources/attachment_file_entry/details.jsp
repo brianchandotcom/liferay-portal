@@ -53,7 +53,7 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 				draggableImage="vertical"
 				fileEntryId="<%= fileEntryId %>"
 				itemSelectorEventName='<%= "addCPAttachmentFileEntry" %>'
-				itemSelectorURL="<%= cpAttachmentFileEntriesDisplayContext.getItemSelectorUrl() %>"
+				itemSelectorURL="<%= cpAttachmentFileEntriesDisplayContext.getImageItemSelectorUrl() %>"
 				maxFileSize="<%= cpAttachmentFileEntriesDisplayContext.getImageMaxSize() %>"
 				paramName="fileEntry"
 				uploadURL="<%= uploadCoverImageURL %>"
@@ -108,7 +108,7 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 						}
 					},
 					title: '<liferay-ui:message key="select-file" />',
-					url: '<%= cpAttachmentFileEntriesDisplayContext.getItemSelectorUrl() %>'
+					url: '<%= cpAttachmentFileEntriesDisplayContext.getAttachmentItemSelectorUrl() %>'
 				}
 			);
 

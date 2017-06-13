@@ -1566,7 +1566,7 @@ Gradle Daemon:
 ### Fixed
 - [LPS-72989]: Fix [Find Security Bugs] custom configuration loading on Windows.
 
-## 3.7.4 - 2017-06-12
+## 3.7.4 - 2017-06-13
 
 ### Fixed
 - [LPS-71201]: Allow to publish projects with a `.lfrbuild-releng-ignore` marker

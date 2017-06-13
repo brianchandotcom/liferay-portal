@@ -4,8 +4,8 @@
 
 		<execute function="Type" locator1="CommerceCatalogEntry#SHORT_DESCRIPTION_FIELD" value1="${productShortDescription}" />
 
-		<execute macro="CommerceCatalogEntry#addLongDescriptionViaAlloyEditor">
-			<var name="productLongDescription" value="${productLongDescription}" />
+		<execute macro="CommerceCatalogEntry#addFullDescriptionViaAlloyEditor">
+			<var name="productFullDescription" value="${productFullDescription}" />
 		</execute>
 
 		<if>
@@ -21,8 +21,8 @@
 		</if>
 	</command>
 
-	<command name="addLongDescriptionViaAlloyEditor">
-		<execute function="Type#typeEditor" locator1="CommerceCatalogEntry#LONG_DESCRIPTION_FIELD" value1="${productLongDescription}" />
+	<command name="addFullDescriptionViaAlloyEditor">
+		<execute function="Type#typeEditor" locator1="CommerceCatalogEntry#FULL_DESCRIPTION_FIELD" value1="${productFullDescription}" />
 	</command>
 
 	<command name="editCatalogEntryBaseSKU">
@@ -39,9 +39,9 @@
 		</if>
 	</command>
 
-	<command name="editCatalogEntryLongDescription">
-		<execute macro="CommerceCatalogEntry#addLongDescriptionViaAlloyEditor">
-			<var name="productLongDescription" value="${newProductLongDescription}" />
+	<command name="editCatalogEntryFullDescription">
+		<execute macro="CommerceCatalogEntry#addFullDescriptionViaAlloyEditor">
+			<var name="productFullDescription" value="${newProductFullDescription}" />
 		</execute>
 	</command>
 
@@ -78,7 +78,7 @@
 
 		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#SHORT_DESCRIPTION_FIELD" value1="${productShortDescription}" />
 
-		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#LONG_DESCRIPTION_FIELD" value1="${productLongDescription}" />
+		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#FULL_DESCRIPTION_FIELD" value1="${productFullDescription}" />
 
 		<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#BASE_SKU_FIELD" value1="${baseSku}" />
 	</command>

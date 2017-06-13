@@ -86,8 +86,20 @@ public class VarElement extends PoshiElement {
 		return sb.toString();
 	}
 
+	protected int getNamePadLength() {
+		PoshiElement parentElement = (PoshiElement)getParent();
+
+		return parentElement.getNamePadLength();
+	}
+
 	protected String getReadableVariableKey() {
 		return THESE_VARIABLES;
+	}
+
+	protected int getValuePadLength() {
+		PoshiElement parentElement = (PoshiElement)getParent();
+
+		return parentElement.getValuePadLength();
 	}
 
 }

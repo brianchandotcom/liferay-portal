@@ -178,6 +178,10 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		return new String[0];
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void updateGroup(long groupId, String typeSettings)
 		throws Exception {
 
@@ -278,6 +282,10 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		runSQL(sb.toString());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void updateLayout(long plid, String typeSettings)
 		throws Exception {
 
@@ -295,6 +303,10 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void updateLayout(
 			long plid, String oldPortletId, String newPortletId)
 		throws Exception {
@@ -319,6 +331,10 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void updateLayoutRevision(
 			long layoutRevisionId, String typeSettings)
 		throws Exception {

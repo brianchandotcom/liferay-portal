@@ -122,6 +122,10 @@ public abstract class PoshiElement extends DefaultElement {
 		return substring.trim();
 	}
 
+	protected int getNamePadLength() {
+		return _namePadLength;
+	}
+
 	protected String getReadableExecuteKey() {
 		List<Element> siblingElements = getSiblings();
 
@@ -148,6 +152,10 @@ public abstract class PoshiElement extends DefaultElement {
 		return Dom4JUtil.toElementList(parentElement.elements());
 	}
 
+	protected int getValuePadLength() {
+		return _valuePadLength;
+	}
+
 	protected String getVariableValueAttribute() {
 		if (attributeValue("method") != null) {
 			return attributeValue("method");
@@ -158,6 +166,29 @@ public abstract class PoshiElement extends DefaultElement {
 		}
 
 		return null;
+	}
+
+	protected void setPadLengths() {
+		if ((_namePadLength >= 0) && (_valuePadLength >= 0)) {
+			return;
+		}
+
+		for (PoshiElement poshiElement : toPoshiElements(elements())) {
+			String name = poshiElement.attributeValue("name");
+			String value = poshiElement.getVariableValueAttribute();
+
+			if ((name == null) || (value == null)) {
+				continue;
+			}
+
+			if (name.length() > _namePadLength) {
+				_namePadLength = name.length();
+			}
+
+			if (value.length() > _valuePadLength) {
+				_valuePadLength = value.length();
+			}
+		}
 	}
 
 	protected List<PoshiElement> toPoshiElements(List<?> list) {
@@ -205,5 +236,8 @@ public abstract class PoshiElement extends DefaultElement {
 
 	private static final String _PHRASE_REGEX =
 		"([\\d]+|[A-Z][a-z]+|[A-Z]+(?![a-z]))";
+
+	private int _namePadLength = -1;
+	private int _valuePadLength = -1;
 
 }

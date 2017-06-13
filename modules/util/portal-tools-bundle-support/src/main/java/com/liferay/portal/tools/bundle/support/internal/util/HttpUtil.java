@@ -86,27 +86,29 @@ public class HttpUtil {
 
 			HttpPost httpPost = new HttpPost(uri);
 
-			List<NameValuePair> params = new ArrayList<>();
+			UsernamePasswordCredentials usernamePasswordCredentials =
+				new UsernamePasswordCredentials(userName, password);
+
+			BasicScheme basicScheme = new BasicScheme();
+
+			httpPost.addHeader(
+				basicScheme.authenticate(
+					usernamePasswordCredentials, httpPost, null));
+
+			List<NameValuePair> parameters = new ArrayList<>();
 
 			InetAddress localHost = InetAddress.getLocalHost();
 
-			params.add(
+			parameters.add(
 				new BasicNameValuePair(
 					"device",
 					"portal-tools-bundle-support-" + localHost.getHostName()));
 
-			httpPost.setEntity(new UrlEncodedFormEntity(params));
+			httpPost.setEntity(new UrlEncodedFormEntity(parameters));
 
-			UsernamePasswordCredentials creds = new UsernamePasswordCredentials(
-				userName, password);
+			HttpResponse httpResponse = closeableHttpClient.execute(httpPost);
 
-			BasicScheme basicScheme = new BasicScheme();
-
-			httpPost.addHeader(basicScheme.authenticate(creds, httpPost, null));
-
-			HttpResponse response = closeableHttpClient.execute(httpPost);
-
-			StatusLine statusLine = response.getStatusLine();
+			StatusLine statusLine = httpResponse.getStatusLine();
 
 			int statusCode = statusLine.getStatusCode();
 
@@ -115,9 +117,9 @@ public class HttpUtil {
 					"Failed : HTTP error code : " + statusCode);
 			}
 
-			HttpEntity httpEntity = response.getEntity();
+			HttpEntity httpEntity = httpResponse.getEntity();
 
-			try (BufferedReader br = new BufferedReader(
+			try (BufferedReader bufferedReader = new BufferedReader(
 					new InputStreamReader(httpEntity.getContent()))) {
 
 				File tokenFile = new File(cacheDirPath.toFile(), ".token");
@@ -128,7 +130,7 @@ public class HttpUtil {
 
 				String line;
 
-				while ((line = br.readLine()) != null) {
+				while ((line = bufferedReader.readLine()) != null) {
 					sb.append(line);
 				}
 

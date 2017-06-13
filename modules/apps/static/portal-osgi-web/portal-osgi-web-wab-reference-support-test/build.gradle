@@ -1,0 +1,9 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.7"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.23.0"
+}

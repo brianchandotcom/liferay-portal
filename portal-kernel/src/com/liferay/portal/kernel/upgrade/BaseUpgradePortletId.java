@@ -199,15 +199,17 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 	protected void updateGroup(String oldRootPortletId, String newRootPortletId)
 		throws Exception {
 
-		String sql1 =
+		String selectSQL =
 			"select groupId, typeSettings from Group_ where " +
 				getTypeSettingsCriteria(oldRootPortletId);
 
-		String sql2 = "update Group_ set typeSettings = ? where groupId = ?";
+		String updateSQL =
+			"update Group_ set typeSettings = ? where groupId = ?";
 
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				sql1, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
-			PreparedStatement ps2 = connection.prepareStatement(sql2);
+				selectSQL, ResultSet.TYPE_FORWARD_ONLY,
+				ResultSet.CONCUR_UPDATABLE);
+			PreparedStatement ps2 = connection.prepareStatement(updateSQL);
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
@@ -342,17 +344,18 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			boolean exactMatch)
 		throws Exception {
 
-		String sql1 =
+		String selectSQL =
 			"select layoutRevisionId, typeSettings from LayoutRevision where " +
 				getTypeSettingsCriteria(oldRootPortletId);
 
-		String sql2 =
+		String updateSQL =
 			"update LayoutRevision set typeSettings = ? where " +
 				"layoutRevisionId = ?";
 
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				sql1, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
-			PreparedStatement ps2 = connection.prepareStatement(sql2);
+				selectSQL, ResultSet.TYPE_FORWARD_ONLY,
+				ResultSet.CONCUR_UPDATABLE);
+			PreparedStatement ps2 = connection.prepareStatement(updateSQL);
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
@@ -393,15 +396,16 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			boolean exactMatch)
 		throws Exception {
 
-		String sql1 =
+		String selectSQL =
 			"select plid, typeSettings from Layout where " +
 				getTypeSettingsCriteria(oldRootPortletId);
 
-		String sql2 = "update Layout set typeSettings = ? where plid = ?";
+		String updateSQL = "update Layout set typeSettings = ? where plid = ?";
 
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				sql1, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
-			PreparedStatement ps2 = connection.prepareStatement(sql2);
+				selectSQL, ResultSet.TYPE_FORWARD_ONLY,
+				ResultSet.CONCUR_UPDATABLE);
+			PreparedStatement ps2 = connection.prepareStatement(updateSQL);
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {

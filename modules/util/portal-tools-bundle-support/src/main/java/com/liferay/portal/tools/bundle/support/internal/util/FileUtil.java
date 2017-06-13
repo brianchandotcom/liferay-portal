@@ -180,13 +180,6 @@ public class FileUtil {
 		return new File(url.toURI());
 	}
 
-	public static String getToken() throws IOException {
-		File file = new File(
-			System.getProperty("user.home"), ".liferay/.token");
-
-		return new String(Files.readAllBytes(file.toPath()));
-	}
-
 	public static boolean isPosixSupported(Path path) {
 		FileSystem fileSystem = path.getFileSystem();
 

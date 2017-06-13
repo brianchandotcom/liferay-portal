@@ -95,9 +95,11 @@ public class HttpUtil {
 				String json = EntityUtils.toString(
 					httpEntity, StandardCharsets.UTF_8);
 
-				int start = json.indexOf("token\":\"") + 8;
+				int start = json.indexOf("token\":") + 7;
 
-				int end = json.indexOf("\"", start);
+				start = json.indexOf('"', start) + 1;
+
+				int end = json.indexOf('"', start);
 
 				return json.substring(start, end);
 			}

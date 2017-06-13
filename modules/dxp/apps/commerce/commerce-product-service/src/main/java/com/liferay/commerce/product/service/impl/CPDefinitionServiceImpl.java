@@ -223,12 +223,11 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.updateCPDefinition(
 			cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-			descriptionMap, urlTitleMap, urlTitleMap, urlTitleMap, urlTitleMap,
-			urlTitleMap, layoutUuid, ddmStructureKey, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			descriptionMap, urlTitleMap, layoutUuid, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override

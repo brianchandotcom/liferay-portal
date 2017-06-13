@@ -3038,6 +3038,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>inTrash</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>numberOfStars</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

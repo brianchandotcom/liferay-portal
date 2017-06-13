@@ -21,6 +21,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_rating
 
 String className = (String)request.getAttribute("liferay-ui:ratings:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:ratings:classPK"));
+Boolean inTrash = (Boolean)request.getAttribute("liferay-ui:ratings:inTrash");
 int numberOfStars = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:ratings:numberOfStars"));
 RatingsEntry ratingsEntry = (RatingsEntry)request.getAttribute("liferay-ui:ratings:ratingsEntry");
 RatingsStats ratingsStats = (RatingsStats)request.getAttribute("liferay-ui:ratings:ratingsStats");
@@ -70,7 +71,9 @@ if (ratingsEntry != null) {
 	yourScore = ratingsEntry.getScore();
 }
 
-boolean inTrash = TrashUtil.isInTrash(className, classPK);
+if (inTrash == null) {
+	inTrash = TrashUtil.isInTrash(className, classPK);
+}
 %>
 
 <div class="taglib-ratings <%= type %>" id="<%= randomNamespace %>ratingContainer">

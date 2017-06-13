@@ -198,6 +198,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									<liferay-ui:ratings
 										className="<%= CommentConstants.getDiscussionClassName() %>"
 										classPK="<%= discussionComment.getCommentId() %>"
+										inTrash="<%= false %>"
 										ratingsEntry="<%= discussionComment.getRatingsEntry() %>"
 										ratingsStats="<%= discussionComment.getRatingsStats() %>"
 									/>

@@ -345,6 +345,7 @@ if (portletTitleBasedNavigation) {
 										<liferay-ui:ratings
 											className="<%= WikiPage.class.getName() %>"
 											classPK="<%= wikiPage.getResourcePrimKey() %>"
+											inTrash="<%= wikiPage.isInTrash() %>"
 										/>
 									</div>
 								</c:if>

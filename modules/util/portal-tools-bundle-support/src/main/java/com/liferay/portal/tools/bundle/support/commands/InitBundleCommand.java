@@ -50,7 +50,7 @@ public class InitBundleCommand
 
 		super.execute();
 
-		FileUtil.unpack(bundlePath, getLiferayHomePath(), stripComponents);
+		FileUtil.unpack(bundlePath, getLiferayHomePath(), _stripComponents);
 
 		_copyConfigs();
 		_fixPosixFilePermissions();
@@ -65,7 +65,7 @@ public class InitBundleCommand
 	}
 
 	public int getStripComponents() {
-		return stripComponents;
+		return _stripComponents;
 	}
 
 	public void setConfigsDir(File configsDir) {
@@ -77,16 +77,8 @@ public class InitBundleCommand
 	}
 
 	public void setStripComponents(int stripComponents) {
-		this.stripComponents = stripComponents;
+		_stripComponents = stripComponents;
 	}
-
-	protected static final int DEFAULT_STRIP_COMPONENTS = 1;
-
-	@Parameter(
-		description = "The number of directories to strip when expanding your bundle.",
-		names = "--strip-components"
-	)
-	protected int stripComponents = DEFAULT_STRIP_COMPONENTS;
 
 	private void _copyConfigs() throws IOException {
 		if ((_configsDir == null) || !_configsDir.exists()) {
@@ -146,6 +138,8 @@ public class InitBundleCommand
 			});
 	}
 
+	private static final int _DEFAULT_STRIP_COMPONENTS = 1;
+
 	private static final Set<PosixFilePermission> _shPosixFilePermissions =
 		PosixFilePermissions.fromString("rwxr-x---");
 
@@ -160,5 +154,11 @@ public class InitBundleCommand
 		names = "--environment"
 	)
 	private String _environment;
+
+	@Parameter(
+		description = "The number of directories to strip when expanding your bundle.",
+		names = "--strip-components"
+	)
+	private int _stripComponents = _DEFAULT_STRIP_COMPONENTS;
 
 }

@@ -52,19 +52,15 @@ public class DownloadBundleCommand extends BaseCommand implements StreamLogger {
 		if ("file".equals(uri.getScheme())) {
 			bundlePath = Paths.get(uri);
 		}
-		else {
-			if (token) {
-				String token = new String(
-					Files.readAllBytes(tokenFile.toPath()),
-					StandardCharsets.UTF_8);
+		else if (token) {
+			String token = new String(
+				Files.readAllBytes(tokenFile.toPath()), StandardCharsets.UTF_8);
 
-				bundlePath = HttpUtil.downloadFile(
-					uri, token, cacheDirPath, this);
-			}
-			else {
-				bundlePath = HttpUtil.downloadFile(
-					uri, userName, password, cacheDirPath, this);
-			}
+			bundlePath = HttpUtil.downloadFile(uri, token, cacheDirPath, this);
+		}
+		else {
+			bundlePath = HttpUtil.downloadFile(
+				uri, userName, password, cacheDirPath, this);
 		}
 	}
 

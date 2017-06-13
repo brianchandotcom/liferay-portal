@@ -79,6 +79,7 @@ public class SelectorIntrabandTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
+			AspectJNewEnvTestRule.INSTANCE,
 			new CodeCoverageAssertor() {
 
 				@Override
@@ -86,8 +87,7 @@ public class SelectorIntrabandTest {
 					assertClasses.add(SelectionKeyRegistrationReference.class);
 				}
 
-			},
-			AspectJNewEnvTestRule.INSTANCE);
+			});
 
 	@Before
 	public void setUp() throws Exception {

@@ -70,8 +70,9 @@ public class DLFolderFinderTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
+			PermissionCheckerTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE,
-			TransactionalTestRule.INSTANCE, PermissionCheckerTestRule.INSTANCE);
+			TransactionalTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {

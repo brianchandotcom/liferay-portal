@@ -369,6 +369,30 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		options.setPost(true);
 
 		try {
+			long timeSinceLastAPICall =
+				System.currentTimeMillis() - _lastAPICallTime;
+
+			if (timeSinceLastAPICall < 1000) {
+				if (_numAPICalls >= 10) {
+					try {
+						Thread.sleep(1001 - timeSinceLastAPICall);
+
+						_numAPICalls = 1;
+					}
+					catch (InterruptedException ie) {
+					}
+				}
+
+				_numAPICalls++;
+			}
+			else {
+				_numAPICalls = 1;
+			}
+
+			if (_numAPICalls == 1) {
+				_lastAPICallTime = System.currentTimeMillis();
+			}
+
 			String response = sendRequest(options);
 
 			return JSONFactoryUtil.createJSONObject(response);
@@ -673,6 +697,9 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ZoomPowwowServiceProvider.class);
+
+	private static long _lastAPICallTime = System.currentTimeMillis();
+	private static int _numAPICalls;
 
 	private List<String> _brandingFeatures;
 	private List<String> _joinByPhoneDefaultNumbers = new ArrayList<String>();

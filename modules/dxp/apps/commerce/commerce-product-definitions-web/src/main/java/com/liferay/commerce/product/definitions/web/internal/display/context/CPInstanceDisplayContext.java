@@ -125,7 +125,7 @@ public class CPInstanceDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		SearchContainer<CPInstance> searchContainer = new SearchContainer<>(
+		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
 		OrderByComparator<CPInstance> orderByComparator =
@@ -166,9 +166,7 @@ public class CPInstanceDisplayContext
 			searchContainer.setResults(results);
 		}
 
-		this.searchContainer = searchContainer;
-
-		return this.searchContainer;
+		return searchContainer;
 	}
 
 	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels()

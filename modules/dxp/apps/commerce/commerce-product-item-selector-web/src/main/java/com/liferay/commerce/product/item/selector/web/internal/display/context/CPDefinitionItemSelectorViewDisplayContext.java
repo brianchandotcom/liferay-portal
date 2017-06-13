@@ -67,7 +67,7 @@ public class CPDefinitionItemSelectorViewDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		SearchContainer<CPDefinition> searchContainer = new SearchContainer<>(
+		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
 		searchContainer.setEmptyResultsMessage("no-products-were-found");
@@ -94,9 +94,7 @@ public class CPDefinitionItemSelectorViewDisplayContext
 
 		searchContainer.setResults(results);
 
-		this.searchContainer = searchContainer;
-
-		return this.searchContainer;
+		return searchContainer;
 	}
 
 	private final CPDefinitionService _cpDefinitionService;

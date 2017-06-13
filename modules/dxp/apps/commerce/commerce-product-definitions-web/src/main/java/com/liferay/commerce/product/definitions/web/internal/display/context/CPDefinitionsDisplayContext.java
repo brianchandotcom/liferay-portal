@@ -116,7 +116,7 @@ public class CPDefinitionsDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		SearchContainer<CPDefinition> searchContainer = new SearchContainer<>(
+		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
 		OrderByComparator<CPDefinition> orderByComparator =
@@ -158,9 +158,7 @@ public class CPDefinitionsDisplayContext
 			searchContainer.setResults(results);
 		}
 
-		this.searchContainer = searchContainer;
-
-		return this.searchContainer;
+		return searchContainer;
 	}
 
 	private final CPDefinitionService _cpDefinitionService;

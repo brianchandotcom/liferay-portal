@@ -73,7 +73,7 @@ public class CPOptionValueDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		SearchContainer<CPOptionValue> searchContainer = new SearchContainer<>(
+		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
 		searchContainer.setEmptyResultsMessage("no-option-values-were-found");
@@ -118,9 +118,7 @@ public class CPOptionValueDisplayContext
 			searchContainer.setResults(results);
 		}
 
-		this.searchContainer = searchContainer;
-
-		return this.searchContainer;
+		return searchContainer;
 	}
 
 	private final CPOptionValueService _cpOptionValueService;

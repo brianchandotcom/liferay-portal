@@ -128,9 +128,8 @@ public class CPDefinitionOptionValueRelDisplayContext extends
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		SearchContainer<CPDefinitionOptionValueRel> searchContainer =
-			new SearchContainer<>(
-				liferayPortletRequest, getPortletURL(), null, null);
+		searchContainer = new SearchContainer<>(
+			liferayPortletRequest, getPortletURL(), null, null);
 
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator =
 			CPDefinitionsPortletUtil.
@@ -182,9 +181,7 @@ public class CPDefinitionOptionValueRelDisplayContext extends
 			searchContainer.setResults(results);
 		}
 
-		this.searchContainer = searchContainer;
-
-		return this.searchContainer;
+		return searchContainer;
 	}
 
 	private CPDefinitionOptionRel _cpDefinitionOptionRel;

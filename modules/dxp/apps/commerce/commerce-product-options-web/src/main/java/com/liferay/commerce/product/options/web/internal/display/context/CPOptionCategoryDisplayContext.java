@@ -52,9 +52,8 @@ public class CPOptionCategoryDisplayContext
 			return searchContainer;
 		}
 
-		SearchContainer<CPOptionCategory> searchContainer =
-			new SearchContainer<>(
-				liferayPortletRequest, getPortletURL(), null, null);
+		searchContainer = new SearchContainer<>(
+			liferayPortletRequest, getPortletURL(), null, null);
 
 		searchContainer.setEmptyResultsMessage(
 			"no-option-categories-were-found");
@@ -80,9 +79,7 @@ public class CPOptionCategoryDisplayContext
 
 		searchContainer.setResults(results);
 
-		this.searchContainer = searchContainer;
-
-		return this.searchContainer;
+		return searchContainer;
 	}
 
 	private final CPOptionCategoryService _cpOptionCategoryService;

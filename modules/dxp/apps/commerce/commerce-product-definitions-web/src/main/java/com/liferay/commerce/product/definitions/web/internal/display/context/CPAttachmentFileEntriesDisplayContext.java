@@ -232,9 +232,8 @@ public class CPAttachmentFileEntriesDisplayContext extends
 
 		long classNameId = _portal.getClassNameId(CPDefinition.class);
 
-		SearchContainer<CPAttachmentFileEntry> searchContainer =
-			new SearchContainer<>(
-				liferayPortletRequest, getPortletURL(), null, null);
+		searchContainer = new SearchContainer<>(
+			liferayPortletRequest, getPortletURL(), null, null);
 
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator =
 			CPDefinitionsPortletUtil.getCPAttachmentFileEntryOrderByComparator(
@@ -262,9 +261,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 			searchContainer.setResults(results);
 		}
 
-		this.searchContainer = searchContainer;
-
-		return this.searchContainer;
+		return searchContainer;
 	}
 
 	public boolean hasOptions() throws PortalException {

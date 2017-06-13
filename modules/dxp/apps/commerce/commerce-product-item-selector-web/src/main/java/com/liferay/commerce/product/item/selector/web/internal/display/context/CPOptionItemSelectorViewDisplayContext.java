@@ -53,7 +53,7 @@ public class CPOptionItemSelectorViewDisplayContext
 			return searchContainer;
 		}
 
-		SearchContainer<CPOption> searchContainer = new SearchContainer<>(
+		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
 		searchContainer.setEmptyResultsMessage("no-options-were-found");
@@ -77,9 +77,7 @@ public class CPOptionItemSelectorViewDisplayContext
 
 		searchContainer.setResults(results);
 
-		this.searchContainer = searchContainer;
-
-		return this.searchContainer;
+		return searchContainer;
 	}
 
 	private final CPOptionService _cpOptionService;

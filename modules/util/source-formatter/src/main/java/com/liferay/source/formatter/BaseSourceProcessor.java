@@ -109,9 +109,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 							return null;
 						}
-						catch (Exception e) {
+						catch (Throwable t) {
 							throw new RuntimeException(
-								"Unable to format " + fileName, e);
+								"Unable to format " + fileName, t);
 						}
 					}
 

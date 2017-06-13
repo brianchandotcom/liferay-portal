@@ -89,10 +89,8 @@ public class DistBundleCommand extends BaseCommand {
 		FileUtil.zip(getLiferayHomePath(), _outputFile, _includeFolder);
 	}
 
-	private static final String _DEFAULT_FORMAT = "zip";
-
 	@Parameter(description = "The archive format.", names = "--format")
-	private String _format = _DEFAULT_FORMAT;
+	private String _format = "zip";
 
 	@Parameter(
 		description = "Add a parent folder to the archive.",

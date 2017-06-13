@@ -138,8 +138,6 @@ public class InitBundleCommand
 			});
 	}
 
-	private static final int _DEFAULT_STRIP_COMPONENTS = 1;
-
 	private static final Set<PosixFilePermission> _shPosixFilePermissions =
 		PosixFilePermissions.fromString("rwxr-x---");
 
@@ -159,6 +157,6 @@ public class InitBundleCommand
 		description = "The number of directories to strip when expanding your bundle.",
 		names = "--strip-components"
 	)
-	private int _stripComponents = _DEFAULT_STRIP_COMPONENTS;
+	private int _stripComponents = 1;
 
 }

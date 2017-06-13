@@ -1372,7 +1372,7 @@
 	</javadoc>
 	<javadoc>
 		<name>TasksEntryFinderImpl</name>
-		<type>com.liferay.tasks.service.persistence.TasksEntryFinderImpl</type>
+		<type>com.liferay.tasks.service.persistence.impl.TasksEntryFinderImpl</type>
 		<author><![CDATA[Ryan Park]]></author>
 		<method>
 			<name>countByG_P_A_R_S_T_N</name>

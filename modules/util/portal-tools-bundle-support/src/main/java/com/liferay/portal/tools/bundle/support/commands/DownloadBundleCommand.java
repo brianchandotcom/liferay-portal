@@ -26,6 +26,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -33,6 +35,7 @@ import java.util.Arrays;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class DownloadBundleCommand extends BaseCommand implements StreamLogger {
 
@@ -51,8 +54,12 @@ public class DownloadBundleCommand extends BaseCommand implements StreamLogger {
 		}
 		else {
 			if (token) {
+				String token = new String(
+					Files.readAllBytes(tokenFile.toPath()),
+					StandardCharsets.UTF_8);
+
 				bundlePath = HttpUtil.downloadFile(
-					uri, FileUtil.getToken(), cacheDirPath, this);
+					uri, token, cacheDirPath, this);
 			}
 			else {
 				bundlePath = HttpUtil.downloadFile(
@@ -67,6 +74,10 @@ public class DownloadBundleCommand extends BaseCommand implements StreamLogger {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public File getTokenFile() {
+		return tokenFile;
 	}
 
 	public URL getUrl() {
@@ -117,6 +128,10 @@ public class DownloadBundleCommand extends BaseCommand implements StreamLogger {
 
 	public void setToken(boolean token) {
 		this.token = token;
+	}
+
+	public void setTokenFile(File tokenFile) {
+		this.tokenFile = tokenFile;
 	}
 
 	public void setUrl(URL url) {
@@ -175,6 +190,12 @@ public class DownloadBundleCommand extends BaseCommand implements StreamLogger {
 		description = "Use token authentication.", names = {"-t", "--token"}
 	)
 	protected boolean token;
+
+	@Parameter(
+		description = "The file where your Liferay.com download token is stored.",
+		names = "--token-file"
+	)
+	protected File tokenFile = CreateTokenCommand.DEFAULT_TOKEN_FILE;
 
 	@Parameter(
 		description = "The URL of the Liferay Bundle to expand.",

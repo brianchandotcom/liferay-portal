@@ -136,7 +136,6 @@ public class CPInstanceDisplayContext
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setEmptyResultsMessage("no-skus-were-found");
-
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (isSearch()) {

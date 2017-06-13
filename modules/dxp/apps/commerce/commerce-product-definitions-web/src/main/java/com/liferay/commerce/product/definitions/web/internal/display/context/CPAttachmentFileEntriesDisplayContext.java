@@ -244,7 +244,6 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setEmptyResultsMessage("no-attachments-were-found");
-
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (!isSearch()) {

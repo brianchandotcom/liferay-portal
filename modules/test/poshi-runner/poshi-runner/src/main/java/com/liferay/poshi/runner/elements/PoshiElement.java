@@ -163,6 +163,10 @@ public abstract class PoshiElement extends DefaultElement {
 	protected List<Element> getSiblings() {
 		Element parentElement = getParent();
 
+		if (parentElement == null) {
+			return new ArrayList<>();
+		}
+
 		return Dom4JUtil.toElementList(parentElement.elements());
 	}
 

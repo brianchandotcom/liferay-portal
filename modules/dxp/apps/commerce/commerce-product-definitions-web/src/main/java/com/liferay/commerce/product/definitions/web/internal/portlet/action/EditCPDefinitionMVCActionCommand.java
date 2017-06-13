@@ -49,6 +49,7 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
@@ -111,6 +112,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Override
+	public boolean processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws PortletException {
+		return super.processAction(actionRequest, actionResponse);
+	}
+
+	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -133,6 +139,10 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 					 cmd.equals(Constants.UPDATE)) {
 
 				cpDefinition = updateCPDefinition(actionRequest);
+				redirect = getSaveAndContinueRedirect(
+						actionRequest, cpDefinition, redirect);
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteCPDefinitions(actionRequest, true);

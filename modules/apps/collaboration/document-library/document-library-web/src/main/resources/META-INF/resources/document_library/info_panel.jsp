@@ -246,6 +246,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 					<liferay-ui:ratings
 						className="<%= DLFileEntryConstants.getClassName() %>"
 						classPK="<%= fileEntry.getFileEntryId() %>"
+						inTrash="<%= fileEntry.isInTrash() %>"
 					/>
 
 					<liferay-expando:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">

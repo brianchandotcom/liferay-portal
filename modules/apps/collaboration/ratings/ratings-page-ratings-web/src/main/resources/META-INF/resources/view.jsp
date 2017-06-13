@@ -19,4 +19,5 @@
 <liferay-ui:ratings
 	className="<%= Layout.class.getName() %>"
 	classPK="<%= layout.getPlid() %>"
+	inTrash="<%= false %>"
 />

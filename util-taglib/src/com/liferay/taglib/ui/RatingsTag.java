@@ -47,6 +47,10 @@ public class RatingsTag extends IncludeTag {
 		_classPK = classPK;
 	}
 
+	public void setInTrash(boolean inTrash) {
+		_inTrash = inTrash;
+	}
+
 	public void setNumberOfStars(int numberOfStars) {
 		_numberOfStars = numberOfStars;
 	}
@@ -79,6 +83,7 @@ public class RatingsTag extends IncludeTag {
 	protected void cleanUp() {
 		_className = null;
 		_classPK = 0;
+		_inTrash = null;
 		_numberOfStars = _DEFAULT_NUMBER_OF_STARS;
 		_ratingsEntry = null;
 		_ratingsStats = null;
@@ -141,6 +146,11 @@ public class RatingsTag extends IncludeTag {
 		request.setAttribute("liferay-ui:ratings:className", _className);
 		request.setAttribute(
 			"liferay-ui:ratings:classPK", String.valueOf(_classPK));
+
+		if (_inTrash != null) {
+			request.setAttribute("liferay-ui:ratings:inTrash", _inTrash);
+		}
+
 		request.setAttribute(
 			"liferay-ui:ratings:numberOfStars", String.valueOf(_numberOfStars));
 		request.setAttribute("liferay-ui:ratings:ratingsEntry", _ratingsEntry);
@@ -168,6 +178,7 @@ public class RatingsTag extends IncludeTag {
 
 	private String _className;
 	private long _classPK;
+	private Boolean _inTrash;
 	private int _numberOfStars = _DEFAULT_NUMBER_OF_STARS;
 	private RatingsEntry _ratingsEntry;
 	private RatingsStats _ratingsStats;

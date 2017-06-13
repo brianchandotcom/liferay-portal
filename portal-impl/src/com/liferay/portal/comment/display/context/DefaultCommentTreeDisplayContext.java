@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Locale;
 
@@ -130,9 +129,7 @@ public class DefaultCommentTreeDisplayContext
 			return false;
 		}
 
-		return !TrashUtil.isInTrash(
-			_discussionComment.getModelClassName(),
-			_discussionComment.getCommentId());
+		return _discussionComment.isInTrash();
 	}
 
 	@Override

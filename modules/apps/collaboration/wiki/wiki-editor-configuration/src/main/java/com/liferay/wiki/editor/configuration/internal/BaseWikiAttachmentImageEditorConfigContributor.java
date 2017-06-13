@@ -17,7 +17,6 @@ package com.liferay.wiki.editor.configuration.internal;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.PortletFileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
@@ -108,15 +107,11 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL);
 	}
 
-	protected ItemSelectorCriterion getImageItemSelectorCriterion() {
+	protected ItemSelectorCriterion getImageItemSelectorCriterion(
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
+
 		ItemSelectorCriterion imageItemSelectorCriterion =
 			new ImageItemSelectorCriterion();
-
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			new ArrayList<>();
-
-		desiredItemSelectorReturnTypes.add(
-			new PortletFileEntryItemSelectorReturnType());
 
 		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
@@ -174,18 +169,13 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 	}
 
 	protected ItemSelectorCriterion getWikiAttachmentItemSelectorCriterion(
-		long wikiPageResourcePrimKey) {
+		long wikiPageResourcePrimKey,
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
 		ItemSelectorCriterion attachmentItemSelectorCriterion =
 			new WikiAttachmentItemSelectorCriterion(
 				wikiPageResourcePrimKey,
 				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES);
-
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			new ArrayList<>();
-
-		desiredItemSelectorReturnTypes.add(
-			new PortletFileEntryItemSelectorReturnType());
 
 		attachmentItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);

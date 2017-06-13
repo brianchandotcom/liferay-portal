@@ -21,8 +21,8 @@ import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.criteria.PortletFileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.PortletFileEntryURLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -142,8 +142,8 @@ public class BlogsItemSelectorView
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
 				new ItemSelectorReturnType[] {
-					new PortletFileEntryItemSelectorReturnType(),
-					new PortletFileEntryURLItemSelectorReturnType()
+					new FileEntryItemSelectorReturnType(),
+					new URLItemSelectorReturnType()
 				}));
 
 	private BlogsEntryLocalService _blogsEntryLocalService;

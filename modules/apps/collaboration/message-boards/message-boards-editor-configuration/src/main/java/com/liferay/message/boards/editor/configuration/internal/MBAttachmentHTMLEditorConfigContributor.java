@@ -78,12 +78,12 @@ public class MBAttachmentHTMLEditorConfigContributor
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
-		ItemSelectorCriterion imageItemSelectorCriterion =
-			new ImageItemSelectorCriterion();
-
 		desiredItemSelectorReturnTypes.add(
 			new FileEntryItemSelectorReturnType());
 		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
+
+		ItemSelectorCriterion imageItemSelectorCriterion =
+			new ImageItemSelectorCriterion();
 
 		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);

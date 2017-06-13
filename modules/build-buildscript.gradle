@@ -1,5 +1,5 @@
 dependencies {
-	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "3.7.3"
+	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "3.7.4"
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.lang.merger", version: "1.0.3"
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "1.1.2"
 	classpath group: "com.liferay", name: "org.ysb33r.gradle.gradletest", version: "1.0-beta3"

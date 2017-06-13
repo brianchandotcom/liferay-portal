@@ -45,7 +45,9 @@ public class CPDefinitionOptionValueRelDisplayContext extends
 			CPDefinitionOptionValueRelService cpDefinitionOptionValueRelService)
 		throws PortalException {
 
-		super(actionHelper, httpServletRequest, "CPDefinitionOptionValueRel");
+		super(
+			actionHelper, httpServletRequest,
+			CPDefinitionOptionValueRel.class.getSimpleName());
 
 		setDefaultOrderByCol("priority");
 

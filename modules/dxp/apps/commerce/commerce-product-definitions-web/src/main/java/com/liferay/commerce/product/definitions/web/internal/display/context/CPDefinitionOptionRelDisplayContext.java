@@ -60,7 +60,9 @@ public class CPDefinitionOptionRelDisplayContext extends
 			ItemSelector itemSelector)
 		throws PortalException {
 
-		super(actionHelper, httpServletRequest, "CPDefinitionOptionRel");
+		super(
+			actionHelper, httpServletRequest,
+			CPDefinitionOptionRel.class.getSimpleName());
 
 		setDefaultOrderByCol("priority");
 

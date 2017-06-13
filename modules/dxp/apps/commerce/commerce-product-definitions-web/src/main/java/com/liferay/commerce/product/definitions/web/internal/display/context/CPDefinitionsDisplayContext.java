@@ -49,7 +49,9 @@ public class CPDefinitionsDisplayContext
 			CPDefinitionService cpDefinitionService)
 		throws PortalException {
 
-		super(actionHelper, httpServletRequest, "CPDefinition");
+		super(
+			actionHelper, httpServletRequest,
+			CPDefinition.class.getSimpleName());
 
 		setDefaultOrderByType("desc");
 

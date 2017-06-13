@@ -54,7 +54,8 @@ public class CPInstanceDisplayContext
 			CPInstanceHelper cpInstanceHelper)
 		throws PortalException {
 
-		super(actionHelper, httpServletRequest, "CPInstance");
+		super(
+			actionHelper, httpServletRequest, CPInstance.class.getSimpleName());
 
 		setDefaultOrderByCol("sku");
 

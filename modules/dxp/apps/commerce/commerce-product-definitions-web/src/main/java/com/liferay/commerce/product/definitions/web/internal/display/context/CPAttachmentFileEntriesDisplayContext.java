@@ -70,7 +70,9 @@ public class CPAttachmentFileEntriesDisplayContext extends
 			Portal portal)
 		throws PortalException {
 
-		super(actionHelper, httpServletRequest, "CPAttachmentFileEntry");
+		super(
+			actionHelper, httpServletRequest,
+			CPAttachmentFileEntry.class.getSimpleName());
 
 		setDefaultOrderByCol("priority");
 		setDefaultOrderByType("asc");

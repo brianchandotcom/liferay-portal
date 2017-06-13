@@ -31,8 +31,4 @@ String userName = GetterUtil.getString((String)request.getAttribute("liferay-ui:
 if (author) {
 	imageCssClass += " author";
 }
-
-if (Validator.isNull(url) && (userDisplay != null)) {
-	url = userDisplay.getDisplayURL(themeDisplay);
-}
 %>

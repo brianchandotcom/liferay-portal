@@ -1,0 +1,43 @@
+Feature:
+
+Background: This executes once per feature file
+	Given these properties
+		| portal.release              | true  |
+		| portal.upstream             | true  |
+		| testray.main.component.name | Smoke |
+
+Set Up: This executes before each scenario
+	Given TestCase set Up Portal Instance
+	Then SignIn sign In
+
+Tear Down: This executes after each scenario
+	Given PortalInstances tear Down CP
+		| testPortalInstance | TestPropsUtil#get('test.portal.instance') |
+
+Scenario: Add User
+Priority: 5
+	Given these variables
+		| userEmailAddress | userea@liferay.com |
+		| userFirstName    | userfn             |
+		| userLastName     | userln             |
+	And ProductMenu goto Control Panel Users
+		| portlet | Users and Organizations |
+	Then User add CP
+		| userEmailAddress | ${userEmailAddress} |
+		| userFirstName    | ${userFirstName}    |
+		| userLastName     | ${userLastName}     |
+		| userScreenName   | ${userScreenName}   |
+		| userScreenName   |                     |
+
+Scenario: Smoke
+Description: Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages.
+Priority: 5
+	Given these properties
+		| portal.smoke                   | true |
+		| test.assert.warning.exceptions | true |
+	And Smoke view Welcome Page
+	And Smoke run Smoke
+	And AssertElementPresent the value 'Welcome' at locator 'Home#PAGE'
+	And Click at locator 'Home#PAGE'
+	And Type the value 'Welcome'
+	Then AssertElementPresent assert Element Present the value 'Welcome' at locator 'Home#PAGE'

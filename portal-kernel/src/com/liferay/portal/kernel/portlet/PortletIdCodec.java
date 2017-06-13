@@ -49,7 +49,8 @@ public class PortletIdCodec {
 		if ((x == -1) && (y == -1)) {
 			return portletId;
 		}
-		else if (x != -1) {
+
+		if (x != -1) {
 			return portletId.substring(0, x);
 		}
 

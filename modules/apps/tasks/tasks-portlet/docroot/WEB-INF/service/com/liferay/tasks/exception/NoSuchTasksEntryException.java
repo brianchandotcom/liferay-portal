@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 public class NoSuchTasksEntryException extends NoSuchModelException {
 
 	public NoSuchTasksEntryException() {
-		super();
 	}
 
 	public NoSuchTasksEntryException(String msg) {

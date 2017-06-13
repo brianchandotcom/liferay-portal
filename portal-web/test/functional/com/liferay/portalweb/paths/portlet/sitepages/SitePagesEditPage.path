@@ -60,6 +60,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TEMPLATE_INHERIT_CHANGES_TOGGLE_1</td>
+	<td>//label[contains(.,'Inherit Changes')]//span[contains(@class,'toggle-switch-handle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TYPE_SELECT</td>
 	<td>//div[contains(@class,'input-select')]//select</td>
 	<td></td>

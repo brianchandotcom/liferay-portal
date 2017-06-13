@@ -31,7 +31,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(MBMessage.clas
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
-AssetEntryServiceUtil.incrementViewCounter(MBMessage.class.getName(), message.getMessageId());
+AssetEntryServiceUtil.incrementViewCounter(layoutAssetEntry);
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 

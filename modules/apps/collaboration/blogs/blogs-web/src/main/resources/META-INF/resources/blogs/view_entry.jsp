@@ -27,7 +27,7 @@ long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 
 AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.getName(), entry.getEntryId());
 
-AssetEntryServiceUtil.incrementViewCounter(BlogsEntry.class.getName(), entry.getEntryId());
+AssetEntryServiceUtil.incrementViewCounter(assetEntry);
 
 AssetUtil.addLayoutTags(request, AssetTagLocalServiceUtil.getTags(BlogsEntry.class.getName(), entry.getEntryId()));
 

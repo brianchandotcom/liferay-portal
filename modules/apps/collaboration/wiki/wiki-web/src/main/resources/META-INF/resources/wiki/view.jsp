@@ -95,13 +95,13 @@ PortletURL taggedPagesURL = renderResponse.createRenderURL();
 taggedPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_tagged_pages");
 taggedPagesURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 
-AssetEntryServiceUtil.incrementViewCounter(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
+AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
+
+AssetEntryServiceUtil.incrementViewCounter(layoutAssetEntry);
 
 if (Validator.isNotNull(ParamUtil.getString(request, "title"))) {
 	AssetUtil.addLayoutTags(request, AssetTagLocalServiceUtil.getTags(WikiPage.class.getName(), wikiPage.getResourcePrimKey()));
 }
-
-AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 

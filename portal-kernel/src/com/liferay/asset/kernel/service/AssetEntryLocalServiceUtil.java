@@ -813,6 +813,12 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	public static void incrementViewCounter(long userId,
+		com.liferay.asset.kernel.model.AssetEntry assetEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().incrementViewCounter(userId, assetEntry);
+	}
+
+	public static void incrementViewCounter(long userId,
 		java.lang.String className, long classPK, int increment) {
 		getService().incrementViewCounter(userId, className, classPK, increment);
 	}

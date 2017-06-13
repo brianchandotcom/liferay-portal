@@ -126,4 +126,7 @@ public interface AssetEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetEntry> getEntries(AssetEntryQuery entryQuery)
 		throws PortalException;
+
+	public void incrementViewCounter(AssetEntry assetEntry)
+		throws PortalException;
 }

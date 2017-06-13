@@ -571,6 +571,9 @@ public interface AssetEntryLocalService extends BaseLocalService,
 
 	public void deleteGroupEntries(long groupId) throws PortalException;
 
+	public void incrementViewCounter(long userId, AssetEntry assetEntry)
+		throws PortalException;
+
 	@BufferedIncrement(configuration = "AssetEntry", incrementClass = com.liferay.portal.kernel.increment.NumberIncrement.class)
 	public void incrementViewCounter(long userId, java.lang.String className,
 		long classPK, int increment);

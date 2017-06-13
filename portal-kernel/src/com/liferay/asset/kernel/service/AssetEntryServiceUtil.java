@@ -158,6 +158,12 @@ public class AssetEntryServiceUtil {
 		return getService().getEntries(entryQuery);
 	}
 
+	public static void incrementViewCounter(
+		com.liferay.asset.kernel.model.AssetEntry assetEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().incrementViewCounter(assetEntry);
+	}
+
 	public static AssetEntryService getService() {
 		if (_service == null) {
 			_service = (AssetEntryService)PortalBeanLocatorUtil.locate(AssetEntryService.class.getName());

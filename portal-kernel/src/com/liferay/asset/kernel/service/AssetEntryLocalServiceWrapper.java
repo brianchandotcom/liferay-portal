@@ -897,6 +897,13 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	}
 
 	@Override
+	public void incrementViewCounter(long userId,
+		com.liferay.asset.kernel.model.AssetEntry assetEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetEntryLocalService.incrementViewCounter(userId, assetEntry);
+	}
+
+	@Override
 	public void incrementViewCounter(long userId, java.lang.String className,
 		long classPK, int increment) {
 		_assetEntryLocalService.incrementViewCounter(userId, className,

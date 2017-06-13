@@ -159,6 +159,13 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 	}
 
 	@Override
+	public void incrementViewCounter(
+		com.liferay.asset.kernel.model.AssetEntry assetEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetEntryService.incrementViewCounter(assetEntry);
+	}
+
+	@Override
 	public AssetEntryService getWrappedService() {
 		return _assetEntryService;
 	}

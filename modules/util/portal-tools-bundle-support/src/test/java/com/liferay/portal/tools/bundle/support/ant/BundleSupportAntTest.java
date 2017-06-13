@@ -65,6 +65,22 @@ public class BundleSupportAntTest extends BundleSupportCommandsTest {
 	}
 
 	@Override
+	protected void createToken(
+			String emailAddress, String password, File tokenFile, URL tokenUrl)
+		throws Exception {
+
+		Project project = buildFileRule.getProject();
+
+		project.setProperty("bundle.support.email.address", emailAddress);
+		project.setProperty("bundle.support.password", password);
+		project.setProperty(
+			"bundle.support.token.file", _getAbsolutePath(tokenFile));
+		project.setProperty("bundle.support.token.url", tokenUrl.toString());
+
+		project.executeTarget("create-token");
+	}
+
+	@Override
 	protected void deploy(File file, File liferayHomeDir, String outputFileName)
 		throws Exception {
 

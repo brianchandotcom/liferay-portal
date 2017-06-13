@@ -165,6 +165,24 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public String buildRemoteURL(
+		ExportImportConfiguration exportImportConfiguration) {
+
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		String remoteAddress = MapUtil.getString(settingsMap, "remoteAddress");
+		int remotePort = MapUtil.getInteger(settingsMap, "remotePort");
+		String remotePathContext = MapUtil.getString(
+			settingsMap, "remotePathContext");
+		boolean secureConnection = MapUtil.getBoolean(
+			settingsMap, "secureConnection");
+
+		return buildRemoteURL(
+			remoteAddress, remotePort, remotePathContext, secureConnection);
+	}
+
+	@Override
+	public String buildRemoteURL(
 		String remoteAddress, int remotePort, String remotePathContext,
 		boolean secureConnection) {
 

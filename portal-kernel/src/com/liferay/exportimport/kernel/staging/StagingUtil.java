@@ -52,6 +52,12 @@ import javax.servlet.http.HttpServletRequest;
 public class StagingUtil {
 
 	public static String buildRemoteURL(
+		ExportImportConfiguration exportImportConfiguration) {
+
+		return _staging.buildRemoteURL(exportImportConfiguration);
+	}
+
+	public static String buildRemoteURL(
 		String remoteAddress, int remotePort, String remotePathContext,
 		boolean secureConnection) {
 

@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -381,9 +382,20 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			}
 		}
 
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		User user = permissionChecker.getUser();
+
+		HttpPrincipal httpPrincipal = new HttpPrincipal(
+			remoteURL, user.getLogin(), user.getPassword(),
+			user.getPasswordEncrypted());
+
 		if (!stagedRemotely) {
-			enableRemoteStaging(remoteURL, remoteGroupId);
+			enableRemoteStaging(httpPrincipal, remoteGroupId);
 		}
+
+		Group remoteGroup = fetchRemoteGroup(httpPrincipal, remoteGroupId);
 
 		checkDefaultLayoutSetBranches(
 			userId, stagingGroup, branchingPublic, branchingPrivate, true,
@@ -396,6 +408,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		typeSettingsProperties.setProperty("remoteAddress", remoteAddress);
 		typeSettingsProperties.setProperty(
 			"remoteGroupId", String.valueOf(remoteGroupId));
+		typeSettingsProperties.setProperty(
+			"remoteGroupUUID", remoteGroup.getUuid());
 		typeSettingsProperties.setProperty(
 			"remotePathContext", remotePathContext);
 		typeSettingsProperties.setProperty(
@@ -776,17 +790,9 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 	}
 
-	protected void enableRemoteStaging(String remoteURL, long remoteGroupId)
+	protected void enableRemoteStaging(
+			HttpPrincipal httpPrincipal, long remoteGroupId)
 		throws PortalException {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		User user = permissionChecker.getUser();
-
-		HttpPrincipal httpPrincipal = new HttpPrincipal(
-			remoteURL, user.getLogin(), user.getPassword(),
-			user.getPasswordEncrypted());
 
 		try {
 			GroupServiceHttp.enableStaging(httpPrincipal, remoteGroupId);
@@ -829,7 +835,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				_log.debug(rae, rae);
 			}
 
-			rae.setURL(remoteURL);
+			rae.setURL(httpPrincipal.getUrl());
 
 			throw rae;
 		}
@@ -844,9 +850,27 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			RemoteExportException ree = new RemoteExportException(
 				RemoteExportException.BAD_CONNECTION);
 
-			ree.setURL(remoteURL);
+			ree.setURL(httpPrincipal.getUrl());
 
 			throw ree;
+		}
+	}
+
+	protected Group fetchRemoteGroup(HttpPrincipal httpPrincipal, long groupId)
+		throws PortalException {
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(
+				PortalClassLoaderUtil.getClassLoader());
+
+			return GroupServiceHttp.getGroup(httpPrincipal, groupId);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

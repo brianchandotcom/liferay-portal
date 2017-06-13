@@ -148,6 +148,18 @@ public abstract class PoshiElement extends DefaultElement {
 		return Dom4JUtil.toElementList(parentElement.elements());
 	}
 
+	protected String getVariableValueAttribute() {
+		if (attributeValue("method") != null) {
+			return attributeValue("method");
+		}
+
+		if (attributeValue("value") != null) {
+			return attributeValue("value");
+		}
+
+		return null;
+	}
+
 	protected List<PoshiElement> toPoshiElements(List<?> list) {
 		if (list == null) {
 			return null;

@@ -80,14 +80,7 @@ public class VarElement extends PoshiElement {
 		sb.append("|");
 		sb.append(attributeValue("name"));
 		sb.append("|");
-
-		if (attributeValue("method") != null) {
-			sb.append(attributeValue("method"));
-		}
-		else if (attributeValue("value") != null) {
-			sb.append(attributeValue("value"));
-		}
-
+		sb.append(getVariableValueAttribute());
 		sb.append("|");
 
 		return sb.toString();

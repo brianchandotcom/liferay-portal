@@ -14,11 +14,9 @@
 
 package com.liferay.portal.tools.bundle.support.maven;
 
-import com.liferay.portal.tools.bundle.support.commands.InitBundleCommand;
+import com.liferay.portal.tools.bundle.support.commands.DownloadBundleCommand;
 import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.MavenUtil;
-
-import java.io.File;
 
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -28,10 +26,9 @@ import org.apache.maven.settings.Proxy;
 
 /**
  * @author David Truong
- * @author Andrea Di Giorgi
  */
-@Mojo(inheritByDefault = false, name = "init")
-public class InitBundleMojo extends AbstractBundleMojo {
+@Mojo(inheritByDefault = false, name = "download")
+public class DownloadBundleMojo extends AbstractBundleMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {
@@ -62,20 +59,16 @@ public class InitBundleMojo extends AbstractBundleMojo {
 		}
 
 		try {
-			InitBundleCommand initBundleCommand = new InitBundleCommand();
+			DownloadBundleCommand downloadCommand = new DownloadBundleCommand();
 
-			initBundleCommand.setCacheDir(cacheDir);
-			initBundleCommand.setConfigsDir(
-				new File(project.getBasedir(), configs));
-			initBundleCommand.setEnvironment(environment);
-			initBundleCommand.setLiferayHomeDir(getLiferayHomeDir());
-			initBundleCommand.setPassword(password);
-			initBundleCommand.setStripComponents(stripComponents);
-			initBundleCommand.setToken(token);
-			initBundleCommand.setUrl(url);
-			initBundleCommand.setUserName(userName);
+			downloadCommand.setCacheDir(cacheDir);
+			downloadCommand.setLiferayHomeDir(getLiferayHomeDir());
+			downloadCommand.setPassword(password);
+			downloadCommand.setToken(token);
+			downloadCommand.setUrl(url);
+			downloadCommand.setUserName(userName);
 
-			initBundleCommand.execute();
+			downloadCommand.execute();
 		}
 		catch (Exception e) {
 			throw new MojoExecutionException("Unable to initialize bundle", e);

@@ -332,7 +332,7 @@
 		<execute macro="FormRules#addRule" />
 
 		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Text Field" />=
+			<var name="conditionField" value="Text Field" />
 			<var name="conditionFieldValue" value="test" />
 			<var name="conditionOperator" value="Is equal to" />
 			<var name="conditionRowNumber" value="1" />
@@ -547,7 +547,7 @@
 		<execute macro="FormRules#addRule" />
 
 		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="User" />=
+			<var name="conditionField" value="User" />
 			<var name="conditionOperator" value="Belongs to" />
 			<var name="conditionRowNumber" value="1" />
 			<var name="conditionValueType" value="Site Administrator" />
@@ -717,7 +717,7 @@
 		<execute macro="FormRules#addRule" />
 
 		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Text Field" />=
+			<var name="conditionField" value="Text Field" />
 			<var name="conditionFieldValue" value="test" />
 			<var name="conditionOperator" value="Is equal to" />
 			<var name="conditionRowNumber" value="1" />
@@ -801,7 +801,7 @@
 		<execute macro="FormRules#addRule" />
 
 		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="A" />=
+			<var name="conditionField" value="A" />
 			<var name="conditionOperator" value="Is not empty" />
 			<var name="conditionRowNumber" value="1" />
 		</execute>

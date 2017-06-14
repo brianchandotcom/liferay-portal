@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.service.base.CPDisplayLayoutLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
  * @author Marco Leo
@@ -26,20 +27,20 @@ public class CPDisplayLayoutLocalServiceImpl
 
 	@Override
 	public CPDisplayLayout addCPDisplayLayout(
-			long groupId, long companyId, Class<?> clazz, long classPK,
-			String layoutUuid)
+			Class<?> clazz, long classPK, String layoutUuid,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
 		return addCPDisplayLayout(
-			groupId, companyId, classNameId, classPK, layoutUuid);
+			classNameId, classPK, layoutUuid, serviceContext);
 	}
 
 	@Override
 	public CPDisplayLayout addCPDisplayLayout(
-			long groupId, long companyId, long classNameId, long classPK,
-			String layoutUuid)
+		long classNameId, long classPK, String layoutUuid,
+		ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDisplayLayout oldCPDisplayLayout =
@@ -55,8 +56,8 @@ public class CPDisplayLayoutLocalServiceImpl
 		CPDisplayLayout cpDisplayLayout = createCPDisplayLayout(
 			cpDisplayLayoutId);
 
-		cpDisplayLayout.setCompanyId(companyId);
-		cpDisplayLayout.setGroupId(groupId);
+		cpDisplayLayout.setCompanyId(serviceContext.getCompanyId());
+		cpDisplayLayout.setGroupId(serviceContext.getScopeGroupId());
 		cpDisplayLayout.setClassNameId(classNameId);
 		cpDisplayLayout.setClassPK(classPK);
 		cpDisplayLayout.setLayoutUuid(layoutUuid);
@@ -66,7 +67,7 @@ public class CPDisplayLayoutLocalServiceImpl
 
 	@Override
 	public void deleteCPDisplayLayout(
-			long companyId, Class<?> clazz, long classPK)
+			Class<?> clazz, long classPK)
 		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
@@ -76,7 +77,7 @@ public class CPDisplayLayoutLocalServiceImpl
 
 	@Override
 	public CPDisplayLayout getCPDisplayLayout(
-			long companyId, long classNameId, long classPK)
+			long classNameId, long classPK)
 		throws PortalException {
 
 		return cpDisplayLayoutPersistence.findByC_C(classNameId, classPK);

@@ -70,7 +70,7 @@ public class CounterLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			false,
+			false, new LiferayIntegrationTestRule(),
 			new BaseTestRule<>(
 				new BaseTestCallback<Void, Void>() {
 
@@ -121,8 +121,7 @@ public class CounterLocalServiceTest {
 					}
 
 				}),
-			HypersonicServerTestRule.INSTANCE,
-			new LiferayIntegrationTestRule());
+			HypersonicServerTestRule.INSTANCE);
 
 	@Test
 	public void testConcurrentIncrement() throws Exception {

@@ -37,6 +37,10 @@ public class JavaAggregateTestRuleParameterOrder extends BaseFileCheck {
 			List<String> parametersList = JavaSourceUtil.getParameterList(
 				content.substring(matcher.start()));
 
+			if ("false".equals(parametersList.get(0))) {
+				return content;
+			}
+
 			for (int i = 1; i < parametersList.size(); i++) {
 				String parameter = parametersList.get(i);
 

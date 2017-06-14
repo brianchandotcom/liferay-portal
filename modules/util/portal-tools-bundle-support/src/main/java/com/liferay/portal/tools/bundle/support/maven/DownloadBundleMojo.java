@@ -65,6 +65,7 @@ public class DownloadBundleMojo extends AbstractBundleMojo {
 			downloadCommand.setLiferayHomeDir(getLiferayHomeDir());
 			downloadCommand.setPassword(password);
 			downloadCommand.setToken(token);
+			downloadCommand.setTokenFile(tokenFile);
 			downloadCommand.setUrl(url);
 			downloadCommand.setUserName(userName);
 

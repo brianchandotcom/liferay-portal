@@ -165,7 +165,7 @@ public class CPDefinitionLocalServiceImpl
 			groupId, serviceContext.getCompanyId(), CPDefinition.class,
 			cpDefinitionId, urlTitleMap);
 
-		// Commerce product template layout entry
+		// Commerce product display layout
 
 		cpDisplayLayoutLocalService.addCPDisplayLayout(
 			CPDefinition.class, cpDefinitionId, layoutUuid, serviceContext);
@@ -242,13 +242,13 @@ public class CPDefinitionLocalServiceImpl
 			cpType.deleteCPDefinition(cpDefinition.getCPDefinitionId());
 		}
 
-		// Commerce product friendly URL
+		// Commerce product friendly URL entries
 
 		cpFriendlyURLEntryLocalService.deleteCPFriendlyURLEntries(
 			cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
 			CPDefinition.class, cpDefinition.getCPDefinitionId());
 
-		// Commerce product template layout entry
+		// Commerce product display layout
 
 		cpDisplayLayoutLocalService.deleteCPDisplayLayout(
 			CPDefinition.class, cpDefinition.getCPDefinitionId());
@@ -661,13 +661,13 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinition.getCompanyId(), cpDefinition.getCPDefinitionId(),
 			titleMap, shortDescriptionMap, descriptionMap);
 
-		// Commerce product friendly URL
+		// Commerce product friendly URL entries
 
 		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
 			groupId, serviceContext.getCompanyId(), CPDefinition.class,
 			cpDefinitionId, urlTitleMap);
 
-		// Commerce product template layout entry
+		// Commerce product display layout
 
 		cpDisplayLayoutLocalService.addCPDisplayLayout(
 			CPDefinition.class, cpDefinitionId, layoutUuid, serviceContext);

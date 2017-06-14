@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -192,7 +192,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		String layoutUuid = _cpDefinitionService.getDisplayPage(cpDefinition);
 
-		return _layoutLocalService.getLayoutByUuidAndGroupId(
+		return _layoutService.getLayoutByUuidAndGroupId(
 			layoutUuid, groupId, privateLayout);
 	}
 
@@ -209,7 +209,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 	private Http _http;
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
+	private LayoutService _layoutService;
 
 	@Reference
 	private Portal _portal;

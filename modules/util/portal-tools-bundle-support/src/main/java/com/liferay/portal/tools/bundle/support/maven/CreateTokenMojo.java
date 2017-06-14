@@ -15,7 +15,7 @@
 package com.liferay.portal.tools.bundle.support.maven;
 
 import com.liferay.portal.tools.bundle.support.commands.CreateTokenCommand;
-import com.liferay.portal.tools.bundle.support.internal.BundleSupportConstants;
+import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
 
 import java.io.File;
 

@@ -66,8 +66,10 @@ public class CPDisplayLayoutLocalServiceImpl
 	}
 
 	@Override
-	public CPDisplayLayout getCPDisplayLayout(long classNameId, long classPK)
+	public CPDisplayLayout getCPDisplayLayout(Class<?> clazz, long classPK)
 		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(clazz);
 
 		return cpDisplayLayoutPersistence.findByC_C(classNameId, classPK);
 	}

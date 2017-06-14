@@ -412,14 +412,11 @@ public class CPDefinitionLocalServiceImpl
 	public String getDisplayPage(CPDefinition cpDefinition)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(
-			CPDefinition.class);
-
 		String layoutUuid = null;
 
 		CPDisplayLayout cpDisplayLayout =
 			cpDisplayLayoutLocalService.getCPDisplayLayout(
-				classNameId, cpDefinition.getCPDefinitionId());
+				CPDefinition.class, cpDefinition.getCPDefinitionId());
 
 		if (cpDisplayLayout != null) {
 			layoutUuid = cpDisplayLayout.getLayoutUuid();

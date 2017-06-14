@@ -16,5 +16,4 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.asset.kernel.model.AssetLink" %><%@
-page import="com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil" %>
+<%@ page import="com.liferay.asset.kernel.model.AssetLink" %>

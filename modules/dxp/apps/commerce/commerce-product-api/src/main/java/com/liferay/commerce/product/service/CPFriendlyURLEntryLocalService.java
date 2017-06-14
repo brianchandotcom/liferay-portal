@@ -207,7 +207,7 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 
 	public java.lang.String buildUrlTitle(long groupId, long companyId,
 		long classNameId, long classPK, java.lang.String languageId,
-		java.lang.String newTitle) throws PortalException;
+		java.lang.String title) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

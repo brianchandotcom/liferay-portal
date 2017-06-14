@@ -393,10 +393,6 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	public Map<Locale, java.lang.String> getCPDefinitionTitleMap(
 		long cpDefinitionId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Locale, java.lang.String> getUniqueUrlTitles(
-		CPDefinition cpDefinition) throws PortalException;
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

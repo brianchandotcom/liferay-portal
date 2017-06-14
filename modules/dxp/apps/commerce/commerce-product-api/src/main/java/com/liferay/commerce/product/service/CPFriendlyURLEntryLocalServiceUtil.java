@@ -223,11 +223,11 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 
 	public static java.lang.String buildUrlTitle(long groupId, long companyId,
 		long classNameId, long classPK, java.lang.String languageId,
-		java.lang.String newTitle)
+		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .buildUrlTitle(groupId, companyId, classNameId, classPK,
-			languageId, newTitle);
+			languageId, title);
 	}
 
 	/**

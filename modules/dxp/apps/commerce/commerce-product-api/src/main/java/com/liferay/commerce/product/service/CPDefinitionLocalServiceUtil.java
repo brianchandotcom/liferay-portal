@@ -462,12 +462,6 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().getCPDefinitionTitleMap(cpDefinitionId);
 	}
 
-	public static java.util.Map<java.util.Locale, java.lang.String> getUniqueUrlTitles(
-		com.liferay.commerce.product.model.CPDefinition cpDefinition)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUniqueUrlTitles(cpDefinition);
-	}
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

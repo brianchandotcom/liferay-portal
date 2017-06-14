@@ -499,13 +499,6 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		return _cpDefinitionLocalService.getCPDefinitionTitleMap(cpDefinitionId);
 	}
 
-	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getUniqueUrlTitles(
-		com.liferay.commerce.product.model.CPDefinition cpDefinition)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLocalService.getUniqueUrlTitles(cpDefinition);
-	}
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

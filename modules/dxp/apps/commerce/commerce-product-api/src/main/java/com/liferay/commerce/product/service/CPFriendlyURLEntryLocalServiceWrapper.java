@@ -233,10 +233,10 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	@Override
 	public java.lang.String buildUrlTitle(long groupId, long companyId,
 		long classNameId, long classPK, java.lang.String languageId,
-		java.lang.String newTitle)
+		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpFriendlyURLEntryLocalService.buildUrlTitle(groupId,
-			companyId, classNameId, classPK, languageId, newTitle);
+			companyId, classNameId, classPK, languageId, title);
 	}
 
 	/**

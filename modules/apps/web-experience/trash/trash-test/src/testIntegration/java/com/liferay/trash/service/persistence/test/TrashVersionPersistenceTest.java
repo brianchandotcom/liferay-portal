@@ -202,7 +202,7 @@ public class TrashVersionPersistenceTest {
 	protected OrderByComparator<TrashVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("TrashVersion", "versionId",
 			true, "companyId", true, "entryId", true, "classNameId", true,
-			"classPK", true, "typeSettings", true, "status", true);
+			"classPK", true, "status", true);
 	}
 
 	@Test

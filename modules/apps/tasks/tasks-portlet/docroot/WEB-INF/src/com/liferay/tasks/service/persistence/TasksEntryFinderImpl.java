@@ -17,6 +17,7 @@
 
 package com.liferay.tasks.service.persistence;
 
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.tasks.model.TasksEntry;
 import com.liferay.tasks.model.TasksEntryConstants;
 import com.liferay.tasks.model.impl.TasksEntryImpl;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Iterator;
 import java.util.List;
@@ -65,7 +65,7 @@ public class TasksEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_P_A_R_S_T_N);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_P_A_R_S_T_N);
 
 			sql = StringUtil.replace(
 				sql, "[$JOIN$]", getJoin(assetTagIds, notAssetTagIds));
@@ -152,7 +152,7 @@ public class TasksEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_P_A_R_S_T_N);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_P_A_R_S_T_N);
 
 			sql = StringUtil.replace(
 				sql, "[$JOIN$]", getJoin(assetTagIds, notAssetTagIds));
@@ -285,11 +285,11 @@ public class TasksEntryFinderImpl
 
 	protected String getJoin(long[] assetTagIds, long[] notAssetTagIds) {
 		if ((assetTagIds != null) && (assetTagIds.length > 0)) {
-			return CustomSQLUtil.get(JOIN_BY_ASSET_TAGS);
+			return CustomSQLUtil.get(getClass(), JOIN_BY_ASSET_TAGS);
 		}
 
 		if ((notAssetTagIds != null) && (notAssetTagIds.length > 0)) {
-			return CustomSQLUtil.get(JOIN_BY_NOT_ASSET_TAGS);
+			return CustomSQLUtil.get(getClass(), JOIN_BY_NOT_ASSET_TAGS);
 		}
 
 		return StringPool.BLANK;

@@ -169,9 +169,14 @@ public class CPDefinitionsDisplayContext
 
 		String navigation = ParamUtil.getString(
 			httpServletRequest, "navigation");
+		String status = ParamUtil.getString(httpServletRequest, "status");
 
 		if (Validator.isNotNull(navigation)) {
 			portletURL.setParameter("navigation", getNavigation());
+		}
+
+		if (Validator.isNotNull(status)) {
+			portletURL.setParameter("status", String.valueOf(getStatus()));
 		}
 
 		return portletURL;

@@ -48,6 +48,7 @@ public class CPDisplayLayoutLocalServiceImpl
 
 		if (oldCPDisplayLayout != null) {
 			oldCPDisplayLayout.setLayoutUuid(layoutUuid);
+
 			return cpDisplayLayoutPersistence.update(oldCPDisplayLayout);
 		}
 

@@ -95,7 +95,6 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		actualParams.put("p_p_id", new String[] {CPPortletKeys.CP_CONTENT_WEB});
 		actualParams.put("p_p_lifecycle", new String[] {"0"});
-
 		actualParams.put("p_p_mode", new String[] {"view"});
 
 		request.setAttribute(CPWebKeys.CP_DEFINITION, cpDefinition);
@@ -136,13 +135,11 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		HttpServletRequest request = (HttpServletRequest)requestContext.get(
 			"request");
 
-		String urlTitle = friendlyURL;
-
 		Locale locale = _portal.getLocale(request);
 
 		String languageId = LanguageUtil.getLanguageId(locale);
 
-		urlTitle = urlTitle.substring(
+		String urlTitle = friendlyURL.substring(
 			CPConstants.PRODUCT_URL_SEPARATOR.length());
 		long classNameId = _portal.getClassNameId(CPDefinition.class);
 

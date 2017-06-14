@@ -21,7 +21,9 @@ CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFI
 %>
 
 <c:if test="<%= cpDefinition != null %>">
-<h1><%= cpDefinition.getTitle(languageId) %></h1>
-<img src="<%= cpDefinition.getDefaultImageThumbnailSrc(themeDisplay) %>">
-<p><%= cpDefinition.getDescription(languageId) %></p>
+	<h1><%= cpDefinition.getTitle(languageId) %></h1>
+
+	<img src="<%= cpDefinition.getDefaultImageThumbnailSrc(themeDisplay) %>">
+
+	<p><%= cpDefinition.getDescription(languageId) %></p>
 </c:if>

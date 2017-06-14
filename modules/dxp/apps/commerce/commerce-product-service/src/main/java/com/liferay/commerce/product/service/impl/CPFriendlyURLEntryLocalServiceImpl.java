@@ -182,8 +182,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 	public CPFriendlyURLEntry getCPFriendlyURLEntry(
 			long groupId, long companyId, long classNameId, long classPK,
 			String languageId, boolean main)
-		throws PortalException
-	{
+		throws PortalException {
 
 		return cpFriendlyURLEntryPersistence.fetchByG_C_C_C_L_M(
 			groupId, companyId, classNameId, classPK, languageId, main);
@@ -193,8 +192,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 	public CPFriendlyURLEntry getCPFriendlyURLEntry(
 			long groupId, long companyId, long classNameId, String languageId,
 			String urlTitle)
-		throws PortalException
-	{
+		throws PortalException {
 
 		return cpFriendlyURLEntryPersistence.findByG_C_C_L_U(
 			groupId, companyId, classNameId, languageId, urlTitle);

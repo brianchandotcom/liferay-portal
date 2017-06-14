@@ -89,7 +89,6 @@ if (Validator.isNotNull(layoutUuid)) {
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-
 								pagesContainerInput.val(selectedItem.value);
 
 								displayPageNameInput.html(selectedItem.layoutpath);

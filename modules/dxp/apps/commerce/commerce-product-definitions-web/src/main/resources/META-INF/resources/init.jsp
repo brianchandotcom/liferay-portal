@@ -65,6 +65,7 @@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
+page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
@@ -93,9 +94,6 @@ page import="java.util.Set" %><%@
 page import="java.util.StringJoiner" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
-
-<%@
-		page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %>
 
 <liferay-frontend:defineObjects />
 

@@ -33,9 +33,9 @@ public abstract class BaseCPDemoDataCreatorHelper {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setCompanyId(user.getCompanyId());
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCompanyId(user.getCompanyId());
 		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setTimeZone(user.getTimeZone());
 		serviceContext.setUserId(user.getUserId());

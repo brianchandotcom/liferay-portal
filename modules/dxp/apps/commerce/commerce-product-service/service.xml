@@ -266,10 +266,6 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CPFriendlyURLEntry" remote-service="true"  uuid="true">
 
@@ -354,10 +350,6 @@
 			<finder-column name="languageId" />
 			<finder-column name="main" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CPInstance" remote-service="true" trash-enabled="true" uuid="true">
 

@@ -65,13 +65,6 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition deleteCPDefinition(
-		com.liferay.commerce.product.model.CPDefinition cpDefinition)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionService.deleteCPDefinition(cpDefinition);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPDefinition deleteCPDefinition(
 		long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionService.deleteCPDefinition(cpDefinitionId);
@@ -155,10 +148,9 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 	}
 
 	@Override
-	public java.lang.String getDisplayPage(
-		com.liferay.commerce.product.model.CPDefinition cpDefinition)
+	public java.lang.String getLayoutUuid(long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionService.getDisplayPage(cpDefinition);
+		return _cpDefinitionService.getLayoutUuid(cpDefinitionId);
 	}
 
 	/**
@@ -172,9 +164,9 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 	}
 
 	@Override
-	public java.lang.String getUrlTitleMapAsXML(
-		com.liferay.commerce.product.model.CPDefinition cpDefinition) {
-		return _cpDefinitionService.getUrlTitleMapAsXML(cpDefinition);
+	public java.lang.String getUrlTitleMapAsXML(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionService.getUrlTitleMapAsXML(cpDefinitionId);
 	}
 
 	@Override

@@ -76,16 +76,6 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	public CPFriendlyURLEntry addCPFriendlyURLEntry(
 		CPFriendlyURLEntry cpFriendlyURLEntry);
 
-	public CPFriendlyURLEntry addCPFriendlyURLEntry(long groupId,
-		long companyId, java.lang.Class<?> clazz, long classPK,
-		java.lang.String languageId, java.lang.String urlTitle)
-		throws PortalException;
-
-	public CPFriendlyURLEntry addCPFriendlyURLEntry(long groupId,
-		long companyId, long classNameId, long classPK,
-		java.lang.String languageId, java.lang.String urlTitle)
-		throws PortalException;
-
 	/**
 	* Creates a new cp friendly url entry with the primary key. Does not add the cp friendly url entry to the database.
 	*
@@ -119,6 +109,11 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPFriendlyURLEntry fetchCPFriendlyURLEntry(long CPFriendlyURLEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPFriendlyURLEntry fetchCPFriendlyURLEntry(long groupId,
+		long companyId, long classNameId, long classPK,
+		java.lang.String languageId, boolean main) throws PortalException;
+
 	/**
 	* Returns the cp friendly url entry matching the UUID and group.
 	*
@@ -145,11 +140,6 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	public CPFriendlyURLEntry getCPFriendlyURLEntry(long groupId,
 		long companyId, long classNameId, java.lang.String languageId,
 		java.lang.String urlTitle) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPFriendlyURLEntry getCPFriendlyURLEntry(long groupId,
-		long companyId, long classNameId, long classPK,
-		java.lang.String languageId, boolean main) throws PortalException;
 
 	/**
 	* Returns the cp friendly url entry matching the UUID and group.
@@ -215,11 +205,6 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getUniqueUrlTitle(long groupId, long companyId,
-		long classNameId, long classPK, java.lang.String languageId,
-		java.lang.String urlTitle);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getUrlTitleMapAsXML(long groupId, long companyId,
@@ -308,18 +293,6 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap(
-		long groupId, long companyId, long classNameId, long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Locale, java.lang.String> getUrlTitleMap(long groupId,
-		long companyId, java.lang.Class<?> clazz, long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Locale, java.lang.String> getUrlTitleMap(long groupId,
-		long companyId, long classNameId, long classPK);
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -338,18 +311,10 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	public void addCPFriendlyURLEntry(long groupId, long companyId,
+	public void addCPFriendlyURLEntries(long groupId, long companyId,
 		java.lang.Class<?> clazz, long classPK,
-		Map<Locale, java.lang.String> urlTitleMap) throws PortalException;
-
-	public void addCPFriendlyURLEntry(long groupId, long companyId,
-		long classNameId, long classPK,
 		Map<Locale, java.lang.String> urlTitleMap) throws PortalException;
 
 	public void deleteCPFriendlyURLEntries(long groupId, long companyId,
 		java.lang.Class<?> clazz, long classPK);
-
-	public void validate(long groupId, long companyId, long classNameId,
-		long classPK, java.lang.String languageId, java.lang.String urlTitle)
-		throws PortalException;
 }

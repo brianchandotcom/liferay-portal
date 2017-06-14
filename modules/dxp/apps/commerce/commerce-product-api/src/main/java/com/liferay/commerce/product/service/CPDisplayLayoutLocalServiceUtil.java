@@ -62,15 +62,6 @@ public class CPDisplayLayoutLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CPDisplayLayout addCPDisplayLayout(
-		long classNameId, long classPK, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addCPDisplayLayout(classNameId, classPK, layoutUuid,
-			serviceContext);
-	}
-
 	/**
 	* Creates a new cp display layout with the primary key. Does not add the cp display layout to the database.
 	*
@@ -107,6 +98,11 @@ public class CPDisplayLayoutLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPDisplayLayout fetchCPDisplayLayout(
+		java.lang.Class<?> clazz, long classPK) {
+		return getService().fetchCPDisplayLayout(clazz, classPK);
+	}
+
+	public static com.liferay.commerce.product.model.CPDisplayLayout fetchCPDisplayLayout(
 		long CPFriendlyURLEntryId) {
 		return getService().fetchCPDisplayLayout(CPFriendlyURLEntryId);
 	}
@@ -134,12 +130,6 @@ public class CPDisplayLayoutLocalServiceUtil {
 		long CPFriendlyURLEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPDisplayLayout(CPFriendlyURLEntryId);
-	}
-
-	public static com.liferay.commerce.product.model.CPDisplayLayout getCPDisplayLayout(
-		long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPDisplayLayout(classNameId, classPK);
 	}
 
 	/**

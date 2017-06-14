@@ -320,10 +320,8 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().buildUniqueUrlTitle(cpDefinition, languageId);
 	}
 
-	public static java.lang.String getDisplayPage(
-		com.liferay.commerce.product.model.CPDefinition cpDefinition)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDisplayPage(cpDefinition);
+	public static java.lang.String getLayoutUuid(long cpDefinitionId) {
+		return getService().getLayoutUuid(cpDefinitionId);
 	}
 
 	/**
@@ -335,9 +333,9 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.lang.String getUrlTitleMapAsXML(
-		com.liferay.commerce.product.model.CPDefinition cpDefinition) {
-		return getService().getUrlTitleMapAsXML(cpDefinition);
+	public static java.lang.String getUrlTitleMapAsXML(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUrlTitleMapAsXML(cpDefinitionId);
 	}
 
 	/**

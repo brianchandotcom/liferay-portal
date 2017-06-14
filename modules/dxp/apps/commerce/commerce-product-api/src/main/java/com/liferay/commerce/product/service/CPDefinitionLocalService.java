@@ -281,8 +281,7 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		java.lang.String languageId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getDisplayPage(CPDefinition cpDefinition)
-		throws PortalException;
+	public java.lang.String getLayoutUuid(long cpDefinitionId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -292,7 +291,8 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getUrlTitleMapAsXML(CPDefinition cpDefinition);
+	public java.lang.String getUrlTitleMapAsXML(long cpDefinitionId)
+		throws PortalException;
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.

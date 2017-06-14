@@ -345,10 +345,8 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 	}
 
 	@Override
-	public java.lang.String getDisplayPage(
-		com.liferay.commerce.product.model.CPDefinition cpDefinition)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLocalService.getDisplayPage(cpDefinition);
+	public java.lang.String getLayoutUuid(long cpDefinitionId) {
+		return _cpDefinitionLocalService.getLayoutUuid(cpDefinitionId);
 	}
 
 	/**
@@ -362,9 +360,9 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 	}
 
 	@Override
-	public java.lang.String getUrlTitleMapAsXML(
-		com.liferay.commerce.product.model.CPDefinition cpDefinition) {
-		return _cpDefinitionLocalService.getUrlTitleMapAsXML(cpDefinition);
+	public java.lang.String getUrlTitleMapAsXML(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLocalService.getUrlTitleMapAsXML(cpDefinitionId);
 	}
 
 	/**

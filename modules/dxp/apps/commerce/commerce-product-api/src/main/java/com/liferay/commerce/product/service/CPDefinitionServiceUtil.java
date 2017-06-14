@@ -71,12 +71,6 @@ public class CPDefinitionServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition deleteCPDefinition(
-		com.liferay.commerce.product.model.CPDefinition cpDefinition)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPDefinition(cpDefinition);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinition deleteCPDefinition(
 		long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCPDefinition(cpDefinitionId);
@@ -154,10 +148,9 @@ public class CPDefinitionServiceUtil {
 			status);
 	}
 
-	public static java.lang.String getDisplayPage(
-		com.liferay.commerce.product.model.CPDefinition cpDefinition)
+	public static java.lang.String getLayoutUuid(long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDisplayPage(cpDefinition);
+		return getService().getLayoutUuid(cpDefinitionId);
 	}
 
 	/**
@@ -169,9 +162,9 @@ public class CPDefinitionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.lang.String getUrlTitleMapAsXML(
-		com.liferay.commerce.product.model.CPDefinition cpDefinition) {
-		return getService().getUrlTitleMapAsXML(cpDefinition);
+	public static java.lang.String getUrlTitleMapAsXML(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUrlTitleMapAsXML(cpDefinitionId);
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(

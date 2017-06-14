@@ -78,10 +78,6 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 		long classPK, java.lang.String layoutUuid, ServiceContext serviceContext)
 		throws PortalException;
 
-	public CPDisplayLayout addCPDisplayLayout(long classNameId, long classPK,
-		java.lang.String layoutUuid, ServiceContext serviceContext)
-		throws PortalException;
-
 	/**
 	* Creates a new cp display layout with the primary key. Does not add the cp display layout to the database.
 	*
@@ -112,6 +108,10 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDisplayLayout fetchCPDisplayLayout(java.lang.Class<?> clazz,
+		long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDisplayLayout fetchCPDisplayLayout(long CPFriendlyURLEntryId);
 
 	/**
@@ -134,10 +134,6 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDisplayLayout getCPDisplayLayout(long CPFriendlyURLEntryId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDisplayLayout getCPDisplayLayout(long classNameId, long classPK)
 		throws PortalException;
 
 	/**

@@ -81,9 +81,6 @@ public interface CPDefinitionService extends BaseService {
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPDefinition deleteCPDefinition(CPDefinition cpDefinition)
-		throws PortalException;
-
 	public CPDefinition deleteCPDefinition(long cpDefinitionId)
 		throws PortalException;
 
@@ -129,7 +126,7 @@ public interface CPDefinitionService extends BaseService {
 		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getDisplayPage(CPDefinition cpDefinition)
+	public java.lang.String getLayoutUuid(long cpDefinitionId)
 		throws PortalException;
 
 	/**
@@ -140,7 +137,8 @@ public interface CPDefinitionService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getUrlTitleMapAsXML(CPDefinition cpDefinition);
+	public java.lang.String getUrlTitleMapAsXML(long cpDefinitionId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinition> getCPDefinitions(long groupId,

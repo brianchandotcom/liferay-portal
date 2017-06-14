@@ -8,7 +8,7 @@ Cody Hoag (GitHub handle: codyhoag).
 ## Text Styles
 
 Title, phrase, and sentence are the three types of text styles used in Liferay's
-language keys. They're described described below.
+language keys. They're described below.
 
 ### Title
 

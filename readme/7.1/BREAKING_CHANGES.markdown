@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `24a4f24`.*
+*This document has been reviewed through commit `327db2f96b5c`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -87,8 +87,7 @@ more generic (e.g., `entityid` and `entityname`).
 
 #### Who is affected?
 
-This affects anyone who is passing selector specific data attributes to a
-selector.
+This affects anyone passing selector specific data attributes to a selector.
 
 #### How should I update my code?
 
@@ -167,7 +166,7 @@ Administration to an OSGI configuration named
 
 #### Who is affected?
 
-This affects anyone who is using the following portlet properties:
+This affects anyone using the following portlet properties:
 
 - `users.image.check.token`
 - `users.image.max.size`
@@ -205,7 +204,7 @@ Administration to an OSGi configuration named `CaptchaConfiguration.java` in the
 
 #### Who is affected?
 
-This affects anyone who is using the following portal properties:
+This affects anyone using the following portal properties:
 
 - `captcha.max.challenges`
 - `captcha.check.portal.create_account`
@@ -256,7 +255,7 @@ configuration named `OpenOfficeConfiguration.java` in the
 
 #### Who is affected?
 
-This affects anyone who is using the following portal properties:
+This affects anyone using the following portal properties:
 
 - `openoffice.cache.enabled`
 - `openoffice.server.enabled`
@@ -324,13 +323,13 @@ more information about this in the `portal.properties` file.
 
 #### What changed?
 
-The Upload Servlet Request properties have been moved from `portal.properties`
-and Server Administration to an OSGi configuration named
-`UploadServletRequestConfiguration.java` in the `portal-upload` module.
+The Upload Servlet Request properties have been moved from the
+`portal.properties` file and Server Administration to an OSGi configuration
+named `UploadServletRequestConfiguration.java` in the `portal-upload` module.
 
 #### Who is affected?
 
-This affects anyone who is using the following portal properties:
+This affects anyone using the following portal properties:
 
 - `com.liferay.portal.upload.UploadServletRequestImpl.max.size`
 - `com.liferay.portal.upload.UploadServletRequestImpl.temp.dir`
@@ -340,7 +339,8 @@ This affects anyone who is using the following portal properties:
 Instead of overriding the `portal.properties` file, you can manage the
 properties from Portal's configuration administrator. This can be accessed by
 navigating to Liferay Portal's *Control Panel* &rarr; *Configuration* &rarr;
-*System Settings* &rarr; *Upload Servlet Request* and editing the settings there.
+*System Settings* &rarr; *Upload Servlet Request* and editing the settings
+there.
 
 If you would like to include the new configuration in your application, follow
 the instructions for

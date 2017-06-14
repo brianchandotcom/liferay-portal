@@ -19,7 +19,10 @@ import com.liferay.trash.kernel.model.TrashEntry;
 
 /**
  * @author Zsolt Berentey
+ * @deprecated As of 7.0.0, replaced by {@link
+ *            com.liferay.trash.model.impl.TrashEntryImpl}
  */
+@Deprecated
 public class TrashEntryImpl extends TrashEntryBaseImpl {
 
 	@Override

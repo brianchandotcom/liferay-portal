@@ -15,10 +15,13 @@
 package com.liferay.portal.tools.bundle.support.maven;
 
 import com.liferay.portal.tools.bundle.support.commands.InitBundleCommand;
+import com.liferay.portal.tools.bundle.support.internal.BundleSupportConstants;
 import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.MavenUtil;
 
 import java.io.File;
+
+import java.net.URL;
 
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -31,7 +34,7 @@ import org.apache.maven.settings.Proxy;
  * @author Andrea Di Giorgi
  */
 @Mojo(inheritByDefault = false, name = "init")
-public class InitBundleMojo extends AbstractBundleMojo {
+public class InitBundleMojo extends AbstractLiferayMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {
@@ -95,6 +98,42 @@ public class InitBundleMojo extends AbstractBundleMojo {
 			}
 		}
 	}
+
+	@Parameter(
+		defaultValue = "${user.home}/" + BundleSupportConstants.DEFAULT_BUNDLE_CACHE_DIR_NAME
+	)
+	protected File cacheDir;
+
+	@Parameter(defaultValue = "configs")
+	protected String configs;
+
+	@Parameter(defaultValue = BundleSupportConstants.DEFAULT_ENVIRONMENT)
+	protected String environment;
+
+	@Parameter
+	protected String password;
+
+	@Parameter(
+		defaultValue = "" + BundleSupportConstants.DEFAULT_STRIP_COMPONENTS
+	)
+	protected int stripComponents;
+
+	@Parameter
+	protected boolean token;
+
+	@Parameter(
+		defaultValue = "${user.home}/" + BundleSupportConstants.DEFAULT_TOKEN_FILE_NAME
+	)
+	protected File tokenFile;
+
+	@Parameter(
+		defaultValue = BundleSupportConstants.DEFAULT_BUNDLE_URL,
+		required = true
+	)
+	protected URL url;
+
+	@Parameter
+	protected String userName;
 
 	@Parameter(property = "session", readonly = true)
 	private MavenSession _mavenSession;

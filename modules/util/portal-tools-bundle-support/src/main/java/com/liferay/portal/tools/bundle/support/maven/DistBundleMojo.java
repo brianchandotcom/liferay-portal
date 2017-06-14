@@ -15,7 +15,6 @@
 package com.liferay.portal.tools.bundle.support.maven;
 
 import com.liferay.portal.tools.bundle.support.commands.DistBundleCommand;
-import com.liferay.portal.tools.bundle.support.commands.InitBundleCommand;
 import com.liferay.portal.tools.bundle.support.internal.BundleSupportConstants;
 import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
@@ -34,9 +33,10 @@ import org.apache.maven.project.MavenProject;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 @Mojo(name = "dist")
-public class DistBundleMojo extends AbstractBundleMojo {
+public class DistBundleMojo extends InitBundleMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {
@@ -85,19 +85,7 @@ public class DistBundleMojo extends AbstractBundleMojo {
 
 				File liferayHomeDir = getLiferayHomeDir();
 
-				InitBundleCommand initBundleCommand = new InitBundleCommand();
-
-				initBundleCommand.setCacheDir(cacheDir);
-				initBundleCommand.setConfigsDir(
-					new File(project.getBasedir(), configs));
-				initBundleCommand.setEnvironment(environment);
-				initBundleCommand.setLiferayHomeDir(liferayHomeDir);
-				initBundleCommand.setPassword(password);
-				initBundleCommand.setStripComponents(stripComponents);
-				initBundleCommand.setUrl(url);
-				initBundleCommand.setUserName(userName);
-
-				initBundleCommand.execute();
+				super.execute();
 
 				DistBundleCommand distBundleCommand = new DistBundleCommand();
 
@@ -110,6 +98,9 @@ public class DistBundleMojo extends AbstractBundleMojo {
 
 				FileUtil.deleteDirectory(liferayHomeDir.toPath());
 			}
+		}
+		catch (MojoExecutionException mee) {
+			throw mee;
 		}
 		catch (Exception e) {
 			throw new MojoExecutionException(

@@ -39,8 +39,8 @@ public class CPDisplayLayoutLocalServiceImpl
 
 	@Override
 	public CPDisplayLayout addCPDisplayLayout(
-		long classNameId, long classPK, String layoutUuid,
-		ServiceContext serviceContext)
+			long classNameId, long classPK, String layoutUuid,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDisplayLayout oldCPDisplayLayout =
@@ -66,8 +66,7 @@ public class CPDisplayLayoutLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCPDisplayLayout(
-			Class<?> clazz, long classPK)
+	public void deleteCPDisplayLayout(Class<?> clazz, long classPK)
 		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
@@ -76,8 +75,7 @@ public class CPDisplayLayoutLocalServiceImpl
 	}
 
 	@Override
-	public CPDisplayLayout getCPDisplayLayout(
-			long classNameId, long classPK)
+	public CPDisplayLayout getCPDisplayLayout(long classNameId, long classPK)
 		throws PortalException {
 
 		return cpDisplayLayoutPersistence.findByC_C(classNameId, classPK);

@@ -51,7 +51,7 @@ if (Validator.isNotNull(layoutUuid)) {
 
 	<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
 
-	<aui:field-wrapper helpMessage="display-page-help" label="display-page">
+	<aui:field-wrapper helpMessage="product-display-page-help" label="product-display-page">
 		<p class="text-default">
 			<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
 				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
@@ -98,7 +98,7 @@ if (Validator.isNotNull(layoutUuid)) {
 						}
 					},
 					'strings.add': '<liferay-ui:message key="done" />',
-					title: '<liferay-ui:message key="select-page" />',
+					title: '<liferay-ui:message key="select-product-display-page" />',
 					url: '<%= cpDefinitionsDisplayContext.getItemSelectorUrl() %>'
 				}
 			);

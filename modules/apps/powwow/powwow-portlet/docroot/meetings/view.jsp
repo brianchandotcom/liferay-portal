@@ -76,7 +76,7 @@ else {
 					<liferay-ui:message key="meeting-info" />
 				</h3>
 
-				<c:if test="<%= !powwowMeetingHost && powwowMeeting.getStatus() == PowwowMeetingConstants.STATUS_SCHEDULED %>">
+				<c:if test="<%= !powwowMeetingHost && (powwowMeeting.getStatus() == PowwowMeetingConstants.STATUS_SCHEDULED) %>">
 					<div class="alert">
 						<liferay-ui:message key="the-meeting-you-have-requested-has-not-yet-started" />
 

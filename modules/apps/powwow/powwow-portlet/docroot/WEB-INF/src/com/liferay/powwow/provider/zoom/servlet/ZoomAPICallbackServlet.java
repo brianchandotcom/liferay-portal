@@ -115,6 +115,7 @@ public class ZoomAPICallbackServlet extends HttpServlet {
 			searchContext, booleanQuery, BooleanClauseOccur.MUST.getName());
 
 		searchContext.setBooleanClauses(new BooleanClause[] {booleanClause});
+
 		searchContext.setCompanyId(companyId);
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(PowwowMeeting.class);

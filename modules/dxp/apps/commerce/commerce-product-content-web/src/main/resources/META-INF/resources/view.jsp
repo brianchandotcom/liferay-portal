@@ -18,8 +18,6 @@
 
 <%
 CPDefinition cpDefinition = (CPDefinition)request.getAttribute(CPWebKeys.CP_DEFINITION);
-
-long cpDefinitionId = ParamUtil.getLong(request, "cpDefinitionId");
 %>
 
 <c:if test="<%= cpDefinition != null %>">

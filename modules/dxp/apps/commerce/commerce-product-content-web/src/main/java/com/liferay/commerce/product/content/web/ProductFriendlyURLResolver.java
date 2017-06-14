@@ -103,17 +103,6 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		actualParams.put("p_p_mode", new String[] {"view"});
 
-		String namespace = _portal.getPortletNamespace(
-			CPPortletKeys.CP_CONTENT_WEB);
-
-		actualParams.put(
-			namespace + "cpDefinitionId",
-			new String[] {String.valueOf(cpDefinition.getCPDefinitionId())});
-
-		actualParams.put(
-			namespace + "urlTitle",
-			new String[] {cpFriendlyURLEntry.getUrlTitle()});
-
 		request.setAttribute(CPWebKeys.CP_DEFINITION, cpDefinition);
 
 		String queryString = _http.parameterMapToString(actualParams, false);

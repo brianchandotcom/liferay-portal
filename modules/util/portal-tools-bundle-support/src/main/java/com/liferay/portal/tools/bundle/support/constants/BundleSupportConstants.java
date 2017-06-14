@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.bundle.support.internal;
+package com.liferay.portal.tools.bundle.support.constants;
 
 import java.io.File;
 

@@ -15,7 +15,7 @@
 package com.liferay.portal.tools.bundle.support.maven;
 
 import com.liferay.portal.tools.bundle.support.commands.InitBundleCommand;
-import com.liferay.portal.tools.bundle.support.internal.BundleSupportConstants;
+import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
 import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.MavenUtil;
 

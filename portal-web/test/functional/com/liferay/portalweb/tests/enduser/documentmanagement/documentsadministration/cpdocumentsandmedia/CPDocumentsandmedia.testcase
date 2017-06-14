@@ -63,12 +63,14 @@
 		</execute>
 
 		<execute macro="DMDocument#addContractCP">
-			<var name="dmContractDealName" value="Deal Name" />
+			<var name="dmContractDealName" value="DM Contract Deal Name" />
 			<var name="dmContractDescription" value="DM Contract Description" />
-			<var name="dmContractFile" value="Document_1.txt" />
-			<var name="dmContractLegalReviewer" value="Legal Reviewer" />
-			<var name="dmContractSigningAuthority" value="Signing Authority" />
+			<var name="dmContractFile" value="Document_1.pdf" />
+			<var name="dmContractLegalReviewer" value="DM Contract Legal Reviewer" />
+			<var name="dmContractSigningAuthority" value="DM Contract Signing Authority" />
 			<var name="dmContractTitle" value="DM Contract Title" />
+			<var name="effectiveDate" value="06/01/2017" />
+			<var name="expirationDate" value="06/15/2017" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoDocumentCP">
@@ -77,8 +79,34 @@
 
 		<execute macro="DMDocument#viewDocumentTypePG">
 			<var name="documentType" value="Contract" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentTypePG">
+			<var name="dateValue" value="6/1/17" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentTypePG">
+			<var name="dateValue" value="6/15/17" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentTypePG">
 			<var name="selectOption" value="NDA" />
-			<var name="textContent" value="Legal Reviewer" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentTypePG">
+			<var name="selectOption" value="Draft" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentTypePG">
+			<var name="textContent" value="DM Contract Legal Reviewer" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentTypePG">
+			<var name="textContent" value="DM Contract Signing Authority" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentTypePG">
+			<var name="textContent" value="DM Contract Deal Name" />
 		</execute>
 	</command>
 

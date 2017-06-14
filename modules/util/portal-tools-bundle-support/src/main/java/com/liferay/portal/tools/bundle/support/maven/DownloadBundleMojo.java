@@ -72,7 +72,7 @@ public class DownloadBundleMojo extends AbstractBundleMojo {
 			downloadCommand.execute();
 		}
 		catch (Exception e) {
-			throw new MojoExecutionException("Unable to initialize bundle", e);
+			throw new MojoExecutionException("Unable to download bundle", e);
 		}
 		finally {
 			if (proxy != null) {

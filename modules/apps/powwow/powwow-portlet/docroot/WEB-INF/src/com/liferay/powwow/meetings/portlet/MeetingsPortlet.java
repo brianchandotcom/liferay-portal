@@ -239,6 +239,7 @@ public class MeetingsPortlet extends MVCPortlet {
 					powwowMeetingId, name, type);
 
 			jsonObject.put("joinPowwowMeetingURL", joinPowwowMeetingURL);
+
 			jsonObject.put("success", Boolean.TRUE);
 		}
 		catch (Exception e) {
@@ -392,6 +393,7 @@ public class MeetingsPortlet extends MVCPortlet {
 				PowwowUtil.exportPowwowMeetingCalendar(powwowMeetingId));
 
 			resourceResponse.setContentLength(byteArrayOutputStream.size());
+
 			resourceResponse.setContentType(ContentTypes.TEXT_CALENDAR);
 
 			String contentDispositionHeader =
@@ -534,10 +536,12 @@ public class MeetingsPortlet extends MVCPortlet {
 				"emailBody",
 				powwowSubscriptionSender.getEmailNotificationBody(
 					serviceContext.getLocale()));
+
 			jsonObject.put(
 				"emailSubject",
 				powwowSubscriptionSender.getEmailNotificationSubject(
 					serviceContext.getLocale()));
+
 			jsonObject.put("success", Boolean.TRUE);
 		}
 		catch (Exception e) {

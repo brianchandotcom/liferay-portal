@@ -44,7 +44,7 @@
 		CalendarBooking calendarBooking = CalendarBookingServiceUtil.fetchCalendarBooking(powwowMeeting.getCalendarBookingId());
 		%>
 
-		<c:if test="<%= (calendarBooking != null) && (!calendarBooking.isInTrash()) %>">
+		<c:if test="<%= (calendarBooking != null) && !calendarBooking.isInTrash() %>">
 			<div class="meeting-time">
 				<span title="<%= longDateFormat.format(calendarBooking.getStartTime()) %>"><%= shortDateFormat.format(calendarBooking.getStartTime()) %></span>
 

@@ -63,8 +63,7 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 		brandingFeatures.add("highest-security");
 		brandingFeatures.add("supports-windows-mac-and-linux");
 		brandingFeatures.add(
-			"includes-audio-video-chat-screen-sharing-and-document" +
-				"-sharing");
+			"includes-audio-video-chat-screen-sharing-and-document-sharing");
 
 		_brandingFeatures = brandingFeatures;
 
@@ -390,9 +389,10 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 		PowwowServer powwowServer, PowwowMeeting powwowMeeting, String name,
 		User user, Map<String, String> options) {
 
-		if (isPowwowMeetingCreated(powwowServer, powwowMeeting)) {
-			if (!endPowwowMeeting(powwowServer, powwowMeeting))
-				throw new SystemException("Unable to update BBB meeting");
+		if (isPowwowMeetingCreated(powwowServer, powwowMeeting) &&
+			!endPowwowMeeting(powwowServer, powwowMeeting)) {
+
+			throw new SystemException("Unable to update BBB meeting");
 		}
 
 		Map<String, Serializable> providerTypeMetadataMap = addPowwowMeeting(

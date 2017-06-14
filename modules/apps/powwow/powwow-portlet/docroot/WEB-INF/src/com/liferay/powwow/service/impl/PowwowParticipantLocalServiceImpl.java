@@ -37,7 +37,7 @@ public class PowwowParticipantLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 
 		long powwowParticipantId = counterLocalService.increment();

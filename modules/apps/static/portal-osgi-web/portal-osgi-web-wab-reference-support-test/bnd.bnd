@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal OSGi Web WAB Reference Support Test
+Bundle-SymbolicName: com.liferay.portal.osgi.web.wab.reference.support.test
+Bundle-Version: 1.0.0
+Include-Resource: test-classes/integration
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Wab

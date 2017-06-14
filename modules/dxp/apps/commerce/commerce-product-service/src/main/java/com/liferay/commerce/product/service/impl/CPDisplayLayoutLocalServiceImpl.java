@@ -43,19 +43,17 @@ public class CPDisplayLayoutLocalServiceImpl
 		throws PortalException {
 
 		CPDisplayLayout oldCPDisplayLayout =
-			cpDisplayLayoutPersistence.fetchByC_C(
-				classNameId, classPK);
+			cpDisplayLayoutPersistence.fetchByC_C(classNameId, classPK);
 
 		if (oldCPDisplayLayout != null) {
 			oldCPDisplayLayout.setLayoutUuid(layoutUuid);
-			return cpDisplayLayoutPersistence.update(
-				oldCPDisplayLayout);
+			return cpDisplayLayoutPersistence.update(oldCPDisplayLayout);
 		}
 
 		long cpDisplayLayoutId = counterLocalService.increment();
 
-		CPDisplayLayout cpDisplayLayout =
-			createCPDisplayLayout(cpDisplayLayoutId);
+		CPDisplayLayout cpDisplayLayout = createCPDisplayLayout(
+			cpDisplayLayoutId);
 
 		cpDisplayLayout.setCompanyId(companyId);
 		cpDisplayLayout.setGroupId(groupId);
@@ -73,8 +71,7 @@ public class CPDisplayLayoutLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
-		cpDisplayLayoutPersistence.removeByC_C(
-			classNameId, classPK);
+		cpDisplayLayoutPersistence.removeByC_C(classNameId, classPK);
 	}
 
 	@Override
@@ -82,8 +79,7 @@ public class CPDisplayLayoutLocalServiceImpl
 			long companyId, long classNameId, long classPK)
 		throws PortalException {
 
-		return cpDisplayLayoutPersistence.findByC_C(
-			classNameId, classPK);
+		return cpDisplayLayoutPersistence.findByC_C(classNameId, classPK);
 	}
 
 }

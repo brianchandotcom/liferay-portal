@@ -19,6 +19,5 @@ import com.liferay.commerce.product.service.base.CPDisplayLayoutServiceBaseImpl;
 /**
  * @author Marco Leo
  */
-public class CPDisplayLayoutServiceImpl
-	extends CPDisplayLayoutServiceBaseImpl {
+public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 }

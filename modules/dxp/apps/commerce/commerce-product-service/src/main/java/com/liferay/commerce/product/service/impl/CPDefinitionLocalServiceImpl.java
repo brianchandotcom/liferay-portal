@@ -161,7 +161,7 @@ public class CPDefinitionLocalServiceImpl
 			urlTitleMap = _getUniqueUrlTitles(cpDefinition);
 		}
 
-		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntry(
+		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
 			groupId, serviceContext.getCompanyId(), CPDefinition.class,
 			cpDefinitionId, urlTitleMap);
 
@@ -663,7 +663,7 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product friendly URL
 
-		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntry(
+		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
 			groupId, serviceContext.getCompanyId(), CPDefinition.class,
 			cpDefinitionId, urlTitleMap);
 

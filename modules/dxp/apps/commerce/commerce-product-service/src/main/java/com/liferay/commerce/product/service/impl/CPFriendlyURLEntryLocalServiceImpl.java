@@ -40,14 +40,14 @@ public class CPFriendlyURLEntryLocalServiceImpl
 	extends CPFriendlyURLEntryLocalServiceBaseImpl {
 
 	@Override
-	public void addCPFriendlyURLEntry(
+	public void addCPFriendlyURLEntries(
 			long groupId, long companyId, Class<?> clazz, long classPK,
 			Map<Locale, String> urlTitleMap)
 		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
-		addCPFriendlyURLEntry(
+		addCPFriendlyURLEntries(
 			groupId, companyId, classNameId, classPK, urlTitleMap);
 	}
 
@@ -64,7 +64,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
-	public void addCPFriendlyURLEntry(
+	public void addCPFriendlyURLEntries(
 			long groupId, long companyId, long classNameId, long classPK,
 			Map<Locale, String> urlTitleMap)
 		throws PortalException {

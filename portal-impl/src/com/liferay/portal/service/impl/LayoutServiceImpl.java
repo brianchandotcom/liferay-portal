@@ -947,13 +947,14 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if there is a matching layout with the UUID, group, and
-	 * privacy.
+	 * Returns <code>true</code> if there is a matching layout with the UUID,
+	 * group, and privacy.
 	 *
 	 * @param  uuid the layout's UUID
 	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout is private to the group
-	 * @return <code>true</code> if the layout is found; <code>false</code> otherwise
+	 * @return <code>true</code> if the layout is found; <code>false</code>
+	 *         otherwise
 	 */
 	@Override
 	public boolean hasLayout(String uuid, long groupId, boolean privateLayout)

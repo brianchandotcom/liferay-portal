@@ -23,8 +23,8 @@ public class CPConstants {
 
 	public static final int ATTACHMENT_FILE_ENTRY_TYPE_OTHER = 1;
 
-	public static final String SERVICE_NAME = "com.liferay.commerce.product";
-
 	public static final String PRODUCT_URL_SEPARATOR = "/p/";
+
+	public static final String SERVICE_NAME = "com.liferay.commerce.product";
 
 }

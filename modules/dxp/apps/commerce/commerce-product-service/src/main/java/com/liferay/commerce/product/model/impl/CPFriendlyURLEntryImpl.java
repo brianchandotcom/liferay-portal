@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class CPFriendlyURLEntryImpl extends CPFriendlyURLEntryBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a cp friendly url entry model instance should use the {@link com.liferay.commerce.product.model.CPFriendlyURLEntry} interface instead.
 	 */
 	public CPFriendlyURLEntryImpl() {
 	}
+
 }

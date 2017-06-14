@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Marco Leo
  */
 @ProviderType
-public class CPAttachmentFileEntryExpirationDateException extends PortalException {
+public class CPAttachmentFileEntryExpirationDateException
+	extends PortalException {
 
 	public CPAttachmentFileEntryExpirationDateException() {
 	}
@@ -30,7 +31,9 @@ public class CPAttachmentFileEntryExpirationDateException extends PortalExceptio
 		super(msg);
 	}
 
-	public CPAttachmentFileEntryExpirationDateException(String msg, Throwable cause) {
+	public CPAttachmentFileEntryExpirationDateException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

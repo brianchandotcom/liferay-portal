@@ -62,7 +62,7 @@ if (Validator.isNotNull(layoutUuid)) {
 
 	<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
 
-	<aui:field-wrapper label="display-page" helpMessage="display-page-help">
+	<aui:field-wrapper helpMessage="display-page-help" label="display-page">
 		<p class="text-default">
 				<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
 					<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />

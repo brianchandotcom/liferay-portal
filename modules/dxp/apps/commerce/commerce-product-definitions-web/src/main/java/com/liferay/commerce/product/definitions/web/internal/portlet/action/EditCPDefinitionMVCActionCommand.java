@@ -126,9 +126,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		CPDefinition cpDefinition = null;
-
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		String backURL = ParamUtil.getString(
+			actionRequest, "backURL", redirect);
+
+		CPDefinition cpDefinition = null;
 
 		int workflowAction = ParamUtil.getInteger(
 			actionRequest, "workflowAction",
@@ -144,7 +146,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				cpDefinition = updateCPDefinition(actionRequest);
 
 				redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition, redirect);
+					actionRequest, cpDefinition, redirect, backURL);
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -159,7 +161,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
 				redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition, redirect);
+					actionRequest, cpDefinition, redirect, backURL);
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -185,7 +187,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 	protected String getSaveAndContinueRedirect(
 			ActionRequest actionRequest, CPDefinition cpDefinition,
-			String redirect)
+			String redirect, String backURL)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -198,6 +200,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "editProductDefinition");
 		portletURL.setParameter("redirect", redirect);
+		portletURL.setParameter("backURL", backURL);
 		portletURL.setParameter(
 			"cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
 

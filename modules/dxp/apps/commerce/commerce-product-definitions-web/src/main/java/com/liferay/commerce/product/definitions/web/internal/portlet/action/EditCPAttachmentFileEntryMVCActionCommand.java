@@ -94,8 +94,11 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String redirect = getSaveAndContinueRedirect(
-			actionRequest, actionResponse);
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		String backURL = ParamUtil.getString(
+			actionRequest, "backURL", redirect);
+
+		redirect = getSaveAndContinueRedirect(actionRequest, redirect, backURL);
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
@@ -118,7 +121,7 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 	}
 
 	protected String getSaveAndContinueRedirect(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, String redirect, String backURL)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -128,12 +131,24 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 			actionRequest, themeDisplay.getScopeGroup(),
 			CPDefinition.class.getName(), PortletProvider.Action.EDIT);
 
+		long cpAttachmentFileEntryId = ParamUtil.getLong(
+			actionRequest, "cpAttachmentFileEntryId");
+
+		if (cpAttachmentFileEntryId > 0) {
+			portletURL.setParameter(
+				"cpAttachmentFileEntryId",
+				String.valueOf(cpAttachmentFileEntryId));
+		}
+
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
+
 		String toolbarItem = ParamUtil.getString(actionRequest, "toolbarItem");
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "editCPAttachmentFileEntry");
+		portletURL.setParameter("redirect", redirect);
+		portletURL.setParameter("backURL", backURL);
 		portletURL.setParameter(
 			"cpDefinitionId", String.valueOf(cpDefinitionId));
 		portletURL.setParameter("toolbarItem", toolbarItem);

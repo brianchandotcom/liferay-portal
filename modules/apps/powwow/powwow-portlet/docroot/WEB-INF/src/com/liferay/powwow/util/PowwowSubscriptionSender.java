@@ -41,7 +41,7 @@ public class PowwowSubscriptionSender extends SubscriptionSender {
 			}
 		}
 		else {
-			processedBody = this.body;
+			processedBody = body;
 		}
 
 		return replaceContent(processedBody, locale, true);
@@ -63,7 +63,7 @@ public class PowwowSubscriptionSender extends SubscriptionSender {
 			}
 		}
 		else {
-			processedSubject = this.subject;
+			processedSubject = subject;
 		}
 
 		return replaceContent(processedSubject, locale, false);

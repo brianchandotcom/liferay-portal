@@ -139,5 +139,9 @@
 			<finder-column name="providerType" />
 			<finder-column name="active" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal.kernel" />
 	</entity>
 </service-builder>

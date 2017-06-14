@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.web;
+package com.liferay.commerce.product.content.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;

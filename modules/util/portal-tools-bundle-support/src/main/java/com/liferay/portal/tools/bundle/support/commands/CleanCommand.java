@@ -19,8 +19,9 @@ import com.beust.jcommander.Parameters;
 
 import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
 
+import java.io.File;
+
 import java.nio.file.Files;
-import java.nio.file.Path;
 
 /**
  * @author David Truong
@@ -34,17 +35,19 @@ public class CleanCommand extends BaseCommand {
 
 	@Override
 	public void execute() throws Exception {
-		String fileName = _fileName.substring(_fileName.lastIndexOf('/') + 1);
+		String fileName;
 
-		fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
+		if (File.separatorChar != '/') {
+			fileName = _fileName.replace(File.separatorChar, '/');
+		}
 
-		String deployDirName = BundleSupportUtil.getDeployDirName(fileName);
+		fileName = _fileName.substring(_fileName.lastIndexOf('/') + 1);
 
-		Path path = getLiferayHomePath();
+		String dirName = BundleSupportUtil.getDeployDirName(fileName);
 
-		path = path.resolve(deployDirName + fileName);
+		File file = new File(getLiferayHomeDir(), dirName + fileName);
 
-		Files.deleteIfExists(path);
+		Files.deleteIfExists(file.toPath());
 	}
 
 	public String getFileName() {

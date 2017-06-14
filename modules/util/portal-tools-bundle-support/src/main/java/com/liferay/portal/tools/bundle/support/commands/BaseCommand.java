@@ -18,8 +18,6 @@ import com.beust.jcommander.Parameter;
 
 import java.io.File;
 
-import java.nio.file.Path;
-
 /**
  * @author David Truong
  */
@@ -31,10 +29,6 @@ public abstract class BaseCommand implements Command {
 
 	public void setLiferayHomeDir(File liferayHomeDir) {
 		_liferayHomeDir = liferayHomeDir;
-	}
-
-	protected Path getLiferayHomePath() {
-		return _liferayHomeDir.toPath();
 	}
 
 	@Parameter(

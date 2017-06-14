@@ -46,6 +46,7 @@ public class CPOptionItemSelectorViewDisplayContext
 		_cpOptionService = cpOptionService;
 	}
 
+	@Override
 	public SearchContainer<CPOption> getSearchContainer()
 		throws PortalException {
 

@@ -146,6 +146,7 @@ public abstract class BaseCPDefinitionsSearchContainerDisplayContext<T>
 		return _orderByType;
 	}
 
+	@Override
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
 

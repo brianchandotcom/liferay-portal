@@ -56,6 +56,7 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		return _cpTypeServicesTracker.getCPType(name);
 	}
 
+	@Override
 	public SearchContainer<CPDefinition> getSearchContainer()
 		throws PortalException {
 

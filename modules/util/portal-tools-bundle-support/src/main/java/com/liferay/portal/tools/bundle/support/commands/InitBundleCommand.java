@@ -105,9 +105,7 @@ public class InitBundleCommand
 	private void _deleteBundle() throws IOException {
 		Path dirPath = getLiferayHomePath();
 
-		if (Files.exists(dirPath)) {
-			FileUtil.deleteDirectory(dirPath);
-		}
+		FileUtil.deleteDirectory(dirPath);
 	}
 
 	private void _fixPosixFilePermissions() throws IOException {

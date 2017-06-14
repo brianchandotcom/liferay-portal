@@ -1575,6 +1575,11 @@ Gradle Daemon:
 - [LPS-71201]: Allow to publish projects with a `.lfrbuild-releng-ignore` marker
 file from the master branch.
 
+## 3.7.5 - 2017-06-13
+
+### Changed
+- [LPS-73058]: Update the [Liferay Gradle Plugins] dependency to version 3.3.27.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1741,6 +1746,7 @@ file from the master branch.
 [LPS-72868]: https://issues.liferay.com/browse/LPS-72868
 [LPS-72914]: https://issues.liferay.com/browse/LPS-72914
 [LPS-72989]: https://issues.liferay.com/browse/LPS-72989
+[LPS-73058]: https://issues.liferay.com/browse/LPS-73058
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

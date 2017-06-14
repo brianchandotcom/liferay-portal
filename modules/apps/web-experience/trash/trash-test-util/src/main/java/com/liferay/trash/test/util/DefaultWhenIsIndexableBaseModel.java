@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
-import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
+import com.liferay.trash.service.TrashEntryLocalServiceUtil;
 
 /**
  * @author Cristina González

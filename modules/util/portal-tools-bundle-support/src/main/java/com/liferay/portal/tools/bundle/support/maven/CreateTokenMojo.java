@@ -15,13 +15,20 @@
 package com.liferay.portal.tools.bundle.support.maven;
 
 import com.liferay.portal.tools.bundle.support.commands.CreateTokenCommand;
+import com.liferay.portal.tools.bundle.support.internal.BundleSupportConstants;
+
+import java.io.File;
+
+import java.net.URL;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 @Mojo(name = "createToken")
 public class CreateTokenMojo extends AbstractMojo {
@@ -31,6 +38,11 @@ public class CreateTokenMojo extends AbstractMojo {
 		try {
 			CreateTokenCommand createTokenCommand = new CreateTokenCommand();
 
+			createTokenCommand.setEmailAddress(emailAddress);
+			createTokenCommand.setPassword(password);
+			createTokenCommand.setTokenFile(tokenFile);
+			createTokenCommand.setTokenUrl(tokenUrl);
+
 			createTokenCommand.execute();
 		}
 		catch (Exception e) {
@@ -38,5 +50,19 @@ public class CreateTokenMojo extends AbstractMojo {
 				"Unable to create Liferay.com download token", e);
 		}
 	}
+
+	@Parameter
+	protected String emailAddress;
+
+	@Parameter
+	protected String password;
+
+	@Parameter(
+		defaultValue = "${user.home}/" + BundleSupportConstants.DEFAULT_TOKEN_FILE_NAME
+	)
+	protected File tokenFile;
+
+	@Parameter(defaultValue = BundleSupportConstants.DEFAULT_BUNDLE_URL)
+	protected URL tokenUrl;
 
 }

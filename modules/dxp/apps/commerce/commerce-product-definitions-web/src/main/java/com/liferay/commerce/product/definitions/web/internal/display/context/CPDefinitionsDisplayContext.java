@@ -138,7 +138,7 @@ public class CPDefinitionsDisplayContext
 			return null;
 		}
 
-		return _cpDefinitionService.getDisplayPage(cpDefinition);
+		return _cpDefinitionService.getLayoutUuid(cpDefinition);
 	}
 
 	public String getNavigation() {

@@ -409,7 +409,7 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public String getDisplayPage(CPDefinition cpDefinition)
+	public String getLayoutUuid(CPDefinition cpDefinition)
 		throws PortalException {
 
 		String layoutUuid = null;

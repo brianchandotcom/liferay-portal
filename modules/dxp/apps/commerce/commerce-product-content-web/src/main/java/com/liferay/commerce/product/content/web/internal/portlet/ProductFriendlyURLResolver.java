@@ -172,7 +172,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 			long groupId, boolean privateLayout, CPDefinition cpDefinition)
 		throws PortalException {
 
-		String layoutUuid = _cpDefinitionService.getDisplayPage(cpDefinition);
+		String layoutUuid = _cpDefinitionService.getLayoutUuid(cpDefinition);
 
 		return _layoutService.getLayoutByUuidAndGroupId(
 			layoutUuid, groupId, privateLayout);

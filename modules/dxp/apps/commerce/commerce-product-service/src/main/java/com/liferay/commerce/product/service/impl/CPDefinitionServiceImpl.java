@@ -157,10 +157,10 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
-	public String getDisplayPage(CPDefinition cpDefinition)
+	public String getLayoutUuid(CPDefinition cpDefinition)
 		throws PortalException {
 
-		return cpDefinitionLocalService.getDisplayPage(cpDefinition);
+		return cpDefinitionLocalService.getLayoutUuid(cpDefinition);
 	}
 
 	@Override

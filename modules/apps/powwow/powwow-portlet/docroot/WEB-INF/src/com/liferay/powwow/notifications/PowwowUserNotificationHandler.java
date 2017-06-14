@@ -14,20 +14,20 @@
 
 package com.liferay.powwow.notifications;
 
-import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.service.PowwowMeetingLocalServiceUtil;
 import com.liferay.powwow.util.PowwowPortletKeys;
@@ -38,7 +38,6 @@ import javax.portlet.PortletURL;
 /**
  * @author Matthew Kong
  */
-
 public class PowwowUserNotificationHandler extends BaseUserNotificationHandler {
 
 	public PowwowUserNotificationHandler() {

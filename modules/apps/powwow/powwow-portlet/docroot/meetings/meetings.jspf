@@ -54,7 +54,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 		orderByType="<%= orderByType %>"
 		total="<%= PowwowMeetingLocalServiceUtil.getParticipantPowwowMeetingsCount(themeDisplay.getUserId(), statuses) %>"
 	>
-
 		<liferay-ui:search-container-results>
 
 			<%

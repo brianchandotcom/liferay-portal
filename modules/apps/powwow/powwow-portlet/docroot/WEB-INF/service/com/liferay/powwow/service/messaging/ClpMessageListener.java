@@ -16,7 +16,6 @@ package com.liferay.powwow.service.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-
 import com.liferay.powwow.service.ClpSerializer;
 import com.liferay.powwow.service.PowwowMeetingLocalServiceUtil;
 import com.liferay.powwow.service.PowwowMeetingServiceUtil;
@@ -28,6 +27,7 @@ import com.liferay.powwow.service.PowwowServerLocalServiceUtil;
  * @author Shinn Lok
  */
 public class ClpMessageListener extends BaseMessageListener {
+
 	public static String getServletContextName() {
 		return ClpSerializer.getServletContextName();
 	}
@@ -38,7 +38,8 @@ public class ClpMessageListener extends BaseMessageListener {
 		String servletContextName = message.getString("servletContextName");
 
 		if (command.equals("undeploy") &&
-				servletContextName.equals(getServletContextName())) {
+			servletContextName.equals(getServletContextName())) {
+
 			PowwowMeetingLocalServiceUtil.clearService();
 
 			PowwowMeetingServiceUtil.clearService();
@@ -48,4 +49,5 @@ public class ClpMessageListener extends BaseMessageListener {
 			PowwowServerLocalServiceUtil.clearService();
 		}
 	}
+
 }

@@ -325,6 +325,45 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 		assertSearchNoHits("\"ONE\"" + ideographicSpace + "\"TWO\"");
 	}
 
+	protected void testWildcardCharacters() throws Exception {
+		addDocument("AAA+BBB-CCC{DDD]");
+		addDocument("AAA BBB CCC DDD");
+		addDocument("M*A*S*H");
+		addDocument("M... A... S... H");
+		addDocument("Who? When? Where?");
+		addDocument("Who. When. Where.");
+
+		assertSearch(
+			"AAA+???-CCC?DDD]",
+			Arrays.asList("AAA+BBB-CCC{DDD]", "AAA BBB CCC DDD"));
+		assertSearch(
+			"AAA+*{DDD*", Arrays.asList("AAA+BBB-CCC{DDD]", "AAA BBB CCC DDD"));
+		assertSearch("AA?+BB?-CC?{DD?]", Arrays.asList());
+		assertSearch("AA*+BB*-CC*{DD*]", Arrays.asList());
+
+		assertSearch("M*A*S*H", Arrays.asList("M*A*S*H", "M... A... S... H"));
+		assertSearch("M A S H", Arrays.asList("M*A*S*H", "M... A... S... H"));
+		assertSearch(
+			"M* A* *S *H", Arrays.asList("M*A*S*H", "M... A... S... H"));
+
+		assertSearch(
+			"When?", Arrays.asList("Who? When? Where?", "Who. When. Where."));
+		assertSearch(
+			"Who? When?",
+			Arrays.asList("Who? When? Where?", "Who. When. Where."));
+		assertSearch(
+			"Who? *en? Where?",
+			Arrays.asList("Who? When? Where?", "Who. When. Where."));
+		assertSearch(
+			"Who? * Where?",
+			Arrays.asList("Who? When? Where?", "Who. When. Where."));
+		assertSearch(
+			"Who?   When?   Where?",
+			Arrays.asList("Who? When? Where?", "Who. When. Where."));
+		assertSearch("Wh?? W?en? Wher??", Arrays.asList());
+		assertSearch("Wh* W*en* Wher*", Arrays.asList());
+	}
+
 	protected void testWordPrefixes() throws Exception {
 		addDocument("Nametag");
 		addDocument("NA-META-G");

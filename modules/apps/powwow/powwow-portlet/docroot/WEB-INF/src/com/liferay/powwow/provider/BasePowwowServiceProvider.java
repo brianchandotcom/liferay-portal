@@ -270,8 +270,7 @@ public abstract class BasePowwowServiceProvider
 
 	public String sendRequest(Http.Options options) {
 		for (int i = 0;
-				i < PortletPropsValues.POWWOW_PROVIDER_API_RETRY_ATTEMPTS;
-					i++) {
+			i < PortletPropsValues.POWWOW_PROVIDER_API_RETRY_ATTEMPTS; i++) {
 
 			try {
 				return HttpUtil.URLtoString(options);

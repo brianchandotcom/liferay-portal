@@ -41,8 +41,6 @@ import com.liferay.powwow.model.PowwowParticipant;
 import com.liferay.powwow.model.PowwowParticipantConstants;
 import com.liferay.powwow.model.PowwowServer;
 import com.liferay.powwow.provider.PowwowServiceProviderUtil;
-import com.liferay.powwow.service.PowwowMeetingLocalServiceUtil;
-import com.liferay.powwow.service.PowwowServerLocalServiceUtil;
 import com.liferay.powwow.service.base.PowwowMeetingLocalServiceBaseImpl;
 import com.liferay.powwow.util.PowwowUtil;
 
@@ -74,7 +72,7 @@ public class PowwowMeetingLocalServiceImpl
 
 		// Powwow meeting
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 
 		long powwowMeetingId = counterLocalService.increment();
@@ -116,12 +114,11 @@ public class PowwowMeetingLocalServiceImpl
 	@Override
 	public void checkPowwowMeetings() throws PortalException {
 		List<PowwowMeeting> powwowMeetings =
-			PowwowMeetingLocalServiceUtil.getPowwowMeetings(
-				PowwowMeetingConstants.STATUS_IN_PROGRESS);
+			getPowwowMeetings(PowwowMeetingConstants.STATUS_IN_PROGRESS);
 
 		for (PowwowMeeting powwowMeeting : powwowMeetings) {
 			PowwowServer powwowServer =
-				PowwowServerLocalServiceUtil.getPowwowServer(
+				powwowServerLocalService.getPowwowServer(
 					powwowMeeting.getPowwowServerId());
 
 			if (!PowwowServiceProviderUtil.isServerActive(powwowServer)) {
@@ -131,7 +128,7 @@ public class PowwowMeetingLocalServiceImpl
 			if (!PowwowServiceProviderUtil.isPowwowMeetingRunning(
 					powwowMeeting.getPowwowMeetingId())) {
 
-				PowwowMeetingLocalServiceUtil.updateStatus(
+				updateStatus(
 					powwowMeeting.getPowwowMeetingId(),
 					PowwowMeetingConstants.STATUS_COMPLETED);
 			}

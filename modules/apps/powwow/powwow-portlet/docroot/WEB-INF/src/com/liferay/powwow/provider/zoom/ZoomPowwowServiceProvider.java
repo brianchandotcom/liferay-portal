@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import net.htmlparser.jericho.Element;
@@ -69,8 +70,8 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		brandingFeatures.add("trusted-security");
 		brandingFeatures.add("supports-windows-and-mac");
 		brandingFeatures.add(
-			"includes-audio-video-chat-screen-sharing-and-native-ios-" +
-				"android-support");
+			"includes-audio-video-chat-screen-sharing-and-native-ios-android-" +
+				"support");
 
 		_brandingFeatures = brandingFeatures;
 
@@ -150,9 +151,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 			}
 		}
 		catch (Exception e) {
-			if (_log.isErrorEnabled()) {
-				_log.error(e);
-			}
+			_log.error(e);
 		}
 
 		return false;
@@ -444,7 +443,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 				String number = HtmlUtil.extractText(numberElement.toString());
 
-				if (Validator.equals(country, "United States")) {
+				if (Objects.equals(country, "United States")) {
 					_joinByPhoneDefaultNumbers.add(number);
 				}
 
@@ -596,9 +595,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 			}
 		}
 		catch (Exception e) {
-			if (_log.isErrorEnabled()) {
-				_log.error(e);
-			}
+			_log.error(e);
 		}
 
 		return false;

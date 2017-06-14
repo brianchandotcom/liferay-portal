@@ -102,7 +102,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 		String saveButtonLabel = "save";
 
-		if ((cpDefinition == null) || cpDefinition.isDraft() || cpDefinition.isApproved()) {
+		if ((cpDefinition == null) || cpDefinition.isDraft() || cpDefinition.isApproved() || cpDefinition.isExpired() || cpDefinition.isScheduled()) {
 			saveButtonLabel = "save-as-draft";
 		}
 

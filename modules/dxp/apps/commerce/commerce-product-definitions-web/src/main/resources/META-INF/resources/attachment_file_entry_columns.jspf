@@ -89,7 +89,6 @@ for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 	property="displayDate"
 />
 
-
 <liferay-ui:search-container-column-jsp
 	cssClass="entry-action-column"
 	path="/attachment_file_entry_action.jsp"

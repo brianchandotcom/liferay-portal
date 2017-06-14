@@ -87,7 +87,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= cpAttachmentFileEntriesDisplayContext.getOrderByCol() %>"
 			orderByType="<%= cpAttachmentFileEntriesDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"priority", "create-date", "display-date"} %>'
+			orderColumns='<%= new String[] {"priority", "modified-date", "display-date"} %>'
 			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>

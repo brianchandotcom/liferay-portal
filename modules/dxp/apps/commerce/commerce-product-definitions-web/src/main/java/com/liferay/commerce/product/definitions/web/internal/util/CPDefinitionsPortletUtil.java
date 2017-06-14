@@ -20,8 +20,8 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.search.CPInstanceIndexer;
-import com.liferay.commerce.product.util.comparator.CPAttachmentFileEntryCreateDateComparator;
 import com.liferay.commerce.product.util.comparator.CPAttachmentFileEntryDisplayDateComparator;
+import com.liferay.commerce.product.util.comparator.CPAttachmentFileEntryModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPAttachmentFileEntryPriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionModifiedDateComparator;
@@ -59,8 +59,8 @@ public class CPDefinitionsPortletUtil {
 
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator = null;
 
-		if (orderByCol.equals("create-date")) {
-			orderByComparator = new CPAttachmentFileEntryCreateDateComparator(
+		if (orderByCol.equals("modified-date")) {
+			orderByComparator = new CPAttachmentFileEntryModifiedDateComparator(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("display-date")) {

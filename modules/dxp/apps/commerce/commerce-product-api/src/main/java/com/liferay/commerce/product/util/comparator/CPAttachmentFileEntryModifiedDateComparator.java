@@ -21,20 +21,20 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Marco Leo
  */
-public class CPAttachmentFileEntryCreateDateComparator
+public class CPAttachmentFileEntryModifiedDateComparator
 	extends OrderByComparator<CPAttachmentFileEntry> {
 
-	public static final String ORDER_BY_ASC = "createDate ASC";
+	public static final String ORDER_BY_ASC = "modifiedDate ASC";
 
-	public static final String ORDER_BY_DESC = "createDate DESC";
+	public static final String ORDER_BY_DESC = "modifiedDate DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"createDate"};
+	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public CPAttachmentFileEntryCreateDateComparator() {
+	public CPAttachmentFileEntryModifiedDateComparator() {
 		this(false);
 	}
 
-	public CPAttachmentFileEntryCreateDateComparator(boolean ascending) {
+	public CPAttachmentFileEntryModifiedDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
@@ -44,8 +44,8 @@ public class CPAttachmentFileEntryCreateDateComparator
 		CPAttachmentFileEntry cpAttachmentFileEntry2) {
 
 		int value = DateUtil.compareTo(
-			cpAttachmentFileEntry1.getCreateDate(),
-			cpAttachmentFileEntry2.getCreateDate());
+			cpAttachmentFileEntry1.getModifiedDate(),
+			cpAttachmentFileEntry2.getModifiedDate());
 
 		if (_ascending) {
 			return value;

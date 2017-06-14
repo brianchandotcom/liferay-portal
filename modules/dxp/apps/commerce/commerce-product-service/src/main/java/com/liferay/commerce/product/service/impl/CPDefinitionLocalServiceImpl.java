@@ -409,20 +409,16 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public String getLayoutUuid(CPDefinition cpDefinition)
-		throws PortalException {
-
-		String layoutUuid = null;
-
+	public String getLayoutUuid(long cpDefinitionId) {
 		CPDisplayLayout cpDisplayLayout =
-			cpDisplayLayoutLocalService.getCPDisplayLayout(
-				CPDefinition.class, cpDefinition.getCPDefinitionId());
+			cpDisplayLayoutLocalService.fetchCPDisplayLayout(
+				CPDefinition.class, cpDefinitionId);
 
-		if (cpDisplayLayout != null) {
-			layoutUuid = cpDisplayLayout.getLayoutUuid();
+		if (cpDisplayLayout == null) {
+			return null;
 		}
 
-		return layoutUuid;
+		return cpDisplayLayout.getLayoutUuid();
 	}
 
 	@Override

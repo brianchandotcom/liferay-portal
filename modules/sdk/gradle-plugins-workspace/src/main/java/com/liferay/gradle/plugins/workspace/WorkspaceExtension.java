@@ -51,6 +51,8 @@ public class WorkspaceExtension {
 
 		_bundleDistRootDirName = _getProperty(
 			settings, "bundle.dist.root.dir", _BUNDLE_DIST_ROOT_DIR_NAME);
+		_bundleTokenDownload = _getProperty(
+			settings, "bundle.token.download", _BUNDLE_TOKEN_DOWNLOAD);
 		_bundleUrl = _getProperty(
 			settings, "bundle.url", BundleSupportConstants.DEFAULT_BUNDLE_URL);
 		_configsDir = _getProperty(
@@ -93,6 +95,10 @@ public class WorkspaceExtension {
 		return _rootProjectConfigurator;
 	}
 
+	public boolean isBundleTokenDownload() {
+		return GradleUtil.toBoolean(_bundleTokenDownload);
+	}
+
 	public ProjectConfigurator propertyMissing(String name) {
 		for (ProjectConfigurator projectConfigurator : _projectConfigurators) {
 			if (name.equals(projectConfigurator.getName())) {
@@ -105,6 +111,10 @@ public class WorkspaceExtension {
 
 	public void setBundleDistRootDirName(Object bundleDistRootDirName) {
 		_bundleDistRootDirName = bundleDistRootDirName;
+	}
+
+	public void setBundleTokenDownload(Object bundleTokenDownload) {
+		_bundleTokenDownload = bundleTokenDownload;
 	}
 
 	public void setBundleUrl(Object bundleUrl) {
@@ -123,6 +133,13 @@ public class WorkspaceExtension {
 		_homeDir = homeDir;
 	}
 
+	private boolean _getProperty(
+		Object object, String keySuffix, boolean defaultValue) {
+
+		return GradleUtil.getProperty(
+			object, WorkspacePlugin.PROPERTY_PREFIX + keySuffix, defaultValue);
+	}
+
 	private String _getProperty(
 		Object object, String keySuffix, String defaultValue) {
 
@@ -132,7 +149,10 @@ public class WorkspaceExtension {
 
 	private static final String _BUNDLE_DIST_ROOT_DIR_NAME = null;
 
+	private static final boolean _BUNDLE_TOKEN_DOWNLOAD = false;
+
 	private Object _bundleDistRootDirName;
+	private Object _bundleTokenDownload;
 	private Object _bundleUrl;
 	private Object _configsDir;
 	private Object _environment;

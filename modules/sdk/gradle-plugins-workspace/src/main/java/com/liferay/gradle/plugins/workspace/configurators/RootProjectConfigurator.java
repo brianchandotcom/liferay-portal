@@ -18,6 +18,7 @@ import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.tasks.CreateTokenTask;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
@@ -34,6 +35,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
+
+import org.apache.http.HttpHeaders;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -69,6 +72,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String CLEAN_TASK_NAME =
 		LifecycleBasePlugin.CLEAN_TASK_NAME;
+
+	public static final String CREATE_TOKEN_TASK_NAME = "createToken";
 
 	public static final String DIST_BUNDLE_TAR_TASK_NAME = "distBundleTar";
 
@@ -106,8 +111,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			GradleUtil.addDefaultRepositories(project);
 		}
 
+		CreateTokenTask createTokenTask = _addTaskCreateToken(project);
+
 		Download downloadBundleTask = _addTaskDownloadBundle(
-			project, workspaceExtension);
+			createTokenTask, workspaceExtension);
 
 		Copy distBundleTask = _addTaskDistBundle(
 			project, downloadBundleTask, workspaceExtension);
@@ -190,6 +197,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return copy;
 	}
 
+	private CreateTokenTask _addTaskCreateToken(Project project) {
+		CreateTokenTask createTokenTask = GradleUtil.addTask(
+			project, CREATE_TOKEN_TASK_NAME, CreateTokenTask.class);
+
+		createTokenTask.setDescription("Creates a Liferay.com download token.");
+		createTokenTask.setGroup(BUNDLE_GROUP);
+
+		return createTokenTask;
+	}
+
 	private Copy _addTaskDistBundle(
 		final Project project, Download downloadBundleTask,
 		WorkspaceExtension workspaceExtension) {
@@ -258,7 +275,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private Download _addTaskDownloadBundle(
-		Project project, final WorkspaceExtension workspaceExtension) {
+		final CreateTokenTask createTokenTask,
+		final WorkspaceExtension workspaceExtension) {
+
+		Project project = createTokenTask.getProject();
 
 		final Download download = GradleUtil.addTask(
 			project, DOWNLOAD_BUNDLE_TASK_NAME, Download.class);
@@ -270,6 +290,22 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		download.dest(destinationDir);
 
+		download.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					if (workspaceExtension.isBundleTokenDownload()) {
+						String token = FileUtil.read(
+							createTokenTask.getTokenFile());
+
+						download.header(
+							HttpHeaders.AUTHORIZATION, "Bearer " + token);
+					}
+				}
+
+			});
+
 		download.onlyIfNewer(true);
 		download.setDescription("Downloads the Liferay bundle zip file.");
 
@@ -278,6 +314,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
+					if (workspaceExtension.isBundleTokenDownload()) {
+						download.dependsOn(createTokenTask);
+					}
+
 					Object src = download.getSrc();
 
 					if (src != null) {

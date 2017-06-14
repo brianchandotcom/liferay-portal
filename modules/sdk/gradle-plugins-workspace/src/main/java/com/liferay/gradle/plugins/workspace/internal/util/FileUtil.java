@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.workspace.internal.util;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,6 +34,16 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 	public static void moveTree(File sourceRootDir, File destinationRootDir) {
 		try {
 			_moveTree(sourceRootDir.toPath(), destinationRootDir.toPath());
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
+		}
+	}
+
+	public static String read(File file) {
+		try {
+			return new String(
+				Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
 		}
 		catch (IOException ioe) {
 			throw new UncheckedIOException(ioe);

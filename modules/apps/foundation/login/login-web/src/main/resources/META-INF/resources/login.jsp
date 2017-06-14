@@ -88,7 +88,7 @@
 									</c:if>
 								</c:when>
 								<c:otherwise>
-									<liferay-ui:message arguments="<%= userPassword %>" key="thank-you-for-creating-an-account.-your-password-is-x" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= HtmlUtil.escape(userPassword) %>" key="thank-you-for-creating-an-account.-your-password-is-x" translateArguments="<%= false %>" />
 								</c:otherwise>
 							</c:choose>
 

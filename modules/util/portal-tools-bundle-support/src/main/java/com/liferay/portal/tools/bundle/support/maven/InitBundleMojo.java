@@ -104,7 +104,7 @@ public class InitBundleMojo extends AbstractLiferayMojo {
 	)
 	protected File cacheDir;
 
-	@Parameter(defaultValue = "configs")
+	@Parameter(defaultValue = BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME)
 	protected String configs;
 
 	@Parameter(defaultValue = BundleSupportConstants.DEFAULT_ENVIRONMENT)

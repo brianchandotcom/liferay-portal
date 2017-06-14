@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.bundle.support.maven;
 
+import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
 import com.liferay.portal.tools.bundle.support.internal.util.MavenUtil;
 
 import java.io.File;
@@ -55,7 +56,8 @@ public abstract class AbstractLiferayMojo extends AbstractMojo {
 	protected MavenProject project;
 
 	@Parameter(
-		alias = "liferayHome", defaultValue = "bundles",
+		alias = "liferayHome",
+		defaultValue = BundleSupportConstants.DEFAULT_LIFERAY_HOME_DIR_NAME,
 		property = "liferayHome", required = true
 	)
 	private String _liferayHome;

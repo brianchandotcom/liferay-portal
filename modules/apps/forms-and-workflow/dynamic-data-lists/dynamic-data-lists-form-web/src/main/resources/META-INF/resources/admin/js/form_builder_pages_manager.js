@@ -65,7 +65,7 @@ AUI.add(
 
 					mode: {
 						validator: '_validateMode',
-						value: 'pagination'
+						value: 'wizard'
 					},
 
 					strings: {

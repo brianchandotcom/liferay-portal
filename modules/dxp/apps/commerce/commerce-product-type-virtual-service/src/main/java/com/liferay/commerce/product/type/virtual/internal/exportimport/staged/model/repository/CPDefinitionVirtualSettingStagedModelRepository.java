@@ -58,18 +58,15 @@ public class CPDefinitionVirtualSettingStagedModelRepository
 		return _cpDefinitionVirtualSettingLocalService.
 			addCPDefinitionVirtualSetting(
 				cpDefinitionVirtualSetting.getCPDefinitionId(),
-				cpDefinitionVirtualSetting.isUseUrl(),
 				cpDefinitionVirtualSetting.getFileEntryId(),
 				cpDefinitionVirtualSetting.getUrl(),
 				cpDefinitionVirtualSetting.getActivationStatus(),
 				cpDefinitionVirtualSetting.getDuration(),
 				cpDefinitionVirtualSetting.getMaxUsages(),
 				cpDefinitionVirtualSetting.isUseSample(),
-				cpDefinitionVirtualSetting.isUseSampleUrl(),
 				cpDefinitionVirtualSetting.getSampleFileEntryId(),
 				cpDefinitionVirtualSetting.getSampleUrl(),
 				cpDefinitionVirtualSetting.isTermsOfUseRequired(),
-				cpDefinitionVirtualSetting.isUseTermsOfUseJournal(),
 				cpDefinitionVirtualSetting.getTermsOfUseContentMap(),
 				cpDefinitionVirtualSetting.
 					getTermsOfUseJournalArticleResourcePrimKey(),
@@ -151,18 +148,15 @@ public class CPDefinitionVirtualSettingStagedModelRepository
 		return _cpDefinitionVirtualSettingLocalService.
 			updateCPDefinitionVirtualSetting(
 				cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId(),
-				cpDefinitionVirtualSetting.isUseUrl(),
 				cpDefinitionVirtualSetting.getFileEntryId(),
 				cpDefinitionVirtualSetting.getUrl(),
 				cpDefinitionVirtualSetting.getActivationStatus(),
 				cpDefinitionVirtualSetting.getDuration(),
 				cpDefinitionVirtualSetting.getMaxUsages(),
 				cpDefinitionVirtualSetting.isUseSample(),
-				cpDefinitionVirtualSetting.isUseSampleUrl(),
 				cpDefinitionVirtualSetting.getSampleFileEntryId(),
 				cpDefinitionVirtualSetting.getSampleUrl(),
 				cpDefinitionVirtualSetting.isTermsOfUseRequired(),
-				cpDefinitionVirtualSetting.isUseTermsOfUseJournal(),
 				cpDefinitionVirtualSetting.getTermsOfUseContentMap(),
 				cpDefinitionVirtualSetting.
 					getTermsOfUseJournalArticleResourcePrimKey(),

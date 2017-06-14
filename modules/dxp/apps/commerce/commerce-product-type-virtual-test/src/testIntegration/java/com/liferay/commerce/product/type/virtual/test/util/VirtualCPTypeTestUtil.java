@@ -50,36 +50,29 @@ public class VirtualCPTypeTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		String url = null;
-		boolean useUrl = false;
 
 		if (fileEntryId <= 0) {
 			url = "http://www.example.com/download";
-			useUrl = true;
 		}
 
 		String sampleUrl = null;
-		boolean useSampleUrl = false;
 
 		if (sampleFileEntryId <= 0) {
 			sampleUrl = "http://www.example.com/sample";
 		}
 
 		Map<Locale, String> termsOfUseContentMap = null;
-		boolean useTermsOfUseJournal = true;
 
 		if (termsOfUseJournalArticleResourcePrimKey <= 0) {
 			termsOfUseContentMap = RandomTestUtil.randomLocaleStringMap();
-			useTermsOfUseJournal = false;
 		}
 
 		return CPDefinitionVirtualSettingLocalServiceUtil.
 			addCPDefinitionVirtualSetting(
-				cpDefinitionId, useUrl, fileEntryId, url,
-				RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
-				RandomTestUtil.randomInt(), true, useSampleUrl,
-				sampleFileEntryId, sampleUrl, true, useTermsOfUseJournal,
-				termsOfUseContentMap, termsOfUseJournalArticleResourcePrimKey,
-				serviceContext);
+				cpDefinitionId, fileEntryId, url, RandomTestUtil.randomString(),
+				RandomTestUtil.randomInt(), RandomTestUtil.randomInt(), true,
+				sampleFileEntryId, sampleUrl, true, termsOfUseContentMap,
+				termsOfUseJournalArticleResourcePrimKey, serviceContext);
 	}
 
 	public static JournalArticle addJournalArticle(long groupId)

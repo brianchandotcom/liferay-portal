@@ -101,10 +101,6 @@ public class CreateTokenCommand implements Command {
 		_tokenUrl = tokenUrl;
 	}
 
-	protected static final File DEFAULT_TOKEN_FILE = new File(
-		System.getProperty("user.home"),
-		BundleSupportConstants.DEFAULT_TOKEN_FILE_NAME);
-
 	private static final URL _DEFAULT_TOKEN_URL;
 
 	static {
@@ -132,7 +128,7 @@ public class CreateTokenCommand implements Command {
 		description = "The file where to store your Liferay.com download token.",
 		names = "--token-file"
 	)
-	private File _tokenFile = DEFAULT_TOKEN_FILE;
+	private File _tokenFile = BundleSupportConstants.DEFAULT_TOKEN_FILE;
 
 	private URL _tokenUrl = _DEFAULT_TOKEN_URL;
 

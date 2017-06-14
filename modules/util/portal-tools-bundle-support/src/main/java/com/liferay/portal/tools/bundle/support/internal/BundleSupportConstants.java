@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.bundle.support.internal;
 
+import java.io.File;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -34,10 +36,17 @@ public class BundleSupportConstants {
 
 	public static final int DEFAULT_STRIP_COMPONENTS = 1;
 
+	public static final File DEFAULT_TOKEN_FILE;
+
 	public static final String DEFAULT_TOKEN_FILE_NAME = ".liferay/token";
 
 	public static final String DEFAULT_TOKEN_URL =
 		"https://web.liferay.com/token-auth-portlet/api/secure/jsonws" +
 			"/tokenauthentry/add-token-auth-entry";
+
+	static {
+		DEFAULT_TOKEN_FILE = new File(
+			System.getProperty("user.home"), DEFAULT_TOKEN_FILE_NAME);
+	}
 
 }

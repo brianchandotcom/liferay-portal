@@ -22,6 +22,9 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 
 String productTypeName = BeanParamUtil.getString(cpDefinition, request, "productTypeName");
+
+CPType cpType = cpDefinitionsDisplayContext.getCPType(productTypeName);
+
 String layoutUuid = cpDefinitionsDisplayContext.getLayoutUuid();
 
 String layoutBreadcrumb = StringPool.BLANK;
@@ -45,7 +48,13 @@ if (Validator.isNotNull(layoutUuid)) {
 <aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
 <aui:fieldset cssClass="col-md-4">
-	<aui:input label="product-type" name="productTypeName" readOnly="readOnly" type="text" value="<%= productTypeName %>" />
+	<aui:input name="productTypeName" type="hidden" value="<%= productTypeName %>" />
+
+	<aui:field-wrapper label="product-type">
+		<h5 class="text-default">
+			<%= cpType.getLabel(locale) %>
+		</h5>
+	</aui:field-wrapper>
 
 	<aui:input label="SKU" name="baseSKU" />
 

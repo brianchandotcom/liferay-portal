@@ -54,21 +54,21 @@ public class CPDisplayLayoutLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPDisplayLayout addCPDisplayLayout(
-		long groupId, long companyId, java.lang.Class<?> clazz, long classPK,
-		java.lang.String layoutUuid)
+		java.lang.Class<?> clazz, long classPK, java.lang.String layoutUuid,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCPDisplayLayout(groupId, companyId, clazz, classPK,
-			layoutUuid);
+				   .addCPDisplayLayout(clazz, classPK, layoutUuid,
+			serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDisplayLayout addCPDisplayLayout(
-		long groupId, long companyId, long classNameId, long classPK,
-		java.lang.String layoutUuid)
+		long classNameId, long classPK, java.lang.String layoutUuid,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCPDisplayLayout(groupId, companyId, classNameId,
-			classPK, layoutUuid);
+				   .addCPDisplayLayout(classNameId, classPK, layoutUuid,
+			serviceContext);
 	}
 
 	/**
@@ -137,9 +137,9 @@ public class CPDisplayLayoutLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPDisplayLayout getCPDisplayLayout(
-		long companyId, long classNameId, long classPK)
+		long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPDisplayLayout(companyId, classNameId, classPK);
+		return getService().getCPDisplayLayout(classNameId, classPK);
 	}
 
 	/**
@@ -338,10 +338,10 @@ public class CPDisplayLayoutLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static void deleteCPDisplayLayout(long companyId,
-		java.lang.Class<?> clazz, long classPK)
+	public static void deleteCPDisplayLayout(java.lang.Class<?> clazz,
+		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCPDisplayLayout(companyId, clazz, classPK);
+		getService().deleteCPDisplayLayout(clazz, classPK);
 	}
 
 	public static CPDisplayLayoutLocalService getService() {

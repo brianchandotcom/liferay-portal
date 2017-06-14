@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -73,12 +74,12 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDisplayLayout addCPDisplayLayout(CPDisplayLayout cpDisplayLayout);
 
-	public CPDisplayLayout addCPDisplayLayout(long groupId, long companyId,
-		java.lang.Class<?> clazz, long classPK, java.lang.String layoutUuid)
+	public CPDisplayLayout addCPDisplayLayout(java.lang.Class<?> clazz,
+		long classPK, java.lang.String layoutUuid, ServiceContext serviceContext)
 		throws PortalException;
 
-	public CPDisplayLayout addCPDisplayLayout(long groupId, long companyId,
-		long classNameId, long classPK, java.lang.String layoutUuid)
+	public CPDisplayLayout addCPDisplayLayout(long classNameId, long classPK,
+		java.lang.String layoutUuid, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -136,8 +137,8 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDisplayLayout getCPDisplayLayout(long companyId, long classNameId,
-		long classPK) throws PortalException;
+	public CPDisplayLayout getCPDisplayLayout(long classNameId, long classPK)
+		throws PortalException;
 
 	/**
 	* Returns the cp display layout matching the UUID and group.
@@ -297,6 +298,6 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	public void deleteCPDisplayLayout(long companyId, java.lang.Class<?> clazz,
-		long classPK) throws PortalException;
+	public void deleteCPDisplayLayout(java.lang.Class<?> clazz, long classPK)
+		throws PortalException;
 }

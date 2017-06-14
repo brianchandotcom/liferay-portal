@@ -48,20 +48,20 @@ public class CPDisplayLayoutLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPDisplayLayout addCPDisplayLayout(
-		long groupId, long companyId, java.lang.Class<?> clazz, long classPK,
-		java.lang.String layoutUuid)
+		java.lang.Class<?> clazz, long classPK, java.lang.String layoutUuid,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDisplayLayoutLocalService.addCPDisplayLayout(groupId,
-			companyId, clazz, classPK, layoutUuid);
+		return _cpDisplayLayoutLocalService.addCPDisplayLayout(clazz, classPK,
+			layoutUuid, serviceContext);
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPDisplayLayout addCPDisplayLayout(
-		long groupId, long companyId, long classNameId, long classPK,
-		java.lang.String layoutUuid)
+		long classNameId, long classPK, java.lang.String layoutUuid,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDisplayLayoutLocalService.addCPDisplayLayout(groupId,
-			companyId, classNameId, classPK, layoutUuid);
+		return _cpDisplayLayoutLocalService.addCPDisplayLayout(classNameId,
+			classPK, layoutUuid, serviceContext);
 	}
 
 	/**
@@ -138,10 +138,10 @@ public class CPDisplayLayoutLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPDisplayLayout getCPDisplayLayout(
-		long companyId, long classNameId, long classPK)
+		long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDisplayLayoutLocalService.getCPDisplayLayout(companyId,
-			classNameId, classPK);
+		return _cpDisplayLayoutLocalService.getCPDisplayLayout(classNameId,
+			classPK);
 	}
 
 	/**
@@ -361,11 +361,9 @@ public class CPDisplayLayoutLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCPDisplayLayout(long companyId, java.lang.Class<?> clazz,
-		long classPK)
+	public void deleteCPDisplayLayout(java.lang.Class<?> clazz, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_cpDisplayLayoutLocalService.deleteCPDisplayLayout(companyId, clazz,
-			classPK);
+		_cpDisplayLayoutLocalService.deleteCPDisplayLayout(clazz, classPK);
 	}
 
 	@Override

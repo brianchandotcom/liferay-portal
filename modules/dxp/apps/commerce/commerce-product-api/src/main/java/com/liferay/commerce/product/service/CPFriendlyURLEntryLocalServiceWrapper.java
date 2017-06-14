@@ -442,9 +442,9 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCPFriendlyURLEntry(long groupId, long companyId,
+	public void deleteCPFriendlyURLEntries(long groupId, long companyId,
 		java.lang.Class<?> clazz, long classPK) {
-		_cpFriendlyURLEntryLocalService.deleteCPFriendlyURLEntry(groupId,
+		_cpFriendlyURLEntryLocalService.deleteCPFriendlyURLEntries(groupId,
 			companyId, clazz, classPK);
 	}
 

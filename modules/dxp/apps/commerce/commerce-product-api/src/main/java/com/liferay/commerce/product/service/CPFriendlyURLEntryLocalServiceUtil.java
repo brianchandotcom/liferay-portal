@@ -419,9 +419,10 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 			urlTitleMap);
 	}
 
-	public static void deleteCPFriendlyURLEntry(long groupId, long companyId,
+	public static void deleteCPFriendlyURLEntries(long groupId, long companyId,
 		java.lang.Class<?> clazz, long classPK) {
-		getService().deleteCPFriendlyURLEntry(groupId, companyId, clazz, classPK);
+		getService()
+			.deleteCPFriendlyURLEntries(groupId, companyId, clazz, classPK);
 	}
 
 	public static void validate(long groupId, long companyId, long classNameId,

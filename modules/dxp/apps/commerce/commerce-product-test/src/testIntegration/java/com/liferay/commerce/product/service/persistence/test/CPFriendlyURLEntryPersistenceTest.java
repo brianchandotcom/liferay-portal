@@ -241,6 +241,16 @@ public class CPFriendlyURLEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C_C_C_M() throws Exception {
+		_persistence.countByG_C_C_C_M(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_C_C_C_M(0L, 0L, 0L, 0L,
+			RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByG_C_C_L_U() throws Exception {
 		_persistence.countByG_C_C_L_U(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
@@ -276,16 +286,6 @@ public class CPFriendlyURLEntryPersistenceTest {
 			RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_C_C_C_L_M(0L, 0L, 0L, 0L, (String)null,
-			RandomTestUtil.randomBoolean());
-	}
-
-	@Test
-	public void testCountByG_C_C_C_M() throws Exception {
-		_persistence.countByG_C_C_C_M(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
-
-		_persistence.countByG_C_C_C_M(0L, 0L, 0L, 0L,
 			RandomTestUtil.randomBoolean());
 	}
 

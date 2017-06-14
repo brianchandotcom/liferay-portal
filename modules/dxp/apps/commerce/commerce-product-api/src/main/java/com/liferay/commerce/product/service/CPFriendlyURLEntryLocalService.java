@@ -346,7 +346,7 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 		long classNameId, long classPK,
 		Map<Locale, java.lang.String> urlTitleMap) throws PortalException;
 
-	public void deleteCPFriendlyURLEntry(long groupId, long companyId,
+	public void deleteCPFriendlyURLEntries(long groupId, long companyId,
 		java.lang.Class<?> clazz, long classPK);
 
 	public void validate(long groupId, long companyId, long classNameId,

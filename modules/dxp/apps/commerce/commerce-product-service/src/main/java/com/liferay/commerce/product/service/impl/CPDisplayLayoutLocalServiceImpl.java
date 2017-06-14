@@ -33,16 +33,6 @@ public class CPDisplayLayoutLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
-		return addCPDisplayLayout(
-			classNameId, classPK, layoutUuid, serviceContext);
-	}
-
-	@Override
-	public CPDisplayLayout addCPDisplayLayout(
-			long classNameId, long classPK, String layoutUuid,
-			ServiceContext serviceContext)
-		throws PortalException {
-
 		CPDisplayLayout oldCPDisplayLayout =
 			cpDisplayLayoutPersistence.fetchByC_C(classNameId, classPK);
 

@@ -51,7 +51,9 @@ public class InitBundleCommand
 
 		super.execute();
 
-		FileUtil.unpack(bundlePath, getLiferayHomePath(), _stripComponents);
+		File liferayHomeDir = getLiferayHomeDir();
+
+		FileUtil.unpack(bundlePath, liferayHomeDir.toPath(), _stripComponents);
 
 		_copyConfigs();
 		_fixPosixFilePermissions();
@@ -90,26 +92,32 @@ public class InitBundleCommand
 
 		Path configsCommonDirPath = configsDirPath.resolve("common");
 
+		File liferayHomeDir = getLiferayHomeDir();
+
+		Path liferayHomeDirPath = liferayHomeDir.toPath();
+
 		if (Files.exists(configsCommonDirPath)) {
-			FileUtil.copyDirectory(configsCommonDirPath, getLiferayHomePath());
+			FileUtil.copyDirectory(configsCommonDirPath, liferayHomeDirPath);
 		}
 
 		Path configsEnvironmentDirPath = configsDirPath.resolve(_environment);
 
 		if (Files.exists(configsEnvironmentDirPath)) {
 			FileUtil.copyDirectory(
-				configsEnvironmentDirPath, getLiferayHomePath());
+				configsEnvironmentDirPath, liferayHomeDirPath);
 		}
 	}
 
 	private void _deleteBundle() throws IOException {
-		Path dirPath = getLiferayHomePath();
+		File dir = getLiferayHomeDir();
 
-		FileUtil.deleteDirectory(dirPath);
+		FileUtil.deleteDirectory(dir.toPath());
 	}
 
 	private void _fixPosixFilePermissions() throws IOException {
-		Path dirPath = getLiferayHomePath();
+		File dir = getLiferayHomeDir();
+
+		Path dirPath = dir.toPath();
 
 		if (!FileUtil.isPosixSupported(dirPath)) {
 			return;

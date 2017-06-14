@@ -44,13 +44,17 @@ public class DistBundleCommand extends BaseCommand {
 
 		Files.createDirectories(outputPath.getParent());
 
+		File liferayHomeDir = getLiferayHomeDir();
+
+		Path liferayHomeDirPath = liferayHomeDir.toPath();
+
 		if (_format.equals("zip")) {
-			_distBundleZip();
+			FileUtil.zip(liferayHomeDirPath, _outputFile, _includeFolder);
 		}
 		else if (_format.equals("tar") || _format.equals("tar.gz") ||
 				 _format.equals("tgz")) {
 
-			_distBundleTar();
+			FileUtil.tar(liferayHomeDirPath, _outputFile, _includeFolder);
 		}
 		else {
 			throw new IllegalArgumentException(
@@ -80,14 +84,6 @@ public class DistBundleCommand extends BaseCommand {
 
 	public void setOutputFile(File outputFile) {
 		_outputFile = outputFile;
-	}
-
-	private void _distBundleTar() throws Exception {
-		FileUtil.tar(getLiferayHomePath(), _outputFile, _includeFolder);
-	}
-
-	private void _distBundleZip() throws Exception {
-		FileUtil.zip(getLiferayHomePath(), _outputFile, _includeFolder);
 	}
 
 	@Parameter(description = "The archive format.", names = "--format")

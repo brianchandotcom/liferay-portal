@@ -39,14 +39,8 @@ if (toolbarItem.equals("view-product-definition-attachments")) {
 
 PortletURL portletURL = cpAttachmentFileEntriesDisplayContext.getPortletURL();
 
-PortletURL backUrl = liferayPortletResponse.createRenderURL();
-
-backUrl.setParameter("mvcPath", "/view.jsp");
-
-String backURLString = backUrl.toString();
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURLString);
+portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
@@ -153,7 +147,6 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 							rowURL.setParameter("mvcRenderCommandName", "editCPAttachmentFileEntry");
 							rowURL.setParameter("redirect", currentURL);
-							rowURL.setParameter("backURL", backURL);
 							rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
 							rowURL.setParameter("cpAttachmentFileEntryId", String.valueOf(cpAttachmentFileEntry.getCPAttachmentFileEntryId()));
 							rowURL.setParameter("toolbarItem", toolbarItem);

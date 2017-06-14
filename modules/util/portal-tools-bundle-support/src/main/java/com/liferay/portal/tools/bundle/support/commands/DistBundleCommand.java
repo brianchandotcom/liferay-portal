@@ -17,6 +17,7 @@ package com.liferay.portal.tools.bundle.support.commands;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
+import com.liferay.portal.tools.bundle.support.internal.BundleSupportConstants;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
 import java.io.File;
@@ -90,13 +91,14 @@ public class DistBundleCommand extends BaseCommand {
 	}
 
 	@Parameter(description = "The archive format.", names = "--format")
-	private String _format = "zip";
+	private String _format = BundleSupportConstants.DEFAULT_BUNDLE_FORMAT;
 
 	@Parameter(
 		description = "Add a parent folder to the archive.",
 		names = "--include-folder"
 	)
-	private boolean _includeFolder;
+	private boolean _includeFolder =
+		BundleSupportConstants.DEFAULT_INCLUDE_FOLDER;
 
 	@Parameter(
 		description = "The path of the archive.", names = {"-o", "--output"},

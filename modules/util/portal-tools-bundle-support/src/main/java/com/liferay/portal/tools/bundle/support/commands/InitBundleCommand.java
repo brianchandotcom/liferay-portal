@@ -17,6 +17,7 @@ package com.liferay.portal.tools.bundle.support.commands;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
+import com.liferay.portal.tools.bundle.support.internal.BundleSupportConstants;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 import com.liferay.portal.tools.bundle.support.util.StreamLogger;
 
@@ -151,12 +152,13 @@ public class InitBundleCommand
 		description = "The environment of your Liferay home deployment.",
 		names = "--environment"
 	)
-	private String _environment;
+	private String _environment = BundleSupportConstants.DEFAULT_ENVIRONMENT;
 
 	@Parameter(
 		description = "The number of directories to strip when expanding your bundle.",
 		names = "--strip-components"
 	)
-	private int _stripComponents = 1;
+	private int _stripComponents =
+		BundleSupportConstants.DEFAULT_STRIP_COMPONENTS;
 
 }

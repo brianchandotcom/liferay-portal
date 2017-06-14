@@ -16,6 +16,7 @@ package com.liferay.portal.tools.bundle.support.maven;
 
 import com.liferay.portal.tools.bundle.support.commands.DistBundleCommand;
 import com.liferay.portal.tools.bundle.support.commands.InitBundleCommand;
+import com.liferay.portal.tools.bundle.support.internal.BundleSupportConstants;
 import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.MavenUtil;
@@ -125,10 +126,16 @@ public class DistBundleMojo extends AbstractBundleMojo {
 	)
 	protected File deployFile;
 
-	@Parameter(defaultValue = "zip", required = true)
+	@Parameter(
+		defaultValue = BundleSupportConstants.DEFAULT_BUNDLE_FORMAT,
+		required = true
+	)
 	protected String format;
 
-	@Parameter(defaultValue = "true", required = true)
+	@Parameter(
+		defaultValue = "" + BundleSupportConstants.DEFAULT_INCLUDE_FOLDER,
+		required = true
+	)
 	protected boolean includeFolder;
 
 	@Parameter(

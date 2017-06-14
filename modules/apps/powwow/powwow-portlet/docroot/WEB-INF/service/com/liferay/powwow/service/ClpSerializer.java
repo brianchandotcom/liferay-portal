@@ -39,6 +39,7 @@ import java.util.List;
  * @author Shinn Lok
  */
 public class ClpSerializer {
+
 	public static String getServletContextName() {
 		if (Validator.isNotNull(_servletContextName)) {
 			return _servletContextName;
@@ -53,13 +54,13 @@ public class ClpSerializer {
 				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
 
 				Class<?> portletPropsClass = classLoader.loadClass(
-						"com.liferay.util.portlet.PortletProps");
+					"com.liferay.util.portlet.PortletProps");
 
 				Method getMethod = portletPropsClass.getMethod("get",
-						new Class<?>[] { String.class });
+					new Class<?>[] {String.class});
 
 				String portletPropsServletContextName = (String)getMethod.invoke(null,
-						"powwow-portlet-deployment-context");
+					"powwow-portlet-deployment-context");
 
 				if (Validator.isNotNull(portletPropsServletContextName)) {
 					_servletContextName = portletPropsServletContextName;
@@ -75,7 +76,7 @@ public class ClpSerializer {
 			if (Validator.isNull(_servletContextName)) {
 				try {
 					String propsUtilServletContextName = PropsUtil.get(
-							"powwow-portlet-deployment-context");
+						"powwow-portlet-deployment-context");
 
 					if (Validator.isNotNull(propsUtilServletContextName)) {
 						_servletContextName = propsUtilServletContextName;
@@ -118,7 +119,7 @@ public class ClpSerializer {
 	}
 
 	public static Object translateInput(List<Object> oldList) {
-		List<Object> newList = new ArrayList<Object>(oldList.size());
+		List<Object> newList = new ArrayList<>(oldList.size());
 
 		for (int i = 0; i < oldList.size(); i++) {
 			Object curObj = oldList.get(i);
@@ -127,6 +128,18 @@ public class ClpSerializer {
 		}
 
 		return newList;
+	}
+
+	public static Object translateInput(Object obj) {
+		if (obj instanceof BaseModel<?>) {
+			return translateInput((BaseModel<?>)obj);
+		}
+		else if (obj instanceof List<?>) {
+			return translateInput((List<Object>)obj);
+		}
+		else {
+			return obj;
+		}
 	}
 
 	public static Object translateInputPowwowMeeting(BaseModel<?> oldModel) {
@@ -139,7 +152,9 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateInputPowwowParticipant(BaseModel<?> oldModel) {
+	public static Object translateInputPowwowParticipant(
+		BaseModel<?> oldModel) {
+
 		PowwowParticipantClp oldClpModel = (PowwowParticipantClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getPowwowParticipantRemoteModel();
@@ -159,25 +174,14 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateInput(Object obj) {
-		if (obj instanceof BaseModel<?>) {
-			return translateInput((BaseModel<?>)obj);
-		}
-		else if (obj instanceof List<?>) {
-			return translateInput((List<Object>)obj);
-		}
-		else {
-			return obj;
-		}
-	}
-
 	public static Object translateOutput(BaseModel<?> oldModel) {
 		Class<?> oldModelClass = oldModel.getClass();
 
 		String oldModelClassName = oldModelClass.getName();
 
 		if (oldModelClassName.equals(
-					"com.liferay.powwow.model.impl.PowwowMeetingImpl")) {
+				"com.liferay.powwow.model.impl.PowwowMeetingImpl")) {
+
 			return translateOutputPowwowMeeting(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
@@ -185,24 +189,26 @@ public class ClpSerializer {
 				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
 
 				Method getClpSerializerClassMethod = oldModelClass.getMethod(
-						"getClpSerializerClass");
+					"getClpSerializerClass");
 
-				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+				Class<?> oldClpSerializerClass =
+					(Class<?>)getClpSerializerClassMethod.invoke(oldModel);
 
-				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+				Class<?> newClpSerializerClass = classLoader.loadClass(
+					oldClpSerializerClass.getName());
 
 				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
-						BaseModel.class);
+					BaseModel.class);
 
 				Class<?> oldModelModelClass = oldModel.getModelClass();
 
 				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
-						oldModelModelClass.getSimpleName() + "RemoteModel");
+					oldModelModelClass.getSimpleName() + "RemoteModel");
 
 				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
 
 				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
-						oldRemoteModel);
+					oldRemoteModel);
 
 				return newModel;
 			}
@@ -214,7 +220,8 @@ public class ClpSerializer {
 		}
 
 		if (oldModelClassName.equals(
-					"com.liferay.powwow.model.impl.PowwowParticipantImpl")) {
+				"com.liferay.powwow.model.impl.PowwowParticipantImpl")) {
+
 			return translateOutputPowwowParticipant(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
@@ -222,24 +229,26 @@ public class ClpSerializer {
 				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
 
 				Method getClpSerializerClassMethod = oldModelClass.getMethod(
-						"getClpSerializerClass");
+					"getClpSerializerClass");
 
-				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+				Class<?> oldClpSerializerClass =
+					(Class<?>)getClpSerializerClassMethod.invoke(oldModel);
 
-				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+				Class<?> newClpSerializerClass = classLoader.loadClass(
+					oldClpSerializerClass.getName());
 
 				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
-						BaseModel.class);
+					BaseModel.class);
 
 				Class<?> oldModelModelClass = oldModel.getModelClass();
 
 				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
-						oldModelModelClass.getSimpleName() + "RemoteModel");
+					oldModelModelClass.getSimpleName() + "RemoteModel");
 
 				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
 
 				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
-						oldRemoteModel);
+					oldRemoteModel);
 
 				return newModel;
 			}
@@ -251,7 +260,8 @@ public class ClpSerializer {
 		}
 
 		if (oldModelClassName.equals(
-					"com.liferay.powwow.model.impl.PowwowServerImpl")) {
+				"com.liferay.powwow.model.impl.PowwowServerImpl")) {
+
 			return translateOutputPowwowServer(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
@@ -259,24 +269,26 @@ public class ClpSerializer {
 				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
 
 				Method getClpSerializerClassMethod = oldModelClass.getMethod(
-						"getClpSerializerClass");
+					"getClpSerializerClass");
 
-				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+				Class<?> oldClpSerializerClass =
+					(Class<?>)getClpSerializerClassMethod.invoke(oldModel);
 
-				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+				Class<?> newClpSerializerClass = classLoader.loadClass(
+					oldClpSerializerClass.getName());
 
 				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
-						BaseModel.class);
+					BaseModel.class);
 
 				Class<?> oldModelModelClass = oldModel.getModelClass();
 
 				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
-						oldModelModelClass.getSimpleName() + "RemoteModel");
+					oldModelModelClass.getSimpleName() + "RemoteModel");
 
 				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
 
 				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
-						oldRemoteModel);
+					oldRemoteModel);
 
 				return newModel;
 			}
@@ -291,7 +303,7 @@ public class ClpSerializer {
 	}
 
 	public static Object translateOutput(List<Object> oldList) {
-		List<Object> newList = new ArrayList<Object>(oldList.size());
+		List<Object> newList = new ArrayList<>(oldList.size());
 
 		for (int i = 0; i < oldList.size(); i++) {
 			Object curObj = oldList.get(i);
@@ -314,11 +326,45 @@ public class ClpSerializer {
 		}
 	}
 
+	public static Object translateOutputPowwowMeeting(BaseModel<?> oldModel) {
+		PowwowMeetingClp newModel = new PowwowMeetingClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setPowwowMeetingRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputPowwowParticipant(
+		BaseModel<?> oldModel) {
+
+		PowwowParticipantClp newModel = new PowwowParticipantClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setPowwowParticipantRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputPowwowServer(BaseModel<?> oldModel) {
+		PowwowServerClp newModel = new PowwowServerClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setPowwowServerRemoteModel(oldModel);
+
+		return newModel;
+	}
+
 	public static Throwable translateThrowable(Throwable throwable) {
 		if (_useReflectionToTranslateThrowable) {
 			try {
-				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream();
-				ObjectOutputStream objectOutputStream = new ObjectOutputStream(unsyncByteArrayOutputStream);
+				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+					new UnsyncByteArrayOutputStream();
+				objectOutputStream = new ObjectOutputStream(
+					unsyncByteArrayOutputStream);
 
 				objectOutputStream.writeObject(throwable);
 
@@ -326,14 +372,15 @@ public class ClpSerializer {
 				objectOutputStream.close();
 
 				UnsyncByteArrayInputStream unsyncByteArrayInputStream = new UnsyncByteArrayInputStream(unsyncByteArrayOutputStream.unsafeGetByteArray(),
-						0, unsyncByteArrayOutputStream.size());
+					0, unsyncByteArrayOutputStream.size());
 
 				Thread currentThread = Thread.currentThread();
 
-				ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+				ClassLoader contextClassLoader =
+					currentThread.getContextClassLoader();
 
-				ObjectInputStream objectInputStream = new ClassLoaderObjectInputStream(unsyncByteArrayInputStream,
-						contextClassLoader);
+				objectInputStream = new ClassLoaderObjectInputStream(unsyncByteArrayInputStream,
+					contextClassLoader);
 
 				throwable = (Throwable)objectInputStream.readObject();
 
@@ -366,55 +413,33 @@ public class ClpSerializer {
 
 		String className = clazz.getName();
 
-		if (className.equals("com.liferay.powwow.NoSuchMeetingException")) {
-			return new com.liferay.powwow.NoSuchMeetingException(throwable.getMessage(),
+		if (className.equals(
+				"com.liferay.powwow.exception.NoSuchMeetingException")) {
+
+			return new com.liferay.powwow.exception.NoSuchMeetingException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
-		if (className.equals("com.liferay.powwow.NoSuchParticipantException")) {
-			return new com.liferay.powwow.NoSuchParticipantException(throwable.getMessage(),
+		if (className.equals(
+				"com.liferay.powwow.exception.NoSuchParticipantException")) {
+
+			return new com.liferay.powwow.exception.NoSuchParticipantException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
-		if (className.equals("com.liferay.powwow.NoSuchServerException")) {
-			return new com.liferay.powwow.NoSuchServerException(throwable.getMessage(),
+		if (className.equals(
+				"com.liferay.powwow.exception.NoSuchServerException")) {
+
+			return new com.liferay.powwow.exception.NoSuchServerException(throwable.getMessage(),
 				throwable.getCause());
 		}
 
 		return throwable;
 	}
 
-	public static Object translateOutputPowwowMeeting(BaseModel<?> oldModel) {
-		PowwowMeetingClp newModel = new PowwowMeetingClp();
+	private static final Log _log = LogFactoryUtil.getLog(ClpSerializer.class);
 
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setPowwowMeetingRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputPowwowParticipant(BaseModel<?> oldModel) {
-		PowwowParticipantClp newModel = new PowwowParticipantClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setPowwowParticipantRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputPowwowServer(BaseModel<?> oldModel) {
-		PowwowServerClp newModel = new PowwowServerClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setPowwowServerRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(ClpSerializer.class);
 	private static String _servletContextName;
 	private static boolean _useReflectionToTranslateThrowable = true;
+
 }

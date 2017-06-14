@@ -15,7 +15,6 @@
 package com.liferay.powwow.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -33,7 +32,7 @@ public class PowwowMeetingPermission {
 	public static void check(
 			PermissionChecker permissionChecker, long powwowMeetingId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, powwowMeetingId, actionId)) {
 			throw new PrincipalException();
@@ -56,7 +55,7 @@ public class PowwowMeetingPermission {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long powwowMeetingId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeeting powwowMeeting =
 			PowwowMeetingLocalServiceUtil.getPowwowMeeting(powwowMeetingId);

@@ -16,11 +16,11 @@ package com.liferay.powwow.provider;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.model.PowwowMeetingConstants;
 import com.liferay.powwow.model.PowwowServer;
@@ -44,7 +44,7 @@ public abstract class BasePowwowServiceProvider
 	public Map<String, Serializable> addPowwowMeeting(
 			long userId, long powwowServerId, long powwowMeetingId, String name,
 			Map<String, String> options)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowServer powwowServer =
 			PowwowServerLocalServiceUtil.getPowwowServer(powwowServerId);
@@ -57,7 +57,7 @@ public abstract class BasePowwowServiceProvider
 
 	@Override
 	public PowwowMeeting deletePowwowMeeting(long powwowMeetingId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeeting powwowMeeting =
 			PowwowMeetingLocalServiceUtil.getPowwowMeeting(powwowMeetingId);
@@ -75,7 +75,7 @@ public abstract class BasePowwowServiceProvider
 
 	@Override
 	public PowwowMeeting endPowwowMeeting(long powwowMeetingId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeeting powwowMeeting =
 			PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(powwowMeetingId);
@@ -102,7 +102,7 @@ public abstract class BasePowwowServiceProvider
 
 	@Override
 	public Map<String, String> getIndexFields(long powwowMeetingId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeeting powwowMeeting =
 			PowwowMeetingLocalServiceUtil.getPowwowMeeting(powwowMeetingId);
@@ -111,9 +111,7 @@ public abstract class BasePowwowServiceProvider
 	}
 
 	@Override
-	public long getJoinByPhoneAccessCode(long powwowMeetingId)
-		throws SystemException {
-
+	public long getJoinByPhoneAccessCode(long powwowMeetingId) {
 		PowwowMeeting powwowMeeting =
 			PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(powwowMeetingId);
 
@@ -141,8 +139,7 @@ public abstract class BasePowwowServiceProvider
 
 	@Override
 	public String getJoinPowwowMeetingURL(
-			long powwowMeetingId, String name, int type)
-		throws SystemException {
+		long powwowMeetingId, String name, int type) {
 
 		PowwowMeeting powwowMeeting =
 			PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(powwowMeetingId);
@@ -163,9 +160,7 @@ public abstract class BasePowwowServiceProvider
 	}
 
 	@Override
-	public boolean getOptionAutoStartVideo(long powwowMeetingId)
-		throws SystemException {
-
+	public boolean getOptionAutoStartVideo(long powwowMeetingId) {
 		PowwowMeeting powwowMeeting =
 			PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(powwowMeetingId);
 
@@ -173,9 +168,7 @@ public abstract class BasePowwowServiceProvider
 	}
 
 	@Override
-	public String getOptionPassword(long powwowMeetingId)
-		throws SystemException {
-
+	public String getOptionPassword(long powwowMeetingId) {
 		PowwowMeeting powwowMeeting =
 			PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(powwowMeetingId);
 
@@ -183,7 +176,7 @@ public abstract class BasePowwowServiceProvider
 	}
 
 	@Override
-	public long getPowwowServerId(String providerType) throws SystemException {
+	public long getPowwowServerId(String providerType) {
 		PowwowServerLocalServiceUtil.checkPowwowServers();
 
 		List<PowwowServer> powwowServers =
@@ -193,7 +186,7 @@ public abstract class BasePowwowServiceProvider
 			return PowwowMeetingConstants.POWWOW_SERVER_ID_DEFAULT;
 		}
 
-		TreeMap<Integer, Long> powwowServerIds = new TreeMap<Integer, Long>();
+		TreeMap<Integer, Long> powwowServerIds = new TreeMap<>();
 
 		for (PowwowServer powwowServer : powwowServers) {
 			int count = PowwowMeetingLocalServiceUtil.getPowwowMeetingsCount(
@@ -225,7 +218,7 @@ public abstract class BasePowwowServiceProvider
 
 	@Override
 	public boolean isPowwowMeetingCreated(long powwowMeetingId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeeting powwowMeeting =
 			PowwowMeetingLocalServiceUtil.getPowwowMeeting(powwowMeetingId);
@@ -243,7 +236,7 @@ public abstract class BasePowwowServiceProvider
 
 	@Override
 	public boolean isPowwowMeetingRunning(long powwowMeetingId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeeting powwowMeeting =
 			PowwowMeetingLocalServiceUtil.getPowwowMeeting(powwowMeetingId);
@@ -275,7 +268,7 @@ public abstract class BasePowwowServiceProvider
 		return false;
 	}
 
-	public String sendRequest(Http.Options options) throws SystemException {
+	public String sendRequest(Http.Options options) {
 		for (int i = 0;
 				i < PortletPropsValues.POWWOW_PROVIDER_API_RETRY_ATTEMPTS;
 					i++) {
@@ -301,7 +294,7 @@ public abstract class BasePowwowServiceProvider
 	public Map<String, Serializable> updatePowwowMeeting(
 			long powwowMeetingId, String name, long userId,
 			Map<String, String> options)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeeting powwowMeeting =
 			PowwowMeetingLocalServiceUtil.getPowwowMeeting(powwowMeetingId);
@@ -317,47 +310,38 @@ public abstract class BasePowwowServiceProvider
 	}
 
 	protected abstract Map<String, Serializable> addPowwowMeeting(
-			User creator, PowwowServer powwowServer, long powwowMeetingId,
-			String name, Map<String, String> options)
-		throws SystemException;
+		User creator, PowwowServer powwowServer, long powwowMeetingId,
+		String name, Map<String, String> options);
 
 	protected abstract boolean deletePowwowMeeting(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting)
-		throws SystemException;
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting);
 
 	protected abstract boolean endPowwowMeeting(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting)
-		throws SystemException;
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting);
 
 	protected abstract Map<String, String> getIndexFields(
-			PowwowMeeting powwowMeeting)
-		throws SystemException;
+		PowwowMeeting powwowMeeting);
 
 	protected abstract long getJoinByPhoneAccessCode(
 		PowwowMeeting powwowMeeting);
 
 	protected abstract String getJoinPowwowMeetingURL(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting, String name,
-			int type)
-		throws SystemException;
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting, String name,
+		int type);
 
 	protected abstract boolean getOptionAutoStartVideo(
-			PowwowMeeting powwowMeeting)
-		throws SystemException;
+		PowwowMeeting powwowMeeting);
 
-	protected abstract String getOptionPassword(PowwowMeeting powwowMeeting)
-		throws SystemException;
+	protected abstract String getOptionPassword(PowwowMeeting powwowMeeting);
 
 	protected abstract boolean isPowwowMeetingCreated(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting)
-		throws SystemException;
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting);
 
 	protected abstract boolean isPowwowMeetingRunning(
 		PowwowServer powwowServer, PowwowMeeting powwowMeeting);
 
 	protected abstract Map<String, Serializable> updatePowwowMeeting(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting, String name,
-			User creator, Map<String, String> options)
-		throws SystemException;
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting, String name,
+		User creator, Map<String, String> options);
 
 }

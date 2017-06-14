@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.model.PowwowMeetingConstants;
 import com.liferay.powwow.service.PowwowMeetingLocalServiceUtil;
@@ -111,9 +111,8 @@ public class ZoomAPICallbackServlet extends HttpServlet {
 		booleanQuery.addExactTerm("zoomHostId", zoomHostId);
 		booleanQuery.addExactTerm("zoomMeetingId", zoomMeetingId);
 
-		BooleanClause booleanClause =
-			BooleanClauseFactoryUtil.create(
-				searchContext, booleanQuery, BooleanClauseOccur.MUST.getName());
+		BooleanClause booleanClause = BooleanClauseFactoryUtil.create(
+			searchContext, booleanQuery, BooleanClauseOccur.MUST.getName());
 
 		searchContext.setBooleanClauses(new BooleanClause[] {booleanClause});
 		searchContext.setCompanyId(companyId);
@@ -170,8 +169,7 @@ public class ZoomAPICallbackServlet extends HttpServlet {
 		String password = decodedCredentials.substring(pos + 1);
 
 		if (login.equals(PortletPropsValues.ZOOM_API_CALLBACK_LOGIN) &&
-			password.equals(
-				PortletPropsValues.ZOOM_API_CALLBACK_PASSWORD)) {
+			password.equals(PortletPropsValues.ZOOM_API_CALLBACK_PASSWORD)) {
 
 			return true;
 		}

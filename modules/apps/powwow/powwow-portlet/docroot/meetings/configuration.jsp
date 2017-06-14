@@ -29,7 +29,7 @@ String emailSubject = PrefsParamUtil.getString(portletPreferences, request, emai
 String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBodyParam, defaultEmailBody);
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
@@ -40,7 +40,7 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 			<%
 			Set<Locale> locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
-			for (Locale currentLocale: locales) {
+			for (Locale currentLocale : locales) {
 				String style = StringPool.BLANK;
 
 				if (Validator.isNotNull(portletPreferences.getValue("emailSubject_" + LocaleUtil.toLanguageId(currentLocale), StringPool.BLANK)) ||

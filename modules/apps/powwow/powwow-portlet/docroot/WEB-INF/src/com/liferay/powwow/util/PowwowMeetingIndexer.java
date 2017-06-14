@@ -16,11 +16,10 @@ package com.liferay.powwow.util;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -31,10 +30,9 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.TermQueryFactoryUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.model.PowwowParticipant;
 import com.liferay.powwow.provider.PowwowServiceProviderUtil;
@@ -50,16 +48,13 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 /**
  * @author Marco Calderon
  */
 public class PowwowMeetingIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES = {
-		PowwowMeeting.class.getName()
-	};
+	public static final String[] CLASS_NAMES = {PowwowMeeting.class.getName()};
 
 	public static final String PORTLET_ID = PowwowPortletKeys.POWWOW_MEETINGS;
 
@@ -88,9 +83,8 @@ public class PowwowMeetingIndexer extends BaseIndexer {
 		BooleanQuery participantTypeBooleanQuery =
 			BooleanQueryFactoryUtil.create(searchContext);
 
-		String[] powwowParticipantKeys =
-			GetterUtil.getStringValues(
-				searchContext.getAttribute("powwowParticipantKeys"));
+		String[] powwowParticipantKeys = GetterUtil.getStringValues(
+			searchContext.getAttribute("powwowParticipantKeys"));
 
 		for (String powwowParticipantKey : powwowParticipantKeys) {
 			participantTypeBooleanQuery.add(
@@ -249,14 +243,15 @@ public class PowwowMeetingIndexer extends BaseIndexer {
 	}
 
 	protected void reindexPowwowMeetings(long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		final Collection<Document> documents = new ArrayList<Document>();
+		final Collection<Document> documents = new ArrayList<>();
 
 		SearchEngineUtil.updateDocuments(
 			getSearchEngineId(), companyId, documents);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PowwowMeetingIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PowwowMeetingIndexer.class);
 
 }

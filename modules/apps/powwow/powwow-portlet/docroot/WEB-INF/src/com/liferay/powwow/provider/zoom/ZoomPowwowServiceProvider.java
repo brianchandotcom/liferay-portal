@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.model.PowwowMeetingConstants;
 import com.liferay.powwow.model.PowwowParticipantConstants;
@@ -62,7 +62,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 			return _brandingFeatures;
 		}
 
-		List<String> brandingFeatures = new ArrayList<String>();
+		List<String> brandingFeatures = new ArrayList<>();
 
 		brandingFeatures.add("fastest-performance");
 		brandingFeatures.add("highest-quality");
@@ -83,10 +83,8 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 	}
 
 	@Override
-	public Map<String, String> getIndexFields(PowwowMeeting powwowMeeting)
-		throws SystemException {
-
-		Map<String, String> indexFields = new HashMap<String, String>();
+	public Map<String, String> getIndexFields(PowwowMeeting powwowMeeting) {
+		Map<String, String> indexFields = new HashMap<>();
 
 		Map<String, Serializable> providerTypeMetadata =
 			powwowMeeting.getProviderTypeMetadataMap();
@@ -177,11 +175,10 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 	@Override
 	protected Map<String, Serializable> addPowwowMeeting(
-			User user, PowwowServer powwowServer, long powwowMeetingId,
-			String name, Map<String, String> options)
-		throws SystemException {
+		User user, PowwowServer powwowServer, long powwowMeetingId, String name,
+		Map<String, String> options) {
 
-		Map<String, String> parameterMap = new HashMap<String, String>();
+		Map<String, String> parameterMap = new HashMap<>();
 
 		String hostId = getHostId(user, powwowServer);
 
@@ -212,8 +209,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 			throw new SystemException("Unable to add Zoom meeting");
 		}
 
-		Map<String, Serializable> providerTypeMetadataMap =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> providerTypeMetadataMap = new HashMap<>();
 
 		providerTypeMetadataMap.put("host_id", hostId);
 		providerTypeMetadataMap.put("id", responseJSONObject.getString("id"));
@@ -234,8 +230,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 	}
 
 	protected void cleanUpZoomHosts(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting)
-		throws SystemException {
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting) {
 
 		int powwowMeetingsCount =
 			PowwowMeetingLocalServiceUtil.getUserPowwowMeetingsCount(
@@ -253,10 +248,8 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		}
 	}
 
-	protected String createZoomHost(User user, PowwowServer powwowServer)
-		throws SystemException {
-
-		Map<String, String> parameterMap = new HashMap<String, String>();
+	protected String createZoomHost(User user, PowwowServer powwowServer) {
+		Map<String, String> parameterMap = new HashMap<>();
 
 		parameterMap.put("dept", _DEPT_API);
 		parameterMap.put("email", user.getEmailAddress());
@@ -278,8 +271,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 	@Override
 	protected boolean deletePowwowMeeting(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting)
-		throws SystemException {
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting) {
 
 		JSONObject responseJSONObject = execute(
 			powwowServer, "meeting", "delete", getParameterMap(powwowMeeting));
@@ -295,10 +287,8 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		return true;
 	}
 
-	protected void deleteZoomHost(PowwowServer powwowServer, String hostId)
-		throws SystemException {
-
-		Map<String, String> params = new HashMap<String, String>();
+	protected void deleteZoomHost(PowwowServer powwowServer, String hostId) {
+		Map<String, String> params = new HashMap<>();
 
 		params.put("id", hostId);
 
@@ -322,8 +312,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 	@Override
 	protected boolean endPowwowMeeting(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting)
-		throws SystemException {
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting) {
 
 		JSONObject responseJSONObject = execute(
 			powwowServer, "meeting", "end", getParameterMap(powwowMeeting));
@@ -338,9 +327,8 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 	}
 
 	protected JSONObject execute(
-			PowwowServer powwowServer, String resource, String action,
-			Map<String, String> parameterMap)
-		throws SystemException {
+		PowwowServer powwowServer, String resource, String action,
+		Map<String, String> parameterMap) {
 
 		Http.Options options = new Http.Options();
 
@@ -355,7 +343,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 		options.setLocation(location);
 
-		Map<String, String> parts = new HashMap<String, String>();
+		Map<String, String> parts = new HashMap<>();
 
 		if (parameterMap != null) {
 			parts.putAll(parameterMap);
@@ -402,9 +390,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		}
 	}
 
-	protected String getHostId(User user, PowwowServer powwowServer)
-		throws SystemException {
-
+	protected String getHostId(User user, PowwowServer powwowServer) {
 		JSONArray usersJSONArray = getUsersJSONArray(powwowServer);
 
 		if (usersJSONArray == null) {
@@ -466,7 +452,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 					country);
 
 				if (numbers == null) {
-					numbers = new ArrayList<String>();
+					numbers = new ArrayList<>();
 				}
 
 				numbers.add(number);
@@ -480,9 +466,8 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 	@Override
 	protected String getJoinPowwowMeetingURL(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting, String name,
-			int type)
-		throws SystemException {
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting, String name,
+		int type) {
 
 		JSONObject responseJSONObject = execute(
 			powwowServer, "meeting", "get", getParameterMap(powwowMeeting));
@@ -520,7 +505,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 	}
 
 	protected Map<String, String> getParameterMap(PowwowMeeting powwowMeeting) {
-		Map<String, String> parameterMap = new HashMap<String, String>();
+		Map<String, String> parameterMap = new HashMap<>();
 
 		Map<String, Serializable> providerTypeMetadataMap =
 			powwowMeeting.getProviderTypeMetadataMap();
@@ -533,9 +518,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		return parameterMap;
 	}
 
-	protected JSONArray getUsersJSONArray(PowwowServer powwowServer)
-		throws SystemException {
-
+	protected JSONArray getUsersJSONArray(PowwowServer powwowServer) {
 		JSONObject responseJSONObject = execute(
 			powwowServer, "user", "list", null);
 
@@ -549,8 +532,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 	}
 
 	protected JSONObject getZoomMeetingJSONObject(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting)
-		throws SystemException {
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting) {
 
 		JSONObject responseJSONObject = execute(
 			powwowServer, "meeting", "get", getParameterMap(powwowMeeting));
@@ -583,8 +565,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 	@Override
 	protected boolean isPowwowMeetingCreated(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting)
-		throws SystemException {
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting) {
 
 		JSONObject zoomMeetingJSONObject = getZoomMeetingJSONObject(
 			powwowServer, powwowMeeting);
@@ -625,11 +606,10 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 	@Override
 	protected Map<String, Serializable> updatePowwowMeeting(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting, String name,
-			User user, Map<String, String> options)
-		throws SystemException {
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting, String name,
+		User user, Map<String, String> options) {
 
-		Map<String, String> parameterMap = new HashMap<String, String>();
+		Map<String, String> parameterMap = new HashMap<>();
 
 		Map<String, Serializable> providerTypeMetadataMap =
 			powwowMeeting.getProviderTypeMetadataMap();
@@ -695,15 +675,15 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 	private static final int _USER_TYPE_PRO = 2;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ZoomPowwowServiceProvider.class);
 
 	private static long _lastAPICallTime = System.currentTimeMillis();
 	private static int _numAPICalls;
 
 	private List<String> _brandingFeatures;
-	private List<String> _joinByPhoneDefaultNumbers = new ArrayList<String>();
-	private Map<String, List<String>> _joinByPhoneInternationalNumbers =
-		new TreeMap<String, List<String>>();
+	private final List<String> _joinByPhoneDefaultNumbers = new ArrayList<>();
+	private final Map<String, List<String>> _joinByPhoneInternationalNumbers =
+		new TreeMap<>();
 
 }

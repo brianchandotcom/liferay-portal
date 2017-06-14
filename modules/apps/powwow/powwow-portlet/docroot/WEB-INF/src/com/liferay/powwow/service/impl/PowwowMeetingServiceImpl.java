@@ -15,9 +15,8 @@
 package com.liferay.powwow.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.model.PowwowParticipant;
 import com.liferay.powwow.service.base.PowwowMeetingServiceBaseImpl;
@@ -43,7 +42,7 @@ public class PowwowMeetingServiceImpl extends PowwowMeetingServiceBaseImpl {
 			String languageId, long calendarBookingId, int status,
 			List<PowwowParticipant> powwowParticipants,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		MeetingsPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.ADD_MEETING);
@@ -56,7 +55,7 @@ public class PowwowMeetingServiceImpl extends PowwowMeetingServiceBaseImpl {
 
 	@Override
 	public PowwowMeeting deletePowwowMeeting(long powwowMeetingId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeetingPermission.check(
 			getPermissionChecker(), powwowMeetingId, ActionKeys.DELETE);
@@ -66,7 +65,7 @@ public class PowwowMeetingServiceImpl extends PowwowMeetingServiceBaseImpl {
 
 	@Override
 	public PowwowMeeting getPowwowMeeting(long powwowMeetingId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeetingPermission.check(
 			getPermissionChecker(), powwowMeetingId, ActionKeys.VIEW);
@@ -76,15 +75,14 @@ public class PowwowMeetingServiceImpl extends PowwowMeetingServiceBaseImpl {
 
 	@Override
 	public List<PowwowMeeting> getPowwowMeetings(
-			long groupId, int start, int end, OrderByComparator obc)
-		throws SystemException {
+		long groupId, int start, int end, OrderByComparator obc) {
 
 		return powwowMeetingPersistence.filterFindByGroupId(
 			groupId, start, end, obc);
 	}
 
 	@Override
-	public int getPowwowMeetingsCount(long groupId) throws SystemException {
+	public int getPowwowMeetingsCount(long groupId) {
 		return powwowMeetingPersistence.filterCountByGroupId(groupId);
 	}
 
@@ -96,7 +94,7 @@ public class PowwowMeetingServiceImpl extends PowwowMeetingServiceBaseImpl {
 			String languageId, long calendarBookingId, int status,
 			List<PowwowParticipant> powwowParticipants,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeetingPermission.check(
 			getPermissionChecker(), powwowMeetingId, ActionKeys.UPDATE);

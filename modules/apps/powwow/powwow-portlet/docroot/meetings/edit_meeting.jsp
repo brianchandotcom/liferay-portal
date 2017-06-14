@@ -121,7 +121,6 @@ if (powwowMeeting != null) {
 				name="startTime"
 			/>
 		</span>
-
 		<span class="to"><liferay-ui:message key="to" /></span>
 
 		<span class="end-date-container" id="<portlet:namespace />endDateContainer">
@@ -202,7 +201,7 @@ if (powwowMeeting != null) {
 		<aui:select cssClass="provider-type-select" disabled="<%= powwowMeeting != null %>" label="provider" name="providerType" required="<%= true %>">
 
 			<%
-			for (String providerType: PortletPropsValues.POWWOW_PROVIDER_TYPES) {
+			for (String providerType : PortletPropsValues.POWWOW_PROVIDER_TYPES) {
 				if (PowwowServerLocalServiceUtil.getPowwowServersCount(providerType, true) > 0) {
 			%>
 
@@ -300,8 +299,7 @@ if (powwowMeeting != null) {
 		A.one('#<portlet:namespace />optionPassword').hide();
 
 		<%
-		for (String providerType: PortletPropsValues.POWWOW_PROVIDER_TYPES) {
-
+		for (String providerType : PortletPropsValues.POWWOW_PROVIDER_TYPES) {
 			StringBundler sb = new StringBundler();
 
 			sb.append("<strong>");
@@ -361,7 +359,7 @@ if (powwowMeeting != null) {
 	);
 
 	<%
-	for (String providerType: PortletPropsValues.POWWOW_PROVIDER_TYPES) {
+	for (String providerType : PortletPropsValues.POWWOW_PROVIDER_TYPES) {
 		if (PowwowServerLocalServiceUtil.getPowwowServersCount(providerType, true) > 0) {
 	%>
 

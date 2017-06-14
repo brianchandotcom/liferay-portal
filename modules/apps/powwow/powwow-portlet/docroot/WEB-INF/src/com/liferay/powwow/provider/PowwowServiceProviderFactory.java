@@ -35,10 +35,11 @@ public class PowwowServiceProviderFactory {
 		return _powwowServiceProviders.get(providerType);
 	}
 
-	private static Map<String, PowwowServiceProvider> _powwowServiceProviders;
+	private static final Map<String, PowwowServiceProvider>
+		_powwowServiceProviders;
 
 	static {
-		_powwowServiceProviders = new HashMap<String, PowwowServiceProvider>();
+		_powwowServiceProviders = new HashMap<>();
 
 		PowwowServiceProvider bbbPowwowServiceProvider =
 			new BBBPowwowServiceProvider();

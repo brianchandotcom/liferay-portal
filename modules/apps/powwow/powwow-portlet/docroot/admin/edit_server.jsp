@@ -48,7 +48,7 @@ PowwowServer powwowServer = PowwowServerLocalServiceUtil.fetchPowwowServer(powwo
 			<%
 			String defaultProviderType = StringPool.BLANK;
 
-			if (powwowServer != null ) {
+			if (powwowServer != null) {
 				if (ArrayUtil.contains(PortletPropsValues.POWWOW_PROVIDER_TYPES, powwowServer.getProviderType())) {
 					defaultProviderType = powwowServer.getProviderType();
 				}
@@ -57,7 +57,7 @@ PowwowServer powwowServer = PowwowServerLocalServiceUtil.fetchPowwowServer(powwo
 				defaultProviderType = PortletPropsValues.POWWOW_PROVIDER_TYPES[0];
 			}
 
-			for (String providerType: PortletPropsValues.POWWOW_PROVIDER_TYPES) {
+			for (String providerType : PortletPropsValues.POWWOW_PROVIDER_TYPES) {
 			%>
 
 				<aui:option selected="<%= defaultProviderType.equals(providerType) %>" value="<%= providerType %>"><%= PowwowServiceProviderUtil.getPowwowServiceProviderName(providerType) %></aui:option>
@@ -89,7 +89,7 @@ PowwowServer powwowServer = PowwowServerLocalServiceUtil.fetchPowwowServer(powwo
 		var selectedProviderType = A.one('#<portlet:namespace/>providerType option:selected').val();
 
 		<%
-		for (String providerType: PortletPropsValues.POWWOW_PROVIDER_TYPES) {
+		for (String providerType : PortletPropsValues.POWWOW_PROVIDER_TYPES) {
 		%>
 
 			if (selectedProviderType == '<%= providerType %>') {

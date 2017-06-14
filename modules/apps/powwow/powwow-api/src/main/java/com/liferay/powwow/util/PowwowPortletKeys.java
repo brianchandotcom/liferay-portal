@@ -17,7 +17,8 @@ package com.liferay.powwow.util;
 /**
  * @author Shinn Lok
  */
-public class PowwowPortletKeys extends com.liferay.portal.kernel.util.PortletKeys {
+public class PowwowPortletKeys
+	extends com.liferay.portal.kernel.util.PortletKeys {
 
 	public static final String POWWOW_ADMIN = "2_WAR_powwowportlet";
 

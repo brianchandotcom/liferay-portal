@@ -17,6 +17,7 @@ package com.liferay.powwow.provider.bbb;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.model.PowwowParticipantConstants;
 import com.liferay.powwow.model.PowwowServer;
@@ -58,7 +58,7 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 			return _brandingFeatures;
 		}
 
-		List<String> brandingFeatures = new ArrayList<String>();
+		List<String> brandingFeatures = new ArrayList<>();
 
 		brandingFeatures.add("highest-security");
 		brandingFeatures.add("supports-windows-mac-and-linux");
@@ -77,9 +77,7 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 	}
 
 	@Override
-	public Map<String, String> getIndexFields(PowwowMeeting powwowMeeting)
-		throws SystemException {
-
+	public Map<String, String> getIndexFields(PowwowMeeting powwowMeeting) {
 		return Collections.<String, String>emptyMap();
 	}
 
@@ -131,9 +129,8 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 
 	@Override
 	protected Map<String, Serializable> addPowwowMeeting(
-			User user, PowwowServer powwowServer, long powwowMeetingId,
-			String name, Map<String, String> options)
-		throws SystemException {
+		User user, PowwowServer powwowServer, long powwowMeetingId, String name,
+		Map<String, String> options) {
 
 		StringBundler sb = new StringBundler(6);
 
@@ -158,8 +155,7 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 			throw new SystemException("Unable to add BBB meeting");
 		}
 
-		Map<String, Serializable> providerTypeMetadataMap =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> providerTypeMetadataMap = new HashMap<>();
 
 		providerTypeMetadataMap.put(
 			"attendeePW", getText(element, "attendeePW"));
@@ -171,16 +167,14 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 
 	@Override
 	protected boolean deletePowwowMeeting(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting)
-		throws SystemException {
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting) {
 
 		return endPowwowMeeting(powwowServer, powwowMeeting);
 	}
 
 	@Override
 	protected boolean endPowwowMeeting(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting)
-		throws SystemException {
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting) {
 
 		StringBundler sb = new StringBundler(4);
 
@@ -209,8 +203,7 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 	}
 
 	protected Document execute(
-			PowwowServer powwowServer, String action, String queryString)
-		throws SystemException {
+		PowwowServer powwowServer, String action, String queryString) {
 
 		try {
 			String url = getURL(powwowServer, action, queryString);
@@ -322,8 +315,7 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 
 	@Override
 	protected boolean isPowwowMeetingCreated(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting)
-		throws SystemException {
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting) {
 
 		StringBundler sb = new StringBundler(4);
 
@@ -395,24 +387,22 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 
 	@Override
 	protected Map<String, Serializable> updatePowwowMeeting(
-			PowwowServer powwowServer, PowwowMeeting powwowMeeting, String name,
-			User user, Map<String, String> options)
-		throws SystemException {
+		PowwowServer powwowServer, PowwowMeeting powwowMeeting, String name,
+		User user, Map<String, String> options) {
 
 		if (isPowwowMeetingCreated(powwowServer, powwowMeeting)) {
 			if (!endPowwowMeeting(powwowServer, powwowMeeting))
 				throw new SystemException("Unable to update BBB meeting");
 		}
 
-		Map<String, Serializable> providerTypeMetadataMap =
-			addPowwowMeeting(
-				user, powwowServer, powwowMeeting.getPowwowMeetingId(), name,
-				options);
+		Map<String, Serializable> providerTypeMetadataMap = addPowwowMeeting(
+			user, powwowServer, powwowMeeting.getPowwowMeetingId(), name,
+			options);
 
 		return providerTypeMetadataMap;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BBBPowwowServiceProvider.class);
 
 	private List<String> _brandingFeatures;

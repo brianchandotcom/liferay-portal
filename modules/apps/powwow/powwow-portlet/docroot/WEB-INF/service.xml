@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 
-<service-builder package-path="com.liferay.powwow" auto-namespace-tables="false">
+<service-builder auto-namespace-tables="false" package-path="com.liferay.powwow">
 	<author>Shinn Lok</author>
 	<namespace>Powwow</namespace>
-	<entity name="PowwowMeeting" local-service="true" remote-service="true">
+	<entity local-service="true" name="PowwowMeeting" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="powwowMeetingId" type="long" primary="true" />
+		<column name="powwowMeetingId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -59,11 +59,11 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
-	<entity name="PowwowParticipant" local-service="true" remote-service="true">
+	<entity local-service="true" name="PowwowParticipant" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="powwowParticipantId" type="long" primary="true" />
+		<column name="powwowParticipantId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -104,11 +104,11 @@
 			<finder-column name="type" />
 		</finder>
 	</entity>
-	<entity name="PowwowServer" local-service="true" remote-service="false">
+	<entity local-service="true" name="PowwowServer" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="powwowServerId" type="long" primary="true" />
+		<column name="powwowServerId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -130,7 +130,7 @@
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="name" case-sensitive="false" />
+			<order-column case-sensitive="false" name="name" />
 		</order>
 
 		<!-- Finder methods -->

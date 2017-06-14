@@ -26,15 +26,15 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.model.PowwowMeetingConstants;
 import com.liferay.powwow.model.PowwowParticipant;
@@ -70,7 +70,7 @@ public class PowwowMeetingLocalServiceImpl
 			String languageId, long calendarBookingId, int status,
 			List<PowwowParticipant> powwowParticipants,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Powwow meeting
 
@@ -114,7 +114,7 @@ public class PowwowMeetingLocalServiceImpl
 	}
 
 	@Override
-	public void checkPowwowMeetings() throws PortalException, SystemException {
+	public void checkPowwowMeetings() throws PortalException {
 		List<PowwowMeeting> powwowMeetings =
 			PowwowMeetingLocalServiceUtil.getPowwowMeetings(
 				PowwowMeetingConstants.STATUS_IN_PROGRESS);
@@ -141,7 +141,7 @@ public class PowwowMeetingLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public PowwowMeeting deletePowwowMeeting(long powwowMeetingId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeeting powwowMeeting = powwowMeetingPersistence.findByPrimaryKey(
 			powwowMeetingId);
@@ -151,7 +151,7 @@ public class PowwowMeetingLocalServiceImpl
 
 	@Override
 	public PowwowMeeting deletePowwowMeeting(PowwowMeeting powwowMeeting)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Powwow meeting
 
@@ -189,49 +189,42 @@ public class PowwowMeetingLocalServiceImpl
 
 	@Override
 	public List<PowwowMeeting> getParticipantPowwowMeetings(
-			long userId, int[] statuses, int start, int end,
-			OrderByComparator orderByComparator)
-		throws SystemException {
+		long userId, int[] statuses, int start, int end,
+		OrderByComparator orderByComparator) {
 
 		return powwowMeetingFinder.findByU_S(
 			userId, statuses, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getParticipantPowwowMeetingsCount(long userId, int[] statuses)
-		throws SystemException {
-
+	public int getParticipantPowwowMeetingsCount(long userId, int[] statuses) {
 		return powwowMeetingFinder.countByU_S(userId, statuses);
 	}
 
 	@Override
 	public PowwowMeeting getPowwowMeeting(long powwowMeetingId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return powwowMeetingPersistence.findByPrimaryKey(powwowMeetingId);
 	}
 
 	@Override
-	public List<PowwowMeeting> getPowwowMeetings(int status)
-		throws SystemException {
-
+	public List<PowwowMeeting> getPowwowMeetings(int status) {
 		return powwowMeetingPersistence.findByStatus(status);
 	}
 
 	@Override
 	public List<PowwowMeeting> getPowwowMeetings(
-			long groupId, int start, int end, OrderByComparator obc)
-		throws SystemException {
+		long groupId, int start, int end, OrderByComparator obc) {
 
 		return powwowMeetingPersistence.findByGroupId(groupId, start, end, obc);
 	}
 
 	@Override
 	public List<PowwowMeeting> getPowwowMeetings(
-			long groupId, long userId, String name, String description,
-			int status, boolean andSearch, int start, int end,
-			String orderByField, String orderByType)
-		throws SystemException {
+		long groupId, long userId, String name, String description, int status,
+		boolean andSearch, int start, int end, String orderByField,
+		String orderByType) {
 
 		DynamicQuery dynamicQuery = buildDynamicQuery(
 			groupId, userId, name, description, status, andSearch);
@@ -247,22 +240,19 @@ public class PowwowMeetingLocalServiceImpl
 	}
 
 	@Override
-	public int getPowwowMeetingsCount(long groupId) throws SystemException {
+	public int getPowwowMeetingsCount(long groupId) {
 		return powwowMeetingPersistence.countByGroupId(groupId);
 	}
 
 	@Override
-	public int getPowwowMeetingsCount(long powwowServerId, int status)
-		throws SystemException {
-
+	public int getPowwowMeetingsCount(long powwowServerId, int status) {
 		return powwowMeetingPersistence.countByPSI_S(powwowServerId, status);
 	}
 
 	@Override
 	public int getPowwowMeetingsCount(
-			long groupId, long userId, String name, String description,
-			int status, boolean andSearch)
-		throws SystemException {
+		long groupId, long userId, String name, String description, int status,
+		boolean andSearch) {
 
 		DynamicQuery dynamicQuery = buildDynamicQuery(
 			groupId, userId, name, description, status, andSearch);
@@ -271,9 +261,7 @@ public class PowwowMeetingLocalServiceImpl
 	}
 
 	@Override
-	public int getUserPowwowMeetingsCount(long userId, int status)
-		throws SystemException {
-
+	public int getUserPowwowMeetingsCount(long userId, int status) {
 		return powwowMeetingPersistence.countByU_S(userId, status);
 	}
 
@@ -286,7 +274,7 @@ public class PowwowMeetingLocalServiceImpl
 			String languageId, long calendarBookingId, int status,
 			List<PowwowParticipant> powwowParticipants,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		// Powwow meeting
 
@@ -320,7 +308,7 @@ public class PowwowMeetingLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public PowwowMeeting updateStatus(long powwowMeetingId, int status)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeeting powwowMeeting = powwowMeetingPersistence.findByPrimaryKey(
 			powwowMeetingId);
@@ -391,9 +379,9 @@ public class PowwowMeetingLocalServiceImpl
 			long userId, long groupId, long powwowMeetingId,
 			List<PowwowParticipant> powwowParticipants,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		Set<Long> powwowParticipantIds = new HashSet<Long>();
+		Set<Long> powwowParticipantIds = new HashSet<>();
 
 		for (PowwowParticipant powwowParticipant : powwowParticipants) {
 			long powwowParticipantId =

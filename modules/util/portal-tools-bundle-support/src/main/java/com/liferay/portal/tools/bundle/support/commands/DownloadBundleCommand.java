@@ -16,6 +16,7 @@ package com.liferay.portal.tools.bundle.support.commands;
 
 import com.beust.jcommander.Parameter;
 
+import com.liferay.portal.tools.bundle.support.internal.BundleSupportConstants;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.HttpUtil;
 import com.liferay.portal.tools.bundle.support.util.StreamLogger;
@@ -152,19 +153,6 @@ public class DownloadBundleCommand extends BaseCommand implements StreamLogger {
 		System.out.println(message);
 	}
 
-	protected static final URL DEFAULT_URL;
-
-	static {
-		try {
-			DEFAULT_URL = new URL(
-				"https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.2-ga3" +
-					"/liferay-ce-portal-tomcat-7.0-ga3-20160804222206210.zip");
-		}
-		catch (MalformedURLException murle) {
-			throw new ExceptionInInitializerError(murle);
-		}
-	}
-
 	protected Path bundlePath;
 
 	@Parameter(
@@ -172,7 +160,8 @@ public class DownloadBundleCommand extends BaseCommand implements StreamLogger {
 		names = "--cache-dir"
 	)
 	protected File cacheDir = new File(
-		System.getProperty("user.home"), ".liferay/bundles");
+		System.getProperty("user.home"),
+		BundleSupportConstants.DEFAULT_BUNDLE_CACHE_DIR_NAME);
 
 	@Parameter(
 		description = "The password if your URL requires authentication.",
@@ -195,12 +184,23 @@ public class DownloadBundleCommand extends BaseCommand implements StreamLogger {
 		description = "The URL of the Liferay Bundle to expand.",
 		names = "--url"
 	)
-	protected URL url = DEFAULT_URL;
+	protected URL url = _DEFAULT_URL;
 
 	@Parameter(
 		description = "The user name if your URL requires authentication.",
 		names = {"-u", "--username", "--user-name"}
 	)
 	protected String userName;
+
+	private static final URL _DEFAULT_URL;
+
+	static {
+		try {
+			_DEFAULT_URL = new URL(BundleSupportConstants.DEFAULT_BUNDLE_URL);
+		}
+		catch (MalformedURLException murle) {
+			throw new ExceptionInInitializerError(murle);
+		}
+	}
 
 }

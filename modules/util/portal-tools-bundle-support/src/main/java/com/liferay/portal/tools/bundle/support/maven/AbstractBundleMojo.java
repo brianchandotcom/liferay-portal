@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.bundle.support.maven;
 
+import com.liferay.portal.tools.bundle.support.internal.BundleSupportConstants;
+
 import java.io.File;
 
 import java.net.URL;
@@ -25,26 +27,30 @@ import org.apache.maven.plugins.annotations.Parameter;
  */
 public abstract class AbstractBundleMojo extends AbstractLiferayMojo {
 
-	@Parameter(defaultValue = "${user.home}/.liferay/bundles")
+	@Parameter(
+		defaultValue = "${user.home}/" + BundleSupportConstants.DEFAULT_BUNDLE_CACHE_DIR_NAME
+	)
 	protected File cacheDir;
 
 	@Parameter(defaultValue = "configs")
 	protected String configs;
 
-	@Parameter(defaultValue = "local")
+	@Parameter(defaultValue = BundleSupportConstants.DEFAULT_ENVIRONMENT)
 	protected String environment;
 
 	@Parameter
 	protected String password;
 
-	@Parameter(defaultValue = "1")
+	@Parameter(
+		defaultValue = "" + BundleSupportConstants.DEFAULT_STRIP_COMPONENTS
+	)
 	protected int stripComponents;
 
 	@Parameter
 	protected boolean token;
 
 	@Parameter(
-		defaultValue = "https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.2-ga3/liferay-ce-portal-tomcat-7.0-ga3-20160804222206210.zip",
+		defaultValue = BundleSupportConstants.DEFAULT_BUNDLE_URL,
 		required = true
 	)
 	protected URL url;

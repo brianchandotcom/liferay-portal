@@ -69,16 +69,6 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
-	public CPDefinition deleteCPDefinition(CPDefinition cpDefinition)
-		throws PortalException {
-
-		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinition, ActionKeys.DELETE);
-
-		return cpDefinitionLocalService.deleteCPDefinition(cpDefinition);
-	}
-
-	@Override
 	public CPDefinition deleteCPDefinition(long cpDefinitionId)
 		throws PortalException {
 

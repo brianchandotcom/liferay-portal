@@ -67,7 +67,7 @@ public class CPDefinitionsPortletUtil {
 			orderByComparator = new CPAttachmentFileEntryDisplayDateComparator(
 				orderByAsc);
 		}
-		else if (orderByCol.equals("prority")) {
+		else if (orderByCol.equals("priority")) {
 			orderByComparator = new CPAttachmentFileEntryPriorityComparator(
 				orderByAsc);
 		}

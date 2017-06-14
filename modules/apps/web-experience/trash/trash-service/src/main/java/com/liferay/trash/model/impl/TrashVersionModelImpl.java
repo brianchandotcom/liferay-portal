@@ -68,7 +68,7 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 			{ "entryId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "typeSettings", Types.VARCHAR },
+			{ "typeSettings", Types.CLOB },
 			{ "status", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -79,11 +79,11 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table TrashVersion (versionId LONG not null primary key,companyId LONG,entryId LONG,classNameId LONG,classPK LONG,typeSettings VARCHAR(75) null,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table TrashVersion (versionId LONG not null primary key,companyId LONG,entryId LONG,classNameId LONG,classPK LONG,typeSettings TEXT null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table TrashVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY trashVersion.versionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY TrashVersion.versionId ASC";

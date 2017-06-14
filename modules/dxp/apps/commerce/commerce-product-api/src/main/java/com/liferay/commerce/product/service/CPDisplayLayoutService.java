@@ -26,28 +26,28 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 /**
- * Provides the remote service interface for CPTemplateLayoutEntry. Methods of this
+ * Provides the remote service interface for CPDisplayLayout. Methods of this
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
  * @author Marco Leo
- * @see CPTemplateLayoutEntryServiceUtil
- * @see com.liferay.commerce.product.service.base.CPTemplateLayoutEntryServiceBaseImpl
- * @see com.liferay.commerce.product.service.impl.CPTemplateLayoutEntryServiceImpl
+ * @see CPDisplayLayoutServiceUtil
+ * @see com.liferay.commerce.product.service.base.CPDisplayLayoutServiceBaseImpl
+ * @see com.liferay.commerce.product.service.impl.CPDisplayLayoutServiceImpl
  * @generated
  */
 @AccessControlled
 @JSONWebService
 @OSGiBeanProperties(property =  {
-	"json.web.service.context.name=commerce", "json.web.service.context.path=CPTemplateLayoutEntry"}, service = CPTemplateLayoutEntryService.class)
+	"json.web.service.context.name=commerce", "json.web.service.context.path=CPDisplayLayout"}, service = CPDisplayLayoutService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface CPTemplateLayoutEntryService extends BaseService {
+public interface CPDisplayLayoutService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link CPTemplateLayoutEntryServiceUtil} to access the cp template layout entry remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPTemplateLayoutEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link CPDisplayLayoutServiceUtil} to access the cp display layout remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDisplayLayoutServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**

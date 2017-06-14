@@ -178,7 +178,7 @@ create table CPOptionValue (
 	lastPublishDate DATE null
 );
 
-create table CPTemplateLayoutEntry (
+create table CPDisplayLayout (
 	uuid_ VARCHAR(75) null,
 	CPFriendlyURLEntryId LONG not null primary key,
 	groupId LONG,

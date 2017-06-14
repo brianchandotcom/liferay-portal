@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.product.service.CPTemplateLayoutEntryServiceUtil} service utility. The
+ * {@link com.liferay.commerce.product.service.CPDisplayLayoutServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -26,10 +26,10 @@ import aQute.bnd.annotation.ProviderType;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.commerce.product.model.CPTemplateLayoutEntrySoap}.
+ * is translated to an array of {@link com.liferay.commerce.product.model.CPDisplayLayoutSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.commerce.product.model.CPTemplateLayoutEntry}, that is translated to a
- * {@link com.liferay.commerce.product.model.CPTemplateLayoutEntrySoap}. Methods that SOAP cannot
+ * {@link com.liferay.commerce.product.model.CPDisplayLayout}, that is translated to a
+ * {@link com.liferay.commerce.product.model.CPDisplayLayoutSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -51,11 +51,11 @@ import aQute.bnd.annotation.ProviderType;
  * </p>
  *
  * @author Marco Leo
- * @see CPTemplateLayoutEntryServiceHttp
- * @see com.liferay.commerce.product.model.CPTemplateLayoutEntrySoap
- * @see com.liferay.commerce.product.service.CPTemplateLayoutEntryServiceUtil
+ * @see CPDisplayLayoutServiceHttp
+ * @see com.liferay.commerce.product.model.CPDisplayLayoutSoap
+ * @see com.liferay.commerce.product.service.CPDisplayLayoutServiceUtil
  * @generated
  */
 @ProviderType
-public class CPTemplateLayoutEntryServiceSoap {
+public class CPDisplayLayoutServiceSoap {
 }

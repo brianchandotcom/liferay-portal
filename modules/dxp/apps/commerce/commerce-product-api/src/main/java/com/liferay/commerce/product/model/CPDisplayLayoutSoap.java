@@ -23,17 +23,16 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.product.service.http.CPTemplateLayoutEntryServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.product.service.http.CPDisplayLayoutServiceSoap}.
  *
  * @author Marco Leo
- * @see com.liferay.commerce.product.service.http.CPTemplateLayoutEntryServiceSoap
+ * @see com.liferay.commerce.product.service.http.CPDisplayLayoutServiceSoap
  * @generated
  */
 @ProviderType
-public class CPTemplateLayoutEntrySoap implements Serializable {
-	public static CPTemplateLayoutEntrySoap toSoapModel(
-		CPTemplateLayoutEntry model) {
-		CPTemplateLayoutEntrySoap soapModel = new CPTemplateLayoutEntrySoap();
+public class CPDisplayLayoutSoap implements Serializable {
+	public static CPDisplayLayoutSoap toSoapModel(CPDisplayLayout model) {
+		CPDisplayLayoutSoap soapModel = new CPDisplayLayoutSoap();
 
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCPFriendlyURLEntryId(model.getCPFriendlyURLEntryId());
@@ -50,9 +49,8 @@ public class CPTemplateLayoutEntrySoap implements Serializable {
 		return soapModel;
 	}
 
-	public static CPTemplateLayoutEntrySoap[] toSoapModels(
-		CPTemplateLayoutEntry[] models) {
-		CPTemplateLayoutEntrySoap[] soapModels = new CPTemplateLayoutEntrySoap[models.length];
+	public static CPDisplayLayoutSoap[] toSoapModels(CPDisplayLayout[] models) {
+		CPDisplayLayoutSoap[] soapModels = new CPDisplayLayoutSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -61,15 +59,15 @@ public class CPTemplateLayoutEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CPTemplateLayoutEntrySoap[][] toSoapModels(
-		CPTemplateLayoutEntry[][] models) {
-		CPTemplateLayoutEntrySoap[][] soapModels = null;
+	public static CPDisplayLayoutSoap[][] toSoapModels(
+		CPDisplayLayout[][] models) {
+		CPDisplayLayoutSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new CPTemplateLayoutEntrySoap[models.length][models[0].length];
+			soapModels = new CPDisplayLayoutSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new CPTemplateLayoutEntrySoap[0][0];
+			soapModels = new CPDisplayLayoutSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -79,18 +77,18 @@ public class CPTemplateLayoutEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CPTemplateLayoutEntrySoap[] toSoapModels(
-		List<CPTemplateLayoutEntry> models) {
-		List<CPTemplateLayoutEntrySoap> soapModels = new ArrayList<CPTemplateLayoutEntrySoap>(models.size());
+	public static CPDisplayLayoutSoap[] toSoapModels(
+		List<CPDisplayLayout> models) {
+		List<CPDisplayLayoutSoap> soapModels = new ArrayList<CPDisplayLayoutSoap>(models.size());
 
-		for (CPTemplateLayoutEntry model : models) {
+		for (CPDisplayLayout model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new CPTemplateLayoutEntrySoap[soapModels.size()]);
+		return soapModels.toArray(new CPDisplayLayoutSoap[soapModels.size()]);
 	}
 
-	public CPTemplateLayoutEntrySoap() {
+	public CPDisplayLayoutSoap() {
 	}
 
 	public long getPrimaryKey() {

@@ -531,7 +531,7 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="true" name="CPTemplateLayoutEntry" remote-service="true"  uuid="true">
+	<entity local-service="true" name="CPDisplayLayout" remote-service="true"  uuid="true">
 
 		<!-- PK fields -->
 
@@ -564,8 +564,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="G_C_C" return-type="CPTemplateLayoutEntry" unique="true">
-			<finder-column name="groupId" />
+		<finder name="C_C" return-type="CPDisplayLayout" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>

@@ -23,7 +23,7 @@ import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameExcepti
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
-import com.liferay.commerce.product.model.CPTemplateLayoutEntry;
+import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.service.base.CPDefinitionLocalServiceBaseImpl;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
@@ -167,7 +167,7 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product template layout entry
 
-		cpTemplateLayoutEntryLocalService.addCPTemplateLayoutEntry(
+		cpDisplayLayoutLocalService.addCPDisplayLayout(
 			groupId, serviceContext.getCompanyId(), CPDefinition.class,
 			cpDefinitionId, layoutUuid);
 
@@ -237,7 +237,7 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product template layout entry
 
-		cpTemplateLayoutEntryLocalService.deleteCPTemplateLayoutEntry(
+		cpDisplayLayoutLocalService.deleteCPDisplayLayout(
 			cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
 			CPDefinition.class, cpDefinition.getCPDefinitionId());
 
@@ -409,13 +409,13 @@ public class CPDefinitionLocalServiceImpl
 
 		String defaultLanguageId = LanguageUtil.getLanguageId(defaultLocale);
 
-		CPTemplateLayoutEntry cpTemplateLayoutEntry =
-			cpTemplateLayoutEntryLocalService.getCPTemplateLayoutEntry(
+		CPDisplayLayout cpDisplayLayout =
+			cpDisplayLayoutLocalService.getCPDisplayLayout(
 				cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
 				classNameId, cpDefinition.getCPDefinitionId());
 
-		if (cpTemplateLayoutEntry != null) {
-			layoutUuid = cpTemplateLayoutEntry.getLayoutUuid();
+		if (cpDisplayLayout != null) {
+			layoutUuid = cpDisplayLayout.getLayoutUuid();
 		}
 
 		return layoutUuid;
@@ -701,7 +701,7 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product template layout entry
 
-		cpTemplateLayoutEntryLocalService.addCPTemplateLayoutEntry(
+		cpDisplayLayoutLocalService.addCPDisplayLayout(
 			groupId, serviceContext.getCompanyId(), CPDefinition.class,
 			cpDefinitionId, layoutUuid);
 

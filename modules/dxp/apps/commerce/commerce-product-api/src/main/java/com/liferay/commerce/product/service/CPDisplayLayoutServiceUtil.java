@@ -21,25 +21,25 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * Provides the remote service utility for CPTemplateLayoutEntry. This utility wraps
- * {@link com.liferay.commerce.product.service.impl.CPTemplateLayoutEntryServiceImpl} and is the
+ * Provides the remote service utility for CPDisplayLayout. This utility wraps
+ * {@link com.liferay.commerce.product.service.impl.CPDisplayLayoutServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on a remote server. Methods of this service are expected to have security
  * checks based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
  * @author Marco Leo
- * @see CPTemplateLayoutEntryService
- * @see com.liferay.commerce.product.service.base.CPTemplateLayoutEntryServiceBaseImpl
- * @see com.liferay.commerce.product.service.impl.CPTemplateLayoutEntryServiceImpl
+ * @see CPDisplayLayoutService
+ * @see com.liferay.commerce.product.service.base.CPDisplayLayoutServiceBaseImpl
+ * @see com.liferay.commerce.product.service.impl.CPDisplayLayoutServiceImpl
  * @generated
  */
 @ProviderType
-public class CPTemplateLayoutEntryServiceUtil {
+public class CPDisplayLayoutServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPTemplateLayoutEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDisplayLayoutServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -51,10 +51,10 @@ public class CPTemplateLayoutEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static CPTemplateLayoutEntryService getService() {
+	public static CPDisplayLayoutService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CPTemplateLayoutEntryService, CPTemplateLayoutEntryService> _serviceTracker =
-		ServiceTrackerFactory.open(CPTemplateLayoutEntryService.class);
+	private static ServiceTracker<CPDisplayLayoutService, CPDisplayLayoutService> _serviceTracker =
+		ServiceTrackerFactory.open(CPDisplayLayoutService.class);
 }

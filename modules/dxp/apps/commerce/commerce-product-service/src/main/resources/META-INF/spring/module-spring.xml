@@ -15,6 +15,9 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionValueRelLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionValueRelServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionValueRelService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionOptionValueRelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPDisplayLayoutLocalServiceImpl" id="com.liferay.commerce.product.service.CPDisplayLayoutLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPDisplayLayoutServiceImpl" id="com.liferay.commerce.product.service.CPDisplayLayoutService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDisplayLayoutPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDisplayLayoutPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPFriendlyURLEntryLocalServiceImpl" id="com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPFriendlyURLEntryServiceImpl" id="com.liferay.commerce.product.service.CPFriendlyURLEntryService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPFriendlyURLEntryPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPFriendlyURLEntryPersistence" parent="basePersistence" />
@@ -30,7 +33,4 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionValueLocalServiceImpl" id="com.liferay.commerce.product.service.CPOptionValueLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPOptionValueServiceImpl" id="com.liferay.commerce.product.service.CPOptionValueService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPOptionValuePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPOptionValuePersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.product.service.impl.CPTemplateLayoutEntryLocalServiceImpl" id="com.liferay.commerce.product.service.CPTemplateLayoutEntryLocalService" />
-	<bean class="com.liferay.commerce.product.service.impl.CPTemplateLayoutEntryServiceImpl" id="com.liferay.commerce.product.service.CPTemplateLayoutEntryService" />
-	<bean class="com.liferay.commerce.product.service.persistence.impl.CPTemplateLayoutEntryPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPTemplateLayoutEntryPersistence" parent="basePersistence" />
 </beans>

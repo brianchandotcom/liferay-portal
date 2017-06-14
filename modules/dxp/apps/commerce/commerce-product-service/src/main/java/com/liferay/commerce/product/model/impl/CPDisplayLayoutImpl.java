@@ -11,31 +11,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.commerce.product.exception;
+
+package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Marco Leo
  */
 @ProviderType
-public class NoSuchCPTemplateLayoutEntryException extends NoSuchModelException {
+public class CPDisplayLayoutImpl extends CPDisplayLayoutBaseImpl {
 
-	public NoSuchCPTemplateLayoutEntryException() {
-	}
-
-	public NoSuchCPTemplateLayoutEntryException(String msg) {
-		super(msg);
-	}
-
-	public NoSuchCPTemplateLayoutEntryException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public NoSuchCPTemplateLayoutEntryException(Throwable cause) {
-		super(cause);
+	public CPDisplayLayoutImpl() {
 	}
 
 }

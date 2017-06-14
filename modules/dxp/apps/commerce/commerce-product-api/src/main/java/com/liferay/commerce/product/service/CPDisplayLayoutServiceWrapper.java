@@ -19,19 +19,18 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
- * Provides a wrapper for {@link CPTemplateLayoutEntryService}.
+ * Provides a wrapper for {@link CPDisplayLayoutService}.
  *
  * @author Marco Leo
- * @see CPTemplateLayoutEntryService
+ * @see CPDisplayLayoutService
  * @generated
  */
 @ProviderType
-public class CPTemplateLayoutEntryServiceWrapper
-	implements CPTemplateLayoutEntryService,
-		ServiceWrapper<CPTemplateLayoutEntryService> {
-	public CPTemplateLayoutEntryServiceWrapper(
-		CPTemplateLayoutEntryService cpTemplateLayoutEntryService) {
-		_cpTemplateLayoutEntryService = cpTemplateLayoutEntryService;
+public class CPDisplayLayoutServiceWrapper implements CPDisplayLayoutService,
+	ServiceWrapper<CPDisplayLayoutService> {
+	public CPDisplayLayoutServiceWrapper(
+		CPDisplayLayoutService cpDisplayLayoutService) {
+		_cpDisplayLayoutService = cpDisplayLayoutService;
 	}
 
 	/**
@@ -41,19 +40,18 @@ public class CPTemplateLayoutEntryServiceWrapper
 	*/
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
-		return _cpTemplateLayoutEntryService.getOSGiServiceIdentifier();
+		return _cpDisplayLayoutService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public CPTemplateLayoutEntryService getWrappedService() {
-		return _cpTemplateLayoutEntryService;
+	public CPDisplayLayoutService getWrappedService() {
+		return _cpDisplayLayoutService;
 	}
 
 	@Override
-	public void setWrappedService(
-		CPTemplateLayoutEntryService cpTemplateLayoutEntryService) {
-		_cpTemplateLayoutEntryService = cpTemplateLayoutEntryService;
+	public void setWrappedService(CPDisplayLayoutService cpDisplayLayoutService) {
+		_cpDisplayLayoutService = cpDisplayLayoutService;
 	}
 
-	private CPTemplateLayoutEntryService _cpTemplateLayoutEntryService;
+	private CPDisplayLayoutService _cpDisplayLayoutService;
 }

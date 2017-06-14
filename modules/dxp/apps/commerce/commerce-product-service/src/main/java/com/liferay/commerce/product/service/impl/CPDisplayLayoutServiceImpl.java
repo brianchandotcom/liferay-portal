@@ -12,17 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.product.model.impl;
+package com.liferay.commerce.product.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.commerce.product.service.base.CPDisplayLayoutServiceBaseImpl;
 
 /**
-* @author Marco Leo
+ * @author Marco Leo
  */
-@ProviderType
-public class CPTemplateLayoutEntryImpl extends CPTemplateLayoutEntryBaseImpl {
-
-	public CPTemplateLayoutEntryImpl() {
-	}
-
+public class CPDisplayLayoutServiceImpl
+	extends CPDisplayLayoutServiceBaseImpl {
 }

@@ -16,7 +16,7 @@ package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.product.model.CPTemplateLayoutEntry;
+import com.liferay.commerce.product.model.CPDisplayLayout;
 
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -31,14 +31,14 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing CPTemplateLayoutEntry in entity cache.
+ * The cache model class for representing CPDisplayLayout in entity cache.
  *
  * @author Marco Leo
- * @see CPTemplateLayoutEntry
+ * @see CPDisplayLayout
  * @generated
  */
 @ProviderType
-public class CPTemplateLayoutEntryCacheModel implements CacheModel<CPTemplateLayoutEntry>,
+public class CPDisplayLayoutCacheModel implements CacheModel<CPDisplayLayout>,
 	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
@@ -46,13 +46,13 @@ public class CPTemplateLayoutEntryCacheModel implements CacheModel<CPTemplateLay
 			return true;
 		}
 
-		if (!(obj instanceof CPTemplateLayoutEntryCacheModel)) {
+		if (!(obj instanceof CPDisplayLayoutCacheModel)) {
 			return false;
 		}
 
-		CPTemplateLayoutEntryCacheModel cpTemplateLayoutEntryCacheModel = (CPTemplateLayoutEntryCacheModel)obj;
+		CPDisplayLayoutCacheModel cpDisplayLayoutCacheModel = (CPDisplayLayoutCacheModel)obj;
 
-		if (CPFriendlyURLEntryId == cpTemplateLayoutEntryCacheModel.CPFriendlyURLEntryId) {
+		if (CPFriendlyURLEntryId == cpDisplayLayoutCacheModel.CPFriendlyURLEntryId) {
 			return true;
 		}
 
@@ -96,55 +96,55 @@ public class CPTemplateLayoutEntryCacheModel implements CacheModel<CPTemplateLay
 	}
 
 	@Override
-	public CPTemplateLayoutEntry toEntityModel() {
-		CPTemplateLayoutEntryImpl cpTemplateLayoutEntryImpl = new CPTemplateLayoutEntryImpl();
+	public CPDisplayLayout toEntityModel() {
+		CPDisplayLayoutImpl cpDisplayLayoutImpl = new CPDisplayLayoutImpl();
 
 		if (uuid == null) {
-			cpTemplateLayoutEntryImpl.setUuid(StringPool.BLANK);
+			cpDisplayLayoutImpl.setUuid(StringPool.BLANK);
 		}
 		else {
-			cpTemplateLayoutEntryImpl.setUuid(uuid);
+			cpDisplayLayoutImpl.setUuid(uuid);
 		}
 
-		cpTemplateLayoutEntryImpl.setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
-		cpTemplateLayoutEntryImpl.setGroupId(groupId);
-		cpTemplateLayoutEntryImpl.setCompanyId(companyId);
-		cpTemplateLayoutEntryImpl.setUserId(userId);
+		cpDisplayLayoutImpl.setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
+		cpDisplayLayoutImpl.setGroupId(groupId);
+		cpDisplayLayoutImpl.setCompanyId(companyId);
+		cpDisplayLayoutImpl.setUserId(userId);
 
 		if (userName == null) {
-			cpTemplateLayoutEntryImpl.setUserName(StringPool.BLANK);
+			cpDisplayLayoutImpl.setUserName(StringPool.BLANK);
 		}
 		else {
-			cpTemplateLayoutEntryImpl.setUserName(userName);
+			cpDisplayLayoutImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			cpTemplateLayoutEntryImpl.setCreateDate(null);
+			cpDisplayLayoutImpl.setCreateDate(null);
 		}
 		else {
-			cpTemplateLayoutEntryImpl.setCreateDate(new Date(createDate));
+			cpDisplayLayoutImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			cpTemplateLayoutEntryImpl.setModifiedDate(null);
+			cpDisplayLayoutImpl.setModifiedDate(null);
 		}
 		else {
-			cpTemplateLayoutEntryImpl.setModifiedDate(new Date(modifiedDate));
+			cpDisplayLayoutImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		cpTemplateLayoutEntryImpl.setClassNameId(classNameId);
-		cpTemplateLayoutEntryImpl.setClassPK(classPK);
+		cpDisplayLayoutImpl.setClassNameId(classNameId);
+		cpDisplayLayoutImpl.setClassPK(classPK);
 
 		if (layoutUuid == null) {
-			cpTemplateLayoutEntryImpl.setLayoutUuid(StringPool.BLANK);
+			cpDisplayLayoutImpl.setLayoutUuid(StringPool.BLANK);
 		}
 		else {
-			cpTemplateLayoutEntryImpl.setLayoutUuid(layoutUuid);
+			cpDisplayLayoutImpl.setLayoutUuid(layoutUuid);
 		}
 
-		cpTemplateLayoutEntryImpl.resetOriginalValues();
+		cpDisplayLayoutImpl.resetOriginalValues();
 
-		return cpTemplateLayoutEntryImpl;
+		return cpDisplayLayoutImpl;
 	}
 
 	@Override

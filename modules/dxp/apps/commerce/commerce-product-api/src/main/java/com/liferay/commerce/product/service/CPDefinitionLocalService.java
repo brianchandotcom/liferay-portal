@@ -277,6 +277,9 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionsCount();
 
+	public java.lang.String buildUniqueUrlTitle(CPDefinition cpDefinition,
+		java.lang.String languageId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getDisplayPage(CPDefinition cpDefinition)
 		throws PortalException;
@@ -287,10 +290,6 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getUniqueUrlTitle(CPDefinition cpDefinition,
-		java.lang.String languageId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getUrlTitleMapAsXML(CPDefinition cpDefinition);

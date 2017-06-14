@@ -17,35 +17,21 @@ package com.liferay.powwow.util;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.notifications.NotificationEvent;
-import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
-import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
-import com.liferay.portal.kernel.util.CalendarUtil;
-import com.liferay.portal.kernel.util.Digester;
-import com.liferay.portal.kernel.util.DigesterUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.kernel.notifications.NotificationEvent;
+import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
+import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
@@ -53,8 +39,21 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CalendarUtil;
+import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.model.PowwowParticipant;
 import com.liferay.powwow.model.PowwowParticipantConstants;
@@ -199,8 +198,7 @@ public class PowwowUtil {
 			ActionRequest actionRequest)
 		throws Exception {
 
-		List<PowwowParticipant> powwowParticipants =
-			new ArrayList<PowwowParticipant>();
+		List<PowwowParticipant> powwowParticipants = new ArrayList<>();
 
 		long powwowMeetingId = ParamUtil.getLong(
 			actionRequest, "powwowMeetingId");
@@ -269,7 +267,8 @@ public class PowwowUtil {
 			PortletPreferencesLocalServiceUtil.getPreferences(
 				powwowMeeting.getCompanyId(), powwowMeeting.getGroupId(),
 				PowwowPortletKeys.PREFS_OWNER_TYPE_GROUP,
-				LayoutConstants.DEFAULT_PLID, PowwowPortletKeys.POWWOW_MEETINGS);
+				LayoutConstants.DEFAULT_PLID,
+				PowwowPortletKeys.POWWOW_MEETINGS);
 
 		if (powwowMeeting.getCalendarBookingId() > 0) {
 			powwowSubscriptionSender.addFileAttachment(
@@ -348,7 +347,8 @@ public class PowwowUtil {
 					PortletPropsValues.POWWOW_INVITATION_EMAIL_SUBJECT)));
 		powwowSubscriptionSender.setMailId(
 			"powwowMeeting", powwowMeeting.getPowwowMeetingId());
-		powwowSubscriptionSender.setPortletId(PowwowPortletKeys.POWWOW_MEETINGS);
+		powwowSubscriptionSender.setPortletId(
+			PowwowPortletKeys.POWWOW_MEETINGS);
 		powwowSubscriptionSender.setReplyToAddress(fromAddress);
 		powwowSubscriptionSender.setScopeGroupId(powwowMeeting.getGroupId());
 		powwowSubscriptionSender.setServiceContext(serviceContext);
@@ -390,9 +390,8 @@ public class PowwowUtil {
 	}
 
 	private static PowwowParticipant _getPowwowParticipant(
-			long powwowMeetingId, String name, long participantUserId,
-			String emailAddress, int type)
-		throws SystemException {
+		long powwowMeetingId, String name, long participantUserId,
+		String emailAddress, int type) {
 
 		PowwowParticipant powwowParticipant = null;
 

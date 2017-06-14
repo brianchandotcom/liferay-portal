@@ -15,11 +15,10 @@
 package com.liferay.powwow.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.powwow.model.PowwowServer;
 import com.liferay.powwow.provider.PowwowServiceProviderUtil;
 import com.liferay.powwow.service.base.PowwowServerLocalServiceBaseImpl;
@@ -37,7 +36,7 @@ public class PowwowServerLocalServiceImpl
 	public PowwowServer addPowwowServer(
 			long userId, String name, String providerType, String url,
 			String apiKey, String secret, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
@@ -66,7 +65,7 @@ public class PowwowServerLocalServiceImpl
 	}
 
 	@Override
-	public void checkPowwowServers() throws SystemException {
+	public void checkPowwowServers() {
 		List<PowwowServer> powwowServers = powwowServerPersistence.findAll();
 
 		for (PowwowServer powwowServer : powwowServers) {
@@ -79,7 +78,7 @@ public class PowwowServerLocalServiceImpl
 
 	@Override
 	public PowwowServer deletePowwowServer(long powwowServerId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowServer powwowServer = powwowServerPersistence.findByPrimaryKey(
 			powwowServerId);
@@ -88,9 +87,7 @@ public class PowwowServerLocalServiceImpl
 	}
 
 	@Override
-	public PowwowServer deletePowwowServer(PowwowServer powwowServer)
-		throws SystemException {
-
+	public PowwowServer deletePowwowServer(PowwowServer powwowServer) {
 		powwowServerPersistence.remove(powwowServer);
 
 		return powwowServer;
@@ -98,29 +95,25 @@ public class PowwowServerLocalServiceImpl
 
 	@Override
 	public List<PowwowServer> getPowwowServers(
-			int start, int end, OrderByComparator obc)
-		throws SystemException {
+		int start, int end, OrderByComparator obc) {
 
 		return powwowServerPersistence.findAll(start, end, obc);
 	}
 
 	@Override
 	public List<PowwowServer> getPowwowServers(
-			String providerType, boolean active)
-		throws SystemException {
+		String providerType, boolean active) {
 
 		return powwowServerPersistence.findByPT_A(providerType, active);
 	}
 
 	@Override
-	public int getPowwowServersCount() throws SystemException {
+	public int getPowwowServersCount() {
 		return powwowServerPersistence.countAll();
 	}
 
 	@Override
-	public int getPowwowServersCount(String providerType, boolean active)
-		throws SystemException {
-
+	public int getPowwowServersCount(String providerType, boolean active) {
 		return powwowServerPersistence.countByPT_A(providerType, active);
 	}
 
@@ -128,7 +121,7 @@ public class PowwowServerLocalServiceImpl
 	public PowwowServer updatePowwowServer(
 			long powwowServerId, String name, String providerType, String url,
 			String apiKey, String secret, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowServer powwowServer = powwowServerPersistence.findByPrimaryKey(
 			powwowServerId);

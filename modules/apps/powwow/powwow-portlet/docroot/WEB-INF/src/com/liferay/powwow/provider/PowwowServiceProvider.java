@@ -15,7 +15,6 @@
 package com.liferay.powwow.provider;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.model.PowwowServer;
 
@@ -36,13 +35,13 @@ public interface PowwowServiceProvider {
 	public Map<String, Serializable> addPowwowMeeting(
 			long userId, long powwowServerId, long powwowMeetingId, String name,
 			Map<String, String> startOptions)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public PowwowMeeting deletePowwowMeeting(long powwowMeetingId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public PowwowMeeting endPowwowMeeting(long powwowMeetingId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public int getAddPowwowMeetingStrategy();
 
@@ -51,10 +50,9 @@ public interface PowwowServiceProvider {
 	public String getBrandingLabel();
 
 	public Map<String, String> getIndexFields(long powwowMeetingId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public long getJoinByPhoneAccessCode(long powwowMeetingId)
-		throws SystemException;
+	public long getJoinByPhoneAccessCode(long powwowMeetingId);
 
 	public String getJoinByPhoneAccessCodeLabel();
 
@@ -63,17 +61,15 @@ public interface PowwowServiceProvider {
 	public Map<String, List<String>> getJoinByPhoneInternationalNumbers();
 
 	public String getJoinPowwowMeetingURL(
-			long powwowMeetingId, String name, int type)
-		throws SystemException;
+		long powwowMeetingId, String name, int type);
 
 	public boolean getOptionAutoStartVideo(long powwowMeetingId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public String getOptionPassword(long powwowMeetingId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public long getPowwowServerId(String providerType)
-		throws SystemException;
+	public long getPowwowServerId(String providerType);
 
 	public String getPowwowServiceProviderKey();
 
@@ -86,10 +82,10 @@ public interface PowwowServiceProvider {
 	public boolean isFieldURLRequired();
 
 	public boolean isPowwowMeetingCreated(long powwowMeetingId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean isPowwowMeetingRunning(long powwowMeetingId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public boolean isServerActive(PowwowServer powwowServer);
 
@@ -104,6 +100,6 @@ public interface PowwowServiceProvider {
 	public Map<String, Serializable> updatePowwowMeeting(
 			long powwowMeetingId, String name, long userId,
 			Map<String, String> startOptions)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 }

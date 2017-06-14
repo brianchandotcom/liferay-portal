@@ -21,30 +21,29 @@ import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.model.PowwowMeetingConstants;
 import com.liferay.powwow.model.PowwowParticipant;
@@ -305,7 +304,7 @@ public class MeetingsPortlet extends MVCPortlet {
 		CalendarBooking calendarBooking = updateCalendarBooking(
 			actionRequest, powwowMeeting, powwowParticipants, serviceContext);
 
-		Map<String, String> options = new HashMap<String, String>();
+		Map<String, String> options = new HashMap<>();
 
 		boolean autoStartVideo = ParamUtil.getBoolean(
 			actionRequest, "autoStartVideo");
@@ -323,8 +322,7 @@ public class MeetingsPortlet extends MVCPortlet {
 			options.put(PowwowMeetingConstants.OPTION_PASSWORD, password);
 		}
 
-		Map<String, Serializable> providerTypeMetadataMap =
-			new HashMap<String, Serializable>();
+		Map<String, Serializable> providerTypeMetadataMap = new HashMap<>();
 
 		if (powwowMeetingId <= 0) {
 			long powwowServerId =
@@ -492,7 +490,7 @@ public class MeetingsPortlet extends MVCPortlet {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		List<Long> childCalendarIds = new ArrayList<Long>();
+		List<Long> childCalendarIds = new ArrayList<>();
 
 		for (PowwowParticipant powwowParticipant : powwowParticipants) {
 			User user = UserLocalServiceUtil.fetchUserByEmailAddress(
@@ -555,7 +553,7 @@ public class MeetingsPortlet extends MVCPortlet {
 
 	protected long getHostUserId(
 			long companyId, List<PowwowParticipant> powwowParticipants)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		for (PowwowParticipant powwowParticipant : powwowParticipants) {
 			if (powwowParticipant.getType() ==
@@ -590,7 +588,7 @@ public class MeetingsPortlet extends MVCPortlet {
 	protected Map<Locale, String> getLocalizationMap(String key) {
 		Set<Locale> locales = LanguageUtil.getAvailableLocales();
 
-		Map<Locale, String> map = new HashMap<Locale, String>();
+		Map<Locale, String> map = new HashMap<>();
 
 		for (Locale locale : locales) {
 			map.put(locale, key);
@@ -690,7 +688,7 @@ public class MeetingsPortlet extends MVCPortlet {
 		long endTime = getTime(
 			actionRequest, "endTime", themeDisplay.getTimeZone());
 
-		serviceContext.setAttribute("sendNotification", false);
+		serviceContext.setAttribute("sendNotification", Boolean.FALSE);
 
 		if (calendarBooking != null) {
 			if (calendarBooking.isInTrash()) {

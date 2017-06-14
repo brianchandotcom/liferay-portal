@@ -39,7 +39,7 @@
 	</command>
 
 	<command name="publishEntry">
-		<execute macro="Button#clickSave" />
+		<execute macro="Button#clickPublish" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="Message#SUCCESS" />

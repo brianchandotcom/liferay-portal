@@ -1670,6 +1670,36 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layouts;
 	}
 
+	/**
+	 * Returns true if there is a matching layout for UUID, groupId and
+	 * privateLayout
+	 *
+	 * @param  uuid the layout's UUID
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @return true if the layout is found
+	 */
+	@Override
+	public boolean hasLayout(String uuid, long groupId, boolean privateLayout)
+		throws PortalException {
+
+		try {
+			getLayoutByUuidAndGroupId(uuid, groupId, privateLayout);
+
+			return true;
+		}
+		catch (NoSuchLayoutException nsle) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsle, nsle);
+			}
+		}
+
+		return false;
+	}
+
 	@Override
 	public boolean hasLayouts(Group group) throws PortalException {
 		List<LayoutSet> groupLayoutSets = layoutSetPersistence.findByGroupId(

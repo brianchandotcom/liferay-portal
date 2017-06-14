@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -629,23 +628,15 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			parentLayout = _layoutLocalService.getLayout(
 				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId);
 
-			try {
-				_layoutLocalService.getLayoutByUuidAndGroupId(
+			if (_layoutLocalService.hasLayout(
 					parentLayout.getUuid(), liveGroupId,
-					parentLayout.isPrivateLayout());
+					parentLayout.isPrivateLayout())) {
 
 				// If one parent is found, all others are assumed to exist
 
 				break;
 			}
-			catch (NoSuchLayoutException nsle) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(nsle, nsle);
-				}
-
+			else {
 				missingParentLayouts.add(parentLayout);
 
 				parentLayoutId = parentLayout.getParentLayoutId();

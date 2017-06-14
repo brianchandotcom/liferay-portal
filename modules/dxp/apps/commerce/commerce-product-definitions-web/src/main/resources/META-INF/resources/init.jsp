@@ -62,6 +62,7 @@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
@@ -92,6 +93,9 @@ page import="java.util.Set" %><%@
 page import="java.util.StringJoiner" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
+
+<%@
+		page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %>
 
 <liferay-frontend:defineObjects />
 

@@ -289,6 +289,13 @@
 			<finder-column name="classNameId" />
 			<finder-column name="urlTitle" />
 		</finder>
+		<finder name="G_C_C_C_M" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="main" />
+		</finder>
 		<finder name="G_C_C_L_U" return-type="FriendlyURLEntry">
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />
@@ -310,13 +317,6 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="languageId" />
-			<finder-column name="main" />
-		</finder>
-		<finder name="G_C_C_C_M" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="companyId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
 			<finder-column name="main" />
 		</finder>
 

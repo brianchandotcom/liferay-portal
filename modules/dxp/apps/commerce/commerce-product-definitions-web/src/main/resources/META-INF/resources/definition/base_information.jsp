@@ -1,14 +1,3 @@
-
-
-<%@ page import="com.liferay.portal.kernel.model.Layout" %><%@
-page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
-
-<%@ page import="java.util.List" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
-
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -64,19 +53,19 @@ if (Validator.isNotNull(layoutUuid)) {
 
 	<aui:field-wrapper helpMessage="display-page-help" label="display-page">
 		<p class="text-default">
-				<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
-					<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
-				</span>
+			<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
+				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+			</span>
 			<span id="<portlet:namespace />displayPageNameInput">
-					<c:choose>
-						<c:when test="<%= Validator.isNull(layoutBreadcrumb) %>">
-							<span class="text-muted"><liferay-ui:message key="none" /></span>
-						</c:when>
-						<c:otherwise>
-							<%= layoutBreadcrumb %>
-						</c:otherwise>
-					</c:choose>
-				</span>
+				<c:choose>
+					<c:when test="<%= Validator.isNull(layoutBreadcrumb) %>">
+						<span class="text-muted"><liferay-ui:message key="none" /></span>
+					</c:when>
+					<c:otherwise>
+						<%= layoutBreadcrumb %>
+					</c:otherwise>
+				</c:choose>
+			</span>
 		</p>
 	</aui:field-wrapper>
 

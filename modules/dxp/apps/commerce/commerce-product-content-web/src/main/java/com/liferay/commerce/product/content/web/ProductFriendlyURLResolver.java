@@ -29,12 +29,11 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.List;
 import java.util.Locale;
@@ -68,6 +67,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		HttpSession session = request.getSession();
 
 		Locale locale = _portal.getLocale(request);
+
 		String languageId = LanguageUtil.getLanguageId(locale);
 
 		String urlTitle = friendlyURL.substring(getURLSeparator().length());
@@ -82,7 +82,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 			cpFriendlyURLEntry =
 				_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntry(
 					groupId, companyId, classNameId,
-				cpFriendlyURLEntry.getPrimaryKey(), languageId, true);
+					cpFriendlyURLEntry.getPrimaryKey(), languageId, true);
 		}
 
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
@@ -97,9 +97,6 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		if (params != null) {
 			actualParams.setParentMap(params);
 		}
-
-		UnicodeProperties typeSettingsProperties =
-			layout.getTypeSettingsProperties();
 
 		actualParams.put("p_p_id", new String[] {CPPortletKeys.CP_CONTENT_WEB});
 		actualParams.put("p_p_lifecycle", new String[] {"0"});
@@ -119,7 +116,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		request.setAttribute(CPWebKeys.CP_DEFINITION, cpDefinition);
 
-		String queryString = HttpUtil.parameterMapToString(actualParams, false);
+		String queryString = _http.parameterMapToString(actualParams, false);
 
 		if (layoutActualURL.contains(StringPool.QUESTION)) {
 			layoutActualURL =
@@ -158,7 +155,9 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		String urlTitle = friendlyURL;
 
 		Locale locale = _portal.getLocale(request);
+
 		String languageId = LanguageUtil.getLanguageId(locale);
+
 		urlTitle = urlTitle.substring(getURLSeparator().length());
 		long classNameId = _portal.getClassNameId(CPDefinition.class);
 
@@ -205,6 +204,9 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 	@Reference
 	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

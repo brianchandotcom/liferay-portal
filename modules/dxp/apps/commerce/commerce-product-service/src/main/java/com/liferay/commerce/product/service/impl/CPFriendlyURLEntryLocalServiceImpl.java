@@ -211,7 +211,8 @@ public class CPFriendlyURLEntryLocalServiceImpl
 				groupId, companyId, classNameId, classPK, true);
 
 		for (CPFriendlyURLEntry cpFriendlyURLEntry : cpFriendlyURLEntries) {
-			languageIdToUrlTitleMap.put(cpFriendlyURLEntry.getLanguageId(),
+			languageIdToUrlTitleMap.put(
+				cpFriendlyURLEntry.getLanguageId(),
 				cpFriendlyURLEntry.getUrlTitle());
 		}
 
@@ -294,8 +295,8 @@ public class CPFriendlyURLEntryLocalServiceImpl
 			getLanguageIdToUrlTitleMap(
 				groupId, companyId, classNameId, classPK);
 
-		return LocalizationUtil.getXml(languageIdToUrlTitleMap,
-			defaultLanguageId, "urlTitle");
+		return LocalizationUtil.getXml(
+			languageIdToUrlTitleMap, defaultLanguageId, "urlTitle");
 	}
 
 	@Override

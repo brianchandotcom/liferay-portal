@@ -46,7 +46,7 @@ public class CPTemplateLayoutEntryLocalServiceImpl
 			cpTemplateLayoutEntryPersistence.fetchByG_C_C(
 				groupId, classNameId, classPK);
 
-		if ((oldCPTemplateLayoutEntry != null)) {
+		if (oldCPTemplateLayoutEntry != null) {
 			oldCPTemplateLayoutEntry.setLayoutUuid(layoutUuid);
 			return cpTemplateLayoutEntryPersistence.update(
 				oldCPTemplateLayoutEntry);

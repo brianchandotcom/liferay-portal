@@ -4132,6 +4132,23 @@
 			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldName" value="TextField" />
 		</execute>
+
+		<execute macro="Form#save" />
+
+		<execute macro="Form#viewAltPagePagination">
+			<var name="page" value="2" />
+		</execute>
+
+		<execute macro="Form#viewAltSuccessPagePagination" />
+
+		<execute macro="Form#gotoPageAltPagination">
+			<var name="page" value="1" />
+		</execute>
+
+		<execute macro="FormFields#viewTextField">
+			<var name="fieldLabel" value="Text Field" />
+			<var name="fieldName" value="TextField" />
+		</execute>
 	</command>
 
 	<command name="ViewBlankLabelWhenAddingNewField" priority="3">

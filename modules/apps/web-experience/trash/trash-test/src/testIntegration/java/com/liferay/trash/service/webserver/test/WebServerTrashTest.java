@@ -47,7 +47,7 @@ import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.webserver.test.BaseWebServerTestCase;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
-import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.model.TrashEntry;
 
 import java.util.HashMap;
 import java.util.Map;

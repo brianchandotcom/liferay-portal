@@ -157,15 +157,15 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
-	public String getLayoutUuid(CPDefinition cpDefinition)
-		throws PortalException {
-
-		return cpDefinitionLocalService.getLayoutUuid(cpDefinition);
+	public String getLayoutUuid(long cpDefinitionId) throws PortalException {
+		return cpDefinitionLocalService.getLayoutUuid(cpDefinitionId);
 	}
 
 	@Override
-	public String getUrlTitleMapAsXML(CPDefinition cpDefinition) {
-		return cpDefinitionLocalService.getUrlTitleMapAsXML(cpDefinition);
+	public String getUrlTitleMapAsXML(long cpDefinitionId)
+		throws PortalException {
+
+		return cpDefinitionLocalService.getUrlTitleMapAsXML(cpDefinitionId);
 	}
 
 	@Override

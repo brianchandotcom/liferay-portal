@@ -83,7 +83,8 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpFriendlyURLEntry.getClassPK());
 
-		Layout layout = getProductLayout(groupId, privateLayout, cpDefinition);
+		Layout layout = getProductLayout(
+			groupId, privateLayout, cpDefinition.getCPDefinitionId());
 
 		String layoutActualURL = _portal.getLayoutActualURL(layout, mainPath);
 
@@ -157,7 +158,8 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpFriendlyURLEntry.getClassPK());
 
-		Layout layout = getProductLayout(groupId, privateLayout, cpDefinition);
+		Layout layout = getProductLayout(
+			groupId, privateLayout, cpDefinition.getCPDefinitionId());
 
 		return new LayoutFriendlyURLComposite(
 			layout, getURLSeparator() + cpFriendlyURLEntry.getUrlTitle());
@@ -169,10 +171,10 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 	}
 
 	protected Layout getProductLayout(
-			long groupId, boolean privateLayout, CPDefinition cpDefinition)
+			long groupId, boolean privateLayout, long cpDefinitionId)
 		throws PortalException {
 
-		String layoutUuid = _cpDefinitionService.getLayoutUuid(cpDefinition);
+		String layoutUuid = _cpDefinitionService.getLayoutUuid(cpDefinitionId);
 
 		return _layoutService.getLayoutByUuidAndGroupId(
 			layoutUuid, groupId, privateLayout);

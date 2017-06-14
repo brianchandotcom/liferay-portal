@@ -132,13 +132,13 @@ public class CPDefinitionsDisplayContext
 	}
 
 	public String getLayoutUuid() throws PortalException {
-		CPDefinition cpDefinition = getCPDefinition();
+		long cpDefinitionId = getCPDefinitionId();
 
-		if (cpDefinition == null) {
+		if (cpDefinitionId <= 0) {
 			return null;
 		}
 
-		return _cpDefinitionService.getLayoutUuid(cpDefinition);
+		return _cpDefinitionService.getLayoutUuid(cpDefinitionId);
 	}
 
 	public String getNavigation() {
@@ -245,13 +245,13 @@ public class CPDefinitionsDisplayContext
 	}
 
 	public String getUrlTitleMapAsXML() throws PortalException {
-		CPDefinition cpDefinition = getCPDefinition();
+		long cpDefinitionId = getCPDefinitionId();
 
-		if (cpDefinition == null) {
+		if (cpDefinitionId <= 0) {
 			return StringPool.BLANK;
 		}
 
-		return _cpDefinitionService.getUrlTitleMapAsXML(cpDefinition);
+		return _cpDefinitionService.getUrlTitleMapAsXML(cpDefinitionId);
 	}
 
 	private final CPDefinitionService _cpDefinitionService;

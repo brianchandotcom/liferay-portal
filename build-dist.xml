@@ -1832,7 +1832,7 @@ wrapper.java.additional.11="-Dfile.encoding=UTF-8"]]></replacevalue>
 			src="${app.server.parent.dir}/${app.server.tomcat.zip.name}"
 		>
 			<patternset
-				excludes="apache-tomcat-${app.server.tomcat.version}/webapps/**"
+				excludes="apache-tomcat-${app.server.tomcat.version}/webapps/**, apache-tomcat-${app.server.tomcat.version}/temp/**"
 			/>
 			<mapper
 				type="glob"

@@ -31,10 +31,13 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.UnsafeConsumer;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -88,6 +91,8 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 			dlProcessor.afterPropertiesSet();
 
 			register(dlProcessor);
+
+			_dlProcessors.add(dlProcessor);
 		}
 	}
 
@@ -284,8 +289,11 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	}
 
 	@Deactivate
-	protected void deactivate() {
+	protected void deactivate() throws Exception {
 		_dlProcessorServiceTrackerMap.close();
+
+		UnsafeConsumer.accept(
+			_dlProcessors, DLProcessor::destroy, Exception.class);
 	}
 
 	private FileVersion _getLatestFileVersion(
@@ -308,6 +316,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		DLProcessorRegistryImpl.class);
 
 	private BundleContext _bundleContext;
+	private final List<DLProcessor> _dlProcessors = new ArrayList<>();
 	private ServiceTrackerMap<String, DLProcessor>
 		_dlProcessorServiceTrackerMap;
 	private final Map<String, ServiceRegistration<DLProcessor>>

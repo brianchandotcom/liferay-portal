@@ -534,6 +534,60 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="run-empty-temp-dir-test">
+		<sequential>
+			<run-batch-test tomcat.gc.log="true">
+				<test-action>
+					<database-test-run-test database.type="mysql" stop.app.server="true">
+						<test-action>
+							<trycatch>
+								<try>
+									<antcall inheritAll="false" target="prepare-log4j-ext-xml">
+										<param name="database.type" value="@{database.type}" />
+									</antcall>
+
+									<antcall inheritAll="false" target="prepare-portal-ext-properties">
+										<param name="database.type" value="@{database.type}" />
+									</antcall>
+
+									<antcall inheritAll="false" target="prepare-system-ext-properties" />
+
+									<antcall inheritall="false" target="start-app-server" />
+								</try>
+
+								<finally>
+									<ant dir="portal-kernel" inheritAll="false" target="test-class">
+										<property name="test.class" value="PortalLogAssertorTest" />
+									</ant>
+								</finally>
+							</trycatch>
+
+							<antcall inheritall="false" target="stop-app-server" />
+
+							<delete dir="${liferay.home}/logs" />
+
+							<ant dir="portal-kernel" inheritAll="false" target="test-class">
+								<property name="test.class" value="EmptyTempDirTest" />
+							</ant>
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+
+				<test-set-up>
+					<if>
+						<isset property="env.DIST_PATH" />
+						<then>
+							<prepare-test-environment />
+						</then>
+						<else>
+							<prepare-test-build />
+						</else>
+					</if>
+				</test-set-up>
+			</run-batch-test>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="run-functional-test">
 		<attribute name="app.server.type" />
 		<attribute default="${app.server.@{app.server.type}.version}" name="app.server.version" />
@@ -1462,6 +1516,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<target name="dist-jdk7">
 		<prepare-test-build-dist app.server.type="${axis.variable}" />
+	</target>
+
+	<target name="empty-temp-dir-jdk8">
+		<run-empty-temp-dir-test />
 	</target>
 
 	<target name="functional-bundle-jboss-db2105-jdk8">

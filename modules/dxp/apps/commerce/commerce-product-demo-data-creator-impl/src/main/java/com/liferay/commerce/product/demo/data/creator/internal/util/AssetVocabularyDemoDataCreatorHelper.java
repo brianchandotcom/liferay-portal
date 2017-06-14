@@ -17,8 +17,6 @@ package com.liferay.commerce.product.demo.data.creator.internal.util;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.HashMap;
@@ -88,9 +86,6 @@ public class AssetVocabularyDemoDataCreatorHelper
 	protected void deactivate() {
 		_assetVocabularies = null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetVocabularyDemoDataCreatorHelper.class);
 
 	private Map<String, AssetVocabulary> _assetVocabularies;
 

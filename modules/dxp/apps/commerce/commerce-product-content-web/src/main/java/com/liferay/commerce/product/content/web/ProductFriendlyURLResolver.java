@@ -40,8 +40,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,10 +59,6 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		HttpServletRequest request = (HttpServletRequest)requestContext.get(
 			"request");
-		HttpServletResponse response = (HttpServletResponse)requestContext.get(
-			"response");
-
-		HttpSession session = request.getSession();
 
 		Locale locale = _portal.getLocale(request);
 

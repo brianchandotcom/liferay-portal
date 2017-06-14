@@ -417,10 +417,6 @@ public class CPDefinitionLocalServiceImpl
 
 		String layoutUuid = null;
 
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
-
-		String defaultLanguageId = LanguageUtil.getLanguageId(defaultLocale);
-
 		CPDisplayLayout cpDisplayLayout =
 			cpDisplayLayoutLocalService.getCPDisplayLayout(
 				classNameId, cpDefinition.getCPDefinitionId());

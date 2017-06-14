@@ -20,8 +20,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -130,9 +128,6 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 			expirationDateHour, expirationDateMinute, true, titleMap, json,
 			priority, type, serviceContext);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPAttachmentFileEntryDemoDataCreatorHelper.class);
 
 	@Reference
 	private CPAttachmentFileEntryLocalService

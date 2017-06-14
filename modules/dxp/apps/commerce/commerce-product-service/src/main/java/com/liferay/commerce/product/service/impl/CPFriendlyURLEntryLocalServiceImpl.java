@@ -161,7 +161,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCPFriendlyURLEntry(
+	public void deleteCPFriendlyURLEntries(
 		long groupId, long companyId, Class<?> clazz, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);

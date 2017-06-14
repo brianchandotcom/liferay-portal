@@ -52,19 +52,84 @@ public class CPFriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
-	public CPFriendlyURLEntry addCPFriendlyURLEntry(
-			long groupId, long companyId, Class<?> clazz, long classPK,
-			String languageId, String urlTitle)
+	public String buildUrlTitle(
+			long groupId, long companyId, long classNameId, long classPK,
+			String languageId, String title)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(clazz);
+		if (title == null) {
+			return String.valueOf(classPK);
+		}
 
-		return addCPFriendlyURLEntry(
+		title = StringUtil.toLowerCase(title.trim());
+
+		if (Validator.isNull(title) || Validator.isNumber(title)) {
+			title = String.valueOf(classPK);
+		}
+		else {
+			title = FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
+				title);
+		}
+
+		String urlTitle = ModelHintsUtil.trimString(
+			CPFriendlyURLEntry.class.getName(), "urlTitle", title);
+
+		return getUniqueUrlTitle(
 			groupId, companyId, classNameId, classPK, languageId, urlTitle);
 	}
 
 	@Override
-	public void addCPFriendlyURLEntries(
+	public void deleteCPFriendlyURLEntries(
+		long groupId, long companyId, Class<?> clazz, long classPK) {
+
+		long classNameId = classNameLocalService.getClassNameId(clazz);
+
+		cpFriendlyURLEntryPersistence.removeByG_C_C_C(
+			groupId, companyId, classNameId, classPK);
+	}
+
+	@Override
+	public CPFriendlyURLEntry fetchCPFriendlyURLEntry(
+			long groupId, long companyId, long classNameId, long classPK,
+			String languageId, boolean main)
+		throws PortalException {
+
+		return cpFriendlyURLEntryPersistence.fetchByG_C_C_C_L_M(
+			groupId, companyId, classNameId, classPK, languageId, main);
+	}
+
+	@Override
+	public List<CPFriendlyURLEntry> getCPFriendlyURLEntries(
+		long groupId, long companyId, long classNameId, long classPK) {
+
+		return cpFriendlyURLEntryPersistence.findByG_C_C_C(
+			groupId, companyId, classNameId, classPK);
+	}
+
+	@Override
+	public CPFriendlyURLEntry getCPFriendlyURLEntry(
+			long groupId, long companyId, long classNameId, String languageId,
+			String urlTitle)
+		throws PortalException {
+
+		return cpFriendlyURLEntryPersistence.findByG_C_C_L_U(
+			groupId, companyId, classNameId, languageId, urlTitle);
+	}
+
+	@Override
+	public String getUrlTitleMapAsXML(
+		long groupId, long companyId, long classNameId, long classPK,
+		String defaultLanguageId) {
+
+		Map<String, String> languageIdToUrlTitleMap =
+			getLanguageIdToUrlTitleMap(
+				groupId, companyId, classNameId, classPK);
+
+		return LocalizationUtil.getXml(
+			languageIdToUrlTitleMap, defaultLanguageId, "urlTitle");
+	}
+
+	protected void addCPFriendlyURLEntries(
 			long groupId, long companyId, long classNameId, long classPK,
 			Map<Locale, String> urlTitleMap)
 		throws PortalException {
@@ -83,8 +148,18 @@ public class CPFriendlyURLEntryLocalServiceImpl
 		}
 	}
 
-	@Override
-	public CPFriendlyURLEntry addCPFriendlyURLEntry(
+	protected CPFriendlyURLEntry addCPFriendlyURLEntry(
+			long groupId, long companyId, Class<?> clazz, long classPK,
+			String languageId, String urlTitle)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(clazz);
+
+		return addCPFriendlyURLEntry(
+			groupId, companyId, classNameId, classPK, languageId, urlTitle);
+	}
+
+	protected CPFriendlyURLEntry addCPFriendlyURLEntry(
 			long groupId, long companyId, long classNameId, long classPK,
 			String languageId, String urlTitle)
 		throws PortalException {
@@ -133,73 +208,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 		return cpFriendlyURLEntryPersistence.update(cpFriendlyURLEntry);
 	}
 
-	@Override
-	public String buildUrlTitle(
-			long groupId, long companyId, long classNameId, long classPK,
-			String languageId, String title)
-		throws PortalException {
-
-		if (title == null) {
-			return String.valueOf(classPK);
-		}
-
-		title = StringUtil.toLowerCase(title.trim());
-
-		if (Validator.isNull(title) || Validator.isNumber(title)) {
-			title = String.valueOf(classPK);
-		}
-		else {
-			title = FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
-				title);
-		}
-
-		String urlTitle = ModelHintsUtil.trimString(
-			CPFriendlyURLEntry.class.getName(), "urlTitle", title);
-
-		return cpFriendlyURLEntryLocalService.getUniqueUrlTitle(
-			groupId, companyId, classNameId, classPK, languageId, urlTitle);
-	}
-
-	@Override
-	public void deleteCPFriendlyURLEntries(
-		long groupId, long companyId, Class<?> clazz, long classPK) {
-
-		long classNameId = classNameLocalService.getClassNameId(clazz);
-
-		cpFriendlyURLEntryPersistence.removeByG_C_C_C(
-			groupId, companyId, classNameId, classPK);
-	}
-
-	@Override
-	public List<CPFriendlyURLEntry> getCPFriendlyURLEntries(
-		long groupId, long companyId, long classNameId, long classPK) {
-
-		return cpFriendlyURLEntryPersistence.findByG_C_C_C(
-			groupId, companyId, classNameId, classPK);
-	}
-
-	@Override
-	public CPFriendlyURLEntry fetchCPFriendlyURLEntry(
-			long groupId, long companyId, long classNameId, long classPK,
-			String languageId, boolean main)
-		throws PortalException {
-
-		return cpFriendlyURLEntryPersistence.fetchByG_C_C_C_L_M(
-			groupId, companyId, classNameId, classPK, languageId, main);
-	}
-
-	@Override
-	public CPFriendlyURLEntry getCPFriendlyURLEntry(
-			long groupId, long companyId, long classNameId, String languageId,
-			String urlTitle)
-		throws PortalException {
-
-		return cpFriendlyURLEntryPersistence.findByG_C_C_L_U(
-			groupId, companyId, classNameId, languageId, urlTitle);
-	}
-
-	@Override
-	public Map<String, String> getLanguageIdToUrlTitleMap(
+	protected Map<String, String> getLanguageIdToUrlTitleMap(
 		long groupId, long companyId, long classNameId, long classPK) {
 
 		Map<String, String> languageIdToUrlTitleMap = new HashMap<>();
@@ -217,8 +226,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 		return languageIdToUrlTitleMap;
 	}
 
-	@Override
-	public String getUniqueUrlTitle(
+	protected String getUniqueUrlTitle(
 		long groupId, long companyId, long classNameId, long classPK,
 		String languageId, String urlTitle) {
 
@@ -255,8 +263,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 		return curUrlTitle;
 	}
 
-	@Override
-	public Map<Locale, String> getUrlTitleMap(
+	protected Map<Locale, String> getUrlTitleMap(
 		long groupId, long companyId, Class<?> clazz, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
@@ -264,8 +271,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 		return getUrlTitleMap(groupId, companyId, classNameId, classPK);
 	}
 
-	@Override
-	public Map<Locale, String> getUrlTitleMap(
+	protected Map<Locale, String> getUrlTitleMap(
 		long groupId, long companyId, long classNameId, long classPK) {
 
 		Map<Locale, String> urlTitleMap = new HashMap<>();
@@ -284,21 +290,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 		return urlTitleMap;
 	}
 
-	@Override
-	public String getUrlTitleMapAsXML(
-		long groupId, long companyId, long classNameId, long classPK,
-		String defaultLanguageId) {
-
-		Map<String, String> languageIdToUrlTitleMap =
-			getLanguageIdToUrlTitleMap(
-				groupId, companyId, classNameId, classPK);
-
-		return LocalizationUtil.getXml(
-			languageIdToUrlTitleMap, defaultLanguageId, "urlTitle");
-	}
-
-	@Override
-	public void validate(
+	protected void validate(
 			long groupId, long companyId, long classNameId, long classPK,
 			String languageId, String urlTitle)
 		throws PortalException {

@@ -50,6 +50,11 @@ public abstract class AbstractBundleMojo extends AbstractLiferayMojo {
 	protected boolean token;
 
 	@Parameter(
+		defaultValue = "${user.home}/" + BundleSupportConstants.DEFAULT_TOKEN_FILE_NAME
+	)
+	protected File tokenFile;
+
+	@Parameter(
 		defaultValue = BundleSupportConstants.DEFAULT_BUNDLE_URL,
 		required = true
 	)

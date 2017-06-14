@@ -158,7 +158,7 @@ public class CPDefinitionLocalServiceImpl
 		// Commerce product friendly URL
 
 		if (Validator.isNull(urlTitleMap)) {
-			urlTitleMap = getUniqueUrlTitles(cpDefinition);
+			urlTitleMap = _getUniqueUrlTitles(cpDefinition);
 		}
 
 		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntry(
@@ -187,6 +187,20 @@ public class CPDefinitionLocalServiceImpl
 
 		return startWorkflowInstance(
 			user.getUserId(), cpDefinition, serviceContext);
+	}
+
+	@Override
+	public String buildUniqueUrlTitle(
+			CPDefinition cpDefinition, String languageId)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(
+			CPDefinition.class);
+
+		return cpFriendlyURLEntryLocalService.buildUrlTitle(
+			cpDefinition.getGroupId(), cpDefinition.getCompanyId(), classNameId,
+			cpDefinition.getCPDefinitionId(), languageId,
+			cpDefinition.getTitle(languageId));
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -419,45 +433,6 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public String getUniqueUrlTitle(
-			CPDefinition cpDefinition, String languageId)
-		throws PortalException {
-
-		long classNameId = classNameLocalService.getClassNameId(
-			CPDefinition.class);
-
-		return cpFriendlyURLEntryLocalService.buildUrlTitle(
-			cpDefinition.getGroupId(), cpDefinition.getCompanyId(), classNameId,
-			cpDefinition.getCPDefinitionId(), languageId,
-			cpDefinition.getTitle(languageId));
-	}
-
-	@Override
-	public Map<Locale, String> getUniqueUrlTitles(CPDefinition cpDefinition)
-		throws PortalException {
-
-		Map<Locale, String> urlTitleMap = new HashMap<>();
-
-		Map<Locale, String> titleMap = cpDefinition.getTitleMap();
-
-		long classNameId = classNameLocalService.getClassNameId(
-			CPDefinition.class);
-
-		for (Map.Entry<Locale, String> titleEntry : titleMap.entrySet()) {
-			String languageId = LanguageUtil.getLanguageId(titleEntry.getKey());
-
-			String urlTitle = cpFriendlyURLEntryLocalService.buildUrlTitle(
-				cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
-				classNameId, cpDefinition.getCPDefinitionId(), languageId,
-				titleEntry.getValue());
-
-			urlTitleMap.put(titleEntry.getKey(), urlTitle);
-		}
-
-		return urlTitleMap;
-	}
-
-	@Override
 	public String getUrlTitleMapAsXML(CPDefinition cpDefinition) {
 		long classNameId = classNameLocalService.getClassNameId(
 			CPDefinition.class);
@@ -681,7 +656,7 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinitionPersistence.update(cpDefinition);
 
 		if (Validator.isNull(urlTitleMap)) {
-			urlTitleMap = getUniqueUrlTitles(cpDefinition);
+			urlTitleMap = _getUniqueUrlTitles(cpDefinition);
 		}
 
 		// Commerce product definition localization
@@ -1006,6 +981,30 @@ public class CPDefinitionLocalServiceImpl
 
 		return cpDefinitionLocalizationPersistence.update(
 			cpDefinitionLocalization);
+	}
+
+	private Map<Locale, String> _getUniqueUrlTitles(CPDefinition cpDefinition)
+		throws PortalException {
+
+		Map<Locale, String> urlTitleMap = new HashMap<>();
+
+		Map<Locale, String> titleMap = cpDefinition.getTitleMap();
+
+		long classNameId = classNameLocalService.getClassNameId(
+			CPDefinition.class);
+
+		for (Map.Entry<Locale, String> titleEntry : titleMap.entrySet()) {
+			String languageId = LanguageUtil.getLanguageId(titleEntry.getKey());
+
+			String urlTitle = cpFriendlyURLEntryLocalService.buildUrlTitle(
+				cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
+				classNameId, cpDefinition.getCPDefinitionId(), languageId,
+				titleEntry.getValue());
+
+			urlTitleMap.put(titleEntry.getKey(), urlTitle);
+		}
+
+		return urlTitleMap;
 	}
 
 	private List<CPDefinitionLocalization> _updateCPDefinitionLocalizedFields(

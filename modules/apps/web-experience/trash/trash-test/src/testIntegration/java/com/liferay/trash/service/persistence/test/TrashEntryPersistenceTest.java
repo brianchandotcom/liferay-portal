@@ -236,8 +236,7 @@ public class TrashEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("TrashEntry", "entryId",
 			true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "classNameId", true,
-			"classPK", true, "systemEventSetKey", true, "typeSettings", true,
-			"status", true);
+			"classPK", true, "systemEventSetKey", true, "status", true);
 	}
 
 	@Test

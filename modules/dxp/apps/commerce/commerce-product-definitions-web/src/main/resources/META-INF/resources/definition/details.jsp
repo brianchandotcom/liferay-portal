@@ -67,44 +67,33 @@ friendlyURLBase.append(CPConstants.PRODUCT_URL_SEPARATOR);
 <aui:script use="aui-base">
 	function afterDeletingAvailableLocale(event) {
 		var descriptionInputLocalized = Liferay.component('<portlet:namespace />descriptionMapAsXML');
-
 		var shortDescriptionInputLocalized = Liferay.component('<portlet:namespace />shortDescriptionMapAsXML');
-
 		var titleInputLocalized = Liferay.component('<portlet:namespace />titleMapAsXML');
-
 		var urlTitleInputLocalized = Liferay.component('<portlet:namespace />urlTitleMapAsXML');
 
 		var locale = event.locale;
 
 		descriptionInputLocalized.removeInputLanguage(locale);
-
 		shortDescriptionInputLocalized.removeInputLanguage(locale);
-
 		titleInputLocalized.removeInputLanguage(locale);
-
 		urlTitleInputLocalized.removeInputLanguage(locale);
 	}
 
 	function afterEditingLocaleChange(event) {
 		var descriptionInputLocalized = Liferay.component('<portlet:namespace />descriptionMapAsXML');
-
 		var shortDescriptionInputLocalized = Liferay.component('<portlet:namespace />shortDescriptionMapAsXML');
-
 		var titleInputLocalized = Liferay.component('<portlet:namespace />titleMapAsXML');
-
 		var urlTitleInputLocalized = Liferay.component('<portlet:namespace />urlTitleMapAsXML');
 
-		var items = descriptionInputLocalized.get('items');
-
 		var editingLocale = event.newVal;
-
+		var items = descriptionInputLocalized.get('items');
 		var selectedIndex = items.indexOf(editingLocale);
-
-		shortDescriptionInputLocalized.set('selected', selectedIndex);
-		shortDescriptionInputLocalized.selectFlag(editingLocale);
 
 		descriptionInputLocalized.set('selected', selectedIndex);
 		descriptionInputLocalized.selectFlag(editingLocale);
+
+		shortDescriptionInputLocalized.set('selected', selectedIndex);
+		shortDescriptionInputLocalized.selectFlag(editingLocale);
 
 		titleInputLocalized.set('selected', selectedIndex);
 		titleInputLocalized.selectFlag(editingLocale);

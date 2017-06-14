@@ -30,7 +30,7 @@ import org.apache.maven.plugins.annotations.Parameter;
  * @author David Truong
  * @author Andrea Di Giorgi
  */
-@Mojo(name = "createToken")
+@Mojo(name = "create-token")
 public class CreateTokenMojo extends AbstractMojo {
 
 	@Override

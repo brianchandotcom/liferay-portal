@@ -35,8 +35,6 @@ public class DefinitionElement extends PoshiElement {
 
 	public DefinitionElement(Element element) {
 		super("definition", element);
-
-		setPadLengths();
 	}
 
 	public DefinitionElement(String readableSyntax) {
@@ -77,6 +75,8 @@ public class DefinitionElement extends PoshiElement {
 
 	@Override
 	public String toReadableSyntax() {
+		prepareVarElementsForReadableSyntax();
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(FEATURE);

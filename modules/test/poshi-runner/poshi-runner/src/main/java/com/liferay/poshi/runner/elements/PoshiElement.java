@@ -87,6 +87,8 @@ public abstract class PoshiElement extends DefaultElement {
 	}
 
 	public String toReadableSyntax() {
+		prepareVarElementsForReadableSyntax();
+
 		StringBuilder sb = new StringBuilder();
 
 		for (PoshiElement poshiElement : toPoshiElements(elements())) {
@@ -121,10 +123,6 @@ public abstract class PoshiElement extends DefaultElement {
 			start + startKey.length(), end);
 
 		return substring.trim();
-	}
-
-	protected int getNamePadLength() {
-		return _namePadLength;
 	}
 
 	protected Element getPreviousSibling() {
@@ -171,42 +169,35 @@ public abstract class PoshiElement extends DefaultElement {
 		return Dom4JUtil.toElementList(parentElement.elements());
 	}
 
-	protected int getValuePadLength() {
-		return _valuePadLength;
-	}
+	protected void prepareVarElementsForReadableSyntax() {
+		List<PoshiElement> poshiElements = toPoshiElements(elements());
 
-	protected String getVariableValueAttribute() {
-		if (attributeValue("method") != null) {
-			return attributeValue("method");
-		}
+		List<VarElement> varElements = new ArrayList<>(poshiElements.size());
 
-		if (attributeValue("value") != null) {
-			return attributeValue("value");
-		}
+		int maxNameLength = 0;
+		int maxValueLength = 0;
 
-		return null;
-	}
-
-	protected void setPadLengths() {
-		if ((_namePadLength >= 0) && (_valuePadLength >= 0)) {
-			return;
-		}
-
-		for (PoshiElement poshiElement : toPoshiElements(elements())) {
-			String name = poshiElement.attributeValue("name");
-			String value = poshiElement.getVariableValueAttribute();
-
-			if ((name == null) || (value == null)) {
+		for (PoshiElement poshiElement : poshiElements) {
+			if (!(poshiElement instanceof VarElement)) {
 				continue;
 			}
 
-			if (name.length() > _namePadLength) {
-				_namePadLength = name.length();
-			}
+			VarElement varElement = (VarElement)poshiElement;
 
-			if (value.length() > _valuePadLength) {
-				_valuePadLength = value.length();
-			}
+			varElements.add(varElement);
+
+			String name = varElement.getVarName();
+
+			maxNameLength = Math.max(maxNameLength, name.length());
+
+			String value = varElement.getVarValue();
+
+			maxValueLength = Math.max(maxValueLength, value.length());
+		}
+
+		for (VarElement varElement : varElements) {
+			varElement.setNamePadLength(maxNameLength);
+			varElement.setValuePadLength(maxValueLength);
 		}
 	}
 
@@ -255,8 +246,5 @@ public abstract class PoshiElement extends DefaultElement {
 
 	private static final String _PHRASE_REGEX =
 		"([\\d]+|[A-Z][a-z]+|[A-Z]+(?![a-z]))";
-
-	private int _namePadLength = -1;
-	private int _valuePadLength = -1;
 
 }

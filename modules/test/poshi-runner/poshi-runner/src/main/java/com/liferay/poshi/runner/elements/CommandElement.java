@@ -47,8 +47,6 @@ public class CommandElement extends PoshiElement {
 
 	public CommandElement(String name, Element element) {
 		super(name, element);
-
-		setPadLengths();
 	}
 
 	public CommandElement(String name, String readableSyntax) {

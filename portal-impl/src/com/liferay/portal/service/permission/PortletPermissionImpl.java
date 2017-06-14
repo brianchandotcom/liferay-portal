@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -557,7 +558,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		String portletId, String actionId) {
 
 		try {
-			portletId = PortletConstants.getRootPortletId(portletId);
+			portletId = PortletIdCodec.decodePortletName(portletId);
 
 			List<String> layoutManagerActions =
 				ResourceActionsUtil.getPortletResourceLayoutManagerActions(
@@ -733,7 +734,7 @@ public class PortletPermissionImpl implements PortletPermission {
 			return false;
 		}
 
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
 		if (checkStagingPermission) {
 			Boolean hasPermission = StagingPermissionUtil.hasPermission(

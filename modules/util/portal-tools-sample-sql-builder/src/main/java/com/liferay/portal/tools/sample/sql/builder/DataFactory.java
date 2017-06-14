@@ -141,6 +141,7 @@ import com.liferay.portal.kernel.model.RoleModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserModel;
 import com.liferay.portal.kernel.model.VirtualHostModel;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
@@ -712,7 +713,7 @@ public class DataFactory {
 	}
 
 	public String getPortletId(String portletPrefix) {
-		return portletPrefix.concat(PortletConstants.generateInstanceId());
+		return portletPrefix.concat(PortletIdCodec.generateInstanceId());
 	}
 
 	public RoleModel getPowerUserRoleModel() {

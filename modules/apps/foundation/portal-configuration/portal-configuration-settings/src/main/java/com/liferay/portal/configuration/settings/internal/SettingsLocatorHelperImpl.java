@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -156,8 +156,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId) {
 
-		if (PortletConstants.hasUserId(portletId)) {
-			ownerId = PortletConstants.getUserId(portletId);
+		if (PortletIdCodec.hasUserId(portletId)) {
+			ownerId = PortletIdCodec.decodeUserId(portletId);
 			ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
 		}
 

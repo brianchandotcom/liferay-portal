@@ -16,8 +16,8 @@ package com.liferay.portal.configuration.settings.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletItem;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesServiceUtil;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
@@ -142,7 +142,7 @@ public class ArchivedSettingsImpl
 			portletPreferences =
 				PortletPreferencesLocalServiceUtil.getPreferences(
 					_portletItem.getCompanyId(), ownerId, ownerType, plid,
-					PortletConstants.getRootPortletId(portletId));
+					PortletIdCodec.decodePortletName(portletId));
 		}
 		catch (SystemException se) {
 			throw new RuntimeException("Unable to load settings", se);

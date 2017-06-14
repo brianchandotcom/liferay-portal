@@ -16,8 +16,8 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -228,7 +228,7 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 			return false;
 		}
 
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
 		return whitelist.contains(getWhitelistValue(rootPortletId, item));
 	}
@@ -240,7 +240,7 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 			return false;
 		}
 
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
 		for (String action : items) {
 			if (!whitelist.contains(getWhitelistValue(rootPortletId, action))) {

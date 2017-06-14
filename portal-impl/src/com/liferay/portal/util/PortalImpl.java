@@ -72,7 +72,6 @@ import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -102,6 +101,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletQNameUtil;
@@ -4523,8 +4523,7 @@ public class PortalImpl implements Portal {
 		}
 
 		return _getPortletTitle(
-			PortletConstants.getRootPortletId(portletId), portletConfig,
-			locale);
+			PortletIdCodec.decodePortletName(portletId), portletConfig, locale);
 	}
 
 	@Override
@@ -4547,7 +4546,7 @@ public class PortalImpl implements Portal {
 	public String getPortletTitle(
 		String portletId, ResourceBundle resourceBundle) {
 
-		portletId = PortletConstants.getRootPortletId(portletId);
+		portletId = PortletIdCodec.decodePortletName(portletId);
 
 		String portletTitle = LanguageUtil.get(
 			resourceBundle,

@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -328,7 +328,7 @@ public class SummaryPortlet extends MVCPortlet {
 		String portletId = _portal.getPortletId(actionRequest);
 
 		extraDataJSONObject.put(
-			"portletId", PortletConstants.getRootPortletId(portletId));
+			"portletId", PortletIdCodec.decodePortletName(portletId));
 
 		return extraDataJSONObject;
 	}

@@ -14,7 +14,7 @@
 
 package com.liferay.knowledge.base.internal.upgrade.v1_1_0;
 
-import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.CamelCaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -76,7 +76,7 @@ public class UpgradePortletPreferences
 
 		Map<String, String[]> preferencesMap = preferences.getMap();
 
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
 		for (String oldName : preferencesMap.keySet()) {
 			String newName = getName(rootPortletId, oldName);

@@ -19,13 +19,13 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
@@ -704,7 +704,7 @@ public class ServiceContext implements Cloneable, Serializable {
 			return null;
 		}
 
-		return PortletConstants.getRootPortletId(portletId);
+		return PortletIdCodec.decodePortletName(portletId);
 	}
 
 	public Group getScopeGroup() throws PortalException {

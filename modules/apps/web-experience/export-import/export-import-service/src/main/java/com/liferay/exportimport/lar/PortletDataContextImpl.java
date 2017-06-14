@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletModel;
 import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.model.Role;
@@ -73,6 +72,7 @@ import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -1963,7 +1963,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_portletId = portletId;
 
 		if (Validator.isNotNull(portletId)) {
-			_rootPortletId = PortletConstants.getRootPortletId(portletId);
+			_rootPortletId = PortletIdCodec.decodePortletName(portletId);
 		}
 		else {
 			_rootPortletId = null;

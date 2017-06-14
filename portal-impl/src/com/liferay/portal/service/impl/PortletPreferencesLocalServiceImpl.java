@@ -26,10 +26,10 @@ import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutStagingHandler;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
-import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ExceptionRetryAcceptor;
@@ -405,11 +405,8 @@ public class PortletPreferencesLocalServiceImpl
 
 			String preferences = portlet.getDefaultPreferences();
 
-			PortletInstance portletInstance =
-				PortletInstance.fromPortletInstanceKey(portletId);
-
-			if (portletInstance.hasUserId()) {
-				ownerId = portletInstance.getUserId();
+			if (PortletIdCodec.hasUserId(portletId)) {
+				ownerId = PortletIdCodec.decodeUserId(portletId);
 				ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
 
 				PortletPreferences portletsPreferences =

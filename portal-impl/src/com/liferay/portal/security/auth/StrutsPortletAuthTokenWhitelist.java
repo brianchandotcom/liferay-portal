@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.BaseAuthTokenWhitelist;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -83,7 +83,7 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		String strutsAction = request.getParameter(
 			namespace.concat("struts_action"));
 
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
 		if (Validator.isNotNull(strutsAction)) {
 			if (_portletCSRFWhitelist.contains(strutsAction) &&
@@ -151,7 +151,7 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 
 			String portletId = liferayPortletURL.getPortletId();
 
-			String rootPortletId = PortletConstants.getRootPortletId(portletId);
+			String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
 			if (isValidStrutsAction(companyId, rootPortletId, strutsAction)) {
 				return true;

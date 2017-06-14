@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletItem;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -125,7 +125,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
 	public SettingsDescriptor getSettingsDescriptor(String settingsId) {
-		settingsId = PortletConstants.getRootPortletId(settingsId);
+		settingsId = PortletIdCodec.decodePortletName(settingsId);
 
 		return _settingsDescriptors.get(settingsId);
 	}
@@ -151,7 +151,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			return settings;
 		}
 
-		settingsId = PortletConstants.getRootPortletId(settingsId);
+		settingsId = PortletIdCodec.decodePortletName(settingsId);
 
 		FallbackKeys fallbackKeys = _fallbackKeysMap.get(settingsId);
 

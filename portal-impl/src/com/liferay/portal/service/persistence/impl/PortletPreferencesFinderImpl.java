@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PortletConstants;
-import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesFinder;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,6 +38,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -327,10 +328,10 @@ public class PortletPreferencesFinderImpl
 			return true;
 		}
 
-		PortletInstance portletInstance =
-			PortletInstance.fromPortletInstanceKey(portletPreferencesPortletId);
+		String portletName = PortletIdCodec.decodePortletName(
+			portletPreferencesPortletId);
 
-		return portletInstance.hasIdenticalPortletName(portletId);
+		return Objects.equals(portletName, portletId);
 	}
 
 	private static final String _OWNER_ID_SQL =

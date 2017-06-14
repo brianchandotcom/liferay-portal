@@ -21,13 +21,13 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletConfigurationLayoutUtil;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -515,7 +515,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 				actionRequest, "rolesSearchContainerPrimaryKeys"),
 			0L);
 
-		String selResource = PortletConstants.getRootPortletId(portletResource);
+		String selResource = PortletIdCodec.decodePortletName(portletResource);
 
 		if (Validator.isNotNull(modelResource)) {
 			selResource = modelResource;

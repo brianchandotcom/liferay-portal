@@ -34,11 +34,11 @@ import com.liferay.document.library.kernel.document.conversion.DocumentConversio
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -564,7 +564,7 @@ public class AssetPublisherDisplayContext {
 
 	public String getRootPortletId() {
 		if (_rootPortletId == null) {
-			_rootPortletId = PortletConstants.getRootPortletId(
+			_rootPortletId = PortletIdCodec.decodePortletName(
 				getPortletResource());
 		}
 

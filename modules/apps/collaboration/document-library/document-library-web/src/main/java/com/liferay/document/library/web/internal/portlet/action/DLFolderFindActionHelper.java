@@ -17,7 +17,7 @@ package com.liferay.document.library.web.internal.portlet.action;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.struts.FindActionHelper;
@@ -68,7 +68,7 @@ public class DLFolderFindActionHelper extends BaseDLFindActionHelper {
 	protected void addRequiredParameters(
 		HttpServletRequest request, String portletId, PortletURL portletURL) {
 
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
 		if (rootPortletId.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 			portletURL.setParameter(

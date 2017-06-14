@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 
@@ -132,8 +132,8 @@ public class ThemeHelper {
 		if (Validator.isNotNull(portletId)) {
 			exists = _resourceExists(servletContext, theme, portletId, path);
 
-			if (!exists && PortletConstants.hasInstanceId(portletId)) {
-				String rootPortletId = PortletConstants.getRootPortletId(
+			if (!exists && PortletIdCodec.hasInstanceId(portletId)) {
+				String rootPortletId = PortletIdCodec.decodePortletName(
 					portletId);
 
 				exists = _resourceExists(

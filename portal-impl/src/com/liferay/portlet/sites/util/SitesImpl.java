@@ -45,13 +45,13 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -389,7 +389,7 @@ public class SitesImpl implements Sites {
 		List<String> sourcePortletIds = sourceLayoutTypePortlet.getPortletIds();
 
 		for (String sourcePortletId : sourcePortletIds) {
-			String resourceName = PortletConstants.getRootPortletId(
+			String resourceName = PortletIdCodec.decodePortletName(
 				sourcePortletId);
 
 			String sourceResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
@@ -1512,7 +1512,7 @@ public class SitesImpl implements Sites {
 		}
 
 		String portletTitle = PortalUtil.getPortletTitle(
-			PortletConstants.getRootPortletId(sourcePortletId), languageId);
+			PortletIdCodec.decodePortletName(sourcePortletId), languageId);
 
 		String newPortletTitle = PortalUtil.getNewPortletTitle(
 			portletTitle, String.valueOf(sourceLayout.getLayoutId()),

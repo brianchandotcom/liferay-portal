@@ -16,8 +16,8 @@ package com.liferay.portal.layoutconfiguration.util.xml;
 
 import com.liferay.portal.kernel.layoutconfiguration.util.xml.RuntimeLogic;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletParameterUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -79,8 +79,9 @@ public class PortletLogic extends RuntimeLogic {
 		String queryString = rootElement.attributeValue("queryString");
 
 		if (Validator.isNotNull(instanceId)) {
-			portletId = PortletConstants.assemblePortletId(
-				portletId, instanceId);
+			PortletIdCodec.validatePortletName(portletId);
+
+			portletId = PortletIdCodec.encode(portletId, instanceId);
 		}
 
 		BufferCacheServletResponse bufferCacheServletResponse =

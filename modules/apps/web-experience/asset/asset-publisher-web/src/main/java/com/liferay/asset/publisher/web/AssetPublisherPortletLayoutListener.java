@@ -18,8 +18,8 @@ import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -67,9 +67,9 @@ public class AssetPublisherPortletLayoutListener
 			long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
 			int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
 
-			if (PortletConstants.hasUserId(portletId)) {
+			if (PortletIdCodec.hasUserId(portletId)) {
 				ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
-				ownerId = PortletConstants.getUserId(portletId);
+				ownerId = PortletIdCodec.decodeUserId(portletId);
 			}
 
 			_subscriptionLocalService.deleteSubscriptions(

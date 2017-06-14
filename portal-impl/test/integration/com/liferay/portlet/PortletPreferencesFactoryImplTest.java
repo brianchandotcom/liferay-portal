@@ -17,7 +17,7 @@ package com.liferay.portlet;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
@@ -85,7 +85,7 @@ public class PortletPreferencesFactoryImplTest {
 		long ownerId = userId;
 
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
-		String customizableColumnPortletId = PortletConstants.assemblePortletId(
+		String customizableColumnPortletId = PortletIdCodec.encode(
 			_PORTLET_ID, userId, null);
 
 		String name = RandomTestUtil.randomString(20);

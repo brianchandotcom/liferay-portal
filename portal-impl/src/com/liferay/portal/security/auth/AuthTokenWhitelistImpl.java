@@ -16,8 +16,8 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.BaseAuthTokenWhitelist;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -111,7 +111,7 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 	public boolean isPortletURLCSRFWhitelisted(
 		LiferayPortletURL liferayPortletURL) {
 
-		String rootPortletId = PortletConstants.getRootPortletId(
+		String rootPortletId = PortletIdCodec.decodePortletName(
 			liferayPortletURL.getPortletId());
 
 		return _portletCSRFWhitelist.contains(rootPortletId);

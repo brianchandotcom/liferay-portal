@@ -25,28 +25,22 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 Theme selTheme = null;
 
-String selThemeId = null;
-
 if (layout.isTypeControlPanel()) {
 	if (layoutsAdminDisplayContext.getSelPlid() != 0) {
 		selLayout = LayoutLocalServiceUtil.getLayout(layoutsAdminDisplayContext.getSelPlid());
 
 		selTheme = selLayout.getTheme();
-
-		selThemeId = selTheme.getThemeId();
 	}
 	else {
 		LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
-		selThemeId = selLayoutSet.getThemeId();
+		selTheme = selLayoutSet.getTheme();
 	}
 }
 else {
 	selLayout = layout;
 
 	selTheme = selLayout.getTheme();
-
-	selThemeId = selTheme.getThemeId();
 }
 
 String layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
@@ -68,7 +62,7 @@ if (selLayout != null) {
 			<liferay-ui:layout-templates-list
 				layoutTemplateId="<%= layoutTemplateId %>"
 				layoutTemplateIdPrefix="addLayout"
-				layoutTemplates="<%= LayoutTemplateLocalServiceUtil.getLayoutTemplates(selThemeId) %>"
+				layoutTemplates="<%= LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId()) %>"
 			/>
 		</div>
 	</c:when>

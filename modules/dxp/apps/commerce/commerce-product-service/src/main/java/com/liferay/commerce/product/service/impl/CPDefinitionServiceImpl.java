@@ -148,12 +148,18 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Override
 	public String getLayoutUuid(long cpDefinitionId) throws PortalException {
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+
 		return cpDefinitionLocalService.getLayoutUuid(cpDefinitionId);
 	}
 
 	@Override
 	public String getUrlTitleMapAsXML(long cpDefinitionId)
 		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionLocalService.getUrlTitleMapAsXML(cpDefinitionId);
 	}

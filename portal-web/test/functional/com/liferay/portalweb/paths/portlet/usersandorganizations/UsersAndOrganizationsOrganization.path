@@ -83,7 +83,7 @@
 </tr>
 <tr>
 	<td>SUBORGANIZATION_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_suborgName}')]/td[4]//div/a</td>
+	<td>//tr[contains(.,'${key_suborgName}')]/td[contains(@class,'action-column')]/div/a</td>
 	<td></td>
 </tr>
 <tr>

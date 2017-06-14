@@ -114,6 +114,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         <code>layoutUpdateable</code> can be used to specify whether site
 	 *         administrators can modify this page within their site.
 	 * @return the layout
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Layout addLayout(
@@ -181,6 +182,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         <code>layoutUpdateable</code> can be used to specify whether site
 	 *         administrators can modify this page within their site.
 	 * @return the layout
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Layout addLayout(
@@ -225,10 +227,11 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * Deletes the layout with the primary key, also deleting the layout's child
 	 * layouts, and associated resources.
 	 *
-	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout is private to the group
-	 * @param layoutId the primary key of the layout
-	 * @param serviceContext the service context to be applied
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @param  layoutId the primary key of the layout
+	 * @param  serviceContext the service context to be applied
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void deleteLayout(
@@ -248,8 +251,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * Deletes the layout with the plid, also deleting the layout's child
 	 * layouts, and associated resources.
 	 *
-	 * @param plid the primary key of the layout
-	 * @param serviceContext the service context to be applied
+	 * @param  plid the primary key of the layout
+	 * @param  serviceContext the service context to be applied
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void deleteLayout(long plid, ServiceContext serviceContext)
@@ -288,6 +292,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      startDate the export's start date
 	 * @param      endDate the export's end date
 	 * @return     the layouts as a byte array
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
@@ -317,6 +322,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      startDate the export's start date
 	 * @param      endDate the export's end date
 	 * @return     the layout as a byte array
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
@@ -371,6 +377,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      startDate the export's start date
 	 * @param      endDate the export's end date
 	 * @return     the layouts as a File
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
@@ -482,6 +489,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      startDate the export's start date
 	 * @param      endDate the export's end date
 	 * @return     the portlet information as a byte array
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
@@ -561,6 +569,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      startDate the export's start date
 	 * @param      endDate the export's end date
 	 * @return     the portlet information as a file
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
@@ -655,6 +664,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *
 	 * @param  plid the primary key of the layout
 	 * @return the ancestor layouts of the layout
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Layout> getAncestorLayouts(long plid) throws PortalException {
@@ -675,6 +685,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  portletId the primary key of the portlet
 	 * @return Returns the primary key of the default layout group; {@link
 	 *         LayoutConstants#DEFAULT_PLID} otherwise
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public long getDefaultPlid(
@@ -799,6 +810,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  groupId the primary key of the group
 	 * @param  privateLayout whether the layout is private to the group
 	 * @return the matching layout
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Layout getLayoutByUuidAndGroupId(
@@ -823,6 +835,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  languageId the primary key of the language. For more information
 	 *         See {@link Locale}.
 	 * @return the layout's name
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public String getLayoutName(
@@ -946,6 +959,17 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			DigesterUtil.digestHex(Digester.SHA_256, folderName));
 	}
 
+	/**
+	 * Returns <code>true</code> if there is a matching layout with the UUID,
+	 * group, and privacy.
+	 *
+	 * @param  uuid the layout's UUID
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @return <code>true</code> if the layout is found; <code>false</code>
+	 *         otherwise
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Override
 	public boolean hasLayout(String uuid, long groupId, boolean privateLayout)
 		throws PortalException {
@@ -1009,6 +1033,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             used in the map see {@link
 	 *             com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	 * @param      bytes the byte array with the data
+	 * @throws     PortalException if a portal exception occurred
 	 * @see        com.liferay.exportimport.kernel.lar.LayoutImporter
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
@@ -1036,6 +1061,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             used in the map see {@link
 	 *             com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	 * @param      file the LAR file with the data
+	 * @throws     PortalException if a portal exception occurred
 	 * @see        com.liferay.exportimport.kernel.lar.LayoutImporter
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
@@ -1063,6 +1089,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             used in the map see {@link
 	 *             com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	 * @param      is the input stream
+	 * @throws     PortalException if a portal exception occurred
 	 * @see        com.liferay.exportimport.kernel.lar.LayoutImporter
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
@@ -1173,6 +1200,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             used in the map see {@link
 	 *             com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	 * @param      file the LAR file with the data
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
@@ -1202,6 +1230,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             used in the map see {@link
 	 *             com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	 * @param      is the input stream
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
@@ -1371,6 +1400,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      schedulerStartDate the scheduler start date
 	 * @param      schedulerEndDate the scheduler end date
 	 * @param      description the scheduler description
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #schedulePublishToLive(long,
 	 *             long, boolean, long[], Map, String, String, Date, Date,
 	 *             String)}
@@ -1393,22 +1423,23 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	/**
 	 * Schedules a range of layouts to be published.
 	 *
-	 * @param sourceGroupId the primary key of the source group
-	 * @param targetGroupId the primary key of the target group
-	 * @param privateLayout whether the layout is private to the group
-	 * @param layoutIds the layouts considered for publishing, specified by the
-	 *        layout IDs
-	 * @param parameterMap the mapping of parameters indicating which
-	 *        information will be used. See {@link
-	 *        com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	 * @param groupName the group name (optionally {@link
-	 *        DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
-	 *        DestinationNames}.
-	 * @param cronText the cron text. See {@link
-	 *        com.liferay.portal.kernel.cal.RecurrenceSerializer #toCronText}
-	 * @param schedulerStartDate the scheduler start date
-	 * @param schedulerEndDate the scheduler end date
-	 * @param description the scheduler description
+	 * @param  sourceGroupId the primary key of the source group
+	 * @param  targetGroupId the primary key of the target group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @param  layoutIds the layouts considered for publishing, specified by the
+	 *         layout IDs
+	 * @param  parameterMap the mapping of parameters indicating which
+	 *         information will be used. See {@link
+	 *         com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param  groupName the group name (optionally {@link
+	 *         DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	 *         DestinationNames}.
+	 * @param  cronText the cron text. See {@link
+	 *         com.liferay.portal.kernel.cal.RecurrenceSerializer #toCronText}
+	 * @param  schedulerStartDate the scheduler start date
+	 * @param  schedulerEndDate the scheduler end date
+	 * @param  description the scheduler description
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void schedulePublishToLive(
@@ -1459,6 +1490,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      parameterMap the mapping of parameters indicating which
 	 *             information will be used. See {@link
 	 *             com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param      scope the scope of the pages
+	 * @param      startDate the start date
+	 * @param      endDate the end date
 	 * @param      groupName the group name (optionally {@link
 	 *             DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
 	 *             DestinationNames}.
@@ -1468,6 +1502,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      schedulerStartDate the scheduler start date
 	 * @param      schedulerEndDate the scheduler end date
 	 * @param      description the scheduler description
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #schedulePublishToLive(long,
 	 *             long, boolean, long[], Map, String, Date, Date, String,
 	 *             String, Date, Date, String)}
@@ -1492,29 +1527,30 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	/**
 	 * Schedules a range of layouts to be stored.
 	 *
-	 * @param sourceGroupId the primary key of the source group
-	 * @param privateLayout whether the layout is private to the group
-	 * @param layoutIdMap the layouts considered for publishing, specified by
-	 *        the layout IDs and booleans indicating whether they have children
-	 * @param parameterMap the mapping of parameters indicating which
-	 *        information will be used. See {@link
-	 *        com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
-	 * @param remoteAddress the remote address
-	 * @param remotePort the remote port
-	 * @param remotePathContext the remote path context
-	 * @param secureConnection whether the connection is secure
-	 * @param remoteGroupId the primary key of the remote group
-	 * @param remotePrivateLayout whether remote group's layout is private
-	 * @param startDate the start date
-	 * @param endDate the end date
-	 * @param groupName the group name. Optionally {@link
-	 *        DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
-	 *        DestinationNames}.
-	 * @param cronText the cron text. See {@link
-	 *        com.liferay.portal.kernel.cal.RecurrenceSerializer #toCronText}
-	 * @param schedulerStartDate the scheduler start date
-	 * @param schedulerEndDate the scheduler end date
-	 * @param description the scheduler description
+	 * @param  sourceGroupId the primary key of the source group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @param  layoutIdMap the layouts considered for publishing, specified by
+	 *         the layout IDs and booleans indicating whether they have children
+	 * @param  parameterMap the mapping of parameters indicating which
+	 *         information will be used. See {@link
+	 *         com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
+	 * @param  remoteAddress the remote address
+	 * @param  remotePort the remote port
+	 * @param  remotePathContext the remote path context
+	 * @param  secureConnection whether the connection is secure
+	 * @param  remoteGroupId the primary key of the remote group
+	 * @param  remotePrivateLayout whether remote group's layout is private
+	 * @param  startDate the start date
+	 * @param  endDate the end date
+	 * @param  groupName the group name. Optionally {@link
+	 *         DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	 *         DestinationNames}.
+	 * @param  cronText the cron text. See {@link
+	 *         com.liferay.portal.kernel.cal.RecurrenceSerializer #toCronText}
+	 * @param  schedulerStartDate the scheduler start date
+	 * @param  schedulerEndDate the scheduler end date
+	 * @param  description the scheduler description
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void schedulePublishToRemote(
@@ -1562,11 +1598,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * Sets the layouts for the group, replacing and prioritizing all layouts of
 	 * the parent layout.
 	 *
-	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout is private to the group
-	 * @param parentLayoutId the primary key of the parent layout
-	 * @param layoutIds the primary keys of the layouts
-	 * @param serviceContext the service context to be applied
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @param  parentLayoutId the primary key of the parent layout
+	 * @param  layoutIds the primary keys of the layouts
+	 * @param  serviceContext the service context to be applied
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void setLayouts(
@@ -1584,11 +1621,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	/**
 	 * Deletes the job from the scheduler's queue.
 	 *
-	 * @param groupId the primary key of the group
-	 * @param jobName the job name
-	 * @param groupName the group name (optionally {@link
-	 *        DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
-	 *        DestinationNames}.
+	 * @param  groupId the primary key of the group
+	 * @param  jobName the job name
+	 * @param  groupName the group name (optionally {@link
+	 *         DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	 *         DestinationNames}.
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void unschedulePublishToLive(
@@ -1605,11 +1643,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	/**
 	 * Deletes the job from the scheduler's persistent queue.
 	 *
-	 * @param groupId the primary key of the group
-	 * @param jobName the job name
-	 * @param groupName the group name (optionally {@link
-	 *        DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
-	 *        DestinationNames}.
+	 * @param  groupId the primary key of the group
+	 * @param  jobName the job name
+	 * @param  groupName the group name (optionally {@link
+	 *         DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	 *         DestinationNames}.
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void unschedulePublishToRemote(
@@ -1660,6 +1699,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date and expando bridge attributes for the layout.
 	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Layout updateLayout(
@@ -1701,6 +1741,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         See {@link com.liferay.portal.kernel.util.UnicodeProperties
 	 *         #fastLoad(String)}.
 	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Layout updateLayout(
@@ -1730,6 +1771,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  colorSchemeId the primary key of the layout's new color scheme
 	 * @param  css the layout's new CSS
 	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Layout updateLookAndFeel(
@@ -1761,6 +1803,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  languageId the primary key of the language. For more information
 	 *         see {@link Locale}.
 	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Layout updateName(
@@ -1784,6 +1827,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  languageId the primary key of the language. For more information
 	 *         see {@link Locale}.
 	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Layout updateName(long plid, String name, String languageId)
@@ -1805,6 +1849,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  parentLayoutId the primary key to be assigned to the parent
 	 *         layout
 	 * @return the matching layout
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Layout updateParentLayoutId(
@@ -1829,6 +1874,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  plid the primary key of the layout
 	 * @param  parentPlid the primary key of the parent layout
 	 * @return the layout matching the primary key
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Layout updateParentLayoutId(long plid, long parentPlid)
@@ -1847,6 +1893,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  parentPlid the primary key of the parent layout
 	 * @param  priority the layout's new priority
 	 * @return the layout matching the primary key
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Layout updateParentLayoutIdAndPriority(
@@ -1869,6 +1916,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  layoutId the primary key of the layout
 	 * @param  priority the layout's new priority
 	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Layout updatePriority(
@@ -1894,6 +1942,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  nextLayoutId the primary key of the next layout
 	 * @param  previousLayoutId the primary key of the previous layout
 	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Layout updatePriority(
@@ -1915,6 +1964,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  plid the primary key of the layout
 	 * @param  priority the layout's new priority
 	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Layout updatePriority(long plid, int priority)

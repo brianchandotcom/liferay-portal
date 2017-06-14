@@ -89,9 +89,11 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 					<div class="default-number">
 						<i class="icon-phone"></i><span class="title"><liferay-ui:message key="dial" />:</span> <%= joinByPhoneDefaultNumbersString %>
 					</div>
+
 					<div class="access-code">
 						<span class="title"><%= LanguageUtil.get(request, PowwowServiceProviderUtil.getJoinByPhoneAccessCodeLabel(powwowMeeting.getProviderType())) %>:</span> <%= PowwowServiceProviderUtil.getJoinByPhoneAccessCode(powwowMeetingId) %>
 					</div>
+
 					<div class="international-numbers-toggler" id="<portlet:namespace />internationalNumbersToggler">
 						<div class="international-numbers-header toggler-header-collapsed">
 							<liferay-ui:message key="international-numbers" />
@@ -123,7 +125,6 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 			<liferay-ui:search-container
 				total="<%= PowwowParticipantLocalServiceUtil.getPowwowParticipantsCount(powwowMeetingId) %>"
 			>
-
 				<liferay-ui:search-container-results>
 
 					<%
@@ -248,8 +249,8 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 		Map<String, List<String>> internationalNumbers = PowwowServiceProviderUtil.getJoinByPhoneInternationalNumbers(powwowMeeting.getProviderType());
 
 		if ((internationalNumbers != null) && !internationalNumbers.isEmpty()) {
-			for (String country: internationalNumbers.keySet()) {
-				for (String number: internationalNumbers.get(country)) {
+			for (String country : internationalNumbers.keySet()) {
+				for (String number : internationalNumbers.get(country)) {
 		%>
 
 					interationalNumbersDisplay.push(

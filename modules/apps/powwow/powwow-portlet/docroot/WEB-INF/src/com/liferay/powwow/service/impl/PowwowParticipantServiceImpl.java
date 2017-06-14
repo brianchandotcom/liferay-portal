@@ -15,7 +15,6 @@
 package com.liferay.powwow.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.powwow.model.PowwowParticipant;
 import com.liferay.powwow.service.base.PowwowParticipantServiceBaseImpl;
@@ -33,7 +32,7 @@ public class PowwowParticipantServiceImpl
 	@Override
 	public PowwowParticipant deletePowwowParticipant(
 			PowwowParticipant powwowParticipant)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeetingPermission.check(
 			getPermissionChecker(), powwowParticipant.getPowwowMeetingId(),
@@ -44,7 +43,7 @@ public class PowwowParticipantServiceImpl
 
 	@Override
 	public List<PowwowParticipant> getPowwowParticipants(long powwowMeetingId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeetingPermission.check(
 			getPermissionChecker(), powwowMeetingId, ActionKeys.VIEW);
@@ -55,7 +54,7 @@ public class PowwowParticipantServiceImpl
 
 	@Override
 	public int getPowwowParticipantsCount(long powwowMeetingId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeetingPermission.check(
 			getPermissionChecker(), powwowMeetingId, ActionKeys.VIEW);
@@ -69,7 +68,7 @@ public class PowwowParticipantServiceImpl
 			long powwowParticipantId, long powwowMeetingId, String name,
 			long participantUserId, String emailAddress, int type, int status,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowMeetingPermission.check(
 			getPermissionChecker(), powwowMeetingId, ActionKeys.UPDATE);

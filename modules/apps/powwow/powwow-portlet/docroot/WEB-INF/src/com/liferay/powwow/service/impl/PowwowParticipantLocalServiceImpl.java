@@ -15,10 +15,9 @@
 package com.liferay.powwow.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.powwow.model.PowwowParticipant;
 import com.liferay.powwow.service.base.PowwowParticipantLocalServiceBaseImpl;
 
@@ -36,7 +35,7 @@ public class PowwowParticipantLocalServiceImpl
 			long userId, long groupId, long powwowMeetingId, String name,
 			long participantUserId, String emailAddress, int type, int status,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
@@ -66,16 +65,14 @@ public class PowwowParticipantLocalServiceImpl
 
 	@Override
 	public PowwowParticipant deletePowwowParticipant(
-			PowwowParticipant powwowParticipant)
-		throws SystemException {
+		PowwowParticipant powwowParticipant) {
 
 		return powwowParticipantPersistence.remove(powwowParticipant);
 	}
 
 	@Override
 	public PowwowParticipant fetchPowwowParticipant(
-			long powwowMeetingId, long participantUserId)
-		throws SystemException {
+		long powwowMeetingId, long participantUserId) {
 
 		return powwowParticipantPersistence.fetchByPMI_PUI(
 			powwowMeetingId, participantUserId);
@@ -83,41 +80,33 @@ public class PowwowParticipantLocalServiceImpl
 
 	@Override
 	public PowwowParticipant fetchPowwowParticipant(
-			long powwowMeetingId, String emailAddress)
-		throws SystemException {
+		long powwowMeetingId, String emailAddress) {
 
 		return powwowParticipantPersistence.fetchByPMI_EA(
 			powwowMeetingId, emailAddress);
 	}
 
 	@Override
-	public List<PowwowParticipant> getPowwowParticipants(long powwowMeetingId)
-		throws SystemException {
-
+	public List<PowwowParticipant> getPowwowParticipants(long powwowMeetingId) {
 		return powwowParticipantPersistence.findByPowwowMeetingId(
 			powwowMeetingId);
 	}
 
 	@Override
 	public List<PowwowParticipant> getPowwowParticipants(
-			long powwowMeetingId, int type)
-		throws SystemException {
+		long powwowMeetingId, int type) {
 
 		return powwowParticipantPersistence.findByPMI_T(powwowMeetingId, type);
 	}
 
 	@Override
-	public int getPowwowParticipantsCount(long powwowMeetingId)
-		throws SystemException {
-
+	public int getPowwowParticipantsCount(long powwowMeetingId) {
 		return powwowParticipantPersistence.countByPowwowMeetingId(
 			powwowMeetingId);
 	}
 
 	@Override
-	public int getPowwowParticipantsCount(long powwowMeetingId, int type)
-		throws SystemException {
-
+	public int getPowwowParticipantsCount(long powwowMeetingId, int type) {
 		return powwowParticipantPersistence.countByPMI_T(powwowMeetingId, type);
 	}
 
@@ -126,7 +115,7 @@ public class PowwowParticipantLocalServiceImpl
 			long powwowParticipantId, long powwowMeetingId, String name,
 			long participantUserId, String emailAddress, int type, int status,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowParticipant powwowParticipant =
 			powwowParticipantPersistence.findByPrimaryKey(powwowParticipantId);
@@ -152,7 +141,7 @@ public class PowwowParticipantLocalServiceImpl
 
 	@Override
 	public PowwowParticipant updateStatus(long powwowParticipantId, int status)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		PowwowParticipant powwowParticipant =
 			powwowParticipantPersistence.findByPrimaryKey(powwowParticipantId);

@@ -20,19 +20,19 @@ import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
-import com.liferay.portal.kernel.util.PortletClassInvoker;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ClassResolverUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -444,21 +444,34 @@ public class MeetingsPortlet extends MVCPortlet {
 				classNameId, userId);
 
 		if (calendarResource == null) {
-			MethodKey methodKey = new MethodKey(
-				ClassResolverUtil.resolveByPortletClassLoader(
-					"com.liferay.calendar.util.CalendarResourceUtil",
-					"calendar-portlet"),
-				"getUserCalendarResource", long.class, ServiceContext.class);
+			User user = UserLocalServiceUtil.getUser(userId);
 
-			Object calendarResourceObject = PortletClassInvoker.invoke(
-				"1_WAR_calendarportlet", methodKey, userId, serviceContext);
+			Group userGroup = null;
 
-			long calendarResourceId = BeanPropertiesUtil.getLong(
-				calendarResourceObject, "calendarResourceId");
+			String userName = user.getFullName();
+
+			if (user.isDefaultUser()) {
+				userGroup = GroupLocalServiceUtil.getGroup(
+					serviceContext.getCompanyId(), GroupConstants.GUEST);
+
+				userName = GroupConstants.GUEST;
+			}
+			else {
+				userGroup = GroupLocalServiceUtil.getUserGroup(
+					serviceContext.getCompanyId(), userId);
+			}
+
+			Map<Locale, String> nameMap = new HashMap<>();
+
+			nameMap.put(LocaleUtil.getDefault(), userName);
+
+			Map<Locale, String> descriptionMap = new HashMap<>();
 
 			calendarResource =
-				CalendarResourceLocalServiceUtil.getCalendarResource(
-					calendarResourceId);
+				CalendarResourceLocalServiceUtil.addCalendarResource(
+					userId, userGroup.getGroupId(),
+					PortalUtil.getClassNameId(User.class), userId, null, null,
+					nameMap, descriptionMap, true, serviceContext);
 
 			if (calendarResource.getDefaultCalendarId() <= 0) {
 				CalendarLocalServiceUtil.addCalendar(

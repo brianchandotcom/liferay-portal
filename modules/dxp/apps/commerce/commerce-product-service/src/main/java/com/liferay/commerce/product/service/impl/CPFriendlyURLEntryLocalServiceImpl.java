@@ -136,25 +136,25 @@ public class CPFriendlyURLEntryLocalServiceImpl
 	@Override
 	public String buildUrlTitle(
 			long groupId, long companyId, long classNameId, long classPK,
-			String languageId, String newTitle)
+			String languageId, String title)
 		throws PortalException {
 
-		if (newTitle == null) {
+		if (title == null) {
 			return String.valueOf(classPK);
 		}
 
-		newTitle = StringUtil.toLowerCase(newTitle.trim());
+		title = StringUtil.toLowerCase(title.trim());
 
-		if (Validator.isNull(newTitle) || Validator.isNumber(newTitle)) {
-			newTitle = String.valueOf(classPK);
+		if (Validator.isNull(title) || Validator.isNumber(title)) {
+			title = String.valueOf(classPK);
 		}
 		else {
-			newTitle = FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
-				newTitle);
+			title = FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
+				title);
 		}
 
 		String urlTitle = ModelHintsUtil.trimString(
-			CPFriendlyURLEntry.class.getName(), "urlTitle", newTitle);
+			CPFriendlyURLEntry.class.getName(), "urlTitle", title);
 
 		return cpFriendlyURLEntryLocalService.getUniqueUrlTitle(
 			groupId, companyId, classNameId, classPK, languageId, urlTitle);

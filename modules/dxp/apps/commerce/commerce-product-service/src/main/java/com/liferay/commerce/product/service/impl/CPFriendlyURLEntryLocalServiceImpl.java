@@ -179,7 +179,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
-	public CPFriendlyURLEntry getCPFriendlyURLEntry(
+	public CPFriendlyURLEntry fetchCPFriendlyURLEntry(
 			long groupId, long companyId, long classNameId, long classPK,
 			String languageId, boolean main)
 		throws PortalException {

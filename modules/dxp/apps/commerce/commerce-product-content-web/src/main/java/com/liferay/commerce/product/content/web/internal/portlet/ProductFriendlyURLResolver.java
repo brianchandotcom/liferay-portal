@@ -75,7 +75,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		if (!cpFriendlyURLEntry.isMain()) {
 			cpFriendlyURLEntry =
-				_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntry(
+				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
 					groupId, companyId, classNameId,
 					cpFriendlyURLEntry.getPrimaryKey(), languageId, true);
 		}
@@ -149,7 +149,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		if (!cpFriendlyURLEntry.isMain()) {
 			cpFriendlyURLEntry =
-				_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntry(
+				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
 					groupId, companyId, classNameId,
 					cpFriendlyURLEntry.getPrimaryKey(), languageId, true);
 		}

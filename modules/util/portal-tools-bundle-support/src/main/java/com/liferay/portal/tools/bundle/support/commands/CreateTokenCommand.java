@@ -17,6 +17,7 @@ package com.liferay.portal.tools.bundle.support.commands;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
+import com.liferay.portal.tools.bundle.support.internal.BundleSupportConstants;
 import com.liferay.portal.tools.bundle.support.internal.util.HttpUtil;
 
 import java.io.Console;
@@ -101,15 +102,15 @@ public class CreateTokenCommand implements Command {
 	}
 
 	protected static final File DEFAULT_TOKEN_FILE = new File(
-		System.getProperty("user.home"), ".liferay/token");
+		System.getProperty("user.home"),
+		BundleSupportConstants.DEFAULT_TOKEN_FILE_NAME);
 
 	private static final URL _DEFAULT_TOKEN_URL;
 
 	static {
 		try {
 			_DEFAULT_TOKEN_URL = new URL(
-				"https://web.liferay.com/token-auth-portlet/api/secure/jsonws" +
-					"/tokenauthentry/add-token-auth-entry");
+				BundleSupportConstants.DEFAULT_TOKEN_URL);
 		}
 		catch (MalformedURLException murle) {
 			throw new ExceptionInInitializerError(murle);

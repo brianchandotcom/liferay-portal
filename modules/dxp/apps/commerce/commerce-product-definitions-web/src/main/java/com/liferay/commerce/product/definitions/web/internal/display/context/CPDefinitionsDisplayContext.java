@@ -92,8 +92,6 @@ public class CPDefinitionsDisplayContext
 			requestBackedPortletURLFactory, "selectDisplayPage",
 			layoutItemSelectorCriterion);
 
-		//itemSelectorURL.setParameter("layoutUuid", layoutUuid);
-
 		return itemSelectorURL.toString();
 	}
 

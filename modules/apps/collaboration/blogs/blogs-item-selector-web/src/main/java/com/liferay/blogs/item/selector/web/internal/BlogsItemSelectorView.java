@@ -16,6 +16,7 @@ package com.liferay.blogs.item.selector.web.internal;
 
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.blogs.item.selector.web.constants.BlogsItemSelectorViewConstants;
+import com.liferay.blogs.item.selector.web.internal.constants.BlogsItemSelectorWebKeys;
 import com.liferay.blogs.item.selector.web.internal.display.context.BlogsItemSelectorViewDisplayContext;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -54,9 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class BlogsItemSelectorView
 	implements ItemSelectorView<BlogsItemSelectorCriterion> {
-
-	public static final String BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
-		"BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
 
 	@Override
 	public Class<BlogsItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -103,7 +101,7 @@ public class BlogsItemSelectorView
 					_blogsEntryLocalService);
 
 		request.setAttribute(
-			BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			BlogsItemSelectorWebKeys.BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			blogsItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();

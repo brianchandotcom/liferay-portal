@@ -1568,6 +1568,9 @@ Gradle Daemon:
 
 ## 3.7.4 - 2017-06-13
 
+### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.3.26.
+
 ### Fixed
 - [LPS-71201]: Allow to publish projects with a `.lfrbuild-releng-ignore` marker
 file from the master branch.

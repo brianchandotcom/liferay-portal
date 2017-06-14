@@ -2,7 +2,6 @@
 	<property name="portal.upstream" value="true" />
 	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Commerce" />
-	<property name="osgi.app.includes" value="commerce" />
 	<property name="plugins.deployment.type" value="osgi" />
 
 	<set-up>

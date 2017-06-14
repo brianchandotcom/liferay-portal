@@ -21,9 +21,7 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 
 CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 
-StringBuilder friendlyURLBase = new StringBuilder();
-friendlyURLBase.append(themeDisplay.getPortalURL());
-friendlyURLBase.append(CPConstants.PRODUCT_URL_SEPARATOR);
+String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.PRODUCT_URL_SEPARATOR;
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />

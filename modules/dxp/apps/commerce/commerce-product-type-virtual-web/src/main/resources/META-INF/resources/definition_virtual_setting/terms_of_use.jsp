@@ -55,11 +55,9 @@ if (termsOfUseJournalArticleResourcePrimKey > 0) {
 <div class="col-md-9">
 	<aui:fieldset>
 		<div class="lfr-definition-virtual-setting-web-content-selector">
-			<div id="lfr-definition-virtual-setting-journal-article">
+			<div class="text-default" id="lfr-definition-virtual-setting-journal-article">
 				<c:if test="<%= journalArticle != null %>">
-					<a href="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadSampleFileEntryURL() %>">
-						<%= journalArticle.getTitle() %>
-					</a>
+					<%= journalArticle.getTitle() %>
 				</c:if>
 			</div>
 

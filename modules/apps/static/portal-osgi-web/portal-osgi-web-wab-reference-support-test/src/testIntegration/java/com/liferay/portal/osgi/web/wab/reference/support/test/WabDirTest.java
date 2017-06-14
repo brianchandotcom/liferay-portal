@@ -85,9 +85,15 @@ public class WabDirTest {
 
 		themeBundle.start();
 
-		int state = themeBundle.getState();
+		Assert.assertEquals(Bundle.ACTIVE, themeBundle.getState());
 
-		Assert.assertEquals(Bundle.ACTIVE, state);
+		themeBundle.stop();
+
+		Assert.assertEquals(Bundle.RESOLVED, themeBundle.getState());
+
+		themeBundle.uninstall();
+
+		Assert.assertEquals(Bundle.UNINSTALLED, themeBundle.getState());
 	}
 
 	private File _getFile(String fileName) throws Exception {

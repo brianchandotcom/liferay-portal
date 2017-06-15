@@ -551,10 +551,10 @@ public class BundleSupportCommandsTest {
 		_createHttpContext(
 			httpServer, _CONTEXT_PATH_TAR, "application/tar+gzip", null);
 		_createHttpContext(
-			httpServer, _CONTEXT_PATH_TOKEN, "application/json", authenticator);
+			httpServer, _CONTEXT_PATH_TOKEN, "application/json", null);
 		_createHttpContext(
 			httpServer, _CONTEXT_PATH_TOKEN_UNFORMATTED, "application/json",
-			authenticator);
+			null);
 		_createHttpContext(
 			httpServer, _CONTEXT_PATH_ZIP, "application/zip", authenticator);
 

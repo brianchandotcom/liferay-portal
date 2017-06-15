@@ -1458,6 +1458,28 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 							</fileset>
 						</chmod>
 
+						<local name="jmx.remote.port.overwrite" />
+
+						<math
+							datatype="int"
+							operand1="${app.server.bundle.index}"
+							operand2="${jmx.remote.port}"
+							operation="+"
+							result="jmx.remote.port.overwrite"
+						/>
+
+						<replace
+							file="${test.app.server.bin.dir}/setenv.sh"
+							token="-Dcom.sun.management.jmxremote.port=${jmx.remote.port}"
+							value="-Dcom.sun.management.jmxremote.port=${jmx.remote.port.overwrite}"
+						/>
+
+						<replace
+							file="${test.app.server.bin.dir}/setenv.bat"
+							token="-Dcom.sun.management.jmxremote.port=${jmx.remote.port}"
+							value="-Dcom.sun.management.jmxremote.port=${jmx.remote.port.overwrite}"
+						/>
+
 						<replaceregexp
 							file="${test.app.server.dir}/conf/server.xml"
 							flags="g"

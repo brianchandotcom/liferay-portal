@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Text Localizer Taglib
+Bundle-SymbolicName: com.liferay.text.localizer.taglib
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.text.localizer.taglib.servlet.taglib
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/text-localizer";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /text-localizer-taglib

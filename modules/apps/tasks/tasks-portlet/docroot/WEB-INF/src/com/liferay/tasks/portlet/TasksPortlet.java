@@ -229,8 +229,11 @@ public class TasksPortlet extends MVCPortlet {
 			return;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		AssetEntryLocalServiceUtil.incrementViewCounter(
-			0, TasksEntry.class.getName(), tasksEntryId);
+			themeDisplay.getUserId(), TasksEntry.class.getName(), tasksEntryId);
 	}
 
 }

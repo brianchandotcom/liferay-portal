@@ -81,59 +81,6 @@
 		</execute>
 	</command>
 
-	<command name="AddChildOrganization" priority="4">
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#searchCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="searchTerm" value="Organization Name" />
-		</execute>
-
-		<execute macro="Organization#viewCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Suborganization#addCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-			<var name="suborgName" value="Sub Organization Name" />
-			<var name="suborgType" value="Regular Organization" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#viewSubOrganizationCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-			<var name="suborgName" value="Sub Organization Name" />
-			<var name="suborgType" value="Organization" />
-		</execute>
-	</command>
-
 	<command name="AddMember" priority="5">
 		<property name="portal.acceptance" value="true" />
 

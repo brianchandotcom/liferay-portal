@@ -12,17 +12,27 @@
  * details.
  */
 
-package com.liferay.vulcan.representor;
-
-import com.liferay.vulcan.representor.builder.RepresentorBuilder;
+package com.liferay.vulcan.pagination;
 
 /**
  * @author Alejandro Hernández
- * @author Carlos Sierra Andrés
- * @author Jorge Ferrer
  */
-public interface ModelRepresentorMapper<T> {
+public class SingleModel<T> {
 
-	public void buildRepresentor(RepresentorBuilder<T> representorBuilder);
+	public SingleModel(T model, Class<T> modelClass) {
+		_model = model;
+		_modelClass = modelClass;
+	}
+
+	public T getModel() {
+		return _model;
+	}
+
+	public Class<T> getModelClass() {
+		return _modelClass;
+	}
+
+	private final T _model;
+	private final Class<T> _modelClass;
 
 }

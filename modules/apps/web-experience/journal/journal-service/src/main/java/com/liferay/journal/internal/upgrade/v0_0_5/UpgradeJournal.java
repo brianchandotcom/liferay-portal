@@ -194,8 +194,11 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	protected void addDDMTemplateLinks() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long classNameId = PortalUtil.getClassNameId(
+			long ddmStructureClassNameId = PortalUtil.getClassNameId(
 				DDMStructure.class.getName());
+
+			long journalArticleClassNameId = PortalUtil.getClassNameId(
+				JournalArticle.class.getName());
 
 			StringBundler sb = new StringBundler(6);
 
@@ -209,7 +212,7 @@ public class UpgradeJournal extends UpgradeProcess {
 			try (PreparedStatement ps = connection.prepareStatement(
 					sb.toString())) {
 
-				ps.setLong(1, classNameId);
+				ps.setLong(1, ddmStructureClassNameId);
 
 				try (ResultSet rs = ps.executeQuery()) {
 					while (rs.next()) {
@@ -217,7 +220,7 @@ public class UpgradeJournal extends UpgradeProcess {
 						long id = rs.getLong("id_");
 
 						_ddmTemplateLinkLocalService.addTemplateLink(
-							classNameId, id, templateId);
+							journalArticleClassNameId, id, templateId);
 					}
 				}
 			}

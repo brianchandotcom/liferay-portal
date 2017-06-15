@@ -15,7 +15,7 @@
 package com.liferay.login.web.internal.portlet.action;
 
 import com.liferay.login.web.constants.LoginPortletKeys;
-import com.liferay.portal.kernel.captcha.CaptchaUtil;
+import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -24,6 +24,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -43,7 +44,7 @@ public class CaptchaMVCResourceCommand implements MVCResourceCommand {
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
 		try {
-			CaptchaUtil.serveImage(resourceRequest, resourceResponse);
+			_captcha.serveImage(resourceRequest, resourceResponse);
 
 			return false;
 		}
@@ -56,5 +57,8 @@ public class CaptchaMVCResourceCommand implements MVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CaptchaMVCResourceCommand.class);
+
+	@Reference
+	private Captcha _captcha;
 
 }

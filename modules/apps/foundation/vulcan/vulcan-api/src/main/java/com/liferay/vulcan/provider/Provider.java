@@ -12,27 +12,15 @@
  * details.
  */
 
-package com.liferay.vulcan.sample.rest.internal.vulcan.resource;
+package com.liferay.vulcan.provider;
 
-import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.vulcan.resource.SingleResource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alejandro Hernández
- * @author Carlos Sierra Andrés
- * @author Jorge Ferrer
  */
-public class BlogPostingSingleResource implements SingleResource<BlogsEntry> {
+public interface Provider<T> {
 
-	public BlogPostingSingleResource(BlogsEntry blogsEntry) {
-		_blogsEntry = blogsEntry;
-	}
-
-	@Override
-	public BlogsEntry getModel() {
-		return _blogsEntry;
-	}
-
-	private final BlogsEntry _blogsEntry;
+	public T createContext(HttpServletRequest httpServletRequest);
 
 }

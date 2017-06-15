@@ -14,31 +14,38 @@
 
 package com.liferay.vulcan.sample.rest.internal.vulcan.representor;
 
+import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.vulcan.representor.ModelRepresentorMapper;
+import com.liferay.vulcan.pagination.PageItems;
+import com.liferay.vulcan.pagination.Pagination;
+import com.liferay.vulcan.representor.Resource;
+import com.liferay.vulcan.representor.Routes;
+import com.liferay.vulcan.representor.RoutesBuilder;
 import com.liferay.vulcan.representor.builder.RepresentorBuilder;
 
 import java.text.DateFormat;
 
+import java.util.List;
 import java.util.function.Function;
 
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-@Component(
-	immediate = true,
-	service = {ModelRepresentorMapper.class, PersonModelRepresentorMapper.class}
-)
-public class PersonModelRepresentorMapper
-	implements ModelRepresentorMapper<User> {
+@Component(immediate = true, service = {Resource.class, PersonResource.class})
+public class PersonResource implements Resource<User> {
 
 	@Override
 	public void buildRepresentor(RepresentorBuilder<User> representorBuilder) {
@@ -53,7 +60,7 @@ public class PersonModelRepresentorMapper
 			}
 		};
 
-		representorBuilder.getFirstStep(
+		representorBuilder.identifier(
 			user -> String.valueOf(user.getUserId())
 		).addField(
 			"additionalName", User::getMiddleName
@@ -73,5 +80,51 @@ public class PersonModelRepresentorMapper
 			"Person"
 		);
 	}
+
+	@Override
+	public String getPath() {
+		return "people";
+	}
+
+	public Routes<User> routes(RoutesBuilder<User> routesBuilder) {
+		return routesBuilder.collectionPage(
+			this::_getPageItems, Company.class
+		).collectionItem(
+			this::_getUser, Long.class
+		);
+	}
+
+	private PageItems<User> _getPageItems(
+		Pagination pagination, Company company) {
+
+		try {
+			List<User> users = _userService.getCompanyUsers(
+				company.getCompanyId(), pagination.getStartPosition(),
+				pagination.getEndPosition());
+
+			int count = _userService.getCompanyUsersCount(
+				company.getCompanyId());
+
+			return new PageItems<>(users, count);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
+
+	private User _getUser(Long id) {
+		try {
+			return _userService.getUserById(id);
+		}
+		catch (NoSuchUserException | PrincipalException e) {
+			throw new NotFoundException(e);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
+
+	@Reference
+	private UserService _userService;
 
 }

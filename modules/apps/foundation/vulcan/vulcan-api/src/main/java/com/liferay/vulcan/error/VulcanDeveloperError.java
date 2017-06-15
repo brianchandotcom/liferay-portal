@@ -30,6 +30,16 @@ public class VulcanDeveloperError extends Error {
 
 	}
 
+	public static class MustHaveProvider extends VulcanDeveloperError {
+
+		public MustHaveProvider(Class<?> modelClass) {
+			super(
+				"Model class " + modelClass.getName() +
+					" does not have a provider");
+		}
+
+	}
+
 	public static class MustHaveValidGenericType extends VulcanDeveloperError {
 
 		public MustHaveValidGenericType(Class clazz) {

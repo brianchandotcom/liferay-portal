@@ -12,12 +12,25 @@
  * details.
  */
 
-package com.liferay.vulcan.resource;
+package com.liferay.vulcan.functions;
+
+import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * @author Alejandro Hernández
- * @author Carlos Sierra Andrés
- * @author Jorge Ferrer
  */
-public interface Resource<T> {
+@FunctionalInterface
+public interface HexaFunction<A, B, C, D, E, F, R> {
+
+	public default <V> HexaFunction<A, B, C, D, E, F, V> andThen(
+		Function<? super R, ? extends V> after) {
+
+		Objects.requireNonNull(after);
+		return (A a, B b, C c, D d, E e, F f) -> after.apply(
+			apply(a, b, c, d, e, f));
+	}
+
+	public R apply(A a, B b, C c, D d, E e, F f);
+
 }

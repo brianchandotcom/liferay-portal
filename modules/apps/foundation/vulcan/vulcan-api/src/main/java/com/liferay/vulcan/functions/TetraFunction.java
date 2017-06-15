@@ -12,20 +12,24 @@
  * details.
  */
 
-package com.liferay.vulcan.resource;
+package com.liferay.vulcan.functions;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * @author Alejandro Hernández
- * @author Carlos Sierra Andrés
- * @author Jorge Ferrer
  */
-public interface SingleResource<T> extends Resource<T> {
+@FunctionalInterface
+public interface TetraFunction<A, B, C, D, R> {
 
-	@GET
-	@Path("/")
-	public T getModel();
+	public default <V> TetraFunction<A, B, C, D, V> andThen(
+		Function<? super R, ? extends V> after) {
+
+		Objects.requireNonNull(after);
+		return (A a, B b, C c, D d) -> after.apply(apply(a, b, c, d));
+	}
+
+	public R apply(A a, B b, C c, D d);
 
 }

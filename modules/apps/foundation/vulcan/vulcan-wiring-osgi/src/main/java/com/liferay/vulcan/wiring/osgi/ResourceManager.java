@@ -14,9 +14,10 @@
 
 package com.liferay.vulcan.wiring.osgi;
 
-import com.liferay.vulcan.representor.ModelRepresentorMapper;
-import com.liferay.vulcan.wiring.osgi.internal.GenericUtil;
+import com.liferay.vulcan.representor.Resource;
+import com.liferay.vulcan.representor.Routes;
 import com.liferay.vulcan.wiring.osgi.internal.RepresentorBuilderImpl;
+import com.liferay.vulcan.wiring.osgi.internal.RoutesBuilderImpl;
 import com.liferay.vulcan.wiring.osgi.internal.ServiceReferenceServiceTuple;
 
 import java.util.ArrayList;
@@ -42,8 +43,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = RepresentorManager.class)
-public class RepresentorManager {
+@Component(immediate = true, service = ResourceManager.class)
+public class ResourceManager {
 
 	public <T> List<RelatedModel<T, ?>> getEmbeddedRelatedModels(
 		Class<T> modelClass) {
@@ -74,12 +75,10 @@ public class RepresentorManager {
 		return _links.get(modelClass.getName());
 	}
 
-	public <T> Optional<ModelRepresentorMapper<T>>
-		getModelRepresentorMapperOptional(Class<T> modelClass) {
-
+	public <T> Optional<Resource<T>> getResourceOptional(Class<T> modelClass) {
 		Optional<TreeSet<ServiceReferenceServiceTuple
-			<ModelRepresentorMapper<?>>>> optional = Optional.ofNullable(
-				_modelRepresentorMappers.get(modelClass.getName()));
+			<Resource<?>>>> optional = Optional.ofNullable(
+				_resources.get(modelClass.getName()));
 
 		return optional.filter(
 			serviceReferenceServiceTuples ->
@@ -88,9 +87,13 @@ public class RepresentorManager {
 			TreeSet::first
 		).map(
 			serviceReferenceServiceTuple ->
-				(ModelRepresentorMapper<T>)
+				(Resource<T>)
 					serviceReferenceServiceTuple.getService()
 		);
+	}
+
+	public <T> Routes<T> getRoutes(Class<T> modelClass) {
+		return (Routes)_routes.get(modelClass.getName());
 	}
 
 	public <T> List<String> getTypes(Class<T> modelClass) {
@@ -103,43 +106,37 @@ public class RepresentorManager {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected <T> void setServiceReference(
-		ServiceReference<ModelRepresentorMapper<T>> serviceReference) {
+		ServiceReference<Resource<T>> serviceReference) {
 
-		ModelRepresentorMapper<T> modelRepresentorMapper =
-			_bundleContext.getService(serviceReference);
+		Resource<T> resource = _bundleContext.getService(serviceReference);
 
 		Class<T> modelClass = GenericUtil.getGenericClass(
-			modelRepresentorMapper, ModelRepresentorMapper.class);
+			resource, Resource.class);
 
-		_addModelRepresentorMapper(
-			serviceReference, modelRepresentorMapper, modelClass);
+		_addResource(serviceReference, resource, modelClass);
 
 		_addModelClassMaps(modelClass);
 	}
 
 	protected <T> void unsetServiceReference(
-		ServiceReference<ModelRepresentorMapper<T>> serviceReference) {
+		ServiceReference<Resource<T>> serviceReference) {
 
-		ModelRepresentorMapper<T> modelRepresentorMapper =
-			_bundleContext.getService(serviceReference);
+		Resource<T> resource = _bundleContext.getService(serviceReference);
 
 		Class<T> modelClass = GenericUtil.getGenericClass(
-			modelRepresentorMapper, ModelRepresentorMapper.class);
+			resource, Resource.class);
 
-		_removeModelRepresentorMapper(modelRepresentorMapper, modelClass);
+		_removeResource(resource, modelClass);
 
 		_removeModelClassMaps(modelClass);
 
-		Optional<ModelRepresentorMapper<T>> optional =
-			getModelRepresentorMapperOptional(modelClass);
+		Optional<Resource<T>> optional = getResourceOptional(modelClass);
 
-		optional.ifPresent(
-			firstModelRepresentorMapper -> _addModelClassMaps(modelClass));
+		optional.ifPresent(firstResource -> _addModelClassMaps(modelClass));
 	}
 
 	private <T> void _addModelClassMaps(Class<T> modelClass) {
-		Optional<ModelRepresentorMapper<T>> optional =
-			getModelRepresentorMapperOptional(modelClass);
+		Optional<Resource<T>> optional = getResourceOptional(modelClass);
 
 		Map<String, Function<?, Object>> fieldFunctions = new HashMap<>();
 
@@ -162,27 +159,32 @@ public class RepresentorManager {
 		_types.put(modelClass.getName(), types);
 
 		optional.ifPresent(
-			modelRepresentorMapper -> modelRepresentorMapper.buildRepresentor(
-				new RepresentorBuilderImpl<>(
-					modelClass, _identifierFunctions, fieldFunctions,
-					embeddedRelatedModels, linkedRelatedModels, links, types)));
+			resource -> {
+				resource.buildRepresentor(
+					new RepresentorBuilderImpl<>(
+						modelClass, _identifierFunctions, fieldFunctions,
+						embeddedRelatedModels, linkedRelatedModels, links,
+						types));
+
+				Routes<T> routes = resource.routes(new RoutesBuilderImpl<>());
+
+				_routes.put(modelClass.getName(), routes);
+			});
 	}
 
-	private <T> void _addModelRepresentorMapper(
-		ServiceReference<ModelRepresentorMapper<T>> serviceReference,
-		ModelRepresentorMapper<T> modelRepresentorMapper, Class<T> modelClass) {
+	private <T> void _addResource(
+		ServiceReference<Resource<T>> serviceReference, Resource<T> resource,
+		Class<T> modelClass) {
 
-		_modelRepresentorMappers.computeIfAbsent(
+		_resources.computeIfAbsent(
 			modelClass.getName(), name -> new TreeSet<>());
 
-		ServiceReferenceServiceTuple<ModelRepresentorMapper<?>>
-			serviceReferenceServiceTuple =
-				(ServiceReferenceServiceTuple)
-					new ServiceReferenceServiceTuple<>(
-						serviceReference, modelRepresentorMapper);
+		ServiceReferenceServiceTuple<Resource<?>> serviceReferenceServiceTuple =
+			(ServiceReferenceServiceTuple)new ServiceReferenceServiceTuple<>(
+				serviceReference, resource);
 
-		TreeSet<ServiceReferenceServiceTuple<ModelRepresentorMapper<?>>>
-			serviceReferenceServiceTuples = _modelRepresentorMappers.get(
+		TreeSet<ServiceReferenceServiceTuple<Resource<?>>>
+			serviceReferenceServiceTuples = _resources.get(
 				modelClass.getName());
 
 		serviceReferenceServiceTuples.add(serviceReferenceServiceTuple);
@@ -197,18 +199,14 @@ public class RepresentorManager {
 		_types.remove(modelClass.getName());
 	}
 
-	private <T> void _removeModelRepresentorMapper(
-		ModelRepresentorMapper modelRepresentorMapper, Class<T> modelClass) {
-
-		TreeSet<ServiceReferenceServiceTuple<ModelRepresentorMapper<?>>>
-			serviceReferenceServiceTuples = _modelRepresentorMappers.get(
+	private <T> void _removeResource(Resource resource, Class<T> modelClass) {
+		TreeSet<ServiceReferenceServiceTuple<Resource<?>>>
+			serviceReferenceServiceTuples = _resources.get(
 				modelClass.getName());
 
 		serviceReferenceServiceTuples.removeIf(
-			modelRepresentorMapperTuple -> {
-				if (modelRepresentorMapperTuple.getService() ==
-						modelRepresentorMapper) {
-
+			resourceTuple -> {
+				if (resourceTuple.getService() == resource) {
 					return true;
 				}
 
@@ -217,7 +215,7 @@ public class RepresentorManager {
 	}
 
 	private final BundleContext _bundleContext = FrameworkUtil.getBundle(
-		RepresentorManager.class).getBundleContext();
+		ResourceManager.class).getBundleContext();
 	private final Map<String, List<RelatedModel<?, ?>>> _embeddedRelatedModels =
 		new ConcurrentHashMap<>();
 	private final Map<String, Map<String, Function<?, Object>>>
@@ -229,8 +227,9 @@ public class RepresentorManager {
 	private final Map<String, Map<String, String>> _links =
 		new ConcurrentHashMap<>();
 	private final Map<String,
-		TreeSet<ServiceReferenceServiceTuple<ModelRepresentorMapper<?>>>>
-			_modelRepresentorMappers = new ConcurrentHashMap<>();
+		TreeSet<ServiceReferenceServiceTuple<Resource<?>>>> _resources =
+			new ConcurrentHashMap<>();
+	private final Map<String, Routes<?>> _routes = new ConcurrentHashMap<>();
 	private final Map<String, List<String>> _types = new ConcurrentHashMap<>();
 
 }

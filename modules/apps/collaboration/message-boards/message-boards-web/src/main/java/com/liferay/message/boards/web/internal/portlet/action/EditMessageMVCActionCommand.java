@@ -40,9 +40,9 @@ import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUplo
 import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandlerProvider;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryUtil;
+import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
-import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -444,7 +444,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				if (captchaConfiguration.
 						messageBoardsEditMessageCaptchaEnabled()) {
 
-					CaptchaUtil.check(actionRequest);
+					_captcha.check(actionRequest);
 				}
 
 				if (threadId <= 0) {
@@ -596,6 +596,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private Captcha _captcha;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

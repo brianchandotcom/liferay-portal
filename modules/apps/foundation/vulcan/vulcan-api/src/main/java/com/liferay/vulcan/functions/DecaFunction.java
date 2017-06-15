@@ -12,29 +12,25 @@
  * details.
  */
 
-package com.liferay.vulcan.endpoint;
+package com.liferay.vulcan.functions;
 
-import com.liferay.vulcan.pagination.Page;
-import com.liferay.vulcan.pagination.SingleModel;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * @author Alejandro Hernández
- * @author Carlos Sierra Andrés
- * @author Jorge Ferrer
  */
-public interface RootEndpoint {
+@FunctionalInterface
+public interface DecaFunction<A, B, C, D, E, F, G, H, I, J, R> {
 
-	@GET
-	@Path("/p/{path}/{id}")
-	public <T> SingleModel<T> getCollectionItemSingleModel(
-		@PathParam("path") String path, @PathParam("id") String id);
+	public default <V> DecaFunction<A, B, C, D, E, F, G, H, I, J, V> andThen(
+		Function<? super R, ? extends V> after) {
 
-	@GET
-	@Path("/p/{path}")
-	public <T> Page<T> getCollectionPage(@PathParam("path") String path);
+		Objects.requireNonNull(after);
+		return (A a, B b, C c, D d, E e, F f, G g, H h, I i, J j) ->
+			after.apply(apply(a, b, c, d, e, f, g, h, i, j));
+	}
+
+	public R apply(A a, B b, C c, D d, E e, F f, G g, H h, I i, J j);
 
 }

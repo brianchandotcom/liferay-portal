@@ -14,8 +14,6 @@
 
 package com.liferay.vulcan.uri;
 
-import com.liferay.vulcan.resource.CollectionResource;
-
 /**
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
@@ -24,11 +22,8 @@ import com.liferay.vulcan.resource.CollectionResource;
 public interface CollectionResourceURITransformer {
 
 	public <T> String transformCollectionItemSingleResourceURI(
-		String uri, Class<T> modelClass, T model,
-		CollectionResource<T> collectionResource);
+		String uri, Class<T> modelClass, T model);
 
-	public <T> String transformPageURI(
-		String uri, Class<T> modelClass,
-		CollectionResource<T> collectionResource);
+	public <T> String transformPageURI(String uri, Class<T> modelClass);
 
 }

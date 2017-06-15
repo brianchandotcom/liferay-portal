@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.vulcan.endpoint;
+package com.liferay.vulcan.pagination;
 
-import com.liferay.vulcan.pagination.Page;
-import com.liferay.vulcan.pagination.SingleModel;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import java.util.Collection;
 
 /**
  * @author Alejandro Hernández
- * @author Carlos Sierra Andrés
- * @author Jorge Ferrer
  */
-public interface RootEndpoint {
+public class PageItems<T> {
 
-	@GET
-	@Path("/p/{path}/{id}")
-	public <T> SingleModel<T> getCollectionItemSingleModel(
-		@PathParam("path") String path, @PathParam("id") String id);
+	public PageItems(Collection<T> items, int totalCount) {
+		_items = items;
+		_totalCount = totalCount;
+	}
 
-	@GET
-	@Path("/p/{path}")
-	public <T> Page<T> getCollectionPage(@PathParam("path") String path);
+	public Collection<T> getItems() {
+		return _items;
+	}
+
+	public int getTotalCount() {
+		return _totalCount;
+	}
+
+	private final Collection<T> _items;
+	private final int _totalCount;
 
 }

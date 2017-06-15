@@ -12,27 +12,25 @@
  * details.
  */
 
-package com.liferay.vulcan.sample.rest.internal.vulcan.resource;
+package com.liferay.vulcan.functions;
 
-import com.liferay.portal.kernel.model.User;
-import com.liferay.vulcan.resource.SingleResource;
+import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * @author Alejandro Hernández
- * @author Carlos Sierra Andrés
- * @author Jorge Ferrer
  */
-public class PersonSingleResource implements SingleResource<User> {
+@FunctionalInterface
+public interface OctaFunction<A, B, C, D, E, F, G, H, R> {
 
-	public PersonSingleResource(User user) {
-		_user = user;
+	public default <V> OctaFunction<A, B, C, D, E, F, G, H, V> andThen(
+		Function<? super R, ? extends V> after) {
+
+		Objects.requireNonNull(after);
+		return (A a, B b, C c, D d, E e, F f, G g, H h) -> after.apply(
+			apply(a, b, c, d, e, f, g, h));
 	}
 
-	@Override
-	public User getModel() {
-		return _user;
-	}
-
-	private final User _user;
+	public R apply(A a, B b, C c, D d, E e, F f, G g, H h);
 
 }

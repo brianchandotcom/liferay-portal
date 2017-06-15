@@ -12,15 +12,24 @@
  * details.
  */
 
-package com.liferay.vulcan.contributor;
+package com.liferay.vulcan.functions;
+
+import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * @author Alejandro Hernández
- * @author Carlos Sierra Andrés
- * @author Jorge Ferrer
  */
-public interface APIContributor {
+@FunctionalInterface
+public interface TriFunction<A, B, C, R> {
 
-	public String getPath();
+	public default <V> TriFunction<A, B, C, V> andThen(
+		Function<? super R, ? extends V> after) {
+
+		Objects.requireNonNull(after);
+		return (A a, B b, C c) -> after.apply(apply(a, b, c));
+	}
+
+	public R apply(A a, B b, C c);
 
 }

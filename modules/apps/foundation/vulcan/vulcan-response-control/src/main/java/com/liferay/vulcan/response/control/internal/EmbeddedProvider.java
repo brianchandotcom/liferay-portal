@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.vulcan.response.control;
+package com.liferay.vulcan.response.control.internal;
+
+import com.liferay.vulcan.provider.Provider;
+import com.liferay.vulcan.response.control.Embedded;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,24 +26,24 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-public class EmbeddedRetriever {
+@Component(immediate = true)
+public class EmbeddedProvider implements Provider<Embedded> {
 
-	public static Embedded getEmbedded(HttpServletRequest httpServletRequest) {
+	public Embedded createContext(HttpServletRequest httpServletRequest) {
 		Map<String, String[]> parameterMap =
 			httpServletRequest.getParameterMap();
 
-		String[] embeddedParams = parameterMap.get("embedded");
+		String[] values = parameterMap.get("embedded");
 
-		if ((embeddedParams != null) && (embeddedParams.length == 1)) {
-			String[] embeddedKeys = _EMBEDDED_SEPARATOR_PATTERN.split(
-				embeddedParams[0]);
-
-			return new EmbeddedImpl(Arrays.asList(embeddedKeys));
+		if ((values != null) && (values.length == 1)) {
+			return new EmbeddedImpl(Arrays.asList(_pattern.split(values[0])));
 		}
 
 		return new EmbeddedImpl(new ArrayList<>());
@@ -61,7 +64,6 @@ public class EmbeddedRetriever {
 
 	}
 
-	private static final Pattern _EMBEDDED_SEPARATOR_PATTERN = Pattern.compile(
-		"\\s*,\\s*");
+	private static final Pattern _pattern = Pattern.compile("\\s*,\\s*");
 
 }

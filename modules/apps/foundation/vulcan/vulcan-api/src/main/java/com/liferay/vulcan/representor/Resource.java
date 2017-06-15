@@ -12,19 +12,21 @@
  * details.
  */
 
-package com.liferay.vulcan.contributor;
+package com.liferay.vulcan.representor;
 
-import com.liferay.vulcan.resource.Resource;
-
-import java.util.function.BiConsumer;
+import com.liferay.vulcan.representor.builder.RepresentorBuilder;
 
 /**
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-public interface ResourceMapper {
+public interface Resource<T> {
 
-	public void mapResources(BiConsumer<String, Resource<?>> biConsumer);
+	public void buildRepresentor(RepresentorBuilder<T> representorBuilder);
+
+	public String getPath();
+
+	public Routes<T> routes(RoutesBuilder<T> routesBuilder);
 
 }

@@ -12,28 +12,24 @@
  * details.
  */
 
-package com.liferay.vulcan.resource;
+package com.liferay.vulcan.functions;
 
-import com.liferay.vulcan.pagination.Page;
-import com.liferay.vulcan.pagination.Pagination;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Context;
+import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * @author Alejandro Hernández
- * @author Carlos Sierra Andrés
- * @author Jorge Ferrer
  */
-public interface CollectionResource<T> extends Resource<T> {
+@FunctionalInterface
+public interface PentaFunction<A, B, C, D, E, R> {
 
-	@Path("/{id}")
-	public SingleResource<T> getCollectionItemSingleResource(
-		@PathParam("id") String id);
+	public default <V> PentaFunction<A, B, C, D, E, V> andThen(
+		Function<? super R, ? extends V> after) {
 
-	@GET
-	public Page<T> getPage(@Context Pagination pagination);
+		Objects.requireNonNull(after);
+		return (A a, B b, C c, D d, E e) -> after.apply(apply(a, b, c, d, e));
+	}
+
+	public R apply(A a, B b, C c, D d, E e);
 
 }

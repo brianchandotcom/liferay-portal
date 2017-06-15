@@ -47,7 +47,7 @@ public class RepresentorBuilderImpl<T> implements RepresentorBuilder<T> {
 	}
 
 	@Override
-	public FirstStep<T> getFirstStep(Function<T, String> identifierFunction) {
+	public FirstStep<T> identifier(Function<T, String> identifierFunction) {
 		_identifierFunctions.put(_modelClass.getName(), identifierFunction);
 
 		return new FirstStep<T>() {

@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Vulcan Liferay API
 Bundle-SymbolicName: com.liferay.vulcan.liferay.api
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.vulcan.liferay.scope
+Export-Package:\
+	com.liferay.vulcan.liferay.context,\
+	com.liferay.vulcan.liferay.scope

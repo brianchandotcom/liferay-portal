@@ -16,16 +16,12 @@ package com.liferay.vulcan.response.control.internal;
 
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.vulcan.pagination.Page;
 import com.liferay.vulcan.pagination.Pagination;
+import com.liferay.vulcan.provider.Provider;
 
-import java.util.Collection;
 import java.util.Map;
 
-import javax.ws.rs.ext.Provider;
-
-import org.apache.cxf.jaxrs.ext.ContextProvider;
-import org.apache.cxf.message.Message;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,16 +31,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-@Component(immediate = true, property = "liferay.vulcan.context.provider=true")
-@Provider
-public class PaginationContextProvider implements ContextProvider<Pagination> {
+@Component(immediate = true)
+public class PaginationProvider implements Provider<Pagination> {
 
 	@Override
-	public Pagination createContext(Message message) {
-		String queryString = (String)message.getContextualProperty(
-			Message.QUERY_STRING);
-
-		Map<String, String[]> parameterMap = _http.getParameterMap(queryString);
+	public Pagination createContext(HttpServletRequest httpServletRequest) {
+		Map<String, String[]> parameterMap =
+			httpServletRequest.getParameterMap();
 
 		int itemsPerPage = MapUtil.getInteger(
 			parameterMap, "per_page", _ITEMS_PER_PAGE_DEFAULT);
@@ -61,79 +54,11 @@ public class PaginationContextProvider implements ContextProvider<Pagination> {
 	@Reference
 	private Http _http;
 
-	private static class DefaultPage<T> implements Page<T> {
-
-		public DefaultPage(
-			Collection<T> items, int itemsPerPage, int pageNumber,
-			int totalCount) {
-
-			_items = items;
-			_itemsPerPage = itemsPerPage;
-			_pageNumber = pageNumber;
-			_totalCount = totalCount;
-		}
-
-		@Override
-		public Collection<T> getItems() {
-			return _items;
-		}
-
-		@Override
-		public int getItemsPerPage() {
-			return _itemsPerPage;
-		}
-
-		@Override
-		public int getLastPageNumber() {
-			return -Math.floorDiv(-_totalCount, _itemsPerPage);
-		}
-
-		@Override
-		public int getPageNumber() {
-			return _pageNumber;
-		}
-
-		@Override
-		public int getTotalCount() {
-			return _totalCount;
-		}
-
-		@Override
-		public boolean hasNext() {
-			if (getLastPageNumber() > _pageNumber) {
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public boolean hasPrevious() {
-			if (_pageNumber > 1) {
-				return true;
-			}
-
-			return false;
-		}
-
-		private final Collection<T> _items;
-		private final int _itemsPerPage;
-		private final int _pageNumber;
-		private final int _totalCount;
-
-	}
-
 	private static class DefaultPagination implements Pagination {
 
 		public DefaultPagination(int itemsPerPage, int pageNumber) {
 			_itemsPerPage = itemsPerPage;
 			_pageNumber = pageNumber;
-		}
-
-		@Override
-		public <T> Page<T> createPage(Collection<T> items, int totalCount) {
-			return new DefaultPage<>(
-				items, getItemsPerPage(), getPageNumber(), totalCount);
 		}
 
 		@Override

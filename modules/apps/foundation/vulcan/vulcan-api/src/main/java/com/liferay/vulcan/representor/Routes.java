@@ -12,37 +12,22 @@
  * details.
  */
 
-package com.liferay.vulcan.representor.builder;
+package com.liferay.vulcan.representor;
+
+import com.liferay.vulcan.pagination.PageItems;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 /**
  * @author Alejandro Hernández
- * @author Carlos Sierra Andrés
- * @author Jorge Ferrer
  */
-public interface RepresentorBuilder<T> {
+public interface Routes<T> {
 
-	public FirstStep<T> identifier(Function<T, String> identifierFunction);
+	public Function<Function<Class<?>, Optional<?>>, Function<String, T>>
+		getModelFunction();
 
-	public interface FirstStep<T> {
-
-		public <S> FirstStep<T> addEmbeddedModel(
-			String key, Class<S> modelClass,
-			Function<T, Optional<S>> modelFunction);
-
-		public FirstStep<T> addField(
-			String key, Function<T, Object> fieldFunction);
-
-		public FirstStep<T> addLink(String key, String url);
-
-		public <S> FirstStep<T> addLinkedModel(
-			String key, Class<S> modelClass,
-			Function<T, Optional<S>> modelFunction);
-
-		public FirstStep<T> addType(String type);
-
-	}
+	public Function<Function<Class<?>, Optional<?>>, PageItems<T>>
+		getPageItemsFunction();
 
 }

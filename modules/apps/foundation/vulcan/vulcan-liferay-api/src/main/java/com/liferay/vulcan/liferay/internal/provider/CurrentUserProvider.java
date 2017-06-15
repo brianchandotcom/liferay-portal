@@ -12,36 +12,39 @@
  * details.
  */
 
-package com.liferay.vulcan.sample.rest.internal.vulcan.resource;
+package com.liferay.vulcan.liferay.internal.provider;
 
-import com.liferay.vulcan.contributor.APIContributor;
-import com.liferay.vulcan.contributor.ResourceMapper;
-import com.liferay.vulcan.resource.Resource;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.UserService;
+import com.liferay.vulcan.liferay.context.CurrentUser;
+import com.liferay.vulcan.provider.Provider;
 
-import java.util.function.BiConsumer;
+import javax.servlet.http.HttpServletRequest;
+
+import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Hernández
- * @author Carlos Sierra Andrés
- * @author Jorge Ferrer
  */
-@Component(immediate = true, service = APIContributor.class)
-public class BlogsAPIContributor implements APIContributor, ResourceMapper {
+@Component(immediate = true)
+public class CurrentUserProvider implements Provider<CurrentUser> {
 
 	@Override
-	public String getPath() {
-		return "blogs";
-	}
-
-	@Override
-	public void mapResources(BiConsumer<String, Resource<?>> mapFunction) {
-		mapFunction.accept("postings", _blogPostingCollectionResource);
+	public CurrentUser createContext(HttpServletRequest httpServletRequest) {
+		return () -> {
+			try {
+				return _userService.getCurrentUser();
+			}
+			catch (PortalException pe) {
+				throw new NotFoundException(pe);
+			}
+		};
 	}
 
 	@Reference
-	private BlogPostingCollectionResource _blogPostingCollectionResource;
+	private UserService _userService;
 
 }

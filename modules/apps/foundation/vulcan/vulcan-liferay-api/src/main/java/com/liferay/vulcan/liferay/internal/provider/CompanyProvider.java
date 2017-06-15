@@ -17,14 +17,11 @@ package com.liferay.vulcan.liferay.internal.provider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.vulcan.provider.Provider;
 
 import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.ServerErrorException;
-import javax.ws.rs.ext.Provider;
-
-import org.apache.cxf.jaxrs.ext.ContextProvider;
-import org.apache.cxf.message.Message;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,17 +31,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-@Component(immediate = true, property = "liferay.vulcan.context.provider=true")
-@Provider
-public class CompanyContextProvider implements ContextProvider<Company> {
+@Component(immediate = true)
+public class CompanyProvider implements Provider<Company> {
 
 	@Override
-	public Company createContext(Message message) {
+	public Company createContext(HttpServletRequest httpServletRequest) {
 		try {
-			HttpServletRequest httpServletRequest =
-				(HttpServletRequest)
-					message.getContextualProperty("HTTP.REQUEST");
-
 			return _portal.getCompany(httpServletRequest);
 		}
 		catch (PortalException pe) {

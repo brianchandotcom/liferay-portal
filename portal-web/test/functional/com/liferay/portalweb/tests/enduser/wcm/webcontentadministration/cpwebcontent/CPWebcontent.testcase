@@ -2044,17 +2044,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
-
 		<execute macro="Page#add">
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">

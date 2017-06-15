@@ -56,9 +56,9 @@ import org.apache.http.client.utils.DateUtils;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -236,9 +236,10 @@ public class BundleSupportCommandsTest {
 			null, _authenticatedHttpProxyHit, Boolean.TRUE);
 	}
 
-	@Ignore
 	@Test
 	public void testInitBundleZip() throws Exception {
+		Assume.assumeFalse(System.getenv("JENKINS_HOME") != null);
+
 		_testInitBundleZip(null, _HTTP_SERVER_PASSWORD, _HTTP_SERVER_USER_NAME);
 	}
 
@@ -247,9 +248,10 @@ public class BundleSupportCommandsTest {
 		_testInitBundleZip(_bundleZipFile, null, null);
 	}
 
-	@Ignore
 	@Test
 	public void testInitBundleZipUnauthorized() throws Exception {
+		Assume.assumeFalse(System.getenv("JENKINS_HOME") != null);
+
 		expectedException.expectMessage("Unauthorized");
 
 		_testInitBundleZip(null, null, null);

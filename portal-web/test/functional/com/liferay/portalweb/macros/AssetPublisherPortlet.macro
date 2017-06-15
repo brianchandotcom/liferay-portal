@@ -121,7 +121,22 @@
 
 		<execute function="Select" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_BY_SELECT" value1="${fieldNameOrder}" />
 
-		<execute function="Click" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_ASCENDING" />
+		<if>
+			<condition function="IsElementNotPresent" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_ASCENDING" />
+			<then>
+				<execute function="Click" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_DESCENDING" value1="${sortOrder}" />
+
+				<execute function="AssertElementPresent" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_ASCENDING" />
+			</then>
+			<elseif>
+				<condition function="IsElementNotPresent" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_DESCENDING" />
+				<then>
+					<execute function="Click" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_ASCENDING" value1="${sortOrder}" />
+
+					<execute function="AssertElementPresent" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_DESCENDING" />
+				</then>
+			</elseif>
+		</if>
 
 		<execute macro="PortletEntry#save" />
 	</command>

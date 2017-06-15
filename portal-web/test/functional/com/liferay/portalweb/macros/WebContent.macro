@@ -885,6 +885,32 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="editInReivew">
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${webContentTitleEdit}" />
+		</execute>
+
+		<if>
+			<isset var="webContentImage" />
+			<then>
+				<var name="key_fieldName" value="Image" />
+
+				<execute function="Click" locator1="Button#SELECT" />
+
+				<execute function="SelectFrameTop" value1="relative=top" />
+
+				<execute macro="ItemSelector#uploadFile">
+					<var name="navTab" value="Web Content Images" />
+					<var name="uploadFileName" value="${webContentImage}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="Button#clickSave" />
+	</command>
+
 	<command name="editNullCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 

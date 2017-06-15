@@ -66,7 +66,7 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 
 		<aui:button name="selectFile" value="select-file" />
 
-		<aui:button cssClass="<%= (fileEntryId > 0) ? StringPool.BLANK : "hidden" %>" name="deleteFile" value="delete" />
+		<aui:button cssClass='<%= (fileEntryId > 0) ? StringPool.BLANK : "hidden" %>' name="deleteFile" value="delete" />
 	</c:when>
 </c:choose>
 

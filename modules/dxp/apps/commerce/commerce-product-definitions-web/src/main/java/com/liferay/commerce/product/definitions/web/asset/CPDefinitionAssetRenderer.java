@@ -168,11 +168,6 @@ public class CPDefinitionAssetRenderer
 	}
 
 	@Override
-	public String getUrlTitle() {
-		return _cpDefinition.getUrlTitle();
-	}
-
-	@Override
 	public String getURLView(
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)

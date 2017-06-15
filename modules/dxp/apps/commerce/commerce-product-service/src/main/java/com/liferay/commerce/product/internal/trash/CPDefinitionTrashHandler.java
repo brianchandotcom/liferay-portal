@@ -69,7 +69,6 @@ public class CPDefinitionTrashHandler extends BaseTrashHandler {
 
 		portletURL.setParameter(
 			"cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
-		portletURL.setParameter("urlTitle", cpDefinition.getUrlTitle());
 
 		return portletURL.toString();
 	}

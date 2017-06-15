@@ -46,6 +46,13 @@ public class AssetVocabularyDemoDataCreatorHelper
 			return assetVocabulary;
 		}
 
+		assetVocabulary = _assetVocabularyLocalService.getGroupVocabulary(
+			groupId, title);
+
+		if (assetVocabulary != null) {
+			return assetVocabulary;
+		}
+
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
 		assetVocabulary = _assetVocabularyLocalService.addVocabulary(

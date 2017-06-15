@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.trash.kernel.model.TrashEntry;
-import com.liferay.trash.kernel.util.comparator.EntryCreateDateComparator;
-import com.liferay.trash.kernel.util.comparator.EntryTypeComparator;
-import com.liferay.trash.kernel.util.comparator.EntryUserNameComparator;
+import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.util.comparator.EntryCreateDateComparator;
+import com.liferay.trash.util.comparator.EntryTypeComparator;
+import com.liferay.trash.util.comparator.EntryUserNameComparator;
 
 import java.util.ArrayList;
 import java.util.HashMap;

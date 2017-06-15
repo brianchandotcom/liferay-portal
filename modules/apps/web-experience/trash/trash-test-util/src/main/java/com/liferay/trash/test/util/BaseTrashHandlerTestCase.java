@@ -40,12 +40,12 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-import com.liferay.trash.kernel.exception.RestoreEntryException;
-import com.liferay.trash.kernel.exception.TrashEntryException;
-import com.liferay.trash.kernel.model.TrashEntry;
-import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
-import com.liferay.trash.kernel.service.TrashEntryServiceUtil;
-import com.liferay.trash.kernel.service.TrashVersionLocalServiceUtil;
+import com.liferay.trash.exception.RestoreEntryException;
+import com.liferay.trash.exception.TrashEntryException;
+import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.service.TrashEntryLocalServiceUtil;
+import com.liferay.trash.service.TrashEntryServiceUtil;
+import com.liferay.trash.service.TrashVersionLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;

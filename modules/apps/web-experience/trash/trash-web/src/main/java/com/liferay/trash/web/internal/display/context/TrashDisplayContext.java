@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.trash.kernel.model.TrashEntry;
-import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
+import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 
 import java.util.Objects;

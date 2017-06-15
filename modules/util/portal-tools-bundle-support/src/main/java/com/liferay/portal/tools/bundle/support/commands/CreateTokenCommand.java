@@ -48,19 +48,7 @@ public class CreateTokenCommand implements Command {
 			return;
 		}
 
-		Console console = System.console();
-
-		while ((_emailAddress == null) || _emailAddress.isEmpty()) {
-			_emailAddress = console.readLine("Email Address: ");
-		}
-
-		while ((_password == null) || _password.isEmpty()) {
-			char[] characters = console.readPassword("Password: ");
-
-			if (characters != null) {
-				_password = new String(characters);
-			}
-		}
+		setCredentials();
 
 		String token = HttpUtil.createToken(
 			_tokenUrl.toURI(), _emailAddress, _password);
@@ -107,6 +95,22 @@ public class CreateTokenCommand implements Command {
 
 	public void setTokenUrl(URL tokenUrl) {
 		_tokenUrl = tokenUrl;
+	}
+
+	protected void setCredentials() {
+		Console console = System.console();
+
+		while ((_emailAddress == null) || _emailAddress.isEmpty()) {
+			_emailAddress = console.readLine("Email Address: ");
+		}
+
+		while ((_password == null) || _password.isEmpty()) {
+			char[] characters = console.readPassword("Password: ");
+
+			if (characters != null) {
+				_password = new String(characters);
+			}
+		}
 	}
 
 	private static final URL _DEFAULT_TOKEN_URL;

@@ -15,14 +15,23 @@
 package com.liferay.gradle.plugins.workspace.tasks;
 
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 import com.liferay.portal.tools.bundle.support.commands.CreateTokenCommand;
 import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
+
+import groovy.lang.Closure;
 
 import java.io.File;
 
 import java.net.URL;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.gradle.api.AntBuilder;
 import org.gradle.api.DefaultTask;
+import org.gradle.api.Project;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
@@ -34,10 +43,17 @@ public class CreateTokenTask extends DefaultTask {
 
 	@TaskAction
 	public void createToken() throws Exception {
-		CreateTokenCommand createTokenCommand = new CreateTokenCommand();
+		String emailAddress = getEmailAddress();
+		String password = getPassword();
 
-		createTokenCommand.setEmailAddress(getEmailAddress());
-		createTokenCommand.setPassword(getPassword());
+		if (Validator.isNull(emailAddress) || Validator.isNull(password)) {
+			System.out.println();
+		}
+
+		CreateTokenCommand createTokenCommand = new AntCreateTokenCommand();
+
+		createTokenCommand.setEmailAddress(emailAddress);
+		createTokenCommand.setPassword(password);
 		createTokenCommand.setTokenFile(getTokenFile());
 		createTokenCommand.setTokenUrl(getTokenUrl());
 
@@ -87,5 +103,68 @@ public class CreateTokenTask extends DefaultTask {
 	private Object _password;
 	private Object _tokenFile = BundleSupportConstants.DEFAULT_TOKEN_FILE;
 	private Object _tokenUrl = BundleSupportConstants.DEFAULT_TOKEN_URL;
+
+	private class AntCreateTokenCommand extends CreateTokenCommand {
+
+		@Override
+		protected void setCredentials() {
+			String emailAddress = getEmailAddress();
+			String password = getPassword();
+
+			if (Validator.isNotNull(emailAddress) &&
+				Validator.isNotNull(password)) {
+
+				return;
+			}
+
+			Project project = getProject();
+
+			AntBuilder antBuilder = project.createAntBuilder();
+
+			while (Validator.isNull(emailAddress)) {
+				emailAddress = _readInput(
+					antBuilder, "Email Address:", "email.address", false);
+			}
+
+			setEmailAddress(emailAddress);
+
+			while (Validator.isNull(password)) {
+				password = _readInput(
+					antBuilder, "Password:", "password", true);
+			}
+
+			setPassword(password);
+		}
+
+		private String _readInput(
+			final AntBuilder antBuilder, String message, String propertySuffix,
+			final boolean secure) {
+
+			String propertyName = getName() + "." + propertySuffix;
+
+			Map<String, Object> args = new HashMap<>();
+
+			args.put("addproperty", propertyName);
+			args.put("message", message);
+
+			Closure<Void> closure = new Closure<Void>(antBuilder) {
+
+				@SuppressWarnings("unused")
+				public void doCall() {
+					if (secure) {
+						antBuilder.invokeMethod(
+							"handler",
+							Collections.singletonMap("type", "secure"));
+					}
+				}
+
+			};
+
+			antBuilder.invokeMethod("input", new Object[] {args, closure});
+
+			return (String)antBuilder.getProperty(propertyName);
+		}
+
+	}
 
 }

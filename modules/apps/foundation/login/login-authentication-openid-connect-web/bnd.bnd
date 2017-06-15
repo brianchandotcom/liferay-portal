@@ -5,8 +5,8 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Login
 Provide-Capability:\
 	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.login.authentication.openid.connect.web),(bundle.symbolic.name=com.liferay.login.web)";\
 		bundle.symbolic.name=com.liferay.login.web;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.login.authentication.openid.connect.web),(bundle.symbolic.name=com.liferay.login.web)";\
 		resource.bundle.base.name="content.Language";\
 		service.ranking="1";\
 		servlet.context.name=login-web

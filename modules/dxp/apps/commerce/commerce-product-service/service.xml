@@ -93,7 +93,6 @@
 
 		<localized-entity>
 			<localized-column name="title" />
-			<localized-column name="urlTitle" />
 			<localized-column name="shortDescription" />
 			<localized-column name="description" />
 		</localized-entity>

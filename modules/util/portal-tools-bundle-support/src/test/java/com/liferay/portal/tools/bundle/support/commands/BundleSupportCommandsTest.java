@@ -554,7 +554,7 @@ public class BundleSupportCommandsTest {
 			httpServer, _CONTEXT_PATH_TOKEN, "application/json", authenticator);
 		_createHttpContext(
 			httpServer, _CONTEXT_PATH_TOKEN_UNFORMATTED, "application/json",
-			authenticator);
+			null);
 		_createHttpContext(
 			httpServer, _CONTEXT_PATH_ZIP, "application/zip", authenticator);
 

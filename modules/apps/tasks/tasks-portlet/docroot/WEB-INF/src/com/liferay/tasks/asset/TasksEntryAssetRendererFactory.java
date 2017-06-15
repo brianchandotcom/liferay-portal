@@ -20,7 +20,6 @@ package com.liferay.tasks.asset;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.tasks.model.TasksEntry;
@@ -30,7 +29,8 @@ import com.liferay.tasks.service.permission.TasksEntryPermission;
 /**
  * @author Matthew Kong
  */
-public class TasksEntryAssetRendererFactory extends BaseAssetRendererFactory {
+public class TasksEntryAssetRendererFactory
+	extends BaseAssetRendererFactory<TasksEntry> {
 
 	public static final String CLASS_NAME = TasksEntry.class.getName();
 
@@ -49,6 +49,11 @@ public class TasksEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	@Override
+	public String getIconCssClass() {
+		return "icon-tasks";
 	}
 
 	@Override

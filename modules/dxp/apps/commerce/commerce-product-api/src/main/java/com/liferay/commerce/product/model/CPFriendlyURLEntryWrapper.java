@@ -323,6 +323,11 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 		return _cpFriendlyURLEntry.getModifiedDate();
 	}
 
+	@Override
+	public java.util.Locale getLocale() {
+		return _cpFriendlyURLEntry.getLocale();
+	}
+
 	/**
 	* Returns the cp friendly url entry ID of this cp friendly url entry.
 	*

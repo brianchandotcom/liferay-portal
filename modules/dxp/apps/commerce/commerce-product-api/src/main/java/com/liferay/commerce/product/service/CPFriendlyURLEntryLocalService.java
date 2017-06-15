@@ -293,6 +293,10 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Locale, java.lang.String> getUrlTitleMap(long groupId,
+		long companyId, long classNameId, long classPK);
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

@@ -453,6 +453,11 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().getCPDefinitionTitleMap(cpDefinitionId);
 	}
 
+	public static java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap(
+		long cpDefinitionId) {
+		return getService().getUrlTitleMap(cpDefinitionId);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

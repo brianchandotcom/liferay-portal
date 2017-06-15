@@ -333,6 +333,12 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 			start, end, orderByComparator);
 	}
 
+	public static java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap(
+		long groupId, long companyId, long classNameId, long classPK) {
+		return getService()
+				   .getUrlTitleMap(groupId, companyId, classNameId, classPK);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

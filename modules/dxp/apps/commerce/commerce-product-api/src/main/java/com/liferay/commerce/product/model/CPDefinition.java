@@ -68,6 +68,8 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap();
 
+	public java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap();
+
 	public void setDescriptionMap(
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap);
 
@@ -76,4 +78,7 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public void setTitleMap(
 		java.util.Map<java.util.Locale, java.lang.String> titleMap);
+
+	public void setUrlTitleMap(
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap);
 }

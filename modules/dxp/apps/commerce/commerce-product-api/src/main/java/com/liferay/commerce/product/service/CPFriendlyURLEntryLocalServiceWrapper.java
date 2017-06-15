@@ -349,6 +349,13 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 			companyId, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap(
+		long groupId, long companyId, long classNameId, long classPK) {
+		return _cpFriendlyURLEntryLocalService.getUrlTitleMap(groupId,
+			companyId, classNameId, classPK);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

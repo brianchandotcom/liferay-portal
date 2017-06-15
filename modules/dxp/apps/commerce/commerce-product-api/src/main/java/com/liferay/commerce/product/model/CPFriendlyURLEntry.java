@@ -55,4 +55,6 @@ public interface CPFriendlyURLEntry extends CPFriendlyURLEntryModel,
 				return CPFriendlyURLEntry.class;
 			}
 		};
+
+	public java.util.Locale getLocale();
 }

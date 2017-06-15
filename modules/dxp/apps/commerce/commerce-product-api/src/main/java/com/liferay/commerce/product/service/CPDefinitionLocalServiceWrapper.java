@@ -488,6 +488,12 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		return _cpDefinitionLocalService.getCPDefinitionTitleMap(cpDefinitionId);
 	}
 
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap(
+		long cpDefinitionId) {
+		return _cpDefinitionLocalService.getUrlTitleMap(cpDefinitionId);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*

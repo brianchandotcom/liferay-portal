@@ -701,6 +701,11 @@ public class CPDefinitionWrapper implements CPDefinition,
 		return _cpDefinition.getTitleMap();
 	}
 
+	@Override
+	public Map<java.util.Locale, java.lang.String> getUrlTitleMap() {
+		return _cpDefinition.getUrlTitleMap();
+	}
+
 	/**
 	* Returns the cp definition ID of this cp definition.
 	*
@@ -1012,6 +1017,12 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setTitleMap(Map<java.util.Locale, java.lang.String> titleMap) {
 		_cpDefinition.setTitleMap(titleMap);
+	}
+
+	@Override
+	public void setUrlTitleMap(
+		Map<java.util.Locale, java.lang.String> urlTitleMap) {
+		_cpDefinition.setUrlTitleMap(urlTitleMap);
 	}
 
 	/**

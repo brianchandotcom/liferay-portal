@@ -154,21 +154,6 @@ public interface CPDefinitionLocalizationModel extends BaseModel<CPDefinitionLoc
 	public void setTitle(String title);
 
 	/**
-	 * Returns the url title of this cp definition localization.
-	 *
-	 * @return the url title of this cp definition localization
-	 */
-	@AutoEscape
-	public String getUrlTitle();
-
-	/**
-	 * Sets the url title of this cp definition localization.
-	 *
-	 * @param urlTitle the url title of this cp definition localization
-	 */
-	public void setUrlTitle(String urlTitle);
-
-	/**
 	 * Returns the short description of this cp definition localization.
 	 *
 	 * @return the short description of this cp definition localization

@@ -65,7 +65,6 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("title", getTitle());
-		attributes.put("urlTitle", getUrlTitle());
 		attributes.put("shortDescription", getShortDescription());
 		attributes.put("description", getDescription());
 
@@ -109,12 +108,6 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 
 		if (title != null) {
 			setTitle(title);
-		}
-
-		String urlTitle = (String)attributes.get("urlTitle");
-
-		if (urlTitle != null) {
-			setUrlTitle(urlTitle);
 		}
 
 		String shortDescription = (String)attributes.get("shortDescription");
@@ -223,16 +216,6 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	@Override
 	public java.lang.String getTitle() {
 		return _cpDefinitionLocalization.getTitle();
-	}
-
-	/**
-	* Returns the url title of this cp definition localization.
-	*
-	* @return the url title of this cp definition localization
-	*/
-	@Override
-	public java.lang.String getUrlTitle() {
-		return _cpDefinitionLocalization.getUrlTitle();
 	}
 
 	@Override
@@ -414,16 +397,6 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	@Override
 	public void setTitle(java.lang.String title) {
 		_cpDefinitionLocalization.setTitle(title);
-	}
-
-	/**
-	* Sets the url title of this cp definition localization.
-	*
-	* @param urlTitle the url title of this cp definition localization
-	*/
-	@Override
-	public void setUrlTitle(java.lang.String urlTitle) {
-		_cpDefinitionLocalization.setUrlTitle(urlTitle);
 	}
 
 	@Override

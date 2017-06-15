@@ -471,61 +471,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	}
 
 	@Override
-	public String getUrlTitle() {
-		return getUrlTitle(getDefaultLanguageId(), false);
-	}
-
-	@Override
-	public String getUrlTitle(String languageId) {
-		return getUrlTitle(languageId, true);
-	}
-
-	@Override
-	public String getUrlTitle(String languageId, boolean useDefault) {
-		if (useDefault) {
-			return LocalizationUtil.getLocalization(new Function<String, String>() {
-					@Override
-					public String apply(String languageId) {
-						return _getUrlTitle(languageId);
-					}
-				}, languageId, getDefaultLanguageId());
-		}
-
-		return _getUrlTitle(languageId);
-	}
-
-	@Override
-	public String getUrlTitleMapAsXML() {
-		return LocalizationUtil.getXml(getLanguageIdToUrlTitleMap(),
-			getDefaultLanguageId(), "UrlTitle");
-	}
-
-	@Override
-	public Map<String, String> getLanguageIdToUrlTitleMap() {
-		Map<String, String> languageIdToUrlTitleMap = new HashMap<String, String>();
-
-		List<CPDefinitionLocalization> cpDefinitionLocalizations = CPDefinitionLocalServiceUtil.getCPDefinitionLocalizations(getPrimaryKey());
-
-		for (CPDefinitionLocalization cpDefinitionLocalization : cpDefinitionLocalizations) {
-			languageIdToUrlTitleMap.put(cpDefinitionLocalization.getLanguageId(),
-				cpDefinitionLocalization.getUrlTitle());
-		}
-
-		return languageIdToUrlTitleMap;
-	}
-
-	private String _getUrlTitle(String languageId) {
-		CPDefinitionLocalization cpDefinitionLocalization = CPDefinitionLocalServiceUtil.fetchCPDefinitionLocalization(getPrimaryKey(),
-				languageId);
-
-		if (cpDefinitionLocalization == null) {
-			return StringPool.BLANK;
-		}
-
-		return cpDefinitionLocalization.getUrlTitle();
-	}
-
-	@Override
 	public String getShortDescription() {
 		return getShortDescription(getDefaultLanguageId(), false);
 	}

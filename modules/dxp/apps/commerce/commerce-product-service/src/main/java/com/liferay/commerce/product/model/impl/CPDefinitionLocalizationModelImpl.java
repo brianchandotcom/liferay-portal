@@ -67,7 +67,6 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 			{ "CPDefinitionId", Types.BIGINT },
 			{ "languageId", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
-			{ "urlTitle", Types.VARCHAR },
 			{ "shortDescription", Types.VARCHAR },
 			{ "description", Types.CLOB }
 		};
@@ -80,12 +79,11 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("shortDescription", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionLocalization (mvccVersion LONG default 0 not null,cpDefinitionLocalizationId LONG not null primary key,companyId LONG,CPDefinitionId LONG,languageId VARCHAR(75) null,title STRING null,urlTitle VARCHAR(75) null,shortDescription STRING null,description TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionLocalization (mvccVersion LONG default 0 not null,cpDefinitionLocalizationId LONG not null primary key,companyId LONG,CPDefinitionId LONG,languageId VARCHAR(75) null,title STRING null,shortDescription STRING null,description TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionLocalization";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionLocalization.cpDefinitionLocalizationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionLocalization.cpDefinitionLocalizationId ASC";
@@ -151,7 +149,6 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("title", getTitle());
-		attributes.put("urlTitle", getUrlTitle());
 		attributes.put("shortDescription", getShortDescription());
 		attributes.put("description", getDescription());
 
@@ -198,12 +195,6 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 
 		if (title != null) {
 			setTitle(title);
-		}
-
-		String urlTitle = (String)attributes.get("urlTitle");
-
-		if (urlTitle != null) {
-			setUrlTitle(urlTitle);
 		}
 
 		String shortDescription = (String)attributes.get("shortDescription");
@@ -312,21 +303,6 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	}
 
 	@Override
-	public String getUrlTitle() {
-		if (_urlTitle == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _urlTitle;
-		}
-	}
-
-	@Override
-	public void setUrlTitle(String urlTitle) {
-		_urlTitle = urlTitle;
-	}
-
-	@Override
 	public String getShortDescription() {
 		if (_shortDescription == null) {
 			return StringPool.BLANK;
@@ -393,7 +369,6 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		cpDefinitionLocalizationImpl.setCPDefinitionId(getCPDefinitionId());
 		cpDefinitionLocalizationImpl.setLanguageId(getLanguageId());
 		cpDefinitionLocalizationImpl.setTitle(getTitle());
-		cpDefinitionLocalizationImpl.setUrlTitle(getUrlTitle());
 		cpDefinitionLocalizationImpl.setShortDescription(getShortDescription());
 		cpDefinitionLocalizationImpl.setDescription(getDescription());
 
@@ -495,14 +470,6 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 			cpDefinitionLocalizationCacheModel.title = null;
 		}
 
-		cpDefinitionLocalizationCacheModel.urlTitle = getUrlTitle();
-
-		String urlTitle = cpDefinitionLocalizationCacheModel.urlTitle;
-
-		if ((urlTitle != null) && (urlTitle.length() == 0)) {
-			cpDefinitionLocalizationCacheModel.urlTitle = null;
-		}
-
 		cpDefinitionLocalizationCacheModel.shortDescription = getShortDescription();
 
 		String shortDescription = cpDefinitionLocalizationCacheModel.shortDescription;
@@ -524,7 +491,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -538,8 +505,6 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		sb.append(getLanguageId());
 		sb.append(", title=");
 		sb.append(getTitle());
-		sb.append(", urlTitle=");
-		sb.append(getUrlTitle());
 		sb.append(", shortDescription=");
 		sb.append(getShortDescription());
 		sb.append(", description=");
@@ -551,7 +516,7 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPDefinitionLocalization");
@@ -582,10 +547,6 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		sb.append(getTitle());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>urlTitle</column-name><column-value><![CDATA[");
-		sb.append(getUrlTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>shortDescription</column-name><column-value><![CDATA[");
 		sb.append(getShortDescription());
 		sb.append("]]></column-value></column>");
@@ -612,7 +573,6 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	private String _languageId;
 	private String _originalLanguageId;
 	private String _title;
-	private String _urlTitle;
 	private String _shortDescription;
 	private String _description;
 	private long _columnBitmask;

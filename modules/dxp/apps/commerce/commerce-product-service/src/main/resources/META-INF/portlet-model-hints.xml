@@ -58,7 +58,6 @@
 		<field name="title" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="urlTitle" type="String" />
 		<field name="shortDescription" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>

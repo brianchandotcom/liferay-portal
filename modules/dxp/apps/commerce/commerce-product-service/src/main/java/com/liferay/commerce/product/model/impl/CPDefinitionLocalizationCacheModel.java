@@ -78,7 +78,7 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -92,8 +92,6 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 		sb.append(languageId);
 		sb.append(", title=");
 		sb.append(title);
-		sb.append(", urlTitle=");
-		sb.append(urlTitle);
 		sb.append(", shortDescription=");
 		sb.append(shortDescription);
 		sb.append(", description=");
@@ -126,13 +124,6 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 			cpDefinitionLocalizationImpl.setTitle(title);
 		}
 
-		if (urlTitle == null) {
-			cpDefinitionLocalizationImpl.setUrlTitle(StringPool.BLANK);
-		}
-		else {
-			cpDefinitionLocalizationImpl.setUrlTitle(urlTitle);
-		}
-
 		if (shortDescription == null) {
 			cpDefinitionLocalizationImpl.setShortDescription(StringPool.BLANK);
 		}
@@ -163,7 +154,6 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 		CPDefinitionId = objectInput.readLong();
 		languageId = objectInput.readUTF();
 		title = objectInput.readUTF();
-		urlTitle = objectInput.readUTF();
 		shortDescription = objectInput.readUTF();
 		description = objectInput.readUTF();
 	}
@@ -193,13 +183,6 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 			objectOutput.writeUTF(title);
 		}
 
-		if (urlTitle == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(urlTitle);
-		}
-
 		if (shortDescription == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -221,7 +204,6 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 	public long CPDefinitionId;
 	public String languageId;
 	public String title;
-	public String urlTitle;
 	public String shortDescription;
 	public String description;
 }

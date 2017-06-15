@@ -561,27 +561,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 		return _cpDefinition.getTitleMapAsXML();
 	}
 
-	@Override
-	public java.lang.String getUrlTitle() {
-		return _cpDefinition.getUrlTitle();
-	}
-
-	@Override
-	public java.lang.String getUrlTitle(java.lang.String languageId) {
-		return _cpDefinition.getUrlTitle(languageId);
-	}
-
-	@Override
-	public java.lang.String getUrlTitle(java.lang.String languageId,
-		boolean useDefault) {
-		return _cpDefinition.getUrlTitle(languageId, useDefault);
-	}
-
-	@Override
-	public java.lang.String getUrlTitleMapAsXML() {
-		return _cpDefinition.getUrlTitleMapAsXML();
-	}
-
 	/**
 	* Returns the user name of this cp definition.
 	*
@@ -710,11 +689,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public Map<java.lang.String, java.lang.String> getLanguageIdToTitleMap() {
 		return _cpDefinition.getLanguageIdToTitleMap();
-	}
-
-	@Override
-	public Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap() {
-		return _cpDefinition.getLanguageIdToUrlTitleMap();
 	}
 
 	@Override

@@ -537,8 +537,7 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 
 	protected CPDefinitionLocalization updateCPDefinitionLocalization(
 		CPDefinition cpDefinition, String languageId, String title,
-		String urlTitle, String shortDescription, String description)
-		throws PortalException {
+		String shortDescription, String description) throws PortalException {
 		CPDefinitionLocalization cpDefinitionLocalization = cpDefinitionLocalizationPersistence.fetchByCPDefinitionId_LanguageId(cpDefinition.getCPDefinitionId(),
 				languageId);
 
@@ -554,7 +553,6 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 		cpDefinitionLocalization.setCompanyId(cpDefinition.getCompanyId());
 
 		cpDefinitionLocalization.setTitle(title);
-		cpDefinitionLocalization.setUrlTitle(urlTitle);
 		cpDefinitionLocalization.setShortDescription(shortDescription);
 		cpDefinitionLocalization.setDescription(description);
 
@@ -563,7 +561,6 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 
 	protected List<CPDefinitionLocalization> updateCPDefinitionLocalizations(
 		CPDefinition cpDefinition, Map<String, String> titleMap,
-		Map<String, String> urlTitleMap,
 		Map<String, String> shortDescriptionMap,
 		Map<String, String> descriptionMap) throws PortalException {
 		Map<String, String[]> localizedValuesMap = new HashMap<String, String[]>();
@@ -574,26 +571,12 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 			String[] localizedValues = localizedValuesMap.get(languageId);
 
 			if (localizedValues == null) {
-				localizedValues = new String[4];
+				localizedValues = new String[3];
 
 				localizedValuesMap.put(languageId, localizedValues);
 			}
 
 			localizedValues[0] = entry.getValue();
-		}
-
-		for (Map.Entry<String, String> entry : urlTitleMap.entrySet()) {
-			String languageId = entry.getKey();
-
-			String[] localizedValues = localizedValuesMap.get(languageId);
-
-			if (localizedValues == null) {
-				localizedValues = new String[4];
-
-				localizedValuesMap.put(languageId, localizedValues);
-			}
-
-			localizedValues[1] = entry.getValue();
 		}
 
 		for (Map.Entry<String, String> entry : shortDescriptionMap.entrySet()) {
@@ -602,12 +585,12 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 			String[] localizedValues = localizedValuesMap.get(languageId);
 
 			if (localizedValues == null) {
-				localizedValues = new String[4];
+				localizedValues = new String[3];
 
 				localizedValuesMap.put(languageId, localizedValues);
 			}
 
-			localizedValues[2] = entry.getValue();
+			localizedValues[1] = entry.getValue();
 		}
 
 		for (Map.Entry<String, String> entry : descriptionMap.entrySet()) {
@@ -616,12 +599,12 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 			String[] localizedValues = localizedValuesMap.get(languageId);
 
 			if (localizedValues == null) {
-				localizedValues = new String[4];
+				localizedValues = new String[3];
 
 				localizedValuesMap.put(languageId, localizedValues);
 			}
 
-			localizedValues[3] = entry.getValue();
+			localizedValues[2] = entry.getValue();
 		}
 
 		List<CPDefinitionLocalization> cpDefinitionLocalizations = new ArrayList<CPDefinitionLocalization>(localizedValuesMap.size());
@@ -637,9 +620,8 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 				cpDefinitionLocalization.setCompanyId(cpDefinition.getCompanyId());
 
 				cpDefinitionLocalization.setTitle(localizedValues[0]);
-				cpDefinitionLocalization.setUrlTitle(localizedValues[1]);
-				cpDefinitionLocalization.setShortDescription(localizedValues[2]);
-				cpDefinitionLocalization.setDescription(localizedValues[3]);
+				cpDefinitionLocalization.setShortDescription(localizedValues[1]);
+				cpDefinitionLocalization.setDescription(localizedValues[2]);
 
 				cpDefinitionLocalizations.add(cpDefinitionLocalizationPersistence.update(
 						cpDefinitionLocalization));
@@ -660,9 +642,8 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 			cpDefinitionLocalization.setLanguageId(languageId);
 
 			cpDefinitionLocalization.setTitle(localizedValues[0]);
-			cpDefinitionLocalization.setUrlTitle(localizedValues[1]);
-			cpDefinitionLocalization.setShortDescription(localizedValues[2]);
-			cpDefinitionLocalization.setDescription(localizedValues[3]);
+			cpDefinitionLocalization.setShortDescription(localizedValues[1]);
+			cpDefinitionLocalization.setDescription(localizedValues[2]);
 
 			cpDefinitionLocalizations.add(cpDefinitionLocalizationPersistence.update(
 					cpDefinitionLocalization));

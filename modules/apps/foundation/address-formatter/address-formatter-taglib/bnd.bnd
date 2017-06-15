@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Address Formatter Taglib
+Bundle-SymbolicName: com.liferay.address.formatter.taglib
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.address.formatter.taglib.servlet.taglib
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/address-formatter";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /address-formatter-taglib

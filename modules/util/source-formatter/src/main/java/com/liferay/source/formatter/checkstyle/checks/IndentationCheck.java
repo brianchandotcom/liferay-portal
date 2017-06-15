@@ -420,7 +420,9 @@ public class IndentationCheck extends AbstractCheck {
 				if (line.endsWith("(") &&
 					(parentAST.getLineNo() < methodCallLineCount)) {
 
-					return tabCount - 1;
+					tabCount--;
+
+					checkChaining = false;
 				}
 			}
 

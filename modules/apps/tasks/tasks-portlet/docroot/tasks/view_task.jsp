@@ -98,13 +98,13 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 			</div>
 		</div>
 
-		<table class="task-data-table lfr-table">
+		<table class="lfr-table task-data-table">
 		<tr>
 			<td class="lfr-label">
 				<liferay-ui:message key="status" />
 			</td>
 			<td>
-				<div class="task-data status">
+				<div class="status task-data">
 					<liferay-ui:message key="<%= tasksEntry.getStatusLabel() %>" />
 				</div>
 			</td>
@@ -126,7 +126,7 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 					<liferay-ui:message key="due-date" />
 				</td>
 				<td>
-					<div class="task-data due-date">
+					<div class="due-date task-data">
 						<%= dateFormatDateTime.format(tasksEntry.getDueDate()) %>
 					</div>
 				</td>

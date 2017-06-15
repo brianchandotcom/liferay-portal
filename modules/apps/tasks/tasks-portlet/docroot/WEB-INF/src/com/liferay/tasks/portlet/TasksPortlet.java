@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBMessageServiceUtil;
 import com.liferay.tasks.model.TasksEntry;
 import com.liferay.tasks.service.TasksEntryLocalServiceUtil;
 import com.liferay.tasks.service.TasksEntryServiceUtil;
@@ -97,46 +95,18 @@ public class TasksPortlet extends MVCPortlet {
 			return;
 		}
 
+		if (SessionErrors.isEmpty(actionRequest)) {
+			SessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+				PortletKeys.TASKS);
+		}
+
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		if (Validator.isNotNull(redirect)) {
 			actionResponse.sendRedirect(redirect);
-		}
-	}
-
-	public void updateMessage(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		long groupId = PortalUtil.getScopeGroupId(actionRequest);
-		String className = ParamUtil.getString(actionRequest, "className");
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-		long messageId = ParamUtil.getLong(actionRequest, "messageId");
-		long threadId = ParamUtil.getLong(actionRequest, "threadId");
-		long parentMessageId = ParamUtil.getLong(
-			actionRequest, "parentMessageId");
-		String subject = ParamUtil.getString(actionRequest, "subject");
-		String body = ParamUtil.getString(actionRequest, "body");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			MBMessage.class.getName(), actionRequest);
-
-		if (cmd.equals(Constants.DELETE)) {
-			MBMessageServiceUtil.deleteDiscussionMessage(messageId);
-		}
-		else if (messageId <= 0) {
-			MBMessageServiceUtil.addDiscussionMessage(
-				groupId, className, classPK, threadId, parentMessageId, subject,
-				body, serviceContext);
-		}
-		else {
-			MBMessageServiceUtil.updateDiscussionMessage(
-				className, classPK, messageId, subject, body, serviceContext);
 		}
 	}
 
@@ -260,7 +230,7 @@ public class TasksPortlet extends MVCPortlet {
 		}
 
 		AssetEntryLocalServiceUtil.incrementViewCounter(
-			0, TasksEntry.class.getName(), tasksEntryId, 1);
+			0, TasksEntry.class.getName(), tasksEntryId);
 	}
 
 }

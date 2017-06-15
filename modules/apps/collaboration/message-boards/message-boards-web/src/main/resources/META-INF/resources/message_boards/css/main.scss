@@ -100,6 +100,8 @@
 	}
 
 	.message-content {
+		word-break: break-all;
+
 		img {
 			max-width: 100%;
 		}

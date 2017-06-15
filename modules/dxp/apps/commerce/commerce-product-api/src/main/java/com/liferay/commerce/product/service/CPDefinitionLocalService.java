@@ -411,6 +411,8 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
+	public void checkCPDefinitions() throws PortalException;
+
 	public void deleteCPDefinitions(long groupId) throws PortalException;
 
 	public void moveCPDefinitionsToTrash(long groupId, long userId)

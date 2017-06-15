@@ -29,7 +29,9 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,6 +43,9 @@ public class CPDefinitionFinderImpl
 
 	public static final String COUNT_BY_G_P_S =
 		CPDefinitionFinder.class.getName() + ".countByG_P_S";
+
+	public static final String FIND_BY_EXPIRATION_DATE =
+		CPDefinitionFinder.class.getName() + ".findByExpirationDate";
 
 	public static final String FIND_BY_G_P_S =
 		CPDefinitionFinder.class.getName() + ".findByG_P_S";
@@ -70,6 +75,13 @@ public class CPDefinitionFinderImpl
 
 		return doFindByG_P_S(
 			groupId, productTypeName, languageId, queryDefinition, true);
+	}
+
+	@Override
+	public List<CPDefinition> findByExpirationDate(
+		Date date, QueryDefinition<CPDefinition> queryDefinition) {
+
+		return doFindByExpirationDate(date, queryDefinition, false);
 	}
 
 	@Override
@@ -147,6 +159,50 @@ public class CPDefinitionFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	protected List<CPDefinition> doFindByExpirationDate(
+		Date date, QueryDefinition<CPDefinition> queryDefinition,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(
+				getClass(), FIND_BY_EXPIRATION_DATE, queryDefinition,
+				CPDefinitionImpl.TABLE_NAME);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity(CPDefinitionImpl.TABLE_NAME, CPDefinitionImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (date != null) {
+				qPos.add(date);
+			}
+
+			qPos.add(WorkflowConstants.STATUS_APPROVED);
+
+			return (List<CPDefinition>)QueryUtil.list(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+		}
+		catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			}
+			catch (SystemException se) {
+				se.printStackTrace();
+			}
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return null;
 	}
 
 	protected List<CPDefinition> doFindByG_P_S(

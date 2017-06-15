@@ -698,6 +698,134 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	public int countByCompanyId(long companyId);
 
 	/**
+	* Returns all the cp definitions where status = &#63;.
+	*
+	* @param status the status
+	* @return the matching cp definitions
+	*/
+	public java.util.List<CPDefinition> findByS(int status);
+
+	/**
+	* Returns a range of all the cp definitions where status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param status the status
+	* @param start the lower bound of the range of cp definitions
+	* @param end the upper bound of the range of cp definitions (not inclusive)
+	* @return the range of matching cp definitions
+	*/
+	public java.util.List<CPDefinition> findByS(int status, int start, int end);
+
+	/**
+	* Returns an ordered range of all the cp definitions where status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param status the status
+	* @param start the lower bound of the range of cp definitions
+	* @param end the upper bound of the range of cp definitions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp definitions
+	*/
+	public java.util.List<CPDefinition> findByS(int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the cp definitions where status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param status the status
+	* @param start the lower bound of the range of cp definitions
+	* @param end the upper bound of the range of cp definitions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp definitions
+	*/
+	public java.util.List<CPDefinition> findByS(int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first cp definition in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition
+	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
+	*/
+	public CPDefinition findByS_First(int status,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator)
+		throws NoSuchCPDefinitionException;
+
+	/**
+	* Returns the first cp definition in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
+	*/
+	public CPDefinition fetchByS_First(int status,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator);
+
+	/**
+	* Returns the last cp definition in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition
+	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
+	*/
+	public CPDefinition findByS_Last(int status,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator)
+		throws NoSuchCPDefinitionException;
+
+	/**
+	* Returns the last cp definition in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
+	*/
+	public CPDefinition fetchByS_Last(int status,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator);
+
+	/**
+	* Returns the cp definitions before and after the current cp definition in the ordered set where status = &#63;.
+	*
+	* @param CPDefinitionId the primary key of the current cp definition
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp definition
+	* @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
+	*/
+	public CPDefinition[] findByS_PrevAndNext(long CPDefinitionId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator)
+		throws NoSuchCPDefinitionException;
+
+	/**
+	* Removes all the cp definitions where status = &#63; from the database.
+	*
+	* @param status the status
+	*/
+	public void removeByS(int status);
+
+	/**
+	* Returns the number of cp definitions where status = &#63;.
+	*
+	* @param status the status
+	* @return the number of matching cp definitions
+	*/
+	public int countByS(int status);
+
+	/**
 	* Returns all the cp definitions where groupId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID

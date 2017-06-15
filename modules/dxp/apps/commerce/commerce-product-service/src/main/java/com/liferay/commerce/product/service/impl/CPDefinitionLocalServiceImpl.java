@@ -30,9 +30,12 @@ import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -50,7 +53,9 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -187,20 +192,6 @@ public class CPDefinitionLocalServiceImpl
 
 		return startWorkflowInstance(
 			user.getUserId(), cpDefinition, serviceContext);
-	}
-
-	@Override
-	public String buildUniqueUrlTitle(
-			CPDefinition cpDefinition, String languageId)
-		throws PortalException {
-
-		long classNameId = classNameLocalService.getClassNameId(
-			CPDefinition.class);
-
-		return cpFriendlyURLEntryLocalService.buildUrlTitle(
-			cpDefinition.getGroupId(), cpDefinition.getCompanyId(), classNameId,
-			cpDefinition.getCPDefinitionId(), languageId,
-			cpDefinition.getTitle(languageId));
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -818,6 +809,75 @@ public class CPDefinitionLocalServiceImpl
 		return searchContext;
 	}
 
+	protected void checkCPDefinitionsByDisplayDate(Date displayDate)
+		throws PortalException {
+
+		List<CPDefinition> cpDefinitions = cpDefinitionPersistence.findByS(
+			WorkflowConstants.STATUS_SCHEDULED);
+
+		if ((cpDefinitions != null) && !cpDefinitions.isEmpty()) {
+			for (CPDefinition cpDefinition : cpDefinitions) {
+				if (DateUtil.compareTo(
+						cpDefinition.getDisplayDate(), displayDate) <= 0) {
+
+					long userId = PortalUtil.getValidUserId(
+						cpDefinition.getCompanyId(), cpDefinition.getUserId());
+
+					ServiceContext serviceContext = new ServiceContext();
+
+					serviceContext.setCommand(Constants.UPDATE);
+
+					serviceContext.setScopeGroupId(cpDefinition.getGroupId());
+
+					cpDefinitionLocalService.updateStatus(
+						userId, cpDefinition.getCPDefinitionId(),
+						WorkflowConstants.STATUS_APPROVED, serviceContext,
+						new HashMap<String, Serializable>());
+				}
+			}
+		}
+	}
+
+	protected void checkCPDefinitionsByExpirationDate(Date expirationDate)
+		throws PortalException {
+
+		List<CPDefinition> cpDefinitions =
+			cpDefinitionFinder.findByExpirationDate(
+				new Date(),
+				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED));
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Expiring " + cpDefinitions.size() + " cPDefinitions");
+		}
+
+		if ((cpDefinitions != null) && !cpDefinitions.isEmpty()) {
+			for (CPDefinition cpDefinition : cpDefinitions) {
+				long userId = PortalUtil.getValidUserId(
+					cpDefinition.getCompanyId(), cpDefinition.getUserId());
+
+				ServiceContext serviceContext = new ServiceContext();
+
+				serviceContext.setCommand(Constants.UPDATE);
+
+				serviceContext.setScopeGroupId(cpDefinition.getGroupId());
+
+				cpDefinitionLocalService.updateStatus(
+					userId, cpDefinition.getCPDefinitionId(),
+					WorkflowConstants.STATUS_EXPIRED, serviceContext,
+					new HashMap<String, Serializable>());
+
+				Indexer<CPDefinition> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
+
+				indexer.reindex(cpDefinition);
+			}
+		}
+
+		if (_previousCheckDate == null) {
+			_previousCheckDate = new Date(expirationDate.getTime());
+		}
+	}
+
 	protected BaseModelSearchResult<CPDefinition> searchCPDefinitions(
 			SearchContext searchContext)
 		throws PortalException {
@@ -1029,5 +1089,10 @@ public class CPDefinitionLocalServiceImpl
 
 		return newCPDefinitionLocalizations;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPDefinitionLocalServiceImpl.class);
+
+	private Date _previousCheckDate;
 
 }

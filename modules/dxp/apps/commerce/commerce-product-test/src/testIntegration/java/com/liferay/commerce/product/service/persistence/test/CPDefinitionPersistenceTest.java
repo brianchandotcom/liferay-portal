@@ -257,6 +257,13 @@ public class CPDefinitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByS() throws Exception {
+		_persistence.countByS(RandomTestUtil.nextInt());
+
+		_persistence.countByS(0);
+	}
+
+	@Test
 	public void testCountByG_S() throws Exception {
 		_persistence.countByG_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());

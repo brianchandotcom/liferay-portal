@@ -4,6 +4,7 @@ create unique index IX_BFCBDC82 on CPAttachmentFileEntry (uuid_[$COLUMN_LENGTH:7
 
 create index IX_217AF702 on CPDefinition (companyId);
 create index IX_419350EA on CPDefinition (groupId, status);
+create index IX_7E7BCA4C on CPDefinition (status);
 create index IX_8EA585DA on CPDefinition (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_BA9BADC on CPDefinition (uuid_[$COLUMN_LENGTH:75$], groupId);
 

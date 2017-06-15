@@ -16,6 +16,20 @@
 				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 		]]>
 	</sql>
+	<sql id="com.liferay.commerce.product.service.persistence.CPDefinitionFinder.findByExpirationDate">
+		<![CDATA[
+			SELECT
+				CPDefinition.*
+			FROM
+				CPDefinition
+			LEFT JOIN CPDefinitionLocalization ON
+				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId)
+			WHERE
+				(CPDefinition.expirationDate < ?)  AND
+				(CPDefinition.expirationDate is not null) AND
+				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
+		]]>
+	</sql>
 	<sql id="com.liferay.commerce.product.service.persistence.CPDefinitionFinder.findByG_P_S">
 		<![CDATA[
 			SELECT

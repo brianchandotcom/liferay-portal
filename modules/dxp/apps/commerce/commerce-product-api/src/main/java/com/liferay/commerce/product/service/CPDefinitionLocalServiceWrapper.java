@@ -525,6 +525,12 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 	}
 
 	@Override
+	public void checkCPDefinitions()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpDefinitionLocalService.checkCPDefinitions();
+	}
+
+	@Override
 	public void deleteCPDefinitions(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_cpDefinitionLocalService.deleteCPDefinitions(groupId);

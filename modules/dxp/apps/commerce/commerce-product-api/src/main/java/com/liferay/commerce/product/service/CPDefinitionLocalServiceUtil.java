@@ -484,6 +484,11 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static void checkCPDefinitions()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkCPDefinitions();
+	}
+
 	public static void deleteCPDefinitions(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCPDefinitions(groupId);

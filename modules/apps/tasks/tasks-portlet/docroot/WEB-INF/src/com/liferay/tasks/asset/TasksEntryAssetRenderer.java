@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.asset.kernel.model.BaseAssetRenderer;
+import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.tasks.model.TasksEntry;
 import com.liferay.tasks.service.permission.TasksEntryPermission;
 import com.liferay.tasks.util.PortletKeys;
@@ -36,8 +36,6 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,7 +43,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Matthew Kong
  */
-public class TasksEntryAssetRenderer extends BaseAssetRenderer {
+public class TasksEntryAssetRenderer extends BaseJSPAssetRenderer<TasksEntry> {
 
 	public TasksEntryAssetRenderer(TasksEntry entry) {
 		_entry = entry;
@@ -69,6 +67,23 @@ public class TasksEntryAssetRenderer extends BaseAssetRenderer {
 	@Override
 	public long getGroupId() {
 		return _entry.getGroupId();
+	}
+
+	@Override
+	public String getJspPath(HttpServletRequest request, String template) {
+		if (template.equals(TEMPLATE_ABSTRACT) ||
+			template.equals(TEMPLATE_FULL_CONTENT)) {
+
+			return "/tasks/asset/" + template + ".jsp";
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
+	public int getStatus() {
+		return _entry.getStatus();
 	}
 
 	@Override
@@ -140,23 +155,9 @@ public class TasksEntryAssetRenderer extends BaseAssetRenderer {
 			String template)
 		throws Exception {
 
-			return false;
-	}
+		request.setAttribute(WebKeys.TASKS_ENTRY, _entry);
 
-	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		String template) {
-
-		if (template.equals(TEMPLATE_ABSTRACT) ||
-			template.equals(TEMPLATE_FULL_CONTENT)) {
-
-			renderRequest.setAttribute(WebKeys.TASKS_ENTRY, _entry);
-
-			return "/tasks/asset/" + template + ".jsp";
-		}
-		else {
-			return null;
-		}
+		return super.include(request, response, template);
 	}
 
 	private TasksEntry _entry;

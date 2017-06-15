@@ -896,14 +896,14 @@
 		it reaches ${dateMonth}.
 		-->
 
-		<while>
+		<while max-iterations="100">
 			<condition function="IsTextNotEqual" locator1="Calendar#SCHEDULER_VIEW_MONTH_DATE" value1="February 2016" />
 			<then>
 				<execute function="Click" locator1="Calendar#VIEW_PREVIOUS_BUTTON" />
 			</then>
 		</while>
 
-		<while>
+		<while max-iterations="100">
 			<condition function="IsTextNotEqual" locator1="Calendar#SCHEDULER_VIEW_MONTH_DATE" value1="${dateMonth}" />
 			<then>
 				<execute function="Click" locator1="Calendar#VIEW_NEXT_BUTTON" />
@@ -919,14 +919,14 @@
 		it reaches ${dateMonth}.
 		-->
 
-		<while>
+		<while max-iterations="100">
 			<condition function="IsTextNotEqual" locator1="Calendar#SMALL_CALENDAR_DATE" value1="February 2016" />
 			<then>
 				<execute function="Click" locator1="Calendar#SMALL_CALENDAR_PREVIOUS" />
 			</then>
 		</while>
 
-		<while>
+		<while max-iterations="100">
 			<condition function="IsTextNotEqual" locator1="Calendar#SMALL_CALENDAR_DATE" value1="${dateMonth}" />
 			<then>
 				<execute function="Click" locator1="Calendar#SMALL_CALENDAR_NEXT" />

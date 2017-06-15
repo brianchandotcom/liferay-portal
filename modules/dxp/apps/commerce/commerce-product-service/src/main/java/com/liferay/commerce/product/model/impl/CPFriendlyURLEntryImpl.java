@@ -16,13 +16,23 @@ package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.util.Locale;
+
 /**
  * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
 @ProviderType
 public class CPFriendlyURLEntryImpl extends CPFriendlyURLEntryBaseImpl {
 
 	public CPFriendlyURLEntryImpl() {
+	}
+
+	@Override
+	public Locale getLocale() {
+		return LocaleUtil.fromLanguageId(getLanguageId());
 	}
 
 }

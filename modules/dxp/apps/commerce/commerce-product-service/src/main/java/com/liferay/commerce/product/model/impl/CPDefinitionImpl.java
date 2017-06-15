@@ -49,6 +49,7 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 
 		cpDefinitionImpl.setDescriptionMap(getDescriptionMap());
 		cpDefinitionImpl.setTitleMap(getTitleMap());
+		cpDefinitionImpl.setUrlTitleMap(getUrlTitleMap());
 
 		return cpDefinitionImpl;
 	}
@@ -137,6 +138,18 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
+	public Map<Locale, String> getUrlTitleMap() {
+		if (_urlTitleMap != null) {
+			return _urlTitleMap;
+		}
+
+		_urlTitleMap = CPDefinitionLocalServiceUtil.getUrlTitleMap(
+			getCPDefinitionId());
+
+		return _urlTitleMap;
+	}
+
+	@Override
 	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
 		_descriptionMap = descriptionMap;
 	}
@@ -153,8 +166,14 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 		_titleMap = titleMap;
 	}
 
+	@Override
+	public void setUrlTitleMap(Map<Locale, String> urlTitleMap) {
+		_urlTitleMap = urlTitleMap;
+	}
+
 	private Map<Locale, String> _descriptionMap;
 	private Map<Locale, String> _shortDescriptionMap;
 	private Map<Locale, String> _titleMap;
+	private Map<Locale, String> _urlTitleMap;
 
 }

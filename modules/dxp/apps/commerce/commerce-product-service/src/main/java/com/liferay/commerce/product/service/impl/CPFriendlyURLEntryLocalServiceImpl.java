@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -114,6 +113,25 @@ public class CPFriendlyURLEntryLocalServiceImpl
 
 		return cpFriendlyURLEntryPersistence.findByG_C_C_L_U(
 			groupId, companyId, classNameId, languageId, urlTitle);
+	}
+
+	@Override
+	public Map<Locale, String> getUrlTitleMap(
+		long groupId, long companyId, long classNameId, long classPK) {
+
+		Map<Locale, String> urlTitleMap = new HashMap<>();
+
+		List<CPFriendlyURLEntry> cpFriendlyURLEntries =
+			cpFriendlyURLEntryPersistence.findByG_C_C_C_M(
+				groupId, companyId, classNameId, classPK, true);
+
+		for (CPFriendlyURLEntry cpFriendlyURLEntry : cpFriendlyURLEntries) {
+			urlTitleMap.put(
+				cpFriendlyURLEntry.getLocale(),
+				cpFriendlyURLEntry.getUrlTitle());
+		}
+
+		return urlTitleMap;
 	}
 
 	@Override
@@ -269,25 +287,6 @@ public class CPFriendlyURLEntryLocalServiceImpl
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
 		return getUrlTitleMap(groupId, companyId, classNameId, classPK);
-	}
-
-	protected Map<Locale, String> getUrlTitleMap(
-		long groupId, long companyId, long classNameId, long classPK) {
-
-		Map<Locale, String> urlTitleMap = new HashMap<>();
-
-		List<CPFriendlyURLEntry> cpFriendlyURLEntries =
-			cpFriendlyURLEntryPersistence.findByG_C_C_C_M(
-				groupId, companyId, classNameId, classPK, true);
-
-		for (CPFriendlyURLEntry cpFriendlyURLEntry : cpFriendlyURLEntries) {
-			Locale locale = LocaleUtil.fromLanguageId(
-				cpFriendlyURLEntry.getLanguageId());
-
-			urlTitleMap.put(locale, cpFriendlyURLEntry.getUrlTitle());
-		}
-
-		return urlTitleMap;
 	}
 
 	protected void validate(

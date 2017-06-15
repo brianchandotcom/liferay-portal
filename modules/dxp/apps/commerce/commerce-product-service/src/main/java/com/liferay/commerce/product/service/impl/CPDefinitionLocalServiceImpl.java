@@ -70,6 +70,7 @@ import com.liferay.trash.kernel.model.TrashEntry;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -423,6 +424,23 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return cpDisplayLayout.getLayoutUuid();
+	}
+
+	@Override
+	public Map<Locale, String> getUrlTitleMap(long cpDefinitionId) {
+		CPDefinition cpDefinition = cpDefinitionPersistence.fetchByPrimaryKey(
+			cpDefinitionId);
+
+		if (cpDefinition == null) {
+			return Collections.emptyMap();
+		}
+
+		long classNameId = classNameLocalService.getClassNameId(
+			CPDefinition.class);
+
+		return cpFriendlyURLEntryLocalService.getUrlTitleMap(
+			cpDefinition.getGroupId(), cpDefinition.getCompanyId(), classNameId,
+			cpDefinition.getCPDefinitionId());
 	}
 
 	@Override

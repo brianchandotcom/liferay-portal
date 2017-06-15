@@ -535,6 +535,14 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 					content, line, trimmedLine, lineLength, lineCount,
 					previousLine, null, false, false, 0);
 			}
+
+			if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
+				trimmedLine.equals(");")) {
+
+				return _getCombinedLinesContent(
+					content, line, trimmedLine, lineLength, lineCount,
+					previousLine, null, false, false, 0);
+			}
 		}
 
 		if ((previousLine.endsWith(StringPool.EQUAL) ||

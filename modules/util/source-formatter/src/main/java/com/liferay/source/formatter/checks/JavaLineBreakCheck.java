@@ -86,7 +86,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 			}
 		}
 
-		_checkIncorrectLineBreaksInsideChains(content, fileName);
+		content = _checkIncorrectLineBreaksInsideChains(content, fileName);
 
 		content = _fixIncorrectLineBreaks(content, fileName);
 
@@ -101,11 +101,22 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkIncorrectLineBreaksInsideChains(
+	private String _checkIncorrectLineBreaksInsideChains(
 		String content, String fileName) {
 
-		Matcher matcher = _incorrectLineBreakInsideChainPattern.matcher(
+		Matcher matcher = _incorrectLineBreakInsideChainPattern1.matcher(
 			content);
+
+		while (matcher.find()) {
+			String linePart = matcher.group(2);
+
+			if (linePart.matches("\\)[^\\)]+[\\(;]")) {
+				return StringUtil.insert(
+					content, "\n" + matcher.group(1), matcher.start(2));
+			}
+		}
+
+		matcher = _incorrectLineBreakInsideChainPattern2.matcher(content);
 
 		while (matcher.find()) {
 			int x = matcher.end();
@@ -114,7 +125,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 				x = content.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
 
 				if (x == -1) {
-					return;
+					return content;
 				}
 
 				if (ToolsUtil.isInsideQuotes(content, x)) {
@@ -144,6 +155,8 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 				break;
 			}
 		}
+
+		return content;
 	}
 
 	private void _checkLambdaLineBreaks(
@@ -748,7 +761,9 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 	private final Pattern _classPattern = Pattern.compile(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
 			"(class|enum|interface) ([\\s\\S]*?) \\{)\n(\\s*)(\\S)");
-	private final Pattern _incorrectLineBreakInsideChainPattern =
+	private final Pattern _incorrectLineBreakInsideChainPattern1 =
+		Pattern.compile("\n(\t*)\\).*?\\((.+)");
+	private final Pattern _incorrectLineBreakInsideChainPattern2 =
 		Pattern.compile("\t\\)\\..*\\(\n");
 	private final Pattern _incorrectLineBreakPattern1 = Pattern.compile(
 		"\n(\t*)(.*\\) \\{)([\t ]*\\}\n)");

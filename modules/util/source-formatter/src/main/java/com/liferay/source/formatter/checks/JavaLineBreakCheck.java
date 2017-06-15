@@ -55,21 +55,11 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 				}
 
 				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
-					!trimmedLine.startsWith(StringPool.STAR)) {
+					!trimmedLine.startsWith(StringPool.STAR) &&
+					trimmedLine.startsWith(StringPool.PERIOD)) {
 
-					if (trimmedLine.startsWith(StringPool.PERIOD)) {
-						addMessage(
-							fileName, "Line should not start with '.'",
-							lineCount);
-					}
-
-					if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
-						trimmedLine.startsWith(StringPool.CLOSE_PARENTHESIS)) {
-
-						addMessage(
-							fileName, "Line should not start with ')'",
-							lineCount);
-					}
+					addMessage(
+						fileName, "Line should not start with '.'", lineCount);
 				}
 
 				int lineLength = getLineLength(line);
@@ -307,16 +297,6 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 					break;
 				}
 			}
-		}
-
-		if (trimmedLine.matches("\\)\\..*\\([^)].*")) {
-			int pos = trimmedLine.indexOf(StringPool.OPEN_PARENTHESIS);
-
-			addMessage(
-				fileName,
-				"There should be a line break after '" +
-					trimmedLine.substring(0, pos + 1) + "'",
-				lineCount);
 		}
 
 		if (trimmedLine.matches("^[^(].*\\+$") && (getLevel(trimmedLine) > 0)) {

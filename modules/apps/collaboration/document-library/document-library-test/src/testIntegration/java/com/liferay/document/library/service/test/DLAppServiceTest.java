@@ -80,6 +80,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -1595,6 +1596,47 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				serviceContext);
+		}
+
+	}
+
+	@RunWith(Arquillian.class)
+	@Sync
+	public static class WhenUpdatingAndCheckingInAFileEntry
+		extends BaseDLAppTestCase {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				new LiferayIntegrationTestRule(),
+				SynchronousDestinationTestRule.INSTANCE);
+
+		@Test
+		public void assetEntryAndFileEntryShouldHaveSameModifiedDate()
+			throws Exception {
+
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId());
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			fileEntry = DLAppServiceUtil.updateFileEntryAndCheckIn(
+				fileEntry.getFileEntryId(), fileEntry.getFileName(),
+				fileEntry.getMimeType(), fileEntry.getTitle(),
+				RandomTestUtil.randomString(), StringPool.BLANK, false, null,
+				serviceContext);
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId());
+
+			Date assetEntryModifiedDate = assetEntry.getModifiedDate();
+
+			Date fileEntryModifiedDate = fileEntry.getModifiedDate();
+
+			Assert.assertEquals(fileEntryModifiedDate, assetEntryModifiedDate);
 		}
 
 	}

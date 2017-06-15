@@ -16,6 +16,7 @@ package com.liferay.powwow.util;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -44,7 +45,6 @@ import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -203,42 +203,19 @@ public class PowwowUtil {
 		long powwowMeetingId = ParamUtil.getLong(
 			actionRequest, "powwowMeetingId");
 
-		String[] powwowParticipantNames = actionRequest.getParameterValues(
-			"powwowParticipantNames");
-		String[] powwowParticipantParticipantUserIds =
-			actionRequest.getParameterValues(
-				"powwowParticipantParticipantUserIds");
-		String[] powwowParticipantEmailAddresses =
-			actionRequest.getParameterValues("powwowParticipantEmailAddresses");
-		String[] powwowParticipantTypes = actionRequest.getParameterValues(
-			"powwowParticipantTypes");
+		String participantJSON = ParamUtil.getString(
+			actionRequest, "powwowParticipantData");
 
-		if ((powwowParticipantNames == null) ||
-			(powwowParticipantParticipantUserIds == null) ||
-			(powwowParticipantEmailAddresses == null) ||
-			(powwowParticipantTypes == null)) {
+		JSONArray participants = JSONFactoryUtil.createJSONArray(
+			participantJSON);
 
-			return powwowParticipants;
-		}
+		for (int i = 0; i < participants.length(); i++) {
+			JSONObject participant = participants.getJSONObject(i);
 
-		if ((powwowParticipantNames.length !=
-				powwowParticipantParticipantUserIds.length) ||
-			(powwowParticipantParticipantUserIds.length !=
-				powwowParticipantEmailAddresses.length) ||
-			(powwowParticipantEmailAddresses.length !=
-				powwowParticipantTypes.length)) {
-
-			throw new PortalException(
-				"The number of names, participant user IDs, email addresses, " +
-					"and types do not match");
-		}
-
-		for (int i = 0; i < powwowParticipantNames.length; i++) {
-			String name = powwowParticipantNames[i];
-			long participantUserId = GetterUtil.getLong(
-				powwowParticipantParticipantUserIds[i]);
-			String emailAddress = powwowParticipantEmailAddresses[i];
-			int type = GetterUtil.getInteger(powwowParticipantTypes[i]);
+			String name = participant.getString("name");
+			long participantUserId = participant.getLong("participantUserId");
+			String emailAddress = participant.getString("emailAddress");
+			int type = participant.getInt("type");
 
 			if (Validator.isNull(name) && Validator.isNull(emailAddress)) {
 				continue;

@@ -336,6 +336,7 @@
 							instance._creatorUserId = config.creatorUserId;
 							instance._formName = formName;
 							instance._meetingId = config.meetingId;
+							instance._participantDataField = instance.byId(config.participantDataField);
 							instance._participantInvitedSelector = config.participantInvitedSelector;
 							instance._participantKeywords = participantKeywords;
 							instance._participantListContainer = instance.byId(config.participantList);
@@ -832,6 +833,10 @@
 							portletURL.setParameter('javax.portlet.action', 'updatePowwowMeeting');
 							portletURL.setPortletId(instance._portletKey);
 							portletURL.setWindowState('normal');
+
+							var participantDataField = instance._participantDataField;
+
+							participantDataField.val(JSON.stringify(instance.get(STR_PARTICIPANTS)));
 
 							A.io.request(
 								portletURL.toString(),

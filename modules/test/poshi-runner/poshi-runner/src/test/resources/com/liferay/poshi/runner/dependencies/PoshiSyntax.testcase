@@ -19,7 +19,6 @@
         <var name="userEmailAddress" value="userea@liferay.com" />
         <var name="userFirstName" value="userfn" />
         <var name="userLastName" value="userln" />
-        <var name="userScreenName" value="usersn" />
 
         <execute macro="ProductMenu#gotoControlPanelUsers">
             <var name="portlet" value="Users and Organizations" />
@@ -30,6 +29,7 @@
             <var name="userFirstName" value="${userFirstName}" />
             <var name="userLastName" value="${userLastName}" />
             <var name="userScreenName" value="${userScreenName}" />
+            <var name="userScreenName" value="" />
         </execute>
     </command>
 

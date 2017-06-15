@@ -75,6 +75,8 @@ public class DefinitionElement extends PoshiElement {
 
 	@Override
 	public String toReadableSyntax() {
+		prepareVarElementsForReadableSyntax();
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(FEATURE);
@@ -121,6 +123,8 @@ public class DefinitionElement extends PoshiElement {
 		}
 
 		for (PoshiElement poshiElement : toPoshiElements(elements("command"))) {
+			sb.append("\n");
+
 			sb.append(poshiElement.toReadableSyntax());
 		}
 

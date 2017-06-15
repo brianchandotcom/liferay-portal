@@ -32,6 +32,7 @@ import com.liferay.poshi.runner.util.Dom4JUtil;
 import com.liferay.poshi.runner.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.dom4j.Attribute;
@@ -86,6 +87,8 @@ public abstract class PoshiElement extends DefaultElement {
 	}
 
 	public String toReadableSyntax() {
+		prepareVarElementsForReadableSyntax();
+
 		StringBuilder sb = new StringBuilder();
 
 		for (PoshiElement poshiElement : toPoshiElements(elements())) {
@@ -122,8 +125,22 @@ public abstract class PoshiElement extends DefaultElement {
 		return substring.trim();
 	}
 
+	protected Element getPreviousSibling() {
+		Element parentElement = getParent();
+
+		if (parentElement != null) {
+			int index = parentElement.indexOf(this);
+
+			if (index > 0) {
+				return (Element)parentElement.node(index - 1);
+			}
+		}
+
+		return null;
+	}
+
 	protected String getReadableExecuteKey() {
-		List<Element> siblingElements = getSiblingElements();
+		List<Element> siblingElements = getSiblings();
 
 		int index = siblingElements.indexOf(this);
 
@@ -131,21 +148,57 @@ public abstract class PoshiElement extends DefaultElement {
 			return GIVEN;
 		}
 
-		if (index == 1) {
-			return WHEN;
-		}
-
 		if (index == (siblingElements.size() - 1)) {
 			return THEN;
+		}
+
+		if (index == 1) {
+			return WHEN;
 		}
 
 		return AND;
 	}
 
-	protected List<Element> getSiblingElements() {
+	protected List<Element> getSiblings() {
 		Element parentElement = getParent();
 
+		if (parentElement == null) {
+			return Collections.emptyList();
+		}
+
 		return Dom4JUtil.toElementList(parentElement.elements());
+	}
+
+	protected void prepareVarElementsForReadableSyntax() {
+		List<PoshiElement> poshiElements = toPoshiElements(elements());
+
+		List<VarElement> varElements = new ArrayList<>(poshiElements.size());
+
+		int maxNameLength = 0;
+		int maxValueLength = 0;
+
+		for (PoshiElement poshiElement : poshiElements) {
+			if (!(poshiElement instanceof VarElement)) {
+				continue;
+			}
+
+			VarElement varElement = (VarElement)poshiElement;
+
+			varElements.add(varElement);
+
+			String name = varElement.getVarName();
+
+			maxNameLength = Math.max(maxNameLength, name.length());
+
+			String value = varElement.getVarValue();
+
+			maxValueLength = Math.max(maxValueLength, value.length());
+		}
+
+		for (VarElement varElement : varElements) {
+			varElement.setNamePadLength(maxNameLength);
+			varElement.setValuePadLength(maxValueLength);
+		}
 	}
 
 	protected List<PoshiElement> toPoshiElements(List<?> list) {

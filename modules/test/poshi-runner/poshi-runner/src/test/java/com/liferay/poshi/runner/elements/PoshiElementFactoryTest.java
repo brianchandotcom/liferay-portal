@@ -29,9 +29,24 @@ import org.junit.Test;
 public class PoshiElementFactoryTest {
 
 	@Test
+	public void testPoshiToReadable() throws Exception {
+		String baselineReadableSyntax = FileUtil.read(_READABLE_TEST_FILE_PATH);
+
+		PoshiElement poshiElement = PoshiElementFactory.newPoshiElementFromFile(
+			_POSHI_TEST_FILE_PATH);
+
+		String readableSyntax = poshiElement.toReadableSyntax();
+
+		if (!readableSyntax.equals(baselineReadableSyntax)) {
+			throw new Exception(
+				"Poshi syntax does not translate to readable syntax.");
+		}
+	}
+
+	@Test
 	public void testPoshiToReadableToXML() throws Exception {
 		PoshiElement poshiElement = PoshiElementFactory.newPoshiElementFromFile(
-			_TEST_FILE_PATH);
+			_POSHI_TEST_FILE_PATH);
 
 		String readableSyntax = poshiElement.toReadableSyntax();
 
@@ -41,7 +56,7 @@ public class PoshiElementFactoryTest {
 		Element baselineElement = _getBaselineElement();
 
 		if (!_areElementsEqual(baselineElement, elementFromReadableSyntax)) {
-			throw new Exception("Readable syntax does not translate to XML");
+			throw new Exception("Readable syntax does not translate to XML.");
 		}
 	}
 
@@ -49,10 +64,10 @@ public class PoshiElementFactoryTest {
 	public void testPoshiToXML() throws Exception {
 		Element baselineElement = _getBaselineElement();
 		PoshiElement poshiElement = PoshiElementFactory.newPoshiElementFromFile(
-			_TEST_FILE_PATH);
+			_POSHI_TEST_FILE_PATH);
 
 		if (!_areElementsEqual(baselineElement, poshiElement)) {
-			throw new Exception("Poshi syntax does not translate to XML");
+			throw new Exception("Poshi syntax does not translate to XML.");
 		}
 	}
 
@@ -71,7 +86,7 @@ public class PoshiElementFactoryTest {
 	}
 
 	private static Element _getBaselineElement() throws Exception {
-		String fileContent = FileUtil.read(_TEST_FILE_PATH);
+		String fileContent = FileUtil.read(_POSHI_TEST_FILE_PATH);
 
 		fileContent = _removeWhitespace(fileContent);
 
@@ -90,8 +105,12 @@ public class PoshiElementFactoryTest {
 		return sb.toString();
 	}
 
-	private static final String _TEST_FILE_PATH =
+	private static final String _POSHI_TEST_FILE_PATH =
 		"src/test/resources/com/liferay/poshi/runner/dependencies" +
 			"/PoshiSyntax.testcase";
+
+	private static final String _READABLE_TEST_FILE_PATH =
+		"src/test/resources/com/liferay/poshi/runner/dependencies" +
+			"/ReadableSyntax.testcase";
 
 }

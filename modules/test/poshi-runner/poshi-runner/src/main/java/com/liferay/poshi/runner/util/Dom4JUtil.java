@@ -77,6 +77,8 @@ public class Dom4JUtil {
 
 		outputFormat.setTrimText(false);
 
+		outputFormat.setIndent("\t");
+
 		XMLWriter xmlWriter = null;
 
 		if (pretty) {

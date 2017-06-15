@@ -1572,6 +1572,13 @@
 				<execute function="AssertTextEquals" locator1="DDMField#GEOLOCATION" value1="${fieldFieldLabel}" />
 			</then>
 		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Image" />
+			<then>
+				<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_IMAGE" value1="${webContentImage}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewDefaultCP">

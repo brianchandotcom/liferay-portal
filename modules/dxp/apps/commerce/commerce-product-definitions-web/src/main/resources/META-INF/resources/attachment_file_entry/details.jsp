@@ -34,14 +34,6 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 
 <liferay-ui:error exception="<%= CPAttachmentFileEntryFileEntryIdException.class %>" message="please-select-an-existing-file" />
 
-<liferay-util:buffer var="removeFileEntryIcon">
-	<liferay-ui:icon
-		icon="times"
-		markupView="lexicon"
-		message="remove"
-	/>
-</liferay-util:buffer>
-
 <portlet:actionURL name="uploadTempAttachment" var="uploadCoverImageURL">
 	<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
 </portlet:actionURL>
@@ -70,11 +62,11 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 					<%= cpAttachmentFileEntriesDisplayContext.getFileEntryName() %>
 				</c:if>
 			</h5>
-
-			<a class="modify-file-entry-link" href="javascript:<portlet:namespace/>modifyFileEntry();"><%= removeFileEntryIcon %></a>
 		</div>
 
 		<aui:button name="selectFile" value="select-file" />
+
+		<aui:button cssClass="<%= (fileEntryId > 0) ? StringPool.BLANK : "hidden" %>" name="deleteFile" value="delete" />
 	</c:when>
 </c:choose>
 
@@ -104,6 +96,8 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 								$('#<portlet:namespace />file-entry-title').html(value.title);
 
 								$('#<portlet:namespace />file-entry-container').removeClass('hidden');
+
+								$('#<portlet:namespace />deleteFile').removeClass('hidden');
 							}
 						}
 					},
@@ -118,14 +112,18 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 </aui:script>
 
 <aui:script>
-	function <portlet:namespace/>modifyFileEntry() {
+	$('#<portlet:namespace />deleteFile').on(
+		'click',
+		function(event) {
+			event.preventDefault();
 
-		$('#<portlet:namespace />fileEntryId').val(0);
+			$('#<portlet:namespace />fileEntryId').val(0);
 
-		$('#<portlet:namespace />file-entry-title').html('');
+			$('#<portlet:namespace />file-entry-title').html('');
 
-		$('#<portlet:namespace />file-entry-container').addClass('hidden');
+			$('#<portlet:namespace />file-entry-container').addClass('hidden');
 
-	}
-
+			$('#<portlet:namespace />deleteFile').addClass('hidden');
+		}
+	);
 </aui:script>

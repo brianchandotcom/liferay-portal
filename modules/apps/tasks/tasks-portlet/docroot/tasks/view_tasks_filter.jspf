@@ -22,52 +22,29 @@
 <div class="filter-container asset-tag-filter">
 
 	<%
-	List<AssetTagStats> assetTagStatsList = AssetTagStatsLocalServiceUtil.getTagStats(PortalUtil.getClassNameId(TasksEntry.class), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-	List<AssetTag> assetTags = new ArrayList<AssetTag>(assetTagStatsList.size());
+	List<AssetTag> assetTags = null;
 
 	if (group.isRegularSite()) {
-		for (AssetTagStats assetTagStats : assetTagStatsList) {
-			if (assetTagStats.getAssetCount() > 0) {
-				try {
-					AssetTag assetTag = AssetTagLocalServiceUtil.getTag(assetTagStats.getTagId());
-
-					if (assetTag.getGroupId() == group.getGroupId()) {
-						assetTags.add(assetTag);
-					}
-				}
-				catch (NoSuchTagException nste) {
-				}
-
-			}
-		}
+		assetTags = AssetTagServiceUtil.getTags(group.getGroupId(), PortalUtil.getClassNameId(TasksEntry.class), null);
 	}
 	else {
-		for (AssetTagStats assetTagStats : assetTagStatsList) {
-			if (assetTagStats.getAssetCount() > 0) {
-				try {
-					AssetTag assetTag = AssetTagLocalServiceUtil.getTag(assetTagStats.getTagId());
-
-					assetTags.add(assetTag);
-				}
-				catch (NoSuchTagException nste) {
-				}
-			}
-		}
+		assetTags = AssetTagServiceUtil.getTags(0, PortalUtil.getClassNameId(TasksEntry.class), null);
 	}
 
-	if (!assetTags.isEmpty()) {
-		for (AssetTag assetTag : assetTags) {
+	boolean hasTags = false;
+
+	for (AssetTag assetTag : assetTags) {
+		if (assetTag.getAssetCount() > 0) {
+			hasTags = true;
 	%>
 
-			<span class="asset-tag" data-assetTagId="<%= assetTag.getTagId() %>">
-				<a href="javascript:;"><%= assetTag.getName() %></a>
-			</span>
+			<a class="asset-tag icon-check-empty" data-assetTagId="<%= assetTag.getTagId() %>" href="javascript:;"><%= assetTag.getName() %></a>
 
 	<%
 		}
 	}
-	else {
+
+	if (!hasTags) {
 	%>
 
 		<liferay-ui:message key="no-tags-were-found" />

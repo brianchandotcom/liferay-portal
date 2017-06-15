@@ -23,7 +23,7 @@
 	<ul class="tasks-entries">
 
 		<%
-		List<TasksEntry> taskEntries = TasksEntryLocalServiceUtil.getTasksEntries(0, 0, user.getUserId(), 0, TasksEntryConstants.STATUS_OPEN, new long[0], new long[0], 0, 10);
+		List<TasksEntry> taskEntries = TasksEntryLocalServiceUtil.getTasksEntries(0, user.getUserId(), 0, 0, TasksEntryConstants.STATUS_OPEN, new long[0], new long[0], 0, 10);
 
 		for (TasksEntry tasksEntry : taskEntries) {
 			String taskHREF = null;
@@ -54,10 +54,18 @@
 			<li class="<%= cssClass %>">
 				<c:choose>
 					<c:when test="<%= Validator.isNotNull(taskHREF) %>">
-						<a href="javascript:;" onClick="Liferay.Tasks.openTask('<%= taskHREF %>');"><%= HtmlUtil.escape(tasksEntry.getTitle()) %></a>
+						<a href="javascript:;" onClick="Liferay.Tasks.openTask('<%= taskHREF %>');">
+							<i class="icon-circle"></i>
+
+							<%= HtmlUtil.escape(tasksEntry.getTitle()) %>
+						</a>
 					</c:when>
 					<c:otherwise>
-						<span><%= HtmlUtil.escape(tasksEntry.getTitle()) %></span>
+						<span>
+							<i class="icon-circle"></i>
+
+							<%= HtmlUtil.escape(tasksEntry.getTitle()) %>
+						</span>
 					</c:otherwise>
 				</c:choose>
 			</li>

@@ -18,7 +18,6 @@
 package com.liferay.tasks.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.tasks.model.TasksEntry;
@@ -35,7 +34,7 @@ public class TasksEntryServiceImpl extends TasksEntryServiceBaseImpl {
 			String title, int priority, long assigneeUserId, int dueDateMonth,
 			int dueDateDay, int dueDateYear, int dueDateHour, int dueDateMinute,
 			boolean neverDue, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		TasksPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -48,7 +47,7 @@ public class TasksEntryServiceImpl extends TasksEntryServiceBaseImpl {
 	}
 
 	public TasksEntry deleteTasksEntry(long tasksEntryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		TasksEntryPermission.check(
 			getPermissionChecker(), tasksEntryId, ActionKeys.UPDATE);
@@ -56,9 +55,7 @@ public class TasksEntryServiceImpl extends TasksEntryServiceBaseImpl {
 		return tasksEntryLocalService.deleteTasksEntry(tasksEntryId);
 	}
 
-	public TasksEntry getTasksEntry(long tasksEntryId)
-		throws PortalException, SystemException {
-
+	public TasksEntry getTasksEntry(long tasksEntryId) throws PortalException {
 		TasksEntryPermission.check(
 			getPermissionChecker(), tasksEntryId, ActionKeys.VIEW);
 
@@ -70,7 +67,7 @@ public class TasksEntryServiceImpl extends TasksEntryServiceBaseImpl {
 			long resolverUserId, int dueDateMonth, int dueDateDay,
 			int dueDateYear, int dueDateHour, int dueDateMinute,
 			boolean neverDue, int status, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		TasksEntryPermission.check(
 			getPermissionChecker(), tasksEntryId, ActionKeys.UPDATE);
@@ -84,7 +81,7 @@ public class TasksEntryServiceImpl extends TasksEntryServiceBaseImpl {
 	public TasksEntry updateTasksEntryStatus(
 			long tasksEntryId, long resolverUserId, int status,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		TasksEntryPermission.check(
 			getPermissionChecker(), tasksEntryId, ActionKeys.UPDATE);

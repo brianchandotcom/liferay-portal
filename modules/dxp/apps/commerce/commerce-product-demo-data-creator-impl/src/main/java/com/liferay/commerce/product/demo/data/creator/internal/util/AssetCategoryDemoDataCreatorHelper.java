@@ -77,6 +77,13 @@ public class AssetCategoryDemoDataCreatorHelper
 			return assetCategory;
 		}
 
+		assetCategory = _assetCategoryLocalService.fetchCategory(
+			groupId, 0, title, vocabularyId);
+
+		if (assetCategory != null) {
+			return assetCategory;
+		}
+
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
 		assetCategory = _assetCategoryLocalService.addCategory(

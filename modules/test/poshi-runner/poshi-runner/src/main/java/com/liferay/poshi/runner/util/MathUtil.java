@@ -33,7 +33,9 @@ public class MathUtil {
 		return false;
 	}
 
-	public static boolean isGreaterThanOrEqual(Integer value1, Integer value2) {
+	public static boolean isGreaterThanOrEqualTo(
+		Integer value1, Integer value2) {
+
 		if (value1 >= value2) {
 			return true;
 		}
@@ -49,7 +51,7 @@ public class MathUtil {
 		return false;
 	}
 
-	public static boolean isLessThanOrEqual(Integer value1, Integer value2) {
+	public static boolean isLessThanOrEqualTo(Integer value1, Integer value2) {
 		if (value1 <= value2) {
 			return true;
 		}

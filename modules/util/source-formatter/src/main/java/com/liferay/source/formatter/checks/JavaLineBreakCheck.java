@@ -91,64 +91,6 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _fixIncorrectLineBreaksInsideChains(
-		String content, String fileName) {
-
-		Matcher matcher = _incorrectLineBreakInsideChainPattern1.matcher(
-			content);
-
-		while (matcher.find()) {
-			String linePart = matcher.group(2);
-
-			if (linePart.matches("\\)[^\\)]+[\\(;]")) {
-				return StringUtil.insert(
-					content, "\n" + matcher.group(1), matcher.start(2));
-			}
-		}
-
-		matcher = _incorrectLineBreakInsideChainPattern2.matcher(content);
-
-		while (matcher.find()) {
-			int x = matcher.end();
-
-			while (true) {
-				x = content.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
-
-				if (x == -1) {
-					return content;
-				}
-
-				if (ToolsUtil.isInsideQuotes(content, x)) {
-					continue;
-				}
-
-				String s = content.substring(matcher.end(), x);
-
-				if (getLevel(s) != 0) {
-					continue;
-				}
-
-				char c = content.charAt(x - 1);
-
-				if (c == CharPool.TAB) {
-					break;
-				}
-
-				int y = content.lastIndexOf(StringPool.TAB, x);
-
-				s = content.substring(y + 1, x);
-
-				addMessage(
-					fileName, "There should be a line break after '" + s + "'",
-					getLineCount(content, x));
-
-				break;
-			}
-		}
-
-		return content;
-	}
-
 	private void _checkLambdaLineBreaks(
 		String line, String fileName, int lineCount) {
 
@@ -559,6 +501,64 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 					"There should be a line break before '" + matcher.group(1) +
 						"'",
 					lineCount);
+			}
+		}
+
+		return content;
+	}
+
+	private String _fixIncorrectLineBreaksInsideChains(
+		String content, String fileName) {
+
+		Matcher matcher = _incorrectLineBreakInsideChainPattern1.matcher(
+			content);
+
+		while (matcher.find()) {
+			String linePart = matcher.group(2);
+
+			if (linePart.matches("\\)[^\\)]+[\\(;]")) {
+				return StringUtil.insert(
+					content, "\n" + matcher.group(1), matcher.start(2));
+			}
+		}
+
+		matcher = _incorrectLineBreakInsideChainPattern2.matcher(content);
+
+		while (matcher.find()) {
+			int x = matcher.end();
+
+			while (true) {
+				x = content.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
+
+				if (x == -1) {
+					return content;
+				}
+
+				if (ToolsUtil.isInsideQuotes(content, x)) {
+					continue;
+				}
+
+				String s = content.substring(matcher.end(), x);
+
+				if (getLevel(s) != 0) {
+					continue;
+				}
+
+				char c = content.charAt(x - 1);
+
+				if (c == CharPool.TAB) {
+					break;
+				}
+
+				int y = content.lastIndexOf(StringPool.TAB, x);
+
+				s = content.substring(y + 1, x);
+
+				addMessage(
+					fileName, "There should be a line break after '" + s + "'",
+					getLineCount(content, x));
+
+				break;
 			}
 		}
 

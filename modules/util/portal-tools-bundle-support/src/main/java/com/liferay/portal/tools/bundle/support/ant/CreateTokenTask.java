@@ -12,29 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.tools.bundle.support.commands;
+package com.liferay.portal.tools.bundle.support.ant;
 
-import com.beust.jcommander.Parameter;
+import com.liferay.portal.tools.bundle.support.commands.CreateTokenCommand;
 
-import java.io.File;
+import org.apache.tools.ant.BuildException;
 
 /**
  * @author David Truong
  */
-public abstract class BaseCommand implements Command {
+public class CreateTokenTask extends CreateTokenCommand {
 
-	public File getLiferayHomeDir() {
-		return _liferayHomeDir;
+	@Override
+	public void execute() {
+		try {
+			super.execute();
+		}
+		catch (Exception e) {
+			throw new BuildException(e);
+		}
 	}
-
-	public void setLiferayHomeDir(File liferayHomeDir) {
-		_liferayHomeDir = liferayHomeDir;
-	}
-
-	@Parameter(
-		description = "The home directory of your Liferay bundle.",
-		names = {"-l", "--liferay"}, required = true
-	)
-	private File _liferayHomeDir;
 
 }

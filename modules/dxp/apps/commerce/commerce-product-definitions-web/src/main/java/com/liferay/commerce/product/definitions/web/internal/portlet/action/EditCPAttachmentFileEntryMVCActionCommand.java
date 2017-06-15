@@ -95,6 +95,7 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
 		String backURL = ParamUtil.getString(
 			actionRequest, "backURL", redirect);
 

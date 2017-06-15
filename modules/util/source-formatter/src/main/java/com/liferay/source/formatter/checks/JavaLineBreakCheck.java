@@ -76,7 +76,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 			}
 		}
 
-		content = _checkIncorrectLineBreaksInsideChains(content, fileName);
+		content = _fixIncorrectLineBreaksInsideChains(content, fileName);
 
 		content = _fixIncorrectLineBreaks(content, fileName);
 
@@ -91,7 +91,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _checkIncorrectLineBreaksInsideChains(
+	private String _fixIncorrectLineBreaksInsideChains(
 		String content, String fileName) {
 
 		Matcher matcher = _incorrectLineBreakInsideChainPattern1.matcher(

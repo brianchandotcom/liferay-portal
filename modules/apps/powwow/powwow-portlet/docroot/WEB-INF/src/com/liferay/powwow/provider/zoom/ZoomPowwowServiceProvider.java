@@ -202,12 +202,6 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		JSONObject responseJSONObject = execute(
 			powwowServer, "meeting", "create", parameterMap);
 
-		JSONObject errorJSONObject = responseJSONObject.getJSONObject("error");
-
-		if (errorJSONObject != null) {
-			throw new SystemException("Unable to add Zoom meeting");
-		}
-
 		Map<String, Serializable> providerTypeMetadataMap = new HashMap<>();
 
 		providerTypeMetadataMap.put("host_id", hostId);
@@ -258,12 +252,6 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 		JSONObject responseJSONObject = execute(
 			powwowServer, "user", "custcreate", parameterMap);
-
-		JSONObject errorJSONObject = responseJSONObject.getJSONObject("error");
-
-		if (errorJSONObject != null) {
-			return null;
-		}
 
 		return responseJSONObject.getString("id");
 	}
@@ -329,6 +317,13 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		PowwowServer powwowServer, String resource, String action,
 		Map<String, String> parameterMap) {
 
+		return execute(powwowServer, resource, action, parameterMap, true);
+	}
+
+	protected JSONObject execute(
+		PowwowServer powwowServer, String resource, String action,
+		Map<String, String> parameterMap, boolean throwError) {
+
 		Http.Options options = new Http.Options();
 
 		StringBundler sb = new StringBundler(4);
@@ -382,7 +377,18 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 			String response = sendRequest(options);
 
-			return JSONFactoryUtil.createJSONObject(response);
+			JSONObject responseJSONObject =
+				JSONFactoryUtil.createJSONObject(response);
+
+			JSONObject errorJSONObject =
+				responseJSONObject.getJSONObject("error");
+
+			if (throwError && (errorJSONObject != null)) {
+				throw new SystemException(
+					"Unable to complete request: " + errorJSONObject);
+			}
+
+			return responseJSONObject;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -471,12 +477,6 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		JSONObject responseJSONObject = execute(
 			powwowServer, "meeting", "get", getParameterMap(powwowMeeting));
 
-		JSONObject errorJSONObject = responseJSONObject.getJSONObject("error");
-
-		if (errorJSONObject != null) {
-			return null;
-		}
-
 		String joinPowwowMeetingURL = responseJSONObject.getString("join_url");
 
 		if (type == PowwowParticipantConstants.TYPE_HOST) {
@@ -521,12 +521,6 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		JSONObject responseJSONObject = execute(
 			powwowServer, "user", "list", null);
 
-		JSONObject errorJSONObject = responseJSONObject.getJSONObject("error");
-
-		if (errorJSONObject != null) {
-			return null;
-		}
-
 		return responseJSONObject.getJSONArray("users");
 	}
 
@@ -534,7 +528,8 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		PowwowServer powwowServer, PowwowMeeting powwowMeeting) {
 
 		JSONObject responseJSONObject = execute(
-			powwowServer, "meeting", "get", getParameterMap(powwowMeeting));
+			powwowServer, "meeting", "get", getParameterMap(powwowMeeting),
+			false);
 
 		JSONObject errorJSONObject = responseJSONObject.getJSONObject("error");
 
@@ -545,7 +540,8 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 				return null;
 			}
 
-			throw new SystemException("Unable to retrieve Zoom meeting");
+			throw new SystemException(
+				"Unable to retrieve Zoom meeting: " + errorJSONObject);
 		}
 
 		if (!responseJSONObject.has("created_at")) {
@@ -636,12 +632,6 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 		JSONObject responseJSONObject = execute(
 			powwowServer, "meeting", "update", parameterMap);
-
-		JSONObject errorJSONObject = responseJSONObject.getJSONObject("error");
-
-		if (errorJSONObject != null) {
-			throw new SystemException("Unable to update Zoom meeting");
-		}
 
 		providerTypeMetadataMap.put(
 			"option_host_video",

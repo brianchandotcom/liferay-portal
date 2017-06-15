@@ -19,19 +19,17 @@ import static org.osgi.service.component.annotations.ReferencePolicyOption.GREED
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.vulcan.error.VulcanDeveloperError;
+import com.liferay.vulcan.error.VulcanDeveloperError.MustHaveProvider;
 import com.liferay.vulcan.list.FunctionalList;
 import com.liferay.vulcan.message.RequestInfo;
 import com.liferay.vulcan.message.json.JSONObjectBuilder;
 import com.liferay.vulcan.message.json.SingleModelMessageMapper;
-import com.liferay.vulcan.pagination.Page;
-import com.liferay.vulcan.representor.ModelRepresentorMapper;
+import com.liferay.vulcan.pagination.SingleModel;
 import com.liferay.vulcan.response.control.Embedded;
-import com.liferay.vulcan.response.control.EmbeddedRetriever;
 import com.liferay.vulcan.response.control.Fields;
-import com.liferay.vulcan.response.control.FieldsRetriever;
+import com.liferay.vulcan.wiring.osgi.ProviderManager;
 import com.liferay.vulcan.wiring.osgi.RelatedModel;
-import com.liferay.vulcan.wiring.osgi.RepresentorManager;
-import com.liferay.vulcan.wiring.osgi.URIResolver;
+import com.liferay.vulcan.wiring.osgi.ResourceManager;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -66,12 +64,13 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "liferay.vulcan.message.body.writer=true"
 )
 @Provider
-public class SingleModelMessageBodyWriter<T> implements MessageBodyWriter<T> {
+public class SingleModelMessageBodyWriter<T>
+	implements MessageBodyWriter<SingleModel<T>> {
 
 	@Override
 	public long getSize(
-		T model, Class<?> clazz, Type genericType, Annotation[] annotations,
-		MediaType mediaType) {
+		SingleModel<T> model, Class<?> clazz, Type genericType,
+		Annotation[] annotations, MediaType mediaType) {
 
 		return -1;
 	}
@@ -81,43 +80,32 @@ public class SingleModelMessageBodyWriter<T> implements MessageBodyWriter<T> {
 		Class<?> clazz, Type genericType, Annotation[] annotations,
 		MediaType mediaType) {
 
-		try {
-			Class<T> modelClass = (Class<T>)genericType;
-
-			if (modelClass.isAssignableFrom(Page.class)) {
-				return false;
-			}
-
-			Optional<ModelRepresentorMapper<T>> optional =
-				_representorManager.getModelRepresentorMapperOptional(
-					modelClass);
-
-			if (!optional.isPresent()) {
-				return false;
-			}
-
+		if (clazz.isAssignableFrom(SingleModel.class)) {
 			return true;
 		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
 	public void writeTo(
-			T model, Class<?> clazz, Type genericType, Annotation[] annotations,
-			MediaType mediaType, MultivaluedMap<String, Object> httpHeaders,
+			SingleModel<T> singleModel, Class<?> clazz, Type genericType,
+			Annotation[] annotations, MediaType mediaType,
+			MultivaluedMap<String, Object> httpHeaders,
 			OutputStream entityStream)
 		throws IOException, WebApplicationException {
 
 		PrintWriter printWriter = new PrintWriter(entityStream, true);
+
+		Class<T> modelClass = singleModel.getModelClass();
+
+		T model = singleModel.getModel();
 
 		Stream<SingleModelMessageMapper<T>> stream =
 			_singleModelMessageMappers.stream();
 
 		String mediaTypeString = mediaType.toString();
 
-		Class<T> modelClass = (Class<T>)genericType;
 		RequestInfo requestInfo = new RequestInfoImpl(mediaType, httpHeaders);
 
 		SingleModelMessageMapper<T> singleModelMessageMapper = stream.filter(
@@ -131,9 +119,17 @@ public class SingleModelMessageBodyWriter<T> implements MessageBodyWriter<T> {
 
 		JSONObjectBuilder jsonObjectBuilder = new JSONObjectBuilderImpl();
 
-		Fields fields = FieldsRetriever.getFields(_httpServletRequest);
+		Optional<Fields> optionalFields = _providerManager.provide(
+			Fields.class, _httpServletRequest);
 
-		Embedded embedded = EmbeddedRetriever.getEmbedded(_httpServletRequest);
+		Optional<Embedded> optionalEmbedded = _providerManager.provide(
+			Embedded.class, _httpServletRequest);
+
+		Fields fields = optionalFields.orElseThrow(
+			() -> new MustHaveProvider(Fields.class));
+
+		Embedded embedded = optionalEmbedded.orElseThrow(
+			() -> new MustHaveProvider(Embedded.class));
 
 		_writeModel(
 			singleModelMessageMapper, jsonObjectBuilder, model, modelClass,
@@ -177,7 +173,7 @@ public class SingleModelMessageBodyWriter<T> implements MessageBodyWriter<T> {
 						jsonObjectBuilder, embeddedPathElements, types));
 
 				List<RelatedModel<V, ?>> embeddedRelatedModels =
-					_representorManager.getEmbeddedRelatedModels(modelClass);
+					_resourceManager.getEmbeddedRelatedModels(modelClass);
 
 				embeddedRelatedModels.forEach(
 					embeddedRelatedModel -> _writeEmbeddedRelatedModel(
@@ -186,7 +182,7 @@ public class SingleModelMessageBodyWriter<T> implements MessageBodyWriter<T> {
 						embeddedPathElements, fields, embedded));
 
 				List<RelatedModel<V, ?>> linkedRelatedModels =
-					_representorManager.getLinkedRelatedModels(modelClass);
+					_resourceManager.getLinkedRelatedModels(modelClass);
 
 				linkedRelatedModels.forEach(
 					linkedRelatedModel -> _writeLinkedRelatedModel(
@@ -194,9 +190,16 @@ public class SingleModelMessageBodyWriter<T> implements MessageBodyWriter<T> {
 						linkedRelatedModel, model, modelClass,
 						embeddedPathElements, fields, embedded));
 			},
-			(url, embeddedPathElements) ->
-				singleModelMessageMapper.mapEmbeddedResourceURL(
-					jsonObjectBuilder, embeddedPathElements, url));
+			(url, embeddedPathElements, isEmbedded) -> {
+				if (isEmbedded) {
+					singleModelMessageMapper.mapEmbeddedResourceURL(
+						jsonObjectBuilder, embeddedPathElements, url);
+				}
+				else {
+					singleModelMessageMapper.mapLinkedResourceURL(
+						jsonObjectBuilder, embeddedPathElements, url);
+				}
+			});
 	}
 
 	private <U, V> void _writeLinkedRelatedModel(
@@ -242,7 +245,7 @@ public class SingleModelMessageBodyWriter<T> implements MessageBodyWriter<T> {
 			url -> singleModelMessageMapper.mapSelfURL(jsonObjectBuilder, url));
 
 		List<RelatedModel<U, ?>> embeddedRelatedModels =
-			_representorManager.getEmbeddedRelatedModels(modelClass);
+			_resourceManager.getEmbeddedRelatedModels(modelClass);
 
 		embeddedRelatedModels.forEach(
 			embeddedRelatedModel -> _writeEmbeddedRelatedModel(
@@ -251,7 +254,7 @@ public class SingleModelMessageBodyWriter<T> implements MessageBodyWriter<T> {
 				embedded));
 
 		List<RelatedModel<U, ?>> linkedRelatedModels =
-			_representorManager.getLinkedRelatedModels(modelClass);
+			_resourceManager.getLinkedRelatedModels(modelClass);
 
 		linkedRelatedModels.forEach(
 			linkedRelatedModel -> _writeLinkedRelatedModel(
@@ -266,16 +269,16 @@ public class SingleModelMessageBodyWriter<T> implements MessageBodyWriter<T> {
 	private HttpServletRequest _httpServletRequest;
 
 	@Reference
-	private RepresentorManager _representorManager;
+	private ProviderManager _providerManager;
+
+	@Reference
+	private ResourceManager _resourceManager;
 
 	@Reference(cardinality = AT_LEAST_ONE, policyOption = GREEDY)
 	private List<SingleModelMessageMapper<T>> _singleModelMessageMappers;
 
 	@Context
 	private UriInfo _uriInfo;
-
-	@Reference
-	private URIResolver _uriResolver;
 
 	@Reference
 	private WriterHelper _writerHelper;

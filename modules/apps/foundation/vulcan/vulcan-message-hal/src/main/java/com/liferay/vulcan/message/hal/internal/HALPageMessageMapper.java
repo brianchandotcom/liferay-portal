@@ -18,7 +18,7 @@ import com.liferay.vulcan.list.FunctionalList;
 import com.liferay.vulcan.message.RequestInfo;
 import com.liferay.vulcan.message.json.JSONObjectBuilder;
 import com.liferay.vulcan.message.json.PageMessageMapper;
-import com.liferay.vulcan.wiring.osgi.RepresentorManager;
+import com.liferay.vulcan.wiring.osgi.ResourceManager;
 
 import java.util.List;
 
@@ -51,9 +51,9 @@ public class HALPageMessageMapper<T> implements PageMessageMapper<T> {
 
 	@Override
 	public void mapCurrentPageURL(
-		JSONObjectBuilder messageBuilder, String url) {
+		JSONObjectBuilder jsonObjectBuilder, String url) {
 
-		messageBuilder.nestedField(
+		jsonObjectBuilder.nestedField(
 			"_links", "self", "href"
 		).value(
 			url
@@ -61,8 +61,10 @@ public class HALPageMessageMapper<T> implements PageMessageMapper<T> {
 	}
 
 	@Override
-	public void mapFirstPageURL(JSONObjectBuilder messageBuilder, String url) {
-		messageBuilder.nestedField(
+	public void mapFirstPageURL(
+		JSONObjectBuilder jsonObjectBuilder, String url) {
+
+		jsonObjectBuilder.nestedField(
 			"_links", "first", "href"
 		).value(
 			url
@@ -143,9 +145,9 @@ public class HALPageMessageMapper<T> implements PageMessageMapper<T> {
 
 	@Override
 	public void mapItemTotalCount(
-		JSONObjectBuilder messageBuilder, int totalCount) {
+		JSONObjectBuilder jsonObjectBuilder, int totalCount) {
 
-		messageBuilder.field(
+		jsonObjectBuilder.field(
 			"total"
 		).value(
 			totalCount
@@ -161,8 +163,10 @@ public class HALPageMessageMapper<T> implements PageMessageMapper<T> {
 	}
 
 	@Override
-	public void mapLastPageURL(JSONObjectBuilder messageBuilder, String url) {
-		messageBuilder.nestedField(
+	public void mapLastPageURL(
+		JSONObjectBuilder jsonObjectBuilder, String url) {
+
+		jsonObjectBuilder.nestedField(
 			"_links", "last", "href"
 		).value(
 			url
@@ -170,8 +174,10 @@ public class HALPageMessageMapper<T> implements PageMessageMapper<T> {
 	}
 
 	@Override
-	public void mapNextPageURL(JSONObjectBuilder messageBuilder, String url) {
-		messageBuilder.nestedField(
+	public void mapNextPageURL(
+		JSONObjectBuilder jsonObjectBuilder, String url) {
+
+		jsonObjectBuilder.nestedField(
 			"_links", "next", "href"
 		).value(
 			url
@@ -179,8 +185,8 @@ public class HALPageMessageMapper<T> implements PageMessageMapper<T> {
 	}
 
 	@Override
-	public void mapPageCount(JSONObjectBuilder messageBuilder, int count) {
-		messageBuilder.field(
+	public void mapPageCount(JSONObjectBuilder jsonObjectBuilder, int count) {
+		jsonObjectBuilder.field(
 			"count"
 		).value(
 			count
@@ -189,9 +195,9 @@ public class HALPageMessageMapper<T> implements PageMessageMapper<T> {
 
 	@Override
 	public void mapPreviousPageURL(
-		JSONObjectBuilder messageBuilder, String url) {
+		JSONObjectBuilder jsonObjectBuilder, String url) {
 
-		messageBuilder.nestedField(
+		jsonObjectBuilder.nestedField(
 			"_links", "prev", "href"
 		).value(
 			url
@@ -204,7 +210,7 @@ public class HALPageMessageMapper<T> implements PageMessageMapper<T> {
 		JSONObjectBuilder itemJSONObjectBuilder, T model, Class<T> modelClass,
 		RequestInfo requestInfo) {
 
-		List<String> types = _representorManager.getTypes(modelClass);
+		List<String> types = _resourceManager.getTypes(modelClass);
 
 		pageJSONObjectBuilder.nestedField(
 			"_embedded", types.get(0)
@@ -217,6 +223,6 @@ public class HALPageMessageMapper<T> implements PageMessageMapper<T> {
 	private HALSingleModelMessageMapper _halSingleModelMessageMapper;
 
 	@Reference
-	private RepresentorManager _representorManager;
+	private ResourceManager _resourceManager;
 
 }

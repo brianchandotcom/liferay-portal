@@ -24,6 +24,6 @@ import java.util.function.Predicate;
  */
 public interface Fields {
 
-	public Predicate<String> getFieldIncludedPredicate(List<String> types);
+	public Predicate<String> getFieldsPredicate(List<String> types);
 
 }

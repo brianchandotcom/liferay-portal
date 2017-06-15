@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.PrefsProps;
@@ -132,7 +133,11 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeJournalContentSearch());
 
 		registry.register(
-			"com.liferay.journal.service", "1.0.1", "1.1.0",
+			"com.liferay.journal.service", "1.0.1", "1.0.2",
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.journal.service", "1.0.2", "1.1.0",
 			new UpgradeDocumentLibraryTypeContent(_dlAppLocalService),
 			new UpgradeImageTypeContent(_imageLocalService),
 			new UpgradeJournalArticleLocalizedValues());

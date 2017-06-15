@@ -14,13 +14,17 @@
 
 package com.liferay.vulcan.jaxrs.writer.json.internal;
 
+import static org.osgi.service.component.annotations.ReferenceCardinality.OPTIONAL;
+import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
+
 import com.liferay.vulcan.error.VulcanDeveloperError;
 import com.liferay.vulcan.list.FunctionalList;
+import com.liferay.vulcan.representor.Resource;
 import com.liferay.vulcan.response.control.Embedded;
 import com.liferay.vulcan.response.control.Fields;
+import com.liferay.vulcan.uri.CollectionResourceURITransformer;
 import com.liferay.vulcan.wiring.osgi.RelatedModel;
-import com.liferay.vulcan.wiring.osgi.RepresentorManager;
-import com.liferay.vulcan.wiring.osgi.URIResolver;
+import com.liferay.vulcan.wiring.osgi.ResourceManager;
 
 import java.net.URI;
 
@@ -28,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -60,19 +65,62 @@ public class WriterHelper {
 		return uri.toString();
 	}
 
+	public <T> Optional<String> getCollectionURL(
+		Class<T> modelClass, UriInfo uriInfo) {
+
+		Optional<Resource<T>> optional = _resourceManager.getResourceOptional(
+			modelClass);
+
+		return optional.map(
+			Resource::getPath
+		).map(
+			path -> "/p/" + path
+		).map(
+			_transformURI(
+				(uri, transformer) -> transformer.transformPageURI(
+					uri, modelClass))
+		).map(
+			uri -> getAbsoluteURL(uriInfo, uri)
+		);
+	}
+
+	public <T> Optional<String> getSingleURL(
+		Class<T> modelClass, T model, UriInfo uriInfo) {
+
+		Optional<Resource<T>> optional = _resourceManager.getResourceOptional(
+			modelClass);
+
+		String identifier = _resourceManager.getIdentifier(modelClass, model);
+
+		return optional.map(
+			Resource::getPath
+		).map(
+			path -> "/p/" + path + "/" + identifier
+		).map(
+			_transformURI(
+				(uri, transformer) ->
+					transformer.transformCollectionItemSingleResourceURI(
+						uri, modelClass, model))
+		).map(
+			uri -> getAbsoluteURL(uriInfo, uri)
+		);
+	}
+
 	public <T> void writeFields(
 		T model, Class<T> modelClass, Fields fields,
 		BiConsumer<String, Object> biConsumer) {
 
-		Map<String, Function<T, Object>> fieldFunctions =
-			_representorManager.getFieldFunctions(modelClass);
-
-		Predicate<String> isFieldIncludedPredicate = _getFieldIncludedPredicate(
+		Predicate<String> fieldsPredicate = _getFieldsPredicate(
 			modelClass, fields);
 
+		Map<String, Function<T, Object>> fieldFunctions =
+			_resourceManager.getFieldFunctions(modelClass);
+
 		for (String field : fieldFunctions.keySet()) {
-			if (isFieldIncludedPredicate.test(field)) {
-				Object data = fieldFunctions.get(field).apply(model);
+			if (fieldsPredicate.test(field)) {
+				Function<T, Object> fieldFunction = fieldFunctions.get(field);
+
+				Object data = fieldFunction.apply(model);
 
 				if (data != null) {
 					biConsumer.accept(field, data);
@@ -93,20 +141,21 @@ public class WriterHelper {
 			parentEmbeddedPathElements, uriInfo, fields, embedded,
 			(model, modelClass, embeddedPathElements) -> {
 			},
-			biConsumer);
+			(url, embeddedPathElements, isEmbedded) -> biConsumer.accept(
+				url, embeddedPathElements));
 	}
 
 	public <T> void writeLinks(
 		Class<T> modelClass, Fields fields,
 		BiConsumer<String, String> biConsumer) {
 
-		Map<String, String> links = _representorManager.getLinks(modelClass);
-
-		Predicate<String> isFieldIncludedPredicate = _getFieldIncludedPredicate(
+		Predicate<String> fieldsPredicate = _getFieldsPredicate(
 			modelClass, fields);
 
+		Map<String, String> links = _resourceManager.getLinks(modelClass);
+
 		for (String key : links.keySet()) {
-			if (isFieldIncludedPredicate.test(key)) {
+			if (fieldsPredicate.test(key)) {
 				biConsumer.accept(key, links.get(key));
 			}
 		}
@@ -117,20 +166,22 @@ public class WriterHelper {
 		Class<T> parentModelClass,
 		FunctionalList<String> parentEmbeddedPathElements, UriInfo uriInfo,
 		Fields fields, Embedded embedded,
-		TriConsumer<U, Class<U>, FunctionalList<String>> triConsumer,
-		BiConsumer<String, FunctionalList<String>> biConsumer) {
+		TriConsumer<U, Class<U>, FunctionalList<String>> modelTriConsumer,
+		TriConsumer<String, FunctionalList<String>, Boolean> urlTriConsumer) {
 
-		Predicate<String> isFieldIncludedPredicate = _getFieldIncludedPredicate(
+		Predicate<String> fieldsPredicate = _getFieldsPredicate(
 			parentModelClass, fields);
 
 		String key = relatedModel.getKey();
 
-		if (!isFieldIncludedPredicate.test(key)) {
+		if (!fieldsPredicate.test(key)) {
 			return;
 		}
 
-		Optional<U> modelOptional =
-			relatedModel.getModelFunction().apply(parentModel);
+		Function<T, Optional<U>> modelFunction =
+			relatedModel.getModelFunction();
+
+		Optional<U> modelOptional = modelFunction.apply(parentModel);
 
 		if (!modelOptional.isPresent()) {
 			return;
@@ -140,17 +191,15 @@ public class WriterHelper {
 
 		Class<U> modelClass = relatedModel.getModelClass();
 
-		Optional<String> uriOptional =
-			_uriResolver.getSingleResourceURIOptional(modelClass, model);
+		Optional<String> urlOptional = getSingleURL(modelClass, model, uriInfo);
 
-		uriOptional.ifPresent(
-			uri -> {
-				String url = getAbsoluteURL(uriInfo, uri);
+		urlOptional.ifPresent(
+			url -> {
+				Predicate<String> embeddedPredicate =
+					embedded.getEmbeddedPredicate();
 
 				FunctionalList<String> embeddedPathElements =
 					new StringFunctionalList(parentEmbeddedPathElements, key);
-
-				biConsumer.accept(url, embeddedPathElements);
 
 				Stream<String> stream = Stream.concat(
 					Stream.of(embeddedPathElements.head()),
@@ -159,8 +208,13 @@ public class WriterHelper {
 				String embeddedPath = String.join(
 					".", stream.collect(Collectors.toList()));
 
-				if (embedded.getEmbeddedPredicate().test(embeddedPath)) {
-					triConsumer.accept(model, modelClass, embeddedPathElements);
+				boolean isEmbedded = embeddedPredicate.test(embeddedPath);
+
+				urlTriConsumer.accept(url, embeddedPathElements, isEmbedded);
+
+				if (isEmbedded) {
+					modelTriConsumer.accept(
+						model, modelClass, embeddedPathElements);
 				}
 			});
 	}
@@ -169,13 +223,8 @@ public class WriterHelper {
 		T model, Class<T> modelClass, UriInfo uriInfo,
 		Consumer<String> consumer) {
 
-		Optional<String> optional = _uriResolver.getSingleResourceURIOptional(
-			modelClass, model);
-
-		String uri = optional.orElseThrow(
+		String url = getSingleURL(modelClass, model, uriInfo).orElseThrow(
 			() -> new VulcanDeveloperError.UnresolvableURI(modelClass));
-
-		String url = getAbsoluteURL(uriInfo, uri);
 
 		consumer.accept(url);
 	}
@@ -183,23 +232,40 @@ public class WriterHelper {
 	public <U> void writeTypes(
 		Class<U> modelClass, Consumer<List<String>> consumer) {
 
-		List<String> types = _representorManager.getTypes(modelClass);
+		List<String> types = _resourceManager.getTypes(modelClass);
 
 		consumer.accept(types);
 	}
 
-	private <T> Predicate<String> _getFieldIncludedPredicate(
+	private <T> Predicate<String> _getFieldsPredicate(
 		Class<T> modelClass, Fields fields) {
 
-		List<String> types = _representorManager.getTypes(modelClass);
+		List<String> types = _resourceManager.getTypes(modelClass);
 
-		return fields.getFieldIncludedPredicate(types);
+		return fields.getFieldsPredicate(types);
 	}
 
-	@Reference
-	private RepresentorManager _representorManager;
+	private Function<String, String> _transformURI(
+		BiFunction<String, CollectionResourceURITransformer, String>
+			biFunction) {
+
+		return uri -> {
+			Optional<CollectionResourceURITransformer>
+				collectionResourceURITransformerOptional = Optional.ofNullable(
+					_collectionResourceURITransformer);
+
+			return collectionResourceURITransformerOptional.map(
+				transformer -> biFunction.apply(uri, transformer)
+			).orElse(
+				uri
+			);
+		};
+	}
+
+	@Reference(cardinality = OPTIONAL, policyOption = GREEDY)
+	private CollectionResourceURITransformer _collectionResourceURITransformer;
 
 	@Reference
-	private URIResolver _uriResolver;
+	private ResourceManager _resourceManager;
 
 }

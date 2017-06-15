@@ -24,14 +24,11 @@ import com.liferay.vulcan.message.RequestInfo;
 import com.liferay.vulcan.message.json.JSONObjectBuilder;
 import com.liferay.vulcan.message.json.PageMessageMapper;
 import com.liferay.vulcan.pagination.Page;
-import com.liferay.vulcan.representor.ModelRepresentorMapper;
 import com.liferay.vulcan.response.control.Embedded;
-import com.liferay.vulcan.response.control.EmbeddedRetriever;
 import com.liferay.vulcan.response.control.Fields;
-import com.liferay.vulcan.response.control.FieldsRetriever;
+import com.liferay.vulcan.wiring.osgi.ProviderManager;
 import com.liferay.vulcan.wiring.osgi.RelatedModel;
-import com.liferay.vulcan.wiring.osgi.RepresentorManager;
-import com.liferay.vulcan.wiring.osgi.URIResolver;
+import com.liferay.vulcan.wiring.osgi.ResourceManager;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -39,7 +36,6 @@ import java.io.PrintWriter;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import java.util.Collection;
@@ -93,29 +89,7 @@ public class PageMessageBodyWriter<T> implements MessageBodyWriter<Page<T>> {
 			return false;
 		}
 
-		Type genericReturnType = resourceMethod.getGenericReturnType();
-
-		ParameterizedType parameterizedType =
-			(ParameterizedType)genericReturnType;
-
-		Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-
-		try {
-			Class<T> modelClass = (Class<T>)actualTypeArguments[0];
-
-			Optional<ModelRepresentorMapper<T>> optional =
-				_representorManager.getModelRepresentorMapperOptional(
-					modelClass);
-
-			if (!optional.isPresent()) {
-				return false;
-			}
-
-			return true;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		return true;
 	}
 
 	@Override
@@ -132,16 +106,7 @@ public class PageMessageBodyWriter<T> implements MessageBodyWriter<Page<T>> {
 
 		String mediaTypeString = mediaType.toString();
 
-		Method resourceMethod = _resourceInfo.getResourceMethod();
-
-		Type genericReturnType = resourceMethod.getGenericReturnType();
-
-		ParameterizedType parameterizedType =
-			(ParameterizedType)genericReturnType;
-
-		Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-
-		Class<T> modelClass = (Class<T>)actualTypeArguments[0];
+		Class<T> modelClass = page.getModelClass();
 
 		RequestInfo requestInfo = new RequestInfoImpl(mediaType, httpHeaders);
 
@@ -156,12 +121,20 @@ public class PageMessageBodyWriter<T> implements MessageBodyWriter<Page<T>> {
 
 		JSONObjectBuilder jsonObjectBuilder = new JSONObjectBuilderImpl();
 
-		Embedded embedded = EmbeddedRetriever.getEmbedded(_httpServletRequest);
-
-		Fields fields = FieldsRetriever.getFields(_httpServletRequest);
-
 		pageMessageMapper.onStart(
 			jsonObjectBuilder, page, modelClass, requestInfo);
+
+		Optional<Fields> optionalFields = _providerManager.provide(
+			Fields.class, _httpServletRequest);
+
+		Optional<Embedded> optionalEmbedded = _providerManager.provide(
+			Embedded.class, _httpServletRequest);
+
+		Fields fields = optionalFields.orElseThrow(
+			() -> new VulcanDeveloperError.MustHaveProvider(Fields.class));
+
+		Embedded embedded = optionalEmbedded.orElseThrow(
+			() -> new VulcanDeveloperError.MustHaveProvider(Embedded.class));
 
 		_writeItems(
 			pageMessageMapper, jsonObjectBuilder, page, modelClass, requestInfo,
@@ -186,13 +159,11 @@ public class PageMessageBodyWriter<T> implements MessageBodyWriter<Page<T>> {
 	}
 
 	private String _getCollectionURL(Class<T> modelClass) {
-		Optional<String> optional =
-			_uriResolver.getCollectionResourceURIOptional(modelClass);
+		Optional<String> optional = _writerHelper.getCollectionURL(
+			modelClass, _uriInfo);
 
-		String uri = optional.orElseThrow(
+		return optional.orElseThrow(
 			() -> new VulcanDeveloperError.UnresolvableURI(modelClass));
-
-		return _writerHelper.getAbsoluteURL(_uriInfo, uri);
 	}
 
 	private String _getPageURL(
@@ -246,7 +217,7 @@ public class PageMessageBodyWriter<T> implements MessageBodyWriter<Page<T>> {
 						embeddedPathElements, types));
 
 				List<RelatedModel<V, ?>> embeddedRelatedModels =
-					_representorManager.getEmbeddedRelatedModels(modelClass);
+					_resourceManager.getEmbeddedRelatedModels(modelClass);
 
 				embeddedRelatedModels.forEach(
 					embeddedRelatedModel -> _writeEmbeddedRelatedModel(
@@ -255,7 +226,7 @@ public class PageMessageBodyWriter<T> implements MessageBodyWriter<Page<T>> {
 						modelClass, embeddedPathElements, fields, embedded));
 
 				List<RelatedModel<V, ?>> linkedRelatedModels =
-					_representorManager.getLinkedRelatedModels(modelClass);
+					_resourceManager.getLinkedRelatedModels(modelClass);
 
 				linkedRelatedModels.forEach(
 					linkedRelatedModel -> _writeLinkedRelatedModel(
@@ -263,10 +234,18 @@ public class PageMessageBodyWriter<T> implements MessageBodyWriter<Page<T>> {
 						itemJSONObjectBuilder, linkedRelatedModel, model,
 						modelClass, embeddedPathElements, fields, embedded));
 			},
-			(url, embeddedPathElements) ->
-				pageMessageMapper.mapItemEmbeddedResourceURL(
-					pageJSONObjectBuilder, itemJSONObjectBuilder,
-					embeddedPathElements, url));
+			(url, embeddedPathElements, isEmbedded) -> {
+				if (isEmbedded) {
+					pageMessageMapper.mapItemEmbeddedResourceURL(
+						pageJSONObjectBuilder, itemJSONObjectBuilder,
+						embeddedPathElements, url);
+				}
+				else {
+					pageMessageMapper.mapItemLinkedResourceURL(
+						pageJSONObjectBuilder, itemJSONObjectBuilder,
+						embeddedPathElements, url);
+				}
+			});
 	}
 
 	private void _writeItems(
@@ -308,7 +287,7 @@ public class PageMessageBodyWriter<T> implements MessageBodyWriter<Page<T>> {
 						jsonObjectBuilder, itemJSONObjectBuilder, url));
 
 				List<RelatedModel<T, ?>> embeddedRelatedModels =
-					_representorManager.getEmbeddedRelatedModels(modelClass);
+					_resourceManager.getEmbeddedRelatedModels(modelClass);
 
 				embeddedRelatedModels.forEach(
 					embeddedRelatedModel -> _writeEmbeddedRelatedModel(
@@ -317,7 +296,7 @@ public class PageMessageBodyWriter<T> implements MessageBodyWriter<Page<T>> {
 						modelClass, null, fields, embedded));
 
 				List<RelatedModel<T, ?>> linkedRelatedModels =
-					_representorManager.getLinkedRelatedModels(modelClass);
+					_resourceManager.getLinkedRelatedModels(modelClass);
 
 				linkedRelatedModels.forEach(
 					linkedRelatedModel -> _writeLinkedRelatedModel(
@@ -409,16 +388,16 @@ public class PageMessageBodyWriter<T> implements MessageBodyWriter<Page<T>> {
 	private List<PageMessageMapper<T>> _pageMessageMappers;
 
 	@Reference
-	private RepresentorManager _representorManager;
+	private ProviderManager _providerManager;
 
 	@Context
 	private ResourceInfo _resourceInfo;
 
+	@Reference
+	private ResourceManager _resourceManager;
+
 	@Context
 	private UriInfo _uriInfo;
-
-	@Reference
-	private URIResolver _uriResolver;
 
 	@Reference
 	private WriterHelper _writerHelper;

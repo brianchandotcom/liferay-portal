@@ -2,15 +2,15 @@ Bundle-Name: Liferay Vulcan API
 Bundle-SymbolicName: com.liferay.vulcan.api
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.vulcan.contributor,\
 	com.liferay.vulcan.endpoint,\
 	com.liferay.vulcan.error,\
+	com.liferay.vulcan.functions,\
 	com.liferay.vulcan.list,\
 	com.liferay.vulcan.message,\
 	com.liferay.vulcan.message.json,\
 	com.liferay.vulcan.pagination,\
+	com.liferay.vulcan.provider,\
 	com.liferay.vulcan.representor,\
 	com.liferay.vulcan.representor.builder,\
-	com.liferay.vulcan.resource,\
 	com.liferay.vulcan.response.control,\
 	com.liferay.vulcan.uri

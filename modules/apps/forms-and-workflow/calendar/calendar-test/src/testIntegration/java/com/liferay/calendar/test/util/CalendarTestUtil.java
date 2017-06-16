@@ -25,9 +25,12 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 
 import java.util.TimeZone;
+
+import org.junit.Assert;
 
 /**
  * @author Adam Brandizzi
@@ -127,6 +130,30 @@ public class CalendarTestUtil {
 		serviceContext.setUserId(user.getUserId());
 
 		return serviceContext;
+	}
+
+	public static Calendar getDefaultCalendar(Group group)
+		throws PortalException {
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getGroupCalendarResource(
+				group.getGroupId(),
+				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		return calendarResource.getDefaultCalendar();
+	}
+
+	public static Calendar getStagingCalendar(Group group, Calendar calendar)
+		throws PortalException {
+
+		if (group.hasStagingGroup()) {
+			group = group.getStagingGroup();
+		}
+
+		Assert.assertTrue(group.isStaged());
+
+		return CalendarLocalServiceUtil.fetchCalendarByUuidAndGroupId(
+			calendar.getUuid(), group.getGroupId());
 	}
 
 }

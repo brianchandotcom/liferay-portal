@@ -16,7 +16,7 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.portal.tools.upgrade.table.builder</artifactId>
-				<version>1.0.7</version>
+				<version>1.0.8</version>
 				<configuration>
 					<upgradeTableDirName>${upgrade.table.dir}</upgradeTableDirName>
 				</configuration>

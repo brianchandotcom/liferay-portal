@@ -155,6 +155,7 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntry getPreviousEntry(long entryId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntry incrementViewCounter(long userId,
 		java.lang.String className, long classPK) throws PortalException;
 

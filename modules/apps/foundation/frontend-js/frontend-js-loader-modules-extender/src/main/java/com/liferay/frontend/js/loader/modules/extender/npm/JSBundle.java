@@ -19,23 +19,30 @@ import java.net.URL;
 import java.util.Collection;
 
 /**
- * A JSBundle describes an OSGi bundle containing some NPM packages and modules.
+ * Describes an OSGi bundle containing NPM packages and modules.
+ *
  * @author Iván Zaera
  */
 public interface JSBundle extends JSBundleObject {
 
 	/**
-	 * Retrieve the list of NPM packages provided by the OSGi bundle.
+	 * Returns the NPM packages provided by the OSGi bundle.
+	 *
+	 * @return the NPM packages
 	 */
 	public Collection<JSPackage> getJSPackages();
 
 	/**
-	 * Retrieve the {@link URL} of a resource living inside the OSGi bundle.
+	 * Returns the {@link URL} of an OSGi bundle's resource.
+	 *
+	 * @return the URL of an OSGi bundle's resource
 	 */
 	public URL getResourceURL(String location);
 
 	/**
-	 * Get the OSGi version of the bundle.
+	 * Returns the bundle's OSGi version.
+	 *
+	 * @return the bundle's OSGi version
 	 */
 	public String getVersion();
 

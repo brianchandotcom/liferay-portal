@@ -1753,6 +1753,10 @@ to version 2.0.18.
 
 ## 3.3.29 - 2017-06-16
 
+### Fixed
+- [LPS-72365]: Avoid deleting the `osgi/test` directory when executing the
+`clean` task.
+
 ### Removed
 - [LPS-73147]: Remove unnecessary default Bnd instruction `-dsannotations: *`.
 

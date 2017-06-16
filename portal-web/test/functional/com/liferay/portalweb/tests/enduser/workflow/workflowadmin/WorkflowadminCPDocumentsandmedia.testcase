@@ -61,7 +61,7 @@
 		</execute>
 
 		<execute macro="DMFolder#configureWorkflowCP">
-			<var name="dmDocumentTypeName" value="Google Docs" />
+			<var name="dmDocumentTypeName" value="Marketing Banner" />
 			<var name="dmFolderName" value="DM Folder Name" />
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowRestriction" value="Specific Restrictions" />

@@ -1,7 +1,6 @@
 <definition component-name="portal-collaboration">
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
-	<property name="custom.properties" value="default.layout.template.id=1_column" />
 	<property name="testray.main.component.name" value="Wiki" />
 
 	<var name="pageName" value="Wiki Test Page" />
@@ -13,18 +12,7 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#add">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
 			<var name="columnName" value="1 Column" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 

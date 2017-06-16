@@ -71,7 +71,8 @@ public class DBInspector {
 
 			if (!rs.next()) {
 				return false;
-			} else {
+			}
+			else {
 				return true;
 			}
 		}

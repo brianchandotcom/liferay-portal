@@ -1754,6 +1754,8 @@ to version 2.0.18.
 ## 3.3.29 - 2017-06-16
 
 ### Changed
+- [LPS-73124]: Update the [Liferay Portal Tools DB Support] dependency to
+version 1.0.4.
 - [LPS-73148]: Update the [Liferay Portal Tools Upgrade Table Builder]
 dependency to version 1.0.8.
 
@@ -1924,6 +1926,7 @@ dependency to version 1.0.8.
 [LPS-72868]: https://issues.liferay.com/browse/LPS-72868
 [LPS-72914]: https://issues.liferay.com/browse/LPS-72914
 [LPS-73058]: https://issues.liferay.com/browse/LPS-73058
+[LPS-73124]: https://issues.liferay.com/browse/LPS-73124
 [LPS-73147]: https://issues.liferay.com/browse/LPS-73147
 [LPS-73148]: https://issues.liferay.com/browse/LPS-73148
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

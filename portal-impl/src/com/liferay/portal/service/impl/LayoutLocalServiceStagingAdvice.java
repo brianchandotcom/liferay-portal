@@ -667,9 +667,8 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 	@BeanReference(type = LayoutLocalServiceHelper.class)
 	protected LayoutLocalServiceHelper layoutLocalServiceHelper;
 
-	private static final Class<?>[] _GET_LAYOUTS_TYPES = {
-		Long.TYPE, Boolean.TYPE, Long.TYPE
-	};
+	private static final Class<?>[] _GET_LAYOUTS_TYPES =
+		{Long.TYPE, Boolean.TYPE, Long.TYPE};
 
 	private static final Class<?>[] _UPDATE_LAYOUT_PARAMETER_TYPES = {
 		long.class, boolean.class, long.class, long.class, Map.class, Map.class,

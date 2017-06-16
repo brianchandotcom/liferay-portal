@@ -2290,9 +2290,8 @@ public class HookHotDeployListener
 		SERVLET_SERVICE_EVENTS_PRE
 	};
 
-	private static final String[] _PROPS_KEYS_SESSION_EVENTS = {
-		SERVLET_SESSION_CREATE_EVENTS, SERVLET_SESSION_DESTROY_EVENTS
-	};
+	private static final String[] _PROPS_KEYS_SESSION_EVENTS =
+		{SERVLET_SESSION_CREATE_EVENTS, SERVLET_SESSION_DESTROY_EVENTS};
 
 	private static final String[] _PROPS_VALUES_BOOLEAN = {
 		"auth.forward.by.last.path", "captcha.check.portal.create_account",
@@ -2367,9 +2366,8 @@ public class HookHotDeployListener
 		"layout.user.public.layouts.modifiable"
 	};
 
-	private static final String[] _PROPS_VALUES_OVERRIDE_STRING_ARRAY = {
-		"locales.beta"
-	};
+	private static final String[] _PROPS_VALUES_OVERRIDE_STRING_ARRAY =
+		{"locales.beta"};
 
 	private static final String[] _PROPS_VALUES_STRING = {
 		"company.default.locale", "company.default.time.zone",

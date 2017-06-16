@@ -246,9 +246,8 @@ public class BundleManager {
 		return false;
 	}
 
-	private static final int[] _INSTALLED_BUNDLE_STATES = {
-		Bundle.ACTIVE, Bundle.INSTALLED, Bundle.RESOLVED
-	};
+	private static final int[] _INSTALLED_BUNDLE_STATES =
+		{Bundle.ACTIVE, Bundle.INSTALLED, Bundle.RESOLVED};
 
 	private static final Log _log = LogFactoryUtil.getLog(BundleManager.class);
 

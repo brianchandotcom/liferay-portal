@@ -220,13 +220,11 @@ public abstract class PoshiElement extends DefaultElement {
 		TEAR_DOWN + COLON
 	};
 
-	protected static final String[] READABLE_EXECUTE_BLOCK_KEYS = {
-		TAB + AND, TAB + GIVEN, TAB + THEN, TAB + WHEN
-	};
+	protected static final String[] READABLE_EXECUTE_BLOCK_KEYS =
+		{TAB + AND, TAB + GIVEN, TAB + THEN, TAB + WHEN};
 
-	protected static final String[] READABLE_VARIABLE_BLOCK_KEYS = {
-		TAB + TAB + PIPE
-	};
+	protected static final String[] READABLE_VARIABLE_BLOCK_KEYS =
+		{TAB + TAB + PIPE};
 
 	private void _addAttributes(Element element) {
 		for (Attribute attribute :

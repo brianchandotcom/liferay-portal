@@ -40,9 +40,8 @@ public class PropsUtil {
 
 	private PropsUtil() {
 		try {
-			String[] propertiesFileNames = {
-				"poshi-runner.properties", "poshi-runner-ext.properties"
-			};
+			String[] propertiesFileNames =
+				{"poshi-runner.properties", "poshi-runner-ext.properties"};
 
 			for (String propertiesFileName : propertiesFileNames) {
 				Class<?> clazz = getClass();

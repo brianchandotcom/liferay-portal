@@ -558,9 +558,8 @@ public class JspServlet extends HttpServlet {
 
 	private static final String _INIT_PARAMETER_NAME_SCRATCH_DIR = "scratchdir";
 
-	private static final Class<?>[] _INTERFACES = {
-		JspServletContext.class, ServletContext.class
-	};
+	private static final Class<?>[] _INTERFACES =
+		{JspServletContext.class, ServletContext.class};
 
 	private static final String _WORK_DIR =
 		PropsValues.LIFERAY_HOME + File.separator + "work" + File.separator;

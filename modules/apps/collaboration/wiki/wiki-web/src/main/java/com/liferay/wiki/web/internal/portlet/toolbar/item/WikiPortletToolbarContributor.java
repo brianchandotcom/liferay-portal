@@ -63,9 +63,8 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"mvc.render.command.name=/wiki/view_pages"
 	},
-	service = {
-		WikiPortletToolbarContributor.class, PortletToolbarContributor.class
-	}
+	service =
+		{WikiPortletToolbarContributor.class, PortletToolbarContributor.class}
 )
 public class WikiPortletToolbarContributor
 	extends BasePortletToolbarContributor {

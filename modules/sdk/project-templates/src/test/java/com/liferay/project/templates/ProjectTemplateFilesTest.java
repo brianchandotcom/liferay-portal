@@ -719,9 +719,8 @@ public class ProjectTemplateFilesTest {
 		}
 	}
 
-	private static final String[] _SOURCESET_NAMES = {
-		"main", "test", "testIntegration"
-	};
+	private static final String[] _SOURCESET_NAMES =
+		{"main", "test", "testIntegration"};
 
 	private static final Pattern _buildGradleDependencyPattern =
 		Pattern.compile(

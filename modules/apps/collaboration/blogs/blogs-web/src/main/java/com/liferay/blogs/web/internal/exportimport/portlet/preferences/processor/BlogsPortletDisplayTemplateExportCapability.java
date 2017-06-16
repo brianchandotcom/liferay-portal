@@ -27,9 +27,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	service = {
-		Capability.class, BlogsPortletDisplayTemplateExportCapability.class
-	}
+	service =
+		{Capability.class, BlogsPortletDisplayTemplateExportCapability.class}
 )
 public class BlogsPortletDisplayTemplateExportCapability
 	extends PortletDisplayTemplateExportCapability {

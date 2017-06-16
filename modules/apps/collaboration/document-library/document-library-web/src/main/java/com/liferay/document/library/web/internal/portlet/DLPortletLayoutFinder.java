@@ -38,8 +38,7 @@ public class DLPortletLayoutFinder extends BasePortletLayoutFinder {
 		return _PORTLET_IDS;
 	}
 
-	private static final String[] _PORTLET_IDS = {
-		DLPortletKeys.DOCUMENT_LIBRARY, DLPortletKeys.MEDIA_GALLERY_DISPLAY
-	};
+	private static final String[] _PORTLET_IDS =
+		{DLPortletKeys.DOCUMENT_LIBRARY, DLPortletKeys.MEDIA_GALLERY_DISPLAY};
 
 }

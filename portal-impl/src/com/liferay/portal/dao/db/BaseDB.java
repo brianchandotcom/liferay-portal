@@ -1153,13 +1153,11 @@ public abstract class BaseDB implements DB {
 
 	protected static final String DROP_PRIMARY_KEY = "drop primary key";
 
-	protected static final String[] RENAME_TABLE_TEMPLATE = {
-		"@old-table@", "@new-table@"
-	};
+	protected static final String[] RENAME_TABLE_TEMPLATE =
+		{"@old-table@", "@new-table@"};
 
-	protected static final String[] REWORD_TEMPLATE = {
-		"@table@", "@old-column@", "@new-column@", "@type@", "@nullable@"
-	};
+	protected static final String[] REWORD_TEMPLATE =
+		{"@table@", "@old-column@", "@new-column@", "@type@", "@nullable@"};
 
 	protected static final String[] TEMPLATE = {
 		"##", "TRUE", "FALSE", "'01/01/1970'", "CURRENT_TIMESTAMP", " BLOB",

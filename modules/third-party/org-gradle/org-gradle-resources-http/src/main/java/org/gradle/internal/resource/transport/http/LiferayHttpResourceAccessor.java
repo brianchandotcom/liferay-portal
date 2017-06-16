@@ -393,9 +393,8 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 	private static final String _FILES_CACHE_DIR_NAME =
 		"caches/modules-2/files-2.1";
 
-	private static final String[] _REPOSITORY_URL_PROPERTY_KEYS = {
-		"repository.private.url", "repository.url"
-	};
+	private static final String[] _REPOSITORY_URL_PROPERTY_KEYS =
+		{"repository.private.url", "repository.url"};
 
 	private static final String[] _REPOSITORY_URLS = {
 		"http://cdn.repository.liferay.com/nexus/content/groups/public/",

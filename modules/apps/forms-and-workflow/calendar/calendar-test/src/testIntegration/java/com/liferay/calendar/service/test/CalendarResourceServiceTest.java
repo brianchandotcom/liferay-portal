@@ -125,9 +125,8 @@ public class CalendarResourceServiceTest {
 		return nameMap;
 	}
 
-	private static final String[] _CALENDAR_RESOURCE_GROUP_PERMISSIONS = {
-		"ADD_CALENDAR", "DELETE", "PERMISSIONS", "UPDATE", "VIEW"
-	};
+	private static final String[] _CALENDAR_RESOURCE_GROUP_PERMISSIONS =
+		{"ADD_CALENDAR", "DELETE", "PERMISSIONS", "UPDATE", "VIEW"};
 
 	@DeleteAfterTestRun
 	private User _user;

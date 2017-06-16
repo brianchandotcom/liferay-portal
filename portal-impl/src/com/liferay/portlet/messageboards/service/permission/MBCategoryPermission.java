@@ -35,9 +35,8 @@ import com.liferay.portal.util.PropsValues;
  * @author Mate Thurzo
  */
 @OSGiBeanProperties(
-	property = {
-		"model.class.name=com.liferay.message.boards.kernel.model.MBCategory"
-	}
+	property =
+		{"model.class.name=com.liferay.message.boards.kernel.model.MBCategory"}
 )
 public class MBCategoryPermission implements BaseModelPermissionChecker {
 

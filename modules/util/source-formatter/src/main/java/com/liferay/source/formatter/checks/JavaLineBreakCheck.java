@@ -367,8 +367,8 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 
 		while (matcher.find()) {
 			String newLine =
-				matcher.group(3) + matcher.group(2) + matcher.group(4) +
-					matcher.group(5);
+				matcher.group(4) + matcher.group(2) + matcher.group(5) +
+					matcher.group(6);
 
 			if (getLineLength(newLine) <= getMaxLineLength()) {
 				return StringUtil.replace(
@@ -737,7 +737,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 	}
 
 	private final Pattern _arrayPattern = Pattern.compile(
-		"(\n\t*.* =) (new \\w*\\[\\] \\{)\n(\t*)(.+)\n\t*(\\};)\n");
+		"(\n\t*.* =) ((new \\w*\\[\\] )?\\{)\n(\t*)(.+)\n\t*(\\};?)\n");
 	private final Pattern _classPattern = Pattern.compile(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
 			"(class|enum|interface) ([\\s\\S]*?) \\{)\n(\\s*)(\\S)");
@@ -750,7 +750,7 @@ public class JavaLineBreakCheck extends BaseFileCheck {
 	private final Pattern _incorrectLineBreakPattern2 = Pattern.compile(
 		"\n(\t*).*\\}\n(\t*)\\);");
 	private final Pattern _incorrectLineBreakPattern3 = Pattern.compile(
-		"\n(\t*)\\{.+(?<!\\}(,|;)?)\n");
+		"\n(\t*)\\{.+(?<!\\}\\){0,10}(,|;)?)\n");
 	private final Pattern _incorrectLineBreakPattern4 = Pattern.compile(
 		"\n(\t+\\{)\n(.*[^;])\n\t+(\\},?)");
 	private final Pattern _incorrectLineBreakPattern5 = Pattern.compile(

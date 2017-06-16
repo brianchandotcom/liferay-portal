@@ -38,8 +38,7 @@ public class PortletAppDescriptor extends SimpleXMLDescriptor {
 		return _ELEMENTS_IDENTIFIED_BY_CHILD;
 	}
 
-	private static final ElementIdentifier[] _ELEMENTS_IDENTIFIED_BY_CHILD = {
-		new ElementIdentifier("portlet", "portlet-name")
-	};
+	private static final ElementIdentifier[] _ELEMENTS_IDENTIFIED_BY_CHILD =
+		{new ElementIdentifier("portlet", "portlet-name")};
 
 }

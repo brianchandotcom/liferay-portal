@@ -39,8 +39,7 @@ public class SampleMySQLDB extends MySQLDB {
 		"COMMIT_TRANSACTION"
 	};
 
-	private static final String[] _MYSQL_TEMPLATE = {
-		"1", "0", "'1970-01-01'", "now()", "commit"
-	};
+	private static final String[] _MYSQL_TEMPLATE =
+		{"1", "0", "'1970-01-01'", "now()", "commit"};
 
 }

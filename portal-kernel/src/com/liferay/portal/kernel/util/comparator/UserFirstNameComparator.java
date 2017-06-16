@@ -28,9 +28,8 @@ public class UserFirstNameComparator extends OrderByComparator<User> {
 	public static final String ORDER_BY_DESC =
 		"firstName DESC, middleName DESC, lastName DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {
-		"firstName", "middleName", "lastName"
-	};
+	public static final String[] ORDER_BY_FIELDS =
+		{"firstName", "middleName", "lastName"};
 
 	public UserFirstNameComparator() {
 		this(false);

@@ -252,9 +252,8 @@ public class PortletPreferencesFinderImpl
 		long companyId, long groupId, long ownerId, int ownerType,
 		String portletId, boolean privateLayout) {
 
-		Object[] finderArgs = {
-			companyId, groupId, ownerId, ownerType, portletId, privateLayout
-		};
+		Object[] finderArgs =
+			{companyId, groupId, ownerId, ownerType, portletId, privateLayout};
 
 		List<PortletPreferences> list =
 			(List<PortletPreferences>)FinderCacheUtil.getResult(

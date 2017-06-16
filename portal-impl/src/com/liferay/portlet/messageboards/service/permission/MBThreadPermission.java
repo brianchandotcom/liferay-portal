@@ -21,9 +21,8 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
  * @author Brian Wing Shun Chan
  */
 @OSGiBeanProperties(
-	property = {
-		"model.class.name=com.liferay.message.boards.kernel.model.MBThread"
-	}
+	property =
+		{"model.class.name=com.liferay.message.boards.kernel.model.MBThread"}
 )
 public class MBThreadPermission
 	extends MBMessagePermission implements BaseModelPermissionChecker {

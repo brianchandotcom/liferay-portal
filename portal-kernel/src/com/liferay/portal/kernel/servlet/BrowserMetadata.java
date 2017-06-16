@@ -242,9 +242,8 @@ public class BrowserMetadata {
 
 	private static final String[] _WEBKIT_ALIASES = {"khtml", "applewebkit"};
 
-	private static final String[] _WINDOWS_ALIASES = {
-		"windows", "win32", "16bit"
-	};
+	private static final String[] _WINDOWS_ALIASES =
+		{"windows", "win32", "16bit"};
 
 	private final String _userAgent;
 

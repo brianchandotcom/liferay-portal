@@ -299,9 +299,8 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 
 	private static final String _INSTANCE_ID = "_INSTANCE_LhZwzy867qfr";
 
-	private static final String[] _PORTLET_IDS = {
-		"47", com.liferay.portlet.util.test.PortletKeys.TEST
-	};
+	private static final String[] _PORTLET_IDS =
+		{"47", com.liferay.portlet.util.test.PortletKeys.TEST};
 
 	private static final List<Portlet> _portlets = new ArrayList<>();
 

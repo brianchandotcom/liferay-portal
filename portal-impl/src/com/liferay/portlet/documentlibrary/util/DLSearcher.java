@@ -26,9 +26,8 @@ import com.liferay.portal.kernel.search.Indexer;
  */
 public class DLSearcher extends BaseSearcher {
 
-	public static final String[] CLASS_NAMES = {
-		DLFileEntry.class.getName(), DLFolder.class.getName()
-	};
+	public static final String[] CLASS_NAMES =
+		{DLFileEntry.class.getName(), DLFolder.class.getName()};
 
 	public static Indexer<?> getInstance() {
 		return new DLSearcher();

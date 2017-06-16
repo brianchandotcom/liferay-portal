@@ -142,9 +142,8 @@ public class UpgradeOracle extends UpgradeProcess {
 		return false;
 	}
 
-	private static final int[] _ORIGINAL_DATA_LENGTH_VALUES = {
-		75, 100, 150, 200, 255, 500, 1000, 1024, 2000, 4000
-	};
+	private static final int[] _ORIGINAL_DATA_LENGTH_VALUES =
+		{75, 100, 150, 200, 255, 500, 1000, 1024, 2000, 4000};
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeOracle.class);
 

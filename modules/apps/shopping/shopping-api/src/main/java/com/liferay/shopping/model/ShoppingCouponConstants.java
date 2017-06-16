@@ -27,8 +27,7 @@ public class ShoppingCouponConstants {
 
 	public static final String DISCOUNT_TYPE_TAX_FREE = "tax-free";
 
-	public static final String[] DISCOUNT_TYPES = {
-		"percentage", "actual", "free-shipping", "tax-free"
-	};
+	public static final String[] DISCOUNT_TYPES =
+		{"percentage", "actual", "free-shipping", "tax-free"};
 
 }

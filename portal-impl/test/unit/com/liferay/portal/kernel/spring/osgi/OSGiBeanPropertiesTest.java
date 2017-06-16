@@ -292,9 +292,8 @@ public class OSGiBeanPropertiesTest {
 	@Test
 	public void testWithArrayOfBooleanProperties() {
 		@OSGiBeanProperties(
-			property = {
-				"key:Boolean=true", "key:Boolean=false", "key:Boolean=true"
-			}
+			property =
+				{"key:Boolean=true", "key:Boolean=false", "key:Boolean=true"}
 		)
 		class C {
 		}
@@ -350,9 +349,8 @@ public class OSGiBeanPropertiesTest {
 	@Test
 	public void testWithArrayOfCharacterProperties() {
 		@OSGiBeanProperties(
-			property = {
-				"key:Character=@", "key:Character=#", "key:Character=\u0069"
-			}
+			property =
+				{"key:Character=@", "key:Character=#", "key:Character=\u0069"}
 		)
 		class C {
 		}
@@ -505,9 +503,8 @@ public class OSGiBeanPropertiesTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testWithArrayOfMixedProperties() {
 		@OSGiBeanProperties(
-			property = {
-				"key:String=32767", "key:Integer=-32768", "key:Short=12"
-			}
+			property =
+				{"key:String=32767", "key:Integer=-32768", "key:Short=12"}
 		)
 		class C {
 		}

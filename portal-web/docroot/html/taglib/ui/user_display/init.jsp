@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/common/init.jsp" %>
 
 <%
 boolean author = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:user-display:author"));

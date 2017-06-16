@@ -43,6 +43,7 @@ import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.RebaseCommand;
 import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -381,7 +382,18 @@ public class GitWorkingDirectory {
 			createBranchCommand.setStartPoint(startPoint);
 		}
 
-		createBranchCommand.call();
+		try {
+			createBranchCommand.call();
+		}
+		catch (JGitInternalException jie) {
+			String errorMessage = jie.getMessage();
+
+			if (errorMessage.contains("FAST_FORWARD")) {
+				return;
+			}
+
+			throw jie;
+		}
 	}
 
 	public String createPullRequest(

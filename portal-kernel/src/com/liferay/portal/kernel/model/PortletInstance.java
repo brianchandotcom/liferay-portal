@@ -23,7 +23,10 @@ import java.util.Objects;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             PortletIdCodec}
  */
+@Deprecated
 public class PortletInstance {
 
 	public static final int PORTLET_INSTANCE_KEY_MAX_LENGTH =

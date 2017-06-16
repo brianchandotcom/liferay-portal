@@ -76,13 +76,13 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 	public FriendlyURLEntry addFriendlyURLEntry(
 		FriendlyURLEntry friendlyURLEntry);
 
-	public FriendlyURLEntry addFriendlyURLEntry(long groupId, long companyId,
+	public FriendlyURLEntry addFriendlyURLEntry(long groupId,
 		java.lang.Class<?> clazz, long classPK, java.lang.String urlTitle,
 		ServiceContext serviceContext) throws PortalException;
 
-	public FriendlyURLEntry addFriendlyURLEntry(long groupId, long companyId,
-		long classNameId, long classPK, java.lang.String urlTitle,
-		ServiceContext serviceContext) throws PortalException;
+	public FriendlyURLEntry addFriendlyURLEntry(long groupId, long classNameId,
+		long classPK, java.lang.String urlTitle, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new friendly url entry with the primary key. Does not add the friendly url entry to the database.
@@ -117,11 +117,11 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 	public FriendlyURLEntry fetchFriendlyURLEntry(long friendlyURLEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntry fetchFriendlyURLEntry(long groupId, long companyId,
+	public FriendlyURLEntry fetchFriendlyURLEntry(long groupId,
 		java.lang.Class<?> clazz, java.lang.String urlTitle);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURLEntry fetchFriendlyURLEntry(long groupId, long companyId,
+	public FriendlyURLEntry fetchFriendlyURLEntry(long groupId,
 		long classNameId, java.lang.String urlTitle);
 
 	/**
@@ -160,13 +160,11 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FriendlyURLEntry getMainFriendlyURLEntry(long groupId,
-		long companyId, java.lang.Class<?> clazz, long classPK)
-		throws PortalException;
+		java.lang.Class<?> clazz, long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FriendlyURLEntry getMainFriendlyURLEntry(long groupId,
-		long companyId, long classNameId, long classPK)
-		throws PortalException;
+		long classNameId, long classPK) throws PortalException;
 
 	/**
 	* Updates the friendly url entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -218,8 +216,8 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getUniqueUrlTitle(long groupId, long companyId,
-		long classNameId, long classPK, java.lang.String urlTitle);
+	public java.lang.String getUniqueUrlTitle(long groupId, long classNameId,
+		long classPK, java.lang.String urlTitle);
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -276,7 +274,7 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FriendlyURLEntry> getFriendlyURLEntries(long groupId,
-		long companyId, long classNameId, long classPK);
+		long classNameId, long classPK);
 
 	/**
 	* Returns all the friendly url entries matching the UUID and company.
@@ -322,22 +320,22 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	public void deleteFriendlyURLEntry(long groupId, long companyId,
-		java.lang.Class<?> clazz, long classPK);
+	public void deleteFriendlyURLEntry(long groupId, java.lang.Class<?> clazz,
+		long classPK);
 
-	public void deleteFriendlyURLEntry(long groupId, long companyId,
-		java.lang.Class<?> clazz, long classPK, java.lang.String urlTitle)
+	public void deleteFriendlyURLEntry(long groupId, java.lang.Class<?> clazz,
+		long classPK, java.lang.String urlTitle)
 		throws NoSuchFriendlyURLEntryException;
 
-	public void deleteFriendlyURLEntry(long groupId, long companyId,
-		long classNameId, long classPK, java.lang.String urlTitle)
+	public void deleteFriendlyURLEntry(long groupId, long classNameId,
+		long classPK, java.lang.String urlTitle)
 		throws NoSuchFriendlyURLEntryException;
 
 	public void deleteGroupFriendlyURLEntries(long groupId, long classNameId);
 
-	public void validate(long groupId, long companyId, long classNameId,
+	public void validate(long groupId, long classNameId,
 		java.lang.String urlTitle) throws PortalException;
 
-	public void validate(long groupId, long companyId, long classNameId,
-		long classPK, java.lang.String urlTitle) throws PortalException;
+	public void validate(long groupId, long classNameId, long classPK,
+		java.lang.String urlTitle) throws PortalException;
 }

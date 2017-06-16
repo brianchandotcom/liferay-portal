@@ -82,7 +82,7 @@
 		<if>
 			<isset var="dmContractLegalReviewer" />
 			<then>
-				<execute function="Type" locator1="DocumentsAndMediaEditContract#LEGALL_REVIEWER" value1="${dmContractLegalReviewer}" />
+				<execute function="Type" locator1="DocumentsAndMediaEditContract#LEGAL_REVIEWER" value1="${dmContractLegalReviewer}" />
 			</then>
 		</if>
 

@@ -29,7 +29,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LEGALL_REVIEWER</td>
+	<td>LEGAL_REVIEWER</td>
 	<td>//div[contains(@class,'ddm-field-group')]//div[contains(.,'Legal Reviewer')]//input</td>
 	<td></td>
 </tr>

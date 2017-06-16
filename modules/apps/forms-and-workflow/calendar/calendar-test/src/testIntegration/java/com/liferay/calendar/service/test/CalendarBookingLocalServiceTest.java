@@ -29,12 +29,14 @@ import com.liferay.calendar.test.util.RecurrenceTestUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -739,6 +741,25 @@ public class CalendarBookingLocalServiceTest {
 		Assert.assertEquals(
 			secondCalendarBookingInstance.getStartTime(),
 			instance.getStartTime());
+	}
+
+	@Test
+	public void testInviteGroupCalendar() throws Exception {
+		ServiceContext serviceContext = createServiceContext();
+
+		Calendar invitingCalendar = CalendarTestUtil.addCalendar(
+			_user, serviceContext);
+
+		_group = GroupTestUtil.addGroup();
+
+		Calendar groupCalendar = CalendarTestUtil.addCalendar(
+			_group, serviceContext);
+
+		CalendarBooking childCalendarBooking =
+			CalendarBookingTestUtil.addChildCalendarBooking(
+				invitingCalendar, groupCalendar);
+
+		assertCalendar(childCalendarBooking, groupCalendar);
 	}
 
 	@Test
@@ -2016,6 +2037,13 @@ public class CalendarBookingLocalServiceTest {
 		assertCalendarBookingInstancesCount(calendarBookingId, 1);
 	}
 
+	protected void assertCalendar(
+		CalendarBooking calendarBooking, Calendar calendar) {
+
+		Assert.assertEquals(
+			calendar.getCalendarId(), calendarBooking.getCalendarId());
+	}
+
 	protected void assertCalendarBookingInstancesCount(
 			long calendarBookingId, int count)
 		throws PortalException {
@@ -2235,6 +2263,9 @@ public class CalendarBookingLocalServiceTest {
 		StringPool.UTC);
 
 	private Object _checkBookingMessageListener;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@DeleteAfterTestRun
 	private User _invitingUser;

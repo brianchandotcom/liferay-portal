@@ -27,7 +27,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import java.util.regex.Matcher;
@@ -62,18 +61,19 @@ public class DBInspector {
 	public boolean hasColumn(String tableName, String columnName)
 		throws Exception {
 
-		try (PreparedStatement ps = _connection.prepareStatement(
-				"select * from " + tableName);
-			ResultSet rs = ps.executeQuery()) {
+		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
-			ResultSetMetaData rsmd = rs.getMetaData();
+		tableName = normalizeName(tableName);
 
-			for (int i = 0; i < rsmd.getColumnCount(); i++) {
-				String curColumnName = rsmd.getColumnName(i + 1);
+		columnName = normalizeName(columnName);
 
-				if (StringUtil.equalsIgnoreCase(curColumnName, columnName)) {
-					return true;
-				}
+		try (ResultSet rs = databaseMetaData.getColumns(
+				getCatalog(), getSchema(), tableName, columnName)) {
+
+			if (!rs.next()) {
+				return false;
+			} else {
+				return true;
 			}
 		}
 		catch (Exception e) {
@@ -174,6 +174,24 @@ public class DBInspector {
 		}
 
 		return false;
+	}
+
+	public String normalizeName(String name) throws SQLException {
+		return normalizeName(name, _connection.getMetaData());
+	}
+
+	public String normalizeName(String name, DatabaseMetaData databaseMetaData)
+		throws SQLException {
+
+		if (databaseMetaData.storesLowerCaseIdentifiers()) {
+			return StringUtil.toLowerCase(name);
+		}
+
+		if (databaseMetaData.storesUpperCaseIdentifiers()) {
+			return StringUtil.toUpperCase(name);
+		}
+
+		return name;
 	}
 
 	private int _getColumnDataType(Class<?> tableClass, String columnName)

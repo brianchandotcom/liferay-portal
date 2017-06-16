@@ -160,7 +160,7 @@ public class WikiPageLocalServiceTest {
 		Assert.assertEquals("ChildPage 1", page.getTitle());
 	}
 
-	@Test(expected = PortalException.class)
+	@Test(expected = AssetCategoryTestException.class)
 	public void testAddPageWithoutRequiredCategory() throws Exception {
 		AssetVocabulary assetVocabulary = getRequiredAssetVocabulary();
 
@@ -178,7 +178,7 @@ public class WikiPageLocalServiceTest {
 				true, serviceContext);
 		}
 		catch (AssetCategoryException ace) {
-			throw new PortalException();
+			throw new AssetCategoryTestException();
 		}
 	}
 
@@ -1049,5 +1049,8 @@ public class WikiPageLocalServiceTest {
 	private Group _group;
 
 	private WikiNode _node;
+
+	private static class AssetCategoryTestException extends PortalException {
+	}
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.wiki.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
@@ -171,15 +170,10 @@ public class WikiPageLocalServiceTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), "category 1",
 			assetVocabulary.getVocabularyId(), serviceContext);
 
-		try {
-			WikiTestUtil.addPage(
-				TestPropsValues.getUserId(), _node.getNodeId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				true, serviceContext);
-		}
-		catch (AssetCategoryException ace) {
-			throw new PortalException();
-		}
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
+			serviceContext);
 	}
 
 	@Test

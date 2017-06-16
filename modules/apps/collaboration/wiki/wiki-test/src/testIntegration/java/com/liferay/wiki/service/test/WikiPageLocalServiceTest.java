@@ -24,11 +24,13 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -44,6 +46,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -98,6 +101,28 @@ public class WikiPageLocalServiceTest {
 	}
 
 	@Test
+	public void testAddFrontPageWithoutRequiredCategory() throws Exception {
+		AssetVocabulary assetVocabulary = getRequiredAssetVocabulary();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		AssetCategoryLocalServiceUtil.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(), "category 1",
+			assetVocabulary.getVocabularyId(), serviceContext);
+
+		WikiPage frontPage = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(), "FrontPage",
+			RandomTestUtil.randomString(), true, serviceContext);
+
+		List<AssetCategory> categories =
+			AssetCategoryLocalServiceUtil.getCategories(
+				WikiPage.class.getName(), frontPage.getResourcePrimKey());
+
+		Assert.assertTrue(ListUtil.isNull(categories));
+	}
+
+	@Test
 	public void testAddPageWithInvalidTitle() throws Exception {
 		char[] invalidCharacters = "\\[]|:;%<>".toCharArray();
 
@@ -132,6 +157,55 @@ public class WikiPageLocalServiceTest {
 			RandomTestUtil.randomString(), true, serviceContext);
 
 		Assert.assertEquals("ChildPage 1", page.getTitle());
+	}
+
+	@Test(expected = PortalException.class)
+	public void testAddPageWithoutRequiredCategory() throws Exception {
+		AssetVocabulary assetVocabulary = getRequiredAssetVocabulary();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		AssetCategoryLocalServiceUtil.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(), "category 1",
+			assetVocabulary.getVocabularyId(), serviceContext);
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
+			serviceContext);
+	}
+
+	@Test
+	public void testAddPageWithRequiredCategory() throws Exception {
+		AssetVocabulary assetVocabulary = getRequiredAssetVocabulary();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(), "category 1",
+			assetVocabulary.getVocabularyId(), serviceContext);
+
+		long categoryId = assetCategory.getCategoryId();
+
+		serviceContext.setAssetCategoryIds(new long[] {categoryId});
+
+		WikiPage page = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
+			serviceContext);
+
+		List<AssetCategory> assetCategories =
+			AssetCategoryLocalServiceUtil.getCategories(
+				WikiPage.class.getName(), page.getResourcePrimKey());
+
+		Assert.assertEquals(
+			assetCategories.toString(), 1, assetCategories.size());
+
+		AssetCategory persistedAssetCategory = assetCategories.get(0);
+
+		Assert.assertEquals(categoryId, persistedAssetCategory.getCategoryId());
 	}
 
 	@Test
@@ -844,6 +918,30 @@ public class WikiPageLocalServiceTest {
 				expandoBridge.getAttributes(),
 				serviceContext.getExpandoBridgeAttributes());
 		}
+	}
+
+	protected AssetVocabulary getRequiredAssetVocabulary()
+		throws PortalException {
+
+		AssetVocabulary assetVocabulary =
+			AssetVocabularyLocalServiceUtil.addDefaultVocabulary(
+				_group.getGroupId());
+
+		long classNameId = PortalUtil.getClassNameId(WikiPage.class.getName());
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("multiValued=true\nrequiredClassNameIds=");
+		sb.append(classNameId);
+		sb.append(":-1\nselectedClassNameIds=");
+		sb.append(classNameId);
+		sb.append(":-1");
+
+		assetVocabulary.setSettings(sb.toString());
+
+		AssetVocabularyLocalServiceUtil.updateAssetVocabulary(assetVocabulary);
+
+		return assetVocabulary;
 	}
 
 	protected void testChangeParent(boolean hasExpandoValues) throws Exception {

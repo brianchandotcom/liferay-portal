@@ -16,84 +16,91 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttribute(SocialActivityWebKeys.SOCIAL_ACTIVITY_SETTINGS_MAP);
-%>
-
-<liferay-ui:error-principal />
-
-<portlet:actionURL name="/social_activity/edit_activity_settings" var="editURL" />
-
-<aui:form action="<%= editURL %>" cssClass="update-socialactivity-form" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input id="settingsJSON" name="settingsJSON" type="hidden" />
-
-	<h4>
-		<liferay-ui:message key="enable-social-activity-for" />:
-	</h4>
-
-	<aui:row cssClass="social-activity social-activity-settings" id="settings">
-		<aui:col cssClass="social-activity-items" width="<%= 20 %>">
+<div class="container-fluid-1280">
+	<div class="card main-content-card">
+		<div class="card-row card-row-padded">
 
 			<%
-			for (Map.Entry<String, Boolean> entry : activitySettingsMap.entrySet()) {
-				String className = entry.getKey();
-
-				String localizedClassName = ResourceActionsUtil.getModelResource(locale, className);
-
-				boolean enabled = entry.getValue();
+			Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttribute(SocialActivityWebKeys.SOCIAL_ACTIVITY_SETTINGS_MAP);
 			%>
 
-				<h4 class="social-activity-item" data-modelName="<%= className %>" title="<%= localizedClassName %>">
-					<div class="social-activity-item-content">
-						<aui:input disabled="<%= !SocialActivityPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.CONFIGURATION) %>" inlineField="<%= true %>" label="" name='<%= className + ".enabled" %>' title="enabled" type="checkbox" value="<%= enabled %>" />
+			<liferay-ui:error-principal />
 
-						<a class="settings-label" href="javascript:;"><%= localizedClassName %></a>
-					</div>
+			<portlet:actionURL name="/social_activity/edit_activity_settings" var="editURL" />
+
+			<aui:form action="<%= editURL %>" cssClass="update-socialactivity-form" method="post" name="fm">
+				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+				<aui:input id="settingsJSON" name="settingsJSON" type="hidden" />
+
+				<h4>
+					<liferay-ui:message key="enable-social-activity-for" />:
 				</h4>
 
-			<%
-			}
-			%>
+				<aui:row cssClass="social-activity social-activity-settings" id="settings">
+					<aui:col cssClass="social-activity-items" width="<%= 20 %>">
 
-		</aui:col>
+						<%
+						for (Map.Entry<String, Boolean> entry : activitySettingsMap.entrySet()) {
+							String className = entry.getKey();
 
-		<aui:col cssClass="social-activity-details" width="<%= 80 %>" />
-	</aui:row>
+							String localizedClassName = ResourceActionsUtil.getModelResource(locale, className);
 
-	<%
-	List<String> activityDefinitionLanguageKeys = new ArrayList<String>();
+							boolean enabled = entry.getValue();
+						%>
 
-	for (String modelName : activitySettingsMap.keySet()) {
-		List<SocialActivityDefinition> activityDefinitions = SocialConfigurationUtil.getActivityDefinitions(modelName);
+							<h4 class="social-activity-item" data-modelName="<%= className %>" title="<%= localizedClassName %>">
+								<div class="social-activity-item-content">
+									<aui:input disabled="<%= !SocialActivityPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.CONFIGURATION) %>" inlineField="<%= true %>" label="" name='<%= className + ".enabled" %>' title="enabled" type="checkbox" value="<%= enabled %>" />
 
-		for (SocialActivityDefinition activityDefinition : activityDefinitions) {
-			activityDefinitionLanguageKeys.add("'" + modelName + "." + activityDefinition.getLanguageKey() + "': \"" + activityDefinition.getName(locale) + "\"");
-		}
-	}
-	%>
+									<a class="settings-label" href="javascript:;"><%= localizedClassName %></a>
+								</div>
+							</h4>
 
-	<aui:script use="liferay-social-activity-admin">
-		new Liferay.Portlet.SocialActivity.Admin(
-			{
-				activityDefinitionLanguageKeys: {
-					<%= StringUtil.merge(activityDefinitionLanguageKeys) %>
-				},
-				counterSettings: {
+						<%
+						}
+						%>
 
-					<%
-					SocialActivityGroupServiceConfiguration socialActivityGroupServiceConfiguration = ConfigurationProviderUtil.getConfiguration(SocialActivityGroupServiceConfiguration.class, new CompanyServiceSettingsLocator(company.getCompanyId(), "com.liferay.social.activity.configuration.SocialActivityGroupServiceConfiguration"));
-					%>
+					</aui:col>
 
-					contributionIncrements: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.contributionIncrements()) %>],
-					contributionLimitValues: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.contributionLimitValues()) %>],
-					participationIncrements: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.participationIncrements()) %>],
-					participationLimitValues: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.participationLimitValues()) %>]
-				},
-				namespace: '<portlet:namespace />',
-				portletId: '<%= portletDisplay.getId() %>'
-			}
-		);
-	</aui:script>
-</aui:form>
+					<aui:col cssClass="social-activity-details" width="<%= 80 %>" />
+				</aui:row>
+
+				<%
+				List<String> activityDefinitionLanguageKeys = new ArrayList<String>();
+
+				for (String modelName : activitySettingsMap.keySet()) {
+					List<SocialActivityDefinition> activityDefinitions = SocialConfigurationUtil.getActivityDefinitions(modelName);
+
+					for (SocialActivityDefinition activityDefinition : activityDefinitions) {
+						activityDefinitionLanguageKeys.add("'" + modelName + "." + activityDefinition.getLanguageKey() + "': \"" + activityDefinition.getName(locale) + "\"");
+					}
+				}
+				%>
+
+				<aui:script use="liferay-social-activity-admin">
+					new Liferay.Portlet.SocialActivity.Admin(
+						{
+							activityDefinitionLanguageKeys: {
+								<%= StringUtil.merge(activityDefinitionLanguageKeys) %>
+							},
+							counterSettings: {
+
+								<%
+								SocialActivityGroupServiceConfiguration socialActivityGroupServiceConfiguration = ConfigurationProviderUtil.getConfiguration(SocialActivityGroupServiceConfiguration.class, new CompanyServiceSettingsLocator(company.getCompanyId(), "com.liferay.social.activity.configuration.SocialActivityGroupServiceConfiguration"));
+								%>
+
+								contributionIncrements: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.contributionIncrements()) %>],
+								contributionLimitValues: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.contributionLimitValues()) %>],
+								participationIncrements: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.participationIncrements()) %>],
+								participationLimitValues: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.participationLimitValues()) %>]
+							},
+							namespace: '<portlet:namespace />',
+							portletId: '<%= portletDisplay.getId() %>'
+						}
+					);
+				</aui:script>
+			</aui:form>
+		</div>
+	</div>
+</div>

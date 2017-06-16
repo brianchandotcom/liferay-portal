@@ -89,6 +89,7 @@
 		</execute>
 
 		<execute function="Close#closeWindow" locator1="title=Page Template Name - ${siteName}" />
+
 		<execute function="SelectWindow" locator1="title=Page Templates - Control Panel - ${siteName}" />
 
 		<execute macro="Navigator#gotoSitePage">
@@ -123,6 +124,7 @@
 		</execute>
 
 		<execute function="Close#closeWindow" locator1="title=Page Template Name - ${siteName}" />
+
 		<execute function="SelectWindow" locator1="title=Page Templates - Control Panel - ${siteName}" />
 
 		<execute macro="Navigator#gotoSitePage">

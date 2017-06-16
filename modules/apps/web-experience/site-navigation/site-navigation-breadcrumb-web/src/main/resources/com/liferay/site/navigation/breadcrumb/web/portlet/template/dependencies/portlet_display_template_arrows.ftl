@@ -11,8 +11,8 @@
 			}
 
 			.breadcrumb-arrows li > a {
-				background: #efefef;
-				border-right: 4px solid #fff;
+				background: #EFEFEF;
+				border-right: 4px solid #FFF;
 				display: inline-block;
 				padding: 12px 30px;
 				position: relative;
@@ -20,11 +20,11 @@
 
 			.breadcrumb-arrows a::after {
 				border-bottom: 20px inset transparent;
-				border-left: 20px solid #efefef;
+				border-left: 20px solid #EFEFEF;
 				border-top: 20px inset transparent;
 				content: "";
 				height: 0;
-				position: absolute;	
+				position: absolute;
 				right: -20px;
 				top: 0;
 				width: 0;
@@ -33,7 +33,7 @@
 
 			.breadcrumb-arrows li:nth-child(n+2) a::before {
 				border-bottom: 20px inset transparent;
-				border-left: 20px solid #fff;
+				border-left: 20px solid #FFF;
 				border-top: 20px inset transparent;
 				content: "";
 				height: 0;
@@ -44,25 +44,21 @@
 			}
 
 			.breadcrumb-arrows li:first-child > a {
-				-moz-border-radius: 4px 0 0 4px;
-				-webkit-border-radius: 4px 0 0 4px;
 				border-radius: 4px 0 0 4px;
 			}
 
 			.breadcrumb-arrows li:last-child {
-				-moz-border-radius: 0 4px 4px 0;
-				-webkit-border-radius: 0 4px 4px 0;
 				background: #007ACC;
 				border-radius: 0 4px 4px 0;
-				border-right: none;
-				color: #fff;
+				border-right-width: 0;
+				color: #FFF;
 				padding: 12px 30px;
 				position: relative;
 			}
 
 			.breadcrumb-arrows li:last-child::before {
 				border-bottom: 20px inset transparent;
-				border-left: 20px solid #fff;
+				border-left: 20px solid #FFF;
 				border-top: 20px inset transparent;
 				content: "";
 				height: 0;
@@ -73,11 +69,11 @@
 			}
 
 			.breadcrumb-arrows li:first-child::before > a {
-				border: none;
+				border-width: 0;
 			}
 
 			.breadcrumb-arrows li:last-child::after > a {
-				border: none;
+				border-width: 0;
 			}
 		</style>
 	</@>

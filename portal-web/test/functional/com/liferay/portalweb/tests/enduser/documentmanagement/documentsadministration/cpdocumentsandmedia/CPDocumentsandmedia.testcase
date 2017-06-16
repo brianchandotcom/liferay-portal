@@ -78,30 +78,15 @@
 		</execute>
 
 		<execute macro="DMDocument#viewDocumentTypePG">
-			<var name="documentType" value="Contract" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentTypePG">
 			<var name="dateValue" value="6/1/17" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentTypePG">
-			<var name="dateValue" value="6/15/17" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentTypePG">
+			<var name="documentType" value="Contract" />
 			<var name="selectOption" value="NDA" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentTypePG">
-			<var name="selectOption" value="Draft" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentTypePG">
 			<var name="textContent" value="DM Contract Legal Reviewer" />
 		</execute>
 
 		<execute macro="DMDocument#viewDocumentTypePG">
+			<var name="dateValue" value="6/15/17" />
+			<var name="selectOption" value="Draft" />
 			<var name="textContent" value="DM Contract Signing Authority" />
 		</execute>
 

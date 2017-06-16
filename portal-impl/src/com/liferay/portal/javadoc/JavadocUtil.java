@@ -98,13 +98,11 @@ public class JavadocUtil {
 		return Arrays.binarySearch(_PRIMITIVE_TYPE_NAMES, className);
 	}
 
-	private static final char[] _PRIMITIVE_BYTECODE_NAME = {
-		'Z', 'B', 'C', 'D', 'F', 'I', 'J', 'S'
-	};
+	private static final char[] _PRIMITIVE_BYTECODE_NAME =
+		{'Z', 'B', 'C', 'D', 'F', 'I', 'J', 'S'};
 
-	private static final String[] _PRIMITIVE_TYPE_NAMES = {
-		"boolean", "byte", "char", "double", "float", "int", "long", "short"
-	};
+	private static final String[] _PRIMITIVE_TYPE_NAMES =
+		{"boolean", "byte", "char", "double", "float", "int", "long", "short"};
 
 	private static final Class<?>[] _PRIMITIVE_TYPES = new Class<?>[] {
 		boolean.class, byte.class, char.class, double.class, float.class,

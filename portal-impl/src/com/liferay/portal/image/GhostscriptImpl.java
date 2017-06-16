@@ -160,9 +160,8 @@ public class GhostscriptImpl implements Ghostscript {
 
 	private static final String _GHOSTSCRIPT_COMMAND_UNIX = "gs";
 
-	private static final String[] _GHOSTSCRIPT_COMMAND_WINDOWS = {
-		"gswin32c", "gswin64c"
-	};
+	private static final String[] _GHOSTSCRIPT_COMMAND_WINDOWS =
+		{"gswin32c", "gswin64c"};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GhostscriptImpl.class);

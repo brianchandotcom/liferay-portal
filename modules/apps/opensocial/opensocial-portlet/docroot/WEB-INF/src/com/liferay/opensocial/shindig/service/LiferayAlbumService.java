@@ -360,9 +360,8 @@ public class LiferayAlbumService implements AlbumService {
 		return album;
 	}
 
-	private static final Album.Field[] _ALBUM_FIELDS = {
-		Album.Field.LOCATION, Album.Field.THUMBNAIL_URL
-	};
+	private static final Album.Field[] _ALBUM_FIELDS =
+		{Album.Field.LOCATION, Album.Field.THUMBNAIL_URL};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayAlbumService.class);

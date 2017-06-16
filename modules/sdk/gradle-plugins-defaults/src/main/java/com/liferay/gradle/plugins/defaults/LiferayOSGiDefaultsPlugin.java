@@ -4105,9 +4105,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private static final String _SERVICE_BUILDER_PORTAL_TOOL_NAME =
 		"com.liferay.portal.tools.service.builder";
 
-	private static final String[] _SNAPSHOT_PROPERTY_NAMES = {
-		SNAPSHOT_IF_STALE_PROPERTY_NAME
-	};
+	private static final String[] _SNAPSHOT_PROPERTY_NAMES =
+		{SNAPSHOT_IF_STALE_PROPERTY_NAME};
 
 	private static final String _SOURCE_FORMATTER_PORTAL_TOOL_NAME =
 		"com.liferay.source.formatter";

@@ -329,9 +329,8 @@ public class JSONFactoryTest {
 
 	private static final int _INTEGER_VALUE = 5;
 
-	private static final long[] _LONG_ARRAY = {
-		10000000000000L, 20000000000000L, 30000000000000L
-	};
+	private static final long[] _LONG_ARRAY =
+		{10000000000000L, 20000000000000L, 30000000000000L};
 
 	private static final String _LONG_ARRAY_STRING =
 		"[10000000000000,20000000000000,30000000000000]";

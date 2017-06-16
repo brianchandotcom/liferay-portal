@@ -98,9 +98,8 @@ public class WebXML24Descriptor extends SimpleXMLDescriptor {
 		new ElementIdentifier("ejb-local-ref", "ejb-ref-name")
 	};
 
-	private static final String[] _JOINABLE_ELEMENTS = {
-		"welcome-file-list", "jsp-config"
-	};
+	private static final String[] _JOINABLE_ELEMENTS =
+		{"welcome-file-list", "jsp-config"};
 
 	private static final String[] _ROOT_ORDERED_CHILDREN = {
 		"icon", "display-name", "description", "distributable", "context-param",

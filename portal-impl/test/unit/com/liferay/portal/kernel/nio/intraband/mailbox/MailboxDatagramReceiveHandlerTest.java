@@ -54,9 +54,8 @@ public class MailboxDatagramReceiveHandlerTest {
 	}
 
 	@AdviseWith(
-		adviceClasses = {
-			PropsUtilAdvice.class, PortalExecutorManagerUtilAdvice.class
-		}
+		adviceClasses =
+			{PropsUtilAdvice.class, PortalExecutorManagerUtilAdvice.class}
 	)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test

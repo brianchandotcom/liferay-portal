@@ -136,9 +136,8 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 		PropsKeys.SITES_EMAIL_MEMBERSHIP_REQUEST_SUBJECT
 	};
 
-	private static final String[] _NEW_PORTLET_PREFERENCES = {
-		"site-role", "[$SITE_NAME$]"
-	};
+	private static final String[] _NEW_PORTLET_PREFERENCES =
+		{"site-role", "[$SITE_NAME$]"};
 
 	private static final String[] _OLD_PORTAL_PREFERENCES = {
 		"company.security.community.logo", "communities.email.from.address",
@@ -149,8 +148,7 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 		"communities.email.membership.request.subject"
 	};
 
-	private static final String[] _OLD_PORTLET_PREFERENCES = {
-		"community-role", "[$COMMUNITY_NAME$]"
-	};
+	private static final String[] _OLD_PORTLET_PREFERENCES =
+		{"community-role", "[$COMMUNITY_NAME$]"};
 
 }

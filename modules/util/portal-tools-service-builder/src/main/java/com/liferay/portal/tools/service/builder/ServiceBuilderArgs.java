@@ -30,9 +30,8 @@ public class ServiceBuilderArgs {
 	public static final String OUTPUT_KEY_MODIFIED_FILES =
 		"service.builder.modified.files";
 
-	public static final String[] READ_ONLY_PREFIXES = {
-		"fetch", "get", "has", "is", "load", "reindex", "search"
-	};
+	public static final String[] READ_ONLY_PREFIXES =
+		{"fetch", "get", "has", "is", "load", "reindex", "search"};
 
 	public static final String[] RESOURCE_ACTION_CONFIGS = {
 		"META-INF/resource-actions/default.xml", "resource-actions/default.xml"

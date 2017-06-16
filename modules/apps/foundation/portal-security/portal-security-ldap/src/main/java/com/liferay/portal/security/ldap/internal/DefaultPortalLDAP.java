@@ -413,9 +413,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		SystemLDAPConfiguration systemLDAPConfiguration =
 			_systemLDAPConfigurationProvider.getConfiguration(companyId);
 
-		String[] attributeIds = {
-			_getNextRange(systemLDAPConfiguration, attribute.getID())
-		};
+		String[] attributeIds =
+			{_getNextRange(systemLDAPConfiguration, attribute.getID())};
 
 		while (true) {
 			List<SearchResult> searchResults = new ArrayList<>();

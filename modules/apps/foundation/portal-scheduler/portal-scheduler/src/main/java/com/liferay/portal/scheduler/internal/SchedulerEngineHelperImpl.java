@@ -252,9 +252,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				int monthlyDay = ParamUtil.getInteger(
 					portletRequest, "monthlyDay1");
 
-				DayAndPosition[] dayPos = {
-					new DayAndPosition(monthlyDay, monthlyPos)
-				};
+				DayAndPosition[] dayPos =
+					{new DayAndPosition(monthlyDay, monthlyPos)};
 
 				recurrence.setByDay(dayPos);
 
@@ -289,9 +288,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				int yearlyMonth = ParamUtil.getInteger(
 					portletRequest, "yearlyMonth1");
 
-				DayAndPosition[] dayPos = {
-					new DayAndPosition(yearlyDay, yearlyPos)
-				};
+				DayAndPosition[] dayPos =
+					{new DayAndPosition(yearlyDay, yearlyPos)};
 
 				recurrence.setByDay(dayPos);
 

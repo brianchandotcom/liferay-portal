@@ -22,8 +22,7 @@ public class PasswordPolicyConstants {
 	public static final String DEFAULT_PASSWORD_POLICY =
 		"Default Password Policy";
 
-	public static final String[] SYSTEM_PASSWORD_POLICIES = {
-		DEFAULT_PASSWORD_POLICY
-	};
+	public static final String[] SYSTEM_PASSWORD_POLICIES =
+		{DEFAULT_PASSWORD_POLICY};
 
 }

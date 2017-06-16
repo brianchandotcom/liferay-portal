@@ -25,8 +25,7 @@ public class LegacyGoogleLoginPropsKeys {
 
 	public static final String CLIENT_SECRET = "google-client-secret";
 
-	public static final String[] GOOGLE_LOGIN_KEYS = {
-		AUTH_ENABLED, CLIENT_ID, CLIENT_SECRET
-	};
+	public static final String[] GOOGLE_LOGIN_KEYS =
+		{AUTH_ENABLED, CLIENT_ID, CLIENT_SECRET};
 
 }

@@ -44,9 +44,8 @@ import org.osgi.service.component.annotations.Modified;
 @Component(
 	configurationPid = "com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	property = {
-		"javax.portlet.name=" + AmazonRankingsPortletKeys.AMAZON_RANKINGS
-	}
+	property =
+		{"javax.portlet.name=" + AmazonRankingsPortletKeys.AMAZON_RANKINGS}
 )
 public class AmazonRankingsPreferencesValidator
 	implements PreferencesValidator {

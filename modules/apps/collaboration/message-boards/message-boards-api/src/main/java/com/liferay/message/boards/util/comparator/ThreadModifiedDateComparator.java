@@ -33,9 +33,8 @@ public class ThreadModifiedDateComparator<T> extends OrderByComparator<T> {
 		"modelCategory ASC, priority DESC, modifiedDate DESC, name ASC, " +
 			"modelId ASC";
 
-	public static final String[] ORDER_BY_FIELDS = {
-		"modelCategory", "priority", "modifiedDate", "name", "modelId"
-	};
+	public static final String[] ORDER_BY_FIELDS =
+		{"modelCategory", "priority", "modifiedDate", "name", "modelId"};
 
 	public ThreadModifiedDateComparator() {
 		this(false);

@@ -45,9 +45,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {"model.class.name=com.liferay.site.model.adapter.StagedGroup"},
-	service = {
-		StagedGroupStagedModelRepository.class, StagedModelRepository.class
-	}
+	service =
+		{StagedGroupStagedModelRepository.class, StagedModelRepository.class}
 )
 public class StagedGroupStagedModelRepository
 	extends BaseStagedModelRepository<StagedGroup> {

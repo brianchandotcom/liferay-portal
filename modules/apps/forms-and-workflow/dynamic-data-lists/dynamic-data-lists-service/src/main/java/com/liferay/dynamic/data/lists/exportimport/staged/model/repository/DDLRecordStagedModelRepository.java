@@ -53,9 +53,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord"
 	},
-	service = {
-		DDLRecordStagedModelRepository.class, StagedModelRepository.class
-	}
+	service =
+		{DDLRecordStagedModelRepository.class, StagedModelRepository.class}
 )
 public class DDLRecordStagedModelRepository
 	extends BaseStagedModelRepository<DDLRecord> {

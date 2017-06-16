@@ -117,7 +117,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

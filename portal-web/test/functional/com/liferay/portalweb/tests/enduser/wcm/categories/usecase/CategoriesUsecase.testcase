@@ -1144,13 +1144,6 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<if>
-			<equals arg1="${exportPermissions}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="Checkbox#PERMISSIONS" />
-			</then>
-		</if>
-
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />

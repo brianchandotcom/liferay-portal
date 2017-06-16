@@ -52,8 +52,6 @@ for (int i = 0; i < organizations.size(); i++) {
 				%>
 
 					<li class="<%= address.isPrimary() ? "icon-star" : StringPool.BLANK %>">
-						<%@ include file="/common/addresses_address_init.jspf" %>
-
 						<%@ include file="/common/addresses_address.jspf" %>
 					</li>
 
@@ -76,8 +74,6 @@ for (int i = 0; i < organizations.size(); i++) {
 				%>
 
 					<li class="<%= (address.isPrimary() && !personalAddresses.isEmpty()) ? "icon-star" : StringPool.BLANK %>">
-						<%@ include file="/common/addresses_address_init.jspf" %>
-
 						<%@ include file="/common/addresses_address.jspf" %>
 					</li>
 

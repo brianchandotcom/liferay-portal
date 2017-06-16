@@ -729,6 +729,8 @@ information.
 				<jvmarg value="-Dosgi.state.dir=${liferay.home}/osgi/state" />
 				<jvmarg value="-Drelease.versions.test.other.dir=${release.versions.test.other.dir}" />
 				<jvmarg value="-Dsun.zip.disableMemoryMapping=true" />
+				<jvmarg value="-DsocksProxyHost=127.0.0.1" />
+				<jvmarg value="-DsocksProxyPort=8888" />
 				<misc />
 				<jvmarg value="-Duser.timezone=GMT" />
 				<classpath location="test-coverage" />

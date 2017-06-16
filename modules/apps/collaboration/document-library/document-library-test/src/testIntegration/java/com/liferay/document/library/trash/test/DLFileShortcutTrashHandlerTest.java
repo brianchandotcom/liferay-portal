@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.trash.exception.RestoreEntryException;
+import com.liferay.trash.exception.TrashEntryException;
 import com.liferay.trash.test.util.BaseTrashHandlerTestCase;
 import com.liferay.trash.test.util.DefaultWhenIsAssetable;
 import com.liferay.trash.test.util.WhenHasGrandParent;
@@ -127,6 +129,28 @@ public class DLFileShortcutTrashHandlerTest
 	@Test
 	public void testTrashFileEntry() throws Exception {
 		trashFileEntry();
+	}
+
+	@Override
+	@Test(expected = TrashEntryException.class)
+	public void testTrashParentAndBaseModel() throws Exception {
+		try {
+			super.testTrashParentAndBaseModel();
+		}
+		catch (com.liferay.trash.kernel.exception.TrashEntryException tee) {
+			throw new TrashEntryException();
+		}
+	}
+
+	@Override
+	@Test(expected = RestoreEntryException.class)
+	public void testTrashParentAndRestoreParentAndBaseModel() throws Exception {
+		try {
+			super.testTrashParentAndRestoreParentAndBaseModel();
+		}
+		catch (com.liferay.trash.kernel.exception.RestoreEntryException ree) {
+			throw new RestoreEntryException();
+		}
 	}
 
 	@Override

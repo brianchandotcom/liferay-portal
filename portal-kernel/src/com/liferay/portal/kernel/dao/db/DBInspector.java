@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.dao.db;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
@@ -166,10 +165,11 @@ public class DBInspector {
 			return false;
 		}
 
-		if (_hasTable(StringUtil.toLowerCase(tableName)) ||
-			_hasTable(StringUtil.toUpperCase(tableName)) ||
-			_hasTable(tableName)) {
+		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
+		tableName = normalizeName(tableName, databaseMetaData);
+
+		if (_hasTable(tableName)) {
 			return true;
 		}
 
@@ -237,20 +237,14 @@ public class DBInspector {
 	}
 
 	private boolean _hasTable(String tableName) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		DatabaseMetaData metadata = _connection.getMetaData();
 
-		try {
-			DatabaseMetaData metadata = _connection.getMetaData();
-
-			rs = metadata.getTables(getCatalog(), getSchema(), tableName, null);
+		try (ResultSet rs = metadata.getTables(
+				getCatalog(), getSchema(), tableName, null);) {
 
 			while (rs.next()) {
 				return true;
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return false;

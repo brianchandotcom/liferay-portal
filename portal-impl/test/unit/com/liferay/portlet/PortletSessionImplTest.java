@@ -17,15 +17,23 @@ package com.liferay.portlet;
 import static com.liferay.portal.kernel.portlet.LiferayPortletSession.LAYOUT_SEPARATOR;
 import static com.liferay.portal.kernel.portlet.LiferayPortletSession.PORTLET_SCOPE_NAMESPACE;
 
+import com.liferay.portal.kernel.io.SerializableObjectWrapper;
+import com.liferay.portal.kernel.servlet.HttpSessionWrapper;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.test.rule.AdviseWith;
+import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletContext;
@@ -33,9 +41,12 @@ import javax.portlet.PortletSession;
 
 import javax.servlet.http.HttpSession;
 
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpSession;
@@ -43,28 +54,25 @@ import org.springframework.mock.web.MockHttpSession;
 /**
  * @author Shuyang Zhou
  */
+@NewEnv(type = NewEnv.Type.CLASSLOADER)
 public class PortletSessionImplTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			AspectJNewEnvTestRule.INSTANCE, CodeCoverageAssertor.INSTANCE);
 
-	@Before
-	public void setUp() {
-		_scopePrefix = _portletSessionImpl.scopePrefix;
-
-		_mockHttpSession.setAttribute(_scopePrefix.concat(_KEY_1), _value1);
-		_mockHttpSession.setAttribute(_scopePrefix.concat(_KEY_2), _value2);
-		_mockHttpSession.setAttribute(_scopePrefix.concat(_KEY_3), _value3);
-
-		_mockHttpSession.setAttribute(_KEY_4, _value4);
-		_mockHttpSession.setAttribute(_KEY_5, _value5);
-	}
-
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testConstructor() {
-		Assert.assertSame(_mockHttpSession, _portletSessionImpl.session);
-		Assert.assertSame(_portletContext, _portletSessionImpl.portletContext);
+		PropsUtilAdvice.setProps(
+			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
+
+		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
+
+		Assert.assertSame(_mockHttpSession, portletSessionImpl.session);
+		Assert.assertSame(_portletContext, portletSessionImpl.portletContext);
 
 		StringBundler sb = new StringBundler(5);
 
@@ -74,50 +82,63 @@ public class PortletSessionImplTest {
 		sb.append(_PLID);
 		sb.append(StringPool.QUESTION);
 
-		Assert.assertEquals(sb.toString(), _portletSessionImpl.scopePrefix);
+		Assert.assertEquals(sb.toString(), portletSessionImpl.scopePrefix);
 	}
 
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testDirectDelegateMethods() {
+		PropsUtilAdvice.setProps(
+			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
+
+		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
+
 		Assert.assertEquals(
 			_mockHttpSession.getCreationTime(),
-			_portletSessionImpl.getCreationTime());
+			portletSessionImpl.getCreationTime());
 		Assert.assertSame(
-			_mockHttpSession, _portletSessionImpl.getHttpSession());
+			_mockHttpSession, portletSessionImpl.getHttpSession());
 		Assert.assertEquals(
-			_mockHttpSession.getId(), _portletSessionImpl.getId());
+			_mockHttpSession.getId(), portletSessionImpl.getId());
 		Assert.assertEquals(
 			_mockHttpSession.getLastAccessedTime(),
-			_portletSessionImpl.getLastAccessedTime());
+			portletSessionImpl.getLastAccessedTime());
 		Assert.assertEquals(
 			_mockHttpSession.getMaxInactiveInterval(),
-			_portletSessionImpl.getMaxInactiveInterval());
+			portletSessionImpl.getMaxInactiveInterval());
 		Assert.assertSame(
-			_portletContext, _portletSessionImpl.getPortletContext());
+			_portletContext, portletSessionImpl.getPortletContext());
 		Assert.assertEquals(
-			_mockHttpSession.isNew(), _portletSessionImpl.isNew());
+			_mockHttpSession.isNew(), portletSessionImpl.isNew());
+
 		Assert.assertFalse(_mockHttpSession.isInvalid());
 
-		_portletSessionImpl.invalidate();
+		portletSessionImpl.invalidate();
 
 		Assert.assertTrue(_mockHttpSession.isInvalid());
 
-		_portletSessionImpl.setMaxInactiveInterval(Integer.MAX_VALUE);
+		portletSessionImpl.setMaxInactiveInterval(Integer.MAX_VALUE);
 
 		Assert.assertEquals(
 			Integer.MAX_VALUE, _mockHttpSession.getMaxInactiveInterval());
 
 		HttpSession session = new MockHttpSession();
 
-		_portletSessionImpl.setHttpSession(session);
+		portletSessionImpl.setHttpSession(session);
 
-		Assert.assertSame(session, _portletSessionImpl.session);
+		Assert.assertSame(session, portletSessionImpl.session);
 	}
 
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testGetAttribute() {
+		PropsUtilAdvice.setProps(
+			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
+
+		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
+
 		try {
-			Assert.assertNull(_portletSessionImpl.getAttribute(null));
+			Assert.assertNull(portletSessionImpl.getAttribute(null));
 
 			Assert.fail();
 		}
@@ -126,7 +147,7 @@ public class PortletSessionImplTest {
 
 		try {
 			Assert.assertNull(
-				_portletSessionImpl.getAttribute(
+				portletSessionImpl.getAttribute(
 					null, PortletSession.APPLICATION_SCOPE));
 
 			Assert.fail();
@@ -134,38 +155,45 @@ public class PortletSessionImplTest {
 		catch (IllegalArgumentException iae) {
 		}
 
-		Assert.assertSame(_value1, _portletSessionImpl.getAttribute(_KEY_1));
-		Assert.assertSame(_value2, _portletSessionImpl.getAttribute(_KEY_2));
-		Assert.assertSame(_value3, _portletSessionImpl.getAttribute(_KEY_3));
-		Assert.assertNull(_portletSessionImpl.getAttribute(_KEY_4));
-		Assert.assertNull(_portletSessionImpl.getAttribute(_KEY_5));
-		Assert.assertNull(_portletSessionImpl.getAttribute(_KEY_6));
+		Assert.assertSame(_value1, portletSessionImpl.getAttribute(_KEY_1));
+		Assert.assertSame(_value2, portletSessionImpl.getAttribute(_KEY_2));
+		Assert.assertSame(_value3, portletSessionImpl.getAttribute(_KEY_3));
+		Assert.assertNull(portletSessionImpl.getAttribute(_KEY_4));
+		Assert.assertNull(portletSessionImpl.getAttribute(_KEY_5));
+		Assert.assertNull(portletSessionImpl.getAttribute(_KEY_6));
 		Assert.assertNull(
-			_portletSessionImpl.getAttribute(
+			portletSessionImpl.getAttribute(
 				_KEY_1, PortletSession.APPLICATION_SCOPE));
 		Assert.assertNull(
-			_portletSessionImpl.getAttribute(
+			portletSessionImpl.getAttribute(
 				_KEY_2, PortletSession.APPLICATION_SCOPE));
 		Assert.assertNull(
-			_portletSessionImpl.getAttribute(
+			portletSessionImpl.getAttribute(
 				_KEY_3, PortletSession.APPLICATION_SCOPE));
 		Assert.assertSame(
 			_value4,
-			_portletSessionImpl.getAttribute(
+			portletSessionImpl.getAttribute(
 				_KEY_4, PortletSession.APPLICATION_SCOPE));
 		Assert.assertSame(
 			_value5,
-			_portletSessionImpl.getAttribute(
+			portletSessionImpl.getAttribute(
 				_KEY_5, PortletSession.APPLICATION_SCOPE));
 		Assert.assertNull(
-			_portletSessionImpl.getAttribute(
+			portletSessionImpl.getAttribute(
 				_KEY_6, PortletSession.APPLICATION_SCOPE));
 	}
 
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testGetAttributeMap() {
-		Map<String, Object> attributeMap =
-			_portletSessionImpl.getAttributeMap();
+		PropsUtilAdvice.setProps(
+			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
+
+		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
+
+		String scopePrefix = portletSessionImpl.scopePrefix;
+
+		Map<String, Object> attributeMap = portletSessionImpl.getAttributeMap();
 
 		Assert.assertEquals(attributeMap.toString(), 3, attributeMap.size());
 		Assert.assertSame(_value1, attributeMap.get(_KEY_1));
@@ -173,77 +201,93 @@ public class PortletSessionImplTest {
 		Assert.assertSame(_value3, attributeMap.get(_KEY_3));
 		Assert.assertEquals(
 			attributeMap,
-			_portletSessionImpl.getAttributeMap(PortletSession.PORTLET_SCOPE));
+			portletSessionImpl.getAttributeMap(PortletSession.PORTLET_SCOPE));
 
-		attributeMap = _portletSessionImpl.getAttributeMap(
+		attributeMap = portletSessionImpl.getAttributeMap(
 			PortletSession.APPLICATION_SCOPE);
 
 		Assert.assertEquals(attributeMap.toString(), 5, attributeMap.size());
 		Assert.assertSame(
-			_value1, attributeMap.get(_scopePrefix.concat(_KEY_1)));
+			_value1, attributeMap.get(scopePrefix.concat(_KEY_1)));
 		Assert.assertSame(
-			_value2, attributeMap.get(_scopePrefix.concat(_KEY_2)));
+			_value2, attributeMap.get(scopePrefix.concat(_KEY_2)));
 		Assert.assertSame(
-			_value3, attributeMap.get(_scopePrefix.concat(_KEY_3)));
+			_value3, attributeMap.get(scopePrefix.concat(_KEY_3)));
 		Assert.assertSame(_value4, attributeMap.get(_KEY_4));
 		Assert.assertSame(_value5, attributeMap.get(_KEY_5));
 	}
 
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testGetAttributeNames() {
+		PropsUtilAdvice.setProps(
+			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
+
+		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
+
+		String scopePrefix = portletSessionImpl.scopePrefix;
+
 		Enumeration<String> enumeration =
-			_portletSessionImpl.getAttributeNames();
+			portletSessionImpl.getAttributeNames();
 
 		Assert.assertEquals(_KEY_1, enumeration.nextElement());
 		Assert.assertEquals(_KEY_2, enumeration.nextElement());
 		Assert.assertEquals(_KEY_3, enumeration.nextElement());
 		Assert.assertFalse(enumeration.hasMoreElements());
 
-		enumeration = _portletSessionImpl.getAttributeNames(
+		enumeration = portletSessionImpl.getAttributeNames(
 			PortletSession.APPLICATION_SCOPE);
 
 		Assert.assertEquals(
-			_scopePrefix.concat(_KEY_1), enumeration.nextElement());
+			scopePrefix.concat(_KEY_1), enumeration.nextElement());
 		Assert.assertEquals(
-			_scopePrefix.concat(_KEY_2), enumeration.nextElement());
+			scopePrefix.concat(_KEY_2), enumeration.nextElement());
 		Assert.assertEquals(
-			_scopePrefix.concat(_KEY_3), enumeration.nextElement());
+			scopePrefix.concat(_KEY_3), enumeration.nextElement());
 		Assert.assertEquals(_KEY_4, enumeration.nextElement());
 		Assert.assertEquals(_KEY_5, enumeration.nextElement());
 		Assert.assertFalse(enumeration.hasMoreElements());
 	}
 
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testRemoveAttribute() {
+		PropsUtilAdvice.setProps(
+			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
+
+		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
+
+		String scopePrefix = portletSessionImpl.scopePrefix;
+
 		try {
-			_portletSessionImpl.removeAttribute(null);
+			portletSessionImpl.removeAttribute(null);
 
 			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
 		}
 
-		_portletSessionImpl.removeAttribute(_KEY_1);
+		portletSessionImpl.removeAttribute(_KEY_1);
 
 		Assert.assertNull(
-			_mockHttpSession.getAttribute(_scopePrefix.concat(_KEY_1)));
+			_mockHttpSession.getAttribute(scopePrefix.concat(_KEY_1)));
 
-		_portletSessionImpl.removeAttribute(_KEY_2);
-
-		Assert.assertNull(
-			_mockHttpSession.getAttribute(_scopePrefix.concat(_KEY_2)));
-
-		_portletSessionImpl.removeAttribute(_KEY_3);
+		portletSessionImpl.removeAttribute(_KEY_2);
 
 		Assert.assertNull(
-			_mockHttpSession.getAttribute(_scopePrefix.concat(_KEY_3)));
+			_mockHttpSession.getAttribute(scopePrefix.concat(_KEY_2)));
 
-		_portletSessionImpl.removeAttribute(
+		portletSessionImpl.removeAttribute(_KEY_3);
+
+		Assert.assertNull(
+			_mockHttpSession.getAttribute(scopePrefix.concat(_KEY_3)));
+
+		portletSessionImpl.removeAttribute(
 			_KEY_4, PortletSession.APPLICATION_SCOPE);
 
 		Assert.assertNull(_mockHttpSession.getAttribute(_KEY_4));
 
-		_portletSessionImpl.removeAttribute(
+		portletSessionImpl.removeAttribute(
 			_KEY_5, PortletSession.APPLICATION_SCOPE);
 
 		Assert.assertNull(_mockHttpSession.getAttribute(_KEY_5));
@@ -253,10 +297,83 @@ public class PortletSessionImplTest {
 		Assert.assertFalse(enumeration.hasMoreElements());
 	}
 
+	@AdviseWith(
+		adviceClasses = {
+			PropsUtilAdvice.class, PortalClassLoaderUtilAdvice.class
+		}
+	)
+	@Test
+	public void testSerializableHttpSessionWrapper() {
+		PropsUtilAdvice.setProps(
+			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "true");
+
+		// Constructor
+
+		PortletSessionImpl portletSessionImpl = new PortletSessionImpl(
+			_mockHttpSession, _portletContext, _PORTLET_NAME, _PLID);
+
+		String scopePrefix = portletSessionImpl.scopePrefix;
+
+		Assert.assertTrue(
+			portletSessionImpl.session instanceof HttpSessionWrapper);
+
+		HttpSessionWrapper httpSessionWrapper =
+			(HttpSessionWrapper)portletSessionImpl.session;
+
+		Assert.assertSame(
+			_mockHttpSession, httpSessionWrapper.getWrappedSession());
+
+		// Set http session when session is not SerializableHttpSessionWrapper
+
+		portletSessionImpl.setHttpSession(_mockHttpSession);
+
+		Assert.assertNotSame(_mockHttpSession, portletSessionImpl.session);
+		Assert.assertTrue(
+			portletSessionImpl.session instanceof HttpSessionWrapper);
+
+		// Set http session when session is SerializableHttpSessionWrapper
+
+		portletSessionImpl.setHttpSession(httpSessionWrapper);
+
+		Assert.assertSame(httpSessionWrapper, portletSessionImpl.session);
+
+		// Set/get attribute when value class is not loaded by PortalClassLoader
+
+		String key = "key";
+		String value = "value";
+
+		PortalClassLoaderUtilAdvice.setPortalClassLoader(false);
+
+		portletSessionImpl.setAttribute(key, value);
+
+		Assert.assertSame(value, portletSessionImpl.getAttribute(key));
+		Assert.assertTrue(
+			_mockHttpSession.getAttribute(scopePrefix.concat(key)) instanceof
+				SerializableObjectWrapper);
+
+		// Set/get attribute when value class is loaded by PortalClassLoader
+
+		PortalClassLoaderUtilAdvice.setPortalClassLoader(true);
+
+		portletSessionImpl.setAttribute(key, value);
+
+		Assert.assertSame(value, portletSessionImpl.getAttribute(key));
+		Assert.assertSame(
+			value, _mockHttpSession.getAttribute(scopePrefix.concat(key)));
+	}
+
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testSetAttribute() {
+		PropsUtilAdvice.setProps(
+			PropsKeys.PORTLET_SESSION_REPLICATE_ENABLED, "false");
+
+		PortletSessionImpl portletSessionImpl = _getPortletSessionImpl();
+
+		String scopePrefix = portletSessionImpl.scopePrefix;
+
 		try {
-			_portletSessionImpl.setAttribute(null, null);
+			portletSessionImpl.setAttribute(null, null);
 
 			Assert.fail();
 		}
@@ -266,18 +383,73 @@ public class PortletSessionImplTest {
 		String key7 = "key7";
 		Object value7 = new Object();
 
-		_portletSessionImpl.setAttribute(key7, value7);
+		portletSessionImpl.setAttribute(key7, value7);
 
 		Assert.assertSame(
-			value7, _mockHttpSession.getAttribute(_scopePrefix.concat(key7)));
+			value7, _mockHttpSession.getAttribute(scopePrefix.concat(key7)));
 
 		String key8 = "key8";
 		Object value8 = new Object();
 
-		_portletSessionImpl.setAttribute(
+		portletSessionImpl.setAttribute(
 			key8, value8, PortletSession.APPLICATION_SCOPE);
 
 		Assert.assertSame(value8, _mockHttpSession.getAttribute(key8));
+	}
+
+	@Aspect
+	public static class PortalClassLoaderUtilAdvice {
+
+		public static void setPortalClassLoader(boolean portalClassLoader) {
+			_portalClassLoader = portalClassLoader;
+		}
+
+		@Around(
+			"execution(public static boolean com.liferay.portal.kernel.util." +
+				"PortalClassLoaderUtil.isPortalClassLoader(ClassLoader)) && " +
+					"args(classLoader)"
+		)
+		public boolean isPortalClassLoader(ClassLoader classLoader) {
+			return _portalClassLoader;
+		}
+
+		private static boolean _portalClassLoader;
+
+	}
+
+	@Aspect
+	public static class PropsUtilAdvice {
+
+		public static void setProps(String name, String value) {
+			_props.put(name, value);
+		}
+
+		@Around(
+			"execution(public static String com.liferay.portal.util." +
+				"PropsUtil.get(String)) && args(key)"
+		)
+		public Object get(String key) {
+			return _props.get(key);
+		}
+
+		private static final Map<String, String> _props = new HashMap<>();
+
+	}
+
+	private PortletSessionImpl _getPortletSessionImpl() {
+		PortletSessionImpl portletSessionImpl = new PortletSessionImpl(
+			_mockHttpSession, _portletContext, _PORTLET_NAME, _PLID);
+
+		String scopePrefix = portletSessionImpl.scopePrefix;
+
+		_mockHttpSession.setAttribute(scopePrefix.concat(_KEY_1), _value1);
+		_mockHttpSession.setAttribute(scopePrefix.concat(_KEY_2), _value2);
+		_mockHttpSession.setAttribute(scopePrefix.concat(_KEY_3), _value3);
+
+		_mockHttpSession.setAttribute(_KEY_4, _value4);
+		_mockHttpSession.setAttribute(_KEY_5, _value5);
+
+		return portletSessionImpl;
 	}
 
 	private static final String _KEY_1 = "key1";
@@ -312,10 +484,6 @@ public class PortletSessionImplTest {
 			});
 
 	private final MockHttpSession _mockHttpSession = new MockHttpSession();
-	private final PortletSessionImpl _portletSessionImpl =
-		new PortletSessionImpl(
-			_mockHttpSession, _portletContext, _PORTLET_NAME, _PLID);
-	private String _scopePrefix;
 	private final Object _value1 = new Object();
 	private final Object _value2 = new Object();
 	private final Object _value3 = new Object();

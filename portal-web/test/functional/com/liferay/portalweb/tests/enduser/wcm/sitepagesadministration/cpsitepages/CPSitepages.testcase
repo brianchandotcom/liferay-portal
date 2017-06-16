@@ -43,30 +43,37 @@
 	<command name="AddPagesFullPageApplication" priority="4">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
-		<for list="Blogs,Documents and Media,Wiki,Media Gallery,Message Boards,Dynamic Data Lists Form,Hello Soy Portlet" param="portlet">
+		<for list="Blogs,Documents and Media,Wiki,Media Gallery,Message Boards,Hello Soy Portlet" param="portlet">
 			<execute macro="Page#add">
 				<var name="pageName" value="${portlet} Full Page Application" />
 				<var name="portlet" value="${portlet}" />
 				<var name="sitePageType" value="Full Page Application" />
 			</execute>
 
-			<if>
-				<equals arg1="${portlet}" arg2="Dynamic Data Lists Form" />
-				<then>
-					<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="Form">
-						<var name="key_portletTitleName" value="Form" />
-					</execute>
-				</then>
-				<else>
-					<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="${portlet}">
-						<var name="key_portletTitleName" value="${portlet}" />
-					</execute>
-				</else>
-			</if>
+			<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="${portlet}">
+				<var name="key_portletTitleName" value="${portlet}" />
+			</execute>
 
 			<execute function="AssertElementNotPresent" locator1="ControlMenu#ADD" />
 			<execute function="AssertElementNotPresent" locator1="ControlMenu#EDIT_COG" />
 		</for>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Dynamic Data Lists Form Full Page Application" />
+			<var name="portlet" value="Dynamic Data Lists Form" />
+			<var name="sitePageType" value="Full Page Application" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="Dynamic Data Lists Form">
+			<var name="key_portletTitleName" value="Dynamic Data Lists Form" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="Form">
+			<var name="key_portletTitleName" value="Form" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="ControlMenu#ADD" />
+		<execute function="AssertElementNotPresent" locator1="ControlMenu#EDIT_COG" />
 	</command>
 
 	<command name="AddPageViaNavigationMenu" priority="4">

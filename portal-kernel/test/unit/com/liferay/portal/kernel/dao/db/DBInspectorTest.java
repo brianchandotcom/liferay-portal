@@ -30,6 +30,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -41,6 +42,38 @@ import org.mockito.runners.MockitoJUnitRunner;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class DBInspectorTest {
+
+	@Test
+	public void testHasColumnIsCaseInsensitive() throws Exception {
+		_givenTableWithColumn(
+			_TABLE_NAME, StringUtil.toLowerCase(_COLUMN_NAME));
+
+		DBInspector dbInspector = new DBInspector(_connection);
+
+		Assert.assertTrue(
+			dbInspector.hasColumn(
+				_TABLE_NAME, StringUtil.toUpperCase(_COLUMN_NAME)));
+	}
+
+	@Test
+	public void testHasColumnReturnsFalseWhenNonExistingColumn()
+		throws Exception {
+
+		_givenTableWithNoColumn(_TABLE_NAME, _COLUMN_NAME);
+
+		DBInspector dbInspector = new DBInspector(_connection);
+
+		Assert.assertFalse(dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME));
+	}
+
+	@Test
+	public void testHasColumnReturnsTrueWhenExistingColumn() throws Exception {
+		_givenTableWithColumn(_TABLE_NAME, _COLUMN_NAME);
+
+		DBInspector dbInspector = new DBInspector(_connection);
+
+		Assert.assertTrue(dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME));
+	}
 
 	@Test
 	public void testNoQueryNeededToCheckIfColumnExists() throws Exception {

@@ -25,9 +25,8 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalService;
 
-import java.util.Dictionary;
+import java.util.Map;
 
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -48,10 +47,7 @@ public class FrontPageAssetEntryValidatorExclusionRule
 
 	@Activate
 	@Modified
-	public void activate(ComponentContext componentContext) {
-		Dictionary<String, Object> properties =
-			componentContext.getProperties();
-
+	public void activate(Map<String, Object> properties) {
 		_wikiGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
 			WikiGroupServiceConfiguration.class, properties);
 	}

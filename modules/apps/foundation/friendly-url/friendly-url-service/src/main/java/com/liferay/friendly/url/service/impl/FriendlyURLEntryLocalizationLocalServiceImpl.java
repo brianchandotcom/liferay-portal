@@ -100,8 +100,7 @@ public class FriendlyURLEntryLocalizationLocalServiceImpl
 
 	@Override
 	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
-		long companyId, long groupId, long classNameId, long classPK,
-		String languageId) {
+		long groupId, long classNameId, long classPK, String languageId) {
 
 		FriendlyURLEntry friendlyURLEntry =
 			friendlyURLEntryPersistence.fetchByG_C_C_C_M(

@@ -25,10 +25,13 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -40,26 +43,26 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public FriendlyURLEntry addFriendlyURLEntry(
-			long groupId, long companyId, Class<?> clazz, long classPK,
-			String urlTitle, ServiceContext serviceContext)
+			long groupId, Class<?> clazz, long classPK, String urlTitle,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
 		return addFriendlyURLEntry(
-			groupId, companyId, classNameId, classPK, urlTitle, serviceContext);
+			groupId, classNameId, classPK, urlTitle, serviceContext);
 	}
 
 	@Override
 	public FriendlyURLEntry addFriendlyURLEntry(
-			long groupId, long companyId, long classNameId, long classPK,
-			String urlTitle, ServiceContext serviceContext)
+			long groupId, long classNameId, long classPK, String urlTitle,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
 			urlTitle);
 
-		validate(groupId, companyId, classNameId, classPK, normalizedUrlTitle);
+		validate(groupId, classNameId, classPK, normalizedUrlTitle);
 
 		FriendlyURLEntry mainFriendlyURLEntry =
 			friendlyURLEntryPersistence.fetchByG_C_C_M(
@@ -87,7 +90,11 @@ public class FriendlyURLEntryLocalServiceImpl
 			friendlyURLEntryId);
 
 		friendlyURLEntry.setUuid(serviceContext.getUuid());
-		friendlyURLEntry.setCompanyId(companyId);
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		friendlyURLEntry.setCompanyId(group.getCompanyId());
+
 		friendlyURLEntry.setGroupId(groupId);
 		friendlyURLEntry.setClassNameId(classNameId);
 		friendlyURLEntry.setClassPK(classPK);
@@ -99,7 +106,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public void deleteFriendlyURLEntry(
-		long groupId, long companyId, Class<?> clazz, long classPK) {
+		long groupId, Class<?> clazz, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
@@ -118,20 +125,17 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public void deleteFriendlyURLEntry(
-			long groupId, long companyId, Class<?> clazz, long classPK,
-			String urlTitle)
+			long groupId, Class<?> clazz, long classPK, String urlTitle)
 		throws NoSuchFriendlyURLEntryException {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
-		deleteFriendlyURLEntry(
-			groupId, companyId, classNameId, classPK, urlTitle);
+		deleteFriendlyURLEntry(groupId, classNameId, classPK, urlTitle);
 	}
 
 	@Override
 	public void deleteFriendlyURLEntry(
-			long groupId, long companyId, long classNameId, long classPK,
-			String urlTitle)
+			long groupId, long classNameId, long classPK, String urlTitle)
 		throws NoSuchFriendlyURLEntryException {
 
 		FriendlyURLEntry friendlyURLEntry =
@@ -193,24 +197,24 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public FriendlyURLEntry fetchFriendlyURLEntry(
-		long groupId, long companyId, Class<?> clazz, String urlTitle) {
+		long groupId, Class<?> clazz, String urlTitle) {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
-		return fetchFriendlyURLEntry(groupId, companyId, classNameId, urlTitle);
+		return fetchFriendlyURLEntry(groupId, classNameId, urlTitle);
 	}
 
 	@Override
 	public FriendlyURLEntry fetchFriendlyURLEntry(
-		long groupId, long companyId, long classNameId, String urlTitle) {
+		long groupId, long classNameId, String urlTitle) {
 
-		return friendlyURLEntryPersistence.fetchByG_C_C_U(
-			groupId, companyId, classNameId, urlTitle);
+		return friendlyURLEntryPersistence.fetchByG_C_U(
+			groupId, classNameId, urlTitle);
 	}
 
 	@Override
 	public List<FriendlyURLEntry> getFriendlyURLEntries(
-		long groupId, long companyId, long classNameId, long classPK) {
+		long groupId, long classNameId, long classPK) {
 
 		return friendlyURLEntryPersistence.findByG_C_C(
 			groupId, classNameId, classPK);
@@ -218,18 +222,17 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public FriendlyURLEntry getMainFriendlyURLEntry(
-			long groupId, long companyId, Class<?> clazz, long classPK)
+			long groupId, Class<?> clazz, long classPK)
 		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
-		return getMainFriendlyURLEntry(
-			groupId, companyId, classNameId, classPK);
+		return getMainFriendlyURLEntry(groupId, classNameId, classPK);
 	}
 
 	@Override
 	public FriendlyURLEntry getMainFriendlyURLEntry(
-			long groupId, long companyId, long classNameId, long classPK)
+			long groupId, long classNameId, long classPK)
 		throws PortalException {
 
 		return friendlyURLEntryPersistence.findByG_C_C_M(
@@ -238,8 +241,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public String getUniqueUrlTitle(
-		long groupId, long companyId, long classNameId, long classPK,
-		String urlTitle) {
+		long groupId, long classNameId, long classPK, String urlTitle) {
 
 		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
 			urlTitle);
@@ -252,7 +254,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		for (int i = 1;; i++) {
 			FriendlyURLEntry curFriendlyURLEntry = fetchFriendlyURLEntry(
-				groupId, companyId, classNameId, curUrlTitle);
+				groupId, classNameId, curUrlTitle);
 
 			if ((curFriendlyURLEntry == null) ||
 				(curFriendlyURLEntry.getClassPK() == classPK)) {
@@ -275,8 +277,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public void validate(
-			long groupId, long companyId, long classNameId, long classPK,
-			String urlTitle)
+			long groupId, long classNameId, long classPK, String urlTitle)
 		throws PortalException {
 
 		int maxLength = ModelHintsUtil.getMaxLength(
@@ -299,8 +300,8 @@ public class FriendlyURLEntryLocalServiceImpl
 			}
 		}
 
-		int count = friendlyURLEntryPersistence.countByG_C_C_U(
-			groupId, companyId, classNameId, normalizedUrlTitle);
+		int count = friendlyURLEntryPersistence.countByG_C_U(
+			groupId, classNameId, normalizedUrlTitle);
 
 		if (count > 0) {
 			throw new DuplicateFriendlyURLEntryException();
@@ -308,11 +309,13 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
-	public void validate(
-			long groupId, long companyId, long classNameId, String urlTitle)
+	public void validate(long groupId, long classNameId, String urlTitle)
 		throws PortalException {
 
-		validate(groupId, companyId, classNameId, 0, urlTitle);
+		validate(groupId, classNameId, 0, urlTitle);
 	}
+
+	@ServiceReference(type = GroupLocalService.class)
+	private GroupLocalService _groupLocalService;
 
 }

@@ -87,26 +87,10 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 %>
 
 <c:if test="<%= !mbListDisplayContext.isShowRecentPosts() %>">
-	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-		<liferay-util:include page="/message_boards_admin/nav.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="navItemSelected" value="threads" />
-		</liferay-util:include>
-
-		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="mvcRenderCommandName" value="/message_boards_admin/search" />
-		</liferay-portlet:renderURL>
-
-		<aui:nav-bar-search>
-			<aui:form action="<%= searchURL %>" name="searchFm">
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-				<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= categoryId %>" />
-				<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
-
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</aui:nav-bar>
+	<liferay-util:include page="/message_boards_admin/nav.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="navItemSelected" value="threads" />
+		<liferay-util:param name="showSearchFm" value="<%= Boolean.TRUE.toString() %>" />
+	</liferay-util:include>
 </c:if>
 
 <%

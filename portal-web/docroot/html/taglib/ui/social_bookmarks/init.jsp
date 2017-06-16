@@ -18,19 +18,10 @@
 
 <%
 String contentId = GetterUtil.getString((String)request.getAttribute("liferay-ui:social-bookmark:contentId"));
-String types = GetterUtil.getString((String)request.getAttribute("liferay-ui:social-bookmark:types"));
+String[] types = (String[])request.getAttribute("liferay-ui:social-bookmark:types");
 String url = GetterUtil.getString((String)request.getAttribute("liferay-ui:social-bookmark:url"));
 String title = GetterUtil.getString((String)request.getAttribute("liferay-ui:social-bookmark:title"));
 String target = GetterUtil.getString((String)request.getAttribute("liferay-ui:social-bookmark:target"));
 
 String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:social-bookmarks:displayStyle"));
-
-String[] typesArray = null;
-
-if (Validator.isNotNull(types)) {
-	typesArray = StringUtil.split(types);
-}
-else {
-	typesArray = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_TYPES);
-}
 %>

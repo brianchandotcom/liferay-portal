@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.dao.db;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -35,6 +36,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
@@ -42,6 +44,20 @@ import org.mockito.runners.MockitoJUnitRunner;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class DBInspectorTest {
+
+	@Test
+	public void testArgumentMetaDataIsUsedToNormalizeName() throws Exception {
+		DBInspector dbInspector = new DBInspector(_connection);
+		DatabaseMetaData databaseMetaData = Mockito.mock(
+			DatabaseMetaData.class);
+
+		when(databaseMetaData.storesLowerCaseIdentifiers()).thenReturn(true);
+
+		dbInspector.normalizeName(_TABLE_NAME, databaseMetaData);
+
+		verify(_connection, never()).getMetaData();
+		verify(databaseMetaData, times(1)).storesLowerCaseIdentifiers();
+	}
 
 	@Test
 	public void testHasColumnIsCaseInsensitive() throws Exception {

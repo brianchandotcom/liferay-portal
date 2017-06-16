@@ -1751,6 +1751,12 @@ to version 2.0.18.
 - [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
 1.0.407.
 
+## 3.3.29 - 2017-06-16
+
+### Fixed
+- [LPS-72365]: Avoid deleting the `osgi/test` directory when executing the
+`clean` task.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

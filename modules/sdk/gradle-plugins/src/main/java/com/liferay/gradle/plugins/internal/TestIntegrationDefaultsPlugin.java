@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.internal;
 
 import com.liferay.gradle.plugins.BaseDefaultsPlugin;
+import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
@@ -32,6 +33,7 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 
 /**
  * @author Andrea Di Giorgi
@@ -55,6 +57,7 @@ public class TestIntegrationDefaultsPlugin
 		_configureTestIntegrationTomcat(
 			project, liferayExtension, tomcatAppServer);
 
+		_configureTaskCopyTestModules(project);
 		_configureTaskSetUpTestableTomcat(project, tomcatAppServer);
 		_configureTaskStartTestableTomcat(project, tomcatAppServer);
 		_configureTaskStopTestableTomcat(project, tomcatAppServer);
@@ -66,6 +69,15 @@ public class TestIntegrationDefaultsPlugin
 	}
 
 	private TestIntegrationDefaultsPlugin() {
+	}
+
+	private void _configureTaskCopyTestModules(Project project) {
+		Task copyTestModulesTask = GradleUtil.getTask(
+			project, TestIntegrationPlugin.COPY_TEST_MODULES_TASK_NAME);
+
+		GradleUtil.setProperty(
+			copyTestModulesTask, LiferayOSGiPlugin.AUTO_CLEAN_PROPERTY_NAME,
+			false);
 	}
 
 	private void _configureTaskSetUpTestableTomcat(

@@ -1024,6 +1024,13 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		</if>
 	</target>
 
+	<target name="update-binaries-cache">
+		<sync-dir
+			dir="${project.dir}/.gradle/caches/modules-2/files-2.1"
+			toDir="${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1"
+		/>
+	</target>
+
 	<target name="update-gradle-cache">
 		<execute>
 			git reset --hard HEAD

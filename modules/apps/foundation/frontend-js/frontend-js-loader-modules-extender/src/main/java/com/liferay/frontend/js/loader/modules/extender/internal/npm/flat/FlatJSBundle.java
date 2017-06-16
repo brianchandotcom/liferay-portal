@@ -25,13 +25,17 @@ import java.util.Enumeration;
 import org.osgi.framework.Bundle;
 
 /**
- * A complete implementation of {@link com.liferay.frontend.js.loader.modules.extender.npm.JSBundle}.
+ * Provides a complete implementation of {@link
+ * com.liferay.frontend.js.loader.modules.extender.npm.JSBundle}.
+ *
  * @author Iván Zaera
  */
 public class FlatJSBundle extends JSBundleAdapter {
 
 	/**
-	 * @param bundle the real OSGi bundle to which this object refers
+	 * Constructs a <code>FlatJSBundle</code> with the OSGi bundle.
+	 *
+	 * @param bundle the OSGi bundle to which this object refers
 	 */
 	public FlatJSBundle(Bundle bundle) {
 		super(
@@ -42,11 +46,13 @@ public class FlatJSBundle extends JSBundleAdapter {
 	}
 
 	/**
-	 * Find some entries inside an OSGi bundle path given a glob pattern.
-	 * @param path the path where the search must start
-	 * @param filePattern the glob pattern of files to be looked for
-	 * @param recurse whether to look for the files just in the path or also in
-	 *                subfolders under it.
+	 * Returns the entries inside an OSGi bundle path given the glob pattern.
+	 *
+	 * @param  path the path where the search must start
+	 * @param  filePattern the glob pattern of files to look for
+	 * @param  recurse whether to exclusively look for files in the path;
+	 *         otherwise, look for files in the path and its subfolders
+	 * @return the entries inside an OSGi bundle path
 	 */
 	public Enumeration<URL> findEntries(
 		String path, String filePattern, boolean recurse) {

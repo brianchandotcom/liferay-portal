@@ -191,6 +191,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			String redirect, String backURL)
 		throws Exception {
 
+
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

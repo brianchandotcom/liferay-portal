@@ -22,6 +22,8 @@ dependencies {
 downloadGems {
 	doLast {
 		File compassFile = FileUtil.get(project, compassUrl, temporaryDir)
+		String httpProxyHost = System.getProperty("http.proxyHost")
+		String httpProxyPort = System.getProperty("http.proxyPort")
 
 		javaexec {
 			args configurations.jruby.singleFile
@@ -31,6 +33,11 @@ downloadGems {
 			args relativePath(compassFile)
 			args "--no-rdoc"
 			args "--no-ri"
+
+			if (httpProxyHost && httpProxyPort) {
+				args "--http-proxy"
+				args "http://${httpProxyHost}:${httpProxyPort}"
+			}
 
 			main = "-jar"
 		}

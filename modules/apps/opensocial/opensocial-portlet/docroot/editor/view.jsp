@@ -16,32 +16,39 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-long repositoryId = themeDisplay.getScopeGroupId();
+<div class="container-fluid-1280">
+	<div class="card main-content-card">
+		<div class="card-row card-row-padded">
 
-Folder rootFolder = ShindigUtil.getGadgetEditorRootFolder(repositoryId);
-%>
+			<%
+			long repositoryId = themeDisplay.getScopeGroupId();
 
-<div id="<portlet:namespace />editor"></div>
+			Folder rootFolder = ShindigUtil.getGadgetEditorRootFolder(repositoryId);
+			%>
 
-<aui:script use="opensocial-editor">
-	new Liferay.OpenSocial.Editor(
-		{
-			baseRenderURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+			<div id="<portlet:namespace />editor"></div>
 
-			<portlet:renderURL var="editorGadgetURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcPath" value="/admin/edit_gadget.jsp" />
-				<portlet:param name="editorGadgetURL" value="editorGadgetURLPlaceholder" />
-			</portlet:renderURL>
+			<aui:script use="opensocial-editor">
+				new Liferay.OpenSocial.Editor(
+					{
+						baseRenderURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 
-			editorGadgetURL: '<%= editorGadgetURL %>',
-			gadgetPortletId: '<%= portletDisplay.getId() %>',
-			gadgetServerBase: '<%= PortalUtil.getPathContext(renderRequest) %>/gadgets/',
-			namespace: '<portlet:namespace />',
-			publishGadgetPermission: <%= GadgetPermission.contains(themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(), ActionKeys.PUBLISH_GADGET) %>,
-			repositoryId: '<%= repositoryId %>',
-			resourceURL: '<portlet:resourceURL />',
-			rootFolderId: '<%= rootFolder.getFolderId() %>'
-		}
-	).render('#<portlet:namespace />editor');
-</aui:script>
+						<portlet:renderURL var="editorGadgetURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="mvcPath" value="/admin/edit_gadget.jsp" />
+							<portlet:param name="editorGadgetURL" value="editorGadgetURLPlaceholder" />
+						</portlet:renderURL>
+
+						editorGadgetURL: '<%= editorGadgetURL %>',
+						gadgetPortletId: '<%= portletDisplay.getId() %>',
+						gadgetServerBase: '<%= PortalUtil.getPathContext(renderRequest) %>/gadgets/',
+						namespace: '<portlet:namespace />',
+						publishGadgetPermission: <%= GadgetPermission.contains(themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(), ActionKeys.PUBLISH_GADGET) %>,
+						repositoryId: '<%= repositoryId %>',
+						resourceURL: '<portlet:resourceURL />',
+						rootFolderId: '<%= rootFolder.getFolderId() %>'
+					}
+				).render('#<portlet:namespace />editor');
+			</aui:script>
+		</div>
+	</div>
+</div>

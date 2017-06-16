@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -90,6 +91,8 @@ public class UpgradeTableBuilder {
 		final PathMatcher pathMatcher = fileSystem.getPathMatcher(
 			"glob:**/upgrade/v**/util/*Table.java");
 
+		final AtomicBoolean tableFilesFound = new AtomicBoolean();
+
 		Files.walkFileTree(
 			Paths.get(_baseDirName),
 			new SimpleFileVisitor<Path>() {
@@ -100,6 +103,8 @@ public class UpgradeTableBuilder {
 					throws IOException {
 
 					if (pathMatcher.matches(path)) {
+						tableFilesFound.set(true);
+
 						_buildUpgradeTable(path);
 					}
 
@@ -107,6 +112,12 @@ public class UpgradeTableBuilder {
 				}
 
 			});
+
+		if (!tableFilesFound.get()) {
+			System.out.println(
+				"No files matching the pattern \"" + _baseDirName +
+					"/**/upgrade/v**/util/*Table.java\" have been found.");
+		}
 	}
 
 	private void _buildUpgradeTable(Path path) throws IOException {

@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletDecorator;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletSetupUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -47,6 +49,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -282,7 +286,7 @@ public class PortletConfigurationCSSPortletDisplayContext {
 		}
 
 		_portletDecoratorId = _portletSetup.getValue(
-			"portletSetupPortletDecoratorId", StringPool.BLANK);
+			"portletSetupPortletDecoratorId", _getDefaultDecoratorId());
 
 		return _portletDecoratorId;
 	}
@@ -358,6 +362,33 @@ public class PortletConfigurationCSSPortletDisplayContext {
 				"portletSetupUseCustomTitle", StringPool.BLANK));
 
 		return _useCustomTitle;
+	}
+
+	private String _getDefaultDecoratorId() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Theme theme = themeDisplay.getTheme();
+
+		List<PortletDecorator> portletDecorators = theme.getPortletDecorators();
+
+		Stream<PortletDecorator> portletDecoratorsStream =
+			portletDecorators.stream();
+
+		List<PortletDecorator> portletDecoratorsList =
+			portletDecoratorsStream.filter(
+				portletDecorator -> portletDecorator.isDefaultPortletDecorator()
+			).collect(
+				Collectors.toList()
+			);
+
+		if (ListUtil.isEmpty(portletDecoratorsList)) {
+			return StringPool.BLANK;
+		}
+
+		PortletDecorator defaultPortletDecorator = portletDecoratorsList.get(0);
+
+		return defaultPortletDecorator.getPortletDecoratorId();
 	}
 
 	private DecimalFormat _decimalFormat;

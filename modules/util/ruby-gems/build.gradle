@@ -16,7 +16,7 @@ configurations {
 }
 
 dependencies {
-	jruby group: "org.jruby", name: "jruby-complete", version: "1.6.5"
+	jruby group: "org.jruby", name: "jruby-complete", version: "9.1.12.0"
 }
 
 downloadGems {

@@ -182,15 +182,16 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 						<c:when test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								name="path"
-								value="<%= HtmlUtil.escape(curCategory.getPath(locale, true)) %>"
+								name="category"
+								value="<%= HtmlUtil.escape(curCategory.getTitle(locale)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								name="category"
-								value="<%= HtmlUtil.escape(curCategory.getTitle(locale)) %>"
-							/>
+								name="path"
+							>
+								<%= HtmlUtil.escape(curCategory.getPath(locale, true)) %> > <strong><%= HtmlUtil.escape(curCategory.getTitle(locale)) %></strong>
+							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:search-container-column-text

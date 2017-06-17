@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.portal.tools.upgrade.table.builder</artifactId>
-  <version>1.0.7</version>
+  <version>1.0.8</version>
   <description>Liferay Portal Tools Upgrade Table Builder</description>
   <licenses>
     <license>

@@ -17,6 +17,7 @@ package com.liferay.portal.tools.bundle.support.commands;
 import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
+import com.sun.net.httpserver.Authenticator;
 import com.sun.net.httpserver.BasicAuthenticator;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpContext;
@@ -57,7 +58,6 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -132,6 +132,16 @@ public class BundleSupportCommandsTest {
 		Assert.assertFalse(warFile.exists());
 
 		Assert.assertTrue(jarFile.exists());
+	}
+
+	@Test
+	public void testCreateToken() throws Exception {
+		_testCreateToken(_CONTEXT_PATH_TOKEN);
+	}
+
+	@Test
+	public void testCreateTokenUnformatted() throws Exception {
+		_testCreateToken(_CONTEXT_PATH_TOKEN_UNFORMATTED);
 	}
 
 	@Test
@@ -225,7 +235,6 @@ public class BundleSupportCommandsTest {
 			null, _authenticatedHttpProxyHit, Boolean.TRUE);
 	}
 
-	@Ignore
 	@Test
 	public void testInitBundleZip() throws Exception {
 		_testInitBundleZip(null, _HTTP_SERVER_PASSWORD, _HTTP_SERVER_USER_NAME);
@@ -236,7 +245,6 @@ public class BundleSupportCommandsTest {
 		_testInitBundleZip(_bundleZipFile, null, null);
 	}
 
-	@Ignore
 	@Test
 	public void testInitBundleZipUnauthorized() throws Exception {
 		expectedException.expectMessage("Unauthorized");
@@ -259,6 +267,20 @@ public class BundleSupportCommandsTest {
 		cleanCommand.setLiferayHomeDir(liferayHomeDir);
 
 		cleanCommand.execute();
+	}
+
+	protected void createToken(
+			String emailAddress, String password, File tokenFile, URL tokenUrl)
+		throws Exception {
+
+		CreateTokenCommand createTokenCommand = new CreateTokenCommand();
+
+		createTokenCommand.setEmailAddress(emailAddress);
+		createTokenCommand.setPassword(password);
+		createTokenCommand.setTokenFile(tokenFile);
+		createTokenCommand.setTokenUrl(tokenUrl);
+
+		createTokenCommand.execute();
 	}
 
 	protected void deploy(File file, File liferayHomeDir, String outputFileName)
@@ -361,7 +383,7 @@ public class BundleSupportCommandsTest {
 
 	private static HttpContext _createHttpContext(
 		HttpServer httpServer, final String contextPath,
-		final String contentType) {
+		final String contentType, Authenticator authenticator) {
 
 		HttpHandler httpHandler = new HttpHandler() {
 
@@ -403,7 +425,19 @@ public class BundleSupportCommandsTest {
 
 		};
 
-		return httpServer.createContext(contextPath, httpHandler);
+		HttpContext httpContext = httpServer.createContext(
+			contextPath, httpHandler);
+
+		if (authenticator != null) {
+			httpContext.setAuthenticator(authenticator);
+		}
+
+		return httpContext;
+	}
+
+	private static URL _getHttpServerUrl(String contextPath) throws Exception {
+		return new URL(
+			"http", "localhost.localdomain", _HTTP_SERVER_PORT, contextPath);
 	}
 
 	private static int _getTestPort(int... excludedPorts) throws IOException {
@@ -493,16 +527,15 @@ public class BundleSupportCommandsTest {
 		HttpServer httpServer = HttpServer.create(
 			new InetSocketAddress(_HTTP_SERVER_PORT), 0);
 
-		HttpContext httpContext = _createHttpContext(
-			httpServer, _CONTEXT_PATH_ZIP, "application/zip");
-
-		httpContext.setAuthenticator(
+		Authenticator authenticator =
 			new BasicAuthenticator(_HTTP_SERVER_REALM) {
 
 				@Override
-				public boolean checkCredentials(String user, String pwd) {
-					if (user.equals(_HTTP_SERVER_USER_NAME) &&
-						pwd.equals(_HTTP_SERVER_PASSWORD)) {
+				public boolean checkCredentials(
+					String username, String password) {
+
+					if (username.equals(_HTTP_SERVER_USER_NAME) &&
+						password.equals(_HTTP_SERVER_PASSWORD)) {
 
 						return true;
 					}
@@ -510,10 +543,17 @@ public class BundleSupportCommandsTest {
 					return false;
 				}
 
-			});
+			};
 
 		_createHttpContext(
-			httpServer, _CONTEXT_PATH_TAR, "application/tar+gzip");
+			httpServer, _CONTEXT_PATH_TAR, "application/tar+gzip", null);
+		_createHttpContext(
+			httpServer, _CONTEXT_PATH_TOKEN, "application/json", authenticator);
+		_createHttpContext(
+			httpServer, _CONTEXT_PATH_TOKEN_UNFORMATTED, "application/json",
+			authenticator);
+		_createHttpContext(
+			httpServer, _CONTEXT_PATH_ZIP, "application/zip", authenticator);
 
 		httpServer.setExecutor(null);
 
@@ -541,12 +581,21 @@ public class BundleSupportCommandsTest {
 		throws Exception {
 
 		File cacheDir = temporaryFolder.newFolder();
-		URL url = new URL(
-			"http", "localhost.localdomain", _HTTP_SERVER_PORT, contextPath);
+		URL url = _getHttpServerUrl(contextPath);
 
 		initBundle(
 			cacheDir, configsDir, _INIT_BUNDLE_ENVIRONMENT, liferayHomeDir,
 			password, _INIT_BUNDLE_STRIP_COMPONENTS, url, userName);
+	}
+
+	private void _testCreateToken(String contextPath) throws Exception {
+		File tokenFile = new File(temporaryFolder.getRoot(), "token");
+		URL tokenUrl = _getHttpServerUrl(contextPath);
+
+		createToken(
+			_HTTP_SERVER_PASSWORD, _HTTP_SERVER_USER_NAME, tokenFile, tokenUrl);
+
+		Assert.assertEquals("hello-world", FileUtil.read(tokenFile));
 	}
 
 	private void _testDistBundle(String format) throws Exception {
@@ -648,6 +697,11 @@ public class BundleSupportCommandsTest {
 	private static final int _AUTHENTICATED_HTTP_PROXY_SERVER_PORT;
 
 	private static final String _CONTEXT_PATH_TAR = "/test.tar.gz";
+
+	private static final String _CONTEXT_PATH_TOKEN = "/token.json";
+
+	private static final String _CONTEXT_PATH_TOKEN_UNFORMATTED =
+		"/token_unformatted";
 
 	private static final String _CONTEXT_PATH_ZIP = "/test.zip";
 

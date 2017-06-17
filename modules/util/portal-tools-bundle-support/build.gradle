@@ -54,6 +54,7 @@ test {
 		systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile
 	}
 
+	systemProperty "http.nonProxyHosts", "localhost.localdomain"
 	systemProperty "http.proxyHost", System.properties["http.proxyHost"]
 	systemProperty "http.proxyPort", System.properties["http.proxyPort"]
 	systemProperty "maven.debug", System.properties["maven.debug"]

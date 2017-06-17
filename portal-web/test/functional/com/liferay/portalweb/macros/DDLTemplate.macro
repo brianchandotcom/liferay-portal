@@ -315,6 +315,18 @@
 		</execute>
 	</command>
 
+	<command name="editTemplateScript">
+		<if>
+			<equals arg1="${fieldName}" arg2="PermissionChecker" />
+			<then>
+				<execute function="MouseOver" locator1="DDMEditTemplate#SCRIPT_UTIL" />
+			</then>
+			<else>
+				<execute function="MouseOver" locator1="DDMEditTemplate#SCRIPT_VARIABLE" />
+			</else>
+		</if>
+	</command>
+
 	<command name="saveAndContinueFormTemplateCP">
 		<execute function="AssertClick" locator1="Button#SAVE_AND_CONTINUE" value1="Save and Continue" />
 

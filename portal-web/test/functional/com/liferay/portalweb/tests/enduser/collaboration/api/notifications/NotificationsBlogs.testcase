@@ -56,25 +56,9 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Blogs#tearDownSubscribePG" />
-
-				<execute macro="Blogs#tearDownCP" />
-
-				<execute macro="NotificationsPortlet#tearDownUserDeliveries" />
-
-				<execute macro="Page#tearDownPG" />
-
-				<execute macro="User#tearDownCP" />
-			</else>
-		</if>
+		<execute macro="PortalInstances#tearDownCP">
+			<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		</execute>
 	</tear-down>
 
 	<command name="MarkAllNotificationsAsRead" priority="4">

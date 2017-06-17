@@ -1794,30 +1794,10 @@
 			<var name="fieldValue" value="testEntry1" />
 		</execute>
 
-		<for list="${fieldValueList}" param="fieldValue">
-			<execute macro="FormsAdmin#searchFormEntry">
-				<var name="searchTerm" value="${fieldValue}" />
-			</execute>
-
-			<execute macro="FormsAdmin#viewFormTableEntry">
-				<var name="fieldLabel" value="Text Field" />
-				<var name="fieldValue" value="${fieldValue}" />
-			</execute>
-
-			<for list="${fieldValueList}" param="fieldValueNotVisible">
-				<if>
-					<not>
-						<equals arg1="${fieldValueNotVisible}" arg2="${fieldValue}" />
-					</not>
-					<then>
-						<execute macro="FormsAdmin#viewTableEntryNotPresent">
-							<var name="fieldLabel" value="Text Field" />
-							<var name="fieldValue" value="${fieldValueNotVisible}" />
-						</execute>
-					</then>
-				</if>
-			</for>
-		</for>
+		<execute macro="FormsAdmin#searchFormEntries">
+			<var name="fieldLabel" value="Text Field" />
+			<var name="fieldValueList" value="${fieldValueList}" />
+		</execute>
 
 		<execute macro="FormsAdmin#searchFormEntry">
 			<var name="searchTerm" value="otherEntry" />

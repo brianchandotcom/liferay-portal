@@ -39,6 +39,7 @@ public class AssetTagNamesFieldQueryBuilderTest
 	}
 
 	@Override
+	@Test
 	public void testLuceneUnfriendlyTerms() throws Exception {
 		super.testLuceneUnfriendlyTerms();
 	}
@@ -88,6 +89,12 @@ public class AssetTagNamesFieldQueryBuilderTest
 	@Override
 	public void testWhitespace() throws Exception {
 		super.testWhitespace();
+	}
+
+	@Override
+	@Test
+	public void testWildcardCharacters() throws Exception {
+		super.testWildcardCharacters();
 	}
 
 	@Override

@@ -12,29 +12,9 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
-
-				<execute macro="WebContent#tearDownCP" />
-
-				<execute macro="WebContentTemplates#tearDownCP" />
-
-				<execute macro="WebContentStructures#tearDownCP" />
-
-				<execute macro="WebContentStructures#tearDownCP">
-					<var name="siteScopeName" value="${globalSiteName}" />
-				</execute>
-
-				<execute macro="Page#tearDownPG" />
-			</else>
-		</if>
+		<execute macro="PortalInstances#tearDownCP">
+			<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		</execute>
 	</tear-down>
 
 	<command name="AddAndViewStructureAndTemplateWithPermissions" priority="4">

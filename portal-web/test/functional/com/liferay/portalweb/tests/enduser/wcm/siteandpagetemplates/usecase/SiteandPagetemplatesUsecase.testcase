@@ -13,33 +13,9 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="Navigator#openURL" />
-
-				<execute macro="User#logoutAndLoginPG">
-					<var name="password" value="test" />
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
-				</execute>
-
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="UserGroup#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-
-				<execute macro="SiteTemplates#tearDownCP" />
-
-				<execute macro="DMDocument#tearDownCP" />
-			</else>
-		</if>
+		<execute macro="PortalInstances#tearDownCP">
+			<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		</execute>
 	</tear-down>
 
 	<command name="AdminCanNotAddASubpageOfAChildPageLinkedToSiteTemplatePage" priority="4">

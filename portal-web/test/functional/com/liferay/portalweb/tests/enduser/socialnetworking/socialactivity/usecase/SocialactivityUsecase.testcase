@@ -11,27 +11,9 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<!--There is no need for a SocialActivity#tearDownCP, as the User Statistics will not be reset and Jenkins does not run teardowns.-->
-
-				<execute macro="User#firstLoginPG" />
-
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="BlogsEntry#tearDownCP" />
-
-				<execute macro="Polls#tearDownCP" />
-
-				<execute macro="Page#tearDownPG" />
-			</else>
-		</if>
+		<execute macro="PortalInstances#tearDownCP">
+			<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		</execute>
 	</tear-down>
 
 	<command name="BlogsDemo" priority="4">

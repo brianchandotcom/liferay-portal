@@ -787,6 +787,15 @@
 		</if>
 	</command>
 
+	<command name="tearDownEvent">
+		<if>
+			<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
+			<then>
+				<execute macro="CalendarEvent#tearDown" />
+			</then>
+		</if>
+	</command>
+
 	<command name="view">
 		<var name="key_calendarName" value="${calendarName}" />
 

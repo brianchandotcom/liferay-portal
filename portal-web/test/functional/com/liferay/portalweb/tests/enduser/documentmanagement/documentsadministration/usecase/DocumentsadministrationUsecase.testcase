@@ -11,31 +11,9 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
-
-				<execute macro="DMDocument#tearDownCP" />
-
-				<execute macro="DMFolder#tearDownCP" />
-
-				<execute macro="DMDocumentType#tearDownCP" />
-
-				<execute macro="DMMetadataSet#tearDownCP" />
-
-				<execute macro="Page#tearDownPG" />
-
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
+		<execute macro="PortalInstances#tearDownCP">
+			<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		</execute>
 	</tear-down>
 
 	<command name="AddAndRemoveMetadataSets" priority="4">

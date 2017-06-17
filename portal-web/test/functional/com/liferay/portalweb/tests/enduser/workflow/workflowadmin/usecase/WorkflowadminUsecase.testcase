@@ -10,41 +10,9 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
-
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="BlogsEntry#tearDownCP" />
-
-				<execute macro="WebContent#tearDownCP" />
-
-				<execute macro="WikiNode#tearDownCP" />
-
-				<execute macro="WikiPage#tearDownCP" />
-
-				<execute macro="Page#tearDownPG" />
-
-				<execute macro="Workflow#tearDownPortalWorkflow" />
-
-				<execute macro="Workflow#tearDownSiteWorkflow" />
-
-				<execute macro="Workflow#tearDownSpecificWorkflowDefinition">
-					<var name="workflowDefinitionTitle" value="Single Approver Edited" />
-				</execute>
-
-				<execute macro="Workflow#tearDownWorkflowDefinitionsViaWorkflowCP" />
-
-				<execute macro="Site#tearDownCP" />
-			</else>
-		</if>
+		<execute macro="PortalInstances#tearDownCP">
+			<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		</execute>
 	</tear-down>
 
 	<command name="AddBlogsEntriesWithPortalScopeWorkflowAndAssertWorkflowScope" priority="4">

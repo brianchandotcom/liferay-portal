@@ -10,27 +10,9 @@
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="Site#tearDownCP" />
-
-				<execute macro="Organization#tearDownCP" />
-
-				<execute macro="Team#tearDownCP" />
-
-				<execute macro="Page#tearDownPG" />
-
-				<execute macro="UserGroup#tearDownCP" />
-			</else>
-		</if>
+		<execute macro="PortalInstances#tearDownCP">
+			<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		</execute>
 	</tear-down>
 
 	<command name="AddOrganizationSitesAndDeactivate" priority="4">

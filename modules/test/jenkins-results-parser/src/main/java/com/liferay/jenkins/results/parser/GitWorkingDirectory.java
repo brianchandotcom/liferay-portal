@@ -385,14 +385,14 @@ public class GitWorkingDirectory {
 		try {
 			createBranchCommand.call();
 		}
-		catch (JGitInternalException jie) {
-			String errorMessage = jie.getMessage();
+		catch (JGitInternalException jgie) {
+			String errorMessage = jgie.getMessage();
 
 			if (errorMessage.contains("FAST_FORWARD")) {
 				return;
 			}
 
-			throw jie;
+			throw jgie;
 		}
 	}
 

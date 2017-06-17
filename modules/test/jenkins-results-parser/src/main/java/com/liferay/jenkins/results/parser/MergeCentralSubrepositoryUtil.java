@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.transport.RemoteConfig;
 
 import org.json.JSONObject;
 
@@ -51,17 +52,27 @@ public class MergeCentralSubrepositoryUtil {
 						gitrepoFile, centralUpstreamBranchName);
 
 				if (centralSubrepository.isCentralPullRequestCandidate()) {
-					_createMergeBranch(
-						centralGitWorkingDirectory, centralSubrepository,
-						topLevelBranchName);
+					String mergeBranchName = _getMergeBranchName(
+						centralSubrepository.getSubrepositoryName(),
+						centralSubrepository.getSubrepositoryUpstreamCommit());
+					RemoteConfig upstreamRemoteConfig =
+						centralGitWorkingDirectory.getRemoteConfig("upstream");
 
-					_commitCiMergeFile(
-						centralGitWorkingDirectory, centralSubrepository,
-						gitrepoFile);
+					if (!centralGitWorkingDirectory.branchExists(
+							mergeBranchName, upstreamRemoteConfig)) {
 
-					_pushMergeBranchToRemote(
-						centralGitWorkingDirectory, centralSubrepository,
-						receiverUserName);
+						_createMergeBranch(
+							centralGitWorkingDirectory, centralSubrepository,
+							topLevelBranchName);
+
+						_commitCiMergeFile(
+							centralGitWorkingDirectory, centralSubrepository,
+							gitrepoFile);
+
+						_pushMergeBranchToRemote(
+							centralGitWorkingDirectory, centralSubrepository,
+							receiverUserName);
+					}
 
 					_createMergePullRequest(
 						centralGitWorkingDirectory, centralSubrepository,

@@ -1585,6 +1585,11 @@ file from the master branch.
 ### Changed
 - [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.3.28.
 
+## 3.7.7 - 2017-06-16
+
+### Changed
+- [LPS-72365]: Update the [Liferay Gradle Plugins] dependency to version 3.3.29.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1737,6 +1742,7 @@ file from the master branch.
 [LPS-72152]: https://issues.liferay.com/browse/LPS-72152
 [LPS-72252]: https://issues.liferay.com/browse/LPS-72252
 [LPS-72340]: https://issues.liferay.com/browse/LPS-72340
+[LPS-72365]: https://issues.liferay.com/browse/LPS-72365
 [LPS-72456]: https://issues.liferay.com/browse/LPS-72456
 [LPS-72465]: https://issues.liferay.com/browse/LPS-72465
 [LPS-72514]: https://issues.liferay.com/browse/LPS-72514

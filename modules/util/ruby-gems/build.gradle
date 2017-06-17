@@ -16,12 +16,14 @@ configurations {
 }
 
 dependencies {
-	jruby group: "org.jruby", name: "jruby-complete", version: "1.6.5"
+	jruby group: "org.jruby", name: "jruby-complete", version: "9.1.12.0"
 }
 
 downloadGems {
 	doLast {
 		File compassFile = FileUtil.get(project, compassUrl, temporaryDir)
+		String httpProxyHost = System.getProperty("http.proxyHost")
+		String httpProxyPort = System.getProperty("http.proxyPort")
 
 		javaexec {
 			args configurations.jruby.singleFile
@@ -31,6 +33,11 @@ downloadGems {
 			args relativePath(compassFile)
 			args "--no-rdoc"
 			args "--no-ri"
+
+			if (httpProxyHost && httpProxyPort) {
+				args "--http-proxy"
+				args "http://${httpProxyHost}:${httpProxyPort}"
+			}
 
 			main = "-jar"
 		}

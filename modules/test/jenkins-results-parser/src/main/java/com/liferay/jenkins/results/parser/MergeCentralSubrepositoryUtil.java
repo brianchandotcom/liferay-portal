@@ -22,6 +22,8 @@ import java.util.List;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -135,8 +137,22 @@ public class MergeCentralSubrepositoryUtil {
 			"](https://github.com/", receiverUserName, "/", subrepositoryName,
 			"/commit/", subrepositoryUpstreamCommit, ")");
 
-		centralGitWorkingDirectory.createPullRequest(
+		String pullRequestURL = centralGitWorkingDirectory.createPullRequest(
 			body, mergeBranchName, receiverUserName, title);
+
+		String url = JenkinsResultsParserUtil.combine(
+			"https://api.github.com/repos/", receiverUserName, "/",
+			subrepositoryName, "/statuses/", subrepositoryUpstreamCommit);
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("context", "liferay/central-pull-request");
+		requestJSONObject.put("description", "Tests are queued on Jenkins.");
+		requestJSONObject.put("state", "pending");
+		requestJSONObject.put("target_url", pullRequestURL);
+
+		JenkinsResultsParserUtil.toJSONObject(
+			url, requestJSONObject.toString());
 	}
 
 	private static String _getCiMergeFilePath(

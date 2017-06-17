@@ -156,7 +156,7 @@ public class CleanServiceBuilderCommand extends BaseCommand {
 		throws SQLException {
 
 		try (Statement statement = connection.createStatement()) {
-			statement.executeUpdate("DROP TABLE " + tableName);
+			statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
 		}
 	}
 

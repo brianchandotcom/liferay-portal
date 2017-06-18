@@ -22,7 +22,7 @@ task testJS
 String alloyUIVersion = "3.1.0-deprecated.11"
 String jqueryPluginsFormVersion = "3.51"
 String jQueryVersion = "2.1.4"
-String lexiconVersion = "1.0.19"
+String lexiconVersion = "1.0.20"
 String lodashVersion = "3.10.1"
 
 File jsDestinationDir = file("tmp/META-INF/resources")

@@ -1,3 +1,10 @@
 Bundle-Name: Liferay Commerce Cart API
 Bundle-SymbolicName: com.liferay.commerce.cart.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.cart.constants,\
+	com.liferay.commerce.cart.exception,\
+	com.liferay.commerce.cart.model,\
+	com.liferay.commerce.cart.service,\
+	com.liferay.commerce.cart.service.persistence,\
+	com.liferay.commerce.cart.util.comparator

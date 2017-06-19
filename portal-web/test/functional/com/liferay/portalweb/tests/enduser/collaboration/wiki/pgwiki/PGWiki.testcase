@@ -27,6 +27,95 @@
 		</execute>
 	</tear-down>
 
+	<command name="AddChildSiteWikiFrontPageFormatHTML" priority="5">
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="parentSiteName" value="Site Name" />
+			<var name="siteName" value="Child SiteName" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Child SiteName" />
+		</execute>
+
+ 		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoNode">
+			<var name="wikiNodeName" value="Main" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoCP">
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
+
+		<execute macro="WikiEntry#selectPageFormat">
+			<var name="pageFormat" value="HTML" />
+		</execute>
+
+		<execute macro="WikiEntry#confirmHTML" />
+
+		<execute macro="AlloyEditor#addContent">
+			<var name="content"><![CDATA[<!DOCTYPE html> <html lang="en"> <body> <h1>My First Heading</h1> <p>My first paragraph.</p> </body> </html>]]></var>
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Page#add">
+			<var name="columnName" value="1 Column" />
+			<var name="pageName" value="Child Site Page" />
+			<var name="siteName" value="Child SiteName" />
+			<var name="sitePagePrivacy" value="Private" />
+		</execute>
+
+		<execute macro="Navigator#gotoSpecificURLPage">
+			<var name="pageName" value="Child Site Page" />
+			<var name="url" value="${portalURL}/group/child-sitename/child-site-page" />
+		</execute>
+
+		<execute macro="Page#view">
+			<var name="pageName" value="Child Site Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />" />
+
+		<execute macro="AlloyEditor#addContent">
+			<var name="content"><![CDATA[<!DOCTYPE html> <html lang="en"> <body> <h1>Edited My First Heading</h1> <p>Edited My first paragraph.</p> </body> </html>]]></var>
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#gotoSpecificURLPage">
+			<var name="pageName" value="Child Site Page" />
+			<var name="url" value="${portalURL}/group/child-sitename/child-site-page" />
+		</execute>
+
+		<execute macro="WikiPage#viewFrontPagePG">
+			<var name="wikiPageContent" value="Edited My first paragraph." />
+			<var name="wikiNodeName" value="FrontPage" />
+		</execute>
+	</command>
+
 	<command name="AddWikiFrontPage" priority="4">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />

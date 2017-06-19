@@ -531,8 +531,6 @@
 		<if>
 			<isset var="webContentImage" />
 			<then>
-				<var name="key_fieldName" value="Image" />
-
 				<execute function="Click" locator1="Button#SELECT" />
 
 				<execute macro="ItemSelector#uploadFile">
@@ -893,8 +891,6 @@
 		<if>
 			<isset var="webContentImage" />
 			<then>
-				<var name="key_fieldName" value="Image" />
-
 				<execute function="Click" locator1="Button#SELECT" />
 
 				<execute function="SelectFrameTop" value1="relative=top" />

@@ -1,6 +1,5 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import dom from 'metal-dom';
 import { Config } from 'metal-state';
 
 import templates from './CategorySelector.soy';

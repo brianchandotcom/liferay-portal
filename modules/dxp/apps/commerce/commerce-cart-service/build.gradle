@@ -1,0 +1,4 @@
+buildService {
+    apiDir = "../commerce-cart-api/src/main/java"
+    testDir = "../commerce-cart-test/src/testIntegration/java"
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.commerce.cart.service.impl.CCartLocalServiceImpl" id="com.liferay.commerce.cart.service.CCartLocalService" />
+	<bean class="com.liferay.commerce.cart.service.impl.CCartServiceImpl" id="com.liferay.commerce.cart.service.CCartService" />
+	<bean class="com.liferay.commerce.cart.service.persistence.impl.CCartPersistenceImpl" id="com.liferay.commerce.cart.service.persistence.CCartPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.cart.service.impl.CCartItemLocalServiceImpl" id="com.liferay.commerce.cart.service.CCartItemLocalService" />
+	<bean class="com.liferay.commerce.cart.service.impl.CCartItemServiceImpl" id="com.liferay.commerce.cart.service.CCartItemService" />
+	<bean class="com.liferay.commerce.cart.service.persistence.impl.CCartItemPersistenceImpl" id="com.liferay.commerce.cart.service.persistence.CCartItemPersistence" parent="basePersistence" />
+</beans>

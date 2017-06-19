@@ -16,8 +16,10 @@ package com.liferay.calendar.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.exception.CalendarBookingDurationException;
 import com.liferay.calendar.exception.CalendarBookingRecurrenceException;
+import com.liferay.calendar.exception.NoSuchCalendarException;
 import com.liferay.calendar.exporter.CalendarDataFormat;
 import com.liferay.calendar.exporter.CalendarDataHandler;
 import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
@@ -1637,6 +1639,13 @@ public class CalendarBookingLocalServiceImpl
 		}
 
 		for (long calendarId : childCalendarIds) {
+			try {
+				calendarId = getNotLiveCalendarId(calendarId);
+			}
+			catch (NoSuchCalendarException nsce) {
+				continue;
+			}
+
 			int count = calendarBookingPersistence.countByC_P(
 				calendarId, calendarBooking.getCalendarBookingId());
 
@@ -1733,6 +1742,34 @@ public class CalendarBookingLocalServiceImpl
 		jsonObject.put("title", calendarBooking.getTitle());
 
 		return jsonObject.toString();
+	}
+
+	protected Calendar getNotLiveCalendar(Calendar calendar)
+		throws PortalException {
+
+		CalendarResource calendarResource = calendar.getCalendarResource();
+
+		if (isCalendarResourceStaged(calendarResource)) {
+			Group group = groupLocalService.fetchGroup(
+				calendarResource.getClassPK());
+
+			Group stagingGroup = group.getStagingGroup();
+
+			calendar = calendarLocalService.getCalendarByUuidAndGroupId(
+				calendar.getUuid(), stagingGroup.getGroupId());
+		}
+
+		return calendar;
+	}
+
+	protected long getNotLiveCalendarId(long calendarId)
+		throws PortalException {
+
+		Calendar calendar = calendarLocalService.getCalendar(calendarId);
+
+		calendar = getNotLiveCalendar(calendar);
+
+		return calendar.getCalendarId();
 	}
 
 	protected List<CalendarBooking> getOverlappingCalendarBookings(
@@ -1854,6 +1891,26 @@ public class CalendarBookingLocalServiceImpl
 		}
 
 		return unmodifiedAttributesNames;
+	}
+
+	protected boolean isCalendarResourceStaged(
+		CalendarResource calendarResource) {
+
+		if (!calendarResource.isGroup()) {
+			return false;
+		}
+
+		long groupId = calendarResource.getClassPK();
+
+		Group group = groupLocalService.fetchGroup(groupId);
+
+		Group stagingGroup = group.getStagingGroup();
+
+		if (stagingGroup == null) {
+			return false;
+		};
+
+		return stagingGroup.isInStagingPortlet(CalendarPortletKeys.CALENDAR);
 	}
 
 	protected void sendNotification(

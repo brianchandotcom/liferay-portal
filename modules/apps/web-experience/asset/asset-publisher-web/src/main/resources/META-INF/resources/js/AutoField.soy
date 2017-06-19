@@ -4,12 +4,9 @@
  * This renders the main element.
  *
  * @param id
- * @param? addNewRule
- * @param? changeSelector
  * @param groupIds
  * @param? logicIndexes
  * @param? namespace
- * @param? removeRule
  * @param rules
  * @param categorySelectorURL
  * @param tagSelectorURL
@@ -21,19 +18,16 @@
 	<div id="{$id}">
 		{call .rules}
 			{param categorySelectorURL: $categorySelectorURL /}
-			{param changeSelector: $changeSelector /}
 			{param groupIds: $groupIds /}
 			{param logicIndexes: $logicIndexes /}
 			{param namespace: $namespace /}
 			{param pathThemeImages: $pathThemeImages /}
-			{param removeRule: $removeRule /}
 			{param rules: $rules /}
 			{param tagSelectorURL: $tagSelectorURL /}
 			{param vocabularyIds: $vocabularyIds /}
 		{/call}
 
 		{call .addButtonTimeLine}
-			{param addNewRule: $addNewRule /}
 			{param pathThemeImages: $pathThemeImages /}
 		{/call}
 	</div>
@@ -43,12 +37,11 @@
  * Renders the Add button at the bottom of the timeline
  */
 {template .addButtonTimeLine}
-	{@param? addNewRule: any}
 	{@param pathThemeImages: string}
 	
 	<div class="addbutton-timeline-item">
 		<div class="add-condition timeline-increment-icon">
-			<a aria-role="button" data-onclick="{$addNewRule}" class="btn btn-primary btn-xs form-builder-timeline-add-item form-builder-rule-add-condition" href="javascript:;">
+			<a aria-role="button" data-onclick="addRule_" class="btn btn-primary btn-xs form-builder-timeline-add-item form-builder-rule-add-condition" href="javascript:;">
 				<svg class="lexicon-icon icon-monospaced">
 					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#plus"></use>
 				</svg>
@@ -58,11 +51,9 @@
 {/template}
 
 /**
-* @param? changeSelector
 * @param groupIds
 * @param? queryLogicIndexes
 * @param? namespace
-* @param? removeRule
 * @param rules
 * @param categorySelectorURL
 * @param tagSelectorURL
@@ -86,11 +77,9 @@
 
 		{call .listRules}
 			{param categorySelectorURL: $categorySelectorURL /}
-			{param changeSelector: $changeSelector /}
 			{param groupIds: $groupIds /}
 			{param namespace: $namespace /}
 			{param pathThemeImages: $pathThemeImages /}
-			{param removeRule: $removeRule /}
 			{param rules: $rules /}
 			{param tagSelectorURL: $tagSelectorURL /}
 			{param vocabularyIds: $vocabularyIds /}
@@ -99,10 +88,8 @@
 {/template}
 
 /**
-* @param? changeSelector
 * @param groupIds
 * @param? namespace
-* @param? removeRule
 * @param rules
 * @param categorySelectorURL
 * @param tagSelectorURL
@@ -137,7 +124,7 @@
 							</label>
 						</div>
 						<div class="form-group">
-							<select class="form-control asset-query-name" data-item-index="{$index}" data-onchange="{$changeSelector}" id="{$namespace + 'queryName' + $index}" name="{$namespace + 'queryName' + $index}">
+							<select class="form-control asset-query-name" data-item-index="{$index}" data-onchange="changeSelector_" id="{$namespace + 'queryName' + $index}" name="{$namespace + 'queryName' + $index}">
 								<option class="" selected="{$rule.type == 'assetTags' ? 'true' : 'false'}" value="assetTags"> Tags </option>
 								<option class="" selected="{$rule.type == 'assetCategories' ? 'true' : 'false'}" value="assetCategories"> Categories </option>
 							</select>
@@ -167,10 +154,9 @@
 					</div>
 				</div>
 
-				{call .trashContainer}
-					{param index: $index /}
+				{call .trashButton}
 					{param pathThemeImages: $pathThemeImages /}
-					{param removeRule: $removeRule /}
+					{param ruleId: $index /}
 				{/call}
 			</li>
 		{/foreach}
@@ -221,17 +207,17 @@
 {/template}
 
 /**
-* @param index
-* @param? removeRule
-**/
-{template .trashContainer}
+ * Renders a trash button that allows deleting the current rule row
+ */
+{template .trashButton}
 	{@param pathThemeImages: string}
+	{@param ruleId: int}
 
 	<div class="container-trash">
 		<button
 			class="btn btn-link condition-card-delete icon-monospaced"
-			data-card-id="{$index}"
-			data-onclick="{$removeRule}"
+			data-rule-id="{$ruleId}"
+			data-onclick="deleteRule_"
 			href="javascript:;"
 			type="button">
 			<svg class="lexicon-icon icon-monospaced">

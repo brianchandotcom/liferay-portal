@@ -8,6 +8,8 @@ import CategorySelector from './CategorySelector.es'
 import TagSelector from './TagSelector.es';
 import templates from './AutoField.soy';
 
+const DEFAULT_RULE = {type: 'assetTags', queryContains: true};
+
 /**
  * AutoField
  *
@@ -15,22 +17,21 @@ import templates from './AutoField.soy';
 class AutoField extends Component {
 
 	/**
-	* Add new rule
-	*/
-	addNewRule() {
-		let list = this.rules;
-
-		list.push({type: 'assetTags', queryContains: true});
-
-		this.rules = list;
+	 * Adds a new rule of type Tags (by default) to the current list of rules.
+	 * @protected
+	 */
+	addNewRule_() {
+		this.rules = this.rules.concat(DEFAULT_RULE);
 	}
 
 	/**
-	* Change Selector
-	*/
-	changeSelector(event) {
-		let itemIndex = event.target.getAttribute('data-item-index');
-
+	 * Updates a given rule when the user changes the type of selection (from Tags
+	 * to Categories) that wants to apply to it
+	 * @param {Event} event
+	 * @protected
+	 */
+	changeSelector_(event) {
+		let itemIndex = event.delegateTarget.getAttribute('data-item-index');
 		let rules = this.rules;
 
 		rules[itemIndex] = {
@@ -43,16 +44,18 @@ class AutoField extends Component {
 	}
 
 	/**
-	* Remove rule
-	*/
-	removeRule(event) {
-		let button = dom.closest(event.target, 'button');
-		let indexToRemove = button.getAttribute('data-card-id');
+	 * Deletes a rule from the current list. This change can not be undone. Changes
+	 * made to the deleted rule will be lost.
+	 * @param {Event} event
+	 * @protected
+	 */
+	deleteRule_(event) {
+		let itemIndex = event.delegateTarget.getAttribute('data-rule-id');
 		let list = this.rules;
 
-		list.splice(indexToRemove, 1);
+		list.splice(itemIndex, 1);
 
-		this.rules = list;
+		this.rules = this.rules;
 	}
 
 	/**
@@ -86,7 +89,7 @@ AutoField.STATE = {
 	 */
 	rules: {
 		setter: 'setterSaveRules_',
-		value: [{type: 'assetTags', queryAndOperator: 'all'}],
+		value: [DEFAULT_RULE],
 	},
 
 	groupIds: {

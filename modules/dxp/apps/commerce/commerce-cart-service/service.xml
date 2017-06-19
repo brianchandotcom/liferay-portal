@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.cart">
+	<author>Alessio Antonio Rendina</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CCart" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CCartId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="cartUserId" type="long" />
+		<column name="type" type="int" />
+		<column name="title" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="title" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="Type" return-type="Collection">
+			<finder-column name="type" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CCartItem" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CCartItemId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CCartId" type="long" />
+		<column name="CPDefinitionId" type="long" />
+		<column name="CPInstanceId" type="long" />
+		<column name="quantity" type="int" />
+		<column name="json" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="CCartId" return-type="Collection">
+			<finder-column name="CCartId" />
+		</finder>
+	</entity>
+</service-builder>

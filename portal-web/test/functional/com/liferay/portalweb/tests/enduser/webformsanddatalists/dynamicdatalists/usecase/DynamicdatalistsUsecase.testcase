@@ -2911,8 +2911,6 @@
 		</execute>
 
 		<for list="Device,Company,PermissionChecker" param="fieldName">
-			<var name="key_fieldName" value="${fieldName}" />
-
 			<execute macro="DDLTemplate#editTemplateScript">
 				<var name="fieldName" value="${fieldName}" />
 			</execute>

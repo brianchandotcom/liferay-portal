@@ -19,7 +19,7 @@ import java.net.URL;
 import java.util.Collection;
 
 /**
- * Describes an OSGi bundle containing NPM packages and modules.
+ * Represents an OSGi bundle containing NPM packages and modules.
  *
  * @author Iván Zaera
  */

@@ -15,17 +15,20 @@
 package com.liferay.frontend.js.loader.modules.extender.npm;
 
 /**
- * A description of an NPM package dependency (another NPM package).
+ * Represents an NPM package dependency (i.e., another NPM package).
+ *
  * @author Iván Zaera
  */
 public class JSPackageDependency {
 
 	/**
+	 * Constructs a <code>JSPackageDependency</code> with the JS package,
+	 * package name, and version constraints.
 	 *
-	 * @param jsPackage the package declaring this dependency
-	 * @param packageName the package name of the dependency
-	 * @param versionConstraints an NPM semantic version expression defining the
-	 *                           suitable versions for this dependency
+	 * @param jsPackage the package declaring the dependency
+	 * @param packageName the dependency's package name
+	 * @param versionConstraints the NPM semantic version expression defining
+	 *        the suitable versions for the dependency
 	 */
 	public JSPackageDependency(
 		JSPackage jsPackage, String packageName, String versionConstraints) {
@@ -36,22 +39,28 @@ public class JSPackageDependency {
 	}
 
 	/**
-	 * Get the NPM package declaring this dependency.
+	 * Returns the NPM package declaring the dependency.
+	 *
+	 * @return the NPM package
 	 */
 	public JSPackage getJSPackage() {
 		return _jsPackage;
 	}
 
 	/**
-	 * Get the package name of the dependency.
+	 * Returns the dependency's package name.
+	 *
+	 * @return the dependency's package name
 	 */
 	public String getPackageName() {
 		return _packageName;
 	}
 
 	/**
-	 * Get the NPM semantic version expression defining the suitable versions
-	 * for this dependency.
+	 * Returns the NPM semantic version expression defining the suitable versions
+	 * for the dependency.
+	 *
+	 * @return the NPM semantic version expression
 	 */
 	public String getVersionConstraints() {
 		return _versionConstraints;

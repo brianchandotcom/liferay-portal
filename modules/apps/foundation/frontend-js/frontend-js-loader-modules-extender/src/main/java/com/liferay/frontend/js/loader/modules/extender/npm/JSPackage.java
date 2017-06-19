@@ -19,52 +19,70 @@ import java.net.URL;
 import java.util.Collection;
 
 /**
- * A description of an NPM package inside a {@link JSBundle}.
+ * Represents an NPM package inside a {@link JSBundle}.
+ *
+ * <p>
+ * {@link JSModule}s belong to a {@link JSPackage} and {@link JSPackage}s belong
+ * to a {@link JSBundle}.
+ * </p>
+ *
  * @author Iván Zaera
  */
 public interface JSPackage extends JSBundleObject {
 
 	/**
-	 * Get the bundle where this package belongs.
+	 * Returns the NPM package's bundle.
+	 *
+	 * @return the NPM package's bundle
 	 */
 	public JSBundle getJSBundle();
 
 	public Collection<JSModuleAlias> getJSModuleAliases();
 
 	/**
-	 * Get the list of NPM modules contained inside the NPM package described by
-	 * this object.
+	 * Returns the NPM modules contained inside the NPM package.
+	 *
+	 * @return the NPM modules
 	 */
 	public Collection<JSModule> getJSModules();
 
 	/**
-	 * Get the list of dependencies (other NPM packages) declared by this
+	 * Returns the dependencies (i.e., other NPM packages) declared by the NPM
 	 * package.
+	 *
+	 * @return the NPM package dependencies
 	 */
 	public Collection<JSPackageDependency> getJSPackageDependencies();
 
 	/**
-	 * Get a dependency of this package (another NPM package) looked up by its
-	 * name.
+	 * Returns the NPM package's dependency (i.e., another NPM package) with the
+	 * package name.
+	 *
 	 * @param packageName the package name
-	 * @return a {@link JSPackageDependency} or null if no dependency with the
-	 *         given name exists
+	 * @return the package dependency or <code>null</code> if no dependency with
+	 *         the name exists
 	 */
 	public JSPackageDependency getJSPackageDependency(String packageName);
 
 	/**
-	 * Get the name of the default module declared by this package.
+	 * Returns the default module's name declared by the NPM package.
+	 *
+	 * @return the default module's name
 	 */
 	public String getMainModuleName();
 
 	/**
-	 * Get the URL of a resource living inside this package.
-	 * @param location the path to the resource
+	 * Returns the resource's URL residing in the NPM package.
+	 *
+	 * @param  location the resource's path
+	 * @return the resource's URL
 	 */
 	public URL getResourceURL(String location);
 
 	/**
-	 * Get the NPM version of this package.
+	 * Returns the package's NPM version.
+	 *
+	 * @return the package's NPM version
 	 */
 	public String getVersion();
 

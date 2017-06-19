@@ -17,33 +17,35 @@ package com.liferay.frontend.js.loader.modules.extender.npm;
 import java.util.Collection;
 
 /**
+ * Represents an NPM module inside a {@link JSBundle}.
+ * 
  * <p>
- * A description of an NPM module inside a {@link JSBundle}.
+ * {@link JSModule}s belong to a {@link JSPackage} and {@link JSPackage}s belong
+ * to a {@link JSBundle}.
  * </p>
- * <p>
- * {@link JSModule}s always belong to a {@link JSPackage}, which at the same
- * time, belongs to a {@link JSBundle}.
- * </p>
+ *
  * @author Iván Zaera
  */
 public interface JSModule extends JSResolvableBundleAsset {
 
 	/**
-	 * Get the list of dependencies declared by this NPM module.
-	 * @return a list of module names
+	 * Returns the module dependencies declared by the NPM module.
+	 *
+	 * @return the module names
 	 */
 	public Collection<String> getDependencies();
 
 	/**
-	 * Get the list of packages that contain all the dependencies of this
-	 * module.
-	 * @see JSModule#getDependencies()
-	 * @return a list of NPM package names
+	 * Returns the packages that contain all the NPM module's dependencies.
+	 *
+	 * @return the NPM package names
 	 */
 	public Collection<String> getDependencyPackageNames();
 
 	/**
-	 * Get the NPM package where this module belongs.
+	 * Returns the module's NPM package.
+	 *
+	 * @return the NPM package
 	 */
 	public JSPackage getJSPackage();
 

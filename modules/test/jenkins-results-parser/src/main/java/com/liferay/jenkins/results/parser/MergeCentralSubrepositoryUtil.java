@@ -21,6 +21,9 @@ import java.util.List;
 
 import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.transport.RemoteConfig;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -49,17 +52,27 @@ public class MergeCentralSubrepositoryUtil {
 						gitrepoFile, centralUpstreamBranchName);
 
 				if (centralSubrepository.isCentralPullRequestCandidate()) {
-					_createMergeBranch(
-						centralGitWorkingDirectory, centralSubrepository,
-						topLevelBranchName);
+					String mergeBranchName = _getMergeBranchName(
+						centralSubrepository.getSubrepositoryName(),
+						centralSubrepository.getSubrepositoryUpstreamCommit());
+					RemoteConfig upstreamRemoteConfig =
+						centralGitWorkingDirectory.getRemoteConfig("upstream");
 
-					_commitCiMergeFile(
-						centralGitWorkingDirectory, centralSubrepository,
-						gitrepoFile);
+					if (!centralGitWorkingDirectory.branchExists(
+							mergeBranchName, upstreamRemoteConfig)) {
 
-					_pushMergeBranchToRemote(
-						centralGitWorkingDirectory, centralSubrepository,
-						receiverUserName);
+						_createMergeBranch(
+							centralGitWorkingDirectory, centralSubrepository,
+							topLevelBranchName);
+
+						_commitCiMergeFile(
+							centralGitWorkingDirectory, centralSubrepository,
+							gitrepoFile);
+
+						_pushMergeBranchToRemote(
+							centralGitWorkingDirectory, centralSubrepository,
+							receiverUserName);
+					}
 
 					_createMergePullRequest(
 						centralGitWorkingDirectory, centralSubrepository,
@@ -135,8 +148,22 @@ public class MergeCentralSubrepositoryUtil {
 			"](https://github.com/", receiverUserName, "/", subrepositoryName,
 			"/commit/", subrepositoryUpstreamCommit, ")");
 
-		centralGitWorkingDirectory.createPullRequest(
+		String pullRequestURL = centralGitWorkingDirectory.createPullRequest(
 			body, mergeBranchName, receiverUserName, title);
+
+		String url = JenkinsResultsParserUtil.combine(
+			"https://api.github.com/repos/", receiverUserName, "/",
+			subrepositoryName, "/statuses/", subrepositoryUpstreamCommit);
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put("context", "liferay/central-pull-request");
+		requestJSONObject.put("description", "Tests are queued on Jenkins.");
+		requestJSONObject.put("state", "pending");
+		requestJSONObject.put("target_url", pullRequestURL);
+
+		JenkinsResultsParserUtil.toJSONObject(
+			url, requestJSONObject.toString());
 	}
 
 	private static String _getCiMergeFilePath(

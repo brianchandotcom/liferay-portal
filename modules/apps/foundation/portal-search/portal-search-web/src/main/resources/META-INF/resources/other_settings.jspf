@@ -25,3 +25,5 @@
 <aui:input helpMessage="display-main-query-help" name="preferences--displayMainQuery--" type="checkbox" value="<%= searchDisplayContext.isDisplayMainQuery() %>" />
 
 <aui:input helpMessage="display-open-search-results-help" name="preferences--displayOpenSearchResults--" type="checkbox" value="<%= searchDisplayContext.isDisplayOpenSearchResults() %>" />
+
+<aui:input helpMessage="use-advanced-search-syntax-help" name="preferences--useAdvancedSearchSyntax--" type="checkbox" value="<%= searchDisplayContext.isUseAdvancedSearchSyntax() %>" />

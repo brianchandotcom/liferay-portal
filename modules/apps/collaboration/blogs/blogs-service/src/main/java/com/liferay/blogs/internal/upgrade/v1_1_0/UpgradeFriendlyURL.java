@@ -41,9 +41,9 @@ public class UpgradeFriendlyURL extends UpgradeProcess {
 			ResultSet rs = ps1.executeQuery();
 
 			while (rs.next()) {
-				long groupId = rs.getLong(2);
-				long classPK = rs.getLong(3);
-				String urlTitle = rs.getString(4);
+				long groupId = rs.getLong(1);
+				long classPK = rs.getLong(2);
+				String urlTitle = rs.getString(3);
 
 				_friendlyURLEntryLocalService.addFriendlyURLEntry(
 					groupId, BlogsEntry.class, classPK, urlTitle,

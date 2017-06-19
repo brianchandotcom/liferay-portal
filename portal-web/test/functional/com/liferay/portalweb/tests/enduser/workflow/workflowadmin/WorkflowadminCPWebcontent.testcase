@@ -93,6 +93,8 @@
 
 		<execute macro="WebContentTemplates#addStructure">
 			<var name="structureName" value="WC Structure Name" />
+			<var name="templateFieldNames" value="Image" />
+			<var name="templateLanguage" value="ftl" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />

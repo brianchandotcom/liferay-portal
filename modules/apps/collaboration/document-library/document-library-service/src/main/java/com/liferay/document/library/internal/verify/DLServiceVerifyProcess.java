@@ -20,8 +20,6 @@ import com.liferay.document.library.kernel.exception.DuplicateFileEntryException
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
-import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
@@ -53,7 +51,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -165,33 +162,6 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 				deleteUnusedDLFileEntryMetadata(dlFileEntryMetadata);
 			}
-		}
-	}
-
-	protected void checkDLFileEntryType() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			DLFileEntryType dlFileEntryType =
-				_dlFileEntryTypeLocalService.fetchDLFileEntryType(
-					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-
-			if (dlFileEntryType != null) {
-				return;
-			}
-
-			dlFileEntryType =
-				_dlFileEntryTypeLocalService.createDLFileEntryType(
-					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-
-			dlFileEntryType.setCompanyId(
-				DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT);
-			dlFileEntryType.setFileEntryTypeKey(
-				StringUtil.toUpperCase(
-					DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT));
-			dlFileEntryType.setName(
-				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT,
-				LocaleUtil.getDefault());
-
-			_dlFileEntryTypeLocalService.updateDLFileEntryType(dlFileEntryType);
 		}
 	}
 
@@ -521,7 +491,6 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		checkMisversionedDLFileEntries();
 
-		checkDLFileEntryType();
 		checkDLFileEntryMetadata();
 		checkMimeTypes();
 		checkTitles();

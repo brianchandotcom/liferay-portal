@@ -361,7 +361,12 @@ public class CalendarBookingTestUtil {
 		CalendarBooking childCalendarBooking = childCalendarBookings.get(0);
 
 		if (childCalendarBooking.isMasterBooking()) {
-			childCalendarBooking = childCalendarBookings.get(1);
+			if (childCalendarBookings.size() > 1) {
+				childCalendarBooking = childCalendarBookings.get(1);
+			}
+			else {
+				childCalendarBooking = null;
+			}
 		}
 
 		return childCalendarBooking;

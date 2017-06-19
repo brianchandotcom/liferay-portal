@@ -40,9 +40,9 @@ import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter
 import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-import com.liferay.trash.kernel.model.TrashEntry;
-import com.liferay.trash.kernel.service.TrashEntryLocalService;
-import com.liferay.trash.kernel.service.TrashVersionLocalService;
+import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.service.TrashEntryLocalService;
+import com.liferay.trash.service.TrashVersionLocalService;
 
 import java.util.List;
 

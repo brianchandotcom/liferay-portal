@@ -61,6 +61,10 @@
 			<var name="samlKeyPassword" value="${samlEntityID}" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="SAML Admin" />
+		</execute>
+
 		<execute macro="SAMLNavigation#gotoIdentityProviderConnection" />
 
 		<execute macro="SAMLPortlet#configureIdentityProviderConnection">

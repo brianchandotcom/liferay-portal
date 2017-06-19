@@ -164,6 +164,11 @@
 	<command name="ViewSingleLogoutWithMultipleSPs" priority="4">
 		<property name="app.server.bundles.size" value="2" />
 
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
 		<execute macro="SAML#configureLiferaySAMLAsSP">
 			<var name="samlEntityID" value="samlsp2" />
 			<var name="spURL" value="http://www.baker.com:10080/" />

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.lar.test.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
 import java.io.InputStream;
 
@@ -67,6 +68,7 @@ public class BlogsEntryStagedModelDataHandlerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
+			PermissionCheckerTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
@@ -92,6 +94,8 @@ public class BlogsEntryStagedModelDataHandlerTest
 				importedEntry.getCoverImageFileEntryId());
 
 		Folder coverImageFileEntryFolder = coverImageFileEntry.getFolder();
+
+		_assertOriginalImage(coverImageFileEntry);
 
 		Assert.assertEquals(
 			liveGroup.getGroupId(), coverImageFileEntry.getGroupId());
@@ -289,6 +293,25 @@ public class BlogsEntryStagedModelDataHandlerTest
 		Assert.assertEquals(
 			entry.getCoverImageCaption(), importedEntry.getCoverImageCaption());
 		Assert.assertEquals(entry.isSmallImage(), importedEntry.isSmallImage());
+	}
+
+	private void _assertOriginalImage(FileEntry coverImageFileEntry)
+		throws Exception {
+
+		Folder attachmentsFolder =
+			BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+				TestPropsValues.getUserId(), liveGroup.getGroupId());
+
+		List<FileEntry> attachments =
+			PortletFileRepositoryUtil.getPortletFileEntries(
+				liveGroup.getGroupId(), attachmentsFolder.getFolderId());
+
+		Assert.assertEquals(attachments.toString(), 1, attachments.size());
+
+		FileEntry originalFileEntry = attachments.get(0);
+
+		Assert.assertEquals(
+			coverImageFileEntry.getFileName(), originalFileEntry.getFileName());
 	}
 
 	private static final String _IMAGE_CROP_REGION =

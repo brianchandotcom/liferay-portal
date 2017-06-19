@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 
 import java.util.TimeZone;
 
@@ -61,13 +62,16 @@ public class CalendarTestUtil {
 			CalendarResourceUtil.getGroupCalendarResource(
 				group.getGroupId(), serviceContext);
 
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		if (timeZone != null) {
-			calendar.setTimeZoneId(timeZone.getID());
-
-			CalendarLocalServiceUtil.updateCalendar(calendar);
+		if (timeZone == null) {
+			timeZone = TimeZoneUtil.getDefault();
 		}
+
+		Calendar calendar = CalendarLocalServiceUtil.addCalendar(
+			group.getCreatorUserId(), group.getGroupId(),
+			calendarResource.getCalendarResourceId(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), timeZone.getID(),
+			RandomTestUtil.randomInt(), false, false, false, serviceContext);
 
 		return calendar;
 	}

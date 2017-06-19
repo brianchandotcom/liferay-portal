@@ -72,8 +72,7 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 
 			FriendlyURLEntry mainFriendlyURLEntry =
 				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-					entry.getGroupId(), entry.getCompanyId(), BlogsEntry.class,
-					entry.getEntryId());
+					entry.getGroupId(), BlogsEntry.class, entry.getEntryId());
 
 			String urlTitle = ParamUtil.getString(renderRequest, "urlTitle");
 

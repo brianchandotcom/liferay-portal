@@ -56,8 +56,8 @@ public class FriendlyURLEntryLocalServiceTest {
 
 		String uniqueUrlTitle =
 			FriendlyURLEntryLocalServiceUtil.getUniqueUrlTitle(
-				_group.getGroupId(), _group.getCompanyId(), classNameId,
-				TestPropsValues.getUserId(), urlTitle);
+				_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
+				urlTitle);
 
 		Assert.assertEquals("url-title-with-spaces", uniqueUrlTitle);
 	}
@@ -68,13 +68,12 @@ public class FriendlyURLEntryLocalServiceTest {
 		String urlTitle = "existing-url-title";
 
 		FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
-			_group.getGroupId(), _group.getCompanyId(), classNameId,
-			TestPropsValues.getUserId(), urlTitle, _getServiceContext());
+			_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
+			urlTitle, _getServiceContext());
 
 		String uniqueUrlTitle =
 			FriendlyURLEntryLocalServiceUtil.getUniqueUrlTitle(
-				_group.getGroupId(), _group.getCompanyId(), classNameId,
-				_user.getUserId(), urlTitle);
+				_group.getGroupId(), classNameId, _user.getUserId(), urlTitle);
 
 		Assert.assertEquals("existing-url-title-1", uniqueUrlTitle);
 	}
@@ -85,13 +84,13 @@ public class FriendlyURLEntryLocalServiceTest {
 		String urlTitle = "existing-url-title";
 
 		FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
-			_group.getGroupId(), _group.getCompanyId(), classNameId,
-			TestPropsValues.getUserId(), urlTitle, _getServiceContext());
+			_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
+			urlTitle, _getServiceContext());
 
 		String uniqueUrlTitle =
 			FriendlyURLEntryLocalServiceUtil.getUniqueUrlTitle(
-				_group.getGroupId(), _group.getCompanyId(), classNameId,
-				TestPropsValues.getUserId(), urlTitle);
+				_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
+				urlTitle);
 
 		Assert.assertEquals(urlTitle, uniqueUrlTitle);
 	}
@@ -107,8 +106,8 @@ public class FriendlyURLEntryLocalServiceTest {
 
 		String uniqueUrlTitle =
 			FriendlyURLEntryLocalServiceUtil.getUniqueUrlTitle(
-				_group.getGroupId(), _group.getCompanyId(), classNameId,
-				TestPropsValues.getUserId(), urlTitle);
+				_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
+				urlTitle);
 
 		Assert.assertEquals(maxLength, uniqueUrlTitle.length());
 	}
@@ -123,8 +122,8 @@ public class FriendlyURLEntryLocalServiceTest {
 		String urlTitle = StringUtil.randomString(maxLength);
 
 		FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
-			_group.getGroupId(), _group.getCompanyId(), classNameId,
-			TestPropsValues.getUserId(), urlTitle, _getServiceContext());
+			_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
+			urlTitle, _getServiceContext());
 
 		FriendlyURLEntryLocalServiceUtil.validate(
 			_group.getGroupId(), _group.getCompanyId(), classNameId, urlTitle);
@@ -140,12 +139,11 @@ public class FriendlyURLEntryLocalServiceTest {
 		String urlTitle = StringUtil.randomString(maxLength);
 
 		FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
-			_group.getGroupId(), _group.getCompanyId(), classNameId,
-			TestPropsValues.getUserId(), urlTitle, _getServiceContext());
+			_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
+			urlTitle, _getServiceContext());
 
 		FriendlyURLEntryLocalServiceUtil.validate(
-			_group.getGroupId(), _group.getCompanyId(), classNameId,
-			_user.getUserId(), urlTitle);
+			_group.getGroupId(), classNameId, _user.getUserId(), urlTitle);
 	}
 
 	@Test
@@ -158,12 +156,12 @@ public class FriendlyURLEntryLocalServiceTest {
 		String urlTitle = StringUtil.randomString(maxLength);
 
 		FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
-			_group.getGroupId(), _group.getCompanyId(), classNameId,
-			TestPropsValues.getUserId(), urlTitle, _getServiceContext());
+			_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
+			urlTitle, _getServiceContext());
 
 		FriendlyURLEntryLocalServiceUtil.validate(
-			_group.getGroupId(), _group.getCompanyId(), classNameId,
-			TestPropsValues.getUserId(), urlTitle);
+			_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
+			urlTitle);
 	}
 
 	@Test(expected = FriendlyURLLengthException.class)

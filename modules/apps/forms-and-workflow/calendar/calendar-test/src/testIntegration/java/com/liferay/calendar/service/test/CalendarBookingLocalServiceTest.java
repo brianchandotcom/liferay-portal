@@ -807,6 +807,30 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
+	public void testInviteNonStagedSiteCalendarCreatesLiveSiteCalendarBooking()
+		throws Exception {
+
+		_liveGroup = GroupTestUtil.addGroup();
+
+		Calendar invitingCalendar = CalendarTestUtil.addCalendar(_user);
+
+		Calendar liveCalendar = CalendarTestUtil.getDefaultCalendar(_liveGroup);
+
+		enableLocalStaging(_liveGroup, false);
+
+		Calendar stagingCalendar = CalendarTestUtil.getStagingCalendar(
+			_liveGroup, liveCalendar);
+
+		Assert.assertNull(stagingCalendar);
+
+		CalendarBooking childCalendarBooking =
+			CalendarBookingTestUtil.addChildCalendarBooking(
+				invitingCalendar, liveCalendar);
+
+		assertCalendar(childCalendarBooking, liveCalendar);
+	}
+
+	@Test
 	public void testInviteToDraftCalendarBookingResultsInMasterPendingChild()
 		throws Exception {
 

@@ -23,9 +23,11 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutReference;
 import com.liferay.portal.kernel.model.LayoutSoap;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutFinder;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
+import com.liferay.portal.kernel.service.persistence.RoleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.LayoutImpl;
@@ -58,6 +60,10 @@ public class LayoutFinderImpl
 		Session session = null;
 
 		try {
+			Role role = RoleUtil.findByPrimaryKey(roleId);
+
+			long companyId = role.getCompanyId();
+
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_NO_PERMISSIONS);
@@ -71,6 +77,7 @@ public class LayoutFinderImpl
 			qPos.add(Layout.class.getName());
 			qPos.add(ResourceConstants.SCOPE_INDIVIDUAL);
 			qPos.add(roleId);
+			qPos.add(companyId);
 
 			return q.list(true);
 		}

@@ -993,8 +993,8 @@ public class UserImpl extends UserBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(UserImpl.class);
 
-	private static final boolean _hasUsersProfileFriendlyURL = Validator.isNull(
-		PropsValues.USERS_PROFILE_FRIENDLY_URL);
+	private static final boolean _hasUsersProfileFriendlyURL =
+		Validator.isNotNull(PropsValues.USERS_PROFILE_FRIENDLY_URL);
 
 	private Contact _contact;
 	private Locale _locale;

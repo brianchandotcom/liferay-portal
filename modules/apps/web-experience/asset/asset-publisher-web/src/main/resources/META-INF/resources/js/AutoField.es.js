@@ -15,12 +15,18 @@ const DEFAULT_RULE = {type: 'assetTags', queryContains: true};
  *
  */
 class AutoField extends Component {
+	/**
+	 * @inheritDoc
+	 */
+	created() {
+		this.on('rulesChanged', this.onRulesChanged_);
+	}
 
 	/**
 	 * Adds a new rule of type Tags (by default) to the current list of rules.
 	 * @protected
 	 */
-	addNewRule_() {
+	addRule_() {
 		this.rules = this.rules.concat(DEFAULT_RULE);
 	}
 
@@ -59,27 +65,14 @@ class AutoField extends Component {
 	}
 
 	/**
-	* Setter rules
-	*
-	* Update queryLogicIndexes depend on length of rules
-	*/
-	setterSaveRules_(rules) {
-		let queryLogicIndexes;
-
-		queryLogicIndexes = rules.reduce((logicIndexes, item, index) => {
-			if (index === 0) {
-				return '0';
-			}
-
-			return logicIndexes + ',' + index;
-
-		}, '');
-
-		this.queryLogicIndexes = queryLogicIndexes;
-
-		return rules;
+	 * Updates the queryLogicIndexes whenever the list of rules change. The value
+	 * of this property is as follow:
+	 * - rules: [{}, {}, {}]
+	 * - queryLogicIndexes: "0,1,2";
+	 */
+	onRulesChanged_() {
+		this.queryLogicIndexes = Object.keys(this.rules).toString();
 	}
-
 }
 
 AutoField.STATE = {
@@ -88,7 +81,6 @@ AutoField.STATE = {
 	 * @type {array}
 	 */
 	rules: {
-		setter: 'setterSaveRules_',
 		value: [DEFAULT_RULE],
 	},
 

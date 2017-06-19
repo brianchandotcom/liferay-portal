@@ -33,6 +33,26 @@
 	}
 }
 
+.ddl-form-settings-modal {
+	.ddl-form-settings-modal-content {
+		.modal-body {
+			padding: 0px;
+		}
+	}
+
+	.ddl-record-set-settings {
+		padding: 0px;
+
+		.lfr-ddm-form-page {
+			.row {
+				padding: 0px;
+				margin-left: 0px;
+				margin-right: 0px;
+			}
+		}
+	}
+}
+
 .ddl-publish-modal {
 	.alert-info {
 		text-align: center;

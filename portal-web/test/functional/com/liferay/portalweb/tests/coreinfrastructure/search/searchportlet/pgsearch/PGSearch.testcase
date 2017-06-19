@@ -681,7 +681,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchDocumentsAndMediaDocument" priority="4">
+	<command name="SearchDocumentsAndMediaDocument" priority="5">
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#openURL" />

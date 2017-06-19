@@ -382,7 +382,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTaskNodeEditNameAndDesciptionAndNotificationsAndDeleteViaViewTab" priority="4">
+	<command name="AddTaskNodeEditNameAndDesciptionAndNotificationsAndDeleteViaViewTab" priority="5">
 		<description message="This is a use case for LPS-53992." />
 
 		<property name="testray.component.names" value="Training" />

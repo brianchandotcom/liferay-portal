@@ -81,8 +81,8 @@ public class CCartModelImpl extends BaseModelImpl<CCart> implements CCartModel {
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "cartUserId", Types.BIGINT },
-			{ "type_", Types.INTEGER },
-			{ "title", Types.VARCHAR }
+			{ "title", Types.VARCHAR },
+			{ "type_", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -96,11 +96,11 @@ public class CCartModelImpl extends BaseModelImpl<CCart> implements CCartModel {
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("cartUserId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CCart (uuid_ VARCHAR(75) null,CCartId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,cartUserId LONG,type_ INTEGER,title VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CCart (uuid_ VARCHAR(75) null,CCartId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,cartUserId LONG,title VARCHAR(75) null,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CCart";
 	public static final String ORDER_BY_JPQL = " ORDER BY cCart.title DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CCart.title DESC";
@@ -144,8 +144,8 @@ public class CCartModelImpl extends BaseModelImpl<CCart> implements CCartModel {
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCartUserId(soapModel.getCartUserId());
-		model.setType(soapModel.getType());
 		model.setTitle(soapModel.getTitle());
+		model.setType(soapModel.getType());
 
 		return model;
 	}
@@ -219,8 +219,8 @@ public class CCartModelImpl extends BaseModelImpl<CCart> implements CCartModel {
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("cartUserId", getCartUserId());
-		attributes.put("type", getType());
 		attributes.put("title", getTitle());
+		attributes.put("type", getType());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -284,16 +284,16 @@ public class CCartModelImpl extends BaseModelImpl<CCart> implements CCartModel {
 			setCartUserId(cartUserId);
 		}
 
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
 		String title = (String)attributes.get("title");
 
 		if (title != null) {
 			setTitle(title);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -478,6 +478,24 @@ public class CCartModelImpl extends BaseModelImpl<CCart> implements CCartModel {
 
 	@JSON
 	@Override
+	public String getTitle() {
+		if (_title == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _title;
+		}
+	}
+
+	@Override
+	public void setTitle(String title) {
+		_columnBitmask = -1L;
+
+		_title = title;
+	}
+
+	@JSON
+	@Override
 	public int getType() {
 		return _type;
 	}
@@ -497,24 +515,6 @@ public class CCartModelImpl extends BaseModelImpl<CCart> implements CCartModel {
 
 	public int getOriginalType() {
 		return _originalType;
-	}
-
-	@JSON
-	@Override
-	public String getTitle() {
-		if (_title == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _title;
-		}
-	}
-
-	@Override
-	public void setTitle(String title) {
-		_columnBitmask = -1L;
-
-		_title = title;
 	}
 
 	@Override
@@ -563,8 +563,8 @@ public class CCartModelImpl extends BaseModelImpl<CCart> implements CCartModel {
 		cCartImpl.setCreateDate(getCreateDate());
 		cCartImpl.setModifiedDate(getModifiedDate());
 		cCartImpl.setCartUserId(getCartUserId());
-		cCartImpl.setType(getType());
 		cCartImpl.setTitle(getTitle());
+		cCartImpl.setType(getType());
 
 		cCartImpl.resetOriginalValues();
 
@@ -694,8 +694,6 @@ public class CCartModelImpl extends BaseModelImpl<CCart> implements CCartModel {
 
 		cCartCacheModel.cartUserId = getCartUserId();
 
-		cCartCacheModel.type = getType();
-
 		cCartCacheModel.title = getTitle();
 
 		String title = cCartCacheModel.title;
@@ -703,6 +701,8 @@ public class CCartModelImpl extends BaseModelImpl<CCart> implements CCartModel {
 		if ((title != null) && (title.length() == 0)) {
 			cCartCacheModel.title = null;
 		}
+
+		cCartCacheModel.type = getType();
 
 		return cCartCacheModel;
 	}
@@ -729,10 +729,10 @@ public class CCartModelImpl extends BaseModelImpl<CCart> implements CCartModel {
 		sb.append(getModifiedDate());
 		sb.append(", cartUserId=");
 		sb.append(getCartUserId());
-		sb.append(", type=");
-		sb.append(getType());
 		sb.append(", title=");
 		sb.append(getTitle());
+		sb.append(", type=");
+		sb.append(getType());
 		sb.append("}");
 
 		return sb.toString();
@@ -783,12 +783,12 @@ public class CCartModelImpl extends BaseModelImpl<CCart> implements CCartModel {
 		sb.append(getCartUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>title</column-name><column-value><![CDATA[");
 		sb.append(getTitle());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>type</column-name><column-value><![CDATA[");
+		sb.append(getType());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -815,10 +815,10 @@ public class CCartModelImpl extends BaseModelImpl<CCart> implements CCartModel {
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _cartUserId;
+	private String _title;
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;
-	private String _title;
 	private long _columnBitmask;
 	private CCart _escapedModel;
 }

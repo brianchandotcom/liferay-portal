@@ -239,20 +239,6 @@ public interface CCartModel extends BaseModel<CCart>, GroupedModel, ShardedModel
 	public void setCartUserUuid(String cartUserUuid);
 
 	/**
-	 * Returns the type of this c cart.
-	 *
-	 * @return the type of this c cart
-	 */
-	public int getType();
-
-	/**
-	 * Sets the type of this c cart.
-	 *
-	 * @param type the type of this c cart
-	 */
-	public void setType(int type);
-
-	/**
 	 * Returns the title of this c cart.
 	 *
 	 * @return the title of this c cart
@@ -266,6 +252,20 @@ public interface CCartModel extends BaseModel<CCart>, GroupedModel, ShardedModel
 	 * @param title the title of this c cart
 	 */
 	public void setTitle(String title);
+
+	/**
+	 * Returns the type of this c cart.
+	 *
+	 * @return the type of this c cart
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this c cart.
+	 *
+	 * @param type the type of this c cart
+	 */
+	public void setType(int type);
 
 	@Override
 	public boolean isNew();

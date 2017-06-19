@@ -123,10 +123,11 @@ public abstract class CCartLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param cCart the c cart
 	 * @return the c cart that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CCart deleteCCart(CCart cCart) {
+	public CCart deleteCCart(CCart cCart) throws PortalException {
 		return cCartPersistence.remove(cCart);
 	}
 

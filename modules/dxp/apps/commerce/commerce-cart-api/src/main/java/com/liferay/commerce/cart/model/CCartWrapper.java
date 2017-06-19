@@ -68,8 +68,8 @@ public class CCartWrapper implements CCart, ModelWrapper<CCart> {
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("cartUserId", getCartUserId());
-		attributes.put("type", getType());
 		attributes.put("title", getTitle());
+		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -130,16 +130,16 @@ public class CCartWrapper implements CCart, ModelWrapper<CCart> {
 			setCartUserId(cartUserId);
 		}
 
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
 		String title = (String)attributes.get("title");
 
 		if (title != null) {
 			setTitle(title);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 	}
 

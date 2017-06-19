@@ -53,6 +53,13 @@ public class CCartLocalServiceUtil {
 		return getService().addCCart(cCart);
 	}
 
+	public static com.liferay.commerce.cart.model.CCart addCCart(
+		long cartUserId, java.lang.String title, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addCCart(cartUserId, title, type, serviceContext);
+	}
+
 	/**
 	* Creates a new c cart with the primary key. Does not add the c cart to the database.
 	*
@@ -69,9 +76,11 @@ public class CCartLocalServiceUtil {
 	*
 	* @param cCart the c cart
 	* @return the c cart that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.cart.model.CCart deleteCCart(
-		com.liferay.commerce.cart.model.CCart cCart) {
+		com.liferay.commerce.cart.model.CCart cCart)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCCart(cCart);
 	}
 
@@ -139,6 +148,12 @@ public class CCartLocalServiceUtil {
 	public static com.liferay.commerce.cart.model.CCart updateCCart(
 		com.liferay.commerce.cart.model.CCart cCart) {
 		return getService().updateCCart(cCart);
+	}
+
+	public static com.liferay.commerce.cart.model.CCart updateCCart(
+		long cCartId, long cartUserId, java.lang.String title, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateCCart(cCartId, cartUserId, title, type);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

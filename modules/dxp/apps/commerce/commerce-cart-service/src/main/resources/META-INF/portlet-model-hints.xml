@@ -11,8 +11,8 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="cartUserId" type="long" />
-		<field name="type" type="int" />
 		<field name="title" type="String" />
+		<field name="type" type="int" />
 	</model>
 	<model name="com.liferay.commerce.cart.model.CCartItem">
 		<field name="uuid" type="String" />

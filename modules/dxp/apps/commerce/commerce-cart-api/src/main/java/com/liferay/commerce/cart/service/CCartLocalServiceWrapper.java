@@ -44,6 +44,15 @@ public class CCartLocalServiceWrapper implements CCartLocalService,
 		return _cCartLocalService.addCCart(cCart);
 	}
 
+	@Override
+	public com.liferay.commerce.cart.model.CCart addCCart(long cartUserId,
+		java.lang.String title, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cCartLocalService.addCCart(cartUserId, title, type,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new c cart with the primary key. Does not add the c cart to the database.
 	*
@@ -60,10 +69,12 @@ public class CCartLocalServiceWrapper implements CCartLocalService,
 	*
 	* @param cCart the c cart
 	* @return the c cart that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.cart.model.CCart deleteCCart(
-		com.liferay.commerce.cart.model.CCart cCart) {
+		com.liferay.commerce.cart.model.CCart cCart)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cCartLocalService.deleteCCart(cCart);
 	}
 
@@ -136,6 +147,13 @@ public class CCartLocalServiceWrapper implements CCartLocalService,
 	public com.liferay.commerce.cart.model.CCart updateCCart(
 		com.liferay.commerce.cart.model.CCart cCart) {
 		return _cCartLocalService.updateCCart(cCart);
+	}
+
+	@Override
+	public com.liferay.commerce.cart.model.CCart updateCCart(long cCartId,
+		long cartUserId, java.lang.String title, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cCartLocalService.updateCCart(cCartId, cartUserId, title, type);
 	}
 
 	@Override

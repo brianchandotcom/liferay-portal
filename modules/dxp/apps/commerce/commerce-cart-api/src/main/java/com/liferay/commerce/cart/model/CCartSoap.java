@@ -43,8 +43,8 @@ public class CCartSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCartUserId(model.getCartUserId());
-		soapModel.setType(model.getType());
 		soapModel.setTitle(model.getTitle());
+		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
@@ -169,20 +169,20 @@ public class CCartSoap implements Serializable {
 		_cartUserId = cartUserId;
 	}
 
-	public int getType() {
-		return _type;
-	}
-
-	public void setType(int type) {
-		_type = type;
-	}
-
 	public String getTitle() {
 		return _title;
 	}
 
 	public void setTitle(String title) {
 		_title = title;
+	}
+
+	public int getType() {
+		return _type;
+	}
+
+	public void setType(int type) {
+		_type = type;
 	}
 
 	private String _uuid;
@@ -194,6 +194,6 @@ public class CCartSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _cartUserId;
-	private int _type;
 	private String _title;
+	private int _type;
 }

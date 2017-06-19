@@ -156,11 +156,9 @@ public class CCartItemLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.cart.model.CCartItem updateCCartItem(
-		long cCartItemId, int quantity, java.lang.String json,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long cCartItemId, int quantity, java.lang.String json)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCCartItem(cCartItemId, quantity, json, serviceContext);
+		return getService().updateCCartItem(cCartItemId, quantity, json);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

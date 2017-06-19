@@ -158,11 +158,10 @@ public class CCartItemLocalServiceWrapper implements CCartItemLocalService,
 
 	@Override
 	public com.liferay.commerce.cart.model.CCartItem updateCCartItem(
-		long cCartItemId, int quantity, java.lang.String json,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long cCartItemId, int quantity, java.lang.String json)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cCartItemLocalService.updateCCartItem(cCartItemId, quantity,
-			json, serviceContext);
+			json);
 	}
 
 	@Override

@@ -85,10 +85,10 @@ public class CCartCacheModel implements CacheModel<CCart>, Externalizable {
 		sb.append(modifiedDate);
 		sb.append(", cartUserId=");
 		sb.append(cartUserId);
-		sb.append(", type=");
-		sb.append(type);
 		sb.append(", title=");
 		sb.append(title);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append("}");
 
 		return sb.toString();
@@ -132,7 +132,6 @@ public class CCartCacheModel implements CacheModel<CCart>, Externalizable {
 		}
 
 		cCartImpl.setCartUserId(cartUserId);
-		cCartImpl.setType(type);
 
 		if (title == null) {
 			cCartImpl.setTitle(StringPool.BLANK);
@@ -140,6 +139,8 @@ public class CCartCacheModel implements CacheModel<CCart>, Externalizable {
 		else {
 			cCartImpl.setTitle(title);
 		}
+
+		cCartImpl.setType(type);
 
 		cCartImpl.resetOriginalValues();
 
@@ -162,9 +163,9 @@ public class CCartCacheModel implements CacheModel<CCart>, Externalizable {
 		modifiedDate = objectInput.readLong();
 
 		cartUserId = objectInput.readLong();
+		title = objectInput.readUTF();
 
 		type = objectInput.readInt();
-		title = objectInput.readUTF();
 	}
 
 	@Override
@@ -197,14 +198,14 @@ public class CCartCacheModel implements CacheModel<CCart>, Externalizable {
 
 		objectOutput.writeLong(cartUserId);
 
-		objectOutput.writeInt(type);
-
 		if (title == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(title);
 		}
+
+		objectOutput.writeInt(type);
 	}
 
 	public String uuid;
@@ -216,6 +217,6 @@ public class CCartCacheModel implements CacheModel<CCart>, Externalizable {
 	public long createDate;
 	public long modifiedDate;
 	public long cartUserId;
-	public int type;
 	public String title;
+	public int type;
 }

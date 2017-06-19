@@ -157,8 +157,7 @@ public interface CCartItemLocalService extends BaseLocalService,
 	public CCartItem updateCCartItem(CCartItem cCartItem);
 
 	public CCartItem updateCCartItem(long cCartItemId, int quantity,
-		java.lang.String json, ServiceContext serviceContext)
-		throws PortalException;
+		java.lang.String json) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

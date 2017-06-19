@@ -28,10 +28,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -73,6 +76,9 @@ public interface CCartLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CCart addCCart(CCart cCart);
 
+	public CCart addCCart(long cartUserId, java.lang.String title, int type,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new c cart with the primary key. Does not add the c cart to the database.
 	*
@@ -86,9 +92,11 @@ public interface CCartLocalService extends BaseLocalService,
 	*
 	* @param cCart the c cart
 	* @return the c cart that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public CCart deleteCCart(CCart cCart);
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CCart deleteCCart(CCart cCart) throws PortalException;
 
 	/**
 	* Deletes the c cart with the primary key from the database. Also notifies the appropriate model listeners.
@@ -143,6 +151,9 @@ public interface CCartLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public CCart updateCCart(CCart cCart);
+
+	public CCart updateCCart(long cCartId, long cartUserId,
+		java.lang.String title, int type) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

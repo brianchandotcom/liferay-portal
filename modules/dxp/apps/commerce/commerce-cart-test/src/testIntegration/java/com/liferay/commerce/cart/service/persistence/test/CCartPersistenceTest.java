@@ -141,9 +141,9 @@ public class CCartPersistenceTest {
 
 		newCCart.setCartUserId(RandomTestUtil.nextLong());
 
-		newCCart.setType(RandomTestUtil.nextInt());
-
 		newCCart.setTitle(RandomTestUtil.randomString());
+
+		newCCart.setType(RandomTestUtil.nextInt());
 
 		_cCarts.add(_persistence.update(newCCart));
 
@@ -164,8 +164,8 @@ public class CCartPersistenceTest {
 			Time.getShortTimestamp(newCCart.getModifiedDate()));
 		Assert.assertEquals(existingCCart.getCartUserId(),
 			newCCart.getCartUserId());
-		Assert.assertEquals(existingCCart.getType(), newCCart.getType());
 		Assert.assertEquals(existingCCart.getTitle(), newCCart.getTitle());
+		Assert.assertEquals(existingCCart.getType(), newCCart.getType());
 	}
 
 	@Test
@@ -228,7 +228,7 @@ public class CCartPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CCart", "uuid", true,
 			"CCartId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"cartUserId", true, "type", true, "title", true);
+			"cartUserId", true, "title", true, "type", true);
 	}
 
 	@Test
@@ -456,9 +456,9 @@ public class CCartPersistenceTest {
 
 		cCart.setCartUserId(RandomTestUtil.nextLong());
 
-		cCart.setType(RandomTestUtil.nextInt());
-
 		cCart.setTitle(RandomTestUtil.randomString());
+
+		cCart.setType(RandomTestUtil.nextInt());
 
 		_cCarts.add(_persistence.update(cCart));
 

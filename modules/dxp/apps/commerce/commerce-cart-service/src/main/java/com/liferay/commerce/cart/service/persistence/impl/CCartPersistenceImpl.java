@@ -2373,8 +2373,8 @@ public class CCartPersistenceImpl extends BasePersistenceImpl<CCart>
 		cCartImpl.setCreateDate(cCart.getCreateDate());
 		cCartImpl.setModifiedDate(cCart.getModifiedDate());
 		cCartImpl.setCartUserId(cCart.getCartUserId());
-		cCartImpl.setType(cCart.getType());
 		cCartImpl.setTitle(cCart.getTitle());
+		cCartImpl.setType(cCart.getType());
 
 		return cCartImpl;
 	}

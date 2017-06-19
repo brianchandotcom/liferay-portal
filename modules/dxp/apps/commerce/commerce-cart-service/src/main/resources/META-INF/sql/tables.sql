@@ -8,8 +8,8 @@ create table CCart (
 	createDate DATE null,
 	modifiedDate DATE null,
 	cartUserId LONG,
-	type_ INTEGER,
-	title VARCHAR(75) null
+	title VARCHAR(75) null,
+	type_ INTEGER
 );
 
 create table CCartItem (

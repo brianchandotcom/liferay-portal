@@ -2112,6 +2112,7 @@
 		<for list="private,public" param="formAccessLevel" >
 			<execute macro="Form#gotoFormAccessLevelPage">
 				<var name="formAccessLevel" value="${formAccessLevel}" />
+				<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
 			</execute>
 
 			<execute macro="FormFields#viewTextField">

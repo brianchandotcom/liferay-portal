@@ -76,8 +76,7 @@ public class CCartItemLocalServiceImpl extends CCartItemLocalServiceBaseImpl {
 
     @Override
     public CCartItem updateCCartItem(
-            long cCartItemId, int quantity, String json,
-            ServiceContext serviceContext)
+            long cCartItemId, int quantity, String json)
         throws PortalException {
 
         CCartItem cCartItem = cCartItemPersistence.findByPrimaryKey(

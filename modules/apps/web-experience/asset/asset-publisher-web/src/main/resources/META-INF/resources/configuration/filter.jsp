@@ -60,6 +60,7 @@ context.put("categorySelectorURL", assetPublisherDisplayContext.getCategorySelec
 context.put("id", "autofield");
 context.put("groupIds", StringUtil.merge(categorizableGroupIds));
 context.put("namespace", liferayPortletResponse.getNamespace());
+context.put("pathThemeImages", themeDisplay.getPathThemeImages());
 context.put("rules", assetPublisherDisplayContext.getAutoFieldRulesJSONArray());
 context.put("tagSelectorURL", assetPublisherDisplayContext.getTagSelectorURL());
 context.put("vocabularyIds", assetPublisherDisplayContext.getVocabularyIds());

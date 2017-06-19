@@ -16,33 +16,41 @@
  * @param vocabularyIds
  */
 {template .render}
+	{@param pathThemeImages: string}
+
 	<div id="{$id}">
 		{call .rules}
+			{param categorySelectorURL: $categorySelectorURL /}
 			{param changeSelector: $changeSelector /}
-			{param namespace: $namespace /}
 			{param groupIds: $groupIds /}
 			{param logicIndexes: $logicIndexes /}
-			{param categorySelectorURL: $categorySelectorURL /}
-			{param tagSelectorURL: $tagSelectorURL /}
+			{param namespace: $namespace /}
+			{param pathThemeImages: $pathThemeImages /}
 			{param removeRule: $removeRule /}
 			{param rules: $rules /}
+			{param tagSelectorURL: $tagSelectorURL /}
 			{param vocabularyIds: $vocabularyIds /}
 		{/call}
+
 		{call .addButtonTimeLine}
 			{param addNewRule: $addNewRule /}
+			{param pathThemeImages: $pathThemeImages /}
 		{/call}
 	</div>
 {/template}
 
 /**
-* @param? addNewRule
-**/
+ * Renders the Add button at the bottom of the timeline
+ */
 {template .addButtonTimeLine}
+	{@param? addNewRule: any}
+	{@param pathThemeImages: string}
+	
 	<div class="addbutton-timeline-item">
 		<div class="add-condition timeline-increment-icon">
 			<a aria-role="button" data-onclick="{$addNewRule}" class="btn btn-primary btn-xs form-builder-timeline-add-item form-builder-rule-add-condition" href="javascript:;">
-				<svg class="lexicon-icon lexicon-icon-plus icon-monospaced" focusable="false" role="image" viewBox="0 0 512 512">
-					<path class="lexicon-icon-outline" d="M479.82 224.002h-192.41v-191.91c0-17.6-14.4-32-32-32v0c-17.6 0-32 14.4-32 32v191.91h-191.41c-17.6 0-32 14.4-32 32v0c0 17.6 14.4 32 32 32h191.41v191.91c0 17.6 14.4 32 32 32v0c17.6 0 32-14.4 32-32v-191.909h192.41c17.6 0 32-14.4 32-32v0c0-17.6-14.4-32-32-32z"></path>
+				<svg class="lexicon-icon icon-monospaced">
+					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#plus"></use>
 				</svg>
 			</a>
 		</div>
@@ -61,6 +69,8 @@
 * @param vocabularyIds
 **/
 {template .rules}
+	{@param pathThemeImages: string}
+	
 	<input name="{$namespace}queryLogicIndexes" value="{$queryLogicIndexes}" type="hidden">
 	<ul class="timeline">
 		<li class="timeline-item">
@@ -73,14 +83,16 @@
 				</div>
 			</div>
 		</li>
+
 		{call .listRules}
+			{param categorySelectorURL: $categorySelectorURL /}
 			{param changeSelector: $changeSelector /}
 			{param groupIds: $groupIds /}
 			{param namespace: $namespace /}
-			{param categorySelectorURL: $categorySelectorURL /}
-			{param tagSelectorURL: $tagSelectorURL /}
+			{param pathThemeImages: $pathThemeImages /}
 			{param removeRule: $removeRule /}
 			{param rules: $rules /}
+			{param tagSelectorURL: $tagSelectorURL /}
 			{param vocabularyIds: $vocabularyIds /}
 		{/call}
 	</ul>
@@ -97,6 +109,8 @@
 * @param vocabularyIds
 **/
 {template .listRules}
+	{@param pathThemeImages: string}
+
 	{if $rules and $namespace}
 		{foreach $rule in $rules}
 			{let $index: index($rule) /}
@@ -106,14 +120,14 @@
 						<div class="form-group">
 							<select class="form-control" id="{$namespace}queryContains{$index}" name="{$namespace}queryContains{$index}" title="Query Contains">
 								<option class="" selected="{$rule.queryContains}" value="true"> Contains </option>
-								<option class="" selected="{not $rule.queryContains}" value="false"> Does not Contain </option>
+								<option class="" selected="{$rule.queryContains ? 'false' : 'true'}" value="false"> Does not Contain </option>
 							</select>
 						</div>
 
 						<div class="form-group">
 							<select class="form-control" id="{$namespace}queryAndOperator{$index}" name="{$namespace}queryAndOperator{$index}" title="And Operator">
 								<option class="" selected="{$rule.queryAndOperator}" value="true"> All </option>
-								<option class="" selected="{not $rule.queryAndOperator}" value="false"> Any </option>
+								<option class="" selected="{$rule.queryAndOperator ? 'false' : 'true'}" value="false"> Any </option>
 							</select>
 						</div>
 
@@ -124,8 +138,8 @@
 						</div>
 						<div class="form-group">
 							<select class="form-control asset-query-name" data-item-index="{$index}" data-onchange="{$changeSelector}" id="{$namespace + 'queryName' + $index}" name="{$namespace + 'queryName' + $index}">
-								<option class="" selected="{$rule.type == 'assetTags' ? true : false}" value="assetTags"> Tags </option>
-								<option class="" selected="{$rule.type == 'assetCategories' ? true : false}" value="assetCategories"> Categories </option>
+								<option class="" selected="{$rule.type == 'assetTags' ? 'true' : 'false'}" value="assetTags"> Tags </option>
+								<option class="" selected="{$rule.type == 'assetCategories' ? 'true' : 'false'}" value="assetCategories"> Categories </option>
 							</select>
 						</div>
 						{if $rule.type == 'assetTags'}
@@ -152,9 +166,11 @@
 						</div>
 					</div>
 				</div>
+
 				{call .trashContainer}
-					{param removeRule: $removeRule /}
 					{param index: $index /}
+					{param pathThemeImages: $pathThemeImages /}
+					{param removeRule: $removeRule /}
 				{/call}
 			</li>
 		{/foreach}
@@ -209,6 +225,8 @@
 * @param? removeRule
 **/
 {template .trashContainer}
+	{@param pathThemeImages: string}
+
 	<div class="container-trash">
 		<button
 			class="btn btn-link condition-card-delete icon-monospaced"
@@ -216,13 +234,8 @@
 			data-onclick="{$removeRule}"
 			href="javascript:;"
 			type="button">
-			<svg class="lexicon-icon lexicon-icon-trash icon-monospaced" focusable="false" role="image" viewBox="0 0 384 513">
-				<path class="lexicon-icon-body" fill="none" d="M0,441.6C0,481,32,513,71.4,513h241.1c39.4,0,71.4-32,71.4-71.4V129H0V441.6z"></path>
-				<path class="lexicon-icon-outline" d="M0,441.6C0,481,32,513,71.4,513h241.1c39.4,0,71.4-32,71.4-71.4V129H0V441.6z M64,193h256v232.2c0,13.1-10.7,23.8-23.8,23.8
-					H87.8C74.7,449,64,438.3,64,425.2V193z"></path>
-				<polygon class="lexicon-icon-outline" points="288,33 288,0 96,0 96,33 0,33 0,96.3 384,96.3 384,33 "></polygon>
-				<rect class="lexicon-icon-outline" x="224" y="224" width="64" height="192"></rect>
-				<rect class="lexicon-icon-outline" x="96" y="224" width="64" height="192"></rect>
+			<svg class="lexicon-icon icon-monospaced">
+				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#trash"></use>
 			</svg>
 		</button>
 	</div>

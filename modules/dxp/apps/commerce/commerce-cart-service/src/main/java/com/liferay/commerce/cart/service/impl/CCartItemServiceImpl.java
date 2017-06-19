@@ -17,23 +17,7 @@ package com.liferay.commerce.cart.service.impl;
 import com.liferay.commerce.cart.service.base.CCartItemServiceBaseImpl;
 
 /**
- * The implementation of the c cart item remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.cart.service.CCartItemService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Alessio Antonio Rendina
- * @see CCartItemServiceBaseImpl
- * @see com.liferay.commerce.cart.service.CCartItemServiceUtil
  */
 public class CCartItemServiceImpl extends CCartItemServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.cart.service.CCartItemServiceUtil} to access the c cart item remote service.
-	 */
 }

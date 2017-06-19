@@ -15,8 +15,8 @@
 package com.liferay.trash.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.trash.kernel.model.TrashEntry;
-import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
+import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.service.TrashEntryLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -54,8 +54,8 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.trash.TrashHelper;
-import com.liferay.trash.kernel.model.TrashEntry;
-import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
+import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.test.util.TrashTestUtil;
 
 import java.util.ArrayList;

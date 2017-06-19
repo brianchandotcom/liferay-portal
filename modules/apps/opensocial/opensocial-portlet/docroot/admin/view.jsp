@@ -62,28 +62,22 @@
 					/>
 				</liferay-ui:search-container-row>
 
-				<div>
+				<aui:button-row>
 					<c:if test="<%= GadgetPermission.contains(permissionChecker, themeDisplay.getScopeGroupId(), ActionKeys.PUBLISH_GADGET) %>">
-						<span>
-							<portlet:renderURL var="publishGadgetURL">
-								<portlet:param name="mvcPath" value="/admin/edit_gadget.jsp" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-							</portlet:renderURL>
+						<portlet:renderURL var="publishGadgetURL">
+							<portlet:param name="mvcPath" value="/admin/edit_gadget.jsp" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+						</portlet:renderURL>
 
-							<aui:button onClick="<%= publishGadgetURL %>" value="publish-gadget" />
-						</span>
+						<aui:button cssClass="btn-lg" onClick="<%= publishGadgetURL %>" value="publish-gadget" />
 					</c:if>
 
-					<span>
-						<portlet:actionURL name="refreshGadgets" var="refreshGadgetsURL">
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-						</portlet:actionURL>
+					<portlet:actionURL name="refreshGadgets" var="refreshGadgetsURL">
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:actionURL>
 
-						<aui:button onClick="<%= refreshGadgetsURL %>" value="refresh-gadgets" />
-					</span>
-				</div>
-
-				<br />
+					<aui:button cssClass="btn-lg" onClick="<%= refreshGadgetsURL %>" value="refresh-gadgets" />
+				</aui:button-row>
 
 				<liferay-ui:search-iterator />
 			</liferay-ui:search-container>

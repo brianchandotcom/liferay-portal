@@ -40,6 +40,11 @@ public class StagingServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.exportimport.service.impl.StagingServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean hasRemoteLayout(java.lang.String uuid, long groupId,
+		boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().hasRemoteLayout(uuid, groupId, privateLayout);
+	}
 
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement

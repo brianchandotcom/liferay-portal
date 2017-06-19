@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.service.http.LayoutServiceHttp;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.service.http.StagingServiceHttp;
 
@@ -262,7 +261,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			Layout parentLayout = LayoutLocalServiceUtil.getLayout(
 				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId);
 
-			if (LayoutServiceHttp.hasLayout(
+			if (StagingServiceHttp.hasRemoteLayout(
 					httpPrincipal, parentLayout.getUuid(), remoteGroupId,
 					parentLayout.getPrivateLayout())) {
 

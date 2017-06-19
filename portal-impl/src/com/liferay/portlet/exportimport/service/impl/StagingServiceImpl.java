@@ -58,6 +58,17 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 	}
 
 	@Override
+	public boolean hasRemoteLayout(
+			String uuid, long groupId, boolean privateLayout)
+		throws PortalException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		return layoutLocalService.hasLayout(uuid, groupId, privateLayout);
+	}
+
+	@Override
 	public void propagateExportImportLifecycleEvent(
 			int code, int processFlag, String processId,
 			List<Serializable> arguments)

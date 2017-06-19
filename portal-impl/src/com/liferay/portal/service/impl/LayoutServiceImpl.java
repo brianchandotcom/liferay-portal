@@ -974,6 +974,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public boolean hasLayout(String uuid, long groupId, boolean privateLayout)
 		throws PortalException {
 
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.VIEW);
+
 		return layoutLocalService.hasLayout(uuid, groupId, privateLayout);
 	}
 

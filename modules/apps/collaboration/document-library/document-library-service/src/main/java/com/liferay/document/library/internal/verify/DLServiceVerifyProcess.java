@@ -491,7 +491,6 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		checkMisversionedDLFileEntries();
 
-		checkDLFileEntryType();
 		checkDLFileEntryMetadata();
 		checkMimeTypes();
 		checkTitles();

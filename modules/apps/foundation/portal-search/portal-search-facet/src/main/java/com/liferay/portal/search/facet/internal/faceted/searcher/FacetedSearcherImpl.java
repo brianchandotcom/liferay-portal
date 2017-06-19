@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
+import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -109,11 +110,23 @@ public class FacetedSearcherImpl
 
 		String keywords = searchContext.getKeywords();
 
-		if (Validator.isNotNull(keywords)) {
-			addSearchLocalizedTerm(
-				searchQuery, searchContext, Field.ASSET_CATEGORY_TITLES, false);
+		boolean luceneSyntax = GetterUtil.getBoolean(
+			searchContext.getAttribute("luceneSyntax"));
 
-			searchQuery.addTerm(Field.ASSET_TAG_NAMES, keywords);
+		if (Validator.isNotNull(keywords)) {
+			if (luceneSyntax) {
+				searchQuery.add(
+					new StringQuery(keywords), BooleanClauseOccur.MUST);
+			}
+			else {
+				addSearchLocalizedTerm(
+					searchQuery, searchContext, Field.ASSET_CATEGORY_TITLES,
+					false);
+
+				searchQuery.addTerm(Field.ASSET_TAG_NAMES, keywords);
+
+				searchQuery.addTerms(Field.KEYWORDS, keywords);
+			}
 
 			int groupId = GetterUtil.getInteger(
 				searchContext.getAttribute(Field.GROUP_ID));
@@ -122,8 +135,6 @@ public class FacetedSearcherImpl
 				fullQueryBooleanFilter.addTerm(
 					Field.STAGING_GROUP, "true", BooleanClauseOccur.MUST_NOT);
 			}
-
-			searchQuery.addTerms(Field.KEYWORDS, keywords);
 		}
 
 		List<Group> inactiveGroups = _groupLocalService.getActiveGroups(
@@ -153,13 +164,15 @@ public class FacetedSearcherImpl
 				continue;
 			}
 
-			if (Validator.isNotNull(keywords)) {
-				addSearchExpandoKeywords(
-					searchQuery, searchContext, keywords, entryClassName);
-			}
+			if (!luceneSyntax) {
+				if (Validator.isNotNull(keywords)) {
+					addSearchExpandoKeywords(
+						searchQuery, searchContext, keywords, entryClassName);
+				}
 
-			indexer.postProcessSearchQuery(
-				searchQuery, fullQueryBooleanFilter, searchContext);
+				indexer.postProcessSearchQuery(
+					searchQuery, fullQueryBooleanFilter, searchContext);
+			}
 
 			for (IndexerPostProcessor indexerPostProcessor :
 					indexer.getIndexerPostProcessors()) {

@@ -12,10 +12,15 @@
  * details.
  */
 
-package com.liferay.commerce.cart.internal.constants;
+package com.liferay.commerce.cart.constants;
 
 /**
- * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
-public class CommerceCartConstants {
+public class CCartConstants {
+
+	public static final int C_CART_TYPE_CART = 0;
+
+	public static final int C_CART_TYPE_WISH_LIST = 1;
+
 }

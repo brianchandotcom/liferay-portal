@@ -25,8 +25,8 @@
 		<!-- Other fields -->
 
 		<column name="cartUserId" type="long" />
-		<column name="type" type="int" />
 		<column name="title" type="String" />
+		<column name="type" type="int" />
 
 		<!-- Order -->
 

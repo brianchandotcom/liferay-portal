@@ -14,26 +14,74 @@
 
 package com.liferay.commerce.cart.service.impl;
 
+import com.liferay.commerce.cart.model.CCart;
 import com.liferay.commerce.cart.service.base.CCartLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 
 /**
- * The implementation of the c cart local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.cart.service.CCartLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Alessio Antonio Rendina
- * @see CCartLocalServiceBaseImpl
- * @see com.liferay.commerce.cart.service.CCartLocalServiceUtil
  */
 public class CCartLocalServiceImpl extends CCartLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.cart.service.CCartLocalServiceUtil} to access the c cart local service.
-	 */
+
+    @Override
+    public CCart addCCart(
+            long cartUserId, String title, int type,
+            ServiceContext serviceContext)
+        throws PortalException {
+
+        User user = userLocalService.getUser(serviceContext.getUserId());
+        long groupId = serviceContext.getScopeGroupId();
+
+        long cCartId = counterLocalService.increment();
+
+        CCart cCart = cCartPersistence.create(cCartId);
+
+        cCart.setUuid(serviceContext.getUuid());
+        cCart.setGroupId(groupId);
+        cCart.setCompanyId(user.getCompanyId());
+        cCart.setUserId(user.getUserId());
+        cCart.setUserName(user.getFullName());
+        cCart.setCartUserId(cartUserId);
+        cCart.setTitle(title);
+        cCart.setType(type);
+
+        cCartPersistence.update(cCart);
+
+        return cCart;
+    }
+
+    @Override
+    @SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+    public CCart deleteCCart(CCart cCart) throws PortalException {
+        cCartPersistence.remove(cCart);
+
+        return cCart;
+    }
+
+    @Override
+    public CCart deleteCCart(long cCartId) throws PortalException {
+        CCart cCart = cCartPersistence.findByPrimaryKey(cCartId);
+
+        return cCartLocalService.deleteCCart(cCart);
+    }
+
+    @Override
+    public CCart updateCCart(
+            long cCartId, long cartUserId, String title, int type)
+        throws PortalException {
+
+        CCart cCart = cCartPersistence.findByPrimaryKey(cCartId);
+
+        cCart.setCartUserId(cartUserId);
+        cCart.setTitle(title);
+        cCart.setType(type);
+
+        cCartPersistence.update(cCart);
+
+        return cCart;
+    }
 }

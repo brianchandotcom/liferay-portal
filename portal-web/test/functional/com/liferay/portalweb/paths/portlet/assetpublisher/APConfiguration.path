@@ -241,13 +241,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ORDERING_AND_GROUPING_ORDER_ASCENDING</td>
-	<td>//div[contains(@class,'order-by-type')]//a[span/*[name()='svg'][contains(@class,'icon-angle-up')]]</td>
+	<td>ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON</td>
+	<td>//div[contains(@class,'order-by-type')]//a[contains(.,'${key_sortOrder}')]//*[name()='svg'][contains(@class,'icon-angle')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ORDERING_AND_GROUPING_ORDER_DESCENDING</td>
-	<td>//div[contains(@class,'order-by-type')]//a[span/*[name()='svg'][contains(@class,'icon-angle-down')]]</td>
+	<td>ORDERING_AND_GROUPING_ORDER_GENERIC_ICON</td>
+	<td>//div[contains(@class,'order-by-type')]/span[not(contains(@class,'hide'))]//*[name()='svg'][contains(@class,'icon-angle')]</td>
 	<td></td>
 </tr>
 <tr>

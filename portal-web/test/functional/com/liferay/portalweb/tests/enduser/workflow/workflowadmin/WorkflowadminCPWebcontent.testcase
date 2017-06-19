@@ -58,7 +58,9 @@
 		</execute>
 	</command>
 
-	<command name="EditWebContentInReviewProcess" priority="4">
+	<command name="EditWebContentInReviewProcess" priority="5">
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#addCP">

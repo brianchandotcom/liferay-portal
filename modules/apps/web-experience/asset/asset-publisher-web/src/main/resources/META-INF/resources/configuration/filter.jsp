@@ -22,16 +22,6 @@ long[] categorizableGroupIds = (long[])request.getAttribute("configuration.jsp-c
 if (categorizableGroupIds == null) {
 	categorizableGroupIds = StringUtil.split(ParamUtil.getString(request, "categorizableGroupIds"), 0L);
 }
-
-Map<String, Object> context = new HashMap<>();
-
-context.put("rules", assetPublisherDisplayContext.getAutoFieldRulesJSONArray());
-context.put("namespace", liferayPortletResponse.getNamespace());
-context.put("groupIds", StringUtil.merge(categorizableGroupIds));
-context.put("id", "autofield");
-context.put("categorySelectorURL", assetPublisherDisplayContext.getCategorySelectorURL());
-context.put("tagSelectorURL", assetPublisherDisplayContext.getTagSelectorURL());
-context.put("vocabularyIds", assetPublisherDisplayContext.getVocabularyIds());
 %>
 
 <aui:fieldset label="displayed-assets-must-match-these-rules" markupView="lexicon">
@@ -62,6 +52,18 @@ context.put("vocabularyIds", assetPublisherDisplayContext.getVocabularyIds());
 </aui:fieldset>
 
 <div id="<portlet:namespace />ConditionForm"></div>
+
+<%
+Map<String, Object> context = new HashMap<>();
+
+context.put("categorySelectorURL", assetPublisherDisplayContext.getCategorySelectorURL());
+context.put("id", "autofield");
+context.put("groupIds", StringUtil.merge(categorizableGroupIds));
+context.put("namespace", liferayPortletResponse.getNamespace());
+context.put("rules", assetPublisherDisplayContext.getAutoFieldRulesJSONArray());
+context.put("tagSelectorURL", assetPublisherDisplayContext.getTagSelectorURL());
+context.put("vocabularyIds", assetPublisherDisplayContext.getVocabularyIds());
+%>
 
 <soy:template-renderer
 	context="<%= context %>"

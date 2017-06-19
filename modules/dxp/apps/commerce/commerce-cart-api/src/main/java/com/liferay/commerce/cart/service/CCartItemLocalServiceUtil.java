@@ -53,6 +53,16 @@ public class CCartItemLocalServiceUtil {
 		return getService().addCCartItem(cCartItem);
 	}
 
+	public static com.liferay.commerce.cart.model.CCartItem addCCartItem(
+		long cCartId, long cpDefinitionId, long cpInstanceId, int quantity,
+		java.lang.String json,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCCartItem(cCartId, cpDefinitionId, cpInstanceId,
+			quantity, json, serviceContext);
+	}
+
 	/**
 	* Creates a new c cart item with the primary key. Does not add the c cart item to the database.
 	*
@@ -69,9 +79,11 @@ public class CCartItemLocalServiceUtil {
 	*
 	* @param cCartItem the c cart item
 	* @return the c cart item that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.cart.model.CCartItem deleteCCartItem(
-		com.liferay.commerce.cart.model.CCartItem cCartItem) {
+		com.liferay.commerce.cart.model.CCartItem cCartItem)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCCartItem(cCartItem);
 	}
 
@@ -141,6 +153,14 @@ public class CCartItemLocalServiceUtil {
 	public static com.liferay.commerce.cart.model.CCartItem updateCCartItem(
 		com.liferay.commerce.cart.model.CCartItem cCartItem) {
 		return getService().updateCCartItem(cCartItem);
+	}
+
+	public static com.liferay.commerce.cart.model.CCartItem updateCCartItem(
+		long cCartItemId, int quantity, java.lang.String json,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCCartItem(cCartItemId, quantity, json, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

@@ -116,6 +116,38 @@ public class StagingServiceHttp {
 		}
 	}
 
+	public static boolean hasRemoteLayout(HttpPrincipal httpPrincipal,
+		java.lang.String uuid, long groupId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(StagingServiceUtil.class,
+					"hasRemoteLayout", _hasRemoteLayoutParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, uuid,
+					groupId, privateLayout);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Boolean)returnObj).booleanValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void propagateExportImportLifecycleEvent(
 		HttpPrincipal httpPrincipal, int code, int processFlag,
 		java.lang.String processId,
@@ -124,7 +156,7 @@ public class StagingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(StagingServiceUtil.class,
 					"propagateExportImportLifecycleEvent",
-					_propagateExportImportLifecycleEventParameterTypes2);
+					_propagateExportImportLifecycleEventParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, code,
 					processFlag, processId, arguments);
@@ -155,7 +187,7 @@ public class StagingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(StagingServiceUtil.class,
 					"publishStagingRequest",
-					_publishStagingRequestParameterTypes3);
+					_publishStagingRequestParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					stagingRequestId, privateLayout, parameterMap);
@@ -189,7 +221,7 @@ public class StagingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(StagingServiceUtil.class,
 					"publishStagingRequest",
-					_publishStagingRequestParameterTypes4);
+					_publishStagingRequestParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					stagingRequestId, exportImportConfiguration);
@@ -221,7 +253,7 @@ public class StagingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(StagingServiceUtil.class,
-					"updateStagingRequest", _updateStagingRequestParameterTypes5);
+					"updateStagingRequest", _updateStagingRequestParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					stagingRequestId, fileName, bytes);
@@ -252,7 +284,7 @@ public class StagingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(StagingServiceUtil.class,
 					"validateStagingRequest",
-					_validateStagingRequestParameterTypes6);
+					_validateStagingRequestParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					stagingRequestId, privateLayout, parameterMap);
@@ -286,21 +318,24 @@ public class StagingServiceHttp {
 	private static final Class<?>[] _createStagingRequestParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _propagateExportImportLifecycleEventParameterTypes2 =
+	private static final Class<?>[] _hasRemoteLayoutParameterTypes2 = new Class[] {
+			java.lang.String.class, long.class, boolean.class
+		};
+	private static final Class<?>[] _propagateExportImportLifecycleEventParameterTypes3 =
 		new Class[] {
 			int.class, int.class, java.lang.String.class, java.util.List.class
 		};
-	private static final Class<?>[] _publishStagingRequestParameterTypes3 = new Class[] {
+	private static final Class<?>[] _publishStagingRequestParameterTypes4 = new Class[] {
 			long.class, boolean.class, java.util.Map.class
 		};
-	private static final Class<?>[] _publishStagingRequestParameterTypes4 = new Class[] {
+	private static final Class<?>[] _publishStagingRequestParameterTypes5 = new Class[] {
 			long.class,
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration.class
 		};
-	private static final Class<?>[] _updateStagingRequestParameterTypes5 = new Class[] {
+	private static final Class<?>[] _updateStagingRequestParameterTypes6 = new Class[] {
 			long.class, java.lang.String.class, byte[].class
 		};
-	private static final Class<?>[] _validateStagingRequestParameterTypes6 = new Class[] {
+	private static final Class<?>[] _validateStagingRequestParameterTypes7 = new Class[] {
 			long.class, boolean.class, java.util.Map.class
 		};
 }

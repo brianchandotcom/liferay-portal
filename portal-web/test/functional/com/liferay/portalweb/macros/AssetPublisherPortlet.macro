@@ -121,7 +121,16 @@
 
 		<execute function="Select" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_BY_SELECT" value1="${fieldNameOrder}" />
 
-		<execute function="Click" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_ASCENDING" />
+		<var name="key_sortOrder" value="${sortOrder}" />
+
+		<if>
+			<condition function="IsNotVisible" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON" />
+			<then>
+				<execute function="Click" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_GENERIC_ICON" />
+			</then>
+		</if>
+
+		<execute function="AssertVisible" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON" />
 
 		<execute macro="PortletEntry#save" />
 	</command>

@@ -36,19 +36,17 @@ public class UpgradeFriendlyURL extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				"select companyId, groupId, entryId, urlTitle from " +
-					"BlogsEntry")) {
+				"select groupId, entryId, urlTitle from BlogsEntry")) {
 
 			ResultSet rs = ps1.executeQuery();
 
 			while (rs.next()) {
-				long companyId = rs.getLong(1);
 				long groupId = rs.getLong(2);
 				long classPK = rs.getLong(3);
 				String urlTitle = rs.getString(4);
 
 				_friendlyURLEntryLocalService.addFriendlyURLEntry(
-					groupId, companyId, BlogsEntry.class, classPK, urlTitle,
+					groupId, BlogsEntry.class, classPK, urlTitle,
 					new ServiceContext());
 			}
 		}

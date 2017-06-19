@@ -41,9 +41,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"path=/document_library/view", "path=/document_library/view_folder",
-		"path=-"
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, "path=-",
+		"path=/document_library/view", "path=/document_library/view_folder"
 	},
 	service = PortletConfigurationIcon.class
 )

@@ -39,10 +39,10 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 	immediate = true,
 	property = {
 		HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(osgi.http.whiteboard.context.name=wsrp-service)",
-		HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME + "=com.liferay.wsrp.servlet.filters.WSRPProxyFilter",
-		HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN + "=/proxy/*",
 		HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX + "filter-class=com.liferay.portal.servlet.filters.secure.SecureFilter",
-		HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX + "portal_property_prefix=proxy.servlet."
+		HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX + "portal_property_prefix=proxy.servlet.",
+		HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME + "=com.liferay.wsrp.servlet.filters.WSRPProxyFilter",
+		HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN + "=/proxy/*"
 	},
 	service = Filter.class
 )

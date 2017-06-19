@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	service = {KnownDevices.class, FiftyOneDegreesKnownDevices.class}
+	service = {FiftyOneDegreesKnownDevices.class, KnownDevices.class}
 )
 public class FiftyOneDegreesKnownDevices implements KnownDevices {
 

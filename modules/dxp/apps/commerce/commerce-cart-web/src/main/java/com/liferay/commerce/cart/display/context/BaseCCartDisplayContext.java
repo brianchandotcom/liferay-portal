@@ -21,12 +21,16 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.*;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -53,6 +57,30 @@ public abstract class BaseCCartDisplayContext<T> {
 
 		_defaultOrderByCol = "modified-date";
 		_defaultOrderByType = "asc";
+	}
+
+	public CCart getCCart() throws PortalException {
+		if (_cCart != null) {
+			return _cCart;
+		}
+
+		_cCart = actionHelper.getCCart(cCartRequestHelper.getRenderRequest());
+
+		return _cCart;
+	}
+
+	public long getCCartId() throws PortalException {
+		CCart cCart = getCCart();
+
+		if (cCart == null) {
+			return 0;
+		}
+
+		return cCart.getCCartId();
+	}
+
+	public int getCCartType() {
+		return ParamUtil.getInteger(httpServletRequest, "type", 0);
 	}
 
 	public String getDisplayStyle() {
@@ -123,26 +151,6 @@ public abstract class BaseCCartDisplayContext<T> {
 		return _orderByType;
 	}
 
-	public CCart getCCart() throws PortalException {
-		if (_cCart != null) {
-			return _cCart;
-		}
-
-		_cCart = actionHelper.getCCart(cCartRequestHelper.getRenderRequest());
-
-		return _cCart;
-	}
-
-	public long getCCartId() throws PortalException {
-		CCart cCart = getCCart();
-
-		if (cCart == null) {
-			return 0;
-		}
-
-		return cCart.getCCartId();
-	}
-
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
@@ -155,8 +163,7 @@ public abstract class BaseCCartDisplayContext<T> {
 		CCart cCart = getCCart();
 
 		if (cCart != null) {
-			portletURL.setParameter(
-				"cCartId", String.valueOf(getCCartId()));
+			portletURL.setParameter("cCartId", String.valueOf(getCCartId()));
 		}
 
 		String delta = ParamUtil.getString(httpServletRequest, "delta");
@@ -200,10 +207,6 @@ public abstract class BaseCCartDisplayContext<T> {
 		portletURL.setParameter("type", String.valueOf(getCCartType()));
 
 		return portletURL;
-	}
-
-	public int getCCartType() {
-		return ParamUtil.getInteger(httpServletRequest, "type", 0);
 	}
 
 	public RowChecker getRowChecker() {
@@ -273,6 +276,8 @@ public abstract class BaseCCartDisplayContext<T> {
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final PortalPreferences portalPreferences;
 	protected SearchContainer<T> searchContainer;
+
+	private CCart _cCart;
 	private String _defaultOrderByCol;
 	private String _defaultOrderByType;
 	private String _displayStyle;
@@ -281,6 +286,5 @@ public abstract class BaseCCartDisplayContext<T> {
 	private String _orderByType;
 	private final String _portalPreferenceNamespace;
 	private RowChecker _rowChecker;
-	private CCart _cCart;
 
 }

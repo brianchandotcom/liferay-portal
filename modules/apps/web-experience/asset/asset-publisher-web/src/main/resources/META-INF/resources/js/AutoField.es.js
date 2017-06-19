@@ -1,13 +1,12 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-
+import core from 'metal';
 import dom from 'metal-dom';
-import core from 'metal/src/core';
-import templates from './AutoField.soy';
 import { Config } from 'metal-state';
 
 import CategorySelector from './CategorySelector.es'
 import TagSelector from './TagSelector.es';
+import templates from './AutoField.soy';
 
 /**
  * AutoField

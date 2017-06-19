@@ -19,13 +19,15 @@ import com.liferay.commerce.cart.model.CCart;
 import com.liferay.commerce.cart.service.CCartLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.ResourceRequest;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina

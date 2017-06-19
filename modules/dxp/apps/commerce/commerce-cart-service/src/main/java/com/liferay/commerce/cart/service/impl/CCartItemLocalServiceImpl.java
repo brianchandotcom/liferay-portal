@@ -30,81 +30,81 @@ import java.util.List;
  */
 public class CCartItemLocalServiceImpl extends CCartItemLocalServiceBaseImpl {
 
-    @Override
-    public CCartItem addCCartItem(
-            long cCartId, long cpDefinitionId, long cpInstanceId, int quantity,
-            String json, ServiceContext serviceContext)
-        throws PortalException {
+	@Override
+	public CCartItem addCCartItem(
+			long cCartId, long cpDefinitionId, long cpInstanceId, int quantity,
+			String json, ServiceContext serviceContext)
+		throws PortalException {
 
-        User user = userLocalService.getUser(serviceContext.getUserId());
-        long groupId = serviceContext.getScopeGroupId();
+		User user = userLocalService.getUser(serviceContext.getUserId());
+		long groupId = serviceContext.getScopeGroupId();
 
-        long cCartItemId = counterLocalService.increment();
+		long cCartItemId = counterLocalService.increment();
 
-        CCartItem cCartItem = cCartItemPersistence.create(cCartItemId);
+		CCartItem cCartItem = cCartItemPersistence.create(cCartItemId);
 
-        cCartItem.setUuid(serviceContext.getUuid());
-        cCartItem.setGroupId(groupId);
-        cCartItem.setCompanyId(user.getCompanyId());
-        cCartItem.setUserId(user.getUserId());
-        cCartItem.setUserName(user.getFullName());
-        cCartItem.setCCartId(cCartId);
-        cCartItem.setCPDefinitionId(cpDefinitionId);
-        cCartItem.setCPInstanceId(cpInstanceId);
-        cCartItem.setQuantity(quantity);
-        cCartItem.setJson(json);
+		cCartItem.setUuid(serviceContext.getUuid());
+		cCartItem.setGroupId(groupId);
+		cCartItem.setCompanyId(user.getCompanyId());
+		cCartItem.setUserId(user.getUserId());
+		cCartItem.setUserName(user.getFullName());
+		cCartItem.setCCartId(cCartId);
+		cCartItem.setCPDefinitionId(cpDefinitionId);
+		cCartItem.setCPInstanceId(cpInstanceId);
+		cCartItem.setQuantity(quantity);
+		cCartItem.setJson(json);
 
-        cCartItemPersistence.update(cCartItem);
+		cCartItemPersistence.update(cCartItem);
 
-        return cCartItem;
-    }
+		return cCartItem;
+	}
 
-    @Override
-    @SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-    public CCartItem deleteCCartItem(CCartItem cCartItem)
-        throws PortalException {
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CCartItem deleteCCartItem(CCartItem cCartItem)
+		throws PortalException {
 
-        cCartItemPersistence.remove(cCartItem);
+		cCartItemPersistence.remove(cCartItem);
 
-        return cCartItem;
-    }
+		return cCartItem;
+	}
 
-    @Override
-    public CCartItem deleteCCartItem(long cCartItemId) throws PortalException {
-        CCartItem cCartItem = cCartItemPersistence.findByPrimaryKey(
-            cCartItemId);
+	@Override
+	public CCartItem deleteCCartItem(long cCartItemId) throws PortalException {
+		CCartItem cCartItem = cCartItemPersistence.findByPrimaryKey(
+			cCartItemId);
 
-        return cCartItemLocalService.deleteCCartItem(cCartItem);
-    }
+		return cCartItemLocalService.deleteCCartItem(cCartItem);
+	}
 
-    @Override
-    public List<CCartItem> getCCartItems(
-        long cCartId, int start, int end,
-        OrderByComparator<CCartItem> orderByComparator) {
+	@Override
+	public List<CCartItem> getCCartItems(
+		long cCartId, int start, int end,
+		OrderByComparator<CCartItem> orderByComparator) {
 
-        return cCartItemPersistence.findByCCartId(
-            cCartId, start, end, orderByComparator);
-    }
+		return cCartItemPersistence.findByCCartId(
+			cCartId, start, end, orderByComparator);
+	}
 
-    @Override
-    public int getCCartItemsCount(long cCartId) {
-        return cCartItemPersistence.countByCCartId(cCartId);
-    }
+	@Override
+	public int getCCartItemsCount(long cCartId) {
+		return cCartItemPersistence.countByCCartId(cCartId);
+	}
 
-    @Override
-    public CCartItem updateCCartItem(
-            long cCartItemId, int quantity, String json)
-        throws PortalException {
+	@Override
+	public CCartItem updateCCartItem(
+			long cCartItemId, int quantity, String json)
+		throws PortalException {
 
-        CCartItem cCartItem = cCartItemPersistence.findByPrimaryKey(
-            cCartItemId);
+		CCartItem cCartItem = cCartItemPersistence.findByPrimaryKey(
+			cCartItemId);
 
-        cCartItem.setQuantity(quantity);
-        cCartItem.setJson(json);
+		cCartItem.setQuantity(quantity);
+		cCartItem.setJson(json);
 
-        cCartItemPersistence.update(cCartItem);
+		cCartItemPersistence.update(cCartItem);
 
-        return cCartItem;
-    }
+		return cCartItem;
+	}
 
 }

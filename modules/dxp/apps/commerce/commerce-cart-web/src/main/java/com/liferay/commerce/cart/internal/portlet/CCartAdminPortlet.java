@@ -23,15 +23,18 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -48,8 +51,7 @@ import java.io.IOException;
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
-		"com.liferay.portlet.scopeable=true",
-		"javax.portlet.display-name=Cart",
+		"com.liferay.portlet.scopeable=true", "javax.portlet.display-name=Cart",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.view-template=/cart_admin/view.jsp",
 		"javax.portlet.name=" + CCartPortletKeys.COMMERCE_CART_ADMIN,

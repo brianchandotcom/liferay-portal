@@ -76,10 +76,10 @@ int type = ParamUtil.getInteger(request, "type", CCartConstants.C_CART_TYPE_CART
 		String deleteMessage = StringPool.BLANK;
 
 		if (type == CCartConstants.C_CART_TYPE_CART) {
-		    deleteMessage = "are-you-sure-you-want-to-delete-the-selected-carts";
+			deleteMessage = "are-you-sure-you-want-to-delete-the-selected-carts";
 		}
 		else if (type == CCartConstants.C_CART_TYPE_WISH_LIST) {
-		    deleteMessage = "are-you-sure-you-want-to-delete-the-selected-wish-lists";
+			deleteMessage = "are-you-sure-you-want-to-delete-the-selected-wish-lists";
 		}
 		%>
 

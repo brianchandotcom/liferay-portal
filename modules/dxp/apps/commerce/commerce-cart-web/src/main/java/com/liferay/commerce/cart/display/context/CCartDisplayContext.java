@@ -23,8 +23,9 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina

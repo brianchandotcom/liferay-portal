@@ -30,74 +30,75 @@ import java.util.List;
  */
 public class CCartLocalServiceImpl extends CCartLocalServiceBaseImpl {
 
-    @Override
-    public CCart addCCart(
-            long cartUserId, String title, int type,
-            ServiceContext serviceContext)
-        throws PortalException {
+	@Override
+	public CCart addCCart(
+			long cartUserId, String title, int type,
+			ServiceContext serviceContext)
+		throws PortalException {
 
-        User user = userLocalService.getUser(serviceContext.getUserId());
-        long groupId = serviceContext.getScopeGroupId();
+		User user = userLocalService.getUser(serviceContext.getUserId());
+		long groupId = serviceContext.getScopeGroupId();
 
-        long cCartId = counterLocalService.increment();
+		long cCartId = counterLocalService.increment();
 
-        CCart cCart = cCartPersistence.create(cCartId);
+		CCart cCart = cCartPersistence.create(cCartId);
 
-        cCart.setUuid(serviceContext.getUuid());
-        cCart.setGroupId(groupId);
-        cCart.setCompanyId(user.getCompanyId());
-        cCart.setUserId(user.getUserId());
-        cCart.setUserName(user.getFullName());
-        cCart.setCartUserId(cartUserId);
-        cCart.setTitle(title);
-        cCart.setType(type);
+		cCart.setUuid(serviceContext.getUuid());
+		cCart.setGroupId(groupId);
+		cCart.setCompanyId(user.getCompanyId());
+		cCart.setUserId(user.getUserId());
+		cCart.setUserName(user.getFullName());
+		cCart.setCartUserId(cartUserId);
+		cCart.setTitle(title);
+		cCart.setType(type);
 
-        cCartPersistence.update(cCart);
+		cCartPersistence.update(cCart);
 
-        return cCart;
-    }
+		return cCart;
+	}
 
-    @Override
-    @SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-    public CCart deleteCCart(CCart cCart) throws PortalException {
-        cCartPersistence.remove(cCart);
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CCart deleteCCart(CCart cCart) throws PortalException {
+		cCartPersistence.remove(cCart);
 
-        return cCart;
-    }
+		return cCart;
+	}
 
-    @Override
-    public CCart deleteCCart(long cCartId) throws PortalException {
-        CCart cCart = cCartPersistence.findByPrimaryKey(cCartId);
+	@Override
+	public CCart deleteCCart(long cCartId) throws PortalException {
+		CCart cCart = cCartPersistence.findByPrimaryKey(cCartId);
 
-        return cCartLocalService.deleteCCart(cCart);
-    }
+		return cCartLocalService.deleteCCart(cCart);
+	}
 
-    @Override
-    public List<CCart> getCCarts(
-        int type, int start, int end,
-        OrderByComparator<CCart> orderByComparator) {
+	@Override
+	public List<CCart> getCCarts(
+		int type, int start, int end,
+		OrderByComparator<CCart> orderByComparator) {
 
-        return cCartPersistence.findByType(type, start, end, orderByComparator);
-    }
+		return cCartPersistence.findByType(type, start, end, orderByComparator);
+	}
 
-    @Override
-    public int getCCartsCount(int type) {
-        return cCartPersistence.countByType(type);
-    }
+	@Override
+	public int getCCartsCount(int type) {
+		return cCartPersistence.countByType(type);
+	}
 
-    @Override
-    public CCart updateCCart(
-            long cCartId, long cartUserId, String title, int type)
-        throws PortalException {
+	@Override
+	public CCart updateCCart(
+			long cCartId, long cartUserId, String title, int type)
+		throws PortalException {
 
-        CCart cCart = cCartPersistence.findByPrimaryKey(cCartId);
+		CCart cCart = cCartPersistence.findByPrimaryKey(cCartId);
 
-        cCart.setCartUserId(cartUserId);
-        cCart.setTitle(title);
-        cCart.setType(type);
+		cCart.setCartUserId(cartUserId);
+		cCart.setTitle(title);
+		cCart.setType(type);
 
-        cCartPersistence.update(cCart);
+		cCartPersistence.update(cCart);
 
-        return cCart;
-    }
+		return cCart;
+	}
+
 }

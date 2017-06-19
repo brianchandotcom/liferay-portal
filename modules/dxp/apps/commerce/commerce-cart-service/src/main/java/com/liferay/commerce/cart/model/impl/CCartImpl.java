@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class CCartImpl extends CCartBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a c cart model instance should use the {@link com.liferay.commerce.cart.model.CCart} interface instead.
 	 */
 	public CCartImpl() {
 	}
+
 }

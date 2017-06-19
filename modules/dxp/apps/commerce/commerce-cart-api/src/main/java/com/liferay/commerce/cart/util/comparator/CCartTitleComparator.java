@@ -38,9 +38,7 @@ public class CCartTitleComparator extends OrderByComparator<CCart> {
 	}
 
 	@Override
-	public int compare(
-			CCart cCart1, CCart cCart2) {
-
+	public int compare(CCart cCart1, CCart cCart2) {
 		String title1 = StringUtil.toLowerCase(cCart1.getTitle());
 		String title2 = StringUtil.toLowerCase(cCart2.getTitle());
 

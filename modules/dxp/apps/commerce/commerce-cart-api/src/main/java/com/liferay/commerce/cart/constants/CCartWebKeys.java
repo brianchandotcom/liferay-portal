@@ -21,10 +21,10 @@ public class CCartWebKeys {
 
 	public static final String C_CART = "C_CART";
 
-	public static final String C_CARTS = "C_CARTS";
-
 	public static final String C_CART_ITEM = "C_CART_ITEM";
 
 	public static final String C_CART_ITEMS = "C_CART_ITEMS";
+
+	public static final String C_CARTS = "C_CARTS";
 
 }

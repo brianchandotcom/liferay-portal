@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Commerce Cart Service
 Bundle-SymbolicName: com.liferay.commerce.cart.service
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.commerce.cart.display.context.util
+Export-Package: com.liferay.commerce.cart.display.context.util
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true

@@ -19,12 +19,14 @@ import com.liferay.commerce.cart.constants.CCartWebKeys;
 import com.liferay.commerce.cart.model.CCart;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -37,8 +39,7 @@ import java.util.List;
 	},
 	service = MVCResourceCommand.class
 )
-public class CCartInfoPanelMVCResourceCommand
-	extends BaseMVCResourceCommand {
+public class CCartInfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(

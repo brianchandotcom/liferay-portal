@@ -19,6 +19,7 @@ import com.liferay.application.list.PanelApp;
 import com.liferay.commerce.application.list.constants.CommercePanelCategoryKeys;
 import com.liferay.commerce.cart.constants.CCartPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

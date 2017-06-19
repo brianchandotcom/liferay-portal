@@ -18,6 +18,8 @@
 	<aui:input helpMessage="display-results-in-document-form-help" name="preferences--displayResultsInDocumentForm--" type="checkbox" value="<%= searchDisplayContext.isDisplayResultsInDocumentForm() %>" />
 </c:if>
 
+<aui:input label="enable-highlighting" name="preferences--highlightEnabled--" type="checkbox" value="<%= searchDisplayContext.isHighlightEnabled() %>" />
+
 <aui:input name="preferences--viewInContext--" type="checkbox" value="<%= searchDisplayContext.isViewInContext() %>" />
 
 <aui:input helpMessage="display-main-query-help" name="preferences--displayMainQuery--" type="checkbox" value="<%= searchDisplayContext.isDisplayMainQuery() %>" />

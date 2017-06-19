@@ -56,12 +56,41 @@ public class CentralSubrepository {
 		return _subrepositoryUpstreamCommit;
 	}
 
+	public Boolean isAutopullEnabled() throws IOException {
+		String mode = _gitrepoProperties.getProperty("mode", "push");
+
+		if (!mode.equals("pull")) {
+			return false;
+		}
+
+		String autopull = _gitrepoProperties.getProperty("autopull", "false");
+
+		if (!autopull.equals("true")) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public Boolean isCentralPullRequestCandidate() throws IOException {
 		if (_centralPullRequestCandidate == null) {
 			_centralPullRequestCandidate = _isCentralPullRequestCandidate();
 		}
 
 		return _centralPullRequestCandidate;
+	}
+
+	public Boolean isSubrepositoryUpstreamCommitMerged() throws IOException {
+		String subrepositoryMergedCommit = _gitrepoProperties.getProperty(
+			"commit", "");
+
+		String subrepositoryUpstreamCommit = getSubrepositoryUpstreamCommit();
+
+		if (subrepositoryMergedCommit.equals(subrepositoryUpstreamCommit)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _getMergePullRequestURL() throws IOException {
@@ -140,30 +169,17 @@ public class CentralSubrepository {
 	}
 
 	private Boolean _isCentralPullRequestCandidate() throws IOException {
-		String mode = _gitrepoProperties.getProperty("mode", "push");
-
-		if (!mode.equals("pull")) {
+		if (!isAutopullEnabled()) {
 			return false;
 		}
 
-		String autopull = _gitrepoProperties.getProperty("autopull", "false");
-
-		if (!autopull.equals("true")) {
-			return false;
-		}
-
-		String subrepositoryMergedCommit = _gitrepoProperties.getProperty(
-			"commit", "");
-
-		String subrepositoryUpstreamCommit = getSubrepositoryUpstreamCommit();
-
-		if (subrepositoryMergedCommit.equals(subrepositoryUpstreamCommit)) {
+		if (isSubrepositoryUpstreamCommitMerged()) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"SKIPPED: ", _subrepositoryName,
 					" contains merged commit https://github.com/",
 					_subrepositoryUsername, "/", _subrepositoryName, "/commit/",
-					subrepositoryUpstreamCommit));
+					getSubrepositoryUpstreamCommit()));
 
 			return false;
 		}

@@ -33,8 +33,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	service = {
-		Capability.class,
-		AssetPublisherPortletDisplayTemplateImportCapability.class
+		AssetPublisherPortletDisplayTemplateImportCapability.class,
+		Capability.class
 	}
 )
 public class AssetPublisherPortletDisplayTemplateImportCapability

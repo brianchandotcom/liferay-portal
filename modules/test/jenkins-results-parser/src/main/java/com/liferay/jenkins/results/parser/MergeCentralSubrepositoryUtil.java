@@ -23,6 +23,7 @@ import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.transport.RemoteConfig;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -75,6 +76,12 @@ public class MergeCentralSubrepositoryUtil {
 					}
 
 					_createMergePullRequest(
+						centralGitWorkingDirectory, centralSubrepository,
+						receiverUserName);
+				}
+
+				if (centralSubrepository.isAutopullEnabled()) {
+					_deleteStaleBranches(
 						centralGitWorkingDirectory, centralSubrepository,
 						receiverUserName);
 				}
@@ -165,6 +172,72 @@ public class MergeCentralSubrepositoryUtil {
 			url, requestJSONObject.toString());
 	}
 
+	private static void _deleteStaleBranches(
+			GitWorkingDirectory centralGitWorkingDirectory,
+			CentralSubrepository centralSubrepository, String receiverUserName)
+		throws GitAPIException, IOException {
+
+		if (_branchesJSONArray == null) {
+			_branchesJSONArray = new JSONArray();
+
+			int page = 1;
+
+			while (page < 10) {
+				JSONArray jsonArray = JenkinsResultsParserUtil.toJSONArray(
+					JenkinsResultsParserUtil.combine(
+						"https://api.github.com/repos/", receiverUserName, "/",
+						centralGitWorkingDirectory.getRepositoryName(),
+						"/branches?page=", String.valueOf(page)));
+
+				if ((jsonArray != null) && (jsonArray.length() > 0)) {
+					for (int i = 0; i < jsonArray.length(); i++) {
+						JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+						String branchName = jsonObject.getString("name");
+
+						if (branchName.startsWith("ci-merge-com-liferay-")) {
+							_branchesJSONArray.put(jsonObject);
+						}
+					}
+				}
+				else {
+					break;
+				}
+
+				page++;
+			}
+		}
+
+		String mergeBranchName = _getMergeBranchName(
+			centralSubrepository.getSubrepositoryName(),
+			centralSubrepository.getSubrepositoryUpstreamCommit());
+
+		String mergeBranchNamePrefix = mergeBranchName.substring(
+			0, mergeBranchName.lastIndexOf("-"));
+
+		for (int i = 0; i < _branchesJSONArray.length(); i++) {
+			JSONObject jsonObject = _branchesJSONArray.getJSONObject(i);
+
+			String branchName = jsonObject.getString("name");
+
+			if (branchName.equals(mergeBranchName) &&
+				!centralSubrepository.isSubrepositoryUpstreamCommitMerged()) {
+
+				continue;
+			}
+
+			if (!branchName.startsWith(mergeBranchNamePrefix)) {
+				continue;
+			}
+
+			RemoteConfig upstreamRemoteConfig =
+				centralGitWorkingDirectory.getRemoteConfig("upstream");
+
+			centralGitWorkingDirectory.deleteRemoteBranch(
+				branchName, upstreamRemoteConfig);
+		}
+	}
+
 	private static String _getCiMergeFilePath(
 			GitWorkingDirectory centralGitWorkingDirectory, File gitrepoFile)
 		throws IOException {
@@ -208,5 +281,7 @@ public class MergeCentralSubrepositoryUtil {
 		centralGitWorkingDirectory.pushToRemote(
 			false, mergeBranchName, originRemoteURL);
 	}
+
+	private static JSONArray _branchesJSONArray;
 
 }

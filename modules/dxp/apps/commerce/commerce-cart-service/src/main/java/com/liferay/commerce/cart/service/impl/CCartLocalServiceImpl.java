@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
@@ -67,6 +70,19 @@ public class CCartLocalServiceImpl extends CCartLocalServiceBaseImpl {
         CCart cCart = cCartPersistence.findByPrimaryKey(cCartId);
 
         return cCartLocalService.deleteCCart(cCart);
+    }
+
+    @Override
+    public List<CCart> getCCarts(
+        int type, int start, int end,
+        OrderByComparator<CCart> orderByComparator) {
+
+        return cCartPersistence.findByType(type, start, end, orderByComparator);
+    }
+
+    @Override
+    public int getCCartsCount(int type) {
+        return cCartPersistence.countByType(type);
     }
 
     @Override

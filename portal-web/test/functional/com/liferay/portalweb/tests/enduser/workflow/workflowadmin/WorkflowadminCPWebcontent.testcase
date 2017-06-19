@@ -146,7 +146,7 @@
 
 		<execute macro="Workflow#gotoPreviewEdit" />
 
-		<execute macro="WebContent#editInReivew">
+		<execute macro="WebContent#editInReview">
 			<var name="webContentImage" value="Document_2.jpeg" />
 			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
 		</execute>

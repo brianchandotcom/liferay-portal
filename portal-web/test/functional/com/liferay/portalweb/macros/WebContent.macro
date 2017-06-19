@@ -885,7 +885,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="editInReivew">
+	<command name="editInReview">
 		<execute macro="PortletEntry#inputTitle">
 			<var name="title" value="${webContentTitleEdit}" />
 		</execute>

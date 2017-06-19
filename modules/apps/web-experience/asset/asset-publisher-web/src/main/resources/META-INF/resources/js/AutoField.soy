@@ -1,42 +1,60 @@
 {namespace AutoField}
 
 /**
- * This renders the main element.
- *
- * @param id
- * @param groupIds
- * @param? logicIndexes
- * @param? namespace
- * @param rules
- * @param categorySelectorURL
- * @param tagSelectorURL
- * @param vocabularyIds
+ * Renders the main element
  */
 {template .render}
+	{@param categorySelectorURL: string}
+	{@param groupIds: string}
+	{@param id: string}
+	{@param? namespace: string}
 	{@param pathThemeImages: string}
+	{@param rules: list<[type: string, queryAndOperator: bool, queryContains: bool]>}
+	{@param tagSelectorURL: string}
+	{@param vocabularyIds: string}
+
+	{@param? queryLogicIndexes: string}
 
 	<div id="{$id}">
-		{call .rules}
-			{param categorySelectorURL: $categorySelectorURL /}
-			{param groupIds: $groupIds /}
-			{param logicIndexes: $logicIndexes /}
-			{param namespace: $namespace /}
-			{param pathThemeImages: $pathThemeImages /}
-			{param rules: $rules /}
-			{param tagSelectorURL: $tagSelectorURL /}
-			{param vocabularyIds: $vocabularyIds /}
-		{/call}
+		<input name="{$namespace}queryLogicIndexes" value="{$queryLogicIndexes}" type="hidden">
+		<ul class="timeline">
+			<li class="timeline-item">
+				<div class="panel panel-default">
+					<div class="flex-container panel-body">
+						<div class="h4 panel-title">Rules</div>
+						<div class="timeline-increment-icon">
+							<span class="timeline-icon"></span>
+						</div>
+					</div>
+				</div>
+			</li>
 
-		{call .addButtonTimeLine}
+			{if $rules and length($rules) > 0}
+				{foreach $rule in $rules}
+					{call .rule}
+						{param categorySelectorURL: $categorySelectorURL /}
+						{param groupIds: $groupIds /}
+						{param index: index($rule) /}
+						{param namespace: $namespace /}
+						{param pathThemeImages: $pathThemeImages /}
+						{param rule: $rule /}
+						{param tagSelectorURL: $tagSelectorURL /}
+						{param vocabularyIds: $vocabularyIds /}
+					{/call}
+				{/foreach}
+			{/if}
+		</ul>
+
+		{call .addRuleButton}
 			{param pathThemeImages: $pathThemeImages /}
 		{/call}
 	</div>
 {/template}
 
 /**
- * Renders the Add button at the bottom of the timeline
+ * Renders the Add Button at the bottom of the timeline
  */
-{template .addButtonTimeLine}
+{template .addRuleButton}
 	{@param pathThemeImages: string}
 	
 	<div class="addbutton-timeline-item">
@@ -51,128 +69,90 @@
 {/template}
 
 /**
-* @param groupIds
-* @param? queryLogicIndexes
-* @param? namespace
-* @param rules
-* @param categorySelectorURL
-* @param tagSelectorURL
-* @param vocabularyIds
-**/
-{template .rules}
+ * Renders a Rule item
+ */
+{template .rule}
+	{@param categorySelectorURL: string}
+	{@param groupIds: string}
+	{@param index: int}
+	{@param? namespace: string}
 	{@param pathThemeImages: string}
-	
-	<input name="{$namespace}queryLogicIndexes" value="{$queryLogicIndexes}" type="hidden">
-	<ul class="timeline">
-		<li class="timeline-item">
-			<div class="panel panel-default">
-				<div class="flex-container panel-body">
-		 			<div class="h4 panel-title">Rules</div>
-					<div class="timeline-increment-icon">
-						<span class="timeline-icon"></span>
-					</div>
+	{@param rule: [type: string, queryAndOperator: bool, queryContains: bool]}
+	{@param tagSelectorURL: string}
+	{@param vocabularyIds: string}
+
+	<li class="timeline-item">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="form-group">
+					<select class="form-control" id="{$namespace}queryContains{$index}" name="{$namespace}queryContains{$index}" title="Query Contains">
+						<option class="" selected="{$rule.queryContains ?: 'false'}" value="true"> Contains </option>
+						<option class="" selected="{$rule.queryContains ? 'false' : 'true'}" value="false"> Does not Contain </option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<select class="form-control" id="{$namespace}queryAndOperator{$index}" name="{$namespace}queryAndOperator{$index}" title="And Operator">
+						<option class="" selected="{$rule.queryAndOperator ?: 'false'}" value="true"> All </option>
+						<option class="" selected="{$rule.queryAndOperator ? 'false' : 'true'}" value="false"> Any </option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label" for="{$namespace + 'queryName' + $index}">
+						of the following
+					</label>
+				</div>
+				<div class="form-group">
+					<select class="form-control asset-query-name" data-item-index="{$index}" data-onchange="changeSelector_" id="{$namespace + 'queryName' + $index}" name="{$namespace + 'queryName' + $index}">
+						<option class="" selected="{$rule.type == 'assetTags' ? 'true' : 'false'}" value="assetTags"> Tags </option>
+						<option class="" selected="{$rule.type == 'assetCategories' ? 'true' : 'false'}" value="assetCategories"> Categories </option>
+					</select>
+				</div>
+				{if $rule.type == 'assetTags'}
+					{call .selectorTags}
+						{param groupIds: $groupIds /}
+						{param index: $index /}
+						{param namespace: $namespace /}
+						{param rule: $rule /}
+						{param tagSelectorURL: $tagSelectorURL /}
+					{/call}
+				{/if}
+				{if $rule.type == 'assetCategories'}
+					{call .selectorCategories}
+						{param groupIds: $groupIds /}
+						{param index: $index /}
+						{param namespace: $namespace /}
+						{param categorySelectorURL: $categorySelectorURL /}
+						{param rule: $rule /}
+						{param vocabularyIds: $vocabularyIds /}
+					{/call}
+				{/if}
+				<div class="timeline-increment-icon">
+					<span class="timeline-icon"></span>
 				</div>
 			</div>
-		</li>
+		</div>
 
-		{call .listRules}
-			{param categorySelectorURL: $categorySelectorURL /}
-			{param groupIds: $groupIds /}
-			{param namespace: $namespace /}
+		{call .trashButton}
 			{param pathThemeImages: $pathThemeImages /}
-			{param rules: $rules /}
-			{param tagSelectorURL: $tagSelectorURL /}
-			{param vocabularyIds: $vocabularyIds /}
+			{param ruleId: $index /}
 		{/call}
-	</ul>
+	</li>
 {/template}
 
 /**
-* @param groupIds
-* @param? namespace
-* @param rules
-* @param categorySelectorURL
-* @param tagSelectorURL
-* @param vocabularyIds
-**/
-{template .listRules}
-	{@param pathThemeImages: string}
-
-	{if $rules and $namespace}
-		{foreach $rule in $rules}
-			{let $index: index($rule) /}
-			<li class="timeline-item">
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<div class="form-group">
-							<select class="form-control" id="{$namespace}queryContains{$index}" name="{$namespace}queryContains{$index}" title="Query Contains">
-								<option class="" selected="{$rule.queryContains}" value="true"> Contains </option>
-								<option class="" selected="{$rule.queryContains ? 'false' : 'true'}" value="false"> Does not Contain </option>
-							</select>
-						</div>
-
-						<div class="form-group">
-							<select class="form-control" id="{$namespace}queryAndOperator{$index}" name="{$namespace}queryAndOperator{$index}" title="And Operator">
-								<option class="" selected="{$rule.queryAndOperator}" value="true"> All </option>
-								<option class="" selected="{$rule.queryAndOperator ? 'false' : 'true'}" value="false"> Any </option>
-							</select>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label" for="{$namespace + 'queryName' + $index}">
-								of the following
-							</label>
-						</div>
-						<div class="form-group">
-							<select class="form-control asset-query-name" data-item-index="{$index}" data-onchange="changeSelector_" id="{$namespace + 'queryName' + $index}" name="{$namespace + 'queryName' + $index}">
-								<option class="" selected="{$rule.type == 'assetTags' ? 'true' : 'false'}" value="assetTags"> Tags </option>
-								<option class="" selected="{$rule.type == 'assetCategories' ? 'true' : 'false'}" value="assetCategories"> Categories </option>
-							</select>
-						</div>
-						{if $rule.type == 'assetTags'}
-							{call .selectorTags}
-								{param groupIds: $groupIds /}
-								{param index: $index /}
-								{param namespace: $namespace /}
-								{param tagSelectorURL: $tagSelectorURL /}
-								{param rule: $rule /}
-							{/call}
-						{/if}
-						{if $rule.type == 'assetCategories'}
-							{call .selectorCategories}
-								{param groupIds: $groupIds /}
-								{param index: $index /}
-								{param namespace: $namespace /}
-								{param categorySelectorURL: $categorySelectorURL /}
-								{param rule: $rule /}
-								{param vocabularyIds: $vocabularyIds /}
-							{/call}
-						{/if}
-						<div class="timeline-increment-icon">
-							<span class="timeline-icon"></span>
-						</div>
-					</div>
-				</div>
-
-				{call .trashButton}
-					{param pathThemeImages: $pathThemeImages /}
-					{param ruleId: $index /}
-				{/call}
-			</li>
-		{/foreach}
-	{/if}
-{/template}
-
-/**
-* @param groupIds
-* @param index
-* @param? namespace
-* @param tagSelectorURL
-* @param rule
-**/
+ * Renders a TagSelector for the current rule item
+ */
 {template .selectorTags}
+	{@param groupIds: string}
+	{@param index: int}
+	{@param? namespace: string}
+	{@param rule: [type: string, queryAndOperator: bool, queryContains: bool]}
+	{@param tagSelectorURL: string}
+
 	{call TagSelector.render}
-		{param divId: $namespace + $index + 'assetTagsSelector' /}
+		{param divId: $namespace + 'assetTagsSelector' + $index /}
 		{param eventName: $namespace + 'selectTag' /}
 	 	{param groupIds: $groupIds /}
 	 	{param hiddenInput: $namespace + 'queryTagNames' + $index /}
@@ -185,16 +165,18 @@
 {/template}
 
 /**
-* @param groupIds
-* @param index
-* @param? namespace
-* @param categorySelectorURL
-* @param rule
-* @param vocabularyIds
-**/
+ * Renders a CategorySelector for the current rule item
+ */
 {template .selectorCategories}
+	{@param categorySelectorURL: string}
+	{@param groupIds: string}
+	{@param index: int}
+	{@param? namespace: string}
+	{@param rule: [type: string, queryAndOperator: bool, queryContains: bool]}
+	{@param vocabularyIds: string}
+	
 	{call CategorySelector.render}
-		{param divId: $namespace + $index + 'assetCategoriesSelector' /}
+		{param divId: $namespace + 'assetCategoriesSelector' + $index /}
 		{param eventName: $namespace + 'selectCategory' /}
 	 	{param groupIds: $groupIds /}
 	 	{param hiddenInput: $namespace + 'queryCategoryIds' + $index /}

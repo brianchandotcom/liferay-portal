@@ -115,6 +115,24 @@ public class CalendarTestUtil {
 		return calendar;
 	}
 
+	public static Calendar addCalendarResourceCalendar(Group group)
+		throws PortalException {
+
+		ServiceContext createServiceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		CalendarResource calendarResource =
+			CalendarResourceLocalServiceUtil.addCalendarResource(
+				group.getCreatorUserId(), group.getGroupId(),
+				ClassNameLocalServiceUtil.getClassNameId(
+					CalendarResource.class),
+				0, null, null, RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				createServiceContext);
+
+		return calendarResource.getDefaultCalendar();
+	}
+
 	public static Calendar addCalendarResourceCalendar(User user)
 		throws PortalException {
 

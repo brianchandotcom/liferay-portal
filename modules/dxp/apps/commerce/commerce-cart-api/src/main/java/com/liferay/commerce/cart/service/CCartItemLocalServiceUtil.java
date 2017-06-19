@@ -202,6 +202,10 @@ public class CCartItemLocalServiceUtil {
 		return getService().getCCartItemsCount();
 	}
 
+	public static int getCCartItemsCount(long cCartId) {
+		return getService().getCCartItemsCount(cCartId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -275,6 +279,12 @@ public class CCartItemLocalServiceUtil {
 	public static java.util.List<com.liferay.commerce.cart.model.CCartItem> getCCartItems(
 		int start, int end) {
 		return getService().getCCartItems(start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.cart.model.CCartItem> getCCartItems(
+		long cCartId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.cart.model.CCartItem> orderByComparator) {
+		return getService().getCCartItems(cCartId, start, end, orderByComparator);
 	}
 
 	/**

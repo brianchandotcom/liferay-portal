@@ -191,6 +191,9 @@ public interface CCartItemLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCCartItemsCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCCartItemsCount(long cCartId);
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -250,6 +253,10 @@ public interface CCartItemLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CCartItem> getCCartItems(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CCartItem> getCCartItems(long cCartId, int start, int end,
+		OrderByComparator<CCartItem> orderByComparator);
 
 	/**
 	* Returns all the c cart items matching the UUID and company.

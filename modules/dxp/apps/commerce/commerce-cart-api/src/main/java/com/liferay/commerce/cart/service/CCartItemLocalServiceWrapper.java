@@ -212,6 +212,11 @@ public class CCartItemLocalServiceWrapper implements CCartItemLocalService,
 		return _cCartItemLocalService.getCCartItemsCount();
 	}
 
+	@Override
+	public int getCCartItemsCount(long cCartId) {
+		return _cCartItemLocalService.getCCartItemsCount(cCartId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -290,6 +295,14 @@ public class CCartItemLocalServiceWrapper implements CCartItemLocalService,
 	public java.util.List<com.liferay.commerce.cart.model.CCartItem> getCCartItems(
 		int start, int end) {
 		return _cCartItemLocalService.getCCartItems(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.cart.model.CCartItem> getCCartItems(
+		long cCartId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.cart.model.CCartItem> orderByComparator) {
+		return _cCartItemLocalService.getCCartItems(cCartId, start, end,
+			orderByComparator);
 	}
 
 	/**

@@ -76,7 +76,7 @@ AUI.add(
 							addColumn: Liferay.Language.get('add-column'),
 							addField: Liferay.Language.get('add-field'),
 							cancelRemoveRow: Liferay.Language.get('cancel'),
-							confirmRemoveRow: Liferay.Language.get('yes-delete'),
+							confirmRemoveRow: Liferay.Language.get('delete'),
 							formTitle: Liferay.Language.get('build-your-form'),
 							modalHeader: Liferay.Language.get('remove-confirmation'),
 							pasteHere: Liferay.Language.get('paste-here'),

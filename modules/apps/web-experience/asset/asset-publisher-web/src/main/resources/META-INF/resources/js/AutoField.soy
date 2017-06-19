@@ -31,10 +31,11 @@
 
 			{if $rules and length($rules) > 0}
 				{foreach $rule in $rules}
+					{let $ruleIndex: index($rule) /}
 					{call .rule}
 						{param categorySelectorURL: $categorySelectorURL /}
 						{param groupIds: $groupIds /}
-						{param index: index($rule) /}
+						{param index: $ruleIndex /}
 						{param namespace: $namespace /}
 						{param pathThemeImages: $pathThemeImages /}
 						{param rule: $rule /}
@@ -101,21 +102,14 @@
 				<div class="form-group">
 					<label class="control-label" for="{$namespace + 'queryName' + $index}">{msg desc=""}of-the-following{/msg}</label>
 				</div>
+
 				<div class="form-group">
 					<select class="form-control asset-query-name" data-item-index="{$index}" data-onchange="changeSelector_" id="{$namespace + 'queryName' + $index}" name="{$namespace + 'queryName' + $index}">
 						<option class="" selected="{$rule.type == 'assetTags' ? 'true' : 'false'}" value="assetTags">{msg desc=""}tags{/msg}</option>
 						<option class="" selected="{$rule.type == 'assetCategories' ? 'true' : 'false'}" value="assetCategories">{msg desc=""}categories{/msg}</option>
 					</select>
 				</div>
-				{if $rule.type == 'assetTags'}
-					{call .selectorTags}
-						{param groupIds: $groupIds /}
-						{param index: $index /}
-						{param namespace: $namespace /}
-						{param rule: $rule /}
-						{param tagSelectorURL: $tagSelectorURL /}
-					{/call}
-				{/if}
+				
 				{if $rule.type == 'assetCategories'}
 					{call .selectorCategories}
 						{param groupIds: $groupIds /}
@@ -125,7 +119,16 @@
 						{param rule: $rule /}
 						{param vocabularyIds: $vocabularyIds /}
 					{/call}
+				{else}
+					{call .selectorTags}
+						{param groupIds: $groupIds /}
+						{param index: $index /}
+						{param namespace: $namespace /}
+						{param rule: $rule /}
+						{param tagSelectorURL: $tagSelectorURL /}
+					{/call}
 				{/if}
+
 				<div class="timeline-increment-icon">
 					<span class="timeline-icon"></span>
 				</div>

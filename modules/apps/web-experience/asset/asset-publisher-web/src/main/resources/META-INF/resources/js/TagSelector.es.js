@@ -59,4 +59,5 @@ TagSelector.STATE = {
 
 Soy.register(TagSelector, templates);
 
+export { TagSelector };
 export default TagSelector;

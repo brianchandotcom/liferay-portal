@@ -95,4 +95,5 @@ AutoField.STATE = {
 
 Soy.register(AutoField, templates);
 
+export { AutoField };
 export default AutoField;

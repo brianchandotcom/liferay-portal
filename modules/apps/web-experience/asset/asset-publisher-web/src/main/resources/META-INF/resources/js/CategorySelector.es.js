@@ -65,4 +65,5 @@ CategorySelector.STATE = {
 
 Soy.register(CategorySelector, templates);
 
+export { CategorySelector };
 export default CategorySelector;

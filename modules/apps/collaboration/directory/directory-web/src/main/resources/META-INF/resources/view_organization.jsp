@@ -32,7 +32,9 @@ request.setAttribute("websites.className", Organization.class.getName());
 request.setAttribute("websites.classPK", organizationId);
 %>
 
-<liferay-util:include page="/tabs1.jsp" />
+<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="showSearch" value="<%= Boolean.FALSE.toString() %>" />
+</liferay-util:include>
 
 <div class="organization-information">
 	<div class="entity-details section">

@@ -1736,6 +1736,21 @@ public class CalendarBookingLocalServiceImpl
 		}
 	}
 
+	protected Group getCalendarResourceSiteGroup(
+			CalendarResource calendarResource)
+		throws PortalException {
+
+		if (calendarResource.isGroup()) {
+			return groupLocalService.getGroup(calendarResource.getClassPK());
+		}
+		else if (isCustomCalendarResource(calendarResource)) {
+			return groupLocalService.getGroup(calendarResource.getGroupId());
+		}
+		else {
+			return null;
+		}
+	}
+
 	protected String getExtraDataJSON(CalendarBooking calendarBooking) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -1750,8 +1765,7 @@ public class CalendarBookingLocalServiceImpl
 		CalendarResource calendarResource = calendar.getCalendarResource();
 
 		if (isCalendarResourceStaged(calendarResource)) {
-			Group group = groupLocalService.fetchGroup(
-				calendarResource.getClassPK());
+			Group group = getCalendarResourceSiteGroup(calendarResource);
 
 			Group stagingGroup = group.getStagingGroup();
 
@@ -1894,15 +1908,14 @@ public class CalendarBookingLocalServiceImpl
 	}
 
 	protected boolean isCalendarResourceStaged(
-		CalendarResource calendarResource) {
+			CalendarResource calendarResource)
+		throws PortalException {
 
-		if (!calendarResource.isGroup()) {
+		Group group = getCalendarResourceSiteGroup(calendarResource);
+
+		if (group == null) {
 			return false;
 		}
-
-		long groupId = calendarResource.getClassPK();
-
-		Group group = groupLocalService.fetchGroup(groupId);
 
 		Group stagingGroup = group.getStagingGroup();
 
@@ -1911,6 +1924,19 @@ public class CalendarBookingLocalServiceImpl
 		};
 
 		return stagingGroup.isInStagingPortlet(CalendarPortletKeys.CALENDAR);
+	}
+
+	protected boolean isCustomCalendarResource(
+		CalendarResource calendarResource) {
+
+		long calendarResourceClassNameId = classNameLocalService.getClassNameId(
+			CalendarResource.class);
+
+		if (calendarResource.getClassNameId() == calendarResourceClassNameId) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void sendNotification(

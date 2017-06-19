@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.wiki.item.selector.constants.WikiItemSelectorViewConstants;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
+import com.liferay.wiki.web.internal.item.selector.constants.WikiItemSelectorWebKeys;
 import com.liferay.wiki.web.internal.item.selector.view.display.context.WikiAttachmentItemSelectorViewDisplayContext;
 
 import java.io.IOException;
@@ -53,10 +54,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class WikiAttachmentItemSelectorView
 	implements ItemSelectorView<WikiAttachmentItemSelectorCriterion> {
-
-	public static final String
-		WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
-			"WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
 
 	@Override
 	public Class<WikiAttachmentItemSelectorCriterion>
@@ -105,7 +102,8 @@ public class WikiAttachmentItemSelectorView
 					itemSelectedEventName, search, portletURL);
 
 		request.setAttribute(
-			WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			WikiItemSelectorWebKeys.
+				WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			wikiAttachmentItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();

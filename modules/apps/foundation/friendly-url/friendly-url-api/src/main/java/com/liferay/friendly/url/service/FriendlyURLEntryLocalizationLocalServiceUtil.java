@@ -110,14 +110,6 @@ public class FriendlyURLEntryLocalizationLocalServiceUtil {
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
-		long companyId, long groupId, long classNameId, long classPK,
-		java.lang.String languageId) {
-		return getService()
-				   .fetchFriendlyURLEntryLocalization(companyId, groupId,
-			classNameId, classPK, languageId);
-	}
-
-	public static com.liferay.friendly.url.model.FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
 		long friendlyURLEntryId, java.lang.String languageId) {
 		return getService()
 				   .fetchFriendlyURLEntryLocalization(friendlyURLEntryId,
@@ -136,6 +128,14 @@ public class FriendlyURLEntryLocalizationLocalServiceUtil {
 		return getService()
 				   .fetchFriendlyURLEntryLocalization(groupId, urlTitle,
 			languageId);
+	}
+
+	public static com.liferay.friendly.url.model.FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
+		long groupId, long classNameId, long classPK,
+		java.lang.String languageId) {
+		return getService()
+				   .fetchFriendlyURLEntryLocalization(groupId, classNameId,
+			classPK, languageId);
 	}
 
 	/**

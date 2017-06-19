@@ -37,12 +37,12 @@ public class CCartPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return CCartPortletKeys.COMMERCE_CART;
+		return CCartPortletKeys.COMMERCE_CART_ADMIN;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CCartPortletKeys.COMMERCE_CART + ")",
+		target = "(javax.portlet.name=" + CCartPortletKeys.COMMERCE_CART_ADMIN + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

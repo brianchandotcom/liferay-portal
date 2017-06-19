@@ -19,7 +19,7 @@ package com.liferay.commerce.cart.constants;
  */
 public class CCartPortletKeys {
 
-	public static final String COMMERCE_CART =
-		"com_liferay_commerce_cart_web_internal_portlet_CCartPortlet";
+	public static final String COMMERCE_CART_ADMIN =
+		"com_liferay_commerce_cart_web_internal_portlet_CCartAdminPortlet";
 
 }

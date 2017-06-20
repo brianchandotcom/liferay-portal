@@ -76,29 +76,33 @@ if (Validator.isNotNull(editorGadgetURL)) {
 
 	<aui:model-context bean="<%= gadget %>" model="<%= Gadget.class %>" />
 
-	<aui:fieldset>
-		<c:choose>
-			<c:when test="<%= editorGadget %>">
-				<aui:input name="url" type="resource" value="<%= editorGadgetURL %>" />
-			</c:when>
-			<c:when test="<%= gadget != null %>">
-				<aui:input name="url" type="resource" value="<%= gadget.getUrl() %>" />
-			</c:when>
-			<c:otherwise>
-				<aui:input name="url" />
-			</c:otherwise>
-		</c:choose>
+	<div class="container-fluid-1280">
+		<div class="card card-row-padded main-content-card">
+			<aui:fieldset>
+				<c:choose>
+					<c:when test="<%= editorGadget %>">
+						<aui:input name="url" type="resource" value="<%= editorGadgetURL %>" />
+					</c:when>
+					<c:when test="<%= gadget != null %>">
+						<aui:input name="url" type="resource" value="<%= gadget.getUrl() %>" />
+					</c:when>
+					<c:otherwise>
+						<aui:input name="url" />
+					</c:otherwise>
+				</c:choose>
 
-		<h4><liferay-ui:message key="category" /></h4>
+				<h4><liferay-ui:message key="category" /></h4>
 
-		<div class="category-treeview" id="<portlet:namespace />categoryTreeView"></div>
+				<div class="category-treeview" id="<portlet:namespace />categoryTreeView"></div>
+			</aui:fieldset>
+		</div>
 
 		<aui:button-row>
-			<aui:button type="submit" />
+			<aui:button cssClass="btn-lg" type="submit" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
-	</aui:fieldset>
+	</div>
 </aui:form>
 
 <aui:script>

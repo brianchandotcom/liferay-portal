@@ -508,6 +508,14 @@ public class ModifiableServletContextAdapter
 						filterClassName);
 			}
 		}
+
+		for (FilterDefinition filterDefinition : filterDefinitions.values()) {
+			Filter filter = filterDefinition.getFilter();
+
+			if (!_filterRegistrationImpls.containsValue(filter)) {
+				addFilter(filterDefinition.getName(), filter);
+			}
+		}
 	}
 
 	@Override
@@ -562,6 +570,16 @@ public class ModifiableServletContextAdapter
 					Logger.LOG_ERROR,
 					"Bundle " + _bundle + " is unable to load servlet " +
 						servletClassName);
+			}
+		}
+
+		for (ServletDefinition servletDefinition :
+				servletDefinitions.values()) {
+
+			Servlet servlet = servletDefinition.getServlet();
+
+			if (!_servletRegistrationImpls.containsValue(servlet)) {
+				addServlet(servletDefinition.getName(), servlet);
 			}
 		}
 	}

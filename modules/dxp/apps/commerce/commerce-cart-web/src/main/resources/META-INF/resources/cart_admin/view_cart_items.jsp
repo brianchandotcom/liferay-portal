@@ -163,6 +163,12 @@ renderResponse.setTitle(cCart.getTitle());
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
+								name="quantity"
+								property="quantity"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
 								name="user"
 								property="userName"
 							/>

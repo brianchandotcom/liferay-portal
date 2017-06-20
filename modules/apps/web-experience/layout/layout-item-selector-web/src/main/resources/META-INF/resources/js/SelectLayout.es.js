@@ -1,10 +1,10 @@
+import CardsTreeView from 'journal-web/js/CardsTreeView.es';
 import Component from 'metal-component';
-import core from 'metal';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
+import core from 'metal';
 import { Config } from 'metal-state';
 
-import CardsTreeView from 'journal-web/js/CardsTreeView.es';
 import templates from './SelectLayout.soy';
 
 /**

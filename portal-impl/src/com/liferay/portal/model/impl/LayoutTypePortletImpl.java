@@ -978,6 +978,38 @@ public class LayoutTypePortletImpl
 
 		UnicodeProperties newTypeSettingsProperties = new UnicodeProperties();
 
+		String nestedPortletIds = null;
+
+		for (Map.Entry<String, String> entry :
+			typeSettingsProperties.entrySet()) {
+
+			String key = entry.getKey();
+	
+			if (key.startsWith(portletNamespace)) {
+				nestedPortletIds = entry.getValue();
+				break;
+			}
+		}
+
+		if (Validator.isNotNull(nestedPortletIds)) {
+			for (String nestedPortletId :
+				StringUtil.split(nestedPortletIds)) {
+	
+				String childNestedPortletNamespace =
+					PortalUtil.getPortletNamespace(nestedPortletId);
+	
+				removeNestedColumns(
+					childNestedPortletNamespace, portletIdList);
+	
+				removeModesPortletId(nestedPortletId);
+				removeStatesPortletId(nestedPortletId);
+	
+				portletIdList.add(nestedPortletId);
+			}
+		}
+
+		typeSettingsProperties = getTypeSettingsProperties();
+
 		for (Map.Entry<String, String> entry :
 				typeSettingsProperties.entrySet()) {
 
@@ -986,17 +1018,6 @@ public class LayoutTypePortletImpl
 			if (!key.startsWith(portletNamespace)) {
 				newTypeSettingsProperties.setProperty(key, entry.getValue());
 				continue;
-			}
-
-			String nestedPortletIds = entry.getValue();
-
-			for (String nestedPortletId :
-				StringUtil.split(nestedPortletIds)) {
-
-				removeModesPortletId(nestedPortletId);
-				removeStatesPortletId(nestedPortletId);
-	
-				portletIdList.add(nestedPortletId);
 			}
 		}
 

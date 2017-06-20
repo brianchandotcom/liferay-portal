@@ -228,14 +228,12 @@ public class SiteBrowserDisplayContext {
 			start = groupSearch.getStart() - additionalSites;
 		}
 
-		int end = groupSearch.getEnd() - additionalSites;
-
 		List<Group> groups = null;
 
 		if (type.equals("layoutScopes")) {
 			groups = GroupLocalServiceUtil.getGroups(
 				company.getCompanyId(), Layout.class.getName(), getGroupId(),
-				start, end);
+				start, groupSearch.getResultEnd() - additionalSites);
 
 			groups = _filterLayoutGroups(groups, isPrivateLayout());
 		}

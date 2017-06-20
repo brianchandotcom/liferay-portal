@@ -312,6 +312,7 @@ alter table DDMTemplate add cacheable BOOLEAN;
 alter table DDMTemplate add smallImage BOOLEAN;
 alter table DDMTemplate add smallImageId LONG;
 alter table DDMTemplate add smallImageURL STRING;
+alter table DDMTemplate add templateKey VARCHAR(75);
 
 update DDMTemplate set type_ = 'display' where type_ = 'list';
 update DDMTemplate set type_ = 'form' where type_ = 'detail';

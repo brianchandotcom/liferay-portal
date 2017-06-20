@@ -1,4 +1,5 @@
 create index IX_3A8B8AC on CCart (type_);
+create index IX_7707C432 on CCart (userId, type_);
 create index IX_581B56BD on CCart (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_8514687F on CCart (uuid_[$COLUMN_LENGTH:75$], groupId);
 

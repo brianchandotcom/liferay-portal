@@ -55,12 +55,12 @@ public class CCartItemLocalServiceUtil {
 
 	public static com.liferay.commerce.cart.model.CCartItem addCCartItem(
 		long cCartId, long cpDefinitionId, long cpInstanceId, int quantity,
-		java.lang.String json,
+		java.lang.String json, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCCartItem(cCartId, cpDefinitionId, cpInstanceId,
-			quantity, json, serviceContext);
+			quantity, json, type, serviceContext);
 	}
 
 	/**

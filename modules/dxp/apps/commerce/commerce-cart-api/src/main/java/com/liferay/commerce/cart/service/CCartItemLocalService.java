@@ -77,7 +77,7 @@ public interface CCartItemLocalService extends BaseLocalService,
 	public CCartItem addCCartItem(CCartItem cCartItem);
 
 	public CCartItem addCCartItem(long cCartId, long cpDefinitionId,
-		long cpInstanceId, int quantity, java.lang.String json,
+		long cpInstanceId, int quantity, java.lang.String json, int type,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**

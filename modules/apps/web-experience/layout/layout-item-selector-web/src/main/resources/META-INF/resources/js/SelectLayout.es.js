@@ -14,11 +14,6 @@ import templates from './SelectLayout.soy';
  * and allows to filter them by searching.
  */
 class SelectLayout extends CardsTreeView {
-
-	attached() {
-		this.on('selectedNodesChanged', this.selectedNodeChange_);
-	}
-
 	/**
 	 * Filters deep nested nodes based on a filtering value
 	 *
@@ -42,23 +37,6 @@ class SelectLayout extends CardsTreeView {
 		);
 
 		return filteredNodes;
-	}
-
-	/**
-	 * This is called when one of this tree view's nodes title is clicked.
-	 * @param {!Event} event
-	 * @protected
-	 */
-	handleNodeTitleClicked_(event) {
-		let path = event.delegateTarget.getAttribute('data-treeview-path').split('-');
-
-		let node = this.getNodeObj(path);
-
-		if (this.followURLOnTitleClick) {
-			Liferay.Util.getOpener().document.location.href = node.url;
-		} else {
-			this.selectedNodeChange_(event, node);
-		}
 	}
 
 	/**
@@ -92,25 +70,30 @@ class SelectLayout extends CardsTreeView {
 	 * @param {!Event} event
 	 * @protected
 	 */
-	selectedNodeChange_(event, selectedNode) {
-		let node = event.newVal[0] ? event.newVal[0] :selectedNode;
+	selectedNodeChange_(event) {
+		let node = event.newVal[0];
 
 		if (node) {
-			let data = {
-				groupId: node.groupId,
-				id: node.id,
-				layoutId: node.layoutId,
-				name: node.value,
-				privateLayout: node.privateLayout,
-				value: node.url
-			};
+			if (this.followURLOnTitleClick) {
+				Liferay.Util.getOpener().document.location.href = node.url;
+			}
+			else {
+				let data = {
+					groupId: node.groupId,
+					id: node.id,
+					layoutId: node.layoutId,
+					name: node.value,
+					privateLayout: node.privateLayout,
+					value: node.url
+				};
 
-			Liferay.Util.getOpener().Liferay.fire(
-				this.itemSelectorSaveEvent,
-				{
-					data: data
-				}
-			);
+				Liferay.Util.getOpener().Liferay.fire(
+					this.itemSelectorSaveEvent,
+					{
+						data: data
+					}
+				);
+			}
 		}
 	}
 }

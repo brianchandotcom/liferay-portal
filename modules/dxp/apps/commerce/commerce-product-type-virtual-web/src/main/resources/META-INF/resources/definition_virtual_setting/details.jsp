@@ -30,7 +30,7 @@ String textCssClass = "text-default ";
 boolean useFileEntry = false;
 
 if (fileEntryId > 0) {
-	textCssClass += "hidden";
+	textCssClass += "hide";
 
 	useFileEntry = true;
 }
@@ -52,25 +52,34 @@ if (fileEntryId > 0) {
 	<aui:fieldset>
 		<aui:input disabled="<%= useFileEntry %>" name="url" />
 
-		<div class="lfr-definition-virtual-setting-file-selector">
-			<div id="lfr-definition-virtual-setting-file-entry">
-				<c:if test="<%= fileEntry != null %>">
-					<a href="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadFileEntryURL() %>">
-						<%= fileEntry.getFileName() %>
-					</a>
-				</c:if>
-			</div>
+		<h4 class="<%= textCssClass %>" id="lfr-definition-virtual-button-row-message"><liferay-ui:message key="or" /></h4>
 
-			<h4 class="<%= textCssClass %>" id="lfr-definition-virtual-button-row-message"><liferay-ui:message key="or" /></h4>
-
-			<aui:button name="selectFile" value="select-file" />
-
-			<aui:button name="deleteFile" value="delete" />
-		</div>
+		<p class="text-default">
+			<span class="<%= (fileEntryId > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />fileEntryRemove" role="button">
+				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+			</span>
+			<span id="<portlet:namespace />fileEntryNameInput">
+				<c:choose>
+					<c:when test="<%= (fileEntry != null) %>">
+						<a href="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadFileEntryURL() %>">
+							<%= fileEntry.getFileName() %>
+						</a>
+					</c:when>
+					<c:otherwise>
+						<span class="text-muted"><liferay-ui:message key="none" /></span>
+					</c:otherwise>
+				</c:choose>
+			</span>
+		</p>
 	</aui:fieldset>
+
+	<aui:button name="selectFile" value="select" />
 </div>
 
 <aui:script use="liferay-item-selector-dialog">
+	var fileEntryRemove = $('#<portlet:namespace />fileEntryRemove');
+	var fileEntryNameInput = $('#<portlet:namespace />fileEntryNameInput');
+
 	$('#<portlet:namespace />selectFile').on(
 		'click',
 		function(event) {
@@ -90,13 +99,13 @@ if (fileEntryId > 0) {
 
 								$('#<portlet:namespace />fileEntryId').val(value.fileEntryId);
 
-								$('#lfr-definition-virtual-setting-file-entry').html('');
-
-								$('#lfr-definition-virtual-setting-file-entry').append('<a>' + value.title + '</a>');
-
-								$('#lfr-definition-virtual-button-row-message').addClass('hidden');
-
 								$('#<portlet:namespace />url').attr('disabled', true);
+
+								$('#lfr-definition-virtual-button-row-message').addClass('hide');
+
+								fileEntryRemove.removeClass('hide');
+
+								fileEntryNameInput.html('<a>' + value.title + '</a>');
 							}
 						}
 					},
@@ -108,21 +117,21 @@ if (fileEntryId > 0) {
 			itemSelectorDialog.open();
 		}
 	);
-</aui:script>
 
-<aui:script>
-	$('#<portlet:namespace />deleteFile').on(
+	$('#<portlet:namespace />fileEntryRemove').on(
 		'click',
 		function(event) {
 			event.preventDefault();
 
 			$('#<portlet:namespace />fileEntryId').val(0);
 
-			$('#lfr-definition-virtual-setting-file-entry').html('');
-
-			$('#lfr-definition-virtual-button-row-message').removeClass('hidden');
-
 			$('#<portlet:namespace />url').attr('disabled', false);
+
+			$('#lfr-definition-virtual-button-row-message').removeClass('hide');
+
+			fileEntryNameInput.html('<liferay-ui:message key="none" />');
+
+			fileEntryRemove.addClass('hide');
 		}
 	);
 </aui:script>

@@ -25,13 +25,9 @@ JournalArticle journalArticle = cpDefinitionVirtualSettingDisplayContext.getJour
 
 long termsOfUseJournalArticleResourcePrimKey = BeanParamUtil.getLong(cpDefinitionVirtualSetting, request, "termsOfUseJournalArticleResourcePrimKey");
 
-String selectArticleButtonCssClass = StringPool.BLANK;
-
 boolean useTermsOfUseJournal = false;
 
 if (termsOfUseJournalArticleResourcePrimKey > 0) {
-	selectArticleButtonCssClass += "article-selected";
-
 	useTermsOfUseJournal = true;
 }
 %>
@@ -54,17 +50,23 @@ if (termsOfUseJournalArticleResourcePrimKey > 0) {
 
 <div class="col-md-9">
 	<aui:fieldset>
-		<div class="lfr-definition-virtual-setting-web-content-selector">
-			<div class="text-default" id="lfr-definition-virtual-setting-journal-article">
-				<c:if test="<%= journalArticle != null %>">
-					<%= journalArticle.getTitle() %>
-				</c:if>
-			</div>
+		<p class="text-default">
+			<span class="<%= (termsOfUseJournalArticleResourcePrimKey > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />journalArticleRemove" role="button">
+				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+			</span>
+			<span id="<portlet:namespace />journalArticleNameInput">
+				<c:choose>
+					<c:when test="<%= (journalArticle != null) %>">
+						<%= journalArticle.getTitle() %>
+					</c:when>
+					<c:otherwise>
+						<span class="text-muted"><liferay-ui:message key="none" /></span>
+					</c:otherwise>
+				</c:choose>
+			</span>
+		</p>
 
-			<aui:button cssClass="<%= selectArticleButtonCssClass %>" name="selectArticle" value="select-web-content" />
-
-			<aui:button name="deleteArticle" value="delete" />
-		</div>
+		<aui:button name="selectArticle" value="select-web-content" />
 
 		<aui:field-wrapper cssClass="lfr-definition-virtual-setting-content">
 			<h4 class="text-default"><liferay-ui:message key="or" /></h4>
@@ -84,6 +86,9 @@ if (termsOfUseJournalArticleResourcePrimKey > 0) {
 </div>
 
 <aui:script sandbox="<%= true %>">
+	var journalArticleRemove = $('#<portlet:namespace />journalArticleRemove');
+	var journalArticleNameInput = $('#<portlet:namespace />journalArticleNameInput');
+
 	$('#<portlet:namespace />selectArticle').on(
 		'click',
 		function(event) {
@@ -104,15 +109,32 @@ if (termsOfUseJournalArticleResourcePrimKey > 0) {
 				function(event) {
 					$('#<portlet:namespace />termsOfUseJournalArticleResourcePrimKey').val(event.assetclasspk);
 
-					$('#lfr-definition-virtual-setting-journal-article').html('');
-
-					$('#lfr-definition-virtual-setting-journal-article').append(event.assettitle);
-
-					$('#<portlet:namespace />selectArticle').addClass('article-selected');
-
 					$('#<portlet:namespace />termsOfUseContent').attr('disabled', true);
+
+					journalArticleRemove.removeClass('hide');
+
+					journalArticleNameInput.html(event.assettitle);
 				}
 			);
+		}
+	);
+
+	$('#<portlet:namespace />journalArticleRemove').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var contentCheckbox = $('#<portlet:namespace/>termsOfUseRequired');
+
+			if (contentCheckbox.attr('checked')) {
+				$('#<portlet:namespace />termsOfUseContent').attr('disabled', false);
+			}
+
+			$('#<portlet:namespace />termsOfUseJournalArticleResourcePrimKey').val(0);
+
+			journalArticleNameInput.html('<liferay-ui:message key="none" />');
+
+			journalArticleRemove.addClass('hide');
 		}
 	);
 </aui:script>
@@ -129,32 +151,15 @@ if (termsOfUseJournalArticleResourcePrimKey > 0) {
 	function selectContentType(A) {
 		var contentCheckbox = A.one('#<portlet:namespace/>termsOfUseRequired');
 
-		var isJournalArticleSelected = A.one('#<portlet:namespace />selectArticle').hasClass('article-selected');
+		var isContentSelected = A.one('#<portlet:namespace />journalArticleRemove').hasClass('hide');
 
 		if (contentCheckbox.attr('checked')) {
-			A.one('#<portlet:namespace />deleteArticle').attr('disabled', false);
 			A.one('#<portlet:namespace />selectArticle').attr('disabled', false);
-			A.one('#<portlet:namespace />termsOfUseContent').attr('disabled', isJournalArticleSelected);
+			A.one('#<portlet:namespace />termsOfUseContent').attr('disabled', !isContentSelected);
 		}
 		else {
-			A.one('#<portlet:namespace />deleteArticle').attr('disabled', true);
 			A.one('#<portlet:namespace />selectArticle').attr('disabled', true);
 			A.one('#<portlet:namespace />termsOfUseContent').attr('disabled', true);
 		}
 	}
-</aui:script>
-
-<aui:script>
-	$('#<portlet:namespace />deleteArticle').on(
-		'click',
-		function(event) {
-			$('#<portlet:namespace />termsOfUseJournalArticleResourcePrimKey').val(0);
-
-			$('#lfr-definition-virtual-setting-journal-article').html('');
-
-			$('#<portlet:namespace />selectArticle').removeClass('article-selected');
-
-			$('#<portlet:namespace />termsOfUseContent').attr('disabled', false);
-		}
-	);
 </aui:script>

@@ -30,7 +30,7 @@ String textCssClass = "text-default ";
 boolean useSampleFileEntry = false;
 
 if (sampleFileEntryId > 0) {
-	textCssClass += "hidden";
+	textCssClass += "hide";
 
 	useSampleFileEntry = true;
 }
@@ -56,25 +56,34 @@ if (sampleFileEntryId > 0) {
 	<aui:fieldset>
 		<aui:input disabled="<%= useSampleFileEntry %>" name="sampleUrl" />
 
-		<div class="lfr-definition-virtual-setting-sample-file-selector">
-			<div id="lfr-definition-virtual-setting-sample-file-entry">
-				<c:if test="<%= sampleFileEntry != null %>">
-					<a href="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadSampleFileEntryURL() %>">
-						<%= sampleFileEntry.getFileName() %>
-					</a>
-				</c:if>
-			</div>
+		<h4 class="<%= textCssClass %>" id="lfr-definition-virtual-sample-button-row-message"><liferay-ui:message key="or" /></h4>
 
-			<h4 class="<%= textCssClass %>" id="lfr-definition-virtual-sample-button-row-message"><liferay-ui:message key="or" /></h4>
-
-			<aui:button name="selectSampleFile" value="select-file" />
-
-			<aui:button name="deleteSampleFile" value="delete" />
-		</div>
+		<p class="text-default">
+			<span class="<%= (sampleFileEntryId > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />sampleFileEntryRemove" role="button">
+				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+			</span>
+			<span id="<portlet:namespace />sampleFileEntryNameInput">
+				<c:choose>
+					<c:when test="<%= (sampleFileEntry != null) %>">
+						<a href="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadSampleFileEntryURL() %>">
+							<%= sampleFileEntry.getFileName() %>
+						</a>
+					</c:when>
+					<c:otherwise>
+						<span class="text-muted"><liferay-ui:message key="none" /></span>
+					</c:otherwise>
+				</c:choose>
+			</span>
+		</p>
 	</aui:fieldset>
+
+	<aui:button name="selectSampleFile" value="select" />
 </div>
 
 <aui:script use="liferay-item-selector-dialog">
+	var sampleFileEntryRemove = $('#<portlet:namespace />sampleFileEntryRemove');
+	var sampleFileEntryNameInput = $('#<portlet:namespace />sampleFileEntryNameInput');
+
 	$('#<portlet:namespace />selectSampleFile').on(
 		'click',
 		function(event) {
@@ -94,13 +103,13 @@ if (sampleFileEntryId > 0) {
 
 								$('#<portlet:namespace />sampleFileEntryId').val(value.fileEntryId);
 
-								$('#lfr-definition-virtual-setting-sample-file-entry').html('');
-
-								$('#lfr-definition-virtual-setting-sample-file-entry').append('<a>' + value.title + '</a>');
-
-								$('#lfr-definition-virtual-sample-button-row-message').addClass('hidden');
-
 								$('#<portlet:namespace />sampleUrl').attr('disabled', true);
+
+								$('#lfr-definition-virtual-sample-button-row-message').addClass('hide');
+
+								sampleFileEntryRemove.removeClass('hide');
+
+								sampleFileEntryNameInput.html('<a>' + value.title + '</a>');
 							}
 						}
 					},
@@ -110,6 +119,27 @@ if (sampleFileEntryId > 0) {
 			);
 
 			itemSelectorDialog.open();
+		}
+	);
+
+	$('#<portlet:namespace />sampleFileEntryRemove').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var useSampleCheckbox = A.one('#<portlet:namespace/>useSample');
+
+			if (useSampleCheckbox.attr('checked')) {
+				$('#<portlet:namespace />sampleUrl').attr('disabled', false);
+			}
+
+			$('#<portlet:namespace />sampleFileEntryId').val(0);
+
+			$('#lfr-definition-virtual-sample-button-row-message').removeClass('hide');
+
+			sampleFileEntryNameInput.html('<liferay-ui:message key="none" />');
+
+			sampleFileEntryRemove.addClass('hide');
 		}
 	);
 </aui:script>
@@ -126,34 +156,15 @@ if (sampleFileEntryId > 0) {
 	function selectSampleFileType(A) {
 		var useSampleCheckbox = A.one('#<portlet:namespace/>useSample');
 
-		var isSampleFileSelected = A.one('#lfr-definition-virtual-sample-button-row-message').hasClass('hidden');
+		var isSampleFileSelected = A.one('#lfr-definition-virtual-sample-button-row-message').hasClass('hide');
 
 		if (useSampleCheckbox.attr('checked')) {
-			A.one('#<portlet:namespace />deleteSampleFile').attr('disabled', false);
 			A.one('#<portlet:namespace />sampleUrl').attr('disabled', isSampleFileSelected);
 			A.one('#<portlet:namespace />selectSampleFile').attr('disabled', false);
 		}
 		else {
-			A.one('#<portlet:namespace />deleteSampleFile').attr('disabled', true);
 			A.one('#<portlet:namespace />sampleUrl').attr('disabled', true);
 			A.one('#<portlet:namespace />selectSampleFile').attr('disabled', true);
 		}
 	}
-</aui:script>
-
-<aui:script>
-	$('#<portlet:namespace />deleteSampleFile').on(
-		'click',
-		function(event) {
-			event.preventDefault();
-
-			$('#<portlet:namespace />sampleFileEntryId').val(0);
-
-			$('#lfr-definition-virtual-setting-sample-file-entry').html('');
-
-			$('#lfr-definition-virtual-sample-button-row').removeClass('hidden');
-
-			$('#<portlet:namespace />sampleUrl').attr('disabled', false);
-		}
-	);
 </aui:script>

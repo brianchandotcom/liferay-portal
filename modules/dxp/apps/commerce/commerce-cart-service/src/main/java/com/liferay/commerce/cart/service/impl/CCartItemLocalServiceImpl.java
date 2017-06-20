@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.cart.service.impl;
 
+import com.liferay.commerce.cart.constants.CCartConstants;
+import com.liferay.commerce.cart.model.CCart;
 import com.liferay.commerce.cart.model.CCartItem;
 import com.liferay.commerce.cart.service.base.CCartItemLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 
@@ -33,11 +36,27 @@ public class CCartItemLocalServiceImpl extends CCartItemLocalServiceBaseImpl {
 	@Override
 	public CCartItem addCCartItem(
 			long cCartId, long cpDefinitionId, long cpInstanceId, int quantity,
-			String json, ServiceContext serviceContext)
+			String json, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		CCart cCart = cCartLocalService.fetchCCart(cCartId);
+
+		if (cCart == null) {
+			String defaultTitle = StringPool.BLANK;
+
+			if (type == CCartConstants.C_CART_TYPE_CART) {
+				defaultTitle = "Cart";
+			}
+			else if (type == CCartConstants.C_CART_TYPE_WISH_LIST) {
+				defaultTitle = "Wish List";
+			}
+
+			cCart = cCartLocalService.addCCart(
+				user.getUserId(), defaultTitle, type, serviceContext);
+		}
 
 		long cCartItemId = counterLocalService.increment();
 
@@ -48,7 +67,7 @@ public class CCartItemLocalServiceImpl extends CCartItemLocalServiceBaseImpl {
 		cCartItem.setCompanyId(user.getCompanyId());
 		cCartItem.setUserId(user.getUserId());
 		cCartItem.setUserName(user.getFullName());
-		cCartItem.setCCartId(cCartId);
+		cCartItem.setCCartId(cCart.getCCartId());
 		cCartItem.setCPDefinitionId(cpDefinitionId);
 		cCartItem.setCPInstanceId(cpInstanceId);
 		cCartItem.setQuantity(quantity);

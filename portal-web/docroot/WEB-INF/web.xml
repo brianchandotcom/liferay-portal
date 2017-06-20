@@ -22,6 +22,19 @@
 		<param-value>/o/</param-value>
 	</context-param>
 	<filter>
+		<filter-name>Invoker Filter - ASYNC</filter-name>
+		<filter-class>com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter</filter-class>
+		<async-supported>true</async-supported>
+		<init-param>
+			<param-name>dispatcher</param-name>
+			<param-value>ASYNC</param-value>
+		</init-param>
+		<init-param>
+			<param-name>register-portal-lifecycle</param-name>
+			<param-value>false</param-value>
+		</init-param>
+	</filter>
+	<filter>
 		<filter-name>Invoker Filter - ERROR</filter-name>
 		<filter-class>com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter</filter-class>
 		<async-supported>true</async-supported>

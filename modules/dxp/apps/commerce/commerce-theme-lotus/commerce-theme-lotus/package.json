@@ -1,23 +1,32 @@
 {
-	"devDependencies": {
-		"gulp": "^3.8.10",
-		"liferay-theme-deps-7.0": "~1.0.0",
-		"liferay-theme-tasks": "*"
-	},
-	"keywords": [
-		"liferay-theme"
-	],
-	"liferayTheme": {
-		"baseTheme": "styled",
-		"rubySass": false,
-		"screenshot": "",
-		"templateLanguage": "ftl",
-		"version": "7.0"
-	},
-	"main": "package.json",
-	"name": "commerce-theme-lotus",
-	"publishConfig": {
-		"tag": "7_0_x"
-	},
-	"version": "1.0.0"
+  "author": "Marco Leo <marco.leo@liferay.com> (https://github.com/marco-leo)",
+  "bugs": {
+    "url": "https://issues.liferay.com/"
+  },
+  "dependencies": {
+    "metal": "^2.2.0",
+    "metal-dom": "^2.4.0",
+    "metal-state": "^2.3.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "liferay-theme-deps-7.0": "~1.0.0",
+    "liferay-theme-es2015-hook": "0.1.1",
+    "liferay-theme-tasks": "^1.3.11"
+  },
+  "keywords": [
+    "liferay-theme"
+  ],
+  "license": "LGPL",
+  "liferayTheme": {
+    "baseTheme": "styled",
+    "distName": "commerce-theme-lotus",
+    "hookModules": ["liferay-theme-es2015-hook"],
+    "rubySass": false,
+    "version": "7.0"
+  },
+  "main": "package.json",
+  "name": "commerce-theme-lotus",
+  "repository": "liferay/com-liferay-commerce-private",
+  "version": "1.0.16"
 }

@@ -204,8 +204,6 @@ public abstract class BaseCCartDisplayContext<T> {
 			portletURL.setParameter("orderByType", orderByType);
 		}
 
-		portletURL.setParameter("type", String.valueOf(getCCartType()));
-
 		return portletURL;
 	}
 

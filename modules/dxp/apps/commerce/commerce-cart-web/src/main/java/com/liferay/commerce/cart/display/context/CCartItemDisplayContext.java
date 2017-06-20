@@ -24,7 +24,9 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 
+import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -51,6 +53,21 @@ public class CCartItemDisplayContext
 
 	public CPDefinition getCPDefinition(long cpDefinitionId) {
 		return _cpDefinitionLocalService.fetchCPDefinition(cpDefinitionId);
+	}
+
+	@Override
+	public PortletURL getPortletURL() throws PortalException {
+		PortletURL portletURL = super.getPortletURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "viewCartItems");
+		portletURL.setParameter("cCartId", String.valueOf(getCCartId()));
+
+		String toolbarItem = ParamUtil.getString(
+			httpServletRequest, "toolbarItem", "view-all-cart-items");
+
+		portletURL.setParameter("toolbarItem", toolbarItem);
+
+		return portletURL;
 	}
 
 	@Override

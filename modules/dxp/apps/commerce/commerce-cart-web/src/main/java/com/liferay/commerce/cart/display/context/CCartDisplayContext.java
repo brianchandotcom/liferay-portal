@@ -22,9 +22,11 @@ import com.liferay.commerce.cart.service.CCartLocalService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
 
+import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -42,6 +44,20 @@ public class CCartDisplayContext extends BaseCCartDisplayContext<CCart> {
 		setDefaultOrderByCol("title");
 
 		_cCartLocalService = cCartLocalService;
+	}
+
+	@Override
+	public PortletURL getPortletURL() throws PortalException {
+		PortletURL portletURL = super.getPortletURL();
+
+		String toolbarItem = ParamUtil.getString(
+			httpServletRequest, "toolbarItem", "view-all-carts");
+
+		portletURL.setParameter("toolbarItem", toolbarItem);
+
+		portletURL.setParameter("type", String.valueOf(getCCartType()));
+
+		return portletURL;
 	}
 
 	@Override

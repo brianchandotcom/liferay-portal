@@ -303,6 +303,12 @@
 	<td>//select[contains(@id,'copyLayoutId')]/option[@value='1']</td>
 	<td></td>
 </tr>
+<!--PAGE_TITLE-->
+<tr>
+ 	<td>PAGE_TITLE</td>
+ 	<td>//*[@data-qa-id='controlMenu']//*[@data-qa-id='headerTitle']</td>
+ 	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -29,6 +29,11 @@
 	<td>Admin Drop Down Button</td>
 </tr>
 <tr>
+	<td>CONFIGURE_PAGE</td>
+ 	<td>//*[@data-qa-id='controlMenu']//*[@data-qa-id='editLayout']</td>
+ 	<td></td>
+ </tr>
+<tr>
 	<td>EDIT_COG</td>
 	<td>//*[@data-qa-id='controlMenu']//span/*[name()='svg'][contains(@class,'icon-cog')]</td>
 	<td></td>

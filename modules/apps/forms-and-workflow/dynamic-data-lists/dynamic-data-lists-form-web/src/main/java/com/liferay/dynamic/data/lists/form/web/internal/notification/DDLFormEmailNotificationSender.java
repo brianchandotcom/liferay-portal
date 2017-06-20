@@ -379,8 +379,7 @@ public class DDLFormEmailNotificationSender {
 		return (ThemeDisplay)portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 	}
 
-	protected String getViewFormEntriesURL(
-			PortletRequest portletRequest, DDLRecordSet recordSet)
+	protected String getViewFormEntriesURL(DDLRecordSet recordSet)
 		throws PortalException {
 
 		Map<String, String[]> params = new HashMap<>();
@@ -400,12 +399,8 @@ public class DDLFormEmailNotificationSender {
 			DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN, params);
 	}
 
-	protected String getViewFormURL(
-			PortletRequest portletRequest, DDLRecordSet recordSet,
-			DDLRecord record)
+	protected String getViewFormURL(DDLRecordSet recordSet, DDLRecord record)
 		throws PortalException {
-
-		ThemeDisplay themeDisplay = getThemeDisplay(portletRequest);
 
 		Map<String, String[]> params = new HashMap<>();
 
@@ -423,7 +418,7 @@ public class DDLFormEmailNotificationSender {
 			new String[] {String.valueOf(recordSet.getRecordSetId())});
 
 		return _portal.getControlPanelFullURL(
-			themeDisplay.getScopeGroupId(),
+			recordSet.getGroupId(),
 			DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN, params);
 	}
 
@@ -439,11 +434,8 @@ public class DDLFormEmailNotificationSender {
 		template.put("pages", getPages(recordSet, record));
 		template.put("siteName", getSiteName(recordSet.getGroupId(), locale));
 		template.put("userName", record.getUserName());
-		template.put(
-			"viewFormEntriesURL",
-			getViewFormEntriesURL(portletRequest, recordSet));
-		template.put(
-			"viewFormURL", getViewFormURL(portletRequest, recordSet, record));
+		template.put("viewFormEntriesURL", getViewFormEntriesURL(recordSet));
+		template.put("viewFormURL", getViewFormURL(recordSet, record));
 	}
 
 	protected String render(Template template) throws TemplateException {

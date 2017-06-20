@@ -71,6 +71,12 @@
 					<execute function="Click" locator1="SitePagesEditPage#LAYOUT_CARD" />
 				</then>
 			</elseif>
+			<elseif>
+				<equals arg1="${sitePageType}" arg2="Page Set" />
+				<then>
+					<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="Page Set" />
+				</then>
+			</elseif>
 		</if>
 	</command>
 

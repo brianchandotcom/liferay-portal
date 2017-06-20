@@ -79,7 +79,9 @@
 		<if>
 			<isset var="contractType" />
 			<then>
-				<execute function="Type#clickAtSendKeys" locator1="DocumentsAndMediaEditContract#CONTRACT_TYPE" value1="${contractType}" />
+				<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${contractType}">
+					<var name="key_fieldLabel" value="Contract Type" />
+				</execute>
 			</then>
 		</if>
 

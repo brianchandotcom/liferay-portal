@@ -104,6 +104,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERIC_SELECT_FIELD</td>
+	<td>//div[label[contains(.,'${key_fieldLabel}')]//select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER</td>
 	<td>//div[label[contains(.,'Header')]]/select</td>
 	<td></td>

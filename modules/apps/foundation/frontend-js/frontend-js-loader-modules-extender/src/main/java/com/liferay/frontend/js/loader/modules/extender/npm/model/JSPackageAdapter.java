@@ -29,16 +29,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A basic incomplete implementation of {@link JSPackage} that can be reused by
- * real implementations.
+ * Provides an incomplete implementation of {@link
+ * com.liferay.frontend.js.loader.modules.extender.npm.JSPackage} that can be
+ * reused by existing implementations.
+ *
  * @author Iván Zaera
  */
 public abstract class JSPackageAdapter implements JSPackage {
 
 	/**
-	 * @param jsBundle the bundle where this package belongs
-	 * @param name the name of the package
-	 * @param version the version of the package
+	 * Constructs a <code>JSPackageAdapter</code> with the JS bundle, name,
+	 * version, and default module name.
+	 *
+	 * @param jsBundle the package's bundle
+	 * @param name the package's name
+	 * @param version the package's version
 	 * @param mainModuleName the default module name
 	 */
 	public JSPackageAdapter(
@@ -61,7 +66,9 @@ public abstract class JSPackageAdapter implements JSPackage {
 	}
 
 	/**
-	 * Add a module to this package.
+	 * Adds the module to the package.
+	 *
+	 * @param jsModule the NPM module
 	 */
 	public void addJSModule(JSModule jsModule) {
 		_jsModules.add(jsModule);
@@ -72,7 +79,9 @@ public abstract class JSPackageAdapter implements JSPackage {
 	}
 
 	/**
-	 * Add a dependency to another NPM package.
+	 * Adds the dependency to another NPM package.
+	 *
+	 * @param jsPackageDependency the NPM package dependency
 	 */
 	public void addJSPackageDependency(
 		JSPackageDependency jsPackageDependency) {

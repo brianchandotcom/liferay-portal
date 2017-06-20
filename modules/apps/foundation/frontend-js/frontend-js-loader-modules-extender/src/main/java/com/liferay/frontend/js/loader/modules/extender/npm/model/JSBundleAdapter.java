@@ -21,16 +21,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * A basic incomplete implementation of {@link JSBundle} that can be reused by
- * real implementations.
+ * Provides an incomplete implementation of {@link
+ * com.liferay.frontend.js.loader.modules.extender.npm.JSBundle} that can be
+ * reused by existing implementations.
+ *
  * @author Iván Zaera
  */
 public abstract class JSBundleAdapter implements JSBundle {
 
 	/**
-	 * @param id the OSGi bundle id
-	 * @param name the OSGi name for this bundle
-	 * @param version the OSGi version of this bundle
+	 * Constructs a <code>JSBundleAdapter</code> with the ID, name, and version.
+	 *
+	 * @param id the OSGi bundle's ID
+	 * @param name the OSGi bundle's name
+	 * @param version the OSGi bundle's version
 	 */
 	public JSBundleAdapter(String id, String name, String version) {
 		_id = id;
@@ -39,7 +43,9 @@ public abstract class JSBundleAdapter implements JSBundle {
 	}
 
 	/**
-	 * Add an NPM package description to this bundle.
+	 * Adds the NPM package description to the bundle.
+	 *
+	 * @param jsPackage the NPM package
 	 */
 	public void addJSPackage(JSPackage jsPackage) {
 		_jsPackages.add(jsPackage);

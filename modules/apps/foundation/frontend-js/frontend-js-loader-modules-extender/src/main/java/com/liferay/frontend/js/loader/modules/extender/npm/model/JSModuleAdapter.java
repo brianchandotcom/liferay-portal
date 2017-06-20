@@ -23,23 +23,26 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * A basic incomplete implementation of {@link JSModule} that can be reused by
- * real implementations.
+ * Provides an incomplete implementation of {@link
+ * com.liferay.frontend.js.loader.modules.extender.npm.JSModule} that can be
+ * reused by existing implementations.
+ *
  * @author Iván Zaera
  */
 public abstract class JSModuleAdapter implements JSModule {
 
 	/**
+	 * Constucts a <code>JSModuleAdapter</code> with the JS package, name, URL,
+	 * resolved URL, resolved ID, and dependencies.
 	 *
-	 * @param jsPackage the package where this module belongs
-	 * @param name the name of the module
-	 * @param url the canonical URL of this module
+	 * @param jsPackage the module's package
+	 * @param name the module's name
+	 * @param url the module's canonical URL
 	 * @param resolvedURL the URL that gives access to the module to which this
-	 *                    module is resolved (in the end, that can be this same
-	 *                    module or another copy of this module contained in a
-	 *                    different bundle)
-	 * @param resolvedId the id of the resolved module
-	 * @param dependencies the list of dependencies declared by this module
+	 *        module is resolved; the module can be this module or another copy
+	 *        of this module contained in a different bundle
+	 * @param resolvedId the resolved module's ID
+	 * @param dependencies the dependencies declared by the module
 	 */
 	public JSModuleAdapter(
 		JSPackage jsPackage, String name, String url, String resolvedURL,

@@ -1,4 +1,6 @@
-create index IX_2193A458 on FriendlyURLEntry (groupId, classNameId);
+create index IX_88D05B8 on FriendlyURLEntry (groupId, classNameId, classPK, main);
+create index IX_E47CFA8 on FriendlyURLEntry (groupId, classNameId, classPK, urlTitle[$COLUMN_LENGTH:255$]);
+create index IX_2E40C535 on FriendlyURLEntry (groupId, classNameId, urlTitle[$COLUMN_LENGTH:255$]);
 create index IX_23FDB0B4 on FriendlyURLEntry (groupId, companyId, classNameId, classPK, main);
 create index IX_5B329CA4 on FriendlyURLEntry (groupId, companyId, classNameId, classPK, urlTitle[$COLUMN_LENGTH:255$]);
 create index IX_B5982CB9 on FriendlyURLEntry (groupId, companyId, classNameId, urlTitle[$COLUMN_LENGTH:255$]);

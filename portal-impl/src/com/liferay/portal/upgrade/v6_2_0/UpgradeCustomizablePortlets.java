@@ -154,7 +154,7 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 			long plid = GetterUtil.getLong(parts[0]);
 			String key = GetterUtil.getString(parts[1]);
 
-			if (key.startsWith(LayoutTypePortletConstants.COLUMN_PREFIX)) {
+			if (_isDivId(key)) {
 				String value = portalPreferencesImpl.getValue(
 					namespacePlid(plid), key);
 
@@ -216,6 +216,37 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 				y = preferences.indexOf(_SUFFIX, x);
 			}
 		}
+	}
+
+	private boolean _isDivId(String id) {
+		if (id.equals(
+				LayoutTypePortletConstants.
+					DEFAULT_ASSET_PUBLISHER_PORTLET_ID) ||
+			id.equals(LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID) ||
+			id.equals(LayoutTypePortletConstants.MODE_ABOUT) ||
+			id.equals(LayoutTypePortletConstants.MODE_CONFIG) ||
+			id.equals(LayoutTypePortletConstants.MODE_EDIT) ||
+			id.equals(LayoutTypePortletConstants.MODE_EDIT_DEFAULTS) ||
+			id.equals(LayoutTypePortletConstants.MODE_EDIT_GUEST) ||
+			id.equals(LayoutTypePortletConstants.MODE_HELP) ||
+			id.equals(LayoutTypePortletConstants.MODE_PREVIEW) ||
+			id.equals(LayoutTypePortletConstants.MODE_PRINT) ||
+			id.equals(LayoutTypePortletConstants.NESTED_COLUMN_IDS) ||
+			id.equals(LayoutTypePortletConstants.STATE_MAX) ||
+			id.equals(LayoutTypePortletConstants.STATE_MIN) ||
+			id.equals(
+				LayoutTypePortletConstants.
+					STATIC_PORTLET_ORGANIZATION_SELECTOR) ||
+			id.equals(
+				LayoutTypePortletConstants.
+					STATIC_PORTLET_REGULAR_SITE_SELECTOR) ||
+			id.equals(
+				LayoutTypePortletConstants.STATIC_PORTLET_USER_SELECTOR)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _PREFIX =

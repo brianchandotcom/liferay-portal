@@ -153,9 +153,7 @@ renderResponse.setTitle(cCart.getTitle());
 								name="title"
 							>
 								<%
-								long cpDefinitionId = cCartItem.getCPDefinitionId();
-
-								CPDefinition cpDefinition = cCartItemDisplayContext.getCPDefinition(cpDefinitionId);
+								CPDefinition cpDefinition = cCartItem.getCPDefinition();
 								%>
 
 								<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>

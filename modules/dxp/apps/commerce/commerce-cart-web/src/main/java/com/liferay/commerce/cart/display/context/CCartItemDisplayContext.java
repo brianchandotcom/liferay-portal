@@ -38,8 +38,7 @@ public class CCartItemDisplayContext
 
 	public CCartItemDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CCartItemLocalService cCartItemLocalService,
-			CPDefinitionLocalService cpDefinitionLocalService)
+			CCartItemLocalService cCartItemLocalService)
 		throws PortalException {
 
 		super(
@@ -48,11 +47,6 @@ public class CCartItemDisplayContext
 		setDefaultOrderByCol("title");
 
 		_cCartItemLocalService = cCartItemLocalService;
-		_cpDefinitionLocalService = cpDefinitionLocalService;
-	}
-
-	public CPDefinition getCPDefinition(long cpDefinitionId) {
-		return _cpDefinitionLocalService.fetchCPDefinition(cpDefinitionId);
 	}
 
 	@Override
@@ -106,6 +100,5 @@ public class CCartItemDisplayContext
 	}
 
 	private final CCartItemLocalService _cCartItemLocalService;
-	private final CPDefinitionLocalService _cpDefinitionLocalService;
 
 }

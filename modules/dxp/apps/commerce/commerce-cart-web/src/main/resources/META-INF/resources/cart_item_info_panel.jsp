@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CCartItemDisplayContext cCartItemDisplayContext = (CCartItemDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
 List<CCartItem> cCartItems = (List<CCartItem>)request.getAttribute(CCartWebKeys.C_CART_ITEMS);
 
 if (ListUtil.isEmpty(cCartItems)) {
@@ -34,9 +32,7 @@ if (ListUtil.isEmpty(cCartItems)) {
 
 		request.setAttribute("info_panel.jsp-entry", cCartItem);
 
-		long cpDefinitionId = cCartItem.getCPDefinitionId();
-
-		CPDefinition cpDefinition = cCartItemDisplayContext.getCPDefinition(cpDefinitionId);
+		CPDefinition cpDefinition = cCartItem.getCPDefinition();
 		%>
 
 		<div class="sidebar-header">

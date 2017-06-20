@@ -55,8 +55,7 @@ public class ViewCCartMVCRenderCommand implements MVCRenderCommand {
 
 			CCartItemDisplayContext cCartItemDisplayContext =
 				new CCartItemDisplayContext(
-					_actionHelper, httpServletRequest, _cCartItemLocalService,
-					_cpDefinitionLocalService);
+					_actionHelper, httpServletRequest, _cCartItemLocalService);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cCartItemDisplayContext);

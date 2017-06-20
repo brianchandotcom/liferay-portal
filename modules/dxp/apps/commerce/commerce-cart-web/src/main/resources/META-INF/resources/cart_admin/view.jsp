@@ -65,7 +65,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 				<aui:input name="deleteCCartIds" type="hidden" />
 
-				<div class="product-options-container" id="<portlet:namespace />entriesContainer">
+				<div class="carts-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
 						id="cCarts"
 						iteratorURL="<%= portletURL %>"
@@ -81,7 +81,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							<%
 							PortletURL rowURL = renderResponse.createRenderURL();
 
-							rowURL.setParameter("mvcRenderCommandName", "viewCart");
+							rowURL.setParameter("mvcRenderCommandName", "viewCartItems");
 							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cCartId", String.valueOf(cCart.getCCartId()));
 							%>
@@ -109,11 +109,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 								cssClass="table-cell-content"
 								name="modified-date"
 								property="modifiedDate"
-							/>
-
-							<liferay-ui:search-container-column-jsp
-								cssClass="entry-action-column"
-								path="/cart_action.jsp"
 							/>
 						</liferay-ui:search-container-row>
 

@@ -36,7 +36,9 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@ page import="com.liferay.commerce.cart.display.context.CCartItemDisplayContext" %>
+<%@ page import="com.liferay.commerce.cart.model.CCartItem" %><%@ page import="com.liferay.commerce.product.model.CPDefinition" %>
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 
 <%@ page import="java.util.Collections" %><%@
 page import="java.util.List" %>
@@ -48,3 +50,7 @@ page import="java.util.List" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+String languageId = LanguageUtil.getLanguageId(locale);
+%>

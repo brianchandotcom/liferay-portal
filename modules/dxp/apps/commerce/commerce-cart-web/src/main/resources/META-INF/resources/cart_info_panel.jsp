@@ -34,15 +34,6 @@ if (ListUtil.isEmpty(cCarts)) {
 		%>
 
 		<div class="sidebar-header">
-			<ul class="sidebar-header-actions">
-				<li>
-					<liferay-util:include
-						page="/cart_action.jsp"
-						servletContext="<%= application %>"
-					/>
-				</li>
-			</ul>
-
 			<h4><%= HtmlUtil.escape(cCart.getTitle()) %></h4>
 		</div>
 

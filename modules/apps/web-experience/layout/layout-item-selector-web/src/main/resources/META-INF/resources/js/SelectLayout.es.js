@@ -1,8 +1,6 @@
 import CardsTreeView from 'journal-web/js/CardsTreeView.es';
 import Component from 'metal-component';
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
-import core from 'metal';
 import { Config } from 'metal-state';
 
 import templates from './SelectLayout.soy';
@@ -13,7 +11,7 @@ import templates from './SelectLayout.soy';
  * This component shows a list of available layouts to select in expanded tree
  * and allows to filter them by searching.
  */
-class SelectLayout extends CardsTreeView {
+class SelectLayout extends Component {
 	/**
 	 * Filters deep nested nodes based on a filtering value
 	 *

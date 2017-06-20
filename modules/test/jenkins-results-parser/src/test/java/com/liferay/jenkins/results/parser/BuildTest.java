@@ -58,6 +58,9 @@ public class BuildTest extends BaseJenkinsResultsParserTestCase {
 		downloadSample(
 			"test-portal-acceptance-pullrequest(ee-7.0.x)_unresolved-req-startup-failure", "495",
 			"test-portal-acceptance-pullrequest(ee-7.0.x)", "test-1-18");
+		downloadSample(
+			"test-portal-acceptance-pullrequest(master)_semantic_versioning_failure", "2003",
+			"test-portal-acceptance-pullrequest(master)", "test-1-3");
 	}
 
 	@After

@@ -80,9 +80,12 @@ public class WabURLConnection extends URLConnection {
 
 			@Override
 			public void close() throws IOException {
-				super.close();
-
-				FileUtil.deltree(file.getParentFile());
+				try {
+					super.close();
+				}
+				finally {
+					FileUtil.deltree(file.getParentFile());
+				}
 			}
 
 		};

@@ -15,6 +15,8 @@
 package com.liferay.commerce.cart.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 
 /**
  * The extended model implementation for the CCartItem service. Represents a row in the &quot;CCartItem&quot; database table, with each column mapped to a property of this class.
@@ -36,4 +38,8 @@ public class CCartItemImpl extends CCartItemBaseImpl {
 	public CCartItemImpl() {
 	}
 
+	public CPDefinition getCPDefinition() {
+		return CPDefinitionLocalServiceUtil.fetchCPDefinition(
+			getCPDefinitionId());
+	}
 }

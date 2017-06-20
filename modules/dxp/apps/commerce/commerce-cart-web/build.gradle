@@ -10,4 +10,5 @@ dependencies {
 	provided project(":private:apps:commerce:commerce-application-list")
 	provided project(":private:apps:commerce:commerce-cart-api")
 	provided project(":private:apps:commerce:commerce-cart-service")
+	provided project(":private:apps:commerce:commerce-product-api")
 }

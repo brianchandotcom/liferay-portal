@@ -57,7 +57,9 @@ public class JSPImportsCheck extends BaseFileCheck {
 		content = JSPSourceUtil.compressImportsOrTaglibs(
 			fileName, content, "<%@ taglib uri=");
 
-		return content;
+		Matcher matcher = _incorrectTaglibPattern.matcher(content);
+
+		return matcher.replaceAll("$1$3 $2");
 	}
 
 	private String _formatJSPImportsOrTaglibs(
@@ -105,6 +107,8 @@ public class JSPImportsCheck extends BaseFileCheck {
 		"(<.*\n*page import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _compressedJSPTaglibPattern = Pattern.compile(
 		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
+	private final Pattern _incorrectTaglibPattern = Pattern.compile(
+		"(taglib )(prefix=\".+\") (uri=\".*\")");
 	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(
 		"(<.*page import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(

@@ -55,16 +55,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_INHERIT_CHANGES_TOGGLE</td>
-	<td>//div[@class='layout-type']//label[contains(.,'Inherit Changes')]/input[contains(@class,'toggle-switch')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_INHERIT_CHANGES_TOGGLE_1</td>
-	<td>//label[contains(.,'Inherit Changes')]//span[contains(@class,'toggle-switch-handle')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_TYPE_SELECT</td>
 	<td>//div[contains(@class,'input-select')]//select</td>
 	<td></td>

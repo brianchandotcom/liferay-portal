@@ -105,7 +105,9 @@
 			<var name="page" value="Site Page" />
 		</execute>
 
-		<execute macro="Page#disablePageTemplateInheritChanges" />
+		<execute macro="Page#togglePageTemplateInheritChanges">
+			<var name="toggleValue" value="disable" />
+		</execute>
 
 		<execute macro="Navigator#openURL" />
 

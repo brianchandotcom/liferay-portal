@@ -433,12 +433,6 @@
 		<execute function="Uncheck#uncheckHiddenToggleSwitch" locator1="ToggleSwitch#INHERIT_MOBILE_DEVICE_RULES_FROM_PAGE" />
 	</command>
 
-	<command name="disablePageTemplateInheritChanges">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="SitePagesEditPage#PAGE_TEMPLATE_INHERIT_CHANGES_TOGGLE_1" />
-
-		<execute macro="Button#clickSave" />
-	</command>
-
 	<command name="disallowEditViaSiteAdminEditCP">
 		<var name="key_page" value="${pageName}" />
 
@@ -705,6 +699,25 @@
 		</while>
 
 		<execute function="AssertElementNotPresent#assertElementNotPresentClickDockbar" locator1="Home#DELETE_PAGE_ICON" />
+	</command>
+
+	<command name="togglePageTemplateInheritChanges">
+		<if>
+			<equals arg1="${toggleValue}" arg2="enable" />
+			<then>
+				<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
+					<var name="key_toggleSwitchLabel" value="Inherit Changes" />
+				</execute>
+			</then>
+			<elseif>
+				<equals arg1="${toggleValue}" arg2="disable" />
+				<then>
+					<execute function="Uncheck#uncheckToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
+						<var name="key_toggleSwitchLabel" value="Inherit Changes" />
+					</execute>
+				</then>
+			</elseif>
+		</if>
 	</command>
 
 	<command name="view">

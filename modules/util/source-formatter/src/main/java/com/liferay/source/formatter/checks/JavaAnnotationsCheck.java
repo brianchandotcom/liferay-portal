@@ -207,13 +207,16 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 
 			String parameterProperties = annotation.substring(matcher.end(), x);
 
-			parameterProperties = StringUtil.removeChar(
-				parameterProperties, CharPool.TAB);
+			parameterProperties = StringUtil.replace(
+				parameterProperties,
+				new String[] {
+					StringPool.TAB, StringPool.FOUR_SPACES, StringPool.NEW_LINE
+				},
+				new String[] {
+					StringPool.BLANK, StringPool.BLANK, StringPool.SPACE
+				});
 
-			parameterProperties = StringUtil.trim(
-				StringUtil.replace(
-					parameterProperties, StringPool.NEW_LINE,
-					StringPool.SPACE));
+			parameterProperties = StringUtil.trim(parameterProperties);
 
 			if (parameterProperties.startsWith(StringPool.AT)) {
 				continue;

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -36,9 +35,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -83,17 +81,16 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 		typeSettingsProperties.fastLoad(typeSettings);
 
-		List<String> columnIds = _getLayoutColumnIds(typeSettingsProperties);
+		for (Map.Entry<String, String> entry :
+				typeSettingsProperties.entrySet()) {
 
-		columnIds.addAll(_getNestedPortletColumnIds(typeSettingsProperties));
+			String id = entry.getKey();
 
-		for (String columnId : columnIds) {
-			if (!typeSettingsProperties.containsKey(columnId)) {
+			if (!_isDivId(id)) {
 				continue;
 			}
 
-			String[] portletIds = StringUtil.split(
-				typeSettingsProperties.getProperty(columnId));
+			String[] portletIds = StringUtil.split(entry.getValue());
 
 			for (int j = 0; j < portletIds.length; j++) {
 				String portletId = portletIds[j];
@@ -121,8 +118,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			}
 
 			typeSettingsProperties.setProperty(
-				columnId,
-				StringUtil.merge(portletIds).concat(StringPool.COMMA));
+				id, StringUtil.merge(portletIds).concat(StringPool.COMMA));
 		}
 
 		return typeSettingsProperties.toString();
@@ -598,35 +594,35 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		}
 	}
 
-	private List<String> _getLayoutColumnIds(
-		UnicodeProperties typeSettingsProperties) {
+	private boolean _isDivId(String id) {
+		if (id.equals(
+				LayoutTypePortletConstants.
+					DEFAULT_ASSET_PUBLISHER_PORTLET_ID) ||
+			id.equals(LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID) ||
+			id.equals(LayoutTypePortletConstants.MODE_ABOUT) ||
+			id.equals(LayoutTypePortletConstants.MODE_CONFIG) ||
+			id.equals(LayoutTypePortletConstants.MODE_EDIT) ||
+			id.equals(LayoutTypePortletConstants.MODE_EDIT_DEFAULTS) ||
+			id.equals(LayoutTypePortletConstants.MODE_EDIT_GUEST) ||
+			id.equals(LayoutTypePortletConstants.MODE_HELP) ||
+			id.equals(LayoutTypePortletConstants.MODE_PREVIEW) ||
+			id.equals(LayoutTypePortletConstants.MODE_PRINT) ||
+			id.equals(LayoutTypePortletConstants.NESTED_COLUMN_IDS) ||
+			id.equals(LayoutTypePortletConstants.STATE_MAX) ||
+			id.equals(LayoutTypePortletConstants.STATE_MIN) ||
+			id.equals(
+				LayoutTypePortletConstants.
+					STATIC_PORTLET_ORGANIZATION_SELECTOR) ||
+			id.equals(
+				LayoutTypePortletConstants.
+					STATIC_PORTLET_REGULAR_SITE_SELECTOR) ||
+			id.equals(
+				LayoutTypePortletConstants.STATIC_PORTLET_USER_SELECTOR)) {
 
-		List<String> columnIds = new ArrayList<>();
-
-		Set<String> keys = typeSettingsProperties.keySet();
-
-		for (String key : keys) {
-			if (StringUtil.startsWith(
-					key, LayoutTypePortletConstants.COLUMN_PREFIX)) {
-
-				columnIds.add(key);
-			}
+			return false;
 		}
 
-		return columnIds;
-	}
-
-	private List<String> _getNestedPortletColumnIds(
-		UnicodeProperties typeSettingsProperties) {
-
-		if (!typeSettingsProperties.containsKey("nested-column-ids")) {
-			return Collections.emptyList();
-		}
-
-		String[] nestedPortletColumnIds = StringUtil.split(
-			typeSettingsProperties.getProperty("nested-column-ids"));
-
-		return ListUtil.fromArray(nestedPortletColumnIds);
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

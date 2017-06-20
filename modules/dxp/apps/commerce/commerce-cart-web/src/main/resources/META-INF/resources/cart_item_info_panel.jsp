@@ -48,7 +48,7 @@ if (ListUtil.isEmpty(cCartItems)) {
 		</aui:nav-bar>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message key="id" /></h5>
+			<h5><liferay-ui:message key="product-id" /></h5>
 
 			<p>
 				<%= HtmlUtil.escape(String.valueOf(cCartItem.getCCartItemId())) %>

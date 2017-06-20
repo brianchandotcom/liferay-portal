@@ -15,6 +15,7 @@
 package com.liferay.exportimport.internal.content.processor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
@@ -87,6 +88,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -136,7 +138,7 @@ public class DefaultExportImportContentProcessorTest {
 		_portletDataContextExport =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
 				_stagingGroup.getCompanyId(), _stagingGroup.getGroupId(),
-				new HashMap<String, String[]>(),
+				new HashMap<>(),
 				new Date(System.currentTimeMillis() - Time.HOUR), new Date(),
 				testReaderWriter);
 
@@ -160,8 +162,7 @@ public class DefaultExportImportContentProcessorTest {
 		_portletDataContextImport =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
 				_liveGroup.getCompanyId(), _liveGroup.getGroupId(),
-				new HashMap<String, String[]>(), new TestUserIdStrategy(),
-				testReaderWriter);
+				new HashMap<>(), new TestUserIdStrategy(), testReaderWriter);
 
 		_portletDataContextImport.setImportDataRootElement(rootElement);
 
@@ -260,17 +261,22 @@ public class DefaultExportImportContentProcessorTest {
 
 		List<String> entries = testReaderWriter.getEntries();
 
-		Assert.assertEquals(entries.toString(), 1, entries.size());
+		_assertContainsReference(
+			entries, DLFileEntryConstants.getClassName(),
+			_fileEntry.getFileEntryId());
 
 		List<String> binaryEntries = testReaderWriter.getBinaryEntries();
 
-		Assert.assertEquals(
-			entries.toString(), binaryEntries.size(), entries.size());
+		_assertContainsBinary(
+			binaryEntries, DLFileEntryConstants.getClassName(),
+			_fileEntry.getFileEntryId());
 
 		for (String entry : testReaderWriter.getEntries()) {
-			Assert.assertTrue(
-				content.contains("[$dl-reference=" + entry + "$]"));
-		};
+			if (entry.contains(DLFileEntryConstants.getClassName())) {
+				Assert.assertTrue(
+					content.contains("[$dl-reference=" + entry + "$]"));
+			}
+		}
 	}
 
 	@Test
@@ -437,8 +443,7 @@ public class DefaultExportImportContentProcessorTest {
 
 		PortletDataContext portletDataContextExport =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
-				group.getCompanyId(), group.getGroupId(),
-				new HashMap<String, String[]>(),
+				group.getCompanyId(), group.getGroupId(), new HashMap<>(),
 				new Date(System.currentTimeMillis() - Time.HOUR), new Date(),
 				new TestReaderWriter());
 
@@ -682,7 +687,7 @@ public class DefaultExportImportContentProcessorTest {
 				buildPublishLayoutLocalSettingsMap(
 					user, _stagingGroup.getGroupId(), _liveGroup.getGroupId(),
 					privateLayout, ExportImportHelperUtil.getLayoutIds(layouts),
-					new HashMap<String, String[]>());
+					new HashMap<>());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -837,6 +842,35 @@ public class DefaultExportImportContentProcessorTest {
 		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 
 		field.set(null, newValue);
+	}
+
+	private void _assertContainsBinary(
+		List<String> entries, String className, long classPK) {
+
+		Pattern pattern = Pattern.compile(
+			String.format("/%s/%d/\\d+\\.\\d+$", className, classPK));
+
+		Stream<String> entriesStream = entries.stream();
+
+		Assert.assertTrue(
+			String.format(
+				"%s does not contain a binary entry for %s with primary key %s",
+				entries.toString(), className, classPK),
+			entriesStream.anyMatch(pattern.asPredicate()));
+	}
+
+	private void _assertContainsReference(
+		List<String> entries, String className, long classPK) {
+
+		String expected = String.format("/%s/%d.xml", className, classPK);
+
+		Stream<String> entriesStream = entries.stream();
+
+		Assert.assertTrue(
+			String.format(
+				"%s does not contain an entry for %s with primary key %s",
+				entries.toString(), className, classPK),
+			entriesStream.anyMatch(entry -> entry.endsWith(expected)));
 	}
 
 	private static String _oldLayoutFriendlyURLPrivateUserServletMapping;

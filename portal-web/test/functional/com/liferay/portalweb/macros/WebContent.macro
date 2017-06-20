@@ -531,8 +531,6 @@
 		<if>
 			<isset var="webContentImage" />
 			<then>
-				<var name="key_fieldName" value="Image" />
-
 				<execute function="Click" locator1="Button#SELECT" />
 
 				<execute macro="ItemSelector#uploadFile">
@@ -883,6 +881,30 @@
 		<execute function="Pause" locator1="3000" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="editInReview">
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${webContentTitleEdit}" />
+		</execute>
+
+		<if>
+			<isset var="webContentImage" />
+			<then>
+				<execute function="Click" locator1="Button#SELECT" />
+
+				<execute function="SelectFrameTop" value1="relative=top" />
+
+				<execute macro="ItemSelector#uploadFile">
+					<var name="navTab" value="Web Content Images" />
+					<var name="uploadFileName" value="${webContentImage}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="editNullCP">
@@ -1544,6 +1566,13 @@
 				<var name="key_fieldName" value="${fieldName}" />
 
 				<execute function="AssertTextEquals" locator1="DDMField#GEOLOCATION" value1="${fieldFieldLabel}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Image" />
+			<then>
+				<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_IMAGE" value1="${webContentImage}" />
 			</then>
 		</if>
 	</command>

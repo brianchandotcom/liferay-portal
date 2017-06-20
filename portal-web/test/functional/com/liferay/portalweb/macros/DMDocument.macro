@@ -33,6 +33,99 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="addContractCP">
+		<execute macro="DMNavigator#gotoAddDocumentType">
+			<var name="dmDocumentTypeName" value="Contract" />
+		</execute>
+
+		<if>
+			<isset var="dmContractFile" />
+			<then>
+				<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmContractFile}" />
+			</then>
+		</if>
+
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${dmContractTitle}" />
+		</execute>
+
+		<if>
+			<isset var="dmContractDescription" />
+			<then>
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${dmContractDescription}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="effectiveDate" />
+			<then>
+				<execute function="Type#clickAtType" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${effectiveDate}">
+					<var name="key_fieldLabel" value="Effective Date" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="expirationDate" />
+			<then>
+				<execute function="Type#clickAtType" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${expirationDate}">
+					<var name="key_fieldLabel" value="Expiration Date" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="contractType" />
+			<then>
+				<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${contractType}">
+					<var name="key_fieldLabel" value="Contract Type" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="status" />
+			<then>
+				<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${status}">
+					<var name="key_fieldLabel" value="Status" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="dmContractLegalReviewer" />
+			<then>
+				<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${dmContractLegalReviewer}">
+					<var name="key_fieldLabel" value="Legal Reviewer" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="dmContractSigningAuthority" />
+			<then>
+				<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${dmContractSigningAuthority}">
+					<var name="key_fieldLabel" value="Signing Authority" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="dmContractDealName" />
+			<then>
+				<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${dmContractDealName}">
+					<var name="key_fieldLabel" value="Deal Name" />
+				</execute>
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="addCP">
 		<execute macro="DMNavigator#gotoAddDocumentType">
 			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
@@ -2107,7 +2200,7 @@
 			<then>
 				<var name="key_selectOption" value="${selectOption}" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#METADATA_PANEL_SELECT" value1="Select ${selectOption}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#METADATA_PANEL_SELECT" value1="${selectOption}" />
 			</then>
 		</if>
 
@@ -2135,6 +2228,15 @@
 				<var name="key_numberValue" value="${numberValue}" />
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#METADATA_PANEL_NUMBER" value1="${numberValue}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="dateValue" />
+			<then>
+				<var name="key_dateValue" value="${dateValue}" />
+
+				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#METADATA_PANEL_DATE" value1="${dateValue}" />
 			</then>
 		</if>
 	</command>

@@ -2021,7 +2021,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="ImportTrainingLAR" priority="4">
+	<command ignore="true" name="ImportTrainingLAR" priority="5">
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

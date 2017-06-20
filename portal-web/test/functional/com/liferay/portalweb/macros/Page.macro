@@ -106,7 +106,9 @@
 			<then>
 				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="${pageTemplateName}" />
 
-				<execute function="Check#checkToggleSwitch" locator1="SitePagesEditPage#PAGE_TEMPLATE_INHERIT_CHANGES_TOGGLE" />
+				<execute macro="Page#togglePageTemplateInheritChanges">
+					<var name="toggleValue" value="enable" />
+				</execute>
 			</then>
 		</if>
 
@@ -699,6 +701,25 @@
 		</while>
 
 		<execute function="AssertElementNotPresent#assertElementNotPresentClickDockbar" locator1="Home#DELETE_PAGE_ICON" />
+	</command>
+
+	<command name="togglePageTemplateInheritChanges">
+		<if>
+			<equals arg1="${toggleValue}" arg2="enable" />
+			<then>
+				<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
+					<var name="key_toggleSwitchLabel" value="Inherit Changes" />
+				</execute>
+			</then>
+			<elseif>
+				<equals arg1="${toggleValue}" arg2="disable" />
+				<then>
+					<execute function="Uncheck#uncheckToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
+						<var name="key_toggleSwitchLabel" value="Inherit Changes" />
+					</execute>
+				</then>
+			</elseif>
+		</if>
 	</command>
 
 	<command name="view">

@@ -15,6 +15,46 @@
 		</execute>
 	</tear-down>
 
+	<command name="AddContract" priority="4">
+		<description message="This is a use case for LPS-42515" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addContractCP">
+			<var name="dmContractDealName" value="DM Contract Deal Name" />
+			<var name="dmContractDescription" value="DM Contract Description" />
+			<var name="dmContractFile" value="Document_1.pdf" />
+			<var name="dmContractLegalReviewer" value="DM Contract Legal Reviewer" />
+			<var name="dmContractSigningAuthority" value="DM Contract Signing Authority" />
+			<var name="dmContractTitle" value="DM Contract Title" />
+			<var name="effectiveDate" value="06/01/2017" />
+			<var name="expirationDate" value="06/15/2017" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="DM Contract Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentTypePG">
+			<var name="dateValue" value="6/1/17" />
+			<var name="documentType" value="Contract" />
+			<var name="selectOption" value="NDA" />
+			<var name="textContent" value="DM Contract Legal Reviewer" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentTypePG">
+			<var name="dateValue" value="6/15/17" />
+			<var name="selectOption" value="Draft" />
+			<var name="textContent" value="DM Contract Signing Authority" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentTypePG">
+			<var name="textContent" value="DM Contract Deal Name" />
+		</execute>
+	</command>
+
 	<command name="AddDocument" priority="4">
 		<execute macro="Navigator#openURL" />
 

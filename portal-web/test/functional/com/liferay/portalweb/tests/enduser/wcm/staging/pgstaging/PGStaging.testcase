@@ -185,7 +185,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDMDocumentWCArticleStagingLocalLive" priority="3">
+	<command name="AddDMDocumentWCArticleStagingLocalLive" priority="5">
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#gotoSitePage">

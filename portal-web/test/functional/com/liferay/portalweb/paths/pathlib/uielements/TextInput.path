@@ -169,6 +169,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERIC_TEXT_INPUT</td>
+	<td>//div[label[contains(.,'${key_fieldLabel}')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GOOGLE_ANALYTICS_ID</td>
 	<td>//input[contains(@id,'googleAnalyticsId')]</td>
 	<td></td>

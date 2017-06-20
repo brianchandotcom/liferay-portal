@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECTED_IMAGE</td>
+	<td>//input[contains(@id,'JournalPortlet_Image')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECTED_STRUCTURE</td>
 	<td>//span[contains(@id,'structureNameLabel')]</td>
 	<td></td>

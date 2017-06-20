@@ -44,8 +44,6 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Sites" />
-
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Site Name" />
 		</execute>

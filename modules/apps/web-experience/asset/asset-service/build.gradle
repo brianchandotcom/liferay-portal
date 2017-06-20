@@ -1,3 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.exportimport.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.exportimport.service", version: "3.4.0"

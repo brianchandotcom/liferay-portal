@@ -23,6 +23,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
+String languageId = LanguageUtil.getLanguageId(locale);
+
 CCartItemDisplayContext cCartItemDisplayContext = (CCartItemDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CCart cCart = cCartItemDisplayContext.getCCart();

@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String languageId = LanguageUtil.getLanguageId(locale);
+
 List<CCartItem> cCartItems = (List<CCartItem>)request.getAttribute(CCartWebKeys.C_CART_ITEMS);
 
 if (ListUtil.isEmpty(cCartItems)) {

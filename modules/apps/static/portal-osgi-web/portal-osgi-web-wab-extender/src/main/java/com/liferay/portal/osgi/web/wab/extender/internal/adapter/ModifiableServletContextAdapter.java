@@ -510,7 +510,6 @@ public class ModifiableServletContextAdapter
 		}
 
 		for (FilterDefinition filterDefinition : filterDefinitions.values()) {
-
 			Filter filter = filterDefinition.getFilter();
 
 			if (!_filterRegistrationImpls.containsValue(filter)) {

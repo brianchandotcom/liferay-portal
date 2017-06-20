@@ -19,7 +19,7 @@ package com.liferay.commerce.product.constants;
  */
 public class CPConstants {
 
-	public static final String ASSET_CATEGORY_URL_SEPARATOR = "/c/";
+	public static final String ASSET_CATEGORY_URL_SEPARATOR = "/g/";
 
 	public static final int ATTACHMENT_FILE_ENTRY_TYPE_IMAGE = 0;
 

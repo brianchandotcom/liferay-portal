@@ -16,6 +16,8 @@ package com.liferay.commerce.cart.internal.portlet.action;
 
 import com.liferay.commerce.cart.constants.CCartWebKeys;
 import com.liferay.commerce.cart.model.CCart;
+import com.liferay.commerce.cart.model.CCartItem;
+import com.liferay.commerce.cart.service.CCartItemLocalService;
 import com.liferay.commerce.cart.service.CCartLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -71,7 +73,28 @@ public class ActionHelper {
 		return cCarts;
 	}
 
+	public List<CCartItem> getCCartItems(ResourceRequest resourceRequest)
+			throws PortalException {
+
+		List<CCartItem> cCartItems = new ArrayList<>();
+
+		long[] cCartItemIds = ParamUtil.getLongValues(
+			resourceRequest, "rowIds");
+
+		for (long cCartItemId : cCartItemIds) {
+			CCartItem cCartItem = _cCartItemLocalService.getCCartItem(
+				cCartItemId);
+
+			cCartItems.add(cCartItem);
+		}
+
+		return cCartItems;
+	}
+
 	@Reference
 	private CCartLocalService _cCartLocalService;
+
+	@Reference
+	private CCartItemLocalService _cCartItemLocalService;
 
 }

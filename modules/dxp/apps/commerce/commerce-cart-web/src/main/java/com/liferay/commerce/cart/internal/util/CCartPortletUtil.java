@@ -15,6 +15,8 @@
 package com.liferay.commerce.cart.internal.util;
 
 import com.liferay.commerce.cart.model.CCart;
+import com.liferay.commerce.cart.model.CCartItem;
+import com.liferay.commerce.cart.util.comparator.CCartItemModifiedDateComparator;
 import com.liferay.commerce.cart.util.comparator.CCartTitleComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -36,6 +38,24 @@ public class CCartPortletUtil {
 
 		if (orderByCol.equals("title")) {
 			orderByComparator = new CCartTitleComparator(orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	public static OrderByComparator<CCartItem> getCCartItemOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CCartItem> orderByComparator = null;
+
+		if (orderByCol.equals("modified-date")) {
+			orderByComparator = new CCartItemModifiedDateComparator(orderByAsc);
 		}
 
 		return orderByComparator;

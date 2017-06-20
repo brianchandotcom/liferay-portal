@@ -532,7 +532,7 @@
 	<command name="enablePageInSitePagesVariation">
 		<execute function="AssertTextEquals#assertPartialText" locator1="Staging#STAGING_MENU_REVISION_DETAILS_MESSAGE" value1="The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations." />
 
-		<execute function="AssertClick" locator1="Staging#STAGING_MENU_ENABLE_PAGE_BUTTON" value1="Enable in Main Variation" />
+		<execute function="AssertClick" locator1="Staging#STAGING_MENU_ENABLE_PAGE_BUTTON" value1="Enable in ${sitePagesVariationName}" />
 
 		<execute macro="Page#view">
 			<var name="pageName" value="${pageName}" />

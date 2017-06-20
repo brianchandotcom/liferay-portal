@@ -1567,23 +1567,25 @@ public class ServiceBuilder {
 	public String getTypeGenericsName(Type type) {
 		StringBundler sb = new StringBundler();
 
-		sb.append(type.getValue());
-
 		Type[] actualTypeArguments = type.getActualTypeArguments();
 
-		if (actualTypeArguments != null) {
-			sb.append(StringPool.LESS_THAN);
-
-			for (Type actualTypeArgument : actualTypeArguments) {
-				sb.append(getTypeGenericsName(actualTypeArgument));
-
-				sb.append(StringPool.COMMA_AND_SPACE);
-			}
-
-			sb.setIndex(sb.index() - 1);
-
-			sb.append(StringPool.GREATER_THAN);
+		if (actualTypeArguments == null) {
+			return type.getGenericValue();
 		}
+
+		sb.append(type.getValue());
+
+		sb.append(StringPool.LESS_THAN);
+
+		for (Type actualTypeArgument : actualTypeArguments) {
+			sb.append(getTypeGenericsName(actualTypeArgument));
+
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(StringPool.GREATER_THAN);
 
 		sb.append(getDimensions(type.getDimensions()));
 

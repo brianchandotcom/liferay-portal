@@ -18,17 +18,16 @@ import com.liferay.commerce.cart.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.cart.internal.util.CCartPortletUtil;
 import com.liferay.commerce.cart.model.CCartItem;
 import com.liferay.commerce.cart.service.CCartItemLocalService;
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import javax.portlet.PortletURL;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina

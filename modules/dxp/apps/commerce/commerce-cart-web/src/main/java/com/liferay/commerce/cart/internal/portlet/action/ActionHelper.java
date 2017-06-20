@@ -57,24 +57,8 @@ public class ActionHelper {
 		return cCart;
 	}
 
-	public List<CCart> getCCarts(ResourceRequest resourceRequest)
-		throws PortalException {
-
-		List<CCart> cCarts = new ArrayList<>();
-
-		long[] cCartIds = ParamUtil.getLongValues(resourceRequest, "rowIds");
-
-		for (long cCartId : cCartIds) {
-			CCart cCart = _cCartLocalService.getCCart(cCartId);
-
-			cCarts.add(cCart);
-		}
-
-		return cCarts;
-	}
-
 	public List<CCartItem> getCCartItems(ResourceRequest resourceRequest)
-			throws PortalException {
+		throws PortalException {
 
 		List<CCartItem> cCartItems = new ArrayList<>();
 
@@ -91,10 +75,26 @@ public class ActionHelper {
 		return cCartItems;
 	}
 
-	@Reference
-	private CCartLocalService _cCartLocalService;
+	public List<CCart> getCCarts(ResourceRequest resourceRequest)
+		throws PortalException {
+
+		List<CCart> cCarts = new ArrayList<>();
+
+		long[] cCartIds = ParamUtil.getLongValues(resourceRequest, "rowIds");
+
+		for (long cCartId : cCartIds) {
+			CCart cCart = _cCartLocalService.getCCart(cCartId);
+
+			cCarts.add(cCart);
+		}
+
+		return cCarts;
+	}
 
 	@Reference
 	private CCartItemLocalService _cCartItemLocalService;
+
+	@Reference
+	private CCartLocalService _cCartLocalService;
 
 }

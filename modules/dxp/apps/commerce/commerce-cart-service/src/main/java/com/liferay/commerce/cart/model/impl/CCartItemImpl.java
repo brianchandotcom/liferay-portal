@@ -15,6 +15,7 @@
 package com.liferay.commerce.cart.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 
@@ -42,4 +43,5 @@ public class CCartItemImpl extends CCartItemBaseImpl {
 		return CPDefinitionLocalServiceUtil.fetchCPDefinition(
 			getCPDefinitionId());
 	}
+
 }

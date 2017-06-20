@@ -25,24 +25,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
  */
 public class CCartPortletUtil {
 
-	public static OrderByComparator<CCart> getCCartOrderByComparator(
-		String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<CCart> orderByComparator = null;
-
-		if (orderByCol.equals("title")) {
-			orderByComparator = new CCartTitleComparator(orderByAsc);
-		}
-
-		return orderByComparator;
-	}
-
 	public static OrderByComparator<CCartItem> getCCartItemOrderByComparator(
 		String orderByCol, String orderByType) {
 
@@ -56,6 +38,24 @@ public class CCartPortletUtil {
 
 		if (orderByCol.equals("modified-date")) {
 			orderByComparator = new CCartItemModifiedDateComparator(orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	public static OrderByComparator<CCart> getCCartOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CCart> orderByComparator = null;
+
+		if (orderByCol.equals("title")) {
+			orderByComparator = new CCartTitleComparator(orderByAsc);
 		}
 
 		return orderByComparator;

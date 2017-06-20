@@ -149,11 +149,11 @@ renderResponse.setTitle(cCart.getTitle());
 							keyProperty="CCartItemId"
 							modelVar="cCartItem"
 						>
-
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
 								name="title"
 							>
+
 								<%
 								CPDefinition cpDefinition = cCartItem.getCPDefinition();
 								%>

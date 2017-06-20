@@ -106,7 +106,8 @@ public class CCartItemPersistenceImpl extends BasePersistenceImpl<CCartItem>
 			CCartItemModelImpl.FINDER_CACHE_ENABLED, CCartItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] { String.class.getName() },
-			CCartItemModelImpl.UUID_COLUMN_BITMASK);
+			CCartItemModelImpl.UUID_COLUMN_BITMASK |
+			CCartItemModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CCartItemModelImpl.ENTITY_CACHE_ENABLED,
 			CCartItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
@@ -905,7 +906,8 @@ public class CCartItemPersistenceImpl extends BasePersistenceImpl<CCartItem>
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] { String.class.getName(), Long.class.getName() },
 			CCartItemModelImpl.UUID_COLUMN_BITMASK |
-			CCartItemModelImpl.COMPANYID_COLUMN_BITMASK);
+			CCartItemModelImpl.COMPANYID_COLUMN_BITMASK |
+			CCartItemModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CCartItemModelImpl.ENTITY_CACHE_ENABLED,
 			CCartItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
@@ -1489,7 +1491,8 @@ public class CCartItemPersistenceImpl extends BasePersistenceImpl<CCartItem>
 			CCartItemModelImpl.FINDER_CACHE_ENABLED, CCartItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCCartId",
 			new String[] { Long.class.getName() },
-			CCartItemModelImpl.CCARTID_COLUMN_BITMASK);
+			CCartItemModelImpl.CCARTID_COLUMN_BITMASK |
+			CCartItemModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_CCARTID = new FinderPath(CCartItemModelImpl.ENTITY_CACHE_ENABLED,
 			CCartItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCCartId",

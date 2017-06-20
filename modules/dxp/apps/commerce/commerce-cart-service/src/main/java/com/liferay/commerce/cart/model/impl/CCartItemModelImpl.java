@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -107,8 +108,8 @@ public class CCartItemModelImpl extends BaseModelImpl<CCartItem>
 
 	public static final String TABLE_SQL_CREATE = "create table CCartItem (uuid_ VARCHAR(75) null,CCartItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CCartId LONG,CPDefinitionId LONG,CPInstanceId LONG,quantity INTEGER,json VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CCartItem";
-	public static final String ORDER_BY_JPQL = " ORDER BY cCartItem.CCartItemId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CCartItem.CCartItemId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY cCartItem.modifiedDate ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CCartItem.modifiedDate ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -125,7 +126,7 @@ public class CCartItemModelImpl extends BaseModelImpl<CCartItem>
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
 	public static final long UUID_COLUMN_BITMASK = 8L;
-	public static final long CCARTITEMID_COLUMN_BITMASK = 16L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -467,6 +468,8 @@ public class CCartItemModelImpl extends BaseModelImpl<CCartItem>
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		_columnBitmask = -1L;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -600,17 +603,16 @@ public class CCartItemModelImpl extends BaseModelImpl<CCartItem>
 
 	@Override
 	public int compareTo(CCartItem cCartItem) {
-		long primaryKey = cCartItem.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = DateUtil.compareTo(getModifiedDate(),
+				cCartItem.getModifiedDate());
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override

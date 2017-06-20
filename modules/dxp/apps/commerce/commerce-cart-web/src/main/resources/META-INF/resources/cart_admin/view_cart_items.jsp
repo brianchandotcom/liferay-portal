@@ -50,7 +50,7 @@ renderResponse.setTitle(cCart.getTitle());
 	<aui:nav cssClass="navbar-nav">
 		<liferay-portlet:renderURL varImpl="viewCartItemsURL">
 			<portlet:param name="mvcRenderCommandName" value="viewCartItems" />
-			<portlet:param name="cCartId" value="" />
+			<portlet:param name="cCartId" value="<%= String.valueOf(cCart.getCCartId()) %>" />
 			<portlet:param name="toolbarItem" value="view-all-cart-items" />
 		</liferay-portlet:renderURL>
 

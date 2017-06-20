@@ -14,8 +14,16 @@
 				background: #EFEFEF;
 				border-right: 4px solid #FFF;
 				display: inline-block;
-				padding: 12px 30px;
+				max-width: inherit;
+				padding: 12px 27px;
 				position: relative;
+			}
+
+			.breadcrumb-arrows li .entry {
+				max-width: inherit;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
 
 			.breadcrumb-arrows a::after {
@@ -68,11 +76,7 @@
 				width: 0;
 			}
 
-			.breadcrumb-arrows li:first-child::before > a {
-				border-width: 0;
-			}
-
-			.breadcrumb-arrows li:last-child::after > a {
+			.breadcrumb-arrows li:first-child::before > a, .breadcrumb-arrows li:last-child::after > a {
 				border-width: 0;
 			}
 		</style>
@@ -97,7 +101,9 @@
 					>
 				</#if>
 
-				${htmlUtil.escape(entry.getTitle())}
+				<div class="entry">
+					${htmlUtil.escape(entry.getTitle())}
+				</div>
 
 				<#if entry?has_next>
 					</a>

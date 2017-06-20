@@ -44,8 +44,6 @@ public class CCartItemDisplayContext
 		super(
 			actionHelper, httpServletRequest, CCartItem.class.getSimpleName());
 
-		setDefaultOrderByCol("title");
-
 		_cCartItemLocalService = cCartItemLocalService;
 	}
 

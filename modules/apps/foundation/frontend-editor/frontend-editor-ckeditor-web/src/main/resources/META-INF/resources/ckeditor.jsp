@@ -103,23 +103,7 @@ if (editorOptions != null) {
 			Liferay.namespace('EDITORS')['<%= editorName %>'] = true;
 
 			CKEDITOR.scriptLoader.loadScripts = function(scripts, success, failure) {
-				AUI().use(
-					'aui-base',
-					function(A) {
-						scripts = scripts.filter(
-							function(item) {
-								return !A.one('script[src=' + item + ']');
-							}
-						);
-
-						if (scripts.length) {
-							CKEDITOR.scriptLoader.load(scripts, success, failure);
-						}
-						else {
-							success();
-						}
-					}
-				);
+				CKEDITOR.scriptLoader.load(scripts, success, failure);
 			};
 
 			CKEDITOR.getNextZIndex = function() {

@@ -69,17 +69,17 @@
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Page Templates" />
 		</execute>
 
 		<execute macro="PageTemplate#gotoPageTemplateViaEdit">
 			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute function="SelectWindow" locator1="title=Page Template Name - ${siteName}" />

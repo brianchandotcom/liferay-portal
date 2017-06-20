@@ -1869,6 +1869,8 @@ public interface PropsKeys {
 
 	public static final String PORTLET_RESOURCE_ID_BANNED_PATHS_REGEXP = "portlet.resource.id.banned.paths.regexp";
 
+	public static final String PORTLET_SESSION_REPLICATE_ENABLED = "portlet.session.replicate.enabled";
+
 	public static final String PORTLET_URL_ANCHOR_ENABLE = "portlet.url.anchor.enable";
 
 	public static final String PORTLET_URL_APPEND_PARAMETERS = "portlet.url.append.parameters";

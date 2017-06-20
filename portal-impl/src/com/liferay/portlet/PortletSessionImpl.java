@@ -14,9 +14,15 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.io.SerializableObjectWrapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletSession;
+import com.liferay.portal.kernel.servlet.HttpSessionWrapper;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.PropsValues;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,7 +45,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		HttpSession session, PortletContext portletContext, String portletName,
 		long plid) {
 
-		this.session = session;
+		this.session = _wrapHttpSession(session);
 		this.portletContext = portletContext;
 
 		StringBundler sb = new StringBundler(5);
@@ -190,7 +196,7 @@ public class PortletSessionImpl implements LiferayPortletSession {
 
 	@Override
 	public void setHttpSession(HttpSession session) {
-		this.session = session;
+		this.session = _wrapHttpSession(session);
 	}
 
 	@Override
@@ -201,5 +207,48 @@ public class PortletSessionImpl implements LiferayPortletSession {
 	protected final PortletContext portletContext;
 	protected final String scopePrefix;
 	protected HttpSession session;
+
+	private HttpSession _wrapHttpSession(HttpSession session) {
+		if (PropsValues.PORTLET_SESSION_REPLICATE_ENABLED &&
+			!(session instanceof SerializableHttpSessionWrapper)) {
+
+			return new SerializableHttpSessionWrapper(session);
+		}
+
+		return session;
+	}
+
+	private static class SerializableHttpSessionWrapper
+		extends HttpSessionWrapper {
+
+		@Override
+		public Object getAttribute(String name) {
+			return SerializableObjectWrapper.unwrap(super.getAttribute(name));
+		}
+
+		@Override
+		public void setAttribute(String name, Object value) {
+			if (!(value instanceof Serializable)) {
+				super.setAttribute(name, value);
+
+				return;
+			}
+
+			Class<?> clazz = value.getClass();
+
+			if (!PortalClassLoaderUtil.isPortalClassLoader(
+					clazz.getClassLoader())) {
+
+				value = new SerializableObjectWrapper((Serializable)value);
+			}
+
+			super.setAttribute(name, value);
+		}
+
+		private SerializableHttpSessionWrapper(HttpSession session) {
+			super(session);
+		}
+
+	}
 
 }

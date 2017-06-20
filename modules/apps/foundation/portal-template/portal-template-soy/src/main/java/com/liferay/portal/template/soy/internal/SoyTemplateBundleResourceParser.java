@@ -32,9 +32,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {"lang.type=" + TemplateConstants.LANG_TYPE_SOY},
-	service = {
-		SoyTemplateBundleResourceParser.class, TemplateResourceParser.class
-	}
+	service =
+		{SoyTemplateBundleResourceParser.class, TemplateResourceParser.class}
 )
 public class SoyTemplateBundleResourceParser extends URLResourceParser {
 

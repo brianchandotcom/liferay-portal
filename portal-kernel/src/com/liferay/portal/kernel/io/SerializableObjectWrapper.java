@@ -40,6 +40,13 @@ public class SerializableObjectWrapper implements Externalizable {
 		return (T)serializableWrapper._serializable;
 	}
 
+	/**
+	 * The empty constructor is required by {@link Externalizable}. Do not use
+	 * this for any other purpose.
+	 */
+	public SerializableObjectWrapper() {
+	}
+
 	public SerializableObjectWrapper(Serializable serializable) {
 		_serializable = serializable;
 	}

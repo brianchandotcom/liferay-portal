@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.asset.kernel.model.AssetCategory" %>
+<%@ page import="com.liferay.portal.kernel.util.WebKeys" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,11 +13,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.commerce.product.internal.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Andrea Di Giorgi
- */
-public class CPConstants {
-}
+<%
+	AssetCategory assetCategory = (AssetCategory)request.getAttribute(WebKeys.ASSET_CATEGORY);
+%>
+
+<c:if test="<%= assetCategory != null %>">
+	<h1><%= assetCategory.getTitle(languageId) %></h1>
+
+	<p><%= assetCategory.getDescription(languageId) %></p>
+</c:if>

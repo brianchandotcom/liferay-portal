@@ -53,4 +53,6 @@ public interface CCartItem extends CCartItemModel, PersistedModel {
 				return CCartItem.class;
 			}
 		};
+
+	public com.liferay.commerce.product.model.CPDefinition getCPDefinition();
 }

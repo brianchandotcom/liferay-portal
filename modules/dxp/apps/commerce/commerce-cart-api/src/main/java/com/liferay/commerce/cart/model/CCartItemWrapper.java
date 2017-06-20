@@ -183,6 +183,11 @@ public class CCartItemWrapper implements CCartItem, ModelWrapper<CCartItem> {
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPDefinition getCPDefinition() {
+		return _cCartItem.getCPDefinition();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _cCartItem.getExpandoBridge();
 	}

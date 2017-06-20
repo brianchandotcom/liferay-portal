@@ -1,0 +1,84 @@
+import com.liferay.gradle.util.StringUtil
+
+task importFiles(type: Copy)
+task transformImportedFiles(type: JavaExec)
+
+classes {
+	dependsOn transformImportedFiles
+}
+
+configurations {
+	bytecodeTransformer
+}
+
+dependencies {
+	bytecodeTransformer group: "com.liferay", name: "com.liferay.portal.tools.portal.compat.bytecode.transformer", version: "1.0.1"
+}
+
+importFiles {
+	into {
+		compileJava.destinationDir
+	}
+}
+
+transformImportedFiles {
+	classpath = configurations.bytecodeTransformer
+	dependsOn importFiles
+	main = "com.liferay.portal.tools.portal.compat.bytecode.transformer.PortalCompactBytecodeTransformer"
+	systemProperty "classes.dir", importFiles.destinationDir
+}
+
+updateFileVersions {
+	String buildPropertiesRegex = /com\.liferay\.portal\.impl\.compat-(\d.+?)\.jar/
+
+	match(buildPropertiesRegex, "../../../build.properties")
+
+	replaceOnlyIf = [{
+		String group, String replacement, String content, File contentFile ->
+
+		if (content =~ buildPropertiesRegex) {
+			return true
+		}
+
+		VersionNumber groupVersionNumber = VersionNumber.parse(group)
+		VersionNumber replacementVersionNumber = VersionNumber.parse(replacement)
+
+		if (groupVersionNumber.major != replacementVersionNumber.major) {
+			return true
+		}
+
+		return false
+	}]
+}
+
+Properties importedFilesProperties = new Properties()
+
+File importedFilesPropertiesFile = file("imported-files.properties")
+
+importedFilesPropertiesFile.withInputStream {
+	importedFilesProperties.load it
+}
+
+importedFilesProperties.each {
+	String dependencyNotation, String dependencyIncludes ->
+
+	String dependencySuffix = dependencyNotation.replaceAll(/[\.|:](\w)/) {
+		String s = it[1]
+
+		s.toUpperCase()
+	}
+
+	Configuration dependencyConfiguration = configurations.create("importedFiles" + StringUtil.capitalize(dependencySuffix))
+
+	dependencyConfiguration.transitive = false
+
+	dependencies.add dependencyConfiguration.name, dependencyNotation
+
+	importFiles {
+		from {
+			zipTree(dependencyConfiguration.singleFile)
+		} {
+			include dependencyIncludes.tokenize(",")
+		}
+	}
+}

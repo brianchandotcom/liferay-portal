@@ -156,4 +156,5 @@ SelectLayout.STATE = {
 
 Soy.register(SelectLayout, templates);
 
+export { SelectLayout }
 export default SelectLayout;

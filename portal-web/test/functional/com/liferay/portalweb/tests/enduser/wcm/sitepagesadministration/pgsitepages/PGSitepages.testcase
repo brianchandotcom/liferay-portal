@@ -76,24 +76,20 @@
 	<command name="EditPageFromControlMenu" priority="5">
 		<description message="This is a use case for LPS-71160" />
 
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="Page#add">
-			<var name="pageName" value="Site Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoEditPageFromControlMenu" >
-			<var name="pageName" value="Site Page" />
+		<execute macro="Dockbar#editPageFromControlMenu" >
+			<var name="pageName" value="Welcome" />
 		</execute>
 
 		<execute macro="Page#editName">
-			<var name="pageNameEdit" value="Site Page Edit" />
+			<var name="pageNameEdit" value="Welcome Page Edit" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Welcome Page Edit" />
 		</execute>
 
 		<execute macro="Page#view">
-			<var name="pageName" value="Site Page Edit" />
+			<var name="pageName" value="Welcome Page Edit" />
 		</execute>
 	</command>
 

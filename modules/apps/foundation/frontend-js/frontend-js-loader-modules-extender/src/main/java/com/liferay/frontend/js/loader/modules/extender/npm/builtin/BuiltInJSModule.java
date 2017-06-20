@@ -24,26 +24,30 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.Collection;
 
 /**
+ * Provides an incomplete implementation of {@link
+ * com.liferay.frontend.js.loader.modules.extender.npm.JSModule} that lets its
+ * contents be retrieved with an HTTP request to the portal.
+ *
  * <p>
- * An incomplete implementation of {@link com.liferay.frontend.js.loader.modules.extender.npm.JSModule}
- * that lets its contents be retrieved with an HTTP request to the Portal.
+ * This class assumes that the {@link BuiltInJSModuleServlet} and {@link
+ * BuiltInJSResolvedModuleServlet} are installed and running in the portal.
+ * These servlets are responsible for exporting the contents returned by the
+ * {@link
+ * com.liferay.frontend.js.loader.modules.extender.npm.JSModule#getInputStream()}
+ * method implemented by subclasses inheriting from this class.
  * </p>
- * <p>
- * This class assumes that the {@link com.liferay.frontend.js.loader.modules.extender.internal.npm.builtin.BuiltInJSModuleServlet}
- * and {@link com.liferay.frontend.js.loader.modules.extender.internal.npm.builtin.BuiltInJSResolvedModuleServlet}
- * servlets are installed and running in the Portal, as they are the
- * responsibles for exporting the contents returned by the
- * {@link JSModule#getInputStream()} method implemented by subclasses
- * inheriting from this one.
- * </p>
+ *
  * @author Iván Zaera
  */
 public abstract class BuiltInJSModule extends JSModuleAdapter {
 
 	/**
-	 * @param jsPackage the package containing this module
-	 * @param name the name of the module
-	 * @param dependencies the dependencies of the module
+	 * Constructs a <code>BuiltInJSModule</code> with the module's JS package,
+	 * name, and dependencies.
+	 *
+	 * @param jsPackage the package containing the module
+	 * @param name the module's name
+	 * @param dependencies the module's dependencies
 	 */
 	public BuiltInJSModule(
 		JSPackage jsPackage, String name, Collection<String> dependencies) {
@@ -55,9 +59,11 @@ public abstract class BuiltInJSModule extends JSModuleAdapter {
 	}
 
 	/**
-	 * Compose a resolved id given a package and a module name.
-	 * @param jsPackage an NPM package
-	 * @param moduleName a module name
+	 * Composes a resolved ID given the package and module name.
+	 *
+	 * @param  jsPackage the NPM package
+	 * @param  moduleName the module's name
+	 * @return a resolved ID
 	 */
 	private static String _getResolvedId(
 		JSPackage jsPackage, String moduleName) {
@@ -74,9 +80,11 @@ public abstract class BuiltInJSModule extends JSModuleAdapter {
 	}
 
 	/**
-	 * Compose a resolved URL given a package and a module name.
-	 * @param jsPackage an NPM package
-	 * @param moduleName a module name
+	 * Composes a resolved URL given the package and module name.
+	 *
+	 * @param  jsPackage the NPM package
+	 * @param  moduleName the module's name
+	 * @return a resolved URL
 	 */
 	private static String _getResolvedURL(
 		JSPackage jsPackage, String moduleName) {
@@ -90,10 +98,10 @@ public abstract class BuiltInJSModule extends JSModuleAdapter {
 	}
 
 	/**
-	 * Compose a canonical (as opposed to resolved) URL given a package and a
-	 * module name.
-	 * @param jsPackage an NPM package
-	 * @param moduleName a module name
+	 * Composes a canonical URL given the package and module name.
+	 *
+	 * @param jsPackage the NPM package
+	 * @param moduleName the module's name
 	 */
 	private static String _getURL(JSPackage jsPackage, String moduleName) {
 		StringBundler sb = new StringBundler(2);

@@ -19,46 +19,68 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 /**
- * <p>
- * An utility class to manipulate module names.
- * </p>
+ * Provides utility methods to manipulate module names.
+ *
  * <p>
  * There are several concepts that must be understood when using this class:
- * <ul>
- *     <li>
- *         <b>module name</b>:
- *		   the name of an NPM module deployed to the portal.
- *         Syntax: {module name}
- *         Example: lib/index
- *     </li>
- *     <li>
- *         <b>module file name</b>:
- *		   the name file implementing an NPM module deployed to the portal.
- *         Syntax: {module file name}
- *         Example: lib/index.js
- *     </li>
- *     <li>
- *         <b>package id:</b>
- *         the unique id of an NPM package deployed to the portal.
- *         Syntax: {bundle id}/{package name}@{package version}.
- *         Example: 625/isarray@1.0.0
- *     </li>
- *     <li>
- *         <b>module id</b>:
- *		   the unique id of an NPM module deployed to the portal.
- *         Syntax: {bundle id}/{package name}@{package version}/{module name}.
- *         Example: 625/isarray@1.0.0/lib/index
- *     </li>
- * </ul>
  * </p>
+ *
+ * <ul>
+ * <li>
+ * <b>module name</b>: the name of an NPM module deployed to the portal
+ * <ul>
+ * <li>
+ * Syntax: <code>{module name}</code>
+ * </li>
+ * <li>
+ * Example: <code>lib/index</code>
+ * </li>
+ * </ul>
+ * </li>
+ * <li>
+ * <b>module file name</b>: the file name implementing an NPM module deployed to
+ * the portal
+ * <ul>
+ * <li>
+ * Syntax: <code>{module file name}</code>
+ * </li>
+ * <li>
+ * Example: <code>lib/index.js</code>
+ * </li>
+ * </ul>
+ * <li>
+ * <b>package id:</b> the unique ID of an NPM package deployed to the portal
+ * <ul>
+ * <li>
+ * Syntax: <code>{bundle id}/{package name}@{package version}</code>
+ * </li>
+ * <li>
+ * Example: <code>625/isarray@1.0.0</code>
+ * </li>
+ * </ul>
+ * <li>
+ * <b>module id</b>: the unique ID of an NPM module deployed to the portal
+ * <ul>
+ * <li>
+ * Syntax: <code>{bundle id}/{package name}@{package version}/{module name}</code>
+ * </li>
+ * <li>
+ * Example: <code>625/isarray@1.0.0/lib/index</code>
+ * </li>
+ * </ul>
+ * </li>
+ * </ul>
+ *
  * @author Iván Zaera
  */
 public class ModuleNameUtil {
 
 	/**
-	 * Get a module id given an NPM package and the name of a module inside it.
-	 * @param jsPackage an NPM package
-	 * @param moduleName a module name
+	 * Returns the module ID with the NPM package and module name.
+	 *
+	 * @param  jsPackage the NPM package
+	 * @param  moduleName the module's name
+	 * @return the module ID
 	 */
 	public static String getModuleId(JSPackage jsPackage, String moduleName) {
 		StringBundler sb = new StringBundler(3);
@@ -71,8 +93,22 @@ public class ModuleNameUtil {
 	}
 
 	/**
-	 * Get the package name portion of a full module name. For instance,
-	 * given `isarray/lib/index` return `isarray`.
+	 * Returns the package name portion of a full module name.
+	 *
+	 * <p>
+	 * Example:
+	 * </p>
+	 * 
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * getPackageName("isarray/lib/index") returns "isarray"
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  moduleName the module's name
+	 * @return the package name
 	 */
 	public static String getPackageName(String moduleName) {
 		int i = moduleName.indexOf(StringPool.SLASH);
@@ -85,8 +121,22 @@ public class ModuleNameUtil {
 	}
 
 	/**
-	 * Get the path portion of a full module name. For instance,
-	 * given `isarray/lib/index` return `lib/index`.
+	 * Returns the path portion of a full module name.
+	 *
+	 * <p>
+	 * Example:
+	 * </p>
+	 * 
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * getPackagePath("isarray/lib/index") returns "lib/index"
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  moduleName
+	 * @return 
 	 */
 	public static String getPackagePath(String moduleName) {
 		int i = moduleName.indexOf(StringPool.SLASH);
@@ -99,15 +149,20 @@ public class ModuleNameUtil {
 	}
 
 	/**
-	 * Get the file name implementing a module.
-	 * @param moduleName the module name
+	 * Returns the file name implementing the module.
+	 *
+	 * @param  moduleName the module name
+	 * @return the file name
 	 */
 	public static String toFileName(String moduleName) {
 		return moduleName + ".js";
 	}
 
 	/**
-	 * Get the name of a module given the file name implementing it.
+	 * Returns the module's name given the file name implementing it.
+	 *
+	 * @param  fileName the file name implementing the module
+	 * @return the module's name
 	 */
 	public static String toModuleName(String fileName) {
 		int i = fileName.lastIndexOf(CharPool.PERIOD);

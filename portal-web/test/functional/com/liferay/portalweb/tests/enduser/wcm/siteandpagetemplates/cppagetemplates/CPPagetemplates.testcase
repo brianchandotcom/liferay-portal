@@ -107,6 +107,8 @@
 			<var name="toggleValue" value="disable" />
 		</execute>
 
+		<execute macro="PortletEntry#save" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

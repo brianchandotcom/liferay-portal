@@ -66,6 +66,12 @@
 		<column name="quantity" type="int" />
 		<column name="json" type="String" />
 
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="modifiedDate" />
+		</order>
+
 		<!-- Finder methods -->
 
 		<finder name="CCartId" return-type="Collection">

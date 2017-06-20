@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.subscription.internal.service.wrapper;
+package com.liferay.subscription.internal.service;
 
 import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.kernel.exception.PortalException;

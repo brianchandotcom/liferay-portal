@@ -1,1 +1,2 @@
 apply plugin: "com.liferay.app.defaults.plugin"
+node.npmVersion = "4.5.0"

@@ -61,14 +61,18 @@
 		<if>
 			<isset var="effectiveDate" />
 			<then>
-				<execute function="Type#clickAtSendKeys" locator1="DocumentsAndMediaEditContract#EFFECTIVE_DATE_FIELD" value1="${effectiveDate}" />
+				<execute function="Type#clickAtType" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${effectiveDate}">
+					<var name="key_fieldLabel" value="Effective Date" />
+				</execute>
 			</then>
 		</if>
 
 		<if>
 			<isset var="expirationDate" />
 			<then>
-				<execute function="Type#clickAtSendKeys" locator1="DocumentsAndMediaEditContract#EXPIRATION_DATE_FIELD" value1="${expirationDate}" />
+				<execute function="Type#clickAtType" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${expirationDate}">
+					<var name="key_fieldLabel" value="Expiration Date" />
+				</execute>
 			</then>
 		</if>
 
@@ -82,21 +86,27 @@
 		<if>
 			<isset var="dmContractLegalReviewer" />
 			<then>
-				<execute function="Type" locator1="DocumentsAndMediaEditContract#LEGAL_REVIEWER" value1="${dmContractLegalReviewer}" />
+				<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${dmContractLegalReviewer}">
+					<var name="key_fieldLabel" value="Legal Reviewer" />
+				</execute>
 			</then>
 		</if>
 
 		<if>
 			<isset var="dmContractSigningAuthority" />
 			<then>
-				<execute function="Type" locator1="DocumentsAndMediaEditContract#SIGNING_AUTHORITY" value1="${dmContractSigningAuthority}" />
+				<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${dmContractSigningAuthority}">
+					<var name="key_fieldLabel" value="Signing Authority" />
+				</execute>
 			</then>
 		</if>
 
 		<if>
 			<isset var="dmContractDealName" />
 			<then>
-				<execute function="Type" locator1="DocumentsAndMediaEditContract#DEAL_NAME" value1="${dmContractDealName}" />
+				<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${dmContractDealName}">
+					<var name="key_fieldLabel" value="Deal Name" />
+				</execute>
 			</then>
 		</if>
 

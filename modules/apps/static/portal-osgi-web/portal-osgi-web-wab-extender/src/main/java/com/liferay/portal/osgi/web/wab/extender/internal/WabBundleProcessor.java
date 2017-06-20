@@ -213,8 +213,9 @@ public class WabBundleProcessor {
 
 			modifiableServletContext.registerServlets();
 
-			initServlets(webXMLDefinition.getServletDefinitions(),
-					modifiableServletContext);
+			initServlets(
+				webXMLDefinition.getServletDefinitions(),
+				modifiableServletContext);
 		}
 		catch (Exception e) {
 			_logger.log(
@@ -684,8 +685,8 @@ public class WabBundleProcessor {
 			}
 
 			ServletExceptionAdapter servletExceptionAdaptor =
-				new ServletExceptionAdapter(servletDefinition.getServlet(),
-						modifiableServletContext);
+				new ServletExceptionAdapter(
+					servletDefinition.getServlet(), modifiableServletContext);
 
 			ServiceRegistration<Servlet> serviceRegistration =
 				_bundleContext.registerService(

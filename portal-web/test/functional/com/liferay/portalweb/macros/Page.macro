@@ -106,7 +106,9 @@
 			<then>
 				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="${pageTemplateName}" />
 
-				<execute function="Check#checkToggleSwitch" locator1="SitePagesEditPage#PAGE_TEMPLATE_INHERIT_CHANGES_TOGGLE" />
+				<execute macro="Page#togglePageTemplateInheritChanges">
+					<var name="toggleValue" value="enable" />
+				</execute>
 			</then>
 		</if>
 

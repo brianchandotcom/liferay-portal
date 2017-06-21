@@ -56,7 +56,7 @@ public class MergeCentralSubrepositoryUtil {
 					gitrepoFile, centralUpstreamBranchName);
 
 			if (!centralSubrepository.isAutoPullEnabled()) {
-				return;
+				continue;
 			}
 
 			if (centralSubrepository.isCentralPullRequestCandidate()) {

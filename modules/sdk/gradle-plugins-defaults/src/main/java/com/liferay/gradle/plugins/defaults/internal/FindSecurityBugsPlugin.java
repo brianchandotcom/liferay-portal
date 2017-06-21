@@ -151,7 +151,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 			project, FIND_SECURITY_BUGS_TASK_NAME, JavaExec.class);
 
 		javaExec.args(
-			"-bugCategories", "SECURITY", "-effort:max", "-html", "-low",
+			"-bugCategories", "SECURITY", "-effort:max", "-html", "-medium",
 			"-progress", "-timestampNow");
 
 		File excludeDir = GradleUtil.getRootDir(
@@ -172,6 +172,10 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 				includeDir, _FIND_SECURITY_BUGS_INCLUDE_FILE_NAME);
 
 			javaExec.args("-include", FileUtil.getAbsolutePath(includeFile));
+		}
+
+		if (Boolean.getBoolean("jvm.debug")) {
+			javaExec.setDebug(true);
 		}
 
 		javaExec.args(
@@ -241,7 +245,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 					if (logger.isLifecycleEnabled()) {
 						logger.lifecycle(
-							"Find Security Bugs report saved to {}.",
+							"Find Security Bugs report saved to {}",
 							outputFile.getAbsolutePath());
 					}
 				}

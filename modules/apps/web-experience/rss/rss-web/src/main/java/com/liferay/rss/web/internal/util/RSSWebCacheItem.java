@@ -29,6 +29,8 @@ import com.sun.syndication.io.XmlReader;
 
 import java.io.InputStream;
 
+import java.net.URL;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -66,14 +68,21 @@ public class RSSWebCacheItem implements WebCacheItem {
 
 			SyndFeedInput input = new SyndFeedInput();
 
-			Http.Options options = new Http.Options();
+			URL url = new URL(_url);
 
-			options.setLocation(_url);
-			options.setTimeout(PropsValues.RSS_CONNECTION_TIMEOUT);
+			if ("file".equals(url.getProtocol())) {
+				feed = input.build(new XmlReader(url.openStream()));
+			}
+			else {
+				Http.Options options = new Http.Options();
 
-			inputstream = HttpUtil.URLtoInputStream(options);
+				options.setLocation(_url);
+				options.setTimeout(PropsValues.RSS_CONNECTION_TIMEOUT);
 
-			feed = input.build(new XmlReader(inputstream));
+				inputstream = HttpUtil.URLtoInputStream(options);
+
+				feed = input.build(new XmlReader(inputstream));
+			}
 		}
 		catch (Exception e) {
 			throw new WebCacheException(_url + " " + e.toString(), e);

@@ -151,13 +151,13 @@
 
 		<column name="CPDefinitionId1" type="long" />
 		<column name="CPDefinitionId2" type="long" />
-		<column name="displayOrder" type="int" />
+		<column name="priority" type="double" />
 		<column name="type" type="int" />
 
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="displayOrder" />
+			<order-column name="priority" />
 		</order>
 
 		<!-- Finder methods -->

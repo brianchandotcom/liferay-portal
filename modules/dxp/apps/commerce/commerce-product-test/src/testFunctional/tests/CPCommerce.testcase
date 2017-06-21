@@ -454,7 +454,7 @@
 			<var name="portlet" value="Catalog" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="CommerceNavigation#ENTRY_TITLE" value1="${newProductTitle}">
+		<execute function="AssertTextEquals" locator1="CommerceNavigation#ENTRY_TITLE" value1="${newEntryTitle}">
 			<var name="key_entryTitle" value="New Product Title" />
 			<var name="newProductTitle" value="New Product Title" />
 		</execute>

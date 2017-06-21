@@ -1,5 +1,5 @@
 <definition>
-	<command name="gotoCatalogEntry">
+	<command name="gotoEntry">
 		<execute macro="CommerceNavigator#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>
@@ -21,7 +21,7 @@
 		</execute>
 	</command>
 
-	<command name="searchCatalogEntry">
+	<command name="searchEntry">
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${productTitle}">
 			<var name="productTitle" value="${productTitle}" />
 		</execute>

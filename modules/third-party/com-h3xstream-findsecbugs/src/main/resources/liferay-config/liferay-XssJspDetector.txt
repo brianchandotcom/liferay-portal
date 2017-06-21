@@ -1,21 +1,40 @@
 --
----- Grep JSPs for taglibs that have some attrs
--- find -name '*.jsp*' -print0 | xargs -0 grep '<[a-zA-Z-]\+:' | sed 's/<[a-zA-Z-]\+:[a-zA-Z-]\+[ \/]*>//g' | grep '<[a-zA-Z-]\+:' | sed 's/.*<\([a-zA-Z-]*:[^ ]\+\) .*/\1/' | grep -v 'jsp\|^portlet:\|^c:' | sort -u
+---- Obtain whitelist of already processed tags
+-- find -name liferay-XssJspDetector.txt -print0 | xargs -0 grep -- '-- [a-z-]\+:[a-z-]' | sed 's/.*:-- /^/' | sort -u | tr '\n' '|' | sed 's/|/$\\|/g' | sed 's/\\|$//'
+--
+---- Grep JSPs for taglibs that have some attrs (with whitelist)
+-- find -name '*.jsp*' -print0 | xargs -0 grep '<[a-zA-Z-]\+:' | sed 's/<[a-zA-Z-]\+:[a-zA-Z-]\+[ \/]*>//g' | grep '<[a-zA-Z-]\+:' | sed 's/.*<\([a-zA-Z-]*:[^ ]\+\) .*/\1/' | grep -v 'jsp\|^portlet:\|^c:' | sort -u | grep -v '^aui:a$\|^aui:alert$\|^aui:button$\|^aui:button-row$\|^aui:col$\|^aui:fieldset$\|^aui:fieldset-group$\|^aui:field-wrapper$\|^aui:form$\|^aui:input$\|^aui:model-context$\|^aui:nav$\|^aui:nav-bar$\|^aui:nav-bar-search$\|^aui:nav-item$\|^aui:option$\|^aui:script$\|^aui:select$\|^aui:validator$\|^aui:workflow-status$\|^liferay-asset:asset-categories-selector$\|^liferay-asset:asset-tags-selector$\|^liferay-captcha:captcha$\|^liferay-expando:custom-attributes-available$\|^liferay-frontend:add-menu$\|^liferay-frontend:add-menu-item$\|^liferay-frontend:management-bar-button$\|^liferay-portlet:actionURL$\|^liferay-portlet:renderURL$\|^liferay-portlet:resourceURL$\|^liferay-ui:alert$\|^liferay-ui:asset-categories-error$\|^liferay-ui:asset-tags-error$\|^liferay-ui:asset-tags-selector$\|^liferay-ui:custom-attributes-available$\|^liferay-ui:error$\|^liferay-ui:error-header$\|^liferay-ui:header$\|^liferay-ui:icon$\|^liferay-ui:icon-menu$\|^liferay-ui:input-editor$\|^liferay-ui:input-field$\|^liferay-ui:input-localized$\|^liferay-ui:input-permissions-params$\|^liferay-ui:input-resource$\|^liferay-ui:input-search$\|^liferay-ui:input-time-zone$\|^liferay-ui:message$\|^liferay-ui:panel$\|^liferay-ui:panel-container$\|^liferay-ui:search-container-column-date$\|^liferay-ui:search-container-column-text$\|^liferay-ui:search-iterator$\|^liferay-ui:search-paginator$\|^liferay-ui:tabs$\|^liferay-ui:user-portrait$\|^liferay-util:buffer$\|^liferay-util:dynamic-include$\|^liferay-util:include$' || printf '\n--- No unknown taglibs ---\n'
 ----
 ---- Grep class methods signatures excl. primitives
 -- find -name PanelTag.class | { while read class; do printf "$class\n\n"; javap -s $class | sed $'s/.*public .* \([a-zA-Z0-9_]\+\)(.*/\\1/' | sed 's/.*descriptor: //' | tr '\n' '-' | sed 's/-(/(/g' | tr '-' '\n'  | grep '^set' | grep '[A-Za-z][A-Za-z0-9_]\+;'; done; }
 --
 
+
+-- liferay-asset:asset-categories-selector
 com/liferay/asset/taglib/servlet/taglib/AssetCategoriesSelectorTag.setHiddenInput(Ljava/lang/String;)V:0
+
+-- liferay-asset:asset-tags-selector
 com/liferay/asset/taglib/servlet/taglib/AssetTagsSelectorTag.setAddCallback(Ljava/lang/String;)V:0
 com/liferay/asset/taglib/servlet/taglib/AssetTagsSelectorTag.setHiddenInput(Ljava/lang/String;)V:0
 com/liferay/asset/taglib/servlet/taglib/AssetTagsSelectorTag.setId(Ljava/lang/String;)V:0
 com/liferay/asset/taglib/servlet/taglib/AssetTagsSelectorTag.setRemoveCallback(Ljava/lang/String;)V:0
 com/liferay/asset/taglib/servlet/taglib/AssetTagsSelectorTag.setTagNames(Ljava/lang/String;)V:0
+
+-- liferay-captcha:captcha
+com/liferay/captcha/taglib/servlet/taglib/CaptchaTag.setUrl(Ljava/lang/String;)V:0
+com/liferay/taglib/ui/CaptchaTag.setUrl(Ljava/lang/String;)V:0
+
+-- liferay-expando:custom-attributes-available
 -- com/liferay/expando/taglib/servlet/taglib/CustomAttributesAvailableTag.class SAFE
+
+-- liferay-frontend:add-menu-item
 com/liferay/frontend/taglib/servlet/taglib/AddMenuItemTag.setId(Ljava/lang/String;)V:0
 com/liferay/frontend/taglib/servlet/taglib/AddMenuItemTag.setUrl(Ljava/lang/String;)V:0
+
+-- liferay-frontend:add-menu
 com/liferay/frontend/taglib/servlet/taglib/AddMenuTag.setViewMoreURL(Ljava/lang/String;)V:0
+
+-- liferay-frontend:management-bar-button
 com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setData(Ljava/util/Map;)V:0
 com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setHref(Ljava/lang/String;)V:0
@@ -23,9 +42,13 @@ com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setIconCssClas
 com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setIcon(Ljava/lang/String;)V:0
 com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setId(Ljava/lang/String;)V:0
 com/liferay/frontend/taglib/servlet/taglib/ManagementBarButtonTag.setLabel(Ljava/lang/String;)V:0
+
+-- aui:alert
 com/liferay/taglib/aui/base/BaseAlertTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseAlertTag.setId(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseAlertTag.setType(Ljava/lang/String;)V:0
+
+-- aui:a
 com/liferay/taglib/aui/base/BaseATag.setAriaRole(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseATag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseATag.setIconCssClass(Ljava/lang/String;)V:0
@@ -35,8 +58,13 @@ com/liferay/taglib/aui/base/BaseATag.setLang(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseATag.setOnClick(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseATag.setTarget(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseATag.setTitle(Ljava/lang/String;)V:0
+
+-- aui:button-row
 com/liferay/taglib/aui/base/BaseButtonRowTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseButtonRowTag.setId(Ljava/lang/String;)V:0
+
+-- aui:button
+com/liferay/taglib/aui/ButtonTag.setIconAlign(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseButtonTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseButtonTag.setIconAlign(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseButtonTag.setIcon(Ljava/lang/String;)V:0
@@ -45,24 +73,36 @@ com/liferay/taglib/aui/base/BaseButtonTag.setName(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseButtonTag.setOnClick(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseButtonTag.setType(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseButtonTag.setValue(Ljava/lang/String;)V:0
+
+-- aui:col
 com/liferay/taglib/aui/base/BaseColTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseColTag.setId(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseColTag.setLg(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseColTag.setMd(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseColTag.setSm(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseColTag.setXs(Ljava/lang/String;)V:0
+
+-- aui:fieldset-group
 com/liferay/taglib/aui/base/BaseFieldsetGroupTag.setMarkupView(Ljava/lang/String;)V:0
+
+-- aui:fieldset
 com/liferay/taglib/aui/base/BaseFieldsetTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseFieldsetTag.setHelpMessage(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseFieldsetTag.setId(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseFieldsetTag.setLabel(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseFieldsetTag.setMarkupView(Ljava/lang/String;)V:0
+
+-- aui:field-wrapper
 com/liferay/taglib/aui/base/BaseFieldWrapperTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseFieldWrapperTag.setHelpMessage(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseFieldWrapperTag.setLabel(Ljava/lang/String;)V:0
+
+-- aui:form
 com/liferay/taglib/aui/base/BaseFormTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseFormTag.setMethod(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseFormTag.setOnSubmit(Ljava/lang/String;)V:0
+
+-- liferay-ui:icon
 com/liferay/taglib/aui/base/BaseIconTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseIconTag.setId(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseIconTag.setImage(Ljava/lang/String;)V:0
@@ -71,6 +111,8 @@ com/liferay/taglib/aui/base/BaseIconTag.setMarkupView(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseIconTag.setSrc(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseIconTag.setTarget(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseIconTag.setUrl(Ljava/lang/String;)V:0
+
+-- aui:input
 com/liferay/taglib/aui/base/BaseInputTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseInputTag.setDateTogglerCheckboxLabel(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseInputTag.setDefaultLanguageId(Ljava/lang/String;)V:0
@@ -89,13 +131,23 @@ com/liferay/taglib/aui/base/BaseInputTag.setSuffix(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseInputTag.setTitle(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseInputTag.setType(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseInputTag.setWrapperCssClass(Ljava/lang/String;)V:0
+
+-- aui:model-context
 com/liferay/taglib/aui/base/BaseModelContextTag.setDefaultLanguageId(Ljava/lang/String;)V:0
+
+-- aui:nav-bar-search
 com/liferay/taglib/aui/base/BaseNavBarSearchTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavBarSearchTag.setFile(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavBarSearchTag.setId(Ljava/lang/String;)V:0
+
+-- aui:nav-bar
+com/liferay/taglib/aui/NavBarTag.setDataTarget(Ljava/lang/String;)V:0
+com/liferay/taglib/aui/NavBarTag.setSelectedItemName(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavBarTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavBarTag.setId(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavBarTag.setMarkupView(Ljava/lang/String;)V:0
+
+-- aui:nav-item
 com/liferay/taglib/aui/base/BaseNavItemTag.setAnchorCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavItemTag.setAnchorId(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavItemTag.setAriaLabel(Ljava/lang/String;)V:0
@@ -109,13 +161,19 @@ com/liferay/taglib/aui/base/BaseNavItemTag.setLabel(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavItemTag.setState(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavItemTag.setTarget(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavItemTag.setTitle(Ljava/lang/String;)V:0
+
+-- aui:nav
 com/liferay/taglib/aui/base/BaseNavTag.setAriaLabel(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavTag.setAriaRole(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavTag.setIcon(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseNavTag.setId(Ljava/lang/String;)V:0
+
+-- aui:script
 com/liferay/taglib/aui/base/BaseScriptTag.setRequire(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseScriptTag.setUse(Ljava/lang/String;)V:0
+
+-- aui:select
 com/liferay/taglib/aui/base/BaseSelectTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseSelectTag.setHelpMessage(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseSelectTag.setId(Ljava/lang/String;)V:0
@@ -127,43 +185,69 @@ com/liferay/taglib/aui/base/BaseSelectTag.setPrefix(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseSelectTag.setSuffix(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseSelectTag.setTitle(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseSelectTag.setWrapperCssClass(Ljava/lang/String;)V:0
+
+-- aui:workflow-status
 com/liferay/taglib/aui/base/BaseWorkflowStatusTag.setHelpMessage(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseWorkflowStatusTag.setId(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseWorkflowStatusTag.setMarkupView(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseWorkflowStatusTag.setStatusMessage(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/base/BaseWorkflowStatusTag.setVersion(Ljava/lang/String;)V:0
-com/liferay/taglib/aui/ButtonTag.setIconAlign(Ljava/lang/String;)V:0
-com/liferay/taglib/aui/NavBarTag.setDataTarget(Ljava/lang/String;)V:0
-com/liferay/taglib/aui/NavBarTag.setSelectedItemName(Ljava/lang/String;)V:0
+
+-- aui:option
 com/liferay/taglib/aui/OptionTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/OptionTag.setLabel(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/OptionTag.setStyle(Ljava/lang/String;)V:0
 com/liferay/taglib/aui/OptionTag.setValue(Ljava/lang/Object;)V:0
+
+-- liferay-portlet:actionURL
+-- com/liferay/taglib/portlet/ActionURLTag SAFE
+
+-- liferay-portlet:renderURL
+-- com/liferay/taglib/portlet/RenderURLTag SAFE
+
+-- liferay-portlet:resourceURL
+-- com/liferay/taglib/portlet/ResourceURLTag SAFE
+
+-- aui:validator
+-- com/liferay/taglib/aui/ValidatorTagImpl SAFE
+
+-- liferay-ui:alert
 com/liferay/taglib/ui/AlertTag.setIcon(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/AlertTag.setTargetNode(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/AlertTag.setTitle(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/AlertTag.setType(Ljava/lang/String;)V:0
-com/liferay/taglib/search/TextSearchEntry.setData(Ljava/util/Map;)V:0
-com/liferay/taglib/search/TextSearchEntry.setHref(Ljava/lang/String;)V:0
-com/liferay/taglib/search/TextSearchEntry.setName(Ljava/lang/String;)V:0
-com/liferay/taglib/search/TextSearchEntry.setTarget(Ljava/lang/String;)V:0
-com/liferay/taglib/search/TextSearchEntry.setTitle(Ljava/lang/String;)V:0
+
+-- liferay-ui:asset-categories-error
 -- com/liferay/taglib/ui/AssetCategoriesErrorTag SAFE
+
+-- liferay-ui:asset-tags-error
 -- com/liferay/taglib/ui/AssetTagsErrorTag SAFE
+
+-- liferay-ui:asset-tags-selector
 com/liferay/taglib/ui/AssetTagsSelectorTag.setAddCallback(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/AssetTagsSelectorTag.setCurTags(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/AssetTagsSelectorTag.setHiddenInput(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/AssetTagsSelectorTag.setId(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/AssetTagsSelectorTag.setRemoveCallback(Ljava/lang/String;)V:0
+
+-- liferay-ui:custom-attributes-available
 -- com/liferay/taglib/ui/CustomAttributesAvailableTag.class SAFE
+
+-- liferay-ui:error-header
 -- com.liferay.taglib.ui.ErrorHeaderTag SAFE
+
+-- liferay-ui:error
 com/liferay/taglib/ui/ErrorTag.setMessage(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/ErrorTag.setRowBreak(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/ErrorTag.setTargetNode(Ljava/lang/String;)V:0
+
+-- liferay-ui:header
 com/liferay/taglib/ui/HeaderTag.setBackLabel(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/HeaderTag.setBackURL(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/HeaderTag.setCssClass(Ljava/lang/String;)V:0
 -- com/liferay/taglib/ui/HeaderTag.setTitle(Ljava/lang/String;)V:0 SAFE in default config, unsafe with escapeXML=false
+
+-- liferay-ui:icon-menu
 com/liferay/taglib/ui/IconMenuTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconMenuTag.setDirection(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconMenuTag.setEndPage(Ljava/lang/String;)V:0
@@ -173,6 +257,8 @@ com/liferay/taglib/ui/IconMenuTag.setMarkupView(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconMenuTag.setMessage(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconMenuTag.setStartPage(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconMenuTag.setTriggerCssClass(Ljava/lang/String;)V:0
+
+-- liferay-ui:icon
 com/liferay/taglib/ui/IconTag.setAlt(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconTag.setAriaRole(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconTag.setCssClass(Ljava/lang/String;)V:0
@@ -191,6 +277,8 @@ com/liferay/taglib/ui/IconTag.setSrcHover(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconTag.setSrc(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconTag.setTarget(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/IconTag.setUrl(Ljava/lang/String;)V:0
+
+-- liferay-ui:input-editor
 com/liferay/taglib/ui/InputEditorTag.setConfigKey(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputEditorTag.setContentsLanguageId(Ljava/lang/String;)V:0
 -- com/liferay/taglib/ui/InputEditorTag.setContents(Ljava/lang/String;)V:0 SAFE in case of default editor
@@ -207,6 +295,8 @@ com/liferay/taglib/ui/InputEditorTag.setOnInitMethod(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputEditorTag.setPlaceholder(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputEditorTag.setToolbarSet(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputEditorTag.setWidth(Ljava/lang/String;)V:0
+
+-- liferay-ui:input-field
 com/liferay/taglib/ui/InputFieldTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputFieldTag.setDateTogglerCheckboxLabel(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputFieldTag.setDefaultLanguageId(Ljava/lang/String;)V:0
@@ -214,6 +304,8 @@ com/liferay/taglib/ui/InputFieldTag.setFieldParam(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputFieldTag.setFormName(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputFieldTag.setId(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputFieldTag.setPlaceholder(Ljava/lang/String;)V:0
+
+-- liferay-ui:input-localized
 com/liferay/taglib/ui/InputLocalizedTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputLocalizedTag.setDefaultLanguageId(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputLocalizedTag.setFieldPrefix(Ljava/lang/String;)V:0
@@ -223,10 +315,16 @@ com/liferay/taglib/ui/InputLocalizedTag.setMaxLength(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputLocalizedTag.setName(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputLocalizedTag.setPlaceholder(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputLocalizedTag.setType(Ljava/lang/String;)V:0
+
+-- liferay-ui:input-permissions-params
 -- com.liferay.taglib.ui.InputPermissionsParamsTag SAFE
+
+-- liferay-ui:input-resource
 com/liferay/taglib/ui/InputResourceTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputResourceTag.setId(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputResourceTag.setTitle(Ljava/lang/String;)V:0
+
+-- liferay-ui:input-search
 com/liferay/taglib/ui/InputSearchTag.setButtonLabel(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputSearchTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputSearchTag.setId(Ljava/lang/String;)V:0
@@ -234,15 +332,23 @@ com/liferay/taglib/ui/InputSearchTag.setMarkupView(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputSearchTag.setName(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputSearchTag.setPlaceholder(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputSearchTag.setTitle(Ljava/lang/String;)V:0
+
+-- liferay-ui:input-time-zone
 com/liferay/taglib/ui/InputTimeZoneTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/InputTimeZoneTag.setName(Ljava/lang/String;)V:0
+
+-- liferay-ui:message
 com/liferay/taglib/ui/MessageTag.setArguments(Ljava/lang/Object;)V:0
 com/liferay/taglib/ui/MessageTag.setKey(Ljava/lang/String;)V:0
+
+-- liferay-ui:panel-container
 com/liferay/taglib/ui/PanelContainerTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/PanelContainerTag.setEndPage(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/PanelContainerTag.setId(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/PanelContainerTag.setMarkupView(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/PanelContainerTag.setStartPage(Ljava/lang/String;)V:0
+
+-- liferay-ui:panel
 com/liferay/taglib/ui/PanelTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/PanelTag.setEndPage(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/PanelTag.setHelpMessage(Ljava/lang/String;)V:0
@@ -252,20 +358,38 @@ com/liferay/taglib/ui/PanelTag.setMarkupView(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/PanelTag.setParentId(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/PanelTag.setStartPage(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/PanelTag.setTitle(Ljava/lang/String;)V:0
+
+-- liferay-ui:search-container-column-text
 com/liferay/taglib/ui/SearchContainerColumnTextTag.setHref(Ljava/lang/Object;)V:0
 com/liferay/taglib/ui/SearchContainerColumnTextTag.setTarget(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/SearchContainerColumnTextTag.setTitle(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/SearchContainerColumnTextTag.setValue(Ljava/lang/String;)V:0
+com/liferay/taglib/search/TextSearchEntry.setData(Ljava/util/Map;)V:0
+com/liferay/taglib/search/TextSearchEntry.setHref(Ljava/lang/String;)V:0
+com/liferay/taglib/search/TextSearchEntry.setName(Ljava/lang/String;)V:0
+com/liferay/taglib/search/TextSearchEntry.setTarget(Ljava/lang/String;)V:0
+com/liferay/taglib/search/TextSearchEntry.setTitle(Ljava/lang/String;)V:0
+
+
+-- liferay-ui:search-container-column-date
 com/liferay/taglib/ui/SearchContainerColumnDateTag.setHref(Ljava/lang/Object;)V:0
 com/liferay/taglib/ui/SearchContainerColumnDateTag.setOrderableProperty(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/SearchContainerColumnDateTag.setProperty(Ljava/lang/String;)V:0
+
+-- global parent for search container tags
 com/liferay/taglib/ui/SearchContainerColumnTag.setAlign(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/SearchContainerColumnTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/SearchContainerColumnTag.setName(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/SearchContainerColumnTag.setValign(Ljava/lang/String;)V:0
+
+-- liferay-ui:search-iterator
 com/liferay/taglib/ui/SearchIteratorTag.setMarkupView(Ljava/lang/String;)V:0
+
+-- liferay-ui:search-paginator
 com/liferay/taglib/ui/SearchPaginatorTag.setId(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/SearchPaginatorTag.setMarkupView(Ljava/lang/String;)V:0
+
+-- liferay-ui:tabs
 com/liferay/taglib/ui/TabsTag.setBackURL(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/TabsTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/TabsTag.setEndPage(Ljava/lang/String;)V:0
@@ -289,9 +413,20 @@ com/liferay/taglib/ui/TabsTag.setUrl8(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/TabsTag.setUrl9(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/TabsTag.setUrls([Ljava/lang/String;)V:0
 com/liferay/taglib/ui/TabsTag.setValue(Ljava/lang/String;)V:0
+
+-- liferay-ui:user-portrait
 com/liferay/taglib/ui/UserPortraitTag.setCssClass(Ljava/lang/String;)V:0
 com/liferay/taglib/ui/UserPortraitTag.setUserName(Ljava/lang/String;)V:0
+
+-- global parent
 com/liferay/taglib/util/AttributesTagSupport.setDynamicAttribute(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Object;)V:0,1
+
+-- liferay-util:buffer
 -- com/liferay/taglib/util/BufferTag SAFE
-com/liferay/taglib/util/IncludeTag.setPage(Ljava/lang/String;)V:0
+
+-- liferay-util:dynamic-include
+-- com/liferay/taglib/util/DynamicIncludeTag SAFE
+
+-- liferay-util:include
+-- safe for XSS: com/liferay/taglib/util/IncludeTag.setPage(Ljava/lang/String;)V:0
 

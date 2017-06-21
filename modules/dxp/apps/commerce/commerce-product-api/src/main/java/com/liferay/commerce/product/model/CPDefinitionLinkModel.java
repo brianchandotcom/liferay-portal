@@ -180,18 +180,18 @@ public interface CPDefinitionLinkModel extends BaseModel<CPDefinitionLink>,
 	public void setCPDefinitionId2(long CPDefinitionId2);
 
 	/**
-	 * Returns the display order of this cp definition link.
+	 * Returns the priority of this cp definition link.
 	 *
-	 * @return the display order of this cp definition link
+	 * @return the priority of this cp definition link
 	 */
-	public int getDisplayOrder();
+	public double getPriority();
 
 	/**
-	 * Sets the display order of this cp definition link.
+	 * Sets the priority of this cp definition link.
 	 *
-	 * @param displayOrder the display order of this cp definition link
+	 * @param priority the priority of this cp definition link
 	 */
-	public void setDisplayOrder(int displayOrder);
+	public void setPriority(double priority);
 
 	/**
 	 * Returns the type of this cp definition link.

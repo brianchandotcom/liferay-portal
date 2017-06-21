@@ -57,7 +57,7 @@
 		<field name="createDate" type="Date" />
 		<field name="CPDefinitionId1" type="long" />
 		<field name="CPDefinitionId2" type="long" />
-		<field name="displayOrder" type="int" />
+		<field name="priority" type="double" />
 		<field name="type" type="int" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionLocalization">

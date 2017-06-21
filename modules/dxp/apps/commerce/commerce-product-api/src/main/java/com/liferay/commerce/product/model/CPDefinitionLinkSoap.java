@@ -41,7 +41,7 @@ public class CPDefinitionLinkSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setCPDefinitionId1(model.getCPDefinitionId1());
 		soapModel.setCPDefinitionId2(model.getCPDefinitionId2());
-		soapModel.setDisplayOrder(model.getDisplayOrder());
+		soapModel.setPriority(model.getPriority());
 		soapModel.setType(model.getType());
 
 		return soapModel;
@@ -153,12 +153,12 @@ public class CPDefinitionLinkSoap implements Serializable {
 		_CPDefinitionId2 = CPDefinitionId2;
 	}
 
-	public int getDisplayOrder() {
-		return _displayOrder;
+	public double getPriority() {
+		return _priority;
 	}
 
-	public void setDisplayOrder(int displayOrder) {
-		_displayOrder = displayOrder;
+	public void setPriority(double priority) {
+		_priority = priority;
 	}
 
 	public int getType() {
@@ -176,6 +176,6 @@ public class CPDefinitionLinkSoap implements Serializable {
 	private Date _createDate;
 	private long _CPDefinitionId1;
 	private long _CPDefinitionId2;
-	private int _displayOrder;
+	private double _priority;
 	private int _type;
 }

@@ -50,7 +50,7 @@ create table CPDefinitionLink (
 	createDate DATE null,
 	CPDefinitionId1 LONG,
 	CPDefinitionId2 LONG,
-	displayOrder INTEGER,
+	priority DOUBLE,
 	type_ INTEGER
 );
 

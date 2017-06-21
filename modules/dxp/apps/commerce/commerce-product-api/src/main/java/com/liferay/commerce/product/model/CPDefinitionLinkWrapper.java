@@ -65,7 +65,7 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("CPDefinitionId1", getCPDefinitionId1());
 		attributes.put("CPDefinitionId2", getCPDefinitionId2());
-		attributes.put("displayOrder", getDisplayOrder());
+		attributes.put("priority", getPriority());
 		attributes.put("type", getType());
 
 		return attributes;
@@ -115,10 +115,10 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 			setCPDefinitionId2(CPDefinitionId2);
 		}
 
-		Integer displayOrder = (Integer)attributes.get("displayOrder");
+		Double priority = (Double)attributes.get("priority");
 
-		if (displayOrder != null) {
-			setDisplayOrder(displayOrder);
+		if (priority != null) {
+			setPriority(priority);
 		}
 
 		Integer type = (Integer)attributes.get("type");
@@ -126,6 +126,11 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 		if (type != null) {
 			setType(type);
 		}
+	}
+
+	@Override
+	public CPDefinition getCPDefinitionEntry() {
+		return _cpDefinitionLink.getCPDefinitionEntry();
 	}
 
 	@Override
@@ -163,19 +168,19 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 		return _cpDefinitionLink.toCacheModel();
 	}
 
+	/**
+	* Returns the priority of this cp definition link.
+	*
+	* @return the priority of this cp definition link
+	*/
+	@Override
+	public double getPriority() {
+		return _cpDefinitionLink.getPriority();
+	}
+
 	@Override
 	public int compareTo(CPDefinitionLink cpDefinitionLink) {
 		return _cpDefinitionLink.compareTo(cpDefinitionLink);
-	}
-
-	/**
-	* Returns the display order of this cp definition link.
-	*
-	* @return the display order of this cp definition link
-	*/
-	@Override
-	public int getDisplayOrder() {
-		return _cpDefinitionLink.getDisplayOrder();
 	}
 
 	/**
@@ -363,16 +368,6 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 		_cpDefinitionLink.setCreateDate(createDate);
 	}
 
-	/**
-	* Sets the display order of this cp definition link.
-	*
-	* @param displayOrder the display order of this cp definition link
-	*/
-	@Override
-	public void setDisplayOrder(int displayOrder) {
-		_cpDefinitionLink.setDisplayOrder(displayOrder);
-	}
-
 	@Override
 	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_cpDefinitionLink.setExpandoBridgeAttributes(expandoBridge);
@@ -407,6 +402,16 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_cpDefinitionLink.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the priority of this cp definition link.
+	*
+	* @param priority the priority of this cp definition link
+	*/
+	@Override
+	public void setPriority(double priority) {
+		_cpDefinitionLink.setPriority(priority);
 	}
 
 	/**

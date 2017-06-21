@@ -105,7 +105,7 @@ public class CPDefinitionLinkPersistenceImpl extends BasePersistenceImpl<CPDefin
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC1",
 			new String[] { Long.class.getName() },
 			CPDefinitionLinkModelImpl.CPDEFINITIONID1_COLUMN_BITMASK |
-			CPDefinitionLinkModelImpl.DISPLAYORDER_COLUMN_BITMASK);
+			CPDefinitionLinkModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C1 = new FinderPath(CPDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC1",
@@ -617,7 +617,7 @@ public class CPDefinitionLinkPersistenceImpl extends BasePersistenceImpl<CPDefin
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC2",
 			new String[] { Long.class.getName() },
 			CPDefinitionLinkModelImpl.CPDEFINITIONID2_COLUMN_BITMASK |
-			CPDefinitionLinkModelImpl.DISPLAYORDER_COLUMN_BITMASK);
+			CPDefinitionLinkModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C2 = new FinderPath(CPDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC2",
@@ -1130,7 +1130,7 @@ public class CPDefinitionLinkPersistenceImpl extends BasePersistenceImpl<CPDefin
 			new String[] { Long.class.getName(), Long.class.getName() },
 			CPDefinitionLinkModelImpl.CPDEFINITIONID1_COLUMN_BITMASK |
 			CPDefinitionLinkModelImpl.CPDEFINITIONID2_COLUMN_BITMASK |
-			CPDefinitionLinkModelImpl.DISPLAYORDER_COLUMN_BITMASK);
+			CPDefinitionLinkModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(CPDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
@@ -1683,7 +1683,7 @@ public class CPDefinitionLinkPersistenceImpl extends BasePersistenceImpl<CPDefin
 			new String[] { Long.class.getName(), Integer.class.getName() },
 			CPDefinitionLinkModelImpl.CPDEFINITIONID1_COLUMN_BITMASK |
 			CPDefinitionLinkModelImpl.TYPE_COLUMN_BITMASK |
-			CPDefinitionLinkModelImpl.DISPLAYORDER_COLUMN_BITMASK);
+			CPDefinitionLinkModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C1_T = new FinderPath(CPDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC1_T",
@@ -2230,7 +2230,7 @@ public class CPDefinitionLinkPersistenceImpl extends BasePersistenceImpl<CPDefin
 			new String[] { Long.class.getName(), Integer.class.getName() },
 			CPDefinitionLinkModelImpl.CPDEFINITIONID2_COLUMN_BITMASK |
 			CPDefinitionLinkModelImpl.TYPE_COLUMN_BITMASK |
-			CPDefinitionLinkModelImpl.DISPLAYORDER_COLUMN_BITMASK);
+			CPDefinitionLinkModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C2_T = new FinderPath(CPDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC2_T",
@@ -3487,7 +3487,7 @@ public class CPDefinitionLinkPersistenceImpl extends BasePersistenceImpl<CPDefin
 		cpDefinitionLinkImpl.setCreateDate(cpDefinitionLink.getCreateDate());
 		cpDefinitionLinkImpl.setCPDefinitionId1(cpDefinitionLink.getCPDefinitionId1());
 		cpDefinitionLinkImpl.setCPDefinitionId2(cpDefinitionLink.getCPDefinitionId2());
-		cpDefinitionLinkImpl.setDisplayOrder(cpDefinitionLink.getDisplayOrder());
+		cpDefinitionLinkImpl.setPriority(cpDefinitionLink.getPriority());
 		cpDefinitionLinkImpl.setType(cpDefinitionLink.getType());
 
 		return cpDefinitionLinkImpl;

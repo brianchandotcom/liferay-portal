@@ -73,7 +73,7 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 		CPDefinitionLink cpDefinitionLink);
 
 	public CPDefinitionLink addCPDefinitionLink(long cpDefinitionId1,
-		long cpDefinitionId2, int displayOrder, int type,
+		long cpDefinitionId2, double priority, int type,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -130,6 +130,9 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	public CPDefinitionLink updateCPDefinitionLink(
 		CPDefinitionLink cpDefinitionLink);
 
+	public CPDefinitionLink updateCPDefinitionLink(long cpDefinitionLinkId,
+		double priority) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -157,6 +160,10 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionLinksCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionLinksCount(long cpDefinitionId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -218,6 +225,16 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionLink> getCPDefinitionLinks(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId,
+		int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws PortalException;
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -235,4 +252,8 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void updateCPDefinitionLinks(long cpDefinitionId,
+		long[] cpDefinitionLinkEntryIds, int type, ServiceContext serviceContext)
+		throws PortalException;
 }

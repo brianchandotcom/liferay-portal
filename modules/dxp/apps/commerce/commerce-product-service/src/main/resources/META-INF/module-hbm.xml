@@ -70,7 +70,7 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="CPDefinitionId1" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="CPDefinitionId2" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="displayOrder" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.commerce.product.model.impl.CPDefinitionLocalizationImpl" table="CPDefinitionLocalization">

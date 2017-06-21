@@ -77,7 +77,7 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 			{ "createDate", Types.TIMESTAMP },
 			{ "CPDefinitionId1", Types.BIGINT },
 			{ "CPDefinitionId2", Types.BIGINT },
-			{ "displayOrder", Types.INTEGER },
+			{ "priority", Types.DOUBLE },
 			{ "type_", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -90,14 +90,14 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("CPDefinitionId1", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPDefinitionId2", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("displayOrder", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionLink (CPDefinitionLinkId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,CPDefinitionId1 LONG,CPDefinitionId2 LONG,displayOrder INTEGER,type_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionLink (CPDefinitionLinkId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,CPDefinitionId1 LONG,CPDefinitionId2 LONG,priority DOUBLE,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionLink";
-	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionLink.displayOrder ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionLink.displayOrder ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionLink.priority ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionLink.priority ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -113,7 +113,7 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 	public static final long CPDEFINITIONID1_COLUMN_BITMASK = 1L;
 	public static final long CPDEFINITIONID2_COLUMN_BITMASK = 2L;
 	public static final long TYPE_COLUMN_BITMASK = 4L;
-	public static final long DISPLAYORDER_COLUMN_BITMASK = 8L;
+	public static final long PRIORITY_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -135,7 +135,7 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setCPDefinitionId1(soapModel.getCPDefinitionId1());
 		model.setCPDefinitionId2(soapModel.getCPDefinitionId2());
-		model.setDisplayOrder(soapModel.getDisplayOrder());
+		model.setPriority(soapModel.getPriority());
 		model.setType(soapModel.getType());
 
 		return model;
@@ -209,7 +209,7 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("CPDefinitionId1", getCPDefinitionId1());
 		attributes.put("CPDefinitionId2", getCPDefinitionId2());
-		attributes.put("displayOrder", getDisplayOrder());
+		attributes.put("priority", getPriority());
 		attributes.put("type", getType());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -262,10 +262,10 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 			setCPDefinitionId2(CPDefinitionId2);
 		}
 
-		Integer displayOrder = (Integer)attributes.get("displayOrder");
+		Double priority = (Double)attributes.get("priority");
 
-		if (displayOrder != null) {
-			setDisplayOrder(displayOrder);
+		if (priority != null) {
+			setPriority(priority);
 		}
 
 		Integer type = (Integer)attributes.get("type");
@@ -399,15 +399,15 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 	@JSON
 	@Override
-	public int getDisplayOrder() {
-		return _displayOrder;
+	public double getPriority() {
+		return _priority;
 	}
 
 	@Override
-	public void setDisplayOrder(int displayOrder) {
+	public void setPriority(double priority) {
 		_columnBitmask = -1L;
 
-		_displayOrder = displayOrder;
+		_priority = priority;
 	}
 
 	@JSON
@@ -471,7 +471,7 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 		cpDefinitionLinkImpl.setCreateDate(getCreateDate());
 		cpDefinitionLinkImpl.setCPDefinitionId1(getCPDefinitionId1());
 		cpDefinitionLinkImpl.setCPDefinitionId2(getCPDefinitionId2());
-		cpDefinitionLinkImpl.setDisplayOrder(getDisplayOrder());
+		cpDefinitionLinkImpl.setPriority(getPriority());
 		cpDefinitionLinkImpl.setType(getType());
 
 		cpDefinitionLinkImpl.resetOriginalValues();
@@ -483,10 +483,10 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 	public int compareTo(CPDefinitionLink cpDefinitionLink) {
 		int value = 0;
 
-		if (getDisplayOrder() < cpDefinitionLink.getDisplayOrder()) {
+		if (getPriority() < cpDefinitionLink.getPriority()) {
 			value = -1;
 		}
-		else if (getDisplayOrder() > cpDefinitionLink.getDisplayOrder()) {
+		else if (getPriority() > cpDefinitionLink.getPriority()) {
 			value = 1;
 		}
 		else {
@@ -587,7 +587,7 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 		cpDefinitionLinkCacheModel.CPDefinitionId2 = getCPDefinitionId2();
 
-		cpDefinitionLinkCacheModel.displayOrder = getDisplayOrder();
+		cpDefinitionLinkCacheModel.priority = getPriority();
 
 		cpDefinitionLinkCacheModel.type = getType();
 
@@ -612,8 +612,8 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 		sb.append(getCPDefinitionId1());
 		sb.append(", CPDefinitionId2=");
 		sb.append(getCPDefinitionId2());
-		sb.append(", displayOrder=");
-		sb.append(getDisplayOrder());
+		sb.append(", priority=");
+		sb.append(getPriority());
 		sb.append(", type=");
 		sb.append(getType());
 		sb.append("}");
@@ -658,8 +658,8 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 		sb.append(getCPDefinitionId2());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>displayOrder</column-name><column-value><![CDATA[");
-		sb.append(getDisplayOrder());
+			"<column><column-name>priority</column-name><column-value><![CDATA[");
+		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>type</column-name><column-value><![CDATA[");
@@ -686,7 +686,7 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 	private long _CPDefinitionId2;
 	private long _originalCPDefinitionId2;
 	private boolean _setOriginalCPDefinitionId2;
-	private int _displayOrder;
+	private double _priority;
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;

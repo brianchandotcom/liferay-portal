@@ -42,12 +42,12 @@ public class CPDefinitionLinkServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionLinkServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.product.model.CPDefinitionLink addCPDefinitionLink(
-		long cpDefinitionId1, long cpDefinitionId2, int displayOrder, int type,
+		long cpDefinitionId1, long cpDefinitionId2, double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCPDefinitionLink(cpDefinitionId1, cpDefinitionId2,
-			displayOrder, type, serviceContext);
+			priority, type, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionLink deleteCPDefinitionLink(
@@ -62,6 +62,29 @@ public class CPDefinitionLinkServiceUtil {
 		return getService().deleteCPDefinitionLink(cpDefinitionLinkId);
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinitionLink fetchCPDefinitionLink(
+		long cpDefinitionLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchCPDefinitionLink(cpDefinitionLinkId);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionLink getCPDefinitionLink(
+		long cpDefinitionLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPDefinitionLink(cpDefinitionLinkId);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionLink updateCPDefinitionLink(
+		long cpDefinitionLinkId, double priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateCPDefinitionLink(cpDefinitionLinkId, priority);
+	}
+
+	public static int getCPDefinitionLinksCount(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPDefinitionLinksCount(cpDefinitionId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -69,6 +92,30 @@ public class CPDefinitionLinkServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPDefinitionLinks(cpDefinitionId);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
+		long cpDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPDefinitionLinks(cpDefinitionId, start, end,
+			orderByComparator);
+	}
+
+	public static void updateCPDefinitionLinks(long cpDefinitionId,
+		long[] cpDefinitionLinkEntryIds, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.updateCPDefinitionLinks(cpDefinitionId, cpDefinitionLinkEntryIds,
+			type, serviceContext);
 	}
 
 	public static CPDefinitionLinkService getService() {

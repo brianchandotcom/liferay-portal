@@ -82,8 +82,8 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 		sb.append(CPDefinitionId1);
 		sb.append(", CPDefinitionId2=");
 		sb.append(CPDefinitionId2);
-		sb.append(", displayOrder=");
-		sb.append(displayOrder);
+		sb.append(", priority=");
+		sb.append(priority);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append("}");
@@ -115,7 +115,7 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 
 		cpDefinitionLinkImpl.setCPDefinitionId1(CPDefinitionId1);
 		cpDefinitionLinkImpl.setCPDefinitionId2(CPDefinitionId2);
-		cpDefinitionLinkImpl.setDisplayOrder(displayOrder);
+		cpDefinitionLinkImpl.setPriority(priority);
 		cpDefinitionLinkImpl.setType(type);
 
 		cpDefinitionLinkImpl.resetOriginalValues();
@@ -137,7 +137,7 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 
 		CPDefinitionId2 = objectInput.readLong();
 
-		displayOrder = objectInput.readInt();
+		priority = objectInput.readDouble();
 
 		type = objectInput.readInt();
 	}
@@ -164,7 +164,7 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 
 		objectOutput.writeLong(CPDefinitionId2);
 
-		objectOutput.writeInt(displayOrder);
+		objectOutput.writeDouble(priority);
 
 		objectOutput.writeInt(type);
 	}
@@ -176,6 +176,6 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 	public long createDate;
 	public long CPDefinitionId1;
 	public long CPDefinitionId2;
-	public int displayOrder;
+	public double priority;
 	public int type;
 }

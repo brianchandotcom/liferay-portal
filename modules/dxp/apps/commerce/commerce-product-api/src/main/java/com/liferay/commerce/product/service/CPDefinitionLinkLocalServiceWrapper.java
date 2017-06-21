@@ -48,11 +48,11 @@ public class CPDefinitionLinkLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinitionLink addCPDefinitionLink(
-		long cpDefinitionId1, long cpDefinitionId2, int displayOrder, int type,
+		long cpDefinitionId1, long cpDefinitionId2, double priority, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLinkLocalService.addCPDefinitionLink(cpDefinitionId1,
-			cpDefinitionId2, displayOrder, type, serviceContext);
+			cpDefinitionId2, priority, type, serviceContext);
 	}
 
 	/**
@@ -128,6 +128,14 @@ public class CPDefinitionLinkLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPDefinitionLink updateCPDefinitionLink(
+		long cpDefinitionLinkId, double priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLinkLocalService.updateCPDefinitionLink(cpDefinitionLinkId,
+			priority);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _cpDefinitionLinkLocalService.getActionableDynamicQuery();
 	}
@@ -167,6 +175,12 @@ public class CPDefinitionLinkLocalServiceWrapper
 	@Override
 	public int getCPDefinitionLinksCount() {
 		return _cpDefinitionLinkLocalService.getCPDefinitionLinksCount();
+	}
+
+	@Override
+	public int getCPDefinitionLinksCount(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLinkLocalService.getCPDefinitionLinksCount(cpDefinitionId);
 	}
 
 	/**
@@ -250,6 +264,22 @@ public class CPDefinitionLinkLocalServiceWrapper
 		return _cpDefinitionLinkLocalService.getCPDefinitionLinks(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLinkLocalService.getCPDefinitionLinks(cpDefinitionId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
+		long cpDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLinkLocalService.getCPDefinitionLinks(cpDefinitionId,
+			start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -275,6 +305,15 @@ public class CPDefinitionLinkLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _cpDefinitionLinkLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void updateCPDefinitionLinks(long cpDefinitionId,
+		long[] cpDefinitionLinkEntryIds, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpDefinitionLinkLocalService.updateCPDefinitionLinks(cpDefinitionId,
+			cpDefinitionLinkEntryIds, type, serviceContext);
 	}
 
 	@Override

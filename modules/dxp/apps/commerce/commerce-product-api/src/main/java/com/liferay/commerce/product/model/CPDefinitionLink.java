@@ -54,4 +54,6 @@ public interface CPDefinitionLink extends CPDefinitionLinkModel, PersistedModel 
 				return CPDefinitionLink.class;
 			}
 		};
+
+	public CPDefinition getCPDefinitionEntry();
 }

@@ -26,7 +26,11 @@ import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for CPDefinitionLink. Methods of this
@@ -53,7 +57,7 @@ public interface CPDefinitionLinkService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionLinkServiceUtil} to access the cp definition link remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionLinkServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CPDefinitionLink addCPDefinitionLink(long cpDefinitionId1,
-		long cpDefinitionId2, int displayOrder, int type,
+		long cpDefinitionId2, double priority, int type,
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinitionLink deleteCPDefinitionLink(
@@ -62,10 +66,39 @@ public interface CPDefinitionLinkService extends BaseService {
 	public CPDefinitionLink deleteCPDefinitionLink(long cpDefinitionLinkId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionLink fetchCPDefinitionLink(long cpDefinitionLinkId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionLink getCPDefinitionLink(long cpDefinitionLinkId)
+		throws PortalException;
+
+	public CPDefinitionLink updateCPDefinitionLink(long cpDefinitionLinkId,
+		double priority) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionLinksCount(long cpDefinitionId)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId,
+		int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws PortalException;
+
+	public void updateCPDefinitionLinks(long cpDefinitionId,
+		long[] cpDefinitionLinkEntryIds, int type, ServiceContext serviceContext)
+		throws PortalException;
 }

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -135,7 +136,7 @@ public class CPDefinitionLinkPersistenceTest {
 
 		newCPDefinitionLink.setCPDefinitionId2(RandomTestUtil.nextLong());
 
-		newCPDefinitionLink.setDisplayOrder(RandomTestUtil.nextInt());
+		newCPDefinitionLink.setPriority(RandomTestUtil.nextDouble());
 
 		newCPDefinitionLink.setType(RandomTestUtil.nextInt());
 
@@ -158,8 +159,8 @@ public class CPDefinitionLinkPersistenceTest {
 			newCPDefinitionLink.getCPDefinitionId1());
 		Assert.assertEquals(existingCPDefinitionLink.getCPDefinitionId2(),
 			newCPDefinitionLink.getCPDefinitionId2());
-		Assert.assertEquals(existingCPDefinitionLink.getDisplayOrder(),
-			newCPDefinitionLink.getDisplayOrder());
+		AssertUtils.assertEquals(existingCPDefinitionLink.getPriority(),
+			newCPDefinitionLink.getPriority());
 		Assert.assertEquals(existingCPDefinitionLink.getType(),
 			newCPDefinitionLink.getType());
 	}
@@ -236,7 +237,7 @@ public class CPDefinitionLinkPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CPDefinitionLink",
 			"CPDefinitionLinkId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "CPDefinitionId1", true,
-			"CPDefinitionId2", true, "displayOrder", true, "type", true);
+			"CPDefinitionId2", true, "priority", true, "type", true);
 	}
 
 	@Test
@@ -471,7 +472,7 @@ public class CPDefinitionLinkPersistenceTest {
 
 		cpDefinitionLink.setCPDefinitionId2(RandomTestUtil.nextLong());
 
-		cpDefinitionLink.setDisplayOrder(RandomTestUtil.nextInt());
+		cpDefinitionLink.setPriority(RandomTestUtil.nextDouble());
 
 		cpDefinitionLink.setType(RandomTestUtil.nextInt());
 

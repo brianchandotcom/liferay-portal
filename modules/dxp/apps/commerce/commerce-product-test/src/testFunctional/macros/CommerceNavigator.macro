@@ -1,11 +1,11 @@
 <definition>
 	<command name="gotoEntry">
 		<execute macro="CommerceNavigator#gotoSitesCommerce">
-			<var name="portlet" value="Catalog" />
+			<var name="portlet" value="${portlet}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CommerceNavigation#ENTRY_TITLE" value1="${productTitle}">
-			<var name="key_productTitle" value="${productTitle}" />
+		<execute function="AssertClick" locator1="CommerceNavigation#ENTRY_TITLE" value1="${entryTitle}">
+			<var name="key_entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
 
@@ -22,8 +22,8 @@
 	</command>
 
 	<command name="searchEntry">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${productTitle}">
-			<var name="productTitle" value="${productTitle}" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${entryTitle}">
+			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
 		<execute function="Click" locator1="Button#SEARCH" />

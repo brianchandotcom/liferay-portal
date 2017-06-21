@@ -78,7 +78,7 @@
 		</execute>
 	</command>
 
-	<command name="AddGroupCatalogEntry" priority="5">
+	<command ignore="true" name="AddGroupCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="Group Product SKU" />
 			<var name="plusMenu" value="Group" />
@@ -126,7 +126,7 @@
 		</execute>
 	</command>
 
-	<command name="AddGroupDraftCatalogEntry" priority="5">
+	<command ignore="true" name="AddGroupDraftCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="Group Product SKU" />
 			<var name="plusMenu" value="Group" />
@@ -216,7 +216,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSimpleCatalogEntry" priority="5">
+	<command ignore="true" name="AddSimpleCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="Simple Product SKU" />
 			<var name="plusMenu" value="Simple" />
@@ -264,7 +264,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSimpleDraftCatalogEntry" priority="5">
+	<command ignore="true" name="AddSimpleDraftCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="Simple Product SKU" />
 			<var name="plusMenu" value="Simple" />
@@ -310,7 +310,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVirtualCatalogEntry" priority="5">
+	<command ignore="true" name="AddVirtualCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="Virtual Product SKU" />
 			<var name="plusMenu" value="Virtual" />
@@ -358,7 +358,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVirtualDraftCatalogEntry" priority="5">
+	<command ignore="true" name="AddVirtualDraftCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="Virtual Product SKU" />
 			<var name="plusMenu" value="Virtual" />
@@ -450,7 +450,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCatalogEntry" priority="5">
+	<command ignore="true" name="EditCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="ProductSKU" />
 			<var name="plusMenu" value="Simple" />
@@ -511,7 +511,7 @@
 		</execute>
 	</command>
 
-	<command name="SetCatalogEntryExpirationDate" priority="5">
+	<command ignore="true" name="SetCatalogEntryExpirationDate" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="ProductSKU" />
 			<var name="plusMenu" value="Simple" />

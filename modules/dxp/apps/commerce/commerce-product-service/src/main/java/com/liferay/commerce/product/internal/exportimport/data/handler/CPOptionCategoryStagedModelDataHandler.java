@@ -35,9 +35,8 @@ import org.osgi.service.component.annotations.Reference;
 public class CPOptionCategoryStagedModelDataHandler
 	extends BaseStagedModelDataHandler<CPOptionCategory> {
 
-	public static final String[] CLASS_NAMES = {
-		CPOptionCategory.class.getName()
-	};
+	public static final String[] CLASS_NAMES =
+		{CPOptionCategory.class.getName()};
 
 	@Override
 	public String[] getClassNames() {

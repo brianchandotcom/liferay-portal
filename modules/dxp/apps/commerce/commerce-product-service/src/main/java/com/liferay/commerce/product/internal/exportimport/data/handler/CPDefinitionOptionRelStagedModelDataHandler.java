@@ -40,9 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 public class CPDefinitionOptionRelStagedModelDataHandler
 	extends BaseStagedModelDataHandler<CPDefinitionOptionRel> {
 
-	public static final String[] CLASS_NAMES = {
-		CPDefinitionOptionRel.class.getName()
-	};
+	public static final String[] CLASS_NAMES =
+		{CPDefinitionOptionRel.class.getName()};
 
 	@Override
 	public String[] getClassNames() {

@@ -31,7 +31,7 @@
 		for (String openIdConnectProviderName : openIdConnectProviderNames) {
 		%>
 
-			<aui:option label="<%= HtmlUtil.escape(openIdConnectProviderName) %>" value="<%= openIdConnectProviderName %>" />
+			<aui:option label="<%= HtmlUtil.escape(openIdConnectProviderName) %>" value="<%= HtmlUtil.escapeAttribute(openIdConnectProviderName) %>" />
 
 		<%
 		}

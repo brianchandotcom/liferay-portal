@@ -58,7 +58,7 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Override
 	public CPDefinitionLink deleteCPDefinitionLink(
-		CPDefinitionLink cpDefinitionLink) {
+			CPDefinitionLink cpDefinitionLink) throws PortalException {
 
 		return cpDefinitionLinkPersistence.remove(cpDefinitionLink);
 	}

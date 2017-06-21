@@ -1370,6 +1370,14 @@
 			<var name="sitePageType" value="Link to URL" />
 		</execute>
 
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Page Type Test Site Name" />
+		</execute>
+
+		<var name="key_pageName" value="Page Set Page" />
+
+		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Page Set Page" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -1386,6 +1394,10 @@
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Page Type Test Site Name" />
 		</execute>
+
+		<var name="key_pageName" value="Page Set Page" />
+
+		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Page Set Page" />
 
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="United States" />

@@ -1,6 +1,6 @@
 <definition>
 	<command name="gotoEntry">
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="ProductMenuHelper#gotoPortlet">
 			<var name="portlet" value="${portlet}" />
 		</execute>
 

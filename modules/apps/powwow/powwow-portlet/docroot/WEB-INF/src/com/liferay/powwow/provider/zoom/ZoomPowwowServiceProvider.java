@@ -377,11 +377,11 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 			String response = sendRequest(options);
 
-			JSONObject responseJSONObject =
-				JSONFactoryUtil.createJSONObject(response);
+			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+				response);
 
-			JSONObject errorJSONObject =
-				responseJSONObject.getJSONObject("error");
+			JSONObject errorJSONObject = responseJSONObject.getJSONObject(
+				"error");
 
 			if (throwError && (errorJSONObject != null)) {
 				throw new SystemException(

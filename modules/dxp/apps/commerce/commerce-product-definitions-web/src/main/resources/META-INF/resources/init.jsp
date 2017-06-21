@@ -82,7 +82,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.trash.kernel.util.TrashUtil" %>
+page import="com.liferay.trash.kernel.util.TrashUtil" %><%@ page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException" %><%@ page import="com.liferay.commerce.product.model.CPDefinitionLink" %><%@ page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionLinkDisplayContext" %>
 
 <%@ page import="java.util.Collections" %><%@
 page import="java.util.Date" %><%@

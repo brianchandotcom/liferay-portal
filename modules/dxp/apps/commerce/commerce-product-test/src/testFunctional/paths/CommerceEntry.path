@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>CommerceCatalogEntry</title>
+<title>CommerceEntry</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CommerceCatalogEntry</td></tr>
+<tr><td rowspan="1" colspan="3">CommerceEntry</td></tr>
 </thead>
 <tbody>
 <tr>
@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_TYPE_SELECT</td>
-	<td>//div/select[contains(@id,'productTypeName')]</td>
+	<td>//div/select[contains(@id,'entryType')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -104,13 +104,43 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_MENU</td>
-	<td>//div[contains (@class, 'dropdown')]//li/a[contains (.,'${key_addMenu}')]</td>
+	<td>PLUS_MENU</td>
+	<td>//div[contains (@class, 'dropdown')]//li/a[contains (.,'${key_plusMenu}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_IMAGE_SELECT_FILE</td>
 	<td>//div[contains(@class,'image-selector')]//a[contains(.,'Select File')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME_FIELD</td>
+	<td>//div/input[contains(@id,'name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//textarea[contains (@id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_TYPE_SELECT</td>
+	<td>//div/select[contains(@id,'FieldTypeName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FACETABLE_CHECKBOX</td>
+	<td>//input[contains(@id,'published') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUIRED_CHECKBOX</td>
+	<td>//input[contains(@id,'required') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SKU_CONTRIBUTOR_CHECKBOX</td>
+	<td>//input[contains(@id,'skuContributor') and (@type='checkbox')]</td>
 	<td></td>
 </tr>
 </tbody>

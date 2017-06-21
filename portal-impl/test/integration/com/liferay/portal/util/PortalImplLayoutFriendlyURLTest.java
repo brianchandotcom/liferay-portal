@@ -50,21 +50,21 @@ public class PortalImplLayoutFriendlyURLTest extends BasePortalImplURLTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		newCompany = CompanyTestUtil.addCompany();
+		_company = CompanyTestUtil.addCompany();
 
-		newCompanyVirtualHostname = newCompany.getVirtualHostname();
+		_companyVirtualHostname = _company.getVirtualHostname();
 
-		newGroup = GroupLocalServiceUtil.fetchGroup(
-			newCompany.getCompanyId(), VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+		_group = GroupLocalServiceUtil.fetchGroup(
+			_company.getCompanyId(), VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 
-		newLayout = LayoutLocalServiceUtil.fetchLayout(
-			newGroup.getGroupId(), false, 1);
+		_layout = LayoutLocalServiceUtil.fetchLayout(
+			_group.getGroupId(), false, 1);
 	}
 
 	@Test
 	public void testUsingCompanyDefaultSiteVirtualHost() throws Exception {
 		testLayoutFriendlyURL(
-			newCompanyVirtualHostname, newLayout.getFriendlyURL());
+			_companyVirtualHostname, _layout.getFriendlyURL());
 	}
 
 	@Test
@@ -75,9 +75,9 @@ public class PortalImplLayoutFriendlyURLTest extends BasePortalImplURLTestCase {
 
 		String expectedURL =
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				newGroup.getFriendlyURL() + newLayout.getFriendlyURL();
+				_group.getFriendlyURL() + _layout.getFriendlyURL();
 
-		testLayoutFriendlyURL(newCompanyVirtualHostname, expectedURL);
+		testLayoutFriendlyURL(_companyVirtualHostname, expectedURL);
 	}
 
 	@Test
@@ -85,14 +85,14 @@ public class PortalImplLayoutFriendlyURLTest extends BasePortalImplURLTestCase {
 		assignNewPublicLayoutSetVirtualHost();
 
 		testLayoutFriendlyURL(
-			newPublicLayoutSetVirtualHostname, newLayout.getFriendlyURL());
+			_publicLayoutSetVirtualHostname, _layout.getFriendlyURL());
 	}
 
 	@Test
 	public void testUsingLocalhost() throws Exception {
 		String expectedURL =
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				newGroup.getFriendlyURL() + newLayout.getFriendlyURL();
+				_group.getFriendlyURL() + _layout.getFriendlyURL();
 
 		testLayoutFriendlyURL(LOCALHOST, expectedURL);
 	}
@@ -105,21 +105,21 @@ public class PortalImplLayoutFriendlyURLTest extends BasePortalImplURLTestCase {
 
 		String expectedURL =
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				newGroup.getFriendlyURL() + newLayout.getFriendlyURL();
+				_group.getFriendlyURL() + _layout.getFriendlyURL();
 
 		testLayoutFriendlyURL(LOCALHOST, expectedURL);
 	}
 
 	protected void assignNewPublicLayoutSetVirtualHost() {
-		LayoutSet newPublicLayoutSet = newGroup.getPublicLayoutSet();
+		LayoutSet newPublicLayoutSet = _group.getPublicLayoutSet();
 
-		newPublicLayoutSetVirtualHostname =
+		_publicLayoutSetVirtualHostname =
 			RandomTestUtil.randomString() + "." +
 				RandomTestUtil.randomString(3);
 
 		VirtualHostLocalServiceUtil.updateVirtualHost(
-			newCompany.getCompanyId(), newPublicLayoutSet.getLayoutSetId(),
-			newPublicLayoutSetVirtualHostname);
+			_company.getCompanyId(), newPublicLayoutSet.getLayoutSetId(),
+			_publicLayoutSetVirtualHostname);
 	}
 
 	protected void testLayoutFriendlyURL(
@@ -127,7 +127,7 @@ public class PortalImplLayoutFriendlyURLTest extends BasePortalImplURLTestCase {
 		throws Exception {
 
 		ThemeDisplay themeDisplay = initThemeDisplay(
-			newCompany, newGroup, newLayout, virtualHostname);
+			_company, _group, _layout, virtualHostname);
 
 		themeDisplay.setPortalDomain(virtualHostname);
 
@@ -136,11 +136,11 @@ public class PortalImplLayoutFriendlyURLTest extends BasePortalImplURLTestCase {
 	}
 
 	@DeleteAfterTestRun
-	protected Company newCompany;
+	private Company _company;
 
-	protected String newCompanyVirtualHostname;
-	protected Group newGroup;
-	protected Layout newLayout;
-	protected String newPublicLayoutSetVirtualHostname;
+	private String _companyVirtualHostname;
+	private Group _group;
+	private Layout _layout;
+	private String _publicLayoutSetVirtualHostname;
 
 }

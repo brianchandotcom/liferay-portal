@@ -452,6 +452,34 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		return _protocol;
 	}
 
+	public String getProxyAuthType() {
+		return _proxyAuthType;
+	}
+
+	public String getProxyDomain() {
+		return _proxyDomain;
+	}
+
+	public String getProxyHostName() {
+		return _proxyHostName;
+	}
+
+	public int getProxyHostPort() {
+		return _proxyHostPort;
+	}
+
+	public String getProxyLogin() {
+		return _proxyLogin;
+	}
+
+	public String getProxyPassword() {
+		return _proxyPassword;
+	}
+
+	public String getProxyWorkstation() {
+		return _proxyWorkstation;
+	}
+
 	@Override
 	public void resetHttpClient() {
 		destroy();

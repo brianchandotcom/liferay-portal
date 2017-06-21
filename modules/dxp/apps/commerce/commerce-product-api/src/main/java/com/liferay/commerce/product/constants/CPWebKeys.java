@@ -27,6 +27,10 @@ public class CPWebKeys {
 
 	public static final String CP_DEFINITION = "CP_DEFINITION";
 
+	public static final String CP_DEFINITION_LINK = "CP_DEFINITION_LINK";
+
+	public static final String CP_DEFINITION_LINKS = "CP_DEFINITION_LINKS";
+
 	public static final String CP_DEFINITION_OPTION_REL =
 		"CP_DEFINITION_OPTION_REL";
 

@@ -405,7 +405,7 @@
 			<var name="entryTitle" value="Product_Title_1" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
+		<execute function="AssertElementNotPresent" locator1="CommerceNavigation#ENTRY_TITLE" />
 	</command>
 
 	<command name="DeleteAllCatalogEntriesViaCheckbox" priority="5">
@@ -468,19 +468,19 @@
 			<var name="portlet" value="Catalog" />
 		</execute>
 
-		<execute macro="CommerceEntry#editCatalogEntryTitle">
+		<execute macro="CommerceEntry#editEntryTitle">
 			<var name="newEntryTitle" value="New Product Title" />
 		</execute>
 
-		<execute macro="CommerceEntry#editCatalogEntryShortDescription">
-			<var name="newProductShortDescription" value="New Product Short Description" />
+		<execute macro="CommerceEntry#editEntryShortDescription">
+			<var name="newEntryShortDescription" value="New Product Short Description" />
 		</execute>
 
-		<execute macro="CommerceEntry#editCatalogEntryFullDescription">
-			<var name="newProductFullDescription" value="New Product Full Description" />
+		<execute macro="CommerceEntry#editEntryFullDescription">
+			<var name="newEntryFullDescription" value="New Product Full Description" />
 		</execute>
 
-		<execute macro="CommerceEntry#editCatalogEntryBaseSKU">
+		<execute macro="CommerceEntry#editEntryBaseSKU">
 			<var name="baseSku" value="New Product BaseSKU" />
 		</execute>
 

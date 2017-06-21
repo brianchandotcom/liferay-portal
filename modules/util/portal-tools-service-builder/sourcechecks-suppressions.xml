@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<suppress checks="JavaVariableTypeCheck" files="modules/util/portal-tools-service-builder/src/main/java/com/liferay/portal/tools/service/builder/ServiceBuilder\.java" />
-</suppressions>

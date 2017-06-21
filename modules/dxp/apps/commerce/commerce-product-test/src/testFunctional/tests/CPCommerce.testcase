@@ -44,6 +44,164 @@
 		</execute>
 	</command>
 
+	<command name="AddCheckboxOptionsEntry" priority="5">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionName" value="Checkbox Option Name 1" />
+			<var name="optionTitle" value="Checkbox Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Checkbox Option Title 1" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#viewOptionsEntry">
+			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionName" value="Checkbox Option Name 1" />
+			<var name="optionTitle" value="Checkbox Option Title 1" />
+		</execute>
+	</command>
+
+	<command name="AddDateOptionsEntry" priority="5">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionFieldType" value="Date" />
+			<var name="optionName" value="Date Option Name 1" />
+			<var name="optionTitle" value="Date Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Date Option Title 1" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#viewOptionsEntry">
+			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionName" value="Date Option Name 1" />
+			<var name="optionTitle" value="Date Option Title 1" />
+		</execute>
+	</command>
+
+	<command name="AddGroupCatalogEntry" priority="5">
+		<execute macro="CommerceCatalog#addEntry">
+			<var name="baseSku" value="Group Product SKU" />
+			<var name="plusMenu" value="Group" />
+			<var name="productFullDescription" value="Group Product Full Description 1" />
+			<var name="productShortDescription" value="Group Product Short Description 1" />
+			<var name="productTitle" value="Group Product Title 1" />
+		</execute>
+
+		<execute macro="CommerceEntry#publishEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Group Product Title 1" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#viewCatalogEntry">
+			<var name="baseSku" value="Group Product SKU" />
+			<var name="productFullDescription" value="Group Product Full Description 1" />
+			<var name="productShortDescription" value="Group Product Short Description 1" />
+			<var name="productTitle" value="Group Product Title 1" />
+		</execute>
+	</command>
+
+	<command name="AddGroupDraftCatalogEntry" priority="5">
+		<execute macro="CommerceCatalog#addEntry">
+			<var name="baseSku" value="Group Product SKU" />
+			<var name="plusMenu" value="Group" />
+			<var name="productFullDescription" value="Group Product Full Description 1" />
+			<var name="productShortDescription" value="Group Product Short Description 1" />
+			<var name="productTitle" value="Group Product Title 1" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntryAsDraft" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Group Product Title 1" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#viewCatalogEntry">
+			<var name="baseSku" value="Group Product SKU" />
+			<var name="productFullDescription" value="Group Product Full Description 1" />
+			<var name="productShortDescription" value="Group Product Short Description 1" />
+			<var name="productTitle" value="Group Product Title 1" />
+		</execute>
+	</command>
+
+	<command name="AddParagraphOptionsEntry" priority="5">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionFieldType" value="Paragraph" />
+			<var name="optionName" value="Paragraph Option Name 1" />
+			<var name="optionTitle" value="Paragraph Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Paragraph Option Title 1" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#viewOptionsEntry">
+			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionName" value="Paragraph Option Name 1" />
+			<var name="optionTitle" value="Paragraph Option Title 1" />
+		</execute>
+	</command>
+
+	<command name="AddRadioOptionsEntry" priority="5">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionFieldType" value="Radio" />
+			<var name="optionName" value="Radio Option Name 1" />
+			<var name="optionTitle" value="Radio Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Radio Option Title 1" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#viewOptionsEntry">
+			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionName" value="Radio Option Name 1" />
+			<var name="optionTitle" value="Radio Option Title 1" />
+		</execute>
+	</command>
+
+	<command name="AddSelectOptionsEntry" priority="5">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionFieldType" value="Select" />
+			<var name="optionName" value="Select Option Name 1" />
+			<var name="optionTitle" value="Select Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Select Option Title 1" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#viewOptionsEntry">
+			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionName" value="Select Option Name 1" />
+			<var name="optionTitle" value="Select Option Title 1" />
+		</execute>
+	</command>
+
 	<command name="AddSimpleCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="true" />
 
@@ -91,6 +249,55 @@
 			<var name="productFullDescription" value="Product Full Description 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
+			<var name="optionTitle" value="Text Option Title 1" />
+		</execute>
+	</command>
+
+	<command name="AddVirtualCatalogEntry" priority="5">
+		<execute macro="CommerceCatalog#addEntry">
+			<var name="baseSku" value="Virtual Product SKU" />
+			<var name="plusMenu" value="Virtual" />
+			<var name="productFullDescription" value="Virtual Product Full Description 1" />
+			<var name="productShortDescription" value="Virtual Product Short Description 1" />
+			<var name="productTitle" value="Virtual Product Title 1" />
+		</execute>
+
+		<execute macro="CommerceEntry#publishEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Virtual Product Title 1" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#viewCatalogEntry">
+			<var name="baseSku" value="Virtual Product SKU" />
+			<var name="productFullDescription" value="Virtual Product Full Description 1" />
+			<var name="productShortDescription" value="Virtual Product Short Description 1" />
+			<var name="productTitle" value="Virtual Product Title 1" />
+		</execute>
+	</command>
+
+	<command name="AddVirtualDraftCatalogEntry" priority="5">
+		<execute macro="CommerceCatalog#addEntry">
+			<var name="baseSku" value="Virtual Product SKU" />
+			<var name="plusMenu" value="Virtual" />
+			<var name="productFullDescription" value="Virtual Product Full Description 1" />
+			<var name="productShortDescription" value="Virtual Product Short Description 1" />
+			<var name="productTitle" value="Virtual Product Title 1" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntryAsDraft" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Virtual Product Title 1" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#viewCatalogEntry">
+			<var name="baseSku" value="Virtual ProductSKU" />
+			<var name="productFullDescription" value="Virtual Product Full Description 1" />
+			<var name="productShortDescription" value="Virtual Product Short Description 1" />
+			<var name="productTitle" value="Virtual Product Title 1" />
 		</execute>
 	</command>
 

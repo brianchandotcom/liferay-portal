@@ -111,7 +111,8 @@
 				</div>
 				
 				{if $rule.type == 'assetCategories'}
-					{call .selectorCategories}
+					{call CategorySelector.render}
+						{param eventName: $namespace + 'selectCategory' /}
 						{param groupIds: $groupIds /}
 						{param index: $index /}
 						{param namespace: $namespace /}
@@ -120,12 +121,13 @@
 						{param vocabularyIds: $vocabularyIds /}
 					{/call}
 				{else}
-					{call .selectorTags}
+					{call TagSelector.render}
+						{param eventName: $namespace + 'selectTag' /}
 						{param groupIds: $groupIds /}
 						{param index: $index /}
 						{param namespace: $namespace /}
-						{param rule: $rule /}
 						{param tagSelectorURL: $tagSelectorURL /}
+						{param rule: $rule /}
 					{/call}
 				{/if}
 
@@ -140,53 +142,6 @@
 			{param ruleId: $index /}
 		{/call}
 	</li>
-{/template}
-
-/**
- * Renders a TagSelector for the current rule item
- */
-{template .selectorTags}
-	{@param groupIds: string}
-	{@param index: int}
-	{@param? namespace: string}
-	{@param rule: [type: string, queryAndOperator: bool, queryContains: bool]}
-	{@param tagSelectorURL: string}
-
-	{call TagSelector.render}
-		{param divId: $namespace + 'assetTagsSelector' + $index /}
-		{param eventName: $namespace + 'selectTag' /}
-	 	{param groupIds: $groupIds /}
-	 	{param hiddenInput: $namespace + 'queryTagNames' + $index /}
-		{param index: $index /}
-		{param inputId: $index + 'assetTagName' /}
-		{param namespace: $namespace /}
-		{param tagSelectorURL: $tagSelectorURL /}
-		{param rule: $rule /}
-	{/call}
-{/template}
-
-/**
- * Renders a CategorySelector for the current rule item
- */
-{template .selectorCategories}
-	{@param categorySelectorURL: string}
-	{@param groupIds: string}
-	{@param index: int}
-	{@param? namespace: string}
-	{@param rule: [type: string, queryAndOperator: bool, queryContains: bool]}
-	{@param vocabularyIds: string}
-	
-	{call CategorySelector.render}
-		{param divId: $namespace + 'assetCategoriesSelector' + $index /}
-		{param eventName: $namespace + 'selectCategory' /}
-	 	{param groupIds: $groupIds /}
-	 	{param hiddenInput: $namespace + 'queryCategoryIds' + $index /}
-		{param index: $index /}
-		{param namespace: $namespace /}
-		{param categorySelectorURL: $categorySelectorURL /}
-		{param rule: $rule /}
-		{param vocabularyIds: $vocabularyIds /}
-	{/call}
 {/template}
 
 /**

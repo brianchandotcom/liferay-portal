@@ -1,15 +1,14 @@
 {namespace TagSelector}
 
 /**
- * This renders the main element.
- * @param divId
- * @param hiddenInput
- * @param inputId
+ *
  */
 {template .render}
-	<div id="{$divId}">
-		<input name="{$hiddenInput}" id="{$hiddenInput}" type="hidden" />
+	{@param index: int}
+	{@param? namespace: string}
 
-		<input class="form-control lfr-tag-selector-input" id="{$inputId}" size="15" title="Add tags" type="text" />
+	<div id="{$namespace}assetTagsSelector{$index}">
+		<input name="{$namespace}queryTagNames{$index}" id="{$namespace}queryTagNames{$index}" type="hidden" />
+		<input class="form-control lfr-tag-selector-input" id="{$index}assetTagName" size="15" title="Add tags" type="text" />
 	</div>
 {/template}

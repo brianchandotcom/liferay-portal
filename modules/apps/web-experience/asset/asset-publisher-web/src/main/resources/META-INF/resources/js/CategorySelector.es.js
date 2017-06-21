@@ -5,59 +5,61 @@ import { Config } from 'metal-state';
 import templates from './CategorySelector.soy';
 
 /**
- * CategorySelector
- *
+ * CategorySelector is a temporary Component wrapping the existing
+ * AUI module liferay-asset-taglib-categories-selector
  */
 class CategorySelector extends Component {
-
+	/**
+	 * @inheritDoc
+	 */
 	rendered() {
-		let instance = this;
+		AUI().use(
+			'liferay-asset-taglib-categories-selector', 
+			function(A) {
+				const config = {
+					categoryIds: this.rule.queryValues || '',
+					categoryTitles: this.rule.categoryIdsTitles ? this.rule.categoryIdsTitles : [],
+					contentBox: this.element,
+					eventName: this.eventName,
+					groupIds: this.groupIds,
+					hiddenInput:  `#${this.element.querySelector('input[type="hidden"]').getAttribute('id')}`,
+					portletURL: this.categorySelectorURL,
+					vocabularyIds: this.vocabularyIds,
+				};
 
-		AUI().use('liferay-asset-taglib-categories-selector', function(A) {
+				this.categoriesSelector_ = new Liferay.AssetTaglibCategoriesSelector(config);
 
-			let config = {
-				categoryIds: instance.rule.queryValues || '',
-				categoryTitles: instance.rule.categoryIdsTitles ? instance.rule.categoryIdsTitles : [],
-				contentBox: '#' + instance.divId,
-				eventName: instance.eventName,
-				groupIds: instance.groupIds,
-				hiddenInput: '#' + instance.hiddenInput,
-				portletURL: instance.portletURLCategorySelector,
-				vocabularyIds: instance.vocabularyIds,
-			};
+				const entries = this.categoriesSelector_.entries;
 
-			instance._categoriesSelector = new Liferay.AssetTaglibCategoriesSelector(
-				config
-			).render();
-
-			let entries = instance._categoriesSelector.entries;
-
-			entries.after('add', instance._updateQueryValues, instance);
-			entries.after('remove', instance._updateQueryValues, instance);
-		});
+				entries.after('add', this.onEntriesChanged_, this);
+				entries.after('remove', this.onEntriesChanged_, this);
+				
+				this.categoriesSelector_.render();
+			}.bind(this)
+		);
 
 	}
 
-	_updateQueryValues() {
-		let instance = this;
-
-		let categoriesSelector = instance._categoriesSelector;
-
-		instance.rule.categoryIdsTitles = categoriesSelector.entries.values.map((element) => element.value);
-
-		instance.rule.queryValues = categoriesSelector.entries.keys.join(',');
+	/**
+	 * Updates the calculated rule fields for `queryValues` and `categoryIdsTitles`
+	 * every time a new category entry is added or removed to the selection
+	 * @protected
+	 */
+	onEntriesChanged_() {
+		this.rule.categoryIdsTitles = this.categoriesSelector_.entries.values.map((element) => element.value);
+		this.rule.queryValues = this.categoriesSelector_.entries.keys.join(',');
 	}
 
 }
 
 CategorySelector.STATE = {
+	categorySelectorURL: Config.string().value(''),
 	divId: Config.string().value(''),
 	eventName: Config.string().value(''),
 	groupIds: Config.string().value(''),
 	hiddenInput: Config.string().value(''),
 	index: Config.number().value(0),
 	namespace: Config.string().value(''),
-	portletURLCategorySelector: Config.string().value(''),
 	rule: Config.object().value({}),
 	vocabularyIds: Config.string().value('')
 }

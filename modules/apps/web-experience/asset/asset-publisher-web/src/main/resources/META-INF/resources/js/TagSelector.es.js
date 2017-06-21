@@ -5,43 +5,47 @@ import { Config } from 'metal-state';
 import templates from './TagSelector.soy';
 
 /**
- * TagSelector
- *
+ * TagSelector is a temporary Component wrapping the existing
+ * AUI module liferay-asset-taglib-tags-selector
  */
 class TagSelector extends Component {
-
+	/**
+	 * @inheritDoc
+	 */
 	rendered() {
-		let instance = this;
+		AUI().use(
+			'liferay-asset-taglib-tags-selector', 
+			function(A) {
+				const config = {
+					allowAddEntry: true,
+					contentBox: this.element,
+					eventName: this.eventName,
+					groupIds: this.groupIds,
+					hiddenInput: `#${this.element.querySelector('input[type="hidden"]').getAttribute('id')}`,
+					input: `#${this.element.querySelector('input[type="text"]').getAttribute('id')}`,
+					portletURL: this.tagSelectorURL,
+					tagNames: this.rule.queryValues || ''
+				};
 
-		AUI().use('liferay-asset-taglib-tags-selector', function(A) {
-			let config = {
-				allowAddEntry: true,
-				contentBox: '#' + instance.divId,
-				eventName: instance.eventName,
-				groupIds: instance.groupIds,
-				hiddenInput: '#' + instance.hiddenInput,
-				input: '#' + instance.inputId,
-				portletURL: instance.portletURLTagSelector,
-				tagNames: instance.rule.queryValues || ''
-			};
+				this.tagsSelector_ = new Liferay.AssetTaglibTagsSelector(config);
 
-			instance._tagSelector = new Liferay.AssetTaglibTagsSelector(
-				config
-			).render();
+				const entries = this.tagsSelector_.entries;
 
-			let entries = instance._tagSelector.entries;
-
-			entries.after('add', instance._updateQueryValues, instance);
-			entries.after('remove', instance._updateQueryValues, instance);
-		});
+				entries.after('add', this.onEntriesChanged_, this);
+				entries.after('remove', this.onEntriesChanged_, this);
+				
+				this.tagsSelector_.render();
+			}.bind(this)
+		);
 	}
 
-	_updateQueryValues() {
-		let instance = this;
-
-		let tagSelector = instance._tagSelector;
-
-		instance.rule.queryValues = tagSelector.entries.keys.join();
+	/**
+	 * Updates the calculated rule fields for `queryValues` every time a new 
+	 * tag entry is added or removed to the selection
+	 * @protected
+	 */
+	onEntriesChanged_() {
+		this.rule.queryValues = this.tagsSelector_.entries.keys.join();
 	}
 }
 
@@ -52,8 +56,8 @@ TagSelector.STATE = {
 	hiddenInput: Config.string().value(''),
 	index: Config.number().value(0),
 	namespace: Config.string().value(''),
-	portletURLTagSelector: Config.string().value(''),
-	rule: Config.object().value({})
+	rule: Config.object().value({}),
+	tagSelectorURL: Config.string().value('')
 }
 
 Soy.register(TagSelector, templates);

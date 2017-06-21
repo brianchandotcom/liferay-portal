@@ -1,0 +1,3 @@
+javax/servlet/http/HttpServletRequest.getAttribute("FACEBOOK_APP_ID"):SAFE@org/apache/jsp/html/portlet/login/navigation/facebook_jsp
+javax/servlet/http/HttpServletRequest.getAttribute("FACEBOOK_AUTH_REDIRECT_URL"):SAFE@org/apache/jsp/html/portlet/login/navigation/facebook_jsp
+javax/servlet/http/HttpServletRequest.getAttribute("FACEBOOK_AUTH_URL"):SAFE@org/apache/jsp/html/portlet/login/navigation/facebook_jsp

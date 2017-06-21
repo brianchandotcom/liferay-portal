@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -161,6 +162,52 @@ public class CPDefinitionLinkPersistenceTest {
 			newCPDefinitionLink.getDisplayOrder());
 		Assert.assertEquals(existingCPDefinitionLink.getType(),
 			newCPDefinitionLink.getType());
+	}
+
+	@Test
+	public void testCountByC1() throws Exception {
+		_persistence.countByC1(RandomTestUtil.nextLong());
+
+		_persistence.countByC1(0L);
+	}
+
+	@Test
+	public void testCountByC2() throws Exception {
+		_persistence.countByC2(RandomTestUtil.nextLong());
+
+		_persistence.countByC2(0L);
+	}
+
+	@Test
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_C(0L, 0L);
+	}
+
+	@Test
+	public void testCountByC1_T() throws Exception {
+		_persistence.countByC1_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC1_T(0L, 0);
+	}
+
+	@Test
+	public void testCountByC2_T() throws Exception {
+		_persistence.countByC2_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC2_T(0L, 0);
+	}
+
+	@Test
+	public void testCountByC_C_T() throws Exception {
+		_persistence.countByC_C_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_C_T(0L, 0L, 0);
 	}
 
 	@Test
@@ -384,6 +431,27 @@ public class CPDefinitionLinkPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		CPDefinitionLink newCPDefinitionLink = addCPDefinitionLink();
+
+		_persistence.clearCache();
+
+		CPDefinitionLink existingCPDefinitionLink = _persistence.findByPrimaryKey(newCPDefinitionLink.getPrimaryKey());
+
+		Assert.assertEquals(Long.valueOf(
+				existingCPDefinitionLink.getCPDefinitionId1()),
+			ReflectionTestUtil.<Long>invoke(existingCPDefinitionLink,
+				"getOriginalCPDefinitionId1", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingCPDefinitionLink.getCPDefinitionId2()),
+			ReflectionTestUtil.<Long>invoke(existingCPDefinitionLink,
+				"getOriginalCPDefinitionId2", new Class<?>[0]));
+		Assert.assertEquals(Integer.valueOf(existingCPDefinitionLink.getType()),
+			ReflectionTestUtil.<Integer>invoke(existingCPDefinitionLink,
+				"getOriginalType", new Class<?>[0]));
 	}
 
 	protected CPDefinitionLink addCPDefinitionLink() throws Exception {

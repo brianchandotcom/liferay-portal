@@ -107,7 +107,13 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.product.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.commerce.product.model.CPDefinitionLink"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.product.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.commerce.product.model.CPDefinitionLink"),
+			true);
+	public static final long CPDEFINITIONID1_COLUMN_BITMASK = 1L;
+	public static final long CPDEFINITIONID2_COLUMN_BITMASK = 2L;
+	public static final long TYPE_COLUMN_BITMASK = 4L;
+	public static final long DISPLAYORDER_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -353,7 +359,19 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 	@Override
 	public void setCPDefinitionId1(long CPDefinitionId1) {
+		_columnBitmask |= CPDEFINITIONID1_COLUMN_BITMASK;
+
+		if (!_setOriginalCPDefinitionId1) {
+			_setOriginalCPDefinitionId1 = true;
+
+			_originalCPDefinitionId1 = _CPDefinitionId1;
+		}
+
 		_CPDefinitionId1 = CPDefinitionId1;
+	}
+
+	public long getOriginalCPDefinitionId1() {
+		return _originalCPDefinitionId1;
 	}
 
 	@JSON
@@ -364,7 +382,19 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 	@Override
 	public void setCPDefinitionId2(long CPDefinitionId2) {
+		_columnBitmask |= CPDEFINITIONID2_COLUMN_BITMASK;
+
+		if (!_setOriginalCPDefinitionId2) {
+			_setOriginalCPDefinitionId2 = true;
+
+			_originalCPDefinitionId2 = _CPDefinitionId2;
+		}
+
 		_CPDefinitionId2 = CPDefinitionId2;
+	}
+
+	public long getOriginalCPDefinitionId2() {
+		return _originalCPDefinitionId2;
 	}
 
 	@JSON
@@ -375,6 +405,8 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 	@Override
 	public void setDisplayOrder(int displayOrder) {
+		_columnBitmask = -1L;
+
 		_displayOrder = displayOrder;
 	}
 
@@ -386,7 +418,23 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 	@Override
 	public void setType(int type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
+		if (!_setOriginalType) {
+			_setOriginalType = true;
+
+			_originalType = _type;
+		}
+
 		_type = type;
+	}
+
+	public int getOriginalType() {
+		return _originalType;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -491,6 +539,21 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 	@Override
 	public void resetOriginalValues() {
+		CPDefinitionLinkModelImpl cpDefinitionLinkModelImpl = this;
+
+		cpDefinitionLinkModelImpl._originalCPDefinitionId1 = cpDefinitionLinkModelImpl._CPDefinitionId1;
+
+		cpDefinitionLinkModelImpl._setOriginalCPDefinitionId1 = false;
+
+		cpDefinitionLinkModelImpl._originalCPDefinitionId2 = cpDefinitionLinkModelImpl._CPDefinitionId2;
+
+		cpDefinitionLinkModelImpl._setOriginalCPDefinitionId2 = false;
+
+		cpDefinitionLinkModelImpl._originalType = cpDefinitionLinkModelImpl._type;
+
+		cpDefinitionLinkModelImpl._setOriginalType = false;
+
+		cpDefinitionLinkModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -618,8 +681,15 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 	private String _userName;
 	private Date _createDate;
 	private long _CPDefinitionId1;
+	private long _originalCPDefinitionId1;
+	private boolean _setOriginalCPDefinitionId1;
 	private long _CPDefinitionId2;
+	private long _originalCPDefinitionId2;
+	private boolean _setOriginalCPDefinitionId2;
 	private int _displayOrder;
 	private int _type;
+	private int _originalType;
+	private boolean _setOriginalType;
+	private long _columnBitmask;
 	private CPDefinitionLink _escapedModel;
 }

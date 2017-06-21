@@ -112,6 +112,942 @@ public class CPDefinitionLinkUtil {
 	}
 
 	/**
+	* Returns all the cp definition links where CPDefinitionId1 = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @return the matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC1(long CPDefinitionId1) {
+		return getPersistence().findByC1(CPDefinitionId1);
+	}
+
+	/**
+	* Returns a range of all the cp definition links where CPDefinitionId1 = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @return the range of matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC1(long CPDefinitionId1,
+		int start, int end) {
+		return getPersistence().findByC1(CPDefinitionId1, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the cp definition links where CPDefinitionId1 = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC1(long CPDefinitionId1,
+		int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
+		return getPersistence()
+				   .findByC1(CPDefinitionId1, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the cp definition links where CPDefinitionId1 = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC1(long CPDefinitionId1,
+		int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC1(CPDefinitionId1, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first cp definition link in the ordered set where CPDefinitionId1 = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink findByC1_First(long CPDefinitionId1,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence()
+				   .findByC1_First(CPDefinitionId1, orderByComparator);
+	}
+
+	/**
+	* Returns the first cp definition link in the ordered set where CPDefinitionId1 = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink fetchByC1_First(long CPDefinitionId1,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByC1_First(CPDefinitionId1, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp definition link in the ordered set where CPDefinitionId1 = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink findByC1_Last(long CPDefinitionId1,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence().findByC1_Last(CPDefinitionId1, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp definition link in the ordered set where CPDefinitionId1 = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink fetchByC1_Last(long CPDefinitionId1,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByC1_Last(CPDefinitionId1, orderByComparator);
+	}
+
+	/**
+	* Returns the cp definition links before and after the current cp definition link in the ordered set where CPDefinitionId1 = &#63;.
+	*
+	* @param CPDefinitionLinkId the primary key of the current cp definition link
+	* @param CPDefinitionId1 the cp definition id1
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a cp definition link with the primary key could not be found
+	*/
+	public static CPDefinitionLink[] findByC1_PrevAndNext(
+		long CPDefinitionLinkId, long CPDefinitionId1,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence()
+				   .findByC1_PrevAndNext(CPDefinitionLinkId, CPDefinitionId1,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the cp definition links where CPDefinitionId1 = &#63; from the database.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	*/
+	public static void removeByC1(long CPDefinitionId1) {
+		getPersistence().removeByC1(CPDefinitionId1);
+	}
+
+	/**
+	* Returns the number of cp definition links where CPDefinitionId1 = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @return the number of matching cp definition links
+	*/
+	public static int countByC1(long CPDefinitionId1) {
+		return getPersistence().countByC1(CPDefinitionId1);
+	}
+
+	/**
+	* Returns all the cp definition links where CPDefinitionId2 = &#63;.
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @return the matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC2(long CPDefinitionId2) {
+		return getPersistence().findByC2(CPDefinitionId2);
+	}
+
+	/**
+	* Returns a range of all the cp definition links where CPDefinitionId2 = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @return the range of matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC2(long CPDefinitionId2,
+		int start, int end) {
+		return getPersistence().findByC2(CPDefinitionId2, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the cp definition links where CPDefinitionId2 = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC2(long CPDefinitionId2,
+		int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
+		return getPersistence()
+				   .findByC2(CPDefinitionId2, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the cp definition links where CPDefinitionId2 = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC2(long CPDefinitionId2,
+		int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC2(CPDefinitionId2, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first cp definition link in the ordered set where CPDefinitionId2 = &#63;.
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink findByC2_First(long CPDefinitionId2,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence()
+				   .findByC2_First(CPDefinitionId2, orderByComparator);
+	}
+
+	/**
+	* Returns the first cp definition link in the ordered set where CPDefinitionId2 = &#63;.
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink fetchByC2_First(long CPDefinitionId2,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByC2_First(CPDefinitionId2, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp definition link in the ordered set where CPDefinitionId2 = &#63;.
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink findByC2_Last(long CPDefinitionId2,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence().findByC2_Last(CPDefinitionId2, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp definition link in the ordered set where CPDefinitionId2 = &#63;.
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink fetchByC2_Last(long CPDefinitionId2,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByC2_Last(CPDefinitionId2, orderByComparator);
+	}
+
+	/**
+	* Returns the cp definition links before and after the current cp definition link in the ordered set where CPDefinitionId2 = &#63;.
+	*
+	* @param CPDefinitionLinkId the primary key of the current cp definition link
+	* @param CPDefinitionId2 the cp definition id2
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a cp definition link with the primary key could not be found
+	*/
+	public static CPDefinitionLink[] findByC2_PrevAndNext(
+		long CPDefinitionLinkId, long CPDefinitionId2,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence()
+				   .findByC2_PrevAndNext(CPDefinitionLinkId, CPDefinitionId2,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the cp definition links where CPDefinitionId2 = &#63; from the database.
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	*/
+	public static void removeByC2(long CPDefinitionId2) {
+		getPersistence().removeByC2(CPDefinitionId2);
+	}
+
+	/**
+	* Returns the number of cp definition links where CPDefinitionId2 = &#63;.
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @return the number of matching cp definition links
+	*/
+	public static int countByC2(long CPDefinitionId2) {
+		return getPersistence().countByC2(CPDefinitionId2);
+	}
+
+	/**
+	* Returns all the cp definition links where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	* @return the matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC_C(long CPDefinitionId1,
+		long CPDefinitionId2) {
+		return getPersistence().findByC_C(CPDefinitionId1, CPDefinitionId2);
+	}
+
+	/**
+	* Returns a range of all the cp definition links where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @return the range of matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC_C(long CPDefinitionId1,
+		long CPDefinitionId2, int start, int end) {
+		return getPersistence()
+				   .findByC_C(CPDefinitionId1, CPDefinitionId2, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the cp definition links where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC_C(long CPDefinitionId1,
+		long CPDefinitionId2, int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
+		return getPersistence()
+				   .findByC_C(CPDefinitionId1, CPDefinitionId2, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the cp definition links where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC_C(long CPDefinitionId1,
+		long CPDefinitionId2, int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_C(CPDefinitionId1, CPDefinitionId2, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first cp definition link in the ordered set where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink findByC_C_First(long CPDefinitionId1,
+		long CPDefinitionId2,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence()
+				   .findByC_C_First(CPDefinitionId1, CPDefinitionId2,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first cp definition link in the ordered set where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink fetchByC_C_First(long CPDefinitionId1,
+		long CPDefinitionId2,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_C_First(CPDefinitionId1, CPDefinitionId2,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last cp definition link in the ordered set where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink findByC_C_Last(long CPDefinitionId1,
+		long CPDefinitionId2,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence()
+				   .findByC_C_Last(CPDefinitionId1, CPDefinitionId2,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last cp definition link in the ordered set where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink fetchByC_C_Last(long CPDefinitionId1,
+		long CPDefinitionId2,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_C_Last(CPDefinitionId1, CPDefinitionId2,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the cp definition links before and after the current cp definition link in the ordered set where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63;.
+	*
+	* @param CPDefinitionLinkId the primary key of the current cp definition link
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a cp definition link with the primary key could not be found
+	*/
+	public static CPDefinitionLink[] findByC_C_PrevAndNext(
+		long CPDefinitionLinkId, long CPDefinitionId1, long CPDefinitionId2,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence()
+				   .findByC_C_PrevAndNext(CPDefinitionLinkId, CPDefinitionId1,
+			CPDefinitionId2, orderByComparator);
+	}
+
+	/**
+	* Removes all the cp definition links where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63; from the database.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	*/
+	public static void removeByC_C(long CPDefinitionId1, long CPDefinitionId2) {
+		getPersistence().removeByC_C(CPDefinitionId1, CPDefinitionId2);
+	}
+
+	/**
+	* Returns the number of cp definition links where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	* @return the number of matching cp definition links
+	*/
+	public static int countByC_C(long CPDefinitionId1, long CPDefinitionId2) {
+		return getPersistence().countByC_C(CPDefinitionId1, CPDefinitionId2);
+	}
+
+	/**
+	* Returns all the cp definition links where CPDefinitionId1 = &#63; and type = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param type the type
+	* @return the matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC1_T(long CPDefinitionId1,
+		int type) {
+		return getPersistence().findByC1_T(CPDefinitionId1, type);
+	}
+
+	/**
+	* Returns a range of all the cp definition links where CPDefinitionId1 = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param type the type
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @return the range of matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC1_T(long CPDefinitionId1,
+		int type, int start, int end) {
+		return getPersistence().findByC1_T(CPDefinitionId1, type, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the cp definition links where CPDefinitionId1 = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param type the type
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC1_T(long CPDefinitionId1,
+		int type, int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
+		return getPersistence()
+				   .findByC1_T(CPDefinitionId1, type, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the cp definition links where CPDefinitionId1 = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param type the type
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC1_T(long CPDefinitionId1,
+		int type, int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC1_T(CPDefinitionId1, type, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first cp definition link in the ordered set where CPDefinitionId1 = &#63; and type = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink findByC1_T_First(long CPDefinitionId1,
+		int type, OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence()
+				   .findByC1_T_First(CPDefinitionId1, type, orderByComparator);
+	}
+
+	/**
+	* Returns the first cp definition link in the ordered set where CPDefinitionId1 = &#63; and type = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink fetchByC1_T_First(long CPDefinitionId1,
+		int type, OrderByComparator<CPDefinitionLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByC1_T_First(CPDefinitionId1, type, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp definition link in the ordered set where CPDefinitionId1 = &#63; and type = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink findByC1_T_Last(long CPDefinitionId1,
+		int type, OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence()
+				   .findByC1_T_Last(CPDefinitionId1, type, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp definition link in the ordered set where CPDefinitionId1 = &#63; and type = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink fetchByC1_T_Last(long CPDefinitionId1,
+		int type, OrderByComparator<CPDefinitionLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByC1_T_Last(CPDefinitionId1, type, orderByComparator);
+	}
+
+	/**
+	* Returns the cp definition links before and after the current cp definition link in the ordered set where CPDefinitionId1 = &#63; and type = &#63;.
+	*
+	* @param CPDefinitionLinkId the primary key of the current cp definition link
+	* @param CPDefinitionId1 the cp definition id1
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a cp definition link with the primary key could not be found
+	*/
+	public static CPDefinitionLink[] findByC1_T_PrevAndNext(
+		long CPDefinitionLinkId, long CPDefinitionId1, int type,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence()
+				   .findByC1_T_PrevAndNext(CPDefinitionLinkId, CPDefinitionId1,
+			type, orderByComparator);
+	}
+
+	/**
+	* Removes all the cp definition links where CPDefinitionId1 = &#63; and type = &#63; from the database.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param type the type
+	*/
+	public static void removeByC1_T(long CPDefinitionId1, int type) {
+		getPersistence().removeByC1_T(CPDefinitionId1, type);
+	}
+
+	/**
+	* Returns the number of cp definition links where CPDefinitionId1 = &#63; and type = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param type the type
+	* @return the number of matching cp definition links
+	*/
+	public static int countByC1_T(long CPDefinitionId1, int type) {
+		return getPersistence().countByC1_T(CPDefinitionId1, type);
+	}
+
+	/**
+	* Returns all the cp definition links where CPDefinitionId2 = &#63; and type = &#63;.
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	* @return the matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC2_T(long CPDefinitionId2,
+		int type) {
+		return getPersistence().findByC2_T(CPDefinitionId2, type);
+	}
+
+	/**
+	* Returns a range of all the cp definition links where CPDefinitionId2 = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @return the range of matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC2_T(long CPDefinitionId2,
+		int type, int start, int end) {
+		return getPersistence().findByC2_T(CPDefinitionId2, type, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the cp definition links where CPDefinitionId2 = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC2_T(long CPDefinitionId2,
+		int type, int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
+		return getPersistence()
+				   .findByC2_T(CPDefinitionId2, type, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the cp definition links where CPDefinitionId2 = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp definition links
+	*/
+	public static List<CPDefinitionLink> findByC2_T(long CPDefinitionId2,
+		int type, int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC2_T(CPDefinitionId2, type, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first cp definition link in the ordered set where CPDefinitionId2 = &#63; and type = &#63;.
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink findByC2_T_First(long CPDefinitionId2,
+		int type, OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence()
+				   .findByC2_T_First(CPDefinitionId2, type, orderByComparator);
+	}
+
+	/**
+	* Returns the first cp definition link in the ordered set where CPDefinitionId2 = &#63; and type = &#63;.
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink fetchByC2_T_First(long CPDefinitionId2,
+		int type, OrderByComparator<CPDefinitionLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByC2_T_First(CPDefinitionId2, type, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp definition link in the ordered set where CPDefinitionId2 = &#63; and type = &#63;.
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink findByC2_T_Last(long CPDefinitionId2,
+		int type, OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence()
+				   .findByC2_T_Last(CPDefinitionId2, type, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp definition link in the ordered set where CPDefinitionId2 = &#63; and type = &#63;.
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink fetchByC2_T_Last(long CPDefinitionId2,
+		int type, OrderByComparator<CPDefinitionLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByC2_T_Last(CPDefinitionId2, type, orderByComparator);
+	}
+
+	/**
+	* Returns the cp definition links before and after the current cp definition link in the ordered set where CPDefinitionId2 = &#63; and type = &#63;.
+	*
+	* @param CPDefinitionLinkId the primary key of the current cp definition link
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a cp definition link with the primary key could not be found
+	*/
+	public static CPDefinitionLink[] findByC2_T_PrevAndNext(
+		long CPDefinitionLinkId, long CPDefinitionId2, int type,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence()
+				   .findByC2_T_PrevAndNext(CPDefinitionLinkId, CPDefinitionId2,
+			type, orderByComparator);
+	}
+
+	/**
+	* Removes all the cp definition links where CPDefinitionId2 = &#63; and type = &#63; from the database.
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	*/
+	public static void removeByC2_T(long CPDefinitionId2, int type) {
+		getPersistence().removeByC2_T(CPDefinitionId2, type);
+	}
+
+	/**
+	* Returns the number of cp definition links where CPDefinitionId2 = &#63; and type = &#63;.
+	*
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	* @return the number of matching cp definition links
+	*/
+	public static int countByC2_T(long CPDefinitionId2, int type) {
+		return getPersistence().countByC2_T(CPDefinitionId2, type);
+	}
+
+	/**
+	* Returns the cp definition link where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63; and type = &#63; or throws a {@link NoSuchCPDefinitionLinkException} if it could not be found.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	* @return the matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink findByC_C_T(long CPDefinitionId1,
+		long CPDefinitionId2, int type)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence()
+				   .findByC_C_T(CPDefinitionId1, CPDefinitionId2, type);
+	}
+
+	/**
+	* Returns the cp definition link where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink fetchByC_C_T(long CPDefinitionId1,
+		long CPDefinitionId2, int type) {
+		return getPersistence()
+				   .fetchByC_C_T(CPDefinitionId1, CPDefinitionId2, type);
+	}
+
+	/**
+	* Returns the cp definition link where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public static CPDefinitionLink fetchByC_C_T(long CPDefinitionId1,
+		long CPDefinitionId2, int type, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByC_C_T(CPDefinitionId1, CPDefinitionId2, type,
+			retrieveFromCache);
+	}
+
+	/**
+	* Removes the cp definition link where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63; and type = &#63; from the database.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	* @return the cp definition link that was removed
+	*/
+	public static CPDefinitionLink removeByC_C_T(long CPDefinitionId1,
+		long CPDefinitionId2, int type)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
+		return getPersistence()
+				   .removeByC_C_T(CPDefinitionId1, CPDefinitionId2, type);
+	}
+
+	/**
+	* Returns the number of cp definition links where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63; and type = &#63;.
+	*
+	* @param CPDefinitionId1 the cp definition id1
+	* @param CPDefinitionId2 the cp definition id2
+	* @param type the type
+	* @return the number of matching cp definition links
+	*/
+	public static int countByC_C_T(long CPDefinitionId1, long CPDefinitionId2,
+		int type) {
+		return getPersistence()
+				   .countByC_C_T(CPDefinitionId1, CPDefinitionId2, type);
+	}
+
+	/**
 	* Caches the cp definition link in the entity cache if it is enabled.
 	*
 	* @param cpDefinitionLink the cp definition link

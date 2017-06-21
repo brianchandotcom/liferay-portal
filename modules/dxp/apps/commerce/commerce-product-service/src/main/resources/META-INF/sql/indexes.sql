@@ -8,6 +8,10 @@ create index IX_7E7BCA4C on CPDefinition (status);
 create index IX_8EA585DA on CPDefinition (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_BA9BADC on CPDefinition (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create unique index IX_EA724334 on CPDefinitionLink (CPDefinitionId1, CPDefinitionId2, type_);
+create index IX_31ED1AF on CPDefinitionLink (CPDefinitionId1, type_);
+create index IX_F76842CE on CPDefinitionLink (CPDefinitionId2, type_);
+
 create unique index IX_F4B4ACB5 on CPDefinitionLocalization (CPDefinitionId, languageId[$COLUMN_LENGTH:75$]);
 
 create index IX_749E99EB on CPDefinitionOptionRel (CPDefinitionId, skuContributor);

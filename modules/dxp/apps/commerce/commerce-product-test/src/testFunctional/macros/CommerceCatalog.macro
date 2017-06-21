@@ -10,7 +10,7 @@
 			<var name="key_plusMenu" value="${plusMenu}" />
 		</execute>
 
-		<execute macro="CommerceCatalogEntry#addCatalogEntry">
+		<execute macro="CommerceEntry#addCatalogEntry">
 			<var name="baseSku" value="${baseSku}" />
 			<var name="productFullDescription" value="${productFullDescription}" />
 			<var name="productShortDescription" value="${productShortDescription}" />

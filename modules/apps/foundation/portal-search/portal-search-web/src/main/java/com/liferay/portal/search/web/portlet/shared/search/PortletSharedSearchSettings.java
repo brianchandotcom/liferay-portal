@@ -22,6 +22,7 @@ import com.liferay.portal.search.web.search.request.SearchSettings;
 import java.util.Optional;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
 
 /**
  * @author André de Oliveira
@@ -34,6 +35,8 @@ public interface PortletSharedSearchSettings extends SearchSettings {
 	public Optional<String[]> getParameterValues(String name);
 
 	public Optional<PortletPreferences> getPortletPreferences();
+
+	public RenderRequest getRenderRequest();
 
 	public ThemeDisplay getThemeDisplay();
 

@@ -26,6 +26,6 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute function="Click" locator1="Button#SEARCH" />
+		<execute function="Click" locator1="CommerceNavigation#SEARCH" />
 	</command>
 </definition>

@@ -1,5 +1,11 @@
 Bundle-Name: Liferay Commerce Product Type Virtual Service
 Bundle-SymbolicName: com.liferay.commerce.product.type.virtual.service
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.journal.model;version="[1.0.0,3)",\
+	com.liferay.journal.service;version="[1.1.1,3)",\
+	com.liferay.journal.service.persistence;version="[1.1.0,3)",\
+	\
+	*
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true

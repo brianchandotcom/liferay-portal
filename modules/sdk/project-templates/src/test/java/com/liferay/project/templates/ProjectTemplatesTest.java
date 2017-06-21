@@ -1699,7 +1699,7 @@ public class ProjectTemplatesTest {
 	}
 
 	private static File _testNotContains(
-			File dir, String fileName, String... strings)
+			File dir, String fileName, boolean match, String... strings)
 		throws IOException {
 
 		File file = _testExists(dir, fileName);
@@ -1707,11 +1707,23 @@ public class ProjectTemplatesTest {
 		String content = FileUtil.read(file.toPath());
 
 		for (String s : strings) {
-			Assert.assertFalse(
-				"Found in " + fileName + ": " + s, content.contains(s));
+			boolean checkResult = content.contains(s);
+
+			if (match) {
+				checkResult = content.matches(s);
+			}
+
+			Assert.assertFalse("Found in " + fileName + ": " + s, checkResult);
 		}
 
 		return file;
+	}
+
+	private static File _testNotContains(
+			File dir, String fileName, String... strings)
+		throws IOException {
+
+		return _testNotContains(dir, fileName, false, strings);
 	}
 
 	private static File _testNotExists(File dir, String fileName) {

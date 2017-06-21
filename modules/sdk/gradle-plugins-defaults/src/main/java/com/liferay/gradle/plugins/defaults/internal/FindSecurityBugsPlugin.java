@@ -174,10 +174,6 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 			javaExec.args("-include", FileUtil.getAbsolutePath(includeFile));
 		}
 
-		if (Boolean.getBoolean("jvm.debug")) {
-			javaExec.setDebug(true);
-		}
-
 		javaExec.args(
 			"-project",
 			new Object() {

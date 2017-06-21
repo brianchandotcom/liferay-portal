@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.petra.json.web.service.client;
+package com.liferay.petra.json.web.service.client.internal;
 
-import com.liferay.petra.json.web.service.client.jcifs.JCIFSNTLMSchemeFactory;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
+import com.liferay.petra.json.web.service.client.internal.jcifs.JCIFSNTLMSchemeFactory;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -30,6 +32,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +96,10 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -100,7 +107,42 @@ import org.slf4j.LoggerFactory;
  * @author Ivica Cardic
  * @author Igor Beslic
  */
+@Component(factory = "JSONWebServiceClient")
 public class JSONWebServiceClientImpl implements JSONWebServiceClient {
+
+	@Activate
+	public void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_setHeaders(String.valueOf(properties.get("headers")));
+
+		setHostName(String.valueOf(properties.get("hostName")));
+		setHostPort(
+			Integer.parseInt(String.valueOf(properties.get("hostPort"))));
+		setLogin(String.valueOf(properties.get("login")));
+		setPassword(String.valueOf(properties.get("password")));
+		setProtocol(String.valueOf(properties.get("protocol")));
+
+		if (properties.containsKey("proxyAuthType")) {
+			setProxyAuthType(String.valueOf(properties.get("proxyAuthType")));
+			setProxyDomain(String.valueOf(properties.get("proxyDomain")));
+			setProxyWorkstation(
+				String.valueOf(properties.get("proxyWorkstation")));
+		}
+
+		if (properties.containsKey("proxyHostName")) {
+			setProxyHostName(String.valueOf(properties.get("proxyHostName")));
+			setProxyHostPort(
+				Integer.parseInt(
+					String.valueOf(properties.get("proxyHostPort"))));
+			setProxyLogin(String.valueOf(properties.get("proxyLogin")));
+			setProxyPassword(String.valueOf(properties.get("proxyPassword")));
+		}
+
+		setKeyStore((KeyStore)properties.get("keyStore"));
+
+		afterPropertiesSet();
+	}
 
 	public void afterPropertiesSet() {
 		HttpClientBuilder httpClientBuilder = HttpClients.custom();
@@ -410,6 +452,34 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		return _protocol;
 	}
 
+	public String getProxyAuthType() {
+		return _proxyAuthType;
+	}
+
+	public String getProxyDomain() {
+		return _proxyDomain;
+	}
+
+	public String getProxyHostName() {
+		return _proxyHostName;
+	}
+
+	public int getProxyHostPort() {
+		return _proxyHostPort;
+	}
+
+	public String getProxyLogin() {
+		return _proxyLogin;
+	}
+
+	public String getProxyPassword() {
+		return _proxyPassword;
+	}
+
+	public String getProxyWorkstation() {
+		return _proxyWorkstation;
+	}
+
 	@Override
 	public void resetHttpClient() {
 		destroy();
@@ -703,6 +773,37 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		}
 
 		return nameValuePairs;
+	}
+
+	private void _setHeaders(String headersString) {
+		if (headersString == null) {
+			return;
+		}
+
+		headersString = headersString.trim();
+
+		if (headersString.length() < 3) {
+			return;
+		}
+
+		Map<String, String> headers = new HashMap<>();
+
+		for (String header : headersString.split(";")) {
+			String[] headerKeyValue = header.split("=");
+
+			if (headerKeyValue.length != 2) {
+				if (_logger.isDebugEnabled()) {
+					_logger.debug(
+						"Unexpected header syntax. Skipp header " + header);
+				}
+
+				continue;
+			}
+
+			headers.put(headerKeyValue[0], headerKeyValue[1]);
+		}
+
+		setHeaders(headers);
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

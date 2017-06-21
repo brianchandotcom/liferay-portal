@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portlet.bridge.soy.internal.SoyPortletHelper;
+import com.liferay.portal.template.soy.utils.SoyContext;
 import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
 
 import java.io.IOException;
@@ -187,17 +188,21 @@ public class SoyPortlet extends MVCPortlet {
 
 		Template template = getTemplate(portletRequest);
 
+		SoyContext soyContext = new SoyContext();
+
 		for (Map.Entry<String, String[]> entry : parametersMap.entrySet()) {
 			String parameterName = entry.getKey();
 			String[] parameterValues = entry.getValue();
 
 			if (parameterValues.length == 1) {
-				template.put(parameterName, parameterValues[0]);
+				soyContext.putInjectedData(parameterName, parameterValues[0]);
 			}
 			else if (parameterValues.length > 1) {
-				template.put(parameterName, parameterValues);
+				soyContext.putInjectedData(parameterName, parameterValues);
 			}
 		}
+
+		template.putAll(soyContext);
 	}
 
 	protected boolean propagateRequestParameters;

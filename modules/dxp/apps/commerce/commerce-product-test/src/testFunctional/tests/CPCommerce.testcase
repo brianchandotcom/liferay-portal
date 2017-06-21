@@ -247,6 +247,23 @@
 			<var name="productFullDescription" value="Product Full Description 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntryAsDraft" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Simple Product Title 1" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#viewCatalogEntry">
+			<var name="baseSku" value="Simple Product SKU" />
+			<var name="productFullDescription" value="Simple Product Full Description 1" />
+			<var name="productShortDescription" value="Simple Product Short Description 1" />
+			<var name="productTitle" value="Simple Product Title 1" />
+		</execute>
+	</command>
+
 	<command name="AddTextOptionsEntry" priority="5">
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Text Option Description 1" />

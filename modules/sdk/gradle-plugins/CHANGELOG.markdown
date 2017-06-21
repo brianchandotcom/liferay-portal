@@ -1754,6 +1754,10 @@ to version 2.0.18.
 ## 3.3.29 - 2017-06-16
 
 ### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.0.19.
+- [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
+1.0.408.
 - [LPS-73124]: Update the [Liferay Portal Tools DB Support] dependency to
 version 1.0.4.
 - [LPS-73148]: Update the [Liferay Portal Tools Upgrade Table Builder]
@@ -1765,6 +1769,22 @@ dependency to version 1.0.8.
 
 ### Removed
 - [LPS-73147]: Remove unnecessary default Bnd instruction `-dsannotations: *`.
+
+## 3.3.30 - 2017-06-19
+
+### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.0.20.
+- [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
+1.0.409.
+
+## 3.3.31 - 2017-06-19
+
+### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.0.22.
+- [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
+1.0.410.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs

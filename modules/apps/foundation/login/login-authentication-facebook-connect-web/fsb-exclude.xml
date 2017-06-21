@@ -1,0 +1,10 @@
+<FindBugsFilter>
+	<Match>
+		<Class name="com.liferay.login.authentication.facebook.connect.web.internal.portlet.action.FacebookConnectAction" />
+		<Or>
+			<Method name="addUser" />
+			<Method name="setFacebookCredentials" />
+		</Or>
+		<Bug pattern="TRUST_BOUNDARY_VIOLATION" />
+	</Match>
+</FindBugsFilter>

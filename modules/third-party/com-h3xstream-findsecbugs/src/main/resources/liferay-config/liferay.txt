@@ -69,6 +69,12 @@ com/liferay/portal/kernel/util/HttpUtil.encodeURL(Ljava/lang/String;)Ljava/lang/
 com/liferay/portal/kernel/util/HttpUtil.decodeURL(Ljava/lang/String;)Ljava/lang/String;:0|-XSS_SAFE,-CR_ENCODED,-LF_ENCODED,-QUOTE_ENCODED,-LT_ENCODED
 com/liferay/portal/kernel/util/HttpUtil.getCompleteURL(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/String;:TAINTED|+CR_ENCODED,+LF_ENCODED,+QUOTE_ENCODED,+LT_ENCODED
 
+com/liferay/portal/kernel/util/URLCodec.decodeURL(Ljava/lang/String;)Ljava/lang/String;:0|-XSS_SAFE,-CR_ENCODED,-LF_ENCODED,-QUOTE_ENCODED,-LT_ENCODED
+com/liferay/portal/kernel/util/URLCodec.decodeURL(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:1|-XSS_SAFE,-CR_ENCODED,-LF_ENCODED,-QUOTE_ENCODED,-LT_ENCODED
+com/liferay/portal/kernel/util/URLCodec.encodeURL(Ljava/lang/String;)Ljava/lang/String;:0|+CR_ENCODED,+LF_ENCODED,+QUOTE_ENCODED,+LT_ENCODED
+com/liferay/portal/kernel/util/URLCodec.encodeURL(Ljava/lang/String;Z)Ljava/lang/String;:1|+CR_ENCODED,+LF_ENCODED,+QUOTE_ENCODED,+LT_ENCODED
+com/liferay/portal/kernel/util/URLCodec.encodeURL(Ljava/lang/String;Ljava/lang/String;Z)Ljava/lang/String;:1|+CR_ENCODED,+LF_ENCODED,+QUOTE_ENCODED,+LT_ENCODED
+
 ------ TAINT HINTS ------
 
 com/liferay/asset/kernel/model/Renderer.getIconCssClass()Ljava/lang/String;:SAFE
@@ -517,3 +523,6 @@ com/liferay/taglib/search/TextSearchEntry.setData(Ljava/util/Map;)V:0#0
 com/liferay/taglib/ui/MessageTag.setArguments(Ljava/lang/Object;)V:0#0
 com/liferay/taglib/ui/SearchContainerColumnTextTag.setHref(Ljava/lang/Object;)V:0#0
 com/liferay/taglib/ui/SearchContainerColumnDateTag.setHref(Ljava/lang/Object;)V:0#0
+
+com/liferay/portal/kernel/security/auth/ScreenNameValidator.getAUIValidatorJS()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/security/auth/ScreenNameValidator.getDescription(Ljava/util/Locale;)Ljava/lang/String;:SAFE

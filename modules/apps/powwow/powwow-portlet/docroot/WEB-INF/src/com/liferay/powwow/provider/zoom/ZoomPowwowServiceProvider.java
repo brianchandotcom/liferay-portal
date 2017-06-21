@@ -181,7 +181,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 		String hostId = getHostId(user, powwowServer);
 
-		parameterMap.put("host_id", getHostId(user, powwowServer));
+		parameterMap.put("host_id", hostId);
 
 		parameterMap.put(
 			"option_host_video",

@@ -88,7 +88,7 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 				while (rs.next()) {
 					String deleteSQL =
 						"delete from ResourcePermission where " +
-							"resourcePermissionId = '" + rs.getString(1) + "'";
+							"resourcePermissionId = " + rs.getLong(1);
 
 					runSQL(deleteSQL);
 				}

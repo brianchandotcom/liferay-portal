@@ -1,12 +1,4 @@
 <definition>
-	<command name="editPageFromControlMenu">
-		<var name="key_page" value="${pageName}" />
-
-		<execute function="Click" locator1="ControlMenu#CONFIGURE_PAGE" />
-
-		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TITLE" value1="${pageName}" />
-	</command>
-
 	<command name="viewAddTabsWithNoAddPagePermission">
 		<execute function="Click" locator1="ControlMenu#ADD" />
 

@@ -427,9 +427,7 @@
 
 		<execute macro="CommerceCatalog#moveCatalogEntriesToRecycleBin" />
 
-		<for list="1,2,3" param="entryNumber">
-			<execute function="AssertElementPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
-		</for>
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
 	</command>
 
 	<command name="DeleteCatalogEntryViaCheckbox" priority="5">

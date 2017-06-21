@@ -241,7 +241,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 					if (logger.isLifecycleEnabled()) {
 						logger.lifecycle(
-							"Find Security Bugs report saved to {}",
+							"Find Security Bugs report saved to {}.",
 							outputFile.getAbsolutePath());
 					}
 				}

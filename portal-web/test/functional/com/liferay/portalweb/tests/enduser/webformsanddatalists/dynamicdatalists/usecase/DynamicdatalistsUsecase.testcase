@@ -1832,42 +1832,36 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="Permissions#definePermissionViaAPI">
-			<var name="groupName" value="Global" />
 			<var name="resourceAction" value="ADD_RECORD" />
 			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
 			<var name="roleTitle" value="User" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaAPI">
-			<var name="groupName" value="Global" />
 			<var name="resourceAction" value="VIEW" />
 			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
 			<var name="roleTitle" value="User" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaAPI">
-			<var name="groupName" value="Global" />
 			<var name="resourceAction" value="UPDATE" />
 			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
 			<var name="roleTitle" value="User" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaAPI">
-			<var name="groupName" value="Global" />
 			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
 			<var name="resourceName" value="90" />
 			<var name="roleTitle" value="User" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaAPI">
-			<var name="groupName" value="Global" />
 			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
 			<var name="resourceName" value="com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet" />
 			<var name="roleTitle" value="User" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaAPI">
-			<var name="groupName" value="Global" />
 			<var name="resourceAction" value="VIEW" />
 			<var name="resourceName" value="com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet" />
 			<var name="roleTitle" value="User" />

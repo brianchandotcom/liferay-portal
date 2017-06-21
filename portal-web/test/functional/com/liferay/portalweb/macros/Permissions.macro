@@ -105,7 +105,7 @@
 
 	<command name="definePermissionViaAPI">
 		<execute macro="JSONResourcePermission#editPermission">
-			<var name="groupName" value="${groupName}" />
+			<var name="groupName" value="Global" />
 			<var name="method" value="add-resource-permission" />
 			<var name="resourceAction" value="${resourceAction}" />
 			<var name="resourceName" value="${resourceName}" />
@@ -149,7 +149,7 @@
 
 	<command name="removePermissionViaAPI">
 		<execute macro="JSONResourcePermission#editPermission">
-			<var name="groupName" value="${groupName}" />
+			<var name="groupName" value="Global" />
 			<var name="method" value="remove-resource-permission" />
 			<var name="resourceAction" value="${resourceAction}" />
 			<var name="resourceName" value="${resourceName}" />

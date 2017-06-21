@@ -690,7 +690,6 @@
 		</execute>
 
 		<execute macro="Permissions#definePermissionViaAPI">
-			<var name="groupName" value="Organization Name" />
 			<var name="resourceAction" value="DELETE" />
 			<var name="resourceName" value="com.liferay.blogs.model.BlogsEntry" />
 			<var name="roleTitle" value="Roles Orgrole Name" />
@@ -708,7 +707,6 @@
 		</execute>
 
 		<execute macro="Permissions#removePermissionViaAPI">
-			<var name="groupName" value="Organization Name" />
 			<var name="resourceAction" value="DELETE" />
 			<var name="resourceName" value="com.liferay.blogs.model.BlogsEntry" />
 			<var name="roleTitle" value="Roles Orgrole Name" />

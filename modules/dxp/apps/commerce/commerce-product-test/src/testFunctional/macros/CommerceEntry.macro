@@ -35,7 +35,7 @@
 		<execute function="Select" locator1="CommerceEntry#FIELD_TYPE_SELECT" value1="${optionFieldType}" />
 	</command>
 
-	<command name="editCatalogEntryBaseSKU">
+	<command name="editEntryBaseSKU">
 		<if>
 			<condition function="IsElementNotPresent" locator1="CommerceEntry#BASE_INFORMATION_TITLE_BAR" />
 			<then>
@@ -49,17 +49,17 @@
 		</if>
 	</command>
 
-	<command name="editCatalogEntryFullDescription">
+	<command name="editEntryFullDescription">
 		<execute macro="CommerceEntry#addFullDescriptionViaAlloyEditor">
 			<var name="entryFullDescription" value="${newProductFullDescription}" />
 		</execute>
 	</command>
 
-	<command name="editCatalogEntryShortDescription">
+	<command name="editEntryShortDescription">
 		<execute function="Type" locator1="CommerceEntry#SHORT_DESCRIPTION_FIELD" value1="${newProductShortDescription}" />
 	</command>
 
-	<command name="editCatalogEntryTitle">
+	<command name="editEntryTitle">
 		<execute function="Type" locator1="CommerceEntry#TITLE_FIELD" value1="${newProductTitle}" />
 	</command>
 

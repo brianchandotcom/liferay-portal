@@ -51,16 +51,16 @@
 
 	<command name="editEntryFullDescription">
 		<execute macro="CommerceEntry#addFullDescriptionViaAlloyEditor">
-			<var name="entryFullDescription" value="${newProductFullDescription}" />
+			<var name="entryFullDescription" value="${newEntryFullDescription}" />
 		</execute>
 	</command>
 
 	<command name="editEntryShortDescription">
-		<execute function="Type" locator1="CommerceEntry#SHORT_DESCRIPTION_FIELD" value1="${newProductShortDescription}" />
+		<execute function="Type" locator1="CommerceEntry#SHORT_DESCRIPTION_FIELD" value1="${newEntryShortDescription}" />
 	</command>
 
 	<command name="editEntryTitle">
-		<execute function="Type" locator1="CommerceEntry#TITLE_FIELD" value1="${newProductTitle}" />
+		<execute function="Type" locator1="CommerceEntry#TITLE_FIELD" value1="${newEntryTitle}" />
 	</command>
 
 	<command name="gotoEntryMenu">

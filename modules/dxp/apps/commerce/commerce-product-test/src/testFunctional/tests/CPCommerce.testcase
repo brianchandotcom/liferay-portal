@@ -36,8 +36,8 @@
 
 	<command name="AddCatalogEntryWithSingleImage" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="addMenu" value="Simple" />
 			<var name="baseSku" value="ProductSKU" />
+			<var name="plusMenu" value="Simple" />
 			<var name="productFullDescription" value="Product Full Description 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
@@ -46,7 +46,8 @@
 		<execute macro="CommerceCatalog#publishEntry" />
 
 		<execute macro="CommerceNavigator#gotoCatalogEntry">
-			<var name="productTitle" value="Product Title 1" />
+			<var name="entryTitle" value="Product Title 1" />
+			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceCatalogEntry#uploadCatalogEntrySingleImage">
@@ -217,24 +218,25 @@
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="addMenu" value="Simple" />
-			<var name="baseSku" value="ProductSKU" />
-			<var name="productFullDescription" value="Product Full Description 1" />
-			<var name="productShortDescription" value="Product Short Description 1" />
-			<var name="productTitle" value="Product Title 1" />
+			<var name="baseSku" value="Simple Product SKU" />
+			<var name="plusMenu" value="Simple" />
+			<var name="productFullDescription" value="Simple Product Full Description 1" />
+			<var name="productShortDescription" value="Simple Product Short Description 1" />
+			<var name="productTitle" value="Simple Product Title 1" />
 		</execute>
 
 		<execute macro="CommerceCatalog#publishEntry" />
 
 		<execute macro="CommerceNavigator#gotoCatalogEntry">
-			<var name="productTitle" value="Product Title 1" />
+			<var name="entryTitle" value="Simple Product Title 1" />
+			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceCatalogEntry#viewCatalogEntry">
-			<var name="baseSku" value="ProductSKU" />
-			<var name="productFullDescription" value="Product Full Description 1" />
-			<var name="productShortDescription" value="Product Short Description 1" />
-			<var name="productTitle" value="Product Title 1" />
+			<var name="baseSku" value="Simple Product SKU" />
+			<var name="productFullDescription" value="Simple Product Full Description 1" />
+			<var name="productShortDescription" value="Simple Product Short Description 1" />
+			<var name="productTitle" value="Simple Product Title 1" />
 		</execute>
 	</command>
 
@@ -242,11 +244,11 @@
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="addMenu" value="Simple" />
-			<var name="baseSku" value="ProductSKU" />
-			<var name="productFullDescription" value="Product Full Description 1" />
-			<var name="productShortDescription" value="Product Short Description 1" />
-			<var name="productTitle" value="Product Title 1" />
+			<var name="baseSku" value="Simple Product SKU" />
+			<var name="plusMenu" value="Simple" />
+			<var name="productFullDescription" value="Simple Product Full Description 1" />
+			<var name="productShortDescription" value="Simple Product Short Description 1" />
+			<var name="productTitle" value="Simple Product Title 1" />
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntryAsDraft" />
@@ -275,14 +277,13 @@
 		<execute macro="CommerceCatalog#saveEntryAsDraft" />
 
 		<execute macro="CommerceNavigator#gotoCatalogEntry">
-			<var name="productTitle" value="Product Title 1" />
+			<var name="entryTitle" value="Text Option Title 1" />
+			<var name="portlet" value="Options" />
 		</execute>
 
 		<execute macro="CommerceCatalogEntry#viewCatalogEntry">
-			<var name="baseSku" value="ProductSKU" />
-			<var name="productFullDescription" value="Product Full Description 1" />
-			<var name="productShortDescription" value="Product Short Description 1" />
-			<var name="productTitle" value="Product Title 1" />
+			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionName" value="Text Option Name 1" />
 			<var name="optionTitle" value="Text Option Title 1" />
 		</execute>
 	</command>
@@ -337,8 +338,8 @@
 
 	<command name="AssertCatalogEntriesSearchResultsNotInTrashBin" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="addMenu" value="Simple" />
 			<var name="baseSku" value="ProductSKU" />
+			<var name="plusMenu" value="Simple" />
 			<var name="productFullDescription" value="Product_Full_Description_1" />
 			<var name="productShortDescription" value="Product_Short_Description_1" />
 			<var name="productTitle" value="Product_Title_1" />
@@ -355,7 +356,7 @@
 		</execute>
 
 		<execute macro="CommerceNavigator#searchCatalogEntry">
-			<var name="productTitle" value="Product_Title_1" />
+			<var name="entryTitle" value="Product_Title_1" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" value1="Product_Title_1" />
@@ -364,8 +365,8 @@
 	<command name="DeleteAllCatalogEntriesViaCheckbox" priority="5">
 		<for list="1,2,3" param="entryNumber">
 			<execute macro="CommerceCatalog#addEntry">
-				<var name="addMenu" value="Simple" />
 				<var name="baseSku" value="ProductSKU ${entryNumber}" />
+				<var name="plusMenu" value="Simple" />
 				<var name="productFullDescription" value="Product Full Description ${entryNumber}" />
 				<var name="productShortDescription" value="Product Short Description ${entryNumber}" />
 				<var name="productTitle" value="Product Title ${entryNumber}" />
@@ -386,11 +387,9 @@
 	</command>
 
 	<command name="DeleteCatalogEntryViaCheckbox" priority="5">
-		<var name="portlet" value="Catalog" />
-
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="addMenu" value="Simple" />
 			<var name="baseSku" value="ProductSKU" />
+			<var name="plusMenu" value="Simple" />
 			<var name="productFullDescription" value="Product Full Description 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
@@ -409,8 +408,8 @@
 
 	<command name="EditCatalogEntry">
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="addMenu" value="Simple" />
 			<var name="baseSku" value="ProductSKU" />
+			<var name="plusMenu" value="Simple" />
 			<var name="productFullDescription" value="Product Full Description" />
 			<var name="productShortDescription" value="Product Short Description" />
 			<var name="productTitle" value="Product Title" />
@@ -419,11 +418,12 @@
 		<execute macro="CommerceCatalog#publishEntry" />
 
 		<execute macro="CommerceNavigator#gotoCatalogEntry">
-			<var name="productTitle" value="Product Title" />
+			<var name="entryTitle" value="Product Title" />
+			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceCatalogEntry#editCatalogEntryTitle">
-			<var name="newProductTitle" value="New Product Title" />
+			<var name="newEntryTitle" value="New Product Title" />
 		</execute>
 
 		<execute macro="CommerceCatalogEntry#editCatalogEntryShortDescription">
@@ -455,12 +455,13 @@
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="CommerceCatalog#PRODUCT_TITLE" value1="${newProductTitle}">
-			<var name="key_productTitle" value="New Product Title" />
+			<var name="key_entryTitle" value="New Product Title" />
 			<var name="newProductTitle" value="New Product Title" />
 		</execute>
 
 		<execute macro="CommerceNavigator#gotoCatalogEntry">
-			<var name="productTitle" value="New Product Title" />
+			<var name="entryTitle" value="New Product Title" />
+			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceCatalogEntry#viewCatalogEntry">
@@ -473,8 +474,8 @@
 
 	<command name="SetCatalogEntryExpirationDate" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="addMenu" value="Simple" />
 			<var name="baseSku" value="ProductSKU" />
+			<var name="plusMenu" value="Simple" />
 			<var name="productFullDescription" value="Product Full Description 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
@@ -483,7 +484,8 @@
 		<execute macro="CommerceCatalog#publishEntry" />
 
 		<execute macro="CommerceNavigator#gotoCatalogEntry">
-			<var name="productTitle" value="Product Title 1" />
+			<var name="entryTitle" value="Product Title 1" />
+			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="WebContent#addExpirationDateCP">
@@ -497,7 +499,8 @@
 		</execute>
 
 		<execute macro="CommerceNavigator#gotoCatalogEntry">
-			<var name="productTitle" value="Product Title 1" />
+			<var name="entryTitle" value="Product Title 1" />
+			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="TextInput#EXPIRATION_DATE" value1="01/02/3000" />

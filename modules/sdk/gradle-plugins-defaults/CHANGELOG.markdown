@@ -1595,6 +1595,14 @@ file from the master branch.
 ### Changed
 - [LPS-73156]: Update the [Liferay Gradle Plugins] dependency to version 3.3.31.
 
+## 3.7.9 - 2017-06-21
+
+### Changed
+- [LPS-73128]: Configure [Find Security Bugs] to report only medium and high
+confidence warnings.
+- [LPS-73128]: Update the [Find Security Bugs] dependency to version
+1.6.0.LIFERAY-PATCHED-3.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1762,6 +1770,7 @@ file from the master branch.
 [LPS-72914]: https://issues.liferay.com/browse/LPS-72914
 [LPS-72989]: https://issues.liferay.com/browse/LPS-72989
 [LPS-73058]: https://issues.liferay.com/browse/LPS-73058
+[LPS-73128]: https://issues.liferay.com/browse/LPS-73128
 [LPS-73148]: https://issues.liferay.com/browse/LPS-73148
 [LPS-73156]: https://issues.liferay.com/browse/LPS-73156
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594

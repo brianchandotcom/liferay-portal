@@ -14,6 +14,8 @@
 
 package com.liferay.powwow.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.powwow.service.http.PowwowParticipantServiceSoap
  * @generated
  */
+@ProviderType
 public class PowwowParticipantSoap implements Serializable {
 	public static PowwowParticipantSoap toSoapModel(PowwowParticipant model) {
 		PowwowParticipantSoap soapModel = new PowwowParticipantSoap();

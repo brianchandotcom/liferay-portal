@@ -14,7 +14,7 @@
 
 package com.liferay.powwow.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.powwow.model.PowwowParticipant;
 import com.liferay.powwow.service.PowwowParticipantLocalServiceUtil;
@@ -28,9 +28,10 @@ import com.liferay.powwow.service.PowwowParticipantLocalServiceUtil;
  *
  * @author Shinn Lok
  * @see PowwowParticipantImpl
- * @see com.liferay.powwow.model.PowwowParticipant
+ * @see PowwowParticipant
  * @generated
  */
+@ProviderType
 public abstract class PowwowParticipantBaseImpl
 	extends PowwowParticipantModelImpl implements PowwowParticipant {
 	/*
@@ -39,7 +40,7 @@ public abstract class PowwowParticipantBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a powwow participant model instance should use the {@link PowwowParticipant} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			PowwowParticipantLocalServiceUtil.addPowwowParticipant(this);
 		}

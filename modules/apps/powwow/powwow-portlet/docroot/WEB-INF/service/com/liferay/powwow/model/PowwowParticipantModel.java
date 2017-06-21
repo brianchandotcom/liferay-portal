@@ -14,14 +14,16 @@
 
 package com.liferay.powwow.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
-
-import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import java.io.Serializable;
 
@@ -40,8 +42,9 @@ import java.util.Date;
  * @see com.liferay.powwow.model.impl.PowwowParticipantModelImpl
  * @generated
  */
+@ProviderType
 public interface PowwowParticipantModel extends BaseModel<PowwowParticipant>,
-	GroupedModel {
+	GroupedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -128,10 +131,9 @@ public interface PowwowParticipantModel extends BaseModel<PowwowParticipant>,
 	 * Returns the user uuid of this powwow participant.
 	 *
 	 * @return the user uuid of this powwow participant
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this powwow participant.
@@ -237,9 +239,8 @@ public interface PowwowParticipantModel extends BaseModel<PowwowParticipant>,
 	 * Returns the participant user uuid of this powwow participant.
 	 *
 	 * @return the participant user uuid of this powwow participant
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getParticipantUserUuid() throws SystemException;
+	public String getParticipantUserUuid();
 
 	/**
 	 * Sets the participant user uuid of this powwow participant.
@@ -328,20 +329,19 @@ public interface PowwowParticipantModel extends BaseModel<PowwowParticipant>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.powwow.model.PowwowParticipant powwowParticipant);
+	public int compareTo(PowwowParticipant powwowParticipant);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.powwow.model.PowwowParticipant> toCacheModel();
+	public CacheModel<PowwowParticipant> toCacheModel();
 
 	@Override
-	public com.liferay.powwow.model.PowwowParticipant toEscapedModel();
+	public PowwowParticipant toEscapedModel();
 
 	@Override
-	public com.liferay.powwow.model.PowwowParticipant toUnescapedModel();
+	public PowwowParticipant toUnescapedModel();
 
 	@Override
 	public String toString();

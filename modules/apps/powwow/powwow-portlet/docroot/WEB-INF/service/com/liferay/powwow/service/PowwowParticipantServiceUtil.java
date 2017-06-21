@@ -14,9 +14,11 @@
 
 package com.liferay.powwow.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.kernel.service.InvokableService;
+import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for PowwowParticipant. This utility wraps
@@ -32,29 +34,34 @@ import com.liferay.portal.kernel.service.InvokableService;
  * @see com.liferay.powwow.service.impl.PowwowParticipantServiceImpl
  * @generated
  */
+@ProviderType
 public class PowwowParticipantServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.powwow.service.impl.PowwowParticipantServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
+	public static com.liferay.powwow.model.PowwowParticipant deletePowwowParticipant(
+		com.liferay.powwow.model.PowwowParticipant powwowParticipant)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePowwowParticipant(powwowParticipant);
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
+	public static com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
+		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
+		long participantUserId, java.lang.String emailAddress, int type,
+		int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updatePowwowParticipant(powwowParticipantId,
+			powwowMeetingId, name, participantUserId, emailAddress, type,
+			status, serviceContext);
+	}
+
+	public static int getPowwowParticipantsCount(long powwowMeetingId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPowwowParticipantsCount(powwowMeetingId);
 	}
 
 	public static java.lang.Object invokeMethod(java.lang.String name,
@@ -63,36 +70,19 @@ public class PowwowParticipantServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static com.liferay.powwow.model.PowwowParticipant deletePowwowParticipant(
-		com.liferay.powwow.model.PowwowParticipant powwowParticipant)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deletePowwowParticipant(powwowParticipant);
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.powwow.model.PowwowParticipant> getPowwowParticipants(
 		long powwowMeetingId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPowwowParticipants(powwowMeetingId);
-	}
-
-	public static int getPowwowParticipantsCount(long powwowMeetingId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getPowwowParticipantsCount(powwowMeetingId);
-	}
-
-	public static com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
-		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
-		long participantUserId, java.lang.String emailAddress, int type,
-		int status, com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .updatePowwowParticipant(powwowParticipantId,
-			powwowMeetingId, name, participantUserId, emailAddress, type,
-			status, serviceContext);
 	}
 
 	public static void clearService() {
@@ -116,12 +106,6 @@ public class PowwowParticipantServiceUtil {
 		}
 
 		return _service;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public void setService(PowwowParticipantService service) {
 	}
 
 	private static PowwowParticipantService _service;

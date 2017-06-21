@@ -14,22 +14,24 @@
 
 package com.liferay.powwow.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author Shinn Lok
+ * @generated
  */
+@ProviderType
 public class PowwowMeetingFinderUtil {
-	public static int countByU_S(long userId, int[] statuses)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByU_S(long userId, int[] statuses) {
 		return getFinder().countByU_S(userId, statuses);
 	}
 
 	public static java.util.List<com.liferay.powwow.model.PowwowMeeting> findByU_S(
 		long userId, int[] statuses, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getFinder()
 				   .findByU_S(userId, statuses, start, end, orderByComparator);
 	}

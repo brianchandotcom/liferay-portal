@@ -14,13 +14,18 @@
 
 package com.liferay.powwow.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.impl.BaseModelImpl;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.powwow.service.ClpSerializer;
 import com.liferay.powwow.service.PowwowServerLocalServiceUtil;
@@ -34,8 +39,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Shinn Lok
+ * @generated
  */
+@ProviderType
 public class PowwowServerClp extends BaseModelImpl<PowwowServer>
 	implements PowwowServer {
 	public PowwowServerClp() {
@@ -87,6 +93,9 @@ public class PowwowServerClp extends BaseModelImpl<PowwowServer>
 		attributes.put("apiKey", getApiKey());
 		attributes.put("secret", getSecret());
 		attributes.put("active", getActive());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -164,6 +173,9 @@ public class PowwowServerClp extends BaseModelImpl<PowwowServer>
 		if (active != null) {
 			setActive(active);
 		}
+
+		_entityCacheEnabled = GetterUtil.getBoolean("entityCacheEnabled");
+		_finderCacheEnabled = GetterUtil.getBoolean("finderCacheEnabled");
 	}
 
 	@Override
@@ -236,13 +248,19 @@ public class PowwowServerClp extends BaseModelImpl<PowwowServer>
 	}
 
 	@Override
-	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
 	@Override
@@ -507,7 +525,7 @@ public class PowwowServerClp extends BaseModelImpl<PowwowServer>
 	}
 
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			PowwowServerLocalServiceUtil.addPowwowServer(this);
 		}
@@ -584,6 +602,16 @@ public class PowwowServerClp extends BaseModelImpl<PowwowServer>
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _entityCacheEnabled;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -684,7 +712,6 @@ public class PowwowServerClp extends BaseModelImpl<PowwowServer>
 	private long _powwowServerId;
 	private long _companyId;
 	private long _userId;
-	private String _userUuid;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -695,5 +722,7 @@ public class PowwowServerClp extends BaseModelImpl<PowwowServer>
 	private String _secret;
 	private boolean _active;
 	private BaseModel<?> _powwowServerRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.powwow.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
+	private boolean _entityCacheEnabled;
+	private boolean _finderCacheEnabled;
 }

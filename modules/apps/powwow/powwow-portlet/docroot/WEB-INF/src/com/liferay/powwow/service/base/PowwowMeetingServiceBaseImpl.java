@@ -15,13 +15,16 @@
 package com.liferay.powwow.service.base;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.service.PowwowMeetingService;
@@ -45,7 +48,7 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
-	implements PowwowMeetingService, IdentifiableBean {
+	implements PowwowMeetingService, IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -76,7 +79,7 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the powwow meeting remote service
 	 */
-	public com.liferay.powwow.service.PowwowMeetingService getPowwowMeetingService() {
+	public PowwowMeetingService getPowwowMeetingService() {
 		return powwowMeetingService;
 	}
 
@@ -86,7 +89,7 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 * @param powwowMeetingService the powwow meeting remote service
 	 */
 	public void setPowwowMeetingService(
-		com.liferay.powwow.service.PowwowMeetingService powwowMeetingService) {
+		PowwowMeetingService powwowMeetingService) {
 		this.powwowMeetingService = powwowMeetingService;
 	}
 
@@ -227,7 +230,7 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -237,7 +240,7 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -383,23 +386,13 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
+	public String getOSGiServiceIdentifier() {
+		return PowwowMeetingService.class.getName();
 	}
 
 	@Override
@@ -432,16 +425,21 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Performs an SQL query.
+	 * Performs a SQL query.
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = powwowMeetingPersistence.getDataSource();
 
+			DB db = DBManagerUtil.getDB();
+
+			sql = db.buildSQL(sql);
+			sql = PortalUtil.transformSQL(sql);
+
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql, new int[0]);
+					sql);
 
 			sqlUpdate.update();
 		}
@@ -452,8 +450,8 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.powwow.service.PowwowMeetingLocalService.class)
 	protected com.liferay.powwow.service.PowwowMeetingLocalService powwowMeetingLocalService;
-	@BeanReference(type = com.liferay.powwow.service.PowwowMeetingService.class)
-	protected com.liferay.powwow.service.PowwowMeetingService powwowMeetingService;
+	@BeanReference(type = PowwowMeetingService.class)
+	protected PowwowMeetingService powwowMeetingService;
 	@BeanReference(type = PowwowMeetingPersistence.class)
 	protected PowwowMeetingPersistence powwowMeetingPersistence;
 	@BeanReference(type = PowwowMeetingFinder.class)
@@ -468,8 +466,8 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.powwow.service.PowwowServerLocalService powwowServerLocalService;
 	@BeanReference(type = PowwowServerPersistence.class)
 	protected PowwowServerPersistence powwowServerPersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
-	protected com.liferay.counter.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
@@ -484,7 +482,6 @@ public abstract class PowwowMeetingServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.kernel.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private String _beanIdentifier;
 	private ClassLoader _classLoader;
 	private PowwowMeetingServiceClpInvoker _clpInvoker = new PowwowMeetingServiceClpInvoker();
 }

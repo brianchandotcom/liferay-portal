@@ -14,6 +14,8 @@
 
 package com.liferay.powwow.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -23,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.powwow.service.PowwowMeetingServiceUtil} service utility. The
+ * {@link PowwowMeetingServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -58,9 +60,10 @@ import java.rmi.RemoteException;
  * @author Shinn Lok
  * @see PowwowMeetingServiceHttp
  * @see com.liferay.powwow.model.PowwowMeetingSoap
- * @see com.liferay.powwow.service.PowwowMeetingServiceUtil
+ * @see PowwowMeetingServiceUtil
  * @generated
  */
+@ProviderType
 public class PowwowMeetingServiceSoap {
 	public static com.liferay.powwow.model.PowwowMeetingSoap deletePowwowMeeting(
 		long powwowMeetingId) throws RemoteException {

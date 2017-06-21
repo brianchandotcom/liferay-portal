@@ -14,6 +14,8 @@
 
 package com.liferay.powwow.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.powwow.service.PowwowParticipantServiceUtil;
 
 import java.util.Arrays;
@@ -22,33 +24,30 @@ import java.util.Arrays;
  * @author Shinn Lok
  * @generated
  */
+@ProviderType
 public class PowwowParticipantServiceClpInvoker {
 	public PowwowParticipantServiceClpInvoker() {
-		_methodName36 = "getBeanIdentifier";
+		_methodName36 = "getOSGiServiceIdentifier";
 
 		_methodParameterTypes36 = new String[] {  };
 
-		_methodName37 = "setBeanIdentifier";
+		_methodName41 = "deletePowwowParticipant";
 
-		_methodParameterTypes37 = new String[] { "java.lang.String" };
-
-		_methodName42 = "deletePowwowParticipant";
-
-		_methodParameterTypes42 = new String[] {
+		_methodParameterTypes41 = new String[] {
 				"com.liferay.powwow.model.PowwowParticipant"
 			};
 
-		_methodName43 = "getPowwowParticipants";
+		_methodName42 = "getPowwowParticipants";
+
+		_methodParameterTypes42 = new String[] { "long" };
+
+		_methodName43 = "getPowwowParticipantsCount";
 
 		_methodParameterTypes43 = new String[] { "long" };
 
-		_methodName44 = "getPowwowParticipantsCount";
+		_methodName44 = "updatePowwowParticipant";
 
-		_methodParameterTypes44 = new String[] { "long" };
-
-		_methodName45 = "updatePowwowParticipant";
-
-		_methodParameterTypes45 = new String[] {
+		_methodParameterTypes44 = new String[] {
 				"long", "long", "java.lang.String", "long", "java.lang.String",
 				"int", "int", "com.liferay.portal.kernel.service.ServiceContext"
 			};
@@ -58,33 +57,26 @@ public class PowwowParticipantServiceClpInvoker {
 		Object[] arguments) throws Throwable {
 		if (_methodName36.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes36, parameterTypes)) {
-			return PowwowParticipantServiceUtil.getBeanIdentifier();
+			return PowwowParticipantServiceUtil.getOSGiServiceIdentifier();
 		}
 
-		if (_methodName37.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes37, parameterTypes)) {
-			PowwowParticipantServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
-
-			return null;
+		if (_methodName41.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes41, parameterTypes)) {
+			return PowwowParticipantServiceUtil.deletePowwowParticipant((com.liferay.powwow.model.PowwowParticipant)arguments[0]);
 		}
 
 		if (_methodName42.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
-			return PowwowParticipantServiceUtil.deletePowwowParticipant((com.liferay.powwow.model.PowwowParticipant)arguments[0]);
+			return PowwowParticipantServiceUtil.getPowwowParticipants(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName43.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
-			return PowwowParticipantServiceUtil.getPowwowParticipants(((Long)arguments[0]).longValue());
+			return PowwowParticipantServiceUtil.getPowwowParticipantsCount(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName44.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
-			return PowwowParticipantServiceUtil.getPowwowParticipantsCount(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName45.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
 			return PowwowParticipantServiceUtil.updatePowwowParticipant(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2],
@@ -100,14 +92,12 @@ public class PowwowParticipantServiceClpInvoker {
 
 	private String _methodName36;
 	private String[] _methodParameterTypes36;
-	private String _methodName37;
-	private String[] _methodParameterTypes37;
+	private String _methodName41;
+	private String[] _methodParameterTypes41;
 	private String _methodName42;
 	private String[] _methodParameterTypes42;
 	private String _methodName43;
 	private String[] _methodParameterTypes43;
 	private String _methodName44;
 	private String[] _methodParameterTypes44;
-	private String _methodName45;
-	private String[] _methodParameterTypes45;
 }

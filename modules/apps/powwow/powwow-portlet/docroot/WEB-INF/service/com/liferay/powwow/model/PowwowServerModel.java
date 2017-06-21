@@ -14,14 +14,16 @@
 
 package com.liferay.powwow.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
-
-import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import java.io.Serializable;
 
@@ -40,7 +42,9 @@ import java.util.Date;
  * @see com.liferay.powwow.model.impl.PowwowServerModelImpl
  * @generated
  */
-public interface PowwowServerModel extends AuditedModel, BaseModel<PowwowServer> {
+@ProviderType
+public interface PowwowServerModel extends AuditedModel, BaseModel<PowwowServer>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -111,10 +115,9 @@ public interface PowwowServerModel extends AuditedModel, BaseModel<PowwowServer>
 	 * Returns the user uuid of this powwow server.
 	 *
 	 * @return the user uuid of this powwow server
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this powwow server.
@@ -306,19 +309,19 @@ public interface PowwowServerModel extends AuditedModel, BaseModel<PowwowServer>
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.powwow.model.PowwowServer powwowServer);
+	public int compareTo(PowwowServer powwowServer);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.powwow.model.PowwowServer> toCacheModel();
+	public CacheModel<PowwowServer> toCacheModel();
 
 	@Override
-	public com.liferay.powwow.model.PowwowServer toEscapedModel();
+	public PowwowServer toEscapedModel();
 
 	@Override
-	public com.liferay.powwow.model.PowwowServer toUnescapedModel();
+	public PowwowServer toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -27,128 +27,133 @@ import java.util.List;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPDefinitionLinkServiceImpl extends CPDefinitionLinkServiceBaseImpl {
+public class CPDefinitionLinkServiceImpl
+	extends CPDefinitionLinkServiceBaseImpl {
 
-    @Override
-    public CPDefinitionLink addCPDefinitionLink(
-            long cpDefinitionId1, long cpDefinitionId2, double priority,
-            int type, ServiceContext serviceContext)
-        throws PortalException {
+	@Override
+	public CPDefinitionLink addCPDefinitionLink(
+			long cpDefinitionId1, long cpDefinitionId2, double priority,
+			int type, ServiceContext serviceContext)
+		throws PortalException {
 
-        CPDefinitionPermission.check(
-            getPermissionChecker(), cpDefinitionId1, ActionKeys.UPDATE);
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId1, ActionKeys.UPDATE);
 
-        CPDefinitionPermission.check(
-            getPermissionChecker(), cpDefinitionId2, ActionKeys.VIEW);
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId2, ActionKeys.VIEW);
 
-        return cpDefinitionLinkLocalService.addCPDefinitionLink(
-            cpDefinitionId1, cpDefinitionId2, priority, type, serviceContext);
-    }
+		return cpDefinitionLinkLocalService.addCPDefinitionLink(
+			cpDefinitionId1, cpDefinitionId2, priority, type, serviceContext);
+	}
 
-    @Override
-    public CPDefinitionLink deleteCPDefinitionLink(
-            CPDefinitionLink cpDefinitionLink) throws PortalException {
+	@Override
+	public CPDefinitionLink deleteCPDefinitionLink(
+			CPDefinitionLink cpDefinitionLink)
+		throws PortalException {
 
-        CPDefinitionPermission.checkCPDefinitionLink(
-            getPermissionChecker(), cpDefinitionLink, ActionKeys.UPDATE);
+		CPDefinitionPermission.checkCPDefinitionLink(
+			getPermissionChecker(), cpDefinitionLink, ActionKeys.UPDATE);
 
-        return cpDefinitionLinkLocalService.deleteCPDefinitionLink(
-            cpDefinitionLink);
-    }
+		return cpDefinitionLinkLocalService.deleteCPDefinitionLink(
+			cpDefinitionLink);
+	}
 
-    @Override
-    public CPDefinitionLink deleteCPDefinitionLink(long cpDefinitionLinkId)
-        throws PortalException {
+	@Override
+	public CPDefinitionLink deleteCPDefinitionLink(long cpDefinitionLinkId)
+		throws PortalException {
 
-        CPDefinitionPermission.checkCPDefinitionLink(
-            getPermissionChecker(), cpDefinitionLinkId, ActionKeys.UPDATE);
+		CPDefinitionPermission.checkCPDefinitionLink(
+			getPermissionChecker(), cpDefinitionLinkId, ActionKeys.UPDATE);
 
-        return cpDefinitionLinkLocalService.deleteCPDefinitionLink(
-            cpDefinitionLinkId);
-    }
+		return cpDefinitionLinkLocalService.deleteCPDefinitionLink(
+			cpDefinitionLinkId);
+	}
 
-    @Override
-    public CPDefinitionLink fetchCPDefinitionLink(long cpDefinitionLinkId)
-        throws PortalException {
+	@Override
+	public CPDefinitionLink fetchCPDefinitionLink(long cpDefinitionLinkId)
+		throws PortalException {
 
-        CPDefinitionLink cpDefinitionLink =
-            cpDefinitionLinkLocalService.fetchCPDefinitionLink(
-                cpDefinitionLinkId);
+		CPDefinitionLink cpDefinitionLink =
+			cpDefinitionLinkLocalService.fetchCPDefinitionLink(
+				cpDefinitionLinkId);
 
-        if (cpDefinitionLink != null) {
-            CPDefinitionPermission.checkCPDefinitionLink(
-                getPermissionChecker(), cpDefinitionLink, ActionKeys.VIEW);
-        }
+		if (cpDefinitionLink != null) {
+			CPDefinitionPermission.checkCPDefinitionLink(
+				getPermissionChecker(), cpDefinitionLink, ActionKeys.VIEW);
+		}
 
-        return cpDefinitionLink;
-    }
+		return cpDefinitionLink;
+	}
 
-    @Override
-    public CPDefinitionLink getCPDefinitionLink(long cpDefinitionLinkId)
-        throws PortalException {
+	@Override
+	public CPDefinitionLink getCPDefinitionLink(long cpDefinitionLinkId)
+		throws PortalException {
 
-        CPDefinitionPermission.checkCPDefinitionLink(
-            getPermissionChecker(), cpDefinitionLinkId, ActionKeys.VIEW);
+		CPDefinitionPermission.checkCPDefinitionLink(
+			getPermissionChecker(), cpDefinitionLinkId, ActionKeys.VIEW);
 
-        return cpDefinitionLinkLocalService.getCPDefinitionLink(
-            cpDefinitionLinkId);
-    }
+		return cpDefinitionLinkLocalService.getCPDefinitionLink(
+			cpDefinitionLinkId);
+	}
 
-    @Override
-    public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
-        throws PortalException {
+	@Override
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
+		throws PortalException {
 
-        CPDefinitionPermission.check(
-            getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
-        return cpDefinitionLinkLocalService.getCPDefinitionLinks(
-            cpDefinitionId);
-    }
+		return cpDefinitionLinkLocalService.getCPDefinitionLinks(
+			cpDefinitionId);
+	}
 
-    @Override
-    public List<CPDefinitionLink> getCPDefinitionLinks(
-            long cpDefinitionId, int start, int end,
-            OrderByComparator<CPDefinitionLink> orderByComparator)
-        throws PortalException {
+	@Override
+	public List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId, int start, int end,
+			OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws PortalException {
 
-        CPDefinitionPermission.check(
-            getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
-        return cpDefinitionLinkLocalService.getCPDefinitionLinks(
-            cpDefinitionId, start, end, orderByComparator);
-    }
+		return cpDefinitionLinkLocalService.getCPDefinitionLinks(
+			cpDefinitionId, start, end, orderByComparator);
+	}
 
-    @Override
-    public int getCPDefinitionLinksCount(long cpDefinitionId)
-        throws PortalException {
+	@Override
+	public int getCPDefinitionLinksCount(long cpDefinitionId)
+		throws PortalException {
 
-        CPDefinitionPermission.check(
-            getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
-        return cpDefinitionLinkLocalService.getCPDefinitionLinksCount(cpDefinitionId);
-    }
+		return cpDefinitionLinkLocalService.getCPDefinitionLinksCount(
+			cpDefinitionId);
+	}
 
-    @Override
-    public CPDefinitionLink updateCPDefinitionLink(
-        long cpDefinitionLinkId, double priority) throws PortalException {
+	@Override
+	public CPDefinitionLink updateCPDefinitionLink(
+			long cpDefinitionLinkId, double priority)
+		throws PortalException {
 
-        CPDefinitionPermission.checkCPDefinitionLink(
-            getPermissionChecker(), cpDefinitionLinkId, ActionKeys.UPDATE);
+		CPDefinitionPermission.checkCPDefinitionLink(
+			getPermissionChecker(), cpDefinitionLinkId, ActionKeys.UPDATE);
 
-        return cpDefinitionLinkLocalService.updateCPDefinitionLink(
-            cpDefinitionLinkId, priority);
-    }
+		return cpDefinitionLinkLocalService.updateCPDefinitionLink(
+			cpDefinitionLinkId, priority);
+	}
 
-    @Override
-    public void updateCPDefinitionLinks(
-            long cpDefinitionId, long[] cpDefinitionLinkEntryIds, int type,
-            ServiceContext serviceContext)
-        throws PortalException {
+	@Override
+	public void updateCPDefinitionLinks(
+			long cpDefinitionId, long[] cpDefinitionLinkEntryIds, int type,
+			ServiceContext serviceContext)
+		throws PortalException {
 
-        CPDefinitionPermission.check(
-            getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
-        cpDefinitionLinkLocalService.updateCPDefinitionLinks(
-            cpDefinitionId, cpDefinitionLinkEntryIds, type, serviceContext);
-    }
+		cpDefinitionLinkLocalService.updateCPDefinitionLinks(
+			cpDefinitionId, cpDefinitionLinkEntryIds, type, serviceContext);
+	}
+
 }

@@ -61,7 +61,8 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Override
 	public CPDefinitionLink deleteCPDefinitionLink(
-			CPDefinitionLink cpDefinitionLink) throws PortalException {
+			CPDefinitionLink cpDefinitionLink)
+		throws PortalException {
 
 		return cpDefinitionLinkPersistence.remove(cpDefinitionLink);
 	}
@@ -85,12 +86,12 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId, int start, int end,
-		OrderByComparator<CPDefinitionLink> orderByComparator)
-	throws PortalException {
+			long cpDefinitionId, int start, int end,
+			OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws PortalException {
 
 		return cpDefinitionLinkPersistence.findByC1(
-				cpDefinitionId, start, end, orderByComparator);
+			cpDefinitionId, start, end, orderByComparator);
 	}
 
 	@Override
@@ -102,7 +103,8 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Override
 	public CPDefinitionLink updateCPDefinitionLink(
-		long cpDefinitionLinkId, double priority) throws PortalException {
+			long cpDefinitionLinkId, double priority)
+		throws PortalException {
 
 		CPDefinitionLink cpDefinitionLink =
 			cpDefinitionLinkPersistence.findByPrimaryKey(cpDefinitionLinkId);
@@ -128,8 +130,10 @@ public class CPDefinitionLinkLocalServiceImpl
 			cpDefinitionId);
 
 		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
-			if (((cpDefinitionLink.getCPDefinitionId1() == cpDefinitionId) &&
-				!ArrayUtil.contains(cpDefinitionLinkEntryIds, cpDefinitionLink.getCPDefinitionId2()))) {
+			if ((cpDefinitionLink.getCPDefinitionId1() == cpDefinitionId) &&
+				!ArrayUtil.contains(
+					cpDefinitionLinkEntryIds,
+					cpDefinitionLink.getCPDefinitionId2())) {
 
 				deleteCPDefinitionLink(cpDefinitionLink);
 			}
@@ -149,4 +153,5 @@ public class CPDefinitionLinkLocalServiceImpl
 			}
 		}
 	}
+
 }

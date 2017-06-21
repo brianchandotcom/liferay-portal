@@ -30,12 +30,13 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -48,8 +49,7 @@ import javax.portlet.PortletURL;
 	},
 	service = MVCActionCommand.class
 )
-public class EditCPDefinitionLinkMVCActionCommand
-	extends BaseMVCActionCommand {
+public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void addCPDefinitionLinks(ActionRequest actionRequest)
 		throws Exception {
@@ -58,7 +58,8 @@ public class EditCPDefinitionLinkMVCActionCommand
 
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
-		long cpDefinitionLinkId = ParamUtil.getLong(actionRequest, "cpDefinitionLinkId");
+		long cpDefinitionLinkId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionLinkId");
 
 		if (cpDefinitionLinkId > 0) {
 			addCPDefinitionIds = new long[] {cpDefinitionLinkId};
@@ -88,15 +89,14 @@ public class EditCPDefinitionLinkMVCActionCommand
 		}
 		else {
 			deleteCPDefinitionLinkIds = StringUtil.split(
-				ParamUtil.getString(
-					actionRequest, "deleteCPDefinitionLinkIds"), 0L);
+				ParamUtil.getString(actionRequest, "deleteCPDefinitionLinkIds"),
+				0L);
 		}
 
 		for (long deleteCPDefinitionLinkId : deleteCPDefinitionLinkIds) {
 			_cpDefinitionLinkService.deleteCPDefinitionLink(
 				deleteCPDefinitionLinkId);
 		}
-
 	}
 
 	@Override
@@ -110,6 +110,7 @@ public class EditCPDefinitionLinkMVCActionCommand
 			actionRequest, "cpDefinitionId");
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
 		String backURL = ParamUtil.getString(
 			actionRequest, "backURL", redirect);
 

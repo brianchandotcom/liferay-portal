@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_3.util;
+package com.liferay.portal.upgrade.v7_0_4.util;
 
 import java.sql.Types;
 

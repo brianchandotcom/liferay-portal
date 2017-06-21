@@ -17,6 +17,21 @@ package com.liferay.poshi.runner.util;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.URI;
+import java.net.URL;
+
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -46,6 +61,72 @@ public class FileUtil {
 		File file = new File(fileName);
 
 		return exists(file);
+	}
+
+	public static List<URL> getIncludedResourceURLs(
+			FileSystem fileSystem, String[] includes, String... basedirs)
+		throws IOException {
+
+		final List<PathMatcher> pathMatchers = new ArrayList<>();
+
+		for (String include : includes) {
+			if (OSDetector.isWindows()) {
+				include = include.replace("/", "\\");
+			}
+
+			pathMatchers.add(fileSystem.getPathMatcher("glob:" + include));
+		}
+
+		final List<URL> filePaths = new ArrayList<>();
+
+		for (String basedir : basedirs) {
+			if (Validator.isNull(basedir)) {
+				continue;
+			}
+
+			Path path = fileSystem.getPath(basedir);
+
+			if (!Files.exists(path)) {
+				System.out.println("Directory " + basedir + " does not exist.");
+
+				continue;
+			}
+
+			Files.walkFileTree(
+				path,
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult visitFile(
+							Path filePath,
+							BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						for (PathMatcher pathMatcher : pathMatchers) {
+							URI uri = filePath.toUri();
+
+							if (pathMatcher.matches(filePath)) {
+								filePaths.add(uri.toURL());
+
+								break;
+							}
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+		}
+
+		return filePaths;
+	}
+
+	public static List<URL> getIncludedResourceURLs(
+			String[] includes, String... basedirs)
+		throws IOException {
+
+		return getIncludedResourceURLs(
+			FileSystems.getDefault(), includes, basedirs);
 	}
 
 	public static String getSeparator() {

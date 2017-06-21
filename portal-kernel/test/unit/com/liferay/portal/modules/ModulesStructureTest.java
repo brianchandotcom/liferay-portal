@@ -877,6 +877,13 @@ public class ModulesStructureTest {
 		String settingsGradle = ModulesStructureTestUtil.read(
 			settingsGradlePath);
 
+		if (Files.notExists(dirPath.resolve("settings-ext.gradle"))) {
+			settingsGradleTemplate = StringUtil.removeSubstring(
+				settingsGradleTemplate,
+				StringPool.NEW_LINE + StringPool.NEW_LINE +
+					"apply from: \"settings-ext.gradle\"");
+		}
+
 		Assert.assertEquals(
 			"Incorrect " + settingsGradlePath, settingsGradleTemplate,
 			settingsGradle);

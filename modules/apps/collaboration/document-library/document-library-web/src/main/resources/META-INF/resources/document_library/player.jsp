@@ -70,7 +70,7 @@ for (String previewFileURL : previewFileURLs) {
 	</c:when>
 	<c:when test="<%= supportedVideo %>">
 		<aui:script use="aui-base,aui-video">
-			new A.Video(
+			var video = new A.Video(
 				{
 					contentBox: '#<portlet:namespace /><%= randomNamespace %>previewFileContent',
 					fixedAttributes: {
@@ -96,6 +96,13 @@ for (String previewFileURL : previewFileURLs) {
 					</c:if>
 				}
 			).render();
+
+			window.parent.Liferay.on(
+				'<portlet:namespace /><%= randomNamespace %>ImageViewer:currentIndexChange',
+				function() {
+					video.pause();
+				}
+			);
 		</aui:script>
 	</c:when>
 </c:choose>

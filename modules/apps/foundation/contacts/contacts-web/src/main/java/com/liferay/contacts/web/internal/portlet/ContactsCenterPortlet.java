@@ -1189,10 +1189,6 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
 
-		if (deleteLogo) {
-			userService.deletePortrait(user.getUserId());
-		}
-
 		byte[] portraitBytes = null;
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");

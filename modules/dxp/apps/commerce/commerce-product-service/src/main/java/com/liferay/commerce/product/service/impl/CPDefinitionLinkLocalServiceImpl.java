@@ -19,8 +19,11 @@ import com.liferay.commerce.product.service.base.CPDefinitionLinkLocalServiceBas
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
@@ -30,7 +33,7 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Override
 	public CPDefinitionLink addCPDefinitionLink(
-			long cpDefinitionId1, long cpDefinitionId2, int displayOrder,
+			long cpDefinitionId1, long cpDefinitionId2, double priority,
 			int type, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -48,7 +51,7 @@ public class CPDefinitionLinkLocalServiceImpl
 		cpDefinitionLink.setCreateDate(now);
 		cpDefinitionLink.setCPDefinitionId1(cpDefinitionId1);
 		cpDefinitionLink.setCPDefinitionId2(cpDefinitionId2);
-		cpDefinitionLink.setDisplayOrder(displayOrder);
+		cpDefinitionLink.setPriority(priority);
 		cpDefinitionLink.setType(type);
 
 		cpDefinitionLinkPersistence.update(cpDefinitionLink);
@@ -71,5 +74,79 @@ public class CPDefinitionLinkLocalServiceImpl
 			cpDefinitionLinkPersistence.findByPrimaryKey(cpDefinitionLinkId);
 
 		return deleteCPDefinitionLink(cpDefinitionLink);
+	}
+
+	@Override
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
+		throws PortalException {
+
+		return cpDefinitionLinkPersistence.findByC1(cpDefinitionId);
+	}
+
+	@Override
+	public List<CPDefinitionLink> getCPDefinitionLinks(
+		long cpDefinitionId, int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
+	throws PortalException {
+
+		return cpDefinitionLinkPersistence.findByC1(
+				cpDefinitionId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCPDefinitionLinksCount(long cpDefinitionId)
+		throws PortalException {
+
+		return cpDefinitionLinkPersistence.countByC1(cpDefinitionId);
+	}
+
+	@Override
+	public CPDefinitionLink updateCPDefinitionLink(
+		long cpDefinitionLinkId, double priority) throws PortalException {
+
+		CPDefinitionLink cpDefinitionLink =
+			cpDefinitionLinkPersistence.findByPrimaryKey(cpDefinitionLinkId);
+
+		cpDefinitionLink.setPriority(priority);
+
+		cpDefinitionLinkPersistence.update(cpDefinitionLink);
+
+		return cpDefinitionLink;
+	}
+
+	@Override
+	public void updateCPDefinitionLinks(
+			long cpDefinitionId, long[] cpDefinitionLinkEntryIds, int type,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (cpDefinitionLinkEntryIds == null) {
+			return;
+		}
+
+		List<CPDefinitionLink> cpDefinitionLinks = getCPDefinitionLinks(
+			cpDefinitionId);
+
+		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
+			if (((cpDefinitionLink.getCPDefinitionId1() == cpDefinitionId) &&
+				!ArrayUtil.contains(cpDefinitionLinkEntryIds, cpDefinitionLink.getCPDefinitionId2()))) {
+
+				deleteCPDefinitionLink(cpDefinitionLink);
+			}
+		}
+
+		for (long cpDefinitionLinkEntryId : cpDefinitionLinkEntryIds) {
+			if (cpDefinitionLinkEntryId != cpDefinitionId) {
+				CPDefinitionLink cpDefinitionLink =
+					cpDefinitionLinkPersistence.fetchByC_C_T(
+						cpDefinitionId, cpDefinitionLinkEntryId, type);
+
+				if (cpDefinitionLink == null) {
+					addCPDefinitionLink(
+						cpDefinitionId, cpDefinitionLinkEntryId, 0, type,
+						serviceContext);
+				}
+			}
+		}
 	}
 }

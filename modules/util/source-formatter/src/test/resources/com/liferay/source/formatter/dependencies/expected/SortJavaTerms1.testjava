@@ -97,7 +97,7 @@ public class SortJavaTerms1 {
 
 	private static final String _VARIABLE_NAME_6 = "test";
 
-	private final String _var5;
+	private String _var5;
 	private final String _var12;
 
 	private static class Class2 {

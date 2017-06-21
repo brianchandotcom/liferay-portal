@@ -30,6 +30,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -249,10 +251,9 @@ public class PoshiRunnerGetterUtil {
 		return getCanonicalPath(PropsValues.PROJECT_DIR);
 	}
 
-	public static Element getRootElementFromFilePath(String filePath)
-		throws Exception {
-
-		String fileContent = FileUtil.read(filePath);
+	public static Element getRootElementFromURL(URL url) throws Exception {
+		String fileContent = FileUtil.read(url);
+		String filePath = url.getFile();
 
 		if (!fileContent.contains("<definition") &&
 			filePath.endsWith(".testcase")) {
@@ -263,14 +264,13 @@ public class PoshiRunnerGetterUtil {
 			fileContent = Dom4JUtil.format(element);
 		}
 
-		boolean cdata = false;
-		int lineNumber = 1;
-		StringBuilder sb = new StringBuilder();
-
 		BufferedReader bufferedReader = new BufferedReader(
 			new StringReader(fileContent));
 
+		boolean cdata = false;
 		String line = null;
+		int lineNumber = 1;
+		StringBuilder sb = new StringBuilder();
 
 		while ((line = bufferedReader.readLine()) != null) {
 			Matcher matcher = _tagPattern.matcher(line);

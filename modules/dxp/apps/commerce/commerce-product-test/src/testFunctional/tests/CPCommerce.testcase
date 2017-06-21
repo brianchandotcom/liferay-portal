@@ -102,6 +102,30 @@
 		</execute>
 	</command>
 
+	<command name="AddGroupCatalogEntryWithSingleImage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="CommerceCatalog#addEntry">
+			<var name="baseSku" value="ProductSKU" />
+			<var name="plusMenu" value="Group" />
+			<var name="productFullDescription" value="Product Full Description 1" />
+			<var name="productShortDescription" value="Product Short Description 1" />
+			<var name="productTitle" value="Product Title 1" />
+		</execute>
+
+		<execute macro="CommerceEntry#publishEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Product Title 1" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#uploadCatalogEntrySingleImage">
+			<var name="menuTab" value="Images" />
+			<var name="uploadFileName" value="high_resolution_photo.jpg" />
+		</execute>
+	</command>
+
 	<command name="AddGroupDraftCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="Group Product SKU" />
@@ -307,6 +331,30 @@
 			<var name="productFullDescription" value="Virtual Product Full Description 1" />
 			<var name="productShortDescription" value="Virtual Product Short Description 1" />
 			<var name="productTitle" value="Virtual Product Title 1" />
+		</execute>
+	</command>
+
+	<command name="AddVirtualCatalogEntryWithSingleImage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="CommerceCatalog#addEntry">
+			<var name="baseSku" value="ProductSKU" />
+			<var name="plusMenu" value="Virtual" />
+			<var name="productFullDescription" value="Product Full Description 1" />
+			<var name="productShortDescription" value="Product Short Description 1" />
+			<var name="productTitle" value="Product Title 1" />
+		</execute>
+
+		<execute macro="CommerceEntry#publishEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Product Title 1" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#uploadCatalogEntrySingleImage">
+			<var name="menuTab" value="Images" />
+			<var name="uploadFileName" value="high_resolution_photo.jpg" />
 		</execute>
 	</command>
 

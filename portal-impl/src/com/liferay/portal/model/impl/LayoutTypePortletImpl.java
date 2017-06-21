@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -978,7 +979,7 @@ public class LayoutTypePortletImpl
 
 		UnicodeProperties newTypeSettingsProperties = new UnicodeProperties();
 
-		String nestedPortletIds = null;
+		String nestedPortletIds = "";
 
 		for (Map.Entry<String, String> entry :
 			typeSettingsProperties.entrySet()) {
@@ -986,8 +987,8 @@ public class LayoutTypePortletImpl
 			String key = entry.getKey();
 	
 			if (key.startsWith(portletNamespace)) {
-				nestedPortletIds = entry.getValue();
-				break;
+				nestedPortletIds += entry.getValue();
+				nestedPortletIds += CharPool.COMMA;
 			}
 		}
 

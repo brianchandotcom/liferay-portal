@@ -14,26 +14,54 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.service.base.CPDefinitionLinkServiceBaseImpl;
+import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
- * The implementation of the cp definition link remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.product.service.CPDefinitionLinkService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Marco Leo
- * @see CPDefinitionLinkServiceBaseImpl
- * @see com.liferay.commerce.product.service.CPDefinitionLinkServiceUtil
+ * @author Alessio Antonio Rendina
  */
 public class CPDefinitionLinkServiceImpl extends CPDefinitionLinkServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.service.CPDefinitionLinkServiceUtil} to access the cp definition link remote service.
-	 */
+
+    @Override
+    public CPDefinitionLink addCPDefinitionLink(
+            long cpDefinitionId1, long cpDefinitionId2, int displayOrder,
+            int type, ServiceContext serviceContext)
+        throws PortalException {
+
+        CPDefinitionPermission.check(
+            getPermissionChecker(), cpDefinitionId1, ActionKeys.UPDATE);
+
+        CPDefinitionPermission.check(
+            getPermissionChecker(), cpDefinitionId2, ActionKeys.VIEW);
+
+        return cpDefinitionLinkLocalService.addCPDefinitionLink(
+            cpDefinitionId1, cpDefinitionId2, displayOrder, type,
+            serviceContext);
+    }
+
+    @Override
+    public CPDefinitionLink deleteCPDefinitionLink(
+            CPDefinitionLink cpDefinitionLink) throws PortalException {
+
+        CPDefinitionPermission.checkCPDefinitionLink(
+            getPermissionChecker(), cpDefinitionLink, ActionKeys.UPDATE);
+
+        return cpDefinitionLinkLocalService.deleteCPDefinitionLink(
+            cpDefinitionLink);
+    }
+
+    @Override
+    public CPDefinitionLink deleteCPDefinitionLink(long cpDefinitionLinkId)
+        throws PortalException {
+
+        CPDefinitionPermission.checkCPDefinitionLink(
+            getPermissionChecker(), cpDefinitionLinkId, ActionKeys.UPDATE);
+
+        return cpDefinitionLinkLocalService.deleteCPDefinitionLink(
+            cpDefinitionLinkId);
+    }
 }

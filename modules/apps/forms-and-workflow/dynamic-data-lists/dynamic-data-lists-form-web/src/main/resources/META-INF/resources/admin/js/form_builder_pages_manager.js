@@ -136,12 +136,6 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance._eventHandlers = [
-							A.on('windowresize', A.bind('_syncPageInformationHeight', instance)),
-							instance.after('editingLanguageIdChange', A.bind('_afterEditingLanguageIdChange', instance)),
-							instance.after('titlesChange', A.bind('_afterTitlesChange', instance))
-						];
-
 						var boundingBox = instance.get('builder').get('boundingBox');
 
 						var content = boundingBox.one('.form-builder-content');
@@ -161,6 +155,18 @@ AUI.add(
 						successPage.hide();
 
 						content.append(successPage);
+
+						var successPageTitle = successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE);
+
+						var successPageContent = successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_CONTENT);
+
+						instance._eventHandlers = [
+							A.on('windowresize', A.bind('_syncPageInformationHeight', instance)),
+							instance.after('editingLanguageIdChange', A.bind('_afterEditingLanguageIdChange', instance)),
+							instance.after('titlesChange', A.bind('_afterTitlesChange', instance)),
+							successPageContent.after('valueChange', A.bind('_afterSuccessPageContentChange', instance), instance),
+							successPageTitle.after('valueChange', A.bind('_afterSuccessPageTitleChange', instance), instance)
+						];
 
 						instance._createTitleForEditingLanguageId();
 					},
@@ -190,7 +196,7 @@ AUI.add(
 					getSuccessPageDefinition: function() {
 						var instance = this;
 
-						return instance._updateSuccessPageSettings();
+						return instance.get('successPageSettings');
 					},
 
 					setSuccessPage: function(successPageSettings) {
@@ -205,11 +211,15 @@ AUI.add(
 						var wizard = instance._getWizard();
 
 						if (successPageSettings && successPageSettings.enabled) {
+							instance.set('successPageSettings', successPageSettings);
+
 							wizard.set('successPage', successPageSettings.enabled);
 
-							successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE).val(successPageSettings.title);
+							var editingLanguageId = instance.get('editingLanguageId');
 
-							successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_CONTENT).val(successPageSettings.body);
+							successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE).val(successPageSettings.title[editingLanguageId]);
+
+							successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_CONTENT).val(successPageSettings.body[editingLanguageId]);
 
 							instance._uiSetMode(instance.get('mode'));
 
@@ -262,8 +272,6 @@ AUI.add(
 					_afterEditingLanguageIdChange: function(event) {
 						var instance = this;
 
-						instance._updateSuccessPageSettings();
-
 						instance.set('editingLanguageId', event.newVal);
 
 						var wizard = instance._getWizard();
@@ -298,6 +306,26 @@ AUI.add(
 						var switchModeNode = popoverBoundingBox.one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_SWITCH_MODE);
 
 						switchModeNode.toggle(event.newVal > 1);
+					},
+
+					_afterSuccessPageContentChange: function(event) {
+						var instance = this;
+
+						var editingLanguageId = instance.get('editingLanguageId');
+
+						var successPageSettings = instance.get('successPageSettings');
+
+						successPageSettings.body[editingLanguageId] = event.newVal;
+					},
+
+					_afterSuccessPageTitleChange: function(event) {
+						var instance = this;
+
+						var editingLanguageId = instance.get('editingLanguageId');
+
+						var successPageSettings = instance.get('successPageSettings');
+
+						successPageSettings.title[editingLanguageId] = event.newVal;
 					},
 
 					_afterTitlesChange: function(event) {
@@ -1054,30 +1082,6 @@ AUI.add(
 							paginationBoundingBox.hide();
 							wizardBoundingBox.hide();
 						}
-					},
-
-					_updateSuccessPageSettings: function() {
-						var instance = this;
-
-						var builder = instance.get('builder');
-
-						var boundingBox = builder.get('boundingBox');
-
-						var successPage = boundingBox.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE);
-
-						var wizard = instance._getWizard();
-
-						var successPageSettings = instance.get('successPageSettings');
-						var editingLanguageId = instance.get('editingLanguageId');
-
-						successPageSettings.enabled = wizard.get('successPage');
-
-						successPageSettings.body[editingLanguageId] = successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_CONTENT).val();
-						successPageSettings.title[editingLanguageId] = successPage.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE_TITLE).val();
-
-						instance.set('successPageSettings', successPageSettings);
-
-						return successPageSettings;
 					},
 
 					_validateMode: function(mode) {

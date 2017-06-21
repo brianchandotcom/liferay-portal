@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -295,11 +296,11 @@ public class DDLFormBuilderContextFactory {
 		DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
 			ddmForm.getDDMFormSuccessPageSettings();
 
-		successPage.put("body", ddmFormSuccessPageSettings.getBody());
+		successPage.put("body", toMap(ddmFormSuccessPageSettings.getBody()));
 		successPage.put("enabled", ddmFormSuccessPageSettings.isEnabled());
-		successPage.put("title", ddmFormSuccessPageSettings.getTitle());
+		successPage.put("title", toMap(ddmFormSuccessPageSettings.getTitle()));
 
-		formContext.put("successPage", successPage);
+		formContext.put("successPageSettings", successPage);
 
 		return formContext;
 	}
@@ -333,6 +334,19 @@ public class DDLFormBuilderContextFactory {
 				});
 
 		ddlFormBuilderContextFieldVisitor.visit();
+	}
+
+	protected Map<String, Object> toMap(LocalizedValue localizedValue) {
+		Map<String, Object> map = new HashMap<>();
+
+		Map<Locale, String> values = localizedValue.getValues();
+
+		for (Map.Entry<Locale, String> entry : values.entrySet()) {
+			map.put(
+				LanguageUtil.getLanguageId(entry.getKey()), entry.getValue());
+		}
+
+		return map;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

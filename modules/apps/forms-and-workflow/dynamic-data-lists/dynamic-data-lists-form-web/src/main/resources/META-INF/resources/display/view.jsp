@@ -36,14 +36,17 @@ long recordSetId = ddlFormDisplayContext.getRecordSetId();
 
 				<%
 				DDMFormSuccessPageSettings ddmFormSuccessPageSettings = ddlFormDisplayContext.getDDMFormSuccessPageSettings();
+
+				LocalizedValue title = ddmFormSuccessPageSettings.getTitle();
+				LocalizedValue body = ddmFormSuccessPageSettings.getBody();
 				%>
 
 				<div class="portlet-forms">
 					<div class="ddl-form-basic-info">
 						<div class="container-fluid-1280">
-							<h1 class="ddl-form-name"><%= ddmFormSuccessPageSettings.getTitle() %></h1>
+							<h1 class="ddl-form-name"><%= GetterUtil.getString(title.getString(locale), title.getString(title.getDefaultLocale())) %></h1>
 
-							<h5 class="ddl-form-description"><%= ddmFormSuccessPageSettings.getBody() %></h5>
+							<h5 class="ddl-form-description"><%= GetterUtil.getString(body.getString(locale), body.getString(body.getDefaultLocale())) %></h5>
 						</div>
 					</div>
 				</div>

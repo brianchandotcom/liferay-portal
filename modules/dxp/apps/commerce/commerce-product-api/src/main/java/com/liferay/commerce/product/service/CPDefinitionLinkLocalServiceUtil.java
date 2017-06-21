@@ -53,6 +53,15 @@ public class CPDefinitionLinkLocalServiceUtil {
 		return getService().addCPDefinitionLink(cpDefinitionLink);
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinitionLink addCPDefinitionLink(
+		long cpDefinitionId1, long cpDefinitionId2, int displayOrder, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCPDefinitionLink(cpDefinitionId1, cpDefinitionId2,
+			displayOrder, type, serviceContext);
+	}
+
 	/**
 	* Creates a new cp definition link with the primary key. Does not add the cp definition link to the database.
 	*

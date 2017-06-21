@@ -1189,6 +1189,13 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		String[] roleNames = portlet.getRolesArray();
 
+		Portlet existingPortlet = portletPersistence.fetchByC_P(
+			portlet.getCompanyId(), portlet.getPortletId());
+
+		if (existingPortlet != null) {
+			roleNames = existingPortlet.getRolesArray();
+		}
+
 		if (roleNames.length == 0) {
 			return;
 		}

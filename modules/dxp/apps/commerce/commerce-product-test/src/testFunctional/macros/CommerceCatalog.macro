@@ -6,8 +6,8 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="CommerceEntry#PLUS_MENU" value1="${addMenu}">
-			<var name="key_addMenu" value="${addMenu}" />
+		<execute function="AssertClick" locator1="CommerceEntry#PLUS_MENU" value1="${plusMenu}">
+			<var name="key_plusMenu" value="${plusMenu}" />
 		</execute>
 
 		<execute macro="CommerceCatalogEntry#addCatalogEntry">
@@ -26,7 +26,7 @@
 
 	<command name="moveCatalogEntryToRecycleBinViaCheckbox">
 		<execute function="Click" locator1="CommerceNavigation#SINGLE_ENTRY_CHECKBOX">
-			<var name="key_productTitle" value="${productTitle}" />
+			<var name="key_entryTitle" value="${productTitle}" />
 		</execute>
 
 		<execute function="Click" locator1="Button#RECYCLE_BIN" />

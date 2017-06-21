@@ -63,13 +63,8 @@ public class CentralSubrepository {
 			return false;
 		}
 
-		String autopull = _gitrepoProperties.getProperty("autopull", "false");
-
-		if (!autopull.equals("true")) {
-			return false;
-		}
-
-		return true;
+		return Boolean.parseBoolean(
+			_gitrepoProperties.getProperty("autopull", "false"));
 	}
 
 	public Boolean isCentralPullRequestCandidate() throws IOException {

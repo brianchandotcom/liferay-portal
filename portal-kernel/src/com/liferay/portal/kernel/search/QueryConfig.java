@@ -259,13 +259,8 @@ public class QueryConfig implements Serializable {
 	}
 
 	public void setHighlightEnabled(boolean highlightEnabled) {
-		if (_INDEX_SEARCH_HIGHLIGHT_ENABLED) {
-			_attributes.put(
-				PropsKeys.INDEX_SEARCH_HIGHLIGHT_ENABLED, highlightEnabled);
-		}
-		else {
-			_attributes.put(PropsKeys.INDEX_SEARCH_HIGHLIGHT_ENABLED, false);
-		}
+		_attributes.put(
+			PropsKeys.INDEX_SEARCH_HIGHLIGHT_ENABLED, highlightEnabled);
 	}
 
 	public void setHighlightFieldNames(String... highlightFieldNames) {

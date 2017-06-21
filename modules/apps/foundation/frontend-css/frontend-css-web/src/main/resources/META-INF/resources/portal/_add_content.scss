@@ -9,6 +9,10 @@
 			cursor: move;
 		}
 
+		.lfr-content-category .list-group-panel.collapse.in {
+			height: auto !important;
+		}
+
 		.lfr-content-item {
 			.drag-content-item {
 				display: inline-block;

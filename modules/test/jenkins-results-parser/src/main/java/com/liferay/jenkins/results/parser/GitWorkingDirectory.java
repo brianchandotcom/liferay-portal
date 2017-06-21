@@ -436,6 +436,20 @@ public class GitWorkingDirectory {
 		deleteBranchCommand.call();
 	}
 
+	public void deleteRemoteBranch(
+			String remoteBranchName, RemoteConfig remoteConfig)
+		throws GitAPIException {
+
+		String remoteURL = getRemoteURL(remoteConfig);
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Deleting remote branch ", remoteBranchName, " from ",
+				remoteURL));
+
+		pushToRemote(true, "", remoteBranchName, remoteConfig);
+	}
+
 	public void fetch(RefSpec refSpec, RemoteConfig remoteConfig)
 		throws GitAPIException {
 

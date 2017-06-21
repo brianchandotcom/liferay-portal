@@ -14,14 +14,19 @@
 
 package com.liferay.powwow.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.impl.BaseModelImpl;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.powwow.service.ClpSerializer;
 import com.liferay.powwow.service.PowwowMeetingLocalServiceUtil;
@@ -35,8 +40,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Shinn Lok
+ * @generated
  */
+@ProviderType
 public class PowwowMeetingClp extends BaseModelImpl<PowwowMeeting>
 	implements PowwowMeeting {
 	public PowwowMeetingClp() {
@@ -91,6 +97,9 @@ public class PowwowMeetingClp extends BaseModelImpl<PowwowMeeting>
 		attributes.put("languageId", getLanguageId());
 		attributes.put("calendarBookingId", getCalendarBookingId());
 		attributes.put("status", getStatus());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -187,6 +196,9 @@ public class PowwowMeetingClp extends BaseModelImpl<PowwowMeeting>
 		if (status != null) {
 			setStatus(status);
 		}
+
+		_entityCacheEnabled = GetterUtil.getBoolean("entityCacheEnabled");
+		_finderCacheEnabled = GetterUtil.getBoolean("finderCacheEnabled");
 	}
 
 	@Override
@@ -282,13 +294,19 @@ public class PowwowMeetingClp extends BaseModelImpl<PowwowMeeting>
 	}
 
 	@Override
-	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
 	@Override
@@ -547,7 +565,7 @@ public class PowwowMeetingClp extends BaseModelImpl<PowwowMeeting>
 	}
 
 	@Override
-	public java.util.Map<java.lang.String, java.io.Serializable> getProviderTypeMetadataMap() {
+	public Map<java.lang.String, Serializable> getProviderTypeMetadataMap() {
 		try {
 			String methodName = "getProviderTypeMetadataMap";
 
@@ -555,7 +573,7 @@ public class PowwowMeetingClp extends BaseModelImpl<PowwowMeeting>
 
 			Object[] parameterValues = new Object[] {  };
 
-			java.util.Map<java.lang.String, java.io.Serializable> returnObj = (java.util.Map<java.lang.String, java.io.Serializable>)invokeOnRemoteModel(methodName,
+			Map<java.lang.String, Serializable> returnObj = (Map<java.lang.String, Serializable>)invokeOnRemoteModel(methodName,
 					parameterTypes, parameterValues);
 
 			return returnObj;
@@ -616,7 +634,7 @@ public class PowwowMeetingClp extends BaseModelImpl<PowwowMeeting>
 	}
 
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			PowwowMeetingLocalServiceUtil.addPowwowMeeting(this);
 		}
@@ -699,6 +717,16 @@ public class PowwowMeetingClp extends BaseModelImpl<PowwowMeeting>
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _entityCacheEnabled;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -818,7 +846,6 @@ public class PowwowMeetingClp extends BaseModelImpl<PowwowMeeting>
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
-	private String _userUuid;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -831,5 +858,7 @@ public class PowwowMeetingClp extends BaseModelImpl<PowwowMeeting>
 	private long _calendarBookingId;
 	private int _status;
 	private BaseModel<?> _powwowMeetingRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.powwow.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
+	private boolean _entityCacheEnabled;
+	private boolean _finderCacheEnabled;
 }

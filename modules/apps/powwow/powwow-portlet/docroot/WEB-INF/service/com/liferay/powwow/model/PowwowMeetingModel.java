@@ -14,14 +14,16 @@
 
 package com.liferay.powwow.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
-
-import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import java.io.Serializable;
 
@@ -40,8 +42,9 @@ import java.util.Date;
  * @see com.liferay.powwow.model.impl.PowwowMeetingModelImpl
  * @generated
  */
+@ProviderType
 public interface PowwowMeetingModel extends BaseModel<PowwowMeeting>,
-	GroupedModel {
+	GroupedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -128,10 +131,9 @@ public interface PowwowMeetingModel extends BaseModel<PowwowMeeting>,
 	 * Returns the user uuid of this powwow meeting.
 	 *
 	 * @return the user uuid of this powwow meeting
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this powwow meeting.
@@ -344,19 +346,19 @@ public interface PowwowMeetingModel extends BaseModel<PowwowMeeting>,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.powwow.model.PowwowMeeting powwowMeeting);
+	public int compareTo(PowwowMeeting powwowMeeting);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.powwow.model.PowwowMeeting> toCacheModel();
+	public CacheModel<PowwowMeeting> toCacheModel();
 
 	@Override
-	public com.liferay.powwow.model.PowwowMeeting toEscapedModel();
+	public PowwowMeeting toEscapedModel();
 
 	@Override
-	public com.liferay.powwow.model.PowwowMeeting toUnescapedModel();
+	public PowwowMeeting toUnescapedModel();
 
 	@Override
 	public String toString();

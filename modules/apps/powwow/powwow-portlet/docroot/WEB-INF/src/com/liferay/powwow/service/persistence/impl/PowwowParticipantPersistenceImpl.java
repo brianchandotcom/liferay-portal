@@ -12,44 +12,52 @@
  * details.
  */
 
-package com.liferay.powwow.service.persistence;
+package com.liferay.powwow.service.persistence.impl;
 
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.CompanyProvider;
+import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.powwow.NoSuchParticipantException;
+import com.liferay.powwow.exception.NoSuchParticipantException;
 import com.liferay.powwow.model.PowwowParticipant;
 import com.liferay.powwow.model.impl.PowwowParticipantImpl;
 import com.liferay.powwow.model.impl.PowwowParticipantModelImpl;
+import com.liferay.powwow.service.persistence.PowwowParticipantPersistence;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
+import java.lang.reflect.Field;
+
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -61,9 +69,10 @@ import java.util.Set;
  *
  * @author Shinn Lok
  * @see PowwowParticipantPersistence
- * @see PowwowParticipantUtil
+ * @see com.liferay.powwow.service.persistence.PowwowParticipantUtil
  * @generated
  */
+@ProviderType
 public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<PowwowParticipant>
 	implements PowwowParticipantPersistence {
 	/*
@@ -115,11 +124,9 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 *
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @return the matching powwow participants
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<PowwowParticipant> findByPowwowMeetingId(long powwowMeetingId)
-		throws SystemException {
+	public List<PowwowParticipant> findByPowwowMeetingId(long powwowMeetingId) {
 		return findByPowwowMeetingId(powwowMeetingId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -128,18 +135,17 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * Returns a range of all the powwow participants where powwowMeetingId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.powwow.model.impl.PowwowParticipantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PowwowParticipantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param start the lower bound of the range of powwow participants
 	 * @param end the upper bound of the range of powwow participants (not inclusive)
 	 * @return the range of matching powwow participants
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<PowwowParticipant> findByPowwowMeetingId(long powwowMeetingId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByPowwowMeetingId(powwowMeetingId, start, end, null);
 	}
 
@@ -147,7 +153,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * Returns an ordered range of all the powwow participants where powwowMeetingId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.powwow.model.impl.PowwowParticipantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PowwowParticipantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param powwowMeetingId the powwow meeting ID
@@ -155,12 +161,34 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param end the upper bound of the range of powwow participants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching powwow participants
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<PowwowParticipant> findByPowwowMeetingId(long powwowMeetingId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end,
+		OrderByComparator<PowwowParticipant> orderByComparator) {
+		return findByPowwowMeetingId(powwowMeetingId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the powwow participants where powwowMeetingId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PowwowParticipantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param powwowMeetingId the powwow meeting ID
+	 * @param start the lower bound of the range of powwow participants
+	 * @param end the upper bound of the range of powwow participants (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching powwow participants
+	 */
+	@Override
+	public List<PowwowParticipant> findByPowwowMeetingId(long powwowMeetingId,
+		int start, int end,
+		OrderByComparator<PowwowParticipant> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -180,15 +208,19 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 				};
 		}
 
-		List<PowwowParticipant> list = (List<PowwowParticipant>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<PowwowParticipant> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (PowwowParticipant powwowParticipant : list) {
-				if ((powwowMeetingId != powwowParticipant.getPowwowMeetingId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<PowwowParticipant>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (PowwowParticipant powwowParticipant : list) {
+					if ((powwowMeetingId != powwowParticipant.getPowwowMeetingId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -198,7 +230,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -236,7 +268,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<PowwowParticipant>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<PowwowParticipant>)QueryUtil.list(q,
@@ -245,10 +277,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -266,13 +298,12 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching powwow participant
-	 * @throws com.liferay.powwow.NoSuchParticipantException if a matching powwow participant could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchParticipantException if a matching powwow participant could not be found
 	 */
 	@Override
 	public PowwowParticipant findByPowwowMeetingId_First(long powwowMeetingId,
-		OrderByComparator orderByComparator)
-		throws NoSuchParticipantException, SystemException {
+		OrderByComparator<PowwowParticipant> orderByComparator)
+		throws NoSuchParticipantException {
 		PowwowParticipant powwowParticipant = fetchByPowwowMeetingId_First(powwowMeetingId,
 				orderByComparator);
 
@@ -298,12 +329,11 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PowwowParticipant fetchByPowwowMeetingId_First(
-		long powwowMeetingId, OrderByComparator orderByComparator)
-		throws SystemException {
+		long powwowMeetingId,
+		OrderByComparator<PowwowParticipant> orderByComparator) {
 		List<PowwowParticipant> list = findByPowwowMeetingId(powwowMeetingId,
 				0, 1, orderByComparator);
 
@@ -320,13 +350,12 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching powwow participant
-	 * @throws com.liferay.powwow.NoSuchParticipantException if a matching powwow participant could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchParticipantException if a matching powwow participant could not be found
 	 */
 	@Override
 	public PowwowParticipant findByPowwowMeetingId_Last(long powwowMeetingId,
-		OrderByComparator orderByComparator)
-		throws NoSuchParticipantException, SystemException {
+		OrderByComparator<PowwowParticipant> orderByComparator)
+		throws NoSuchParticipantException {
 		PowwowParticipant powwowParticipant = fetchByPowwowMeetingId_Last(powwowMeetingId,
 				orderByComparator);
 
@@ -352,11 +381,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PowwowParticipant fetchByPowwowMeetingId_Last(long powwowMeetingId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<PowwowParticipant> orderByComparator) {
 		int count = countByPowwowMeetingId(powwowMeetingId);
 
 		if (count == 0) {
@@ -380,14 +408,13 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next powwow participant
-	 * @throws com.liferay.powwow.NoSuchParticipantException if a powwow participant with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchParticipantException if a powwow participant with the primary key could not be found
 	 */
 	@Override
 	public PowwowParticipant[] findByPowwowMeetingId_PrevAndNext(
 		long powwowParticipantId, long powwowMeetingId,
-		OrderByComparator orderByComparator)
-		throws NoSuchParticipantException, SystemException {
+		OrderByComparator<PowwowParticipant> orderByComparator)
+		throws NoSuchParticipantException {
 		PowwowParticipant powwowParticipant = findByPrimaryKey(powwowParticipantId);
 
 		Session session = null;
@@ -417,13 +444,14 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 	protected PowwowParticipant getByPowwowMeetingId_PrevAndNext(
 		Session session, PowwowParticipant powwowParticipant,
-		long powwowMeetingId, OrderByComparator orderByComparator,
-		boolean previous) {
+		long powwowMeetingId,
+		OrderByComparator<PowwowParticipant> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -525,11 +553,9 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * Removes all the powwow participants where powwowMeetingId = &#63; from the database.
 	 *
 	 * @param powwowMeetingId the powwow meeting ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByPowwowMeetingId(long powwowMeetingId)
-		throws SystemException {
+	public void removeByPowwowMeetingId(long powwowMeetingId) {
 		for (PowwowParticipant powwowParticipant : findByPowwowMeetingId(
 				powwowMeetingId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(powwowParticipant);
@@ -541,17 +567,14 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 *
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @return the number of matching powwow participants
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByPowwowMeetingId(long powwowMeetingId)
-		throws SystemException {
+	public int countByPowwowMeetingId(long powwowMeetingId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_POWWOWMEETINGID;
 
 		Object[] finderArgs = new Object[] { powwowMeetingId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -575,10 +598,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -605,18 +628,16 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the powwow participant where powwowMeetingId = &#63; and participantUserId = &#63; or throws a {@link com.liferay.powwow.NoSuchParticipantException} if it could not be found.
+	 * Returns the powwow participant where powwowMeetingId = &#63; and participantUserId = &#63; or throws a {@link NoSuchParticipantException} if it could not be found.
 	 *
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param participantUserId the participant user ID
 	 * @return the matching powwow participant
-	 * @throws com.liferay.powwow.NoSuchParticipantException if a matching powwow participant could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchParticipantException if a matching powwow participant could not be found
 	 */
 	@Override
 	public PowwowParticipant findByPMI_PUI(long powwowMeetingId,
-		long participantUserId)
-		throws NoSuchParticipantException, SystemException {
+		long participantUserId) throws NoSuchParticipantException {
 		PowwowParticipant powwowParticipant = fetchByPMI_PUI(powwowMeetingId,
 				participantUserId);
 
@@ -633,8 +654,8 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
 			}
 
 			throw new NoSuchParticipantException(msg.toString());
@@ -649,11 +670,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param participantUserId the participant user ID
 	 * @return the matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PowwowParticipant fetchByPMI_PUI(long powwowMeetingId,
-		long participantUserId) throws SystemException {
+		long participantUserId) {
 		return fetchByPMI_PUI(powwowMeetingId, participantUserId, true);
 	}
 
@@ -662,20 +682,18 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 *
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param participantUserId the participant user ID
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PowwowParticipant fetchByPMI_PUI(long powwowMeetingId,
-		long participantUserId, boolean retrieveFromCache)
-		throws SystemException {
+		long participantUserId, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { powwowMeetingId, participantUserId };
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_PMI_PUI,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_PMI_PUI,
 					finderArgs, this);
 		}
 
@@ -715,15 +733,19 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 				List<PowwowParticipant> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PMI_PUI,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_PMI_PUI,
 						finderArgs, list);
 				}
 				else {
-					if ((list.size() > 1) && _log.isWarnEnabled()) {
-						_log.warn(
-							"PowwowParticipantPersistenceImpl.fetchByPMI_PUI(long, long, boolean) with parameters (" +
-							StringUtil.merge(finderArgs) +
-							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"PowwowParticipantPersistenceImpl.fetchByPMI_PUI(long, long, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
 					}
 
 					PowwowParticipant powwowParticipant = list.get(0);
@@ -734,13 +756,13 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 					if ((powwowParticipant.getPowwowMeetingId() != powwowMeetingId) ||
 							(powwowParticipant.getParticipantUserId() != participantUserId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PMI_PUI,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_PMI_PUI,
 							finderArgs, powwowParticipant);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PMI_PUI,
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_PMI_PUI,
 					finderArgs);
 
 				throw processException(e);
@@ -764,12 +786,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param participantUserId the participant user ID
 	 * @return the powwow participant that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PowwowParticipant removeByPMI_PUI(long powwowMeetingId,
-		long participantUserId)
-		throws NoSuchParticipantException, SystemException {
+		long participantUserId) throws NoSuchParticipantException {
 		PowwowParticipant powwowParticipant = findByPMI_PUI(powwowMeetingId,
 				participantUserId);
 
@@ -782,17 +802,14 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param participantUserId the participant user ID
 	 * @return the number of matching powwow participants
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByPMI_PUI(long powwowMeetingId, long participantUserId)
-		throws SystemException {
+	public int countByPMI_PUI(long powwowMeetingId, long participantUserId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_PMI_PUI;
 
 		Object[] finderArgs = new Object[] { powwowMeetingId, participantUserId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -820,10 +837,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -850,17 +867,16 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the powwow participant where powwowMeetingId = &#63; and emailAddress = &#63; or throws a {@link com.liferay.powwow.NoSuchParticipantException} if it could not be found.
+	 * Returns the powwow participant where powwowMeetingId = &#63; and emailAddress = &#63; or throws a {@link NoSuchParticipantException} if it could not be found.
 	 *
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param emailAddress the email address
 	 * @return the matching powwow participant
-	 * @throws com.liferay.powwow.NoSuchParticipantException if a matching powwow participant could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchParticipantException if a matching powwow participant could not be found
 	 */
 	@Override
 	public PowwowParticipant findByPMI_EA(long powwowMeetingId,
-		String emailAddress) throws NoSuchParticipantException, SystemException {
+		String emailAddress) throws NoSuchParticipantException {
 		PowwowParticipant powwowParticipant = fetchByPMI_EA(powwowMeetingId,
 				emailAddress);
 
@@ -877,8 +893,8 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
 			}
 
 			throw new NoSuchParticipantException(msg.toString());
@@ -893,11 +909,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param emailAddress the email address
 	 * @return the matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PowwowParticipant fetchByPMI_EA(long powwowMeetingId,
-		String emailAddress) throws SystemException {
+		String emailAddress) {
 		return fetchByPMI_EA(powwowMeetingId, emailAddress, true);
 	}
 
@@ -906,20 +921,18 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 *
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param emailAddress the email address
-	 * @param retrieveFromCache whether to use the finder cache
+	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PowwowParticipant fetchByPMI_EA(long powwowMeetingId,
-		String emailAddress, boolean retrieveFromCache)
-		throws SystemException {
+		String emailAddress, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { powwowMeetingId, emailAddress };
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_PMI_EA,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_PMI_EA,
 					finderArgs, this);
 		}
 
@@ -927,7 +940,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 			PowwowParticipant powwowParticipant = (PowwowParticipant)result;
 
 			if ((powwowMeetingId != powwowParticipant.getPowwowMeetingId()) ||
-					!Validator.equals(emailAddress,
+					!Objects.equals(emailAddress,
 						powwowParticipant.getEmailAddress())) {
 				result = null;
 			}
@@ -974,7 +987,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 				List<PowwowParticipant> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PMI_EA,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_PMI_EA,
 						finderArgs, list);
 				}
 				else {
@@ -988,14 +1001,13 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 							(powwowParticipant.getEmailAddress() == null) ||
 							!powwowParticipant.getEmailAddress()
 												  .equals(emailAddress)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PMI_EA,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_PMI_EA,
 							finderArgs, powwowParticipant);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PMI_EA,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_PMI_EA, finderArgs);
 
 				throw processException(e);
 			}
@@ -1018,11 +1030,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param emailAddress the email address
 	 * @return the powwow participant that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PowwowParticipant removeByPMI_EA(long powwowMeetingId,
-		String emailAddress) throws NoSuchParticipantException, SystemException {
+		String emailAddress) throws NoSuchParticipantException {
 		PowwowParticipant powwowParticipant = findByPMI_EA(powwowMeetingId,
 				emailAddress);
 
@@ -1035,17 +1046,14 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param emailAddress the email address
 	 * @return the number of matching powwow participants
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByPMI_EA(long powwowMeetingId, String emailAddress)
-		throws SystemException {
+	public int countByPMI_EA(long powwowMeetingId, String emailAddress) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_PMI_EA;
 
 		Object[] finderArgs = new Object[] { powwowMeetingId, emailAddress };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1087,10 +1095,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1134,11 +1142,9 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param type the type
 	 * @return the matching powwow participants
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<PowwowParticipant> findByPMI_T(long powwowMeetingId, int type)
-		throws SystemException {
+	public List<PowwowParticipant> findByPMI_T(long powwowMeetingId, int type) {
 		return findByPMI_T(powwowMeetingId, type, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1147,7 +1153,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * Returns a range of all the powwow participants where powwowMeetingId = &#63; and type = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.powwow.model.impl.PowwowParticipantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PowwowParticipantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param powwowMeetingId the powwow meeting ID
@@ -1155,11 +1161,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param start the lower bound of the range of powwow participants
 	 * @param end the upper bound of the range of powwow participants (not inclusive)
 	 * @return the range of matching powwow participants
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<PowwowParticipant> findByPMI_T(long powwowMeetingId, int type,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByPMI_T(powwowMeetingId, type, start, end, null);
 	}
 
@@ -1167,7 +1172,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * Returns an ordered range of all the powwow participants where powwowMeetingId = &#63; and type = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.powwow.model.impl.PowwowParticipantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PowwowParticipantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param powwowMeetingId the powwow meeting ID
@@ -1176,12 +1181,35 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param end the upper bound of the range of powwow participants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching powwow participants
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<PowwowParticipant> findByPMI_T(long powwowMeetingId, int type,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end,
+		OrderByComparator<PowwowParticipant> orderByComparator) {
+		return findByPMI_T(powwowMeetingId, type, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the powwow participants where powwowMeetingId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PowwowParticipantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param powwowMeetingId the powwow meeting ID
+	 * @param type the type
+	 * @param start the lower bound of the range of powwow participants
+	 * @param end the upper bound of the range of powwow participants (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching powwow participants
+	 */
+	@Override
+	public List<PowwowParticipant> findByPMI_T(long powwowMeetingId, int type,
+		int start, int end,
+		OrderByComparator<PowwowParticipant> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1201,16 +1229,20 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 				};
 		}
 
-		List<PowwowParticipant> list = (List<PowwowParticipant>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<PowwowParticipant> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (PowwowParticipant powwowParticipant : list) {
-				if ((powwowMeetingId != powwowParticipant.getPowwowMeetingId()) ||
-						(type != powwowParticipant.getType())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<PowwowParticipant>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (PowwowParticipant powwowParticipant : list) {
+					if ((powwowMeetingId != powwowParticipant.getPowwowMeetingId()) ||
+							(type != powwowParticipant.getType())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1220,7 +1252,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1262,7 +1294,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<PowwowParticipant>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<PowwowParticipant>)QueryUtil.list(q,
@@ -1271,10 +1303,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1293,13 +1325,12 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching powwow participant
-	 * @throws com.liferay.powwow.NoSuchParticipantException if a matching powwow participant could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchParticipantException if a matching powwow participant could not be found
 	 */
 	@Override
 	public PowwowParticipant findByPMI_T_First(long powwowMeetingId, int type,
-		OrderByComparator orderByComparator)
-		throws NoSuchParticipantException, SystemException {
+		OrderByComparator<PowwowParticipant> orderByComparator)
+		throws NoSuchParticipantException {
 		PowwowParticipant powwowParticipant = fetchByPMI_T_First(powwowMeetingId,
 				type, orderByComparator);
 
@@ -1329,11 +1360,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PowwowParticipant fetchByPMI_T_First(long powwowMeetingId, int type,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<PowwowParticipant> orderByComparator) {
 		List<PowwowParticipant> list = findByPMI_T(powwowMeetingId, type, 0, 1,
 				orderByComparator);
 
@@ -1351,13 +1381,12 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching powwow participant
-	 * @throws com.liferay.powwow.NoSuchParticipantException if a matching powwow participant could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchParticipantException if a matching powwow participant could not be found
 	 */
 	@Override
 	public PowwowParticipant findByPMI_T_Last(long powwowMeetingId, int type,
-		OrderByComparator orderByComparator)
-		throws NoSuchParticipantException, SystemException {
+		OrderByComparator<PowwowParticipant> orderByComparator)
+		throws NoSuchParticipantException {
 		PowwowParticipant powwowParticipant = fetchByPMI_T_Last(powwowMeetingId,
 				type, orderByComparator);
 
@@ -1387,11 +1416,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PowwowParticipant fetchByPMI_T_Last(long powwowMeetingId, int type,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<PowwowParticipant> orderByComparator) {
 		int count = countByPMI_T(powwowMeetingId, type);
 
 		if (count == 0) {
@@ -1416,14 +1444,13 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next powwow participant
-	 * @throws com.liferay.powwow.NoSuchParticipantException if a powwow participant with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchParticipantException if a powwow participant with the primary key could not be found
 	 */
 	@Override
 	public PowwowParticipant[] findByPMI_T_PrevAndNext(
 		long powwowParticipantId, long powwowMeetingId, int type,
-		OrderByComparator orderByComparator)
-		throws NoSuchParticipantException, SystemException {
+		OrderByComparator<PowwowParticipant> orderByComparator)
+		throws NoSuchParticipantException {
 		PowwowParticipant powwowParticipant = findByPrimaryKey(powwowParticipantId);
 
 		Session session = null;
@@ -1453,15 +1480,16 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 	protected PowwowParticipant getByPMI_T_PrevAndNext(Session session,
 		PowwowParticipant powwowParticipant, long powwowMeetingId, int type,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<PowwowParticipant> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_POWWOWPARTICIPANT_WHERE);
@@ -1565,11 +1593,9 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 *
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param type the type
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByPMI_T(long powwowMeetingId, int type)
-		throws SystemException {
+	public void removeByPMI_T(long powwowMeetingId, int type) {
 		for (PowwowParticipant powwowParticipant : findByPMI_T(
 				powwowMeetingId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null)) {
@@ -1583,17 +1609,14 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param type the type
 	 * @return the number of matching powwow participants
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByPMI_T(long powwowMeetingId, int type)
-		throws SystemException {
+	public int countByPMI_T(long powwowMeetingId, int type) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_PMI_T;
 
 		Object[] finderArgs = new Object[] { powwowMeetingId, type };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1621,10 +1644,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1641,6 +1664,22 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 	public PowwowParticipantPersistenceImpl() {
 		setModelClass(PowwowParticipant.class);
+
+		try {
+			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+					"_dbColumnNames");
+
+			Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+			dbColumnNames.put("type", "type_");
+
+			field.set(this, dbColumnNames);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
 	}
 
 	/**
@@ -1650,17 +1689,17 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 */
 	@Override
 	public void cacheResult(PowwowParticipant powwowParticipant) {
-		EntityCacheUtil.putResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
 			PowwowParticipantImpl.class, powwowParticipant.getPrimaryKey(),
 			powwowParticipant);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PMI_PUI,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_PMI_PUI,
 			new Object[] {
 				powwowParticipant.getPowwowMeetingId(),
 				powwowParticipant.getParticipantUserId()
 			}, powwowParticipant);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PMI_EA,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_PMI_EA,
 			new Object[] {
 				powwowParticipant.getPowwowMeetingId(),
 				powwowParticipant.getEmailAddress()
@@ -1677,7 +1716,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	@Override
 	public void cacheResult(List<PowwowParticipant> powwowParticipants) {
 		for (PowwowParticipant powwowParticipant : powwowParticipants) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
 						PowwowParticipantImpl.class,
 						powwowParticipant.getPrimaryKey()) == null) {
@@ -1693,145 +1732,117 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * Clears the cache for all powwow participants.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			CacheRegistryUtil.clear(PowwowParticipantImpl.class.getName());
-		}
+		entityCache.clearCache(PowwowParticipantImpl.class);
 
-		EntityCacheUtil.clearCache(PowwowParticipantImpl.class.getName());
-
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the powwow participant.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(PowwowParticipant powwowParticipant) {
-		EntityCacheUtil.removeResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
 			PowwowParticipantImpl.class, powwowParticipant.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(powwowParticipant);
+		clearUniqueFindersCache((PowwowParticipantModelImpl)powwowParticipant,
+			true);
 	}
 
 	@Override
 	public void clearCache(List<PowwowParticipant> powwowParticipants) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (PowwowParticipant powwowParticipant : powwowParticipants) {
-			EntityCacheUtil.removeResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
 				PowwowParticipantImpl.class, powwowParticipant.getPrimaryKey());
 
-			clearUniqueFindersCache(powwowParticipant);
+			clearUniqueFindersCache((PowwowParticipantModelImpl)powwowParticipant,
+				true);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(PowwowParticipant powwowParticipant) {
-		if (powwowParticipant.isNew()) {
-			Object[] args = new Object[] {
-					powwowParticipant.getPowwowMeetingId(),
-					powwowParticipant.getParticipantUserId()
-				};
-
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PMI_PUI, args,
-				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PMI_PUI, args,
-				powwowParticipant);
-
-			args = new Object[] {
-					powwowParticipant.getPowwowMeetingId(),
-					powwowParticipant.getEmailAddress()
-				};
-
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PMI_EA, args,
-				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PMI_EA, args,
-				powwowParticipant);
-		}
-		else {
-			PowwowParticipantModelImpl powwowParticipantModelImpl = (PowwowParticipantModelImpl)powwowParticipant;
-
-			if ((powwowParticipantModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_PMI_PUI.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						powwowParticipant.getPowwowMeetingId(),
-						powwowParticipant.getParticipantUserId()
-					};
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PMI_PUI, args,
-					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PMI_PUI, args,
-					powwowParticipant);
-			}
-
-			if ((powwowParticipantModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_PMI_EA.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						powwowParticipant.getPowwowMeetingId(),
-						powwowParticipant.getEmailAddress()
-					};
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PMI_EA, args,
-					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PMI_EA, args,
-					powwowParticipant);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(PowwowParticipant powwowParticipant) {
-		PowwowParticipantModelImpl powwowParticipantModelImpl = (PowwowParticipantModelImpl)powwowParticipant;
-
+	protected void cacheUniqueFindersCache(
+		PowwowParticipantModelImpl powwowParticipantModelImpl) {
 		Object[] args = new Object[] {
-				powwowParticipant.getPowwowMeetingId(),
-				powwowParticipant.getParticipantUserId()
+				powwowParticipantModelImpl.getPowwowMeetingId(),
+				powwowParticipantModelImpl.getParticipantUserId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PMI_PUI, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PMI_PUI, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_PMI_PUI, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_PMI_PUI, args,
+			powwowParticipantModelImpl, false);
+
+		args = new Object[] {
+				powwowParticipantModelImpl.getPowwowMeetingId(),
+				powwowParticipantModelImpl.getEmailAddress()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_PMI_EA, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_PMI_EA, args,
+			powwowParticipantModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		PowwowParticipantModelImpl powwowParticipantModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					powwowParticipantModelImpl.getPowwowMeetingId(),
+					powwowParticipantModelImpl.getParticipantUserId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_PMI_PUI, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_PMI_PUI, args);
+		}
 
 		if ((powwowParticipantModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_PMI_PUI.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					powwowParticipantModelImpl.getOriginalPowwowMeetingId(),
 					powwowParticipantModelImpl.getOriginalParticipantUserId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PMI_PUI, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PMI_PUI, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_PMI_PUI, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_PMI_PUI, args);
 		}
 
-		args = new Object[] {
-				powwowParticipant.getPowwowMeetingId(),
-				powwowParticipant.getEmailAddress()
-			};
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					powwowParticipantModelImpl.getPowwowMeetingId(),
+					powwowParticipantModelImpl.getEmailAddress()
+				};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PMI_EA, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PMI_EA, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_PMI_EA, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_PMI_EA, args);
+		}
 
 		if ((powwowParticipantModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_PMI_EA.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					powwowParticipantModelImpl.getOriginalPowwowMeetingId(),
 					powwowParticipantModelImpl.getOriginalEmailAddress()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PMI_EA, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PMI_EA, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_PMI_EA, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_PMI_EA, args);
 		}
 	}
 
@@ -1848,6 +1859,8 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 		powwowParticipant.setNew(true);
 		powwowParticipant.setPrimaryKey(powwowParticipantId);
 
+		powwowParticipant.setCompanyId(companyProvider.getCompanyId());
+
 		return powwowParticipant;
 	}
 
@@ -1856,12 +1869,11 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 *
 	 * @param powwowParticipantId the primary key of the powwow participant
 	 * @return the powwow participant that was removed
-	 * @throws com.liferay.powwow.NoSuchParticipantException if a powwow participant with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchParticipantException if a powwow participant with the primary key could not be found
 	 */
 	@Override
 	public PowwowParticipant remove(long powwowParticipantId)
-		throws NoSuchParticipantException, SystemException {
+		throws NoSuchParticipantException {
 		return remove((Serializable)powwowParticipantId);
 	}
 
@@ -1870,12 +1882,11 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 *
 	 * @param primaryKey the primary key of the powwow participant
 	 * @return the powwow participant that was removed
-	 * @throws com.liferay.powwow.NoSuchParticipantException if a powwow participant with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchParticipantException if a powwow participant with the primary key could not be found
 	 */
 	@Override
 	public PowwowParticipant remove(Serializable primaryKey)
-		throws NoSuchParticipantException, SystemException {
+		throws NoSuchParticipantException {
 		Session session = null;
 
 		try {
@@ -1885,8 +1896,8 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 					primaryKey);
 
 			if (powwowParticipant == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				if (_log.isDebugEnabled()) {
+					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchParticipantException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
@@ -1907,8 +1918,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	}
 
 	@Override
-	protected PowwowParticipant removeImpl(PowwowParticipant powwowParticipant)
-		throws SystemException {
+	protected PowwowParticipant removeImpl(PowwowParticipant powwowParticipant) {
 		powwowParticipant = toUnwrappedModel(powwowParticipant);
 
 		Session session = null;
@@ -1940,14 +1950,36 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	}
 
 	@Override
-	public PowwowParticipant updateImpl(
-		com.liferay.powwow.model.PowwowParticipant powwowParticipant)
-		throws SystemException {
+	public PowwowParticipant updateImpl(PowwowParticipant powwowParticipant) {
 		powwowParticipant = toUnwrappedModel(powwowParticipant);
 
 		boolean isNew = powwowParticipant.isNew();
 
 		PowwowParticipantModelImpl powwowParticipantModelImpl = (PowwowParticipantModelImpl)powwowParticipant;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (powwowParticipant.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				powwowParticipant.setCreateDate(now);
+			}
+			else {
+				powwowParticipant.setCreateDate(serviceContext.getCreateDate(
+						now));
+			}
+		}
+
+		if (!powwowParticipantModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				powwowParticipant.setModifiedDate(now);
+			}
+			else {
+				powwowParticipant.setModifiedDate(serviceContext.getModifiedDate(
+						now));
+			}
+		}
 
 		Session session = null;
 
@@ -1960,7 +1992,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 				powwowParticipant.setNew(false);
 			}
 			else {
-				session.merge(powwowParticipant);
+				powwowParticipant = (PowwowParticipant)session.merge(powwowParticipant);
 			}
 		}
 		catch (Exception e) {
@@ -1970,10 +2002,33 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew || !PowwowParticipantModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		if (!PowwowParticipantModelImpl.COLUMN_BITMASK_ENABLED) {
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+		else
+		 if (isNew) {
+			Object[] args = new Object[] {
+					powwowParticipantModelImpl.getPowwowMeetingId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_POWWOWMEETINGID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_POWWOWMEETINGID,
+				args);
+
+			args = new Object[] {
+					powwowParticipantModelImpl.getPowwowMeetingId(),
+					powwowParticipantModelImpl.getType()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_PMI_T, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PMI_T,
+				args);
+
+			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+				FINDER_ARGS_EMPTY);
 		}
 
 		else {
@@ -1983,18 +2038,18 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 						powwowParticipantModelImpl.getOriginalPowwowMeetingId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_POWWOWMEETINGID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_POWWOWMEETINGID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_POWWOWMEETINGID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_POWWOWMEETINGID,
 					args);
 
 				args = new Object[] {
 						powwowParticipantModelImpl.getPowwowMeetingId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_POWWOWMEETINGID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_POWWOWMEETINGID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_POWWOWMEETINGID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_POWWOWMEETINGID,
 					args);
 			}
 
@@ -2005,8 +2060,8 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 						powwowParticipantModelImpl.getOriginalType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PMI_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PMI_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_PMI_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PMI_T,
 					args);
 
 				args = new Object[] {
@@ -2014,18 +2069,20 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 						powwowParticipantModelImpl.getType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PMI_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PMI_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_PMI_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PMI_T,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
 			PowwowParticipantImpl.class, powwowParticipant.getPrimaryKey(),
-			powwowParticipant);
+			powwowParticipant, false);
 
-		clearUniqueFindersCache(powwowParticipant);
-		cacheUniqueFindersCache(powwowParticipant);
+		clearUniqueFindersCache(powwowParticipantModelImpl, false);
+		cacheUniqueFindersCache(powwowParticipantModelImpl);
+
+		powwowParticipant.resetOriginalValues();
 
 		return powwowParticipant;
 	}
@@ -2059,21 +2116,20 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	}
 
 	/**
-	 * Returns the powwow participant with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the powwow participant with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the powwow participant
 	 * @return the powwow participant
-	 * @throws com.liferay.powwow.NoSuchParticipantException if a powwow participant with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchParticipantException if a powwow participant with the primary key could not be found
 	 */
 	@Override
 	public PowwowParticipant findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchParticipantException, SystemException {
+		throws NoSuchParticipantException {
 		PowwowParticipant powwowParticipant = fetchByPrimaryKey(primaryKey);
 
 		if (powwowParticipant == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			if (_log.isDebugEnabled()) {
+				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			throw new NoSuchParticipantException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
@@ -2084,16 +2140,15 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	}
 
 	/**
-	 * Returns the powwow participant with the primary key or throws a {@link com.liferay.powwow.NoSuchParticipantException} if it could not be found.
+	 * Returns the powwow participant with the primary key or throws a {@link NoSuchParticipantException} if it could not be found.
 	 *
 	 * @param powwowParticipantId the primary key of the powwow participant
 	 * @return the powwow participant
-	 * @throws com.liferay.powwow.NoSuchParticipantException if a powwow participant with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws NoSuchParticipantException if a powwow participant with the primary key could not be found
 	 */
 	@Override
 	public PowwowParticipant findByPrimaryKey(long powwowParticipantId)
-		throws NoSuchParticipantException, SystemException {
+		throws NoSuchParticipantException {
 		return findByPrimaryKey((Serializable)powwowParticipantId);
 	}
 
@@ -2102,17 +2157,17 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 *
 	 * @param primaryKey the primary key of the powwow participant
 	 * @return the powwow participant, or <code>null</code> if a powwow participant with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public PowwowParticipant fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
-		PowwowParticipant powwowParticipant = (PowwowParticipant)EntityCacheUtil.getResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
+	public PowwowParticipant fetchByPrimaryKey(Serializable primaryKey) {
+		Serializable serializable = entityCache.getResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
 				PowwowParticipantImpl.class, primaryKey);
 
-		if (powwowParticipant == _nullPowwowParticipant) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		PowwowParticipant powwowParticipant = (PowwowParticipant)serializable;
 
 		if (powwowParticipant == null) {
 			Session session = null;
@@ -2127,13 +2182,12 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 					cacheResult(powwowParticipant);
 				}
 				else {
-					EntityCacheUtil.putResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
-						PowwowParticipantImpl.class, primaryKey,
-						_nullPowwowParticipant);
+					entityCache.putResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
+						PowwowParticipantImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
 					PowwowParticipantImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2151,22 +2205,113 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 *
 	 * @param powwowParticipantId the primary key of the powwow participant
 	 * @return the powwow participant, or <code>null</code> if a powwow participant with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public PowwowParticipant fetchByPrimaryKey(long powwowParticipantId)
-		throws SystemException {
+	public PowwowParticipant fetchByPrimaryKey(long powwowParticipantId) {
 		return fetchByPrimaryKey((Serializable)powwowParticipantId);
+	}
+
+	@Override
+	public Map<Serializable, PowwowParticipant> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, PowwowParticipant> map = new HashMap<Serializable, PowwowParticipant>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			PowwowParticipant powwowParticipant = fetchByPrimaryKey(primaryKey);
+
+			if (powwowParticipant != null) {
+				map.put(primaryKey, powwowParticipant);
+			}
+
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			Serializable serializable = entityCache.getResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
+					PowwowParticipantImpl.class, primaryKey);
+
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
+
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (PowwowParticipant)serializable);
+				}
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
+			return map;
+		}
+
+		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
+				1);
+
+		query.append(_SQL_SELECT_POWWOWPARTICIPANT_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : uncachedPrimaryKeys) {
+			query.append((long)primaryKey);
+
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (PowwowParticipant powwowParticipant : (List<PowwowParticipant>)q.list()) {
+				map.put(powwowParticipant.getPrimaryKeyObj(), powwowParticipant);
+
+				cacheResult(powwowParticipant);
+
+				uncachedPrimaryKeys.remove(powwowParticipant.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				entityCache.putResult(PowwowParticipantModelImpl.ENTITY_CACHE_ENABLED,
+					PowwowParticipantImpl.class, primaryKey, nullModel);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
 	 * Returns all the powwow participants.
 	 *
 	 * @return the powwow participants
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<PowwowParticipant> findAll() throws SystemException {
+	public List<PowwowParticipant> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2174,17 +2319,15 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * Returns a range of all the powwow participants.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.powwow.model.impl.PowwowParticipantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PowwowParticipantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of powwow participants
 	 * @param end the upper bound of the range of powwow participants (not inclusive)
 	 * @return the range of powwow participants
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<PowwowParticipant> findAll(int start, int end)
-		throws SystemException {
+	public List<PowwowParticipant> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -2192,18 +2335,37 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * Returns an ordered range of all the powwow participants.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.powwow.model.impl.PowwowParticipantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PowwowParticipantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of powwow participants
 	 * @param end the upper bound of the range of powwow participants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of powwow participants
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<PowwowParticipant> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<PowwowParticipant> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the powwow participants.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PowwowParticipantModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of powwow participants
+	 * @param end the upper bound of the range of powwow participants (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of powwow participants
+	 */
+	@Override
+	public List<PowwowParticipant> findAll(int start, int end,
+		OrderByComparator<PowwowParticipant> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2219,8 +2381,12 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<PowwowParticipant> list = (List<PowwowParticipant>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<PowwowParticipant> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<PowwowParticipant>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2228,7 +2394,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 			if (orderByComparator != null) {
 				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_POWWOWPARTICIPANT);
 
@@ -2258,7 +2424,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<PowwowParticipant>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<PowwowParticipant>)QueryUtil.list(q,
@@ -2267,10 +2433,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2285,10 +2451,9 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	/**
 	 * Removes all the powwow participants from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (PowwowParticipant powwowParticipant : findAll()) {
 			remove(powwowParticipant);
 		}
@@ -2298,11 +2463,10 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 * Returns the number of powwow participants.
 	 *
 	 * @return the number of powwow participants
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+	public int countAll() {
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2315,11 +2479,11 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2333,72 +2497,42 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return PowwowParticipantModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**
 	 * Initializes the powwow participant persistence.
 	 */
 	public void afterPropertiesSet() {
-		String[] listenerClassNames = StringUtil.split(GetterUtil.getString(
-					com.liferay.util.service.ServiceProps.get(
-						"value.object.listener.com.liferay.powwow.model.PowwowParticipant")));
-
-		if (listenerClassNames.length > 0) {
-			try {
-				List<ModelListener<PowwowParticipant>> listenersList = new ArrayList<ModelListener<PowwowParticipant>>();
-
-				for (String listenerClassName : listenerClassNames) {
-					listenersList.add((ModelListener<PowwowParticipant>)InstanceFactory.newInstance(
-							getClassLoader(), listenerClassName));
-				}
-
-				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);
-			}
-			catch (Exception e) {
-				_log.error(e);
-			}
-		}
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(PowwowParticipantImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(PowwowParticipantImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderWrapper.class)
+	protected CompanyProvider companyProvider;
+	protected EntityCache entityCache = EntityCacheUtil.getEntityCache();
+	protected FinderCache finderCache = FinderCacheUtil.getFinderCache();
 	private static final String _SQL_SELECT_POWWOWPARTICIPANT = "SELECT powwowParticipant FROM PowwowParticipant powwowParticipant";
+	private static final String _SQL_SELECT_POWWOWPARTICIPANT_WHERE_PKS_IN = "SELECT powwowParticipant FROM PowwowParticipant powwowParticipant WHERE powwowParticipantId IN (";
 	private static final String _SQL_SELECT_POWWOWPARTICIPANT_WHERE = "SELECT powwowParticipant FROM PowwowParticipant powwowParticipant WHERE ";
 	private static final String _SQL_COUNT_POWWOWPARTICIPANT = "SELECT COUNT(powwowParticipant) FROM PowwowParticipant powwowParticipant";
 	private static final String _SQL_COUNT_POWWOWPARTICIPANT_WHERE = "SELECT COUNT(powwowParticipant) FROM PowwowParticipant powwowParticipant WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "powwowParticipant.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No PowwowParticipant exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PowwowParticipant exists with the key {";
-	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
-	private static Log _log = LogFactoryUtil.getLog(PowwowParticipantPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(PowwowParticipantPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"type"
 			});
-	private static PowwowParticipant _nullPowwowParticipant = new PowwowParticipantImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<PowwowParticipant> toCacheModel() {
-				return _nullPowwowParticipantCacheModel;
-			}
-		};
-
-	private static CacheModel<PowwowParticipant> _nullPowwowParticipantCacheModel =
-		new CacheModel<PowwowParticipant>() {
-			@Override
-			public PowwowParticipant toEntityModel() {
-				return _nullPowwowParticipant;
-			}
-		};
 }

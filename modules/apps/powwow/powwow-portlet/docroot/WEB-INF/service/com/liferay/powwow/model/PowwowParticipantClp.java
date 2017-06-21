@@ -14,13 +14,18 @@
 
 package com.liferay.powwow.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.impl.BaseModelImpl;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.powwow.service.ClpSerializer;
 import com.liferay.powwow.service.PowwowParticipantLocalServiceUtil;
@@ -34,8 +39,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Shinn Lok
+ * @generated
  */
+@ProviderType
 public class PowwowParticipantClp extends BaseModelImpl<PowwowParticipant>
 	implements PowwowParticipant {
 	public PowwowParticipantClp() {
@@ -88,6 +94,9 @@ public class PowwowParticipantClp extends BaseModelImpl<PowwowParticipant>
 		attributes.put("emailAddress", getEmailAddress());
 		attributes.put("type", getType());
 		attributes.put("status", getStatus());
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -171,6 +180,9 @@ public class PowwowParticipantClp extends BaseModelImpl<PowwowParticipant>
 		if (status != null) {
 			setStatus(status);
 		}
+
+		_entityCacheEnabled = GetterUtil.getBoolean("entityCacheEnabled");
+		_finderCacheEnabled = GetterUtil.getBoolean("finderCacheEnabled");
 	}
 
 	@Override
@@ -267,13 +279,19 @@ public class PowwowParticipantClp extends BaseModelImpl<PowwowParticipant>
 	}
 
 	@Override
-	public String getUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getUserId(), "uuid", _userUuid);
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
 	public void setUserUuid(String userUuid) {
-		_userUuid = userUuid;
 	}
 
 	@Override
@@ -416,14 +434,19 @@ public class PowwowParticipantClp extends BaseModelImpl<PowwowParticipant>
 	}
 
 	@Override
-	public String getParticipantUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getParticipantUserId(), "uuid",
-			_participantUserUuid);
+	public String getParticipantUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getParticipantUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
 	public void setParticipantUserUuid(String participantUserUuid) {
-		_participantUserUuid = participantUserUuid;
 	}
 
 	@Override
@@ -546,7 +569,7 @@ public class PowwowParticipantClp extends BaseModelImpl<PowwowParticipant>
 	}
 
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			PowwowParticipantLocalServiceUtil.addPowwowParticipant(this);
 		}
@@ -627,6 +650,16 @@ public class PowwowParticipantClp extends BaseModelImpl<PowwowParticipant>
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _entityCacheEnabled;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -734,17 +767,17 @@ public class PowwowParticipantClp extends BaseModelImpl<PowwowParticipant>
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
-	private String _userUuid;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _powwowMeetingId;
 	private String _name;
 	private long _participantUserId;
-	private String _participantUserUuid;
 	private String _emailAddress;
 	private int _type;
 	private int _status;
 	private BaseModel<?> _powwowParticipantRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.powwow.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
+	private boolean _entityCacheEnabled;
+	private boolean _finderCacheEnabled;
 }

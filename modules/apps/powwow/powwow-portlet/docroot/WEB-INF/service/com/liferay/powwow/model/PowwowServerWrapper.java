@@ -14,12 +14,19 @@
 
 package com.liferay.powwow.model;
 
-import com.liferay.portal.kernel.util.Validator;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.expando.kernel.model.ExpandoBridge;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -30,6 +37,7 @@ import java.util.Map;
  * @see PowwowServer
  * @generated
  */
+@ProviderType
 public class PowwowServerWrapper implements PowwowServer,
 	ModelWrapper<PowwowServer> {
 	public PowwowServerWrapper(PowwowServer powwowServer) {
@@ -141,266 +149,14 @@ public class PowwowServerWrapper implements PowwowServer,
 		}
 	}
 
-	/**
-	* Returns the primary key of this powwow server.
-	*
-	* @return the primary key of this powwow server
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _powwowServer.getPrimaryKey();
+	public PowwowServer toEscapedModel() {
+		return new PowwowServerWrapper(_powwowServer.toEscapedModel());
 	}
 
-	/**
-	* Sets the primary key of this powwow server.
-	*
-	* @param primaryKey the primary key of this powwow server
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_powwowServer.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the powwow server ID of this powwow server.
-	*
-	* @return the powwow server ID of this powwow server
-	*/
-	@Override
-	public long getPowwowServerId() {
-		return _powwowServer.getPowwowServerId();
-	}
-
-	/**
-	* Sets the powwow server ID of this powwow server.
-	*
-	* @param powwowServerId the powwow server ID of this powwow server
-	*/
-	@Override
-	public void setPowwowServerId(long powwowServerId) {
-		_powwowServer.setPowwowServerId(powwowServerId);
-	}
-
-	/**
-	* Returns the company ID of this powwow server.
-	*
-	* @return the company ID of this powwow server
-	*/
-	@Override
-	public long getCompanyId() {
-		return _powwowServer.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this powwow server.
-	*
-	* @param companyId the company ID of this powwow server
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_powwowServer.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this powwow server.
-	*
-	* @return the user ID of this powwow server
-	*/
-	@Override
-	public long getUserId() {
-		return _powwowServer.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this powwow server.
-	*
-	* @param userId the user ID of this powwow server
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_powwowServer.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this powwow server.
-	*
-	* @return the user uuid of this powwow server
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _powwowServer.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this powwow server.
-	*
-	* @param userUuid the user uuid of this powwow server
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_powwowServer.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this powwow server.
-	*
-	* @return the user name of this powwow server
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _powwowServer.getUserName();
-	}
-
-	/**
-	* Sets the user name of this powwow server.
-	*
-	* @param userName the user name of this powwow server
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_powwowServer.setUserName(userName);
-	}
-
-	/**
-	* Returns the create date of this powwow server.
-	*
-	* @return the create date of this powwow server
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _powwowServer.getCreateDate();
-	}
-
-	/**
-	* Sets the create date of this powwow server.
-	*
-	* @param createDate the create date of this powwow server
-	*/
-	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_powwowServer.setCreateDate(createDate);
-	}
-
-	/**
-	* Returns the modified date of this powwow server.
-	*
-	* @return the modified date of this powwow server
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _powwowServer.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this powwow server.
-	*
-	* @param modifiedDate the modified date of this powwow server
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_powwowServer.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Returns the name of this powwow server.
-	*
-	* @return the name of this powwow server
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _powwowServer.getName();
-	}
-
-	/**
-	* Sets the name of this powwow server.
-	*
-	* @param name the name of this powwow server
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_powwowServer.setName(name);
-	}
-
-	/**
-	* Returns the provider type of this powwow server.
-	*
-	* @return the provider type of this powwow server
-	*/
-	@Override
-	public java.lang.String getProviderType() {
-		return _powwowServer.getProviderType();
-	}
-
-	/**
-	* Sets the provider type of this powwow server.
-	*
-	* @param providerType the provider type of this powwow server
-	*/
-	@Override
-	public void setProviderType(java.lang.String providerType) {
-		_powwowServer.setProviderType(providerType);
-	}
-
-	/**
-	* Returns the url of this powwow server.
-	*
-	* @return the url of this powwow server
-	*/
-	@Override
-	public java.lang.String getUrl() {
-		return _powwowServer.getUrl();
-	}
-
-	/**
-	* Sets the url of this powwow server.
-	*
-	* @param url the url of this powwow server
-	*/
-	@Override
-	public void setUrl(java.lang.String url) {
-		_powwowServer.setUrl(url);
-	}
-
-	/**
-	* Returns the api key of this powwow server.
-	*
-	* @return the api key of this powwow server
-	*/
-	@Override
-	public java.lang.String getApiKey() {
-		return _powwowServer.getApiKey();
-	}
-
-	/**
-	* Sets the api key of this powwow server.
-	*
-	* @param apiKey the api key of this powwow server
-	*/
-	@Override
-	public void setApiKey(java.lang.String apiKey) {
-		_powwowServer.setApiKey(apiKey);
-	}
-
-	/**
-	* Returns the secret of this powwow server.
-	*
-	* @return the secret of this powwow server
-	*/
-	@Override
-	public java.lang.String getSecret() {
-		return _powwowServer.getSecret();
-	}
-
-	/**
-	* Sets the secret of this powwow server.
-	*
-	* @param secret the secret of this powwow server
-	*/
-	@Override
-	public void setSecret(java.lang.String secret) {
-		_powwowServer.setSecret(secret);
+	public PowwowServer toUnescapedModel() {
+		return new PowwowServerWrapper(_powwowServer.toUnescapedModel());
 	}
 
 	/**
@@ -423,34 +179,9 @@ public class PowwowServerWrapper implements PowwowServer,
 		return _powwowServer.isActive();
 	}
 
-	/**
-	* Sets whether this powwow server is active.
-	*
-	* @param active the active of this powwow server
-	*/
-	@Override
-	public void setActive(boolean active) {
-		_powwowServer.setActive(active);
-	}
-
-	@Override
-	public boolean isNew() {
-		return _powwowServer.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_powwowServer.setNew(n);
-	}
-
 	@Override
 	public boolean isCachedModel() {
 		return _powwowServer.isCachedModel();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_powwowServer.setCachedModel(cachedModel);
 	}
 
 	@Override
@@ -459,45 +190,22 @@ public class PowwowServerWrapper implements PowwowServer,
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _powwowServer.getPrimaryKeyObj();
+	public boolean isNew() {
+		return _powwowServer.isNew();
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_powwowServer.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
+	public ExpandoBridge getExpandoBridge() {
 		return _powwowServer.getExpandoBridge();
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_powwowServer.setExpandoBridgeAttributes(baseModel);
+	public com.liferay.portal.kernel.model.CacheModel<PowwowServer> toCacheModel() {
+		return _powwowServer.toCacheModel();
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
-		_powwowServer.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		_powwowServer.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new PowwowServerWrapper((PowwowServer)_powwowServer.clone());
-	}
-
-	@Override
-	public int compareTo(com.liferay.powwow.model.PowwowServer powwowServer) {
+	public int compareTo(PowwowServer powwowServer) {
 		return _powwowServer.compareTo(powwowServer);
 	}
 
@@ -507,18 +215,83 @@ public class PowwowServerWrapper implements PowwowServer,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.powwow.model.PowwowServer> toCacheModel() {
-		return _powwowServer.toCacheModel();
+	public Serializable getPrimaryKeyObj() {
+		return _powwowServer.getPrimaryKeyObj();
 	}
 
 	@Override
-	public com.liferay.powwow.model.PowwowServer toEscapedModel() {
-		return new PowwowServerWrapper(_powwowServer.toEscapedModel());
+	public java.lang.Object clone() {
+		return new PowwowServerWrapper((PowwowServer)_powwowServer.clone());
 	}
 
+	/**
+	* Returns the api key of this powwow server.
+	*
+	* @return the api key of this powwow server
+	*/
 	@Override
-	public com.liferay.powwow.model.PowwowServer toUnescapedModel() {
-		return new PowwowServerWrapper(_powwowServer.toUnescapedModel());
+	public java.lang.String getApiKey() {
+		return _powwowServer.getApiKey();
+	}
+
+	/**
+	* Returns the name of this powwow server.
+	*
+	* @return the name of this powwow server
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _powwowServer.getName();
+	}
+
+	/**
+	* Returns the provider type of this powwow server.
+	*
+	* @return the provider type of this powwow server
+	*/
+	@Override
+	public java.lang.String getProviderType() {
+		return _powwowServer.getProviderType();
+	}
+
+	/**
+	* Returns the secret of this powwow server.
+	*
+	* @return the secret of this powwow server
+	*/
+	@Override
+	public java.lang.String getSecret() {
+		return _powwowServer.getSecret();
+	}
+
+	/**
+	* Returns the url of this powwow server.
+	*
+	* @return the url of this powwow server
+	*/
+	@Override
+	public java.lang.String getUrl() {
+		return _powwowServer.getUrl();
+	}
+
+	/**
+	* Returns the user name of this powwow server.
+	*
+	* @return the user name of this powwow server
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _powwowServer.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this powwow server.
+	*
+	* @return the user uuid of this powwow server
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _powwowServer.getUserUuid();
 	}
 
 	@Override
@@ -531,10 +304,240 @@ public class PowwowServerWrapper implements PowwowServer,
 		return _powwowServer.toXmlString();
 	}
 
+	/**
+	* Returns the create date of this powwow server.
+	*
+	* @return the create date of this powwow server
+	*/
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public Date getCreateDate() {
+		return _powwowServer.getCreateDate();
+	}
+
+	/**
+	* Returns the modified date of this powwow server.
+	*
+	* @return the modified date of this powwow server
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _powwowServer.getModifiedDate();
+	}
+
+	/**
+	* Returns the company ID of this powwow server.
+	*
+	* @return the company ID of this powwow server
+	*/
+	@Override
+	public long getCompanyId() {
+		return _powwowServer.getCompanyId();
+	}
+
+	/**
+	* Returns the powwow server ID of this powwow server.
+	*
+	* @return the powwow server ID of this powwow server
+	*/
+	@Override
+	public long getPowwowServerId() {
+		return _powwowServer.getPowwowServerId();
+	}
+
+	/**
+	* Returns the primary key of this powwow server.
+	*
+	* @return the primary key of this powwow server
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _powwowServer.getPrimaryKey();
+	}
+
+	/**
+	* Returns the user ID of this powwow server.
+	*
+	* @return the user ID of this powwow server
+	*/
+	@Override
+	public long getUserId() {
+		return _powwowServer.getUserId();
+	}
+
+	@Override
+	public void persist() {
 		_powwowServer.persist();
+	}
+
+	/**
+	* Sets whether this powwow server is active.
+	*
+	* @param active the active of this powwow server
+	*/
+	@Override
+	public void setActive(boolean active) {
+		_powwowServer.setActive(active);
+	}
+
+	/**
+	* Sets the api key of this powwow server.
+	*
+	* @param apiKey the api key of this powwow server
+	*/
+	@Override
+	public void setApiKey(java.lang.String apiKey) {
+		_powwowServer.setApiKey(apiKey);
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_powwowServer.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this powwow server.
+	*
+	* @param companyId the company ID of this powwow server
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_powwowServer.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the create date of this powwow server.
+	*
+	* @param createDate the create date of this powwow server
+	*/
+	@Override
+	public void setCreateDate(Date createDate) {
+		_powwowServer.setCreateDate(createDate);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_powwowServer.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_powwowServer.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		_powwowServer.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the modified date of this powwow server.
+	*
+	* @param modifiedDate the modified date of this powwow server
+	*/
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_powwowServer.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the name of this powwow server.
+	*
+	* @param name the name of this powwow server
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_powwowServer.setName(name);
+	}
+
+	@Override
+	public void setNew(boolean n) {
+		_powwowServer.setNew(n);
+	}
+
+	/**
+	* Sets the powwow server ID of this powwow server.
+	*
+	* @param powwowServerId the powwow server ID of this powwow server
+	*/
+	@Override
+	public void setPowwowServerId(long powwowServerId) {
+		_powwowServer.setPowwowServerId(powwowServerId);
+	}
+
+	/**
+	* Sets the primary key of this powwow server.
+	*
+	* @param primaryKey the primary key of this powwow server
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_powwowServer.setPrimaryKey(primaryKey);
+	}
+
+	@Override
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
+		_powwowServer.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the provider type of this powwow server.
+	*
+	* @param providerType the provider type of this powwow server
+	*/
+	@Override
+	public void setProviderType(java.lang.String providerType) {
+		_powwowServer.setProviderType(providerType);
+	}
+
+	/**
+	* Sets the secret of this powwow server.
+	*
+	* @param secret the secret of this powwow server
+	*/
+	@Override
+	public void setSecret(java.lang.String secret) {
+		_powwowServer.setSecret(secret);
+	}
+
+	/**
+	* Sets the url of this powwow server.
+	*
+	* @param url the url of this powwow server
+	*/
+	@Override
+	public void setUrl(java.lang.String url) {
+		_powwowServer.setUrl(url);
+	}
+
+	/**
+	* Sets the user ID of this powwow server.
+	*
+	* @param userId the user ID of this powwow server
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_powwowServer.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this powwow server.
+	*
+	* @param userName the user name of this powwow server
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_powwowServer.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this powwow server.
+	*
+	* @param userUuid the user uuid of this powwow server
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_powwowServer.setUserUuid(userUuid);
 	}
 
 	@Override
@@ -549,18 +552,11 @@ public class PowwowServerWrapper implements PowwowServer,
 
 		PowwowServerWrapper powwowServerWrapper = (PowwowServerWrapper)obj;
 
-		if (Validator.equals(_powwowServer, powwowServerWrapper._powwowServer)) {
+		if (Objects.equals(_powwowServer, powwowServerWrapper._powwowServer)) {
 			return true;
 		}
 
 		return false;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	public PowwowServer getWrappedPowwowServer() {
-		return _powwowServer;
 	}
 
 	@Override
@@ -569,9 +565,19 @@ public class PowwowServerWrapper implements PowwowServer,
 	}
 
 	@Override
+	public boolean isEntityCacheEnabled() {
+		return _powwowServer.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _powwowServer.isFinderCacheEnabled();
+	}
+
+	@Override
 	public void resetOriginalValues() {
 		_powwowServer.resetOriginalValues();
 	}
 
-	private PowwowServer _powwowServer;
+	private final PowwowServer _powwowServer;
 }

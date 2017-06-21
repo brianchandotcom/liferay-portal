@@ -14,7 +14,11 @@
 
 package com.liferay.powwow.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.Accessor;
 
 /**
  * The extended model interface for the PowwowMeeting service. Represents a row in the &quot;PowwowMeeting&quot; database table, with each column mapped to a property of this class.
@@ -25,11 +29,31 @@ import com.liferay.portal.kernel.model.PersistedModel;
  * @see com.liferay.powwow.model.impl.PowwowMeetingModelImpl
  * @generated
  */
+@ImplementationClassName("com.liferay.powwow.model.impl.PowwowMeetingImpl")
+@ProviderType
 public interface PowwowMeeting extends PowwowMeetingModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.powwow.model.impl.PowwowMeetingImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<PowwowMeeting, Long> POWWOW_MEETING_ID_ACCESSOR =
+		new Accessor<PowwowMeeting, Long>() {
+			@Override
+			public Long get(PowwowMeeting powwowMeeting) {
+				return powwowMeeting.getPowwowMeetingId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<PowwowMeeting> getTypeClass() {
+				return PowwowMeeting.class;
+			}
+		};
+
 	public java.util.Map<java.lang.String, java.io.Serializable> getProviderTypeMetadataMap();
 }

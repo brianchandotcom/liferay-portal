@@ -14,9 +14,12 @@
 
 package com.liferay.powwow.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.model.CacheModel;
 
 import com.liferay.powwow.model.PowwowMeeting;
 
@@ -34,8 +37,33 @@ import java.util.Date;
  * @see PowwowMeeting
  * @generated
  */
+@ProviderType
 public class PowwowMeetingCacheModel implements CacheModel<PowwowMeeting>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PowwowMeetingCacheModel)) {
+			return false;
+		}
+
+		PowwowMeetingCacheModel powwowMeetingCacheModel = (PowwowMeetingCacheModel)obj;
+
+		if (powwowMeetingId == powwowMeetingCacheModel.powwowMeetingId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, powwowMeetingId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(31);
@@ -153,19 +181,25 @@ public class PowwowMeetingCacheModel implements CacheModel<PowwowMeeting>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		powwowMeetingId = objectInput.readLong();
+
 		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
 		powwowServerId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		providerType = objectInput.readUTF();
 		providerTypeMetadata = objectInput.readUTF();
 		languageId = objectInput.readUTF();
+
 		calendarBookingId = objectInput.readLong();
+
 		status = objectInput.readInt();
 	}
 
@@ -173,8 +207,11 @@ public class PowwowMeetingCacheModel implements CacheModel<PowwowMeeting>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(powwowMeetingId);
+
 		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -186,6 +223,7 @@ public class PowwowMeetingCacheModel implements CacheModel<PowwowMeeting>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
 		objectOutput.writeLong(powwowServerId);
 
 		if (name == null) {
@@ -224,6 +262,7 @@ public class PowwowMeetingCacheModel implements CacheModel<PowwowMeeting>,
 		}
 
 		objectOutput.writeLong(calendarBookingId);
+
 		objectOutput.writeInt(status);
 	}
 

@@ -14,15 +14,17 @@
 
 package com.liferay.powwow.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Shinn Lok
+ * @generated
  */
+@ProviderType
 public interface PowwowMeetingFinder {
-	public int countByU_S(long userId, int[] statuses)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByU_S(long userId, int[] statuses);
 
 	public java.util.List<com.liferay.powwow.model.PowwowMeeting> findByU_S(
 		long userId, int[] statuses, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 }

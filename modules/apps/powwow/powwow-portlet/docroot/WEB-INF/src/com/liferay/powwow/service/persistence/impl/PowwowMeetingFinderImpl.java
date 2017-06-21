@@ -14,6 +14,9 @@
 
 package com.liferay.powwow.service.persistence.impl;
 
+import com.liferay.powwow.service.persistence.PowwowMeetingFinder;
+import com.liferay.powwow.service.persistence.PowwowMeetingUtil;
+
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;

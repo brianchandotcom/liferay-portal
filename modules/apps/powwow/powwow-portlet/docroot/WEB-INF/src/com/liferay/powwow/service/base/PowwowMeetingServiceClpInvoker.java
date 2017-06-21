@@ -14,6 +14,8 @@
 
 package com.liferay.powwow.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.powwow.service.PowwowMeetingServiceUtil;
 
 import java.util.Arrays;
@@ -22,47 +24,44 @@ import java.util.Arrays;
  * @author Shinn Lok
  * @generated
  */
+@ProviderType
 public class PowwowMeetingServiceClpInvoker {
 	public PowwowMeetingServiceClpInvoker() {
-		_methodName36 = "getBeanIdentifier";
+		_methodName36 = "getOSGiServiceIdentifier";
 
 		_methodParameterTypes36 = new String[] {  };
 
-		_methodName37 = "setBeanIdentifier";
+		_methodName41 = "addPowwowMeeting";
 
-		_methodParameterTypes37 = new String[] { "java.lang.String" };
-
-		_methodName42 = "addPowwowMeeting";
-
-		_methodParameterTypes42 = new String[] {
+		_methodParameterTypes41 = new String[] {
 				"long", "java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.util.Map",
 				"java.lang.String", "long", "int", "java.util.List",
 				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
-		_methodName43 = "deletePowwowMeeting";
+		_methodName42 = "deletePowwowMeeting";
+
+		_methodParameterTypes42 = new String[] { "long" };
+
+		_methodName43 = "getPowwowMeeting";
 
 		_methodParameterTypes43 = new String[] { "long" };
 
-		_methodName44 = "getPowwowMeeting";
+		_methodName44 = "getPowwowMeetings";
 
-		_methodParameterTypes44 = new String[] { "long" };
-
-		_methodName45 = "getPowwowMeetings";
-
-		_methodParameterTypes45 = new String[] {
+		_methodParameterTypes44 = new String[] {
 				"long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName46 = "getPowwowMeetingsCount";
+		_methodName45 = "getPowwowMeetingsCount";
 
-		_methodParameterTypes46 = new String[] { "long" };
+		_methodParameterTypes45 = new String[] { "long" };
 
-		_methodName47 = "updatePowwowMeeting";
+		_methodName46 = "updatePowwowMeeting";
 
-		_methodParameterTypes47 = new String[] {
+		_methodParameterTypes46 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Map", "java.lang.String", "long",
 				"int", "java.util.List",
@@ -74,18 +73,11 @@ public class PowwowMeetingServiceClpInvoker {
 		Object[] arguments) throws Throwable {
 		if (_methodName36.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes36, parameterTypes)) {
-			return PowwowMeetingServiceUtil.getBeanIdentifier();
+			return PowwowMeetingServiceUtil.getOSGiServiceIdentifier();
 		}
 
-		if (_methodName37.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes37, parameterTypes)) {
-			PowwowMeetingServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
-
-			return null;
-		}
-
-		if (_methodName42.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
+		if (_methodName41.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes41, parameterTypes)) {
 			return PowwowMeetingServiceUtil.addPowwowMeeting(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -99,31 +91,31 @@ public class PowwowMeetingServiceClpInvoker {
 				(com.liferay.portal.kernel.service.ServiceContext)arguments[11]);
 		}
 
+		if (_methodName42.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
+			return PowwowMeetingServiceUtil.deletePowwowMeeting(((Long)arguments[0]).longValue());
+		}
+
 		if (_methodName43.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
-			return PowwowMeetingServiceUtil.deletePowwowMeeting(((Long)arguments[0]).longValue());
+			return PowwowMeetingServiceUtil.getPowwowMeeting(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName44.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
-			return PowwowMeetingServiceUtil.getPowwowMeeting(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName45.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
 			return PowwowMeetingServiceUtil.getPowwowMeetings(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
 		}
 
-		if (_methodName46.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
+		if (_methodName45.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
 			return PowwowMeetingServiceUtil.getPowwowMeetingsCount(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName47.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
+		if (_methodName46.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
 			return PowwowMeetingServiceUtil.updatePowwowMeeting(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -141,8 +133,8 @@ public class PowwowMeetingServiceClpInvoker {
 
 	private String _methodName36;
 	private String[] _methodParameterTypes36;
-	private String _methodName37;
-	private String[] _methodParameterTypes37;
+	private String _methodName41;
+	private String[] _methodParameterTypes41;
 	private String _methodName42;
 	private String[] _methodParameterTypes42;
 	private String _methodName43;
@@ -153,6 +145,4 @@ public class PowwowMeetingServiceClpInvoker {
 	private String[] _methodParameterTypes45;
 	private String _methodName46;
 	private String[] _methodParameterTypes46;
-	private String _methodName47;
-	private String[] _methodParameterTypes47;
 }

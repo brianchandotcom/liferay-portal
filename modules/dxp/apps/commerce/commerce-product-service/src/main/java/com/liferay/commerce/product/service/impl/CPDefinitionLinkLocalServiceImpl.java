@@ -14,27 +14,62 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.service.base.CPDefinitionLinkLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.Date;
 
 /**
- * The implementation of the cp definition link local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.product.service.CPDefinitionLinkLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Marco Leo
- * @see CPDefinitionLinkLocalServiceBaseImpl
- * @see com.liferay.commerce.product.service.CPDefinitionLinkLocalServiceUtil
+ * @author Alessio Antonio Rendina
  */
 public class CPDefinitionLinkLocalServiceImpl
 	extends CPDefinitionLinkLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.product.service.CPDefinitionLinkLocalServiceUtil} to access the cp definition link local service.
-	 */
+
+	@Override
+	public CPDefinitionLink addCPDefinitionLink(
+			long cpDefinitionId1, long cpDefinitionId2, int displayOrder,
+			int type, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
+		Date now = new Date();
+
+		long cpDefinitionLinkId = counterLocalService.increment();
+
+		CPDefinitionLink cpDefinitionLink = cpDefinitionLinkPersistence.create(
+			cpDefinitionLinkId);
+
+		cpDefinitionLink.setCompanyId(user.getCompanyId());
+		cpDefinitionLink.setUserId(user.getUserId());
+		cpDefinitionLink.setUserName(user.getFullName());
+		cpDefinitionLink.setCreateDate(now);
+		cpDefinitionLink.setCPDefinitionId1(cpDefinitionId1);
+		cpDefinitionLink.setCPDefinitionId2(cpDefinitionId2);
+		cpDefinitionLink.setDisplayOrder(displayOrder);
+		cpDefinitionLink.setType(type);
+
+		cpDefinitionLinkPersistence.update(cpDefinitionLink);
+
+		return cpDefinitionLink;
+	}
+
+	@Override
+	public CPDefinitionLink deleteCPDefinitionLink(
+		CPDefinitionLink cpDefinitionLink) {
+
+		return cpDefinitionLinkPersistence.remove(cpDefinitionLink);
+	}
+
+	@Override
+	public CPDefinitionLink deleteCPDefinitionLink(long cpDefinitionLinkId)
+		throws PortalException {
+
+		CPDefinitionLink cpDefinitionLink =
+			cpDefinitionLinkPersistence.findByPrimaryKey(cpDefinitionLinkId);
+
+		return deleteCPDefinitionLink(cpDefinitionLink);
+	}
 }

@@ -89,10 +89,11 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	*
 	* @param cpDefinitionLink the cp definition link
 	* @return the cp definition link that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CPDefinitionLink deleteCPDefinitionLink(
-		CPDefinitionLink cpDefinitionLink);
+		CPDefinitionLink cpDefinitionLink) throws PortalException;
 
 	/**
 	* Deletes the cp definition link with the primary key from the database. Also notifies the appropriate model listeners.

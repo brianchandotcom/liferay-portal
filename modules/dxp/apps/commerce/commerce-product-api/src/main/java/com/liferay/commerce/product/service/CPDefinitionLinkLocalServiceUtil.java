@@ -78,9 +78,11 @@ public class CPDefinitionLinkLocalServiceUtil {
 	*
 	* @param cpDefinitionLink the cp definition link
 	* @return the cp definition link that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.product.model.CPDefinitionLink deleteCPDefinitionLink(
-		com.liferay.commerce.product.model.CPDefinitionLink cpDefinitionLink) {
+		com.liferay.commerce.product.model.CPDefinitionLink cpDefinitionLink)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCPDefinitionLink(cpDefinitionLink);
 	}
 

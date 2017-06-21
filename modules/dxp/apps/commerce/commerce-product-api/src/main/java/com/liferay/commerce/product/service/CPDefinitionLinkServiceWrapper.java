@@ -33,6 +33,29 @@ public class CPDefinitionLinkServiceWrapper implements CPDefinitionLinkService,
 		_cpDefinitionLinkService = cpDefinitionLinkService;
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionLink addCPDefinitionLink(
+		long cpDefinitionId1, long cpDefinitionId2, int displayOrder, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLinkService.addCPDefinitionLink(cpDefinitionId1,
+			cpDefinitionId2, displayOrder, type, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionLink deleteCPDefinitionLink(
+		com.liferay.commerce.product.model.CPDefinitionLink cpDefinitionLink)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLinkService.deleteCPDefinitionLink(cpDefinitionLink);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionLink deleteCPDefinitionLink(
+		long cpDefinitionLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLinkService.deleteCPDefinitionLink(cpDefinitionLinkId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

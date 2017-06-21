@@ -41,6 +41,26 @@ public class CPDefinitionLinkServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionLinkServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.product.model.CPDefinitionLink addCPDefinitionLink(
+		long cpDefinitionId1, long cpDefinitionId2, int displayOrder, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCPDefinitionLink(cpDefinitionId1, cpDefinitionId2,
+			displayOrder, type, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionLink deleteCPDefinitionLink(
+		com.liferay.commerce.product.model.CPDefinitionLink cpDefinitionLink)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteCPDefinitionLink(cpDefinitionLink);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionLink deleteCPDefinitionLink(
+		long cpDefinitionLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteCPDefinitionLink(cpDefinitionLinkId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.

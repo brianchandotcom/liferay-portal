@@ -16,11 +16,14 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.model.CPDefinitionLink;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -49,6 +52,15 @@ public interface CPDefinitionLinkService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionLinkServiceUtil} to access the cp definition link remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionLinkServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CPDefinitionLink addCPDefinitionLink(long cpDefinitionId1,
+		long cpDefinitionId2, int displayOrder, int type,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CPDefinitionLink deleteCPDefinitionLink(
+		CPDefinitionLink cpDefinitionLink) throws PortalException;
+
+	public CPDefinitionLink deleteCPDefinitionLink(long cpDefinitionLinkId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

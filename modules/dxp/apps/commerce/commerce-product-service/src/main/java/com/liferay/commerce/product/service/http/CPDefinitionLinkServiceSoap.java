@@ -16,9 +16,16 @@ package com.liferay.commerce.product.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.service.CPDefinitionLinkServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.product.service.CPDefinitionLinkServiceUtil} service utility. The
+ * {@link CPDefinitionLinkServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,57 @@ import aQute.bnd.annotation.ProviderType;
  * @author Marco Leo
  * @see CPDefinitionLinkServiceHttp
  * @see com.liferay.commerce.product.model.CPDefinitionLinkSoap
- * @see com.liferay.commerce.product.service.CPDefinitionLinkServiceUtil
+ * @see CPDefinitionLinkServiceUtil
  * @generated
  */
 @ProviderType
 public class CPDefinitionLinkServiceSoap {
+	public static com.liferay.commerce.product.model.CPDefinitionLinkSoap addCPDefinitionLink(
+		long cpDefinitionId1, long cpDefinitionId2, int displayOrder, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPDefinitionLink returnValue = CPDefinitionLinkServiceUtil.addCPDefinitionLink(cpDefinitionId1,
+					cpDefinitionId2, displayOrder, type, serviceContext);
+
+			return com.liferay.commerce.product.model.CPDefinitionLinkSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionLinkSoap deleteCPDefinitionLink(
+		com.liferay.commerce.product.model.CPDefinitionLinkSoap cpDefinitionLink)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPDefinitionLink returnValue = CPDefinitionLinkServiceUtil.deleteCPDefinitionLink(com.liferay.commerce.product.model.impl.CPDefinitionLinkModelImpl.toModel(
+						cpDefinitionLink));
+
+			return com.liferay.commerce.product.model.CPDefinitionLinkSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionLinkSoap deleteCPDefinitionLink(
+		long cpDefinitionLinkId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPDefinitionLink returnValue = CPDefinitionLinkServiceUtil.deleteCPDefinitionLink(cpDefinitionLinkId);
+
+			return com.liferay.commerce.product.model.CPDefinitionLinkSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CPDefinitionLinkServiceSoap.class);
 }

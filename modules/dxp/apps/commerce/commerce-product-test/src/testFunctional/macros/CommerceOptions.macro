@@ -1,0 +1,26 @@
+<definition>
+	<command name="addEntry">
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute macro="CommerceEntry#addOptionsEntry">
+			<var name="optionDescription" value="${optionDescription}" />
+			<var name="optionFieldType" value="${optionFieldType}" />
+			<var name="optionName" value="${optionName}" />
+			<var name="optionTitle" value="${optionTitle}" />
+		</execute>
+	</command>
+
+	<command name="deleteOptionsEntries">
+		<execute function="Click" locator1="CommerceNavigation#SELECT_ALL_CHECKBOX" />
+
+		<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
+
+		<execute function="Confirm" value1="Are you sure you want to permanently delete the selected options?" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+</definition>

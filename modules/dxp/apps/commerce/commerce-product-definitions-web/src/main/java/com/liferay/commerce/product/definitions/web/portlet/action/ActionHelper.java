@@ -17,10 +17,12 @@ package com.liferay.commerce.product.definitions.web.portlet.action;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -116,6 +118,13 @@ public class ActionHelper {
 			if (cpDefinitionOptionRel != null) {
 				cpDefinitionId = cpDefinitionOptionRel.getCPDefinitionId();
 			}
+
+			CPDefinitionLink cpDefinitionLink = getCPDefinitionLink(
+				renderRequest);
+
+			if (cpDefinitionLink != null) {
+				cpDefinitionId = cpDefinitionLink.getCPDefinitionId1();
+			}
 		}
 
 		if (cpDefinitionId > 0) {
@@ -187,6 +196,54 @@ public class ActionHelper {
 		}
 
 		return cpDefinitionOptionRels;
+	}
+
+	public CPDefinitionLink getCPDefinitionLink(
+			RenderRequest renderRequest)
+		throws PortalException {
+
+		CPDefinitionLink cpDefinitionLink =
+			(CPDefinitionLink)renderRequest.getAttribute(
+				CPWebKeys.CP_DEFINITION_LINK);
+
+		if (cpDefinitionLink != null) {
+			return cpDefinitionLink;
+		}
+
+		long cpDefinitionLinkId = ParamUtil.getLong(
+			renderRequest, "cpDefinitionLinkId");
+
+		if (cpDefinitionLinkId > 0) {
+			cpDefinitionLink = _cpDefinitionLinkService.fetchCPDefinitionLink(
+				cpDefinitionLinkId);
+		}
+
+		if (cpDefinitionLink != null) {
+			renderRequest.setAttribute(
+				CPWebKeys.CP_DEFINITION_LINK, cpDefinitionLink);
+		}
+
+		return cpDefinitionLink;
+	}
+
+	public List<CPDefinitionLink> getCPDefinitionLinks(
+			ResourceRequest resourceRequest)
+		throws PortalException {
+
+		List<CPDefinitionLink> cpDefinitionLinks = new ArrayList<>();
+
+		long[] cpDefinitionLinkIds = ParamUtil.getLongValues(
+			resourceRequest, "rowIds");
+
+		for (long cpDefinitionLinkId : cpDefinitionLinkIds) {
+			CPDefinitionLink cpDefinitionLink =
+				_cpDefinitionLinkService.getCPDefinitionLink(
+					cpDefinitionLinkId);
+
+			cpDefinitionLinks.add(cpDefinitionLink);
+		}
+
+		return cpDefinitionLinks;
 	}
 
 	public CPDefinitionOptionValueRel getCPDefinitionOptionValueRel(
@@ -332,6 +389,9 @@ public class ActionHelper {
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
+
+	@Reference
+	private CPDefinitionLinkService _cpDefinitionLinkService;
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;

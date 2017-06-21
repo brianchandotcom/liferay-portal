@@ -35,6 +35,8 @@
 	</tear-down>
 
 	<command name="AddCatalogEntryWithSingleImage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="ProductSKU" />
 			<var name="plusMenu" value="Simple" />
@@ -215,8 +217,6 @@
 	</command>
 
 	<command name="AddSimpleCatalogEntry" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="Simple Product SKU" />
 			<var name="plusMenu" value="Simple" />
@@ -241,8 +241,6 @@
 	</command>
 
 	<command name="AddSimpleDraftCatalogEntry" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="Simple Product SKU" />
 			<var name="plusMenu" value="Simple" />
@@ -406,7 +404,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCatalogEntry">
+	<command name="EditCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="ProductSKU" />
 			<var name="plusMenu" value="Simple" />

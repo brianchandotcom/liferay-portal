@@ -222,6 +222,10 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 		}
 	).render();
 
+	Liferay.on('<portlet:namespace />Video:play', function() {
+		imageViewer.pause();
+	});
+
 	var onClickLinksDefaultFn = imageViewer._onClickLinks;
 
 	imageViewer._onClickLinks = function(event) {

@@ -79,6 +79,12 @@ for (String previewFileURL : previewFileURLs) {
 						wmode: 'opaque'
 					},
 
+					on: {
+						'play': function() {
+							window.parent.Liferay.fire('<portlet:namespace /><%= randomNamespace %>Video:play');
+						}
+					},
+
 					<c:if test="<%= Validator.isNotNull(ogvPreviewFileURL) %>">
 						ogvUrl: '<%= HtmlUtil.escapeJS(ogvPreviewFileURL) %>',
 					</c:if>

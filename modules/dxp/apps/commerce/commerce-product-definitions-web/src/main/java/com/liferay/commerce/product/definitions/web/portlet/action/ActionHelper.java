@@ -139,6 +139,53 @@ public class ActionHelper {
 		return cpDefinition;
 	}
 
+	public CPDefinitionLink getCPDefinitionLink(RenderRequest renderRequest)
+		throws PortalException {
+
+		CPDefinitionLink cpDefinitionLink =
+			(CPDefinitionLink)renderRequest.getAttribute(
+				CPWebKeys.CP_DEFINITION_LINK);
+
+		if (cpDefinitionLink != null) {
+			return cpDefinitionLink;
+		}
+
+		long cpDefinitionLinkId = ParamUtil.getLong(
+			renderRequest, "cpDefinitionLinkId");
+
+		if (cpDefinitionLinkId > 0) {
+			cpDefinitionLink = _cpDefinitionLinkService.fetchCPDefinitionLink(
+				cpDefinitionLinkId);
+		}
+
+		if (cpDefinitionLink != null) {
+			renderRequest.setAttribute(
+				CPWebKeys.CP_DEFINITION_LINK, cpDefinitionLink);
+		}
+
+		return cpDefinitionLink;
+	}
+
+	public List<CPDefinitionLink> getCPDefinitionLinks(
+			ResourceRequest resourceRequest)
+		throws PortalException {
+
+		List<CPDefinitionLink> cpDefinitionLinks = new ArrayList<>();
+
+		long[] cpDefinitionLinkIds = ParamUtil.getLongValues(
+			resourceRequest, "rowIds");
+
+		for (long cpDefinitionLinkId : cpDefinitionLinkIds) {
+			CPDefinitionLink cpDefinitionLink =
+				_cpDefinitionLinkService.getCPDefinitionLink(
+					cpDefinitionLinkId);
+
+			cpDefinitionLinks.add(cpDefinitionLink);
+		}
+
+		return cpDefinitionLinks;
+	}
+
 	public CPDefinitionOptionRel getCPDefinitionOptionRel(
 			RenderRequest renderRequest)
 		throws PortalException {
@@ -196,54 +243,6 @@ public class ActionHelper {
 		}
 
 		return cpDefinitionOptionRels;
-	}
-
-	public CPDefinitionLink getCPDefinitionLink(
-			RenderRequest renderRequest)
-		throws PortalException {
-
-		CPDefinitionLink cpDefinitionLink =
-			(CPDefinitionLink)renderRequest.getAttribute(
-				CPWebKeys.CP_DEFINITION_LINK);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		long cpDefinitionLinkId = ParamUtil.getLong(
-			renderRequest, "cpDefinitionLinkId");
-
-		if (cpDefinitionLinkId > 0) {
-			cpDefinitionLink = _cpDefinitionLinkService.fetchCPDefinitionLink(
-				cpDefinitionLinkId);
-		}
-
-		if (cpDefinitionLink != null) {
-			renderRequest.setAttribute(
-				CPWebKeys.CP_DEFINITION_LINK, cpDefinitionLink);
-		}
-
-		return cpDefinitionLink;
-	}
-
-	public List<CPDefinitionLink> getCPDefinitionLinks(
-			ResourceRequest resourceRequest)
-		throws PortalException {
-
-		List<CPDefinitionLink> cpDefinitionLinks = new ArrayList<>();
-
-		long[] cpDefinitionLinkIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIds");
-
-		for (long cpDefinitionLinkId : cpDefinitionLinkIds) {
-			CPDefinitionLink cpDefinitionLink =
-				_cpDefinitionLinkService.getCPDefinitionLink(
-					cpDefinitionLinkId);
-
-			cpDefinitionLinks.add(cpDefinitionLink);
-		}
-
-		return cpDefinitionLinks;
 	}
 
 	public CPDefinitionOptionValueRel getCPDefinitionOptionValueRel(

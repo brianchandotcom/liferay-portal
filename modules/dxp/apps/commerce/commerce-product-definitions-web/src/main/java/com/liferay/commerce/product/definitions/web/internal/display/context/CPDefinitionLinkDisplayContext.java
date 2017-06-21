@@ -28,26 +28,25 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.PortletURL;
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPDefinitionLinkDisplayContext extends
-	BaseCPDefinitionsSearchContainerDisplayContext<CPDefinitionLink> {
+public class CPDefinitionLinkDisplayContext
+	extends BaseCPDefinitionsSearchContainerDisplayContext<CPDefinitionLink> {
 
 	public CPDefinitionLinkDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CPDefinitionLinkService cpDefinitionLinkService, ItemSelector itemSelector)
+			CPDefinitionLinkService cpDefinitionLinkService,
+			ItemSelector itemSelector)
 		throws PortalException {
 
 		super(

@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 
@@ -29,7 +30,8 @@ import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
  */
 @ProviderType
 public class CPDefinitionLinkImpl extends CPDefinitionLinkBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a cp definition link model instance should use the {@link com.liferay.commerce.product.model.CPDefinitionLink} interface instead.
@@ -41,4 +43,5 @@ public class CPDefinitionLinkImpl extends CPDefinitionLinkBaseImpl {
 		return CPDefinitionLocalServiceUtil.fetchCPDefinition(
 			getCPDefinitionId2());
 	}
+
 }

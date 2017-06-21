@@ -43,8 +43,7 @@ public class CPDefinitionLinkPriorityComparator
 		CPDefinitionLink cpDefinitionLink2) {
 
 		int value = Double.compare(
-			cpDefinitionLink1.getPriority(),
-			cpDefinitionLink1.getPriority());
+			cpDefinitionLink1.getPriority(), cpDefinitionLink1.getPriority());
 
 		if (_ascending) {
 			return value;

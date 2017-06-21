@@ -25,13 +25,15 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -44,8 +46,7 @@ import javax.servlet.http.HttpServletRequest;
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCPDefinitionLinkMVCRenderCommand
-	implements MVCRenderCommand {
+public class EditCPDefinitionLinkMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -58,8 +59,8 @@ public class EditCPDefinitionLinkMVCRenderCommand
 
 			CPDefinitionLinkDisplayContext cpDefinitionLinkDisplayContext =
 				new CPDefinitionLinkDisplayContext(
-					_actionHelper, httpServletRequest,
-					_cpDefinitionLinkService, _itemSelector);
+					_actionHelper, httpServletRequest, _cpDefinitionLinkService,
+					_itemSelector);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,

@@ -16,9 +16,11 @@ package com.liferay.commerce.product.service.permission;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
@@ -63,6 +65,30 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 				permissionChecker, CPDefinition.class.getName(), cpDefinitionId,
 				actionId);
 		}
+	}
+
+	public static void checkCPDefinitionLink(
+			PermissionChecker permissionChecker,
+			CPDefinitionLink cpDefinitionLink, String actionId)
+		throws PortalException {
+
+		long cpDefinitionId1 = cpDefinitionLink.getCPDefinitionId1();
+		long cpDefinitionId2 = cpDefinitionLink.getCPDefinitionId2();
+
+		check(permissionChecker, cpDefinitionId1, actionId);
+		check(permissionChecker, cpDefinitionId2, actionId);
+	}
+
+	public static void checkCPDefinitionLink(
+			PermissionChecker permissionChecker, long cpDefinitionLinkId,
+			String actionId)
+		throws PortalException {
+
+		CPDefinitionLink cpDefinitionLink =
+			_cpDefinitionLinkLocalService.getCPDefinitionLink(
+				cpDefinitionLinkId);
+
+		checkCPDefinitionLink(permissionChecker, cpDefinitionLink, actionId);
 	}
 
 	public static void checkCPDefinitionOptionRel(
@@ -183,6 +209,13 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 	}
 
 	@Reference(unbind = "-")
+	protected void setCPDefinitionLinkLocalService(
+		CPDefinitionLinkLocalService cpDefinitionLinkLocalService) {
+
+		_cpDefinitionLinkLocalService = cpDefinitionLinkLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setCPDefinitionLocalService(
 		CPDefinitionLocalService cpDefinitionLocalService) {
 
@@ -212,6 +245,7 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 		_cpInstanceLocalService = cpInstanceLocalService;
 	}
 
+	private static CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
 	private static CPDefinitionLocalService _cpDefinitionLocalService;
 	private static CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;

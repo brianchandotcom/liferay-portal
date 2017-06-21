@@ -73,7 +73,7 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 			sb.append("SELECT orp.resourcePermissionId FROM ");
 			sb.append("ResourcePermission orp, ResourcePermission nrp WHERE ");
 			sb.append("orp.companyId = nrp.companyId AND orp.scope = ");
-			sb.append("nrp.scope AND orp.primkey = nrp.primkey AND ");
+			sb.append("nrp.scope AND orp.primKey = nrp.primKey AND ");
 			sb.append("orp.roleId = nrp.roleId AND orp.name = ? AND nrp.name ");
 			sb.append("= ?");
 

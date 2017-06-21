@@ -28,6 +28,11 @@
 	<td>//div[contains (@class,'empty-result-message-header')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SEARCH</td>
+	<td>//*[@data-qa-id='searchButton'] | //button[contains(.,'search')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -4,7 +4,7 @@
 			<var name="portlet" value="Catalog" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CommerceCatalog#PRODUCT_TITLE" value1="${productTitle}">
+		<execute function="AssertClick" locator1="CommerceNavigation#ENTRY_TITLE" value1="${productTitle}">
 			<var name="key_productTitle" value="${productTitle}" />
 		</execute>
 	</command>
@@ -26,6 +26,6 @@
 			<var name="productTitle" value="${productTitle}" />
 		</execute>
 
-		<execute function="Click" locator1="CommerceCatalog#SEARCH_BUTTON" />
+		<execute function="Click" locator1="Button#SEARCH" />
 	</command>
 </definition>

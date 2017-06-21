@@ -42,6 +42,18 @@ create table CPDefinition (
 	defaultLanguageId VARCHAR(75) null
 );
 
+create table CPDefinitionLink (
+	CPDefinitionLinkId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	CPDefinitionId1 LONG,
+	CPDefinitionId2 LONG,
+	displayOrder INTEGER,
+	type_ INTEGER
+);
+
 create table CPDefinitionLocalization (
 	mvccVersion LONG default 0 not null,
 	cpDefinitionLocalizationId LONG not null primary key,

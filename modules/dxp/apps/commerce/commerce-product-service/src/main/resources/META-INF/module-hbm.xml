@@ -4,6 +4,7 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.commerce.product.model.CPAttachmentFileEntry" />
 	<import class="com.liferay.commerce.product.model.CPDefinition" />
+	<import class="com.liferay.commerce.product.model.CPDefinitionLink" />
 	<import class="com.liferay.commerce.product.model.CPDefinitionLocalization" />
 	<import class="com.liferay.commerce.product.model.CPDefinitionOptionRel" />
 	<import class="com.liferay.commerce.product.model.CPDefinitionOptionValueRel" />
@@ -58,6 +59,19 @@
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 		<property name="defaultLanguageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.commerce.product.model.impl.CPDefinitionLinkImpl" table="CPDefinitionLink">
+		<id name="CPDefinitionLinkId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="CPDefinitionId1" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="CPDefinitionId2" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="displayOrder" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.commerce.product.model.impl.CPDefinitionLocalizationImpl" table="CPDefinitionLocalization">
 		<id name="cpDefinitionLocalizationId" type="long">

@@ -1,0 +1,181 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.commerce.product.model;
+
+import aQute.bnd.annotation.ProviderType;
+
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.product.service.http.CPDefinitionLinkServiceSoap}.
+ *
+ * @author Marco Leo
+ * @see com.liferay.commerce.product.service.http.CPDefinitionLinkServiceSoap
+ * @generated
+ */
+@ProviderType
+public class CPDefinitionLinkSoap implements Serializable {
+	public static CPDefinitionLinkSoap toSoapModel(CPDefinitionLink model) {
+		CPDefinitionLinkSoap soapModel = new CPDefinitionLinkSoap();
+
+		soapModel.setCPDefinitionLinkId(model.getCPDefinitionLinkId());
+		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setCPDefinitionId1(model.getCPDefinitionId1());
+		soapModel.setCPDefinitionId2(model.getCPDefinitionId2());
+		soapModel.setDisplayOrder(model.getDisplayOrder());
+		soapModel.setType(model.getType());
+
+		return soapModel;
+	}
+
+	public static CPDefinitionLinkSoap[] toSoapModels(CPDefinitionLink[] models) {
+		CPDefinitionLinkSoap[] soapModels = new CPDefinitionLinkSoap[models.length];
+
+		for (int i = 0; i < models.length; i++) {
+			soapModels[i] = toSoapModel(models[i]);
+		}
+
+		return soapModels;
+	}
+
+	public static CPDefinitionLinkSoap[][] toSoapModels(
+		CPDefinitionLink[][] models) {
+		CPDefinitionLinkSoap[][] soapModels = null;
+
+		if (models.length > 0) {
+			soapModels = new CPDefinitionLinkSoap[models.length][models[0].length];
+		}
+		else {
+			soapModels = new CPDefinitionLinkSoap[0][0];
+		}
+
+		for (int i = 0; i < models.length; i++) {
+			soapModels[i] = toSoapModels(models[i]);
+		}
+
+		return soapModels;
+	}
+
+	public static CPDefinitionLinkSoap[] toSoapModels(
+		List<CPDefinitionLink> models) {
+		List<CPDefinitionLinkSoap> soapModels = new ArrayList<CPDefinitionLinkSoap>(models.size());
+
+		for (CPDefinitionLink model : models) {
+			soapModels.add(toSoapModel(model));
+		}
+
+		return soapModels.toArray(new CPDefinitionLinkSoap[soapModels.size()]);
+	}
+
+	public CPDefinitionLinkSoap() {
+	}
+
+	public long getPrimaryKey() {
+		return _CPDefinitionLinkId;
+	}
+
+	public void setPrimaryKey(long pk) {
+		setCPDefinitionLinkId(pk);
+	}
+
+	public long getCPDefinitionLinkId() {
+		return _CPDefinitionLinkId;
+	}
+
+	public void setCPDefinitionLinkId(long CPDefinitionLinkId) {
+		_CPDefinitionLinkId = CPDefinitionLinkId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public long getCPDefinitionId1() {
+		return _CPDefinitionId1;
+	}
+
+	public void setCPDefinitionId1(long CPDefinitionId1) {
+		_CPDefinitionId1 = CPDefinitionId1;
+	}
+
+	public long getCPDefinitionId2() {
+		return _CPDefinitionId2;
+	}
+
+	public void setCPDefinitionId2(long CPDefinitionId2) {
+		_CPDefinitionId2 = CPDefinitionId2;
+	}
+
+	public int getDisplayOrder() {
+		return _displayOrder;
+	}
+
+	public void setDisplayOrder(int displayOrder) {
+		_displayOrder = displayOrder;
+	}
+
+	public int getType() {
+		return _type;
+	}
+
+	public void setType(int type) {
+		_type = type;
+	}
+
+	private long _CPDefinitionLinkId;
+	private long _companyId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private long _CPDefinitionId1;
+	private long _CPDefinitionId2;
+	private int _displayOrder;
+	private int _type;
+}

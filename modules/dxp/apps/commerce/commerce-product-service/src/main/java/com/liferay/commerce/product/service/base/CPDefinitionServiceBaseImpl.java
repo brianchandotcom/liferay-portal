@@ -21,6 +21,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
+import com.liferay.commerce.product.service.persistence.CPDefinitionLinkPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
@@ -203,6 +204,63 @@ public abstract class CPDefinitionServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setCPDefinitionFinder(CPDefinitionFinder cpDefinitionFinder) {
 		this.cpDefinitionFinder = cpDefinitionFinder;
+	}
+
+	/**
+	 * Returns the cp definition link local service.
+	 *
+	 * @return the cp definition link local service
+	 */
+	public com.liferay.commerce.product.service.CPDefinitionLinkLocalService getCPDefinitionLinkLocalService() {
+		return cpDefinitionLinkLocalService;
+	}
+
+	/**
+	 * Sets the cp definition link local service.
+	 *
+	 * @param cpDefinitionLinkLocalService the cp definition link local service
+	 */
+	public void setCPDefinitionLinkLocalService(
+		com.liferay.commerce.product.service.CPDefinitionLinkLocalService cpDefinitionLinkLocalService) {
+		this.cpDefinitionLinkLocalService = cpDefinitionLinkLocalService;
+	}
+
+	/**
+	 * Returns the cp definition link remote service.
+	 *
+	 * @return the cp definition link remote service
+	 */
+	public com.liferay.commerce.product.service.CPDefinitionLinkService getCPDefinitionLinkService() {
+		return cpDefinitionLinkService;
+	}
+
+	/**
+	 * Sets the cp definition link remote service.
+	 *
+	 * @param cpDefinitionLinkService the cp definition link remote service
+	 */
+	public void setCPDefinitionLinkService(
+		com.liferay.commerce.product.service.CPDefinitionLinkService cpDefinitionLinkService) {
+		this.cpDefinitionLinkService = cpDefinitionLinkService;
+	}
+
+	/**
+	 * Returns the cp definition link persistence.
+	 *
+	 * @return the cp definition link persistence
+	 */
+	public CPDefinitionLinkPersistence getCPDefinitionLinkPersistence() {
+		return cpDefinitionLinkPersistence;
+	}
+
+	/**
+	 * Sets the cp definition link persistence.
+	 *
+	 * @param cpDefinitionLinkPersistence the cp definition link persistence
+	 */
+	public void setCPDefinitionLinkPersistence(
+		CPDefinitionLinkPersistence cpDefinitionLinkPersistence) {
+		this.cpDefinitionLinkPersistence = cpDefinitionLinkPersistence;
 	}
 
 	/**
@@ -1232,6 +1290,12 @@ public abstract class CPDefinitionServiceBaseImpl extends BaseServiceImpl
 	protected CPDefinitionPersistence cpDefinitionPersistence;
 	@BeanReference(type = CPDefinitionFinder.class)
 	protected CPDefinitionFinder cpDefinitionFinder;
+	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionLinkLocalService.class)
+	protected com.liferay.commerce.product.service.CPDefinitionLinkLocalService cpDefinitionLinkLocalService;
+	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionLinkService.class)
+	protected com.liferay.commerce.product.service.CPDefinitionLinkService cpDefinitionLinkService;
+	@BeanReference(type = CPDefinitionLinkPersistence.class)
+	protected CPDefinitionLinkPersistence cpDefinitionLinkPersistence;
 	@BeanReference(type = CPDefinitionLocalizationPersistence.class)
 	protected CPDefinitionLocalizationPersistence cpDefinitionLocalizationPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService.class)

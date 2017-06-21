@@ -8,6 +8,9 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionFinderImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionFinder" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionLinkLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionLinkLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionLinkServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionLinkService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLinkPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionLinkPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLocalizationPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionRelLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionRelServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionRelService" />

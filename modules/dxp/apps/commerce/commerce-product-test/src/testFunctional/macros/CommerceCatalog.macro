@@ -6,7 +6,7 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="CommerceCatalogEntry#ADD_MENU" value1="${addMenu}">
+		<execute function="AssertClick" locator1="CommerceEntry#PLUS_MENU" value1="${addMenu}">
 			<var name="key_addMenu" value="${addMenu}" />
 		</execute>
 
@@ -19,17 +19,17 @@
 	</command>
 
 	<command name="moveCatalogEntriesToRecycleBin">
-		<execute function="Click" locator1="CommerceCatalog#ENTRY_TABLE_ALL_CHECKBOX" />
+		<execute function="Click" locator1="CommerceNavigation#SELECT_ALL_CHECKBOX" />
 
-		<execute function="Click" locator1="CommerceCatalog#RECYCLE_BIN_BUTTON" />
+		<execute function="Click" locator1="Button#RECYCLE_BIN" />
 	</command>
 
 	<command name="moveCatalogEntryToRecycleBinViaCheckbox">
-		<execute function="Click" locator1="CommerceCatalog#ENTRY_CONTENT_ENTRY_CHECKBOX">
+		<execute function="Click" locator1="CommerceNavigation#SINGLE_ENTRY_CHECKBOX">
 			<var name="key_productTitle" value="${productTitle}" />
 		</execute>
 
-		<execute function="Click" locator1="CommerceCatalog#RECYCLE_BIN_BUTTON" />
+		<execute function="Click" locator1="Button#RECYCLE_BIN" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 
@@ -58,7 +58,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Message#SUCCESS" />
 			<then>
-				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+				<execute function="AssertElementPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="CommerceCatalogEntry#WORKFLOW_STATUS" value1="Draft" />

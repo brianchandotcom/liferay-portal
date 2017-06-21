@@ -16,10 +16,17 @@ package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.upgrade.v7_0_4.UpgradeContact;
 import com.liferay.portal.upgrade.v7_0_4.UpgradeGroup;
+import com.liferay.portal.upgrade.v7_0_4.UpgradeEmailAddress;
+import com.liferay.portal.upgrade.v7_0_4.UpgradeExpando;
+import com.liferay.portal.upgrade.v7_0_4.UpgradeMBMailingList;
+import com.liferay.portal.upgrade.v7_0_4.UpgradeSchema;
+import com.liferay.portal.upgrade.v7_0_4.UpgradeUser;
 
 /**
  * @author Roberto Díaz
+ * @author Samuel Ziemer
  */
 public class UpgradeProcess_7_0_4 extends UpgradeProcess {
 
@@ -30,7 +37,14 @@ public class UpgradeProcess_7_0_4 extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		upgrade(UpgradeSchema.class);
+
+		upgrade(UpgradeContact.class);
 		upgrade(UpgradeGroup.class);
+		upgrade(UpgradeEmailAddress.class);
+		upgrade(UpgradeExpando.class);
+		upgrade(UpgradeMBMailingList.class);
+		upgrade(UpgradeUser.class);
 
 		clearIndexesCache();
 	}

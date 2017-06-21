@@ -196,9 +196,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 
 		Pattern pattern = Pattern.compile(sb.toString());
 
-		if (!_isFinalableField(
-				javaClass, javaVariable, pattern, allChildJavaTerms)) {
-
+		if (!_isFinalableField(javaClass, pattern, allChildJavaTerms)) {
 			return classContent;
 		}
 
@@ -291,7 +289,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 	}
 
 	private boolean _isFinalableField(
-		JavaClass javaClass, JavaVariable javaVariable, Pattern pattern,
+		JavaClass javaClass, Pattern pattern,
 		List<JavaTerm> allChildJavaTerms) {
 
 		for (JavaTerm childJavaTerm : allChildJavaTerms) {
@@ -299,24 +297,24 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 
 			Matcher matcher = pattern.matcher(content);
 
-			if (!matcher.find() || !content.contains(javaVariable.getName())) {
-				continue;
-			}
-
 			if (childJavaTerm instanceof JavaConstructor) {
 				JavaClass constructorClass = childJavaTerm.getParentJavaClass();
 
 				String constructorClassName = constructorClass.getName();
 
-				if (!constructorClassName.equals(javaClass.getName())) {
+				if (constructorClassName.equals(javaClass.getName())) {
+					if (!matcher.find()) {
+						return false;
+					}
+				}
+				else if (matcher.find()) {
 					return false;
 				}
 			}
-			else if (childJavaTerm instanceof JavaMethod) {
-				return false;
-			}
-			else if ((childJavaTerm instanceof JavaVariable) &&
-					 content.contains("{\n\n")) {
+			else if (matcher.find() &&
+					 ((childJavaTerm instanceof JavaMethod) ||
+					  ((childJavaTerm instanceof JavaVariable) &&
+					   content.contains("{\n\n")))) {
 
 				return false;
 			}

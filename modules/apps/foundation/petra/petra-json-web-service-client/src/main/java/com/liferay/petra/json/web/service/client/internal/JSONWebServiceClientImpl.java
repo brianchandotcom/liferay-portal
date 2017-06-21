@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.petra.json.web.service.client;
+package com.liferay.petra.json.web.service.client.internal;
 
-import com.liferay.petra.json.web.service.client.jcifs.JCIFSNTLMSchemeFactory;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
+import com.liferay.petra.json.web.service.client.internal.jcifs.JCIFSNTLMSchemeFactory;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;

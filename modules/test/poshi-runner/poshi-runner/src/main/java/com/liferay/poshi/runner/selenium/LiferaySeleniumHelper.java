@@ -36,6 +36,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -50,8 +52,6 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 
 import junit.framework.TestCase;
-
-import org.apache.tools.ant.DirectoryScanner;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -420,19 +420,14 @@ public class LiferaySeleniumHelper {
 	public static String getTestConsoleLogFileContent() throws Exception {
 		Map<String, File> consoleLogFiles = new TreeMap<>();
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
+		int x = PropsValues.TEST_CONSOLE_LOG_FILE_NAME.lastIndexOf("/");
 
-		directoryScanner.setIncludes(
-			new String[] {PropsValues.TEST_CONSOLE_LOG_FILE_NAME});
+		String baseDir = PropsValues.TEST_CONSOLE_LOG_FILE_NAME.substring(0, x);
+		String[] includes =
+			new String[] {PropsValues.TEST_CONSOLE_LOG_FILE_NAME.substring(x)};
 
-		directoryScanner.scan();
-
-		for (String filePath : directoryScanner.getIncludedFiles()) {
-			if (OSDetector.isWindows()) {
-				filePath = filePath.replace("/", "\\");
-			}
-
-			File file = new File(filePath);
+		for (URL url : FileUtil.getIncludedResourceURLs(includes, baseDir)) {
+			File file = new File(url.toURI());
 
 			consoleLogFiles.put(Long.toString(file.lastModified()), file);
 		}

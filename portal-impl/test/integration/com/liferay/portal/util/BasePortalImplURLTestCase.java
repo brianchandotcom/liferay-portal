@@ -88,8 +88,6 @@ public abstract class BasePortalImplURLTestCase {
 
 	protected static final String VIRTUAL_HOSTNAME = "test.com";
 
-	protected static final String VIRTUAL_HOSTS_DEFAULT_SITE_NAME = "Guest";
-
 	protected Company company;
 	protected Layout controlPanelLayout;
 

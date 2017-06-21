@@ -16,6 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -25,8 +26,10 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -38,7 +41,7 @@ import org.junit.Test;
 /**
  * @author Michael Bowerman
  */
-public class PortalImplLayoutFriendlyURLTest extends BasePortalImplURLTestCase {
+public class PortalImplLayoutFriendlyURLTest {
 
 	@ClassRule
 	@Rule
@@ -46,16 +49,13 @@ public class PortalImplLayoutFriendlyURLTest extends BasePortalImplURLTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_company = CompanyTestUtil.addCompany();
 
 		_companyVirtualHostname = _company.getVirtualHostname();
 
 		_group = GroupLocalServiceUtil.fetchGroup(
-			_company.getCompanyId(), VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+			_company.getCompanyId(), GroupConstants.GUEST);
 
 		_layout = LayoutLocalServiceUtil.fetchLayout(
 			_group.getGroupId(), false, 1);
@@ -94,7 +94,7 @@ public class PortalImplLayoutFriendlyURLTest extends BasePortalImplURLTestCase {
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
 				_group.getFriendlyURL() + _layout.getFriendlyURL();
 
-		testLayoutFriendlyURL(LOCALHOST, expectedURL);
+		testLayoutFriendlyURL("localhost", expectedURL);
 	}
 
 	@Test
@@ -107,7 +107,7 @@ public class PortalImplLayoutFriendlyURLTest extends BasePortalImplURLTestCase {
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
 				_group.getFriendlyURL() + _layout.getFriendlyURL();
 
-		testLayoutFriendlyURL(LOCALHOST, expectedURL);
+		testLayoutFriendlyURL("localhost", expectedURL);
 	}
 
 	protected void assignNewPublicLayoutSetVirtualHost() {
@@ -126,8 +126,20 @@ public class PortalImplLayoutFriendlyURLTest extends BasePortalImplURLTestCase {
 			String virtualHostname, String expectedURL)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = initThemeDisplay(
-			_company, _group, _layout, virtualHostname);
+		_company.setVirtualHostname(virtualHostname);
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(_company);
+		themeDisplay.setI18nLanguageId(StringPool.BLANK);
+		themeDisplay.setLayout(_layout);
+		themeDisplay.setLayoutSet(_layout.getLayoutSet());
+		themeDisplay.setSecure(false);
+		themeDisplay.setServerName(virtualHostname);
+		themeDisplay.setServerPort(8080);
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+		themeDisplay.setWidget(false);
 
 		themeDisplay.setPortalDomain(virtualHostname);
 

@@ -17,6 +17,7 @@ package com.liferay.captcha.configuration.settings.internal;
 import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.CaptchaSettings;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -131,7 +132,8 @@ public class CaptchaSettingsImpl implements CaptchaSettings {
 	@Override
 	public void setCaptchaEngine(String className) throws Exception {
 		Configuration configuration = _configurationAdmin.getConfiguration(
-			"com.liferay.captcha.configuration.CaptchaConfiguration");
+			"com.liferay.captcha.configuration.CaptchaConfiguration",
+			StringPool.QUESTION);
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 

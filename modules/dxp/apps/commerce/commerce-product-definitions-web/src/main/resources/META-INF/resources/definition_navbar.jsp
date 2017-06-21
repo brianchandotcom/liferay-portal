@@ -113,6 +113,20 @@ if (cpDefinition != null) {
 				label='<%= LanguageUtil.get(request, "attachments") %>'
 				selected='<%= toolbarItem.equals("view-product-definition-attachments") %>'
 			/>
+
+			<liferay-portlet:renderURL varImpl="viewProductDefinitionLinksURL">
+				<portlet:param name="mvcRenderCommandName" value="viewCPDefinitionLinks" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="backURL" value="<%= backURL %>" />
+				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
+				<portlet:param name="toolbarItem" value="view-product-definition-links" />
+			</liferay-portlet:renderURL>
+
+			<aui:nav-item
+				href="<%= viewProductDefinitionLinksURL.toString() %>"
+				label='<%= LanguageUtil.get(request, "related-products") %>'
+				selected='<%= toolbarItem.equals("view-product-definition-links") %>'
+			/>
 		</c:if>
 	</aui:nav>
 

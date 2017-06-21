@@ -6,7 +6,6 @@
 	<import class="com.liferay.powwow.model.PowwowParticipant" />
 	<import class="com.liferay.powwow.model.PowwowServer" />
 	<class name="com.liferay.powwow.model.impl.PowwowMeetingImpl" table="PowwowMeeting">
-		<cache usage="read-write" />
 		<id name="powwowMeetingId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -26,7 +25,6 @@
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.powwow.model.impl.PowwowParticipantImpl" table="PowwowParticipant">
-		<cache usage="read-write" />
 		<id name="powwowParticipantId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -40,11 +38,10 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="participantUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="emailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
+		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.powwow.model.impl.PowwowServerImpl" table="PowwowServer">
-		<cache usage="read-write" />
 		<id name="powwowServerId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -58,6 +55,6 @@
 		<property name="url" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="apiKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="secret" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
+		<property column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 </hibernate-mapping>

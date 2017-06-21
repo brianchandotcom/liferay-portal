@@ -14,7 +14,7 @@
 
 package com.liferay.powwow.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.powwow.model.PowwowServer;
 import com.liferay.powwow.service.PowwowServerLocalServiceUtil;
@@ -28,9 +28,10 @@ import com.liferay.powwow.service.PowwowServerLocalServiceUtil;
  *
  * @author Shinn Lok
  * @see PowwowServerImpl
- * @see com.liferay.powwow.model.PowwowServer
+ * @see PowwowServer
  * @generated
  */
+@ProviderType
 public abstract class PowwowServerBaseImpl extends PowwowServerModelImpl
 	implements PowwowServer {
 	/*
@@ -39,7 +40,7 @@ public abstract class PowwowServerBaseImpl extends PowwowServerModelImpl
 	 * Never modify or reference this class directly. All methods that expect a powwow server model instance should use the {@link PowwowServer} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			PowwowServerLocalServiceUtil.addPowwowServer(this);
 		}

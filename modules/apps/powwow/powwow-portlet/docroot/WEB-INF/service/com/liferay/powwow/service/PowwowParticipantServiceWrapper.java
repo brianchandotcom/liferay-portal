@@ -14,6 +14,8 @@
 
 package com.liferay.powwow.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @see PowwowParticipantService
  * @generated
  */
+@ProviderType
 public class PowwowParticipantServiceWrapper implements PowwowParticipantService,
 	ServiceWrapper<PowwowParticipantService> {
 	public PowwowParticipantServiceWrapper(
@@ -30,24 +33,29 @@ public class PowwowParticipantServiceWrapper implements PowwowParticipantService
 		_powwowParticipantService = powwowParticipantService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _powwowParticipantService.getBeanIdentifier();
+	public com.liferay.powwow.model.PowwowParticipant deletePowwowParticipant(
+		com.liferay.powwow.model.PowwowParticipant powwowParticipant)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _powwowParticipantService.deletePowwowParticipant(powwowParticipant);
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
 	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_powwowParticipantService.setBeanIdentifier(beanIdentifier);
+	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
+		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
+		long participantUserId, java.lang.String emailAddress, int type,
+		int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _powwowParticipantService.updatePowwowParticipant(powwowParticipantId,
+			powwowMeetingId, name, participantUserId, emailAddress, type,
+			status, serviceContext);
+	}
+
+	@Override
+	public int getPowwowParticipantsCount(long powwowMeetingId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _powwowParticipantService.getPowwowParticipantsCount(powwowMeetingId);
 	}
 
 	@Override
@@ -58,54 +66,21 @@ public class PowwowParticipantServiceWrapper implements PowwowParticipantService
 			arguments);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
-	public com.liferay.powwow.model.PowwowParticipant deletePowwowParticipant(
-		com.liferay.powwow.model.PowwowParticipant powwowParticipant)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _powwowParticipantService.deletePowwowParticipant(powwowParticipant);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _powwowParticipantService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public java.util.List<com.liferay.powwow.model.PowwowParticipant> getPowwowParticipants(
 		long powwowMeetingId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _powwowParticipantService.getPowwowParticipants(powwowMeetingId);
-	}
-
-	@Override
-	public int getPowwowParticipantsCount(long powwowMeetingId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _powwowParticipantService.getPowwowParticipantsCount(powwowMeetingId);
-	}
-
-	@Override
-	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
-		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
-		long participantUserId, java.lang.String emailAddress, int type,
-		int status, com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _powwowParticipantService.updatePowwowParticipant(powwowParticipantId,
-			powwowMeetingId, name, participantUserId, emailAddress, type,
-			status, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public PowwowParticipantService getWrappedPowwowParticipantService() {
-		return _powwowParticipantService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedPowwowParticipantService(
-		PowwowParticipantService powwowParticipantService) {
-		_powwowParticipantService = powwowParticipantService;
 	}
 
 	@Override

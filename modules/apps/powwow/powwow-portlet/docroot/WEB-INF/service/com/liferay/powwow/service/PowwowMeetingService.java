@@ -14,15 +14,27 @@
 
 package com.liferay.powwow.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.InvokableService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.security.ac.AccessControlled;
-import com.liferay.portal.kernel.service.BaseService;
-import com.liferay.portal.kernel.service.InvokableService;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import com.liferay.powwow.model.PowwowMeeting;
+import com.liferay.powwow.model.PowwowParticipant;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for PowwowMeeting. Methods of this
@@ -37,6 +49,7 @@ import com.liferay.portal.kernel.service.InvokableService;
  */
 @AccessControlled
 @JSONWebService
+@ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface PowwowMeetingService extends BaseService, InvokableService {
@@ -45,65 +58,45 @@ public interface PowwowMeetingService extends BaseService, InvokableService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PowwowMeetingServiceUtil} to access the powwow meeting remote service. Add custom service methods to {@link com.liferay.powwow.service.impl.PowwowMeetingServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public PowwowMeeting addPowwowMeeting(long groupId,
+		java.lang.String portletId, long powwowServerId, java.lang.String name,
+		java.lang.String description, java.lang.String providerType,
+		Map<java.lang.String, Serializable> providerTypeMetadataMap,
+		java.lang.String languageId, long calendarBookingId, int status,
+		List<PowwowParticipant> powwowParticipants,
+		ServiceContext serviceContext) throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
+	public PowwowMeeting deletePowwowMeeting(long powwowMeetingId)
+		throws PortalException;
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PowwowMeeting getPowwowMeeting(long powwowMeetingId)
+		throws PortalException;
+
+	public PowwowMeeting updatePowwowMeeting(long powwowMeetingId,
+		long powwowServerId, java.lang.String name,
+		java.lang.String description, java.lang.String providerType,
+		Map<java.lang.String, Serializable> providerTypeMetadataMap,
+		java.lang.String languageId, long calendarBookingId, int status,
+		List<PowwowParticipant> powwowParticipants,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPowwowMeetingsCount(long groupId);
 
 	@Override
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(
-		long groupId, java.lang.String portletId, long powwowServerId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String providerType,
-		java.util.Map<java.lang.String, java.io.Serializable> providerTypeMetadataMap,
-		java.lang.String languageId, long calendarBookingId, int status,
-		java.util.List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public com.liferay.powwow.model.PowwowMeeting deletePowwowMeeting(
-		long powwowMeetingId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.powwow.model.PowwowMeeting getPowwowMeeting(
-		long powwowMeetingId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.powwow.model.PowwowMeeting> getPowwowMeetings(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getPowwowMeetingsCount(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
-		long powwowMeetingId, long powwowServerId, java.lang.String name,
-		java.lang.String description, java.lang.String providerType,
-		java.util.Map<java.lang.String, java.io.Serializable> providerTypeMetadataMap,
-		java.lang.String languageId, long calendarBookingId, int status,
-		java.util.List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public List<PowwowMeeting> getPowwowMeetings(long groupId, int start,
+		int end, OrderByComparator obc);
 }

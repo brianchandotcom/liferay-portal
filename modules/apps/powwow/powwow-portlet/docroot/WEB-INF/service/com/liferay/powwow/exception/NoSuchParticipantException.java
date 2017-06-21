@@ -12,27 +12,27 @@
  * details.
  */
 
-package com.liferay.powwow;
+package com.liferay.powwow.exception;
 
-import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Shinn Lok
  */
-public class NoSuchMeetingException extends NoSuchModelException {
+public class NoSuchParticipantException extends NoSuchModelException {
 
-	public NoSuchMeetingException() {
+	public NoSuchParticipantException() {
 	}
 
-	public NoSuchMeetingException(String msg) {
+	public NoSuchParticipantException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchMeetingException(String msg, Throwable cause) {
+	public NoSuchParticipantException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchMeetingException(Throwable cause) {
+	public NoSuchParticipantException(Throwable cause) {
 		super(cause);
 	}
 

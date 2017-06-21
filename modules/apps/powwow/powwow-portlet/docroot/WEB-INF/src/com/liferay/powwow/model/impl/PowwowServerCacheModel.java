@@ -14,9 +14,12 @@
 
 package com.liferay.powwow.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.model.CacheModel;
 
 import com.liferay.powwow.model.PowwowServer;
 
@@ -34,8 +37,33 @@ import java.util.Date;
  * @see PowwowServer
  * @generated
  */
+@ProviderType
 public class PowwowServerCacheModel implements CacheModel<PowwowServer>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PowwowServerCacheModel)) {
+			return false;
+		}
+
+		PowwowServerCacheModel powwowServerCacheModel = (PowwowServerCacheModel)obj;
+
+		if (powwowServerId == powwowServerCacheModel.powwowServerId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, powwowServerId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(25);
@@ -143,7 +171,9 @@ public class PowwowServerCacheModel implements CacheModel<PowwowServer>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		powwowServerId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -153,6 +183,7 @@ public class PowwowServerCacheModel implements CacheModel<PowwowServer>,
 		url = objectInput.readUTF();
 		apiKey = objectInput.readUTF();
 		secret = objectInput.readUTF();
+
 		active = objectInput.readBoolean();
 	}
 
@@ -160,7 +191,9 @@ public class PowwowServerCacheModel implements CacheModel<PowwowServer>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(powwowServerId);
+
 		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {

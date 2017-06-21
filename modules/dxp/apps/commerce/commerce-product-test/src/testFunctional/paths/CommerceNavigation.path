@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>CommerceNavigation</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CommerceNavigation</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ENTRY_TITLE</td>
+	<td>//tr[@data-qa-id='row']//a[contains(.,'${key_entryTitle}')] | //div/h5/a[contains(.,'${key_entryTitle}')] | //div/span/a[contains(.,'${key_entryTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ALL_CHECKBOX</td>
+	<td>//input[contains (@id,'allRowIds') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SINGLE_ENTRY_CHECKBOX</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_entryTitle}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMPTY_SEARCH_CONTAINER</td>
+	<td>//div[contains (@class,'empty-result-message-header')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -247,6 +247,12 @@
 			<var name="productFullDescription" value="Product Full Description 1" />
 			<var name="productShortDescription" value="Product Short Description 1" />
 			<var name="productTitle" value="Product Title 1" />
+	<command name="AddTextOptionsEntry" priority="5">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionFieldType" value="Text" />
+			<var name="optionName" value="Text Option Name 1" />
+			<var name="optionTitle" value="Text Option Title 1" />
 		</execute>
 
 		<execute macro="CommerceCatalog#saveEntryAsDraft" />

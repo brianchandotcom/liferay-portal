@@ -19,7 +19,7 @@
 
 		<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
 
-		<execute function="Confirm" value1="Are you sure you want to permanently delete the selected options?" />
+		<execute function="Confirm" value1="Are you sure you want to delete the selected options?" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

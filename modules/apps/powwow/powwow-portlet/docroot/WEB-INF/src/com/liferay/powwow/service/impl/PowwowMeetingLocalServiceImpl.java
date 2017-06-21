@@ -113,8 +113,8 @@ public class PowwowMeetingLocalServiceImpl
 
 	@Override
 	public void checkPowwowMeetings() throws PortalException {
-		List<PowwowMeeting> powwowMeetings =
-			getPowwowMeetings(PowwowMeetingConstants.STATUS_IN_PROGRESS);
+		List<PowwowMeeting> powwowMeetings = getPowwowMeetings(
+			PowwowMeetingConstants.STATUS_IN_PROGRESS);
 
 		for (PowwowMeeting powwowMeeting : powwowMeetings) {
 			PowwowServer powwowServer =

@@ -134,6 +134,32 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
+	<entity local-service="true" name="CPDefinitionLink" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="CPDefinitionLinkId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPDefinitionId1" type="long" />
+		<column name="CPDefinitionId2" type="long" />
+		<column name="displayOrder" type="int" />
+		<column name="type" type="int" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="displayOrder" />
+		</order>
+	</entity>
 	<entity local-service="true" name="CPDefinitionOptionRel" remote-service="true"  uuid="true">
 
 		<!-- PK fields -->

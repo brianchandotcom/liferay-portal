@@ -232,6 +232,22 @@ public class ProjectTemplateFilesTest {
 			"Missing " + buildGradlePath, Files.exists(buildGradlePath));
 	}
 
+	private void _testBuildGradleWorkspaceVariant(
+			Path archetypeResourcesDirPath)
+		throws IOException {
+
+		Path buildGradlePath = archetypeResourcesDirPath.resolve(
+			"build.gradle");
+
+		String contents = FileUtil.read(buildGradlePath);
+
+		Matcher matcher = _WORKSPACE_VARIANT_PATTERN.matcher(contents);
+
+		Assert.assertTrue(
+			buildGradlePath + " is missing non-workspace specific variant.",
+			matcher.matches());
+	}
+
 	private void _testGitIgnore(
 			String projectTemplateDirName, Path archetypeResourcesDirPath)
 		throws IOException {
@@ -583,6 +599,11 @@ public class ProjectTemplateFilesTest {
 
 		_testBndBnd(projectTemplateDirPath);
 		_testBuildGradle(archetypeResourcesDirPath);
+
+		if (!projectTemplateDirPath.endsWith("project-templates-workspace")) {
+			_testBuildGradleWorkspaceVariant(archetypeResourcesDirPath);
+		}
+
 		_testGitIgnore(projectTemplateDirName, archetypeResourcesDirPath);
 		_testGradleWrapper(archetypeResourcesDirPath);
 		_testMavenWrapper(archetypeResourcesDirPath);
@@ -721,6 +742,10 @@ public class ProjectTemplateFilesTest {
 
 	private static final String[] _SOURCESET_NAMES =
 		{"main", "test", "testIntegration"};
+
+	private static final Pattern _WORKSPACE_VARIANT_PATTERN = Pattern.compile(
+		".*^#if \\(\\$\\{projectType\\} != \"workspace\"\\).*",
+		Pattern.DOTALL | Pattern.MULTILINE);
 
 	private static final Pattern _buildGradleDependencyPattern =
 		Pattern.compile(

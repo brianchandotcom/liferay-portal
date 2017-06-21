@@ -14,7 +14,7 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
+			<condition function="IsElementNotPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
 			<then>
 				<execute macro="CommerceCatalog#moveCatalogEntriesToRecycleBin" />
 			</then>
@@ -359,7 +359,7 @@
 			<var name="entryTitle" value="Product_Title_1" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" value1="Product_Title_1" />
+		<execute function="AssertElementNotPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
 	</command>
 
 	<command name="DeleteAllCatalogEntriesViaCheckbox" priority="5">
@@ -382,7 +382,7 @@
 		<execute macro="CommerceCatalog#moveCatalogEntriesToRecycleBin" />
 
 		<for list="1,2,3" param="entryNumber">
-			<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" value1="Product Title ${entryNumber}" />
+			<execute function="AssertElementPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
 		</for>
 	</command>
 
@@ -454,7 +454,7 @@
 			<var name="portlet" value="Catalog" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="CommerceCatalog#PRODUCT_TITLE" value1="${newProductTitle}">
+		<execute function="AssertTextEquals" locator1="CommerceNavigation#ENTRY_TITLE" value1="${newProductTitle}">
 			<var name="key_entryTitle" value="New Product Title" />
 			<var name="newProductTitle" value="New Product Title" />
 		</execute>

@@ -1003,7 +1003,7 @@ information.
 			<if>
 				<available file="${project.dir}/${build.binaries.cache.dir}" type="dir" />
 				<then>
-					<exec dir="${project.dir}/${build.binaries.cache.dir}" executable="git" failonerror="true">
+					<exec dir="${project.dir}/${build.binaries.cache.dir}" executable="git">
 						<arg value="pull" />
 						<arg value="--rebase" />
 					</exec>

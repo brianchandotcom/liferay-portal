@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>FACETABLE_CHECKBOX</td>
-	<td>//input[contains(@id,'published') and (@type='checkbox')]</td>
+	<td>//input[contains(@id,'facetable') and (@type='checkbox')]</td>
 	<td></td>
 </tr>
 <tr>

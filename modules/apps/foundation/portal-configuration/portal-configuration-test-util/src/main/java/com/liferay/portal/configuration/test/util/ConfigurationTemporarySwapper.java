@@ -17,6 +17,7 @@ package com.liferay.portal.configuration.test.util;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.osgi.util.test.OSGiServiceUtil;
 
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
@@ -47,14 +48,12 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 		Bundle bundle = FrameworkUtil.getBundle(
 			ConfigurationTemporarySwapper.class);
 
-		_configurationAdminServiceTracker = ServiceTrackerFactory.open(
-			bundle, ConfigurationAdmin.class);
+		BundleContext bundleContext = bundle.getBundleContext();
 
-		ConfigurationAdmin configurationAdmin =
-			_configurationAdminServiceTracker.waitForService(5000);
-
-		_configuration = configurationAdmin.getConfiguration(
-			pid, StringPool.QUESTION);
+		_configuration = OSGiServiceUtil.callService(
+			bundleContext, ConfigurationAdmin.class,
+			configurationAdmin -> configurationAdmin.getConfiguration(
+				pid, StringPool.QUESTION));
 
 		_oldProperties = _configuration.getProperties();
 
@@ -100,7 +99,6 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 			_serviceListener.unregister();
 
 			_serviceServiceTracker.close();
-			_configurationAdminServiceTracker.close();
 		}
 	}
 
@@ -152,8 +150,6 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 	}
 
 	private final Configuration _configuration;
-	private final ServiceTracker<ConfigurationAdmin, ConfigurationAdmin>
-		_configurationAdminServiceTracker;
 	private final Dictionary<String, Object> _oldProperties;
 	private final ConfigurationServiceListener _serviceListener;
 	private final ServiceTracker<?, ?> _serviceServiceTracker;

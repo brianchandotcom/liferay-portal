@@ -931,10 +931,9 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"spring-mvc-portlet", "foo");
 
-		_testContains(gradleProjectDir, "build.gradle", "buildscript {");
 		_testContains(
-			gradleProjectDir, "build.gradle", "apply plugin: \"war\"");
-		_testContains(gradleProjectDir, "build.gradle", "repositories {");
+			gradleProjectDir, "build.gradle", "buildscript {",
+			"apply plugin: \"war\"", "repositories {");
 
 		File workspaceDir = _buildWorkspace();
 

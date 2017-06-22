@@ -20,9 +20,9 @@
 
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
-page import="com.liferay.commerce.product.model.CPDefinition" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %>
+<%@ page import="com.liferay.asset.kernel.model.AssetCategory" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <liferay-frontend:defineObjects />
 

@@ -1,5 +1,4 @@
-<%@ page import="com.liferay.asset.kernel.model.AssetCategory" %>
-<%@ page import="com.liferay.portal.kernel.util.WebKeys" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -18,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-	AssetCategory assetCategory = (AssetCategory)request.getAttribute(WebKeys.ASSET_CATEGORY);
+AssetCategory assetCategory = (AssetCategory)request.getAttribute(WebKeys.ASSET_CATEGORY);
 %>
 
 <c:if test="<%= assetCategory != null %>">

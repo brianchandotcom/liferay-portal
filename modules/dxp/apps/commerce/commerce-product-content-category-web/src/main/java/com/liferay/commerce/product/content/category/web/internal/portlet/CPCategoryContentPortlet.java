@@ -16,9 +16,10 @@ package com.liferay.commerce.product.content.category.web.internal.portlet;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.Portlet;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marco Leo

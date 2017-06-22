@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
@@ -37,13 +36,15 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -84,7 +85,7 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 		AssetCategory assetCategory = _assetCategoryService.fetchCategory(
 			cpFriendlyURLEntry.getClassPK());
 
-		if(assetCategory == null){
+		if (assetCategory == null) {
 			return null;
 		}
 
@@ -99,7 +100,8 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 			actualParams.setParentMap(params);
 		}
 
-		actualParams.put("p_p_id", new String[] {CPPortletKeys.CP_CATEGORY_CONTENT_WEB});
+		actualParams.put(
+			"p_p_id", new String[] {CPPortletKeys.CP_CATEGORY_CONTENT_WEB});
 		actualParams.put("p_p_lifecycle", new String[] {"0"});
 		actualParams.put("p_p_mode", new String[] {"view"});
 
@@ -163,7 +165,7 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 		AssetCategory assetCategory = _assetCategoryService.fetchCategory(
 			cpFriendlyURLEntry.getClassPK());
 
-		if(assetCategory == null){
+		if (assetCategory == null) {
 			return null;
 		}
 
@@ -191,7 +193,7 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 			return null;
 		}
 
-		String layoutUuid =  cpDisplayLayout.getLayoutUuid();
+		String layoutUuid = cpDisplayLayout.getLayoutUuid();
 
 		return _layoutService.getLayoutByUuidAndGroupId(
 			layoutUuid, groupId, privateLayout);

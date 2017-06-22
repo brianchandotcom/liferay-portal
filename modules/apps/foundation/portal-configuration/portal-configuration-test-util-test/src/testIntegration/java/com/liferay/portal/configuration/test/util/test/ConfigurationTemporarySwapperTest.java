@@ -171,8 +171,6 @@ public class ConfigurationTemporarySwapperTest {
 
 		temporaryValues.put(testKey, temporaryValue);
 
-		Dictionary<String, Object> testProperties;
-
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					SearchPermissionChecker.class, _pid, temporaryValues)) {
@@ -185,7 +183,8 @@ public class ConfigurationTemporarySwapperTest {
 
 		Assert.assertEquals(4, testConfiguration.getChangeCount());
 
-		testProperties = testConfiguration.getProperties();
+		Dictionary<String, Object> testProperties =
+			testConfiguration.getProperties();
 
 		Assert.assertNotNull(testProperties);
 

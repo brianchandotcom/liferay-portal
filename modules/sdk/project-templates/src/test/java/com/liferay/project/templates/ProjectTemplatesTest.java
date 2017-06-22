@@ -1743,10 +1743,13 @@ public class ProjectTemplatesTest {
 		String content = FileUtil.read(file.toPath());
 
 		for (String s : strings) {
-			boolean checkResult = content.contains(s);
+			boolean checkResult;
 
 			if (match) {
 				checkResult = content.matches(s);
+			}
+			else {
+				checkResult = content.contains(s);
 			}
 
 			Assert.assertFalse("Found in " + fileName + ": " + s, checkResult);

@@ -14,14 +14,15 @@
 
 package com.liferay.portal.servlet.filters.util;
 
-import com.liferay.portal.kernel.util.Function;
-import com.liferay.portal.kernel.util.KeyValuePair;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public interface CacheFileNameContributor
-	extends Function<HttpServletRequest, KeyValuePair> {
+public interface CacheFileNameContributor {
+
+	public String getParameterName();
+
+	public String getParameterValue(HttpServletRequest request);
+
 }

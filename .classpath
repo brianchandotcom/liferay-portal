@@ -33,6 +33,7 @@
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.bnd.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.build.logger.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.mirrors.get.jar"/>
+	<classpathentry kind="lib" path="lib/development/com.liferay.ant.sync.dir.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.util.taglib.compat.jar"/>
 	<classpathentry kind="lib" path="lib/development/deployment.jar"/>
 	<classpathentry kind="lib" path="lib/development/dtddoc.jar"/>

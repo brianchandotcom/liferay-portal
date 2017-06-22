@@ -85,6 +85,7 @@
 	<taskdef classname="com.liferay.ant.beanshell.BeanShellTask" classpathref="lib.classpath" name="beanshell" />
 	<taskdef classname="com.liferay.ant.build.logger.LiferayBuildLoggerInstallerTask" classpath="${project.dir}/lib/development/com.liferay.ant.build.logger.jar" name="liferay-build-logger-installer" />
 	<taskdef classname="com.liferay.ant.mirrors.get.MirrorsGetTask" classpathref="lib.classpath" name="mirrors-get" />
+	<taskdef classname="com.liferay.ant.sync.dir.SyncDirTask" classpathref="lib.classpath" name="sync-dir" />
 
 	<liferay-build-logger-installer />
 
@@ -567,6 +568,8 @@ information.
 		<element implicit="true" name="args" optional="true" />
 
 		<sequential>
+			<setup-binaries-cache unless:true="${setup.binaries.cache.executed}" />
+
 			<if>
 				<os family="unix" />
 				<then>
@@ -992,6 +995,24 @@ information.
 					<fail>Test class ${test.class} cannot be found.</fail>
 				</else>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-binaries-cache">
+		<sequential>
+			<var name="gradle.build.binaries.cache.dir" value="${project.dir}/${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1" />
+
+			<if>
+				<available file="${gradle.build.binaries.cache.dir}" type="dir" />
+				<then>
+					<sync-dir
+						dir="${gradle.build.binaries.cache.dir}"
+						toDir="${project.dir}/.gradle/caches/modules-2/files-2.1"
+					/>
+				</then>
+			</if>
+
+			<property name="setup.binaries.cache.executed" value="true" />
 		</sequential>
 	</macrodef>
 

@@ -125,8 +125,8 @@ public class WorkspaceExtension {
 	private static final String _BUNDLE_DIST_ROOT_DIR_NAME = null;
 
 	private static final String _BUNDLE_URL =
-		"https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.2-ga3" +
-			"/liferay-ce-portal-tomcat-7.0-ga3-20160804222206210.zip";
+		"https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.3-ga4" +
+			"/liferay-ce-portal-tomcat-7.0-ga4-20170613175008905.zip";
 
 	private static final String _CONFIGS_DIR = "configs";
 

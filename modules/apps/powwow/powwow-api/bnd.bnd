@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Powwow API
-Bundle-SymbolicName: com.liferay.powwow.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.powwow.util

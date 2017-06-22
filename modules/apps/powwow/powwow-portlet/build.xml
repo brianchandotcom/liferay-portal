@@ -2,7 +2,5 @@
 <!DOCTYPE project>
 
 <project basedir="." default="deploy" name="powwow-portlet">
-	<property name="import.shared" value="powwow-shared" />
-
 	<import file="../../../../../tools/sdk/portlets/build-common-portlet.xml" />
 </project>

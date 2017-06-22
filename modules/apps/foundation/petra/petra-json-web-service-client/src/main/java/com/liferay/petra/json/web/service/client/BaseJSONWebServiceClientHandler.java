@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -103,7 +104,7 @@ public abstract class BaseJSONWebServiceClientHandler {
 		try {
 			TypeFactory typeFactory = objectMapper.getTypeFactory();
 
-			List<V> list = Collections.emptyList();
+			List<V> list = new ArrayList<>();
 
 			JavaType javaType = typeFactory.constructCollectionType(
 				list.getClass(), clazz);

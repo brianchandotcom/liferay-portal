@@ -78,6 +78,114 @@
 		</execute>
 	</command>
 
+	<command name="AddFacetableCheckboxOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionName" value="Checkbox Option Name 1" />
+			<var name="optionTitle" value="Checkbox Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#FACETABLE_CHECKBOX" value1="Facetable" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="facetable" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableDateOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionFieldType" value="Date" />
+			<var name="optionName" value="Date Option Name 1" />
+			<var name="optionTitle" value="Date Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#FACETABLE_CHECKBOX" value1="Facetable" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="facetable" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableParagraphOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionFieldType" value="Paragraph" />
+			<var name="optionName" value="Paragraph Option Name 1" />
+			<var name="optionTitle" value="Paragraph Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#FACETABLE_CHECKBOX" value1="Facetable" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="facetable" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableRadioOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionFieldType" value="Radio" />
+			<var name="optionName" value="Radio Option Name 1" />
+			<var name="optionTitle" value="Radio Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#FACETABLE_CHECKBOX" value1="Facetable" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="facetable" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableSelectOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionFieldType" value="Select" />
+			<var name="optionName" value="Select Option Name 1" />
+			<var name="optionTitle" value="Select Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#FACETABLE_CHECKBOX" value1="Facetable" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="facetable" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableTextOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionFieldType" value="Text" />
+			<var name="optionName" value="Text Option Name 1" />
+			<var name="optionTitle" value="Text Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#FACETABLE_CHECKBOX" value1="Facetable" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="facetable" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
 	<command ignore="true" name="AddGroupCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="Group Product SKU" />
@@ -194,6 +302,114 @@
 		</execute>
 	</command>
 
+	<command name="AddRequiredCheckboxOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionName" value="Checkbox Option Name 1" />
+			<var name="optionTitle" value="Checkbox Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#REQUIRED_CHECKBOX" value1="Required" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="required" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
+	<command name="AddRequiredDateOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionFieldType" value="Date" />
+			<var name="optionName" value="Date Option Name 1" />
+			<var name="optionTitle" value="Date Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#REQUIRED_CHECKBOX" value1="Required" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="required" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
+	<command name="AddRequiredParagraphOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionFieldType" value="Paragraph" />
+			<var name="optionName" value="Paragraph Option Name 1" />
+			<var name="optionTitle" value="Paragraph Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#REQUIRED_CHECKBOX" value1="Required" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="required" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
+	<command name="AddRequiredRadioOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionFieldType" value="Radio" />
+			<var name="optionName" value="Radio Option Name 1" />
+			<var name="optionTitle" value="Radio Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#REQUIRED_CHECKBOX" value1="Required" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="required" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
+	<command name="AddRequiredSelectOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionFieldType" value="Select" />
+			<var name="optionName" value="Select Option Name 1" />
+			<var name="optionTitle" value="Select Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#REQUIRED_CHECKBOX" value1="Required" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="required" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
+	<command name="AddRequiredTextOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionFieldType" value="Text" />
+			<var name="optionName" value="Text Option Name 1" />
+			<var name="optionTitle" value="Text Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#REQUIRED_CHECKBOX" value1="Required" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="required" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
 	<command name="AddSelectOptionsEntry" priority="5">
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option Description 1" />
@@ -285,6 +501,114 @@
 			<var name="productFullDescription" value="Simple Product Full Description 1" />
 			<var name="productShortDescription" value="Simple Product Short Description 1" />
 			<var name="productTitle" value="Simple Product Title 1" />
+		</execute>
+	</command>
+
+	<command name="AddSKUContributorCheckboxOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionName" value="Checkbox Option Name 1" />
+			<var name="optionTitle" value="Checkbox Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" value1="SKU Contributor" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="contributor" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
+	<command name="AddSKUContributorDateOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionFieldType" value="Date" />
+			<var name="optionName" value="Date Option Name 1" />
+			<var name="optionTitle" value="Date Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" value1="SKU Contributor" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="contributor" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
+	<command name="AddSKUContributorParagraphOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionFieldType" value="Paragraph" />
+			<var name="optionName" value="Paragraph Option Name 1" />
+			<var name="optionTitle" value="Paragraph Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" value1="SKU Contributor" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="contributor" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
+	<command name="AddSKUContributorRadioOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionFieldType" value="Radio" />
+			<var name="optionName" value="Radio Option Name 1" />
+			<var name="optionTitle" value="Radio Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" value1="SKU Contributor" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="contributor" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
+	<command name="AddSKUContributorSelectOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionFieldType" value="Select" />
+			<var name="optionName" value="Select Option Name 1" />
+			<var name="optionTitle" value="Select Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" value1="SKU Contributor" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="contributor" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+	</command>
+
+	<command name="AddSKUContributorTextOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionFieldType" value="Text" />
+			<var name="optionName" value="Text Option Name 1" />
+			<var name="optionTitle" value="Text Option Title 1" />
+		</execute>
+
+		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" value1="SKU Contributor" />
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="contributor" />
+			<var name="key_cpOptionStatus" value="true" />
 		</execute>
 	</command>
 

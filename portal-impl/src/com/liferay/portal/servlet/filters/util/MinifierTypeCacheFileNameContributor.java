@@ -14,8 +14,6 @@
 
 package com.liferay.portal.servlet.filters.util;
 
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,20 +21,24 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Carlos Sierra Andrés
  */
-@OSGiBeanProperties(property = "cache.file.name.contributor=true")
 public class MinifierTypeCacheFileNameContributor
 	implements CacheFileNameContributor {
 
 	@Override
-	public KeyValuePair apply(HttpServletRequest request) {
-		String minifierType = request.getParameter("minifierType");
+	public String getParameterName() {
+		return "minifierType";
+	}
+
+	@Override
+	public String getParameterValue(HttpServletRequest request) {
+		String minifierType = request.getParameter(getParameterName());
 
 		if (Validator.isNull(minifierType)) {
 			return null;
 		}
 
 		if (minifierType.equals("css") || minifierType.equals("js")) {
-			return new KeyValuePair("minifierType", minifierType);
+			return minifierType;
 		}
 
 		return null;

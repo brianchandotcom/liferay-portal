@@ -630,8 +630,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		parameterMap.put("topic", name);
 		parameterMap.put("type", String.valueOf(_MEETING_TYPE_RECURRING));
 
-		JSONObject responseJSONObject = execute(
-			powwowServer, "meeting", "update", parameterMap);
+		execute(powwowServer, "meeting", "update", parameterMap);
 
 		providerTypeMetadataMap.put(
 			"option_host_video",

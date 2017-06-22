@@ -1000,6 +1000,21 @@ information.
 
 	<macrodef name="setup-binaries-cache">
 		<sequential>
+			<if>
+				<and>
+					<available file="${project.dir}/${build.binaries.cache.dir}" type="dir" />
+					<not>
+						<isset property="env.JENKINS_HOME" />
+					</not>
+				</and>
+				<then>
+					<exec dir="${project.dir}/${build.binaries.cache.dir}" executable="git" failonerror="true">
+						<arg value="pull" />
+						<arg value="--rebase" />
+					</exec>
+				</then>
+			</if>
+
 			<var name="gradle.build.binaries.cache.dir" value="${project.dir}/${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1" />
 
 			<if>

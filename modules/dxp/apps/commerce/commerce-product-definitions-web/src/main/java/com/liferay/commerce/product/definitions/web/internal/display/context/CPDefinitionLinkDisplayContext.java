@@ -80,7 +80,7 @@ public class CPDefinitionLinkDisplayContext
 		return cpDefinitionLink.getCPDefinitionLinkId();
 	}
 
-	public String getItemSelectorUrl() {
+	public String getItemSelectorUrl() throws PortalException {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(
 				cpRequestHelper.getRenderRequest());
@@ -99,6 +99,9 @@ public class CPDefinitionLinkDisplayContext
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, "productDefinitionsSelectItem",
 			cpDefinitionItemSelectorCriterion);
+
+		itemSelectorURL.setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
 
 		return itemSelectorURL.toString();
 	}

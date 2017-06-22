@@ -19,6 +19,8 @@
 		<execute macro="ProductMenuHelper#gotoPortlet">
 			<var name="portlet" value="${portlet}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 	</command>
 
 	<command name="searchEntry">

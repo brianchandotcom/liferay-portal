@@ -208,17 +208,21 @@
 			<var name="userLastName" value="Test" />
 		</execute>
 
+		<!-- Initiate Single Logout for first SP -->
+
 		<execute macro="User#logoutPG">
 			<var name="specificURL" value="http://www.able.com:9080" />
 		</execute>
 
 		<execute macro="User#viewLoggedOutPG" />
 
-		<!-- Verify IdP is also logged out -->
+		<!-- Verify IdP is logged out -->
 
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="User#viewLoggedOutPG" />
+
+		<!-- Verify second SP is logged out -->
 
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="http://www.baker.com:10080" />

@@ -14,10 +14,10 @@
 
 package com.liferay.portal.upgrade.util;
 
+import com.liferay.layouts.admin.kernel.util.LayoutTypeUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -73,7 +73,7 @@ public class UpgradePortletId extends UpgradeProcess {
 
 			String id = entry.getKey();
 
-			if (!_isDivId(id)) {
+			if (!LayoutTypeUtil.isDivId(id)) {
 				continue;
 			}
 
@@ -496,37 +496,6 @@ public class UpgradePortletId extends UpgradeProcess {
 				updateLayouts(portletId, newPortletInstanceKey, true);
 			}
 		}
-	}
-
-	private boolean _isDivId(String id) {
-		if (id.equals(
-				LayoutTypePortletConstants.
-					DEFAULT_ASSET_PUBLISHER_PORTLET_ID) ||
-			id.equals(LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID) ||
-			id.equals(LayoutTypePortletConstants.MODE_ABOUT) ||
-			id.equals(LayoutTypePortletConstants.MODE_CONFIG) ||
-			id.equals(LayoutTypePortletConstants.MODE_EDIT) ||
-			id.equals(LayoutTypePortletConstants.MODE_EDIT_DEFAULTS) ||
-			id.equals(LayoutTypePortletConstants.MODE_EDIT_GUEST) ||
-			id.equals(LayoutTypePortletConstants.MODE_HELP) ||
-			id.equals(LayoutTypePortletConstants.MODE_PREVIEW) ||
-			id.equals(LayoutTypePortletConstants.MODE_PRINT) ||
-			id.equals(LayoutTypePortletConstants.NESTED_COLUMN_IDS) ||
-			id.equals(LayoutTypePortletConstants.STATE_MAX) ||
-			id.equals(LayoutTypePortletConstants.STATE_MIN) ||
-			id.equals(
-				LayoutTypePortletConstants.
-					STATIC_PORTLET_ORGANIZATION_SELECTOR) ||
-			id.equals(
-				LayoutTypePortletConstants.
-					STATIC_PORTLET_REGULAR_SITE_SELECTOR) ||
-			id.equals(
-				LayoutTypePortletConstants.STATIC_PORTLET_USER_SELECTOR)) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.configuration.test.util;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.osgi.util.test.OSGiServiceUtil;
@@ -33,7 +32,6 @@ import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.runtime.ServiceComponentRuntime;
 import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Drew Brokke
@@ -122,18 +120,12 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 		String componentName = (String)serviceReference.getProperty(
 			"component.name");
 
-		ServiceTracker<ServiceComponentRuntime, ServiceComponentRuntime>
-			serviceComponentRuntimeTracker = ServiceTrackerFactory.open(
-				bundle, ServiceComponentRuntime.class);
-
-		ServiceComponentRuntime serviceComponentRuntime =
-			serviceComponentRuntimeTracker.waitForService(5000);
-
 		ComponentDescriptionDTO componentDescriptionDTO =
-			serviceComponentRuntime.getComponentDescriptionDTO(
-				bundle, componentName);
-
-		serviceComponentRuntimeTracker.close();
+			OSGiServiceUtil.callService(
+				bundleContext, ServiceComponentRuntime.class,
+				serviceComponentRuntime ->
+					serviceComponentRuntime.getComponentDescriptionDTO(
+						bundle, componentName));
 
 		for (String curPid : componentDescriptionDTO.configurationPid) {
 			if (pid.equals(curPid)) {

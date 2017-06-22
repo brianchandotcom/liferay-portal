@@ -398,13 +398,13 @@
 
 		<execute macro="RSS#viewPG">
 			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedUrlLink" value="http://rss.nytimes.com/services/xml/rss/nyt/Technology.xml" />
+			<var name="feedTitle" value="Technology" />
 			<var name="rowIndexNumber" value="1" />
 		</execute>
 
 		<execute macro="RSS#viewPG">
 			<var name="feedRowIndexNumber" value="1" />
-			<var name="feedUrlLink" value="http://sports.espn.go.com/espn/rss/nba/news" />
+			<var name="feedTitle" value="NBA" />
 			<var name="rowIndexNumber" value="2" />
 		</execute>
 
@@ -428,13 +428,13 @@
 
 		<execute macro="RSS#viewPG">
 			<var name="feedRowIndexNumber" value="0" />
-			<var name="feedUrlLink" value="http://sports.espn.go.com/espn/rss/nba/news" />
+			<var name="feedTitle" value="NBA" />
 			<var name="rowIndexNumber" value="1" />
 		</execute>
 
 		<execute macro="RSS#viewPG">
 			<var name="feedRowIndexNumber" value="1" />
-			<var name="feedUrlLink" value="http://rss.nytimes.com/services/xml/rss/nyt/Technology.xml" />
+			<var name="feedTitle" value="Technology" />
 			<var name="rowIndexNumber" value="2" />
 		</execute>
 	</command>

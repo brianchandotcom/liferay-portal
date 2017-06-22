@@ -153,7 +153,7 @@
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="RSSFeed#FEEDS_DEFAULT" />
-		<execute function="AssertTextEquals" locator1="RSSFeed#FEEDS_URL_NAME_FIELD" value1="${feedUrlLink}" />
+		<execute function="AssertTextEquals" locator1="RSSFeed#FEEDS_TITLE_NAME_FIELD" value1="${feedTitle}" />
 	</command>
 
 	<command name="viewPortletConfigurationInfo">

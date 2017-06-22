@@ -33,6 +33,11 @@
 	<td>//*[@data-qa-id='searchButton'] | //button[contains(.,'search')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CPOPTIONS_STATUS</td>
+	<td>//table[contains (@data-searchcontainerid,'cpOptions')]/tbody//td[contains (@class,'${key_cpOption}') and contains (.,'${key_cpOptionStatus}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

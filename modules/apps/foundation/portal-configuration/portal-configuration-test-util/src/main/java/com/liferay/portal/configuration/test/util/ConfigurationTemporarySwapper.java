@@ -57,15 +57,13 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 
 		_oldProperties = _configuration.getProperties();
 
-		_serviceServiceTracker = ServiceTrackerFactory.open(
-			bundle, serviceClass);
+		_serviceListener = OSGiServiceUtil.callService(
+			bundleContext, serviceClass,
+			service -> {
+				_validateService(serviceClass, service, pid);
 
-		Object service = _serviceServiceTracker.waitForService(5000);
-
-		_validateService(serviceClass, service, pid);
-
-		_serviceListener = new ConfigurationServiceListener(
-			serviceClass, service);
+				return new ConfigurationServiceListener(serviceClass, service);
+			});
 
 		_serviceListener.register();
 
@@ -97,8 +95,6 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 		}
 		finally {
 			_serviceListener.unregister();
-
-			_serviceServiceTracker.close();
 		}
 	}
 
@@ -152,7 +148,6 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 	private final Configuration _configuration;
 	private final Dictionary<String, Object> _oldProperties;
 	private final ConfigurationServiceListener _serviceListener;
-	private final ServiceTracker<?, ?> _serviceServiceTracker;
 
 	private static class ConfigurationServiceListener
 		implements ServiceListener {

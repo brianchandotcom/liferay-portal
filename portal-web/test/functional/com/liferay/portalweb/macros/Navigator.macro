@@ -51,6 +51,10 @@
 		<execute function="AssertClick" locator1="SitesDirectory#DESCRIPTIVE_SITE_ENTRY" value1="${entryName}" />
 	</command>
 
+	<command name="gotoLoginPage">
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+	</command>
+
 	<command name="gotoNavItem">
 		<var name="key_navItem" value="${navItem}" />
 

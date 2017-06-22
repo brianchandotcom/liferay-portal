@@ -36,27 +36,27 @@
 <!--CERTIFICATE_AND_PRIVATE_KEY-->
 <tr>
 	<td>CERTIFICATE_AND_PRIVATE_KEY_COMMON_NAME_FIELD</td>
-	<td>//input[contains(@id,'samlportlet_certificateCommonName')]</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_certificateCommonName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CERTIFICATE_AND_PRIVATE_KEY_ORGANIZATION_FIELD</td>
-	<td>//input[contains(@id,'samlportlet_certificateOrganization')]</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_certificateOrganization')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CERTIFICATE_AND_PRIVATE_KEY_COUNTRY_FIELD</td>
-	<td>//input[contains(@id,'samlportlet_certificateCountry')]</td>
+	<td>//input[contains(@id,'SamlAdminPortlet_certificateCountry')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CERTIFICATE_AND_PRIVATE_KEY_KEY_ALGORITHM_SELECT</td>
-	<td>//select[contains(@id,'samlportlet_certificateKeyAlgorithm')]</td>
+	<td>//select[contains(@id,'SamlAdminPortlet_certificateKeyAlgorithm')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CERTIFICATE_AND_PRIVATE_KEY_KEY_LENGTH_SELECT</td>
-	<td>//select[contains(@id,'samlportlet_certificateKeyLength')]</td>
+	<td>//select[contains(@id,'SamlAdminPortlet_certificateKeyLength')]</td>
 	<td></td>
 </tr>
 <tr>

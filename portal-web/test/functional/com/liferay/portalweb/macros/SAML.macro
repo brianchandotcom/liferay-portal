@@ -1,5 +1,5 @@
 <definition>
-	<command name="configureLiferaySAMLAsIdPAndLiferaySAMLasSP">
+	<command name="configureLiferaySAMLAsIdP">
 		<description message="Configures Liferay SAML as the IdP and Liferay SAML as the SP." />
 
 		<!-- Configure IdP (Identity Provider) on http://localhost:8080 with database lportal and saml deployed -->
@@ -9,16 +9,16 @@
 		</execute>
 
 		<execute macro="SAMLRole#configure">
-			<var name="samlEntityID" value="samlidp" />
+			<var name="samlEntityID" value="${samlEntityID}" />
 			<var name="samlRoleType" value="Identity Provider" />
 		</execute>
 
 		<execute macro="SAMLRole#configureCertificateAndPrivateKey">
-			<var name="samlKeyPassword" value="samlidp" />
+			<var name="samlKeyPassword" value="${samlEntityID}" />
 		</execute>
 
 		<execute macro="SAMLRole#enable">
-			<var name="samlEntityID" value="samlidp" />
+			<var name="samlEntityID" value="${samlEntityID}" />
 		</execute>
 
 		<!-- Navigate away from SAML portlet after enabling SAML in order to avoid LPS-65869 -->
@@ -30,22 +30,22 @@
 		<execute macro="SAMLNavigation#gotoIdentityProvider" />
 
 		<execute macro="SAMLPortlet#configureIdentityProvider" />
+	</command>
 
-		<!-- Configure SP (Service Provider) on http://www.able.com:9080 with database lportal1 and saml deployed -->
-
+	<command name="configureLiferaySAMLAsSP">
 		<execute macro="User#loginPG">
 			<var name="authenticationMethod" value="${authenticationMethod}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="password" value="test" />
 			<var name="rememberMeChecked" value="false" />
-			<var name="specificURL" value="http://www.able.com:9080" />
+			<var name="specificURL" value="${spURL}" />
 			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://www.able.com:9080" />
+			<var name="url" value="${spURL}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -53,12 +53,16 @@
 		</execute>
 
 		<execute macro="SAMLRole#configure">
-			<var name="samlEntityID" value="samlsp" />
+			<var name="samlEntityID" value="${samlEntityID}" />
 			<var name="samlRoleType" value="Service Provider" />
 		</execute>
 
 		<execute macro="SAMLRole#configureCertificateAndPrivateKey">
-			<var name="samlKeyPassword" value="samlsp" />
+			<var name="samlKeyPassword" value="${samlEntityID}" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="SAML Admin" />
 		</execute>
 
 		<execute macro="SAMLNavigation#gotoIdentityProviderConnection" />
@@ -72,12 +76,12 @@
 		<execute macro="SAMLNavigation#gotoGeneral" />
 
 		<execute macro="SAMLRole#enable">
-			<var name="samlEntityID" value="samlsp" />
+			<var name="samlEntityID" value="${samlEntityID}" />
 		</execute>
 
 		<execute macro="User#logoutPG">
 			<var name="nodePort" value="${nodePort}" />
-			<var name="specificURL" value="http://www.able.com:9080" />
+			<var name="specificURL" value="${spURL}" />
 		</execute>
 
 		<!-- Add the configured SP connection to the IdP -->
@@ -91,9 +95,9 @@
 		<execute macro="SAMLNavigation#gotoServiceProviderConnection" />
 
 		<execute macro="SAMLPortlet#addServiceProviderConnection">
-			<var name="SPEntityID" value="samlsp" />
-			<var name="SPMetadataURL" value="http://www.able.com:9080/c/portal/saml/metadata" />
-			<var name="SPNameID" value="samlsp" />
+			<var name="SPEntityID" value="${samlEntityID}" />
+			<var name="SPMetadataURL" value="${spURL}/c/portal/saml/metadata" />
+			<var name="SPNameID" value="${samlEntityID}" />
 		</execute>
 	</command>
 

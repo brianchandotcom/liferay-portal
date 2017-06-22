@@ -14,15 +14,21 @@
 
 package com.liferay.commerce.product.item.selector.web.internal.display.context;
 
+import com.liferay.commerce.product.item.selector.web.internal.CPDefinitionItemSelectorView;
+import com.liferay.commerce.product.item.selector.web.internal.search.CPDefinitionItemSelectorChecker;
 import com.liferay.commerce.product.item.selector.web.internal.util.CPItemSelectorViewUtil;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionLink;
+import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -41,15 +47,29 @@ public class CPDefinitionItemSelectorViewDisplayContext
 
 	public CPDefinitionItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
-		String itemSelectedEventName, CPDefinitionService cpDefinitionService,
+		String itemSelectedEventName,
+		CPDefinitionLinkService cpDefinitionLinkService,
+		CPDefinitionService cpDefinitionService,
 		CPTypeServicesTracker cpTypeServicesTracker) {
 
 		super(
 			httpServletRequest, portletURL, itemSelectedEventName,
-			"CPDefinitionItemSelectorView");
+			CPDefinitionItemSelectorView.class.getSimpleName());
 
+		_cpDefinitionLinkService = cpDefinitionLinkService;
 		_cpDefinitionService = cpDefinitionService;
 		_cpTypeServicesTracker = cpTypeServicesTracker;
+	}
+
+	public long getCPDefinitionId() {
+		return ParamUtil.getLong(httpServletRequest, "cpDefinitionId");
+	}
+
+	public List<CPDefinitionLink> getCPDefinitionLinks()
+		throws PortalException {
+
+		return _cpDefinitionLinkService.getCPDefinitionLinks(
+			getCPDefinitionId());
 	}
 
 	public CPType getCPType(String name) {
@@ -77,10 +97,13 @@ public class CPDefinitionItemSelectorViewDisplayContext
 			CPItemSelectorViewUtil.getCPDefinitionOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
+		RowChecker rowChecker = new CPDefinitionItemSelectorChecker(
+			cpRequestHelper.getRenderResponse(), getCPDefinitionLinks());
+
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setRowChecker(getRowChecker());
+		searchContainer.setRowChecker(rowChecker);
 
 		int total = _cpDefinitionService.getCPDefinitionsCount(
 			getScopeGroupId(), StringPool.BLANK, themeDisplay.getLanguageId(),
@@ -98,6 +121,7 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		return searchContainer;
 	}
 
+	private final CPDefinitionLinkService _cpDefinitionLinkService;
 	private final CPDefinitionService _cpDefinitionService;
 	private final CPTypeServicesTracker _cpTypeServicesTracker;
 

@@ -135,9 +135,9 @@
 	</command>
 
 	<command name="viewCP">
-		<var name="key_pageTemplateName" value="${pageTemplateName}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}">
+			<var name="key_pageTemplateName" value="${pageTemplateName}" />
+		</execute>
 	</command>
 
 	<command name="viewDefaultCP">

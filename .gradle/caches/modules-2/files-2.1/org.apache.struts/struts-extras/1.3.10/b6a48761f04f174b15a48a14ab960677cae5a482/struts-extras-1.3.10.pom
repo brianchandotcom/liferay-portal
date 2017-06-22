@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!--
+    $Id: pom.xml 721646 2008-11-29 05:43:22Z pbenedict $
+
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements.  See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to You under the Apache License, Version 2.0
+    (the "License"); you may not use this file except in compliance with
+    the License.  You may obtain a copy of the License at
+   
+         http://www.apache.org/licenses/LICENSE-2.0
+   
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+   <parent>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts-parent</artifactId>
+      <version>1.3.10</version>
+   </parent>
+   
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>org.apache.struts</groupId>
+   <artifactId>struts-extras</artifactId>
+   <packaging>jar</packaging>
+   <name>Struts Extras</name>
+   <url>http://struts.apache.org</url>
+
+    <scm>
+        <connection>scm:svn:http://svn.apache.org/repos/asf/struts/struts1/trunk/extras/</connection>
+        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/struts/struts1/trunk/extras/</developerConnection>
+        <url>http://svn.apache.org/repos/asf/struts/struts1/trunk/extras/</url>
+    </scm>
+    
+   <distributionManagement>
+      <site>
+         <id>apache-site</id>
+         <url>scp://people.apache.org/www/struts.apache.org/1.x/struts-extras</url>
+      </site>
+   </distributionManagement>
+
+   <build>
+      <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+         <resource>
+            <directory>src/main/java</directory>
+            <includes>
+               <include>**/*.properties</include>
+            </includes>
+         </resource>
+      </resources>
+   </build>
+
+   <dependencies>
+
+      <dependency>
+         <groupId>javax.servlet</groupId>
+         <artifactId>servlet-api</artifactId>
+         <version>2.3</version>
+         <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <version>3.8.1</version>
+         <scope>test</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>org.apache.struts</groupId>
+         <artifactId>struts-core</artifactId>
+         <version>${pom.version}</version>
+      </dependency>
+
+   </dependencies>
+
+     <profiles>
+       <profile>
+        <id>pre-assembly</id>
+        <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-javadoc</id>
+                <goals><goal>jar</goal></goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-source</id>
+                <goals><goal>jar</goal></goals>
+              </execution>
+            </executions>
+          </plugin>
+       </plugins>
+       </build>
+      </profile>
+    </profiles>
+
+
+</project>

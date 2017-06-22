@@ -1,0 +1,15 @@
+<?xml version="1.0"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.metaparadigm</groupId>
+  <artifactId>json-rpc</artifactId>
+  <name>JSON RPC</name>
+  <version>1.0</version>
+  <description>JavaScript to Java AJAX communications library</description>
+  <url>http://oss.metaparadigm.com/jsonrpc</url>
+  <licenses>
+    <license>
+      <name>Apache License</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+    </license>
+  </licenses>
+</project>

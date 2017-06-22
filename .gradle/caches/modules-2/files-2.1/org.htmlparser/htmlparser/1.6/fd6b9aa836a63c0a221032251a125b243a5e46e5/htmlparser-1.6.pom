@@ -1,0 +1,338 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.htmlparser</groupId>
+  <artifactId>htmlparser</artifactId>
+  <name>HTML Parser</name>
+  <version>1.6</version>
+  <description>HTML Parser is a Java library used to parse HTML in either a linear or nested fashion. Primarily used for transformation or extraction, it features filters, visitors, custom tags and easy to use JavaBeans. It is a fast, robust and well tested package.</description>
+  <url>http://htmlparser.org</url>
+  <issueManagement>
+    <system>SourceForge Tracker</system>
+    <url>http://sourceforge.net/tracker/?group_id=24399</url>
+  </issueManagement>
+  <scm>
+    <connection>scm:svn:https://svn.sourceforge.net/svnroot/htmlparser</connection>
+    <developerConnection>scm:svn:https://svn.sourceforge.net/svnroot/htmlparser</developerConnection>
+    <url>http://svn.sourceforge.net/viewcvs.cgi/htmlparser/</url>
+  </scm>
+  <inceptionYear>2001</inceptionYear>
+  <mailingLists>
+    <mailingList>
+      <name>htmlparser-announce</name>
+      <subscribe>http://lists.sourceforge.net/mailman/listinfo/htmlparser-announce</subscribe>
+      <unsubscribe>http://lists.sourceforge.net/mailman/listinfo/htmlparser-announce</unsubscribe>
+      <archive>http://sourceforge.net/mailarchive/forum.php?forum_id=2024</archive>
+    </mailingList>
+    <mailingList>
+      <name>htmlparser-developer</name>
+      <subscribe>http://lists.sourceforge.net/mailman/listinfo/htmlparser-developer</subscribe>
+      <unsubscribe>http://lists.sourceforge.net/mailman/listinfo/htmlparser-developer</unsubscribe>
+      <post>htmlparser-developer@sourceforge.org</post>
+      <archive>http://sourceforge.net/mailarchive/forum.php?forum_id=2025</archive>
+    </mailingList>
+    <mailingList>
+      <name>htmlparser-user</name>
+      <subscribe>http://lists.sourceforge.net/mailman/listinfo/htmlparser-user</subscribe>
+      <unsubscribe>http://lists.sourceforge.net/mailman/listinfo/htmlparser-user</unsubscribe>
+      <post>htmlparser-user@sourceforge.org</post>
+      <archive>http://sourceforge.net/mailarchive/forum.php?forum_id=2023</archive>
+    </mailingList>
+    <mailingList>
+      <name>htmlparser-cvs</name>
+      <subscribe>http://lists.sourceforge.net/mailman/listinfo/htmlparser-cvs</subscribe>
+      <unsubscribe>http://lists.sourceforge.net/mailman/listinfo/htmlparser-cvs</unsubscribe>
+      <archive>http://sourceforge.net/mailarchive/forum.php?forum_id=33210</archive>
+    </mailingList>
+  </mailingLists>
+  <developers>
+    <developer>
+      <id>derrickoswald</id>
+      <name>Derrick Oswald</name>
+      <email>http://sourceforge.net/sendmessage.php?touser=605407</email>
+      <url>http://sourceforge.net/users/derrickoswald</url>
+      <organization>Autodesk</organization>
+      <organizationUrl>http://www.autodesk.com</organizationUrl>
+      <roles>
+        <role>Project Admin</role>
+      </roles>
+      <timezone>-5</timezone>
+      <properties/>
+    </developer>
+    <developer>
+      <id>somik</id>
+      <name>Somik Raha</name>
+      <email>http://sourceforge.net/sendmessage.php?touser=187944</email>
+      <url>http://sourceforge.net/users/somik/</url>
+      <organization>Industrial Logic Inc.</organization>
+      <organizationUrl>http://www.industriallogic.com</organizationUrl>
+      <roles>
+        <role>Project Admin</role>
+      </roles>
+      <timezone>-8</timezone>
+      <properties/>
+    </developer>
+    <developer>
+      <id>ian_macfarlane</id>
+      <name>Ian Macfarlane</name>
+      <email>http://sourceforge.net/sendmessage.php?touser=1367545</email>
+      <url>http://www.ianmacfarlane.com/</url>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>-5</timezone>
+      <properties/>
+    </developer>
+    <developer>
+      <id>dwalters128</id>
+      <name>David Walters</name>
+      <email>http://sourceforge.net/sendmessage.php?touser=957342</email>
+      <url>http://sourceforge.net/users/dwalters128/</url>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>-5</timezone>
+      <properties/>
+    </developer>
+  </developers>
+  <contributors>
+    <contributor>
+      <name>Ivan Shi</name>
+      <email>http://sourceforge.net/sendmessage.php?touser=1537105</email>
+    </contributor>
+    <contributor>
+      <name>Antonio Petrelli</name>
+      <email>http://sourceforge.net/sendmessage.php?touser=348219</email>
+    </contributor>
+    <contributor>
+      <name>Yuta Okamoto</name>
+      <email>http://sourceforge.net/sendmessage.php?touser=1586822</email>
+    </contributor>
+    <contributor>
+      <name>Rafique</name>
+      <email>http://sourceforge.net/sendmessage.php?touser=876446</email>
+    </contributor>
+    <contributor>
+      <name>RabeRalf</name>
+      <email>http://sourceforge.net/sendmessage.php?touser=1433119</email>
+    </contributor>
+  </contributors>
+  <licenses>
+    <license>
+      <name>Common Public License</name>
+      <url>http://opensource.org/licenses/cpl1.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>The HTML Parser code is licensed under the Common Public License.</comments>
+    </license>
+  </licenses>
+<!--
+  <modules>
+    <module>lexer</module>
+    <module>parser</module>
+    <module>filterbuilder</module>
+    <module>sitecapturer</module>
+    <module>thumbelina</module>
+  </modules>
+-->
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+<!--
+Dependencies is severely broken:
+              <report>dependencies</report>
+-->
+              <report>project-team</report>
+              <report>mailing-list</report>
+              <report>issue-tracking</report>
+              <report>license</report>
+              <report>scm</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+  <build>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+         <artifactId>wagon-ssh-external</artifactId>
+         <version>1.0-beta-1</version>
+      </extension>
+    </extensions>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <locales>en</locales>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <inherited>false</inherited>
+        <executions>
+          <execution>
+            <phase>deploy</phase>
+            <configuration>
+              <tasks>
+                <tstamp>
+                  <format property="TODAY" pattern="yyyyMMdd" locale="en"/>
+                  <format property="TODAY_STRING" pattern="MMM dd, yyyy"/>
+                </tstamp>
+                <mkdir dir="target/classes"/>
+                <javac fork="yes" srcdir="src/main/java:parser/src/main/java:lexer/src/main/java" includes="HtmlTaglet.java" destdir="target/classes" classpath="${java.home}/../lib/tools.jar"/>
+                <mkdir dir="target/site/javadoc"/>
+                <property name="javadoc.doctitle" value="HTML Parser 2.0"/>
+                <property name="javadoc.header" value="&lt;A HREF=&quot;http://htmlparser.sourceforge.net&quot; target=&quot;_top&quot;>HTML Parser Home Page&lt;/A>"/>
+                <property name="javadoc.footer" value="&amp;copy; 2006 Derrick Oswald&lt;div align=&quot;right&quot;&gt;${TODAY_STRING}&lt;/div&gt;"/>
+                <property name="javadoc.bottom" value="&lt;table width='100%'&gt;&lt;tr&gt;&lt;td&gt;HTML Parser is an open source library released under
+                  &lt;a HREF=&quot;http://opensource.org/licenses/cpl1.0.txt&quot; target=&quot;_top&quot;&gt;Common Public License&lt;/a&gt;.&lt;/td&gt;&lt;td align='right'&gt;
+                  &lt;a HREF=&quot;http://sourceforge.net/projects/htmlparser&quot; target=&quot;_top&quot;&gt;
+                  &lt;img src=&quot;http://sourceforge.net/sflogo.php?group_id=24399&amp;type=1&quot; width=&quot;88&quot; height=&quot;31&quot; border=&quot;0&quot; alt=&quot;SourceForge.net&quot;&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;"/>
+                <javadoc packagenames="org.htmlparser.*"
+                       sourcepath="lexer/src/main/java:parser/src/main/java:filterbuilder/src/main/java:sitecapturer/src/main/java:thumbelina/src/main/java"
+                       classpath="src/main/resources"
+                       defaultexcludes="yes"
+                       excludepackagenames="org.htmlparser.tests.*"
+                       destdir="target/site/javadoc"
+                       author="true"
+                       version="true"
+                       use="true"
+                       windowtitle="HTML Parser 2.0"
+                       stylesheetfile="src/main/resources/stylesheet.css"
+                       overview="src/main/java/doc-files/overview.html">
+                  <doctitle>${javadoc.doctitle}</doctitle>
+                  <header>${javadoc.header}</header>
+                  <bottom>${javadoc.bottom}</bottom>
+                  <footer>${javadoc.footer}</footer>
+                  <taglet name="HtmlTaglet" path="target/classes"/>
+                  <group title="Main Package" packages="org.htmlparser"/>
+                  <group title="Example Applications" packages="org.htmlparser.parserapplications,org.htmlparser.lexerapplications.tabby,org.htmlparser.lexerapplications.thumbelina,org.htmlparser.parserapplications.filterbuilder*"/>
+                  <group title="Nodes" packages="org.htmlparser.nodes,org.htmlparser.tags"/>
+                  <group title="Lexer" packages="org.htmlparser.lexer"/>
+                  <group title="Scanners" packages="org.htmlparser.scanners"/>
+                  <group title="Beans" packages="org.htmlparser.beans"/>
+                  <group title="Patterns" packages="org.htmlparser.visitors,org.htmlparser.nodeDecorators,org.htmlparser.filters"/>
+                  <group title="Http" packages="org.htmlparser.http"/>
+                  <group title="Sax" packages="org.htmlparser.sax"/>
+                  <group title="Utility" packages="org.htmlparser.util*"/>
+                  <link href="http://java.sun.com/j2se/1.4.2/docs/api/"/>
+                  <link href="http://www.saxproject.org/apidoc/"/>
+                </javadoc>
+                <copy file="src/main/resources/inherit.gif" tofile="target/site/javadoc/resources/inherit.gif" overwrite="true"/>
+                <delete dir="target/classes"/>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptors>
+            <descriptor>src/main/assembly/binaries.xml</descriptor>
+            <descriptor>src/main/assembly/sources.xml</descriptor>
+            <descriptor>src/main/assembly/documentation.xml</descriptor>
+          </descriptors>
+          <outputDirectory>target</outputDirectory>
+          <workDirectory>target/assembly/work</workDirectory>
+        </configuration>
+      </plugin>
+<!--
+NOTE: This is not used since there is no way to javadoc multiple modules...
+
+The maven-javadoc-plugin is completely broken for aggregator artifacts.
+If you try this you will get a message like:
+  "Not executing Javadoc as the project is not a Java classpath-capable package"
+and if you set the artifact type to be jar or something classpath-capable you get:
+  "Aggregator projects require 'pom' as packaging"
+
+Also, there doesn't appear to be a way to incorporate the current date and the overview functionality doesn't work.
+
+So we revert back to the antrun plugin to get this functionality, see above.
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <doctitle>${project.name} ${project.version}</doctitle>
+          <header>&lt;A HREF=&quot;http://htmlparser.sourceforge.net&quot;>${project.name} Home Page&lt;/A></header>
+          <bottom>&lt;table width="100%"&gt;&lt;tr&gt;&lt;td&gt;HTML Parser is an open source library released under &lt;a HREF=&quot;http://opensource.org/licenses/cpl1.0.txt&quot; target=&quot;_top&quot;&gt;Common Public License&lt;/a&gt;.&lt;/td&gt;&lt;td align="right"&gt;&lt;a HREF=&quot;http://sourceforge.net/projects/htmlparser&quot; target=&quot;_top&quot;&gt;&lt;img src=&quot;http://sourceforge.net/sflogo.php?group_id=24399&amp;type=1&quot; width=&quot;88&quot; height=&quot;31&quot; border=&quot;0&quot; alt=&quot;SourceForge.net&quot;&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</bottom>
+there must be a current date variable, and a current year
+- the comma is stripped out of a hard coded date
+
+          <footer>&amp;copy; 2006 Derrick Oswald&lt;div align=&quot;right&quot;&gt;April 1, 2006&lt;/div&gt;</footer>
+          <destDir>${project.build.directory}/site/javadoc/</destDir>
+          <windowtitle>${project.name} ${project.version}</windowtitle>
+          <stylesheetfile>${basedir}/src/main/resources/stylesheet.css</stylesheetfile>
+overview is broken...
+          <overview>C:/Data Files/Personal/htmlparser/src/main/java/doc-files/overview.html</overview>
+          <groups>
+              <group>Main Package org.htmlparser</group>
+              <group title="Example Applications">org.htmlparser.parserapplications,org.htmlparser.lexerapplications.tabby,org.htmlparser.lexerapplications.thumbelina,org.htmlparser.parserapplications.filterbuilder*</group>
+              <group title="Nodes">org.htmlparser.nodes,org.htmlparser.tags</group>
+              <group title="Lexer">org.htmlparser.lexer</group>
+              <group title="Scanners">org.htmlparser.scanners</group>
+              <group title="Beans">org.htmlparser.beans</group>
+              <group title="Patterns">org.htmlparser.visitors,org.htmlparser.nodeDecorators,org.htmlparser.filters</group>
+              <group title="Http">org.htmlparser.http</group>
+              <group title="Sax">org.htmlparser.sax</group>
+              <group title="Utility">org.htmlparser.util*</group>
+          </groups>
+          <links>
+              <link>http://java.sun.com/j2se/1.4.2/docs/api/</link>
+              <link>http://www.saxproject.org/apidoc/</link>
+          </links>
+          <tagletpath>${basedir}/src/main/resources</tagletpath>
+          <taglet>HtmlTaglet</taglet>
+          <additionalparam>-sourcepath ..\parser\src\main\java</additionalparam>
+          <additionalparam>-sourcepath ..\lexer\src\main\java</additionalparam>
+        </configuration>
+      </plugin>
+-->
+    </plugins>
+  </build>
+  <distributionManagement>
+    <!-- use the following if you're not using a snapshot version. -->
+    <!-- repository>
+      <id>sourceforge-repository</id>
+      <name>Sourceforge</name>
+      <url>scpexe://shell.sourceforge.net/home/groups/h/ht/htmlparser/htdocs/m2-repo</url>
+    </repository -->
+    <!-- use the following if you ARE using a snapshot version. -->
+    <snapshotRepository>
+      <id>sourceforge-snapshot-repository</id>
+      <name>Sourceforge SNAPSHOT</name>
+      <url>scpexe://shell.sourceforge.net/home/groups/h/ht/htmlparser/htdocs/m2-snapshot-repo</url>
+    </snapshotRepository>
+  </distributionManagement>
+  <profiles>
+    <profile>
+      <id>default-tools.jar</id>
+      <activation>
+        <property>
+          <name>java.vendor</name>
+          <value>Sun Microsystems Inc.</value>
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>com.sun</groupId>
+          <artifactId>tools</artifactId>
+          <version>1.5.0</version>
+          <scope>system</scope>
+          <systemPath>${java.home}/../lib/tools.jar</systemPath>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
+</project>

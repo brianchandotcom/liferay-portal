@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>net.open-esb</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.0.2</version>
+    <packaging>pom</packaging>
+    
+    <name>OpenESB Parent POM</name>
+    
+    <description>The OpenESB Parent POM provides common settings for all OpenESB components.</description>
+    <url>https://bitbucket.org/openesb/openesb-parent</url>
+    <inceptionYear>2011</inceptionYear>
+    
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>9</version>
+    </parent>
+    
+    <licenses>
+        <license>
+            <name>CDDL-1.0</name>
+            <url>LICENSE.txt</url>
+            <comments>Common Development and Distribution License 1.0</comments>
+        </license>
+    </licenses>
+    
+    <issueManagement>
+        <system>Jira</system>
+        <url>https://openesb.atlassian.net/</url>
+    </issueManagement>
+    
+    <scm>
+        <url>git@bitbucket.org:openesb/openesb-parent.git</url>
+        <connection>scm:git:git@bitbucket.org:openesb/openesb-parent.git</connection>
+        <developerConnection>scm:git:git@bitbucket.org:openesb/openesb-parent.git</developerConnection>
+    </scm>
+    
+    <ciManagement>
+        <system>Jenkins</system>
+        <url>http://build2.open-esb.net:8080/hudson/</url>
+    </ciManagement>
+    
+    <organization>
+        <name>OpenESB Community</name>
+        <url>www.open-esb.net</url>
+    </organization>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>            
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            
+            <!--
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>1.5</version>
+                <configuration>
+                    <licenseName>cddl</licenseName>
+                    <verbose>false</verbose>
+                    <licenseResolver>${project.baseUri}/src/license</licenseResolver>
+                    <roots>
+                        <root>src/main</root>
+                    </roots>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>file-header</id>
+                        <goals>
+                            <goal>update-file-header</goal>
+                        </goals>
+                        <phase>process-sources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+        </plugins>
+    </build>
+    
+    <profiles>
+        <profile>
+            <id>openesb-release</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>2.5.1</version>
+                        <configuration>
+                            <useReleaseProfile>false</useReleaseProfile>
+                            <releaseProfiles>release</releaseProfiles>
+                            <goals>deploy</goals>
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <arguments>-DskipTests</arguments>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <configuration>
+                            <encoding>UTF-8</encoding>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+            
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.8</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

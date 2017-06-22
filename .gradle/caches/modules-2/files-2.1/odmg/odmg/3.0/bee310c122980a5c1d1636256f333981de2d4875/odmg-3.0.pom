@@ -1,0 +1,6 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>odmg</groupId>
+  <artifactId>odmg</artifactId>
+  <version>3.0</version>
+</project>

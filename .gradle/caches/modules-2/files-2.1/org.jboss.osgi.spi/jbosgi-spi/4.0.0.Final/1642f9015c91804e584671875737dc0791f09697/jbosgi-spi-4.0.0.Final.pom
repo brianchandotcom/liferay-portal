@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ====================================================================== -->
+<!--                                                                        -->
+<!--  JBoss, the OpenSource J2EE webOS                                      -->
+<!--                                                                        -->
+<!--  Distributable under LGPL license.                                     -->
+<!--  See terms of license at http://www.gnu.org.                           -->
+<!--                                                                        -->
+<!-- ====================================================================== -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.jboss.osgi</groupId>
+        <artifactId>jbosgi-parent</artifactId>
+        <version>1.0.24</version>
+    </parent>
+
+    <name>JBossOSGi SPI</name>
+
+    <groupId>org.jboss.osgi.spi</groupId>
+    <artifactId>jbosgi-spi</artifactId>
+    <packaging>jar</packaging>
+
+    <version>4.0.0.Final</version>
+
+    <!-- Properties -->
+    <properties>
+        <version.jboss.logging>3.1.3.GA</version.jboss.logging>
+        <version.jboss.logging.processor>1.1.0.Final</version.jboss.logging.processor>
+        <version.jboss.osgi.metadata>3.0.0.Final</version.jboss.osgi.metadata>
+        <version.jboss.osgi.vfs>2.0.0.Final</version.jboss.osgi.vfs>
+        <version.jboss.shrinkwrap>1.0.0</version.jboss.shrinkwrap>
+        <version.junit>4.10</version.junit>
+        <version.osgi>5.0.0</version.osgi>
+    </properties>
+
+    <!-- Source Control -->
+    <scm>
+        <connection>scm:git:git://github.com/jbosgi/jbosgi-spi.git</connection>
+        <developerConnection>scm:git:git@github.com:jbosgi/jbosgi-spi.git</developerConnection>
+        <url>http://github.com/jbosgi/jbosgi-spi</url>
+    <tag>4.0.0.Final</tag>
+  </scm>
+
+    <!-- Dependencies -->
+    <dependencies>
+
+        <!-- Compile Dependencies -->
+        <dependency>
+            <groupId>org.jboss.osgi.metadata</groupId>
+            <artifactId>jbosgi-metadata</artifactId>
+            <version>${version.jboss.osgi.metadata}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.osgi.vfs</groupId>
+            <artifactId>jbosgi-vfs30</artifactId>
+            <version>${version.jboss.osgi.vfs}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.shrinkwrap</groupId>
+            <artifactId>shrinkwrap-api</artifactId>
+            <version>${version.jboss.shrinkwrap}</version>
+        </dependency>
+
+        <!-- Provided Dependencies -->
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>${version.jboss.logging}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging-processor</artifactId>
+            <version>${version.jboss.logging.processor}</version>
+            <scope>provided</scope>
+			<optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>${version.osgi}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Test Dependencies -->
+        <dependency>
+            <groupId>org.jboss.shrinkwrap</groupId>
+            <artifactId>shrinkwrap-impl-base</artifactId>
+            <version>${version.jboss.shrinkwrap}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>commons-dbcp</groupId>
+  <artifactId>commons-dbcp</artifactId>
+  <name>Commons DBCP</name>
+  <version>1.2.2</version>
+  <description>Commons Database Connection Pooling</description>
+  <url>http://jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</url>
+  <issueManagement>
+    <url>http://issues.apache.org/jira/</url>
+  </issueManagement>
+  <ciManagement>
+    <notifiers>
+      <notifier>
+        <configuration>
+          <address>commons-dev@jakarta.apache.org</address>
+        </configuration>
+      </notifier>
+    </notifiers>
+  </ciManagement>
+  <inceptionYear>2001</inceptionYear>
+  <mailingLists>
+    <mailingList>
+      <name>Commons Dev List</name>
+      <subscribe>commons-dev-subscribe@jakarta.apache.org</subscribe>
+      <unsubscribe>commons-dev-unsubscribe@jakarta.apache.org</unsubscribe>
+      <archive>http://mail-archives.apache.org/mod_mbox/jakarta-commons-dev/</archive>
+    </mailingList>
+    <mailingList>
+      <name>Commons User List</name>
+      <subscribe>commons-user-subscribe@jakarta.apache.org</subscribe>
+      <unsubscribe>commons-user-unsubscribe@jakarta.apache.org</unsubscribe>
+      <archive>http://mail-archives.apache.org/mod_mbox/jakarta-commons-user/</archive>
+    </mailingList>
+  </mailingLists>
+  <developers>
+    <developer>
+      <id>morgand</id>
+      <name>Morgan Delagrange</name>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <id>geirm</id>
+      <name>Geir Magnusson</name>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <id>craigmcc</id>
+      <name>Craig McClanahan</name>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <id>jmcnally</id>
+      <name>John McNally</name>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <id>mpoeschl</id>
+      <name>Martin Poeschl</name>
+      <email>mpoeschl@marmot.at</email>
+      <organization>tucana.at</organization>
+    </developer>
+    <developer>
+      <id>rwaldhoff</id>
+      <name>Rodney Waldhoff</name>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <id>dweinr1</id>
+      <name>David Weinrich</name>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <id>dirkv</id>
+      <name>Dirk Verbeeck</name>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <id>yoavs</id>
+      <name>Yoav Shapira</name>
+      <email>yoavs@apache.org</email>
+      <organization>Apache Software Foundation</organization>
+    </developer>
+    <developer>
+      <id>psteitz</id>
+      <name>Phil Steitz</name>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <id>joehni</id>
+      <name>J?rg Schaible</name>
+      <email>joerg.schaible@gmx.de</email>
+      <organization></organization>
+      <timezone>+1</timezone>
+    </developer>
+  </developers>
+  <contributors>
+    <contributor>
+      <name>Todd Carmichael</name>
+      <email>toddc@concur.com</email>
+    </contributor>
+    <contributor>
+      <name>Wayne Woodfield</name>
+    </contributor>
+  </contributors>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>/LICENSE.txt</url>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/jakarta/commons/proper/${pom.artifactId.substring(8)}/trunk</connection>
+    <url>http://svn.apache.org/repos/asf/jakarta/commons/proper/${pom.artifactId.substring(8)}/trunk</url>
+  </scm>
+  <organization>
+    <name>The Apache Software Foundation</name>
+    <url>http://jakarta.apache.org</url>
+  </organization>
+  <build>
+    <sourceDirectory>src/java</sourceDirectory>
+    <testSourceDirectory>src/test</testSourceDirectory>
+    <resources>
+      <resource>
+        <directory>${basedir}/src/test</directory>
+        <includes>
+          <include>testpool.jocl</include>
+        </includes>
+      </resource>
+      <resource>
+        <targetPath>META-INF</targetPath>
+        <directory>${basedir}</directory>
+        <includes>
+          <include>NOTICE.txt</include>
+        </includes>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>${basedir}/src/test</directory>
+        <includes>
+          <include>testpool.jocl</include>
+        </includes>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>org/apache/commons/dbcp/TestAbandonedObjectPool.java</include>
+            <include>org/apache/commons/jocl/TestJOCLContentHandler.java</include>
+            <include>org/apache/commons/dbcp/TestDelegatingConnection.java</include>
+            <include>org/apache/commons/dbcp/TestPoolableConnection.java</include>
+            <include>org/apache/commons/dbcp/TestDelegatingPreparedStatement.java</include>
+            <include>org/apache/commons/dbcp/TestDelegatingStatement.java</include>
+            <include>org/apache/commons/dbcp/TestJOCLed.java</include>
+            <include>org/apache/commons/dbcp/TestManual.java</include>
+            <include>org/apache/commons/dbcp/TestBasicDataSourceFactory.java</include>
+            <include>org/apache/commons/dbcp/TestBasicDataSource.java</include>
+            <include>org/apache/commons/dbcp/TestAbandonedBasicDataSource.java</include>
+            <include>org/apache/commons/dbcp/TestPStmtPoolingBasicDataSource.java</include>
+            <include>org/apache/commons/dbcp/TestPoolingDataSource.java</include>
+            <include>org/apache/commons/dbcp/TestJndi.java</include>
+            <include>org/apache/commons/dbcp/datasources/TestFactory.java</include>
+            <include>org/apache/commons/dbcp/datasources/TestPerUserPoolDataSource.java</include>
+            <include>org/apache/commons/dbcp/datasources/TestSharedPoolDataSource.java</include>
+          </includes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-artifact-plugin</artifactId>
+        <version>1.5</version>
+        <configuration>
+          <scope>test</scope>
+          <comment>&lt;strong>Build Only&lt;/strong> Generates distributions.</comment>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-xdoc-plugin</artifactId>
+        <version>1.9.2</version>
+        <configuration>
+          <comment>&lt;strong>Site Only&lt;/strong> - v1.9.2 (minimum)
+              required for building the project web site.</comment>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>maven-plugins</groupId>
+        <artifactId>maven-cobertura-plugin</artifactId>
+        <version>1.1.1</version>
+        <configuration>
+          <scope>test</scope>
+          <comment>&lt;strong>Site Only&lt;/strong> Generates test coverage reports.</comment>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>maven-plugins</groupId>
+        <artifactId>maven-findbugs-plugin</artifactId>
+        <version>1.3</version>
+        <configuration>
+          <scope>test</scope>
+          <comment>&lt;strong>Site Only&lt;/strong></comment>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>1.9</version>
+        <configuration>
+          <scope>test</scope>
+          <comment>&lt;strong>Site Only&lt;/strong></comment>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.0.1</version>
+        <configuration>
+          <scope>test</scope>
+          <comment>&lt;strong>Site Only&lt;/strong></comment>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>commons-pool</groupId>
+      <artifactId>commons-pool</artifactId>
+      <version>1.3</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>tomcat</groupId>
+      <artifactId>naming-common</artifactId>
+      <version>5.0.28</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>tomcat</groupId>
+      <artifactId>naming-java</artifactId>
+      <version>5.0.28</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.0.4</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <distributionManagement>
+    <repository>
+      <id>default</id>
+      <name>Default Repository</name>
+      <url>file:///www/jakarta.apache.org/builds/jakarta-commons/${pom.artifactId.substring(8)}/</url>
+    </repository>
+    <site>
+      <id>default</id>
+      <name>Default Site</name>
+      <url>scp://people.apache.org//www/jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</url>
+    </site>
+    <status>converted</status>
+  </distributionManagement>
+</project>

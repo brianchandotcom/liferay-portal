@@ -1,0 +1,68 @@
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.sf.jazzy</groupId>
+	<artifactId>jazzy</artifactId>
+	<version>0.5.2-rtext-1.4.1-2</version>
+	<packaging>jar</packaging>
+	<name>Jazzy (RText Version)</name>
+	<description>  
+		A set of APIs that allow you to add spell checking functionality to Java Applications easily. 
+		Jazzy is based on most of the algorithms that aspell has; so the suggestions they come up 
+		with are very similar.  Note that this is not an official release from the jazzy project; it is
+		a release of 0.5.2 with enhancements / bug-fixes as required by the RText SpellChecker project 
+		hosted on www.fifesoft.com.  The scm urls in this pom indicate where the enhanced source code
+		is hosted
+  	</description>
+	<url>http://jazzy.sourceforge.net/</url>
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License</name>
+			<url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<url>http://svn.fifesoft.com/viewvc-1.0.5/bin/cgi/viewvc.cgi/SpellChecker/trunk/src/com/?root=RSyntaxTextArea</url>
+		<connection>http://svn.fifesoft.com/svn/RSyntaxTextArea/SpellChecker/trunk/src/com/</connection>
+	</scm>
+	<developers>
+		<developer>
+			<name>Mindaugas Idzelis</name>
+		</developer>		
+		<developer>
+			<name>Ben Galbraith</name>
+		</developer>		
+		<developer>
+			<name>Damien Guillaume</name>
+		</developer>		
+		<developer>
+			<name>Robert Gustavsson</name>
+		</developer>		
+		<developer>
+			<name>Jason Height</name>
+		</developer>		
+		<developer>
+			<name>Anthony Roy</name>
+		</developer>		
+		<developer>
+			<name>Stig Tanggaard</name>
+		</developer>		
+		<developer>
+			<name>Don Vail</name>
+		</developer>		
+		<developer>
+			<name>Matthew Demerath</name>
+		</developer>		
+		<developer>
+			<name>Tony Chan</name>
+		</developer>				
+		<developer>
+			<name>Robert Futrell</name>
+			<url>http://www.fifesoft.com</url>
+		</developer>		
+	</developers>
+</project>
+

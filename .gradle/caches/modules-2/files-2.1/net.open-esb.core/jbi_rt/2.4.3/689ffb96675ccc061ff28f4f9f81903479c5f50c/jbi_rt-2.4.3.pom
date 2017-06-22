@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>esb-packages</artifactId>
+        <groupId>net.open-esb.core</groupId>
+        <version>2.4.3</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.open-esb.core</groupId>
+    <artifactId>jbi_rt</artifactId>
+    <name>uber-core</name>
+    <description>Builds the OpenESB runtime jar.</description>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Implementation-MajorVersion>${parsedVersion.majorVersion}</Implementation-MajorVersion>
+                            <Implementation-MinorVersion>${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}-${parsedVersion.qualifier}</Implementation-MinorVersion>
+                            <Implementation-Build>${timestamp}</Implementation-Build>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.2</version>
+                <configuration>
+                    <timestampFormat>yyMMdd_HHmm</timestampFormat>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>create-buildnumber</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create-timestamp</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>parse-version</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>parse-version</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>${project.artifactId}-unpack-deps</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <!-- DELETE wsdl2 classes -->
+                            <excludes>com/sun/jbi/management/binding/**,com/sun/jbi/management/engine/**</excludes>
+                            <overWriteReleases>true</overWriteReleases>
+                            <excludeTransitive>true</excludeTransitive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <dependencies>
+        <dependency>
+            <groupId>net.open-esb.core</groupId>
+            <artifactId>base</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.open-esb.core</groupId>
+            <artifactId>esb-util</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.open-esb.core</groupId>
+            <artifactId>framework-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.open-esb.core</groupId>
+            <artifactId>manage</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.open-esb.core</groupId>
+            <artifactId>nmr</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--
+        <dependency>
+            <groupId>net.open-esb.core</groupId>
+            <artifactId>shasta-version</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        -->
+        <!-- SecurityService not included in Glassfish 9.1
+        <dependency>
+            <groupId>net.open-esb.core</groupId>
+            <artifactId>security</artifactId>
+            <version>${openesb.currentVersion}</version>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>net.open-esb.core</groupId>
+            <artifactId>jbi-admin-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>        
+        <!-- dependency>
+            <groupId>net.open-esb.core</groupId>
+            <artifactId>admin-common</artifactId>
+            <version>${openesb.currentVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.open-esb.core</groupId>
+            <artifactId>admin-cli</artifactId>
+            <version>${openesb.currentVersion}</version>
+        </dependency -->
+        <dependency>
+            <groupId>net.open-esb.core</groupId>
+            <artifactId>ui</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.open-esb.core</groupId>
+            <artifactId>wsdl2</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.open-esb.core</groupId>
+            <artifactId>esb-manage</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- SecurityService not included in Glassfish 9.1
+        <dependency>
+            <groupId>net.open-esb.core</groupId>
+            <artifactId>esb-security</artifactId>
+            <version>${openesb.currentVersion}</version>
+        </dependency>
+        -->
+    </dependencies>
+</project>

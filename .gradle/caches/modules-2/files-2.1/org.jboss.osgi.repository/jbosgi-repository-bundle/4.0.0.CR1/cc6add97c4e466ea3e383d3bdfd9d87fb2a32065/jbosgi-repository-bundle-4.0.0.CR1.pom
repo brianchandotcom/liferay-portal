@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  JBossOSGi Repository
+  %%
+  Copyright (C) 2010 - 2012 JBoss by Red Hat
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.jboss.osgi.repository</groupId>
+        <artifactId>jbosgi-repository-parent</artifactId>
+        <version>4.0.0.CR1</version>
+    </parent>
+
+    <name>JBossOSGi Repository: Bundle</name>
+
+    <artifactId>jbosgi-repository-bundle</artifactId>
+    <packaging>bundle</packaging>
+
+	<!-- Dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>org.jboss.osgi.repository</groupId>
+            <artifactId>jbosgi-repository-core</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.osgi.metadata</groupId>
+            <artifactId>jbosgi-metadata</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.osgi.resolver</groupId>
+            <artifactId>jbosgi-resolver-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- [JBOSGI-585] Separate maven project.version from bundle.version and package version -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals><goal>parse-version</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                  <execution>
+                    <phase>validate</phase>
+                    <goals><goal>run</goal></goals>
+                    <configuration>
+                      <exportAntProperties>true</exportAntProperties>
+                      <target>
+                       <condition property="final.version">
+                          <matches string="${project.version}" pattern="(.*)Final" />
+                       </condition>
+                       <condition property="bundle.version" value="${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}">
+                          <isset property="final.version" />
+                       </condition>
+                       <condition property="bundle.version" value="${project.version}">
+                          <not><isset property="final.version" /></not>
+                       </condition>
+                       <echo message="bundle.version=${bundle.version}" />
+                      </target>
+                    </configuration>
+                  </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>jbosgi-repository</Bundle-SymbolicName>
+                        <Bundle-Version>${bundle.version}</Bundle-Version>
+                        <Bundle-Activator>org.jboss.osgi.repository.internal.RepositoryActivator</Bundle-Activator>
+                        <Export-Package>
+                            org.jboss.osgi.metadata;version="${version.jboss.osgi.metadata}",
+                            org.jboss.osgi.repository;version="${bundle.version}",
+                            org.jboss.osgi.repository.spi;version="${bundle.version}",
+                            org.jboss.osgi.resolver;version="${version.jboss.osgi.resolver}",
+                            org.jboss.osgi.resolver.spi;version="${version.jboss.osgi.resolver}",
+                            org.jboss.osgi.spi;version="${version.jboss.osgi.spi}",
+                            org.osgi.service.repository;version="1.1",
+                            org.osgi.util.function;version="1",
+                            org.osgi.util.promise;version="1"
+                        </Export-Package>
+                        <Import-Package>
+                            javax.xml.namespace, 
+                            javax.xml.stream, 
+                            org.jboss.logging;version="[3.0,4.0)",
+                            org.jboss.osgi.metadata;version="[3.0,4.0)",
+                            org.jboss.osgi.resolver;version="[4.0,5.0)",
+                            org.jboss.osgi.resolver.spi;version="[4.0,5.0)",
+                            org.jboss.osgi.spi;version="[4.0,5.0)",
+                            org.osgi.framework;version="[1.7,2.0)",
+                            org.osgi.framework.hooks.resolver;version="[1.0,2.0)",
+                            org.osgi.framework.wiring;version="[1.1,2.0)",
+                            org.osgi.resource;version="[1.0,2.0)",
+                            org.osgi.service.repository;version="[1.1,2.0)",
+                            org.osgi.service.resolver;version="[1.0,2.0)",
+                            org.osgi.util.function;version="[1,2)",
+                            org.osgi.util.tracker;version="[1.5,2.0)",
+                            org.osgi.util.promise;version="[1,2)",
+                            org.jboss.modules;resolution:=optional,
+                            org.jboss.modules.filter;resolution:=optional,
+                            org.jboss.osgi.vfs;resolution:=optional,
+                            !org.jboss.shrinkwrap.api.asset
+                        </Import-Package>
+                        <Private-Package>
+                            org.jboss.osgi.metadata.spi, 
+                            org.jboss.osgi.metadata.internal,
+                            org.jboss.osgi.repository.internal,
+                        </Private-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

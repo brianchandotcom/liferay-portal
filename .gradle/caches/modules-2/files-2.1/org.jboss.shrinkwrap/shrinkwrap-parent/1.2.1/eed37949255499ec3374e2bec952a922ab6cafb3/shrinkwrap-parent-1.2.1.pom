@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!--
+  vi:ts=2:sw=2:expandtab:
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <!-- Parent -->
+  <parent>
+    <groupId>org.jboss</groupId>
+    <artifactId>jboss-parent</artifactId>
+    <version>8</version>
+  </parent>
+
+  <!-- Model Information -->
+  <modelVersion>4.0.0</modelVersion>
+  
+    <!-- Artifact Information  -->
+  <groupId>org.jboss.shrinkwrap</groupId>
+  <artifactId>shrinkwrap-parent</artifactId>
+  <version>1.2.1</version>
+  <packaging>pom</packaging>
+  <name>ShrinkWrap Aggregator and Build Parent</name>
+  <url>http://www.jboss.org</url>
+  <description>ShrinkWrap Aggregator</description>
+  
+  <!-- Properties -->
+  <properties>
+
+    <!-- Versioning -->
+    <version.junit_junit>4.8.2</version.junit_junit>
+    <version.org.apache.maven.plugins_maven-site-plugin>3.0-beta-3</version.org.apache.maven.plugins_maven-site-plugin>
+
+  </properties>
+  
+  <!-- SCM -->
+  <scm>
+    <connection>scm:git:git://github.com/shrinkwrap/shrinkwrap.git</connection>
+    <developerConnection>scm:git:git@github.com:shrinkwrap/shrinkwrap.git</developerConnection>
+    <url>https://github.com/shrinkwrap/shrinkwrap</url>
+  </scm>
+
+  <!-- Issues -->
+  <issueManagement>
+    <system>jira</system>
+    <url>http://jira.jboss.com/jira/browse/SHRINKWRAP</url>
+  </issueManagement>
+
+  <!-- Licenses -->
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <!-- Plugin Configuration -->
+  <build>
+  
+    <!-- Plugin Management -->
+    <pluginManagement>
+      <plugins>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>2.9.1</version>
+          <configuration>
+            <configLocation>code-style/checkstyle.xml</configLocation>
+            <logViolationsToConsole>true</logViolationsToConsole>
+            <violationSeverity>error</violationSeverity>
+          </configuration>
+          <executions>
+            <execution>
+              <id>checkstyle-report</id>
+              <phase>compile</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+          <dependencies>
+            <dependency>
+              <groupId>org.jboss.shrinkwrap</groupId>
+              <artifactId>shrinkwrap-build-resources</artifactId>
+              <version>${project.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+      
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>2.2.1</version>
+          <configuration>
+            <finalName>shrinkwrap-${project.version}</finalName>
+            <descriptors>
+              <descriptor>dist.xml</descriptor>
+            </descriptors>
+          </configuration>
+        </plugin>
+        
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>${version.org.apache.maven.plugins_maven-site-plugin}</version>
+        </plugin>
+        
+       <!-- So m2e doesn't throw errors for features it doesn't support in the 
+        POM -->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <versionRange>[1.0.0,)</versionRange>
+                    <goals>
+                      <goal>check</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <execute />
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+        
+      </plugins>
+    </pluginManagement>
+  
+    <plugins>
+
+      <!-- Release -->
+      <plugin> 
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <pushChanges>false</pushChanges>
+          <localCheckout>true</localCheckout>
+        </configuration>
+      </plugin>
+
+      <!-- Compiler -->
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <inherited>true</inherited>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+          <showDeprecation>false</showDeprecation>
+          <showWarnings>true</showWarnings>
+          <optimize>true</optimize>
+          <compilerVersion>1.7</compilerVersion>
+          <fork>true</fork>
+          <compilerArguments>
+            <source>1.5</source>
+            <target>1.5</target>
+          </compilerArguments>
+        </configuration>
+      </plugin>
+
+      <!-- Surefire -->
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          <!-- Needed to not break Coburtura in Oracle JDKs -->
+          <argLine>-XX:-UseSplitVerifier</argLine>
+          <trimStackTrace>false</trimStackTrace>
+          <printSummary>true</printSummary>
+          <includes>
+            <include>**/*TestCase.java</include>
+            <include>**/*TestSuite.java</include>
+          </includes>
+          <forkMode>always</forkMode>
+        </configuration>
+      </plugin>
+
+      <!-- Enforce Maven Environment -->
+      <plugin>
+        <artifactId>maven-enforcer-plugin
+                      </artifactId>
+        <executions>
+          <execution>
+            <id>enforce-maven-environment</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <rules>
+            <requireMavenVersion>
+              <version>[2.2.0,)</version>
+              <!--
+                Must be more that 2.2 to support
+                Assembly "includeModuleDirectory":
+                http://maven.apache.org/plugins/maven-assembly-plugin/assembly.html
+              -->
+            </requireMavenVersion>
+            <requireJavaVersion>
+              <version>1.7.0</version> <!-- Must be JDK7 -->
+            </requireJavaVersion>
+            <requireProperty>
+              <property>env.JAVA_HOME</property>
+              <message>"JAVA_HOME needs to be set (to Java7)"</message>
+            </requireProperty>
+            <requireProperty>
+              <property>env.JAVA5_HOME</property>
+              <message>"JAVA5_HOME needs to be set to run some tests in the JRE5 runtime"</message>
+            </requireProperty>
+          </rules>
+        </configuration>
+      </plugin>
+      
+      <!-- m2e Config -->
+      <plugin>
+        <groupId>org.eclipse.m2e</groupId>
+        <artifactId>lifecycle-mapping</artifactId>
+      </plugin>
+
+    </plugins>
+  </build>
+  
+  <!-- Dependency Management -->
+  <dependencyManagement>
+    <dependencies>
+
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${version.junit_junit}</version>
+        <scope>test</scope>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
+  <!-- Aggregate Modules -->
+  <modules>
+    <module>api</module>
+    <module>api-nio2</module>
+    <module>bom</module>
+    <module>build-resources</module>
+    <module>depchain</module>
+    <module>depchain-java7</module>
+    <module>dist</module>
+    <module>impl-base</module>
+    <module>impl-nio2</module>
+    <module>spi</module>
+  </modules>
+  
+  <!-- Reporting -->
+  <reporting>
+    <plugins>
+
+      <!-- Cobertura (Code Coverage) -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.5.2</version>
+        <configuration>
+          <formats>
+            <format>html</format>
+            <format>xml</format>
+          </formats>
+        </configuration>
+      </plugin>
+
+      <!-- FindBugs -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>2.3.1</version>
+        <configuration>
+          <xmlOutput>true</xmlOutput>
+          <findbugsXmlOutputDirectory>target/site</findbugsXmlOutputDirectory>
+        </configuration>
+      </plugin>
+    
+      <!-- SHRINKWRAP-157 Workaround -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>project-team</report>
+              <report>mailing-list</report>
+              <report>cim</report>
+              <report>issue-tracking</report>
+              <report>license</report>
+              <report>scm</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+
+    </plugins>
+  </reporting>
+
+  <repositories>
+    <repository>
+      <id>jboss-public-repository</id>
+      <name>JBoss Repository</name>
+      <url> https://repository.jboss.org/nexus/content/groups/public</url>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+      </snapshots>
+    </repository>
+    <repository>
+       <id>jboss-deprecated-repository</id>
+       <name>JBoss Deprecated Maven Repository</name>
+       <url>https://repository.jboss.org/nexus/content/repositories/deprecated/</url>
+       <layout>default</layout>
+       <releases>
+          <enabled>true</enabled>
+          <updatePolicy>never</updatePolicy>
+       </releases>
+       <snapshots>
+         <enabled>false</enabled>
+         <updatePolicy>never</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>jboss-public-repository</id>
+      <name>JBoss Repository</name>
+      <url> https://repository.jboss.org/nexus/content/groups/public</url>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories> 
+
+</project>

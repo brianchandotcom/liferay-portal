@@ -1,0 +1,44 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.im4java</groupId>
+  <artifactId>im4java</artifactId>
+  <packaging>jar</packaging>
+  <version>1.2.0</version>
+  <name>im4java</name>
+  <description>im4java is a pure-java interface to the ImageMagick commandline. For details about the project, please visit the main project page.</description>
+  <url>http://sourceforge.net/projects/im4java/</url>
+  <licenses>
+    <license>
+      <name>GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1</name>
+      <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <connection>
+      scm:svn:https://im4java.svn.sourceforge.net/svnroot/im4java im4java
+    </connection>
+    <url>scm:svn:https://im4java.svn.sourceforge.net/svnroot/im4java im4java</url>
+    <developerConnection>
+      scm:svn:https://im4java.svn.sourceforge.net/svnroot/im4java im4java
+    </developerConnection>
+  </scm>
+  <developers>
+    <developer>
+      <id>bablokb</id>
+      <name>Bernhard Bablok</name>
+      <email>mail@bablokb.de</email>
+    </developer>
+  </developers>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

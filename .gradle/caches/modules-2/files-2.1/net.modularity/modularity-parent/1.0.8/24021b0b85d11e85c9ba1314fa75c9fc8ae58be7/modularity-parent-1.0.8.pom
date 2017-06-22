@@ -1,0 +1,274 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.modularity</groupId>
+	<artifactId>modularity-parent</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0.8</version>
+	<name>modularity-parent</name>
+	<description>Parent Maven POM for Modularity</description>
+	<organization>
+		<name>Modularity</name>
+		<url>http://modularity.net.au</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>fortuna</id>
+			<name>Ben Fortuna</name>
+			<email>fortuna@users.sourceforge.net</email>
+			<url>http://basepatterns.org</url>
+			<organization>Modularity</organization>
+			<organizationUrl>http://modularity.net.au</organizationUrl>
+			<roles>
+				<role>Administrator</role>
+			</roles>
+			<timezone>10</timezone>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:svn:http://svn.modularity.net.au/modularity/tags/modularity-parent-1.0.8</connection>
+		<developerConnection>scm:svn:http://svn.modularity.net.au/modularity/tags/modularity-parent-1.0.8</developerConnection>
+	</scm>
+
+	<ciManagement>
+		<system>continuum</system>
+		<url>http://modularity.servehttp.com/continuum</url>
+		<!--
+			<notifiers> <notifier> <type>mail</type>
+			<sendOnError>true</sendOnError> <sendOnFailure>true</sendOnFailure>
+			<sendOnSuccess>false</sendOnSuccess>
+			<sendOnWarning>false</sendOnWarning> <configuration>
+			<address>admin@modularity.net.au</address> </configuration>
+			</notifier> </notifiers>
+		-->
+	</ciManagement>
+
+	<distributionManagement>
+		<repository>
+			<id>modularity-releases</id>
+			<name>Modularity Maven Repository</name>
+			<url>scp://m2.modularity.net.au/home/modularity/m2.modularity.net.au/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>modularity-snapshots</id>
+			<name>Modularity Snapshot Repository</name>
+			<url>scp://m2.modularity.net.au/home/modularity/m2.modularity.net.au/snapshots</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+		<site>
+			<id>modularity-site</id>
+			<url>scp://m2.modularity.net.au/home/modularity/m2.modularity.net.au/projects</url>
+		</site>
+	</distributionManagement>
+
+	<pluginRepositories>
+		<pluginRepository>
+		    <id>mc-release</id>
+		    <name>Local Maven repository of releases</name>
+		    <url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
+		    <snapshots>
+		        <enabled>false</enabled>
+		    </snapshots>
+		    <releases>
+		        <enabled>true</enabled>
+		    </releases>
+		</pluginRepository>
+		
+		<pluginRepository>
+		    <id>mc-release</id>
+		    <name>Local Maven repository of releases</name>
+		    <url>http://mc-repo.googlecode.com/svn/maven2/snapshots</url>
+		    <snapshots>
+		        <enabled>true</enabled>
+		    </snapshots>
+		    <releases>
+		        <enabled>false</enabled>
+		    </releases>
+		</pluginRepository>		
+	</pluginRepositories>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<!-- Default to Java 5.. -->
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+	        <plugin>
+	            <groupId>com.google.code.maven-license-plugin</groupId>
+	            <artifactId>maven-license-plugin</artifactId>
+	            <configuration>
+	                <header>etc/header.txt</header>
+	                <failIfMissing>true</failIfMissing>
+	                <properties>
+	                	<year>2009</year>
+	                </properties>
+	                <includes>
+	                	<include>src/**</include>
+	                	<include>source/**</include>
+	                	<include>test/**</include>
+	                </includes>
+	            </configuration>
+	            <version>1.4.0</version>
+	            <executions>
+	                <execution>
+	                	<phase>test</phase>
+	                    <goals>
+	                        <goal>check</goal>
+	                    </goals>
+	                </execution>
+	            </executions>
+	        </plugin>
+		</plugins>
+	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<overview>
+						${project.build.outputDirectory}/overview.html
+					</overview>
+					<links>
+						<link>
+							http://java.sun.com/j2se/1.4.2/docs/api/
+						</link>
+						<link>
+							http://java.sun.com/j2se/1.5.0/docs/api/
+						</link>
+						<link>
+							http://java.sun.com/j2ee/1.4/docs/api/
+						</link>
+						<link>
+							http://java.sun.com/products/javamail/javadocs/
+						</link>
+						<link>
+							http://commons.apache.org/logging/apidocs/
+						</link>
+						<link>
+							http://commons.apache.org/codec/apidocs/
+						</link>
+						<link>
+							http://commons.apache.org/lang/apidocs/
+						</link>
+						<link>
+							http://commons.apache.org/io/api-release/
+						</link>
+						<link>
+							http://junit.org/junit/javadoc/4.5/
+						</link>
+						<link>
+							http://www.day.com/maven/jsr170/javadocs/jcr-1.0/
+						</link>
+						<link>
+							http://jackrabbit.apache.org/api/1.4/
+						</link>
+						<!-- 
+						<link>http://wicketframework.org/apidocs</link>
+						 -->
+						<link>http://www.osgi.org/javadoc/r4v41/</link>
+						<link>
+							http://ehcache.sourceforge.net/javadoc/
+						</link>
+						<link>
+							http://m2.modularity.net.au/projects/ical4j/apidocs/
+						</link>
+						<link>
+							http://commons.apache.org/configuration/apidocs/
+						</link>
+						<link>
+							http://download.java.net/javadesktop/swinglabs/releases/0.8/docs/api/
+						</link>
+						<link>
+							http://www.hibernate.org/hib_docs/v3/api/
+						</link>
+						<link>
+							https://rome.dev.java.net/apidocs/0_9/
+						</link>
+						<link>
+							http://www.opensymphony.com/quartz/api/
+						</link>
+						<!-- 
+						<link>
+							http://envoisolutions.com/xfire/api/
+						</link>
+						 -->
+						<link>
+							https://jdic.dev.java.net/nonav/documentation/javadoc/jdic/
+						</link>
+						<!--
+							<link>
+							http://www.igniterealtime.org/builds/smack/docs/latest/javadoc/
+							</link>
+						-->
+					</links>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+			</plugin>
+			
+	        <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-checkstyle-plugin</artifactId>
+	            <configuration>
+	               <configLocation>http://svn.mnode.org/tools/checkstyle/mnode_checks.xml</configLocation>
+	               <suppressionsLocation>http://svn.mnode.org/tools/checkstyle/default-suppressions.xml</suppressionsLocation>
+	            </configuration>
+	        </plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<configuration>
+					<linkXref>true</linkXref>
+					<targetJdk>1.5</targetJdk>
+					<rulesets>
+						<ruleset>http://svn.mnode.org/tools/pmd/mnode_ruleset.xml</ruleset>
+					</rulesets>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+			</plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jdepend-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>taglist-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+            </plugin>
+		</plugins>
+	</reporting>
+</project>

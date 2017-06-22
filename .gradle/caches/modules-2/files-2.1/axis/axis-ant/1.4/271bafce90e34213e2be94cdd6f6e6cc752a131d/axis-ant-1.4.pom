@@ -1,0 +1,13 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>axis</groupId>
+  <artifactId>axis-ant</artifactId>
+  <version>1.4</version>
+
+  <distributionManagement>
+    <relocation>
+      <groupId>org.apache.axis</groupId>
+    </relocation>
+  </distributionManagement>
+
+</project>

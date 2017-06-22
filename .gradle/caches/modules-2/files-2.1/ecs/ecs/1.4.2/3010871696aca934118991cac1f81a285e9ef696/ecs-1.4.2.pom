@@ -1,0 +1,6 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ecs</groupId>
+  <artifactId>ecs</artifactId>
+  <version>1.4.2</version>
+</project>

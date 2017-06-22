@@ -1,0 +1,383 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-parent</artifactId>
+      <version>11</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-email</artifactId>
+    <version>1.2</version>
+    <name>Commons Email</name>
+
+    <inceptionYear>2001</inceptionYear>
+    <description>
+        Commons-Email aims to provide an API for sending email. It is built on top of
+        the JavaMail API, which it aims to simplify.
+    </description>
+
+    <url>http://commons.apache.org/email/</url>
+
+    <issueManagement>
+        <system>jira</system>
+        <url>http://issues.apache.org/jira/browse/EMAIL</url>
+    </issueManagement>
+
+    <scm>
+        <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/email/tags/EMAIL_1_2_RC3</connection>
+        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/email/tags/EMAIL_1_2_RC3</developerConnection>
+        <url>http://svn.apache.org/viewvc/commons/proper/email/tags/EMAIL_1_2_RC3</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>dIon Gillard</name>
+            <id>dion</id>
+            <email>dion@apache.org</email>
+            <organization>Apache Software Foundation</organization>
+            <roles>
+              <role>Java Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>John McNally</name>
+            <id>jmcnally</id>
+            <email>jmcnally@collab.net</email>
+            <organization>CollabNet, Inc.</organization>
+            <roles />
+        </developer>
+        <developer>
+            <name>Quinton McCombs</name>
+            <id>quintonm</id>
+            <email>quintonm@bellsouth.net</email>
+            <organization>NequalsOne, LLC.</organization>
+            <roles />
+        </developer>
+        <developer>
+            <name>Eric Pugh</name>
+            <id>epugh</id>
+            <email>epugh@opensourceconnections.com</email>
+            <organization>OpenSource Connections</organization>
+            <roles />
+        </developer>
+        <developer>
+            <name>Daniel Rall</name>
+            <id>dlr</id>
+            <email>dlr@finemaltcoding.com</email>
+            <organization>CollabNet, Inc.</organization>
+            <roles />
+        </developer>
+        <developer>
+            <name>Jon Scott Stevens</name>
+            <id>jon</id>
+            <email>jon@latchkey.com</email>
+            <organization>CollabNet, Inc.</organization>
+            <roles />
+        </developer>
+        <developer>
+            <name>Jason van Zyl</name>
+            <id>jvanzyl</id>
+            <email>jason@zenplex.com</email>
+            <organization>Zenplex</organization>
+            <roles />
+        </developer>
+        <developer>
+            <name>Joe Germuska</name>
+            <id>germuska</id>
+            <email>Joe@Germuska.com</email>
+            <roles />
+        </developer>
+        <developer>
+            <name>Robert Burrell Donkin</name>
+            <id>rdonkin</id>
+            <email>rdonkin@apache.org</email>
+            <roles />
+        </developer>
+        <developer>
+            <name>Henning P. Schmiedehausen</name>
+            <id>henning</id>
+            <email>hps@intermeta.de</email>
+            <organization>INTERMETA - Gesellschaft fuer Mehrwertdienste mbH</organization>
+            <roles>
+              <role>Java Developer</role>
+            </roles>
+            <timezone>2</timezone>
+        </developer>
+        <developer>
+            <name>Stephen Colebourne</name>
+            <id>scolebourne</id>
+            <roles />
+            <timezone>0</timezone>
+        </developer>
+        <developer>
+            <name>Ben Speakmon</name>
+            <id>bspeakmon</id>
+            <email>bspeakmon@apache.org</email>
+            <organization>Apache Software Foundation</organization>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+            <timezone>-8</timezone>
+        </developer>
+        <developer>
+            <name>Siegfried Goeschl</name>
+            <id>sgoeschl</id>
+            <roles>
+              <role>Java Developer</role>
+            </roles>
+            <timezone>2</timezone>
+        </developer>        
+    </developers>
+    <contributors>
+        <contributor>
+            <name>Mark Lowe</name>
+            <email>mark.lowe@boxstuff.com</email>
+            <roles />
+        </contributor>
+        <contributor>
+            <name>Niall Pemberton</name>
+            <roles />
+        </contributor>
+        <contributor>
+            <name>Corey Scott</name>
+            <email>corey.scott@gmail.com</email>
+            <roles />
+        </contributor>
+        <contributor>
+            <name>Eric Spiegelberg</name>
+            <email>eric@spiegs.com</email>
+            <roles />
+        </contributor>
+        <contributor>
+            <name>Matthias Wessendorf</name>
+            <email>matthias@wessendorf.net</email>
+            <roles />
+        </contributor>
+        <contributor>
+            <name>Bindul Bhowmik</name>
+        </contributor>
+        <contributor>
+            <name>Brandon Wolfe</name>
+        </contributor>
+        <contributor>
+            <name>Piero Ottuzzi</name>
+        </contributor>
+        <contributor>
+            <name>Andrew Liles</name>
+        </contributor>
+        <contributor>
+            <name>Cedrik Lime</name>
+        </contributor>
+    </contributors>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.1</version>
+            <!--<url>http://java.sun.com/products/javamail/</url>-->
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1</version>
+            <!--<url>http://java.sun.com/products/javabeans/glasgow/jaf.html</url>-->
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.retrotranslator</groupId>
+            <artifactId>retrotranslator-runtime</artifactId>
+            <version>1.2.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.subethamail</groupId>
+            <artifactId>subethasmtp-smtp</artifactId>
+            <version>1.2</version>
+            <classifier>java14</classifier>
+            <!--<url>http://subethasmtp.tigris.org/</url>-->
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.subethamail</groupId>
+            <artifactId>subethasmtp-wiser</artifactId>
+            <version>1.2</version>
+            <classifier>java14</classifier>
+            <!--<url>http://subethasmtp.tigris.org/wiser.html</url>-->
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.subethamail</groupId>
+                    <artifactId>subethasmtp-smtp</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compile.source>1.4</maven.compile.source>
+        <maven.compile.target>1.4</maven.compile.target>
+        <commons.componentid>email</commons.componentid>
+        <commons.jira.id>EMAIL</commons.jira.id>
+        <commons.jira.pid>12310474</commons.jira.pid>
+        <commons.release.version>1.2</commons.release.version>
+        <commons.rc.version>RC3</commons.rc.version>
+        <commons.binary.suffix>-bin</commons.binary.suffix>
+    </properties> 
+
+    <build>
+        <sourceDirectory>src/java</sourceDirectory>
+        <testSourceDirectory>src/test</testSourceDirectory>
+        <testResources>
+            <testResource>
+                <directory>src/test</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </testResource>
+        </testResources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- exclude test case support classes -->
+                    <excludes>
+                        <exclude>org/apache/commons/mail/BaseEmailTestCase.java</exclude>
+                        <exclude>org/apache/commons/mail/mocks/*</exclude>
+                        <exclude>org/apache/commons/mail/settings/*</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/assembly/bin.xml</descriptor>
+                        <descriptor>src/assembly/src.xml</descriptor>
+                    </descriptors>
+                    <tarLongFileMode>gnu</tarLongFileMode>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>            
+        </plugins>
+    </build>
+
+    <distributionManagement>
+      <site>
+        <id>apache.website</id>
+        <name>Apache Website</name>
+        <url>${commons.deployment.protocol}://people.apache.org/www/commons.apache.org/email/</url>
+      </site>    
+    </distributionManagement>
+    
+    <reporting>
+        <plugins>
+            <!-- generate the changes report from changes.xml -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changes-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>changes-report</report>
+                        </reports>
+                    </reportSet>
+              </reportSets>
+            </plugin>        
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <configLocation>${basedir}/conf/checkstyle.xml</configLocation>
+                    <enableRulesSummary>false</enableRulesSummary>
+                    <headerFile>${basedir}/conf/HEADER.txt</headerFile>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>clirr-maven-plugin</artifactId>
+                <version>2.2.2</version>
+                <configuration>
+                    <comparisonArtifacts>
+                        <comparisonArtifact>
+                            <groupId>org.apache.commons</groupId>
+                            <artifactId>commons-email</artifactId>
+                            <version>1.1</version>
+                        </comparisonArtifact>
+                    </comparisonArtifacts>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>1.2</version>
+                <configuration>
+                    <threshold>Normal</threshold>
+                    <effort>Default</effort>
+               </configuration>
+            </plugin>
+            <!--
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.0</version>
+            </plugin>
+            -->
+          </plugins>
+    </reporting>
+
+    <profiles>
+        <profile>
+            <id>rc</id>
+            <distributionManagement>
+                <!-- Cannot define in parent ATM, see COMMONSSITE-26 -->
+                <site>
+                    <id>apache.website</id>
+                    <name>Apache Commons Release Candidate Staging Site</name>
+                    <url>${commons.deployment.protocol}://people.apache.org/www/people.apache.org/builds/commons/${commons.componentid}/${commons.release.version}/${commons.rc.version}/site</url>
+                </site>
+            </distributionManagement>
+        </profile>
+    </profiles>
+</project>

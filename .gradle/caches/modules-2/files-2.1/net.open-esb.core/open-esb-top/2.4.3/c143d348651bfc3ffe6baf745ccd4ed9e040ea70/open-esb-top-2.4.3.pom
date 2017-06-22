@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ # BEGIN_HEADER - DO NOT EDIT
+ #
+ # The contents of this file are subject to the terms
+ # of the Common Development and Distribution License
+ # (the "License").  You may not use this file except
+ # in compliance with the License.
+ #
+ # You can obtain a copy of the license at
+ # https://open-esb.dev.java.net/public/CDDLv1.0.html.
+ # See the License for the specific language governing
+ # permissions and limitations under the License.
+ #
+ # When distributing Covered Code, include this CDDL
+ # HEADER in each file and include the License file at
+ # https://open-esb.dev.java.net/public/CDDLv1.0.html.
+ # If applicable add the following below this CDDL HEADER,
+ # with the fields enclosed by brackets "[]" replaced with
+ # your own identifying information: Portions Copyright
+ # [year] [name of copyright owner]
+-->
+
+<!--
+ # @(#)pom.xml
+ # Copyright 2004-2007 Sun Microsystems, Inc. All Rights Reserved.
+ #
+ # END_HEADER - DO NOT EDIT
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>net.open-esb</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.2</version>
+    </parent>
+    
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.open-esb.core</groupId>
+    <artifactId>open-esb-top</artifactId>
+    <packaging>pom</packaging>
+    <name>open-esb-top</name>
+    <version>2.4.3</version>
+    <description>Top-level Build for open-esb-top</description>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <id>inst_1</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <configuration>
+                            <file>vendor-libs/jta/jars/jta-1_1-classes.zip</file>
+                            <groupId>jta</groupId>
+                            <artifactId>jta-1_1-classes</artifactId>
+                            <version>1.1</version>
+                            <packaging>zip</packaging>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>inst_2</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <configuration>
+                            <file>vendor-libs/ant/jars/jmx4ant.jar</file>
+                            <groupId>jmx4ant</groupId>
+                            <artifactId>jmx4ant</artifactId>
+                            <version>1.2b1</version>
+                            <packaging>jar</packaging>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.4</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultImplementationEntries>false</addDefaultImplementationEntries>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <!-- 2.1-alpha-1-SNAPSHOT is the default, but is not downloading. RT 8/7/08 -->
+                    <version>2.0.2</version>
+                </plugin>
+        
+        <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.16</version>
+            <configuration>
+                <reuseForks>false</reuseForks>
+                <!-- Tests are doing string comparaison using US locale -->
+                <argLine>-Duser.language=en -Duser.region=US</argLine>
+            </configuration>
+        </plugin>
+        
+        <plugin>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.7</version>
+        </plugin>
+
+        <plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>0.8.3</version>
+        </plugin>
+        
+                <!--
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>jboss-packaging-maven-plugin</artifactId>
+          <version>2.0</version>
+        </plugin>
+        <plugin>
+          <groupId>net.java.dev.jregress</groupId>
+          <artifactId>maven-jregress-plugin</artifactId>
+          <version>1.0-SNAPSHOT</version>
+        </plugin>
+        -->
+        <plugin>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>maven-bundle-plugin</artifactId>
+            <version>1.4.0</version>
+        </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <profiles>
+        <profile>
+            <id>default-profile</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+      <modules>
+        <!-- common project:
+        <module>build-common/jbi-common</module>
+        <module>build-common/package-common</module>
+        <module>build-common</module>
+        -->
+        <!-- compile configuration
+        <module>platform-config</module>
+         -->
+        <!-- jbi: -->
+        <module>jbi</module>
+        <module>esb-util</module>
+        <module>ri-clients</module>
+        <module>runtime</module>
+        <module>esb-packages</module>
+        <module>distribution</module>
+        <!--
+
+
+
+        <module>ri-components</module>
+        <module>esb-components</module>
+
+
+
+               <module>ri-packages</module>
+               <module>esb-packages</module>
+               <module>installers</module>
+                -->
+            </modules>
+        </profile>
+
+        <profile>
+            <id>junit-profile</id>
+            <activation>
+                <property>
+                    <name>maven.test.skip</name>
+                    <value>false</value>
+                </property>
+            </activation>
+            <modules>
+                <!-- list only modules that have junit tests: -->
+                <module>runtime</module>
+                <module>esb-util</module>
+                <module>ri-components</module>
+                <module>esb-components</module>
+                <module>ri-clients</module>
+                <module>installers</module>
+            </modules>
+        </profile>
+
+        <!-- run-schemaorg_apache_xmlbeans.system-tests profile: -->
+        <profile>
+            <id>run-schemaorg_apache_xmlbeans.system-tests</id>
+            <activation>
+                <property>
+                    <name>jregress</name>
+                </property>
+            </activation>
+            <build>
+                <defaultGoal>integration-test</defaultGoal>
+            </build>
+            <modules>
+                <!-- list only modules that have jregress tests: -->
+                <module>runtime</module>
+                <module>ri-components</module>
+                <module>esb-components</module>
+                <module>ri-clients</module>
+                <module>installers</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>aggregateReports</id>
+
+            <activation>
+                <property>
+                    <name>aggregateReports</name>
+                </property>
+            </activation>
+            <reporting>
+                <outputDirectory>target/site</outputDirectory>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jxr-plugin</artifactId>
+                        <configuration>
+                            <!-- aggregate all sub-project source into one report.  -->
+                            <aggregate>true</aggregate>
+                            <bottom>Copyright (c) 2004-2007 Sun Microsystems Inc. All Rights Reserved.</bottom>
+                            <windowTitle>Open-ESB ${project.version} Reference</windowTitle>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <!-- aggregate all sub-project javadoc into one report.  -->
+                            <aggregate>true</aggregate>
+                            <minmemory>128m</minmemory>
+                            <maxmemory>512m</maxmemory>
+                            <failOnError>false</failOnError>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+    </profiles>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- used in ri-clients/jbi-ant-tasks, runtime/manage runtime/ui. -->
+            <dependency>
+                <groupId>ant</groupId>
+                <artifactId>ant</artifactId>
+                <version>1.6.5</version>
+            </dependency>
+            <dependency>
+                <groupId>ant-contrib</groupId>
+                <artifactId>ant-contrib</artifactId>
+                <version>1.0b2</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>ant-testutil</groupId>
+                <artifactId>ant-testutil</artifactId>
+                <version>DEV</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>jmx4ant</groupId>
+                <artifactId>jmx4ant</artifactId>
+                <version>1.2b1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>bouncycastle</groupId>
+                <artifactId>bcprov</artifactId>
+                <version>jdk14-125</version>
+                <scope>compile</scope>
+            </dependency>
+            <!-- used by esb-util, created from glassfish by jbi-compileconf. -->
+            <dependency>
+                <groupId>glassfish</groupId>
+                <artifactId>appserv-ext</artifactId>
+                <version>9.1</version>
+            </dependency>
+            <!-- used by runtime/manage tests, created from glassfish by jbi-compileconf. -->
+            <dependency>
+                <groupId>glassfish</groupId>
+                <artifactId>webservices-rt</artifactId>
+                <version>9.1</version>
+            </dependency>
+            <dependency>
+                <groupId>jdmk</groupId>
+                <artifactId>jdmkrt</artifactId>
+                <version>5_1-b34.1</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>jsf</groupId>
+                <artifactId>jsf-api</artifactId>
+                <version>1.1.02</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>jsf</groupId>
+                <artifactId>jsf-impl</artifactId>
+                <version>1.1.02</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>jwsdp</groupId>
+                <artifactId>jax-qname</artifactId>
+                <version>jwsdp-1.5</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>jwsdp</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>jwsdp-1.5</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>jwsdp</groupId>
+                <artifactId>jaxb-impl</artifactId>
+                <version>jwsdp-1.5</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>jwsdp</groupId>
+                <artifactId>jaxb-libs</artifactId>
+                <version>jwsdp-1.5</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>jwsdp</groupId>
+                <artifactId>jaxb-xjc</artifactId>
+                <version>jwsdp-1.5</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>jwsdp</groupId>
+                <artifactId>namespace</artifactId>
+                <version>jwsdp-1.5</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>jwsdp</groupId>
+                <artifactId>relaxngDatatype</artifactId>
+                <version>jwsdp-1.5</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>jwsdp</groupId>
+                <artifactId>xercesImpl</artifactId>
+                <version>jwsdp-1.5</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>jwsdp</groupId>
+                <artifactId>xsdlib</artifactId>
+                <version>jwsdp-1.5</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>lockhart</groupId>
+                <artifactId>dataprovider</artifactId>
+                <version>3.0.1</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>lockhart</groupId>
+                <artifactId>jh</artifactId>
+                <version>3.0.1</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>lockhart</groupId>
+                <artifactId>jhall</artifactId>
+                <version>3.0.1</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>lockhart</groupId>
+                <artifactId>jhbasic</artifactId>
+                <version>3.0.1</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>lockhart</groupId>
+                <artifactId>jsearch</artifactId>
+                <version>3.0.1</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>lockhart</groupId>
+                <artifactId>jstl</artifactId>
+                <version>3.0.1</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>lockhart</groupId>
+                <artifactId>suntheme</artifactId>
+                <version>3.0.1</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>lockhart</groupId>
+                <artifactId>webui</artifactId>
+                <version>3.0.1</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>jsftemplating</groupId>
+                <artifactId>jsftemplating</artifactId>
+                <version>20060601-DEV</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>xmlbeans</groupId>
+                <artifactId>xbean</artifactId>
+                <version>2.2.0</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jsr173_api</artifactId>
+                <version>1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-httpclient</groupId>
+                <artifactId>commons-httpclient</artifactId>
+                <version>3.0-beta1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>1.0.4</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>1.5</version>
+                <type>jar</type>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>jsr173</artifactId>
+                        <groupId>javax.xml</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>htmlunit</groupId>
+                <artifactId>htmlunit</artifactId>
+                <version>1.7</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>jaxen</groupId>
+                <artifactId>jaxen</artifactId>
+                <version>1.1-beta-6</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>jboss</groupId>
+                <artifactId>jboss-schemaorg_apache_xmlbeans.system</artifactId>
+                <version>4.0.2</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>jboss</groupId>
+                <artifactId>jboss-jmx</artifactId>
+                <version>4.0.2</version>
+                <type>jar</type>
+            </dependency>
+            <!-- used by jbi 1.0 api: -->
+            <dependency>
+                <groupId>javax.transaction</groupId>
+                <artifactId>transaction-api</artifactId>
+                <version>${javax.transaction.version}</version>
+            </dependency>
+            <!-- used by jbi 1.0 api: -->
+            <dependency>
+                <groupId>javax.activation</groupId>
+                <artifactId>activation</artifactId>
+                <version>${javax.activation.version}</version>
+            </dependency>
+            <!-- used by runtime/base: -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>2.5</version>
+            </dependency>
+            <!-- used by runtime/manage: -->
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>2.2</version>
+            </dependency>
+            <!-- used by runtime/base: -->
+            <dependency>
+                <groupId>javax.xml.soap</groupId>
+                <artifactId>saaj-api</artifactId>
+                <version>1.3</version>
+                <exclusions>
+                    <exclusion>
+                        <!--
+                        ! maven central pom references the 1.0.2 version of this jar,
+                        ! which is unavailable.  Exclude it because we use 1.1.
+                        ! The java.net legacy repo has the corrected pom.  RT 10/12/07
+                        !-->
+                        <groupId>javax.activation</groupId>
+                        <artifactId>activation</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- used by runtime/wsdl: -->
+            <!--
+            <dependency>
+                <groupId>javax.xml.stream</groupId>
+                <artifactId>jsr173_1.0_api</artifactId>
+                <version>1.0</version>
+            </dependency>
+            -->
+            <dependency>
+                <groupId>nekohtml</groupId>
+                <artifactId>nekohtml</artifactId>
+                <version>0.9.5</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-script-ant</artifactId>
+                <version>2.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>rhino</groupId>
+                <artifactId>js</artifactId>
+                <version>1.6R1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>saxpath</groupId>
+                <artifactId>saxpath</artifactId>
+                <version>1.0-FCS</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>wsdl4j</groupId>
+                <artifactId>wsdl4j</artifactId>
+                <version>1.6.2</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>xerces</groupId>
+                <artifactId>xmlParserAPIs</artifactId>
+                <version>2.2.1</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>xerces</groupId>
+                <artifactId>xercesImpl</artifactId>
+                <version>2.6.2</version>
+                <type>jar</type>
+            </dependency>
+            <!--esb-packages/websphere-package overrides this jaxb version dependency-->
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-impl</artifactId>
+                <version>2.2.7</version>
+            </dependency>
+            <dependency>
+                <groupId>jta</groupId>
+                <artifactId>jta-1_1-classes</artifactId>
+                <version>1.1</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.11</version>
+            </dependency>
+            <dependency>
+                <groupId>ant</groupId>
+                <artifactId>ant-junit</artifactId>
+                <version>1.6.5</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
+    <properties>
+        <javax.transaction.version>1.1</javax.transaction.version>
+        <javax.activation.version>1.1</javax.activation.version>
+    </properties>
+    
+    <scm>
+        <url>git@bitbucket.org:openesb/openesb-core.git</url>
+        <connection>scm:git:git@bitbucket.org:openesb/openesb-core.git</connection>
+        <developerConnection>scm:git:git@bitbucket.org:openesb/openesb-core.git</developerConnection>
+    </scm>
+</project>

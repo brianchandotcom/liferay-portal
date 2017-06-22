@@ -1,0 +1,384 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>commons-jelly</groupId>
+  <artifactId>commons-jelly-tags-xml</artifactId>
+  <name>commons-jelly-tags-xml</name>
+  <version>1.1</version>
+  <description>The Jelly XML Tag Library</description>
+  <url>http://jakarta.apache.org/commons/jelly/libs/xml/index.html</url>
+  <issueManagement>
+    <url>http://issues.apache.org/jira/secure/BrowseProject.jspa?id=10012</url>
+  </issueManagement>
+  <ciManagement>
+    <notifiers>
+      <notifier>
+        <configuration>
+          <address>commons-dev@jakarta.apache.org</address>
+        </configuration>
+      </notifier>
+    </notifiers>
+  </ciManagement>
+  <inceptionYear>2002</inceptionYear>
+  <mailingLists>
+    <mailingList>
+      <name>Commons Dev List</name>
+      <subscribe>commons-dev-subscribe@jakarta.apache.org</subscribe>
+      <unsubscribe>commons-dev-unsubscribe@jakarta.apache.org</unsubscribe>
+      <archive>http://mail-archives.apache.org/eyebrowse/SummarizeList?listName=commons-dev@jakarta.apache.org</archive>
+    </mailingList>
+    <mailingList>
+      <name>Commons User List</name>
+      <subscribe>commons-user-subscribe@jakarta.apache.org</subscribe>
+      <unsubscribe>commons-user-unsubscribe@jakarta.apache.org</unsubscribe>
+      <archive>http://mail-archives.apache.org/eyebrowse/SummarizeList?listName=commons-user@jakarta.apache.org</archive>
+    </mailingList>
+  </mailingLists>
+  <developers>
+    <developer>
+      <id>jstrachan</id>
+      <name>James Strachan</name>
+      <email>jstrachan@apache.org</email>
+      <url></url>
+      <organization>SpiritSoft, Inc.</organization>
+      <timezone></timezone>
+    </developer>
+    <developer>
+      <id>geirm</id>
+      <name>Geir Magnusson Jr.</name>
+      <email>geirm@adeptra.com</email>
+      <url></url>
+      <organization>Adeptra, Inc.</organization>
+      <timezone></timezone>
+    </developer>
+    <developer>
+      <id>werken</id>
+      <name>Bob McWhirter</name>
+      <email>bob@eng.werken.com</email>
+      <url></url>
+      <organization>The Werken Company</organization>
+      <timezone></timezone>
+    </developer>
+    <developer>
+      <id>dion</id>
+      <name>dIon Gillard</name>
+      <email>dion@multitask.com.au</email>
+      <url></url>
+      <organization>Multitask Consulting</organization>
+      <roles>
+        <role>Interested party</role>
+      </roles>
+      <timezone></timezone>
+    </developer>
+    <developer>
+      <id>morgand</id>
+      <name>Morgan Delagrange</name>
+      <email>morgand@apache.org</email>
+      <url></url>
+      <organization></organization>
+      <timezone></timezone>
+    </developer>
+    <developer>
+      <id>rwaldhoff</id>
+      <name>Rodney Waldhoff</name>
+      <email>rwaldhoff@apache.org</email>
+      <url></url>
+      <organization></organization>
+      <timezone></timezone>
+    </developer>
+    <developer>
+      <id>rdonkin</id>
+      <name>Robert Burrell Donkin</name>
+      <email>rdonkin@apache.org</email>
+      <url></url>
+      <organization></organization>
+      <timezone></timezone>
+    </developer>
+  </developers>
+  <contributors>
+    <contributor>
+      <name>Martin van dem Bemt</name>
+      <email>mvdb@mvdb.com</email>
+      <url></url>
+      <organization></organization>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Erik Fransen</name>
+      <email>erik167@xs4all.nl</email>
+      <url></url>
+      <organization></organization>
+      <roles>
+        <role>Logo designer</role>
+      </roles>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Calvin Yu</name>
+      <email></email>
+      <url></url>
+      <organization></organization>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Stephen Haberman</name>
+      <email>stephenh@chase3000.com</email>
+      <url></url>
+      <organization></organization>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Vinay Chandran</name>
+      <email>sahilvinay@yahoo.com</email>
+      <url></url>
+      <organization></organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Theo Niemeijer</name>
+      <email></email>
+      <url></url>
+      <organization></organization>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Joe Walnes</name>
+      <email>joew@thoughtworks.com</email>
+      <url></url>
+      <organization>ThoughtWorks, Inc.</organization>
+      <roles>
+        <role>Inventor of Mock Tags</role>
+      </roles>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Otto von Wachter</name>
+      <email>vonwao@yahoo.com</email>
+      <url></url>
+      <organization></organization>
+      <roles>
+        <role>Author of the tutorials</role>
+        <role>Developer</role>
+      </roles>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Robert Leftwich</name>
+      <email>robert@leftwich.info</email>
+      <url></url>
+      <organization></organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Paul Libbrecht</name>
+      <email>paul@activemath.org</email>
+      <url></url>
+      <organization></organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Jim Birchfield</name>
+      <email>jim.birchfield@genscape.com</email>
+      <url></url>
+      <organization>Genscape, Inc.</organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Jason Horman</name>
+      <email>jhorman@musicmatch.com</email>
+      <url></url>
+      <organization></organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Tim Anderson</name>
+      <email>tima@intalio.com</email>
+      <url></url>
+      <organization>Intalio, Inc.</organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Theo Niemeijer</name>
+      <email>theo.niemeijer@getthere.nl</email>
+      <url></url>
+      <organization></organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>J. Matthew Pryor</name>
+      <email>matthew_pryor@versata.com</email>
+      <url></url>
+      <organization></organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Knut Wannheden</name>
+      <email></email>
+      <url></url>
+      <organization></organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Kelvin Tan</name>
+      <email></email>
+      <url></url>
+      <organization></organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone></timezone>
+    </contributor>
+    <contributor>
+      <name>Todd Jonker</name>
+      <email></email>
+      <url></url>
+      <organization></organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone></timezone>
+    </contributor>
+  </contributors>
+  <scm>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/jakarta/commons/proper/jelly/trunk/jelly-tags/xml</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/jakarta/commons/proper/jelly/trunk/jelly-tags/xml</developerConnection>
+    <url>http://svn.apache.org/viewcvs.cgi/jakarta/commons/proper/jelly/trunk/jelly-tags/xml</url>
+  </scm>
+  <organization>
+    <name>Apache Software Foundation</name>
+    <url>http://jakarta.apache.org/</url>
+  </organization>
+  <build>
+    <sourceDirectory>src/java</sourceDirectory>
+    <testSourceDirectory>src/test</testSourceDirectory>
+    <resources>
+      <resource>
+        <targetPath></targetPath>
+        <directory>src/java</directory>
+        <includes>
+          <include>**/*.properties</include>
+        </includes>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <targetPath></targetPath>
+        <directory>src/test</directory>
+        <includes>
+          <include>**/*.jelly</include>
+          <include>**/*.xml</include>
+          <include>**/*.xsl</include>
+          <include>**/*.rng</include>
+          <include>**/*.dtd</include>
+          <include>**/*.properties</include>
+          <include>**/*.html</include>
+        </includes>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>**/Test*.java</include>
+          </includes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>xalan</artifactId>
+      <version>2.3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-jelly</groupId>
+      <artifactId>commons-jelly-tags-junit</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>xml-apis</groupId>
+      <artifactId>xml-apis</artifactId>
+      <version>1.0.b2</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.6</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-jexl</groupId>
+      <artifactId>commons-jexl</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-jelly</groupId>
+      <artifactId>commons-jelly</artifactId>
+      <version>1.0-RC2</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.0.3</version>
+    </dependency>
+    <dependency>
+      <groupId>dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>1.5</version>
+    </dependency>
+    <dependency>
+      <groupId>jaxen</groupId>
+      <artifactId>jaxen</artifactId>
+      <version>1.1-beta-2</version>
+    </dependency>
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xerces</artifactId>
+      <version>2.2.1</version>
+    </dependency>
+  </dependencies>
+  <distributionManagement>
+    <repository>
+      <id>default</id>
+      <name>Default Repository</name>
+      <url>file:///www/jakarta.apache.org/builds/jakarta-commons/jelly/jelly-tags/xml/</url>
+    </repository>
+    <site>
+      <id>default</id>
+      <name>Default Site</name>
+      <url>scp://cvs.apache.org//www/jakarta.apache.org/commons/jelly/libs/xml/</url>
+    </site>
+  </distributionManagement>
+</project>

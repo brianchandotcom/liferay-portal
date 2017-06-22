@@ -1,0 +1,75 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>commons-discovery</groupId>
+  <artifactId>commons-discovery</artifactId>
+  <name>Discovery</name>
+  <version>0.2</version>
+  <description>Commons Discovery</description>
+  <inceptionYear>2002</inceptionYear>
+  <developers>
+    <developer>
+      <id></id>
+      <name>Richard Sitze</name>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <id></id>
+      <name>Craig R. McClanahan</name>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <id></id>
+      <name>Costin Manolache</name>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <id>jstrachan</id>
+      <name>James Strachan</name>
+      <email>jstrachan@apache.org</email>
+      <organization>SpiritSoft, Inc.</organization>
+    </developer>
+  </developers>
+  <build>
+    <testResources>
+      <testResource>
+        <directory>${basedir}/src</directory>
+        <includes>
+          <include>**/testResource</include>
+        </includes>
+      </testResource>
+      <testResource>
+        <directory>${basedir}/src/test</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>META-INF/**</include>
+        </includes>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>**/TestAll.java</include>
+          </includes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.0.3</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.7</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

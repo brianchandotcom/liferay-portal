@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.igniterealtime.smack</groupId>
+	<artifactId>smack</artifactId>
+	<packaging>jar</packaging>
+	<name>smack</name>
+	<version>3.2.1</version>
+	<description>Smack is an Open Source XMPP (Jabber) client library for instant messaging and presence.  This library provides the client side functionality as specified in the core XMPP specifications as related to the client side of said specifications.</description>
+	<parent>
+	    <groupId>org.sonatype.oss</groupId>
+	    <artifactId>oss-parent</artifactId>
+	    <version>5</version>
+	</parent>
+	<organization>
+		<name>Ignite Realtime</name>
+		<url>http://www.igniterealtime.org</url>
+	</organization>
+	<url>http://www.igniterealtime.org/projects/smack/</url>
+	<developers>
+		<developer>
+			<name>Robin Collier</name>
+			<timezone>-5</timezone>
+			<roles>
+				<role>Project Lead</role>
+			</roles>
+		</developer>
+	</developers>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<issueManagement>
+		<system>jira</system>
+		<url>http://www.igniterealtime.org/issues/browse/SMACK</url>
+	</issueManagement>
+	<scm>
+		<connection>scm:svn:http://svn.igniterealtime.org/svn/repos/smack</connection>
+		<developerConnection>scm:svn:https://svn.igniterealtime.org/svn/repos/smack</developerConnection>
+		<url>http://svn.igniterealtime.org/svn/repos/smack</url>
+	</scm>
+
+	<modules>
+	</modules>
+
+
+</project>

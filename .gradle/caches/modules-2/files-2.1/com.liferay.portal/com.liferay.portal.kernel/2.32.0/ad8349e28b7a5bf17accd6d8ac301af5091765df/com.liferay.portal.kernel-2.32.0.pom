@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.liferay.portal</groupId>
+	<artifactId>com.liferay.portal.kernel</artifactId>
+	<name>Liferay Portal Kernel</name>
+	<version>2.32.0</version>
+	<description>Contains interfaces for the portal services. Interfaces are only loaded by the global class loader and are shared by all plugins.</description>
+	<licenses>
+		<license>
+			<name>LGPL 2.1</name>
+			<url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Brian Wing Shun Chan</name>
+			<organization>Liferay, Inc.</organization>
+			<organizationUrl>http://www.liferay.com</organizationUrl>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:git@github.com:liferay/liferay-portal.git</connection>
+		<developerConnection>scm:git:git@github.com:liferay/liferay-portal.git</developerConnection>
+		<url>http://github.com/liferay/liferay-portal</url>
+	</scm>
+</project>

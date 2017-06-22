@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.sf.jsr107cache</groupId>
+    <artifactId>jsr107cache</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0</version>
+    <name>jsr107cache</name>
+    <description><![CDATA[jsr107cache is a place for the evolving JCACHE API so that code can be written to the spec before final release.]]>
+    </description>
+    <url>http://maven.apache.org</url>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+
+    <scm>
+        <connection>scm:svn:https://jsr107cache.svn.sourceforge.net/svnroot/jsr107cache</connection>
+        <developerConnection>scm:svn:https://username@jsr107cache.svn.sourceforge.net/svnroot/jsr107cache</developerConnection>
+        <tag/>
+        <url>http://jsr107cache.svn.sourceforge.net/viewvc/jsr107cache/</url>
+    </scm>
+
+
+    <!-- Reports -->
+    <reporting>
+        <plugins>
+
+
+            <!-- javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <author>true</author>
+                    <bottom>true</bottom>
+                    <destDir>target/site/javadoc</destDir>
+                    <header><![CDATA[<a href="/" target="_top">ehcache</a>]]></header>
+                    <minmemory>128m</minmemory>
+                    <maxmemory>512</maxmemory>
+                    <overview>${basedir}/src/main/java/net/sf/jsr107cache/overview.html
+                    </overview>
+                    <packagenames>net.sf.*</packagenames>
+                    <use>true</use>
+                    <version>true</version>
+                    <windowtitle>${project.name} ${project.version} API</windowtitle>
+                    <tag name="noinspection" description="IntelliJ Inspection Ignore tag"
+                         enabled="false"/>
+                </configuration>
+            </plugin>
+
+
+        </plugins>
+    </reporting>
+
+</project>

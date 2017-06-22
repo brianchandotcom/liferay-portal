@@ -504,6 +504,7 @@ public class SearchDisplayContext {
 			isCollatedSpellCheckResultEnabled());
 		queryConfig.setCollatedSpellCheckResultScoresThreshold(
 			getCollatedSpellCheckResultDisplayThreshold());
+		queryConfig.setHighlightEnabled(isHighlightEnabled());
 		queryConfig.setQueryIndexingEnabled(isQueryIndexingEnabled());
 		queryConfig.setQueryIndexingThreshold(getQueryIndexingThreshold());
 		queryConfig.setQuerySuggestionEnabled(isQuerySuggestionsEnabled());

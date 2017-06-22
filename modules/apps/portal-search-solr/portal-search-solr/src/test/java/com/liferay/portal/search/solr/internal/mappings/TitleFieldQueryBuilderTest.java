@@ -95,6 +95,12 @@ public class TitleFieldQueryBuilderTest
 
 	@Override
 	@Test
+	public void testWildcardCharacters() throws Exception {
+		super.testWildcardCharacters();
+	}
+
+	@Override
+	@Test
 	public void testWordPrefixes() throws Exception {
 		super.testWordPrefixes();
 	}

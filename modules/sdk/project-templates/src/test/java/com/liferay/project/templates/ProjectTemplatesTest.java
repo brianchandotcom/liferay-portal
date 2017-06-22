@@ -932,10 +932,8 @@ public class ProjectTemplatesTest {
 			"spring-mvc-portlet", "foo");
 
 		_testContains(gradleProjectDir, "build.gradle", "buildscript {");
-
 		_testContains(
 			gradleProjectDir, "build.gradle", "apply plugin: \"war\"");
-
 		_testContains(gradleProjectDir, "build.gradle", "repositories {");
 
 		File workspaceDir = _buildWorkspace();
@@ -947,7 +945,6 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			workspaceProjectDir, "build.gradle", "apply plugin: \"war\"");
-
 		_testNotContains(
 			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
 

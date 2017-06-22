@@ -16,6 +16,7 @@ package com.liferay.commerce.product.item.selector.web.internal;
 
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
 import com.liferay.commerce.product.item.selector.web.internal.display.context.CPDefinitionItemSelectorViewDisplayContext;
+import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -24,6 +25,7 @@ import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -96,11 +98,17 @@ public class CPDefinitionItemSelectorView
 
 		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
 
+		long cpDefinitionId = ParamUtil.getLong(
+			httpServletRequest, "cpDefinitionId");
+
+		request.setAttribute("cpDefinitionId", String.valueOf(cpDefinitionId));
+
 		CPDefinitionItemSelectorViewDisplayContext
 			cpDefinitionItemSelectorViewDisplayContext =
 				new CPDefinitionItemSelectorViewDisplayContext(
 					httpServletRequest, portletURL, itemSelectedEventName,
-					_cpDefinitionService, _cpTypeServicesTracker);
+					_cpDefinitionLinkService, _cpDefinitionService,
+					_cpTypeServicesTracker);
 
 		request.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -121,6 +129,9 @@ public class CPDefinitionItemSelectorView
 				new ItemSelectorReturnType[] {
 					new UUIDItemSelectorReturnType()
 				}));
+
+	@Reference
+	private CPDefinitionLinkService _cpDefinitionLinkService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

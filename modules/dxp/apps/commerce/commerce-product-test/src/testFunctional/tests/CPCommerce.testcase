@@ -9,7 +9,7 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="ProductMenuHelper#gotoPortlet">
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>
 
@@ -20,7 +20,7 @@
 			</then>
 		</if>
 
-		<execute macro="ProductMenuHelper#gotoPortlet">
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -393,8 +393,8 @@
 
 		<execute macro="CommerceEntry#publishEntry" />
 
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="Catalog" />
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
 		</execute>
 
 		<execute macro="CommerceCatalog#moveCatalogEntryToRecycleBinViaCheckbox" >
@@ -421,7 +421,7 @@
 			<execute macro="CommerceEntry#publishEntry" />
 		</for>
 
-		<execute macro="ProductMenuHelper#gotoPortlet">
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>
 
@@ -441,7 +441,7 @@
 
 		<execute macro="CommerceEntry#publishEntry" />
 
-		<execute macro="ProductMenuHelper#gotoPortlet">
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>
 
@@ -494,7 +494,7 @@
 			</else>
 		</if>
 
-		<execute macro="ProductMenuHelper#gotoPortlet">
+		<execute macro="CommerceNavigator#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>
 

@@ -78,7 +78,7 @@
 		</execute>
 	</command>
 
-	<command name="AddGroupCatalogEntry" priority="5">
+	<command ignore="true" name="AddGroupCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="Group Product SKU" />
 			<var name="plusMenu" value="Group" />
@@ -102,7 +102,7 @@
 		</execute>
 	</command>
 
-	<command name="AddGroupCatalogEntryWithSingleImage" priority="5">
+	<command ignore="true" name="AddGroupCatalogEntryWithSingleImage" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="CommerceCatalog#addEntry">
@@ -126,7 +126,7 @@
 		</execute>
 	</command>
 
-	<command name="AddGroupDraftCatalogEntry" priority="5">
+	<command ignore="true" name="AddGroupDraftCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="baseSku" value="Group Product SKU" />
 			<var name="plusMenu" value="Group" />

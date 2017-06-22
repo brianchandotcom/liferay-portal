@@ -241,7 +241,7 @@ public class ProjectTemplateFilesTest {
 				buildGradle);
 
 			Assert.assertTrue(
-				buildGradlePath + " is missing non-workspace specific variant.",
+				buildGradlePath + " is missing non-workspace specific variant",
 				matcher.matches());
 		}
 	}

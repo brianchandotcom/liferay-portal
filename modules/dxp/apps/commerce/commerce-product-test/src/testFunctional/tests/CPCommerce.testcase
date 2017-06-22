@@ -375,7 +375,7 @@
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
-			<var name="baseSku" value="Virtual ProductSKU" />
+			<var name="baseSku" value="Virtual Product SKU" />
 			<var name="productFullDescription" value="Virtual Product Full Description 1" />
 			<var name="productShortDescription" value="Virtual Product Short Description 1" />
 			<var name="productTitle" value="Virtual Product Title 1" />

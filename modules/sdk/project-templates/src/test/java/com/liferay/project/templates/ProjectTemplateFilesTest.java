@@ -224,28 +224,26 @@ public class ProjectTemplateFilesTest {
 			matcher.matches());
 	}
 
-	private void _testBuildGradle(Path archetypeResourcesDirPath) {
-		Path buildGradlePath = archetypeResourcesDirPath.resolve(
-			"build.gradle");
-
-		Assert.assertTrue(
-			"Missing " + buildGradlePath, Files.exists(buildGradlePath));
-	}
-
-	private void _testBuildGradleWorkspaceVariant(
-			Path archetypeResourcesDirPath)
+	private void _testBuildGradle(
+			String projectTemplateDirName, Path archetypeResourcesDirPath)
 		throws IOException {
 
 		Path buildGradlePath = archetypeResourcesDirPath.resolve(
 			"build.gradle");
 
-		String contents = FileUtil.read(buildGradlePath);
-
-		Matcher matcher = _WORKSPACE_VARIANT_PATTERN.matcher(contents);
-
 		Assert.assertTrue(
-			buildGradlePath + " is missing non-workspace specific variant.",
-			matcher.matches());
+			"Missing " + buildGradlePath, Files.exists(buildGradlePath));
+
+		if (!projectTemplateDirName.equals("project-templates-workspace")) {
+			String buildGradle = FileUtil.read(buildGradlePath);
+
+			Matcher matcher = _buildGradleWorkspaceVariantPattern.matcher(
+				buildGradle);
+
+			Assert.assertTrue(
+				buildGradlePath + " is missing non-workspace specific variant.",
+				matcher.matches());
+		}
 	}
 
 	private void _testGitIgnore(
@@ -598,11 +596,7 @@ public class ProjectTemplateFilesTest {
 			projectTemplateDirPath.getFileName());
 
 		_testBndBnd(projectTemplateDirPath);
-		_testBuildGradle(archetypeResourcesDirPath);
-
-		if (!projectTemplateDirPath.endsWith("project-templates-workspace")) {
-			_testBuildGradleWorkspaceVariant(archetypeResourcesDirPath);
-		}
+		_testBuildGradle(projectTemplateDirName, archetypeResourcesDirPath);
 
 		_testGitIgnore(projectTemplateDirName, archetypeResourcesDirPath);
 		_testGradleWrapper(archetypeResourcesDirPath);
@@ -743,14 +737,14 @@ public class ProjectTemplateFilesTest {
 	private static final String[] _SOURCESET_NAMES =
 		{"main", "test", "testIntegration"};
 
-	private static final Pattern _WORKSPACE_VARIANT_PATTERN = Pattern.compile(
-		".*^#if \\(\\$\\{projectType\\} != \"workspace\"\\).*",
-		Pattern.DOTALL | Pattern.MULTILINE);
-
 	private static final Pattern _buildGradleDependencyPattern =
 		Pattern.compile(
 			"(compile(?:Only)?) group: \"(.+)\", name: \"(.+)\", " +
 				"(?:transitive: (?:true|false), )?version: \"(.+)\"");
+	private static final Pattern _buildGradleWorkspaceVariantPattern =
+		Pattern.compile(
+			".*^#if \\(\\$\\{projectType\\} != \"workspace\"\\).*",
+			Pattern.DOTALL | Pattern.MULTILINE);
 	private static final Pattern _bundleDescriptionPattern = Pattern.compile(
 		"Creates a .+\\.");
 	private static final List<String> _gitIgnoreLines = Arrays.asList(

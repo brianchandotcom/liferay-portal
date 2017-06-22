@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.trash.kernel.service.TrashEntryService;
+import com.liferay.trash.service.TrashEntryService;
 import com.liferay.wiki.service.WikiPageService;
 
 import java.io.InputStream;

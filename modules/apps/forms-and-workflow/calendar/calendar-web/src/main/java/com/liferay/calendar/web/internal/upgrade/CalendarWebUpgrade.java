@@ -16,7 +16,7 @@ package com.liferay.calendar.web.internal.upgrade;
 
 import com.liferay.calendar.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.calendar.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
-import com.liferay.calendar.web.internal.upgrade.v1_0_3.UpgradeEventsDisplayPortletId;
+import com.liferay.calendar.web.internal.upgrade.v1_1_1.UpgradeEventsDisplayPortletId;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -51,12 +51,12 @@ public class CalendarWebUpgrade implements UpgradeStepRegistrator {
 				UpgradePortletPreferences());
 
 		registry.register(
-			"com.liferay.calendar.web", "1.0.1", "1.0.2",
-			new com.liferay.calendar.web.internal.upgrade.v1_0_2.
+			"com.liferay.calendar.web", "1.0.1", "1.1.0",
+			new com.liferay.calendar.web.internal.upgrade.v1_1_0.
 				UpgradePortletId());
 
 		registry.register(
-			"com.liferay.calendar.web", "1.0.2", "1.0.3",
+			"com.liferay.calendar.web", "1.1.0", "1.1.1",
 			new UpgradeEventsDisplayPortletId(
 				_portletPreferencesLocalService,
 				_resourcePermissionLocalService));

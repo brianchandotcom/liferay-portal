@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.web.internal.upgrade.v1_0_2;
+package com.liferay.calendar.web.internal.upgrade.v1_1_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 

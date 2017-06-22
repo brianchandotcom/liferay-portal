@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.web.internal.upgrade.v1_0_3;
+package com.liferay.calendar.web.internal.upgrade.v1_1_1;
 
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

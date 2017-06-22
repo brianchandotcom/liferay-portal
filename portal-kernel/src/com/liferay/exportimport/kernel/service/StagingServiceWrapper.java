@@ -32,6 +32,13 @@ public class StagingServiceWrapper implements StagingService,
 		_stagingService = stagingService;
 	}
 
+	@Override
+	public boolean hasRemoteLayout(java.lang.String uuid, long groupId,
+		boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _stagingService.hasRemoteLayout(uuid, groupId, privateLayout);
+	}
+
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/

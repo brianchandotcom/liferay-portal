@@ -10,6 +10,8 @@
 	</command>
 
 	<command name="gotoSitesCommerce" summary="Navigate to Product Menu > Sites > Commerce > ${portlet}">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
@@ -19,8 +21,6 @@
 		<execute macro="ProductMenuHelper#gotoPortlet">
 			<var name="portlet" value="${portlet}" />
 		</execute>
-
-		<execute macro="Navigator#openURL" />
 	</command>
 
 	<command name="searchEntry">

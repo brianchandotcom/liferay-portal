@@ -33,11 +33,7 @@ public class ConfigurationTemporarySwapperException extends PortalException {
 				String.format(
 					"No service found that implements interface \"%s\"",
 					serviceClass));
-
-			this.serviceClass = serviceClass;
 		}
-
-		public final String serviceClass;
 
 	}
 
@@ -51,13 +47,7 @@ public class ConfigurationTemporarySwapperException extends PortalException {
 				String.format(
 					"Component \"%s\" does not consume configuration \"%s\"",
 					componentName, pid));
-
-			this.componentName = componentName;
-			this.pid = pid;
 		}
-
-		public final String componentName;
-		public final String pid;
 
 	}
 
@@ -68,11 +58,7 @@ public class ConfigurationTemporarySwapperException extends PortalException {
 			super(
 				String.format(
 					"No bundle found for the service \"%s\"", serviceClass));
-
-			this.serviceClass = serviceClass;
 		}
-
-		public final String serviceClass;
 
 	}
 

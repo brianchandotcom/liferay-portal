@@ -91,7 +91,6 @@ public class ConfigurationTemporarySwapperTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					ConfigurationTemporarySwapperTest.class,
 					SearchPermissionChecker.class, _pid,
 					new HashMapDictionary<String, Object>())) {
 
@@ -109,7 +108,6 @@ public class ConfigurationTemporarySwapperTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					ConfigurationTemporarySwapperTest.class,
 					HasNoImplementation.class, _pid,
 					new HashMapDictionary<String, Object>())) {
 
@@ -129,7 +127,6 @@ public class ConfigurationTemporarySwapperTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					ConfigurationTemporarySwapperTest.class,
 					SearchPermissionChecker.class, _pid,
 					new HashMapDictionary<String, Object>())) {
 
@@ -146,8 +143,8 @@ public class ConfigurationTemporarySwapperTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					ConfigurationTemporarySwapperTest.class, PrefsProps.class,
-					_pid, new HashMapDictionary<String, Object>())) {
+					PrefsProps.class, _pid,
+					new HashMapDictionary<String, Object>())) {
 
 			Assert.fail();
 		}
@@ -178,7 +175,6 @@ public class ConfigurationTemporarySwapperTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					ConfigurationTemporarySwapperTest.class,
 					SearchPermissionChecker.class, _pid, temporaryValues)) {
 		}
 
@@ -212,7 +208,6 @@ public class ConfigurationTemporarySwapperTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					ConfigurationTemporarySwapperTest.class,
 					SearchPermissionChecker.class, _pid, temporaryValues)) {
 
 			testConfiguration = _configurationAdmin.getConfiguration(

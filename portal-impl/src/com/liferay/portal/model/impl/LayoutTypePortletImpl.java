@@ -972,72 +972,6 @@ public class LayoutTypePortletImpl
 			StringUtil.merge(nestedColumnIdsArray));
 	}
 
-	private void _removeNestedColumns(
-		String portletNamespace, Set<String> portletIdList) {
-
-		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
-
-		UnicodeProperties newTypeSettingsProperties = new UnicodeProperties();
-
-		String nestedPortletIds = "";
-
-		for (Map.Entry<String, String> entry :
-			typeSettingsProperties.entrySet()) {
-
-			String key = entry.getKey();
-	
-			if (key.startsWith(portletNamespace)) {
-				nestedPortletIds += entry.getValue();
-				nestedPortletIds += CharPool.COMMA;
-			}
-		}
-
-		if (Validator.isNotNull(nestedPortletIds)) {
-			for (String nestedPortletId :
-				StringUtil.split(nestedPortletIds)) {
-	
-				String childNestedPortletNamespace =
-					PortalUtil.getPortletNamespace(nestedPortletId);
-	
-				_removeNestedColumns(
-					childNestedPortletNamespace, portletIdList);
-	
-				removeModesPortletId(nestedPortletId);
-				removeStatesPortletId(nestedPortletId);
-	
-				portletIdList.add(nestedPortletId);
-			}
-		}
-
-		typeSettingsProperties = getTypeSettingsProperties();
-
-		for (Map.Entry<String, String> entry :
-				typeSettingsProperties.entrySet()) {
-
-			String key = entry.getKey();
-
-			if (!key.startsWith(portletNamespace)) {
-				newTypeSettingsProperties.setProperty(key, entry.getValue());
-				continue;
-			}
-		}
-
-		Layout layout = getLayout();
-
-		layout.setTypeSettingsProperties(newTypeSettingsProperties);
-
-		String nestedColumnIds = GetterUtil.getString(
-			getTypeSettingsProperty(
-				LayoutTypePortletConstants.NESTED_COLUMN_IDS));
-
-		String[] nestedColumnIdsArray = ArrayUtil.removeByPrefix(
-			StringUtil.split(nestedColumnIds), portletNamespace);
-
-		setTypeSettingsProperty(
-			LayoutTypePortletConstants.NESTED_COLUMN_IDS,
-			StringUtil.merge(nestedColumnIdsArray));
-	}
-
 	@Override
 	public void removePortletId(long userId, String portletId) {
 		removePortletId(userId, portletId, true);
@@ -1999,6 +1933,70 @@ public class LayoutTypePortletImpl
 		}
 
 		return _group;
+	}
+
+	private void _removeNestedColumns(
+		String portletNamespace, Set<String> portletIdList) {
+
+		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+
+		UnicodeProperties newTypeSettingsProperties = new UnicodeProperties();
+
+		String nestedPortletIds = "";
+
+		for (Map.Entry<String, String> entry :
+				typeSettingsProperties.entrySet()) {
+
+			String key = entry.getKey();
+
+			if (key.startsWith(portletNamespace)) {
+				nestedPortletIds += entry.getValue();
+				nestedPortletIds += CharPool.COMMA;
+			}
+		}
+
+		if (Validator.isNotNull(nestedPortletIds)) {
+			for (String nestedPortletId : StringUtil.split(nestedPortletIds)) {
+				String childNestedPortletNamespace =
+					PortalUtil.getPortletNamespace(nestedPortletId);
+
+				_removeNestedColumns(
+					childNestedPortletNamespace, portletIdList);
+
+				removeModesPortletId(nestedPortletId);
+				removeStatesPortletId(nestedPortletId);
+
+				portletIdList.add(nestedPortletId);
+			}
+		}
+
+		typeSettingsProperties = getTypeSettingsProperties();
+
+		for (Map.Entry<String, String> entry :
+				typeSettingsProperties.entrySet()) {
+
+			String key = entry.getKey();
+
+			if (!key.startsWith(portletNamespace)) {
+				newTypeSettingsProperties.setProperty(key, entry.getValue());
+				continue;
+			}
+		}
+
+		Layout layout = getLayout();
+
+		layout.setTypeSettingsProperties(newTypeSettingsProperties);
+
+		String nestedColumnIds = GetterUtil.getString(
+			getTypeSettingsProperty(
+				LayoutTypePortletConstants.NESTED_COLUMN_IDS));
+
+		String[] nestedColumnIdsArray = ArrayUtil.removeByPrefix(
+			StringUtil.split(nestedColumnIds), portletNamespace);
+
+		setTypeSettingsProperty(
+			LayoutTypePortletConstants.NESTED_COLUMN_IDS,
+			StringUtil.merge(nestedColumnIdsArray));
 	}
 
 	private static final String _MODIFIED_DATE = "modifiedDate";

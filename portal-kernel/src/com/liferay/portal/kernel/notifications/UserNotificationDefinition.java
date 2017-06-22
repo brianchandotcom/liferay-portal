@@ -14,11 +14,13 @@
 
 package com.liferay.portal.kernel.notifications;
 
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
@@ -86,8 +88,14 @@ public class UserNotificationDefinition {
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+		try {
+			return ResourceBundleUtil.getBundle(
+				"content.Language", locale, getClass());
+		}
+		catch (MissingResourceException mre) {
+			return ResourceBundleUtil.getBundle(
+				"content.Language", locale, PortalClassLoaderUtil.getClassLoader());
+		}
 	}
 
 	private final long _classNameId;

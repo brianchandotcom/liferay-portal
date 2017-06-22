@@ -165,6 +165,8 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 	var maxHeight = (viewportRegion.height);
 	var maxWidth = (viewportRegion.width);
 
+	var playingVideoIndex = -1;
+
 	var imageViewer = new A.ImageViewer(
 		{
 			after: {
@@ -195,6 +197,15 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 			links: '#<portlet:namespace />imageGalleryAssetInfo .image-link.preview',
 			maxHeight: maxHeight,
 			maxWidth: maxWidth,
+			on: {
+				'currentIndexChange': function() {
+					if (playingVideoIndex != -1) {
+						Liferay.fire('<portlet:namespace />ImageViewer:currentIndexChange');
+
+						playingVideoIndex = -1;
+					}
+				}
+			},
 			playingLabel: '(<liferay-ui:message key="playing" />)',
 			plugins: [
 				{
@@ -221,6 +232,12 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 			zIndex: ++Liferay.zIndex.WINDOW
 		}
 	).render();
+
+	Liferay.on('<portlet:namespace />Video:play', function() {
+		imageViewer.pause();
+
+		playingVideoIndex = this.get('currentIndex');
+	});
 
 	var onClickLinksDefaultFn = imageViewer._onClickLinks;
 

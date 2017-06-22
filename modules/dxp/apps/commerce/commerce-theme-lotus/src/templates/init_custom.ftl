@@ -26,3 +26,5 @@
 	<#assign company_logo_height = company_logo_height/2 />
 	<#assign company_logo_width = company_logo_width/2 />
 </#if>
+
+<#assign footer_content_id = getterUtil.getLong(theme_settings["footer-web-content-id"]!"", 0) />

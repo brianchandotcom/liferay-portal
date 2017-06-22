@@ -53,20 +53,23 @@
 			</main>
 
 			<footer id="footer" role="contentinfo">
-				<div class="container-fluid-1280" id="company-info">
-					<div id="footer-brand">
-						<img alt="${logo_description}" height="${company_logo_height/2}" src="${site_logo}" />
-					</div>
-
+				<div class="container-fluid-1280">
 					<#if has_navigation>
 						<#include "${full_templates_path}/footer_navigation.ftl" />
 					</#if>
-				</div>
 
-				<div class="container-fluid-1280">
-					<p id="copyright">
-						<small><@liferay.language key="powered-by" /> <a href="http://www.liferay.com" rel="external">Liferay</a></small>
-					</p>
+					<div class="col-md-4">
+                        <div id="foocont">
+							<@liferay_ui["asset-display"]
+								className = "com.liferay.journal.model.JournalArticle"
+								classPK = footer_content_id
+							/>
+                        </div>
+
+						<p id="copyright">
+							<small><@liferay.language key="powered-by" /> <a href="http://www.liferay.com" rel="external">Liferay</a></small>
+						</p>
+					</div>
 				</div>
 			</footer>
 		</div>

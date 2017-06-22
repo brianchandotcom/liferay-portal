@@ -972,7 +972,7 @@ public class LayoutTypePortletImpl
 			StringUtil.merge(nestedColumnIdsArray));
 	}
 
-	public void removeNestedColumns(
+	private void _removeNestedColumns(
 		String portletNamespace, Set<String> portletIdList) {
 
 		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
@@ -999,7 +999,7 @@ public class LayoutTypePortletImpl
 				String childNestedPortletNamespace =
 					PortalUtil.getPortletNamespace(nestedPortletId);
 	
-				removeNestedColumns(
+				_removeNestedColumns(
 					childNestedPortletNamespace, portletIdList);
 	
 				removeModesPortletId(nestedPortletId);
@@ -1951,7 +1951,7 @@ public class LayoutTypePortletImpl
 				String portletNamespace = PortalUtil.getPortletNamespace(
 					portletId);
 
-				removeNestedColumns(portletNamespace, portletIdList);
+				_removeNestedColumns(portletNamespace, portletIdList);
 			}
 
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);

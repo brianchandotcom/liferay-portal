@@ -40,11 +40,12 @@ import org.osgi.util.tracker.ServiceTracker;
 public class ConfigurationTemporarySwapper implements AutoCloseable {
 
 	public ConfigurationTemporarySwapper(
-			Class<?> callingClass, Class<?> serviceClass, String pid,
+			Class<?> serviceClass, String pid,
 			Dictionary<String, Object> properties)
 		throws Exception {
 
-		Bundle bundle = FrameworkUtil.getBundle(callingClass);
+		Bundle bundle = FrameworkUtil.getBundle(
+			ConfigurationTemporarySwapper.class);
 
 		_serviceServiceTracker = ServiceTrackerFactory.open(
 			bundle, serviceClass);

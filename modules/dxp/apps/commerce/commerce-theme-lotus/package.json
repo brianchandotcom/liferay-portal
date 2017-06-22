@@ -11,7 +11,7 @@
   "devDependencies": {
     "gulp": "^3.8.10",
     "liferay-theme-deps-7.0": "~1.0.0",
-    "liferay-theme-es2015-hook": "0.1.1",
+    "liferay-theme-es2015-hook": "0.3.0",
     "liferay-theme-tasks": "^1.4.0"
   },
   "keywords": [

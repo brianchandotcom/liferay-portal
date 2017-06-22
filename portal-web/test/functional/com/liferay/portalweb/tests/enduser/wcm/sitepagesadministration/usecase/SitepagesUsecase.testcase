@@ -1404,7 +1404,7 @@
 			<var name="pageName" value="Page Set Page" />
 		</execute>
 
-		<execute function="AssertLocation" value1="http://localhost:8080/web/united-states" />
+		<execute function="AssertLocation" value1="${portalURL}/web/united-states" />
 		<execute function="AssertTextNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 
 		<execute macro="Navigator#openSiteURL">
@@ -1416,7 +1416,7 @@
 			<var name="pageName" value="Page Set Page" />
 		</execute>
 
-		<execute function="AssertLocation" value1="http://localhost:8080/web/canada" />
+		<execute function="AssertLocation" value1="${portalURL}/web/canada" />
 		<execute function="AssertTextNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 	</command>
 </definition>

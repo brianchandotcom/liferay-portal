@@ -1000,10 +1000,8 @@ information.
 
 	<macrodef name="setup-binaries-cache">
 		<sequential>
-			<var name="gradle.build.binaries.cache.dir" value="${project.dir}/${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1" />
-
 			<if>
-				<available file="${gradle.build.binaries.cache.dir}" type="dir" />
+				<available file="${project.dir}/${build.binaries.cache.dir}" type="dir" />
 				<then>
 					<exec dir="${project.dir}/${build.binaries.cache.dir}" executable="git" failonerror="true">
 						<arg value="pull" />
@@ -1011,7 +1009,7 @@ information.
 					</exec>
 
 					<sync-dir
-						dir="${gradle.build.binaries.cache.dir}"
+						dir="${project.dir}/${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1"
 						toDir="${project.dir}/.gradle/caches/modules-2/files-2.1"
 					/>
 				</then>

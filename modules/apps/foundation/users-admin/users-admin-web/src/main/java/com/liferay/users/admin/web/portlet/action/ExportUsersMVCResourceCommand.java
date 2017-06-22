@@ -129,20 +129,16 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 				Object obj = BeanPropertiesUtil.getObject(user, field);
 
 				if (obj != null) {
-					String dateString = "";
-
 					Class<?> clazz = obj.getClass();
 
 					if (clazz.equals(Date.class)) {
-						dateString = obj.toString();
+						sb.append(CSVUtil.encode(obj.toString()));
 					}
 					else if (clazz.equals(Timestamp.class)) {
 						Date date = new Date(((Timestamp)obj).getTime());
 
-						dateString = date.toString();
+						sb.append(CSVUtil.encode(date.toString()));
 					}
-
-					sb.append(CSVUtil.encode(dateString));
 				}
 			}
 			else if (field.startsWith("expando:")) {

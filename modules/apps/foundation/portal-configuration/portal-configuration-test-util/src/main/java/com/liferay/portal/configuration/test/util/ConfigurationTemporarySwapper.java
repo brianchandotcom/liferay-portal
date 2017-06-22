@@ -47,13 +47,6 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 		Bundle bundle = FrameworkUtil.getBundle(
 			ConfigurationTemporarySwapper.class);
 
-		_serviceServiceTracker = ServiceTrackerFactory.open(
-			bundle, serviceClass);
-
-		Object service = _serviceServiceTracker.waitForService(5000);
-
-		_validateService(serviceClass, service, pid);
-
 		_configurationAdminServiceTracker = ServiceTrackerFactory.open(
 			bundle, ConfigurationAdmin.class);
 
@@ -64,6 +57,13 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 			pid, StringPool.QUESTION);
 
 		_oldProperties = _configuration.getProperties();
+
+		_serviceServiceTracker = ServiceTrackerFactory.open(
+			bundle, serviceClass);
+
+		Object service = _serviceServiceTracker.waitForService(5000);
+
+		_validateService(serviceClass, service, pid);
 
 		_serviceListener = new ConfigurationServiceListener(
 			serviceClass, service);

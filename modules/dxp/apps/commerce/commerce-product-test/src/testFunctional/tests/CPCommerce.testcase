@@ -394,7 +394,7 @@
 		<execute macro="CommerceEntry#publishEntry" />
 
 		<execute macro="CommerceNavigator#gotoSitesCommerce">
-			<var name="portlet" value="Options" />
+			<var name="portlet" value="Catalog" />
 		</execute>
 
 		<execute macro="CommerceCatalog#moveCatalogEntryToRecycleBinViaCheckbox" >

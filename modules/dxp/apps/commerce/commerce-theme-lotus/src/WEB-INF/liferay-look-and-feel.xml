@@ -7,6 +7,9 @@
 	</compatibility>
 	<theme id="commerce-theme-lotus" name="Commerce Theme Lotus">
 		<template-extension>ftl</template-extension>
+		<settings>
+			<setting key="footer-web-content-id" configurable="true"></setting>
+		</settings>
 		<portlet-decorator id="barebone" name="Barebone">
 			<portlet-decorator-css-class>portlet-barebone</portlet-decorator-css-class>
 		</portlet-decorator>

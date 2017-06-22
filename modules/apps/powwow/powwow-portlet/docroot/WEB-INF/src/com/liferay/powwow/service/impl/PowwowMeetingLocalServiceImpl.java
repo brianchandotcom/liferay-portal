@@ -428,7 +428,7 @@ public class PowwowMeetingLocalServiceImpl
 			PowwowUtil.sendNotifications(powwowMeetingId, serviceContext);
 		}
 		catch (Exception e) {
-			throw new SystemException();
+			throw new SystemException(e);
 		}
 	}
 

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -123,21 +122,16 @@ public class PortalImplLayoutFriendlyURLTest {
 			String virtualHostname, String expectedURL)
 		throws Exception {
 
-		_company.setVirtualHostname(virtualHostname);
-
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
-		themeDisplay.setI18nLanguageId(StringPool.BLANK);
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLayoutSet(_layout.getLayoutSet());
 		themeDisplay.setPortalDomain(virtualHostname);
-		themeDisplay.setSecure(false);
 		themeDisplay.setServerName(virtualHostname);
 		themeDisplay.setServerPort(8080);
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
-		themeDisplay.setWidget(false);
 
 		Assert.assertEquals(
 			expectedURL, PortalUtil.getLayoutFriendlyURL(themeDisplay));

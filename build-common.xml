@@ -1005,6 +1005,11 @@ information.
 			<if>
 				<available file="${gradle.build.binaries.cache.dir}" type="dir" />
 				<then>
+					<exec dir="${project.dir}/${build.binaries.cache.dir}" executable="git" failonerror="true">
+						<arg value="pull" />
+						<arg value="--rebase" />
+					</exec>
+
 					<sync-dir
 						dir="${gradle.build.binaries.cache.dir}"
 						toDir="${project.dir}/.gradle/caches/modules-2/files-2.1"

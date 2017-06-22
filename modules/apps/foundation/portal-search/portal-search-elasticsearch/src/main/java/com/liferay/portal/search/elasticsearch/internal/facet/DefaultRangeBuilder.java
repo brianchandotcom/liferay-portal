@@ -46,6 +46,7 @@ public class DefaultRangeBuilder extends AbstractRangeBuilder<RangeBuilder> {
 
 	public DefaultRangeBuilder addUnboundedFrom(String key, String from) {
 		ranges.add(new Range(key, from, null));
+
 		return this;
 	}
 

@@ -46,12 +46,6 @@
 	</command>
 
 	<command name="gotoEditPageFromControlMenu">
-		<var name="key_page" value="${pageName}" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute function="Click" locator1="ControlMenu#CONFIGURE_PAGE" />
 
 		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="${pageName}" />

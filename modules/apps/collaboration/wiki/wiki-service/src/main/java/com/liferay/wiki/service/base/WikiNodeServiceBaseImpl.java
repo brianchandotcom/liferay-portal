@@ -31,9 +31,6 @@ import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersist
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
-import com.liferay.trash.kernel.service.persistence.TrashEntryPersistence;
-import com.liferay.trash.kernel.service.persistence.TrashVersionPersistence;
-
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.persistence.WikiNodePersistence;
@@ -401,101 +398,6 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the trash entry local service.
-	 *
-	 * @return the trash entry local service
-	 */
-	public com.liferay.trash.kernel.service.TrashEntryLocalService getTrashEntryLocalService() {
-		return trashEntryLocalService;
-	}
-
-	/**
-	 * Sets the trash entry local service.
-	 *
-	 * @param trashEntryLocalService the trash entry local service
-	 */
-	public void setTrashEntryLocalService(
-		com.liferay.trash.kernel.service.TrashEntryLocalService trashEntryLocalService) {
-		this.trashEntryLocalService = trashEntryLocalService;
-	}
-
-	/**
-	 * Returns the trash entry remote service.
-	 *
-	 * @return the trash entry remote service
-	 */
-	public com.liferay.trash.kernel.service.TrashEntryService getTrashEntryService() {
-		return trashEntryService;
-	}
-
-	/**
-	 * Sets the trash entry remote service.
-	 *
-	 * @param trashEntryService the trash entry remote service
-	 */
-	public void setTrashEntryService(
-		com.liferay.trash.kernel.service.TrashEntryService trashEntryService) {
-		this.trashEntryService = trashEntryService;
-	}
-
-	/**
-	 * Returns the trash entry persistence.
-	 *
-	 * @return the trash entry persistence
-	 */
-	public TrashEntryPersistence getTrashEntryPersistence() {
-		return trashEntryPersistence;
-	}
-
-	/**
-	 * Sets the trash entry persistence.
-	 *
-	 * @param trashEntryPersistence the trash entry persistence
-	 */
-	public void setTrashEntryPersistence(
-		TrashEntryPersistence trashEntryPersistence) {
-		this.trashEntryPersistence = trashEntryPersistence;
-	}
-
-	/**
-	 * Returns the trash version local service.
-	 *
-	 * @return the trash version local service
-	 */
-	public com.liferay.trash.kernel.service.TrashVersionLocalService getTrashVersionLocalService() {
-		return trashVersionLocalService;
-	}
-
-	/**
-	 * Sets the trash version local service.
-	 *
-	 * @param trashVersionLocalService the trash version local service
-	 */
-	public void setTrashVersionLocalService(
-		com.liferay.trash.kernel.service.TrashVersionLocalService trashVersionLocalService) {
-		this.trashVersionLocalService = trashVersionLocalService;
-	}
-
-	/**
-	 * Returns the trash version persistence.
-	 *
-	 * @return the trash version persistence
-	 */
-	public TrashVersionPersistence getTrashVersionPersistence() {
-		return trashVersionPersistence;
-	}
-
-	/**
-	 * Sets the trash version persistence.
-	 *
-	 * @param trashVersionPersistence the trash version persistence
-	 */
-	public void setTrashVersionPersistence(
-		TrashVersionPersistence trashVersionPersistence) {
-		this.trashVersionPersistence = trashVersionPersistence;
-	}
-
-	/**
 	 * Returns the wiki page local service.
 	 *
 	 * @return the wiki page local service
@@ -653,16 +555,6 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.asset.kernel.service.AssetEntryService assetEntryService;
 	@ServiceReference(type = AssetEntryPersistence.class)
 	protected AssetEntryPersistence assetEntryPersistence;
-	@ServiceReference(type = com.liferay.trash.kernel.service.TrashEntryLocalService.class)
-	protected com.liferay.trash.kernel.service.TrashEntryLocalService trashEntryLocalService;
-	@ServiceReference(type = com.liferay.trash.kernel.service.TrashEntryService.class)
-	protected com.liferay.trash.kernel.service.TrashEntryService trashEntryService;
-	@ServiceReference(type = TrashEntryPersistence.class)
-	protected TrashEntryPersistence trashEntryPersistence;
-	@ServiceReference(type = com.liferay.trash.kernel.service.TrashVersionLocalService.class)
-	protected com.liferay.trash.kernel.service.TrashVersionLocalService trashVersionLocalService;
-	@ServiceReference(type = TrashVersionPersistence.class)
-	protected TrashVersionPersistence trashVersionPersistence;
 	@BeanReference(type = com.liferay.wiki.service.WikiPageLocalService.class)
 	protected com.liferay.wiki.service.WikiPageLocalService wikiPageLocalService;
 	@BeanReference(type = com.liferay.wiki.service.WikiPageService.class)

@@ -52,8 +52,6 @@ public class PortalImplLayoutFriendlyURLTest {
 	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		_companyVirtualHostname = _company.getVirtualHostname();
-
 		_group = GroupLocalServiceUtil.fetchGroup(
 			_company.getCompanyId(), GroupConstants.GUEST);
 
@@ -64,28 +62,27 @@ public class PortalImplLayoutFriendlyURLTest {
 	@Test
 	public void testCompanyDefaultSiteVirtualHost() throws Exception {
 		testLayoutFriendlyURL(
-			_companyVirtualHostname, _layout.getFriendlyURL());
+			_company.getVirtualHostname(), _layout.getFriendlyURL());
 	}
 
 	@Test
 	public void testCompanyDefaultSiteVirtualHostWithLayoutSetVirtualHost()
 		throws Exception {
 
-		assignNewPublicLayoutSetVirtualHost();
+		setLayoutSetVirtualHost();
 
 		String expectedURL =
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
 				_group.getFriendlyURL() + _layout.getFriendlyURL();
 
-		testLayoutFriendlyURL(_companyVirtualHostname, expectedURL);
+		testLayoutFriendlyURL(_company.getVirtualHostname(), expectedURL);
 	}
 
 	@Test
 	public void testLayoutSetVirtualHost() throws Exception {
-		assignNewPublicLayoutSetVirtualHost();
+		String layoutSetVirtualHost = setLayoutSetVirtualHost();
 
-		testLayoutFriendlyURL(
-			_publicLayoutSetVirtualHostname, _layout.getFriendlyURL());
+		testLayoutFriendlyURL(layoutSetVirtualHost, _layout.getFriendlyURL());
 	}
 
 	@Test
@@ -99,7 +96,7 @@ public class PortalImplLayoutFriendlyURLTest {
 
 	@Test
 	public void testLocalhostWithLayoutSetVirtualHost() throws Exception {
-		assignNewPublicLayoutSetVirtualHost();
+		setLayoutSetVirtualHost();
 
 		String expectedURL =
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
@@ -108,16 +105,18 @@ public class PortalImplLayoutFriendlyURLTest {
 		testLayoutFriendlyURL("localhost", expectedURL);
 	}
 
-	protected void assignNewPublicLayoutSetVirtualHost() {
+	protected String setLayoutSetVirtualHost() {
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
-		_publicLayoutSetVirtualHostname =
+		String layoutSetVirtualHost =
 			RandomTestUtil.randomString() + "." +
 				RandomTestUtil.randomString(3);
 
 		VirtualHostLocalServiceUtil.updateVirtualHost(
 			_company.getCompanyId(), layoutSet.getLayoutSetId(),
-			_publicLayoutSetVirtualHostname);
+			layoutSetVirtualHost);
+
+		return layoutSetVirtualHost;
 	}
 
 	protected void testLayoutFriendlyURL(
@@ -147,9 +146,7 @@ public class PortalImplLayoutFriendlyURLTest {
 	@DeleteAfterTestRun
 	private Company _company;
 
-	private String _companyVirtualHostname;
 	private Group _group;
 	private Layout _layout;
-	private String _publicLayoutSetVirtualHostname;
 
 }

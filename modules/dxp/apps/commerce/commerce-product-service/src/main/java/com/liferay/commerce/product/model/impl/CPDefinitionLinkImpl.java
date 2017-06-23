@@ -39,6 +39,7 @@ public class CPDefinitionLinkImpl extends CPDefinitionLinkBaseImpl {
 	public CPDefinitionLinkImpl() {
 	}
 
+	@Override
 	public CPDefinition getCPDefinitionEntry() {
 		return CPDefinitionLocalServiceUtil.fetchCPDefinition(
 			getCPDefinitionId2());

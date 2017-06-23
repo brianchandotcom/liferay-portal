@@ -15,7 +15,7 @@
 	</command>
 
 	<command name="assertAllCpOptionsSet">
-		<for list="facetable,required,contributor" param="cpOption" >
+		<for list="${setCpOption1},${setCpOption2},${setCpOption3}" param="cpOption" >
 			<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
 				<var name="key_cpOption" value="${cpOption}" />
 				<var name="key_cpOptionStatus" value="true" />
@@ -59,5 +59,19 @@
 		<execute function="Confirm" value1="Are you sure you want to delete the selected options?" />
 
 		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="setThreeCpOptions">
+		<execute function="Check" locator1="CommerceEntry#${checkboxLocator1}_CHECKBOX" value1="${cpOption1}" />
+
+		<execute function="Check" locator1="CommerceEntry#${checkboxLocator2}_CHECKBOX" value1="${cpOption2}" />
+
+		<execute function="Check" locator1="CommerceEntry#${checkboxLocator3}_CHECKBOX" value1="${cpOption3}" />
+	</command>
+
+	<command name="setTwoCpOptions">
+		<execute function="Check" locator1="CommerceEntry#${checkboxLocator1}_CHECKBOX" value1="${cpOption1}" />
+
+		<execute function="Check" locator1="CommerceEntry#${checkboxLocator2}_CHECKBOX" value1="${cpOption2}" />
 	</command>
 </definition>

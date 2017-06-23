@@ -1,0 +1,83 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<div class="meeting-body">
+	<div class="meeting-header">
+		<c:if test="<%= PowwowServiceProviderUtil.isSupportsOptionAutoStartVideo(powwowMeeting.getProviderType()) %>">
+			<c:choose>
+				<c:when test="<%= PowwowServiceProviderUtil.getOptionAutoStartVideo(powwowMeetingId) %>">
+					<span class="icon-stack" id="<portlet:namespace/>autoStartVideo" title="<liferay-ui:message key="start-meeting-with-video" />">
+						<i class="icon-facetime-video"></i>
+						<i class="icon-circle-blank icon-stack-base"></i>
+					</span>
+				</c:when>
+				<c:otherwise>
+					<span class="icon-stack" id="<portlet:namespace/>autoStartVideo" title="<liferay-ui:message key="start-meeting-with-audio-only" />">
+						<i class="icon-facetime-video"></i>
+						<i class="icon-ban-circle icon-stack-base"></i>
+					</span>
+				</c:otherwise>
+			</c:choose>
+		</c:if>
+
+		<span class="meeting-name">
+			<%= HtmlUtil.escape(powwowMeeting.getName()) %>
+		</span>
+		<span class="meeting-status">
+			(<liferay-ui:message key="<%= PowwowMeetingConstants.getStatusLabel(powwowMeeting.getStatus()) %>" />)
+		</span>
+
+		<%
+		CalendarBooking calendarBooking = CalendarBookingServiceUtil.fetchCalendarBooking(powwowMeeting.getCalendarBookingId());
+		%>
+
+		<c:if test="<%= (calendarBooking != null) && !calendarBooking.isInTrash() %>">
+			<div class="meeting-time">
+				<span title="<%= longDateFormat.format(calendarBooking.getStartTime()) %>"><%= shortDateFormat.format(calendarBooking.getStartTime()) %></span>
+
+				<span><liferay-ui:message key="to" /></span>
+
+				<span title="<%= longDateFormat.format(calendarBooking.getEndTime()) %>"><%= shortDateFormat.format(calendarBooking.getEndTime()) %></span>
+			</div>
+		</c:if>
+	</div>
+
+	<c:if test="<%= displayMeetingActions %>">
+		<div class="meeting-actions">
+			<%@ include file="/meetings/meeting_action.jspf" %>
+		</div>
+	</c:if>
+
+	<c:if test="<%= Validator.isNotNull(powwowMeeting.getDescription()) %>">
+		<div class="meeting-description">
+			<%= HtmlUtil.escape(powwowMeeting.getDescription()) %>
+		</div>
+	</c:if>
+</div>
+
+<aui:script use="aui-tooltip">
+	new A.Tooltip(
+		{
+			cssClass: 'tooltip-help',
+			html: true,
+			opacity: 1,
+			position: 'right',
+			trigger: '#<portlet:namespace/>autoStartVideo',
+			visible: false,
+			zIndex: 10000
+		}
+	).render();
+</aui:script>

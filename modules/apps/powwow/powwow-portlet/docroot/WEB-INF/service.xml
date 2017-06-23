@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.powwow">
+	<author>Shinn Lok</author>
+	<namespace>Powwow</namespace>
+	<entity local-service="true" name="PowwowMeeting" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="powwowMeetingId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="powwowServerId" type="long" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="providerType" type="String" />
+		<column name="providerTypeMetadata" type="String" />
+		<column name="languageId" type="String" />
+		<column name="calendarBookingId" type="long" />
+		<column name="status" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="PowwowServerId" return-type="Collection">
+			<finder-column name="powwowServerId" />
+		</finder>
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status" />
+		</finder>
+		<finder name="U_S" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="PSI_S" return-type="Collection">
+			<finder-column name="powwowServerId" />
+			<finder-column name="status" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="PowwowParticipant" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="powwowParticipantId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="powwowMeetingId" type="long" />
+		<column name="name" type="String" />
+		<column name="participantUserId" type="long" />
+		<column name="emailAddress" type="String" />
+		<column name="type" type="int" />
+		<column name="status" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="PowwowMeetingId" return-type="Collection">
+			<finder-column name="powwowMeetingId" />
+		</finder>
+		<finder name="PMI_PUI" return-type="PowwowParticipant">
+			<finder-column name="powwowMeetingId" />
+			<finder-column name="participantUserId" />
+		</finder>
+		<finder name="PMI_EA" return-type="PowwowParticipant" unique="true">
+			<finder-column name="powwowMeetingId" />
+			<finder-column name="emailAddress" />
+		</finder>
+		<finder name="PMI_T" return-type="Collection">
+			<finder-column name="powwowMeetingId" />
+			<finder-column name="type" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="PowwowServer" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="powwowServerId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="providerType" type="String" />
+		<column name="url" type="String" />
+		<column name="apiKey" type="String" />
+		<column name="secret" type="String" />
+		<column name="active" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column case-sensitive="false" name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="PT_A" return-type="Collection">
+			<finder-column name="providerType" />
+			<finder-column name="active" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal.kernel" />
+	</entity>
+</service-builder>

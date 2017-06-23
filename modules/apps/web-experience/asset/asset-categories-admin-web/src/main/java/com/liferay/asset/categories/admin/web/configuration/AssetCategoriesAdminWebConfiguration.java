@@ -29,7 +29,18 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface AssetCategoriesAdminWebConfiguration {
 
-	@Meta.AD(deflt = "false", required = false)
+	/**
+	 * Set this to <code>true</code> to enable the asset categories tree to
+	 * display as a flattened tree.
+	 *
+	 * @return <code>true</code> if the asset categories tree is displayed as a
+	 * flattened tree; <code>false</code> otherwise
+	 */
+	@Meta.AD(
+		deflt = "false",
+		description = "flattened.navigation.allowed.description",
+		required = false
+	)
 	public boolean flattenedNavigationAllowed();
 
 }

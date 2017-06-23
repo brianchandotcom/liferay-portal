@@ -94,7 +94,9 @@
 		</execute>
 	</command>
 
-	<command description="Ensure that a user can add a category." name="AddCategory" priority="4">
+	<command name="AddCategory" priority="4">
+		<description message="Ensure that a user can add a category." />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

@@ -9,7 +9,9 @@
 		<execute macro="SignIn#signInTestSetup" />
 	</set-up>
 
-	<command description="Ensures that a fix pack can be reverted." name="RevertFixPack" priority="5">
+	<command name="RevertFixPack" priority="5">
+		<description message="Ensures that a fix pack can be reverted." />
+
 		<property name="skip.install-patch" value="true" />
 		<property name="test.assert.warning.exceptions" value="true" />
 

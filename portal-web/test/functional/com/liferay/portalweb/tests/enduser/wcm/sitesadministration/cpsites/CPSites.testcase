@@ -205,7 +205,9 @@
 		</execute>
 	</command>
 
-	<command description="Ensure that the super admin can add a Blank Site" name="AddSite" priority="4">
+	<command name="AddSite" priority="4">
+		<description message="Ensure that the super admin can add a Blank Site" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

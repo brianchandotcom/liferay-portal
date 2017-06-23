@@ -54,7 +54,7 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 	protected void addCPDefinitionLinks(ActionRequest actionRequest)
 		throws Exception {
 
-		long[] addCPDefinitionIds = null;
+		long[] cpDefinitionIds2 = null;
 
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
@@ -62,10 +62,10 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "cpDefinitionLinkId");
 
 		if (cpDefinitionLinkId > 0) {
-			addCPDefinitionIds = new long[] {cpDefinitionLinkId};
+			cpDefinitionIds2 = new long[] {cpDefinitionLinkId};
 		}
 		else {
-			addCPDefinitionIds = StringUtil.split(
+			cpDefinitionIds2 = StringUtil.split(
 				ParamUtil.getString(actionRequest, "cpDefinitionIds"), 0L);
 		}
 
@@ -73,7 +73,7 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 			CPDefinitionOptionRel.class.getName(), actionRequest);
 
 		_cpDefinitionLinkService.updateCPDefinitionLinks(
-			cpDefinitionId, addCPDefinitionIds, 0, serviceContext);
+			cpDefinitionId, cpDefinitionIds2, 0, serviceContext);
 	}
 
 	protected void deleteCPDefinitionLinks(ActionRequest actionRequest)

@@ -69,38 +69,38 @@ public class CPDefinitionLinkServiceImpl
 	}
 
 	@Override
-	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+			getPermissionChecker(), cpDefinitionId1, ActionKeys.VIEW);
 
 		return cpDefinitionLinkLocalService.getCPDefinitionLinks(
-			cpDefinitionId);
+			cpDefinitionId1);
 	}
 
 	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(
-			long cpDefinitionId, int start, int end,
+			long cpDefinitionId1, int start, int end,
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+			getPermissionChecker(), cpDefinitionId1, ActionKeys.VIEW);
 
 		return cpDefinitionLinkLocalService.getCPDefinitionLinks(
-			cpDefinitionId, start, end, orderByComparator);
+			cpDefinitionId1, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCPDefinitionLinksCount(long cpDefinitionId)
+	public int getCPDefinitionLinksCount(long cpDefinitionId1)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+			getPermissionChecker(), cpDefinitionId1, ActionKeys.VIEW);
 
 		return cpDefinitionLinkLocalService.getCPDefinitionLinksCount(
-			cpDefinitionId);
+			cpDefinitionId1);
 	}
 
 	@Override
@@ -117,15 +117,15 @@ public class CPDefinitionLinkServiceImpl
 
 	@Override
 	public void updateCPDefinitionLinks(
-			long cpDefinitionId, long[] cpDefinitionLinkEntryIds, int type,
+			long cpDefinitionId1, long[] cpDefinitionIds2, int type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
+			getPermissionChecker(), cpDefinitionId1, ActionKeys.UPDATE);
 
 		cpDefinitionLinkLocalService.updateCPDefinitionLinks(
-			cpDefinitionId, cpDefinitionLinkEntryIds, type, serviceContext);
+			cpDefinitionId1, cpDefinitionIds2, type, serviceContext);
 	}
 
 }

@@ -31,29 +31,29 @@ public class CPDefinitionLinkLocalServiceImpl
 	extends CPDefinitionLinkLocalServiceBaseImpl {
 
 	@Override
-	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1)
 		throws PortalException {
 
 		return cpDefinitionLinkPersistence.findByCPDefinitionId1(
-			cpDefinitionId);
+			cpDefinitionId1);
 	}
 
 	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(
-			long cpDefinitionId, int start, int end,
+			long cpDefinitionId1, int start, int end,
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws PortalException {
 
 		return cpDefinitionLinkPersistence.findByCPDefinitionId1(
-			cpDefinitionId, start, end, orderByComparator);
+			cpDefinitionId1, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCPDefinitionLinksCount(long cpDefinitionId)
+	public int getCPDefinitionLinksCount(long cpDefinitionId1)
 		throws PortalException {
 
 		return cpDefinitionLinkPersistence.countByCPDefinitionId1(
-			cpDefinitionId);
+			cpDefinitionId1);
 	}
 
 	@Override
@@ -73,36 +73,35 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Override
 	public void updateCPDefinitionLinks(
-			long cpDefinitionId, long[] cpDefinitionLinkEntryIds, int type,
+			long cpDefinitionId1, long[] cpDefinitionIds2, int type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (cpDefinitionLinkEntryIds == null) {
+		if (cpDefinitionIds2 == null) {
 			return;
 		}
 
 		List<CPDefinitionLink> cpDefinitionLinks = getCPDefinitionLinks(
-			cpDefinitionId);
+			cpDefinitionId1);
 
 		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
-			if ((cpDefinitionLink.getCPDefinitionId1() == cpDefinitionId) &&
+			if ((cpDefinitionLink.getCPDefinitionId1() == cpDefinitionId1) &&
 				!ArrayUtil.contains(
-					cpDefinitionLinkEntryIds,
-					cpDefinitionLink.getCPDefinitionId2())) {
+					cpDefinitionIds2, cpDefinitionLink.getCPDefinitionId2())) {
 
 				deleteCPDefinitionLink(cpDefinitionLink);
 			}
 		}
 
-		for (long cpDefinitionLinkEntryId : cpDefinitionLinkEntryIds) {
-			if (cpDefinitionLinkEntryId != cpDefinitionId) {
+		for (long cpDefinitionId2 : cpDefinitionIds2) {
+			if (cpDefinitionId1 != cpDefinitionId2) {
 				CPDefinitionLink cpDefinitionLink =
 					cpDefinitionLinkPersistence.fetchByC1_C2_T(
-						cpDefinitionId, cpDefinitionLinkEntryId, type);
+						cpDefinitionId1, cpDefinitionId2, type);
 
 				if (cpDefinitionLink == null) {
 					addCPDefinitionLink(
-						cpDefinitionId, cpDefinitionLinkEntryId, 0, type,
+						cpDefinitionId1, cpDefinitionId2, 0, type,
 						serviceContext);
 				}
 			}

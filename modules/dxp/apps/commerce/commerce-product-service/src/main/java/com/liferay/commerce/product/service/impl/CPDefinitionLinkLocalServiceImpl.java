@@ -34,7 +34,8 @@ public class CPDefinitionLinkLocalServiceImpl
 	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
 		throws PortalException {
 
-		return cpDefinitionLinkPersistence.findByC1(cpDefinitionId);
+		return cpDefinitionLinkPersistence.findByCPDefinitionId1(
+			cpDefinitionId);
 	}
 
 	@Override
@@ -43,7 +44,7 @@ public class CPDefinitionLinkLocalServiceImpl
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws PortalException {
 
-		return cpDefinitionLinkPersistence.findByC1(
+		return cpDefinitionLinkPersistence.findByCPDefinitionId1(
 			cpDefinitionId, start, end, orderByComparator);
 	}
 
@@ -51,7 +52,8 @@ public class CPDefinitionLinkLocalServiceImpl
 	public int getCPDefinitionLinksCount(long cpDefinitionId)
 		throws PortalException {
 
-		return cpDefinitionLinkPersistence.countByC1(cpDefinitionId);
+		return cpDefinitionLinkPersistence.countByCPDefinitionId1(
+			cpDefinitionId);
 	}
 
 	@Override
@@ -95,7 +97,7 @@ public class CPDefinitionLinkLocalServiceImpl
 		for (long cpDefinitionLinkEntryId : cpDefinitionLinkEntryIds) {
 			if (cpDefinitionLinkEntryId != cpDefinitionId) {
 				CPDefinitionLink cpDefinitionLink =
-					cpDefinitionLinkPersistence.fetchByC_C_T(
+					cpDefinitionLinkPersistence.fetchByC1_C2_T(
 						cpDefinitionId, cpDefinitionLinkEntryId, type);
 
 				if (cpDefinitionLink == null) {

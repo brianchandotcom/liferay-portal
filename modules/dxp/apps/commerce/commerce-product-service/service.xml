@@ -112,7 +112,7 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="S" return-type="Collection">
+		<finder name="Status" return-type="Collection">
 			<finder-column name="status" />
 		</finder>
 		<finder name="G_S" return-type="Collection">
@@ -162,13 +162,13 @@
 
 		<!-- Finder methods -->
 
-		<finder name="C1" return-type="Collection">
+		<finder name="CPDefinitionId1" return-type="Collection">
 			<finder-column name="CPDefinitionId1" />
 		</finder>
-		<finder name="C2" return-type="Collection">
+		<finder name="CPDefinitionId2" return-type="Collection">
 			<finder-column name="CPDefinitionId2" />
 		</finder>
-		<finder name="C_C" return-type="Collection">
+		<finder name="C1_C2" return-type="Collection">
 			<finder-column name="CPDefinitionId1" />
 			<finder-column name="CPDefinitionId2" />
 		</finder>
@@ -180,7 +180,7 @@
 			<finder-column name="CPDefinitionId2" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="C_C_T" return-type="CPDefinitionLink" unique="true">
+		<finder name="C1_C2_T" return-type="CPDefinitionLink" unique="true">
 			<finder-column name="CPDefinitionId1" />
 			<finder-column name="CPDefinitionId2" />
 			<finder-column name="type" />

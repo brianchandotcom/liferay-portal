@@ -822,7 +822,7 @@ public class CPDefinitionLocalServiceImpl
 	protected void checkCPDefinitionsByDisplayDate(Date displayDate)
 		throws PortalException {
 
-		List<CPDefinition> cpDefinitions = cpDefinitionPersistence.findByS(
+		List<CPDefinition> cpDefinitions = cpDefinitionPersistence.findByStatus(
 			WorkflowConstants.STATUS_SCHEDULED);
 
 		if ((cpDefinitions != null) && !cpDefinitions.isEmpty()) {

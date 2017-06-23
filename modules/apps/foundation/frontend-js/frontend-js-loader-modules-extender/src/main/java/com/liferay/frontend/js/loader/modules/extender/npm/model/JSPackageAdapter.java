@@ -29,9 +29,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Provides an incomplete implementation of {@link
- * com.liferay.frontend.js.loader.modules.extender.npm.JSPackage} that can be
- * reused by existing implementations.
+ * Provides an incomplete implementation of {@link JSPackage} that can be reused
+ * by existing implementations.
  *
  * @author Iván Zaera
  */

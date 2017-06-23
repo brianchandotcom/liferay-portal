@@ -18,7 +18,7 @@ import java.util.Collection;
 
 /**
  * Represents an NPM module inside a {@link JSBundle}.
- * 
+ *
  * <p>
  * {@link JSModule}s belong to a {@link JSPackage} and {@link JSPackage}s belong
  * to a {@link JSBundle}.
@@ -42,8 +42,8 @@ import java.util.Collection;
  * The modules would look something like this:
  * </p>
  *
- * <p>
  * <b>Modules:</b>
+ *
  * <ul>
  * <li>
  * <code>b1.jar:p@1.0.0/m</code> with URL <code>.../b1.jar/p@1.0.0/m</code>
@@ -55,13 +55,14 @@ import java.util.Collection;
  * <code>b3.jar:p@1.0.0/m</code> with URL <code>.../b3.jar/p@1.0.0/m</code>
  * </li>
  * </ul>
+ *
  * <b>Resolved Module:</b>
+ *
  * <ul>
  * <li>
  * <code>p@1.0.0/m</code> with URL <code>.../p@1.0.0/m</code>
  * </li>
  * </ul>
- * </p>
  *
  * <p>
  * The URL of the resolved module does not show any reference to a bundle. Also,

@@ -36,10 +36,12 @@ import com.liferay.portal.kernel.util.StringPool;
  * Example: <code>lib/index</code>
  * </li>
  * </ul>
+ *
  * </li>
  * <li>
  * <b>module file name</b>: the file name implementing an NPM module deployed to
  * the portal
+ *
  * <ul>
  * <li>
  * Syntax: <code>{module file name}</code>
@@ -49,25 +51,29 @@ import com.liferay.portal.kernel.util.StringPool;
  * </li>
  * </ul>
  * <li>
- * <b>package id:</b> the unique ID of an NPM package deployed to the portal
+ * <b>package ID:</b> the unique ID of an NPM package deployed to the portal
+ *
  * <ul>
  * <li>
- * Syntax: <code>{bundle id}/{package name}@{package version}</code>
+ * Syntax: <code>{bundle ID}/{package name}@{package version}</code>
  * </li>
  * <li>
  * Example: <code>625/isarray@1.0.0</code>
  * </li>
  * </ul>
  * <li>
- * <b>module id</b>: the unique ID of an NPM module deployed to the portal
+ * <b>module ID</b>: the unique ID of an NPM module deployed to the portal
+ *
  * <ul>
  * <li>
- * Syntax: <code>{bundle id}/{package name}@{package version}/{module name}</code>
+ * Syntax: <code>{bundle ID}/{package name}@{package version}/{module
+ * name}</code>
  * </li>
  * <li>
  * Example: <code>625/isarray@1.0.0/lib/index</code>
  * </li>
  * </ul>
+ *
  * </li>
  * </ul>
  *
@@ -98,7 +104,7 @@ public class ModuleNameUtil {
 	 * <p>
 	 * Example:
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * <pre>
 	 * <code>
@@ -126,7 +132,7 @@ public class ModuleNameUtil {
 	 * <p>
 	 * Example:
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * <pre>
 	 * <code>
@@ -135,8 +141,8 @@ public class ModuleNameUtil {
 	 * </pre>
 	 * </p>
 	 *
-	 * @param  moduleName
-	 * @return 
+	 * @param moduleName
+	 * @return
 	 */
 	public static String getPackagePath(String moduleName) {
 		int i = moduleName.indexOf(StringPool.SLASH);

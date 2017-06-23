@@ -24,17 +24,15 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.Collection;
 
 /**
- * Provides an incomplete implementation of {@link
- * com.liferay.frontend.js.loader.modules.extender.npm.JSModule} that lets its
+ * Provides an incomplete implementation of {@link JSModule} that lets its
  * contents be retrieved with an HTTP request to the portal.
  *
  * <p>
  * This class assumes that the {@link BuiltInJSModuleServlet} and {@link
  * BuiltInJSResolvedModuleServlet} are installed and running in the portal.
  * These servlets are responsible for exporting the contents returned by the
- * {@link
- * com.liferay.frontend.js.loader.modules.extender.npm.JSModule#getInputStream()}
- * method implemented by subclasses inheriting from this class.
+ * {@link JSModule#getInputStream()} method implemented by subclasses inheriting
+ * from this class.
  * </p>
  *
  * @author Iván Zaera

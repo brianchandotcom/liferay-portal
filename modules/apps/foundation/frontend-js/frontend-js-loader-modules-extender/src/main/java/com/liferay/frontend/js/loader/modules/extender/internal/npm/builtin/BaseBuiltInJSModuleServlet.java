@@ -41,10 +41,8 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 	 * Returns the requested module. This is a template method that must be
 	 * implemented by subclasses to lookup the requested module.
 	 *
-	 * @param moduleName the module's name
-	 * @return the {@link
-	 *         com.liferay.frontend.js.loader.modules.extender.npm.JSModule}
-	 *         object describing the module
+	 * @param  moduleName the module's name
+	 * @return the {@link JSModule} object describing the module
 	 */
 	protected abstract JSModule getJSModule(String moduleName);
 

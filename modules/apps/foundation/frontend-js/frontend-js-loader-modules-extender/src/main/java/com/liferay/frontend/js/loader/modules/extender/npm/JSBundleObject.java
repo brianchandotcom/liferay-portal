@@ -16,8 +16,8 @@ package com.liferay.frontend.js.loader.modules.extender.npm;
 
 /**
  * Provides an object related to the NPM description model that can be directly
- * referenced by its unique ID. A {@link JSBundle} contains
- * {@link JSBundleObject}s.
+ * referenced by its unique ID. A {@link JSBundle} contains {@link
+ * JSBundleObject}s.
  *
  * @author Iván Zaera
  */

@@ -58,7 +58,7 @@ public interface JSPackage extends JSBundleObject {
 	 * Returns the NPM package's dependency (i.e., another NPM package) with the
 	 * package name.
 	 *
-	 * @param packageName the package name
+	 * @param  packageName the package name
 	 * @return the package dependency or <code>null</code> if no dependency with
 	 *         the name exists
 	 */

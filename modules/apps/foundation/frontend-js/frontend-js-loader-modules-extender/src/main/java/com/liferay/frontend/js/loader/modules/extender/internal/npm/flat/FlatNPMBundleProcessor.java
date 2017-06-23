@@ -43,10 +43,8 @@ import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Provides an implementation of {@link
- * com.liferay.frontend.js.loader.modules.extender.npm.JSBundleProcessor} that
- * assumes the <code>flat</code> format for the OSGi bundles containing NPM
- * packages.
+ * Provides an implementation of {@link JSBundleProcessor} that assumes the
+ * <code>flat</code> format for the OSGi bundles containing NPM packages.
  *
  * <p>
  * See this package's summary for an explanation of the <code>flat</code>
@@ -80,11 +78,10 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	}
 
 	/**
-	 * Returns the contents of a resource inside a {@link
-	 * com.liferay.frontend.js.loader.modules.extender.internal.npm.flat.FlatJSBundle}.
+	 * Returns the contents of a resource inside a {@link FlatJSBundle}.
 	 *
-	 * @param flatJSBundle the bundle
-	 * @param location the resource's path
+	 * @param  flatJSBundle the bundle
+	 * @param  location the resource's path
 	 * @return the contents of the resource as a String
 	 */
 	private String _getResourceContent(
@@ -108,7 +105,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	 * Returns the dependencies of a module given its URL. The dependencies are
 	 * parsed by reading the module's JavaScript code.
 	 *
-	 * @param url the {@link URL} of the module
+	 * @param  url the {@link URL} of the module
 	 * @return the dependencies of the module
 	 */
 	private Collection<String> _parseModuleDependencies(URL url)
@@ -164,8 +161,8 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	}
 
 	/**
-	 * Processes the modules of a package and adds them to their
-	 * {@link FlatJSPackage} descriptor.
+	 * Processes the modules of a package and adds them to their {@link
+	 * FlatJSPackage} descriptor.
 	 *
 	 * @param flatJSPackage the NPM package descriptor
 	 * @param location the bundle's relative path of the package folder

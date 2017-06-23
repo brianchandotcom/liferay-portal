@@ -57,8 +57,8 @@ public class JSPackageDependency {
 	}
 
 	/**
-	 * Returns the NPM semantic version expression defining the suitable versions
-	 * for the dependency.
+	 * Returns the NPM semantic version expression defining the suitable
+	 * versions for the dependency.
 	 *
 	 * @return the NPM semantic version expression
 	 */

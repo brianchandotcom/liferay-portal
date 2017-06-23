@@ -31,32 +31,6 @@ public class CPDefinitionLinkLocalServiceImpl
 	extends CPDefinitionLinkLocalServiceBaseImpl {
 
 	@Override
-	public CPDefinitionLink addCPDefinitionLink(
-			long cpDefinitionId1, long cpDefinitionId2, double priority,
-			int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		User user = userLocalService.getUser(serviceContext.getUserId());
-
-		long cpDefinitionLinkId = counterLocalService.increment();
-
-		CPDefinitionLink cpDefinitionLink = cpDefinitionLinkPersistence.create(
-			cpDefinitionLinkId);
-
-		cpDefinitionLink.setCompanyId(user.getCompanyId());
-		cpDefinitionLink.setUserId(user.getUserId());
-		cpDefinitionLink.setUserName(user.getFullName());
-		cpDefinitionLink.setCPDefinitionId1(cpDefinitionId1);
-		cpDefinitionLink.setCPDefinitionId2(cpDefinitionId2);
-		cpDefinitionLink.setPriority(priority);
-		cpDefinitionLink.setType(type);
-
-		cpDefinitionLinkPersistence.update(cpDefinitionLink);
-
-		return cpDefinitionLink;
-	}
-
-	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
 		throws PortalException {
 
@@ -131,6 +105,31 @@ public class CPDefinitionLinkLocalServiceImpl
 				}
 			}
 		}
+	}
+
+	protected CPDefinitionLink addCPDefinitionLink(
+			long cpDefinitionId1, long cpDefinitionId2, double priority,
+			int type, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
+
+		long cpDefinitionLinkId = counterLocalService.increment();
+
+		CPDefinitionLink cpDefinitionLink = cpDefinitionLinkPersistence.create(
+			cpDefinitionLinkId);
+
+		cpDefinitionLink.setCompanyId(user.getCompanyId());
+		cpDefinitionLink.setUserId(user.getUserId());
+		cpDefinitionLink.setUserName(user.getFullName());
+		cpDefinitionLink.setCPDefinitionId1(cpDefinitionId1);
+		cpDefinitionLink.setCPDefinitionId2(cpDefinitionId2);
+		cpDefinitionLink.setPriority(priority);
+		cpDefinitionLink.setType(type);
+
+		cpDefinitionLinkPersistence.update(cpDefinitionLink);
+
+		return cpDefinitionLink;
 	}
 
 }

@@ -31,22 +31,6 @@ public class CPDefinitionLinkServiceImpl
 	extends CPDefinitionLinkServiceBaseImpl {
 
 	@Override
-	public CPDefinitionLink addCPDefinitionLink(
-			long cpDefinitionId1, long cpDefinitionId2, double priority,
-			int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId1, ActionKeys.UPDATE);
-
-		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId2, ActionKeys.VIEW);
-
-		return cpDefinitionLinkLocalService.addCPDefinitionLink(
-			cpDefinitionId1, cpDefinitionId2, priority, type, serviceContext);
-	}
-
-	@Override
 	public CPDefinitionLink deleteCPDefinitionLink(
 			CPDefinitionLink cpDefinitionLink)
 		throws PortalException {

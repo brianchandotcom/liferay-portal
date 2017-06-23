@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 
 import java.util.Map;
 
@@ -45,13 +44,17 @@ public class CheckCPDefinitionMessageListener
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
 		CPDefinitionConfiguration cPDefinitionConfiguration =
 			ConfigurableUtil.createConfigurable(
 				CPDefinitionConfiguration.class, properties);
 
 		schedulerEntryImpl.setTrigger(
-			TriggerFactoryUtil.createTrigger(
-				getEventListenerClass(), getEventListenerClass(),
+			_triggerFactory.createTrigger(
+				className, className, null, null,
 				cPDefinitionConfiguration.checkInterval(), TimeUnit.MINUTE));
 
 		_schedulerEngineHelper.register(
@@ -73,14 +76,13 @@ public class CheckCPDefinitionMessageListener
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-	}
-
 	@Reference
 	private CPDefinitionLocalService _cPDefinitionLocalService;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

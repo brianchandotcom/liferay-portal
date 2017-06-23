@@ -48,6 +48,10 @@ public class CommerceProductAssetCategoryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		AssetCategory assetCategory = super.addCategory(
+			userId, groupId, parentCategoryId, titleMap, descriptionMap,
+			vocabularyId, categoryProperties, serviceContext);
+
 		String layoutUuid = (String)serviceContext.getAttribute("layoutUuid");
 
 		String urlTitleMapAsXML = (String)serviceContext.getAttribute(
@@ -55,10 +59,6 @@ public class CommerceProductAssetCategoryLocalServiceImpl
 
 		Map<Locale, String> urlTitleMap = LocalizationUtil.getLocalizationMap(
 			urlTitleMapAsXML);
-
-		AssetCategory assetCategory = super.addCategory(
-			userId, groupId, parentCategoryId, titleMap, descriptionMap,
-			vocabularyId, categoryProperties, serviceContext);
 
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			AssetCategory.class, assetCategory.getCategoryId(), layoutUuid,
@@ -79,14 +79,14 @@ public class CommerceProductAssetCategoryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		AssetCategory assetCategory = super.updateCategory(
+			userId, categoryId, parentCategoryId, titleMap, descriptionMap,
+			vocabularyId, categoryProperties, serviceContext);
+
 		String layoutUuid = (String)serviceContext.getAttribute("layoutUuid");
 
 		Map<Locale, String> urlTitleMap = LocalizationUtil.getLocalizationMap(
 			serviceContext.getRequest(), "urlTitleMapAsXML");
-
-		AssetCategory assetCategory = super.updateCategory(
-			userId, categoryId, parentCategoryId, titleMap, descriptionMap,
-			vocabularyId, categoryProperties, serviceContext);
 
 		_cpDisplayLayoutLocalService.addCPDisplayLayout(
 			AssetCategory.class, assetCategory.getCategoryId(), layoutUuid,

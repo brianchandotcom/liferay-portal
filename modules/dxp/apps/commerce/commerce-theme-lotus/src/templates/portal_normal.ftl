@@ -59,12 +59,12 @@
 					</#if>
 
 					<div class="col-md-4 col-md-offset-2">
-                        <div id="foocont">
+						<div id="foocont">
 							<@liferay_ui["asset-display"]
 								className = "com.liferay.journal.model.JournalArticle"
 								classPK = footer_content_id
 							/>
-                        </div>
+						</div>
 
 						<p id="copyright">
 							<small><@liferay.language key="powered-by" /> <a href="http://www.liferay.com" rel="external">Liferay</a></small>

@@ -1,233 +1,233 @@
 @import "partials/fonts";
 
 body {
-  font-family: 'Montserrat_Regular';
+font-family: 'Montserrat_Regular';
 
-  .portlet-content, .portlet-content-editable {
-    padding: 0;
-  }
+.portlet-content, .portlet-content-editable {
+	padding: 0;
+}
 }
 
 #footer {
-  background-color: #F6F8F9;
-  color: #9A8468;
-  padding: 72px 0;
+background-color: #F6F8F9;
+color: #9A8468;
+padding: 72px 0;
 
-  #p_p_id_com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_ {
-    .portlet-title-text {
-      color: #9A8468;
-      font-size: 14px;
-      font-weight: 600;
-    }
+#p_p_id_com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_ {
+	.portlet-title-text {
+	  color: #9A8468;
+	  font-size: 14px;
+	  font-weight: 600;
+	}
 
-    #navbar_com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet {
-      .lfr-nav-item {
-        float: none;
+	#navbar_com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet {
+	  .lfr-nav-item {
+		float: none;
 
-        a, a:hover, a:focus {
-          padding: 0;
-          color: #9A8468;
-          font-size: 14px;
-          font-weight: 300;
-        }
-      }
-    }
-  }
+		a, a:hover, a:focus {
+		  padding: 0;
+		  color: #9A8468;
+		  font-size: 14px;
+		  font-weight: 300;
+		}
+	  }
+	}
+}
 
-  .social-content {
-    color: #9A8468;
-    font-size: 14px;
-    font-weight: 600;
-  }
+.social-content {
+	color: #9A8468;
+	font-size: 14px;
+	font-weight: 600;
+}
 
-  .social-icons {
-    padding-top: 16px;
-    padding-bottom: 33px;
+.social-icons {
+	padding-top: 16px;
+	padding-bottom: 33px;
 
-    img {
-      height: 20.81px;
-      padding-right: 19px;
-    }
-  }
+	img {
+	  height: 20.81px;
+	  padding-right: 19px;
+	}
+}
 
-  #copyright {
-    a, a:hover, a:focus {
-      color: #9A8468;
-      font-size: 14px;
-    }
-  }
+#copyright {
+	a, a:hover, a:focus {
+	  color: #9A8468;
+	  font-size: 14px;
+	}
+}
 }
 
 .focus-product-column {
-  height: 100%;
+height: 100%;
 }
 
 .focus-product-title {
-  color: #9A8468;
-  font-size: 60px;
-  font-weight: 200;
-  padding: 80px 120px;
+color: #9A8468;
+font-size: 60px;
+font-weight: 200;
+padding: 80px 120px;
 }
 
 .focus-product-description {
-  color: #3F3F3F;
-  font-size: 24px;
-  font-weight: 200;
-  padding: 0 120px;
+color: #3F3F3F;
+font-size: 24px;
+font-weight: 200;
+padding: 0 120px;
 }
 
 .focus-product-logo {
-  padding: 10px 0 0 30px;
+padding: 10px 0 0 30px;
 }
 
 .focus-product-image {
-  img {
-    object-fit: cover;
-    width: 100%;
-  }
+img {
+	object-fit: cover;
+	width: 100%;
+}
 }
 
 .focus-product-highlighter-long {
-  height: 1px;
-  width: 420px;
-  background-color: #9A8468;
-  margin-top: 35px;
-  margin-left: 120px;
+height: 1px;
+width: 420px;
+background-color: #9A8468;
+margin-top: 35px;
+margin-left: 120px;
 }
 
 .focus-product-highlighter-short {
-  height: 1px;
-  width: 348px;
-  background-color: #9A8468;
-  margin-top: 22px;
-  margin-left: 120px;
+height: 1px;
+width: 348px;
+background-color: #9A8468;
+margin-top: 22px;
+margin-left: 120px;
 }
 
 .section-title-background {
-  height: 90px;
-  background-color: #6B6157;
+height: 90px;
+background-color: #6B6157;
 
-  .section-title-highlighter {
-    height: 1px;
-    margin: 43px auto;
-    background-color: #FFFFFF;
-    width: 320px;
-  }
+.section-title-highlighter {
+	height: 1px;
+	margin: 43px auto;
+	background-color: #FFFFFF;
+	width: 320px;
+}
 
-  .section-title {
-    opacity: 0.9;
-    color: #FFFFFF;
-    font-size: 27px;
-    font-family: 'Montserrat_Light';
-    font-weight: 200;
-    text-align: center;
-    padding: 23px 0;
+.section-title {
+	opacity: 0.9;
+	color: #FFFFFF;
+	font-size: 27px;
+	font-family: 'Montserrat_Light';
+	font-weight: 200;
+	text-align: center;
+	padding: 23px 0;
 
-    p {
-      margin: 0 0 5px;
-    }
-  }
+	p {
+	  margin: 0 0 5px;
+	}
+}
 }
 
 @media screen and (min-width: 1491px) and (max-width: 1837px) {
-  #footer {
-    .social-icons {
-      img {
-        padding-right: 15px;
-      }
-    }
-  }
+#footer {
+	.social-icons {
+	  img {
+		padding-right: 15px;
+	  }
+	}
+}
 
-  .section-title-background {
-    .section-title-highlighter {
-      width: 300px;
-    }
+.section-title-background {
+	.section-title-highlighter {
+	  width: 300px;
+	}
 
-    .section-title {
-      font-size: 20px;
-      padding: 29px 0;
-    }
-  }
+	.section-title {
+	  font-size: 20px;
+	  padding: 29px 0;
+	}
+}
 }
 
 @media screen and (min-width: 1385px) and (max-width: 1490px) {
-  #footer {
-    .social-icons {
-      img {
-        padding-right: 11px;
-      }
-    }
-  }
+#footer {
+	.social-icons {
+	  img {
+		padding-right: 11px;
+	  }
+	}
+}
 
-  .focus-product-title {
-    font-size: 50px;
-    padding: 50px 75px;
-  }
+.focus-product-title {
+	font-size: 50px;
+	padding: 50px 75px;
+}
 
-  .focus-product-description {
-    font-size: 19px;
-    padding: 0 75px;
-  }
+.focus-product-description {
+	font-size: 19px;
+	padding: 0 75px;
+}
 
-  .focus-product-highlighter-long {
-    margin-left: 75px;
-  }
+.focus-product-highlighter-long {
+	margin-left: 75px;
+}
 
-  .focus-product-highlighter-short {
-    margin-left: 75px;
-  }
+.focus-product-highlighter-short {
+	margin-left: 75px;
+}
 
-  .section-title-background {
-    .section-title-highlighter {
-      width: 300px;
-    }
+.section-title-background {
+	.section-title-highlighter {
+	  width: 300px;
+	}
 
-    .section-title {
-      font-size: 19px;
-      padding: 30px 0;
-    }
-  }
+	.section-title {
+	  font-size: 19px;
+	  padding: 30px 0;
+	}
+}
 }
 
 @media screen and (min-width: 1280px) and (max-width: 1384px) {
-  #footer {
-    .social-icons {
-      img {
-        padding-right: 6px;
-      }
-    }
-  }
+#footer {
+	.social-icons {
+	  img {
+		padding-right: 6px;
+	  }
+	}
+}
 
-  .focus-product-title {
-    font-size: 50px;
-    padding: 40px 60px;
-  }
+.focus-product-title {
+	font-size: 50px;
+	padding: 40px 60px;
+}
 
-  .focus-product-description {
-    font-size: 19px;
-    padding: 0 60px;
-  }
+.focus-product-description {
+	font-size: 19px;
+	padding: 0 60px;
+}
 
-  .focus-product-logo {
-    padding: 10px 0 0 80px;
-  }
+.focus-product-logo {
+	padding: 10px 0 0 80px;
+}
 
-  .focus-product-highlighter-long {
-    margin-left: 60px;
-  }
+.focus-product-highlighter-long {
+	margin-left: 60px;
+}
 
-  .focus-product-highlighter-short {
-    margin-left: 60px;
-  }
+.focus-product-highlighter-short {
+	margin-left: 60px;
+}
 
-  .section-title-background {
-    .section-title-highlighter {
-      width: 270px;
-    }
+.section-title-background {
+	.section-title-highlighter {
+	  width: 270px;
+	}
 
-    .section-title {
-      font-size: 19px;
-      padding: 30px 0;
-    }
-  }
+	.section-title {
+	  font-size: 19px;
+	  padding: 30px 0;
+	}
+}
 }

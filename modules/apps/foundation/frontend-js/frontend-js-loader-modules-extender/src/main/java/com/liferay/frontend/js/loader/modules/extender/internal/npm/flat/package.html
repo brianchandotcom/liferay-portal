@@ -17,36 +17,36 @@ details.
 <html>
 <body>
 <p>
-	This package provides complete implementations for the interfaces in
-	{@link com.liferay.frontend.js.loader.modules.extender.npm.model} that are
-	provided by default by Liferay Portal.
+	Provides complete implementations for the interfaces in {@link
+	com.liferay.frontend.js.loader.modules.extender.npm.model} that are provided
+	by default by Liferay Portal.
 </p>
 <p>
-	These implementations assume a particular OSGi bundle structure to be able
-	to locate the contents of modules. We call such structure `flat` and it
-	looks like the following example:
+	These implementations assume a particular OSGi bundle structure to locate
+	the contents of modules. These are <code>flat</code> structures and look
+	like the following example:
 </p>
 <pre>
-	📄 my-bundle.jar
-	   📂 META-INF
-	      📂 resources
-	         📄 package.json
-	         📂 node_modules
-	            📂 isarray@1.0.0
-	               📄 package.json
-                   …
-	            📂 isarray@2.1.0
-	               📄 package.json
-                   …
-	            📂 isobject@1.0.0
-	               📄 package.json
-                   …
-	         …
+	- my-bundle.jar
+		- META-INF
+			- resources
+				- package.json
+				- node_modules
+				- isarray@1.0.0
+					- package.json
+				...
+				- isarray@2.1.0
+					- package.json
+				...
+				- isobject@1.0.0
+					- package.json
+				...
+			...
 </pre>
 <p>
-	As it can be seen, all NPM packages live in META-INF/resources/node_modules
-	and are laid out in a flat (not nested) disposition, where each package
-	lives next to the others.
+	All NPM packages live in <code>META-INF/resources/node_modules</code>
+	and are laid out in a flat (not nested) disposition where each package
+	resides next to the others.
 </p>
 </body>
 </html>

@@ -113,12 +113,12 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		if (cmd.equals(Constants.ADD) || cmd.equals(Constants.ADD_MULTIPLE)) {
 			addCPDefinitionOptionRels(actionRequest);
 		}
-		else if (cmd.equals(Constants.UPDATE)) {
-			updateCPDefinitionOptionRel(cpDefinitionOptionRelId, actionRequest);
-		}
 		else if (cmd.equals(Constants.DELETE)) {
 			deleteCPDefinitionOptionRels(
 				cpDefinitionOptionRelId, actionRequest);
+		}
+		else if (cmd.equals(Constants.UPDATE)) {
+			updateCPDefinitionOptionRel(cpDefinitionOptionRelId, actionRequest);
 		}
 		else if (cmd.equals("setFacetable")) {
 			boolean facetable = ParamUtil.getBoolean(

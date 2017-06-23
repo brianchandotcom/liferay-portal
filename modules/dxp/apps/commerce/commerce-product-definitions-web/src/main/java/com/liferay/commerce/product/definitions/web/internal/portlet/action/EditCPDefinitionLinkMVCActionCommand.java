@@ -122,13 +122,13 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
+		else if (cmd.equals(Constants.DELETE)) {
+			deleteCPDefinitionLinks(actionRequest);
+		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			updateCPDefinitionLink(actionRequest);
 
 			sendRedirect(actionRequest, actionResponse, redirect);
-		}
-		else if (cmd.equals(Constants.DELETE)) {
-			deleteCPDefinitionLinks(actionRequest);
 		}
 	}
 

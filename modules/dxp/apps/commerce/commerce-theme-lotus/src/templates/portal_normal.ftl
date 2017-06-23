@@ -58,7 +58,7 @@
 						<#include "${full_templates_path}/footer_navigation.ftl" />
 					</#if>
 
-					<div class="col-md-4">
+					<div class="col-md-4 col-md-offset-2">
                         <div id="foocont">
 							<@liferay_ui["asset-display"]
 								className = "com.liferay.journal.model.JournalArticle"

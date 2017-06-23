@@ -59,12 +59,12 @@ public class CPDefinitionsPortletUtil {
 
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator = null;
 
-		if (orderByCol.equals("modified-date")) {
-			orderByComparator = new CPAttachmentFileEntryModifiedDateComparator(
+		if (orderByCol.equals("display-date")) {
+			orderByComparator = new CPAttachmentFileEntryDisplayDateComparator(
 				orderByAsc);
 		}
-		else if (orderByCol.equals("display-date")) {
-			orderByComparator = new CPAttachmentFileEntryDisplayDateComparator(
+		else if (orderByCol.equals("modified-date")) {
+			orderByComparator = new CPAttachmentFileEntryModifiedDateComparator(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("priority")) {

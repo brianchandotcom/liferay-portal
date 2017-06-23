@@ -207,16 +207,13 @@ public class CategoryCPFormNavigatorEntry
 				}
 			}
 		}
-		catch (Exception ex) {
-			_log.error(ex);
+		catch (Exception e) {
+			_log.error(e);
 		}
 
 		request.setAttribute("itemSelectorURL", itemSelectorURL);
-
 		request.setAttribute("layoutBreadcrumb", layoutBreadcrumb);
-
 		request.setAttribute("layoutUuid", layoutUuid);
-
 		request.setAttribute("titleMapAsXML", titleMapAsXML);
 
 		super.include(request, response);

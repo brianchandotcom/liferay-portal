@@ -1,1 +1,3 @@
-node.npmVersion = "4.5.0"
+node {
+	npmVersion = "4.5.0"
+}

@@ -48,7 +48,7 @@
 	<command name="gotoEditPageFromControlMenu">
 		<execute function="Click" locator1="ControlMenu#CONFIGURE_PAGE" />
 
-		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="${pageName}" />
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${pageName}" />
 	</command>
 
 	<command name="gotoEntryInDescriptiveView">

@@ -5,7 +5,7 @@
 
 	<command name="_add">
 		<if>
-			<condition function="IsElementNotPresent" locator1="ControlMenu#HEADER_TITLE" />
+			<condition function="IsElementNotPresent" locator1="Portlet#HEADER" />
 			<then>
 				<var name="key_iframeTitle" value="Data Definitions" />
 
@@ -18,7 +18,7 @@
 				<execute function="AssertTextEquals" locator1="NavBar#ASSET_TITLE" value1="Data Definitions" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="Structures" />
+				<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Structures" />
 			</else>
 		</if>
 

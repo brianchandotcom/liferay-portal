@@ -90,9 +90,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="facetable" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="required" />
+			<var name="notSetCpOption2" value="contributor" />
+			<var name="setCpOption" value="facetable" />
 		</execute>
 	</command>
 
@@ -108,9 +109,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="facetable" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="required" />
+			<var name="notSetCpOption2" value="contributor" />
+			<var name="setCpOption" value="facetable" />
 		</execute>
 	</command>
 
@@ -126,9 +128,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="facetable" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="required" />
+			<var name="notSetCpOption2" value="contributor" />
+			<var name="setCpOption" value="facetable" />
 		</execute>
 	</command>
 
@@ -144,9 +147,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="facetable" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="required" />
+			<var name="notSetCpOption2" value="contributor" />
+			<var name="setCpOption" value="facetable" />
 		</execute>
 	</command>
 
@@ -162,9 +166,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="facetable" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="required" />
+			<var name="notSetCpOption2" value="contributor" />
+			<var name="setCpOption" value="facetable" />
 		</execute>
 	</command>
 
@@ -180,9 +185,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="facetable" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="required" />
+			<var name="notSetCpOption2" value="contributor" />
+			<var name="setCpOption" value="facetable" />
 		</execute>
 	</command>
 
@@ -314,9 +320,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="required" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="facetable" />
+			<var name="notSetCpOption2" value="contributor" />
+			<var name="setCpOption" value="required" />
 		</execute>
 	</command>
 
@@ -332,9 +339,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="required" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="facetable" />
+			<var name="notSetCpOption2" value="contributor" />
+			<var name="setCpOption" value="required" />
 		</execute>
 	</command>
 
@@ -350,9 +358,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="required" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="facetable" />
+			<var name="notSetCpOption2" value="contributor" />
+			<var name="setCpOption" value="required" />
 		</execute>
 	</command>
 
@@ -368,9 +377,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="required" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="facetable" />
+			<var name="notSetCpOption2" value="contributor" />
+			<var name="setCpOption" value="required" />
 		</execute>
 	</command>
 
@@ -386,9 +396,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="required" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="facetable" />
+			<var name="notSetCpOption2" value="contributor" />
+			<var name="setCpOption" value="required" />
 		</execute>
 	</command>
 
@@ -404,9 +415,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="required" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="facetable" />
+			<var name="notSetCpOption2" value="contributor" />
+			<var name="setCpOption" value="required" />
 		</execute>
 	</command>
 
@@ -516,9 +528,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="contributor" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="facetable" />
+			<var name="notSetCpOption2" value="required" />
+			<var name="setCpOption" value="contributor" />
 		</execute>
 	</command>
 
@@ -534,9 +547,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="contributor" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="facetable" />
+			<var name="notSetCpOption2" value="required" />
+			<var name="setCpOption" value="contributor" />
 		</execute>
 	</command>
 
@@ -552,9 +566,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="contributor" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="facetable" />
+			<var name="notSetCpOption2" value="required" />
+			<var name="setCpOption" value="contributor" />
 		</execute>
 	</command>
 
@@ -570,9 +585,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="contributor" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="facetable" />
+			<var name="notSetCpOption2" value="required" />
+			<var name="setCpOption" value="contributor" />
 		</execute>
 	</command>
 
@@ -588,9 +604,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="contributor" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="facetable" />
+			<var name="notSetCpOption2" value="required" />
+			<var name="setCpOption" value="contributor" />
 		</execute>
 	</command>
 
@@ -606,9 +623,10 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="contributor" />
-			<var name="key_cpOptionStatus" value="true" />
+		<execute macro="CommerceOptions#assertCpOptionSet">
+			<var name="notSetCpOption1" value="facetable" />
+			<var name="notSetCpOption2" value="required" />
+			<var name="setCpOption" value="contributor" />
 		</execute>
 	</command>
 

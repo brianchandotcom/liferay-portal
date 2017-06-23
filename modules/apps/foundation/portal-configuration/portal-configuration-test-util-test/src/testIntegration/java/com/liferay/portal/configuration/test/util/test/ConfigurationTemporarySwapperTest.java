@@ -167,8 +167,6 @@ public class ConfigurationTemporarySwapperTest {
 
 		testConfiguration.update(temporaryValues);
 
-		_persistenceManager.load(_pid);
-
 		temporaryValues.put(testKey, temporaryValue);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =

@@ -14,6 +14,43 @@
 		</execute>
 	</command>
 
+	<command name="assertAllCpOptionsSet">
+		<for list="facetable,required,contributor" param="cpOption" >
+			<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+				<var name="key_cpOption" value="${cpOption}" />
+				<var name="key_cpOptionStatus" value="true" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="assertCpOptionSet">
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="${setCpOption}" />
+			<var name="key_cpOptionStatus" value="true" />
+		</execute>
+
+		<for list="${notSetCpOption1},${notSetCpOption2}" param="cpOption" >
+			<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+				<var name="key_cpOption" value="${cpOption}" />
+				<var name="key_cpOptionStatus" value="false" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="assertTwoCpOptionsSet">
+		<for list="${setCpOption1},${setCpOption2}" param="cpOption" >
+			<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+				<var name="key_cpOption" value="${cpOption}" />
+				<var name="key_cpOptionStatus" value="true" />
+			</execute>
+		</for>
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
+			<var name="key_cpOption" value="${notSetCpOption}" />
+			<var name="key_cpOptionStatus" value="false" />
+		</execute>
+	</command>
+
 	<command name="deleteOptionsEntries">
 		<execute function="Click" locator1="CommerceNavigation#SELECT_ALL_CHECKBOX" />
 

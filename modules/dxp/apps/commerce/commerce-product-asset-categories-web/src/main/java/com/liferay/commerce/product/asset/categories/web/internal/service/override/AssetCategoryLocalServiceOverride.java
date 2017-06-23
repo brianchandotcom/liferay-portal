@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.asset.categories.web.internal.service.ovveride;
+package com.liferay.commerce.product.asset.categories.web.internal.service.override;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceWrapper;
@@ -33,10 +33,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(immediate = true, service = ServiceWrapper.class)
-public class AssetCategoryLocalServiceOvveride
+public class AssetCategoryLocalServiceOverride
 	extends AssetCategoryLocalServiceWrapper {
 
-	public AssetCategoryLocalServiceOvveride() {
+	public AssetCategoryLocalServiceOverride() {
 		super(null);
 	}
 

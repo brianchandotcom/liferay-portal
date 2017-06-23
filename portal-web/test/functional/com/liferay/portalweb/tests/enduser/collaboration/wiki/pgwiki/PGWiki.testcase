@@ -99,7 +99,7 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />" />
+		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
 
 		<execute macro="AlloyEditor#addContent">
 			<var name="content"><![CDATA[<!DOCTYPE html> <html lang="en"> <body> <h1>Edited My First Heading</h1> <p>Edited My first paragraph.</p> </body> </html>]]></var>

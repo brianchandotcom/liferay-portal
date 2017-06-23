@@ -873,11 +873,6 @@ public class CPDefinitionLocalServiceImpl
 					userId, cpDefinition.getCPDefinitionId(),
 					WorkflowConstants.STATUS_EXPIRED, serviceContext,
 					new HashMap<String, Serializable>());
-
-				Indexer<CPDefinition> indexer =
-					IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
-
-				indexer.reindex(cpDefinition);
 			}
 		}
 	}

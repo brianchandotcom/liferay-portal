@@ -86,11 +86,11 @@ public class CPDefinitionsPortletUtil {
 
 		Sort sort = null;
 
-		if (orderByCol.equals("create-date")) {
-			sort = SortFactoryUtil.create(Field.CREATE_DATE, true);
-		}
-		else if (orderByCol.equals("display-date")) {
+		if (orderByCol.equals("display-date")) {
 			sort = SortFactoryUtil.create("display-date", true);
+		}
+		else if (orderByCol.equals("modified-date")) {
+			sort = SortFactoryUtil.create(Field.MODIFIED_DATE, true);
 		}
 		else if (orderByCol.equals("priority")) {
 			sort = SortFactoryUtil.create(

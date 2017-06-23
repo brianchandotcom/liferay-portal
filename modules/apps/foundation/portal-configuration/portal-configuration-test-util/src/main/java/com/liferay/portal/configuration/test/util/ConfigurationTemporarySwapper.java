@@ -14,13 +14,11 @@
 
 package com.liferay.portal.configuration.test.util;
 
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.osgi.util.test.OSGiServiceUtil;
 
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -43,56 +41,75 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 			Dictionary<String, Object> properties)
 		throws Exception {
 
-		Bundle bundle = FrameworkUtil.getBundle(
-			ConfigurationTemporarySwapper.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
 		_configuration = OSGiServiceUtil.callService(
-			bundleContext, ConfigurationAdmin.class,
+			_bundleContext, ConfigurationAdmin.class,
 			configurationAdmin -> configurationAdmin.getConfiguration(
 				pid, StringPool.QUESTION));
 
 		_oldProperties = _configuration.getProperties();
 
-		_serviceListener = OSGiServiceUtil.callService(
-			bundleContext, serviceClass,
+		_service = OSGiServiceUtil.callService(
+			_bundleContext, serviceClass,
 			service -> {
 				_validateService(serviceClass, service, pid);
 
-				return new ConfigurationServiceListener(serviceClass, service);
+				return service;
 			});
 
-		_serviceListener.register();
-
-		_serviceListener._countDownLatch = new CountDownLatch(1);
-
-		_configuration.update(properties);
-
-		_serviceListener._countDownLatch.await(
-			TestPropsValues.CI_TEST_TIMEOUT_TIME, TimeUnit.MILLISECONDS);
+		_updateProperties(_service, _configuration, properties);
 	}
 
 	@Override
 	public void close() throws Exception {
-		try {
-			if (_configuration != null) {
-				_serviceListener._countDownLatch = new CountDownLatch(1);
+		if (_configuration != null) {
+			_updateProperties(_service, _configuration, _oldProperties);
+		}
+	}
 
-				if (_oldProperties != null) {
-					_configuration.update(_oldProperties);
-				}
-				else {
-					_configuration.delete();
+	private static void _updateProperties(
+			Object service, Configuration configuration,
+			Dictionary<String, Object> dictionary)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		ServiceListener serviceListener = new ServiceListener() {
+
+			@Override
+			public void serviceChanged(ServiceEvent serviceEvent) {
+				if (serviceEvent.getType() == ServiceEvent.REGISTERED) {
+					return;
 				}
 
-				_serviceListener._countDownLatch.await(
-					TestPropsValues.CI_TEST_TIMEOUT_TIME,
-					TimeUnit.MILLISECONDS);
+				ServiceReference<?> serviceReference =
+					serviceEvent.getServiceReference();
+
+				Object changedService = _bundleContext.getService(
+					serviceReference);
+
+				if (changedService == service) {
+					countDownLatch.countDown();
+				}
+
+				_bundleContext.ungetService(serviceReference);
 			}
+
+		};
+
+		_bundleContext.addServiceListener(serviceListener);
+
+		try {
+			if (dictionary == null) {
+				configuration.delete();
+			}
+			else {
+				configuration.update(dictionary);
+			}
+
+			countDownLatch.await();
 		}
 		finally {
-			_serviceListener.unregister();
+			_bundleContext.removeServiceListener(serviceListener);
 		}
 	}
 
@@ -137,43 +154,17 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 			ServiceMustConsumeConfiguration(componentName, pid);
 	}
 
+	private static final BundleContext _bundleContext;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			ConfigurationTemporarySwapper.class);
+
+		_bundleContext = bundle.getBundleContext();
+	}
+
 	private final Configuration _configuration;
 	private final Dictionary<String, Object> _oldProperties;
-	private final ConfigurationServiceListener _serviceListener;
-
-	private static class ConfigurationServiceListener
-		implements ServiceListener {
-
-		public void register() throws Exception {
-			_bundleContext.addServiceListener(
-				this, "(objectClass=" + _serviceClass.getName() + ")");
-		}
-
-		@Override
-		public void serviceChanged(ServiceEvent serviceEvent) {
-			if (serviceEvent.getType() == ServiceEvent.MODIFIED) {
-				_countDownLatch.countDown();
-			}
-		}
-
-		public void unregister() {
-			_bundleContext.removeServiceListener(this);
-		}
-
-		private ConfigurationServiceListener(
-			Class<?> serviceClass, Object service) {
-
-			_serviceClass = serviceClass;
-
-			Bundle bundle = FrameworkUtil.getBundle(service.getClass());
-
-			_bundleContext = bundle.getBundleContext();
-		}
-
-		private final BundleContext _bundleContext;
-		private CountDownLatch _countDownLatch;
-		private final Class<?> _serviceClass;
-
-	}
+	private final Object _service;
 
 }

@@ -857,7 +857,9 @@ public class CPDefinitionLocalServiceImpl
 				new QueryDefinition<>(WorkflowConstants.STATUS_APPROVED));
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Expiring " + cpDefinitions.size() + " cPDefinitions");
+			_log.debug(
+				"Expiring " + cpDefinitions.size() +
+					" commerce product definitions");
 		}
 
 		if ((cpDefinitions != null) && !cpDefinitions.isEmpty()) {

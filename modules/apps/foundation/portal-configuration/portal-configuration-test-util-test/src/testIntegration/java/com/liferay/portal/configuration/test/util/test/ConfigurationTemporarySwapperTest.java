@@ -132,7 +132,7 @@ public class ConfigurationTemporarySwapperTest {
 		_pid = _SEARCH_CONFIGURATION_PID;
 
 		String testKey = "permissionTermsLimit";
-		int valueToPreserve = 250;
+		Integer valueToPreserve = 250;
 		int temporaryValue = 300;
 
 		Dictionary<String, Object> temporaryValues = new HashMapDictionary<>();
@@ -166,8 +166,7 @@ public class ConfigurationTemporarySwapperTest {
 			testConfiguration.getProperties();
 
 		Assert.assertNotNull(testProperties);
-
-		Assert.assertEquals(valueToPreserve, testProperties.get(testKey));
+		Assert.assertSame(valueToPreserve, testProperties.get(testKey));
 	}
 
 	@Test
@@ -175,7 +174,7 @@ public class ConfigurationTemporarySwapperTest {
 		_pid = _SEARCH_CONFIGURATION_PID;
 
 		String testKey = "permissionTermsLimit";
-		int testValue = 300;
+		Integer testValue = 300;
 
 		Dictionary<String, Object> temporaryValues = new HashMapDictionary<>();
 
@@ -194,8 +193,7 @@ public class ConfigurationTemporarySwapperTest {
 				testConfiguration.getProperties();
 
 			Assert.assertNotNull(testProperties);
-
-			Assert.assertEquals(testValue, testProperties.get(testKey));
+			Assert.assertSame(testValue, testProperties.get(testKey));
 		}
 	}
 

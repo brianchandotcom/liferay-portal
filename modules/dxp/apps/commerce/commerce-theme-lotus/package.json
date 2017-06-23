@@ -28,5 +28,5 @@
 	"main": "package.json",
 	"name": "commerce-theme-lotus",
 	"repository": "liferay/com-liferay-commerce-private",
-	"version": "1.0.16"
+	"version": "1.0.0"
 }

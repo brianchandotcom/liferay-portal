@@ -62,6 +62,7 @@
 				WikiPage
 			LEFT JOIN
 				AssetEntry ON
+					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = WikiPage.resourcePrimKey)
 			WHERE
 				(AssetEntry.classPK IS NULL)

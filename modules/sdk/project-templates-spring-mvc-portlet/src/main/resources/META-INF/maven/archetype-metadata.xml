@@ -19,6 +19,15 @@
 			<includes>
 				<include>**/*</include>
 			</includes>
+			<excludes>
+				<exclude>**/*.png</exclude>
+			</excludes>
+		</fileSet>
+		<fileSet filtered="false">
+			<directory>src/main/webapp</directory>
+			<includes>
+				<include>**/*.png</include>
+			</includes>
 		</fileSet>
 		<fileSet filtered="true">
 			<directory></directory>

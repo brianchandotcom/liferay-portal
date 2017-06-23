@@ -929,6 +929,42 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateSpringMVCPortletInWorkspace()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"spring-mvc-portlet", "foo");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", "buildscript {",
+			"apply plugin: \"war\"", "repositories {");
+
+		File workspaceDir = _buildWorkspace();
+
+		File warsDir = new File(workspaceDir, "wars");
+
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			warsDir, "spring-mvc-portlet", "foo");
+
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", "apply plugin: \"war\"");
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+
+		File gradleWarFile = _testExists(
+			gradleProjectDir, "build/libs/foo.war");
+
+		_executeGradle(workspaceDir, ":wars:foo:build");
+
+		File workspaceWarFile = _testExists(
+			workspaceProjectDir, "build/libs/foo.war");
+
+		_testWarsDiff(gradleWarFile, workspaceWarFile);
+	}
+
+	@Test
 	public void testBuildTemplateSpringMVCPortletWithPackage()
 		throws Exception {
 
@@ -1703,7 +1739,7 @@ public class ProjectTemplatesTest {
 	}
 
 	private static File _testNotContains(
-			File dir, String fileName, String... strings)
+			File dir, String fileName, boolean match, String... strings)
 		throws IOException {
 
 		File file = _testExists(dir, fileName);
@@ -1711,11 +1747,26 @@ public class ProjectTemplatesTest {
 		String content = FileUtil.read(file.toPath());
 
 		for (String s : strings) {
-			Assert.assertFalse(
-				"Found in " + fileName + ": " + s, content.contains(s));
+			boolean checkResult;
+
+			if (match) {
+				checkResult = content.matches(s);
+			}
+			else {
+				checkResult = content.contains(s);
+			}
+
+			Assert.assertFalse("Found in " + fileName + ": " + s, checkResult);
 		}
 
 		return file;
+	}
+
+	private static File _testNotContains(
+			File dir, String fileName, String... strings)
+		throws IOException {
+
+		return _testNotContains(dir, fileName, false, strings);
 	}
 
 	private static File _testNotExists(File dir, String fileName) {
@@ -1908,6 +1959,13 @@ public class ProjectTemplatesTest {
 		File destinationDir = temporaryFolder.newFolder("maven");
 
 		return _buildTemplateWithMaven(destinationDir, template, name, args);
+	}
+
+	private File _buildWorkspace() throws Exception {
+		File destinationDir = temporaryFolder.newFolder("workspace");
+
+		return _buildTemplateWithGradle(
+			destinationDir, "workspace", "workspace");
 	}
 
 	private File _testBuildTemplatePortlet(

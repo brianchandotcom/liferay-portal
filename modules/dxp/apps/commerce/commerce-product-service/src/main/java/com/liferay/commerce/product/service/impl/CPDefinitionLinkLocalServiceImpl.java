@@ -31,6 +31,12 @@ public class CPDefinitionLinkLocalServiceImpl
 	extends CPDefinitionLinkLocalServiceBaseImpl {
 
 	@Override
+	public void deleteCPDefinitionLinks(long cpDefinitionId) {
+		cpDefinitionLinkPersistence.removeByCPDefinitionId1(cpDefinitionId);
+		cpDefinitionLinkPersistence.removeByCPDefinitionId2(cpDefinitionId);
+	}
+
+	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1)
 		throws PortalException {
 

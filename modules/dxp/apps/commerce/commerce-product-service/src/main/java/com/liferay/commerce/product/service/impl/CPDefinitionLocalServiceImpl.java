@@ -232,6 +232,11 @@ public class CPDefinitionLocalServiceImpl
 		cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntries(
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
+		// Commerce product definition links
+
+		cpDefinitionLinkLocalService.deleteCPDefinitionLinks(
+			cpDefinition.getCPDefinitionId());
+
 		// Commerce product type
 
 		CPType cpType = cpTypeServicesTracker.getCPType(

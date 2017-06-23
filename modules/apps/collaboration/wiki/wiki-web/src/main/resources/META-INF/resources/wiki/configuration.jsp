@@ -37,6 +37,8 @@
 					<aui:input name="preferences--enableComments--" type="checkbox" value="<%= wikiPortletInstanceSettingsHelper.isEnableComments() %>" />
 
 					<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= wikiPortletInstanceSettingsHelper.isEnableCommentRatings() %>" />
+
+					<aui:input name="preferences--enableHighlighting--" type="checkbox" value="<%= wikiPortletInstanceSettingsHelper.isEnableHighlighting() %>" />
 				</aui:fieldset>
 
 				<aui:fieldset collapsible="<%= true %>" label="templates">

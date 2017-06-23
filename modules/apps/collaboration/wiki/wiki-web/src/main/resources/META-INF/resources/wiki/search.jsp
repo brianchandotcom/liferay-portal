@@ -65,6 +65,10 @@ portletURL.setParameter("keywords", keywords);
 		<%
 		Indexer<WikiPage> indexer = IndexerRegistryUtil.getIndexer(WikiPage.class);
 
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(wikiPortletInstanceSettingsHelper.isEnableHighlighting());
+
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 		searchContext.setAttribute("paginationType", "more");
@@ -73,6 +77,7 @@ portletURL.setParameter("keywords", keywords);
 		searchContext.setIncludeDiscussions(true);
 		searchContext.setKeywords(keywords);
 		searchContext.setNodeIds(nodeIds);
+		searchContext.setQueryConfig(queryConfig);
 		searchContext.setStart(searchContainer.getStart());
 
 		Hits hits = indexer.search(searchContext);
@@ -115,6 +120,7 @@ portletURL.setParameter("keywords", keywords);
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 				description="<%= (summary != null) ? summary.getContent() : wikiPage.getSummary() %>"
 				fileEntryRelatedSearchResults="<%= searchResult.getFileEntryRelatedSearchResults() %>"
+				highlightEnabled="<%= queryConfig.isHighlightEnabled() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
 				title="<%= (summary != null) ? summary.getTitle() : wikiPage.getTitle() %>"
 				url="<%= rowURL %>"

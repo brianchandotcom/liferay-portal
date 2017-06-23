@@ -46,7 +46,7 @@ if (Validator.isNull(icon)) {
 		<aui:icon image="<%= icon %>" markupView="lexicon" />
 	</a>
 
-	<aui:script use="liferay-menu">
+	<aui:script position="inline" use="liferay-menu">
 		Liferay.Menu.register('<%= id %>');
 	</aui:script>
 

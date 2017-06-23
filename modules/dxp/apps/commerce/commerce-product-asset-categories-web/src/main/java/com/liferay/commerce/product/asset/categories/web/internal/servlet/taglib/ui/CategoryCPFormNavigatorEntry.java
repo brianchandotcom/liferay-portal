@@ -208,7 +208,7 @@ public class CategoryCPFormNavigatorEntry
 			}
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 
 		request.setAttribute("itemSelectorURL", itemSelectorURL);

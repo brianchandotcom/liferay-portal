@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -192,6 +193,10 @@ public class MBMessageFinderImpl
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("MBMessage", MBMessageImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(PortalUtil.getClassNameId(MBMessage.class));
 
 			return q.list(true);
 		}

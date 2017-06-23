@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.layouts.admin.kernel.util.LayoutTypeUtil;
+import com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -86,7 +86,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 			String id = entry.getKey();
 
-			if (!LayoutTypeUtil.isDivId(id)) {
+			if (!LayoutTypePortletConstants.isLayoutTemplateColumnName(id)) {
 				continue;
 			}
 

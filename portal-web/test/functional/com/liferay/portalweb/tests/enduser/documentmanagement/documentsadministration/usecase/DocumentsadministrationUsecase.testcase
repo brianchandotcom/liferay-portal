@@ -78,7 +78,10 @@
 		</execute>
 	</command>
 
-	<command name="AddDocumentTypeAndMetadata" priority="3">
+	<command name="AddDocumentTypeAndMetadata" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -880,8 +883,10 @@
 		<execute macro="DMDocument#viewDefaultCP" />
 	</command>
 
-	<command name="UpdateDocumentTypeWithPermissions" priority="3">
+	<command name="UpdateDocumentTypeWithPermissions" priority="5">
+		<property name="portal.acceptance" value="pending" />
 		<property name="test.name.skip.portal.instance" value="DocumentsadministrationUsecase#UpdateDocumentTypeWithPermissions" />
+		<property name="testray.component.names" value="Training" />
 
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
@@ -1111,7 +1116,10 @@
 		<execute macro="DMDocumentType#viewNoAvailableActionsViaDocumentTypesPG" />
 	</command>
 
-	<command name="ViewDocumentWithGlobalScope" priority="4">
+	<command name="ViewDocumentWithGlobalScope" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -1296,7 +1304,10 @@
 		</execute>
 	</command>
 
-	<command name="ViewFileCategoryAndTags" priority="4">
+	<command name="ViewFileCategoryAndTags" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>

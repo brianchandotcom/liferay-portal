@@ -67,7 +67,10 @@
 		</execute>
 	</command>
 
-	<command name="AddShortcutToSiteDocument" priority="3">
+	<command name="AddShortcutToSiteDocument" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -165,6 +168,7 @@
 
 	<command name="EditFolder" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#openURL" />
 

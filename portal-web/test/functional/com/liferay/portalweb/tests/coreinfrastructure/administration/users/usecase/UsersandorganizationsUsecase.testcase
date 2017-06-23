@@ -328,8 +328,10 @@
 		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - ${siteName}" />
 	</command>
 
-	<command name="MultipleUsersandOrganizations" priority="4">
+	<command name="MultipleUsersandOrganizations" priority="5">
+		<property name="portal.acceptance" value="pending" />
 		<property name="test.name.skip.portal.instance" value="UsersandorganizationsUsecase#MultipleUsersandOrganizations" />
+		<property name="testray.component.names" value="Training" />
 
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
@@ -688,7 +690,10 @@
 		</execute>
 	</command>
 
-	<command name="OrganizationAdministratorActivate" priority="3">
+	<command name="OrganizationAdministratorActivate" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Roles" />
 		</execute>

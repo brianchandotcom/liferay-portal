@@ -133,14 +133,14 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cpDefinitionLinkId", String.valueOf(cpDefinitionLink.getCPDefinitionLinkId()));
 
-							CPDefinition cpDefinitionEntry = cpDefinitionLink.getCPDefinitionEntry();
+							CPDefinition cpDefinition2 = cpDefinitionLink.getCPDefinition2();
 							%>
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
 								href="<%= rowURL %>"
 								name="title"
-								value="<%= HtmlUtil.escape(cpDefinitionEntry.getTitle(languageId)) %>"
+								value="<%= HtmlUtil.escape(cpDefinition2.getTitle(languageId)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

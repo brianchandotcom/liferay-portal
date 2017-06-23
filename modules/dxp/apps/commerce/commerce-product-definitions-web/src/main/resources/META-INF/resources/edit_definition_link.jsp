@@ -25,7 +25,7 @@ CPDefinitionLink cpDefinitionLink = cpDefinitionLinkDisplayContext.getCPDefiniti
 
 long cpDefinitionLinkId = cpDefinitionLinkDisplayContext.getCPDefinitionLinkId();
 
-CPDefinition cpDefinitionEntry = cpDefinitionLink.getCPDefinitionEntry();
+CPDefinition cpDefinition2 = cpDefinitionLink.getCPDefinition2();
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -33,7 +33,7 @@ portletURL.setParameter("mvcRenderCommandName", "editCPDefinitionLink");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
-renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinitionEntry.getTitle(languageId));
+renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition2.getTitle(languageId));
 %>
 
 <portlet:actionURL name="editCPDefinitionLink" var="editCPDefinitionLinkActionURL" />

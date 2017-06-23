@@ -32,7 +32,7 @@ if (ListUtil.isEmpty(cpDefinitionLinks)) {
 
 		request.setAttribute("info_panel.jsp-entry", cpDefinitionLink);
 
-		CPDefinition cpDefinitionEntry = cpDefinitionLink.getCPDefinitionEntry();
+		CPDefinition cpDefinition2 = cpDefinitionLink.getCPDefinition2();
 		%>
 
 		<div class="sidebar-header">
@@ -45,7 +45,7 @@ if (ListUtil.isEmpty(cpDefinitionLinks)) {
 				</li>
 			</ul>
 
-			<h4><%= HtmlUtil.escape(cpDefinitionEntry.getTitle(languageId)) %></h4>
+			<h4><%= HtmlUtil.escape(cpDefinition2.getTitle(languageId)) %></h4>
 		</div>
 
 		<aui:nav-bar markupView="lexicon">
@@ -58,7 +58,7 @@ if (ListUtil.isEmpty(cpDefinitionLinks)) {
 			<h5><liferay-ui:message key="product-id" /></h5>
 
 			<p>
-				<%= HtmlUtil.escape(String.valueOf(cpDefinitionEntry.getCPDefinitionId())) %>
+				<%= HtmlUtil.escape(String.valueOf(cpDefinition2.getCPDefinitionId())) %>
 			</p>
 		</div>
 	</c:when>

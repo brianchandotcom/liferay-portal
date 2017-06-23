@@ -200,8 +200,6 @@ public class CPDefinitionLocalServiceImpl
 
 		checkCPDefinitionsByExpirationDate(now);
 		checkCPDefinitionsByDisplayDate(now);
-
-		_previousCheckDate = now;
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -884,10 +882,6 @@ public class CPDefinitionLocalServiceImpl
 				indexer.reindex(cpDefinition);
 			}
 		}
-
-		if (_previousCheckDate == null) {
-			_previousCheckDate = new Date(expirationDate.getTime());
-		}
 	}
 
 	protected BaseModelSearchResult<CPDefinition> searchCPDefinitions(
@@ -1104,7 +1098,5 @@ public class CPDefinitionLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionLocalServiceImpl.class);
-
-	private Date _previousCheckDate;
 
 }

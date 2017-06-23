@@ -84,16 +84,16 @@
 									<liferay-ui:message key="thank-you-for-creating-an-account" />
 
 									<c:if test="<%= company.isStrangersVerify() %>">
-										<liferay-ui:message arguments="<%= userEmailAddress %>" key="your-email-verification-code-was-sent-to-x" translateArguments="<%= false %>" />
+										<liferay-ui:message arguments="<%= HtmlUtil.escape(userEmailAddress) %>" key="your-email-verification-code-was-sent-to-x" translateArguments="<%= false %>" />
 									</c:if>
 								</c:when>
 								<c:otherwise>
-									<liferay-ui:message arguments="<%= userPassword %>" key="thank-you-for-creating-an-account.-your-password-is-x" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= HtmlUtil.escape(userPassword) %>" key="thank-you-for-creating-an-account.-your-password-is-x" translateArguments="<%= false %>" />
 								</c:otherwise>
 							</c:choose>
 
 							<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED) %>">
-								<liferay-ui:message arguments="<%= userEmailAddress %>" key="your-password-was-sent-to-x" translateArguments="<%= false %>" />
+								<liferay-ui:message arguments="<%= HtmlUtil.escape(userEmailAddress) %>" key="your-password-was-sent-to-x" translateArguments="<%= false %>" />
 							</c:if>
 						</div>
 					</c:when>
@@ -104,7 +104,7 @@
 						%>
 
 						<div class="alert alert-success">
-							<liferay-ui:message arguments="<%= userEmailAddress %>" key="thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved" translateArguments="<%= false %>" />
+							<liferay-ui:message arguments="<%= HtmlUtil.escape(userEmailAddress) %>" key="thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved" translateArguments="<%= false %>" />
 						</div>
 					</c:when>
 				</c:choose>

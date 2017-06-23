@@ -156,8 +156,8 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 			project, FIND_SECURITY_BUGS_TASK_NAME, JavaExec.class);
 
 		javaExec.args(
-			"-bugCategories", "SECURITY", "-effort:max", "-html", "-medium",
-			"-progress", "-timestampNow");
+			"-bugCategories", "SECURITY", "-effort:max", "-exitcode", "-html",
+			"-medium", "-progress", "-timestampNow");
 
 		File excludeDir = GradleUtil.getRootDir(
 			project, _FIND_SECURITY_BUGS_EXCLUDE_FILE_NAME);
@@ -267,6 +267,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		javaExec.setClasspath(classpath);
 		javaExec.setDescription("Runs FindSecurityBugs on this project.");
 		javaExec.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
+		javaExec.setIgnoreExitValue(true);
 		javaExec.setMain("edu.umd.cs.findbugs.FindBugs2");
 
 		javaExec.systemProperty(

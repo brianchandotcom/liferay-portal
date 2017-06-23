@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,7 +37,6 @@ public class CPDefinitionLinkLocalServiceImpl
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
-		Date now = new Date();
 
 		long cpDefinitionLinkId = counterLocalService.increment();
 
@@ -48,7 +46,6 @@ public class CPDefinitionLinkLocalServiceImpl
 		cpDefinitionLink.setCompanyId(user.getCompanyId());
 		cpDefinitionLink.setUserId(user.getUserId());
 		cpDefinitionLink.setUserName(user.getFullName());
-		cpDefinitionLink.setCreateDate(now);
 		cpDefinitionLink.setCPDefinitionId1(cpDefinitionId1);
 		cpDefinitionLink.setCPDefinitionId2(cpDefinitionId2);
 		cpDefinitionLink.setPriority(priority);

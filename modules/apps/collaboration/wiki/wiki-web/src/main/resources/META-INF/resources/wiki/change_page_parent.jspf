@@ -45,80 +45,87 @@ childPages = ListUtil.sort(childPages);
 childPages.remove(wikiPage);
 %>
 
-<aui:fieldset>
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+<aui:form action="<%= movePageURL %>" method="post" name="changeParentFm" onSubmit='<%= renderResponse.getNamespace() + "changeParent();" %>'>
+	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
+	<aui:input name="title" type="hidden" value="<%= title %>" />
+	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
-	<aui:input name="currentParent" type="resource" value="<%= parentText %>" />
+	<aui:fieldset>
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-	<%
-	boolean newParentAvailable = true;
+		<aui:input name="currentParent" type="resource" value="<%= parentText %>" />
 
-	if (childPages.isEmpty()) {
-		newParentAvailable = false;
-	%>
+		<%
+		boolean newParentAvailable = true;
 
-		<aui:select disabled="<%= true %>" label="new-parent" name="newParentTitle">
-			<aui:option label="not-available" value="" />
-		</aui:select>
+		if (childPages.isEmpty()) {
+			newParentAvailable = false;
+		%>
 
-	<%
-	}
-	else {
-	%>
+			<aui:select disabled="<%= true %>" label="new-parent" name="newParentTitle">
+				<aui:option label="not-available" value="" />
+			</aui:select>
 
-		<aui:select label="new-parent" name="newParentTitle">
-			<aui:option label="none" selected="<%= Validator.isNull(wikiPage.getParentTitle()) %>" value="" />
+		<%
+		}
+		else {
+		%>
 
-			<%
-			for (WikiPage childPage : childPages) {
-				if (Validator.isNull(childPage.getRedirectTitle())) {
-					request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_DEPTH, 1);
-					request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_PAGE, wikiPage);
-					request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_PARENT, childPage);
-			%>
+			<aui:select label="new-parent" name="newParentTitle">
+				<aui:option label="none" selected="<%= Validator.isNull(wikiPage.getParentTitle()) %>" value="" />
 
-					<liferay-util:include page="/wiki/page_tree.jsp" servletContext="<%= application %>" />
+				<%
+				for (WikiPage childPage : childPages) {
+					if (Validator.isNull(childPage.getRedirectTitle())) {
+						request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_DEPTH, 1);
+						request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_PAGE, wikiPage);
+						request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_PARENT, childPage);
+				%>
 
-			<%
+						<liferay-util:include page="/wiki/page_tree.jsp" servletContext="<%= application %>" />
+
+				<%
+					}
 				}
-			}
-			%>
+				%>
 
-		</aui:select>
+			</aui:select>
 
-	<%
-	}
-	%>
+		<%
+		}
+		%>
 
-	<c:if test="<%= pending %>">
-		<div class="alert alert-info">
-			<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-		</div>
-	</c:if>
+		<c:if test="<%= pending %>">
+			<div class="alert alert-info">
+				<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+			</div>
+		</c:if>
 
-	<aui:button-row>
-		<c:choose>
-			<c:when test="<%= hasWorkflowDefinitionLink %>">
-				<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' value="submit-for-publication" />
-			</c:when>
-			<c:otherwise>
-				<aui:button cssClass="btn-lg" disabled="<%= !newParentAvailable %>" type="submit" value="change-parent" />
-			</c:otherwise>
-		</c:choose>
+		<aui:button-row>
+			<c:choose>
+				<c:when test="<%= hasWorkflowDefinitionLink %>">
+					<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' value="submit-for-publication" />
+				</c:when>
+				<c:otherwise>
+					<aui:button cssClass="btn-lg" disabled="<%= !newParentAvailable %>" type="submit" value="change-parent" />
+				</c:otherwise>
+			</c:choose>
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:fieldset>
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</aui:fieldset>
+</aui:form>
 
 <aui:script>
 	function <portlet:namespace />changeParent() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHANGE_PARENT %>';
+		document.<portlet:namespace />changeParentFm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHANGE_PARENT %>';
 
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(document.<portlet:namespace />changeParentFm);
 	}
 
 	function <portlet:namespace />publishPage() {
-		document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = '<%= WorkflowConstants.ACTION_PUBLISH %>';
+		document.<portlet:namespace />changeParentFm.<portlet:namespace />workflowAction.value = '<%= WorkflowConstants.ACTION_PUBLISH %>';
 
 		<portlet:namespace />changeParent();
 	}

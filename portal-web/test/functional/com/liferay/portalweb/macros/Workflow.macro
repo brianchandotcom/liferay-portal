@@ -1086,7 +1086,7 @@
 	</command>
 
 	<command name="viewTaskHeaderTitle">
-		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="${workflowTask}: ${kfProcessName}" />
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${workflowTask}: ${kfProcessName}" />
 	</command>
 
 	<command name="viewTaskNotPresentAssignedToMyRoles">

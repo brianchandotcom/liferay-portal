@@ -45,6 +45,12 @@
 		<execute function="Click" locator1="Icon#BACK" />
 	</command>
 
+	<command name="gotoEditPageViaControlMenu">
+		<execute function="Click" locator1="ControlMenu#EDIT_COG" />
+
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${pageName}" />
+	</command>
+
 	<command name="gotoEntryInDescriptiveView">
 		<var name="key_siteName" value="${entryName}" />
 

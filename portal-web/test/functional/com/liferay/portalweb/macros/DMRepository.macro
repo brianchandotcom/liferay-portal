@@ -38,7 +38,7 @@
 
 		<execute function="AssertVisible" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" />
 
-		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="${dmRepositoryName}" />
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${dmRepositoryName}" />
 	</command>
 
 	<command name="tearDownCP">

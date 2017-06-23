@@ -71,6 +71,12 @@
 					<execute function="Click" locator1="SitePagesEditPage#LAYOUT_CARD" />
 				</then>
 			</elseif>
+			<elseif>
+				<equals arg1="${sitePageType}" arg2="Page Set" />
+				<then>
+					<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="Page Set" />
+				</then>
+			</elseif>
 		</if>
 	</command>
 
@@ -129,17 +135,24 @@
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
 		<if>
-			<contains string="${pageName}" substring="&apos;" />
+			<not>
+				<equals arg1="${sitePageType}" arg2="Page Set" />
+			</not>
 			<then>
-				<execute function="AssertVisible" locator1="Home#PAGE_WITH_QUOTES">
-					<var name="key_pageName" value="${pageName}" />
-				</execute>
+				<if>
+					<contains string="${pageName}" substring="&apos;" />
+					<then>
+						<execute function="AssertVisible" locator1="Home#PAGE_WITH_QUOTES">
+							<var name="key_pageName" value="${pageName}" />
+						</execute>
+					</then>
+					<else>
+						<execute function="AssertVisible" locator1="Home#PAGE">
+							<var name="key_pageName" value="${pageName}" />
+						</execute>
+					</else>
+				</if>
 			</then>
-			<else>
-				<execute function="AssertVisible" locator1="Home#PAGE">
-					<var name="key_pageName" value="${pageName}" />
-				</execute>
-			</else>
 		</if>
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -181,6 +194,20 @@
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${siteChildPageName}" />
 		</execute>
+
+		<if>
+			<isset var="sitePageType" />
+			<then>
+				<execute macro="Page#_selectPageTypeRadio">
+					<var name="columnName" value="${columnName}" />
+					<var name="componentName" value="${componentName}" />
+					<var name="pageTypeDescription" value="${pageTypeDescription}" />
+					<var name="pageTypeURL" value="${pageTypeURL}" />
+					<var name="portlet" value="${portlet}" />
+					<var name="sitePageType" value="${sitePageType}" />
+				</execute>
+			</then>
+		</if>
 
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 

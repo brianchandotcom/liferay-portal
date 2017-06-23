@@ -28,7 +28,7 @@ public class ConfigurationTemporarySwapperException extends PortalException {
 	public static class MustFindService
 		extends ConfigurationTemporarySwapperException {
 
-		public MustFindService(String serviceClass) {
+		public MustFindService(Class<?> serviceClass) {
 			super(
 				String.format(
 					"No service found that implements interface \"%s\"",
@@ -54,7 +54,7 @@ public class ConfigurationTemporarySwapperException extends PortalException {
 	public static class ServiceMustHaveBundle
 		extends ConfigurationTemporarySwapperException {
 
-		public ServiceMustHaveBundle(String serviceClass) {
+		public ServiceMustHaveBundle(Class<?> serviceClass) {
 			super(
 				String.format(
 					"No bundle found for the service \"%s\"", serviceClass));

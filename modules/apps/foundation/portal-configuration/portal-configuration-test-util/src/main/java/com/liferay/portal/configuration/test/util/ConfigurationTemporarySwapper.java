@@ -113,14 +113,14 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 
 		if (service == null) {
 			throw new ConfigurationTemporarySwapperException.MustFindService(
-				serviceClass.getName());
+				serviceClass);
 		}
 
 		Bundle bundle = FrameworkUtil.getBundle(service.getClass());
 
 		if (bundle == null) {
 			throw new ConfigurationTemporarySwapperException.
-				ServiceMustHaveBundle(service.getClass().getName());
+				ServiceMustHaveBundle(service.getClass());
 		}
 
 		BundleContext bundleContext = bundle.getBundleContext();

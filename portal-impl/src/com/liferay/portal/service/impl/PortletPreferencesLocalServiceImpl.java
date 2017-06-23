@@ -35,6 +35,9 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ExceptionRetryAcceptor;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
+import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
+import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.spring.aop.Skip;
@@ -45,7 +48,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.base.PortletPreferencesLocalServiceBaseImpl;
-import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
@@ -181,12 +183,9 @@ public class PortletPreferencesLocalServiceImpl
 			return null;
 		}
 
-		PortletPreferencesImpl portletPreferencesImpl =
-			(PortletPreferencesImpl)PortletPreferencesFactoryUtil.fromXML(
-				companyId, ownerId, ownerType, plid, portletId,
-				portletPreferences.getPreferences());
-
-		return portletPreferencesImpl;
+		return PortletPreferencesFactoryUtil.fromXML(
+			companyId, ownerId, ownerType, plid, portletId,
+			portletPreferences.getPreferences());
 	}
 
 	@Override
@@ -211,6 +210,57 @@ public class PortletPreferencesLocalServiceImpl
 
 		return PortletPreferencesFactoryUtil.fromDefaultXML(
 			portlet.getDefaultPreferences());
+	}
+
+	@Override
+	public Settings getPortletInstanceSettings(
+		long companyId, long groupId, String portletId,
+		PortletInstanceSettingsLocator portletInstanceSettingsLocator,
+		Settings portalPreferencesSettings) {
+
+		String defaultPreferences = PortletConstants.DEFAULT_PREFERENCES;
+
+		Portlet portlet = portletLocalService.fetchPortletById(
+			companyId, PortletIdCodec.decodePortletName(portletId));
+
+		if (portlet != null) {
+			defaultPreferences = portlet.getDefaultPreferences();
+		}
+
+		Settings companyPortletPreferencesSettings =
+			new PortletPreferencesSettings(
+				_getStrictPreferences(
+					companyId, companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+					PortletKeys.PREFS_PLID_SHARED, portletId,
+					defaultPreferences),
+				portalPreferencesSettings);
+
+		Settings groupPortletPreferencesSettings =
+			new PortletPreferencesSettings(
+				_getStrictPreferences(
+					companyId, groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP,
+					PortletKeys.PREFS_PLID_SHARED, portletId,
+					defaultPreferences),
+				companyPortletPreferencesSettings);
+
+		long ownerId = portletInstanceSettingsLocator.getOwnerId();
+		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
+
+		long userId = PortletIdCodec.decodeUserId(portletId);
+
+		if (userId > 0) {
+			ownerId = userId;
+			ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
+		}
+
+		long plid = _swapPlidForPortletPreferences(
+			portletInstanceSettingsLocator.getPlid());
+
+		return new PortletPreferencesSettings(
+			_getStrictPreferences(
+				companyId, ownerId, ownerType, plid, portletId,
+				defaultPreferences),
+			groupPortletPreferencesSettings);
 	}
 
 	@Override
@@ -353,12 +403,9 @@ public class PortletPreferencesLocalServiceImpl
 					defaultPreferences);
 		}
 
-		PortletPreferencesImpl portletPreferencesImpl =
-			(PortletPreferencesImpl)PortletPreferencesFactoryUtil.fromXML(
-				companyId, ownerId, ownerType, plid, portletId,
-				portletPreferences.getPreferences());
-
-		return portletPreferencesImpl;
+		return PortletPreferencesFactoryUtil.fromXML(
+			companyId, ownerId, ownerType, plid, portletId,
+			portletPreferences.getPreferences());
 	}
 
 	@Override
@@ -465,12 +512,9 @@ public class PortletPreferencesLocalServiceImpl
 				defaultPreferences);
 		}
 
-		PortletPreferencesImpl portletPreferencesImpl =
-			(PortletPreferencesImpl)PortletPreferencesFactoryUtil.fromXML(
-				companyId, ownerId, ownerType, plid, portletId,
-				portletPreferences.getPreferences());
-
-		return portletPreferencesImpl;
+		return PortletPreferencesFactoryUtil.fromXML(
+			companyId, ownerId, ownerType, plid, portletId,
+			portletPreferences.getPreferences());
 	}
 
 	@Override
@@ -557,6 +601,25 @@ public class PortletPreferencesLocalServiceImpl
 		}
 
 		return null;
+	}
+
+	private javax.portlet.PortletPreferences _getStrictPreferences(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, String defaultPreferences) {
+
+		PortletPreferences portletPreferences =
+			portletPreferencesPersistence.fetchByO_O_P_P(
+				ownerId, ownerType, plid, portletId);
+
+		if (portletPreferences == null) {
+			return PortletPreferencesFactoryUtil.strictFromXML(
+				companyId, ownerId, ownerType, plid, portletId,
+				defaultPreferences);
+		}
+
+		return PortletPreferencesFactoryUtil.fromXML(
+			companyId, ownerId, ownerType, plid, portletId,
+			portletPreferences.getPreferences());
 	}
 
 	private long _swapPlidForPortletPreferences(long plid) {

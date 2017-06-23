@@ -180,6 +180,15 @@ public class PortletPreferencesLocalServiceUtil {
 			portletPreferences);
 	}
 
+	public static com.liferay.portal.kernel.settings.Settings getPortletInstanceSettings(
+		long companyId, long groupId, java.lang.String portletId,
+		com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator portletInstanceSettingsLocator,
+		com.liferay.portal.kernel.settings.Settings portalPreferencesSettings) {
+		return getService()
+				   .getPortletInstanceSettings(companyId, groupId, portletId,
+			portletInstanceSettingsLocator, portalPreferencesSettings);
+	}
+
 	/**
 	* Returns the number of portlet preferenceses.
 	*

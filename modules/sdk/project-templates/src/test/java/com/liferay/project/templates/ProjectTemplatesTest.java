@@ -856,6 +856,10 @@ public class ProjectTemplatesTest {
 			"apply plugin: \"com.liferay.plugin\"");
 		_testContains(
 			gradleProjectDir,
+			"src/main/java/com/liferay/test/constants/FooPortletKeys.java",
+			"public static final String Foo = \"Foo\"");
+		_testContains(
+			gradleProjectDir,
 			"src/main/java/com/liferay/test/portlet/FooPortlet.java",
 			"public class FooPortlet extends SoyPortlet {");
 

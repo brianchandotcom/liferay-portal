@@ -129,8 +129,8 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	}
 
 	@Override
-	public CPDefinition getCPDefinitionEntry() {
-		return _cpDefinitionLink.getCPDefinitionEntry();
+	public CPDefinition getCPDefinition2() {
+		return _cpDefinitionLink.getCPDefinition2();
 	}
 
 	@Override

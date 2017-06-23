@@ -65,39 +65,6 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class CPDefinitionLinkServiceSoap {
-	public static com.liferay.commerce.product.model.CPDefinitionLinkSoap addCPDefinitionLink(
-		long cpDefinitionId1, long cpDefinitionId2, double priority, int type,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPDefinitionLink returnValue = CPDefinitionLinkServiceUtil.addCPDefinitionLink(cpDefinitionId1,
-					cpDefinitionId2, priority, type, serviceContext);
-
-			return com.liferay.commerce.product.model.CPDefinitionLinkSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionLinkSoap deleteCPDefinitionLink(
-		com.liferay.commerce.product.model.CPDefinitionLinkSoap cpDefinitionLink)
-		throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPDefinitionLink returnValue = CPDefinitionLinkServiceUtil.deleteCPDefinitionLink(com.liferay.commerce.product.model.impl.CPDefinitionLinkModelImpl.toModel(
-						cpDefinitionLink));
-
-			return com.liferay.commerce.product.model.CPDefinitionLinkSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.commerce.product.model.CPDefinitionLinkSoap deleteCPDefinitionLink(
 		long cpDefinitionLinkId) throws RemoteException {
 		try {
@@ -141,10 +108,10 @@ public class CPDefinitionLinkServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionLinkSoap[] getCPDefinitionLinks(
-		long cpDefinitionId) throws RemoteException {
+		long cpDefinitionId1) throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> returnValue =
-				CPDefinitionLinkServiceUtil.getCPDefinitionLinks(cpDefinitionId);
+				CPDefinitionLinkServiceUtil.getCPDefinitionLinks(cpDefinitionId1);
 
 			return com.liferay.commerce.product.model.CPDefinitionLinkSoap.toSoapModels(returnValue);
 		}
@@ -156,12 +123,12 @@ public class CPDefinitionLinkServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionLinkSoap[] getCPDefinitionLinks(
-		long cpDefinitionId, int start, int end,
+		long cpDefinitionId1, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> returnValue =
-				CPDefinitionLinkServiceUtil.getCPDefinitionLinks(cpDefinitionId,
+				CPDefinitionLinkServiceUtil.getCPDefinitionLinks(cpDefinitionId1,
 					start, end, orderByComparator);
 
 			return com.liferay.commerce.product.model.CPDefinitionLinkSoap.toSoapModels(returnValue);
@@ -173,10 +140,10 @@ public class CPDefinitionLinkServiceSoap {
 		}
 	}
 
-	public static int getCPDefinitionLinksCount(long cpDefinitionId)
+	public static int getCPDefinitionLinksCount(long cpDefinitionId1)
 		throws RemoteException {
 		try {
-			int returnValue = CPDefinitionLinkServiceUtil.getCPDefinitionLinksCount(cpDefinitionId);
+			int returnValue = CPDefinitionLinkServiceUtil.getCPDefinitionLinksCount(cpDefinitionId1);
 
 			return returnValue;
 		}
@@ -202,13 +169,13 @@ public class CPDefinitionLinkServiceSoap {
 		}
 	}
 
-	public static void updateCPDefinitionLinks(long cpDefinitionId,
-		long[] cpDefinitionLinkEntryIds, int type,
+	public static void updateCPDefinitionLinks(long cpDefinitionId1,
+		long[] cpDefinitionIds2, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			CPDefinitionLinkServiceUtil.updateCPDefinitionLinks(cpDefinitionId,
-				cpDefinitionLinkEntryIds, type, serviceContext);
+			CPDefinitionLinkServiceUtil.updateCPDefinitionLinks(cpDefinitionId1,
+				cpDefinitionIds2, type, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

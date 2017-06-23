@@ -166,49 +166,25 @@ public class CPDefinitionLinkPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC1() throws Exception {
-		_persistence.countByC1(RandomTestUtil.nextLong());
+	public void testCountByCPDefinitionId1() throws Exception {
+		_persistence.countByCPDefinitionId1(RandomTestUtil.nextLong());
 
-		_persistence.countByC1(0L);
+		_persistence.countByCPDefinitionId1(0L);
 	}
 
 	@Test
-	public void testCountByC2() throws Exception {
-		_persistence.countByC2(RandomTestUtil.nextLong());
+	public void testCountByCPDefinitionId2() throws Exception {
+		_persistence.countByCPDefinitionId2(RandomTestUtil.nextLong());
 
-		_persistence.countByC2(0L);
+		_persistence.countByCPDefinitionId2(0L);
 	}
 
 	@Test
-	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
-
-		_persistence.countByC_C(0L, 0L);
-	}
-
-	@Test
-	public void testCountByC1_T() throws Exception {
-		_persistence.countByC1_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByC1_T(0L, 0);
-	}
-
-	@Test
-	public void testCountByC2_T() throws Exception {
-		_persistence.countByC2_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByC2_T(0L, 0);
-	}
-
-	@Test
-	public void testCountByC_C_T() throws Exception {
-		_persistence.countByC_C_T(RandomTestUtil.nextLong(),
+	public void testCountByC1_C2_T() throws Exception {
+		_persistence.countByC1_C2_T(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
-		_persistence.countByC_C_T(0L, 0L, 0);
+		_persistence.countByC1_C2_T(0L, 0L, 0);
 	}
 
 	@Test

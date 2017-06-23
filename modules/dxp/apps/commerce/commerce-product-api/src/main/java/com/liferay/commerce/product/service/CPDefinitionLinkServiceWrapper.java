@@ -34,22 +34,6 @@ public class CPDefinitionLinkServiceWrapper implements CPDefinitionLinkService,
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPDefinitionLink addCPDefinitionLink(
-		long cpDefinitionId1, long cpDefinitionId2, double priority, int type,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLinkService.addCPDefinitionLink(cpDefinitionId1,
-			cpDefinitionId2, priority, type, serviceContext);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPDefinitionLink deleteCPDefinitionLink(
-		com.liferay.commerce.product.model.CPDefinitionLink cpDefinitionLink)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLinkService.deleteCPDefinitionLink(cpDefinitionLink);
-	}
-
-	@Override
 	public com.liferay.commerce.product.model.CPDefinitionLink deleteCPDefinitionLink(
 		long cpDefinitionLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -79,9 +63,9 @@ public class CPDefinitionLinkServiceWrapper implements CPDefinitionLinkService,
 	}
 
 	@Override
-	public int getCPDefinitionLinksCount(long cpDefinitionId)
+	public int getCPDefinitionLinksCount(long cpDefinitionId1)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLinkService.getCPDefinitionLinksCount(cpDefinitionId);
+		return _cpDefinitionLinkService.getCPDefinitionLinksCount(cpDefinitionId1);
 	}
 
 	/**
@@ -96,27 +80,27 @@ public class CPDefinitionLinkServiceWrapper implements CPDefinitionLinkService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId)
+		long cpDefinitionId1)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId);
+		return _cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId1);
 	}
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId, int start, int end,
+		long cpDefinitionId1, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId,
+		return _cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId1,
 			start, end, orderByComparator);
 	}
 
 	@Override
-	public void updateCPDefinitionLinks(long cpDefinitionId,
-		long[] cpDefinitionLinkEntryIds, int type,
+	public void updateCPDefinitionLinks(long cpDefinitionId1,
+		long[] cpDefinitionIds2, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_cpDefinitionLinkService.updateCPDefinitionLinks(cpDefinitionId,
-			cpDefinitionLinkEntryIds, type, serviceContext);
+		_cpDefinitionLinkService.updateCPDefinitionLinks(cpDefinitionId1,
+			cpDefinitionIds2, type, serviceContext);
 	}
 
 	@Override

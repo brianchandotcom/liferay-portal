@@ -72,10 +72,6 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	public CPDefinitionLink addCPDefinitionLink(
 		CPDefinitionLink cpDefinitionLink);
 
-	public CPDefinitionLink addCPDefinitionLink(long cpDefinitionId1,
-		long cpDefinitionId2, double priority, int type,
-		ServiceContext serviceContext) throws PortalException;
-
 	/**
 	* Creates a new cp definition link with the primary key. Does not add the cp definition link to the database.
 	*
@@ -89,11 +85,10 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	*
 	* @param cpDefinitionLink the cp definition link
 	* @return the cp definition link that was removed
-	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CPDefinitionLink deleteCPDefinitionLink(
-		CPDefinitionLink cpDefinitionLink) throws PortalException;
+		CPDefinitionLink cpDefinitionLink);
 
 	/**
 	* Deletes the cp definition link with the primary key from the database. Also notifies the appropriate model listeners.
@@ -162,7 +157,7 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	public int getCPDefinitionLinksCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionLinksCount(long cpDefinitionId)
+	public int getCPDefinitionLinksCount(long cpDefinitionId1)
 		throws PortalException;
 
 	/**
@@ -226,11 +221,11 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	public List<CPDefinitionLink> getCPDefinitionLinks(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId,
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1,
 		int start, int end,
 		OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws PortalException;
@@ -253,7 +248,9 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	public void updateCPDefinitionLinks(long cpDefinitionId,
-		long[] cpDefinitionLinkEntryIds, int type, ServiceContext serviceContext)
+	public void deleteCPDefinitionLinks(long cpDefinitionId);
+
+	public void updateCPDefinitionLinks(long cpDefinitionId1,
+		long[] cpDefinitionIds2, int type, ServiceContext serviceContext)
 		throws PortalException;
 }

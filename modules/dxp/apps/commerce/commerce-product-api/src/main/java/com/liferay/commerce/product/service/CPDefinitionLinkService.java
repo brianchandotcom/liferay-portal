@@ -56,13 +56,6 @@ public interface CPDefinitionLinkService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionLinkServiceUtil} to access the cp definition link remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionLinkServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CPDefinitionLink addCPDefinitionLink(long cpDefinitionId1,
-		long cpDefinitionId2, double priority, int type,
-		ServiceContext serviceContext) throws PortalException;
-
-	public CPDefinitionLink deleteCPDefinitionLink(
-		CPDefinitionLink cpDefinitionLink) throws PortalException;
-
 	public CPDefinitionLink deleteCPDefinitionLink(long cpDefinitionLinkId)
 		throws PortalException;
 
@@ -78,7 +71,7 @@ public interface CPDefinitionLinkService extends BaseService {
 		double priority) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionLinksCount(long cpDefinitionId)
+	public int getCPDefinitionLinksCount(long cpDefinitionId1)
 		throws PortalException;
 
 	/**
@@ -89,16 +82,16 @@ public interface CPDefinitionLinkService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId,
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1,
 		int start, int end,
 		OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws PortalException;
 
-	public void updateCPDefinitionLinks(long cpDefinitionId,
-		long[] cpDefinitionLinkEntryIds, int type, ServiceContext serviceContext)
+	public void updateCPDefinitionLinks(long cpDefinitionId1,
+		long[] cpDefinitionIds2, int type, ServiceContext serviceContext)
 		throws PortalException;
 }

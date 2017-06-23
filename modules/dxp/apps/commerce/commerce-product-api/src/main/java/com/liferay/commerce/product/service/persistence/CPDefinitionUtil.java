@@ -900,8 +900,8 @@ public class CPDefinitionUtil {
 	* @param status the status
 	* @return the matching cp definitions
 	*/
-	public static List<CPDefinition> findByS(int status) {
-		return getPersistence().findByS(status);
+	public static List<CPDefinition> findByStatus(int status) {
+		return getPersistence().findByStatus(status);
 	}
 
 	/**
@@ -916,8 +916,8 @@ public class CPDefinitionUtil {
 	* @param end the upper bound of the range of cp definitions (not inclusive)
 	* @return the range of matching cp definitions
 	*/
-	public static List<CPDefinition> findByS(int status, int start, int end) {
-		return getPersistence().findByS(status, start, end);
+	public static List<CPDefinition> findByStatus(int status, int start, int end) {
+		return getPersistence().findByStatus(status, start, end);
 	}
 
 	/**
@@ -933,9 +933,10 @@ public class CPDefinitionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definitions
 	*/
-	public static List<CPDefinition> findByS(int status, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator) {
-		return getPersistence().findByS(status, start, end, orderByComparator);
+	public static List<CPDefinition> findByStatus(int status, int start,
+		int end, OrderByComparator<CPDefinition> orderByComparator) {
+		return getPersistence()
+				   .findByStatus(status, start, end, orderByComparator);
 	}
 
 	/**
@@ -952,11 +953,11 @@ public class CPDefinitionUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definitions
 	*/
-	public static List<CPDefinition> findByS(int status, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator,
+	public static List<CPDefinition> findByStatus(int status, int start,
+		int end, OrderByComparator<CPDefinition> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByS(status, start, end, orderByComparator,
+				   .findByStatus(status, start, end, orderByComparator,
 			retrieveFromCache);
 	}
 
@@ -968,10 +969,10 @@ public class CPDefinitionUtil {
 	* @return the first matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public static CPDefinition findByS_First(int status,
+	public static CPDefinition findByStatus_First(int status,
 		OrderByComparator<CPDefinition> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionException {
-		return getPersistence().findByS_First(status, orderByComparator);
+		return getPersistence().findByStatus_First(status, orderByComparator);
 	}
 
 	/**
@@ -981,9 +982,9 @@ public class CPDefinitionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public static CPDefinition fetchByS_First(int status,
+	public static CPDefinition fetchByStatus_First(int status,
 		OrderByComparator<CPDefinition> orderByComparator) {
-		return getPersistence().fetchByS_First(status, orderByComparator);
+		return getPersistence().fetchByStatus_First(status, orderByComparator);
 	}
 
 	/**
@@ -994,10 +995,10 @@ public class CPDefinitionUtil {
 	* @return the last matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public static CPDefinition findByS_Last(int status,
+	public static CPDefinition findByStatus_Last(int status,
 		OrderByComparator<CPDefinition> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionException {
-		return getPersistence().findByS_Last(status, orderByComparator);
+		return getPersistence().findByStatus_Last(status, orderByComparator);
 	}
 
 	/**
@@ -1007,9 +1008,9 @@ public class CPDefinitionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public static CPDefinition fetchByS_Last(int status,
+	public static CPDefinition fetchByStatus_Last(int status,
 		OrderByComparator<CPDefinition> orderByComparator) {
-		return getPersistence().fetchByS_Last(status, orderByComparator);
+		return getPersistence().fetchByStatus_Last(status, orderByComparator);
 	}
 
 	/**
@@ -1021,11 +1022,11 @@ public class CPDefinitionUtil {
 	* @return the previous, current, and next cp definition
 	* @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
 	*/
-	public static CPDefinition[] findByS_PrevAndNext(long CPDefinitionId,
+	public static CPDefinition[] findByStatus_PrevAndNext(long CPDefinitionId,
 		int status, OrderByComparator<CPDefinition> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionException {
 		return getPersistence()
-				   .findByS_PrevAndNext(CPDefinitionId, status,
+				   .findByStatus_PrevAndNext(CPDefinitionId, status,
 			orderByComparator);
 	}
 
@@ -1034,8 +1035,8 @@ public class CPDefinitionUtil {
 	*
 	* @param status the status
 	*/
-	public static void removeByS(int status) {
-		getPersistence().removeByS(status);
+	public static void removeByStatus(int status) {
+		getPersistence().removeByStatus(status);
 	}
 
 	/**
@@ -1044,8 +1045,8 @@ public class CPDefinitionUtil {
 	* @param status the status
 	* @return the number of matching cp definitions
 	*/
-	public static int countByS(int status) {
-		return getPersistence().countByS(status);
+	public static int countByStatus(int status) {
+		return getPersistence().countByStatus(status);
 	}
 
 	/**

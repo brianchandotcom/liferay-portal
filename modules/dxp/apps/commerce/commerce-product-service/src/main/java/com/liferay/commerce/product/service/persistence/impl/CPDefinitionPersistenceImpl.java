@@ -2852,25 +2852,26 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "cpDefinition.companyId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_S = new FinderPath(CPDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_STATUS = new FinderPath(CPDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionModelImpl.FINDER_CACHE_ENABLED, CPDefinitionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStatus",
 			new String[] {
 				Integer.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S = new FinderPath(CPDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS =
+		new FinderPath(CPDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionModelImpl.FINDER_CACHE_ENABLED, CPDefinitionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStatus",
 			new String[] { Integer.class.getName() },
 			CPDefinitionModelImpl.STATUS_COLUMN_BITMASK |
 			CPDefinitionModelImpl.DISPLAYDATE_COLUMN_BITMASK |
 			CPDefinitionModelImpl.CREATEDATE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_S = new FinderPath(CPDefinitionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_STATUS = new FinderPath(CPDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStatus",
 			new String[] { Integer.class.getName() });
 
 	/**
@@ -2880,8 +2881,8 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 	 * @return the matching cp definitions
 	 */
 	@Override
-	public List<CPDefinition> findByS(int status) {
-		return findByS(status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<CPDefinition> findByStatus(int status) {
+		return findByStatus(status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -2897,8 +2898,8 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 	 * @return the range of matching cp definitions
 	 */
 	@Override
-	public List<CPDefinition> findByS(int status, int start, int end) {
-		return findByS(status, start, end, null);
+	public List<CPDefinition> findByStatus(int status, int start, int end) {
+		return findByStatus(status, start, end, null);
 	}
 
 	/**
@@ -2915,9 +2916,9 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 	 * @return the ordered range of matching cp definitions
 	 */
 	@Override
-	public List<CPDefinition> findByS(int status, int start, int end,
+	public List<CPDefinition> findByStatus(int status, int start, int end,
 		OrderByComparator<CPDefinition> orderByComparator) {
-		return findByS(status, start, end, orderByComparator, true);
+		return findByStatus(status, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2935,7 +2936,7 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 	 * @return the ordered range of matching cp definitions
 	 */
 	@Override
-	public List<CPDefinition> findByS(int status, int start, int end,
+	public List<CPDefinition> findByStatus(int status, int start, int end,
 		OrderByComparator<CPDefinition> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -2945,11 +2946,11 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS;
 			finderArgs = new Object[] { status };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_S;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_STATUS;
 			finderArgs = new Object[] { status, start, end, orderByComparator };
 		}
 
@@ -2983,7 +2984,7 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 
 			query.append(_SQL_SELECT_CPDEFINITION_WHERE);
 
-			query.append(_FINDER_COLUMN_S_STATUS_2);
+			query.append(_FINDER_COLUMN_STATUS_STATUS_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -3046,10 +3047,11 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	 */
 	@Override
-	public CPDefinition findByS_First(int status,
+	public CPDefinition findByStatus_First(int status,
 		OrderByComparator<CPDefinition> orderByComparator)
 		throws NoSuchCPDefinitionException {
-		CPDefinition cpDefinition = fetchByS_First(status, orderByComparator);
+		CPDefinition cpDefinition = fetchByStatus_First(status,
+				orderByComparator);
 
 		if (cpDefinition != null) {
 			return cpDefinition;
@@ -3075,9 +3077,9 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 	 * @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	 */
 	@Override
-	public CPDefinition fetchByS_First(int status,
+	public CPDefinition fetchByStatus_First(int status,
 		OrderByComparator<CPDefinition> orderByComparator) {
-		List<CPDefinition> list = findByS(status, 0, 1, orderByComparator);
+		List<CPDefinition> list = findByStatus(status, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3095,10 +3097,10 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	 */
 	@Override
-	public CPDefinition findByS_Last(int status,
+	public CPDefinition findByStatus_Last(int status,
 		OrderByComparator<CPDefinition> orderByComparator)
 		throws NoSuchCPDefinitionException {
-		CPDefinition cpDefinition = fetchByS_Last(status, orderByComparator);
+		CPDefinition cpDefinition = fetchByStatus_Last(status, orderByComparator);
 
 		if (cpDefinition != null) {
 			return cpDefinition;
@@ -3124,15 +3126,15 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	 */
 	@Override
-	public CPDefinition fetchByS_Last(int status,
+	public CPDefinition fetchByStatus_Last(int status,
 		OrderByComparator<CPDefinition> orderByComparator) {
-		int count = countByS(status);
+		int count = countByStatus(status);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CPDefinition> list = findByS(status, count - 1, count,
+		List<CPDefinition> list = findByStatus(status, count - 1, count,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3152,8 +3154,8 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
 	 */
 	@Override
-	public CPDefinition[] findByS_PrevAndNext(long CPDefinitionId, int status,
-		OrderByComparator<CPDefinition> orderByComparator)
+	public CPDefinition[] findByStatus_PrevAndNext(long CPDefinitionId,
+		int status, OrderByComparator<CPDefinition> orderByComparator)
 		throws NoSuchCPDefinitionException {
 		CPDefinition cpDefinition = findByPrimaryKey(CPDefinitionId);
 
@@ -3164,12 +3166,12 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 
 			CPDefinition[] array = new CPDefinitionImpl[3];
 
-			array[0] = getByS_PrevAndNext(session, cpDefinition, status,
+			array[0] = getByStatus_PrevAndNext(session, cpDefinition, status,
 					orderByComparator, true);
 
 			array[1] = cpDefinition;
 
-			array[2] = getByS_PrevAndNext(session, cpDefinition, status,
+			array[2] = getByStatus_PrevAndNext(session, cpDefinition, status,
 					orderByComparator, false);
 
 			return array;
@@ -3182,7 +3184,7 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 		}
 	}
 
-	protected CPDefinition getByS_PrevAndNext(Session session,
+	protected CPDefinition getByStatus_PrevAndNext(Session session,
 		CPDefinition cpDefinition, int status,
 		OrderByComparator<CPDefinition> orderByComparator, boolean previous) {
 		StringBundler query = null;
@@ -3198,7 +3200,7 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 
 		query.append(_SQL_SELECT_CPDEFINITION_WHERE);
 
-		query.append(_FINDER_COLUMN_S_STATUS_2);
+		query.append(_FINDER_COLUMN_STATUS_STATUS_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -3294,9 +3296,9 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 	 * @param status the status
 	 */
 	@Override
-	public void removeByS(int status) {
-		for (CPDefinition cpDefinition : findByS(status, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+	public void removeByStatus(int status) {
+		for (CPDefinition cpDefinition : findByStatus(status,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(cpDefinition);
 		}
 	}
@@ -3308,8 +3310,8 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 	 * @return the number of matching cp definitions
 	 */
 	@Override
-	public int countByS(int status) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_S;
+	public int countByStatus(int status) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_STATUS;
 
 		Object[] finderArgs = new Object[] { status };
 
@@ -3320,7 +3322,7 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 
 			query.append(_SQL_COUNT_CPDEFINITION_WHERE);
 
-			query.append(_FINDER_COLUMN_S_STATUS_2);
+			query.append(_FINDER_COLUMN_STATUS_STATUS_2);
 
 			String sql = query.toString();
 
@@ -3352,7 +3354,7 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_S_STATUS_2 = "cpDefinition.status = ?";
+	private static final String _FINDER_COLUMN_STATUS_STATUS_2 = "cpDefinition.status = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_S = new FinderPath(CPDefinitionModelImpl.ENTITY_CACHE_ENABLED,
 			CPDefinitionModelImpl.FINDER_CACHE_ENABLED, CPDefinitionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
@@ -5514,8 +5516,8 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 
 			args = new Object[] { cpDefinitionModelImpl.getStatus() };
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_S, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS,
 				args);
 
 			args = new Object[] {
@@ -5606,19 +5608,19 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 			}
 
 			if ((cpDefinitionModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						cpDefinitionModelImpl.getOriginalStatus()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_S, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS,
 					args);
 
 				args = new Object[] { cpDefinitionModelImpl.getStatus() };
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_S, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS,
 					args);
 			}
 

@@ -703,7 +703,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param status the status
 	* @return the matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByS(int status);
+	public java.util.List<CPDefinition> findByStatus(int status);
 
 	/**
 	* Returns a range of all the cp definitions where status = &#63;.
@@ -717,7 +717,8 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param end the upper bound of the range of cp definitions (not inclusive)
 	* @return the range of matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByS(int status, int start, int end);
+	public java.util.List<CPDefinition> findByStatus(int status, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the cp definitions where status = &#63;.
@@ -732,7 +733,8 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByS(int status, int start, int end,
+	public java.util.List<CPDefinition> findByStatus(int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator);
 
 	/**
@@ -749,7 +751,8 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definitions
 	*/
-	public java.util.List<CPDefinition> findByS(int status, int start, int end,
+	public java.util.List<CPDefinition> findByStatus(int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -761,7 +764,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @return the first matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public CPDefinition findByS_First(int status,
+	public CPDefinition findByStatus_First(int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator)
 		throws NoSuchCPDefinitionException;
 
@@ -772,7 +775,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public CPDefinition fetchByS_First(int status,
+	public CPDefinition fetchByStatus_First(int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator);
 
 	/**
@@ -783,7 +786,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @return the last matching cp definition
 	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	*/
-	public CPDefinition findByS_Last(int status,
+	public CPDefinition findByStatus_Last(int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator)
 		throws NoSuchCPDefinitionException;
 
@@ -794,7 +797,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	*/
-	public CPDefinition fetchByS_Last(int status,
+	public CPDefinition fetchByStatus_Last(int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator);
 
 	/**
@@ -806,7 +809,8 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @return the previous, current, and next cp definition
 	* @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
 	*/
-	public CPDefinition[] findByS_PrevAndNext(long CPDefinitionId, int status,
+	public CPDefinition[] findByStatus_PrevAndNext(long CPDefinitionId,
+		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinition> orderByComparator)
 		throws NoSuchCPDefinitionException;
 
@@ -815,7 +819,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	*
 	* @param status the status
 	*/
-	public void removeByS(int status);
+	public void removeByStatus(int status);
 
 	/**
 	* Returns the number of cp definitions where status = &#63;.
@@ -823,7 +827,7 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	* @param status the status
 	* @return the number of matching cp definitions
 	*/
-	public int countByS(int status);
+	public int countByStatus(int status);
 
 	/**
 	* Returns all the cp definitions where groupId = &#63; and status = &#63;.

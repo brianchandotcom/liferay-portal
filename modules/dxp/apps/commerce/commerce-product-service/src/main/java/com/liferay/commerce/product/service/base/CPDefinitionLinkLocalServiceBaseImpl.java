@@ -130,12 +130,11 @@ public abstract class CPDefinitionLinkLocalServiceBaseImpl
 	 *
 	 * @param cpDefinitionLink the cp definition link
 	 * @return the cp definition link that was removed
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CPDefinitionLink deleteCPDefinitionLink(
-		CPDefinitionLink cpDefinitionLink) throws PortalException {
+		CPDefinitionLink cpDefinitionLink) {
 		return cpDefinitionLinkPersistence.remove(cpDefinitionLink);
 	}
 

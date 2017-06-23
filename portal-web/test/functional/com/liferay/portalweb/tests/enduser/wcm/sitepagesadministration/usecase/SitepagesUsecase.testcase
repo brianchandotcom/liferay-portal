@@ -1184,6 +1184,7 @@
 	</command>
 
 	<command name="WebContentAdministrationSitesPageTypes" priority="5">
+		<property name="portal.acceptance" value="pending" />
 		<property name="testray.component.names" value="Site Pages Administration,Training" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />

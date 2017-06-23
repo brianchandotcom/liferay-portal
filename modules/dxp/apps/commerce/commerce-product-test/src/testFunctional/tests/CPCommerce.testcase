@@ -97,6 +97,150 @@
 		</execute>
 	</command>
 
+	<command name="AddFacetableContributorCheckboxOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionName" value="Checkbox Option Name 1" />
+			<var name="optionTitle" value="Checkbox Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="required" />
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableContributorDateOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionFieldType" value="Date" />
+			<var name="optionName" value="Date Option Name 1" />
+			<var name="optionTitle" value="Date Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="required" />
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableContributorParagraphOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionFieldType" value="Paragraph" />
+			<var name="optionName" value="Paragraph Option Name 1" />
+			<var name="optionTitle" value="Paragraph Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="required" />
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableContributorRadioOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionFieldType" value="Radio" />
+			<var name="optionName" value="Radio Option Name 1" />
+			<var name="optionTitle" value="Radio Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="required" />
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableContributorSelectOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionFieldType" value="Select" />
+			<var name="optionName" value="Select Option Name 1" />
+			<var name="optionTitle" value="Select Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="required" />
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableContributorTextOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionFieldType" value="Text" />
+			<var name="optionName" value="Text Option Name 1" />
+			<var name="optionTitle" value="Text Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="required" />
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="contributor" />
+		</execute>
+	</command>
+
 	<command name="AddFacetableDateOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option Description 1" />
@@ -151,6 +295,306 @@
 			<var name="notSetCpOption1" value="required" />
 			<var name="notSetCpOption2" value="contributor" />
 			<var name="setCpOption" value="facetable" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableRequiredCheckboxOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionName" value="Checkbox Option Name 1" />
+			<var name="optionTitle" value="Checkbox Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="REQUIRED" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="required" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="contributor" />
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="required" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableRequiredContributorCheckboxOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionName" value="Checkbox Option Name 1" />
+			<var name="optionTitle" value="Checkbox Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setThreeCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="REQUIRED" />
+			<var name="checkboxLocator3" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="required" />
+			<var name="CpOption3" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertAllCpOptionsSet">
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="required" />
+			<var name="setCpOption3" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableRequiredContributorDateOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionFieldType" value="Date" />
+			<var name="optionName" value="Date Option Name 1" />
+			<var name="optionTitle" value="Date Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setThreeCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="REQUIRED" />
+			<var name="checkboxLocator3" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="required" />
+			<var name="CpOption3" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertAllCpOptionsSet">
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="required" />
+			<var name="setCpOption3" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableRequiredContributorParagraphOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionFieldType" value="Paragraph" />
+			<var name="optionName" value="Paragraph Option Name 1" />
+			<var name="optionTitle" value="Paragraph Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setThreeCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="REQUIRED" />
+			<var name="checkboxLocator3" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="required" />
+			<var name="CpOption3" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertAllCpOptionsSet">
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="required" />
+			<var name="setCpOption3" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableRequiredContributorRadioOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionFieldType" value="Radio" />
+			<var name="optionName" value="Radio Option Name 1" />
+			<var name="optionTitle" value="Radio Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setThreeCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="REQUIRED" />
+			<var name="checkboxLocator3" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="required" />
+			<var name="CpOption3" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertAllCpOptionsSet">
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="required" />
+			<var name="setCpOption3" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableRequiredContributorSelectOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionFieldType" value="Select" />
+			<var name="optionName" value="Select Option Name 1" />
+			<var name="optionTitle" value="Select Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setThreeCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="REQUIRED" />
+			<var name="checkboxLocator3" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="required" />
+			<var name="CpOption3" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertAllCpOptionsSet">
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="required" />
+			<var name="setCpOption3" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableRequiredContributorTextOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionFieldType" value="Text" />
+			<var name="optionName" value="Text Option Name 1" />
+			<var name="optionTitle" value="Text Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setThreeCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="REQUIRED" />
+			<var name="checkboxLocator3" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="required" />
+			<var name="CpOption3" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertAllCpOptionsSet">
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="required" />
+			<var name="setCpOption3" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableRequiredDateOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionFieldType" value="Date" />
+			<var name="optionName" value="Date Option Name 1" />
+			<var name="optionTitle" value="Date Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="REQUIRED" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="required" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="contributor" />
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="required" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableRequiredParagraphOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionFieldType" value="Paragraph" />
+			<var name="optionName" value="Paragraph Option Name 1" />
+			<var name="optionTitle" value="Paragraph Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="REQUIRED" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="required" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="contributor" />
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="required" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableRequiredRadioOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionFieldType" value="Radio" />
+			<var name="optionName" value="Radio Option Name 1" />
+			<var name="optionTitle" value="Radio Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="REQUIRED" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="required" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="contributor" />
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="required" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableRequiredSelectOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionFieldType" value="Select" />
+			<var name="optionName" value="Select Option Name 1" />
+			<var name="optionTitle" value="Select Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="REQUIRED" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="required" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="contributor" />
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="required" />
+		</execute>
+	</command>
+
+	<command name="AddFacetableRequiredTextOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionFieldType" value="Text" />
+			<var name="optionName" value="Text Option Name 1" />
+			<var name="optionTitle" value="Text Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="FACETABLE" />
+			<var name="checkboxLocator2" value="REQUIRED" />
+			<var name="CpOption1" value="facetable" />
+			<var name="CpOption2" value="required" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="contributor" />
+			<var name="setCpOption1" value="facetable" />
+			<var name="setCpOption2" value="required" />
 		</execute>
 	</command>
 
@@ -324,6 +768,150 @@
 			<var name="notSetCpOption1" value="facetable" />
 			<var name="notSetCpOption2" value="contributor" />
 			<var name="setCpOption" value="required" />
+		</execute>
+	</command>
+
+	<command name="AddRequiredContributorCheckboxOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Checkbox Option Description 1" />
+			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionName" value="Checkbox Option Name 1" />
+			<var name="optionTitle" value="Checkbox Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="REQUIRED" />
+			<var name="checkboxLocator2" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="required" />
+			<var name="CpOption2" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="facetable" />
+			<var name="setCpOption1" value="required" />
+			<var name="setCpOption2" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddRequiredContributorDateOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Date Option Description 1" />
+			<var name="optionFieldType" value="Date" />
+			<var name="optionName" value="Date Option Name 1" />
+			<var name="optionTitle" value="Date Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="REQUIRED" />
+			<var name="checkboxLocator2" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="required" />
+			<var name="CpOption2" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="facetable" />
+			<var name="setCpOption1" value="required" />
+			<var name="setCpOption2" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddRequiredContributorParagraphOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Paragraph Option Description 1" />
+			<var name="optionFieldType" value="Paragraph" />
+			<var name="optionName" value="Paragraph Option Name 1" />
+			<var name="optionTitle" value="Paragraph Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="REQUIRED" />
+			<var name="checkboxLocator2" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="required" />
+			<var name="CpOption2" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="facetable" />
+			<var name="setCpOption1" value="required" />
+			<var name="setCpOption2" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddRequiredContributorRadioOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Radio Option Description 1" />
+			<var name="optionFieldType" value="Radio" />
+			<var name="optionName" value="Radio Option Name 1" />
+			<var name="optionTitle" value="Radio Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="REQUIRED" />
+			<var name="checkboxLocator2" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="required" />
+			<var name="CpOption2" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="facetable" />
+			<var name="setCpOption1" value="required" />
+			<var name="setCpOption2" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddRequiredContributorSelectOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Select Option Description 1" />
+			<var name="optionFieldType" value="Select" />
+			<var name="optionName" value="Select Option Name 1" />
+			<var name="optionTitle" value="Select Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="REQUIRED" />
+			<var name="checkboxLocator2" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="required" />
+			<var name="CpOption2" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="facetable" />
+			<var name="setCpOption1" value="required" />
+			<var name="setCpOption2" value="contributor" />
+		</execute>
+	</command>
+
+	<command name="AddRequiredContributorTextOptionsEntry">
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="Text Option Description 1" />
+			<var name="optionFieldType" value="Text" />
+			<var name="optionName" value="Text Option Name 1" />
+			<var name="optionTitle" value="Text Option Title 1" />
+		</execute>
+
+		<execute macro="CommerceOptions#setTwoCpOptions">
+			<var name="checkboxLocator1" value="REQUIRED" />
+			<var name="checkboxLocator2" value="SKU_CONTRIBUTOR" />
+			<var name="CpOption1" value="required" />
+			<var name="CpOption2" value="contributor" />
+		</execute>
+
+		<execute macro="CommerceEntry#saveEntry" />
+
+		<execute macro="CommerceOptions#assertTwoCpOptionsSet">
+			<var name="notSetCpOption" value="facetable" />
+			<var name="setCpOption1" value="required" />
+			<var name="setCpOption2" value="contributor" />
 		</execute>
 	</command>
 

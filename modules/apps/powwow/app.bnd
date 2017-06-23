@@ -1,5 +1,5 @@
 Liferay-Releng-App-Description:
-Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Meetings EE
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Meetings
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Communication
 Liferay-Releng-Demo-Url:
@@ -7,7 +7,7 @@ Liferay-Releng-Deprecated: true
 Liferay-Releng-Labs: true
 Liferay-Releng-Marketplace: true
 Liferay-Releng-Portal-Required: false
-Liferay-Releng-Public: false
+Liferay-Releng-Public: true
 Liferay-Releng-Restart-Required: false
 Liferay-Releng-Support-Url:
 Liferay-Releng-Supported: false

@@ -17,5 +17,5 @@ dependencies {
 }
 
 findSecurityBugs {
-	args = args + ['-exitcode']
+	ignoreExitValue = false
 }

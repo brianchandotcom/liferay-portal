@@ -160,6 +160,7 @@
 		<check name="JSPIncludeCheck" />
 		<check name="JSPIndentationCheck" />
 		<check name="JSPLanguageUtilCheck" />
+		<check name="JSPLineBreakCheck" />
 		<check name="JSPLogFileNameCheck" />
 		<check name="JSPRedirectBackURLCheck" />
 		<check name="JSPSendRedirectCheck" />

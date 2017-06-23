@@ -105,6 +105,12 @@ in `gradle.properties`.
 ### Changed
 - [LPS-72252]: Update the [Liferay Gradle Plugins] dependency to version 3.3.9.
 
+## 1.4.1 - *(Unreleased)*
+
+### Changed
+- [LPS-73156]: Update the [Liferay Gradle Plugins] dependency to version 3.3.31.
+- [LPS-73248]: Use Liferay 7.0.3 GA4 by default.
+
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
@@ -127,3 +133,5 @@ in `gradle.properties`.
 [LPS-70677]: https://issues.liferay.com/browse/LPS-70677
 [LPS-71724]: https://issues.liferay.com/browse/LPS-71724
 [LPS-72252]: https://issues.liferay.com/browse/LPS-72252
+[LPS-73156]: https://issues.liferay.com/browse/LPS-73156
+[LPS-73248]: https://issues.liferay.com/browse/LPS-73248

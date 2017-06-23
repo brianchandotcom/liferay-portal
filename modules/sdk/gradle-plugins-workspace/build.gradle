@@ -9,12 +9,12 @@ task copyDistBundleZipPluginsSdk(type: Copy)
 task downloadPluginsSdk(type: Download)
 task copyGradleTestDependencies(type: Copy)
 
-String bundleUrl = "https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.2-ga3/liferay-ce-portal-tomcat-7.0-ga3-20160804222206210.zip"
-String pluginsSdkUrl = "https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.2-ga3/com.liferay.portal.plugins.sdk-7.0-ga3-20160804222206210.zip"
+String bundleUrl = "https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.3-ga4/liferay-ce-portal-tomcat-7.0-ga4-20170613175008905.zip"
+String pluginsSdkUrl = "https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.3-ga4/com.liferay.portal.plugins.sdk-1.0.11-20170613175008905.zip"
 
 if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
-	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.0.2-ga3/liferay-ce-portal-tomcat-7.0-ga3-20160804222206210.zip"
-	pluginsSdkUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.0.2-ga3/com.liferay.portal.plugins.sdk-7.0-ga3-20160804222206210.zip"
+	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.0.3-ga4/liferay-ce-portal-tomcat-7.0-ga4-20170613175008905.zip"
+	pluginsSdkUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.0.3-ga4/com.liferay.portal.plugins.sdk-1.0.11-20170613175008905.zip"
 }
 
 copyDistBundleZipPluginsSdk {

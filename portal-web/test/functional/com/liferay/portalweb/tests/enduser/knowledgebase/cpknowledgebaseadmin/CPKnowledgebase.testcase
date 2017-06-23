@@ -403,7 +403,10 @@
 		</execute>
 	</command>
 
-	<command name="AddKBFolder" priority="4">
+	<command name="AddKBFolder" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

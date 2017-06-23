@@ -100,7 +100,10 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command name="HSQLtoHSQLSampleDataDisabled" priority="4">
+	<command name="HSQLtoHSQLSampleDataDisabled" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="SetupWizard#configurePG">
 			<var name="addSampleData" value="false" />
 			<var name="administratorEmail" value="test@liferay.com" />

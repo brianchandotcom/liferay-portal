@@ -21,7 +21,10 @@
 		</if>
 	</tear-down>
 
-	<command name="ViewWCDNestedPortlets" priority="4">
+	<command name="ViewWCDNestedPortlets" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Nested Portlets Page" />
 		</execute>

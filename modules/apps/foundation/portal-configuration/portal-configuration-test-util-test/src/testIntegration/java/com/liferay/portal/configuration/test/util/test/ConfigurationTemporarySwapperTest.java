@@ -195,8 +195,6 @@ public class ConfigurationTemporarySwapperTest {
 
 			Assert.assertNotNull(testProperties);
 
-			Assert.assertNotNull(testProperties.get(testKey));
-
 			Assert.assertEquals(testValue, testProperties.get(testKey));
 		}
 	}

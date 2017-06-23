@@ -52,6 +52,7 @@ import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -121,6 +122,11 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 
 			if (field.equals("fullName")) {
 				sb.append(CSVUtil.encode(user.getFullName()));
+			}
+			else if (field.contains("Date")) {
+				Date date = (Date)BeanPropertiesUtil.getObject(user, field);
+
+				sb.append(CSVUtil.encode(String.valueOf(date)));
 			}
 			else if (field.startsWith("expando:")) {
 				String attributeName = field.substring(8);

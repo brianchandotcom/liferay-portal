@@ -29,10 +29,22 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Provides an incomplete implementation of {@link JSPackage} that can be reused
+ * by existing implementations.
+ *
  * @author Iván Zaera
  */
 public abstract class JSPackageAdapter implements JSPackage {
 
+	/**
+	 * Constructs a <code>JSPackageAdapter</code> with the JS bundle, name,
+	 * version, and default module name.
+	 *
+	 * @param jsBundle the package's bundle
+	 * @param name the package's name
+	 * @param version the package's version
+	 * @param mainModuleName the default module name
+	 */
 	public JSPackageAdapter(
 		JSBundle jsBundle, String name, String version, String mainModuleName) {
 
@@ -52,6 +64,11 @@ public abstract class JSPackageAdapter implements JSPackage {
 		_id = id.toString();
 	}
 
+	/**
+	 * Adds the module to the package.
+	 *
+	 * @param jsModule the NPM module
+	 */
 	public void addJSModule(JSModule jsModule) {
 		_jsModules.add(jsModule);
 	}
@@ -60,6 +77,11 @@ public abstract class JSPackageAdapter implements JSPackage {
 		_jsModuleAliases.add(jsModuleAlias);
 	}
 
+	/**
+	 * Adds the dependency to another NPM package.
+	 *
+	 * @param jsPackageDependency the NPM package dependency
+	 */
 	public void addJSPackageDependency(
 		JSPackageDependency jsPackageDependency) {
 

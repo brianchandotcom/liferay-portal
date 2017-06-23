@@ -113,9 +113,11 @@ AUI.add(
 										navbar.placeAfter(alertsContainer);
 									}
 									else {
-										var prependTarget = rootNode.one('.portlet-body') || rootNode;
+										var prependTarget = rootNode.one('.portlet-body');
 
-										prependTarget.prepend(alertsContainer);
+										if (prependTarget) {
+											prependTarget.prepend(alertsContainer);
+										}
 									}
 								}
 							}

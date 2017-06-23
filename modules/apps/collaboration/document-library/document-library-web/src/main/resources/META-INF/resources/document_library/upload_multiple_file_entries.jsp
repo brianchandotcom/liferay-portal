@@ -51,7 +51,7 @@ if (portletTitleBasedNavigation) {
 		/>
 	</c:if>
 
-	<div class="card main-content-card card-row-padded">
+	<div class="card card-row-padded main-content-card">
 		<c:choose>
 			<c:when test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
 				<aui:row>

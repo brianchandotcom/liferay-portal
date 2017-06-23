@@ -16,9 +16,15 @@ package com.liferay.portal.security.wedeploy.auth.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppServiceUtil} service utility. The
+ * {@link WeDeployAuthAppServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +59,43 @@ import aQute.bnd.annotation.ProviderType;
  * @author Supritha Sundaram
  * @see WeDeployAuthAppServiceHttp
  * @see com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthAppSoap
- * @see com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppServiceUtil
+ * @see WeDeployAuthAppServiceUtil
  * @generated
  */
 @ProviderType
 public class WeDeployAuthAppServiceSoap {
+	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthAppSoap addWeDeployAuthApp(
+		java.lang.String name, java.lang.String redirectURI,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp returnValue =
+				WeDeployAuthAppServiceUtil.addWeDeployAuthApp(name,
+					redirectURI, serviceContext);
+
+			return com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthAppSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthAppSoap deleteWeDeployAuthApp(
+		long weDeployAuthAppId) throws RemoteException {
+		try {
+			com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp returnValue =
+				WeDeployAuthAppServiceUtil.deleteWeDeployAuthApp(weDeployAuthAppId);
+
+			return com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthAppSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(WeDeployAuthAppServiceSoap.class);
 }

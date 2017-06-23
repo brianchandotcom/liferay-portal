@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.security.wedeploy.auth.service.impl;
-
-import com.liferay.portal.security.wedeploy.auth.service.base.WeDeployAuthTokenServiceBaseImpl;
+package com.liferay.portal.security.wedeploy.auth.constants;
 
 /**
  * @author Supritha Sundaram
  */
-public class WeDeployAuthTokenServiceImpl
-	extends WeDeployAuthTokenServiceBaseImpl {
+public class WeDeployAuthActionKeys {
+
+	public static final String ADD_APP = "ADD_APP";
+
 }

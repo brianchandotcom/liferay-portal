@@ -58,18 +58,18 @@ public class WeDeployUserInfoAction extends BaseStrutsAction {
 
 		try {
 			WeDeployAuthToken weDeployAuthToken =
-				_weDeployAuthTokenLocalService.fetchTokenByType(
+				_weDeployAuthTokenLocalService.getWeDeployAuthToken(
 					accessToken, WeDeployAuthTokenConstants.TYPE_AUTHORIZATION);
 
 			User user = _userLocalService.getUser(
 				weDeployAuthToken.getUserId());
 
-			JSONObject elementJSONObject = JSONFactoryUtil.createJSONObject();
+			JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
 
-			elementJSONObject.put("email", user.getEmailAddress());
-			elementJSONObject.put("name", user.getFullName());
+			userJSONObject.put("email", user.getEmailAddress());
+			userJSONObject.put("name", user.getFullName());
 
-			jsonObject.put("info", elementJSONObject);
+			jsonObject.put("info", userJSONObject);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

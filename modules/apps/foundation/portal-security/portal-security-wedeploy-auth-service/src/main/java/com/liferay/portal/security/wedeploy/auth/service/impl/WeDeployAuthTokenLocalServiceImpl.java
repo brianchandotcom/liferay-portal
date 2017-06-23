@@ -123,7 +123,7 @@ public class WeDeployAuthTokenLocalServiceImpl
 		return weDeployAuthToken;
 	}
 
-	public WeDeployAuthToken fetchTokenByType(String token, int type)
+	public WeDeployAuthToken getWeDeployAuthToken(String token, int type)
 		throws PortalException {
 
 		return weDeployAuthTokenPersistence.findByT_T(token, type);

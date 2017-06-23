@@ -69,7 +69,7 @@ public class ConfigurationTemporarySwapperTest {
 						configurationTemporarySwapper =
 							new ConfigurationTemporarySwapper(
 								SearchPermissionChecker.class, _pid,
-								new HashMapDictionary<String, Object>())) {
+								new HashMapDictionary<>())) {
 
 					Assert.assertTrue(persistenceManager.exists(_pid));
 				}
@@ -87,7 +87,7 @@ public class ConfigurationTemporarySwapperTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					HasNoImplementation.class, _pid,
-					new HashMapDictionary<String, Object>())) {
+					new HashMapDictionary<>())) {
 
 			Assert.fail();
 		}
@@ -106,7 +106,7 @@ public class ConfigurationTemporarySwapperTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					SearchPermissionChecker.class, _pid,
-					new HashMapDictionary<String, Object>())) {
+					new HashMapDictionary<>())) {
 
 			Assert.fail();
 		}
@@ -121,8 +121,7 @@ public class ConfigurationTemporarySwapperTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					PrefsProps.class, _pid,
-					new HashMapDictionary<String, Object>())) {
+					PrefsProps.class, _pid, new HashMapDictionary<>())) {
 
 			Assert.fail();
 		}
@@ -136,7 +135,7 @@ public class ConfigurationTemporarySwapperTest {
 		int valueToPreserve = 250;
 		int temporaryValue = 300;
 
-		Dictionary<String, Object> temporaryValues = new HashMapDictionary();
+		Dictionary<String, Object> temporaryValues = new HashMapDictionary<>();
 
 		temporaryValues.put(testKey, valueToPreserve);
 

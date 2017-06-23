@@ -33,10 +33,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(immediate = true, service = ServiceWrapper.class)
-public class CommerceProductAssetCategoryLocalServiceImpl
+public class CPAssetCategoryLocalServiceImpl
 	extends AssetCategoryLocalServiceWrapper {
 
-	public CommerceProductAssetCategoryLocalServiceImpl() {
+	public CPAssetCategoryLocalServiceImpl() {
 		super(null);
 	}
 

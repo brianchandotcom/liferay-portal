@@ -107,15 +107,15 @@ public class PortalImplLayoutFriendlyURLTest {
 	protected String setLayoutSetVirtualHost() {
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
-		String layoutSetVirtualHost =
+		String hostname =
 			RandomTestUtil.randomString() + "." +
 				RandomTestUtil.randomString(3);
 
 		VirtualHostLocalServiceUtil.updateVirtualHost(
 			_company.getCompanyId(), layoutSet.getLayoutSetId(),
-			layoutSetVirtualHost);
+			hostname);
 
-		return layoutSetVirtualHost;
+		return hostname;
 	}
 
 	protected void testLayoutFriendlyURL(

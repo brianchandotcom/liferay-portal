@@ -96,7 +96,7 @@ AUI.add(
 						var alertsContainer = instance._alertsContainer;
 
 						if (!alertsContainer) {
-							var rootNode = targetNode || instance.get('rootNode') || A;
+							var rootNode = targetNode || instance.get('rootNode') || A.getBody();
 
 							alertsContainer = (targetNode && targetNode.one('.lfr-alert-container')) || rootNode.one('.lfr-alert-container');
 

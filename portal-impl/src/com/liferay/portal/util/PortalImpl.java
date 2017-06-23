@@ -8392,8 +8392,10 @@ public class PortalImpl implements Portal {
 					}
 
 					if (_isSameHostName(virtualHostname, portalDomain) &&
-						virtualHostname.equals(
-							layoutSet.getVirtualHostname())) {
+						(virtualHostname.equals(
+							layoutSet.getVirtualHostname()) ||
+						 PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME.equals(
+							 group.getGroupKey()))) {
 
 						String path = StringPool.BLANK;
 

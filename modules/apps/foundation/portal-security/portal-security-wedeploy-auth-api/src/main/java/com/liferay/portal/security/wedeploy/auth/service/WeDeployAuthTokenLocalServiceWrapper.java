@@ -152,6 +152,13 @@ public class WeDeployAuthTokenLocalServiceWrapper
 		return _weDeployAuthTokenLocalService.fetchWeDeployAuthToken(weDeployAuthTokenId);
 	}
 
+	@Override
+	public com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken getWeDeployAuthToken(
+		java.lang.String token, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _weDeployAuthTokenLocalService.getWeDeployAuthToken(token, type);
+	}
+
 	/**
 	* Returns the we deploy auth token with the primary key.
 	*

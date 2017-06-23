@@ -135,6 +135,10 @@ public interface WeDeployAuthTokenLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WeDeployAuthToken fetchWeDeployAuthToken(long weDeployAuthTokenId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WeDeployAuthToken getWeDeployAuthToken(java.lang.String token,
+		int type) throws PortalException;
+
 	/**
 	* Returns the we deploy auth token with the primary key.
 	*

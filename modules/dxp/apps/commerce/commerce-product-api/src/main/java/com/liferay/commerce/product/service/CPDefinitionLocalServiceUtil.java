@@ -313,13 +313,6 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().getCPDefinitionsCount();
 	}
 
-	public static java.lang.String buildUniqueUrlTitle(
-		com.liferay.commerce.product.model.CPDefinition cpDefinition,
-		java.lang.String languageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().buildUniqueUrlTitle(cpDefinition, languageId);
-	}
-
 	public static java.lang.String getLayoutUuid(long cpDefinitionId) {
 		return getService().getLayoutUuid(cpDefinitionId);
 	}

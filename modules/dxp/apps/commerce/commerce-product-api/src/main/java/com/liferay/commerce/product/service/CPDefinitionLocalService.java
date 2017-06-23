@@ -277,9 +277,6 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionsCount();
 
-	public java.lang.String buildUniqueUrlTitle(CPDefinition cpDefinition,
-		java.lang.String languageId) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getLayoutUuid(long cpDefinitionId);
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.asset.categories.web.internal.service.impl;
+package com.liferay.commerce.product.asset.categories.web.service.impl;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceWrapper;

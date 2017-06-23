@@ -1,8 +1,5 @@
 {
 	"author": "Marco Leo <marco.leo@liferay.com> (https://github.com/marco-leo)",
-	"bugs": {
-		"url": "https://issues.liferay.com/"
-	},
 	"dependencies": {
 		"metal": "^2.2.0",
 		"metal-dom": "^2.4.0",
@@ -17,7 +14,6 @@
 	"keywords": [
 		"liferay-theme"
 	],
-	"license": "LGPL",
 	"liferayTheme": {
 		"baseTheme": "styled",
 		"distName": "commerce-theme-lotus",
@@ -25,8 +21,6 @@
 		"rubySass": false,
 		"version": "7.0"
 	},
-	"main": "package.json",
 	"name": "commerce-theme-lotus",
-	"repository": "liferay/com-liferay-commerce-private",
 	"version": "1.0.0"
 }

@@ -1,5 +1,7 @@
+@import "partials/fonts";
+
 body {
-  font-family: Montserrat;
+  font-family: 'Montserrat_Regular';
 
   .portlet-content, .portlet-content-editable {
     padding: 0;
@@ -44,6 +46,7 @@ body {
 
     img {
       height: 20.81px;
+      padding-right: 19px;
     }
   }
 
@@ -53,6 +56,10 @@ body {
       font-size: 14px;
     }
   }
+}
+
+.focus-product-column {
+  height: 100%;
 }
 
 .focus-product-title {
@@ -67,6 +74,17 @@ body {
   font-size: 24px;
   font-weight: 200;
   padding: 0 120px;
+}
+
+.focus-product-logo {
+  padding: 10px 0 0 30px;
+}
+
+.focus-product-image {
+  img {
+    object-fit: cover;
+    width: 100%;
+  }
 }
 
 .focus-product-highlighter-long {
@@ -99,7 +117,8 @@ body {
   .section-title {
     opacity: 0.9;
     color: #FFFFFF;
-    font-size: 28px;
+    font-size: 27px;
+    font-family: 'Montserrat_Light';
     font-weight: 200;
     text-align: center;
     padding: 23px 0;
@@ -111,17 +130,35 @@ body {
 }
 
 @media screen and (min-width: 1491px) and (max-width: 1837px) {
-  .section-title-highlighter {
-    width: 300px;
+  #footer {
+    .social-icons {
+      img {
+        padding-right: 15px;
+      }
+    }
   }
 
-  .section-title {
-    font-size: 21px;
-    padding: 29px 0;
+  .section-title-background {
+    .section-title-highlighter {
+      width: 300px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      padding: 29px 0;
+    }
   }
 }
 
-@media screen and (min-width: 1385px) and (max-width: 1491px) {
+@media screen and (min-width: 1385px) and (max-width: 1490px) {
+  #footer {
+    .social-icons {
+      img {
+        padding-right: 11px;
+      }
+    }
+  }
+
   .focus-product-title {
     font-size: 50px;
     padding: 50px 75px;
@@ -140,8 +177,57 @@ body {
     margin-left: 75px;
   }
 
-  .section-title {
+  .section-title-background {
+    .section-title-highlighter {
+      width: 300px;
+    }
+
+    .section-title {
+      font-size: 19px;
+      padding: 30px 0;
+    }
+  }
+}
+
+@media screen and (min-width: 1280px) and (max-width: 1384px) {
+  #footer {
+    .social-icons {
+      img {
+        padding-right: 6px;
+      }
+    }
+  }
+
+  .focus-product-title {
+    font-size: 50px;
+    padding: 40px 60px;
+  }
+
+  .focus-product-description {
     font-size: 19px;
-    padding: 30px 0;
+    padding: 0 60px;
+  }
+
+  .focus-product-logo {
+    padding: 10px 0 0 80px;
+  }
+
+  .focus-product-highlighter-long {
+    margin-left: 60px;
+  }
+
+  .focus-product-highlighter-short {
+    margin-left: 60px;
+  }
+
+  .section-title-background {
+    .section-title-highlighter {
+      width: 270px;
+    }
+
+    .section-title {
+      font-size: 19px;
+      padding: 30px 0;
+    }
   }
 }

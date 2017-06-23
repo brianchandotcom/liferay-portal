@@ -24,7 +24,7 @@ import java.util.Set;
 public class LayoutTypePortletConstants
 	extends com.liferay.portal.kernel.model.LayoutTypePortletConstants {
 
-	public static boolean isDivId(String id) {
+	public static boolean isLayoutTemplateColumnName(String id) {
 		return !_knownIds.contains(id);
 	}
 

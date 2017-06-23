@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.defaults.internal;
 
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.defaults.tasks.ActionTask;
 import com.liferay.gradle.plugins.defaults.tasks.WriteFindBugsProjectTask;
 import com.liferay.gradle.plugins.jasper.jspc.CompileJSPTask;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
@@ -147,7 +148,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 		Project project = writeFindBugsProjectTask.getProject();
 
-		JavaExec javaExec = GradleUtil.addTask(
+		final JavaExec javaExec = GradleUtil.addTask(
 			project, FIND_SECURITY_BUGS_TASK_NAME, JavaExec.class);
 
 		javaExec.args(
@@ -230,14 +231,17 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 			});
 
-		javaExec.doLast(
+		ActionTask printReportFileNameTask = GradleUtil.addTask(
+			project, "printReportFileName", ActionTask.class);
+
+		printReportFileNameTask.setAction(
 			new Action<Task>() {
 
 				@Override
 				public void execute(Task task) {
-					Logger logger = task.getLogger();
+					Logger logger = javaExec.getLogger();
 
-					File outputFile = outputFileGetter.transform(task);
+					File outputFile = outputFileGetter.transform(javaExec);
 
 					if (logger.isLifecycleEnabled()) {
 						logger.lifecycle(
@@ -247,6 +251,8 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		javaExec.finalizedBy(printReportFileNameTask);
 
 		javaExec.dependsOn(writeFindBugsProjectTask);
 

@@ -61,9 +61,7 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 
 	@Override
 	public void close() throws Exception {
-		if (_configuration != null) {
-			_updateProperties(_service, _configuration, _oldProperties);
-		}
+		_updateProperties(_service, _configuration, _oldProperties);
 	}
 
 	private static void _updateProperties(

@@ -198,8 +198,8 @@ public class CPDefinitionLocalServiceImpl
 	public void checkCPDefinitions() throws PortalException {
 		Date now = new Date();
 
-		checkCPDefinitionsByExpirationDate(now);
 		checkCPDefinitionsByDisplayDate(now);
+		checkCPDefinitionsByExpirationDate(now);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

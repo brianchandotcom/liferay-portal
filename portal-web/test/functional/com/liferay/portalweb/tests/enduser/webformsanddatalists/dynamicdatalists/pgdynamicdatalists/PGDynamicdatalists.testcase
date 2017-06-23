@@ -1047,7 +1047,7 @@
 			<var name="searchAssetType" value="Dynamic Data Lists Record" />
 		</execute>
 
-		<execute macro="Search#gotoUserSearchResultPG">
+		<execute macro="Search#gotoSearchResultPG">
 			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
 		</execute>
 
@@ -1070,7 +1070,7 @@
 			<var name="searchAssetType" value="Dynamic Data Lists Record" />
 		</execute>
 
-		<execute macro="Search#gotoUserSearchResultPG">
+		<execute macro="Search#gotoSearchResultPG">
 			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
 		</execute>
 
@@ -1222,7 +1222,7 @@
 			<var name="searchAssetType" value="Dynamic Data Lists Record" />
 		</execute>
 
-		<execute macro="Search#gotoUserSearchResultPG">
+		<execute macro="Search#gotoSearchResultPG">
 			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
 		</execute>
 

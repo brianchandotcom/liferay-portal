@@ -833,7 +833,6 @@ public class CPDefinitionLocalServiceImpl
 				ServiceContext serviceContext = new ServiceContext();
 
 				serviceContext.setCommand(Constants.UPDATE);
-
 				serviceContext.setScopeGroupId(cpDefinition.getGroupId());
 
 				cpDefinitionLocalService.updateStatus(
@@ -866,7 +865,6 @@ public class CPDefinitionLocalServiceImpl
 				ServiceContext serviceContext = new ServiceContext();
 
 				serviceContext.setCommand(Constants.UPDATE);
-
 				serviceContext.setScopeGroupId(cpDefinition.getGroupId());
 
 				cpDefinitionLocalService.updateStatus(

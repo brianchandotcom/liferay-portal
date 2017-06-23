@@ -50,11 +50,7 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 
 		_service = OSGiServiceUtil.callService(
 			_bundleContext, serviceClass,
-			service -> {
-				_validateService(serviceClass, service, pid);
-
-				return service;
-			});
+			service -> _validateService(serviceClass, service, pid));
 
 		_updateProperties(_service, _configuration, properties);
 	}
@@ -111,7 +107,7 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 		}
 	}
 
-	private void _validateService(
+	private Object _validateService(
 			Class<?> serviceClass, Object service, String pid)
 		throws Exception {
 
@@ -144,7 +140,7 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 
 		for (String curPid : componentDescriptionDTO.configurationPid) {
 			if (pid.equals(curPid)) {
-				return;
+				return service;
 			}
 		}
 

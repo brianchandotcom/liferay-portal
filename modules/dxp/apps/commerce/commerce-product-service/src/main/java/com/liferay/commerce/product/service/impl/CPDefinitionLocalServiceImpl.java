@@ -823,25 +823,23 @@ public class CPDefinitionLocalServiceImpl
 		List<CPDefinition> cpDefinitions = cpDefinitionPersistence.findByStatus(
 			WorkflowConstants.STATUS_SCHEDULED);
 
-		if ((cpDefinitions != null) && !cpDefinitions.isEmpty()) {
-			for (CPDefinition cpDefinition : cpDefinitions) {
-				if (DateUtil.compareTo(
-						cpDefinition.getDisplayDate(), displayDate) <= 0) {
+		for (CPDefinition cpDefinition : cpDefinitions) {
+			if (DateUtil.compareTo(
+					cpDefinition.getDisplayDate(), displayDate) <= 0) {
 
-					long userId = PortalUtil.getValidUserId(
-						cpDefinition.getCompanyId(), cpDefinition.getUserId());
+				long userId = PortalUtil.getValidUserId(
+					cpDefinition.getCompanyId(), cpDefinition.getUserId());
 
-					ServiceContext serviceContext = new ServiceContext();
+				ServiceContext serviceContext = new ServiceContext();
 
-					serviceContext.setCommand(Constants.UPDATE);
+				serviceContext.setCommand(Constants.UPDATE);
 
-					serviceContext.setScopeGroupId(cpDefinition.getGroupId());
+				serviceContext.setScopeGroupId(cpDefinition.getGroupId());
 
-					cpDefinitionLocalService.updateStatus(
-						userId, cpDefinition.getCPDefinitionId(),
-						WorkflowConstants.STATUS_APPROVED, serviceContext,
-						new HashMap<String, Serializable>());
-				}
+				cpDefinitionLocalService.updateStatus(
+					userId, cpDefinition.getCPDefinitionId(),
+					WorkflowConstants.STATUS_APPROVED, serviceContext,
+					new HashMap<String, Serializable>());
 			}
 		}
 	}

@@ -68,30 +68,19 @@ public class CheckCPDefinitionMessageListener
 		_cPDefinitionLocalService.checkCPDefinitions();
 	}
 
-	@Reference(unbind = "-")
-	protected void setCPDefinitionLocalService(
-		CPDefinitionLocalService cpDefinitionLocalService) {
-
-		_cPDefinitionLocalService = cpDefinitionLocalService;
-	}
-
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference(unbind = "-")
-	protected void setSchedulerEngineHelper(
-		SchedulerEngineHelper schedulerEngineHelper) {
-
-		_schedulerEngineHelper = schedulerEngineHelper;
-	}
-
-	@Reference(unbind = "-")
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
+	@Reference
 	private CPDefinitionLocalService _cPDefinitionLocalService;
+
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

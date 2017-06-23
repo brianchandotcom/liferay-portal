@@ -130,6 +130,8 @@ public class BlogsEntryStagedModelDataHandlerTest
 
 		Folder smallImageFileEntryFolder = smallImageFileEntry.getFolder();
 
+		_assertOriginalImage(smallImageFileEntry);
+
 		Assert.assertEquals(
 			liveGroup.getGroupId(), smallImageFileEntry.getGroupId());
 
@@ -295,7 +297,7 @@ public class BlogsEntryStagedModelDataHandlerTest
 		Assert.assertEquals(entry.isSmallImage(), importedEntry.isSmallImage());
 	}
 
-	private void _assertOriginalImage(FileEntry coverImageFileEntry)
+	private void _assertOriginalImage(FileEntry imageFileEntry)
 		throws Exception {
 
 		Folder attachmentsFolder =
@@ -311,7 +313,7 @@ public class BlogsEntryStagedModelDataHandlerTest
 		FileEntry originalFileEntry = attachments.get(0);
 
 		Assert.assertEquals(
-			coverImageFileEntry.getFileName(), originalFileEntry.getFileName());
+			imageFileEntry.getFileName(), originalFileEntry.getFileName());
 	}
 
 	private static final String _IMAGE_CROP_REGION =

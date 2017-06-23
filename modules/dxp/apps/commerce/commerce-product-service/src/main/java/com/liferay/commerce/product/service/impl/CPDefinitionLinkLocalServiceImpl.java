@@ -57,24 +57,6 @@ public class CPDefinitionLinkLocalServiceImpl
 	}
 
 	@Override
-	public CPDefinitionLink deleteCPDefinitionLink(
-			CPDefinitionLink cpDefinitionLink)
-		throws PortalException {
-
-		return cpDefinitionLinkPersistence.remove(cpDefinitionLink);
-	}
-
-	@Override
-	public CPDefinitionLink deleteCPDefinitionLink(long cpDefinitionLinkId)
-		throws PortalException {
-
-		CPDefinitionLink cpDefinitionLink =
-			cpDefinitionLinkPersistence.findByPrimaryKey(cpDefinitionLinkId);
-
-		return deleteCPDefinitionLink(cpDefinitionLink);
-	}
-
-	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId)
 		throws PortalException {
 

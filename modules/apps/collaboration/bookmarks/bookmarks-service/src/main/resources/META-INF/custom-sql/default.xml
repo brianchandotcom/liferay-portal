@@ -9,6 +9,7 @@
 				BookmarksEntry
 			LEFT JOIN
 				AssetEntry ON
+					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = BookmarksEntry.entryId)
 			WHERE
 				(AssetEntry.classPK IS NULL)
@@ -68,6 +69,7 @@
 				BookmarksFolder
 			LEFT JOIN
 				AssetEntry ON
+					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = BookmarksFolder.folderId)
 			WHERE
 				(AssetEntry.classPK IS NULL)

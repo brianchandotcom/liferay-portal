@@ -194,6 +194,16 @@ public class CPDefinitionLocalServiceImpl
 			user.getUserId(), cpDefinition, serviceContext);
 	}
 
+	@Override
+	public void checkCPDefinitions() throws PortalException {
+		Date now = new Date();
+
+		checkCPDefinitionsByExpirationDate(now);
+		checkCPDefinitionsByDisplayDate(now);
+
+		_previousCheckDate = now;
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)

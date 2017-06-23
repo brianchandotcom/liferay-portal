@@ -41,16 +41,16 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 			Dictionary<String, Object> properties)
 		throws Exception {
 
+		_service = OSGiServiceUtil.callService(
+			_bundleContext, serviceClass,
+			service -> _validateService(serviceClass, service, pid));
+
 		_configuration = OSGiServiceUtil.callService(
 			_bundleContext, ConfigurationAdmin.class,
 			configurationAdmin -> configurationAdmin.getConfiguration(
 				pid, StringPool.QUESTION));
 
 		_oldProperties = _configuration.getProperties();
-
-		_service = OSGiServiceUtil.callService(
-			_bundleContext, serviceClass,
-			service -> _validateService(serviceClass, service, pid));
 
 		_updateProperties(_service, _configuration, properties);
 	}

@@ -112,8 +112,7 @@ public class PortalImplLayoutFriendlyURLTest {
 				RandomTestUtil.randomString(3);
 
 		VirtualHostLocalServiceUtil.updateVirtualHost(
-			_company.getCompanyId(), layoutSet.getLayoutSetId(),
-			hostname);
+			_company.getCompanyId(), layoutSet.getLayoutSetId(), hostname);
 
 		return hostname;
 	}

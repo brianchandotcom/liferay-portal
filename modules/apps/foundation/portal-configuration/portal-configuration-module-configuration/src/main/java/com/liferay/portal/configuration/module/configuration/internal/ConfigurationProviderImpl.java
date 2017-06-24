@@ -32,9 +32,6 @@ import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -64,22 +61,13 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		throws ConfigurationException {
 
 		try {
-			Class<?> configurationOverrideClass = getOverrideClass(clazz);
-
-			Object configurationOverrideInstance = null;
-
 			Settings settings = _settingsFactory.getSettings(settingsLocator);
 
 			TypedSettings typedSettings = new TypedSettings(settings);
 
-			if (configurationOverrideClass != null) {
-				Constructor<?> constructor =
-					configurationOverrideClass.getConstructor(
-						TypedSettings.class);
-
-				configurationOverrideInstance = constructor.newInstance(
-					typedSettings);
-			}
+			ConfigurationOverrideInstance configurationOverrideInstance =
+				ConfigurationOverrideInstance.getConfigurationOverrideInstance(
+					clazz, typedSettings);
 
 			ConfigurationInvocationHandler<T> configurationInvocationHandler =
 				new ConfigurationInvocationHandler<>(
@@ -87,10 +75,7 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 			return configurationInvocationHandler.createProxy();
 		}
-		catch (IllegalAccessException | InstantiationException |
-			   InvocationTargetException | NoSuchMethodException |
-			   SettingsException e) {
-
+		catch (ReflectiveOperationException | SettingsException e) {
 			throw new ConfigurationException(
 				"Unable to load configuration of type " + clazz.getName(), e);
 		}
@@ -149,21 +134,6 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 		return getConfiguration(
 			clazz, new SystemSettingsLocator(configurationPid));
-	}
-
-	protected <T> Class<?> getOverrideClass(Class<T> clazz) {
-		Settings.OverrideClass overrideClass = clazz.getAnnotation(
-			Settings.OverrideClass.class);
-
-		if (overrideClass == null) {
-			return null;
-		}
-
-		if (overrideClass.value() == Object.class) {
-			return null;
-		}
-
-		return overrideClass.value();
 	}
 
 	private String _getConfigurationPid(Class<?> clazz) {

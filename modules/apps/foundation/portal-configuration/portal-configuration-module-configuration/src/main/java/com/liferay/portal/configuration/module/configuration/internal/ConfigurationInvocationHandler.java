@@ -32,7 +32,8 @@ import java.lang.reflect.Method;
 public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 
 	public ConfigurationInvocationHandler(
-		Class<S> clazz, Object configurationOverrideInstance,
+		Class<S> clazz,
+		ConfigurationOverrideInstance configurationOverrideInstance,
 		TypedSettings typedSettings) {
 
 		_clazz = clazz;
@@ -51,7 +52,11 @@ public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 
 		if (_configurationOverrideInstance != null) {
 			try {
-				return _invokeConfigurationOverride(method);
+				Object result = _configurationOverrideInstance.invoke(method);
+
+				if (result != ConfigurationOverrideInstance.NULL_RESULT) {
+					return result;
+				}
 			}
 			catch (InvocationTargetException ite) {
 				throw ite;
@@ -131,17 +136,6 @@ public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 		return constructor.newInstance(_typedSettings.getValue(key, null));
 	}
 
-	private Object _invokeConfigurationOverride(Method method)
-		throws IllegalAccessException, InstantiationException,
-			   InvocationTargetException, NoSuchMethodException {
-
-		Class<?> clazz = _configurationOverrideInstance.getClass();
-
-		method = clazz.getMethod(method.getName());
-
-		return method.invoke(_configurationOverrideInstance);
-	}
-
 	private Object _invokeTypedSettings(Method method)
 		throws IllegalAccessException, InstantiationException,
 			   InvocationTargetException, NoSuchMethodException {
@@ -197,7 +191,7 @@ public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 	}
 
 	private final Class<S> _clazz;
-	private final Object _configurationOverrideInstance;
+	private final ConfigurationOverrideInstance _configurationOverrideInstance;
 	private final TypedSettings _typedSettings;
 
 }

@@ -2,6 +2,7 @@ Bundle-Name: Liferay Commerce Product Definitions Web
 Bundle-SymbolicName: com.liferay.commerce.product.definitions.web
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.commerce.product.definitions.web.configuration,\
 	com.liferay.commerce.product.definitions.web.display.context,\
 	com.liferay.commerce.product.definitions.web.portlet.action
 Web-ContextPath: /commerce-product-definitions-web

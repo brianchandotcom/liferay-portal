@@ -19,20 +19,18 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
  * @author Sergio González
  */
 public class EditorConfigProvider
-	extends BaseEditorConfigurationProvider<EditorConfigContributor> {
+	extends BaseEditorProvider<EditorConfigContributor> {
+
+	public EditorConfigProvider() {
+		super(EditorConfigContributor.class);
+	}
 
 	public JSONObject getConfigJSONObject(
 		String portletName, String editorConfigKey, String editorName,
@@ -42,39 +40,14 @@ public class EditorConfigProvider
 
 		JSONObject configJSONObject = JSONFactoryUtil.createJSONObject();
 
-		List<EditorConfigContributor> editorConfigContributors =
-			getContributors(portletName, editorConfigKey, editorName);
-
-		Iterator<EditorConfigContributor> iterator = ListUtil.reverseIterator(
-			editorConfigContributors);
-
-		while (iterator.hasNext()) {
-			EditorConfigContributor editorConfigContributor = iterator.next();
-
-			editorConfigContributor.populateConfigJSONObject(
-				configJSONObject, inputEditorTaglibAttributes, themeDisplay,
-				requestBackedPortletURLFactory);
-		}
+		visitEditorContributors(
+			editorConfigContributor ->
+				editorConfigContributor.populateConfigJSONObject(
+					configJSONObject, inputEditorTaglibAttributes, themeDisplay,
+					requestBackedPortletURLFactory),
+			portletName, editorConfigKey, editorName);
 
 		return configJSONObject;
 	}
-
-	@Override
-	protected ServiceTrackerMap<String, List<EditorConfigContributor>>
-		getServiceTrackerMap() {
-
-		return _serviceTrackerMap;
-	}
-
-	private static final ServiceReferenceMapper<String, EditorConfigContributor>
-		_serviceReferenceMapper = new EditorServiceReferenceMapper<>();
-	private static final ServiceTrackerMap
-		<String, List<EditorConfigContributor>>
-			_serviceTrackerMap = ServiceTrackerCollections.openMultiValueMap(
-				EditorConfigContributor.class,
-				"(|(editor.config.key=*)(editor.name=*)" +
-					"(javax.portlet.name=*)(objectClass=" +
-						EditorConfigContributor.class.getName() + "))",
-				_serviceReferenceMapper);
 
 }

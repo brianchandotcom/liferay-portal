@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.io.Closeable;
 
-import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Shuyang Zhou
@@ -36,29 +36,20 @@ public class EditorConfigProviderSwapper implements Closeable {
 			new EditorConfigProvider() {
 
 				@Override
-				protected List<EditorConfigContributor> getContributors(
+				protected void visitEditorContributors(
+					final Consumer<EditorConfigContributor> consumer,
 					String portletName, String editorConfigKey,
 					String editorName) {
 
-					List<EditorConfigContributor> editorConfigContributors =
-						super.getContributors(
-							portletName, editorConfigKey, editorName);
+					super.visitEditorContributors(
+						(editorConfigContributor) -> {
+							if (classes.contains(
+									editorConfigContributor.getClass())) {
 
-					Iterator<EditorConfigContributor> iterator =
-						editorConfigContributors.iterator();
-
-					while (iterator.hasNext()) {
-						EditorConfigContributor editorConfigContributor =
-							iterator.next();
-
-						if (!classes.contains(
-								editorConfigContributor.getClass())) {
-
-							iterator.remove();
-						}
-					}
-
-					return editorConfigContributors;
+								consumer.accept(editorConfigContributor);
+							}
+						},
+						portletName, editorConfigKey, editorName);
 				}
 
 			});

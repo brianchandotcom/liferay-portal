@@ -81,13 +81,15 @@ portletURL.setParameter("appURL", StringPool.BLANK);
 					// element. One solution is to manually check the position of the
 					// bottom edge of every div.
 
-					body.all('div').each(function(div) {
-						var height = div.getY() + div.get('scrollHeight');
+					body.all('div').each(
+						function(div) {
+							var height = div.getY() + div.get('scrollHeight');
 
-						if (height > max) {
-							max = height;
+							if (height > max) {
+								max = height;
+							}
 						}
-					});
+					);
 
 					var scrollHeight = body.get('scrollHeight');
 

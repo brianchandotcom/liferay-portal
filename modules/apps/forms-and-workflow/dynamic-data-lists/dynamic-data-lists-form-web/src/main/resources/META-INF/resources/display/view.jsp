@@ -143,7 +143,8 @@ long recordSetId = ddlFormDisplayContext.getRecordSetId();
 							</liferay-portlet:resourceURL>
 
 							function <portlet:namespace />autoSave() {
-								A.io.request('<%= autoSaveRecordURL.toString() %>',
+								A.io.request(
+									'<%= autoSaveRecordURL.toString() %>',
 									{
 										data: {
 											<portlet:namespace />recordSetId: <%= recordSetId %>,

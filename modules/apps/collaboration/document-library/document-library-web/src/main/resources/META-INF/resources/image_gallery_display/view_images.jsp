@@ -239,7 +239,8 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 			imageViewer.pause();
 
 			playingVideoIndex = this.get('currentIndex');
-		});
+		}
+	);
 
 	var onClickLinksDefaultFn = imageViewer._onClickLinks;
 

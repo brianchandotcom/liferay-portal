@@ -43,32 +43,41 @@
 
 	var clipboard = new metalClipboardSrcClipboard.default();
 
-	clipboard.on('success', function() {
-		var popoverContent = A.one('.publish-popover-content');
+	clipboard.on(
+		'success',
+		function() {
+			var popoverContent = A.one('.publish-popover-content');
 
-		popoverContent.one('.form-group').addClass('has-success');
-		popoverContent.one('.form-group').removeClass('has-error');
+			popoverContent.one('.form-group').addClass('has-success');
+			popoverContent.one('.form-group').removeClass('has-error');
 
-		popoverContent.one('.btn').addClass('btn-success');
-		popoverContent.one('.btn').removeClass('btn-danger');
+			popoverContent.one('.btn').addClass('btn-success');
+			popoverContent.one('.btn').removeClass('btn-danger');
 
-		popoverContent.one('.help-block').html('<liferay-ui:message key="copied-to-clipboard" />');
-	});
+			popoverContent.one('.help-block').html('<liferay-ui:message key="copied-to-clipboard" />');
+		}
+	);
 
-	clipboard.on('error', function() {
-		var popoverContent = A.one('.publish-popover-content');
+	clipboard.on(
+		'error',
+		function() {
+			var popoverContent = A.one('.publish-popover-content');
 
-		popoverContent.one('.form-group').addClass('has-error');
-		popoverContent.one('.form-group').removeClass('has-success');
+			popoverContent.one('.form-group').addClass('has-error');
+			popoverContent.one('.form-group').removeClass('has-success');
 
-		popoverContent.one('.btn').addClass('btn-danger');
-		popoverContent.one('.btn').removeClass('btn-success');
+			popoverContent.one('.btn').addClass('btn-danger');
+			popoverContent.one('.btn').removeClass('btn-success');
 
-		popoverContent.one('.help-block').html('<liferay-ui:message key="sorry-something-wrong-happened" />');
-		popoverContent.one('.publish-button-text').html('<liferay-ui:message key="retry" />');
-	});
+			popoverContent.one('.help-block').html('<liferay-ui:message key="sorry-something-wrong-happened" />');
+			popoverContent.one('.publish-button-text').html('<liferay-ui:message key="retry" />');
+		}
+	);
 
-	Liferay.on('destroyPortlet', function() {
-		clipboard.dispose();
-	});
+	Liferay.on(
+		'destroyPortlet',
+		function() {
+			clipboard.dispose();
+		}
+	);
 </aui:script>

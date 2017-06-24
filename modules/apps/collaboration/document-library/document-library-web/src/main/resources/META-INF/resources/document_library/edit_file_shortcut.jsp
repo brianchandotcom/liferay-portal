@@ -156,7 +156,7 @@ if (portletTitleBasedNavigation) {
 					dialog: {
 						constrain: true,
 						destroyOnHide: true,
-						modal: true,
+						modal: true
 					},
 					id: '<portlet:namespace />selectGroup',
 					title: '<liferay-ui:message arguments="site" key="select-x" />',
@@ -191,7 +191,7 @@ if (portletTitleBasedNavigation) {
 					dialog: {
 						constrain: true,
 						destroyOnHide: true,
-						modal: true,
+						modal: true
 					},
 					id: <portlet:namespace />createSelectFileEntryId(),
 					title: '<liferay-ui:message arguments="file" key="select-x" />',

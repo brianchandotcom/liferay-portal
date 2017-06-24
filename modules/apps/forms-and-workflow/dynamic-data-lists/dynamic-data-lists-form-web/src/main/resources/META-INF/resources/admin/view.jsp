@@ -152,7 +152,10 @@ portletURL.setParameter("displayStyle", displayStyle);
 		}
 	);
 
-	Liferay.on('destroyPortlet', function() {
-		copyPublishFormURLPopover.destroy();
-	});
+	Liferay.on(
+		'destroyPortlet',
+		function() {
+			copyPublishFormURLPopover.destroy();
+		}
+	);
 </aui:script>

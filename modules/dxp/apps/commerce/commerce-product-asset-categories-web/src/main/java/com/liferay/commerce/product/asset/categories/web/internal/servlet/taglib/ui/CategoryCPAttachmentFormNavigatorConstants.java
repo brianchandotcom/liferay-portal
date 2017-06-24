@@ -19,10 +19,11 @@ package com.liferay.commerce.product.asset.categories.web.internal.servlet.tagli
  */
 public class CategoryCPAttachmentFormNavigatorConstants {
 
-    public static final String CATEGORY_KEY_CP_ATTACHMENT_FILE_ENTRY_DETAILS =
-        "details";
+	public static final String CATEGORY_KEY_CP_ATTACHMENT_FILE_ENTRY_DETAILS =
+		"details";
 
-    public static final String
-        FORM_NAVIGATOR_ID_COMMERCE_CP_ATTACHMENT_FILE_ENTRY =
-            "edit.category.cp.attachment.form";
+	public static final String
+		FORM_NAVIGATOR_ID_COMMERCE_CP_ATTACHMENT_FILE_ENTRY =
+			"edit.category.cp.attachment.form";
+
 }

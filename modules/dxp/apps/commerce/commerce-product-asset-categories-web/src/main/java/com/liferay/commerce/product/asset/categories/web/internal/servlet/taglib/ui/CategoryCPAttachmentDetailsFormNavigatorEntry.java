@@ -18,11 +18,13 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.Locale;
 
 import javax.servlet.ServletContext;
-import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -69,4 +71,5 @@ public class CategoryCPAttachmentDetailsFormNavigatorEntry
 	protected String getJspPath() {
 		return "/image/details.jsp";
 	}
+
 }

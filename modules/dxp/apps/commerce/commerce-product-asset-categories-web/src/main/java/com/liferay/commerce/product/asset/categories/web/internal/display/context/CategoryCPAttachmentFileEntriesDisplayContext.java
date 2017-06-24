@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.product.asset.categories.web.internal.display.context;
 
-import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.configuration.AttachmentsConfiguration;
+import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
@@ -26,12 +26,12 @@ import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCrite
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.StringPool;
+
+import java.util.Collections;
 
 import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
 
 /**
  * @author Alessio Antonio Rendina
@@ -70,6 +70,10 @@ public class CategoryCPAttachmentFileEntriesDisplayContext
 		return _attachmentsConfiguration.imageExtensions();
 	}
 
+	public long getImageMaxSize() {
+		return _attachmentsConfiguration.imageMaxSize();
+	}
+
 	public String getItemSelectorUrl() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(
@@ -83,14 +87,10 @@ public class CategoryCPAttachmentFileEntriesDisplayContext
 				new FileEntryItemSelectorReturnType()));
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory,
-			"addCategoryCPAttachmentFileEntry", imageItemSelectorCriterion);
+			requestBackedPortletURLFactory, "addCategoryCPAttachmentFileEntry",
+			imageItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
-	}
-
-	public long getImageMaxSize() {
-		return _attachmentsConfiguration.imageMaxSize();
 	}
 
 	private final AttachmentsConfiguration _attachmentsConfiguration;

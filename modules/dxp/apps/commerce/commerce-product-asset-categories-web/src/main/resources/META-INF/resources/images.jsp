@@ -43,6 +43,7 @@ List<CPAttachmentFileEntry> cpAttachmentFileEntries = cpAttachmentFileEntryServi
 				keyProperty="CPAttachmentFileEntryId"
 				modelVar="cpAttachmentFileEntry"
 			>
+
 				<%
 				FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
 
@@ -111,5 +112,5 @@ List<CPAttachmentFileEntry> cpAttachmentFileEntries = cpAttachmentFileEntryServi
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, "add-image") %>" url="<%= addAttachmentFileEntryURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-image") %>' url="<%= addAttachmentFileEntryURL.toString() %>" />
 </liferay-frontend:add-menu>

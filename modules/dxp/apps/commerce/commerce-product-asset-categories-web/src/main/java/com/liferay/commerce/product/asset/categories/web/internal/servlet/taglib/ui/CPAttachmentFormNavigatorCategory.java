@@ -16,9 +16,10 @@ package com.liferay.commerce.product.asset.categories.web.internal.servlet.tagli
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alessio Antonio Rendina

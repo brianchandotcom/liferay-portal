@@ -28,13 +28,15 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.upload.UploadResponseHandler;
+
+import java.util.Map;
+
+import javax.portlet.PortletRequest;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
-
-import javax.portlet.PortletRequest;
-import java.util.Map;
 
 /**
  * @author Alessio Antonio Rendina
@@ -44,7 +46,8 @@ import java.util.Map;
 	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	service = AssetCategoryAttachmentsUploadResponseHandler.class
 )
-public class AssetCategoryAttachmentsUploadResponseHandler implements UploadResponseHandler {
+public class AssetCategoryAttachmentsUploadResponseHandler
+	implements UploadResponseHandler {
 
 	@Override
 	public JSONObject onFailure(

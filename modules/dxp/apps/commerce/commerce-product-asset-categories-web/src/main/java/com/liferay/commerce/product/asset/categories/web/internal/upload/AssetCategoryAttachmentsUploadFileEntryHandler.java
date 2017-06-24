@@ -33,14 +33,16 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadFileEntryHandler;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
 
 /**
  * @author Alessio Antonio Rendina
@@ -110,11 +112,11 @@ public class AssetCategoryAttachmentsUploadFileEntryHandler
 	}
 
 	@Reference
-	protected CPAttachmentFileEntryLocalService
-		cpAttachmentFileEntryLocalService;
+	protected AssetCategoryService assetCategoryService;
 
 	@Reference
-	protected AssetCategoryService assetCategoryService;
+	protected CPAttachmentFileEntryLocalService
+		cpAttachmentFileEntryLocalService;
 
 	private void _validateFile(String fileName, long size)
 		throws PortalException {

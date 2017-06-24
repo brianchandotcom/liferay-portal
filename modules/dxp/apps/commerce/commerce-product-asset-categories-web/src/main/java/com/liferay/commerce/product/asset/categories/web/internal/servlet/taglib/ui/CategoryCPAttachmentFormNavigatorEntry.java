@@ -25,14 +25,17 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.io.IOException;
+
+import java.util.Locale;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -89,7 +92,11 @@ public class CategoryCPAttachmentFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, AssetCategory formModelBean) {
-		return formModelBean != null;
+		if (formModelBean != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -106,13 +113,13 @@ public class CategoryCPAttachmentFormNavigatorEntry
 		return "/images.jsp";
 	}
 
+	@Reference
+	protected CPAttachmentFileEntryService cpAttachmentFileEntryService;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CategoryCPAttachmentFormNavigatorEntry.class);
 
 	@Reference
 	private AssetCategoryService _assetCategoryService;
-
-	@Reference
-	protected CPAttachmentFileEntryService cpAttachmentFileEntryService;
 
 }

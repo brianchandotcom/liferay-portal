@@ -155,7 +155,7 @@ if (sampleFileEntryId > 0) {
 				function(b) {
 					selectSampleFileType(A);
 				}
-			);
+			)
 		}
 	);
 

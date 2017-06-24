@@ -58,6 +58,7 @@
 		<check name="JavaBooleanStatementCheck" />
 		<check name="JavaBooleanUsageCheck" />
 		<check name="JavaCombineLinesCheck" />
+		<check name="JavaConfigurationAdminCheck" />
 		<check name="JavaConstructorParameterOrder" />
 		<check name="JavaConstructorSuperCallCheck" />
 		<check name="JavaDataAccessConnectionCheck" />

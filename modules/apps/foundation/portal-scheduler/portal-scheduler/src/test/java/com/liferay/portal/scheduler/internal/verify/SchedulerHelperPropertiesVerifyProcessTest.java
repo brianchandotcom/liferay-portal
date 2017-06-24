@@ -15,6 +15,7 @@
 package com.liferay.portal.scheduler.internal.verify;
 
 import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.scheduler.configuration.SchedulerEngineHelperConfiguration;
 
 import java.util.Dictionary;
@@ -119,7 +120,8 @@ public class SchedulerHelperPropertiesVerifyProcessTest {
 
 		Mockito.when(
 			configurationAdmin.getConfiguration(
-				SchedulerEngineHelperConfiguration.class.getName())
+				SchedulerEngineHelperConfiguration.class.getName(),
+				StringPool.QUESTION)
 		).thenReturn(
 			configuration
 		);

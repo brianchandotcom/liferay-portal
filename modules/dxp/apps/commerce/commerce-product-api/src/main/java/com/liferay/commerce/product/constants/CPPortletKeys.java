@@ -31,6 +31,10 @@ public class CPPortletKeys {
 		"com_liferay_commerce_product_options_web_internal_portlet_" +
 			"CPOptionsPortlet";
 
+	public static final String CP_ASSET_CATEGORY_NAVIGATION =
+		"com_liferay_commerce_product_asset_category_navigation_web_internal" +
+			"_portlet_CPAssetCategoryNavigationPortlet";
+
 	public static final String CP_CATEGORY_CONTENT_WEB =
 		"com_liferay_commerce_product_content_web_internal_portlet_" +
 			"CPCategoryContentPortlet";

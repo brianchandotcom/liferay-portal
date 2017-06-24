@@ -60,6 +60,9 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 	public static final Plugin<Project> INSTANCE = new FindSecurityBugsPlugin();
 
+	public static final String PRINT_FIND_SECURITY_BUGS_REPORT_TASK_NAME =
+		"printFindSecurityBugsReport";
+
 	public static final String WRITE_FIND_BUGS_PROJECT_TASK_NAME =
 		"writeFindBugsProject";
 
@@ -76,6 +79,8 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		Task findSecurityBugsTask = _addTaskFindSecurityBugs(
 			writeFindBugsProjectTask, findSecurityBugsConfiguration,
 			findSecurityBugsPluginsConfiguration);
+
+		_addTaskPrintFindSecurityBugsReport(findSecurityBugsTask);
 
 		_checkTaskCheck(findSecurityBugsTask);
 	}
@@ -151,8 +156,8 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 			project, FIND_SECURITY_BUGS_TASK_NAME, JavaExec.class);
 
 		javaExec.args(
-			"-bugCategories", "SECURITY", "-effort:max", "-html", "-medium",
-			"-progress", "-timestampNow");
+			"-bugCategories", "SECURITY", "-effort:max", "-exitcode", "-html",
+			"-medium", "-progress", "-timestampNow");
 
 		File excludeDir = GradleUtil.getRootDir(
 			project, _FIND_SECURITY_BUGS_EXCLUDE_FILE_NAME);
@@ -186,22 +191,6 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 			});
 
-		final Transformer<File, Task> outputFileGetter =
-			new Transformer<File, Task>() {
-
-				@Override
-				public File transform(Task task) {
-					ReportingExtension reportingExtension =
-						GradleUtil.getExtension(
-							task.getProject(), ReportingExtension.class);
-
-					return new File(
-						reportingExtension.getBaseDir(),
-						task.getName() + "/reports.html");
-				}
-
-			};
-
 		javaExec.doFirst(
 			new Action<Task>() {
 
@@ -211,7 +200,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 					Logger logger = javaExec.getLogger();
 
-					File outputFile = outputFileGetter.transform(javaExec);
+					File outputFile = _reportsFileGetter.transform(javaExec);
 
 					File outputDir = outputFile.getParentFile();
 
@@ -225,24 +214,6 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 					if (logger.isLifecycleEnabled()) {
 						logger.lifecycle(
 							"Using Find Security Bugs version " + _VERSION);
-					}
-				}
-
-			});
-
-		javaExec.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					Logger logger = task.getLogger();
-
-					File outputFile = outputFileGetter.transform(task);
-
-					if (logger.isLifecycleEnabled()) {
-						logger.lifecycle(
-							"Find Security Bugs report saved to {}.",
-							outputFile.getAbsolutePath());
 					}
 				}
 
@@ -296,6 +267,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		javaExec.setClasspath(classpath);
 		javaExec.setDescription("Runs FindSecurityBugs on this project.");
 		javaExec.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
+		javaExec.setIgnoreExitValue(true);
 		javaExec.setMain("edu.umd.cs.findbugs.FindBugs2");
 
 		javaExec.systemProperty(
@@ -331,6 +303,40 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 			"findsecbugs.taint.customconfigfile", customConfigFile);
 
 		return javaExec;
+	}
+
+	private Task _addTaskPrintFindSecurityBugsReport(
+		final Task findSecurityBugsTask) {
+
+		Project project = findSecurityBugsTask.getProject();
+
+		Task task = project.task(PRINT_FIND_SECURITY_BUGS_REPORT_TASK_NAME);
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Logger logger = task.getLogger();
+
+					File outputFile = _reportsFileGetter.transform(
+						findSecurityBugsTask);
+
+					if (logger.isLifecycleEnabled()) {
+						logger.lifecycle(
+							"Find Security Bugs report saved to {}",
+							outputFile.getAbsolutePath());
+					}
+				}
+
+			});
+
+		task.setDescription(
+			"Prints the path of the Find Security Bugs report.");
+
+		findSecurityBugsTask.finalizedBy(task);
+
+		return task;
 	}
 
 	private WriteFindBugsProjectTask _addTaskWriteFindBugsProject(
@@ -417,5 +423,20 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 	private static final String _UNZIP_JAR_TASK_NAME = "unzipJar";
 
 	private static final String _VERSION = "1.6.0.LIFERAY-PATCHED-3";
+
+	private static final Transformer<File, Task> _reportsFileGetter =
+		new Transformer<File, Task>() {
+
+			@Override
+			public File transform(Task task) {
+				ReportingExtension reportingExtension = GradleUtil.getExtension(
+					task.getProject(), ReportingExtension.class);
+
+				return new File(
+					reportingExtension.getBaseDir(),
+					task.getName() + "/reports.html");
+			}
+
+		};
 
 }

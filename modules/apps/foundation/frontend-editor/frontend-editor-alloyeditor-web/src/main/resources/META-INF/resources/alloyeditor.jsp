@@ -19,12 +19,6 @@
 <%
 String portletId = portletDisplay.getRootPortletId();
 
-String doAsUserId = themeDisplay.getDoAsUserId();
-
-if (Validator.isNull(doAsUserId)) {
-	doAsUserId = Encryptor.encrypt(company.getKeyObj(), String.valueOf(themeDisplay.getUserId()));
-}
-
 boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
 String contents = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:contents"));
 String contentsLanguageId = (String)request.getAttribute("liferay-ui:input-editor:contentsLanguageId");

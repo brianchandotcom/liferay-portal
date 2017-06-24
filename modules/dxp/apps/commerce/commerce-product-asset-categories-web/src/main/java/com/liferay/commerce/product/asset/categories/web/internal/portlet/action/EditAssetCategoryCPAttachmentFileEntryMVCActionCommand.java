@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=",
+		"javax.portlet.name=com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
 		"mvc.command.name=editAssetCategoryCPAttachmentFileEntry"
 	},
 	service = MVCActionCommand.class

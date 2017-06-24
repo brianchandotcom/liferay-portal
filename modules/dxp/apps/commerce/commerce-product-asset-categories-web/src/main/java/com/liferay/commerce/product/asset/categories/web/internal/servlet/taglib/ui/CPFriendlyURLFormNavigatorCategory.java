@@ -28,7 +28,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {"form.navigator.category.order:Integer=5"},
 	service = FormNavigatorCategory.class
 )
-public class CPFormNavigatorCategory implements FormNavigatorCategory {
+public class CPFriendlyURLFormNavigatorCategory
+	implements FormNavigatorCategory {
 
 	@Override
 	public String getFormNavigatorId() {

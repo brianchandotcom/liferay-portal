@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"form.navigator.entry.order:Integer=300"},
 	service = FormNavigatorEntry.class
 )
-public class CategoryCPFormNavigatorEntry
+public class CategoryCPFriendlyURLFormNavigatorEntry
 	extends BaseJSPFormNavigatorEntry<AssetCategory> {
 
 	@Override
@@ -234,7 +234,7 @@ public class CategoryCPFormNavigatorEntry
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CategoryCPFormNavigatorEntry.class);
+		CategoryCPFriendlyURLFormNavigatorEntry.class);
 
 	@Reference
 	private AssetCategoryService _assetCategoryService;

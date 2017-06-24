@@ -28,3 +28,12 @@
 </#if>
 
 <#assign footer_content_id = getterUtil.getLong(theme_settings["footer-web-content-id"]!"", 0) />
+
+<#macro commerce_category_navigation_menu
+	default_preferences = ""
+>
+	<@liferay_portlet["runtime"]
+		defaultPreferences=default_preferences
+		portletName="com_liferay_commerce_product_asset_category_navigation_web_internal_portlet_CPAssetCategoryNavigationPortlet"
+	/>
+</#macro>

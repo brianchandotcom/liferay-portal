@@ -27,7 +27,7 @@ import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration;
+import com.liferay.wiki.web.configuration.WikiPortletInstanceConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -91,32 +91,32 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 		return _wikiPage;
 	}
 
-	public WikiPortletInstanceOverriddenConfiguration
-		getWikiPortletInstanceOverridenConfiguration() {
+	public WikiPortletInstanceConfiguration
+		getWikiPortletInstanceConfiguration() {
 
 		try {
-			if (_wikiPortletInstanceOverridenConfiguration == null) {
+			if (_wikiPortletInstanceConfiguration == null) {
 				String portletResource = getPortletResource();
 
 				if (Validator.isNotNull(portletResource)) {
-					_wikiPortletInstanceOverridenConfiguration =
+					_wikiPortletInstanceConfiguration =
 						ConfigurationProviderUtil.getConfiguration(
-							WikiPortletInstanceOverriddenConfiguration.class,
+							WikiPortletInstanceConfiguration.class,
 							new ParameterMapSettingsLocator(
 								getRequest().getParameterMap(),
 								new PortletInstanceSettingsLocator(
 									getLayout(), getResourcePortletId())));
 				}
 				else {
-					_wikiPortletInstanceOverridenConfiguration =
+					_wikiPortletInstanceConfiguration =
 						ConfigurationProviderUtil.getConfiguration(
-							WikiPortletInstanceOverriddenConfiguration.class,
+							WikiPortletInstanceConfiguration.class,
 							new PortletInstanceSettingsLocator(
 								getLayout(), getPortletId()));
 				}
 			}
 
-			return _wikiPortletInstanceOverridenConfiguration;
+			return _wikiPortletInstanceConfiguration;
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
@@ -127,7 +127,6 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 	private WikiGroupServiceOverriddenConfiguration
 		_wikiGroupServiceOverriddenConfiguration;
 	private WikiPage _wikiPage;
-	private WikiPortletInstanceOverriddenConfiguration
-		_wikiPortletInstanceOverridenConfiguration;
+	private WikiPortletInstanceConfiguration _wikiPortletInstanceConfiguration;
 
 }

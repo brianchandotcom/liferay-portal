@@ -16,14 +16,15 @@ package com.liferay.wiki.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.TrashedModel;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
+import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -43,7 +44,6 @@ import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.util.WikiCacheHelper;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
-import com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -100,9 +100,8 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "rowIdsWikiNode");
 		}
 
-		WikiPortletInstanceOverriddenConfiguration
-			wikiPortletInstanceOverriddenConfiguration =
-				getWikiPortletInstanceOverriddenConfiguration(actionRequest);
+		ModifiableSettings modifiableSettings = getModifiableSettings(
+			actionRequest);
 
 		for (long deleteNodeId : deleteNodeIds) {
 			WikiNode wikiNode = _wikiNodeService.getNode(deleteNodeId);
@@ -124,9 +123,7 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 
 			_wikiCacheHelper.clearCache(deleteNodeId);
 
-			updateSettings(
-				wikiPortletInstanceOverriddenConfiguration, oldName,
-				StringPool.BLANK);
+			updateSettings(modifiableSettings, oldName, StringPool.BLANK);
 		}
 
 		WikiCacheThreadLocal.setClearCache(true);
@@ -186,9 +183,8 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected WikiPortletInstanceOverriddenConfiguration
-			getWikiPortletInstanceOverriddenConfiguration(
-				ActionRequest actionRequest)
+	protected ModifiableSettings getModifiableSettings(
+			ActionRequest actionRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -196,14 +192,13 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		WikiPortletInstanceOverriddenConfiguration
-			wikiPortletInstanceOverriddenConfiguration =
-				ConfigurationProviderUtil.getConfiguration(
-					WikiPortletInstanceOverriddenConfiguration.class,
-					new PortletInstanceSettingsLocator(
-						themeDisplay.getLayout(), portletDisplay.getId()));
+		PortletInstanceSettingsLocator portletInstanceSettingsLocator =
+			new PortletInstanceSettingsLocator(
+				themeDisplay.getLayout(), portletDisplay.getId());
 
-		return wikiPortletInstanceOverriddenConfiguration;
+		Settings settings = portletInstanceSettingsLocator.getSettings();
+
+		return settings.getModifiableSettings();
 	}
 
 	protected void restoreTrashEntries(ActionRequest actionRequest)
@@ -279,38 +274,47 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 			_wikiNodeService.updateNode(
 				nodeId, name, description, serviceContext);
 
-			WikiPortletInstanceOverriddenConfiguration
-				wikiPortletInstanceOverriddenConfiguration =
-					getWikiPortletInstanceOverriddenConfiguration(
-						actionRequest);
+			ModifiableSettings modifiableSettings = getModifiableSettings(
+				actionRequest);
 
-			updateSettings(
-				wikiPortletInstanceOverriddenConfiguration, oldName, name);
+			updateSettings(modifiableSettings, oldName, name);
 		}
 	}
 
 	protected void updateSettings(
-			WikiPortletInstanceOverriddenConfiguration
-				wikiPortletInstanceOverriddenConfiguration,
-			String oldName, String newName)
+			ModifiableSettings modifiableSettings, String oldName,
+			String newName)
 		throws Exception {
 
-		String[] hiddenNodes =
-			wikiPortletInstanceOverriddenConfiguration.hiddenNodes();
+		String[] hiddenNodes = modifiableSettings.getValues(
+			"hiddenNodes", null);
 
-		ArrayUtil.replace(hiddenNodes, oldName, newName);
+		if (hiddenNodes != null) {
+			if (newName.isEmpty()) {
+				ArrayUtil.remove(hiddenNodes, oldName);
+			}
+			else {
+				ArrayUtil.replace(hiddenNodes, oldName, newName);
+			}
 
-		wikiPortletInstanceOverriddenConfiguration.setHiddenNodes(hiddenNodes);
+			modifiableSettings.setValues("hiddenNodes", hiddenNodes);
+		}
 
-		String[] visibleNodes =
-			wikiPortletInstanceOverriddenConfiguration.visibleNodes();
+		String[] visibleNodes = modifiableSettings.getValues(
+			"visibleNodes", null);
 
-		ArrayUtil.replace(visibleNodes, oldName, newName);
+		if (hiddenNodes != null) {
+			if (newName.isEmpty()) {
+				ArrayUtil.remove(visibleNodes, oldName);
+			}
+			else {
+				ArrayUtil.replace(visibleNodes, oldName, newName);
+			}
 
-		wikiPortletInstanceOverriddenConfiguration.setVisibleNodes(
-			visibleNodes);
+			modifiableSettings.setValues("visibleNodes", visibleNodes);
+		}
 
-		wikiPortletInstanceOverriddenConfiguration.store();
+		modifiableSettings.store();
 	}
 
 	private TrashEntryService _trashEntryService;

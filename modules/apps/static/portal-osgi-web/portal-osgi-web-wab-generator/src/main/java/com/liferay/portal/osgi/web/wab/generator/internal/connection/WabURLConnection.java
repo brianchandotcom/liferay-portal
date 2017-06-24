@@ -71,17 +71,24 @@ public class WabURLConnection extends URLConnection {
 					"Web-ContextPath");
 		}
 
-		File file = transferToTempFile(new URL(url.getPath()));
+		final File file = transferToTempFile(new URL(url.getPath()));
 
-		try {
-			File processedFile = _wabGenerator.generate(
-				_classLoader, file, parameters);
+		File processedFile = _wabGenerator.generate(
+			_classLoader, file, parameters);
 
-			return new FileInputStream(processedFile);
-		}
-		finally {
-			FileUtil.deltree(file.getParentFile());
-		}
+		return new FileInputStream(processedFile) {
+
+			@Override
+			public void close() throws IOException {
+				try {
+					super.close();
+				}
+				finally {
+					FileUtil.deltree(file.getParentFile());
+				}
+			}
+
+		};
 	}
 
 	protected File transferToTempFile(URL url) throws IOException {

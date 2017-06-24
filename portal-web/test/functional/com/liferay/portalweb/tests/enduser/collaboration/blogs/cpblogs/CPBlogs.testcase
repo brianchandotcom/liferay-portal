@@ -15,7 +15,9 @@
 		</execute>
 	</tear-down>
 
-	<command description="Ensure that a user can add multiple Blogs Entries." name="AddBlogsEntries" priority="4">
+	<command name="AddBlogsEntries" priority="4">
+		<description message="Ensure that a user can add multiple Blogs Entries." />
+
 		<property name="testray.component.names" value="Blogs" />
 		<property name="testray.main.component.name" value="Blogs" />
 

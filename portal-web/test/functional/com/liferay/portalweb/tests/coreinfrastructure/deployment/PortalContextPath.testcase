@@ -5,7 +5,9 @@
 		<execute macro="SignIn#signInTestSetup" />
 	</set-up>
 
-	<command description="Runs the smoke test on a non-root portal context." name="Smoke" priority="5">
+	<command name="Smoke" priority="5">
+		<description message="Runs the smoke test on a non-root portal context." />
+
 		<property name="portal.acceptance" value="true" />
 		<property name="portal.context" value="liferay" />
 		<property name="skip.clean-app-server-deploy-dir" value="true" />

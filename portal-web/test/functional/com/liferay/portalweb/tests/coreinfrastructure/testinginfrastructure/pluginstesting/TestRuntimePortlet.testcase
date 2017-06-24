@@ -16,7 +16,9 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command description="This is a test case for LPS-56769." name="Smoke" priority="5">
+	<command name="Smoke" priority="5">
+		<description message="This is a test case for LPS-56769." />
+
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#gotoPage">

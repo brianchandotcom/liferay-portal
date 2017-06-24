@@ -1,0 +1,644 @@
+<?xml version="1.0"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:nyt="http://www.nytimes.com/namespaces/rss/2.0" version="2.0">
+<channel>
+	<title>NYT &gt; Technology</title>
+	<link>https://www.nytimes.com/section/technology?partner=rss&amp;emc=rss</link>
+	<atom:link href="http://www.nytimes.com/services/xml/rss/nyt/Technology.xml" rel="self" type="application/rss+xml" />
+	<description/>
+	<language>en-us</language>
+	<copyright>Copyright 2017  The New York Times Company</copyright>
+	<lastBuildDate>Wed, 21 Jun 2017 15:42:07 GMT </lastBuildDate>
+	<image>
+	  <title>NYT &gt; Technology</title>
+	  <url>https://static01.nyt.com/images/misc/NYT_logo_rss_250x40.png</url>
+	  <link>https://www.nytimes.com/section/technology?partner=rss&amp;emc=rss</link>
+	</image>
+	<item>
+	  <title>Uber Founder Travis Kalanick Resigns as C.E.O.</title>
+	  <link>https://www.nytimes.com/2017/06/21/technology/uber-ceo-travis-kalanick.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/21/technology/uber-ceo-travis-kalanick.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/21/technology/uber-ceo-travis-kalanick.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/21/business/21UBER2/21UBER2-moth-v2.jpg" width="151" />
+	  <media:description>Travis Kalanick, the chief executive of Uber, said last week that he would take an indefinite leave of absence.</media:description>
+	  <media:credit>Kim Kyung-Hoon/Reuters</media:credit>
+	  <description>The company&#x2019;s co-founder had been under increasing pressure, and several major investors demanded that he resign from the company immediately.</description>
+	  <dc:creator>MIKE ISAAC</dc:creator>
+	  <pubDate>Wed, 21 Jun 2017 05:20:56 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Uber Technologies Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Kalanick, Travis</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Shareholder Rights and Activism</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Car Services and Livery Cabs</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Venture Capital</category>
+	</item>
+	<item>
+	  <title>Amazon Will Let Customers Try On Clothes Before Buying</title>
+	  <link>https://www.nytimes.com/2017/06/20/business/amazon-shopping-retail-fashion.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/20/business/amazon-shopping-retail-fashion.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/20/business/amazon-shopping-retail-fashion.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/21/business/21AMAZON2/21AMAZON2-moth.jpg" width="151" />
+	  <media:description>The chief executive of Amazon, Jeff Bezos. The retailer&#x2019;s new try-on clothing service will be available only to members of Amazon Prime.</media:description>
+	  <media:credit>Matthew Ryan Williams for The New York Times</media:credit>
+	  <description>Amazon Wardrobe, part of the Prime service and part of the company&#x2019;s effort to expand in apparel, will let customers order three to 15 items of clothing without buying it.</description>
+	  <dc:creator>NICK WINGFIELD</dc:creator>
+	  <pubDate>Tue, 20 Jun 2017 15:03:56 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Fashion and Apparel</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Amazon.com Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">E-Commerce</category>
+	</item>
+	<item>
+	  <title>Move Over, Bitcoin. Ether Is the Digital Currency of the Moment.</title>
+	  <link>https://www.nytimes.com/2017/06/19/business/dealbook/ethereum-bitcoin-digital-currency.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/19/business/dealbook/ethereum-bitcoin-digital-currency.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/19/business/dealbook/ethereum-bitcoin-digital-currency.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/20/business/20BITCOIN2/20BITCOIN2-moth.jpg" width="151" />
+	  <media:description>Racks of machines at a server farm mining Bitcoins and Ether in Guizhou, China, last June.</media:description>
+	  <media:credit>Gilles Sabri&#xE9; for The New York Time</media:credit>
+	  <description>Ethereum, a digital currency network that is winning over tech geeks and big companies, may soon surpass Bitcoin, its inspiration. Or it may fizzle.</description>
+	  <dc:creator>NATHANIEL POPPER</dc:creator>
+	  <pubDate>Mon, 19 Jun 2017 19:11:29 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Ethereum Foundation</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Bitcoin (Currency)</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Virtual Currency</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Start-ups</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">E-Commerce</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Computers and the Internet</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Venture Capital</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Decentralized Autonomous Organization</category>
+	</item>
+	<item>
+	  <title>Tech Titans Make Pilgrimage to White House to Discuss Government Systems</title>
+	  <link>https://www.nytimes.com/2017/06/19/technology/technology-forum-white-house.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/19/technology/technology-forum-white-house.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/19/technology/technology-forum-white-house.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/20/business/20TRUMPTECH/20TRUMPTECH-moth.jpg" width="151" />
+	  <media:description>Tech leaders and investors, some of whom have disagreed with President Trump, met at the White House on Monday about updating government technology.</media:description>
+	  <media:credit>Stephen Crowley/The New York Times</media:credit>
+	  <description>Timothy Cook, Jeff Bezos and Eric Schmidt were among 18 tech executives at a forum held by an administration they have had conflicts with.</description>
+	  <dc:creator>CECILIA KANG</dc:creator>
+	  <pubDate>Tue, 20 Jun 2017 00:53:03 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">United States Politics and Government</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Trump, Donald J</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Liddell, Christopher P</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Kushner, Jared</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Computers and the Internet</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Cloud Computing</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Alphabet Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Apple Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Amazon.com Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Microsoft Corp</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Bezos, Jeffrey P</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Cook, Timothy D</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Nadella, Satya</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Schmidt, Eric E</category>
+	</item>
+	<item>
+	  <title>Critic's Notebook: When Fan Fiction and Reality Collide</title>
+	  <link>https://www.nytimes.com/2017/06/21/arts/when-fan-fiction-and-reality-collide.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/21/arts/when-fan-fiction-and-reality-collide.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/21/arts/when-fan-fiction-and-reality-collide.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/21/arts/hess-fanfiction/hess-fanfiction-moth.jpg" width="151" />
+	  <media:description/>
+	  <media:credit>Tracy Ma</media:credit>
+	  <description>The topsy-turvy power dynamics of internet culture are on display in &#x201C;FANtasies,&#x201D; a new fan-fiction-inspired web series.</description>
+	  <dc:creator>AMANDA HESS</dc:creator>
+	  <pubDate>Wed, 21 Jun 2017 13:57:08 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Web-Original Programming</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Writing and Writers</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Computers and the Internet</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Video Recordings, Downloads and Streaming</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Comedy and Humor</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Fullscreen Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_ttl">FANtasies (Web-Original Program)</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Wattpad</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">YouTube.com</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Helbig, Grace</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Hart, Hannah</category>
+	</item>
+	<item>
+	  <title>State of the Art: How Battling Brands Online Has Gained Urgency, and Impact</title>
+	  <link>https://www.nytimes.com/2017/06/21/technology/how-battling-brands-online-has-gained-urgency-and-impact.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/21/technology/how-battling-brands-online-has-gained-urgency-and-impact.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/21/technology/how-battling-brands-online-has-gained-urgency-and-impact.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/22/business/22STATE/22STATE-moth.jpg" width="151" />
+	  <media:description/>
+	  <media:credit>Doug Chayka</media:credit>
+	  <description>In a nation where politics have grown pitched, such campaigns suddenly feel like the most effective political action many of us can take.</description>
+	  <dc:creator>FARHAD MANJOO</dc:creator>
+	  <pubDate>Wed, 21 Jun 2017 09:00:28 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Social Media</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Online Advertising</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Facebook Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Twitter</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Jones, Alex (1974- )</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Shakespeare, William</category>
+	</item>
+	<item>
+	  <title>Toshiba Picks Preferred Bidder for Microchip Business</title>
+	  <link>https://www.nytimes.com/2017/06/21/business/dealbook/toshiba-microchip-business-sale.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/21/business/dealbook/toshiba-microchip-business-sale.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/21/business/dealbook/toshiba-microchip-business-sale.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/22/business/22db-toshiba/22db-toshiba-moth.jpg" width="151" />
+	  <media:description>Toshiba said on Wednesday that a consortium made up of the Innovation Network Corporation of Japan, Bain Capital and the Development Bank of Japan had &#x201C;presented the best proposal.&#x201D;</media:description>
+	  <media:credit>Toru Yamanaka/Agence France-Presse &#x2014; Getty Images</media:credit>
+	  <description>The decision to negotiate with a Japanese-led consortium was likely to intensify a showdown with an American business partner seeking to steer the sale.</description>
+	  <dc:creator>GERRY DOYLE</dc:creator>
+	  <pubDate>Wed, 21 Jun 2017 14:04:15 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Computer Chips</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Mergers, Acquisitions and Divestitures</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">TOSHIBA Corporation</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Innovation Network Corporation of Japan</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Japan</category>
+	</item>
+	<item>
+	  <title>Germany Raids Homes of 36 People Accused of Hateful Postings Over Social Media</title>
+	  <link>https://www.nytimes.com/2017/06/20/world/europe/germany-36-accused-of-hateful-postings-over-social-media.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/20/world/europe/germany-36-accused-of-hateful-postings-over-social-media.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/20/world/europe/germany-36-accused-of-hateful-postings-over-social-media.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/21/world/21germany/21germany-moth.jpg" width="151" />
+	  <media:description>Heiko Maas, the German justice minister, is endorsing a new social media law aimed at cracking down on hate speech, a measure that an array of experts has warned is unconstitutional.</media:description>
+	  <media:credit>Tobias Schwarz/Agence France-Presse &#x2014; Getty Images</media:credit>
+	  <description>The raids were part of a coordinated campaign across 14 states. Most cases concerned politically motivated right-wing incitement, police said.</description>
+	  <dc:creator>DAVID SHIMER</dc:creator>
+	  <pubDate>Tue, 20 Jun 2017 19:10:37 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Cyberharassment</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Social Media</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Computers and the Internet</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Hate Crimes</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Facebook Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Twitter</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Maas, Heiko (1966- )</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Germany</category>
+	</item>
+	<item>
+	  <title>Bits: Daily Report: When Tech Titans Go to Washington</title>
+	  <link>https://www.nytimes.com/2017/06/20/technology/daily-report-when-tech-titans-go-to-washington.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/20/technology/daily-report-when-tech-titans-go-to-washington.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/20/technology/daily-report-when-tech-titans-go-to-washington.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/20/business/20TRUMPTECH/20TRUMPTECH-moth.jpg" width="151" />
+	  <media:description>Tech leaders and investors, some of whom have disagreed with President Trump, met at the White House on Monday about updating government technology.</media:description>
+	  <media:credit>Stephen Crowley/The New York Times</media:credit>
+	  <description>An event at the White House on Monday was closely watched for the Trump administration&#x2019;s ability to gather leaders in the tech realm.</description>
+	  <dc:creator>PUI-WING TAM</dc:creator>
+	  <pubDate>Tue, 20 Jun 2017 15:57:10 GMT</pubDate>
+	</item>
+	<item>
+	  <title>Tech Tip: What to Do When Chrome Wants to Update &#x2014; but Can&#x2019;t</title>
+	  <link>https://www.nytimes.com/2017/06/20/technology/personaltech/google-chrome-update-issues.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/20/technology/personaltech/google-chrome-update-issues.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/20/technology/personaltech/google-chrome-update-issues.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <description>If Google&#x2019;s browser trips up trying to install a new version, check your system and settings before reinstalling the software.</description>
+	  <dc:creator>J. D. BIERSDORFER</dc:creator>
+	  <pubDate>Tue, 20 Jun 2017 15:49:25 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Chrome (Browser)</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Chrome (Operating System)</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Computers and the Internet</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Software</category>
+	</item>
+	<item>
+	  <title>Want to Work for Jaguar Land Rover? Start Playing Phone Games</title>
+	  <link>https://www.nytimes.com/2017/06/19/business/jaguar-land-rover-app-puzzles.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/19/business/jaguar-land-rover-app-puzzles.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/19/business/jaguar-land-rover-app-puzzles.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/20/business/20jaguar/20jaguar-moth.jpg" width="151" />
+	  <media:description>The Jaguar F-Pace at the New York International Auto Show in April. The carmaker said Monday that it would be recruiting 5,000 people this year, including 1,000 electronics and software engineers.</media:description>
+	  <media:credit>Jason Szenes/European Pressphoto Agency</media:credit>
+	  <description>The carmaker wants potential employees to download an app with a series of puzzles it says will test for the engineering skills it hopes to bring in.</description>
+	  <dc:creator>AMIE TSANG</dc:creator>
+	  <pubDate>Mon, 19 Jun 2017 20:48:33 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Automobiles</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Hiring and Promotion</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Engineering and Engineers</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Labor and Jobs</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Jaguar Land Rover</category>
+	</item>
+	<item>
+	  <title>Drones to the Rescue</title>
+	  <link>https://www.nytimes.com/2017/06/19/health/drones-by-air.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/19/health/drones-by-air.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/19/health/drones-by-air.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/20/science/20OBSDRONE/20OBSDRONE-moth.jpg" width="151" />
+	  <media:description/>
+	  <media:credit>Bas Czerwinski/Agence France-Presse &#x2014; Getty Images</media:credit>
+	  <description>Researchers find that drones carrying heart defibrillators can reach cardiac arrest victims quicker than ambulances.</description>
+	  <dc:creator>THE ASSOCIATED PRESS</dc:creator>
+	  <pubDate>Mon, 19 Jun 2017 19:59:29 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Heart</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Defibrillators</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Drones (Pilotless Planes)</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Research</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Emergency Medical Treatment</category>
+	</item>
+	<item>
+	  <title>Global Health: The High-Tech Device That&#x2019;s Like a Bouncer for Mosquitoes</title>
+	  <link>https://www.nytimes.com/2017/06/19/health/mosquito-trap-microsoft-project-premonition.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/19/health/mosquito-trap-microsoft-project-premonition.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/19/health/mosquito-trap-microsoft-project-premonition.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/20/science/20GLOBAL1/20GLOBAL1-moth.jpg" width="151" />
+	  <media:description>A mosquito trap created by Microsoft has 64 chambers that can trap individual species of mosquitoes.</media:description>
+	  <media:credit>Michael Stravato for The New York Times</media:credit>
+	  <description>New traps that use infrared beams to identify insects are helping researchers capture more of the disease-carrying insects they need.</description>
+	  <dc:creator>DONALD G. McNEIL Jr.</dc:creator>
+	  <pubDate>Mon, 19 Jun 2017 17:52:48 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Mosquitoes</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">West Nile Virus</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Zika Virus</category>
+	</item>
+	<item>
+	  <title>Tech Tip: Making Your Messages Really Move</title>
+	  <link>https://www.nytimes.com/2017/06/19/technology/personaltech/gif-text-messages-apps.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/19/technology/personaltech/gif-text-messages-apps.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/19/technology/personaltech/gif-text-messages-apps.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <description>Communicating through animated GIF files is a popular form of self-expression, and you don&#x2019;t have to look far to find images to share.</description>
+	  <dc:creator>J. D. BIERSDORFER</dc:creator>
+	  <pubDate>Mon, 19 Jun 2017 17:19:07 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Mobile Applications</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Computers and the Internet</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">iOS (Operating System)</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Giphy Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Android (Operating System)</category>
+	</item>
+	<item>
+	  <title>Bits: Arianna Huffington Gains Power at Uber</title>
+	  <link>https://www.nytimes.com/2017/06/19/technology/arianna-huffington-gains-power-at-uber.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/19/technology/arianna-huffington-gains-power-at-uber.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/19/technology/arianna-huffington-gains-power-at-uber.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/20/technology/20bitsdaily-web/20bitsdaily-web-moth.jpg" width="151" />
+	  <media:description>Arianna Huffington, who joined Uber&#x2019;s board last year, has been gaining influence at the company.</media:description>
+	  <media:credit>Drew Angerer/Getty Images</media:credit>
+	  <description>Ms. Huffington, a founder of The Huffington Post who joined Uber&#x2019;s board last year, has been helping fill a leadership void at the troubled company.</description>
+	  <dc:creator>PUI-WING TAM</dc:creator>
+	  <pubDate>Mon, 19 Jun 2017 17:16:52 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Workplace Environment</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Uber Technologies Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Huffington, Arianna</category>
+	</item>
+	<item>
+	  <title>U.K. to Decide on 21st Century Fox Deal for Sky by June 29</title>
+	  <link>https://www.nytimes.com/2017/06/19/business/dealbook/sky-21st-century-fox-murdoch.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/19/business/dealbook/sky-21st-century-fox-murdoch.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/19/business/dealbook/sky-21st-century-fox-murdoch.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/20/world/20Db-sky-sub/20Db-sky-sub-moth.jpg" width="151" />
+	  <media:description/>
+	  <media:credit>Daniel Leal-Olivas/Agence France-Presse &#x2014; Getty Images</media:credit>
+	  <description>Regulators handed recommendations to the country&#x2019;s culture minister on whether the deal should go through.</description>
+	  <dc:creator>MARK SCOTT and EMILY STEEL</dc:creator>
+	  <pubDate>Tue, 20 Jun 2017 14:14:45 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">News and News Media</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Mergers, Acquisitions and Divestitures</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Television</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Regulation and Deregulation of Industry</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">21st Century Fox</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Sky PLC</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Great Britain</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Murdoch, James R</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Murdoch, Rupert</category>
+	</item>
+	<item>
+	  <title>Nonfiction: The iPhone Is 10 Years Old. Here&#x2019;s the Story of Its Birth.</title>
+	  <link>https://www.nytimes.com/2017/06/19/books/review/one-device-secret-history-iphone-brian-merchant.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/19/books/review/one-device-secret-history-iphone-brian-merchant.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/19/books/review/one-device-secret-history-iphone-brian-merchant.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/25/books/review/25Grossman/25Grossman-moth-v2.jpg" width="151" />
+	  <media:description>Apple chief executive Steve Jobs unveils the first iPhone at the Macworld Conference in January 2007.</media:description>
+	  <media:credit>Tony Avelar/Agence France-Presse &#x2014; Getty Images</media:credit>
+	  <description>Apple&#x2019;s culture of reverence and secrecy is no match for Brian Merchant in &#x201C;The One Device: The Secret History of the iPhone.&#x201D;</description>
+	  <dc:creator>LEV GROSSMAN</dc:creator>
+	  <pubDate>Mon, 19 Jun 2017 15:07:04 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Books and Literature</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Merchant, Brian</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_ttl">The One Device: The Secret History of the iPhone (Book)</category>
+	</item>
+	<item>
+	  <title>After Terror Attacks, Britain Moves to Police the Web</title>
+	  <link>https://www.nytimes.com/2017/06/19/technology/britain-encryption-privacy-hate-speech.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/19/technology/britain-encryption-privacy-hate-speech.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/19/technology/britain-encryption-privacy-hate-speech.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/14/business/00UKTECH1/00UKTECH1-moth.jpg" width="151" />
+	  <media:description>Londoners checking their phones during lunch hour. British officials would like to create a digital backdoor to encrypted messaging technologies in hopes of detecting and preventing terrorist activity.</media:description>
+	  <media:credit>Andrew Testa for The New York Times</media:credit>
+	  <description>The country is cracking down on the use of encryption for instant messaging, as well as on potentially extremist material that circulates across social media.</description>
+	  <dc:creator>MARK SCOTT</dc:creator>
+	  <pubDate>Mon, 19 Jun 2017 14:22:08 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Great Britain</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Terrorism</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Surveillance of Citizens by Government</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Computers and the Internet</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Freedom of Speech and Expression</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Social Media</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Espionage and Intelligence Services</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Privacy</category>
+	</item>
+	<item>
+	  <title>YouTube Sets New Policies to Curb Extremist Videos</title>
+	  <link>https://www.nytimes.com/2017/06/18/business/youtube-terrorism.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/18/business/youtube-terrorism.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/18/business/youtube-terrorism.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/19/business/19YOUTUBE1/19YOUTUBE1-moth-v2.jpg" width="151" />
+	  <media:description>Gatherers at a vigil for the victims of an attack on London Bridge this month. One of the attackers is said to have become radicalized by watching YouTube videos of an American Islamic preacher.</media:description>
+	  <media:credit>Daniel Leal-Olivas/Agence France-Presse &#x2014; Getty Images</media:credit>
+	  <description>The company says it wants to quickly identify and pull down videos promoting terrorism. It will also make offensive videos harder to find.</description>
+	  <dc:creator>DAISUKE WAKABAYASHI</dc:creator>
+	  <pubDate>Mon, 19 Jun 2017 00:31:13 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">YouTube.com</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Video Recordings, Downloads and Streaming</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Freedom of Speech and Expression</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Online Advertising</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Terrorism</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Google Inc</category>
+	</item>
+	<item>
+	  <title>As Uber Leaders Step Aside, Arianna Huffington&#x2019;s Influence Grows</title>
+	  <link>https://www.nytimes.com/2017/06/17/business/uber-arianna-huffington-board.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/17/business/uber-arianna-huffington-board.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/17/business/uber-arianna-huffington-board.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/19/business/19HUFFINGTON1/19HUFFINGTON1-moth.jpg" width="151" />
+	  <media:description>Arianna Huffington, left center, with Bozoma A. Saint John, Uber&#x2019;s chief brand officer, in San Francisco. Ms. Huffington, a member of Uber&#x2019;s board, is playing a growing role in the company as it contends with a string of scandals.</media:description>
+	  <media:credit>Jason Henry for The New York Times</media:credit>
+	  <description>In the 14 months since she joined the board, Ms. Huffington has been a public voice for the start-up and a confidante to its chief executive.</description>
+	  <dc:creator>KATIE BENNER and MIKE ISAAC</dc:creator>
+	  <pubDate>Sat, 17 Jun 2017 20:27:09 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Huffington, Arianna</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Uber Technologies Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Car Services and Livery Cabs</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Huffington Post</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Kalanick, Travis</category>
+	</item>
+	<item>
+	  <title>Whole Foods Deal Shows Amazon&#x2019;s Prodigious Tolerance for Risk</title>
+	  <link>https://www.nytimes.com/2017/06/17/technology/whole-foods-amazon.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/17/technology/whole-foods-amazon.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/17/technology/whole-foods-amazon.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/18/us/18Amazon-1/18Amazon-1-moth.jpg" width="151" />
+	  <media:description>Jeff Bezos, the founder of Amazon, at the Space Symposium in Colorado Springs in April. His embrace of risk and experimentation has included the development of reusable rockets.</media:description>
+	  <media:credit>Nick Cote for The New York Times</media:credit>
+	  <description>A longtime approach of making bold &#x2014; and sometimes head-scratching &#x2014; moves has brought Jeff Bezos staggering success.</description>
+	  <dc:creator>DAVID STREITFELD</dc:creator>
+	  <pubDate>Sat, 17 Jun 2017 16:18:20 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">E-Commerce</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Cloud Computing</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Supermarkets and Grocery Stores</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Amazon.com Inc</category>
+	</item>
+	<item>
+	  <title>Airbnb Tries to Behave More Like a Hotel</title>
+	  <link>https://www.nytimes.com/2017/06/17/technology/airbnbs-hosts-professional-hotels.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/17/technology/airbnbs-hosts-professional-hotels.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/17/technology/airbnbs-hosts-professional-hotels.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/15/business/18AIRBNB1/18AIRBNB1-moth.jpg" width="151" />
+	  <media:description>Jill Bishop, who rents out a bedroom in her Denver home, says she is dealing with the changes being asked of Airbnb&#x2019;s hosts.</media:description>
+	  <media:credit>Ryan David Brown for The New York Times</media:credit>
+	  <description>Less chatting on the couch; fewer idiosyncratic toiletries in the bath. Pursuing growth, the company promotes consistency among its millions of hosts.</description>
+	  <dc:creator>KATIE BENNER</dc:creator>
+	  <pubDate>Sat, 17 Jun 2017 13:00:30 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Airbnb</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Hotels and Travel Lodgings</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Renting and Leasing (Real Estate)</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Chesky, Brian</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Regulation and Deregulation of Industry</category>
+	</item>
+	<item>
+	  <title>Bits: Farhad&#x2019;s, Mike&#x2019;s and Cade&#x2019;s Week in Tech: More Uber, With a Dash of Amazon</title>
+	  <link>https://www.nytimes.com/2017/06/17/technology/farhads-mikes-and-cades-week-in-tech-more-uber-with-a-dash-of-amazon.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/17/technology/farhads-mikes-and-cades-week-in-tech-more-uber-with-a-dash-of-amazon.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/17/technology/farhads-mikes-and-cades-week-in-tech-more-uber-with-a-dash-of-amazon.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/18/technology/18technewsletter-web/18technewsletter-web-moth.jpg" width="151" />
+	  <media:description>Uber has announced sweeping reforms to its culture and workplace practices.</media:description>
+	  <media:credit>Spencer Platt/Getty Images</media:credit>
+	  <description>And a discussion of how Facebook is harnessing artificial intelligence &#x2014; well, almost &#x2014; to take on &#x201C;hard questions.&#x201D;</description>
+	  <dc:creator>FARHAD MANJOO, MIKE ISAAC and CADE METZ</dc:creator>
+	  <pubDate>Sat, 17 Jun 2017 13:00:02 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Facebook Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Uber Technologies Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Artificial Intelligence</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Whole Foods Market Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Kalanick, Travis</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Thacker, Chuck</category>
+	</item>
+	<item>
+	  <title>Robot Revolution: Amazon&#x2019;s Move Signals End of Line for Many Cashiers</title>
+	  <link>https://www.nytimes.com/2017/06/17/upshot/amazons-move-signals-end-of-line-for-many-cashiers.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/17/upshot/amazons-move-signals-end-of-line-for-many-cashiers.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/17/upshot/amazons-move-signals-end-of-line-for-many-cashiers.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/19/us/17up-cashier/08xp-lines-moth.jpg" width="151" />
+	  <media:description>Shoppers in line at a Brooklyn Whole Foods. The grocery store of the future may not have checkout lines or cashiers.</media:description>
+	  <media:credit>Nina Westervelt for The New York Times</media:credit>
+	  <description>The next jobs set to disappear may be ones that are a bigger part of people&#x2019;s daily lives: retail workers and cashiers in stores and restaurants.</description>
+	  <dc:creator>CLAIRE CAIN MILLER</dc:creator>
+	  <pubDate>Sat, 17 Jun 2017 12:59:34 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Amazon.com Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Whole Foods Market Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Labor and Jobs</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Shopping and Retail</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Computers and the Internet</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Robots and Robotics</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Mergers, Acquisitions and Divestitures</category>
+	</item>
+	<item>
+	  <title>State of the Art: In Whole Foods, Bezos Gets a Sustainably Sourced Guinea Pig</title>
+	  <link>https://www.nytimes.com/2017/06/17/technology/whole-foods-amazon-jeff-bezos.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/17/technology/whole-foods-amazon-jeff-bezos.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/17/technology/whole-foods-amazon-jeff-bezos.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/19/business/statejump/17GroceryWarsArt-moth.jpg" width="151" />
+	  <media:description/>
+	  <media:credit>Minh Uong/The New York Times</media:credit>
+	  <description>By purchasing the upscale chain, Jeff Bezos, Amazon&#x2019;s chief, has a chance to tinker with how people buy groceries &#x2014; and map the future of the physical store.</description>
+	  <dc:creator>FARHAD MANJOO</dc:creator>
+	  <pubDate>Sat, 17 Jun 2017 09:00:22 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Amazon.com Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Whole Foods Market Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Bezos, Jeffrey P</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Mergers, Acquisitions and Divestitures</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">E-Commerce</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Shopping and Retail</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Supermarkets and Grocery Stores</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Food</category>
+	</item>
+	<item>
+	  <title>An Online Retailer Walked Into a Salad Bar</title>
+	  <link>https://www.nytimes.com/2017/06/16/business/amazon-whole-foods-jokes-reaction.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/16/business/amazon-whole-foods-jokes-reaction.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/16/business/amazon-whole-foods-jokes-reaction.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/17/business/17amazon1_hp/17amazon1_hp-moth.jpg" width="151" />
+	  <media:description>All things Amazon as they add Whole Foods to their list of businesses.</media:description>
+	  <media:credit>Shannon Stapleton/Reuters</media:credit>
+	  <description>Amazon announced it was buying Whole Foods, and the internet started cracking jokes.</description>
+	  <dc:creator>ERIN McCANN</dc:creator>
+	  <pubDate>Fri, 16 Jun 2017 17:04:33 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Social Media</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Supermarkets and Grocery Stores</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Organic Foods and Products</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Health Foods</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Mergers, Acquisitions and Divestitures</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Amazon.com Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Whole Foods Market Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Bezos, Jeffrey P</category>
+	</item>
+	<item>
+	  <title>Bits: Daily Report: The Limits of A.I.</title>
+	  <link>https://www.nytimes.com/2017/06/16/technology/facebook-the-limits-of-ai.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/16/technology/facebook-the-limits-of-ai.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/16/technology/facebook-the-limits-of-ai.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <description>Facebook wants to rely on technology to help it spot extremist content. But how do you teach a computer context?</description>
+	  <dc:creator>JIM KERSTETTER</dc:creator>
+	  <pubDate>Fri, 16 Jun 2017 16:21:12 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Computers and the Internet</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Driverless and Semiautonomous Vehicles</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Artificial Intelligence</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Facebook Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Google Inc</category>
+	</item>
+	<item>
+	  <title>Tech Tip: Claiming Your Own Little Corner of the Web</title>
+	  <link>https://www.nytimes.com/2017/06/16/technology/personaltech/claiming-your-own-little-corner-of-the-web.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/16/technology/personaltech/claiming-your-own-little-corner-of-the-web.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/16/technology/personaltech/claiming-your-own-little-corner-of-the-web.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <description>You don&#x2019;t need a lot of technical expertise to make a personal site or a blog to share your thoughts with the world.</description>
+	  <dc:creator>J. D. BIERSDORFER</dc:creator>
+	  <pubDate>Fri, 16 Jun 2017 16:07:02 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Blogs and Blogging (Internet)</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Computers and the Internet</category>
+	</item>
+	<item>
+	  <title>Amazon to Buy Whole Foods for $13.4 Billion</title>
+	  <link>https://www.nytimes.com/2017/06/16/business/dealbook/amazon-whole-foods.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/16/business/dealbook/amazon-whole-foods.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/16/business/dealbook/amazon-whole-foods.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/17/business/17DB-WHOLEFOODS1/17DB-WHOLEFOODS1-moth.jpg" width="151" />
+	  <media:description>Customers at a Whole Foods Market in Midtown Manhattan.</media:description>
+	  <media:credit>John Taggart for The New York Times</media:credit>
+	  <description>The deal for a physical grocery retailer reflects Amazon&#x2019;s ambition to become an even more frequent shopping habit to customers.</description>
+	  <dc:creator>NICK WINGFIELD and MICHAEL J. de la MERCED</dc:creator>
+	  <pubDate>Sat, 17 Jun 2017 01:27:04 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Amazon.com Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Whole Foods Market Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Mergers, Acquisitions and Divestitures</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">E-Commerce</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Supermarkets and Grocery Stores</category>
+	</item>
+	<item>
+	  <title>Walmart to Buy Bonobos, Men&#x2019;s Wear Company, for $310 Million</title>
+	  <link>https://www.nytimes.com/2017/06/16/business/walmart-bonobos-merger.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/16/business/walmart-bonobos-merger.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/16/business/walmart-bonobos-merger.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/17/business/17DB-BONOBUS/17DB-BONOBUS-moth.jpg" width="151" />
+	  <media:description>Merchandise at the headquarters of Bonobos in New York. Walmart bought the retailer as part of its effort to compete with Amazon.</media:description>
+	  <media:credit>John Taggart for The New York Times</media:credit>
+	  <description>Acquiring the clothing brand born on the internet is intended to energize Walmart&#x2019;s e-commerce strategy as it races to catch up with Amazon.</description>
+	  <dc:creator>MICHAEL J. de la MERCED</dc:creator>
+	  <pubDate>Fri, 16 Jun 2017 13:05:15 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">E-Commerce</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Shopping and Retail</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Mergers, Acquisitions and Divestitures</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Amazon.com Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Bonobos.com</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Jet.com Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Walmart Stores Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Lore, Marc (1971- )</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Dunn, Andy</category>
+	</item>
+	<item>
+	  <title>Apple, Moving In on Prestige TV, Poaches Two Sony Executives</title>
+	  <link>https://www.nytimes.com/2017/06/16/business/media/apple-tv-studio-executives-sony.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/16/business/media/apple-tv-studio-executives-sony.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/16/business/media/apple-tv-studio-executives-sony.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/17/business/17apple/17apple-moth.jpg" width="151" />
+	  <media:description>The actress Glenn Close with Zack Van Amburg, center, and Jamie Erlicht, the leaders of Sony Pictures Television, in 2012.</media:description>
+	  <media:credit>Mike Coppola/Getty Images for DirecTV</media:credit>
+	  <description>The company&#x2019;s hiring of two respected leaders, who cultivated shows like &#x201C;Breaking Bad&#x201D; at Sony, signaled to Hollywood that Apple is serious about original programming.</description>
+	  <dc:creator>BROOKS BARNES</dc:creator>
+	  <pubDate>Fri, 16 Jun 2017 12:30:21 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Apple Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Sony Pictures Television</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Erlicht, Jamie (1968- )</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Van Amburg, Zack (1970- )</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Web-Original Programming</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Television</category>
+	</item>
+	<item>
+	  <title>Google Said to Be Facing Record E.U. Fine by End of August</title>
+	  <link>https://www.nytimes.com/2017/06/16/business/eu-google-antitrust-fine.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/16/business/eu-google-antitrust-fine.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/16/business/eu-google-antitrust-fine.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/17/business/17eugoogle/17eugoogle-moth.jpg" width="151" />
+	  <media:description>Margrethe Vestager, the European Union&#x2019;s antitrust chief, at a news conference in Brussels in April 2016.</media:description>
+	  <media:credit>Francois Lenoir/Reuters</media:credit>
+	  <description>Regulators are set to impose a penalty of more than $1 billion and force the company to alter how it operates, according to people familiar with the case.</description>
+	  <dc:creator>MARK SCOTT</dc:creator>
+	  <pubDate>Fri, 16 Jun 2017 12:16:30 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Google Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">European Commission</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">European Union</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Antitrust Laws and Competition Issues</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Computers and the Internet</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Search Engines</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Fines (Penalties)</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Vestager, Margrethe</category>
+	</item>
+	<item>
+	  <title>Slack Is Said to Be in Talks to Raise $500 Million</title>
+	  <link>https://www.nytimes.com/2017/06/15/technology/slack-amazon-fundraising.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/15/technology/slack-amazon-fundraising.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/15/technology/slack-amazon-fundraising.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/16/business/16SLACK1/16SLACK1-moth.jpg" width="151" />
+	  <media:description>Stewart Butterfield, chief executive of Slack, at the company&#x2019;s office in San Francisco.</media:description>
+	  <media:credit>Jason Henry for The New York Times</media:credit>
+	  <description>The office messaging company is not yet profitable, but new funding could raise its valuation to $5 billion as it faces rivals like Microsoft&#x2019;s Teams.</description>
+	  <dc:creator>KATIE BENNER</dc:creator>
+	  <pubDate>Thu, 15 Jun 2017 22:06:23 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Slack Technologies Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Instant Messaging</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Venture Capital</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Mergers, Acquisitions and Divestitures</category>
+	</item>
+	<item>
+	  <title>Jeff Bezos Wants Ideas for Philanthropy, So He Asked Twitter</title>
+	  <link>https://www.nytimes.com/2017/06/15/technology/jeff-bezos-amazon-twitter-charity.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/15/technology/jeff-bezos-amazon-twitter-charity.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/15/technology/jeff-bezos-amazon-twitter-charity.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/17/business/16Bezos/16Bezos-moth.jpg" width="151" />
+	  <media:description>Jeff Bezos, the founder and chief executive of Amazon, is worth more than $80 billion, according to Forbes. He sought ideas for helping the world in the short term.</media:description>
+	  <media:credit>Joshua Roberts/Reuters</media:credit>
+	  <description>The Amazon chief asked for tips where his money could be used in the &#x201C;here and now,&#x201D; unlike many of his business investments.</description>
+	  <dc:creator>NICK WINGFIELD</dc:creator>
+	  <pubDate>Thu, 15 Jun 2017 22:04:36 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Bezos, Jeffrey P</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Amazon.com Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Philanthropy</category>
+	</item>
+	<item>
+	  <title>Wheels: Envisioning the Car of the Future as a Living Room on Wheels</title>
+	  <link>https://www.nytimes.com/2017/06/15/automobiles/wheels/driverless-cars-interior.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/15/automobiles/wheels/driverless-cars-interior.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/15/automobiles/wheels/driverless-cars-interior.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/16/business/16WHEELS1/16WHEELS1-moth.jpg" width="151" />
+	  <media:description>BMW&#x2019;s show car at CES in Las Vegas, the annual consumer electronics show in Las Vegas.</media:description>
+	  <media:credit>BMW Group</media:credit>
+	  <description>As driverless cars develop, how we sit, inform and entertain ourselves are all up for grabs &#x2014; and companies, designers and researchers are dreaming big.</description>
+	  <dc:creator>ERIC A. TAUB</dc:creator>
+	  <pubDate>Thu, 15 Jun 2017 19:28:25 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Automobiles</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Driverless and Semiautonomous Vehicles</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Research</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Panasonic Corp</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Valeo SA</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Design</category>
+	</item>
+	<item>
+	  <title>Facebook Will Use Artificial Intelligence to Find Extremist Posts</title>
+	  <link>https://www.nytimes.com/2017/06/15/technology/facebook-artificial-intelligence-extremists-terrorism.html?partner=rss&amp;emc=rss</link>
+	  <guid isPermaLink="true">https://www.nytimes.com/2017/06/15/technology/facebook-artificial-intelligence-extremists-terrorism.html</guid>
+	  <atom:link href="https://www.nytimes.com/2017/06/15/technology/facebook-artificial-intelligence-extremists-terrorism.html?partner=rss&amp;emc=rss" rel="standout" />
+	  <media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/16/business/16FACEBOOK1/16FACEBOOK1-moth.jpg" width="151" />
+	  <media:description>Facebook says the first use of its new artificial intelligence program will be to prevent the posting of gruesome content such as images from terrorist attacks.</media:description>
+	  <media:credit>Patricia De Melo Moreira/Agence France-Presse &#x2014; Getty Images</media:credit>
+	  <description>Under pressure from governments to counter inappropriate content, the social media company will pair new technology with human moderators.</description>
+	  <dc:creator>SHEERA FRENKEL</dc:creator>
+	  <pubDate>Thu, 15 Jun 2017 17:12:18 GMT</pubDate>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Facebook Inc</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Social Media</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Artificial Intelligence</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/des">Terrorism</category>
+	  <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Freedom of Speech and Expression</category>
+	</item>
+</channel>
+</rss>

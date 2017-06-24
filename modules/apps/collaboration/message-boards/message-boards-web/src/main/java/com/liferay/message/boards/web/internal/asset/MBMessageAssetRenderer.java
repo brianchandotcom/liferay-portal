@@ -211,7 +211,7 @@ public class MBMessageAssetRenderer
 
 		if (_message.isDiscussion()) {
 			return MBDiscussionPermission.contains(
-				permissionChecker, _message.getMessageId(), ActionKeys.UPDATE);
+				permissionChecker, _message, ActionKeys.UPDATE);
 		}
 		else {
 			return MBMessagePermission.contains(
@@ -225,7 +225,7 @@ public class MBMessageAssetRenderer
 
 		if (_message.isDiscussion()) {
 			return MBDiscussionPermission.contains(
-				permissionChecker, _message.getMessageId(), ActionKeys.VIEW);
+				permissionChecker, _message, ActionKeys.VIEW);
 		}
 		else {
 			return MBMessagePermission.contains(

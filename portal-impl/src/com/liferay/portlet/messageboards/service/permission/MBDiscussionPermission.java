@@ -123,6 +123,14 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
 
+		return contains(permissionChecker, message, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, MBMessage message,
+			String actionId)
+		throws PortalException {
+
 		String className = message.getClassName();
 
 		if (className.equals(WorkflowInstance.class.getName())) {

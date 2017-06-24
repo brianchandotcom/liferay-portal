@@ -66,6 +66,10 @@ public class MBCommentImpl implements WorkflowableComment {
 		return _message.getGroupId();
 	}
 
+	public MBMessage getMessage() {
+		return _message;
+	}
+
 	@Override
 	public Class<?> getModelClass() {
 		return MBMessage.class;
@@ -134,10 +138,6 @@ public class MBCommentImpl implements WorkflowableComment {
 		MBMessage message = getMessage();
 
 		return message.isRoot();
-	}
-
-	protected MBMessage getMessage() {
-		return _message;
 	}
 
 	private final MBMessage _message;

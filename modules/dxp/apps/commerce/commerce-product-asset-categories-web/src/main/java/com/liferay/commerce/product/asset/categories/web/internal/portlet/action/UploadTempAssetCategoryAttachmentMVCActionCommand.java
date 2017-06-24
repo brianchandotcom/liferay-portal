@@ -14,17 +14,17 @@
 
 package com.liferay.commerce.product.asset.categories.web.internal.portlet.action;
 
-import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.commerce.product.asset.categories.web.internal.upload.AssetCategoryAttachmentsUploadResponseHandler;
 import com.liferay.commerce.product.asset.categories.web.internal.upload.TempAssetCategoryAttachmentsUploadFileEntryHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.upload.UploadHandler;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -32,12 +32,13 @@ import javax.portlet.ActionResponse;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
+		"javax.portlet.name=com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
 		"mvc.command.name=uploadTempCategoryAttachment"
 	},
 	service = MVCActionCommand.class
 )
-public class UploadTempAssetCategoryAttachmentMVCActionCommand extends BaseMVCActionCommand {
+public class UploadTempAssetCategoryAttachmentMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -52,7 +53,7 @@ public class UploadTempAssetCategoryAttachmentMVCActionCommand extends BaseMVCAc
 
 	@Reference
 	private AssetCategoryAttachmentsUploadResponseHandler
-			_assetCategoryAttachmentsUploadResponseHandler;
+		_assetCategoryAttachmentsUploadResponseHandler;
 
 	@Reference
 	private TempAssetCategoryAttachmentsUploadFileEntryHandler

@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.asset.categories.web.internal.portlet.action;
 
-import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.commerce.product.asset.categories.web.internal.display.context.CategoryCPAttachmentFileEntriesDisplayContext;
 import com.liferay.commerce.product.definitions.web.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
@@ -28,19 +27,22 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -49,7 +51,7 @@ import java.util.Map;
 	configurationPid = "com.liferay.commerce.product.definitions.web.configuration.AttachmentsConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
-		"javax.portlet.name=" + AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
+		"javax.portlet.name=com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
 		"mvc.command.name=editAssetCategoryCPAttachmentFileEntry"
 	},
 	service = MVCRenderCommand.class
@@ -63,8 +65,7 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCRenderCommand
 		throws PortletException {
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(
-				"/edit_image.jsp");
+			servletContext.getRequestDispatcher("/edit_image.jsp");
 
 		try {
 			HttpServletRequest httpServletRequest =

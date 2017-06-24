@@ -14,31 +14,29 @@
 
 package com.liferay.commerce.product.asset.categories.web.internal.portlet.action;
 
-import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryFileEntryIdException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
-import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.*;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -46,7 +44,7 @@ import java.util.Map;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
+		"javax.portlet.name=",
 		"mvc.command.name=editAssetCategoryCPAttachmentFileEntry"
 	},
 	service = MVCActionCommand.class

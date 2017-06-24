@@ -108,6 +108,29 @@ public class RatingsStatsLocalServiceTest {
 	}
 
 	@Test
+	public void testRatingsStatsDeletedWhenNoRatingsEntries() throws Exception {
+		String className = StringUtil.randomString();
+		long classPK = RandomTestUtil.randomLong();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		RatingsEntryLocalServiceUtil.updateEntry(
+			_user1.getUserId(), className, classPK, 1, serviceContext);
+
+		RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.getStats(
+			className, classPK);
+
+		RatingsEntryLocalServiceUtil.deleteEntry(
+			_user1.getUserId(), className, classPK);
+
+		ratingsStats = RatingsStatsLocalServiceUtil.fetchStats(
+			className, classPK);
+
+		Assert.assertNull(ratingsStats);
+	}
+
+	@Test
 	public void testTotalEntriesWithMultipleRatingsEntries() throws Exception {
 		String className = StringUtil.randomString();
 		long classPK = RandomTestUtil.randomLong();

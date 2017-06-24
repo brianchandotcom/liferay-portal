@@ -90,8 +90,15 @@ List<BlogsEntry> blogsEntries = _convertToBlogEntries(results);
 	<%
 	long[] classPKs = ListUtil.toLongArray(blogsEntries, BlogsEntry.ENTRY_ID_ACCESSOR);
 
-	Map<Long, RatingsEntry> ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(themeDisplay.getUserId(), BlogsEntry.class.getName(), classPKs);
+	Map<Long, RatingsEntry> ratingsEntries = null;
 	Map<Long, RatingsStats> ratingsStats = RatingsStatsLocalServiceUtil.getStats(BlogsEntry.class.getName(), classPKs);
+
+	if (ratingsStats.isEmpty()) {
+		ratingsEntries = Collections.emptyMap();
+	}
+	else {
+		ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(themeDisplay.getUserId(), BlogsEntry.class.getName(), classPKs);
+	}
 
 	int index = 0;
 

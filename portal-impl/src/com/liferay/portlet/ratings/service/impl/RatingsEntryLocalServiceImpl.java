@@ -76,19 +76,25 @@ public class RatingsEntryLocalServiceImpl
 			className, classPK);
 
 		int totalEntries = stats.getTotalEntries() - 1;
-		double totalScore = stats.getTotalScore() - oldScore;
 
-		double averageScore = 0;
-
-		if (totalEntries > 0) {
-			averageScore = totalScore / totalEntries;
+		if (totalEntries == 0) {
+			ratingsStatsPersistence.remove(stats);
 		}
+		else {
+			double totalScore = stats.getTotalScore() - oldScore;
 
-		stats.setTotalEntries(totalEntries);
-		stats.setTotalScore(totalScore);
-		stats.setAverageScore(averageScore);
+			double averageScore = 0;
 
-		ratingsStatsPersistence.update(stats);
+			if (totalEntries > 0) {
+				averageScore = totalScore / totalEntries;
+			}
+
+			stats.setTotalEntries(totalEntries);
+			stats.setTotalScore(totalScore);
+			stats.setAverageScore(averageScore);
+
+			ratingsStatsPersistence.update(stats);
+		}
 	}
 
 	@Override

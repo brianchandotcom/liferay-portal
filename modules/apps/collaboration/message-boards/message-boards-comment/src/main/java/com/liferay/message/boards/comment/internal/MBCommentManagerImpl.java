@@ -365,13 +365,19 @@ public class MBCommentManagerImpl implements CommentManager {
 
 		long[] classPKsArray = ArrayUtil.toLongArray(classPKs);
 
-		Map<Long, RatingsEntry> ratingsEntries =
-			_ratingsEntryLocalService.getEntries(
-				userId, CommentConstants.getDiscussionClassName(),
-				classPKsArray);
+		Map<Long, RatingsEntry> ratingsEntries = null;
 		Map<Long, RatingsStats> ratingsStats =
 			_ratingsStatsLocalService.getStats(
 				CommentConstants.getDiscussionClassName(), classPKsArray);
+
+		if (ratingsStats.isEmpty()) {
+			ratingsEntries = Collections.emptyMap();
+		}
+		else {
+			ratingsEntries = _ratingsEntryLocalService.getEntries(
+				userId, CommentConstants.getDiscussionClassName(),
+				classPKsArray);
+		}
 
 		return new MBDiscussionCommentImpl(
 			treeWalker.getRoot(), treeWalker, ratingsEntries, ratingsStats);

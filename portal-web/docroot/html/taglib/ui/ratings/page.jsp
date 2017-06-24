@@ -35,12 +35,12 @@ if (numberOfStars < 1) {
 	numberOfStars = 1;
 }
 
-if (!setRatingsEntry) {
-	ratingsEntry = RatingsEntryLocalServiceUtil.fetchEntry(themeDisplay.getUserId(), className, classPK);
-}
-
 if (!setRatingsStats) {
 	ratingsStats = RatingsStatsLocalServiceUtil.fetchStats(className, classPK);
+}
+
+if (!setRatingsEntry && (ratingsStats != null)) {
+	ratingsEntry = RatingsEntryLocalServiceUtil.fetchEntry(themeDisplay.getUserId(), className, classPK);
 }
 
 if (Validator.isNull(url)) {

@@ -1,0 +1,186 @@
+diff --git a/freemarker/ext/jsp/TagTransformModel.java b/freemarker/ext/jsp/TagTransformModel.java
+index 05c5f94..aa5cbc3 100644
+--- a/freemarker/ext/jsp/TagTransformModel.java
++++ b/freemarker/ext/jsp/TagTransformModel.java
+@@ -17,10 +17,9 @@
+ package freemarker.ext.jsp;
+ 
+ import java.beans.IntrospectionException;
+-import java.io.CharArrayReader;
+-import java.io.CharArrayWriter;
+ import java.io.IOException;
+ import java.io.Reader;
++import java.io.StringReader;
+ import java.io.Writer;
+ import java.util.Map;
+ 
+@@ -32,6 +31,7 @@ import javax.servlet.jsp.tagext.IterationTag;
+ import javax.servlet.jsp.tagext.Tag;
+ import javax.servlet.jsp.tagext.TryCatchFinally;
+ 
++import freemarker.ext.jsp.internal.WriterFactoryUtil;
+ import freemarker.log.Logger;
+ import freemarker.template.TemplateModelException;
+ import freemarker.template.TemplateTransformModel;
+@@ -95,7 +95,7 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
+      * An implementation of BodyContent that buffers it's input to a char[].
+      */
+     static class BodyContentImpl extends BodyContent {
+-        private CharArrayWriter buf;
++        private Writer buf;
+ 
+         BodyContentImpl(JspWriter out, boolean buffer) {
+             super(out);
+@@ -103,7 +103,7 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
+         }
+ 
+         void initBuffer() {
+-            buf = new CharArrayWriter();
++            buf = WriterFactoryUtil.createWriter();
+         }
+ 
+         public void flush() throws IOException {
+@@ -114,7 +114,7 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
+ 
+         public void clear() throws IOException {
+             if(buf != null) {
+-                buf = new CharArrayWriter();
++                buf = WriterFactoryUtil.createWriter();
+             }
+             else {
+                 throw new IOException("Can't clear");
+@@ -123,7 +123,7 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
+ 
+         public void clearBuffer() throws IOException {
+             if(buf != null) {
+-                buf = new CharArrayWriter();
++                buf = WriterFactoryUtil.createWriter();
+             }
+             else {
+                 throw new IOException("Can't clear");
+@@ -264,16 +264,36 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
+             }
+         }
+ 
++        @Override
++        public void write(String s) throws IOException {
++            if(buf != null) {
++                buf.write(s);
++            }
++            else {
++                getEnclosingWriter().write(s);
++            }
++        }
++
++        @Override
++        public void write(String s, int off, int len) throws IOException {
++            if(buf != null) {
++                buf.write(s, off, len);
++            }
++            else {
++                getEnclosingWriter().write(s, off, len);
++            }
++        }
++
+         public String getString() {
+             return buf.toString();
+         }
+ 
+         public Reader getReader() {
+-            return new CharArrayReader(buf.toCharArray());
++            return new StringReader(buf.toString());
+         }
+ 
+         public void writeOut(Writer out) throws IOException {
+-            buf.writeTo(out);
++            out.write(buf.toString());
+         }
+ 
+     }
+@@ -412,3 +432,4 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
+         
+     }
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/freemarker/ext/jsp/internal/WriterFactory.java b/freemarker/ext/jsp/internal/WriterFactory.java
+new file mode 100644
+index 0000000..00d7d5d
+--- /dev/null
++++ b/freemarker/ext/jsp/internal/WriterFactory.java
+@@ -0,0 +1,27 @@
++/**
++ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
++ *
++ * This library is free software; you can redistribute it and/or modify it under
++ * the terms of the GNU Lesser General Public License as published by the Free
++ * Software Foundation; either version 2.1 of the License, or (at your option)
++ * any later version.
++ *
++ * This library is distributed in the hope that it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
++ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
++ * details.
++ */
++
++package freemarker.ext.jsp.internal;
++
++import java.io.Writer;
++
++/**
++ * @author Preston Crary
++ */
++public interface WriterFactory {
++
++	public Writer createWriter();
++
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/freemarker/ext/jsp/internal/WriterFactoryUtil.java b/freemarker/ext/jsp/internal/WriterFactoryUtil.java
+new file mode 100644
+index 0000000..eab1b08
+--- /dev/null
++++ b/freemarker/ext/jsp/internal/WriterFactoryUtil.java
+@@ -0,0 +1,40 @@
++/**
++ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
++ *
++ * This library is free software; you can redistribute it and/or modify it under
++ * the terms of the GNU Lesser General Public License as published by the Free
++ * Software Foundation; either version 2.1 of the License, or (at your option)
++ * any later version.
++ *
++ * This library is distributed in the hope that it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
++ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
++ * details.
++ */
++
++package freemarker.ext.jsp.internal;
++
++import java.io.CharArrayWriter;
++import java.io.Writer;
++
++/**
++ * @author Preston Crary
++ */
++public class WriterFactoryUtil {
++
++	public static Writer createWriter() {
++		if (_writerFactory == null) {
++			return new CharArrayWriter();
++		}
++
++		return _writerFactory.createWriter();
++	}
++
++	public static void setWriterFactory(WriterFactory writerFactory) {
++		_writerFactory = writerFactory;
++	}
++
++	private static WriterFactory _writerFactory;
++
++}
++/* @generated */
+\ No newline at end of file

@@ -47,4 +47,11 @@ public class MissingEmptyLines {
 			return;
 		}
 	}
+
+	public String method4() {
+		String s1 = null;
+
+		s1 = "Hello World";
+		return s1;
+	}
 }

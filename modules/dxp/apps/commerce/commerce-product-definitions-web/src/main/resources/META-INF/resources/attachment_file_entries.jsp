@@ -123,7 +123,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 				<liferay-ui:error exception="<%= NoSuchSkuContributorCPDefinitionOptionRelException.class %>" message="there-are-no-options-set-as-sku-contributor" />
 
-				<div class="product-skus-container" id="<portlet:namespace />entriesContainer">
+				<div class="product-attachments-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
 						id="cpAttachmentFileEntries"
 						iteratorURL="<%= portletURL %>"

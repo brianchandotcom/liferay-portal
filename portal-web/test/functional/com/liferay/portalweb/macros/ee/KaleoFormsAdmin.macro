@@ -45,7 +45,7 @@
 	</command>
 
 	<command name="addProcess">
-		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="Kaleo Forms Admin" />
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Kaleo Forms Admin" />
 
 		<execute function="Click" locator1="Button#PLUS" />
 	</command>

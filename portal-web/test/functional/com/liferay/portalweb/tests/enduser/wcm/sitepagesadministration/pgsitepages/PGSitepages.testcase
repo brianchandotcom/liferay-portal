@@ -73,6 +73,33 @@
 		</execute>
 	</command>
 
+	<command name="EditPageViaControlMenu" priority="5">
+		<description message="This is a use case for LPS-71160" />
+
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Site Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoEditPageViaControlMenu" >
+			<var name="pageName" value="Site Page" />
+		</execute>
+
+		<execute macro="Page#editName">
+			<var name="pageNameEdit" value="Site Page Edit" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Edit" />
+		</execute>
+
+		<execute macro="Page#view">
+			<var name="pageName" value="Site Page Edit" />
+		</execute>
+	</command>
+
 	<command name="EditSitePage" priority="4">
 		<execute macro="Navigator#openURL" />
 

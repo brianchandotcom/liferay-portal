@@ -295,6 +295,83 @@
 		</execute>
 	</command>
 
+	<command ignore="true" name="ImportLAR" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Page Templates" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="college-and-department-page-templates.lar" />
+			<var name="uploadFrom" value="dependencies" />
+		</execute>
+
+		<execute macro="PageTemplate#viewCP">
+			<var name="pageTemplateName" value="College Landing Page" />
+		</execute>
+
+		<execute macro="PageTemplate#viewCP">
+			<var name="pageTemplateName" value="Department Landing Page" />
+		</execute>
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="PageTemplate#viewPG">
+			<var name="pageTemplateName" value="College Landing Page" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Media Gallery" />
+		</execute>
+
+		<execute macro="Portlet#viewDuplicatePG">
+			<var name="portletName" value="Web Content Display" />
+			<var name="totalPortletCount" value="3" />
+		</execute>
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute function="Close#closeWindow" locator1="title=College Landing Page - ${siteName}" />
+
+		<execute function="SelectWindow" locator1="title=Page Templates - Control Panel - ${siteName}" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#viewPG">
+			<var name="pageTemplateName" value="Department Landing Page" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Media Gallery" />
+		</execute>
+
+		<execute macro="Portlet#viewDuplicatePG">
+			<var name="portletName" value="Web Content Display" />
+			<var name="totalPortletCount" value="2" />
+		</execute>
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Members" />
+		</execute>
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Navigation Menu" />
+		</execute>
+	</command>
+
 	<command name="LocalizeDefaultPageTemplates" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Page Templates" />

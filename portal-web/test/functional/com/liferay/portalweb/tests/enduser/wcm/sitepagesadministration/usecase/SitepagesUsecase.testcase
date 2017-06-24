@@ -1183,8 +1183,9 @@
 		</execute>
 	</command>
 
-	<command name="WebContentAdministrationSitesPageTypes" priority="3">
-		<property name="testray.component.names" value="Site Pages Administration" />
+	<command name="WebContentAdministrationSitesPageTypes" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Site Pages Administration,Training" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
@@ -1286,5 +1287,137 @@
 			<var name="pageName" value="Panel Page" />
 			<var name="portletNameList" value="Bookmarks,Friends Directory,My Sites,My Sites Directory,Page Comments,Page Flags,Page Ratings,Portal Directory,Site Members Directory" />
 		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="United States" />
+			<var name="orgType" value="Organization" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#addSiteCP">
+			<var name="orgName" value="United States" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="United States" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="Canada" />
+			<var name="orgType" value="Organization" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#addSiteCP">
+			<var name="orgName" value="Canada" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="Canada" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Page Set Page" />
+			<var name="siteName" value="Page Type Test Site Name" />
+			<var name="sitePageType" value="Page Set" />
+		</execute>
+
+		<var name="key_pageName" value="Page Set Page" />
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE" value1="Page Set Page" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#addChild">
+			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Page Set Page" />
+			<var name="pageTypeURL" value="/web/united-states" />
+			<var name="siteChildPageName" value="United States" />
+			<var name="siteName" value="Page Type Test Site Name" />
+			<var name="sitePageType" value="Link to URL" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Page Type Test Site Name" />
+		</execute>
+
+		<var name="key_pageName" value="Page Set Page" />
+
+		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Page Set Page" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#addChild">
+			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Page Set Page" />
+			<var name="pageTypeURL" value="/web/canada" />
+			<var name="siteChildPageName" value="Canada" />
+			<var name="siteName" value="Page Type Test Site Name" />
+			<var name="sitePageType" value="Link to URL" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Page Type Test Site Name" />
+		</execute>
+
+		<var name="key_pageName" value="Page Set Page" />
+
+		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Page Set Page" />
+
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="United States" />
+			<var name="pageName" value="Page Set Page" />
+		</execute>
+
+		<execute function="AssertLocation" value1="${portalURL}/web/united-states" />
+		<execute function="AssertTextNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Page Type Test Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="Canada" />
+			<var name="pageName" value="Page Set Page" />
+		</execute>
+
+		<execute function="AssertLocation" value1="${portalURL}/web/canada" />
+		<execute function="AssertTextNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 	</command>
 </definition>

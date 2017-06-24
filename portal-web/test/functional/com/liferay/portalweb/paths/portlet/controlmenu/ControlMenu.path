@@ -39,11 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HEADER_TITLE</td>
-	<td>//*[@data-qa-id='headerTitle']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RELOAD_TOOLTIP</td>
 	<td>//div[contains(.,'The portal is currently reindexing.')]</td>
 	<td></td>

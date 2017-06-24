@@ -275,7 +275,7 @@
 			<var name="portletName" value="Activité sociale" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="ControlMenu#HEADER_TITLE" />
+		<execute function="AssertVisible" locator1="Portlet#HEADER" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Social Activity Page" />
@@ -291,7 +291,7 @@
 			<var name="portletName" value="ソーシャルアクティビティ" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="ControlMenu#HEADER_TITLE" />
+		<execute function="AssertVisible" locator1="Portlet#HEADER" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Social Activity Page" />
@@ -307,7 +307,7 @@
 			<var name="portletName" value="Atividade Social" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="ControlMenu#HEADER_TITLE" />
+		<execute function="AssertVisible" locator1="Portlet#HEADER" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Social Activity Page" />

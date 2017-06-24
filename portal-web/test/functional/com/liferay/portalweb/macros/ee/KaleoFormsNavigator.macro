@@ -4,7 +4,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_FIELD_SETS" value1="Manage Field Sets" />
 
-		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="Field Sets" />
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Field Sets" />
 	</command>
 
 	<command name="gotoManageForms">

@@ -21,9 +21,18 @@ AssetCategory assetCategory = (AssetCategory)request.getAttribute(WebKeys.ASSET_
 
 CPAttachmentFileEntryService cpAttachmentFileEntryService = (CPAttachmentFileEntryService)request.getAttribute("cpAttachmentFileEntryService");
 
+PortletURL portletURL = currentURLObj;
+
+portletURL.setParameter("historyKey", renderResponse.getNamespace() + "images");
+
+SearchContainer<CPAttachmentFileEntry> cpAttachmentFileEntrySearchContainer = new SearchContainer<>(liferayPortletRequest, portletURL, null, null);
+
 int cpAttachmentFileEntriesCount = cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(PortalUtil.getClassNameId(AssetCategory.class), assetCategory.getCategoryId(), CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
 
-List<CPAttachmentFileEntry> cpAttachmentFileEntries = cpAttachmentFileEntryService.getCPAttachmentFileEntries(PortalUtil.getClassNameId(AssetCategory.class), assetCategory.getCategoryId(), CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE, 0, cpAttachmentFileEntriesCount);
+List<CPAttachmentFileEntry> cpAttachmentFileEntries = cpAttachmentFileEntryService.getCPAttachmentFileEntries(PortalUtil.getClassNameId(AssetCategory.class), assetCategory.getCategoryId(), CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE, cpAttachmentFileEntrySearchContainer.getStart(), cpAttachmentFileEntrySearchContainer.getEnd());
+
+cpAttachmentFileEntrySearchContainer.setTotal(cpAttachmentFileEntriesCount);
+cpAttachmentFileEntrySearchContainer.setResults(cpAttachmentFileEntries);
 %>
 
 <div id="<portlet:namespace />attachmentFileEntriesContainer">
@@ -31,12 +40,8 @@ List<CPAttachmentFileEntry> cpAttachmentFileEntries = cpAttachmentFileEntryServi
 		<liferay-ui:search-container
 			emptyResultsMessage="there-are-no-images"
 			id="cpAttachmentFileEntries"
-			total="<%= cpAttachmentFileEntriesCount %>"
+			searchContainer="<%= cpAttachmentFileEntrySearchContainer %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= cpAttachmentFileEntries %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.commerce.product.model.CPAttachmentFileEntry"
 				cssClass="entry-display-style"
@@ -100,7 +105,7 @@ List<CPAttachmentFileEntry> cpAttachmentFileEntries = cpAttachmentFileEntryServi
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" />
+			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= cpAttachmentFileEntrySearchContainer %>" />
 		</liferay-ui:search-container>
 	</div>
 </div>

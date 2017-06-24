@@ -160,10 +160,12 @@ public class ScreensAssetEntryServiceImpl
 	public JSONObject getAssetEntry(long entryId, Locale locale)
 		throws PortalException {
 
-		AssetEntryPermission.check(
-			getPermissionChecker(), entryId, ActionKeys.VIEW);
+		AssetEntry entry = assetEntryLocalService.getEntry(entryId);
 
-		return toJSONObject(assetEntryLocalService.getEntry(entryId), locale);
+		AssetEntryPermission.check(
+			getPermissionChecker(), entry, ActionKeys.VIEW);
+
+		return toJSONObject(entry, locale);
 	}
 
 	@Override

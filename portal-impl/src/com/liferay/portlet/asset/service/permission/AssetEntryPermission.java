@@ -96,10 +96,18 @@ public class AssetEntryPermission {
 			String actionId)
 		throws PortalException {
 
-		AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(
-			className, classPK);
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
 
-		return contains(permissionChecker, entry, actionId);
+		try {
+			return assetRendererFactory.hasPermission(
+				permissionChecker, classPK, actionId);
+		}
+		catch (Exception e) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, className, classPK, e, actionId);
+		}
 	}
 
 }

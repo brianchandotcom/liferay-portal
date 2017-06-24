@@ -126,10 +126,12 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 	@Override
 	public AssetEntry getEntry(long entryId) throws PortalException {
-		AssetEntryPermission.check(
-			getPermissionChecker(), entryId, ActionKeys.VIEW);
+		AssetEntry entry = assetEntryLocalService.getEntry(entryId);
 
-		return assetEntryLocalService.getEntry(entryId);
+		AssetEntryPermission.check(
+			getPermissionChecker(), entry, ActionKeys.VIEW);
+
+		return entry;
 	}
 
 	@Override

@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.subscriptions.test;
 
-import com.dumbster.smtp.MailMessage;
-
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
@@ -25,8 +23,9 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.test.mail.MailMessage;
+import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portal.util.test.MailServiceTestUtil;
 
 import java.util.HashMap;
 import java.util.List;

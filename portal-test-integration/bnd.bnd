@@ -1,6 +1,6 @@
 Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
-Bundle-Version: 2.0.1
+Bundle-Version: 2.1.0
 Export-Package:\
 	com.liferay.portal.lar.test,\
 	com.liferay.portal.module.framework.test,\
@@ -8,6 +8,7 @@ Export-Package:\
 	com.liferay.portal.service.permission.test,\
 	com.liferay.portal.service.test,\
 	com.liferay.portal.test.log,\
+	com.liferay.portal.test.mail,\
 	com.liferay.portal.test.randomizerbumpers,\
 	com.liferay.portal.test.rule,\
 	com.liferay.portal.test.rule.callback,\

@@ -17,7 +17,7 @@ package com.liferay.staging.configuration.web.internal.portlet;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.NoSuchBackgroundTaskException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -84,7 +84,7 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 			long backgroundTaskId = ParamUtil.getLong(
 				actionRequest, BackgroundTaskConstants.BACKGROUND_TASK_ID);
 
-			BackgroundTaskManagerUtil.deleteBackgroundTask(backgroundTaskId);
+			_backgroundTaskManager.deleteBackgroundTask(backgroundTaskId);
 
 			sendRedirect(actionRequest, actionResponse);
 		}
@@ -244,6 +244,9 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 
 		_stagingLocalService = null;
 	}
+
+	@Reference
+	private BackgroundTaskManager _backgroundTaskManager;
 
 	private GroupLocalService _groupLocalService;
 

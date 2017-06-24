@@ -26,7 +26,7 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationService;
 import com.liferay.exportimport.kernel.service.ExportImportService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -200,8 +200,8 @@ public class EditExportConfigurationMVCActionCommand
 		long backgroundTaskId = ParamUtil.getLong(
 			actionRequest, BackgroundTaskConstants.BACKGROUND_TASK_ID);
 
-		BackgroundTask backgroundTask =
-			BackgroundTaskManagerUtil.getBackgroundTask(backgroundTaskId);
+		BackgroundTask backgroundTask = backgroundTaskManager.getBackgroundTask(
+			backgroundTaskId);
 
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
@@ -293,6 +293,9 @@ public class EditExportConfigurationMVCActionCommand
 				addExportLayoutExportImportConfiguration(actionRequest);
 		}
 	}
+
+	@Reference
+	protected BackgroundTaskManager backgroundTaskManager;
 
 	protected ExportImportConfigurationLocalService
 		exportImportConfigurationLocalService;

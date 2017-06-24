@@ -187,6 +187,16 @@ public class PortletPreferencesLocalServiceWrapper
 			ownerType, plid, portletId, portletPreferences);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.settings.Settings getPortletInstanceSettings(
+		long companyId, long groupId, java.lang.String portletId,
+		com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator portletInstanceSettingsLocator,
+		com.liferay.portal.kernel.settings.Settings portalPreferencesSettings) {
+		return _portletPreferencesLocalService.getPortletInstanceSettings(companyId,
+			groupId, portletId, portletInstanceSettingsLocator,
+			portalPreferencesSettings);
+	}
+
 	/**
 	* Returns the number of portlet preferenceses.
 	*

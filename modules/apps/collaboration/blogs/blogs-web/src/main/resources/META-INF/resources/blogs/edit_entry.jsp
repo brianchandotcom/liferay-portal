@@ -23,26 +23,63 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
-long entryId = BeanParamUtil.getLong(entry, request, "entryId");
+long entryId = 0;
 
-String title = BeanParamUtil.getString(entry, request, "title");
-String subtitle = BeanParamUtil.getString(entry, request, "subtitle");
-String content = BeanParamUtil.getString(entry, request, "content");
-String urlTitle = BeanParamUtil.getString(entry, request, "urlTitle");
+String title = null;
+String subtitle = null;
+String content = null;
+String urlTitle = null;
 
-String description = BeanParamUtil.getString(entry, request, "description");
+String description = null;
 
-boolean customAbstract = ParamUtil.getBoolean(request, "customAbstract", (entry != null) && Validator.isNotNull(entry.getDescription()) ? true : false);
+boolean customAbstract = false;
+
+boolean allowPingbacks = false;
+boolean allowTrackbacks = false;
+String coverImageCaption = null;
+long coverImageFileEntryId = 0;
+long smallImageFileEntryId = 0;
+
+if (entry == null) {
+	entryId = ParamUtil.getLong(request, "entryId");
+
+	title = ParamUtil.getString(request, "title");
+	subtitle = ParamUtil.getString(request, "subtitle");
+	content = ParamUtil.getString(request, "content");
+	urlTitle = ParamUtil.getString(request, "urlTitle");
+
+	description = ParamUtil.getString(request, "description");
+
+	customAbstract = ParamUtil.getBoolean(request, "customAbstract");
+
+	allowPingbacks = PropsValues.BLOGS_PINGBACK_ENABLED && ParamUtil.getBoolean(request, "allowPingbacks", true);
+	allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && ParamUtil.getBoolean(request, "allowTrackbacks", true);
+	coverImageCaption = ParamUtil.getString(request, "coverImageCaption");
+	coverImageFileEntryId = ParamUtil.getLong(request, "coverImageFileEntryId");
+	smallImageFileEntryId = ParamUtil.getLong(request, "smallImageFileEntryId");
+}
+else {
+	entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
+
+	title = ParamUtil.getString(request, "title", entry.getTitle());
+	subtitle = ParamUtil.getString(request, "subtitle", entry.getSubtitle());
+	content = ParamUtil.getString(request, "content", entry.getContent());
+	urlTitle = ParamUtil.getString(request, "urlTitle", entry.getUrlTitle());
+
+	description = ParamUtil.getString(request, "description", entry.getDescription());
+
+	customAbstract = ParamUtil.getBoolean(request, "customAbstract", Validator.isNotNull(entry.getDescription()));
+
+	allowPingbacks = PropsValues.BLOGS_PINGBACK_ENABLED && ParamUtil.getBoolean(request, "allowPingbacks", entry.getAllowPingbacks());
+	allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && ParamUtil.getBoolean(request, "allowTrackbacks", entry.getAllowTrackbacks());
+	coverImageCaption = ParamUtil.getString(request, "coverImageCaption", entry.getCoverImageCaption());
+	coverImageFileEntryId = ParamUtil.getLong(request, "coverImageFileEntryId", entry.getCoverImageFileEntryId());
+	smallImageFileEntryId = ParamUtil.getLong(request, "smallImageFileEntryId", entry.getSmallImageFileEntryId());
+}
 
 if (!customAbstract) {
 	description = StringUtil.shorten(content, pageAbstractLength);
 }
-
-boolean allowPingbacks = PropsValues.BLOGS_PINGBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowPingbacks", true);
-boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowTrackbacks", true);
-String coverImageCaption = BeanParamUtil.getString(entry, request, "coverImageCaption");
-long coverImageFileEntryId = BeanParamUtil.getLong(entry, request, "coverImageFileEntryId");
-long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFileEntryId");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

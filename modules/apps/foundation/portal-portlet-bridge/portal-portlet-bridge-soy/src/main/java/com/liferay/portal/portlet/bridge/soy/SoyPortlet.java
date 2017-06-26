@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -184,23 +185,27 @@ public class SoyPortlet extends MVCPortlet {
 	protected void propagateRequestParameters(PortletRequest portletRequest)
 		throws PortletException {
 
+		Map<String, Object> soyContextParametersMap = new HashMap<>();
+
 		Map<String, String[]> parametersMap = portletRequest.getParameterMap();
-
-		Template template = getTemplate(portletRequest);
-
-		SoyContext soyContext = new SoyContext();
 
 		for (Map.Entry<String, String[]> entry : parametersMap.entrySet()) {
 			String parameterName = entry.getKey();
 			String[] parameterValues = entry.getValue();
 
 			if (parameterValues.length == 1) {
-				soyContext.putInjectedData(parameterName, parameterValues[0]);
+				soyContextParametersMap.put(parameterName, parameterValues[0]);
 			}
 			else if (parameterValues.length > 1) {
-				soyContext.putInjectedData(parameterName, parameterValues);
+				soyContextParametersMap.put(parameterName, parameterValues);
 			}
 		}
+
+		SoyContext soyContext = new SoyContext();
+
+		soyContext.putInjectedData("requestParams", soyContextParametersMap);
+
+		Template template = getTemplate(portletRequest);
 
 		template.putAll(soyContext);
 	}

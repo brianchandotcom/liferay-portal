@@ -1613,6 +1613,7 @@ confidence warnings.
 - [LPS-73271]: Set [Find Security Bugs] exit code, but ignore it by default.
 
 ### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.3.32.
 - [LPS-73271]: Print the [Find Security Bugs] report location even in case of
 failure.
 

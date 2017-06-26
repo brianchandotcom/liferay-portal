@@ -80,7 +80,8 @@ public class StagingPermissionImpl implements StagingPermission {
 			return null;
 		}
 
-		if (!actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL) &&
+		if (!actionId.equals(ActionKeys.ACCESS) &&
+			!actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL) &&
 			!actionId.equals(ActionKeys.ADD_TO_PAGE) &&
 			!actionId.equals(ActionKeys.ASSIGN_MEMBERS) &&
 			!actionId.equals(ActionKeys.CONFIGURATION) &&

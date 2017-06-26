@@ -121,7 +121,7 @@ public class CPDefinitionStagedModelRepository
 			cpDefinition.getBaseSKU(), cpDefinition.getTitleMap(),
 			cpDefinition.getShortDescriptionMap(),
 			cpDefinition.getDescriptionMap(), cpDefinition.getUrlTitleMap(),
-			null, cpDefinition.getProductTypeName(),
+			cpDefinition.getLayoutUuid(), cpDefinition.getProductTypeName(),
 			cpDefinition.getDDMStructureKey(), displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -289,11 +289,11 @@ public class CPDefinitionStagedModelRepository
 			cpDefinition.getCPDefinitionId(), cpDefinition.getBaseSKU(),
 			cpDefinition.getTitleMap(), cpDefinition.getShortDescriptionMap(),
 			cpDefinition.getDescriptionMap(), cpDefinition.getUrlTitleMap(),
-			null, cpDefinition.getDDMStructureKey(), displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			cpDefinition.getLayoutUuid(), cpDefinition.getDDMStructureKey(),
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Reference

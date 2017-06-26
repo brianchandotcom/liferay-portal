@@ -22,6 +22,8 @@ import java.io.IOException;
 
 import java.nio.file.Path;
 
+import java.util.Optional;
+
 import org.elasticsearch.Version;
 import org.elasticsearch.common.cli.Terminal;
 import org.elasticsearch.common.cli.Terminal.Verbosity;
@@ -58,6 +60,23 @@ public class EmbeddedElasticsearchPluginManager {
 		}
 	}
 
+	public void removeObsoletePlugin() throws IOException {
+		PluginManager pluginManager =
+			_pluginManagerFactory.createPluginManager();
+
+		Optional<Path> pathOptional = getInstalledPluginPath(pluginManager);
+
+		if (!pathOptional.isPresent()) {
+			return;
+		}
+
+		if (pluginManager.isCurrentVersion(pathOptional.get())) {
+			return;
+		}
+
+		pluginManager.removePlugin(_pluginName, getTerminal());
+	}
+
 	protected PluginZip createPluginZip() throws IOException {
 		return _pluginZipFactory.createPluginZip(
 			"/plugins/" + _pluginName + "-" + Version.CURRENT + ".zip");
@@ -71,18 +90,38 @@ public class EmbeddedElasticsearchPluginManager {
 		PluginManager pluginManager = _pluginManagerFactory.createPluginManager(
 			pluginZip);
 
-		Terminal terminal = Terminal.DEFAULT;
-
-		terminal.verbosity(Verbosity.SILENT);
-
 		try {
-			pluginManager.downloadAndExtract(_pluginName, terminal, true);
+			pluginManager.downloadAndExtract(_pluginName, getTerminal(), true);
 		}
 		catch (IOException ioe) {
 			if (!handle(ioe)) {
 				throw ioe;
 			}
 		}
+	}
+
+	protected Optional<Path> getInstalledPluginPath(PluginManager pluginManager)
+		throws IOException {
+
+		Path[] paths = pluginManager.getInstalledPluginsPaths();
+
+		if (paths != null) {
+			for (Path path : paths) {
+				if (path.endsWith(_pluginName)) {
+					return Optional.of(path);
+				}
+			}
+		}
+
+		return Optional.empty();
+	}
+
+	protected Terminal getTerminal() {
+		Terminal terminal = Terminal.DEFAULT;
+
+		terminal.verbosity(Verbosity.SILENT);
+
+		return terminal;
 	}
 
 	protected boolean handle(IOException ioe) {
@@ -112,14 +151,10 @@ public class EmbeddedElasticsearchPluginManager {
 		PluginManager pluginManager =
 			_pluginManagerFactory.createPluginManager();
 
-		Path[] paths = pluginManager.getInstalledPluginsPaths();
+		Optional<Path> pathOptional = getInstalledPluginPath(pluginManager);
 
-		if (paths != null) {
-			for (Path path : paths) {
-				if (path.endsWith(_pluginName)) {
-					return true;
-				}
-			}
+		if (pathOptional.isPresent()) {
+			return true;
 		}
 
 		return false;

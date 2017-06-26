@@ -32,4 +32,8 @@ public interface PluginManager {
 
 	public Path[] getInstalledPluginsPaths() throws IOException;
 
+	public boolean isCurrentVersion(Path path) throws IOException;
+
+	public void removePlugin(String name, Terminal terminal) throws IOException;
+
 }

@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import org.elasticsearch.common.cli.Terminal;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.env.Environment;
+import org.elasticsearch.plugins.PluginInfo;
 import org.elasticsearch.plugins.PluginManager.OutputMode;
 
 /**
@@ -50,6 +51,31 @@ public class PluginManagerImpl implements PluginManager {
 	@Override
 	public Path[] getInstalledPluginsPaths() throws IOException {
 		return _pluginManager.getListInstalledPlugins();
+	}
+
+	@Override
+	public boolean isCurrentVersion(Path path) throws IOException {
+		try {
+			PluginInfo.readFromProperties(path);
+
+			return true;
+		}
+		catch (IllegalArgumentException iae) {
+			String message = iae.getMessage();
+
+			if ((message != null) && message.contains("designed for version")) {
+				return false;
+			}
+
+			throw iae;
+		}
+	}
+
+	@Override
+	public void removePlugin(String name, Terminal terminal)
+		throws IOException {
+
+		_pluginManager.removePlugin(name, terminal);
 	}
 
 	private final org.elasticsearch.plugins.PluginManager _pluginManager;

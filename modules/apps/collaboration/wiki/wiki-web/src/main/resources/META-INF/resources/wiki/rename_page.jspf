@@ -28,7 +28,7 @@
 
 	<aui:input name="currentTitle" type="resource" value="<%= wikiPage.getTitle() %>" />
 
-	<aui:input name="newTitle" onKeyup='<%= renderResponse.getNamespace() + "handleTitleKeyup();" %>' value="<%= newTitle %>" />
+	<aui:input name="newTitle" value="<%= newTitle %>" />
 
 	<c:if test="<%= pending %>">
 		<div class="alert alert-info">
@@ -37,21 +37,13 @@
 	</c:if>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" disabled="<%= pending %>" onClick='<%= renderResponse.getNamespace() + "renamePage();" %>' value='<%= hasWorkflowDefinitionLink ? "submit-for-publication" : "rename" %>' />
+		<aui:button cssClass="btn-lg" disabled="<%= pending %>" type="submit" value='<%= hasWorkflowDefinitionLink ? "submit-for-publication" : "rename" %>' />
 
 		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />handleTitleKeyup() {
-		if (event && (event.which === 13)) {
-			event.preventDefault();
-
-			<portlet:namespace />renamePage();
-		}
-	}
-
 	function <portlet:namespace />renamePage() {
 		document.<portlet:namespace />renameFm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.RENAME %>';
 

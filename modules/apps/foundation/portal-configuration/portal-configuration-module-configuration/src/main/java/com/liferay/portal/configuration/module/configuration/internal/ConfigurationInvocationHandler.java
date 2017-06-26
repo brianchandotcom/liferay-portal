@@ -16,6 +16,7 @@ package com.liferay.portal.configuration.module.configuration.internal;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -32,13 +33,15 @@ import java.lang.reflect.Method;
 public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 
 	public ConfigurationInvocationHandler(
-		Class<S> clazz,
-		ConfigurationOverrideInstance configurationOverrideInstance,
-		TypedSettings typedSettings) {
+			Class<S> clazz, TypedSettings typedSettings)
+		throws ConfigurationException, ReflectiveOperationException {
 
 		_clazz = clazz;
-		_configurationOverrideInstance = configurationOverrideInstance;
 		_typedSettings = typedSettings;
+
+		_configurationOverrideInstance =
+			ConfigurationOverrideInstance.getConfigurationOverrideInstance(
+				clazz, typedSettings);
 	}
 
 	public S createProxy() {

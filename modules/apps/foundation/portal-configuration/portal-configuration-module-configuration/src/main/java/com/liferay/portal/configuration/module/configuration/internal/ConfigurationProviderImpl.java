@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
-import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsLocator;
@@ -61,17 +60,11 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		throws ConfigurationException {
 
 		try {
-			Settings settings = _settingsFactory.getSettings(settingsLocator);
-
-			TypedSettings typedSettings = new TypedSettings(settings);
-
-			ConfigurationOverrideInstance configurationOverrideInstance =
-				ConfigurationOverrideInstance.getConfigurationOverrideInstance(
-					clazz, typedSettings);
-
 			ConfigurationInvocationHandler<T> configurationInvocationHandler =
 				new ConfigurationInvocationHandler<>(
-					clazz, configurationOverrideInstance, typedSettings);
+					clazz,
+					new TypedSettings(
+						_settingsFactory.getSettings(settingsLocator)));
 
 			return configurationInvocationHandler.createProxy();
 		}

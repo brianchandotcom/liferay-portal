@@ -50,6 +50,7 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 
 		cpDefinitionImpl.setDescriptionMap(getDescriptionMap());
 		cpDefinitionImpl.setLayoutUuid(getLayoutUuid());
+		cpDefinitionImpl.setShortDescriptionMap(getShortDescriptionMap());
 		cpDefinitionImpl.setTitleMap(getTitleMap());
 		cpDefinitionImpl.setUrlTitleMap(getUrlTitleMap());
 

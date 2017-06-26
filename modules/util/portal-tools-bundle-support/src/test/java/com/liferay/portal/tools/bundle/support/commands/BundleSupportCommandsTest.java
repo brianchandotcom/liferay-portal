@@ -292,13 +292,6 @@ public class BundleSupportCommandsTest {
 		createTokenCommand.execute();
 	}
 
-	protected void createToken(
-			String emailAddress, String password, File tokenFile, URL tokenUrl)
-		throws Exception {
-
-		createToken(emailAddress, false, password, tokenFile, tokenUrl);
-	}
-
 	protected void deploy(File file, File liferayHomeDir, String outputFileName)
 		throws Exception {
 

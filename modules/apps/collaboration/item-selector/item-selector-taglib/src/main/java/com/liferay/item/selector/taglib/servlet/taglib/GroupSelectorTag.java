@@ -91,27 +91,13 @@ public class GroupSelectorTag extends IncludeTag {
 		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
 			cur, delta);
 
-		if (Validator.isNotNull(keywords)) {
-			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
-			groupParams.put("site", Boolean.TRUE);
-			groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
+		groupParams.put("site", Boolean.TRUE);
 
-			return GroupLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
-				groupParams, startAndEnd[0], startAndEnd[1], null);
-		}
-
-		try {
-			List<Group> groups = user.getMySiteGroups(null, startAndEnd[1]);
-
-			return ListUtil.subList(groups, startAndEnd[0], startAndEnd[1]);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return new ArrayList<>();
-		}
+		return GroupLocalServiceUtil.search(
+			themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
+			groupParams, startAndEnd[0], startAndEnd[1], null);
 	}
 
 	protected int getGroupsCount(HttpServletRequest request) {
@@ -126,27 +112,13 @@ public class GroupSelectorTag extends IncludeTag {
 
 		String keywords = ParamUtil.getString(request, "keywords");
 
-		if (Validator.isNotNull(keywords)) {
-			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
-			groupParams.put("site", Boolean.TRUE);
-			groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
+		groupParams.put("site", Boolean.TRUE);
 
-			return GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
-				groupParams);
-		}
-
-		try {
-			List<Group> groups = user.getMySiteGroups(null, QueryUtil.ALL_POS);
-
-			return groups.size();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return 0;
-		}
+		return GroupLocalServiceUtil.searchCount(
+			themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
+			groupParams);
 	}
 
 	@Override

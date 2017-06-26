@@ -62,10 +62,10 @@ public class BNDSourceUtil {
 				"Liferay-Releng-App-Description", "Liferay-Releng-App-Title",
 				"Liferay-Releng-Bundle", "Liferay-Releng-Category",
 				"Liferay-Releng-Demo-Url", "Liferay-Releng-Deprecated",
-				"Liferay-Releng-Labs", "Liferay-Releng-Marketplace",
-				"Liferay-Releng-Portal-Required", "Liferay-Releng-Public",
-				"Liferay-Releng-Restart-Required", "Liferay-Releng-Support-Url",
-				"Liferay-Releng-Supported"));
+				"Liferay-Releng-Fix-Delivery-Method", "Liferay-Releng-Labs",
+				"Liferay-Releng-Marketplace", "Liferay-Releng-Portal-Required",
+				"Liferay-Releng-Public", "Liferay-Releng-Restart-Required",
+				"Liferay-Releng-Support-Url", "Liferay-Releng-Supported"));
 		fileSpecificDefinitionKeysMap.put(
 			"bnd.bnd",
 			_populateDefinitionKeysMap(

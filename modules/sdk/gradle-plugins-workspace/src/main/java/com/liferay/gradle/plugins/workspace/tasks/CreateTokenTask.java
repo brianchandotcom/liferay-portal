@@ -44,6 +44,7 @@ public class CreateTokenTask extends DefaultTask {
 	@TaskAction
 	public void createToken() throws Exception {
 		String emailAddress = getEmailAddress();
+		boolean force = isForce();
 		String password = getPassword();
 
 		if (Validator.isNull(emailAddress) || Validator.isNull(password)) {
@@ -53,6 +54,7 @@ public class CreateTokenTask extends DefaultTask {
 		CreateTokenCommand createTokenCommand = new AntCreateTokenCommand();
 
 		createTokenCommand.setEmailAddress(emailAddress);
+		createTokenCommand.setForce(force);
 		createTokenCommand.setPassword(password);
 		createTokenCommand.setTokenFile(getTokenFile());
 		createTokenCommand.setTokenUrl(getTokenUrl());
@@ -82,8 +84,16 @@ public class CreateTokenTask extends DefaultTask {
 		return GradleUtil.toURL(_tokenUrl);
 	}
 
+	public boolean isForce() {
+		return GradleUtil.toBoolean(_force);
+	}
+
 	public void setEmailAddress(Object emailAddress) {
 		_emailAddress = emailAddress;
+	}
+
+	public void setForce(Object force) {
+		_force = force;
 	}
 
 	public void setPassword(Object password) {
@@ -100,6 +110,7 @@ public class CreateTokenTask extends DefaultTask {
 	}
 
 	private Object _emailAddress;
+	private Object _force;
 	private Object _password;
 	private Object _tokenFile = BundleSupportConstants.DEFAULT_TOKEN_FILE;
 	private Object _tokenUrl = BundleSupportConstants.DEFAULT_TOKEN_URL;

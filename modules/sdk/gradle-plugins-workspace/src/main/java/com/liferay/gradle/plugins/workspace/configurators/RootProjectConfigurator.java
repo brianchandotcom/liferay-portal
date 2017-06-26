@@ -75,6 +75,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String CREATE_TOKEN_TASK_NAME = "createToken";
 
+	public static final String EMAIL_ADDRESS = "email.address";
+
+	public static final String FORCE = "force";
+
+	public static final String PASSWORD = "password";
+
 	public static final String DIST_BUNDLE_TAR_TASK_NAME = "distBundleTar";
 
 	public static final String DIST_BUNDLE_TASK_NAME = "distBundle";
@@ -201,8 +207,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		CreateTokenTask createTokenTask = GradleUtil.addTask(
 			project, CREATE_TOKEN_TASK_NAME, CreateTokenTask.class);
 
-		createTokenTask.setDescription("Creates a Liferay.com download token.");
+		createTokenTask.setDescription("Creates a liferay.com download token.");
+		createTokenTask.setEmailAddress(project.findProperty(EMAIL_ADDRESS));
+		createTokenTask.setForce(project.findProperty(FORCE));
 		createTokenTask.setGroup(BUNDLE_GROUP);
+		createTokenTask.setPassword(project.findProperty(PASSWORD));
 
 		return createTokenTask;
 	}

@@ -140,6 +140,13 @@ public class BundleSupportCommandsTest {
 	}
 
 	@Test
+	public void testCreateTokenForce() throws Exception {
+		File tokenFile = temporaryFolder.newFile();
+
+		_testCreateToken(_CONTEXT_PATH_TOKEN, true, tokenFile);
+	}
+
+	@Test
 	public void testCreateTokenUnformatted() throws Exception {
 		_testCreateToken(_CONTEXT_PATH_TOKEN_UNFORMATTED);
 	}
@@ -270,12 +277,14 @@ public class BundleSupportCommandsTest {
 	}
 
 	protected void createToken(
-			String emailAddress, String password, File tokenFile, URL tokenUrl)
+			String emailAddress, boolean force, String password, File tokenFile,
+			URL tokenUrl)
 		throws Exception {
 
 		CreateTokenCommand createTokenCommand = new CreateTokenCommand();
 
 		createTokenCommand.setEmailAddress(emailAddress);
+		createTokenCommand.setForce(force);
 		createTokenCommand.setPassword(password);
 		createTokenCommand.setTokenFile(tokenFile);
 		createTokenCommand.setTokenUrl(tokenUrl);
@@ -590,10 +599,19 @@ public class BundleSupportCommandsTest {
 
 	private void _testCreateToken(String contextPath) throws Exception {
 		File tokenFile = new File(temporaryFolder.getRoot(), "token");
+
+		_testCreateToken(contextPath, false, tokenFile);
+	}
+
+	private void _testCreateToken(
+			String contextPath, boolean force, File tokenFile)
+		throws Exception {
+
 		URL tokenUrl = _getHttpServerUrl(contextPath);
 
 		createToken(
-			_HTTP_SERVER_PASSWORD, _HTTP_SERVER_USER_NAME, tokenFile, tokenUrl);
+			_HTTP_SERVER_PASSWORD, force, _HTTP_SERVER_USER_NAME, tokenFile,
+			tokenUrl);
 
 		Assert.assertEquals("hello-world", FileUtil.read(tokenFile));
 	}

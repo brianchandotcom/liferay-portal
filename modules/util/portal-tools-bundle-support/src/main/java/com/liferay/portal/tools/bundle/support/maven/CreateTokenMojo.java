@@ -39,6 +39,7 @@ public class CreateTokenMojo extends AbstractMojo {
 			CreateTokenCommand createTokenCommand = new CreateTokenCommand();
 
 			createTokenCommand.setEmailAddress(emailAddress);
+			createTokenCommand.setForce(force);
 			createTokenCommand.setPassword(password);
 			createTokenCommand.setTokenFile(tokenFile);
 			createTokenCommand.setTokenUrl(tokenUrl);
@@ -47,12 +48,15 @@ public class CreateTokenMojo extends AbstractMojo {
 		}
 		catch (Exception e) {
 			throw new MojoExecutionException(
-				"Unable to create Liferay.com download token", e);
+				"Unable to create liferay.com download token", e);
 		}
 	}
 
 	@Parameter
 	protected String emailAddress;
+
+	@Parameter
+	protected boolean force;
 
 	@Parameter
 	protected String password;

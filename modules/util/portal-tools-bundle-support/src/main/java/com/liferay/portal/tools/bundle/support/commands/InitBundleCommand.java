@@ -315,7 +315,7 @@ public class InitBundleCommand extends BaseCommand implements StreamLogger {
 	private boolean _token;
 
 	@Parameter(
-		description = "The file where your Liferay.com download token is stored.",
+		description = "The file where your liferay.com download token is stored.",
 		names = "--token-file"
 	)
 	private File _tokenFile = BundleSupportConstants.DEFAULT_TOKEN_FILE;

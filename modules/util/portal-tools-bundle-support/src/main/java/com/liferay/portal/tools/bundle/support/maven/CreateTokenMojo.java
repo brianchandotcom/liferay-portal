@@ -39,6 +39,7 @@ public class CreateTokenMojo extends AbstractMojo {
 			CreateTokenCommand createTokenCommand = new CreateTokenCommand();
 
 			createTokenCommand.setEmailAddress(emailAddress);
+			createTokenCommand.setForce(force);
 			createTokenCommand.setPassword(password);
 			createTokenCommand.setTokenFile(tokenFile);
 			createTokenCommand.setTokenUrl(tokenUrl);
@@ -53,6 +54,9 @@ public class CreateTokenMojo extends AbstractMojo {
 
 	@Parameter
 	protected String emailAddress;
+
+	@Parameter
+	protected boolean force;
 
 	@Parameter
 	protected String password;

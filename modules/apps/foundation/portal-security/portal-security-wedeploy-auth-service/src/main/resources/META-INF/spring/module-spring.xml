@@ -5,6 +5,5 @@
 	<bean class="com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthAppServiceImpl" id="com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppService" />
 	<bean class="com.liferay.portal.security.wedeploy.auth.service.persistence.impl.WeDeployAuthAppPersistenceImpl" id="com.liferay.portal.security.wedeploy.auth.service.persistence.WeDeployAuthAppPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthTokenLocalServiceImpl" id="com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenLocalService" />
-	<bean class="com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthTokenServiceImpl" id="com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenService" />
 	<bean class="com.liferay.portal.security.wedeploy.auth.service.persistence.impl.WeDeployAuthTokenPersistenceImpl" id="com.liferay.portal.security.wedeploy.auth.service.persistence.WeDeployAuthTokenPersistence" parent="basePersistence" />
 </beans>

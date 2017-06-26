@@ -14,8 +14,10 @@
 
 package com.liferay.poshi.runner.util;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import java.net.URI;
 import java.net.URL;
@@ -141,6 +143,22 @@ public class FileUtil {
 		File file = new File(fileName);
 
 		return read(file);
+	}
+
+	public static String read(URL url) throws IOException {
+		BufferedReader bufferedReader = new BufferedReader(
+			new InputStreamReader(url.openStream()));
+
+		String line;
+
+		StringBuilder sb = new StringBuilder();
+
+		while ((line = bufferedReader.readLine()) != null) {
+			sb.append(line);
+			sb.append("\n");
+		}
+
+		return sb.toString();
 	}
 
 	public static void write(File file, byte[] bytes) throws IOException {

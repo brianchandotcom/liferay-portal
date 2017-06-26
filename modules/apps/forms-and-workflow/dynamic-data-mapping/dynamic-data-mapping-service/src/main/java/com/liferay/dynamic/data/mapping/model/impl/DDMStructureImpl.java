@@ -435,6 +435,13 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
+	public void setClassNameId(long classNameId) {
+		super.setClassNameId(classNameId);
+
+		setClassName(PortalUtil.getClassName(classNameId));
+	}
+
+	@Override
 	public void setDDMForm(DDMForm ddmForm) {
 		_ddmForm = ddmForm;
 	}

@@ -422,7 +422,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 	 */
 	private static final String _UNZIP_JAR_TASK_NAME = "unzipJar";
 
-	private static final String _VERSION = "1.6.0.LIFERAY-PATCHED-3";
+	private static final String _VERSION = "1.6.0.LIFERAY-PATCHED-4";
 
 	private static final Transformer<File, Task> _reportsFileGetter =
 		new Transformer<File, Task>() {

@@ -190,6 +190,8 @@ public class SynchronousDestinationTestCallback
 
 			ProxyModeThreadLocal.setForceSync(true);
 
+			replaceDestination("liferay/adaptive_media_processor");
+
 			replaceDestination(DestinationNames.ASYNC_SERVICE);
 			replaceDestination(DestinationNames.BACKGROUND_TASK);
 			replaceDestination(DestinationNames.BACKGROUND_TASK_STATUS);

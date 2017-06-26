@@ -145,13 +145,19 @@ if (sampleFileEntryId > 0) {
 </aui:script>
 
 <aui:script>
-	AUI().ready('node', 'event', function(A) {
-		selectSampleFileType(A);
-
-		A.one('#<portlet:namespace/>useSample').on('click',function(b) {
+	AUI().ready(
+		'node', 'event',
+		function(A) {
 			selectSampleFileType(A);
-		})
-	});
+
+			A.one('#<portlet:namespace/>useSample').on(
+				'click',
+				function(b) {
+					selectSampleFileType(A);
+				}
+			);
+		}
+	);
 
 	function selectSampleFileType(A) {
 		var useSampleCheckbox = A.one('#<portlet:namespace/>useSample');

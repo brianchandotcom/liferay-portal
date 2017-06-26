@@ -140,13 +140,19 @@ if (termsOfUseJournalArticleResourcePrimKey > 0) {
 </aui:script>
 
 <aui:script>
-	AUI().ready('node', 'event', function(A) {
-		selectContentType(A);
-
-		A.one('#<portlet:namespace/>termsOfUseRequired').on('click',function(b) {
+	AUI().ready(
+		'node', 'event',
+		function(A) {
 			selectContentType(A);
-		})
-	});
+
+			A.one('#<portlet:namespace/>termsOfUseRequired').on(
+				'click',
+				function(b) {
+					selectContentType(A);
+				}
+			);
+		}
+	);
 
 	function selectContentType(A) {
 		var contentCheckbox = A.one('#<portlet:namespace/>termsOfUseRequired');

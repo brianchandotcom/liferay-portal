@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
@@ -48,6 +49,7 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 		CPDefinitionImpl cpDefinitionImpl = (CPDefinitionImpl)super.clone();
 
 		cpDefinitionImpl.setDescriptionMap(getDescriptionMap());
+		cpDefinitionImpl.setLayoutUuid(getLayoutUuid());
 		cpDefinitionImpl.setTitleMap(getTitleMap());
 		cpDefinitionImpl.setUrlTitleMap(getUrlTitleMap());
 
@@ -106,6 +108,18 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
+	public String getLayoutUuid() {
+		if (Validator.isNotNull(_layoutUuid)) {
+			return _layoutUuid;
+		}
+
+		_layoutUuid = CPDefinitionLocalServiceUtil.getLayoutUuid(
+			getCPDefinitionId());
+
+		return _layoutUuid;
+	}
+
+	@Override
 	public Map<Locale, String> getShortDescriptionMap() {
 		if (_shortDescriptionMap != null) {
 			return _shortDescriptionMap;
@@ -155,6 +169,11 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
+	public void setLayoutUuid(String layoutUuid) {
+		_layoutUuid = layoutUuid;
+	}
+
+	@Override
 	public void setShortDescriptionMap(
 		Map<Locale, String> shortDescriptionMap) {
 
@@ -172,6 +191,7 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	private Map<Locale, String> _descriptionMap;
+	private String _layoutUuid;
 	private Map<Locale, String> _shortDescriptionMap;
 	private Map<Locale, String> _titleMap;
 	private Map<Locale, String> _urlTitleMap;

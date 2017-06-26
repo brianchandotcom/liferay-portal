@@ -51,8 +51,6 @@ import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
-import java.sql.Timestamp;
-
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -126,16 +124,9 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 				Object obj = BeanPropertiesUtil.getObject(user, field);
 
 				if (obj != null) {
-					Class<?> clazz = obj.getClass();
+					Date date = new Date(((Date)obj).getTime());
 
-					if (clazz.equals(Date.class)) {
-						sb.append(CSVUtil.encode(obj.toString()));
-					}
-					else if (clazz.equals(Timestamp.class)) {
-						Date date = new Date(((Timestamp)obj).getTime());
-
-						sb.append(CSVUtil.encode(date.toString()));
-					}
+					sb.append(CSVUtil.encode(String.valueOf(date)));
 				}
 			}
 			else if (field.startsWith("expando:")) {

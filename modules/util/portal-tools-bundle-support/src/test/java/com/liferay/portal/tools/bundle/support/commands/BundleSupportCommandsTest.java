@@ -146,7 +146,7 @@ public class BundleSupportCommandsTest {
 
 		Assume.assumeTrue(tokenFile.createNewFile());
 
-		_testCreateToken(_CONTEXT_PATH_TOKEN, tokenFile, true);
+		_testCreateToken(_CONTEXT_PATH_TOKEN, true, tokenFile);
 	}
 
 	@Test
@@ -280,26 +280,26 @@ public class BundleSupportCommandsTest {
 	}
 
 	protected void createToken(
-			String emailAddress, String password, File tokenFile, URL tokenUrl)
-		throws Exception {
-
-		createToken(emailAddress, password, tokenFile, tokenUrl, false);
-	}
-
-	protected void createToken(
-			String emailAddress, String password, File tokenFile, URL tokenUrl,
-			boolean force)
+			String emailAddress, boolean force, String password, File tokenFile,
+			URL tokenUrl)
 		throws Exception {
 
 		CreateTokenCommand createTokenCommand = new CreateTokenCommand();
 
 		createTokenCommand.setEmailAddress(emailAddress);
+		createTokenCommand.setForce(force);
 		createTokenCommand.setPassword(password);
 		createTokenCommand.setTokenFile(tokenFile);
 		createTokenCommand.setTokenUrl(tokenUrl);
-		createTokenCommand.setForce(force);
 
 		createTokenCommand.execute();
+	}
+
+	protected void createToken(
+			String emailAddress, String password, File tokenFile, URL tokenUrl)
+		throws Exception {
+
+		createToken(emailAddress, false, password, tokenFile, tokenUrl);
 	}
 
 	protected void deploy(File file, File liferayHomeDir, String outputFileName)
@@ -610,18 +610,18 @@ public class BundleSupportCommandsTest {
 	private void _testCreateToken(String contextPath) throws Exception {
 		File tokenFile = new File(temporaryFolder.getRoot(), "token");
 
-		_testCreateToken(contextPath, tokenFile, false);
+		_testCreateToken(contextPath, false, tokenFile);
 	}
 
 	private void _testCreateToken(
-			String contextPath, File tokenFile, boolean force)
+			String contextPath, boolean force, File tokenFile)
 		throws Exception {
 
 		URL tokenUrl = _getHttpServerUrl(contextPath);
 
 		createToken(
-			_HTTP_SERVER_PASSWORD, _HTTP_SERVER_USER_NAME, tokenFile, tokenUrl,
-			force);
+			_HTTP_SERVER_PASSWORD, force, _HTTP_SERVER_USER_NAME, tokenFile,
+			tokenUrl);
 
 		Assert.assertEquals("hello-world", FileUtil.read(tokenFile));
 	}

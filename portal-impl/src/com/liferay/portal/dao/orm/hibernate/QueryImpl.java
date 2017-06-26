@@ -115,8 +115,8 @@ public class QueryImpl implements Query {
 	public List<?> list(boolean copy, boolean unmodifiable)
 		throws ORMException {
 
-		// LPS-42478 is a workaround for HHH-8310. Remove this after upgrading
-		// to Hibernate 4.3.6+.
+		// LPS-42478 work around for HHH-8310, removed this after upgrade to
+		// Hibernate 4.3.6+
 
 		ClassLoader contextClassLoader =
 			ClassLoaderUtil.getContextClassLoader();
@@ -147,8 +147,8 @@ public class QueryImpl implements Query {
 	@Override
 	public ScrollableResults scroll() throws ORMException {
 
-		// LPS-42478 is a workaround for HHH-8310. Remove this after upgrading
-		// to Hibernate 4.3.6+.
+		// LPS-42478 work around for HHH-8310, removed this after upgrade to
+		// Hibernate 4.3.6+
 
 		ClassLoader contextClassLoader =
 			ClassLoaderUtil.getContextClassLoader();

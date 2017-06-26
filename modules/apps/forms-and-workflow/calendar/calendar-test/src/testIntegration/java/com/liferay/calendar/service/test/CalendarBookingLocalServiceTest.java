@@ -1712,6 +1712,59 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateCalendarBookingDoesNotPreserveChildStatusIfIntervalChanges()
+		throws Exception {
+
+		ServiceContext serviceContext = createServiceContext();
+
+		Calendar calendar = CalendarTestUtil.addCalendar(_user, serviceContext);
+
+		Calendar invitedCalendar = CalendarTestUtil.addCalendar(
+			calendar.getCalendarResource(), serviceContext);
+
+		long startTime = System.currentTimeMillis();
+
+		long endTime = startTime + (Time.HOUR * 10);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingTestUtil.addMasterCalendarBooking(
+				_user, calendar, new long[] {invitedCalendar.getCalendarId()},
+				startTime, endTime, serviceContext);
+
+		CalendarBooking childCalendarBooking = getChildCalendarBooking(
+			calendarBooking);
+
+		assertStatus(childCalendarBooking, WorkflowConstants.STATUS_PENDING);
+
+		CalendarBookingLocalServiceUtil.updateStatus(
+			_user.getUserId(), childCalendarBooking,
+			CalendarBookingWorkflowConstants.STATUS_MAYBE, serviceContext);
+
+		long newEndTime = endTime + 1000000;
+
+		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
+			_user.getUserId(), calendarBooking.getCalendarBookingId(),
+			calendarBooking.getCalendarId(),
+			new long[] {invitedCalendar.getCalendarId()},
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(), startTime, newEndTime,
+			calendarBooking.getAllDay(), calendarBooking.getRecurrence(),
+			calendarBooking.getFirstReminder(),
+			calendarBooking.getFirstReminderType(),
+			calendarBooking.getSecondReminder(),
+			calendarBooking.getSecondReminderType(), serviceContext);
+
+		childCalendarBooking = getChildCalendarBooking(calendarBooking);
+
+		Assert.assertNotEquals(
+			CalendarBookingWorkflowConstants.STATUS_MAYBE,
+			childCalendarBooking.getStatus());
+	}
+
+	@Test
 	public void testUpdateCalendarBookingInstance() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
@@ -1907,27 +1960,6 @@ public class CalendarBookingLocalServiceTest {
 		assertStatus(
 			childCalendarBooking,
 			CalendarBookingWorkflowConstants.STATUS_MAYBE);
-
-		long newEndTime = endTime + 1000000;
-
-		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
-			_user.getUserId(), calendarBooking.getCalendarBookingId(),
-			calendarBooking.getCalendarId(),
-			new long[] {invitedCalendar.getCalendarId()},
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(), startTime, newEndTime,
-			calendarBooking.getAllDay(), calendarBooking.getRecurrence(),
-			calendarBooking.getFirstReminder(),
-			calendarBooking.getFirstReminderType(),
-			calendarBooking.getSecondReminder(),
-			calendarBooking.getSecondReminderType(), serviceContext);
-
-		childCalendarBooking = getChildCalendarBooking(calendarBooking);
-
-		Assert.assertNotEquals(
-			CalendarBookingWorkflowConstants.STATUS_MAYBE,
-			childCalendarBooking.getStatus());
 	}
 
 	@Test

@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "collaboration")
 @Meta.OCD(
 	id = "com.liferay.subscription.web.configuration.SubscriptionConfiguration",
-	localization = "content/Language", name = "subscription.configuration.name"
+	localization = "content/Language", name = "subscription-configuration-name"
 )
 public interface SubscriptionConfiguration {
 

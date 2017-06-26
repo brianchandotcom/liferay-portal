@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.blogs.web.configuration.BlogsPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "blogs.portlet.instance.configuration.name"
+	name = "blogs-portlet-instance-configuration-name"
 )
 public interface BlogsPortletInstanceConfiguration {
 

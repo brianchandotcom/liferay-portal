@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "collaboration")
 @Meta.OCD(
 	id = "com.liferay.document.library.item.selector.web.internal.configuration.DLImageItemSelectorViewConfiguration",
-	localization = "content/Language", name = "dl.image.item.selector.view.name"
+	localization = "content/Language", name = "dl-image-item-selector-view-name"
 )
 public interface DLImageItemSelectorViewConfiguration {
 

@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.social.user.statistics.web.configuration.SocialUserStatisticsPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "social.user.statistics.portlet.instance.configuration.name"
+	name = "social-user-statistics-portlet-instance-configuration-name"
 )
 public interface SocialUserStatisticsPortletInstanceConfiguration {
 

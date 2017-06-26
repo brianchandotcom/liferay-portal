@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "collaboration")
 @Meta.OCD(
 	id = "com.liferay.document.library.configuration.DLConfiguration",
-	localization = "content/Language", name = "dl.configuration.name"
+	localization = "content/Language", name = "dl-configuration-name"
 )
 @ProviderType
 public interface DLConfiguration {

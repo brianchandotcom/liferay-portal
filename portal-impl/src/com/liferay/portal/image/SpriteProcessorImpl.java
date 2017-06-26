@@ -241,9 +241,8 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 					return null;
 				}
-				else {
-					throw e;
-				}
+
+				throw e;
 			}
 
 			if (lastModified > 0) {

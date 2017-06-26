@@ -31,7 +31,7 @@ if (Validator.isNull(redirect)) {
 
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
-long entryId = BeanParamUtil.getLong(entry, request, "entryId");
+long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 
 AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.getName(), entry.getEntryId());
 

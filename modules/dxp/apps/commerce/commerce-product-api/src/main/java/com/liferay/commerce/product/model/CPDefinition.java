@@ -62,6 +62,8 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap();
 
+	public java.lang.String getLayoutUuid();
+
 	public java.util.Map<java.util.Locale, java.lang.String> getShortDescriptionMap();
 
 	public java.lang.String getTitleCurrentValue();
@@ -72,6 +74,8 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public void setDescriptionMap(
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap);
+
+	public void setLayoutUuid(java.lang.String layoutUuid);
 
 	public void setShortDescriptionMap(
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap);

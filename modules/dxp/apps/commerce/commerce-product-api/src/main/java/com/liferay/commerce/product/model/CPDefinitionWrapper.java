@@ -484,6 +484,11 @@ public class CPDefinitionWrapper implements CPDefinition,
 		return _cpDefinition.getDescriptionMapAsXML();
 	}
 
+	@Override
+	public java.lang.String getLayoutUuid() {
+		return _cpDefinition.getLayoutUuid();
+	}
+
 	/**
 	* Returns the product type name of this cp definition.
 	*
@@ -916,6 +921,11 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		_cpDefinition.setLastPublishDate(lastPublishDate);
+	}
+
+	@Override
+	public void setLayoutUuid(java.lang.String layoutUuid) {
+		_cpDefinition.setLayoutUuid(layoutUuid);
 	}
 
 	/**

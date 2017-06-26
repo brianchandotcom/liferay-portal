@@ -114,6 +114,8 @@ public class CPDefinitionStagedModelDataHandlerTest
 			cpDefinition.getUrlTitleMap(),
 			importedCPDefinition.getUrlTitleMap());
 		Assert.assertEquals(
+			cpDefinition.getLayoutUuid(), importedCPDefinition.getLayoutUuid());
+		Assert.assertEquals(
 			cpDefinition.getProductTypeName(),
 			importedCPDefinition.getProductTypeName());
 		Assert.assertEquals(

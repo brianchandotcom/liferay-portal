@@ -36,35 +36,28 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 
 <portlet:actionURL name="/wiki/move_page" var="movePageURL" />
 
-<aui:form action="<%= movePageURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "changeParent();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
-	<aui:input name="title" type="hidden" value="<%= title %>" />
-	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
+<liferay-ui:tabs
+	names="rename,change-parent"
+	refresh="<%= false %>"
+>
 
-	<liferay-ui:tabs
-		names="rename,change-parent"
-		refresh="<%= false %>"
-	>
+	<%
+	boolean pending = false;
 
-		<%
-		boolean pending = false;
+	boolean hasWorkflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, WikiPage.class.getName());
 
-		boolean hasWorkflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, WikiPage.class.getName());
+	if (hasWorkflowDefinitionLink) {
+		WikiPage latestWikiPage = WikiPageServiceUtil.getPage(wikiPage.getNodeId(), wikiPage.getTitle(), null);
 
-		if (hasWorkflowDefinitionLink) {
-			WikiPage latestWikiPage = WikiPageServiceUtil.getPage(wikiPage.getNodeId(), wikiPage.getTitle(), null);
+		pending = latestWikiPage.isPending();
+	}
+	%>
 
-			pending = latestWikiPage.isPending();
-		}
-		%>
+	<liferay-ui:section>
+		<%@ include file="/wiki/rename_page.jspf" %>
+	</liferay-ui:section>
 
-		<liferay-ui:section>
-			<%@ include file="/wiki/rename_page.jspf" %>
-		</liferay-ui:section>
-
-		<liferay-ui:section>
-			<%@ include file="/wiki/change_page_parent.jspf" %>
-		</liferay-ui:section>
-	</liferay-ui:tabs>
-</aui:form>
+	<liferay-ui:section>
+		<%@ include file="/wiki/change_page_parent.jspf" %>
+	</liferay-ui:section>
+</liferay-ui:tabs>

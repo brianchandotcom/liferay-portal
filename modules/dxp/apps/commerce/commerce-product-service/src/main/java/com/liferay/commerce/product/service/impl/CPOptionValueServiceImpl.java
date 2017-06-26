@@ -104,6 +104,7 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 
 		CPOptionPermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
+
 		return cpOptionValueLocalService.getCPOptionValues(
 			cpOptionId, start, end);
 	}
@@ -116,6 +117,7 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 
 		CPOptionPermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
+
 		return cpOptionValueLocalService.getCPOptionValues(
 			cpOptionId, start, end, orderByComparator);
 	}

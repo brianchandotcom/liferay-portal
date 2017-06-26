@@ -521,6 +521,10 @@ public class MBThreadFinderImpl
 
 			q.addEntity("MBThread", MBThreadImpl.class);
 
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(PortalUtil.getClassNameId(MBThread.class));
+
 			return q.list(true);
 		}
 		catch (Exception e) {

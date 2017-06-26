@@ -91,6 +91,7 @@
 				BlogsEntry
 			LEFT JOIN
 				AssetEntry ON
+					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = BlogsEntry.entryId)
 			WHERE
 				(AssetEntry.classPK IS NULL)

@@ -9,3 +9,7 @@ dependencies {
 
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.2.0"
 }
+
+findSecurityBugs {
+	ignoreExitValue = false
+}

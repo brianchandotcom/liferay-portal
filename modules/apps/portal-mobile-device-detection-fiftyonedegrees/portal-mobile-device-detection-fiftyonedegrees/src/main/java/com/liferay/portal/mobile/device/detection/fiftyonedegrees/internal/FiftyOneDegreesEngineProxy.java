@@ -87,12 +87,12 @@ public class FiftyOneDegreesEngineProxy {
 		try (InputStream inputStream =
 				_dataFileProvider.getDataFileInputStream()) {
 
-			_tempFile = File.createTempFile(
+			File tempFile = File.createTempFile(
 				"51degrees", String.valueOf(System.currentTimeMillis()));
 
-			_tempFile.deleteOnExit();
+			tempFile.deleteOnExit();
 
-			try (OutputStream outputStream = new FileOutputStream(_tempFile)) {
+			try (OutputStream outputStream = new FileOutputStream(tempFile)) {
 				IOUtils.copy(inputStream, outputStream);
 
 				outputStream.flush();
@@ -105,10 +105,10 @@ public class FiftyOneDegreesEngineProxy {
 
 			buildFromFile.setTempFile();
 
-			Dataset dataset = buildFromFile.build(_tempFile.getAbsolutePath());
+			_dataset = buildFromFile.build(tempFile.getAbsolutePath());
 
 			_provider = new Provider(
-				dataset, _fiftyOneDegreesConfiguration.cacheSize());
+				_dataset, _fiftyOneDegreesConfiguration.cacheSize());
 		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {
@@ -120,12 +120,12 @@ public class FiftyOneDegreesEngineProxy {
 	}
 
 	@Deactivate
-	protected void deactivate() {
+	protected void deactivate() throws IOException {
 		_fiftyOneDegreesConfiguration = null;
 		_provider = null;
 
-		if (_tempFile != null) {
-			_tempFile.delete();
+		if (_dataset != null) {
+			_dataset.close();
 		}
 	}
 
@@ -135,8 +135,8 @@ public class FiftyOneDegreesEngineProxy {
 	@Reference(policyOption = ReferencePolicyOption.GREEDY)
 	private DataFileProvider _dataFileProvider;
 
+	private Dataset _dataset;
 	private volatile FiftyOneDegreesConfiguration _fiftyOneDegreesConfiguration;
 	private Provider _provider;
-	private File _tempFile;
 
 }

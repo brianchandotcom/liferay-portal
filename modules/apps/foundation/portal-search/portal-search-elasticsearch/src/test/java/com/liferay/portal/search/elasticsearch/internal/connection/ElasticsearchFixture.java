@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch.internal.connection;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.internal.cluster.ClusterSettingsContext;
 import com.liferay.portal.search.elasticsearch.internal.cluster.UnicastSettingsContributor;
@@ -46,6 +47,8 @@ import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.common.unit.TimeValue;
 
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author André de Oliveira
@@ -257,8 +260,17 @@ public class ElasticsearchFixture implements IndicesAdminClientSupplier {
 
 		embeddedElasticsearchConnection.props = props;
 
+		BundleContext bundleContext = Mockito.mock(BundleContext.class);
+
+		Mockito.when(
+			bundleContext.getDataFile(
+				embeddedElasticsearchConnection.JNA_TMP_DIR)).thenReturn(
+			new File(
+				SystemProperties.get(SystemProperties.TMP_DIR) + "/" +
+					embeddedElasticsearchConnection.JNA_TMP_DIR));
+
 		embeddedElasticsearchConnection.activate(
-			_elasticsearchConfigurationProperties);
+			bundleContext, _elasticsearchConfigurationProperties);
 
 		embeddedElasticsearchConnection.connect();
 

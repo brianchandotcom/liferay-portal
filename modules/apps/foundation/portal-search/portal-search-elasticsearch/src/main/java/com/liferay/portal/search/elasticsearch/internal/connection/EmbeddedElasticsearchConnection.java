@@ -56,6 +56,7 @@ import org.elasticsearch.transport.TransportService;
 
 import org.jboss.netty.util.internal.ByteBufferUtil;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -101,7 +102,7 @@ public class EmbeddedElasticsearchConnection
 
 		_node = null;
 
-		_file.deltree(_JNA_TMP_DIR);
+		_file.deltree(_jnaTmpDir);
 	}
 
 	public Node getNode() {
@@ -121,9 +122,15 @@ public class EmbeddedElasticsearchConnection
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
+
+		java.io.File tempDir = bundleContext.getDataFile(JNA_TMP_DIR);
+
+		_jnaTmpDir = tempDir.getAbsolutePath();
 	}
 
 	@Override
@@ -315,7 +322,7 @@ public class EmbeddedElasticsearchConnection
 
 		String jnaTmpDir = System.getProperty("jna.tmpdir");
 
-		System.setProperty("jna.tmpdir", _JNA_TMP_DIR);
+		System.setProperty("jna.tmpdir", _jnaTmpDir);
 
 		try {
 			NodeBuilder nodeBuilder = new NodeBuilder();
@@ -393,6 +400,8 @@ public class EmbeddedElasticsearchConnection
 		super.removeSettingsContributor(settingsContributor);
 	}
 
+	protected static final String JNA_TMP_DIR = "elasticSearch-tmpDir";
+
 	@Reference
 	protected ClusterSettingsContext clusterSettingsContext;
 
@@ -424,12 +433,10 @@ public class EmbeddedElasticsearchConnection
 			});
 	}
 
-	private static final String _JNA_TMP_DIR =
-		SystemProperties.get(SystemProperties.TMP_DIR) +
-			"/elasticSearch-tmpDir";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		EmbeddedElasticsearchConnection.class);
+
+	private static String _jnaTmpDir;
 
 	@Reference
 	private File _file;

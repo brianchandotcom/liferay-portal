@@ -16,6 +16,8 @@ package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.Serializable;
 
@@ -23,6 +25,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
@@ -92,7 +95,14 @@ public class MapType implements CompositeUserType, Serializable {
 		String json = (String)StandardBasicTypes.STRING.nullSafeGet(
 			rs, names, session, owner);
 
-		return _jsonFactory.deserialize(json);
+		try {
+			return _jsonFactory.deserialize(json);
+		}
+		catch (Exception e) {
+			_log.error("Unable to process json " + json, e);
+
+			return Collections.emptyMap();
+		}
 	}
 
 	@Override
@@ -123,6 +133,8 @@ public class MapType implements CompositeUserType, Serializable {
 	@Override
 	public void setPropertyValue(Object component, int property, Object value) {
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(MapType.class);
 
 	private static final JSONFactory _jsonFactory = new JSONFactoryImpl();
 

@@ -56,7 +56,6 @@ import org.apache.http.client.utils.DateUtils;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -142,9 +141,7 @@ public class BundleSupportCommandsTest {
 
 	@Test
 	public void testCreateTokenForce() throws Exception {
-		File tokenFile = new File(temporaryFolder.getRoot(), "token");
-
-		Assume.assumeTrue(tokenFile.createNewFile());
+		File tokenFile = temporaryFolder.newFile();
 
 		_testCreateToken(_CONTEXT_PATH_TOKEN, true, tokenFile);
 	}

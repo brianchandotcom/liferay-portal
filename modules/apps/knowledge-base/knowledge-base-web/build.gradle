@@ -33,3 +33,7 @@ dependencies {
 	provided project(":apps:web-experience:asset:asset-taglib")
 	provided project(":apps:web-experience:journal:journal-api")
 }
+
+findSecurityBugs {
+	ignoreExitValue = false
+}

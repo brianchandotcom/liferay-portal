@@ -49,7 +49,6 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.RelativePath;
 import org.gradle.api.initialization.Settings;
-import org.gradle.api.internal.TaskOutputsInternal;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.specs.Spec;
@@ -76,12 +75,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String CREATE_TOKEN_TASK_NAME = "createToken";
 
-	public static final String EMAIL_ADDRESS = "email.address";
-
-	public static final String FORCE = "force";
-
-	public static final String PASSWORD = "password";
-
 	public static final String DIST_BUNDLE_TAR_TASK_NAME = "distBundleTar";
 
 	public static final String DIST_BUNDLE_TASK_NAME = "distBundle";
@@ -90,7 +83,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String DOWNLOAD_BUNDLE_TASK_NAME = "downloadBundle";
 
+	public static final String EMAIL_ADDRESS = "email.address";
+
+	public static final String FORCE = "force";
+
 	public static final String INIT_BUNDLE_TASK_NAME = "initBundle";
+
+	public static final String PASSWORD = "password";
 
 	/**
 	 * @deprecated As of 1.4.0, replaced by {@link
@@ -208,16 +207,21 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		final CreateTokenTask createTokenTask = GradleUtil.addTask(
 			project, CREATE_TOKEN_TASK_NAME, CreateTokenTask.class);
 
-		createTokenTask.onlyIf(new Spec<Task>() {
+		createTokenTask.onlyIf(
+			new Spec<Task>() {
 
-			@Override
-			public boolean isSatisfiedBy(Task task) {
-				File tokenFile = createTokenTask.getTokenFile();
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					File tokenFile = createTokenTask.getTokenFile();
 
-				return !tokenFile.exists() || createTokenTask.isForce();
-			}
+					if (!tokenFile.exists() || createTokenTask.isForce()) {
+						return true;
+					}
 
-		});
+					return false;
+				}
+
+			});
 
 		createTokenTask.setDescription("Creates a liferay.com download token.");
 		createTokenTask.setEmailAddress(project.findProperty(EMAIL_ADDRESS));

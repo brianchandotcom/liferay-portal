@@ -56,6 +56,7 @@ import org.apache.http.client.utils.DateUtils;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -137,6 +138,15 @@ public class BundleSupportCommandsTest {
 	@Test
 	public void testCreateToken() throws Exception {
 		_testCreateToken(_CONTEXT_PATH_TOKEN);
+	}
+
+	@Test
+	public void testCreateTokenForce() throws Exception {
+		File tokenFile = new File(temporaryFolder.getRoot(), "token");
+
+		Assume.assumeTrue(tokenFile.createNewFile());
+
+		_testCreateToken(_CONTEXT_PATH_TOKEN, tokenFile, true);
 	}
 
 	@Test
@@ -273,12 +283,21 @@ public class BundleSupportCommandsTest {
 			String emailAddress, String password, File tokenFile, URL tokenUrl)
 		throws Exception {
 
+		createToken(emailAddress, password, tokenFile, tokenUrl, false);
+	}
+
+	protected void createToken(
+			String emailAddress, String password, File tokenFile, URL tokenUrl,
+			boolean force)
+		throws Exception {
+
 		CreateTokenCommand createTokenCommand = new CreateTokenCommand();
 
 		createTokenCommand.setEmailAddress(emailAddress);
 		createTokenCommand.setPassword(password);
 		createTokenCommand.setTokenFile(tokenFile);
 		createTokenCommand.setTokenUrl(tokenUrl);
+		createTokenCommand.setForce(force);
 
 		createTokenCommand.execute();
 	}
@@ -590,10 +609,19 @@ public class BundleSupportCommandsTest {
 
 	private void _testCreateToken(String contextPath) throws Exception {
 		File tokenFile = new File(temporaryFolder.getRoot(), "token");
+
+		_testCreateToken(contextPath, tokenFile, false);
+	}
+
+	private void _testCreateToken(
+			String contextPath, File tokenFile, boolean force)
+		throws Exception {
+
 		URL tokenUrl = _getHttpServerUrl(contextPath);
 
 		createToken(
-			_HTTP_SERVER_PASSWORD, _HTTP_SERVER_USER_NAME, tokenFile, tokenUrl);
+			_HTTP_SERVER_PASSWORD, _HTTP_SERVER_USER_NAME, tokenFile, tokenUrl,
+			force);
 
 		Assert.assertEquals("hello-world", FileUtil.read(tokenFile));
 	}

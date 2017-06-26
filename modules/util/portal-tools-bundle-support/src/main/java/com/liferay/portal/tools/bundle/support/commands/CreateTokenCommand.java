@@ -41,9 +41,9 @@ public class CreateTokenCommand implements Command {
 
 	@Override
 	public void execute() throws Exception {
-		if (_tokenFile.exists()) {
+		if (_tokenFile.exists() && !isForce()) {
 			System.out.println(
-				"The Liferay.com download token already exists.");
+				"The liferay.com download token already exists.");
 
 			return;
 		}
@@ -85,8 +85,16 @@ public class CreateTokenCommand implements Command {
 		return _tokenUrl;
 	}
 
+	public boolean isForce() {
+		return _force;
+	}
+
 	public void setEmailAddress(String emailAddress) {
 		_emailAddress = emailAddress;
+	}
+
+	public void setForce(boolean force) {
+		_force = force;
 	}
 
 	public void setPassword(String password) {
@@ -118,6 +126,12 @@ public class CreateTokenCommand implements Command {
 		names = {"-e", "--email"}
 	)
 	private String _emailAddress;
+
+	@Parameter(
+		description = "Force creation of liferay.com token file.",
+		names = {"-f", "--force"}
+	)
+	private boolean _force;
 
 	@Parameter(
 		description = "Your Liferay.com password.", names = {"-p", "--password"}

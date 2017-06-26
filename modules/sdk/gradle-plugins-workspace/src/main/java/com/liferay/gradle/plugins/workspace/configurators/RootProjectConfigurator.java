@@ -49,6 +49,7 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.RelativePath;
 import org.gradle.api.initialization.Settings;
+import org.gradle.api.internal.TaskOutputsInternal;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.specs.Spec;
@@ -204,8 +205,19 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private CreateTokenTask _addTaskCreateToken(Project project) {
-		CreateTokenTask createTokenTask = GradleUtil.addTask(
+		final CreateTokenTask createTokenTask = GradleUtil.addTask(
 			project, CREATE_TOKEN_TASK_NAME, CreateTokenTask.class);
+
+		createTokenTask.onlyIf(new Spec<Task>() {
+
+			@Override
+			public boolean isSatisfiedBy(Task task) {
+				File tokenFile = createTokenTask.getTokenFile();
+
+				return !tokenFile.exists() || createTokenTask.isForce();
+			}
+
+		});
 
 		createTokenTask.setDescription("Creates a liferay.com download token.");
 		createTokenTask.setEmailAddress(project.findProperty(EMAIL_ADDRESS));

@@ -51,13 +51,15 @@ public class CreateTokenTask extends DefaultTask {
 			System.out.println();
 		}
 
-		CreateTokenCommand createTokenCommand = new AntCreateTokenCommand();
+		AntCreateTokenCommand createTokenCommand = new AntCreateTokenCommand();
 
 		createTokenCommand.setEmailAddress(emailAddress);
 		createTokenCommand.setForce(force);
 		createTokenCommand.setPassword(password);
 		createTokenCommand.setTokenFile(getTokenFile());
 		createTokenCommand.setTokenUrl(getTokenUrl());
+
+		createTokenCommand.setCredentials();
 
 		createTokenCommand.execute();
 	}
@@ -117,7 +119,6 @@ public class CreateTokenTask extends DefaultTask {
 
 	private class AntCreateTokenCommand extends CreateTokenCommand {
 
-		@Override
 		protected void setCredentials() {
 			String emailAddress = getEmailAddress();
 			String password = getPassword();

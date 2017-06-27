@@ -35,6 +35,7 @@ class CategorySelector extends Component {
 				entries.after('remove', this.onEntriesChanged_, this);
 				
 				this.categoriesSelector_.render();
+				this.element.parentNode.removeAttribute('tabindex');
 			}.bind(this)
 		);
 

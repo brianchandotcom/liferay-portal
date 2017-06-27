@@ -34,6 +34,7 @@ portletURL.setParameter("mvcRenderCommandName", "editProductDefinitionOptionRel"
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
+
 renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinitionOptionRel.getTitle(languageId));
 %>
 

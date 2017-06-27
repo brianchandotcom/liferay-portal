@@ -27,6 +27,7 @@ long cpInstanceId = cpInstanceDisplayContext.getCPInstanceId();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
+
 renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sku") : cpDefinition.getTitle(languageId) + " - " + cpInstance.getSku());
 %>
 

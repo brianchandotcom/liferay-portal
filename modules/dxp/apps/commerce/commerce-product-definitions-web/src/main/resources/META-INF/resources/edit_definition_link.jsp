@@ -33,6 +33,7 @@ portletURL.setParameter("mvcRenderCommandName", "editCPDefinitionLink");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
+
 renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition2.getTitle(languageId));
 %>
 

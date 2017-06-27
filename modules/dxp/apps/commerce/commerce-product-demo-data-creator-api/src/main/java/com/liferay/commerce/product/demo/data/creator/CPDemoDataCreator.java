@@ -27,7 +27,7 @@ public interface CPDemoDataCreator {
 	public void create(long userId, long groupId, boolean buildSkus)
 		throws Exception;
 
-	public void delete() throws PortalException;
+	public void delete(long userId, long groupId) throws PortalException;
 
 	public void init();
 

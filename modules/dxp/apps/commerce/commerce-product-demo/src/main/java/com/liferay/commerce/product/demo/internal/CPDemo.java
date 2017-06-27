@@ -38,14 +38,13 @@ public class CPDemo extends BasePortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		Group guestGroup = _groupLocalService.getGroup(
-			company.getCompanyId(), "Guest");
+		_group = _groupLocalService.getGroup(company.getCompanyId(), "Guest");
 
-		User user = _omniAdminUserDemoDataCreator.create(
+		_user = _omniAdminUserDemoDataCreator.create(
 			company.getCompanyId(), "alessio.rendina@liferay.com");
 
 		_cpDemoDataCreator.create(
-			user.getUserId(), guestGroup.getGroupId(), true);
+			_user.getUserId(), _group.getGroupId(), true);
 	}
 
 	@Activate
@@ -55,7 +54,7 @@ public class CPDemo extends BasePortalInstanceLifecycleListener {
 
 	@Deactivate
 	protected void deactivate() throws PortalException {
-		_cpDemoDataCreator.delete();
+		_cpDemoDataCreator.delete(_user.getUserId(), _group.getGroupId());
 		_omniAdminUserDemoDataCreator.delete();
 	}
 
@@ -63,6 +62,9 @@ public class CPDemo extends BasePortalInstanceLifecycleListener {
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	private static User _user;
+	private static Group _group;
 
 	@Reference
 	private CPDemoDataCreator _cpDemoDataCreator;

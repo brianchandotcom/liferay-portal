@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +33,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,34 +58,24 @@ public class AssetCategoryDemoDataCreatorHelper
 
 			long parentCategoryId = assetCategory.getCategoryId();
 
-			addSubCategories(
+			addSubcategories(
 				userId, groupId, parentCategoryId, vocabularyId, layoutUuid,
 				categoryJSONObject);
 		}
 	}
 
-	protected void addSubCategories(
-			long userId, long groupId, long parentCategoryId,
-			long vocabularyId, String layoutUuid, JSONObject jsonObject)
-		throws PortalException {
+	public long[] getProductAssetCategoryIds(JSONArray jsonArray) {
+		List<Long> productAssetCategoryIds = new ArrayList<>();
 
-		JSONArray jsonArray = jsonObject.getJSONArray("subCategories");
+		for (int i = 0; i < jsonArray.length(); i++) {
+			String categoryName = jsonArray.getString(i);
 
-		if (jsonArray != null) {
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject categoryJSONObject = jsonArray.getJSONObject(i);
+			AssetCategory assetCategory = _assetCategories.get(categoryName);
 
-				AssetCategory assetCategory = getAssetCategory(
-					userId, groupId, parentCategoryId, vocabularyId,
-					layoutUuid, categoryJSONObject);
-
-				long subCategoryId = assetCategory.getCategoryId();
-
-				addSubCategories(
-					userId, groupId, subCategoryId, vocabularyId, layoutUuid,
-					categoryJSONObject);
-			}
+			productAssetCategoryIds.add(assetCategory.getCategoryId());
 		}
+
+		return ArrayUtil.toLongArray(productAssetCategoryIds);
 	}
 
 	public void init() {
@@ -97,9 +87,33 @@ public class AssetCategoryDemoDataCreatorHelper
 		init();
 	}
 
+	protected void addSubcategories(
+			long userId, long groupId, long parentCategoryId, long vocabularyId,
+			String layoutUuid, JSONObject jsonObject)
+		throws PortalException {
+
+		JSONArray jsonArray = jsonObject.getJSONArray("subcategories");
+
+		if (jsonArray != null) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject categoryJSONObject = jsonArray.getJSONObject(i);
+
+				AssetCategory assetCategory = getAssetCategory(
+					userId, groupId, parentCategoryId, vocabularyId, layoutUuid,
+					categoryJSONObject);
+
+				long subcategoryId = assetCategory.getCategoryId();
+
+				addSubcategories(
+					userId, groupId, subcategoryId, vocabularyId, layoutUuid,
+					categoryJSONObject);
+			}
+		}
+	}
+
 	protected AssetCategory getAssetCategory(
-			long userId, long groupId, long parentCategoryId,
-			long vocabularyId, String layoutUuid, JSONObject jsonObject)
+			long userId, long groupId, long parentCategoryId, long vocabularyId,
+			String layoutUuid, JSONObject jsonObject)
 		throws PortalException {
 
 		String path = jsonObject.getString("path");
@@ -144,22 +158,7 @@ public class AssetCategoryDemoDataCreatorHelper
 		return assetCategory;
 	}
 
-	public long[] getProductAssetCategoryIds(JSONArray jsonArray) {
-		List<Long> productAssetCategoryIds = new ArrayList<>();
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			String categoryName = jsonArray.getString(i);
-
-			AssetCategory assetCategory = _assetCategories.get(categoryName);
-
-			productAssetCategoryIds.add(assetCategory.getCategoryId());
-		}
-
-		return ArrayUtil.toLongArray(productAssetCategoryIds);
-	}
-
-	private Map<Locale, String> _getUniqueUrlTitles(
-			AssetCategory assetCategory)
+	private Map<Locale, String> _getUniqueUrlTitles(AssetCategory assetCategory)
 		throws PortalException {
 
 		Map<Locale, String> urlTitleMap = new HashMap<>();

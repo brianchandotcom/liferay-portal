@@ -1,324 +1,324 @@
 [
-    {
-        "categories": [
-            {
-                "path": "women",
-                "title": "Women",
-                "subCategories": [
-                    {
-                        "path": "women-clothes",
-                        "title": "Clothes",
-                        "subCategories": [
-                            {
-                                "path": "women-clothes-dressers",
-                                "title": "Dressers & Skirts"
-                            },
-                            {
-                                "path": "women-clothes-jeans",
-                                "title": "Jeans"
-                            },
-                            {
-                                "path": "women-clothes-skirts",
-                                "title": "Sweat skirts"
-                            },
-                            {
-                                "path": "women-clothes-t-shirts",
-                                "title": "T-shirts"
-                            },
-                            {
-                                "path": "women-clothes-shirts",
-                                "title": "Shirts"
-                            },
-                            {
-                                "path": "women-clothes-knitwear",
-                                "title": "Knitwear"
-                            },
-                            {
-                                "path": "women-clothes-outerwear",
-                                "title": "Outerwear"
-                            },
-                            {
-                                "path": "women-clothes-shorts",
-                                "title": "Trousers & Shorts"
-                            },
-                            {
-                                "path": "women-clothes-blazers",
-                                "title": "Blazers"
-                            }
-                        ]
-                    },
-                    {
-                        "path": "women-accessories",
-                        "title": "Shoes & Accessories",
-                        "subCategories": [
-                            {
-                                "path": "women-accessories-bags",
-                                "title": "Bags"
-                            },
-                            {
-                                "path": "women-accessories-shoes",
-                                "title": "Shoes"
-                            },
-                            {
-                                "path": "women-accessories-wallets",
-                                "title": "Wallets"
-                            },
-                            {
-                                "path": "women-accessories-belts",
-                                "title": "Belts"
-                            },
-                            {
-                                "path": "women-accessories-hats",
-                                "title": "Hats, Scarves, & Gloves"
-                            },
-                            {
-                                "path": "women-accessories-jewellery",
-                                "title": "Watch & Jewellery"
-                            },
-                            {
-                                "path": "women-accessories-perfumes",
-                                "title": "Perfumes"
-                            },
-                            {
-                                "path": "women-accessories-sunglasses",
-                                "title": "Sunglasses"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "path": "men",
-                "title": "Men",
-                "subCategories": [
-                    {
-                        "path": "men-clothes",
-                        "title": "Clothes",
-                        "subCategories": [
-                            {
-                                "path": "men-clothes-jeans",
-                                "title": "Jeans"
-                            },
-                            {
-                                "path": "men-clothes-t-shirts",
-                                "title": "T-shirts"
-                            },
-                            {
-                                "path": "men-clothes-shirts",
-                                "title": "Shirts"
-                            },
-                            {
-                                "path": "men-clothes-knitwear",
-                                "title": "Knitwear"
-                            },
-                            {
-                                "path": "men-clothes-outerwear",
-                                "title": "Outerwear"
-                            },
-                            {
-                                "path": "men-clothes-shorts",
-                                "title": "Trousers & Shorts"
-                            },
-                            {
-                                "path": "men-clothes-blazers",
-                                "title": "Blazers"
-                            }
-                        ]
-                    },
-                    {
-                        "path": "men-accessories",
-                        "title": "Shoes & Accessories",
-                        "subCategories": [
-                            {
-                                "path": "men-accessories-bags",
-                                "title": "Bags"
-                            },
-                            {
-                                "path": "men-accessories-shoes",
-                                "title": "Shoes"
-                            },
-                            {
-                                "path": "men-accessories-wallets",
-                                "title": "Wallets"
-                            },
-                            {
-                                "path": "men-accessories-belts",
-                                "title": "Belts"
-                            },
-                            {
-                                "path": "men-accessories-hats",
-                                "title": "Hats, Scarves, & Gloves"
-                            },
-                            {
-                                "path": "men-accessories-jewellery",
-                                "title": "Watch & Jewellery"
-                            },
-                            {
-                                "path": "men-accessories-perfumes",
-                                "title": "Perfumes"
-                            },
-                            {
-                                "path": "men-accessories-sunglasses",
-                                "title": "Sunglasses"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "path": "underwear",
-                "title": "Underwear",
-                "subCategories": [
-                    {
-                        "path": "underwear-women",
-                        "title": "Women",
-                        "subCategories": [
-                            {
-                                "path": "underwear-women-new-arrival",
-                                "title": "New arrivals"
-                            },
-                            {
-                                "path": "underwear-women-shop-by-set",
-                                "title": "Shop by set"
-                            },
-                            {
-                                "path": "underwear-women-bras",
-                                "title": "Bras"
-                            },
-                            {
-                                "path": "underwear-women-panties",
-                                "title": "Panties"
-                            },
-                            {
-                                "path": "underwear-women-sports",
-                                "title": "Sports underwear"
-                            },
-                            {
-                                "path": "underwear-women-nightwear",
-                                "title": "Nightwear & Loungewear"
-                            },
-                            {
-                                "path": "underwear-women-socks",
-                                "title": "Socks & Tights"
-                            }
-                        ]
-                    },
-                    {
-                        "path": "underwear-men",
-                        "title": "Men",
-                        "subCategories": [
-                            {
-                                "path": "underwear-men-new-arrival",
-                                "title": "New arrivals"
-                            },
-                            {
-                                "path": "underwear-men-trunks",
-                                "title": "Trunks"
-                            },
-                            {
-                                "path": "underwear-men-briefs",
-                                "title": "Briefs"
-                            },
-                            {
-                                "path": "underwear-men-boxers",
-                                "title": "Boxers"
-                            },
-                            {
-                                "path": "underwear-men-socks",
-                                "title": "Socks"
-                            },
-                            {
-                                "path": "underwear-men-nightwear",
-                                "title": "Nightwear & Loungewear"
-                            },
-                            {
-                                "path": "underwear-men-multipacks",
-                                "title": "Multipacks"
-                            }
-                        ]
-                    },
-                    {
-                        "path": "underwear-girls",
-                        "title": "Girls",
-                        "subCategories": [
-                            {
-                                "path": "underwear-girls-underwear",
-                                "title": "Underwear"
-                            },
-                            {
-                                "path": "underwear-girls-pyjamas",
-                                "title": "Pyjamas"
-                            }
-                        ]
-                    },
-                    {
-                        "path": "underwear-boys",
-                        "title": "Boys",
-                        "subCategories": [
-                            {
-                                "path": "underwear-boys-underwear",
-                                "title": "Underwear"
-                            },
-                            {
-                                "path": "underwear-boys-pyjamas",
-                                "title": "Pyjamas"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "path": "sale",
-                "title": "Sale",
-                "subCategories": [
-                    {
-                        "path": "sale-women",
-                        "title": "Women",
-                        "subCategories": [
-                            {
-                                "path": "sale-women-clothes",
-                                "title": "Clothes"
-                            },
-                            {
-                                "path": "sale-women-accessories",
-                                "title": "Shoes & Accessories"
-                            },
-                            {
-                                "path": "sale-women-underwear",
-                                "title": "Underwear"
-                            }
-                        ]
-                    },
-                    {
-                        "path": "sale-men",
-                        "title": "Men",
-                        "subCategories": [
-                            {
-                                "path": "sale-men-clothes",
-                                "title": "Clothes"
-                            },
-                            {
-                                "path": "sale-men-accessories",
-                                "title": "Shoes & Accessories"
-                            },
-                            {
-                                "path": "sale-men-underwear",
-                                "title": "Underwear"
-                            }
-                        ]
-                    }
-                ]
-            }
-        ],
-        "manufacturers": [
-            {
-                "path": "loewe",
-                "title": "LOEWE"
-            },
-            {
-                "path": "calvin-klein",
-                "title": "Calvin Klein"
-            }
-        ]
-    }
+	{
+		"categories": [
+			{
+				"path": "women",
+				"subcategories": [
+					{
+						"path": "women-clothes",
+						"subcategories": [
+							{
+								"path": "women-clothes-dressers",
+								"title": "Dressers & Skirts"
+							},
+							{
+								"path": "women-clothes-jeans",
+								"title": "Jeans"
+							},
+							{
+								"path": "women-clothes-skirts",
+								"title": "Sweat skirts"
+							},
+							{
+								"path": "women-clothes-t-shirts",
+								"title": "T-shirts"
+							},
+							{
+								"path": "women-clothes-shirts",
+								"title": "Shirts"
+							},
+							{
+								"path": "women-clothes-knitwear",
+								"title": "Knitwear"
+							},
+							{
+								"path": "women-clothes-outerwear",
+								"title": "Outerwear"
+							},
+							{
+								"path": "women-clothes-shorts",
+								"title": "Trousers & Shorts"
+							},
+							{
+								"path": "women-clothes-blazers",
+								"title": "Blazers"
+							}
+						],
+						"title": "Clothes"
+					},
+					{
+						"path": "women-accessories",
+						"subcategories": [
+							{
+								"path": "women-accessories-bags",
+								"title": "Bags"
+							},
+							{
+								"path": "women-accessories-shoes",
+								"title": "Shoes"
+							},
+							{
+								"path": "women-accessories-wallets",
+								"title": "Wallets"
+							},
+							{
+								"path": "women-accessories-belts",
+								"title": "Belts"
+							},
+							{
+								"path": "women-accessories-hats",
+								"title": "Hats, Scarves, & Gloves"
+							},
+							{
+								"path": "women-accessories-jewellery",
+								"title": "Watch & Jewellery"
+							},
+							{
+								"path": "women-accessories-perfumes",
+								"title": "Perfumes"
+							},
+							{
+								"path": "women-accessories-sunglasses",
+								"title": "Sunglasses"
+							}
+						],
+						"title": "Shoes & Accessories"
+					}
+				],
+				"title": "Women"
+			},
+			{
+				"path": "men",
+				"subcategories": [
+					{
+						"path": "men-clothes",
+						"subcategories": [
+							{
+								"path": "men-clothes-jeans",
+								"title": "Jeans"
+							},
+							{
+								"path": "men-clothes-t-shirts",
+								"title": "T-shirts"
+							},
+							{
+								"path": "men-clothes-shirts",
+								"title": "Shirts"
+							},
+							{
+								"path": "men-clothes-knitwear",
+								"title": "Knitwear"
+							},
+							{
+								"path": "men-clothes-outerwear",
+								"title": "Outerwear"
+							},
+							{
+								"path": "men-clothes-shorts",
+								"title": "Trousers & Shorts"
+							},
+							{
+								"path": "men-clothes-blazers",
+								"title": "Blazers"
+							}
+						],
+						"title": "Clothes"
+					},
+					{
+						"path": "men-accessories",
+						"subcategories": [
+							{
+								"path": "men-accessories-bags",
+								"title": "Bags"
+							},
+							{
+								"path": "men-accessories-shoes",
+								"title": "Shoes"
+							},
+							{
+								"path": "men-accessories-wallets",
+								"title": "Wallets"
+							},
+							{
+								"path": "men-accessories-belts",
+								"title": "Belts"
+							},
+							{
+								"path": "men-accessories-hats",
+								"title": "Hats, Scarves, & Gloves"
+							},
+							{
+								"path": "men-accessories-jewellery",
+								"title": "Watch & Jewellery"
+							},
+							{
+								"path": "men-accessories-perfumes",
+								"title": "Perfumes"
+							},
+							{
+								"path": "men-accessories-sunglasses",
+								"title": "Sunglasses"
+							}
+						],
+						"title": "Shoes & Accessories"
+					}
+				],
+				"title": "Men"
+			},
+			{
+				"path": "underwear",
+				"subcategories": [
+					{
+						"path": "underwear-women",
+						"subcategories": [
+							{
+								"path": "underwear-women-new-arrival",
+								"title": "New arrivals"
+							},
+							{
+								"path": "underwear-women-shop-by-set",
+								"title": "Shop by set"
+							},
+							{
+								"path": "underwear-women-bras",
+								"title": "Bras"
+							},
+							{
+								"path": "underwear-women-panties",
+								"title": "Panties"
+							},
+							{
+								"path": "underwear-women-sports",
+								"title": "Sports underwear"
+							},
+							{
+								"path": "underwear-women-nightwear",
+								"title": "Nightwear & Loungewear"
+							},
+							{
+								"path": "underwear-women-socks",
+								"title": "Socks & Tights"
+							}
+						],
+						"title": "Women"
+					},
+					{
+						"path": "underwear-men",
+						"subcategories": [
+							{
+								"path": "underwear-men-new-arrival",
+								"title": "New arrivals"
+							},
+							{
+								"path": "underwear-men-trunks",
+								"title": "Trunks"
+							},
+							{
+								"path": "underwear-men-briefs",
+								"title": "Briefs"
+							},
+							{
+								"path": "underwear-men-boxers",
+								"title": "Boxers"
+							},
+							{
+								"path": "underwear-men-socks",
+								"title": "Socks"
+							},
+							{
+								"path": "underwear-men-nightwear",
+								"title": "Nightwear & Loungewear"
+							},
+							{
+								"path": "underwear-men-multipacks",
+								"title": "Multipacks"
+							}
+						],
+						"title": "Men"
+					},
+					{
+						"path": "underwear-girls",
+						"subcategories": [
+							{
+								"path": "underwear-girls-underwear",
+								"title": "Underwear"
+							},
+							{
+								"path": "underwear-girls-pyjamas",
+								"title": "Pyjamas"
+							}
+						],
+						"title": "Girls"
+					},
+					{
+						"path": "underwear-boys",
+						"subcategories": [
+							{
+								"path": "underwear-boys-underwear",
+								"title": "Underwear"
+							},
+							{
+								"path": "underwear-boys-pyjamas",
+								"title": "Pyjamas"
+							}
+						],
+						"title": "Boys"
+					}
+				],
+				"title": "Underwear"
+			},
+			{
+				"path": "sale",
+				"subcategories": [
+					{
+						"path": "sale-women",
+						"subcategories": [
+							{
+								"path": "sale-women-clothes",
+								"title": "Clothes"
+							},
+							{
+								"path": "sale-women-accessories",
+								"title": "Shoes & Accessories"
+							},
+							{
+								"path": "sale-women-underwear",
+								"title": "Underwear"
+							}
+						],
+						"title": "Women"
+					},
+					{
+						"path": "sale-men",
+						"subcategories": [
+							{
+								"path": "sale-men-clothes",
+								"title": "Clothes"
+							},
+							{
+								"path": "sale-men-accessories",
+								"title": "Shoes & Accessories"
+							},
+							{
+								"path": "sale-men-underwear",
+								"title": "Underwear"
+							}
+						],
+						"title": "Men"
+					}
+				],
+				"title": "Sale"
+			}
+		],
+		"manufacturers": [
+			{
+				"path": "calvin-klein",
+				"title": "Calvin Klein"
+			},
+			{
+				"path": "loewe",
+				"title": "LOEWE"
+			}
+		]
+	}
 ]

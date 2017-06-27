@@ -14,9 +14,8 @@
 
 package com.liferay.commerce.product.demo.data.creator.internal.util;
 
-import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,14 +29,20 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -52,19 +57,9 @@ public class CPDefinitionDemoDataCreatorHelper
 
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
-		AssetVocabulary commerceAssetVocabulary =
-			_assetVocabularyDemoDataCreatorHelper.createAssetVocabulary(
-				userId, groupId, "Commerce");
-
-		AssetVocabulary manufacturersAssetVocabulary =
-			_assetVocabularyDemoDataCreatorHelper.createAssetVocabulary(
-				userId, groupId, "Manufacturers");
-
-		long commerceVocabularyId = commerceAssetVocabulary.getVocabularyId();
-		long manufacturersVocabularyId =
-			manufacturersAssetVocabulary.getVocabularyId();
-
 		JSONArray catalogJSONArray = getCatalogJSONArray();
+
+		// Product definitions
 
 		for (int i = 0; i < catalogJSONArray.length(); i++) {
 			JSONObject productJSONObject = catalogJSONArray.getJSONObject(i);
@@ -72,34 +67,23 @@ public class CPDefinitionDemoDataCreatorHelper
 			String baseSKU = productJSONObject.getString("baseSKU");
 			String title = productJSONObject.getString("title");
 			String description = productJSONObject.getString("description");
+			String urlTitle = productJSONObject.getString("urlTitle");
 			String productTypeName = productJSONObject.getString(
 				"productTypeName");
 
-			Map<Locale, String> titleMap = Collections.singletonMap(
-				Locale.US, title);
-			Map<Locale, String> descriptionMap = Collections.singletonMap(
-				Locale.US, description);
+			String layoutUuid = _layoutDemoDataCreatorHelper.getLayoutUuid(
+				userId, groupId, "Products");
 
-			JSONArray categoriesJSONArray = productJSONObject.getJSONArray(
+			JSONArray productJSONArray = productJSONObject.getJSONArray(
 				"categories");
-			JSONArray manufacturersJSONArray = productJSONObject.getJSONArray(
-				"manufacturers");
 
-			long[] commerceAssetCategoryIds =
-				_assetCategoryDemoDataCreatorHelper.getAssetCategoryIds(
-					userId, groupId, commerceVocabularyId, categoriesJSONArray);
-
-			long[] manufacturersAssetCategoryIds =
-				_assetCategoryDemoDataCreatorHelper.getAssetCategoryIds(
-					userId, groupId, manufacturersVocabularyId,
-					manufacturersJSONArray);
-
-			long[] assetCategoryIds = ArrayUtil.append(
-				commerceAssetCategoryIds, manufacturersAssetCategoryIds);
+			long[] assetCategoryIds =
+				_assetCategoryDemoDataCreatorHelper.getProductAssetCategoryIds(
+					productJSONArray);
 
 			CPDefinition cpDefinition = createCPDefinition(
-				userId, groupId, baseSKU, titleMap, descriptionMap,
-				productTypeName, assetCategoryIds);
+				userId, groupId, baseSKU, title, description, urlTitle,
+				layoutUuid, productTypeName, assetCategoryIds);
 
 			JSONArray cpOptionsJSONArray = productJSONObject.getJSONArray(
 				"options");
@@ -121,28 +105,77 @@ public class CPDefinitionDemoDataCreatorHelper
 					cpDefinition.getCPDefinitionId(), serviceContext);
 			}
 		}
+
+		// Related products
+
+		for (int i = 0; i < catalogJSONArray.length(); i++) {
+			JSONObject productJSONObject = catalogJSONArray.getJSONObject(i);
+
+			String title = productJSONObject.getString("title");
+
+			Collection<CPDefinition> cpDefinitions = _cpDefinitions.values();
+
+			JSONArray cpDefinitionLinksJSONArray =
+				productJSONObject.getJSONArray("relatedProducts");
+
+			for (CPDefinition cpDefinition : cpDefinitions) {
+				List<Long> cpDefinitionIdsList = new ArrayList<>();
+
+				for (int x = 0; x < cpDefinitionLinksJSONArray.length(); x++) {
+					JSONObject relatedProductJSONObject =
+						cpDefinitionLinksJSONArray.getJSONObject(x);
+
+					String cpDefinitionEntryTitle =
+						relatedProductJSONObject.getString("title");
+
+					if (title.equals(cpDefinition.getTitle("en_US"))) {
+
+						CPDefinition cpDefinitionEntry =
+							getCPDefinitionByTitle(cpDefinitionEntryTitle);
+
+						cpDefinitionIdsList.add(
+							cpDefinitionEntry.getCPDefinitionId());
+					}
+					else {
+						continue;
+					}
+				}
+
+				long[] cpDefinitionEntryIds = ArrayUtil.toLongArray(
+					cpDefinitionIdsList);
+
+				_cpDefinitionLinkLocalService.updateCPDefinitionLinks(
+					cpDefinition.getCPDefinitionId(), cpDefinitionEntryIds, 0,
+					serviceContext);
+			}
+		}
 	}
 
 	public void deleteCPDefinitions() throws PortalException {
-		for (long cpDefinitionId : _cpDefinitionIds) {
-			try {
-				_cpDefinitionLocalService.deleteCPDefinition(cpDefinitionId);
-			}
-			catch (NoSuchCPDefinitionException nscpde) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(nscpde);
-				}
-			}
+		Set<Map.Entry<String, CPDefinition>> entrySet = _cpDefinitions.entrySet();
 
-			_cpDefinitionIds.remove(cpDefinitionId);
+		Iterator<Map.Entry<String, CPDefinition>> iterator = entrySet.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, CPDefinition> entry = iterator.next();
+
+			_cpDefinitionLocalService.deleteCPDefinition(entry.getValue());
+
+			iterator.remove();
 		}
 	}
 
 	protected CPDefinition createCPDefinition(
-			long userId, long groupId, String baseSKU,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			long userId, long groupId, String baseSKU, String title,
+			String description, String urlTitle, String layoutUuid,
 			String productTypeName, long[] assetCategoryIds)
 		throws PortalException {
+
+		CPDefinition cpDefinition = getCPDefinitionByTitle(title);
+
+		if (cpDefinition != null) {
+			return cpDefinition;
+		}
 
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
@@ -176,16 +209,29 @@ public class CPDefinitionDemoDataCreatorHelper
 			expirationDateHour += 12;
 		}
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.addCPDefinition(
-			baseSKU, titleMap, null, descriptionMap, null, null,
+		Map<Locale, String> titleMap = Collections.singletonMap(
+			Locale.US, title);
+		Map<Locale, String> descriptionMap = Collections.singletonMap(
+			Locale.US, description);
+		Map<Locale, String> urlTitleMap = Collections.singletonMap(
+			Locale.US, urlTitle);
+
+		cpDefinition = _cpDefinitionLocalService.addCPDefinition(
+			baseSKU, titleMap, null, descriptionMap, urlTitleMap, layoutUuid,
 			productTypeName, null, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, true, serviceContext);
 
-		_cpDefinitionIds.add(cpDefinition.getCPDefinitionId());
+		_cpDefinitions.put(title, cpDefinition);
 
 		return cpDefinition;
+	}
+
+	public CPDefinition getCPDefinitionByTitle(String title)
+		throws PortalException {
+
+		return _cpDefinitions.get(title);
 	}
 
 	protected JSONArray getCatalogJSONArray() throws Exception {
@@ -204,6 +250,22 @@ public class CPDefinitionDemoDataCreatorHelper
 		return catalogJSONArray;
 	}
 
+	public void init() {
+		_cpDefinitions = new HashMap<>();
+	}
+
+	@Activate
+	protected void activate() {
+		init();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_cpDefinitions = null;
+	}
+
+	private Map<String, CPDefinition> _cpDefinitions;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionDemoDataCreatorHelper.class);
 
@@ -219,7 +281,8 @@ public class CPDefinitionDemoDataCreatorHelper
 	private CPAttachmentFileEntryDemoDataCreatorHelper
 		_cpAttachmentFileEntryDemoDataCreatorHelper;
 
-	private final List<Long> _cpDefinitionIds = new CopyOnWriteArrayList<>();
+	@Reference
+	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
@@ -229,5 +292,8 @@ public class CPDefinitionDemoDataCreatorHelper
 
 	@Reference
 	private CPOptionDemoDataCreatorHelper _cpOptionDemoDataCreatorHelper;
+
+	@Reference
+	private LayoutDemoDataCreatorHelper _layoutDemoDataCreatorHelper;
 
 }

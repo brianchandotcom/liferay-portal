@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -95,6 +96,23 @@ public class EmbeddedElasticsearchConnection
 						" to prevent Netty shutdown concurrent class loading " +
 							"interruption issue",
 					cnfe);
+			}
+		}
+
+		Injector injector = _node.injector();
+
+		ThreadPool threadPool = injector.getInstance(ThreadPool.class);
+
+		threadPool.shutdownNow();
+
+		try {
+			threadPool.awaitTermination(
+				elasticsearchConfiguration.shutdownWaitTime(),
+				TimeUnit.MILLISECONDS);
+		}
+		catch (InterruptedException ie) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("ThreadPool shutdown wait got interrupted", ie);
 			}
 		}
 

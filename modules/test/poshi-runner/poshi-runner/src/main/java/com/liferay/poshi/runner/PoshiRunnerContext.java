@@ -29,16 +29,25 @@ import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.reflect.Method;
 
+import java.net.URI;
+import java.net.URL;
+
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -49,8 +58,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-
-import org.apache.tools.ant.DirectoryScanner;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -68,9 +75,9 @@ public class PoshiRunnerContext {
 		_commandReturns.clear();
 		_commandSummaries.clear();
 		_filePaths.clear();
-		_filePathsList.clear();
 		_functionLocatorCounts.clear();
 		_pathLocators.clear();
+		_resources.clear();
 		_rootElements.clear();
 		_seleniumParameterCounts.clear();
 	}
@@ -129,10 +136,6 @@ public class PoshiRunnerContext {
 		return _filePaths.get(fileName);
 	}
 
-	public static List<String> getFilePathsList() {
-		return _filePathsList;
-	}
-
 	public static Element getFunctionCommandElement(String classCommandName) {
 		return _commandElements.get("function#" + classCommandName);
 	}
@@ -181,6 +184,10 @@ public class PoshiRunnerContext {
 
 	public static Element getPathRootElement(String className) {
 		return _rootElements.get("path#" + className);
+	}
+
+	public static List<URL> getResources() {
+		return _resources;
 	}
 
 	public static Map<String, Element> getRootElementsMap() {
@@ -403,42 +410,38 @@ public class PoshiRunnerContext {
 		return classCommandName;
 	}
 
-	private static List<String> _getFilePaths(
-			String[] includes, String... basedirs)
-		throws Exception {
+	private static List<URL> _getPoshiURLs(
+			FileSystem fileSystem, String[] includes, String... baseDirs)
+		throws IOException {
 
-		List<String> filePaths = new ArrayList<>();
+		List<URL> urls;
 
-		for (String basedir : basedirs) {
-			if (Validator.isNull(basedir)) {
-				continue;
-			}
-
-			if (!FileUtil.exists(basedir)) {
-				System.out.println("Directory " + basedir + " does not exist.");
-
-				continue;
-			}
-
-			DirectoryScanner directoryScanner = new DirectoryScanner();
-
-			directoryScanner.setBasedir(basedir);
-			directoryScanner.setIncludes(includes);
-
-			directoryScanner.scan();
-
-			for (String filePath : directoryScanner.getIncludedFiles()) {
-				filePath = basedir + "/" + filePath;
-
-				if (OSDetector.isWindows()) {
-					filePath = filePath.replace("/", "\\");
-				}
-
-				filePaths.add(filePath);
-			}
+		if (fileSystem == null) {
+			urls = FileUtil.getIncludedResourceURLs(includes, baseDirs);
+		}
+		else {
+			urls = FileUtil.getIncludedResourceURLs(
+				fileSystem, includes, baseDirs);
 		}
 
-		return filePaths;
+		for (URL url : urls) {
+			String filePath = url.getFile();
+
+			_filePaths.put(
+				PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath),
+				filePath);
+
+			_resources.add(url);
+		}
+
+		return urls;
+	}
+
+	private static List<URL> _getPoshiURLs(
+			String[] includes, String... baseDirs)
+		throws Exception {
+
+		return _getPoshiURLs(null, includes, baseDirs);
 	}
 
 	private static List<String> _getRelatedActionClassCommandNames(
@@ -830,12 +833,188 @@ public class PoshiRunnerContext {
 		return false;
 	}
 
-	private static void _readPathFile(
-			String filePath, String className, String extendedClassName)
+	private static void _readPoshiFiles() throws Exception {
+		String[] poshiFileNames = {
+			"**/*.action", "**/*.function", "**/*.macro", "**/*.path",
+			"**/*.testcase"
+		};
+
+		_readPoshiFilesFromClassPath(
+			poshiFileNames, "default/testFunctional",
+			"override/testFunctional");
+
+		List<URL> urls = new ArrayList<>();
+
+		urls.addAll(_getPoshiURLs(poshiFileNames, _TEST_BASE_DIR_NAME));
+
+		if (Validator.isNotNull(PropsValues.TEST_INCLUDE_DIR_NAMES)) {
+			urls.addAll(
+				_getPoshiURLs(
+					new String[] {
+						"**/*.action", "**/*.function", "**/*.macro",
+						"**/*.path"
+					},
+					PropsValues.TEST_INCLUDE_DIR_NAMES));
+		}
+
+		if (Validator.isNotNull(PropsValues.TEST_SUBREPO_DIRS)) {
+			urls.addAll(
+				_getPoshiURLs(poshiFileNames, PropsValues.TEST_SUBREPO_DIRS));
+		}
+
+		for (URL url : urls) {
+			_storeRootElement(
+				PoshiRunnerGetterUtil.getRootElementFromURL(url),
+				url.getFile());
+		}
+
+		_initComponentCommandNamesMap();
+	}
+
+	private static void _readPoshiFilesFromClassPath(
+			String[] includes, String... resourceNames)
 		throws Exception {
 
-		Element rootElement = PoshiRunnerGetterUtil.getRootElementFromFilePath(
-			filePath);
+		ClassLoader classLoader = PoshiRunnerContext.class.getClassLoader();
+
+		List<URL> urls = new ArrayList<>();
+
+		for (String resourceName : resourceNames) {
+			Enumeration<URL> resources = classLoader.getResources(resourceName);
+
+			while (resources.hasMoreElements()) {
+				URL resource = resources.nextElement();
+
+				String resourceString = resource.toString();
+
+				int x = resourceString.indexOf("!");
+
+				try (FileSystem fileSystem = FileSystems.newFileSystem(
+						URI.create(resourceString.substring(0, x)),
+						new HashMap<String, String>(), classLoader)) {
+
+					urls.addAll(
+						_getPoshiURLs(
+							fileSystem, includes,
+							resourceString.substring(x + 1)));
+				}
+			}
+		}
+
+		for (URL url : urls) {
+			_storeRootElement(
+				PoshiRunnerGetterUtil.getRootElementFromURL(url),
+				url.getFile());
+		}
+	}
+
+	private static void _readSeleniumFiles() throws Exception {
+		Method[] methods = LiferaySelenium.class.getMethods();
+
+		for (Method method : methods) {
+			Class<?>[] parameterTypes = method.getParameterTypes();
+
+			_seleniumParameterCounts.put(
+				method.getName(), parameterTypes.length);
+		}
+
+		_seleniumParameterCounts.put("open", 1);
+	}
+
+	private static void _readTestToggleFiles() throws Exception {
+		for (String testToggleFileName : PropsValues.TEST_TOGGLE_FILE_NAMES) {
+			if (!FileUtil.exists(testToggleFileName)) {
+				continue;
+			}
+
+			String content = FileUtil.read(testToggleFileName);
+
+			InputStream inputStream = new ByteArrayInputStream(
+				content.getBytes("UTF-8"));
+
+			SAXReader saxReader = new SAXReader();
+
+			Document document = saxReader.read(inputStream);
+
+			Element rootElement = document.getRootElement();
+
+			List<Element> toggleElements = rootElement.elements("toggle");
+
+			for (Element toggleElement : toggleElements) {
+				String toggleName = toggleElement.attributeValue("name");
+
+				Element dateElement = toggleElement.element("date");
+
+				if (dateElement == null) {
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("Unable to parse toggle:\n");
+					sb.append(testToggleFileName);
+					sb.append(":");
+					sb.append(toggleName);
+					sb.append(" because the date was not found");
+
+					Exception e = new RuntimeException(sb.toString());
+
+					e.printStackTrace();
+
+					throw e;
+				}
+				else {
+					try {
+						_toggleDateFormat.parse(dateElement.getText());
+					}
+					catch (ParseException pe) {
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("Unable to parse date \"");
+						sb.append(dateElement.getText());
+						sb.append("\" in ");
+						sb.append(testToggleFileName);
+						sb.append(":");
+						sb.append(toggleName);
+						sb.append(" because it doesn't match the format \"");
+						sb.append(_toggleDateFormat.toPattern());
+						sb.append("\"");
+
+						Exception e = new RuntimeException(sb.toString(), pe);
+
+						e.printStackTrace();
+
+						throw e;
+					}
+				}
+
+				Element ownerElement = toggleElement.element("owner");
+
+				if ((ownerElement == null) ||
+					Validator.isNull(ownerElement.getText())) {
+
+					Exception exception = new Exception(
+						"Please set an author for this toggle:\n" +
+							testToggleFileName + ":" + toggleName);
+
+					exception.printStackTrace();
+
+					throw exception;
+				}
+
+				_testToggleNames.add(toggleName);
+			}
+		}
+
+		System.out.println("Active Toggles:");
+
+		for (String testToggleName : _testToggleNames) {
+			System.out.println("* " + testToggleName);
+		}
+
+		System.out.println();
+	}
+
+	private static void _storePathElement(
+			Element rootElement, String className, String extendedClassName)
+		throws Exception {
 
 		if (extendedClassName != null) {
 			_rootElements.put("path#" + extendedClassName, rootElement);
@@ -864,16 +1043,20 @@ public class PoshiRunnerContext {
 			String locator = locatorElement.getText();
 
 			if (locatorKey.equals("EXTEND_ACTION_PATH")) {
-				for (String extendFilePath : _filePathsList) {
+				for (URL resource : _resources) {
 					String expectedExtendedPath = "/" + locator + ".path";
 
 					if (OSDetector.isWindows()) {
 						expectedExtendedPath = "\\" + locator + ".path";
 					}
 
+					String extendFilePath = resource.getFile();
+
 					if (extendFilePath.endsWith(expectedExtendedPath)) {
-						_readPathFile(
-							extendFilePath, className,
+						_storePathElement(
+							PoshiRunnerGetterUtil.getRootElementFromURL(
+								resource),
+							className,
 							PoshiRunnerGetterUtil.getClassNameFromFilePath(
 								extendFilePath));
 
@@ -888,23 +1071,22 @@ public class PoshiRunnerContext {
 		}
 	}
 
-	private static void _readPoshiFile(String filePath) throws Exception {
+	private static void _storeRootElement(Element rootElement, String filePath)
+		throws Exception {
+
 		String className = PoshiRunnerGetterUtil.getClassNameFromFilePath(
 			filePath);
 		String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
 			filePath);
 
+		if (classType.equals("test-case")) {
+			_testCaseClassNames.add(className);
+		}
+
 		if (classType.equals("action") || classType.equals("function") ||
 			classType.equals("macro") || classType.equals("test-case")) {
 
-			Element rootElement =
-				PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
-
 			_rootElements.put(classType + "#" + className, rootElement);
-
-			if (classType.equals("test-case")) {
-				_testCaseClassNames.add(className);
-			}
 
 			if (rootElement.element("set-up") != null) {
 				Element setUpElement = rootElement.element("set-up");
@@ -931,7 +1113,7 @@ public class PoshiRunnerContext {
 					className + "#" + commandElement.attributeValue("name");
 
 				if (isCommandElement(classType + "#" + classCommandName)) {
-					throw new Exception(
+					System.out.println(
 						"Duplicate command name\n" + filePath + ":" +
 							commandElement.attributeValue("line-number"));
 				}
@@ -999,138 +1181,8 @@ public class PoshiRunnerContext {
 			}
 		}
 		else if (classType.equals("path")) {
-			_readPathFile(filePath, className, null);
+			_storePathElement(rootElement, className, null);
 		}
-	}
-
-	private static void _readPoshiFiles() throws Exception {
-		String[] poshiFileNames = {
-			"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.path",
-			"**\\*.testcase"
-		};
-
-		List<String> testBaseDirFilePaths = _getFilePaths(
-			poshiFileNames, _TEST_BASE_DIR_NAME);
-
-		_filePathsList.addAll(testBaseDirFilePaths);
-
-		if (Validator.isNotNull(PropsValues.TEST_INCLUDE_DIR_NAMES)) {
-			_filePathsList.addAll(
-				_getFilePaths(
-					new String[] {
-						"**\\*.action", "**\\*.function", "**\\*.macro",
-						"**\\*.path"
-					},
-					PropsValues.TEST_INCLUDE_DIR_NAMES));
-		}
-
-		if (Validator.isNotNull(PropsValues.TEST_SUBREPO_DIRS)) {
-			_filePathsList.addAll(
-				_getFilePaths(poshiFileNames, PropsValues.TEST_SUBREPO_DIRS));
-		}
-
-		for (String filePath : _filePathsList) {
-			_filePaths.put(
-				PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath),
-				filePath);
-
-			_readPoshiFile(filePath);
-		}
-
-		_initComponentCommandNamesMap();
-	}
-
-	private static void _readSeleniumFiles() throws Exception {
-		Method[] methods = LiferaySelenium.class.getMethods();
-
-		for (Method method : methods) {
-			Class<?>[] parameterTypes = method.getParameterTypes();
-
-			_seleniumParameterCounts.put(
-				method.getName(), parameterTypes.length);
-		}
-
-		_seleniumParameterCounts.put("open", 1);
-	}
-
-	private static void _readTestToggleFiles() throws Exception {
-		for (String testToggleFileName : PropsValues.TEST_TOGGLE_FILE_NAMES) {
-			if (!FileUtil.exists(testToggleFileName)) {
-				continue;
-			}
-
-			String content = FileUtil.read(testToggleFileName);
-
-			InputStream inputStream = new ByteArrayInputStream(
-				content.getBytes("UTF-8"));
-
-			SAXReader saxReader = new SAXReader();
-
-			Document document = saxReader.read(inputStream);
-
-			Element rootElement = document.getRootElement();
-
-			List<Element> toggleElements = rootElement.elements("toggle");
-
-			for (Element toggleElement : toggleElements) {
-				String toggleName = toggleElement.attributeValue("name");
-
-				Element dateElement = toggleElement.element("date");
-
-				if (dateElement == null) {
-					Exception exception = new Exception(
-						"Please set a date for this toggle:\n" +
-							testToggleFileName + ":" + toggleName);
-
-					exception.printStackTrace();
-
-					throw exception;
-				}
-				else {
-					try {
-						SimpleDateFormat simpleDateFormat =
-							new SimpleDateFormat("YYYY-MM-dd");
-
-						simpleDateFormat.parse(dateElement.getText());
-					}
-					catch (Exception e) {
-						Exception exception = new Exception(
-							"Please use the date format, YYYY-MM-dd, for " +
-								"this toggle:\n" + testToggleFileName + ":" +
-									toggleName,
-							e);
-
-						exception.printStackTrace();
-
-						throw exception;
-					}
-				}
-
-				Element ownerElement = toggleElement.element("owner");
-
-				if ((ownerElement == null) ||
-					Validator.isNull(ownerElement.getText())) {
-
-					Exception exception = new Exception(
-						"Please set an author for this toggle:\n" +
-							testToggleFileName + ":" + toggleName);
-
-					exception.printStackTrace();
-
-					throw exception;
-				}
-
-				_testToggleNames.add(toggleName);
-			}
-		}
-
-		System.out.println("Active Toggles:");
-
-		for (String testToggleName : _testToggleNames) {
-			System.out.println("* " + testToggleName);
-		}
-
-		System.out.println();
 	}
 
 	private static void _writeTestCaseMethodNamesProperties() throws Exception {
@@ -1227,11 +1279,11 @@ public class PoshiRunnerContext {
 		new TreeMap<>();
 	private static final Set<String> _componentNames = new TreeSet<>();
 	private static final Map<String, String> _filePaths = new HashMap<>();
-	private static final List<String> _filePathsList = new ArrayList<>();
 	private static final Map<String, Integer> _functionLocatorCounts =
 		new HashMap<>();
 	private static final Map<String, String> _pathLocators = new HashMap<>();
 	private static final List<String> _productNames = new ArrayList<>();
+	private static final List<URL> _resources = new ArrayList<>();
 	private static final Map<String, Element> _rootElements = new HashMap<>();
 	private static final Map<String, Integer> _seleniumParameterCounts =
 		new HashMap<>();
@@ -1247,6 +1299,8 @@ public class PoshiRunnerContext {
 	private static String _testClassCommandName;
 	private static String _testClassName;
 	private static final Set<String> _testToggleNames = new HashSet<>();
+	private static final SimpleDateFormat _toggleDateFormat =
+		new SimpleDateFormat("YYYY-MM-dd");
 
 	static {
 		Collections.addAll(

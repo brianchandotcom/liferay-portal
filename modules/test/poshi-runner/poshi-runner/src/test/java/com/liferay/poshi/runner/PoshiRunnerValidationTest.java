@@ -17,6 +17,9 @@ package com.liferay.poshi.runner;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -171,22 +174,22 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 	@Test
 	public void testValidateDefinitionElement() throws Exception {
-		String filePath = getFilePath("ValidateDefinitionElement.macro");
+		URL url = getURL("ValidateDefinitionElement.macro");
 
-		Element rootElement = PoshiRunnerGetterUtil.getRootElementFromFilePath(
-			filePath);
+		Element rootElement = PoshiRunnerGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validateDefinitionElement(rootElement, filePath);
+		PoshiRunnerValidation.validateDefinitionElement(
+			rootElement, url.getFile());
 
 		Assert.assertEquals(
 			"validateDefinitionElement is failing", "", getExceptionMessage());
 
-		filePath = getFilePath("ValidateDefinitionElement2.macro");
+		url = getURL("ValidateDefinitionElement2.macro");
 
-		rootElement = PoshiRunnerGetterUtil.getRootElementFromFilePath(
-			filePath);
+		rootElement = PoshiRunnerGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validateDefinitionElement(rootElement, filePath);
+		PoshiRunnerValidation.validateDefinitionElement(
+			rootElement, url.getFile());
 
 		Assert.assertEquals(
 			"validateDefinitionElement is failing",
@@ -1059,61 +1062,60 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 	@Test
 	public void testValidatePathFile() throws Exception {
-		String filePath = getFilePath("Click.path");
+		URL url = getURL("Click.path");
 
-		Element element = PoshiRunnerGetterUtil.getRootElementFromFilePath(
-			filePath);
+		Element element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validatePathFile(element, filePath);
+		PoshiRunnerValidation.validatePathFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validatePathFile is failing", "", getExceptionMessage());
 
-		filePath = getFilePath("ValidatePathFile1.path");
+		url = getURL("ValidatePathFile1.path");
 
-		element = PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
+		element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validatePathFile(element, filePath);
+		PoshiRunnerValidation.validatePathFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validatePathFile is failing", "Invalid definition element",
 			getExceptionMessage());
 
-		filePath = getFilePath("ValidatePathFile2.path");
+		url = getURL("ValidatePathFile2.path");
 
-		element = PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
+		element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validatePathFile(element, filePath);
+		PoshiRunnerValidation.validatePathFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validatePathFile is failing", "Missing locator",
 			getExceptionMessage());
 
-		filePath = getFilePath("ValidatePathFile3.path");
+		url = getURL("ValidatePathFile3.path");
 
-		element = PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
+		element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validatePathFile(element, filePath);
+		PoshiRunnerValidation.validatePathFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validatePathFile is failing", "Missing thead class name",
 			getExceptionMessage());
 
-		filePath = getFilePath("ValidatePathFile4.path");
+		url = getURL("ValidatePathFile4.path");
 
-		element = PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
+		element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validatePathFile(element, filePath);
+		PoshiRunnerValidation.validatePathFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validatePathFile is failing",
 			"Thead class name does not match file name", getExceptionMessage());
 
-		filePath = getFilePath("ValidatePathFile5.path");
+		url = getURL("ValidatePathFile5.path");
 
-		element = PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
+		element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validatePathFile(element, filePath);
+		PoshiRunnerValidation.validatePathFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validatePathFile is failing", "File name and title are different",
@@ -1296,21 +1298,20 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 	@Test
 	public void testValidateTestCaseFile() throws Exception {
-		String filePath = getFilePath("ValidateTestCaseFile1.testcase");
+		URL url = getURL("ValidateTestCaseFile1.testcase");
 
-		Element element = PoshiRunnerGetterUtil.getRootElementFromFilePath(
-			filePath);
+		Element element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validateTestCaseFile(element, filePath);
+		PoshiRunnerValidation.validateTestCaseFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validateTestCaseFile is failing", "", getExceptionMessage());
 
-		filePath = getFilePath("ValidateTestCaseFile2.testcase");
+		url = getURL("ValidateTestCaseFile2.testcase");
 
-		element = PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
+		element = PoshiRunnerGetterUtil.getRootElementFromURL(url);
 
-		PoshiRunnerValidation.validateTestCaseFile(element, filePath);
+		PoshiRunnerValidation.validateTestCaseFile(element, url.getFile());
 
 		Assert.assertEquals(
 			"validateTestCaseFile is failing", "Invalid execute element",
@@ -1627,6 +1628,10 @@ public class PoshiRunnerValidationTest extends TestCase {
 		}
 
 		return filePath;
+	}
+
+	protected URL getURL(String fileName) throws MalformedURLException {
+		return new URL("file:" + getFilePath(fileName));
 	}
 
 }

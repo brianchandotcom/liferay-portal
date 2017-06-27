@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner;
 
+import java.net.URL;
+
 import junit.framework.TestCase;
 
 import org.dom4j.Element;
@@ -75,13 +77,15 @@ public class PoshiRunnerGetterUtilTest extends TestCase {
 	}
 
 	@Test
-	public void testGetRootElementFromFilePath() throws Exception {
-		Element rootElement = PoshiRunnerGetterUtil.getRootElementFromFilePath(
-			"src/test/resources/com/liferay/poshi/runner/dependencies" +
+	public void testGetRootElementFromURL() throws Exception {
+		URL url = new URL(
+			"file:src/test/resources/com/liferay/poshi/runner/dependencies" +
 				"/Test.testcase");
 
+		Element rootElement = PoshiRunnerGetterUtil.getRootElementFromURL(url);
+
 		Assert.assertEquals(
-			"getRootElementFromFilePath is failing", "definition",
+			"getRootElementFromURL is failing", "definition",
 			rootElement.getName());
 	}
 

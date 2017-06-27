@@ -17,6 +17,7 @@ package com.liferay.portal.security.ldap.internal.configuration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -30,6 +31,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
@@ -240,11 +242,24 @@ public class LDAPServerConfigurationProviderImpl
 			ldapServerConfigurations.add(_defaultLDAPServerConfiguration);
 		}
 		else if (!MapUtil.isEmpty(objectValuePairs)) {
-			for (ObjectValuePair<Configuration, LDAPServerConfiguration>
-					objectValuePair : objectValuePairs.values()) {
+			ArrayList<ObjectValuePair<Configuration, LDAPServerConfiguration>>
+				objectValuePairsList = new ArrayList<>(
+					objectValuePairs.values());
 
-				ldapServerConfigurations.add(objectValuePair.getValue());
-			}
+			objectValuePairsList.sort(
+				Comparator.comparing(
+					o -> {
+						Configuration key = o.getKey();
+
+						Dictionary<String, Object> properties =
+							key.getProperties();
+
+						return GetterUtil.getLong(
+							properties.get(LDAPConstants.AUTH_SERVER_PRIORITY));
+					}));
+
+			objectValuePairsList.forEach(
+				o -> ldapServerConfigurations.add(o.getValue()));
 		}
 
 		return ldapServerConfigurations;
@@ -309,16 +324,8 @@ public class LDAPServerConfigurationProviderImpl
 
 		synchronized (_configurations) {
 			Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
-				ldapServerConfigurations = _configurations.get(
-					ldapServerConfiguration.companyId());
-
-			if (ldapServerConfigurations == null) {
-				ldapServerConfigurations = new TreeMap<>();
-
-				_configurations.put(
-					ldapServerConfiguration.companyId(),
-					ldapServerConfigurations);
-			}
+				ldapServerConfigurations = _configurations.computeIfAbsent(
+					ldapServerConfiguration.companyId(), k -> new TreeMap<>());
 
 			ldapServerConfigurations.put(
 				ldapServerConfiguration.ldapServerId(),
@@ -372,13 +379,8 @@ public class LDAPServerConfigurationProviderImpl
 		properties.put(LDAPConstants.LDAP_SERVER_ID, ldapServerId);
 
 		Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
-			objectValuePairs = _configurations.get(companyId);
-
-		if (objectValuePairs == null) {
-			objectValuePairs = new HashMap<>();
-
-			_configurations.put(companyId, objectValuePairs);
-		}
+			objectValuePairs = _configurations.computeIfAbsent(
+				companyId, k -> new HashMap<>());
 
 		try {
 			ObjectValuePair<Configuration, LDAPServerConfiguration>
@@ -409,8 +411,9 @@ public class LDAPServerConfigurationProviderImpl
 		super.configurationAdmin = configurationAdmin;
 	}
 
-	private final Map<Long, Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>>
-		_configurations = new ConcurrentHashMap<>();
+	private final Map<Long,
+		Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>>
+			_configurations = new ConcurrentHashMap<>();
 	private final LDAPServerConfiguration _defaultLDAPServerConfiguration =
 		ConfigurableUtil.createConfigurable(
 			LDAPServerConfiguration.class, Collections.emptyMap());

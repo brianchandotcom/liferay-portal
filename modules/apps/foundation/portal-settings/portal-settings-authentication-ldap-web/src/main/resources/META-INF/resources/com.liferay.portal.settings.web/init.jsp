@@ -29,6 +29,7 @@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.auth.FullNameDefinition" %><%@
 page import="com.liferay.portal.kernel.security.auth.FullNameDefinitionFactory" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -55,6 +56,7 @@ page import="com.liferay.portal.settings.authentication.ldap.web.internal.portle
 page import="com.liferay.portal.util.PropsValues" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Dictionary" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Properties" %>
 

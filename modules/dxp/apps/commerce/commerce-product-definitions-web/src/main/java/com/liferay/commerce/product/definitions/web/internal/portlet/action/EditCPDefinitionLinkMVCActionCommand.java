@@ -17,7 +17,6 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
-import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -70,7 +69,7 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPDefinitionOptionRel.class.getName(), actionRequest);
+			CPDefinitionLink.class.getName(), actionRequest);
 
 		_cpDefinitionLinkService.updateCPDefinitionLinks(
 			cpDefinitionId, cpDefinitionIds2, 0, serviceContext);

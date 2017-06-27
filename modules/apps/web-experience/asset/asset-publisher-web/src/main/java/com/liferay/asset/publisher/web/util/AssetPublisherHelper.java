@@ -79,7 +79,11 @@ public class AssetPublisherHelper {
 			liferayPortletRequest, "resetCur");
 
 		redirectURL.setParameter("cur", String.valueOf(cur));
-		redirectURL.setParameter("delta", String.valueOf(delta));
+
+		if (delta > 0) {
+			redirectURL.setParameter("delta", String.valueOf(delta));
+		}
+
 		redirectURL.setParameter("resetCur", String.valueOf(resetCur));
 		redirectURL.setParameter(
 			"assetEntryId", String.valueOf(assetEntry.getEntryId()));

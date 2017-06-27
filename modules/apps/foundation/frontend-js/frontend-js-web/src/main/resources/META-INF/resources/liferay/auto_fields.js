@@ -457,7 +457,7 @@ AUI.add(
 									item.attr('value', guid);
 									item.attr('id', newName);
 								}
-								else if (inputNodeName == 'button' || inputNodeName == 'span' || inputNodeName == 'div') {
+								else if (inputNodeName == 'button' || inputNodeName == 'div' || inputNodeName == 'span') {
 									if (oldName) {
 										item.attr('id', newName);
 									}
@@ -596,23 +596,26 @@ AUI.add(
 						var inputLocalizedId = inputLocalized.get('id').replace(/([0-9]+)$/, guid);
 						var inputLocalizedNamespaceId = inputLocalized.get('namespace') + inputLocalizedId;
 
-						Liferay.InputLocalized.register(inputLocalizedNamespaceId, {
-							boundingBox: '#' + inputLocalizedNamespaceId + 'BoundingBox',
-							columns: inputLocalized.get('columns'),
-							contentBox: '#' + inputLocalizedNamespaceId + 'ContentBox',
-							defaultLanguageId: inputLocalized.get('defaultLanguageId'),
-							fieldPrefix: inputLocalized.get('fieldPrefix'),
-							fieldPrefixSeparator: inputLocalized.get('fieldPrefixSeparator'),
-							id: inputLocalizedId,
-							inputPlaceholder: '#' + inputLocalizedNamespaceId,
-							items: inputLocalized.get('items'),
-							itemsError: inputLocalized.get('itemsError'),
-							lazy: true,
-							name: inputLocalizedId,
-							namespace: inputLocalized.get('namespace'),
-							toggleSelection: inputLocalized.get('toggleSelection'),
-							translatedLanguages: inputLocalized.get('translatedLanguages')
-						});
+						Liferay.InputLocalized.register(
+							inputLocalizedNamespaceId,
+							{
+								boundingBox: '#' + inputLocalizedNamespaceId + 'BoundingBox',
+								columns: inputLocalized.get('columns'),
+								contentBox: '#' + inputLocalizedNamespaceId + 'ContentBox',
+								defaultLanguageId: inputLocalized.get('defaultLanguageId'),
+								fieldPrefix: inputLocalized.get('fieldPrefix'),
+								fieldPrefixSeparator: inputLocalized.get('fieldPrefixSeparator'),
+								id: inputLocalizedId,
+								inputPlaceholder: '#' + inputLocalizedNamespaceId,
+								items: inputLocalized.get('items'),
+								itemsError: inputLocalized.get('itemsError'),
+								lazy: true,
+								name: inputLocalizedId,
+								namespace: inputLocalized.get('namespace'),
+								toggleSelection: inputLocalized.get('toggleSelection'),
+								translatedLanguages: inputLocalized.get('translatedLanguages')
+							}
+						);
 					},
 
 					_guid: 0

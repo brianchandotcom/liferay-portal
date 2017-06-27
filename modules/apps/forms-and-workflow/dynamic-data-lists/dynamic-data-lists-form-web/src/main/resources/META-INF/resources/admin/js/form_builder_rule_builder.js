@@ -295,7 +295,7 @@ AUI.add(
 									fieldListDescription.push(
 										badgeTemplate(
 											{
-												content: action.outputs[output]
+												content: instance._getFieldLabel(action.outputs[output])
 											}
 										)
 									);

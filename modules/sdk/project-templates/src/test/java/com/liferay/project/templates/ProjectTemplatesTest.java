@@ -55,6 +55,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.diibadaaba.zipdiff.DifferenceCalculator;
 import net.diibadaaba.zipdiff.Differences;
@@ -1898,14 +1900,33 @@ public class ProjectTemplatesTest {
 	private static File _testContains(
 			File dir, String fileName, String... strings)
 		throws IOException {
+		return _testContains(dir, fileName, false, strings);
+	}
+
+	private static File _testContains(
+			File dir, String fileName, boolean regex, String...strings)
+		throws IOException {
 
 		File file = _testExists(dir, fileName);
 
 		String content = FileUtil.read(file.toPath());
 
 		for (String s : strings) {
+			boolean checkResult;
+
+			if (regex) {
+				Pattern pattern = Pattern.compile(s, Pattern.DOTALL | Pattern.MULTILINE);
+
+				Matcher matcher = pattern.matcher(content);
+
+				checkResult = matcher.matches();
+			}
+			else {
+				checkResult = content.contains(s);
+			}
+
 			Assert.assertTrue(
-				"Not found in " + fileName + ": " + s, content.contains(s));
+				"Not found in " + fileName + ": " + s, checkResult);
 		}
 
 		return file;
@@ -1945,7 +1966,7 @@ public class ProjectTemplatesTest {
 	}
 
 	private static File _testNotContains(
-			File dir, String fileName, boolean match, String... strings)
+			File dir, String fileName, boolean regex, String... strings)
 		throws IOException {
 
 		File file = _testExists(dir, fileName);
@@ -1955,8 +1976,12 @@ public class ProjectTemplatesTest {
 		for (String s : strings) {
 			boolean checkResult;
 
-			if (match) {
-				checkResult = content.matches(s);
+			if (regex) {
+				Pattern pattern = Pattern.compile(s, Pattern.DOTALL | Pattern.MULTILINE);
+
+				Matcher matcher = pattern.matcher(content);
+
+				checkResult = matcher.matches();
 			}
 			else {
 				checkResult = content.contains(s);
@@ -2317,8 +2342,8 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(template, name);
 
 		_testContains(
-			gradleProjectDir, "build.gradle", "buildscript {",
-			"repositories {");
+			gradleProjectDir, "build.gradle", true, ".*^buildscript \\{.*",
+			".*^repositories \\{.*");
 
 		File workspaceDir = _buildWorkspace();
 

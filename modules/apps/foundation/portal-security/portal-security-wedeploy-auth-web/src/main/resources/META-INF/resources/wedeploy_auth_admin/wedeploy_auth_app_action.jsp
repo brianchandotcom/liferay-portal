@@ -37,5 +37,7 @@ portletURL.setParameter("mvcRenderCommandName", "/wedeploy_auth_admin/view");
 		<portlet:param name="weDeployAuthAppId" value="<%= String.valueOf(weDeployAuthApp.getWeDeployAuthAppId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-delete url="<%= deleteURL %>" />
+	<c:if test="<%= WeDeployAuthAppPermission.contains(permissionChecker, weDeployAuthApp.getWeDeployAuthAppId(), ActionKeys.DELETE) %>">
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
+	</c:if>
 </liferay-ui:icon-menu>

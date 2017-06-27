@@ -93,6 +93,16 @@
 					color: #65B6F0;
 				}
 			}
+
+			.textboxlist-input-container {
+				height: 32px;
+				line-height: 32px;
+
+				& .field-input-text {
+					padding: 0;
+					margin: 0;
+				}
+			}
 		}
 	}
 

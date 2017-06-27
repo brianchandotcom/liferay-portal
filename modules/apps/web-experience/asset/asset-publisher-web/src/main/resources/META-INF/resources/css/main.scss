@@ -34,8 +34,8 @@
 			}
 		}
 
-		&:hover > .container-trash {
-			display: block;
+		&:hover > .container-trash > .btn {
+			opacity: 1;
 		}
 
 		.form-group {
@@ -47,7 +47,6 @@
 
 		.container-trash {
 			cursor: pointer;
-			display: none;
 			padding: 10px;
 			position: absolute;
 			right: 0;
@@ -55,6 +54,14 @@
 
 			&:hover {
 				color: #65B6F0;
+			}
+
+			> .btn {
+				opacity: 0;
+			}
+
+			> .btn:focus {
+				opacity: 1;
 			}
 		}
 

@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,19 +35,20 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		content = _formatDeprecatedJavadoc(fileName, absolutePath, content);
+		content = _formatDeprecatedJavadoc(fileName, content);
 
 		return content;
 	}
 
-	private String _formatDeprecatedJavadoc(
-			String fileName, String absolutePath, String content)
+	private String _formatDeprecatedJavadoc(String fileName, String content)
 		throws Exception {
 
-		ComparableVersion mainReleaseComparableVersion =
-			_getMainReleaseComparableVersion(fileName, absolutePath);
+		BNDSettings bndSettings = getBNDSettings(fileName);
 
-		if (mainReleaseComparableVersion == null) {
+		ComparableVersion releaseComparableVersion =
+			bndSettings.getReleaseComparableVersion();
+
+		if (releaseComparableVersion == null) {
 			return content;
 		}
 
@@ -57,8 +57,7 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			if (matcher.group(2) == null) {
 				return StringUtil.insert(
-					content,
-					" As of " + mainReleaseComparableVersion.toString(),
+					content, " As of " + releaseComparableVersion.toString(),
 					matcher.end(1));
 			}
 
@@ -67,9 +66,9 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 			ComparableVersion comparableVersion = new ComparableVersion(
 				version);
 
-			if (comparableVersion.compareTo(mainReleaseComparableVersion) > 0) {
+			if (comparableVersion.compareTo(releaseComparableVersion) > 0) {
 				return StringUtil.replaceFirst(
-					content, version, mainReleaseComparableVersion.toString(),
+					content, version, releaseComparableVersion.toString(),
 					matcher.start());
 			}
 
@@ -100,58 +99,8 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private ComparableVersion _getMainReleaseComparableVersion(
-			String fileName, String absolutePath)
-		throws Exception {
-
-		boolean usePortalReleaseVersion = false;
-
-		if (isPortalSource() && !isModulesFile(absolutePath)) {
-			usePortalReleaseVersion = true;
-		}
-
-		String releaseVersion = StringPool.BLANK;
-
-		if (usePortalReleaseVersion) {
-			if (_mainReleaseComparableVersion != null) {
-				return _mainReleaseComparableVersion;
-			}
-
-			releaseVersion = ReleaseInfo.getVersion();
-		}
-		else {
-			BNDSettings bndSettings = getBNDSettings(fileName);
-
-			if (bndSettings == null) {
-				return null;
-			}
-
-			releaseVersion = bndSettings.getReleaseVersion();
-
-			if (releaseVersion == null) {
-				return null;
-			}
-
-			putBNDSettings(bndSettings);
-		}
-
-		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
-
-		String mainReleaseVersion = releaseVersion.substring(0, pos) + ".0";
-
-		ComparableVersion mainReleaseComparableVersion = new ComparableVersion(
-			mainReleaseVersion);
-
-		if (usePortalReleaseVersion) {
-			_mainReleaseComparableVersion = mainReleaseComparableVersion;
-		}
-
-		return mainReleaseComparableVersion;
-	}
-
 	private final Pattern _deprecatedPattern = Pattern.compile(
 		"(\n\\s*\\* @deprecated)( As of ([0-9\\.]+)(.*?)\n\\s*\\*( @|/))?",
 		Pattern.DOTALL);
-	private ComparableVersion _mainReleaseComparableVersion;
 
 }

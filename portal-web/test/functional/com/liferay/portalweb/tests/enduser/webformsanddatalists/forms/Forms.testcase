@@ -1252,12 +1252,11 @@
 			<var name="fieldName" value="ds.lock.timeout.milliseconds" />
 		</execute>
 
-		<execute macro="FormFields#editText">
+		<execute macro="FormFields#editTextWithBackspace">
 			<var name="fieldName" value="ds.lock.timeout.milliseconds" />
-			<var name="fieldValue" value="" />
 		</execute>
 
-		<execute macro="Button#clickSave" />
+		<execute macro="Button#clickUpdate" />
 
 		<execute macro="FormFields#viewFieldValidationErrorMessage">
 			<var name="fieldName" value="ds.lock.timeout.milliseconds" />

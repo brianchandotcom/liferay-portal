@@ -370,10 +370,11 @@ if (Validator.isNotNull(keywords)) {
 												/>
 											</c:when>
 											<c:otherwise>
-												<liferay-frontend:image-card
+												<liferay-frontend:vertical-card
 													cssClass="item-preview"
 													data="<%= data %>"
 													imageUrl="<%= thumbnailSrc %>"
+													title="<%= title %>"
 												/>
 											</c:otherwise>
 										</c:choose>

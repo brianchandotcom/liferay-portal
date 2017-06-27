@@ -57,23 +57,23 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			if (matcher.group(2) == null) {
 				return StringUtil.insert(
-					content, " As of " + releaseComparableVersion.toString(),
-					matcher.end(1));
+					content, " As of " + _NEXT_VERSION, matcher.end(1));
 			}
 
 			String version = matcher.group(3);
 
-			ComparableVersion comparableVersion = new ComparableVersion(
-				version);
+			if (!version.equals(_NEXT_VERSION)) {
+				ComparableVersion comparableVersion = new ComparableVersion(
+					version);
 
-			if (comparableVersion.compareTo(releaseComparableVersion) > 0) {
-				return StringUtil.replaceFirst(
-					content, version, releaseComparableVersion.toString(),
-					matcher.start());
-			}
+				if (comparableVersion.compareTo(releaseComparableVersion) > 0) {
+					return StringUtil.replaceFirst(
+						content, version, _NEXT_VERSION, matcher.start());
+				}
 
-			if (StringUtil.count(version, CharPool.PERIOD) == 1) {
-				return StringUtil.insert(content, ".0", matcher.end(3));
+				if (StringUtil.count(version, CharPool.PERIOD) == 1) {
+					return StringUtil.insert(content, ".0", matcher.end(3));
+				}
 			}
 
 			String deprecatedInfo = matcher.group(4);
@@ -99,8 +99,11 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private static final String _NEXT_VERSION = "NEXT-VERSION";
+
 	private final Pattern _deprecatedPattern = Pattern.compile(
-		"(\n\\s*\\* @deprecated)( As of ([0-9\\.]+)(.*?)\n\\s*\\*( @|/))?",
+		"(\n\\s*\\* @deprecated)( As of ([0-9\\.]+|NEXT-VERSION)(.*?)\n" +
+			"\\s*\\*( @|/))?",
 		Pattern.DOTALL);
 
 }

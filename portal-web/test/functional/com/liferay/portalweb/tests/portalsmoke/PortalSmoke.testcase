@@ -12,9 +12,9 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="Page#tearDownPG" />
-
-		<execute macro="WebContent#tearDownCP" />
+		<execute macro="PortalInstances#tearDownCP">
+			<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		</execute>
 	</tear-down>
 
 	<command name="Smoke" priority="5">

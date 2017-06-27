@@ -17,9 +17,12 @@ package com.liferay.commerce.product.demo.data.creator.internal.util;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -31,6 +34,7 @@ import java.io.InputStream;
 
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -45,7 +49,8 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 	extends BaseCPDemoDataCreatorHelper {
 
 	public void addCPAttachmentFileEntries(
-			long userId, long groupId, long cpDefinitionId, JSONArray jsonArray)
+			long userId, long groupId, long cpDefinitionId,
+			JSONArray jsonArray)
 		throws Exception {
 
 		Class<?> clazz = getClass();
@@ -54,8 +59,9 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 
 		long classeNameId = _portal.getClassNameId(CPDefinition.class);
 
-		Folder folder = _cpAttachmentFileEntryLocalService.getAttachmentsFolder(
-			userId, groupId, CPDefinition.class.getName(), cpDefinitionId);
+		Folder folder =
+			_cpAttachmentFileEntryLocalService.getAttachmentsFolder(
+				userId, groupId, CPDefinition.class.getName(), cpDefinitionId);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			String fileName = jsonArray.getString(i);
@@ -77,10 +83,46 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 						folder.getFolderId(), inputStream, uniqueFileName,
 						"image/jpeg", true);
 
-				createCPAttachmentFileEntry(
-					userId, groupId, classeNameId, cpDefinitionId,
-					fileEntry.getFileEntryId(), titleMap, null, 0,
-					CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
+				List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+					_cpOptionDemoDataCreatorHelper.getCPDefinitionOptionRels();
+				List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+					_cpDefinitionOptionValueRelDemoDataCreatorHelper.
+						getCPDefinitionOptionValueRels();
+
+				JSONArray OptionIds = JSONFactoryUtil.createJSONArray();
+
+				for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
+					if (cpDefinitionOptionRel.getCPDefinitionId() == cpDefinitionId) {
+						long cpDefinitionOptionRelId = cpDefinitionOptionRel.getCPDefinitionOptionRelId();
+
+						OptionIds.put(cpDefinitionOptionRelId);
+
+						for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
+							if (cpDefinitionOptionValueRel.getCPDefinitionOptionRelId() == cpDefinitionOptionRelId) {
+								OptionIds.put(cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+
+								String json =
+									"[{\"cpDefinitionOptionRelId\":\"" +
+									OptionIds.get(0) +
+									"\",\"cpDefinitionOptionValueRelId\":\"" +
+									OptionIds.get(1) + "\"}]";
+
+								createCPAttachmentFileEntry(
+									userId, groupId, classeNameId,
+									cpDefinitionId, fileEntry.getFileEntryId(),
+									titleMap, json, 0,
+									CPConstants.
+										ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
+							}
+							else {
+								continue;
+							}
+						}
+					}
+					else {
+						continue;
+					}
+				}
 			}
 		}
 	}
@@ -132,6 +174,13 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
+
+	@Reference
+	private CPDefinitionOptionValueRelDemoDataCreatorHelper
+		_cpDefinitionOptionValueRelDemoDataCreatorHelper;
+
+	@Reference
+	private CPOptionDemoDataCreatorHelper _cpOptionDemoDataCreatorHelper;
 
 	@Reference
 	private Portal _portal;

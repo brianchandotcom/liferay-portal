@@ -87,15 +87,15 @@
 			<div class="panel-body">
 				<div class="form-group">
 					<select class="form-control" id="{$namespace}queryContains{$index}" name="{$namespace}queryContains{$index}" title="Query Contains">
-						<option class="" selected="{$rule.queryContains ?: 'false'}" value="true">{msg desc=""}contains{/msg}</option>
-						<option class="" selected="{$rule.queryContains ? 'false' : 'true'}" value="false">{msg desc=""}does-not-contain{/msg}</option>
+						<option class="" {if $rule.queryContains}selected="selected"{/if} value="true">{msg desc=""}contains{/msg}</option>
+						<option class="" {if not $rule.queryContains}selected="selected"{/if} value="false">{msg desc=""}does-not-contain{/msg}</option>
 					</select>
 				</div>
 
 				<div class="form-group">
 					<select class="form-control" id="{$namespace}queryAndOperator{$index}" name="{$namespace}queryAndOperator{$index}" title="And Operator">
-						<option class="" selected="{$rule.queryAndOperator ?: 'false'}" value="true">{msg desc=""}all{/msg}</option>
-						<option class="" selected="{$rule.queryAndOperator ? 'false' : 'true'}" value="false">{msg desc=""}any{/msg}</option>
+						<option class="" {if $rule.queryAndOperator}selected="selected"{/if} value="true">{msg desc=""}all{/msg}</option>
+						<option class="" {if not $rule.queryAndOperator}selected="selected"{/if}>{msg desc=""}any{/msg}</option>
 					</select>
 				</div>
 
@@ -105,8 +105,8 @@
 
 				<div class="form-group">
 					<select class="form-control asset-query-name" data-item-index="{$index}" data-onchange="changeSelector_" id="{$namespace + 'queryName' + $index}" name="{$namespace + 'queryName' + $index}">
-						<option class="" selected="{$rule.type == 'assetCategories' ? 'true' : 'false'}" value="assetCategories">{msg desc=""}categories{/msg}</option>
-						<option class="" selected="{$rule.type == 'assetTags' ? 'true' : 'false'}" value="assetTags">{msg desc=""}tags{/msg}</option>
+						<option class="" {if $rule.type == 'assetCategories'}selected="selected"{/if} value="assetCategories">{msg desc=""}categories{/msg}</option>
+						<option class="" {if $rule.type == 'assetTags'}selected="selected"{/if} value="assetTags">{msg desc=""}tags{/msg}</option>
 					</select>
 				</div>
 				

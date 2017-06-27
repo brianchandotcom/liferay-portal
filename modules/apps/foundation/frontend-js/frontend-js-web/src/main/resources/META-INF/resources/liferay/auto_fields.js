@@ -392,7 +392,7 @@ AUI.add(
 						);
 					},
 
-					_clearInputLocalizeds: function(node) {
+					_clearInputsLocalized: function(node) {
 						node.all('.language-value').attr('placeholder', '');
 						node.all('.lfr-input-localized-state').removeClass('lfr-input-localized-state-error');
 						node.all('.palette-item').removeClass('palette-item-selected');
@@ -418,7 +418,7 @@ AUI.add(
 
 						var formValidator = instance._getFormValidator(node);
 
-						var inputLocalizeds = node.all('.language-value');
+						var inputsLocalized = node.all('.language-value');
 
 						var clonedRow;
 
@@ -426,13 +426,13 @@ AUI.add(
 							clonedRow = instance._createCloneFromURL(clone, guid);
 						}
 						else {
-							clonedRow = instance._createCloneFromMarkup(clone, guid, formValidator, inputLocalizeds);
+							clonedRow = instance._createCloneFromMarkup(clone, guid, formValidator, inputsLocalized);
 						}
 
 						return clonedRow;
 					},
 
-					_createCloneFromMarkup: function(node, guid, formValidator, inputLocalizeds) {
+					_createCloneFromMarkup: function(node, guid, formValidator, inputsLocalized) {
 						var instance = this;
 
 						var rules;
@@ -479,22 +479,22 @@ AUI.add(
 							}
 						);
 
-						instance._clearInputLocalizeds(node);
+						instance._clearInputsLocalized(node);
 
-						inputLocalizeds.each(
+						inputsLocalized.each(
 							function(item, index) {
-								var inputLocalizedInputId = item.attr('id');
+								var inputId = item.attr('id');
 
 								var inputLocalized;
 
-								if (inputLocalizedInputId) {
-									inputLocalized = Liferay.InputLocalized._registered[inputLocalizedInputId];
+								if (inputId) {
+									inputLocalized = Liferay.InputLocalized._registered[inputId];
 
 									if (inputLocalized) {
-										Liferay.component(inputLocalizedInputId).render();
+										Liferay.component(inputId).render();
 									}
 
-									inputLocalized = Liferay.InputLocalized._instances[inputLocalizedInputId];
+									inputLocalized = Liferay.InputLocalized._instances[inputId];
 								}
 
 								instance._registerInputLocalized(inputLocalized, guid);

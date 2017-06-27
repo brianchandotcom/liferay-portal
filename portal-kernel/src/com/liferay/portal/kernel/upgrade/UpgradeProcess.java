@@ -568,13 +568,24 @@ public abstract class UpgradeProcess
 		return db.isSupportsUpdateWithInnerJoin();
 	}
 
+	/**
+	 * @deprecated As of 7.1.0, replaced by {@link
+	 *             DBInspector#normalizeName(java.lang.String, DatabaseMetaData)}
+	 */
+	@Deprecated
 	protected String normalizeName(
 			String name, DatabaseMetaData databaseMetaData)
 		throws SQLException {
 
-		DBInspector dbInspector = new DBInspector(connection);
+		if (databaseMetaData.storesLowerCaseIdentifiers()) {
+			return StringUtil.toLowerCase(name);
+		}
 
-		return dbInspector.normalizeName(name, databaseMetaData);
+		if (databaseMetaData.storesUpperCaseIdentifiers()) {
+			return StringUtil.toUpperCase(name);
+		}
+
+		return name;
 	}
 
 	protected void upgradeTable(String tableName, Object[][] tableColumns)

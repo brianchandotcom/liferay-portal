@@ -85,10 +85,10 @@ public class CPDefinitionOptionValueRelDemoDataCreatorHelper
 		_cpDefinitionOptionValueRels = null;
 	}
 
-	private List<CPDefinitionOptionValueRel> _cpDefinitionOptionValueRels;
-
 	@Reference
 	private CPDefinitionOptionValueRelLocalService
 		_cpDefinitionOptionValueRelLocalService;
+
+	private List<CPDefinitionOptionValueRel> _cpDefinitionOptionValueRels;
 
 }

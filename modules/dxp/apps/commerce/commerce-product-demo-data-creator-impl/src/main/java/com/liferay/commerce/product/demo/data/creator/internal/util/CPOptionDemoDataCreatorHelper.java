@@ -94,10 +94,6 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 		}
 	}
 
-	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels() {
-		return _cpDefinitionOptionRels;
-	}
-
 	public void deleteCPOptions() throws PortalException {
 		Set<Map.Entry<String, CPOption>> entrySet = _cpOptions.entrySet();
 
@@ -117,6 +113,10 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 
 			iterator.remove();
 		}
+	}
+
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels() {
+		return _cpDefinitionOptionRels;
 	}
 
 	public void init() {
@@ -177,6 +177,8 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 	private CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
 
+	private List<CPDefinitionOptionRel> _cpDefinitionOptionRels;
+
 	@Reference
 	private CPDefinitionOptionValueRelDemoDataCreatorHelper
 		_cpDefinitionOptionValueRelDemoDataCreatorHelper;
@@ -184,7 +186,6 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 	@Reference
 	private CPOptionLocalService _cpOptionLocalService;
 
-	private List<CPDefinitionOptionRel> _cpDefinitionOptionRels;
 	private Map<String, CPOption> _cpOptions;
 
 }

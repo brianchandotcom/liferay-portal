@@ -129,9 +129,8 @@ public class CPDefinitionDemoDataCreatorHelper
 						relatedProductJSONObject.getString("title");
 
 					if (title.equals(cpDefinition.getTitle("en_US"))) {
-
-						CPDefinition cpDefinitionEntry =
-							getCPDefinitionByTitle(cpDefinitionEntryTitle);
+						CPDefinition cpDefinitionEntry = getCPDefinitionByTitle(
+							cpDefinitionEntryTitle);
 
 						cpDefinitionIdsList.add(
 							cpDefinitionEntry.getCPDefinitionId());
@@ -152,9 +151,11 @@ public class CPDefinitionDemoDataCreatorHelper
 	}
 
 	public void deleteCPDefinitions() throws PortalException {
-		Set<Map.Entry<String, CPDefinition>> entrySet = _cpDefinitions.entrySet();
+		Set<Map.Entry<String, CPDefinition>> entrySet =
+			_cpDefinitions.entrySet();
 
-		Iterator<Map.Entry<String, CPDefinition>> iterator = entrySet.iterator();
+		Iterator<Map.Entry<String, CPDefinition>> iterator =
+			entrySet.iterator();
 
 		while (iterator.hasNext()) {
 			Map.Entry<String, CPDefinition> entry = iterator.next();
@@ -163,6 +164,21 @@ public class CPDefinitionDemoDataCreatorHelper
 
 			iterator.remove();
 		}
+	}
+
+	public CPDefinition getCPDefinitionByTitle(String title)
+		throws PortalException {
+
+		return _cpDefinitions.get(title);
+	}
+
+	public void init() {
+		_cpDefinitions = new HashMap<>();
+	}
+
+	@Activate
+	protected void activate() {
+		init();
 	}
 
 	protected CPDefinition createCPDefinition(
@@ -228,10 +244,9 @@ public class CPDefinitionDemoDataCreatorHelper
 		return cpDefinition;
 	}
 
-	public CPDefinition getCPDefinitionByTitle(String title)
-		throws PortalException {
-
-		return _cpDefinitions.get(title);
+	@Deactivate
+	protected void deactivate() {
+		_cpDefinitions = null;
 	}
 
 	protected JSONArray getCatalogJSONArray() throws Exception {
@@ -249,22 +264,6 @@ public class CPDefinitionDemoDataCreatorHelper
 
 		return catalogJSONArray;
 	}
-
-	public void init() {
-		_cpDefinitions = new HashMap<>();
-	}
-
-	@Activate
-	protected void activate() {
-		init();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_cpDefinitions = null;
-	}
-
-	private Map<String, CPDefinition> _cpDefinitions;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionDemoDataCreatorHelper.class);
@@ -286,6 +285,8 @@ public class CPDefinitionDemoDataCreatorHelper
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	private Map<String, CPDefinition> _cpDefinitions;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

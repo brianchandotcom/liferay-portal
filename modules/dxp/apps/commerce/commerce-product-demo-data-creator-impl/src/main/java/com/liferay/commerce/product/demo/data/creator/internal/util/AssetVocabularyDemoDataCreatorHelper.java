@@ -20,17 +20,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -68,8 +65,7 @@ public class AssetVocabularyDemoDataCreatorHelper
 			JSONArray categoriesJSONArray = categoriesJSONObject.getJSONArray(
 				"categories");
 			JSONArray manufacturersJSONArray =
-				categoriesJSONObject.getJSONArray(
-					"manufacturers");
+				categoriesJSONObject.getJSONArray("manufacturers");
 
 			_assetCategoryDemoDataCreatorHelper.addAssetCategories(
 				userId, groupId, 0, commerceVocabularyId, layoutUuid,
@@ -88,16 +84,16 @@ public class AssetVocabularyDemoDataCreatorHelper
 		AssetVocabulary assetVocabulary = _assetVocabularies.get(title);
 
 		if (assetVocabulary != null) {
-            return assetVocabulary;
+			return assetVocabulary;
 		}
 
 		assetVocabulary = _assetVocabularyLocalService.fetchGroupVocabulary(
 			groupId, title);
 
 		if (assetVocabulary != null) {
-            _assetVocabularies.put(title, assetVocabulary);
+			_assetVocabularies.put(title, assetVocabulary);
 
-            return assetVocabulary;
+			return assetVocabulary;
 		}
 
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
@@ -130,6 +126,16 @@ public class AssetVocabularyDemoDataCreatorHelper
 		_assetVocabularies = new HashMap<>();
 	}
 
+	@Activate
+	protected void activate() {
+		init();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_assetVocabularies = null;
+	}
+
 	protected JSONArray getAssetCategoriesJSONArray() throws Exception {
 		Class<?> clazz = getClass();
 
@@ -146,21 +152,11 @@ public class AssetVocabularyDemoDataCreatorHelper
 		return assetCategoriesJSONArray;
 	}
 
-	@Activate
-	protected void activate() {
-		init();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_assetVocabularies = null;
-	}
-
-	private Map<String, AssetVocabulary> _assetVocabularies;
-
 	@Reference
 	private AssetCategoryDemoDataCreatorHelper
 		_assetCategoryDemoDataCreatorHelper;
+
+	private Map<String, AssetVocabulary> _assetVocabularies;
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

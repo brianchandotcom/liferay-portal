@@ -43,8 +43,7 @@ public class CPDemo extends BasePortalInstanceLifecycleListener {
 		_user = _omniAdminUserDemoDataCreator.create(
 			company.getCompanyId(), "alessio.rendina@liferay.com");
 
-		_cpDemoDataCreator.create(
-			_user.getUserId(), _group.getGroupId(), true);
+		_cpDemoDataCreator.create(_user.getUserId(), _group.getGroupId(), true);
 	}
 
 	@Activate
@@ -63,8 +62,8 @@ public class CPDemo extends BasePortalInstanceLifecycleListener {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private static User _user;
 	private static Group _group;
+	private static User _user;
 
 	@Reference
 	private CPDemoDataCreator _cpDemoDataCreator;

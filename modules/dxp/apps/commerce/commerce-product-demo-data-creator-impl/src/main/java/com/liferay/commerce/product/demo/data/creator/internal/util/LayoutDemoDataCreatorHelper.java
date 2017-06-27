@@ -19,32 +19,22 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  */
 @Component(service = LayoutDemoDataCreatorHelper.class)
-public class LayoutDemoDataCreatorHelper
-	extends BaseCPDemoDataCreatorHelper {
-
-	public String getLayoutUuid(long userId, long groupId, String name)
-		throws PortalException {
-
-		String friendlyURL = StringPool.FORWARD_SLASH + name;
-
-		Layout layout = createLayout(userId, groupId, name, friendlyURL);
-
-		return layout.getUuid();
-	}
+public class LayoutDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 
 	public Layout createLayout(
 			long userId, long groupId, String name, String friendlyURL)
@@ -93,6 +83,16 @@ public class LayoutDemoDataCreatorHelper
 		}
 	}
 
+	public String getLayoutUuid(long userId, long groupId, String name)
+		throws PortalException {
+
+		String friendlyURL = StringPool.FORWARD_SLASH + name;
+
+		Layout layout = createLayout(userId, groupId, name, friendlyURL);
+
+		return layout.getUuid();
+	}
+
 	public void init() {
 		_layouts = new HashMap<>();
 	}
@@ -107,9 +107,9 @@ public class LayoutDemoDataCreatorHelper
 		_layouts = null;
 	}
 
-	private Map<String, Layout> _layouts;
-
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	private Map<String, Layout> _layouts;
 
 }

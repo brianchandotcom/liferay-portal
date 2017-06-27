@@ -1934,10 +1934,10 @@ public class ProjectTemplatesTest {
 	}
 
 	private File _buildWorkspace() throws Exception {
-		File destinationDir = temporaryFolder.newFolder("workspace");
+		File destinationDir = temporaryFolder.newFolder(WorkspaceUtil.WORKSPACE);
 
 		return _buildTemplateWithGradle(
-			destinationDir, "workspace", "workspace");
+			destinationDir, WorkspaceUtil.WORKSPACE, WorkspaceUtil.WORKSPACE);
 	}
 
 	private File _testBuildTemplatePortlet(

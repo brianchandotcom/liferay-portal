@@ -342,30 +342,6 @@ public class SampleSQLBuilder {
 		return charPipe.getReader();
 	}
 
-	protected Properties getProperties(String[] args) throws Exception {
-		Reader reader = null;
-
-		try {
-			Properties properties = new SortedProperties();
-
-			reader = new FileReader(args[0]);
-
-			properties.load(reader);
-
-			return properties;
-		}
-		finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				}
-				catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
-			}
-		}
-	}
-
 	protected void mergeSQL(File inputDir, File outputSQLFile)
 		throws IOException {
 

@@ -43,6 +43,10 @@
 			width: auto;
 			vertical-align: middle;
 			margin: 8px;
+
+			&:first-child {
+				margin-left: 0;
+			}
 		}
 
 		.container-trash {

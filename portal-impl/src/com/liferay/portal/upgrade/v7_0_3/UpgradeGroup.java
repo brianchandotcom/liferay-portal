@@ -34,8 +34,8 @@ public class UpgradeGroup extends UpgradeProcess {
 
 		try (ResultSet rs = databaseMetaData.getColumns(
 				dbInspector.getCatalog(), dbInspector.getSchema(),
-				normalizeName("Group_", databaseMetaData),
-				normalizeName("groupKey", databaseMetaData))) {
+				dbInspector.normalizeName("Group_"),
+				dbInspector.normalizeName("groupKey"))) {
 
 			if (rs.next()) {
 				int columnSize = rs.getInt("COLUMN_SIZE");

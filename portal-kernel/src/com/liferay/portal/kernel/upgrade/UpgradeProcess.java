@@ -355,7 +355,7 @@ public abstract class UpgradeProcess
 					tableName);
 				ResultSet rs2 = databaseMetaData.getIndexInfo(
 					dbInspector.getCatalog(), dbInspector.getSchema(),
-					normalizeName(tableName, databaseMetaData), false, false)) {
+					dbInspector.normalizeName(tableName), false, false)) {
 
 				Set<String> primaryKeyNames = new HashSet<>();
 
@@ -568,6 +568,11 @@ public abstract class UpgradeProcess
 		return db.isSupportsUpdateWithInnerJoin();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             DBInspector#normalizeName(java.lang.String, DatabaseMetaData)}
+	 */
+	@Deprecated
 	protected String normalizeName(
 			String name, DatabaseMetaData databaseMetaData)
 		throws SQLException {

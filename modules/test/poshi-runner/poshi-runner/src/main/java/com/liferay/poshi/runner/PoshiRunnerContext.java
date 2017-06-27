@@ -955,22 +955,28 @@ public class PoshiRunnerContext {
 					throw exception;
 				}
 				else {
-					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-						"YYYY-MM-dd");
-
 					try {
-						simpleDateFormat.parse(dateElement.getText());
+						_toggleDateFormat.parse(dateElement.getText());
 					}
 					catch (ParseException pe) {
-						Exception exception = new Exception(
-							"Please use the date format, YYYY-MM-dd, for " +
-								"this toggle:\n" + testToggleFileName + ":" +
-									toggleName,
-							pe);
+						StringBuilder sb = new StringBuilder();
 
-						exception.printStackTrace();
+						sb.append("Unable to parse date \"");
+						sb.append(dateElement.getText());
+						sb.append("\" in ");
+						sb.append(testToggleFileName);
+						sb.append(":");
+						sb.append(toggleName);
+						sb.append(" because it doesn't match the format \"");
+						sb.append(_toggleDateFormat.toPattern());
+						sb.append("\"");
 
-						throw exception;
+						RuntimeException re = new RuntimeException(
+							sb.toString(), pe);
+
+						re.printStackTrace();
+
+						throw re;
 					}
 				}
 
@@ -1288,6 +1294,8 @@ public class PoshiRunnerContext {
 	private static String _testClassCommandName;
 	private static String _testClassName;
 	private static final Set<String> _testToggleNames = new HashSet<>();
+	private static final SimpleDateFormat _toggleDateFormat =
+		new SimpleDateFormat("YYYY-MM-dd");
 
 	static {
 		Collections.addAll(

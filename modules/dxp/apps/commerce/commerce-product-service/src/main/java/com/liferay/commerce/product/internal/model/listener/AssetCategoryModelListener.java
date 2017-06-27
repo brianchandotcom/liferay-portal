@@ -19,8 +19,11 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -28,7 +31,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(immediate = true, service = ModelListener.class)
-public class AssetCategoryModelListener extends BaseModelListener<AssetCategory> {
+public class AssetCategoryModelListener
+	extends BaseModelListener<AssetCategory> {
 
 	@Override
 	public void onBeforeRemove(AssetCategory assetCategory) {
@@ -37,16 +41,21 @@ public class AssetCategoryModelListener extends BaseModelListener<AssetCategory>
 				AssetCategory.class.getName(), assetCategory.getCategoryId());
 
 			_cpDisplayLayoutLocalService.deleteCPDisplayLayout(
-                AssetCategory.class, assetCategory.getCategoryId());
+				AssetCategory.class, assetCategory.getCategoryId());
 
 			_cpFriendlyURLEntryLocalService.deleteCPFriendlyURLEntries(
-				assetCategory.getGroupId(), assetCategory. getCompanyId(),
+				assetCategory.getGroupId(), assetCategory.getCompanyId(),
 				AssetCategory.class, assetCategory.getCategoryId());
 		}
-		catch (PortalException e) {
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
 		}
-
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetCategoryModelListener.class);
 
 	@Reference
 	private CPAttachmentFileEntryLocalService

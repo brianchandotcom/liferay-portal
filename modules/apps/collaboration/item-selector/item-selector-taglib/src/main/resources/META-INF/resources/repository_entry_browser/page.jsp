@@ -20,6 +20,7 @@
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_repository_entry_browse_page") + StringPool.UNDERLINE;
 
 String displayStyle = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:displayStyle"));
+DLMimeTypeDisplayContext dlMimeTypeDisplayContext = (DLMimeTypeDisplayContext)request.getAttribute("liferay-item-selector:repository-entry-browser:dlMimeTypeDisplayContext");
 String emptyResultsMessage = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:emptyResultsMessage"));
 ItemSelectorReturnType existingFileEntryReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-item-selector:repository-entry-browser:existingFileEntryReturnType");
 List<String> extensions = (List)request.getAttribute("liferay-item-selector:repository-entry-browser:extensions");
@@ -352,6 +353,13 @@ if (Validator.isNotNull(keywords)) {
 									data.put("title", title);
 									data.put("url", DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK));
 									data.put("value", ItemSelectorRepositoryEntryBrowserUtil.getValue(itemSelectorReturnTypeResolver, existingFileEntryReturnType, fileEntry, themeDisplay));
+
+									String fileExtensionSticker = StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK);
+									String stickerCssClass = "file-icon-color-0";
+
+									if (Validator.isNotNull(dlMimeTypeDisplayContext)) {
+										stickerCssClass = dlMimeTypeDisplayContext.getCssClassFileMimeType(fileEntry.getMimeType());
+									}
 								%>
 
 									<liferay-ui:search-container-column-text>
@@ -367,7 +375,13 @@ if (Validator.isNotNull(keywords)) {
 													data="<%= data %>"
 													icon="documents-and-media"
 													title="<%= title %>"
-												/>
+												>
+													<liferay-frontend:vertical-card-sticker-bottom>
+														<div class="sticker sticker-bottom <%= stickerCssClass %>">
+															<%= fileExtensionSticker %>
+														</div>
+													</liferay-frontend:vertical-card-sticker-bottom>
+												</liferay-frontend:icon-vertical-card>
 											</c:when>
 											<c:otherwise>
 												<liferay-frontend:vertical-card
@@ -375,7 +389,13 @@ if (Validator.isNotNull(keywords)) {
 													data="<%= data %>"
 													imageUrl="<%= thumbnailSrc %>"
 													title="<%= title %>"
-												/>
+												>
+													<liferay-frontend:vertical-card-sticker-bottom>
+														<div class="sticker sticker-bottom <%= stickerCssClass %>">
+															<%= fileExtensionSticker %>
+														</div>
+													</liferay-frontend:vertical-card-sticker-bottom>
+												</liferay-frontend:vertical-card>
 											</c:otherwise>
 										</c:choose>
 									</liferay-ui:search-container-column-text>

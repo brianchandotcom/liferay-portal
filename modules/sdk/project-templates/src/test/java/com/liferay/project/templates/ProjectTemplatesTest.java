@@ -163,7 +163,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateActivatorInWorkspace() throws Exception {
-		_testBuildTemplateProjectInWorkspace(
+		_testBuildTemplateWithWorkspace(
 			"activator", "bar-activator", "bar.activator");
 	}
 
@@ -213,7 +213,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateApiInWorkspace() throws Exception {
-		_testBuildTemplateProjectInWorkspace("api", "foo", "foo");
+		_testBuildTemplateWithWorkspace("api", "foo", "foo");
 	}
 
 	@Test
@@ -241,7 +241,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateContentTargetingReportInWorkspace()
 		throws Exception {
 
-		_testBuildTemplateProjectInWorkspace(
+		_testBuildTemplateWithWorkspace(
 			"content-targeting-report", "foo-bar", "foo.bar");
 	}
 
@@ -270,7 +270,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateContentTargetingRuleInWorkspace()
 		throws Exception {
 
-		_testBuildTemplateProjectInWorkspace(
+		_testBuildTemplateWithWorkspace(
 			"content-targeting-rule", "foo-bar", "foo.bar");
 	}
 
@@ -302,7 +302,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateContentTargetingTrackingActionInWorkspace()
 		throws Exception {
 
-		_testBuildTemplateProjectInWorkspace(
+		_testBuildTemplateWithWorkspace(
 			"content-targeting-tracking-action", "foo-bar", "foo.bar");
 	}
 
@@ -334,7 +334,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateControlMenuEntryInWorkspace()
 		throws Exception {
 
-		_testBuildTemplateProjectInWorkspace(
+		_testBuildTemplateWithWorkspace(
 			"control-menu-entry", "foo-bar", "foo.bar");
 	}
 
@@ -379,7 +379,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateFormFieldInWorkspace() throws Exception {
-		_testBuildTemplateProjectInWorkspace("form-field", "foobar", "foobar");
+		_testBuildTemplateWithWorkspace("form-field", "foobar", "foobar");
 	}
 
 	@Test
@@ -420,7 +420,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateFreeMarkerPortletInWorkspace()
 		throws Exception {
 
-		_testBuildTemplateProjectInWorkspace(
+		_testBuildTemplateWithWorkspace(
 			"freemarker-portlet", "foo", "foo");
 	}
 
@@ -465,7 +465,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateInWorkspace() throws Exception {
-		_testBuildTemplateProjectInWorkspace(
+		_testBuildTemplateWithWorkspace(
 			null, "hello-world-portlet", "hello.world.portlet");
 	}
 
@@ -510,7 +510,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateMVCPortletInWorkspace() throws Exception {
-		_testBuildTemplateProjectInWorkspace("mvc-portlet", "foo", "foo");
+		_testBuildTemplateWithWorkspace("mvc-portlet", "foo", "foo");
 	}
 
 	@Test
@@ -579,13 +579,13 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplatePanelAppInWorkspace() throws Exception {
-		_testBuildTemplateProjectInWorkspace(
+		_testBuildTemplateWithWorkspace(
 			"panel-app", "gradle.test", "gradle.test");
 	}
 
 	@Test
 	public void testBuildTemplatePorletProviderInWorkspace() throws Exception {
-		_testBuildTemplateProjectInWorkspace(
+		_testBuildTemplateWithWorkspace(
 			"portlet-provider", "provider.test", "provider.test");
 	}
 
@@ -649,13 +649,13 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplatePortletConfigurationIconInWorkspace()
 		throws Exception {
 
-		_testBuildTemplateProjectInWorkspace(
+		_testBuildTemplateWithWorkspace(
 			"portlet-configuration-icon", "blade.test", "blade.test");
 	}
 
 	@Test
 	public void testBuildTemplatePortletInWorkspace() throws Exception {
-		_testBuildTemplateProjectInWorkspace("portlet", "foo.test", "foo.test");
+		_testBuildTemplateWithWorkspace("portlet", "foo.test", "foo.test");
 	}
 
 	@Test
@@ -715,7 +715,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplatePortletToolbarContributorInWorkspace()
 		throws Exception {
 
-		_testBuildTemplateProjectInWorkspace(
+		_testBuildTemplateWithWorkspace(
 			"portlet-toolbar-contributor", "blade.test", "blade.test");
 	}
 
@@ -789,7 +789,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateRestInWorkspace() throws Exception {
-		_testBuildTemplateProjectInWorkspace("rest", "my-rest", "my.rest");
+		_testBuildTemplateWithWorkspace("rest", "my-rest", "my.rest");
 	}
 
 	@Test
@@ -1003,7 +1003,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateSimulationPanelEntryInWorkspace()
 		throws Exception {
 
-		_testBuildTemplateProjectInWorkspace(
+		_testBuildTemplateWithWorkspace(
 			"simulation-panel-entry", "test.simulator", "test.simulator");
 	}
 
@@ -1229,7 +1229,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateTemplateContextContributorInWorkspace()
 		throws Exception {
 
-		_testBuildTemplateProjectInWorkspace(
+		_testBuildTemplateWithWorkspace(
 			"template-context-contributor", "blade-test", "blade.test");
 	}
 
@@ -1311,7 +1311,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateThemeContributorinWorkspace()
 		throws Exception {
 
-		_testBuildTemplateProjectInWorkspace(
+		_testBuildTemplateWithWorkspace(
 			"theme-contributor", "my-contributor", "my.contributor");
 	}
 
@@ -2335,7 +2335,7 @@ public class ProjectTemplatesTest {
 		return gradleProjectDir;
 	}
 
-	private void _testBuildTemplateProjectInWorkspace(
+	private void _testBuildTemplateWithWorkspace(
 			String template, String name, String jarFileName)
 		throws Exception {
 

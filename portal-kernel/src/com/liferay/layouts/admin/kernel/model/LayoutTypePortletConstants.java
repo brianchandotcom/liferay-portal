@@ -25,10 +25,10 @@ public class LayoutTypePortletConstants
 	extends com.liferay.portal.kernel.model.LayoutTypePortletConstants {
 
 	public static boolean isLayoutTemplateColumnName(String id) {
-		return !_knownIds.contains(id);
+		return !_typeSettingsIds.contains(id);
 	}
 
-	private static final Set<String> _knownIds = SetUtil.fromArray(
+	private static final Set<String> _typeSettingsIds = SetUtil.fromArray(
 		new String[] {
 			DEFAULT_ASSET_PUBLISHER_PORTLET_ID, LAYOUT_TEMPLATE_ID, MODE_ABOUT,
 			MODE_CONFIG, MODE_EDIT, MODE_EDIT_DEFAULTS, MODE_EDIT_GUEST,

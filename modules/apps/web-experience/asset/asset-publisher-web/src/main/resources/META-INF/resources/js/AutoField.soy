@@ -105,8 +105,8 @@
 
 				<div class="form-group">
 					<select class="form-control asset-query-name" data-item-index="{$index}" data-onchange="changeSelector_" id="{$namespace + 'queryName' + $index}" name="{$namespace + 'queryName' + $index}">
-						<option class="" selected="{$rule.type == 'assetTags' ? 'true' : 'false'}" value="assetTags">{msg desc=""}tags{/msg}</option>
 						<option class="" selected="{$rule.type == 'assetCategories' ? 'true' : 'false'}" value="assetCategories">{msg desc=""}categories{/msg}</option>
+						<option class="" selected="{$rule.type == 'assetTags' ? 'true' : 'false'}" value="assetTags">{msg desc=""}tags{/msg}</option>
 					</select>
 				</div>
 				

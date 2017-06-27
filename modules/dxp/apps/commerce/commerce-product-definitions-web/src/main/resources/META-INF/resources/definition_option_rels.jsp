@@ -204,7 +204,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 </aui:form>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addCommerceProducOption" title='<%= LanguageUtil.get(request, "add-option") %>' url="javascript:;" />
+	<liferay-frontend:add-menu-item id="addCommerceProductOption" title='<%= LanguageUtil.get(request, "add-option") %>' url="javascript:;" />
 </liferay-frontend:add-menu>
 
 <aui:script>
@@ -222,7 +222,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 </aui:script>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />addCommerceProducOption').on(
+	$('#<portlet:namespace />addCommerceProductOption').on(
 		'click',
 		function(event) {
 			event.preventDefault();

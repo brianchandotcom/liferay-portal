@@ -360,7 +360,7 @@
 		</execute>
 	</command>
 
-	<command name="AddEventWithLargeDateRange" priority="5">
+	<command name="AddEventWithLargeDateRange" priority="4">
 		<description message="This is a use case for LPS-61427." />
 
 		<execute macro="Navigator#gotoPage">
@@ -374,7 +374,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#setEndDate">
-			<var name="endDate" value="200000" />
+			<var name="endDate" value="01/01/200000" />
 		</execute>
 
 		<execute macro="CalendarEvent#publish" />

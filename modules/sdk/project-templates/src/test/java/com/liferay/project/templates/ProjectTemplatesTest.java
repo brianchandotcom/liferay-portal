@@ -463,9 +463,6 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateInWorkspace() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			null, "hello-world-portlet");
-
 		_testBuildTemplateProjectInWorkspace(
 			null, "hello-world-portlet", "hello.world.portlet");
 	}
@@ -1318,8 +1315,34 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateThemeInWorkspace() throws Exception {
-		_testBuildTemplateProjectWarInWorkspace(
-			"theme", "theme-test", "theme-test");
+		File gradleProjectDir = _buildTemplateWithGradle("theme", "theme-test");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", "buildscript {",
+			"apply plugin: \"com.liferay.portal.tools.theme.builder\"",
+			"repositories {");
+
+		File workspaceDir = _buildWorkspace();
+
+		File warsDir = new File(workspaceDir, "wars");
+
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			warsDir, "theme", "theme-test");
+
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+
+		File gradleWarFile = _testExists(
+			gradleProjectDir, "build/libs/theme-test.war");
+
+		_executeGradle(workspaceDir, ":wars:theme-test:build");
+
+		File workspaceWarFile = _testExists(
+			workspaceProjectDir, "build/libs/theme-test.war");
+
+		_testWarsDiff(gradleWarFile, workspaceWarFile);
 	}
 
 	@Test

@@ -102,7 +102,7 @@ public class JSONWebServiceClientImplTest {
 	}
 
 	private Map<String, Object> _getBaseProperties() {
-		Map<String, Object> properties = new HashMap<>();
+		Map<String, Object> properties = new HashMap<String, Object>();
 
 		properties.put("hostName", "localhost");
 		properties.put("hostPort", "9090");

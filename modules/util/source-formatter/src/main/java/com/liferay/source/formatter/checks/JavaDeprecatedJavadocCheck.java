@@ -66,7 +66,9 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 				ComparableVersion comparableVersion = new ComparableVersion(
 					version);
 
-				if (comparableVersion.compareTo(releaseComparableVersion) > 0) {
+				if (comparableVersion.compareTo(releaseComparableVersion) >=
+						0) {
+
 					return StringUtil.replaceFirst(
 						content, version, _NEXT_VERSION, matcher.start());
 				}

@@ -213,7 +213,8 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateApiInWorkspace() throws Exception {
-		_testBuildTemplateWithWorkspace("api", "foo", "build/libs/foo-1.0.0.jar");
+		_testBuildTemplateWithWorkspace(
+			"api", "foo", "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
@@ -242,7 +243,8 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"content-targeting-report", "foo-bar", "build/libs/foo.bar-1.0.0.jar");
+			"content-targeting-report", "foo-bar",
+			"build/libs/foo.bar-1.0.0.jar");
 	}
 
 	@Test
@@ -271,7 +273,8 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"content-targeting-rule", "foo-bar", "build/libs/foo.bar-1.0.0.jar");
+			"content-targeting-rule", "foo-bar",
+			"build/libs/foo.bar-1.0.0.jar");
 	}
 
 	@Test
@@ -303,7 +306,8 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"content-targeting-tracking-action", "foo-bar", "build/libs/foo.bar-1.0.0.jar");
+			"content-targeting-tracking-action", "foo-bar",
+			"build/libs/foo.bar-1.0.0.jar");
 	}
 
 	@Test
@@ -379,7 +383,8 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateFormFieldInWorkspace() throws Exception {
-		_testBuildTemplateWithWorkspace("form-field", "foobar", "build/libs/foobar-1.0.0.jar");
+		_testBuildTemplateWithWorkspace(
+			"form-field", "foobar", "build/libs/foobar-1.0.0.jar");
 	}
 
 	@Test
@@ -466,7 +471,8 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
-			null, "hello-world-portlet", "build/libs/hello.world.portlet-1.0.0.jar");
+			null, "hello-world-portlet",
+			"build/libs/hello.world.portlet-1.0.0.jar");
 	}
 
 	@Test
@@ -587,7 +593,8 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplatePorletProviderInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
-			"portlet-provider", "provider.test", "build/libs/provider.test-1.0.0.jar");
+			"portlet-provider", "provider.test",
+			"build/libs/provider.test-1.0.0.jar");
 	}
 
 	@Test
@@ -651,12 +658,14 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"portlet-configuration-icon", "blade.test", "build/libs/blade.test-1.0.0.jar");
+			"portlet-configuration-icon", "blade.test",
+			"build/libs/blade.test-1.0.0.jar");
 	}
 
 	@Test
 	public void testBuildTemplatePortletInWorkspace() throws Exception {
-		_testBuildTemplateWithWorkspace("portlet", "foo.test", "build/libs/foo.test-1.0.0.jar");
+		_testBuildTemplateWithWorkspace(
+			"portlet", "foo.test", "build/libs/foo.test-1.0.0.jar");
 	}
 
 	@Test
@@ -717,7 +726,8 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"portlet-toolbar-contributor", "blade.test", "build/libs/blade.test-1.0.0.jar");
+			"portlet-toolbar-contributor", "blade.test",
+			"build/libs/blade.test-1.0.0.jar");
 	}
 
 	@Test
@@ -790,7 +800,8 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateRestInWorkspace() throws Exception {
-		_testBuildTemplateWithWorkspace("rest", "my-rest", "build/libs/my.rest-1.0.0.jar");
+		_testBuildTemplateWithWorkspace(
+			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar");
 	}
 
 	@Test
@@ -1005,7 +1016,8 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"simulation-panel-entry", "test.simulator", "build/libs/test.simulator-1.0.0.jar");
+			"simulation-panel-entry", "test.simulator",
+			"build/libs/test.simulator-1.0.0.jar");
 	}
 
 	@Test
@@ -1231,7 +1243,8 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"template-context-contributor", "blade-test", "build/libs/blade.test-1.0.0.jar");
+			"template-context-contributor", "blade-test",
+			"build/libs/blade.test-1.0.0.jar");
 	}
 
 	@Test
@@ -1313,7 +1326,8 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"theme-contributor", "my-contributor", "build/libs/my.contributor-1.0.0.jar");
+			"theme-contributor", "my-contributor",
+			"build/libs/my.contributor-1.0.0.jar");
 	}
 
 	@Test
@@ -1899,12 +1913,6 @@ public class ProjectTemplatesTest {
 	}
 
 	private static File _testContains(
-			File dir, String fileName, String... strings)
-		throws IOException {
-		return _testContains(dir, fileName, false, strings);
-	}
-
-	private static File _testContains(
 			File dir, String fileName, boolean regex, String...strings)
 		throws IOException {
 
@@ -1916,7 +1924,8 @@ public class ProjectTemplatesTest {
 			boolean checkResult;
 
 			if (regex) {
-				Pattern pattern = Pattern.compile(s, Pattern.DOTALL | Pattern.MULTILINE);
+				Pattern pattern = Pattern.compile(
+					s, Pattern.DOTALL | Pattern.MULTILINE);
 
 				Matcher matcher = pattern.matcher(content);
 
@@ -1931,6 +1940,13 @@ public class ProjectTemplatesTest {
 		}
 
 		return file;
+	}
+
+	private static File _testContains(
+			File dir, String fileName, String... strings)
+		throws IOException {
+
+		return _testContains(dir, fileName, false, strings);
 	}
 
 	private static File _testEquals(
@@ -1978,7 +1994,8 @@ public class ProjectTemplatesTest {
 			boolean checkResult;
 
 			if (regex) {
-				Pattern pattern = Pattern.compile(s, Pattern.DOTALL | Pattern.MULTILINE);
+				Pattern pattern = Pattern.compile(
+					s, Pattern.DOTALL | Pattern.MULTILINE);
 
 				Matcher matcher = pattern.matcher(content);
 
@@ -2335,38 +2352,6 @@ public class ProjectTemplatesTest {
 		return gradleProjectDir;
 	}
 
-	private void _testBuildTemplateWithWorkspace(
-			String template, String name, String jarFilePath)
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(template, name);
-
-		_testContains(
-			gradleProjectDir, "build.gradle", true, ".*^buildscript \\{.*",
-			".*^repositories \\{.*");
-
-		File workspaceDir = _buildWorkspace();
-
-		File modulesDir = new File(workspaceDir, "modules");
-
-		File workspaceProjectDir = _buildTemplateWithGradle(
-			modulesDir, template, name);
-
-		_testNotContains(
-			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
-
-		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
-
-		File gradleBundleFile = _testExists(gradleProjectDir, jarFilePath);
-
-		_executeGradle(workspaceDir, ":modules:" + name + ":build");
-
-		File workspaceBundleFile =
-			_testExists(workspaceProjectDir, jarFilePath);
-
-		_testBundlesDiff(gradleBundleFile, workspaceBundleFile);
-	}
-
 	private void _testBuildTemplateProjectWarInWorkspace(
 			String template, String name, String warFileName)
 		throws Exception {
@@ -2505,6 +2490,38 @@ public class ProjectTemplatesTest {
 
 		_testBundlesDiff(gradleApiBundleFile, mavenApiBundleFile);
 		_testBundlesDiff(gradleServiceBundleFile, mavenServiceBundleFile);
+	}
+
+	private void _testBuildTemplateWithWorkspace(
+			String template, String name, String jarFilePath)
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(template, name);
+
+		_testContains(
+			gradleProjectDir, "build.gradle", true, ".*^buildscript \\{.*",
+			".*^repositories \\{.*");
+
+		File workspaceDir = _buildWorkspace();
+
+		File modulesDir = new File(workspaceDir, "modules");
+
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			modulesDir, template, name);
+
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+
+		File gradleBundleFile = _testExists(gradleProjectDir, jarFilePath);
+
+		_executeGradle(workspaceDir, ":modules:" + name + ":build");
+
+		File workspaceBundleFile = _testExists(
+			workspaceProjectDir, jarFilePath);
+
+		_testBundlesDiff(gradleBundleFile, workspaceBundleFile);
 	}
 
 	private static final String _BUNDLES_DIFF_IGNORES = StringTestUtil.merge(

@@ -64,10 +64,6 @@
 			<var name="sitePageType" value="Full Page Application" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="Dynamic Data Lists Form">
-			<var name="key_portletTitleName" value="Dynamic Data Lists Form" />
-		</execute>
-
 		<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="Form">
 			<var name="key_portletTitleName" value="Form" />
 		</execute>

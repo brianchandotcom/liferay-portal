@@ -3051,6 +3051,39 @@ go</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="setup-testable-tomcat-dummy-socket-proxy">
+		<sequential>
+			<local name="dummy.socket.proxy" />
+
+			<property name="dummy.socket.proxy" value="-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=8888" />
+
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.bat" substring="${dummy.socket.proxy}" />
+				</not>
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
+						<![CDATA[
+							set "CATALINA_OPTS=%CATALINA_OPTS% ${dummy.socket.proxy}"
+						]]>
+					</echo>
+				</then>
+			</if>
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${dummy.socket.proxy}" />
+				</not>
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
+						<![CDATA[
+							CATALINA_OPTS="${CATALINA_OPTS} ${dummy.socket.proxy}"
+						]]>
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="setup-testable-tomcat-gc">
 		<sequential>
 			<if>
@@ -3361,6 +3394,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 	<macrodef name="setup-testable-tomcat-setenv">
 		<sequential>
 			<setup-testable-tomcat-aspectj-agent />
+
+			<setup-testable-tomcat-dummy-socket-proxy />
 
 			<setup-testable-tomcat-gc />
 

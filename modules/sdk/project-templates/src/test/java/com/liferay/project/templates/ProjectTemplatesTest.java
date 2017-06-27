@@ -164,7 +164,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateActivatorInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
-			"activator", "bar-activator", "bar.activator");
+			"activator", "bar-activator", "build/libs/bar.activator-1.0.0.jar");
 	}
 
 	@Test
@@ -213,7 +213,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateApiInWorkspace() throws Exception {
-		_testBuildTemplateWithWorkspace("api", "foo", "foo");
+		_testBuildTemplateWithWorkspace("api", "foo", "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
@@ -242,7 +242,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"content-targeting-report", "foo-bar", "foo.bar");
+			"content-targeting-report", "foo-bar", "build/libs/foo.bar-1.0.0.jar");
 	}
 
 	@Test
@@ -271,7 +271,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"content-targeting-rule", "foo-bar", "foo.bar");
+			"content-targeting-rule", "foo-bar", "build/libs/foo.bar-1.0.0.jar");
 	}
 
 	@Test
@@ -303,7 +303,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"content-targeting-tracking-action", "foo-bar", "foo.bar");
+			"content-targeting-tracking-action", "foo-bar", "build/libs/foo.bar-1.0.0.jar");
 	}
 
 	@Test
@@ -335,7 +335,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"control-menu-entry", "foo-bar", "foo.bar");
+			"control-menu-entry", "foo-bar", "build/libs/foo.bar-1.0.0.jar");
 	}
 
 	@Test
@@ -379,7 +379,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateFormFieldInWorkspace() throws Exception {
-		_testBuildTemplateWithWorkspace("form-field", "foobar", "foobar");
+		_testBuildTemplateWithWorkspace("form-field", "foobar", "build/libs/foobar-1.0.0.jar");
 	}
 
 	@Test
@@ -421,7 +421,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"freemarker-portlet", "foo", "foo");
+			"freemarker-portlet", "foo", "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
@@ -466,7 +466,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
-			null, "hello-world-portlet", "hello.world.portlet");
+			null, "hello-world-portlet", "build/libs/hello.world.portlet-1.0.0.jar");
 	}
 
 	@Test
@@ -510,7 +510,8 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateMVCPortletInWorkspace() throws Exception {
-		_testBuildTemplateWithWorkspace("mvc-portlet", "foo", "foo");
+		_testBuildTemplateWithWorkspace(
+			"mvc-portlet", "foo", "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
@@ -580,13 +581,13 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplatePanelAppInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
-			"panel-app", "gradle.test", "gradle.test");
+			"panel-app", "gradle.test", "build/libs/gradle.test-1.0.0.jar");
 	}
 
 	@Test
 	public void testBuildTemplatePorletProviderInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
-			"portlet-provider", "provider.test", "provider.test");
+			"portlet-provider", "provider.test", "build/libs/provider.test-1.0.0.jar");
 	}
 
 	@Test
@@ -650,12 +651,12 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"portlet-configuration-icon", "blade.test", "blade.test");
+			"portlet-configuration-icon", "blade.test", "build/libs/blade.test-1.0.0.jar");
 	}
 
 	@Test
 	public void testBuildTemplatePortletInWorkspace() throws Exception {
-		_testBuildTemplateWithWorkspace("portlet", "foo.test", "foo.test");
+		_testBuildTemplateWithWorkspace("portlet", "foo.test", "build/libs/foo.test-1.0.0.jar");
 	}
 
 	@Test
@@ -716,7 +717,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"portlet-toolbar-contributor", "blade.test", "blade.test");
+			"portlet-toolbar-contributor", "blade.test", "build/libs/blade.test-1.0.0.jar");
 	}
 
 	@Test
@@ -789,7 +790,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateRestInWorkspace() throws Exception {
-		_testBuildTemplateWithWorkspace("rest", "my-rest", "my.rest");
+		_testBuildTemplateWithWorkspace("rest", "my-rest", "build/libs/my.rest-1.0.0.jar");
 	}
 
 	@Test
@@ -1004,7 +1005,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"simulation-panel-entry", "test.simulator", "test.simulator");
+			"simulation-panel-entry", "test.simulator", "build/libs/test.simulator-1.0.0.jar");
 	}
 
 	@Test
@@ -1230,7 +1231,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"template-context-contributor", "blade-test", "blade.test");
+			"template-context-contributor", "blade-test", "build/libs/blade.test-1.0.0.jar");
 	}
 
 	@Test
@@ -1312,7 +1313,7 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
-			"theme-contributor", "my-contributor", "my.contributor");
+			"theme-contributor", "my-contributor", "build/libs/my.contributor-1.0.0.jar");
 	}
 
 	@Test
@@ -2336,7 +2337,7 @@ public class ProjectTemplatesTest {
 	}
 
 	private void _testBuildTemplateWithWorkspace(
-			String template, String name, String jarFileName)
+			String template, String name, String jarFilePath)
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(template, name);
@@ -2357,13 +2358,12 @@ public class ProjectTemplatesTest {
 
 		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
-		File gradleBundleFile = _testExists(
-			gradleProjectDir, "build/libs/" + jarFileName + "-1.0.0.jar");
+		File gradleBundleFile = _testExists(gradleProjectDir, jarFilePath);
 
 		_executeGradle(workspaceDir, ":modules:" + name + ":build");
 
-		File workspaceBundleFile = _testExists(
-			workspaceProjectDir, "build/libs/" + jarFileName + "-1.0.0.jar");
+		File workspaceBundleFile =
+			_testExists(workspaceProjectDir, jarFilePath);
 
 		_testBundlesDiff(gradleBundleFile, workspaceBundleFile);
 	}

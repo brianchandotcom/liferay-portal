@@ -2,20 +2,13 @@
 	{
 		"baseSKU": "PZLSMB",
 		"categories": [
-			{
-				"title": "Bags"
-			}
+			"loewe", "women-accessories-bags"
 		],
 		"description": "The first completely new bag designed by Jonathan Anderson has become a LOEWE icon. With its innovative cuboid shape, extreme tactility and maximum utility, volume is created through precise cutting so the Puzzle small bag can be worn in five different ways, from shoulder bag to clutch and folds completely until it´s flat. Key characteristics: hand-painted edges, textile lining, two pockets inside and one zippered pocket outside. Removable adjustable strap for the most comfortable length.",
 		"images": [
 			"Puzzle-bag-blue.jpg",
 			"Puzzle-bag-pink.jpg",
 			"Puzzle-bag-gold.jpg"
-		],
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
 		],
 		"options": [
 			{
@@ -46,15 +39,19 @@
 			}
 		],
 		"productTypeName": "simple",
+		"relatedProducts": [
+			{
+				"title": "Amazona Bag"
+			}
+		],
 		"shortDescription": "",
-		"title": "Puzzle Small Bag"
+		"title": "Puzzle Small Bag",
+		"urlTitle": "puzzle-small-bag"
 	},
 	{
 		"baseSKU": "HMMKBG",
 		"categories": [
-			{
-				"title": "Bags"
-			}
+			"loewe", "women-accessories-bags"
 		],
 		"description": "Versatility and eye-catching, multi-functional form define the Hammock, the latest, completely novel bag design from LOEWE. Its innovative design allows this bag to be worn as a shoulder bag, hand-held or even as a crossbody guaranteeing modern comfort and a different character for different times of the day. It's fitted with zipped and patch pockets for easy organization. Key features: tan grained calf leather, golden hardware, hand-edge painting, hook fastening at open top, folded zippered sides, exterior zippered pocket, embossed Anagram and two leather top handles.",
 		"images": [
@@ -62,11 +59,6 @@
 			"Hammock-black.jpg",
 			"Hammock-red.jpg",
 			"Hammock-blue.jpg"
-		],
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
 		],
 		"name": "Hammock Bag",
 		"options": [
@@ -103,15 +95,19 @@
 			}
 		],
 		"productTypeName": "simple",
+		"relatedProducts": [
+			{
+				"title": "Amazona Bag"
+			}
+		],
 		"shortDescription": "",
-		"title": "Hammock Bag"
+		"title": "Hammock Bag",
+		"urlTitle": "hammock-bag"
 	},
 	{
 		"baseSKU": "ELEMNB",
 		"categories": [
-			{
-				"title": "Bags"
-			}
+			"loewe", "women-accessories-bags"
 		],
 		"description": "Loewe presents a playful collection of Elephant-shaped mini bags in calf leather with adjustable strap, complete with a long trunk and dot-perforated eyes. Key features: Black lacquered edging, polished silvertone hardware, Detachable, adjustable flat leather strap and Top zip closure.",
 		"images": [
@@ -121,11 +117,6 @@
 			"Elephant-mini-pink.jpg",
 			"Elephant-mini-red.jpg",
 			"Elephant-mini-blue.jpg"
-		],
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
 		],
 		"options": [
 			{
@@ -171,15 +162,19 @@
 			}
 		],
 		"productTypeName": "simple",
+		"relatedProducts": [
+			{
+				"title": "Amazona Bag"
+			}
+		],
 		"shortDescription": "",
-		"title": "Elephant Mini Bag"
+		"title": "Elephant Mini Bag",
+		"urlTitle": "elephant-mini-bag"
 	},
 	{
 		"baseSKU": "FRTHBG",
 		"categories": [
-			{
-				"title": "Bags"
-			}
+			"loewe", "women-accessories-bags"
 		],
 		"description": "LOEWE's new approach of a basic functionality in a cool ultra-fashionable shape. Hobo-style bag highly adorned with different leather dangling elements adding playfulness. Sleek and subtle accordion-like silhouette with long slender knotted tassels, hold the bag?s refined construction. Perfectly sized for daily use, it provides a comfortable carry when simply slipped over the shoulder, worn as a cross-carry or even hand-held. Versatile multiple straps: long hand-braided leather, plain leather and small wide shoulder strap. Key features: oro suede lining, trimmed in leather to tone, crafted from refined calf leather.",
 		"images": [
@@ -188,11 +183,6 @@
 			"Fortune-hobo-tan.jpg",
 			"Fortune-hobo-red.jpg",
 			"Fortune-hobo-indigo.jpg"
-		],
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
 		],
 		"name": "Fortune Hobo Bag",
 		"options": [
@@ -234,15 +224,19 @@
 			}
 		],
 		"productTypeName": "simple",
+		"relatedProducts": [
+			{
+				"title": "Amazona Bag"
+			}
+		],
 		"shortDescription": "",
-		"title": "Fortune Hobo Bag"
+		"title": "Fortune Hobo Bag",
+		"urlTitle": "fortune-hobo-bag"
 	},
 	{
 		"baseSKU": "PZLBG",
 		"categories": [
-			{
-				"title": "Bags"
-			}
+			"loewe", "women-accessories-bags"
 		],
 		"description": "The first completely new bag designed by Jonathan Anderson has become a LOEWE icon. With its innovative cuboid shape, extreme tactility and maximum utility, volume is created through precise cutting so the Puzzle bag can be worn in five different ways, from shoulder bag to clutch and folds completely until it´s flat. Key characteristics: hand-painted edges; textile lining and two pockets inside. Removable adjustable strap for the most comfortable length.",
 		"images": [
@@ -253,11 +247,6 @@
 			"Puzzle-stone.jpg",
 			"Puzzle-blue.jpg",
 			"Puzzle-fuchsia.jpg"
-		],
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
 		],
 		"options": [
 			{
@@ -308,15 +297,19 @@
 			}
 		],
 		"productTypeName": "simple",
+		"relatedProducts": [
+			{
+				"title": "Amazona Bag"
+			}
+		],
 		"shortDescription": "",
-		"title": "Puzzle Bag"
+		"title": "Puzzle Bag",
+		"urlTitle": "puzzle-bag"
 	},
 	{
 		"baseSKU": "AMZBG",
 		"categories": [
-			{
-				"title": "Bags"
-			}
+			"loewe", "women-accessories-bags"
 		],
 		"description": "Amazona bag in suede with embossed Anagram. An icon among icons, the Amazona is reinterpreted enhancing the bag’s superior features and perfecting its unmistakable shape. Born 40 years ago, the Amazona bag now features an adjustable shoulder strap and a name tag, both removable. Key features: high grade exposed leather, reinforcement corner patches, protective bottom studs, large interior zippered pocket in calf leather, D ring, unlined interior. Shoulder strap and name tag in calf leather.",
 		"images": [
@@ -324,11 +317,6 @@
 			"Amazona-tan.jpg",
 			"Amazona-mink.jpg",
 			"Amazona-marine.jpg"
-		],
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
 		],
 		"options": [
 			{
@@ -364,26 +352,25 @@
 			}
 		],
 		"productTypeName": "simple",
+		"relatedProducts": [
+			{
+				"title": "Puzzle Bag"
+			}
+		],
 		"shortDescription": "",
-		"title": "Amazona Bag"
+		"title": "Amazona Bag",
+		"urlTitle": "amazona-bag"
 	},
 	{
 		"baseSKU": "MDTPCH",
 		"categories": [
-			{
-				"title": "Bags"
-			}
+			"loewe", "women-accessories-bags"
 		],
 		"description": "The perfect clutch bag. Exemplifying the pared-down, modern craft of Loewe the zipped medium T Pouch in calf leather engraved with a repeat Anagram pattern features a straightforward notched silhouette and a characteristic T-bar profile with hand-painted edges. Herringbone-patterned including an inside flat pocket. Secure the zip using the interlocking strap, and carry it tucked under one arm.",
 		"images": [
 			"Medium-pouch-black.jpg",
 			"Medium-pouch-tan.jpg",
 			"Medium-pouch-blue.jpg"
-		],
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
 		],
 		"name": "Medium T Pouch",
 		"options": [
@@ -415,15 +402,19 @@
 			}
 		],
 		"productTypeName": "simple",
+		"relatedProducts": [
+			{
+				"title": "Amazona Bag"
+			}
+		],
 		"shortDescription": "",
-		"title": "Medium T Pouch"
+		"title": "Medium T Pouch",
+		"urlTitle": "medium-t-pouch"
 	},
 	{
 		"baseSKU": "AVNBG",
 		"categories": [
-			{
-				"title": "Bags"
-			}
+			"loewe", "women-accessories-bags"
 		],
 		"description": "Introducing the new Avenue crossbody bag in calf leather with the Anagram embossed all over and with a light gold chain shoulder strap. Key features: Side T construction, magnetic closure, leather lining.",
 		"images": [
@@ -432,11 +423,6 @@
 			"Avenue-red.jpg",
 			"Avenue-stone.jpg",
 			"Avenue-fuchsia.jpg"
-		],
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
 		],
 		"options": [
 			{
@@ -477,15 +463,19 @@
 			}
 		],
 		"productTypeName": "simple",
+		"relatedProducts": [
+			{
+				"title": "Amazona Bag"
+			}
+		],
 		"shortDescription": "",
-		"title": "Avenue Bag"
+		"title": "Avenue Bag",
+		"urlTitle": "avenue-bag"
 	},
 	{
 		"baseSKU": "FMKTBG",
 		"categories": [
-			{
-				"title": "Bags"
-			}
+			"loewe", "women-accessories-bags"
 		],
 		"description": "The Flamenco Knot Bag is a softly structured shoulder bag where volume is created through precise cutting. It has a detailed drawstring to cinch the top and keep your belongings secure. Its spacious interior is lined in durable canvas and sized to hold daily essentials. Key characteristics: Soft, two-fold construction with T-bar profile and hand-painted edges; notched silhouette; interior with two flat pockets. Adjustable strap for the most comfortable length.",
 		"images": [
@@ -493,11 +483,6 @@
 			"Flamenco-tan.jpg",
 			"Flamenco-marine.jpg",
 			"Flamenco-pink.jpg"
-		],
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
 		],
 		"name": "Flamenco Knot bag",
 		"options": [
@@ -534,15 +519,19 @@
 			}
 		],
 		"productTypeName": "simple",
+		"relatedProducts": [
+			{
+				"title": "Amazona Bag"
+			}
+		],
 		"shortDescription": "",
-		"title": "Flamenco Knot Bag"
+		"title": "Flamenco Knot Bag",
+		"urlTitle": "flamenco-knot-bag"
 	},
 	{
 		"baseSKU": "TPCH",
 		"categories": [
-			{
-				"title": "Bags"
-			}
+			"loewe", "women-accessories-bags"
 		],
 		"description": "The perfect clutch bag. Exemplifying the pared-down, modern craft of Loewe the zipped clutch in calf leather engraved with Textured Leather pattern features a straightforward notched silhouette and a characteristic T-bar profile with hand-painted edges. Herringbone-patterned. Secure the zip using the interlocking strap, and carry it tucked under one arm.",
 		"images": [
@@ -552,11 +541,6 @@
 			"Pouch-orange.jpg",
 			"Pouch-blue.jpg",
 			"Pouch-fuchsia.jpg"
-		],
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
 		],
 		"options": [
 			{
@@ -602,15 +586,19 @@
 			}
 		],
 		"productTypeName": "simple",
+		"relatedProducts": [
+			{
+				"title": "Amazona Bag"
+			}
+		],
 		"shortDescription": "",
-		"title": "T Pouch"
+		"title": "T Pouch",
+		"urlTitle": "t-pouch"
 	},
 	{
 		"baseSKU": "HMKSMB",
 		"categories": [
-			{
-				"title": "Bags"
-			}
+			"loewe", "women-accessories-bags"
 		],
 		"description": "Versatility and eye-catching, multi-functional form define the Hammock Small Bag, the latest, completely novel bag design from LOEWE. Its innovative design allows this bag to be worn as a shoulder bag, hand-held or even as a crossbody guaranteeing modern comfort and a different character for different times of the day. It's fitted with zipped and patch pockets for easy organization. Key features: classic calf leather, hand-edge painting, hook fastening at open top, folded zippered sides, exterior zippered pocket, embossed Anagram and two leather top handles.",
 		"images": [
@@ -621,11 +609,6 @@
 			"Hammock-small-tan.jpg",
 			"Hammock-small-orange.jpg",
 			"Hammock-small-blue.jpg"
-		],
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
 		],
 		"options": [
 			{
@@ -676,26 +659,25 @@
 			}
 		],
 		"productTypeName": "simple",
+		"relatedProducts": [
+			{
+				"title": "Amazona Bag"
+			}
+		],
 		"shortDescription": "",
-		"title": "Hammock Small Bag"
+		"title": "Hammock Small Bag",
+		"urlTitle": "hammock-small-bag"
 	},
 	{
 		"baseSKU": "JYCSMB",
 		"categories": [
-			{
-				"title": "Bags"
-			}
+			"loewe", "women-accessories-bags"
 		],
 		"description": "Desirable cool new style with a sleek rounded silhouette embellished with an ornate gold-tone rounded Loewe engraved medal. Handcrafted from soft calf leather with an excepcional handfeel. Key features: non-detachable slender leather shoulder strap;flat rounded interior pocket; oval buckle and hidden snap-fastening.This time in the new colour: electric blue.",
 		"images": [
 			"Joyce-small-black.jpg",
 			"Joyce-small-blue.jpg",
 			"Joyce-small-orange.jpg"
-		],
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
 		],
 		"name": "Joyce Small Bag",
 		"options": [
@@ -727,15 +709,19 @@
 			}
 		],
 		"productTypeName": "simple",
+		"relatedProducts": [
+			{
+				"title": "Amazona Bag"
+			}
+		],
 		"shortDescription": "",
-		"title": "Joyce Small Bag"
+		"title": "Joyce Small Bag",
+		"urlTitle": "joyce-small-bag"
 	},
 	{
 		"baseSKU": "BCLNBG",
 		"categories": [
-			{
-				"title": "Bags"
-			}
+			"loewe", "women-accessories-bags"
 		],
 		"description": "Barcelona bag is meticulously handcrafted from calf leather for a new sophisticated style. Its streamlined shape is enriched with distinctive geometric detailing taken from the LOEWE archives. It features a unique metallic triangle closure with embossed Logo. Adjust the slim calf leather strap to suit your carrying style on the shoulder or as a crossbody bag. This structured piece opens to two internal compartments and has a central slit pocket for securing small items.",
 		"images": [
@@ -745,11 +731,6 @@
 			"Barcelona-orange.jpg",
 			"Barcelona-pink.jpg",
 			"Barcelona-mink.jpg"
-		],
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
 		],
 		"options": [
 			{
@@ -795,15 +776,19 @@
 			}
 		],
 		"productTypeName": "simple",
+		"relatedProducts": [
+			{
+				"title": "Amazona Bag"
+			}
+		],
 		"shortDescription": "",
-		"title": "Barcelona Bag"
+		"title": "Barcelona Bag",
+		"urlTitle": "barcelona-bag"
 	},
 	{
 		"baseSKU": "GYBKPK",
 		"categories": [
-			{
-				"title": "Bags"
-			}
+			"loewe", "women-accessories-bags"
 		],
 		"description": "Goya Backpack in canvas and classic calf. Key features: zippered closure, detachable top handle, two adjustable shoulder straps, herringbone-patterned textile lining, interior zippered pocket.",
 		"images": [
@@ -811,11 +796,6 @@
 			"Goya-red.jpg",
 			"Goya-tan.jpg",
 			"Goya-indigo.jpg"
-		],
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
 		],
 		"options": [
 			{
@@ -851,15 +831,19 @@
 			}
 		],
 		"productTypeName": "simple",
+		"relatedProducts": [
+			{
+				"title": "Amazona Bag"
+			}
+		],
 		"shortDescription": "",
-		"title": "Goya Backpack"
+		"title": "Goya Backpack",
+		"urlTitle": "goya-backpack"
 	},
 	{
 		"baseSKU": "TMNBG",
 		"categories": [
-			{
-				"title": "Bags"
-			}
+			"loewe", "women-accessories-bags"
 		],
 		"description": "The perfect small bag. Exemplifying the pared-down, modern craft of Loewe the zipped clutch in calf leather engraved with a repeat Anagram pattern features a straightforward notched silhouette and a characteristic T-bar profile with hand-painted edges. Herringbone-patterned. Secure the zip using the interlocking strap,and a detachable, adjustable flat leather strap.",
 		"images": [
@@ -867,11 +851,6 @@
 			"Mini-yellow.jpg",
 			"Mini-red.jpg",
 			"Mini-green.jpg"
-		],
-		"manufacturers": [
-			{
-				"title": "LOEWE"
-			}
 		],
 		"options": [
 			{
@@ -907,7 +886,13 @@
 			}
 		],
 		"productTypeName": "simple",
+		"relatedProducts": [
+			{
+				"title": "Amazona Bag"
+			}
+		],
 		"shortDescription": "",
-		"title": "T Mini Bag"
+		"title": "T Mini Bag",
+		"urlTitle": "t-mini-bag"
 	}
 ]

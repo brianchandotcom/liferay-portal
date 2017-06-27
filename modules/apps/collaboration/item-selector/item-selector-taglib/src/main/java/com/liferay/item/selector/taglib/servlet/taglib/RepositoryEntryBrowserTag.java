@@ -14,6 +14,7 @@
 
 package com.liferay.item.selector.taglib.servlet.taglib;
 
+import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
@@ -57,6 +58,12 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
+	}
+
+	public void setDlMimeTypeDisplayContext(
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
+
+		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 	}
 
 	public void setEmptyResultsMessage(String emptyResultsMessage) {
@@ -123,6 +130,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_desiredItemSelectorReturnTypes = null;
 		_emptyResultsMessage = null;
 		_displayStyle = null;
+		_dlMimeTypeDisplayContext = null;
 		_extensions = new ArrayList<>();
 		_itemSelectedEventName = null;
 		_maxFileSize = UploadServletRequestConfigurationHelperUtil.getMaxSize();
@@ -178,6 +186,10 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:displayStyle",
 			getDisplayStyle());
+		request.setAttribute(
+			"liferay-item-selector:repository-entry-browser:" +
+				"dlMimeTypeDisplayContext",
+			_dlMimeTypeDisplayContext);
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:" +
 				"emptyResultsMessage",
@@ -240,6 +252,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 
 	private List<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 	private String _displayStyle;
+	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private String _emptyResultsMessage;
 	private List<String> _extensions = new ArrayList<>();
 	private String _itemSelectedEventName;

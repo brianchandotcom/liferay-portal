@@ -17,6 +17,10 @@ package com.liferay.commerce.product.demo.data.creator.internal.util;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.HashMap;
@@ -24,6 +28,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -36,6 +43,44 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetVocabularyDemoDataCreatorHelper
 	extends BaseCPDemoDataCreatorHelper {
 
+	public void addAssetVocabularies(long userId, long groupId)
+		throws Exception {
+
+		String layoutUuid = _layoutDemoDataCreatorHelper.getLayoutUuid(
+			userId, groupId, "Categories");
+
+		AssetVocabulary commerceAssetVocabulary = createAssetVocabulary(
+			userId, groupId, "Commerce");
+
+		AssetVocabulary manufacturersAssetVocabulary = createAssetVocabulary(
+			userId, groupId, "Manufacturers");
+
+		long commerceVocabularyId = commerceAssetVocabulary.getVocabularyId();
+		long manufacturersVocabularyId =
+			manufacturersAssetVocabulary.getVocabularyId();
+
+		JSONArray assetCategoriesJSONArray = getAssetCategoriesJSONArray();
+
+		for (int i = 0; i < assetCategoriesJSONArray.length(); i++) {
+			JSONObject categoriesJSONObject =
+				assetCategoriesJSONArray.getJSONObject(i);
+
+			JSONArray categoriesJSONArray = categoriesJSONObject.getJSONArray(
+				"categories");
+			JSONArray manufacturersJSONArray =
+				categoriesJSONObject.getJSONArray(
+					"manufacturers");
+
+			_assetCategoryDemoDataCreatorHelper.addAssetCategories(
+				userId, groupId, 0, commerceVocabularyId, layoutUuid,
+				categoriesJSONArray);
+
+			_assetCategoryDemoDataCreatorHelper.addAssetCategories(
+				userId, groupId, 0, manufacturersVocabularyId, layoutUuid,
+				manufacturersJSONArray);
+		}
+	}
+
 	public AssetVocabulary createAssetVocabulary(
 			long userId, long groupId, String title)
 		throws PortalException {
@@ -43,14 +88,16 @@ public class AssetVocabularyDemoDataCreatorHelper
 		AssetVocabulary assetVocabulary = _assetVocabularies.get(title);
 
 		if (assetVocabulary != null) {
-			return assetVocabulary;
+            return assetVocabulary;
 		}
 
-		assetVocabulary = _assetVocabularyLocalService.getGroupVocabulary(
+		assetVocabulary = _assetVocabularyLocalService.fetchGroupVocabulary(
 			groupId, title);
 
 		if (assetVocabulary != null) {
-			return assetVocabulary;
+            _assetVocabularies.put(title, assetVocabulary);
+
+            return assetVocabulary;
 		}
 
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
@@ -73,8 +120,7 @@ public class AssetVocabularyDemoDataCreatorHelper
 		while (iterator.hasNext()) {
 			Map.Entry<String, AssetVocabulary> entry = iterator.next();
 
-			_assetVocabularyLocalService.deleteAssetVocabulary(
-				entry.getValue());
+			_assetVocabularyLocalService.deleteVocabulary(entry.getValue());
 
 			iterator.remove();
 		}
@@ -82,6 +128,22 @@ public class AssetVocabularyDemoDataCreatorHelper
 
 	public void init() {
 		_assetVocabularies = new HashMap<>();
+	}
+
+	protected JSONArray getAssetCategoriesJSONArray() throws Exception {
+		Class<?> clazz = getClass();
+
+		String assetCategoriesPath =
+			"com/liferay/commerce/product/demo/data/creator/internal" +
+				"/dependencies/categories.json";
+
+		String assetCategoriesJSON = StringUtil.read(
+			clazz.getClassLoader(), assetCategoriesPath, false);
+
+		JSONArray assetCategoriesJSONArray = JSONFactoryUtil.createJSONArray(
+			assetCategoriesJSON);
+
+		return assetCategoriesJSONArray;
 	}
 
 	@Activate
@@ -97,6 +159,13 @@ public class AssetVocabularyDemoDataCreatorHelper
 	private Map<String, AssetVocabulary> _assetVocabularies;
 
 	@Reference
+	private AssetCategoryDemoDataCreatorHelper
+		_assetCategoryDemoDataCreatorHelper;
+
+	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private LayoutDemoDataCreatorHelper _layoutDemoDataCreatorHelper;
 
 }

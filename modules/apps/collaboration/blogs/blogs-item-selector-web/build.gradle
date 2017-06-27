@@ -1,5 +1,6 @@
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.blogs.item.selector.api", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.document.library.api", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.2.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.0.0"

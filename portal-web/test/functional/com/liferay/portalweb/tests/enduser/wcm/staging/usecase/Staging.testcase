@@ -888,7 +888,7 @@
 		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_UNAPPROVED" value1="Web Content Title is not approved." />
 	</command>
 
-	<command name="StagingMultipleDM" priority="3">
+	<command name="StagingMultipleDM" priority="5">
 		<property name="portal.acceptance" value="pending" />
 		<property name="testray.component.names" value="Training" />
 
@@ -964,7 +964,7 @@
 		<execute macro="DMDocument#viewStagingDetailsPG" />
 	</command>
 
-	<command name="StagingOnlyApprovedPublishToLive" priority="4">
+	<command name="StagingOnlyApprovedPublishToLive" priority="5">
 		<property name="portal.acceptance" value="pending" />
 		<property name="testray.component.names" value="Training" />
 

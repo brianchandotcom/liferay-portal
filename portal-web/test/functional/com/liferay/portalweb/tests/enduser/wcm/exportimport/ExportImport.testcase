@@ -613,6 +613,9 @@
 	</command>
 
 	<command name="ExportImportSmoke" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="LAR#configureExportSiteCP" />
@@ -675,13 +678,6 @@
 			<var name="uncheckSitePagesSettings" value="true" />
 			<var name="uncheckSiteTemplateSettings" value="true" />
 		</execute>
-	</command>
-
-	<command name="ExportImportSmoke" priority="5">
-		<property name="portal.acceptance" value="pending" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="User#firstLoginPG" />
 
 		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
 

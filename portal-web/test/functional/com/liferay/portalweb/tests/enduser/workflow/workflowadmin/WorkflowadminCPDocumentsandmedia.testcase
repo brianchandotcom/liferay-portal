@@ -74,7 +74,7 @@
 		</execute>
 	</command>
 
-	<command name="SaveAsDraftAndViewCategories" priority="3">
+	<command name="SaveAsDraftAndViewCategories" priority="5">
 		<description message="This is a use case for LPS-60870." />
 
 		<property name="custom.properties" value="dl.file.entry.drafts.enabled=true" />

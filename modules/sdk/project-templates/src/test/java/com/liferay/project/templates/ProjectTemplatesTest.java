@@ -931,37 +931,9 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateSpringMVCPortletInWorkspace()
 		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", "buildscript {",
-			"apply plugin: \"war\"", "repositories {");
-
-		File workspaceDir = _buildWorkspace();
-
-		File warsDir = new File(workspaceDir, "wars");
-
-		File workspaceProjectDir = _buildTemplateWithGradle(
-			warsDir, "spring-mvc-portlet", "foo");
-
-		_testNotContains(
-			workspaceProjectDir, "build.gradle", "apply plugin: \"war\"");
-		_testNotContains(
-			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
-
-		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
-
-		File gradleWarFile = _testExists(
-			gradleProjectDir, "build/libs/foo.war");
-
-		_executeGradle(workspaceDir, ":wars:foo:build");
-
-		File workspaceWarFile = _testExists(
-			workspaceProjectDir, "build/libs/foo.war");
-
-		_testWarsDiff(gradleWarFile, workspaceWarFile);
+		
+		_testBuildTemplateProjectWarInWorkspace(
+			"spring-mvc-portlet", "foo", "foo");
 	}
 
 	@Test
@@ -2102,6 +2074,77 @@ public class ProjectTemplatesTest {
 
 		return gradleProjectDir;
 	}
+	
+	private void _testBuildTemplateProjectInWorkspace(
+			String template, String name, String jarFileName) 
+				throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			template, name);
+		
+		_testContains(gradleProjectDir, "build.gradle",
+			"buildscript {", "repositories {");
+		
+		File workspaceDir = _buildWorkspace();
+		
+		File modulesDir = new File(workspaceDir, "modules");
+		
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			modulesDir, template, name);
+		
+		_testNotContains(workspaceProjectDir, "build.gradle",
+			true, "^repositories \\{.*");
+		
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+		
+		File gradleBundleFile = _testExists(gradleProjectDir, 
+			"build/libs/" + jarFileName + "-1.0.0.jar");
+		
+		_executeGradle(workspaceDir, 
+			":modules:" + name + ":build");
+		
+		File workspaceBundleFile = _testExists(workspaceProjectDir,
+			"build/libs/" + jarFileName + "-1.0.0.jar");
+				
+		_testBundlesDiff(gradleBundleFile, workspaceBundleFile);
+		
+	}
+	
+	private void _testBuildTemplateProjectWarInWorkspace(
+			String template, String name, String warFileName) 
+				throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			template, name);
+
+		_testContains(
+			gradleProjectDir, "build.gradle", "buildscript {",
+			"apply plugin: \"war\"", "repositories {");
+
+		File workspaceDir = _buildWorkspace();
+
+		File warsDir = new File(workspaceDir, "wars");
+
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			warsDir, template, name);
+
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", "apply plugin: \"war\"");
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+
+		File gradleWarFile = _testExists(
+			gradleProjectDir, "build/libs/" + warFileName + ".war");
+
+		_executeGradle(workspaceDir, ":wars:" + name + ":build");
+
+		File workspaceWarFile = _testExists(
+			workspaceProjectDir, "build/libs/" + warFileName + ".war");
+
+		_testWarsDiff(gradleWarFile, workspaceWarFile);
+	}
+		
 
 	private void _testBuildTemplateServiceBuilder(
 			File gradleProjectDir, final File rootProject, String name,

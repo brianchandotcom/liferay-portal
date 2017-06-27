@@ -14,7 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
-import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
+import com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -154,7 +154,7 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 			long plid = GetterUtil.getLong(parts[0]);
 			String key = GetterUtil.getString(parts[1]);
 
-			if (key.startsWith(LayoutTypePortletConstants.COLUMN_PREFIX)) {
+			if (LayoutTypePortletConstants.isLayoutTemplateColumnName(key)) {
 				String value = portalPreferencesImpl.getValue(
 					namespacePlid(plid), key);
 

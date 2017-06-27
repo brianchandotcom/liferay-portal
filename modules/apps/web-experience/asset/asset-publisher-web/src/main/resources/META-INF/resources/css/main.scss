@@ -69,13 +69,23 @@
 			}
 		}
 
+		.categoriesselector-content,
+		.tagselector-content {
+			.textboxlistentry-holder {
+				padding: 0 0 4px;
+
+				> .textboxlistentry {
+					margin: 4px 5px;
+				}
+			}
+		}
+
 		.categoriesselector-content {
 			position: relative;
 
 			.textboxlistentry-holder {
 				border-bottom: 2px solid #869CAD;
 	   	 		margin-bottom: 10px;
-	   	 		height: 40px;
 			}
 
 			.btn-toolbar-content {

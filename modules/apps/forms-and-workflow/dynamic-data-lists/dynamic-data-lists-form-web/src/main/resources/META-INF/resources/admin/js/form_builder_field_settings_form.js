@@ -393,7 +393,6 @@ AUI.add(
 						var editMode = instance.get('editMode');
 
 						if (editMode) {
-							optionsField.set('sortable', false);
 							optionsField.set('editable', false);
 						}
 					},

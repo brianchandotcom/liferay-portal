@@ -946,13 +946,19 @@ public class PoshiRunnerContext {
 				Element dateElement = toggleElement.element("date");
 
 				if (dateElement == null) {
-					Exception exception = new Exception(
-						"Please set a date for this toggle:\n" +
-							testToggleFileName + ":" + toggleName);
+					StringBuilder sb = new StringBuilder();
 
-					exception.printStackTrace();
+					sb.append("Unable to parse toggle:\n");
+					sb.append(testToggleFileName);
+					sb.append(":");
+					sb.append(toggleName);
+					sb.append(" because the date was not found");
 
-					throw exception;
+					Exception e = new RuntimeException(sb.toString());
+
+					e.printStackTrace();
+
+					throw e;
 				}
 				else {
 					try {
@@ -971,12 +977,11 @@ public class PoshiRunnerContext {
 						sb.append(_toggleDateFormat.toPattern());
 						sb.append("\"");
 
-						RuntimeException re = new RuntimeException(
-							sb.toString(), pe);
+						Exception e = new RuntimeException(sb.toString(), pe);
 
-						re.printStackTrace();
+						e.printStackTrace();
 
-						throw re;
+						throw e;
 					}
 				}
 

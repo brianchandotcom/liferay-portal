@@ -130,10 +130,10 @@ public class RequestBackedPortletURLFactoryUtil {
 
 			if (themeDisplay != null) {
 				controlPanelLayout = themeDisplay.getControlPanelLayout();
-			}
 
-			if (group == null) {
-				group = themeDisplay.getScopeGroup();
+				if (group == null) {
+					group = themeDisplay.getScopeGroup();
+				}
 			}
 
 			LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(

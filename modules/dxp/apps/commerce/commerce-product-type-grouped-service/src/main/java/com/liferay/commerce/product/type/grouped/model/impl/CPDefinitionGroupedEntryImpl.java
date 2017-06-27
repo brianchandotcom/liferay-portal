@@ -16,6 +16,10 @@ package com.liferay.commerce.product.type.grouped.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -24,6 +28,18 @@ public class CPDefinitionGroupedEntryImpl
 	extends CPDefinitionGroupedEntryBaseImpl {
 
 	public CPDefinitionGroupedEntryImpl() {
+	}
+
+	@Override
+	public CPDefinition getCPDefinition() throws PortalException {
+		return CPDefinitionLocalServiceUtil.getCPDefinition(
+			getCPDefinitionId());
+	}
+
+	@Override
+	public CPDefinition getEntryCPDefinition() throws PortalException {
+		return CPDefinitionLocalServiceUtil.getCPDefinition(
+			getEntryCPDefinitionId());
 	}
 
 }

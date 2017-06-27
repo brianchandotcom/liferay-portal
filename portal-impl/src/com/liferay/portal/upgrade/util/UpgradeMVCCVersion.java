@@ -24,8 +24,10 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 
 import java.io.InputStream;
+
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+
 import java.util.List;
 
 /**

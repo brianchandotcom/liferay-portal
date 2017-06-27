@@ -165,9 +165,7 @@ public class DBInspector {
 
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
-		tableName = normalizeName(tableName, databaseMetaData);
-
-		if (_hasTable(tableName)) {
+		if (_hasTable(normalizeName(tableName, databaseMetaData))) {
 			return true;
 		}
 

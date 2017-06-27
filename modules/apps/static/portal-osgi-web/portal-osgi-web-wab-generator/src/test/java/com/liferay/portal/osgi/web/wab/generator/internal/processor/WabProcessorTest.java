@@ -413,8 +413,14 @@ public class WabProcessorTest {
 				File parent = deployDir.getParentFile();
 
 				Files.walk(
-					parent.toPath()).sorted(Comparator.reverseOrder()).map(
-					Path::toFile).forEach(File::delete);
+					parent.toPath()
+				).sorted(
+					Comparator.reverseOrder()
+				).map(
+					Path::toFile
+				).forEach(
+					File::delete
+				);
 
 				parent.mkdirs();
 

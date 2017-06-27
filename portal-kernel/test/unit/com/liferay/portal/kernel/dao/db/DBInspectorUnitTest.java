@@ -43,7 +43,7 @@ import org.mockito.runners.MockitoJUnitRunner;
  * @author Mariano Alvaro Saiz
  */
 @RunWith(MockitoJUnitRunner.class)
-public class DBInspectorTest {
+public class DBInspectorUnitTest {
 
 	@Test
 	public void testArgumentMetaDataIsUsedToNormalizeName() throws Exception {

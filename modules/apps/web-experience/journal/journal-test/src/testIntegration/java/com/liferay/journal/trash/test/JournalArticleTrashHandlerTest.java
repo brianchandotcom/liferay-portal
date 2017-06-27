@@ -36,9 +36,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -330,22 +332,25 @@ public class JournalArticleTrashHandlerTest
 
 		long folderId = article.getImagesFolderId();
 
+		Group controlPanelGroup = GroupLocalServiceUtil.getGroup(
+			group.getCompanyId(), GroupConstants.CONTROL_PANEL);
+
 		Assert.assertEquals(
 			1,
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				group.getGroupId(), folderId));
+				controlPanelGroup.getGroupId(), folderId));
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(
 			0,
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				group.getGroupId(), folderId,
+				controlPanelGroup.getGroupId(), folderId,
 				WorkflowConstants.STATUS_APPROVED));
 		Assert.assertEquals(
 			1,
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				group.getGroupId(), folderId,
+				controlPanelGroup.getGroupId(), folderId,
 				WorkflowConstants.STATUS_IN_TRASH));
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
@@ -356,7 +361,7 @@ public class JournalArticleTrashHandlerTest
 		Assert.assertEquals(
 			0,
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				group.getGroupId(), folderId));
+				controlPanelGroup.getGroupId(), folderId));
 	}
 
 	@Override

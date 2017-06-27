@@ -8,6 +8,7 @@
 
 		&.open {
 			width: $width;
+			z-index: 500;
 		}
 	}
 

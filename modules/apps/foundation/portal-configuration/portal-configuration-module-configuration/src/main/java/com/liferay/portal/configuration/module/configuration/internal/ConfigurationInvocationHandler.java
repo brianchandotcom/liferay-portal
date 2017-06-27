@@ -16,6 +16,7 @@ package com.liferay.portal.configuration.module.configuration.internal;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -32,12 +33,15 @@ import java.lang.reflect.Method;
 public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 
 	public ConfigurationInvocationHandler(
-		Class<S> clazz, Object configurationOverrideInstance,
-		TypedSettings typedSettings) {
+			Class<S> clazz, TypedSettings typedSettings)
+		throws ConfigurationException, ReflectiveOperationException {
 
 		_clazz = clazz;
-		_configurationOverrideInstance = configurationOverrideInstance;
 		_typedSettings = typedSettings;
+
+		_configurationOverrideInstance =
+			ConfigurationOverrideInstance.getConfigurationOverrideInstance(
+				clazz, typedSettings);
 	}
 
 	public S createProxy() {
@@ -49,28 +53,27 @@ public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 	public Object invoke(Object proxy, Method method, Object[] args)
 		throws InvocationTargetException {
 
-		if (_configurationOverrideInstance != null) {
-			try {
-				return _invokeConfigurationOverride(method);
-			}
-			catch (InvocationTargetException ite) {
-				throw ite;
-			}
-			catch (Exception e) {
-			}
-		}
-
 		try {
+			if (_configurationOverrideInstance != null) {
+				Object result = _configurationOverrideInstance.invoke(method);
+
+				if (result != ConfigurationOverrideInstance.NULL_RESULT) {
+					return result;
+				}
+			}
+
 			return _invokeTypedSettings(method);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (InvocationTargetException ite) {
+			throw ite;
+		}
+		catch (ReflectiveOperationException roe) {
+			throw new RuntimeException(roe);
 		}
 	}
 
 	private Object _getValue(Class<?> returnType, String key)
-		throws IllegalAccessException, InstantiationException,
-			   InvocationTargetException, NoSuchMethodException {
+		throws ReflectiveOperationException {
 
 		if (returnType.equals(boolean.class) ||
 			returnType.equals(double.class) || returnType.equals(float.class) ||
@@ -131,20 +134,8 @@ public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 		return constructor.newInstance(_typedSettings.getValue(key, null));
 	}
 
-	private Object _invokeConfigurationOverride(Method method)
-		throws IllegalAccessException, InstantiationException,
-			   InvocationTargetException, NoSuchMethodException {
-
-		Class<?> clazz = _configurationOverrideInstance.getClass();
-
-		method = clazz.getMethod(method.getName());
-
-		return method.invoke(_configurationOverrideInstance);
-	}
-
 	private Object _invokeTypedSettings(Method method)
-		throws IllegalAccessException, InstantiationException,
-			   InvocationTargetException, NoSuchMethodException {
+		throws ReflectiveOperationException {
 
 		Class<?> returnType = method.getReturnType();
 
@@ -197,7 +188,7 @@ public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 	}
 
 	private final Class<S> _clazz;
-	private final Object _configurationOverrideInstance;
+	private final ConfigurationOverrideInstance _configurationOverrideInstance;
 	private final TypedSettings _typedSettings;
 
 }

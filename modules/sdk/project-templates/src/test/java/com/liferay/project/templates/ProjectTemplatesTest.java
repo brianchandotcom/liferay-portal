@@ -134,6 +134,16 @@ public class ProjectTemplatesTest {
 			"build/libs/hello.world.portlet-1.0.0.jar",
 			"target/hello-world-portlet-1.0.0.jar");
 	}
+	
+	@Test
+	public void testBuildTemplateInWorkspace()
+			throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			null, "hello-world-portlet");
+		
+		_testBuildTemplateProjectInWorkspace(null, "hello-world-portlet",
+			"hello.world.portlet");
+	}
 
 	@Test
 	public void testBuildTemplateActivator() throws Exception {
@@ -158,6 +168,14 @@ public class ProjectTemplatesTest {
 			"build/libs/bar.activator-1.0.0.jar",
 			"target/bar-activator-1.0.0.jar");
 	}
+	
+	@Test
+	public void testBuildTemplateActivatorInWorkspace()
+			throws Exception {
+		
+		_testBuildTemplateProjectInWorkspace(
+			"activator", "bar-activator", "bar.activator");
+	}
 
 	@Test
 	public void testBuildTemplateApi() throws Exception {
@@ -181,6 +199,13 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/foo-1.0.0.jar",
 			"target/foo-1.0.0.jar");
+	}
+	
+	@Test
+	public void testBuildTemplateApiInWorkspace()
+			throws Exception {
+		
+		_testBuildTemplateProjectInWorkspace("api", "foo", "foo");
 	}
 
 	@Test
@@ -223,6 +248,14 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, mavenProjectDir, "build/libs/foo.bar-1.0.0.jar",
 			"target/foo-bar-1.0.0.jar");
 	}
+	
+	@Test
+	public void testBuildTemplateContentTargetingReportInWorkspace()
+			throws Exception {
+		
+		_testBuildTemplateProjectInWorkspace(
+			"content-targeting-report", "foo-bar", "foo.bar");
+	}
 
 	@Test
 	public void testBuildTemplateContentTargetingRule() throws Exception {
@@ -243,6 +276,14 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/foo.bar-1.0.0.jar",
 			"target/foo-bar-1.0.0.jar");
+	}
+	
+	@Test
+	public void testBuildTemplateContentTargetingRuleInWorkspace()
+			throws Exception {
+		
+		_testBuildTemplateProjectInWorkspace(
+			"content-targeting-rule", "foo-bar", "foo.bar");
 	}
 
 	@Test
@@ -270,6 +311,14 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateContentTargetingTrackingActionInWorkspace()
+			throws Exception {
+		
+		_testBuildTemplateProjectInWorkspace(
+			"content-targeting-tracking-action", "foo-bar", "foo.bar");
+	}
+	
+	@Test
 	public void testBuildTemplateControlMenuEntry() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"control-menu-entry", "foo-bar");
@@ -291,6 +340,14 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/foo.bar-1.0.0.jar",
 			"target/foo-bar-1.0.0.jar");
+	}
+	
+	@Test
+	public void testBuildTemplateControlMenuEntryInWorkspace()
+			throws Exception {
+
+		_testBuildTemplateProjectInWorkspace(
+			"control-menu-entry", "foo-bar", "foo.bar");
 	}
 
 	@Test
@@ -331,6 +388,14 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, mavenProjectDir, "build/libs/foobar-1.0.0.jar",
 			"target/foobar-1.0.0.jar");
 	}
+	
+	@Test
+	public void testBuildTemplateFormFieldInWorkspace()
+			throws Exception {
+
+		_testBuildTemplateProjectInWorkspace(
+			"form-field", "foobar", "foobar");
+	}
 
 	@Test
 	public void testBuildTemplateFragment() throws Exception {
@@ -364,6 +429,14 @@ public class ProjectTemplatesTest {
 		_testStartsWith(
 			gradleProjectDir, "src/main/resources/templates/view.ftl",
 			_FREEMARKER_PORTLET_VIEW_FTL_PREFIX);
+	}
+	
+	@Test
+	public void testBuildTemplateFreeMarkerPortletInWorkspace()
+			throws Exception {
+
+		_testBuildTemplateProjectInWorkspace(
+			"freemarker-portlet", "foo", "foo");
 	}
 
 	@Test
@@ -443,6 +516,11 @@ public class ProjectTemplatesTest {
 			"mvc-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
 			"META-INF/resources/view.jsp");
 	}
+	
+	@Test
+	public void testBuildTemplateMVCPortletInWorkspace() throws Exception {
+		_testBuildTemplateProjectInWorkspace("mvc-portlet", "foo", "foo");
+	}
 
 	@Test
 	public void testBuildTemplateMVCPortletWithPackage() throws Exception {
@@ -507,6 +585,14 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, mavenProjectDir,
 			"build/libs/gradle.test-1.0.0.jar", "target/gradle.test-1.0.0.jar");
 	}
+	
+	@Test
+	public void testBuildTemplatePanelAppInWorkspace()
+			throws Exception {
+		
+		_testBuildTemplateProjectInWorkspace(
+			"panel-app", "gradle.test", "gradle.test");
+	}
 
 	@Test
 	public void testBuildTemplatePortlet() throws Exception {
@@ -536,6 +622,14 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, mavenProjectDir, "build/libs/foo.test-1.0.0.jar",
 			"target/foo.test-1.0.0.jar");
 	}
+	
+	@Test
+	public void testBuildTemplatePortletInWorkspace() 
+			throws Exception {
+		
+		_testBuildTemplateProjectInWorkspace(
+			"portlet", "foo.test", "foo.test");
+	}
 
 	@Test
 	public void testBuildTemplatePortletConfigurationIcon() throws Exception {
@@ -563,6 +657,14 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, mavenProjectDir,
 			"build/libs/blade.test-1.0.0.jar", "target/icontest-1.0.0.jar");
 	}
+	
+	@Test
+	public void testBuildTemplatePortletConfigurationIconInWorkspace()
+			throws Exception {
+		
+		_testBuildTemplateProjectInWorkspace(
+			"portlet-configuration-icon", "blade.test", "blade.test");
+	}
 
 	@Test
 	public void testBuildTemplatePortletProvider() throws Exception {
@@ -588,6 +690,14 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, mavenProjectDir,
 			"build/libs/provider.test-1.0.0.jar",
 			"target/provider.test-1.0.0.jar");
+	}
+	
+	@Test
+	public void testBuildTemplatePorletProviderInWorkspace()
+			throws Exception {
+		
+		_testBuildTemplateProjectInWorkspace(
+			"portlet-provider", "provider.test", "provider.test");
 	}
 
 	@Test
@@ -615,6 +725,14 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir,
 			"build/libs/blade.test-1.0.0.jar", "target/toolbartest-1.0.0.jar");
+	}
+	
+	@Test
+	public void testBuildTemplatePortletToolbarContributorInWorkspace()
+			throws Exception {
+		
+		_testBuildTemplateProjectInWorkspace(
+			"portlet-toolbar-contributor", "blade.test", "blade.test");
 	}
 
 	@Test
@@ -683,6 +801,11 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/my.rest-1.0.0.jar",
 			"target/my-rest-1.0.0.jar");
+	}
+	
+	@Test
+	public void testBuildTemplateRestInWorkspace() throws Exception {
+		_testBuildTemplateProjectInWorkspace("rest", "my-rest", "my.rest");
 	}
 
 	@Test
@@ -762,7 +885,7 @@ public class ProjectTemplatesTest {
 		_testBuildTemplateServiceBuilder(
 			gradleProjectDir, gradleProjectDir, name, packageName, "");
 	}
-
+	
 	@Test
 	public void testBuildTemplateServiceBuilderNestedPath() throws Exception {
 		File workspaceProjectDir = _buildTemplateWithGradle(
@@ -829,7 +952,7 @@ public class ProjectTemplatesTest {
 			"build/libs/serviceoverride-1.0.0.jar",
 			"target/serviceoverride-1.0.0.jar");
 	}
-
+	
 	@Test
 	public void testBuildTemplateServiceWrapperInWorkspace() 
 		throws Exception {
@@ -892,6 +1015,14 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, mavenProjectDir,
 			"build/libs/test.simulator-1.0.0.jar",
 			"target/simulator-1.0.0.jar");
+	}
+	
+	@Test
+	public void testBuildTemplateSimulationPanelEntryInWorkspace()
+			throws Exception {
+		
+		_testBuildTemplateProjectInWorkspace(
+			"simulation-panel-entry", "test.simulator", "test.simulator");
 	}
 
 	@Test
@@ -1111,6 +1242,14 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, mavenProjectDir,
 			"build/libs/blade.test-1.0.0.jar", "target/blade-test-1.0.0.jar");
 	}
+	
+	@Test
+	public void testBuildTemplateTemplateContextContributorInWorkspace()
+			throws Exception {
+		
+		_testBuildTemplateProjectInWorkspace(
+			"template-context-contributor", "blade-test", "blade.test");
+	}
 
 	@Test
 	public void testBuildTemplateTheme() throws Exception {
@@ -1134,6 +1273,12 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/theme-test.war",
 			"target/theme-test-1.0.0.war");
+	}
+	
+	@Test
+	public void testBuildTemplateThemeInWorkspace() throws Exception {
+		_testBuildTemplateProjectWarInWorkspace(
+			"theme", "theme-test", "theme-test");
 	}
 
 	@Test
@@ -1184,6 +1329,14 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir, "bnd.bnd",
 			"Web-ContextPath: /my-contributor-default-theme-contributor");
+	}
+	
+	@Test
+	public void testBuildTemplateThemeContributorinWorkspace() 
+			throws Exception {
+
+		_testBuildTemplateProjectInWorkspace(
+			"theme-contributor", "my-contributor", "my.contributor");
 	}
 
 	@Test

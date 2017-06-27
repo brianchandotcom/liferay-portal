@@ -17,8 +17,10 @@ package com.liferay.commerce.product.type.grouped.web.internal;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.grouped.constants.GroupedCPTypeConstants;
+import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -61,6 +64,17 @@ public class GroupedCPType implements CPType {
 	public void exportCPDefinition(
 			CPDefinition cpDefinition, PortletDataContext portletDataContext)
 		throws Exception {
+
+		List<CPDefinitionGroupedEntry> cpDefinitionGroupedEntries =
+			_cpDefinitionGroupedEntryLocalService.getCPDefinitionGroupedEntries(
+				cpDefinition.getCPDefinitionId());
+
+		for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry :
+				cpDefinitionGroupedEntries) {
+
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, cpDefinitionGroupedEntry);
+		}
 	}
 
 	@Override

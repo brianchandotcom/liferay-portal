@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.service.persistence.impl;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryUtil;
 import com.liferay.document.library.kernel.service.persistence.DLFileShortcutUtil;
 import com.liferay.document.library.kernel.service.persistence.DLFolderFinder;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -171,6 +173,11 @@ public class DLFolderFinderImpl
 			String sql = CustomSQLUtil.get(FIND_F_BY_NO_ASSETS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(
+				PortalUtil.getClassNameId(DLFolderConstants.getClassName()));
 
 			q.addEntity("DLFolder", DLFolderImpl.class);
 

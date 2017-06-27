@@ -14,17 +14,23 @@
 
 package com.liferay.commerce.product.demo.data.creator.internal.util;
 
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -36,7 +42,7 @@ public class CPDefinitionOptionValueRelDemoDataCreatorHelper
 
 	public void addCPDefinitionOptionValueRels(
 			Locale locale, long userId, long groupId,
-			long cpDefinitionOptionRelId, JSONArray jsonArray)
+			CPDefinitionOptionRel cpDefinitionOptionRel, JSONArray jsonArray)
 		throws PortalException {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
@@ -51,12 +57,35 @@ public class CPDefinitionOptionValueRelDemoDataCreatorHelper
 
 			ServiceContext serviceContext = getServiceContext(userId, groupId);
 
-			_cpDefinitionOptionValueRelLocalService.
-				addCPDefinitionOptionValueRel(
-					cpDefinitionOptionRelId, name, titleMap, priority,
-					serviceContext);
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+				_cpDefinitionOptionValueRelLocalService.
+					addCPDefinitionOptionValueRel(
+						cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+						name, titleMap, priority, serviceContext);
+
+			_cpDefinitionOptionValueRels.add(cpDefinitionOptionValueRel);
 		}
 	}
+
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels() {
+		return _cpDefinitionOptionValueRels;
+	}
+
+	public void init() {
+		_cpDefinitionOptionValueRels = new ArrayList<>();
+	}
+
+	@Activate
+	protected void activate() {
+		init();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_cpDefinitionOptionValueRels = null;
+	}
+
+	private List<CPDefinitionOptionValueRel> _cpDefinitionOptionValueRels;
 
 	@Reference
 	private CPDefinitionOptionValueRelLocalService

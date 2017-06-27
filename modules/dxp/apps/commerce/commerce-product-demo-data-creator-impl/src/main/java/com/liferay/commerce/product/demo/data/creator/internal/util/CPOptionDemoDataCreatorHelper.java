@@ -26,9 +26,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -80,17 +82,20 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 					ddmFormFieldTypeName, priority, facetable, required,
 					skuContributor, false, serviceContext);
 
-			long cpDefinitionOptionRelId =
-				cpDefinitionOptionRel.getCPDefinitionOptionRelId();
+			_cpDefinitionOptionRels.add(cpDefinitionOptionRel);
 
 			JSONArray cpDefinitionOptionValueRelsJSONArray =
 				jsonObject.getJSONArray("values");
 
 			_cpDefinitionOptionValueRelDemoDataCreatorHelper.
 				addCPDefinitionOptionValueRels(
-					locale, userId, groupId, cpDefinitionOptionRelId,
+					locale, userId, groupId, cpDefinitionOptionRel,
 					cpDefinitionOptionValueRelsJSONArray);
 		}
+	}
+
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels() {
+		return _cpDefinitionOptionRels;
 	}
 
 	public void deleteCPOptions() throws PortalException {
@@ -115,6 +120,7 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 	}
 
 	public void init() {
+		_cpDefinitionOptionRels = new ArrayList<>();
 		_cpOptions = new HashMap<>();
 	}
 
@@ -125,6 +131,7 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 
 	@Deactivate
 	protected void deactivate() {
+		_cpDefinitionOptionRels = null;
 		_cpOptions = null;
 	}
 
@@ -177,6 +184,7 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 	@Reference
 	private CPOptionLocalService _cpOptionLocalService;
 
+	private List<CPDefinitionOptionRel> _cpDefinitionOptionRels;
 	private Map<String, CPOption> _cpOptions;
 
 }

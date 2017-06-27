@@ -40,6 +40,7 @@ import java.net.URL;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
@@ -954,18 +955,18 @@ public class PoshiRunnerContext {
 					throw exception;
 				}
 				else {
-					try {
-						SimpleDateFormat simpleDateFormat =
-							new SimpleDateFormat("YYYY-MM-dd");
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+						"YYYY-MM-dd");
 
+					try {
 						simpleDateFormat.parse(dateElement.getText());
 					}
-					catch (Exception e) {
+					catch (ParseException pe) {
 						Exception exception = new Exception(
 							"Please use the date format, YYYY-MM-dd, for " +
 								"this toggle:\n" + testToggleFileName + ":" +
 									toggleName,
-							e);
+							pe);
 
 						exception.printStackTrace();
 

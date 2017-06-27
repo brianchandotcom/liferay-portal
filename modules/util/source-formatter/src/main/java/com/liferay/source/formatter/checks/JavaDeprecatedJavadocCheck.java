@@ -45,6 +45,10 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 
 		BNDSettings bndSettings = getBNDSettings(fileName);
 
+		if (bndSettings == null) {
+			return content;
+		}
+
 		ComparableVersion releaseComparableVersion =
 			bndSettings.getReleaseComparableVersion();
 

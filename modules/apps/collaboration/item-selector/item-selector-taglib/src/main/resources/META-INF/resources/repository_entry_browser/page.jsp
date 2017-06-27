@@ -366,6 +366,7 @@ if (Validator.isNotNull(keywords)) {
 													cssClass="item-preview"
 													data="<%= data %>"
 													icon="documents-and-media"
+													title="<%= title %>"
 												/>
 											</c:when>
 											<c:otherwise>

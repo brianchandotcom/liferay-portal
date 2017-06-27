@@ -711,6 +711,45 @@ public class ProjectTemplatesTest {
 			"build/libs/servicepreaction-1.0.0.jar",
 			"target/servicepreaction-1.0.0.jar");
 	}
+	
+	@Test
+	public void testBuildTemplateServiceInWorkspace() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service", "servicepreaction", "--class-name", "FooAction",
+			"--service", "com.liferay.portal.kernel.events.LifecycleAction");
+		
+		_testContains(gradleProjectDir, "build.gradle",
+				"buildscript {", "repositories {");
+		
+		_writeServiceClass(gradleProjectDir);
+			
+		File workspaceDir = _buildWorkspace();
+			
+		File modulesDir = new File(workspaceDir, "modules");
+			
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			modulesDir,	"service", "servicepreaction", "--class-name", 
+			"FooAction", "--service",
+			"com.liferay.portal.kernel.events.LifecycleAction");
+		
+		_testNotContains(workspaceProjectDir, "build.gradle",
+			true, "^repositories \\{.*");
+		
+		_writeServiceClass(workspaceProjectDir);
+		
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+		
+		File gradleBundleFile = _testExists(gradleProjectDir, 
+			"build/libs/servicepreaction-1.0.0.jar");
+		
+		_executeGradle(workspaceDir, 
+			":modules:servicepreaction:build");
+		
+		File workspaceBundleFile = _testExists(workspaceProjectDir,
+			"build/libs/servicepreaction-1.0.0.jar");
+				
+		_testBundlesDiff(gradleBundleFile, workspaceBundleFile);
+	}
 
 	@Test
 	public void testBuildTemplateServiceBuilder() throws Exception {
@@ -789,6 +828,42 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, mavenProjectDir,
 			"build/libs/serviceoverride-1.0.0.jar",
 			"target/serviceoverride-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateServiceWrapperInWorkspace() 
+		throws Exception {
+		
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-wrapper", "serviceoverride", "--service",
+			"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
+	
+		_testContains(gradleProjectDir, "build.gradle",
+			"buildscript {", "repositories {");
+		
+		File workspaceDir = _buildWorkspace();
+		
+		File modulesDir = new File(workspaceDir, "modules");
+		
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			modulesDir, "service-wrapper", "serviceoverride", "--service",
+			"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
+		
+		_testNotContains(workspaceProjectDir, "build.gradle",
+			true, "^repositories \\{.*");
+		
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+		
+		File gradleBundleFile = _testExists(gradleProjectDir, 
+			"build/libs/serviceoverride-1.0.0.jar");
+		
+		_executeGradle(workspaceDir, 
+			":modules:serviceoverride:build");
+		
+		File workspaceBundleFile = _testExists(workspaceProjectDir,
+			"build/libs/serviceoverride-1.0.0.jar");
+				
+		_testBundlesDiff(gradleBundleFile, workspaceBundleFile);
 	}
 
 	@Test

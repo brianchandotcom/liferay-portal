@@ -10,9 +10,35 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="PortalInstances#tearDownCP">
-			<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-		</execute>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#firstLoginPG" />
+
+				<execute macro="DDLTemplate#tearDownTemplateCP" />
+
+				<execute macro="DDLTemplate#tearDownTemplateCP">
+					<var name="ddlDataDefinitionName" value="Data Definition Clone With Form Template" />
+				</execute>
+
+				<execute macro="DDLList#tearDownCP" />
+
+				<execute macro="DDLDataDefinition#tearDownCP" />
+
+				<execute macro="DMDocument#tearDownCP" />
+
+				<execute macro="User#tearDownCP" />
+
+				<execute macro="Page#tearDownPG" />
+
+				<execute macro="Site#tearDownCP" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddDataDefinitionWithoutANameAndAssertErrorMessage" priority="3">
@@ -2911,9 +2937,17 @@
 		</execute>
 
 		<for list="Device,Company,PermissionChecker" param="fieldName">
-			<execute macro="DDLTemplate#editTemplateScript">
-				<var name="fieldName" value="${fieldName}" />
-			</execute>
+			<var name="key_fieldName" value="${fieldName}" />
+
+			<if>
+				<equals arg1="${fieldName}" arg2="PermissionChecker" />
+				<then>
+					<execute function="MouseOver" locator1="DDMEditTemplate#SCRIPT_UTIL" />
+				</then>
+				<else>
+					<execute function="MouseOver" locator1="DDMEditTemplate#SCRIPT_VARIABLE" />
+				</else>
+			</if>
 
 			<execute function="AssertClick" locator1="JavaDocs#TOOLTIP_JAVA_CLASS_LINK" value1="${fieldName}" />
 

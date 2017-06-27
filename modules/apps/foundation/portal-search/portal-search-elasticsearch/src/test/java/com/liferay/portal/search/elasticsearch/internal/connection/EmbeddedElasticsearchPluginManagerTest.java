@@ -67,11 +67,7 @@ public class EmbeddedElasticsearchPluginManagerTest {
 
 	@Test
 	public void testInstallForTheSecondTime() throws Exception {
-		Mockito.doReturn(
-			new Path[] {createPath(_PLUGIN_NAME)}
-		).when(
-			_pluginManager
-		).getInstalledPluginsPaths();
+		setUpAlreadyInstalled(true);
 
 		install();
 
@@ -88,6 +84,19 @@ public class EmbeddedElasticsearchPluginManagerTest {
 		);
 
 		Mockito.verifyZeroInteractions(_pluginZip);
+	}
+
+	@Test
+	public void testInstallOverObsoleteVersion() throws Exception {
+		setUpAlreadyInstalled(false);
+
+		install();
+
+		Mockito.verify(
+			_pluginManager
+		).removePlugin(
+			Mockito.eq(_PLUGIN_NAME), Mockito.<Terminal>any()
+		);
 	}
 
 	@Test
@@ -143,7 +152,29 @@ public class EmbeddedElasticsearchPluginManagerTest {
 				_PLUGIN_NAME, _PLUGINS_PATH_STRING, _pluginManagerFactory,
 				_pluginZipFactory);
 
+		embeddedElasticsearchPluginManager.removeObsoletePlugin();
+
 		embeddedElasticsearchPluginManager.install();
+	}
+
+	protected void setUpAlreadyInstalled(boolean currentVersion)
+		throws Exception {
+
+		Path path = createPath(_PLUGIN_NAME);
+
+		Mockito.doReturn(
+			new Path[] {path}
+		).when(
+			_pluginManager
+		).getInstalledPluginsPaths();
+
+		Mockito.doReturn(
+			currentVersion
+		).when(
+			_pluginManager
+		).isCurrentVersion(
+			path
+		);
 	}
 
 	protected void setUpBrokenDownloadAndExtract(IOException ioException)

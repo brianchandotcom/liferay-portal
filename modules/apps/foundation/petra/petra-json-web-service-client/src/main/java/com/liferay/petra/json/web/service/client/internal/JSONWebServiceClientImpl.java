@@ -96,7 +96,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
@@ -111,9 +110,7 @@ import org.slf4j.LoggerFactory;
 public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 
 	@Activate
-	public void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
+	public void activate(Map<String, Object> properties) {
 		_setHeaders(String.valueOf(properties.get("headers")));
 
 		setHostName(String.valueOf(properties.get("hostName")));

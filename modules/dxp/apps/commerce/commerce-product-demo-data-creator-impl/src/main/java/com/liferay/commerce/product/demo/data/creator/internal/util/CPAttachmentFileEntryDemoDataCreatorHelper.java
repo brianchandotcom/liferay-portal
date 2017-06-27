@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.InputStream;
 
@@ -49,8 +50,7 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 	extends BaseCPDemoDataCreatorHelper {
 
 	public void addCPAttachmentFileEntries(
-			long userId, long groupId, long cpDefinitionId,
-			JSONArray jsonArray)
+			long userId, long groupId, long cpDefinitionId, JSONArray jsonArray)
 		throws Exception {
 
 		Class<?> clazz = getClass();
@@ -59,9 +59,8 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 
 		long classeNameId = _portal.getClassNameId(CPDefinition.class);
 
-		Folder folder =
-			_cpAttachmentFileEntryLocalService.getAttachmentsFolder(
-				userId, groupId, CPDefinition.class.getName(), cpDefinitionId);
+		Folder folder = _cpAttachmentFileEntryLocalService.getAttachmentsFolder(
+			userId, groupId, CPDefinition.class.getName(), cpDefinitionId);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			String fileName = jsonArray.getString(i);
@@ -89,28 +88,47 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 					_cpDefinitionOptionValueRelDemoDataCreatorHelper.
 						getCPDefinitionOptionValueRels();
 
-				JSONArray OptionIds = JSONFactoryUtil.createJSONArray();
+				JSONArray optionIds = JSONFactoryUtil.createJSONArray();
 
-				for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
-					if (cpDefinitionOptionRel.getCPDefinitionId() == cpDefinitionId) {
-						long cpDefinitionOptionRelId = cpDefinitionOptionRel.getCPDefinitionOptionRelId();
+				for (CPDefinitionOptionRel cpDefinitionOptionRel :
+						cpDefinitionOptionRels) {
 
-						OptionIds.put(cpDefinitionOptionRelId);
+					if (cpDefinitionOptionRel.getCPDefinitionId() ==
+							cpDefinitionId) {
 
-						for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
-							if (cpDefinitionOptionValueRel.getCPDefinitionOptionRelId() == cpDefinitionOptionRelId) {
-								OptionIds.put(cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+						long cpDefinitionOptionRelId =
+							cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 
-								String json =
-									"[{\"cpDefinitionOptionRelId\":\"" +
-									OptionIds.get(0) +
-									"\",\"cpDefinitionOptionValueRelId\":\"" +
-									OptionIds.get(1) + "\"}]";
+						optionIds.put(cpDefinitionOptionRelId);
+
+						for (CPDefinitionOptionValueRel
+								cpDefinitionOptionValueRel :
+									cpDefinitionOptionValueRels) {
+
+							if (cpDefinitionOptionValueRel.
+									getCPDefinitionOptionRelId() ==
+										cpDefinitionOptionRelId) {
+
+								optionIds.put(
+									cpDefinitionOptionValueRel.
+										getCPDefinitionOptionValueRelId());
+
+								StringBuilder sb = new StringBuilder();
+
+								sb.append("[{\"cpDefinitionOptionRelId\":\"");
+								sb.append(optionIds.get(0));
+								sb.append(StringPool.QUOTE);
+								sb.append(StringPool.COMMA);
+								sb.append("\"cpDefinitionOptionValueRelId\"");
+								sb.append(StringPool.COLON);
+								sb.append(StringPool.QUOTE);
+								sb.append(optionIds.get(1));
+								sb.append("\"}]");
 
 								createCPAttachmentFileEntry(
 									userId, groupId, classeNameId,
 									cpDefinitionId, fileEntry.getFileEntryId(),
-									titleMap, json, 0,
+									titleMap, sb.toString(), 0,
 									CPConstants.
 										ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
 							}

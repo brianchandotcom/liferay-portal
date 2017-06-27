@@ -16,17 +16,23 @@ package com.liferay.commerce.product.demo.data.creator.internal.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
+import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,22 +44,48 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetCategoryDemoDataCreatorHelper
 	extends BaseCPDemoDataCreatorHelper {
 
-	public long[] getAssetCategoryIds(
-			long userId, long groupId, long vocabularyId, JSONArray jsonArray)
+	public void addAssetCategories(
+			long userId, long groupId, long assetCategoryId, long vocabularyId,
+			String layoutUuid, JSONArray jsonArray)
 		throws PortalException {
 
-		List<Long> assetCategoryIds = new ArrayList<>();
-
 		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			JSONObject categoryJSONObject = jsonArray.getJSONObject(i);
 
 			AssetCategory assetCategory = getAssetCategory(
-				userId, groupId, vocabularyId, jsonObject);
+				userId, groupId, assetCategoryId, vocabularyId, layoutUuid,
+				categoryJSONObject);
 
-			assetCategoryIds.add(i, assetCategory.getCategoryId());
+			long parentCategoryId = assetCategory.getCategoryId();
+
+			addSubCategories(
+				userId, groupId, parentCategoryId, vocabularyId, layoutUuid,
+				categoryJSONObject);
 		}
+	}
 
-		return ArrayUtil.toLongArray(assetCategoryIds);
+	protected void addSubCategories(
+			long userId, long groupId, long parentCategoryId,
+			long vocabularyId, String layoutUuid, JSONObject jsonObject)
+		throws PortalException {
+
+		JSONArray jsonArray = jsonObject.getJSONArray("subCategories");
+
+		if (jsonArray != null) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject categoryJSONObject = jsonArray.getJSONObject(i);
+
+				AssetCategory assetCategory = getAssetCategory(
+					userId, groupId, parentCategoryId, vocabularyId,
+					layoutUuid, categoryJSONObject);
+
+				long subCategoryId = assetCategory.getCategoryId();
+
+				addSubCategories(
+					userId, groupId, subCategoryId, vocabularyId, layoutUuid,
+					categoryJSONObject);
+			}
+		}
 	}
 
 	public void init() {
@@ -66,37 +98,103 @@ public class AssetCategoryDemoDataCreatorHelper
 	}
 
 	protected AssetCategory getAssetCategory(
-			long userId, long groupId, long vocabularyId, JSONObject jsonObject)
+			long userId, long groupId, long parentCategoryId,
+			long vocabularyId, String layoutUuid, JSONObject jsonObject)
 		throws PortalException {
 
+		String path = jsonObject.getString("path");
 		String title = jsonObject.getString("title");
 
-		AssetCategory assetCategory = _assetCategories.get(title);
+		AssetCategory assetCategory = _assetCategories.get(path);
 
 		if (assetCategory != null) {
 			return assetCategory;
 		}
 
 		assetCategory = _assetCategoryLocalService.fetchCategory(
-			groupId, 0, title, vocabularyId);
+			groupId, parentCategoryId, title, vocabularyId);
 
 		if (assetCategory != null) {
+			_assetCategories.put(path, assetCategory);
+
 			return assetCategory;
 		}
 
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
-		assetCategory = _assetCategoryLocalService.addCategory(
-			userId, groupId, title, vocabularyId, serviceContext);
+		Map<Locale, String> titleMap = Collections.singletonMap(
+			Locale.US, title);
 
-		_assetCategories.put(title, assetCategory);
+		assetCategory = _assetCategoryLocalService.addCategory(
+			userId, groupId, parentCategoryId, titleMap, null, vocabularyId,
+			null, serviceContext);
+
+		titleMap = _getUniqueUrlTitles(assetCategory);
+
+		_cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
+			groupId, serviceContext.getCompanyId(), AssetCategory.class,
+			assetCategory.getCategoryId(), titleMap);
+
+		_cpDisplayLayoutLocalService.addCPDisplayLayout(
+			AssetCategory.class, assetCategory.getCategoryId(), layoutUuid,
+			serviceContext);
+
+		_assetCategories.put(path, assetCategory);
 
 		return assetCategory;
+	}
+
+	public long[] getProductAssetCategoryIds(JSONArray jsonArray) {
+		List<Long> productAssetCategoryIds = new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			String categoryName = jsonArray.getString(i);
+
+			AssetCategory assetCategory = _assetCategories.get(categoryName);
+
+			productAssetCategoryIds.add(assetCategory.getCategoryId());
+		}
+
+		return ArrayUtil.toLongArray(productAssetCategoryIds);
+	}
+
+	private Map<Locale, String> _getUniqueUrlTitles(
+			AssetCategory assetCategory)
+		throws PortalException {
+
+		Map<Locale, String> urlTitleMap = new HashMap<>();
+
+		Map<Locale, String> titleMap = assetCategory.getTitleMap();
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			AssetCategory.class);
+
+		for (Map.Entry<Locale, String> titleEntry : titleMap.entrySet()) {
+			String languageId = "en_US";
+
+			String urlTitle = _cpFriendlyURLEntryLocalService.buildUrlTitle(
+				assetCategory.getGroupId(), assetCategory.getCompanyId(),
+				classNameId, assetCategory.getCategoryId(), languageId,
+				titleEntry.getValue());
+
+			urlTitleMap.put(titleEntry.getKey(), urlTitle);
+		}
+
+		return urlTitleMap;
 	}
 
 	private Map<String, AssetCategory> _assetCategories;
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
+
+	@Reference
+	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
 
 }

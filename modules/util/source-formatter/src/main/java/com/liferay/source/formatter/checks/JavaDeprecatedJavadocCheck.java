@@ -64,7 +64,25 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 					content, " As of " + _NEXT_VERSION, matcher.end(1));
 			}
 
-			String version = matcher.group(3);
+			String bundleSymbolicName = bndSettings.getBundleSymbolicName();
+
+			if (Validator.isNull(bundleSymbolicName)) {
+				return content;
+			}
+
+			String symbolicName = matcher.group(3);
+
+			if (symbolicName == null) {
+				return StringUtil.insert(
+					content, bundleSymbolicName + "#", matcher.start(4));
+			}
+
+			if (symbolicName.equals(bundleSymbolicName)) {
+				return StringUtil.replaceFirst(
+					content, symbolicName, bundleSymbolicName, matcher.start());
+			}
+
+			String version = matcher.group(4);
 
 			if (!version.equals(_NEXT_VERSION)) {
 				ComparableVersion comparableVersion = new ComparableVersion(
@@ -78,11 +96,11 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 				}
 
 				if (StringUtil.count(version, CharPool.PERIOD) == 1) {
-					return StringUtil.insert(content, ".0", matcher.end(3));
+					return StringUtil.insert(content, ".0", matcher.end(4));
 				}
 			}
 
-			String deprecatedInfo = matcher.group(4);
+			String deprecatedInfo = matcher.group(5);
 
 			if (Validator.isNull(deprecatedInfo)) {
 				continue;
@@ -90,7 +108,7 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 
 			if (!deprecatedInfo.startsWith(StringPool.COMMA)) {
 				return StringUtil.insert(
-					content, StringPool.COMMA, matcher.end(3));
+					content, StringPool.COMMA, matcher.end(4));
 			}
 
 			if (deprecatedInfo.endsWith(StringPool.PERIOD) &&
@@ -98,9 +116,11 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 
 				return StringUtil.replaceFirst(
 					content, StringPool.PERIOD, StringPool.BLANK,
-					matcher.end(4) - 1);
+					matcher.end(5) - 1);
 			}
 		}
+
+		putBNDSettings(bndSettings);
 
 		return content;
 	}
@@ -108,8 +128,8 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 	private static final String _NEXT_VERSION = "NEXT-VERSION";
 
 	private final Pattern _deprecatedPattern = Pattern.compile(
-		"(\n\\s*\\* @deprecated)( As of ([0-9\\.]+|NEXT-VERSION)(.*?)\n" +
-			"\\s*\\*( @|/))?",
+		"(\n\\s*\\* @deprecated)( As of ([\\w\\.]+#)?([0-9\\.]+|NEXT-VERSION)" +
+			"(.*?)\n\\s*\\*( @|/))?",
 		Pattern.DOTALL);
 
 }

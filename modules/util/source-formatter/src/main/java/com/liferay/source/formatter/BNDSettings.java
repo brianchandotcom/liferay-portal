@@ -15,6 +15,8 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,6 +35,51 @@ public class BNDSettings {
 	public BNDSettings(String fileLocation, String content) {
 		_fileLocation = fileLocation;
 		_content = content;
+	}
+
+	public String getBundleSymbolicName() throws Exception {
+		if (_bundleSymbolicName != null) {
+			return _bundleSymbolicName;
+		}
+
+		Matcher matcher = _bundleSymbolicNamePattern.matcher(_content);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		String bundleSymbolicName = matcher.group(1);
+
+		if (!bundleSymbolicName.matches("\\$\\{.*\\}")) {
+			_bundleSymbolicName = bundleSymbolicName;
+
+			return _bundleSymbolicName;
+		}
+
+		File buildFile = new File(_fileLocation + "build.xml");
+
+		if (!buildFile.exists()) {
+			_bundleSymbolicName = StringPool.BLANK;
+
+			return _bundleSymbolicName;
+		}
+
+		String propertyName = bundleSymbolicName.substring(
+			2, bundleSymbolicName.length() - 1);
+
+		Pattern pattern = Pattern.compile(
+			"name=\"" + propertyName + "\" value=\"(.*?)[;\"]");
+
+		matcher = pattern.matcher(FileUtil.read(buildFile));
+
+		if (matcher.find()) {
+			_bundleSymbolicName = matcher.group(1);
+		}
+		else {
+			_bundleSymbolicName = StringPool.BLANK;
+		}
+
+		return _bundleSymbolicName;
 	}
 
 	public String getContent() {
@@ -99,6 +146,9 @@ public class BNDSettings {
 		return _releaseComparableVersion;
 	}
 
+	private String _bundleSymbolicName;
+	private final Pattern _bundleSymbolicNamePattern = Pattern.compile(
+		"Bundle-SymbolicName: (.*)(\n|\\Z)");
 	private final String _content;
 	private final Pattern _contentDirPattern = Pattern.compile(
 		"\\scontent=(.*?)(,\\\\|\n|$)");

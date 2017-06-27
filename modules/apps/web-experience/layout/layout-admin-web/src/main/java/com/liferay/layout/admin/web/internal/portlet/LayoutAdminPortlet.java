@@ -19,7 +19,9 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.MDRActionLocalService;
@@ -818,6 +820,9 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				ApplicationListWebKeys.GROUP_PROVIDER, groupProvider);
 
+			renderRequest.setAttribute(
+				LayoutAdminWebKeys.ITEM_SELECTOR, itemSelector);
+
 			super.doDispatch(renderRequest, renderResponse);
 		}
 	}
@@ -1404,6 +1409,10 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	protected GroupLocalService groupLocalService;
 	protected GroupProvider groupProvider;
 	protected GroupService groupService;
+
+	@Reference
+	protected ItemSelector itemSelector;
+
 	protected LayoutLocalService layoutLocalService;
 	protected LayoutPrototypeLocalService layoutPrototypeLocalService;
 	protected LayoutPrototypeService layoutPrototypeService;

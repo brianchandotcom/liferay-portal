@@ -23,6 +23,7 @@ import com.liferay.layout.item.selector.view.LayoutItemSelectorView;
 import com.liferay.layout.item.selector.web.internal.constants.LayoutsItemSelectorWebKeys;
 import com.liferay.layout.item.selector.web.internal.display.context.LayoutItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.io.IOException;
 
@@ -37,6 +38,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -79,7 +82,8 @@ public abstract class BaseLayoutsItemSelectorView
 			layoutItemSelectorViewDisplayContext =
 				new LayoutItemSelectorViewDisplayContext(
 					(HttpServletRequest)request, layoutItemSelectorCriterion,
-					itemSelectedEventName, isPrivateLayout());
+					itemSelectedEventName, resourceBundleLoader,
+					isPrivateLayout());
 
 		request.setAttribute(
 			LayoutsItemSelectorWebKeys.
@@ -93,6 +97,12 @@ public abstract class BaseLayoutsItemSelectorView
 
 		requestDispatcher.include(request, response);
 	}
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.layout.admin.web)",
+		unbind = "-"
+	)
+	protected ResourceBundleLoader resourceBundleLoader;
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(

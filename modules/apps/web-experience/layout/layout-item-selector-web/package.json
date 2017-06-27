@@ -1,0 +1,12 @@
+{
+	"dependencies": {
+		"metal-component": "^2.10.0",
+		"metal-state": "^2.6.4"
+	},
+	"devDependencies": {
+		"liferay-module-config-generator": "^1.2.1",
+		"metal-cli": "^4.1.2"
+	},
+	"name": "layout-item-selector-web",
+	"version": "1.2.0"
+}

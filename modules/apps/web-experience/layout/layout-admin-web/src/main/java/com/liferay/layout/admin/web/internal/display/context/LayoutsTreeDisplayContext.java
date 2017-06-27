@@ -16,7 +16,12 @@ package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
+import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetBranchException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,6 +36,7 @@ import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -39,6 +45,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -142,6 +149,32 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 			"privateLayout", String.valueOf(privateLayout));
 
 		return emptyLayoutSetURL;
+	}
+
+	public PortletURL getItemSelectorURL() {
+		ItemSelector itemSelector =
+			(ItemSelector)liferayPortletRequest.getAttribute(
+				LayoutAdminWebKeys.ITEM_SELECTOR);
+
+		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
+			new LayoutItemSelectorCriterion();
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(new UUIDItemSelectorReturnType());
+
+		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		layoutItemSelectorCriterion.setFollowURLOnTitleClick(true);
+		layoutItemSelectorCriterion.setShowActionsMenu(true);
+
+		String eventName = liferayPortletResponse.getNamespace() + "selectPage";
+
+		return itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest),
+			eventName, layoutItemSelectorCriterion);
 	}
 
 	public String getLayoutSetBranchCssClass(LayoutSetBranch layoutSetBranch)

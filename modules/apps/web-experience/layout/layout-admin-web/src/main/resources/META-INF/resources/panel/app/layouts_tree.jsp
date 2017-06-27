@@ -319,11 +319,6 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	);
 </aui:script>
 
-<liferay-portlet:renderURL portletName="<%= LayoutAdminPortletKeys.GROUP_PAGES %>" var="treeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/panel/app/layouts_tree_expanded.jsp" />
-	<portlet:param name="showLayoutTabs" value="<%= String.valueOf(Boolean.FALSE) %>" />
-</liferay-portlet:renderURL>
-
 <aui:script use="liferay-url-preview">
 	var expandedTreeDialog;
 
@@ -337,7 +332,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 					expandedTreeDialog = new Liferay.UrlPreview(
 						{
 							title: '<%= HtmlUtil.escape(LanguageUtil.get(request, "pages")) %>',
-							url: '<%= treeURL.toString() %>',
+							url: '<%= layoutsTreeDisplayContext.getItemSelectorURL() %>',
 							width: Liferay.Util.isPhone() ? '100%' : '900px'
 						}
 					);

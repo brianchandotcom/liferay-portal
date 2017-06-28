@@ -55,6 +55,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.diibadaaba.zipdiff.DifferenceCalculator;
 import net.diibadaaba.zipdiff.Differences;
@@ -160,6 +162,12 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateActivatorInWorkspace() throws Exception {
+		_testBuildTemplateWithWorkspace(
+			"activator", "bar-activator", "build/libs/bar.activator-1.0.0.jar");
+	}
+
+	@Test
 	public void testBuildTemplateApi() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle("api", "foo");
 
@@ -204,6 +212,12 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateApiInWorkspace() throws Exception {
+		_testBuildTemplateWithWorkspace(
+			"api", "foo", "build/libs/foo-1.0.0.jar");
+	}
+
+	@Test
 	public void testBuildTemplateContentTargetingReport() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"content-targeting-report", "foo-bar");
@@ -225,6 +239,15 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateContentTargetingReportInWorkspace()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"content-targeting-report", "foo-bar",
+			"build/libs/foo.bar-1.0.0.jar");
+	}
+
+	@Test
 	public void testBuildTemplateContentTargetingRule() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"content-targeting-rule", "foo-bar");
@@ -243,6 +266,15 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/foo.bar-1.0.0.jar",
 			"target/foo-bar-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateContentTargetingRuleInWorkspace()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"content-targeting-rule", "foo-bar",
+			"build/libs/foo.bar-1.0.0.jar");
 	}
 
 	@Test
@@ -270,6 +302,15 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateContentTargetingTrackingActionInWorkspace()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"content-targeting-tracking-action", "foo-bar",
+			"build/libs/foo.bar-1.0.0.jar");
+	}
+
+	@Test
 	public void testBuildTemplateControlMenuEntry() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"control-menu-entry", "foo-bar");
@@ -291,6 +332,14 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/foo.bar-1.0.0.jar",
 			"target/foo-bar-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateControlMenuEntryInWorkspace()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"control-menu-entry", "foo-bar", "build/libs/foo.bar-1.0.0.jar");
 	}
 
 	@Test
@@ -333,6 +382,12 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateFormFieldInWorkspace() throws Exception {
+		_testBuildTemplateWithWorkspace(
+			"form-field", "foobar", "build/libs/foobar-1.0.0.jar");
+	}
+
+	@Test
 	public void testBuildTemplateFragment() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"fragment", "loginhook", "--host-bundle-symbolic-name",
@@ -364,6 +419,14 @@ public class ProjectTemplatesTest {
 		_testStartsWith(
 			gradleProjectDir, "src/main/resources/templates/view.ftl",
 			_FREEMARKER_PORTLET_VIEW_FTL_PREFIX);
+	}
+
+	@Test
+	public void testBuildTemplateFreeMarkerPortletInWorkspace()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"freemarker-portlet", "foo", "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
@@ -406,6 +469,13 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateInWorkspace() throws Exception {
+		_testBuildTemplateWithWorkspace(
+			null, "hello-world-portlet",
+			"build/libs/hello.world.portlet-1.0.0.jar");
+	}
+
+	@Test
 	public void testBuildTemplateLayoutTemplate() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"layout-template", "foo");
@@ -442,6 +512,12 @@ public class ProjectTemplatesTest {
 		_testBuildTemplatePortlet(
 			"mvc-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
 			"META-INF/resources/view.jsp");
+	}
+
+	@Test
+	public void testBuildTemplateMVCPortletInWorkspace() throws Exception {
+		_testBuildTemplateWithWorkspace(
+			"mvc-portlet", "foo", "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
@@ -509,6 +585,19 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplatePanelAppInWorkspace() throws Exception {
+		_testBuildTemplateWithWorkspace(
+			"panel-app", "gradle.test", "build/libs/gradle.test-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplatePorletProviderInWorkspace() throws Exception {
+		_testBuildTemplateWithWorkspace(
+			"portlet-provider", "provider.test",
+			"build/libs/provider.test-1.0.0.jar");
+	}
+
+	@Test
 	public void testBuildTemplatePortlet() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet", "foo.test", "--class-name", "Foo");
@@ -565,6 +654,21 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplatePortletConfigurationIconInWorkspace()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"portlet-configuration-icon", "blade.test",
+			"build/libs/blade.test-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplatePortletInWorkspace() throws Exception {
+		_testBuildTemplateWithWorkspace(
+			"portlet", "foo.test", "build/libs/foo.test-1.0.0.jar");
+	}
+
+	@Test
 	public void testBuildTemplatePortletProvider() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-provider", "provider.test");
@@ -615,6 +719,15 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir,
 			"build/libs/blade.test-1.0.0.jar", "target/toolbartest-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplatePortletToolbarContributorInWorkspace()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"portlet-toolbar-contributor", "blade.test",
+			"build/libs/blade.test-1.0.0.jar");
 	}
 
 	@Test
@@ -683,6 +796,12 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/my.rest-1.0.0.jar",
 			"target/my-rest-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateRestInWorkspace() throws Exception {
+		_testBuildTemplateWithWorkspace(
+			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar");
 	}
 
 	@Test
@@ -760,6 +879,45 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateServiceInWorkspace() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service", "servicepreaction", "--class-name", "FooAction",
+			"--service", "com.liferay.portal.kernel.events.LifecycleAction");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", "buildscript {",
+			"repositories {");
+
+		_writeServiceClass(gradleProjectDir);
+
+		File workspaceDir = _buildWorkspace();
+
+		File modulesDir = new File(workspaceDir, "modules");
+
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			modulesDir, "service", "servicepreaction", "--class-name",
+			"FooAction", "--service",
+			"com.liferay.portal.kernel.events.LifecycleAction");
+
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+
+		_writeServiceClass(workspaceProjectDir);
+
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+
+		File gradleBundleFile = _testExists(
+			gradleProjectDir, "build/libs/servicepreaction-1.0.0.jar");
+
+		_executeGradle(workspaceDir, ":modules:servicepreaction:build");
+
+		File workspaceBundleFile = _testExists(
+			workspaceProjectDir, "build/libs/servicepreaction-1.0.0.jar");
+
+		_testBundlesDiff(gradleBundleFile, workspaceBundleFile);
+	}
+
+	@Test
 	public void testBuildTemplateServiceWrapper() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-wrapper", "serviceoverride", "--service",
@@ -792,6 +950,40 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateServiceWrapperInWorkspace() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-wrapper", "serviceoverride", "--service",
+			"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", "buildscript {",
+			"repositories {");
+
+		File workspaceDir = _buildWorkspace();
+
+		File modulesDir = new File(workspaceDir, "modules");
+
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			modulesDir, "service-wrapper", "serviceoverride", "--service",
+			"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
+
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+
+		File gradleBundleFile = _testExists(
+			gradleProjectDir, "build/libs/serviceoverride-1.0.0.jar");
+
+		_executeGradle(workspaceDir, ":modules:serviceoverride:build");
+
+		File workspaceBundleFile = _testExists(
+			workspaceProjectDir, "build/libs/serviceoverride-1.0.0.jar");
+
+		_testBundlesDiff(gradleBundleFile, workspaceBundleFile);
+	}
+
+	@Test
 	public void testBuildTemplateSimulationPanelEntry() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"simulation-panel-entry", "simulator", "--package-name",
@@ -817,6 +1009,15 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, mavenProjectDir,
 			"build/libs/test.simulator-1.0.0.jar",
 			"target/simulator-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateSimulationPanelEntryInWorkspace()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"simulation-panel-entry", "test.simulator",
+			"build/libs/test.simulator-1.0.0.jar");
 	}
 
 	@Test
@@ -932,36 +1133,8 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateSpringMVCPortletInWorkspace()
 		throws Exception {
 
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"spring-mvc-portlet", "foo");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", "buildscript {",
-			"apply plugin: \"war\"", "repositories {");
-
-		File workspaceDir = _buildWorkspace();
-
-		File warsDir = new File(workspaceDir, "wars");
-
-		File workspaceProjectDir = _buildTemplateWithGradle(
-			warsDir, "spring-mvc-portlet", "foo");
-
-		_testNotContains(
-			workspaceProjectDir, "build.gradle", "apply plugin: \"war\"");
-		_testNotContains(
-			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
-
-		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
-
-		File gradleWarFile = _testExists(
-			gradleProjectDir, "build/libs/foo.war");
-
-		_executeGradle(workspaceDir, ":wars:foo:build");
-
-		File workspaceWarFile = _testExists(
-			workspaceProjectDir, "build/libs/foo.war");
-
-		_testWarsDiff(gradleWarFile, workspaceWarFile);
+		_testBuildTemplateProjectWarInWorkspace(
+			"spring-mvc-portlet", "foo", "foo");
 	}
 
 	@Test
@@ -1066,6 +1239,15 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateTemplateContextContributorInWorkspace()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"template-context-contributor", "blade-test",
+			"build/libs/blade.test-1.0.0.jar");
+	}
+
+	@Test
 	public void testBuildTemplateTheme() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle("theme", "theme-test");
 
@@ -1137,6 +1319,47 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir, "bnd.bnd",
 			"Web-ContextPath: /my-contributor-default-theme-contributor");
+	}
+
+	@Test
+	public void testBuildTemplateThemeContributorinWorkspace()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"theme-contributor", "my-contributor",
+			"build/libs/my.contributor-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateThemeInWorkspace() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle("theme", "theme-test");
+
+		_testContains(
+			gradleProjectDir, "build.gradle", "buildscript {",
+			"apply plugin: \"com.liferay.portal.tools.theme.builder\"",
+			"repositories {");
+
+		File workspaceDir = _buildWorkspace();
+
+		File warsDir = new File(workspaceDir, "wars");
+
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			warsDir, "theme", "theme-test");
+
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+
+		File gradleWarFile = _testExists(
+			gradleProjectDir, "build/libs/theme-test.war");
+
+		_executeGradle(workspaceDir, ":wars:theme-test:build");
+
+		File workspaceWarFile = _testExists(
+			workspaceProjectDir, "build/libs/theme-test.war");
+
+		_testWarsDiff(gradleWarFile, workspaceWarFile);
 	}
 
 	@Test
@@ -1690,7 +1913,7 @@ public class ProjectTemplatesTest {
 	}
 
 	private static File _testContains(
-			File dir, String fileName, String... strings)
+			File dir, String fileName, boolean regex, String... strings)
 		throws IOException {
 
 		File file = _testExists(dir, fileName);
@@ -1698,11 +1921,31 @@ public class ProjectTemplatesTest {
 		String content = FileUtil.read(file.toPath());
 
 		for (String s : strings) {
-			Assert.assertTrue(
-				"Not found in " + fileName + ": " + s, content.contains(s));
+			boolean found;
+
+			if (regex) {
+				Pattern pattern = Pattern.compile(
+					s, Pattern.DOTALL | Pattern.MULTILINE);
+
+				Matcher matcher = pattern.matcher(content);
+
+				found = matcher.matches();
+			}
+			else {
+				found = content.contains(s);
+			}
+
+			Assert.assertTrue("Not found in " + fileName + ": " + s, found);
 		}
 
 		return file;
+	}
+
+	private static File _testContains(
+			File dir, String fileName, String... strings)
+		throws IOException {
+
+		return _testContains(dir, fileName, false, strings);
 	}
 
 	private static File _testEquals(
@@ -1739,7 +1982,7 @@ public class ProjectTemplatesTest {
 	}
 
 	private static File _testNotContains(
-			File dir, String fileName, boolean match, String... strings)
+			File dir, String fileName, boolean regex, String... strings)
 		throws IOException {
 
 		File file = _testExists(dir, fileName);
@@ -1747,16 +1990,21 @@ public class ProjectTemplatesTest {
 		String content = FileUtil.read(file.toPath());
 
 		for (String s : strings) {
-			boolean checkResult;
+			boolean found;
 
-			if (match) {
-				checkResult = content.matches(s);
+			if (regex) {
+				Pattern pattern = Pattern.compile(
+					s, Pattern.DOTALL | Pattern.MULTILINE);
+
+				Matcher matcher = pattern.matcher(content);
+
+				found = matcher.matches();
 			}
 			else {
-				checkResult = content.contains(s);
+				found = content.contains(s);
 			}
 
-			Assert.assertFalse("Found in " + fileName + ": " + s, checkResult);
+			Assert.assertFalse("Found in " + fileName + ": " + s, found);
 		}
 
 		return file;
@@ -1965,7 +2213,7 @@ public class ProjectTemplatesTest {
 		File destinationDir = temporaryFolder.newFolder("workspace");
 
 		return _buildTemplateWithGradle(
-			destinationDir, "workspace", "workspace");
+			destinationDir, WorkspaceUtil.WORKSPACE, "test-workspace");
 	}
 
 	private File _testBuildTemplatePortlet(
@@ -2103,6 +2351,41 @@ public class ProjectTemplatesTest {
 		return gradleProjectDir;
 	}
 
+	private void _testBuildTemplateProjectWarInWorkspace(
+			String template, String name, String warFileName)
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(template, name);
+
+		_testContains(
+			gradleProjectDir, "build.gradle", "buildscript {",
+			"apply plugin: \"war\"", "repositories {");
+
+		File workspaceDir = _buildWorkspace();
+
+		File warsDir = new File(workspaceDir, "wars");
+
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			warsDir, template, name);
+
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", "apply plugin: \"war\"");
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+
+		File gradleWarFile = _testExists(
+			gradleProjectDir, "build/libs/" + warFileName + ".war");
+
+		_executeGradle(workspaceDir, ":wars:" + name + ":build");
+
+		File workspaceWarFile = _testExists(
+			workspaceProjectDir, "build/libs/" + warFileName + ".war");
+
+		_testWarsDiff(gradleWarFile, workspaceWarFile);
+	}
+
 	private void _testBuildTemplateServiceBuilder(
 			File gradleProjectDir, final File rootProject, String name,
 			String packageName, final String projectPath)
@@ -2206,6 +2489,38 @@ public class ProjectTemplatesTest {
 
 		_testBundlesDiff(gradleApiBundleFile, mavenApiBundleFile);
 		_testBundlesDiff(gradleServiceBundleFile, mavenServiceBundleFile);
+	}
+
+	private void _testBuildTemplateWithWorkspace(
+			String template, String name, String jarFilePath)
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(template, name);
+
+		_testContains(
+			gradleProjectDir, "build.gradle", true, ".*^buildscript \\{.*",
+			".*^repositories \\{.*");
+
+		File workspaceDir = _buildWorkspace();
+
+		File modulesDir = new File(workspaceDir, "modules");
+
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			modulesDir, template, name);
+
+		_testNotContains(
+			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
+
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+
+		File gradleBundleFile = _testExists(gradleProjectDir, jarFilePath);
+
+		_executeGradle(workspaceDir, ":modules:" + name + ":build");
+
+		File workspaceBundleFile = _testExists(
+			workspaceProjectDir, jarFilePath);
+
+		_testBundlesDiff(gradleBundleFile, workspaceBundleFile);
 	}
 
 	private static final String _BUNDLES_DIFF_IGNORES = StringTestUtil.merge(

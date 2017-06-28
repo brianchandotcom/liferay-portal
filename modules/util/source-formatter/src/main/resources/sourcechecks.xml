@@ -74,6 +74,8 @@
 		<check name="JavaIndexableCheck" />
 		<check name="JavaInterfaceCheck" />
 		<check name="JavaIOExceptionCheck" />
+		<check name="JavaLiferayPortletRequestCheck" />
+		<check name="JavaLiferayPortletResponseCheck" />
 		<check name="JavaLineBreakCheck" />
 		<check name="JavaLocalSensitiveComparisonCheck" />
 		<check name="JavaLogClassNameCheck" />

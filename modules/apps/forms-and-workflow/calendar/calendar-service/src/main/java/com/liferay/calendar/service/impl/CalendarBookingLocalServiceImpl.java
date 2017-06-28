@@ -217,6 +217,9 @@ public class CalendarBookingLocalServiceImpl
 		else if (hasExclusiveCalendarBooking(calendar, startTime, endTime)) {
 			status = CalendarBookingWorkflowConstants.STATUS_DENIED;
 		}
+		else if (isStagingCalendarBooking(calendarBooking)) {
+			status = CalendarBookingWorkflowConstants.STATUS_MASTER_STAGING;
+		}
 		else {
 			status = CalendarBookingWorkflowConstants.STATUS_MASTER_PENDING;
 		}
@@ -883,6 +886,18 @@ public class CalendarBookingLocalServiceImpl
 		}
 
 		return calendarBooking;
+	}
+
+	public boolean isStagingCalendarBooking(CalendarBooking calendarBooking)
+		throws PortalException {
+
+		if (!calendarBooking.isMasterBooking()) {
+			return isStagingCalendarBooking(
+				calendarBooking.getParentCalendarBooking());
+		}
+
+		return calendarLocalService.isStagingCalendar(
+			calendarBooking.getCalendar());
 	}
 
 	@Override

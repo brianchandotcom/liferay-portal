@@ -73,6 +73,10 @@ public interface CalendarBookingLocalService extends BaseLocalService,
 	public boolean hasExclusiveCalendarBooking(Calendar calendar,
 		long startTime, long endTime) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isStagingCalendarBooking(CalendarBooking calendarBooking)
+		throws PortalException;
+
 	/**
 	* Adds the calendar booking to the database. Also notifies the appropriate model listeners.
 	*

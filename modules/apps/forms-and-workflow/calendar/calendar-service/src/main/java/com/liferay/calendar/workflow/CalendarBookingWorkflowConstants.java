@@ -24,6 +24,8 @@ public class CalendarBookingWorkflowConstants extends WorkflowConstants {
 
 	public static final int STATUS_MASTER_PENDING = 10;
 
+	public static final int STATUS_MASTER_STAGING = 11;
+
 	public static final int STATUS_MAYBE = 9;
 
 }

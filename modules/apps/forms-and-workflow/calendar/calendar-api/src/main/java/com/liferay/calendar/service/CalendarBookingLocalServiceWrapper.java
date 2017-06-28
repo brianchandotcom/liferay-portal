@@ -43,6 +43,13 @@ public class CalendarBookingLocalServiceWrapper
 			startTime, endTime);
 	}
 
+	@Override
+	public boolean isStagingCalendarBooking(
+		com.liferay.calendar.model.CalendarBooking calendarBooking)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _calendarBookingLocalService.isStagingCalendarBooking(calendarBooking);
+	}
+
 	/**
 	* Adds the calendar booking to the database. Also notifies the appropriate model listeners.
 	*

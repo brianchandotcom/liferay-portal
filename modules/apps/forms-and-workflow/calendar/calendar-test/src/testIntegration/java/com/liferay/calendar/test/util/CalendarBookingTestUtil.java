@@ -184,6 +184,19 @@ public class CalendarBookingTestUtil {
 	}
 
 	public static CalendarBooking addMasterCalendarBooking(
+			Calendar invitingCalendar, Calendar invitedCalendar)
+		throws PortalException {
+
+		User user = UserLocalServiceUtil.fetchUser(
+			invitingCalendar.getUserId());
+
+		return addMasterCalendarBooking(
+			user, invitingCalendar,
+			new long[] {invitedCalendar.getCalendarId()},
+			createServiceContext(user));
+	}
+
+	public static CalendarBooking addMasterCalendarBooking(
 			User user, Calendar calendar, long[] childCalendarBookingIds,
 			long startTime, long endTime, ServiceContext serviceContext)
 		throws PortalException {

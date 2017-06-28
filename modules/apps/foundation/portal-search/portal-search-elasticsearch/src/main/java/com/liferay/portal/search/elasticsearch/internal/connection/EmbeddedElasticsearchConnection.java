@@ -36,7 +36,9 @@ import java.io.IOException;
 
 import java.net.InetAddress;
 
+import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -45,6 +47,9 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.common.inject.Injector;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.discovery.DiscoveryService;
+import org.elasticsearch.index.IndexService;
+import org.elasticsearch.index.settings.IndexSettingsService;
+import org.elasticsearch.indices.IndicesService;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 import org.elasticsearch.search.SearchService;
@@ -99,20 +104,46 @@ public class EmbeddedElasticsearchConnection
 			}
 		}
 
-		Injector injector = _node.injector();
+		if (PortalRunMode.isTestMode()) {
+			settingsBuilder.put("index.refresh_interval", "-1");
+			settingsBuilder.put(
+				"index.translog.flush_threshold_ops", Integer.MAX_VALUE);
+			settingsBuilder.put("index.translog.interval", "1d");
 
-		ThreadPool threadPool = injector.getInstance(ThreadPool.class);
+			Settings settings = settingsBuilder.build();
 
-		threadPool.shutdownNow();
+			Injector injector = _node.injector();
 
-		try {
-			threadPool.awaitTermination(
-				elasticsearchConfiguration.shutdownWaitTime(),
-				TimeUnit.MILLISECONDS);
-		}
-		catch (InterruptedException ie) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Thread pool shutdown wait was interrupted", ie);
+			IndicesService indicesService = injector.getInstance(
+				IndicesService.class);
+
+			Iterator<IndexService> iterator = indicesService.iterator();
+
+			while (iterator.hasNext()) {
+				IndexService indexService = iterator.next();
+
+				injector = indexService.injector();
+
+				IndexSettingsService indexSettingsService =
+					injector.getInstance(IndexSettingsService.class);
+
+				indexSettingsService.refreshSettings(settings);
+			}
+
+			ThreadPool threadPool = injector.getInstance(ThreadPool.class);
+
+			ScheduledExecutorService scheduledExecutorService =
+				threadPool.scheduler();
+
+			scheduledExecutorService.shutdown();
+
+			try {
+				scheduledExecutorService.awaitTermination(1, TimeUnit.HOURS);
+			}
+			catch (InterruptedException ie) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Thread pool shutdown wait was interrupted", ie);
+				}
 			}
 		}
 

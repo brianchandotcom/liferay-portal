@@ -3191,6 +3191,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTaskTestIgnoreFailures(test);
 		_configureTaskTestJvmArgs(test, "junit.java.unit.gc");
 		_configureTaskTestLogging(test);
+
+		test.setEnableAssertions(false);
 	}
 
 	private void _configureTaskTestAspectJWeaver(

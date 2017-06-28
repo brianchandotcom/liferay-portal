@@ -19,6 +19,8 @@ import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.util.Validator;
 
+import java.io.File;
+
 import java.util.List;
 
 import org.gradle.api.Action;
@@ -103,9 +105,12 @@ public class JacocoPlugin implements Plugin<Project> {
 						"jacoco.dump.file");
 
 					if (Validator.isNull(jacocoDumpFileName)) {
-						jacocoDumpFileName =
-							FileUtil.getAbsolutePath(project.getProjectDir()) +
-								"/build/jacoco/" + taskName + ".exec";
+						File jacocoDumpFile = new File(
+							project.getBuildDir(),
+							"jacoco/" + taskName + ".exec");
+
+						jacocoDumpFileName = FileUtil.getAbsolutePath(
+							jacocoDumpFile);
 					}
 
 					String jacocoJvmArg =

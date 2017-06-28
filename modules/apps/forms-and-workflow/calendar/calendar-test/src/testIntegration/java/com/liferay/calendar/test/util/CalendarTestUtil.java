@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.util.TimeZoneUtil;
 
 import java.util.TimeZone;
 
-import org.junit.Assert;
-
 /**
  * @author Adam Brandizzi
  */
@@ -166,19 +164,6 @@ public class CalendarTestUtil {
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		return calendarResource.getDefaultCalendar();
-	}
-
-	public static Calendar getStagingCalendar(Group group, Calendar calendar)
-		throws PortalException {
-
-		if (group.hasStagingGroup()) {
-			group = group.getStagingGroup();
-		}
-
-		Assert.assertTrue(group.isStaged());
-
-		return CalendarLocalServiceUtil.fetchCalendarByUuidAndGroupId(
-			calendar.getUuid(), group.getGroupId());
 	}
 
 }

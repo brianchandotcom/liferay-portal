@@ -220,8 +220,11 @@ public class CalendarBookingLocalServiceImpl
 		else if (isStagingCalendarBooking(calendarBooking)) {
 			status = CalendarBookingWorkflowConstants.STATUS_MASTER_STAGING;
 		}
-		else {
+		else if (isMasterPending(calendarBooking)) {
 			status = CalendarBookingWorkflowConstants.STATUS_MASTER_PENDING;
+		}
+		else {
+			status = CalendarBookingWorkflowConstants.STATUS_PENDING;
 		}
 
 		calendarBooking.setStatus(status);
@@ -1948,6 +1951,25 @@ public class CalendarBookingLocalServiceImpl
 			CalendarResource.class);
 
 		if (calendarResource.getClassNameId() == calendarResourceClassNameId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isMasterPending(CalendarBooking calendarBooking)
+		throws PortalException {
+
+		if (calendarBooking.isMasterBooking()) {
+			return false;
+		}
+
+		CalendarBooking parentCalendarBooking =
+			calendarBooking.getParentCalendarBooking();
+
+		if (parentCalendarBooking.isPending() ||
+			parentCalendarBooking.isDraft()) {
+
 			return true;
 		}
 

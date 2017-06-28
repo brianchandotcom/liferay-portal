@@ -105,7 +105,13 @@ in `gradle.properties`.
 ### Changed
 - [LPS-72252]: Update the [Liferay Gradle Plugins] dependency to version 3.3.9.
 
-## 1.4.1 - *(Unreleased)*
+## 1.5.0 - *(Unreleased)*
+
+### Added
+- [LPS-73056]: Add the ability to download the Liferay bundle from
+[www.liferay.com](https://www.liferay.com) via authentication token. This
+behavior can be enabled by setting the `liferay.workspace.bundle.token.download`
+property to `true` in `gradle.properties`.
 
 ### Changed
 - [LPS-73156]: Update the [Liferay Gradle Plugins] dependency to version 3.3.31.
@@ -133,5 +139,6 @@ in `gradle.properties`.
 [LPS-70677]: https://issues.liferay.com/browse/LPS-70677
 [LPS-71724]: https://issues.liferay.com/browse/LPS-71724
 [LPS-72252]: https://issues.liferay.com/browse/LPS-72252
+[LPS-73056]: https://issues.liferay.com/browse/LPS-73506
 [LPS-73156]: https://issues.liferay.com/browse/LPS-73156
 [LPS-73248]: https://issues.liferay.com/browse/LPS-73248

@@ -20,6 +20,9 @@ import java.io.File;
 
 import java.lang.reflect.Method;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
@@ -115,6 +118,41 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		}
 
 		return toString(value);
+	}
+
+	public static boolean toBoolean(Object object) {
+		object = toObject(object);
+
+		if (object instanceof Boolean) {
+			return (Boolean)object;
+		}
+
+		if (object instanceof String) {
+			return Boolean.parseBoolean((String)object);
+		}
+
+		return false;
+	}
+
+	public static URL toURL(Object url) {
+		url = toObject(url);
+
+		if (url instanceof URL) {
+			return (URL)url;
+		}
+
+		String s = toString(url);
+
+		if (Validator.isNull(s)) {
+			return null;
+		}
+
+		try {
+			return new URL(toString(url));
+		}
+		catch (MalformedURLException murle) {
+			throw new GradleException("Unable to parse " + s, murle);
+		}
 	}
 
 	private static final String _DEFAULT_REPOSITORY_URL =

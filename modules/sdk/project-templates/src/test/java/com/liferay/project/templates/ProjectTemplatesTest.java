@@ -1913,7 +1913,7 @@ public class ProjectTemplatesTest {
 	}
 
 	private static File _testContains(
-			File dir, String fileName, boolean regex, String...strings)
+			File dir, String fileName, boolean regex, String... strings)
 		throws IOException {
 
 		File file = _testExists(dir, fileName);

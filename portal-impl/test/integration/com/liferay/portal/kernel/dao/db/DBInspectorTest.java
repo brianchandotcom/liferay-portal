@@ -1,19 +1,35 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.portal.kernel.dao.db;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+
 import org.eclipse.core.runtime.Assert;
+
 import org.junit.AfterClass;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 
 /**
  * @author Alberto Chaparro
@@ -40,7 +56,8 @@ public class DBInspectorTest {
 	@Test
 	public void testHasColumn() throws Exception {
 		Assert.isTrue(
-			_dbInspector.hasColumn(EXISTING_TABLE_NAME, EXISTING_COLUMN_NAME));
+			_dbInspector.hasColumn(
+				_EXISTING_TABLE_NAME, _EXISTING_COLUMN_NAME));
 	}
 
 	@Test
@@ -51,7 +68,8 @@ public class DBInspectorTest {
 
 		Assert.isTrue(
 			_dbInspector.hasColumn(
-				EXISTING_TABLE_NAME, EXISTING_COLUMN_NAME.toLowerCase()));
+				_EXISTING_TABLE_NAME,
+				StringUtil.toLowerCase(_EXISTING_COLUMN_NAME)));
 	}
 
 	@Test
@@ -62,24 +80,25 @@ public class DBInspectorTest {
 
 		Assert.isTrue(
 			_dbInspector.hasColumn(
-				EXISTING_TABLE_NAME, EXISTING_COLUMN_NAME.toUpperCase()));
+				_EXISTING_TABLE_NAME,
+				StringUtil.toUpperCase(_EXISTING_COLUMN_NAME)));
 	}
 
 	@Test
 	public void testHasNoColumn() throws Exception {
 		Assert.isTrue(
 			!_dbInspector.hasColumn(
-				EXISTING_TABLE_NAME, NON_EXISTING_COLUMN_NAME));
+				_EXISTING_TABLE_NAME, _NON_EXISTING_COLUMN_NAME));
 	}
 
 	@Test
 	public void testHasNoTable() throws Exception {
-		Assert.isTrue(!_dbInspector.hasTable(NON_EXISTING_TABLE_NAME));
+		Assert.isTrue(!_dbInspector.hasTable(_NON_EXISTING_TABLE_NAME));
 	}
 
 	@Test
 	public void testHasTable() throws Exception {
-		Assert.isTrue(_dbInspector.hasTable(EXISTING_TABLE_NAME));
+		Assert.isTrue(_dbInspector.hasTable(_EXISTING_TABLE_NAME));
 	}
 
 	@Test
@@ -88,7 +107,9 @@ public class DBInspectorTest {
 
 		Assume.assumeTrue(databaseMetaData.storesLowerCaseIdentifiers());
 
-		Assert.isTrue(_dbInspector.hasTable(EXISTING_TABLE_NAME.toLowerCase()));
+		Assert.isTrue(
+			_dbInspector.hasTable(
+				StringUtil.toLowerCase(_EXISTING_TABLE_NAME)));
 	}
 
 	@Test
@@ -97,15 +118,20 @@ public class DBInspectorTest {
 
 		Assume.assumeTrue(databaseMetaData.storesUpperCaseIdentifiers());
 
-		Assert.isTrue(_dbInspector.hasTable(EXISTING_TABLE_NAME.toUpperCase()));
+		Assert.isTrue(
+			_dbInspector.hasTable(
+				StringUtil.toUpperCase(_EXISTING_TABLE_NAME)));
 	}
 
-	private static final String EXISTING_TABLE_NAME = "Release_";
-	private static final String EXISTING_COLUMN_NAME = "releaseId";
+	private static final String _EXISTING_COLUMN_NAME = "releaseId";
 
-	private static final String NON_EXISTING_TABLE_NAME = "NonExistingTable";
-	private static final String NON_EXISTING_COLUMN_NAME = "NonExistingColumn";
+	private static final String _EXISTING_TABLE_NAME = "Release_";
+
+	private static final String _NON_EXISTING_COLUMN_NAME = "NonExistingColumn";
+
+	private static final String _NON_EXISTING_TABLE_NAME = "NonExistingTable";
 
 	private static Connection _con;
 	private static DBInspector _dbInspector;
+
 }

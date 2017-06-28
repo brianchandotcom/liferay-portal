@@ -65,23 +65,15 @@ public class CreateTokenTask extends DefaultTask {
 
 	@TaskAction
 	public void createToken() throws Exception {
-		String emailAddress = getEmailAddress();
-		boolean force = isForce();
-		String password = getPassword();
+		_setCredentials();
 
-		if (Validator.isNull(emailAddress) || Validator.isNull(password)) {
-			System.out.println();
-		}
+		CreateTokenCommand createTokenCommand = new CreateTokenCommand();
 
-		AntCreateTokenCommand createTokenCommand = new AntCreateTokenCommand();
-
-		createTokenCommand.setEmailAddress(emailAddress);
-		createTokenCommand.setForce(force);
-		createTokenCommand.setPassword(password);
+		createTokenCommand.setEmailAddress(getEmailAddress());
+		createTokenCommand.setForce(isForce());
+		createTokenCommand.setPassword(getPassword());
 		createTokenCommand.setTokenFile(getTokenFile());
 		createTokenCommand.setTokenUrl(getTokenUrl());
-
-		createTokenCommand.setCredentials();
 
 		createTokenCommand.execute();
 	}
@@ -133,72 +125,66 @@ public class CreateTokenTask extends DefaultTask {
 		_tokenUrl = tokenUrl;
 	}
 
+	private String _readInput(
+		final AntBuilder antBuilder, String message, String propertySuffix,
+		final boolean secure) {
+
+		String propertyName = getName() + "." + propertySuffix;
+
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("addproperty", propertyName);
+		args.put("message", message);
+
+		Closure<Void> closure = new Closure<Void>(antBuilder) {
+
+			@SuppressWarnings("unused")
+			public void doCall() {
+				if (secure) {
+					antBuilder.invokeMethod(
+						"handler", Collections.singletonMap("type", "secure"));
+				}
+			}
+
+		};
+
+		antBuilder.invokeMethod("input", new Object[] {args, closure});
+
+		return (String)antBuilder.getProperty(propertyName);
+	}
+
+	private void _setCredentials() {
+		String emailAddress = getEmailAddress();
+		String password = getPassword();
+
+		if (Validator.isNotNull(emailAddress) &&
+			Validator.isNotNull(password)) {
+
+			return;
+		}
+
+		Project project = getProject();
+
+		AntBuilder antBuilder = project.createAntBuilder();
+
+		while (Validator.isNull(emailAddress)) {
+			emailAddress = _readInput(
+				antBuilder, "Email Address:", "email.address", false);
+		}
+
+		setEmailAddress(emailAddress);
+
+		while (Validator.isNull(password)) {
+			password = _readInput(antBuilder, "Password:", "password", true);
+		}
+
+		setPassword(password);
+	}
+
 	private Object _emailAddress;
 	private Object _force;
 	private Object _password;
 	private Object _tokenFile = BundleSupportConstants.DEFAULT_TOKEN_FILE;
 	private Object _tokenUrl = BundleSupportConstants.DEFAULT_TOKEN_URL;
-
-	private class AntCreateTokenCommand extends CreateTokenCommand {
-
-		protected void setCredentials() {
-			String emailAddress = getEmailAddress();
-			String password = getPassword();
-
-			if (Validator.isNotNull(emailAddress) &&
-				Validator.isNotNull(password)) {
-
-				return;
-			}
-
-			Project project = getProject();
-
-			AntBuilder antBuilder = project.createAntBuilder();
-
-			while (Validator.isNull(emailAddress)) {
-				emailAddress = _readInput(
-					antBuilder, "Email Address:", "email.address", false);
-			}
-
-			setEmailAddress(emailAddress);
-
-			while (Validator.isNull(password)) {
-				password = _readInput(
-					antBuilder, "Password:", "password", true);
-			}
-
-			setPassword(password);
-		}
-
-		private String _readInput(
-			final AntBuilder antBuilder, String message, String propertySuffix,
-			final boolean secure) {
-
-			String propertyName = getName() + "." + propertySuffix;
-
-			Map<String, Object> args = new HashMap<>();
-
-			args.put("addproperty", propertyName);
-			args.put("message", message);
-
-			Closure<Void> closure = new Closure<Void>(antBuilder) {
-
-				@SuppressWarnings("unused")
-				public void doCall() {
-					if (secure) {
-						antBuilder.invokeMethod(
-							"handler",
-							Collections.singletonMap("type", "secure"));
-					}
-				}
-
-			};
-
-			antBuilder.invokeMethod("input", new Object[] {args, closure});
-
-			return (String)antBuilder.getProperty(propertyName);
-		}
-
-	}
 
 }

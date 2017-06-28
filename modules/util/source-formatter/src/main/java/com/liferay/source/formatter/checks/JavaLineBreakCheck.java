@@ -509,6 +509,23 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			}
 		}
 
+		matcher = _incorrectLineBreakInsideChainPattern3.matcher(content);
+
+		while (matcher.find()) {
+			if (getLevel(matcher.group(1)) <= 0) {
+				String methodName = matcher.group(2);
+
+				if (!methodName.equals("concat")) {
+					addMessage(
+						fileName,
+						"Chaining on method '" + methodName +
+							"' is allowed, but incorrect styling",
+						"chaining.markdown",
+						getLineCount(content, matcher.end(1)));
+				}
+			}
+		}
+
 		return content;
 	}
 
@@ -692,6 +709,8 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		Pattern.compile("\n(\t*)\\).*?\\((.+)");
 	private final Pattern _incorrectLineBreakInsideChainPattern2 =
 		Pattern.compile("\t\\)\\..*\\(\n");
+	private final Pattern _incorrectLineBreakInsideChainPattern3 =
+		Pattern.compile("\n(.*\\S)\\)\\.(.*)\\(\n");
 	private final Pattern _incorrectLineBreakPattern1 = Pattern.compile(
 		"\n(\t*)(.*\\) \\{)([\t ]*\\}\n)");
 	private final Pattern _incorrectLineBreakPattern2 = Pattern.compile(

@@ -373,6 +373,7 @@
 				DLFolder
 			LEFT JOIN
 				AssetEntry ON
+					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = DLFolder.folderId)
 			WHERE
 				(AssetEntry.classPK IS NULL)

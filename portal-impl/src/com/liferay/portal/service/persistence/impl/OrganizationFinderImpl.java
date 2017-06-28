@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.persistence.OrganizationFinder;
 import com.liferay.portal.kernel.service.persistence.OrganizationUtil;
 import com.liferay.portal.kernel.service.persistence.UserUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -574,6 +575,10 @@ public class OrganizationFinderImpl
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("Organization_", OrganizationImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(PortalUtil.getClassNameId(Organization.class.getName()));
 
 			return q.list(true);
 		}

@@ -610,6 +610,7 @@
 				Organization_
 			LEFT JOIN
 				AssetEntry ON
+					(AssetEntry.classNameId = ?) AND
 					(AssetEntry.classPK = Organization_.organizationId)
 			WHERE
 				(AssetEntry.classPK IS NULL)

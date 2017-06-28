@@ -37,7 +37,7 @@ public class JSONWebServiceClientImplTest {
 		properties.put("proxyLogin", "proxylogin");
 		properties.put("proxyPassword", "proxypass");
 
-		jsonWebServiceClientImpl.activate(null, properties);
+		jsonWebServiceClientImpl.activate(properties);
 
 		Assert.assertEquals(
 			properties.get("hostName"), jsonWebServiceClientImpl.getHostName());
@@ -71,7 +71,7 @@ public class JSONWebServiceClientImplTest {
 		properties.put("proxyDomain", "liferay.com");
 		properties.put("proxyWorkstation", "lrdcom2003");
 
-		jsonWebServiceClientImpl.activate(null, properties);
+		jsonWebServiceClientImpl.activate(properties);
 
 		Assert.assertEquals(
 			properties.get("proxyAuthType"),
@@ -94,7 +94,7 @@ public class JSONWebServiceClientImplTest {
 		properties.put(
 			"headers", "headerKey1=headerValue1;headerKey2=headerValue2");
 
-		jsonWebServiceClientImpl.activate(null, properties);
+		jsonWebServiceClientImpl.activate(properties);
 
 		Map<String, String> headers = jsonWebServiceClientImpl.getHeaders();
 
@@ -102,7 +102,7 @@ public class JSONWebServiceClientImplTest {
 	}
 
 	private Map<String, Object> _getBaseProperties() {
-		Map<String, Object> properties = new HashMap<>();
+		Map<String, Object> properties = new HashMap<String, Object>();
 
 		properties.put("hostName", "localhost");
 		properties.put("hostPort", "9090");

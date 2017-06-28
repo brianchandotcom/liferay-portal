@@ -26,9 +26,9 @@ import com.liferay.message.boards.kernel.exception.NoSuchCategoryException;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.service.MBCategoryService;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
+import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -262,7 +262,7 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 		if (categoryId <= 0) {
 			if (captchaConfiguration.messageBoardsEditMessageCaptchaEnabled()) {
-				_captcha.check(actionRequest);
+				CaptchaUtil.check(actionRequest);
 			}
 
 			// Add category
@@ -287,9 +287,6 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 				mergeWithParentCategory, serviceContext);
 		}
 	}
-
-	@Reference
-	private Captcha _captcha;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

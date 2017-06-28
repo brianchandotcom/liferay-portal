@@ -135,7 +135,6 @@ liferay.home=${liferay.home}</echo>
 			</then>
 			<else>
 				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.parent.dir=${app.server.parent.dir}
-app.server.tomcat.dir=${app.server.parent.dir}/tomcat-$(app.server.tomcat.version)
 app.server.type=${app.server.type}
 
 auto.deploy.dir=${auto.deploy.dir}
@@ -177,6 +176,19 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 
 app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 			</then>
+			<elseif>
+				<or>
+					<equals arg1="@{liferay.portal.bundle}" arg2="6.2.4" />
+					<equals arg1="@{liferay.portal.bundle}" arg2="6.2.5" />
+					<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.14" />
+					<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.15" />
+				</or>
+				<then>
+					<echo append="true" file="${lp.plugins.dir}/build.${user.name}.properties">
+
+app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.62</echo>
+				</then>
+			</elseif>
 		</if>
 
 		<for list="${plugins.includes}" param="plugin">

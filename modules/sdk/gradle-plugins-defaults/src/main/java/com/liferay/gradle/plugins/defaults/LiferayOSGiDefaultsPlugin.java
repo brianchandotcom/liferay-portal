@@ -25,6 +25,7 @@ import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
 import com.liferay.gradle.plugins.defaults.internal.FindSecurityBugsPlugin;
+import com.liferay.gradle.plugins.defaults.internal.JacocoPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
 import com.liferay.gradle.plugins.defaults.internal.WhipDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.BackupFilesBuildAdapter;
@@ -256,8 +257,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String INSTALL_CACHE_TASK_NAME = "installCache";
 
-	public static final String JACOCO_AGENT_CONFIGURATION_NAME = "jacocoAgent";
-
 	public static final String JAR_JAVADOC_TASK_NAME = "jarJavadoc";
 
 	public static final String JAR_JSP_TASK_NAME = "jarJSP";
@@ -365,16 +364,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				aspectJWeaverConfiguration);
 
 			if (Boolean.getBoolean("jacoco.code.coverage")) {
-				Configuration jacocoAgentConfiguration =
-					_addConfigurationJacocoAgent(project);
-
-				_configureTaskTestJacocoAgent(
-					project, JavaPlugin.TEST_TASK_NAME,
-					jacocoAgentConfiguration);
-				_configureTaskTestJacocoAgent(
-					project,
-					TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME,
-					jacocoAgentConfiguration);
+				JacocoPlugin.INSTANCE.apply(project);
 			}
 		}
 
@@ -646,28 +636,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	private Configuration _addConfigurationJacocoAgent(final Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, JACOCO_AGENT_CONFIGURATION_NAME);
-
-		configuration.defaultDependencies(
-			new Action<DependencySet>() {
-
-				@Override
-				public void execute(DependencySet dependencySet) {
-					_addDependenciesJacocoAgent(project);
-				}
-
-			});
-
-		configuration.setDescription(
-			"Configures Jacoco Agent to apply to the test tasks.");
-		configuration.setTransitive(false);
-		configuration.setVisible(false);
-
-		return configuration;
-	}
-
 	private Configuration _addConfigurationPortalTest(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PORTAL_TEST_CONFIGURATION_NAME);
@@ -684,12 +652,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, ASPECTJ_WEAVER_CONFIGURATION_NAME, "org.aspectj",
 			"aspectjweaver", "1.8.9");
-	}
-
-	private void _addDependenciesJacocoAgent(Project project) {
-		GradleUtil.addDependency(
-			project, JACOCO_AGENT_CONFIGURATION_NAME, "org.jacoco",
-			"org.jacoco.agent", "0.7.9", "runtime", true);
 	}
 
 	private void _addDependenciesPmd(Project project) {
@@ -3287,61 +3249,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		JUnitXmlReport jUnitXmlReport = testTaskReports.getJunitXml();
 
 		jUnitXmlReport.setDestination(resultsDir);
-	}
-
-	private void _configureTaskTestJacocoAgent(
-		final Project project, final String taskName,
-		final Configuration jacocoAgentConfiguration) {
-
-		Test test = (Test)GradleUtil.getTask(project, taskName);
-
-		test.doFirst(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					String jarFilePath = FileUtil.getAbsolutePath(
-						jacocoAgentConfiguration.getSingleFile());
-
-					String jacocoDumpFile = System.getProperty(
-						"jacoco.dump.file");
-
-					if (jacocoDumpFile == null) {
-						jacocoDumpFile =
-							FileUtil.getAbsolutePath(project.getProjectDir()) +
-								"/build/jacoco/" + taskName + ".exec";
-					}
-
-					String jacocoAgent =
-						"-javaagent:" + jarFilePath + "=destfile=" +
-							jacocoDumpFile + ",output=file,append=true";
-
-					Test test = (Test)task;
-
-					List<String> allJVMArgs = test.getAllJvmArgs();
-
-					for (int i = 0; i < allJVMArgs.size(); i++) {
-						String jvmArg = allJVMArgs.get(i);
-
-						if (jvmArg.contains("-javaagent:")) {
-							allJVMArgs.set(
-								i,
-								jvmArg.replaceFirst(
-									"-javaagent:",
-									jacocoAgent + " -javaagent:"));
-
-							test.setAllJvmArgs(allJVMArgs);
-
-							return;
-						}
-					}
-
-					test.jvmArgs(jacocoAgent);
-				}
-
-			});
-
-		test.systemProperty("jacoco.code.coverage", "true");
 	}
 
 	private void _configureTaskTestJvmArgs(Test test, String propertyName) {

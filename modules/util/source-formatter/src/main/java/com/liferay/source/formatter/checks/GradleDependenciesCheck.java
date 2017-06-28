@@ -84,6 +84,25 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 				continue;
 			}
 
+			matcher = _incorrectTestIntegrationRuntimePattern.matcher(
+				dependency);
+
+			if (matcher.find()) {
+				StringBundler sb = new StringBundler(9);
+
+				sb.append(matcher.group(1));
+				sb.append(" group: \"");
+				sb.append(matcher.group(2));
+				sb.append("\" name: \"");
+				sb.append(matcher.group(3));
+				sb.append("\" version: \"");
+				sb.append(matcher.group(4));
+				sb.append("\"");
+				sb.append(matcher.group(5));
+
+				dependency = sb.toString();
+			}
+
 			uniqueDependencies.add(dependency);
 		}
 
@@ -125,6 +144,10 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 
 	private final Pattern _dependenciesPattern = Pattern.compile(
 		"^dependencies \\{(.+?\n)\\}", Pattern.DOTALL | Pattern.MULTILINE);
+	private final Pattern _incorrectTestIntegrationRuntimePattern =
+		Pattern.compile(
+			"(testIntegrationRuntime)\\s\"([^:]+?):([^:]+?):([^\"]+?)\"(.*?)",
+			Pattern.DOTALL);
 	private final Pattern _incorrectWhitespacePattern = Pattern.compile(
 		":[^ \n]");
 	private String _projectPathPrefix;

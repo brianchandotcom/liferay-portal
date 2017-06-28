@@ -30,10 +30,23 @@
 			<var name="fieldValue" value="${username}" />
 		</execute>
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="$password" />
-			<var name="fieldValue" value="${password}" />
-		</execute>
+		<var name="key_fieldName" value="$password" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="FormFields#PASSWORD_FIELD" />
+			<then>
+				<execute macro="FormFields#editPassword">
+					<var name="fieldName" value="$password" />
+					<var name="fieldValue" value="${password}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="FormFields#editText">
+					<var name="fieldName" value="$password" />
+					<var name="fieldValue" value="${password}" />
+				</execute>
+			</else>
+		</if>
 
 		<execute macro="FormsAdmin#editDataProviderOutputParameter">
 			<var name="outputParameterLabel" value="${outputParameterLabel}" />

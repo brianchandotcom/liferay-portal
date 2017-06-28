@@ -70,6 +70,12 @@
 		<execute function="Type" locator1="FormFields#PARAGRAPH_BODY_TEXT_FIELD" value1="${fieldValue}" />
 	</command>
 
+	<command name="editPassword">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Type" locator1="FormFields#PASSWORD_FIELD" value1="${fieldValue}" />
+	</command>
+
 	<command name="editRepeatableTextMultiline">
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_repeatableFieldNumber" value="${repeatableFieldNumber}" />

@@ -1629,6 +1629,12 @@ failure.
 ### Changed
 - [LPS-73327]: Disable JVM assertions for unit tests.
 
+## 3.7.13 - 2017-06-28
+
+### Added
+- [LPS-73352]: Add Jacoco Java Agent to the `test` and `testIntegration` tasks,
+if the system property `jacoco.code.coverage` is set to `true`.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1803,6 +1809,7 @@ failure.
 [LPS-73271]: https://issues.liferay.com/browse/LPS-73271
 [LPS-73289]: https://issues.liferay.com/browse/LPS-73289
 [LPS-73327]: https://issues.liferay.com/browse/LPS-73327
+[LPS-73352]: https://issues.liferay.com/browse/LPS-73352
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

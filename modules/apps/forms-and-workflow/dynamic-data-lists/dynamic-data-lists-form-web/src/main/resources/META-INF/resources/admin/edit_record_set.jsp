@@ -224,7 +224,6 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 				portletNamespace: '<portlet:namespace />',
 				publishRecordSetURL: '<%= publishRecordSetURL.toString() %>',
 				restrictedFormURL: '<%= ddlFormAdminDisplayContext.getRestrictedFormURL() %>',
-				rules: <%= ddlFormAdminDisplayContext.getSerializedDDMFormRules() %>,
 				sharedFormURL: '<%= ddlFormAdminDisplayContext.getSharedFormURL() %>'
 			};
 
@@ -266,6 +265,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 											published: !!<%= ddlFormAdminDisplayContext.isFormPublished() %>,
 											publishRecordSetURL: '<%= publishRecordSetURL.toString() %>',
 											recordSetId: <%= recordSetId %>,
+											rules: <%= ddlFormAdminDisplayContext.getSerializedDDMFormRules() %>,
 											translationManager: Liferay.component('<portlet:namespace />translationManager')
 										}
 									)

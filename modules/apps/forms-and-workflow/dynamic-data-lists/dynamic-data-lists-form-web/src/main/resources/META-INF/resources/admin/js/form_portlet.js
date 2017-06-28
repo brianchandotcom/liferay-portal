@@ -63,6 +63,10 @@ AUI.add(
 						valueFn: '_valueRuleBuilder'
 					},
 
+					rules: {
+						value: []
+					},
+
 					translationManager: {
 					}
 				},
@@ -862,7 +866,7 @@ AUI.add(
 						return new Liferay.DDL.FormBuilderRuleBuilder(
 							{
 								formBuilder: instance.get('formBuilder'),
-								rules: Settings.rules,
+								rules: instance.get('rules'),
 								visible: false
 							}
 						);

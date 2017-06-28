@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
+
+<liferay-portlet-app>
+	<portlet>
+		<portlet-name>1</portlet-name>
+		<icon>/admin/icon.png</icon>
+		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
+		<indexer-class>com.liferay.powwow.util.PowwowMeetingIndexer</indexer-class>
+		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapping>meetings</friendly-url-mapping>
+		<friendly-url-routes>com/liferay/powwow/meetings/portlet/meetings-friendly-url-routes.xml</friendly-url-routes>
+		<user-notification-definitions>com/liferay/powwow/portlet/powwow-user-notification-definitions.xml</user-notification-definitions>
+		<user-notification-handler-class>com.liferay.powwow.notifications.PowwowUserNotificationHandler</user-notification-handler-class>
+		<preferences-unique-per-layout>false</preferences-unique-per-layout>
+		<header-portlet-css>/meetings/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>/meetings/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>powwow-portlet</css-class-wrapper>
+		<add-default-resource>true</add-default-resource>
+	</portlet>
+	<portlet>
+		<portlet-name>2</portlet-name>
+		<icon>/meetings/icon.png</icon>
+		<scheduler-entry>
+			<scheduler-event-listener-class>com.liferay.powwow.admin.messaging.SynchronizePowwowMessageListener</scheduler-event-listener-class>
+			<trigger>
+				<simple>
+					<property-key>powwow.synchronization.interval</property-key>
+					<time-unit>minute</time-unit>
+				</simple>
+			</trigger>
+		</scheduler-entry>
+		<control-panel-entry-category>configuration</control-panel-entry-category>
+		<control-panel-entry-class>com.liferay.portal.kernel.portlet.OmniadminControlPanelEntry</control-panel-entry-class>
+		<css-class-wrapper>powwow-portlet</css-class-wrapper>
+	</portlet>
+	<role-mapper>
+		<role-name>administrator</role-name>
+		<role-link>Administrator</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>guest</role-name>
+		<role-link>Guest</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>power-user</role-name>
+		<role-link>Power User</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>user</role-name>
+		<role-link>User</role-link>
+	</role-mapper>
+</liferay-portlet-app>

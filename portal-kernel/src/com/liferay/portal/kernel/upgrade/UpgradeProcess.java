@@ -577,15 +577,9 @@ public abstract class UpgradeProcess
 			String name, DatabaseMetaData databaseMetaData)
 		throws SQLException {
 
-		if (databaseMetaData.storesLowerCaseIdentifiers()) {
-			return StringUtil.toLowerCase(name);
-		}
+		DBInspector dbInspector = new DBInspector(connection);
 
-		if (databaseMetaData.storesUpperCaseIdentifiers()) {
-			return StringUtil.toUpperCase(name);
-		}
-
-		return name;
+		return dbInspector.normalizeName(name, databaseMetaData);
 	}
 
 	protected void upgradeTable(String tableName, Object[][] tableColumns)

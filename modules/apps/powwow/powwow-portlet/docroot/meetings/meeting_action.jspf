@@ -34,16 +34,11 @@ PowwowParticipant userPowwowParticipant = PowwowParticipantLocalServiceUtil.fetc
 </c:if>
 
 <c:if test="<%= PowwowMeetingPermission.contains(permissionChecker, powwowMeeting, userPowwowParticipant, ActionKeys.DELETE) %>">
-
-	<%
-	String taglibOnClickDeleteMeeting = renderResponse.getNamespace() + "deleteMeeting(" + String.valueOf(powwowMeeting.getPowwowMeetingId()) + ");";
-	%>
-
 	<liferay-ui:icon
 		iconCssClass="icon-remove"
 		label="<%= true %>"
 		message="delete"
-		onClick="<%= taglibOnClickDeleteMeeting %>"
+		onClick='<%= renderResponse.getNamespace() + "deleteMeeting(" + String.valueOf(powwowMeeting.getPowwowMeetingId()) + ");" %>'
 		url="javascript:;"
 	/>
 </c:if>
@@ -62,36 +57,20 @@ PowwowParticipant userPowwowParticipant = PowwowParticipantLocalServiceUtil.fetc
 	/>
 </c:if>
 
-<c:if test="<%= (powwowMeeting.getStatus() == PowwowMeetingConstants.STATUS_IN_PROGRESS) || (powwowMeeting.getStatus() == PowwowMeetingConstants.STATUS_SCHEDULED) %>">
-
-	<%
-	String invitationURL = PowwowUtil.getInvitationURL(powwowMeeting.getPowwowMeetingId(), userPowwowParticipant, request);
-
-	if (userPowwowParticipant != null) {
-	%>
-
-		<liferay-ui:icon
-			iconCssClass="icon-comments-alt"
-			label="<%= true %>"
-			message='<%= ((powwowMeeting.getStatus() == PowwowMeetingConstants.STATUS_SCHEDULED) && (userPowwowParticipant.getType() == PowwowParticipantConstants.TYPE_HOST)) ? "start-meeting" : "join-meeting" %>'
-			url="<%= invitationURL %>"
-		/>
-
-	<%
-	}
-	%>
-
+<c:if test="<%= (userPowwowParticipant != null) && ((powwowMeeting.getStatus() == PowwowMeetingConstants.STATUS_IN_PROGRESS) || (powwowMeeting.getStatus() == PowwowMeetingConstants.STATUS_SCHEDULED)) %>">
+	<liferay-ui:icon
+		iconCssClass="icon-comments-alt"
+		label="<%= true %>"
+		message='<%= ((powwowMeeting.getStatus() == PowwowMeetingConstants.STATUS_SCHEDULED) && (userPowwowParticipant.getType() == PowwowParticipantConstants.TYPE_HOST)) ? "start-meeting" : "join-meeting" %>'
+		url="<%= PowwowUtil.getInvitationURL(powwowMeeting.getPowwowMeetingId(), userPowwowParticipant, request) %>"
+	/>
 </c:if>
-
-<%
-String taglibOnClickViewInvitation = renderResponse.getNamespace() + "viewInvitation(" + String.valueOf(powwowMeeting.getPowwowMeetingId()) + ");";
-%>
 
 <liferay-ui:icon
 	iconCssClass="icon-search"
 	label="<%= true %>"
 	message="view-invitation"
-	onClick="<%= taglibOnClickViewInvitation %>"
+	onClick='<%= renderResponse.getNamespace() + "viewInvitation(" + String.valueOf(powwowMeeting.getPowwowMeetingId()) + ");" %>'
 	url="javascript:;"
 />
 

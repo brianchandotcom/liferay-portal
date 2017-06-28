@@ -1921,7 +1921,7 @@ public class ProjectTemplatesTest {
 		String content = FileUtil.read(file.toPath());
 
 		for (String s : strings) {
-			boolean checkResult;
+			boolean found;
 
 			if (regex) {
 				Pattern pattern = Pattern.compile(
@@ -1929,14 +1929,13 @@ public class ProjectTemplatesTest {
 
 				Matcher matcher = pattern.matcher(content);
 
-				checkResult = matcher.matches();
+				found = matcher.matches();
 			}
 			else {
-				checkResult = content.contains(s);
+				found = content.contains(s);
 			}
 
-			Assert.assertTrue(
-				"Not found in " + fileName + ": " + s, checkResult);
+			Assert.assertTrue("Not found in " + fileName + ": " + s, found);
 		}
 
 		return file;
@@ -1991,7 +1990,7 @@ public class ProjectTemplatesTest {
 		String content = FileUtil.read(file.toPath());
 
 		for (String s : strings) {
-			boolean checkResult;
+			boolean found;
 
 			if (regex) {
 				Pattern pattern = Pattern.compile(
@@ -1999,13 +1998,13 @@ public class ProjectTemplatesTest {
 
 				Matcher matcher = pattern.matcher(content);
 
-				checkResult = matcher.matches();
+				found = matcher.matches();
 			}
 			else {
-				checkResult = content.contains(s);
+				found = content.contains(s);
 			}
 
-			Assert.assertFalse("Found in " + fileName + ": " + s, checkResult);
+			Assert.assertFalse("Found in " + fileName + ": " + s, found);
 		}
 
 		return file;

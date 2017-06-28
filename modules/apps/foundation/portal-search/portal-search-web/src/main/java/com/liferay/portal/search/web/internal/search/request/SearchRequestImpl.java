@@ -129,7 +129,6 @@ public class SearchRequestImpl implements SearchRequest {
 		SearchResponseImpl searchResponseImpl = new SearchResponseImpl();
 
 		searchResponseImpl.setDocuments(hits.toList());
-		searchResponseImpl.setHighlights(hits.getQueryTerms());
 		searchResponseImpl.setHits(hits);
 		searchResponseImpl.setKeywords(searchContext.getKeywords());
 		searchResponseImpl.setPaginationDelta(searchContainer.getDelta());

@@ -100,12 +100,12 @@ Hits hits = searchDisplayContext.getHits();
 				searchResultSummaryDisplayBuilder.setLanguage(com.liferay.portal.kernel.language.LanguageUtil.getLanguage());
 				searchResultSummaryDisplayBuilder.setLocale(locale);
 				searchResultSummaryDisplayBuilder.setPortletURLFactory(searchDisplayContext.getPortletURLFactory());
-				searchResultSummaryDisplayBuilder.setQueryTerms(searchDisplayContext.getQueryTerms());
 				searchResultSummaryDisplayBuilder.setRenderRequest(renderRequest);
 				searchResultSummaryDisplayBuilder.setRenderResponse(renderResponse);
 				searchResultSummaryDisplayBuilder.setRequest(request);
 				searchResultSummaryDisplayBuilder.setResourceActions(com.liferay.portal.kernel.security.permission.ResourceActionsUtil.getResourceActions());
 				searchResultSummaryDisplayBuilder.setSearchResultPreferences(searchDisplayContext.getSearchResultPreferences());
+				searchResultSummaryDisplayBuilder.setSummaryBuilderFactory(searchDisplayContext.getSummaryBuilderFactory());
 				searchResultSummaryDisplayBuilder.setThemeDisplay(themeDisplay);
 
 				com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext searchResultSummaryDisplayContext = searchResultSummaryDisplayBuilder.build();

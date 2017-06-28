@@ -16,7 +16,6 @@ package com.liferay.gradle.plugins.defaults.internal;
 
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -29,7 +28,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
-import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.testing.Test;
 
 /**
@@ -47,11 +46,7 @@ public class JacocoPlugin implements Plugin<Project> {
 		Configuration jacocoAgentConfiguration = _addConfigurationJacocoAgent(
 			project);
 
-		_configureTaskTestJacoco(
-			project, JavaPlugin.TEST_TASK_NAME, jacocoAgentConfiguration);
-		_configureTaskTestJacoco(
-			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME,
-			jacocoAgentConfiguration);
+		_configureTasksTest(project, jacocoAgentConfiguration);
 	}
 
 	private JacocoPlugin() {
@@ -85,11 +80,25 @@ public class JacocoPlugin implements Plugin<Project> {
 			"org.jacoco.agent", "0.7.9", "runtime", true);
 	}
 
-	private void _configureTaskTestJacoco(
-		final Project project, final String taskName,
-		final Configuration jacocoAgentConfiguration) {
+	private void _configureTasksTest(
+		Project project, final Configuration jacocoAgentConfiguration) {
 
-		Test test = (Test)GradleUtil.getTask(project, taskName);
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			Test.class,
+			new Action<Test>() {
+
+				@Override
+				public void execute(Test test) {
+					_configureTaskTest(test, jacocoAgentConfiguration);
+				}
+
+			});
+	}
+
+	private void _configureTaskTest(
+		Test test, final Configuration jacocoAgentConfiguration) {
 
 		test.doFirst(
 			new Action<Task>() {
@@ -97,6 +106,8 @@ public class JacocoPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Task task) {
 					Test test = (Test)task;
+
+					Project project = test.getProject();
 
 					String jacocoAgentFileName = FileUtil.getAbsolutePath(
 						jacocoAgentConfiguration.getSingleFile());
@@ -107,7 +118,7 @@ public class JacocoPlugin implements Plugin<Project> {
 					if (Validator.isNull(jacocoDumpFileName)) {
 						File jacocoDumpFile = new File(
 							project.getBuildDir(),
-							"jacoco/" + taskName + ".exec");
+							"jacoco/" + test.getName() + ".exec");
 
 						jacocoDumpFileName = FileUtil.getAbsolutePath(
 							jacocoDumpFile);

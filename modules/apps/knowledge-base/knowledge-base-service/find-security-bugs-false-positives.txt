@@ -1,1 +1,0 @@
-com/liferay/portal/kernel/theme/ThemeDisplay.getURLCurrent():SAFE@com/liferay/knowledge/base/internal/events/KBServicePreAction

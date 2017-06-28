@@ -53,6 +53,22 @@ com/liferay/portal/kernel/util/UnicodeFormatter.parseString(Ljava/lang/String;)L
 com/liferay/portal/kernel/util/UnicodeFormatter.toString([C)Ljava/lang/String;:0|+XSS_SAFE
 com/liferay/portal/kernel/util/UnicodeFormatter.toString(Ljava/lang/String;)Ljava/lang/String;:0|+XSS_SAFE
 
+com/liferay/portal/kernel/util/Http.addParameter(Ljava/lang/String;Ljava/lang/String;Z)Ljava/lang/String;:1,2
+com/liferay/portal/kernel/util/Http.addParameter(Ljava/lang/String;Ljava/lang/String;D)Ljava/lang/String;:2,3
+com/liferay/portal/kernel/util/Http.addParameter(Ljava/lang/String;Ljava/lang/String;I)Ljava/lang/String;:1,2
+com/liferay/portal/kernel/util/Http.addParameter(Ljava/lang/String;Ljava/lang/String;J)Ljava/lang/String;:2,3
+com/liferay/portal/kernel/util/Http.addParameter(Ljava/lang/String;Ljava/lang/String;S)Ljava/lang/String;:1,2
+com/liferay/portal/kernel/util/Http.addParameter(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1,2
+com/liferay/portal/kernel/util/Http.setParameter(Ljava/lang/String;Ljava/lang/String;Z)Ljava/lang/String;:1,2
+com/liferay/portal/kernel/util/Http.setParameter(Ljava/lang/String;Ljava/lang/String;D)Ljava/lang/String;:2,3
+com/liferay/portal/kernel/util/Http.setParameter(Ljava/lang/String;Ljava/lang/String;I)Ljava/lang/String;:1,2
+com/liferay/portal/kernel/util/Http.setParameter(Ljava/lang/String;Ljava/lang/String;J)Ljava/lang/String;:2,3
+com/liferay/portal/kernel/util/Http.setParameter(Ljava/lang/String;Ljava/lang/String;S)Ljava/lang/String;:1,2
+com/liferay/portal/kernel/util/Http.setParameter(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1,2
+com/liferay/portal/kernel/util/Http.encodeURL(Ljava/lang/String;)Ljava/lang/String;:0|+CR_ENCODED,+LF_ENCODED,+QUOTE_ENCODED,+LT_ENCODED
+com/liferay/portal/kernel/util/Http.decodeURL(Ljava/lang/String;)Ljava/lang/String;:0|-XSS_SAFE,-CR_ENCODED,-LF_ENCODED,-QUOTE_ENCODED,-LT_ENCODED
+com/liferay/portal/kernel/util/Http.getCompleteURL(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/String;:TAINTED|+CR_ENCODED,+LF_ENCODED,+QUOTE_ENCODED,+LT_ENCODED
+
 com/liferay/portal/kernel/util/HttpUtil.addParameter(Ljava/lang/String;Ljava/lang/String;Z)Ljava/lang/String;:1,2
 com/liferay/portal/kernel/util/HttpUtil.addParameter(Ljava/lang/String;Ljava/lang/String;D)Ljava/lang/String;:2,3
 com/liferay/portal/kernel/util/HttpUtil.addParameter(Ljava/lang/String;Ljava/lang/String;I)Ljava/lang/String;:1,2
@@ -295,6 +311,8 @@ java/text/NumberFormat.format(D)Ljava/lang/String;:SAFE
 java/text/NumberFormat.format(J)Ljava/lang/String;:SAFE
 
 com/liferay/portal/kernel/util/Portal.escapeRedirect(Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/Portal.getCurrentURL(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/String;:TAINTED
+com/liferay/portal/kernel/util/Portal.getCurrentURL(Ljavax/portlet/PortletRequest;)Ljava/lang/String;:TAINTED
 com/liferay/portal/kernel/util/Portal.getHomeURL(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/util/Portal.getLayoutURL(Lcom/liferay/portal/kernel/model/Layout;Lcom/liferay/portal/kernel/theme/ThemeDisplay;)Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/util/Portal.getLayoutURL(Lcom/liferay/portal/kernel/model/Layout;Lcom/liferay/portal/kernel/theme/ThemeDisplay;Z)Ljava/lang/String;:SAFE
@@ -328,6 +346,8 @@ com/liferay/portal/kernel/util/Portal.getStaticResourceURL(Ljavax/servlet/http/H
 com/liferay/portal/kernel/util/Portal.getStaticResourceURL(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;Ljava/lang/String;J)Ljava/lang/String;:2,3
 
 com/liferay/portal/kernel/util/PortalUtil.escapeRedirect(Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/PortalUtil.getCurrentURL(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/String;:TAINTED
+com/liferay/portal/kernel/util/PortalUtil.getCurrentURL(Ljavax/portlet/PortletRequest;)Ljava/lang/String;:TAINTED
 com/liferay/portal/kernel/util/PortalUtil.getHomeURL(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/util/PortalUtil.getLayoutURL(Lcom/liferay/portal/kernel/model/Layout;Lcom/liferay/portal/kernel/theme/ThemeDisplay;)Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/util/PortalUtil.getLayoutURL(Lcom/liferay/portal/kernel/model/Layout;Lcom/liferay/portal/kernel/theme/ThemeDisplay;Z)Ljava/lang/String;:SAFE
@@ -362,7 +382,7 @@ com/liferay/portal/kernel/util/PortalUtil.getStaticResourceURL(Ljavax/servlet/ht
 
 com/liferay/portal/kernel/theme/ThemeDisplay.getPathMain()Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/theme/ThemeDisplay.getPathThemeImages()Ljava/lang/String;:SAFE
-com/liferay/portal/kernel/theme/ThemeDisplay.getURLCurrent()Ljava/lang/String;:UNKNOWN
+com/liferay/portal/kernel/theme/ThemeDisplay.getURLCurrent()Ljava/lang/String;:TAINTED
 com/liferay/portal/kernel/theme/ThemeDisplay.getSiteDefaultLocale()Ljava/util/Locale;:SAFE
 
 com/liferay/portal/util/PrefsPropsUtil.getContent(JLjava/lang/String;)Ljava/lang/String;:SAFE

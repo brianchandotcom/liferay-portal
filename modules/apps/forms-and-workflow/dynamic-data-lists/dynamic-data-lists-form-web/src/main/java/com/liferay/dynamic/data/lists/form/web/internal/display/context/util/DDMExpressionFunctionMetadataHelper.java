@@ -41,6 +41,11 @@ public class DDMExpressionFunctionMetadataHelper {
 		addDDMExpressionFunctionMetadata(
 			new DDMExpressionFunctionMetadata(
 				"equals-to", LanguageUtil.get(resourceBundle, "is-equal-to"),
+				_TYPE_BOOLEAN, new String[] {_TYPE_NUMBER, _TYPE_NUMBER}));
+
+		addDDMExpressionFunctionMetadata(
+			new DDMExpressionFunctionMetadata(
+				"equals-to", LanguageUtil.get(resourceBundle, "is-equal-to"),
 				_TYPE_BOOLEAN, new String[] {_TYPE_TEXT, _TYPE_TEXT}));
 
 		addDDMExpressionFunctionMetadata(
@@ -81,6 +86,12 @@ public class DDMExpressionFunctionMetadataHelper {
 				"not-contains",
 				LanguageUtil.get(resourceBundle, "does-not-contain"),
 				_TYPE_BOOLEAN, new String[] {_TYPE_TEXT, _TYPE_TEXT}));
+
+		addDDMExpressionFunctionMetadata(
+			new DDMExpressionFunctionMetadata(
+				"not-equals-to",
+				LanguageUtil.get(resourceBundle, "is-not-equal-to"),
+				_TYPE_BOOLEAN, new String[] {_TYPE_NUMBER, _TYPE_NUMBER}));
 
 		addDDMExpressionFunctionMetadata(
 			new DDMExpressionFunctionMetadata(

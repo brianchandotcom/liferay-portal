@@ -32,6 +32,8 @@ import java.util.Map;
 import org.gradle.api.AntBuilder;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
@@ -40,6 +42,26 @@ import org.gradle.api.tasks.TaskAction;
  * @author Andrea Di Giorgi
  */
 public class CreateTokenTask extends DefaultTask {
+
+	public CreateTokenTask() {
+		onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					CreateTokenTask createTokenTask = (CreateTokenTask)task;
+
+					File tokenFile = createTokenTask.getTokenFile();
+
+					if (createTokenTask.isForce() || !tokenFile.exists()) {
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+	}
 
 	@TaskAction
 	public void createToken() throws Exception {

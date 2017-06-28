@@ -204,24 +204,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private CreateTokenTask _addTaskCreateToken(Project project) {
-		final CreateTokenTask createTokenTask = GradleUtil.addTask(
+		CreateTokenTask createTokenTask = GradleUtil.addTask(
 			project, CREATE_TOKEN_TASK_NAME, CreateTokenTask.class);
-
-		createTokenTask.onlyIf(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					File tokenFile = createTokenTask.getTokenFile();
-
-					if (!tokenFile.exists() || createTokenTask.isForce()) {
-						return true;
-					}
-
-					return false;
-				}
-
-			});
 
 		createTokenTask.setDescription("Creates a liferay.com download token.");
 		createTokenTask.setEmailAddress(project.findProperty(EMAIL_ADDRESS));

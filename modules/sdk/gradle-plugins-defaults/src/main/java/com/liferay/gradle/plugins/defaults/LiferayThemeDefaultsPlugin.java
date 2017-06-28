@@ -92,7 +92,10 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			GradleUtil.addExtension(
 				project, PLUGIN_NAME, LiferayThemeDefaultsExtension.class);
 
-		LiferayOSGiDefaultsPlugin.configureRepositories(project);
+		File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
+
+		LiferayOSGiDefaultsPlugin.configureRepositories(project, portalRootDir);
 
 		Configuration frontendCSSCommonConfiguration =
 			_addConfigurationFrontendCSSCommon(project);

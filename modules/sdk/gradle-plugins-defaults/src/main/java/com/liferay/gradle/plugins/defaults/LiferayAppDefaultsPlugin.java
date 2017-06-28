@@ -96,10 +96,10 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 
 		_applyPlugins(project);
 
-		LiferayOSGiDefaultsPlugin.configureRepositories(project);
-
 		File portalRootDir = GradleUtil.getRootDir(
 			project.getRootProject(), "portal-impl");
+
+		LiferayOSGiDefaultsPlugin.configureRepositories(project, portalRootDir);
 
 		_configureAppJavadocBuilder(project, privateProject);
 		_configureAppTLDDocBuilder(project, privateProject);

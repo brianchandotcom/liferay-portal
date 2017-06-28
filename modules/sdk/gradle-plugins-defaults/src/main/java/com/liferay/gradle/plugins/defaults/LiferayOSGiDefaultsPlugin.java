@@ -421,7 +421,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			_SOURCE_FORMATTER_PORTAL_TOOL_NAME);
 		_configurePmd(project);
 		_configureProject(project);
-		configureRepositories(project);
+		configureRepositories(project, portalRootDir);
 		_configureSourceSetMain(project);
 		_configureTaskDeploy(project, deployDependenciesTask);
 		_configureTaskJar(project, testProject);
@@ -530,27 +530,33 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected static void configureRepositories(Project project) {
+	protected static void configureRepositories(
+		Project project, File portalRootDir) {
+
 		RepositoryHandler repositoryHandler = project.getRepositories();
 
 		if (!Boolean.getBoolean("maven.local.ignore")) {
 			repositoryHandler.mavenLocal();
+
+			File tmpMavenRepositoryDir = null;
+
+			if (portalRootDir != null) {
+				tmpMavenRepositoryDir = new File(
+					portalRootDir, _TMP_MAVEN_REPOSITORY_DIR_NAME);
+			}
+
+			if ((tmpMavenRepositoryDir != null) &&
+				tmpMavenRepositoryDir.exists()) {
+
+				GradleUtil.addMavenArtifactRepository(
+					repositoryHandler, tmpMavenRepositoryDir);
+			}
 		}
 
-		repositoryHandler.maven(
-			new Action<MavenArtifactRepository>() {
+		String url = System.getProperty(
+			"repository.url", DEFAULT_REPOSITORY_URL);
 
-				@Override
-				public void execute(
-					MavenArtifactRepository mavenArtifactRepository) {
-
-					String url = System.getProperty(
-						"repository.url", DEFAULT_REPOSITORY_URL);
-
-					mavenArtifactRepository.setUrl(url);
-				}
-
-			});
+		GradleUtil.addMavenArtifactRepository(repositoryHandler, url);
 
 		final String repositoryPrivatePassword = System.getProperty(
 			"repository.private.password");
@@ -4112,6 +4118,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final String _SOURCE_FORMATTER_PORTAL_TOOL_NAME =
 		"com.liferay.source.formatter";
+
+	private static final String _TMP_MAVEN_REPOSITORY_DIR_NAME = ".m2-tmp";
 
 	private static final BackupFilesBuildAdapter _backupFilesBuildAdapter =
 		new BackupFilesBuildAdapter();

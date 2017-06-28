@@ -474,11 +474,6 @@
 			<xs:enumeration value="velocity" />
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="timer-execution-type">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="onTimer" />
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:simpleType name="time-scale-type">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="second" />

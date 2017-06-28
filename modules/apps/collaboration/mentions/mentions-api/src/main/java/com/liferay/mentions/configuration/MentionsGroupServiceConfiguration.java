@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 @Meta.OCD(
 	id = "com.liferay.mentions.configuration.MentionsGroupServiceConfiguration",
 	localization = "content/Language",
-	name = "mentions.group.service.configuration.name"
+	name = "mentions-group-service-configuration-name"
 )
 public interface MentionsGroupServiceConfiguration {
 

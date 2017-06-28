@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.wiki.configuration.WikiPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "wiki.portlet.instance.configuration.name"
+	name = "wiki-portlet-instance-configuration-name"
 )
 public interface WikiPortletInstanceConfiguration {
 

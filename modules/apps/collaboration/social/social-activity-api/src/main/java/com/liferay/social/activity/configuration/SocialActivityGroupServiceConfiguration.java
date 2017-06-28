@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.social.activity.configuration.SocialActivityGroupServiceConfiguration",
 	localization = "content/Language",
-	name = "social.activity.group.service.configuration.name"
+	name = "social-activity-group-service-configuration-name"
 )
 public interface SocialActivityGroupServiceConfiguration {
 

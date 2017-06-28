@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "collaboration")
 @Meta.OCD(
 	id = "com.liferay.message.boards.configuration.MBConfiguration",
-	localization = "content/Language", name = "mb.configuration.name"
+	localization = "content/Language", name = "mb-configuration-name"
 )
 public interface MBConfiguration {
 

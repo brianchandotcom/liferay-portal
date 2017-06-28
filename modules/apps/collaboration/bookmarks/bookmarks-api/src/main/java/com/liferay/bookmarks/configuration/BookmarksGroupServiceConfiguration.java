@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 @Meta.OCD(
 	id = "com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration",
 	localization = "content/Language",
-	name = "bookmarks.group.service.configuration.name"
+	name = "bookmarks-group-service-configuration-name"
 )
 public interface BookmarksGroupServiceConfiguration {
 

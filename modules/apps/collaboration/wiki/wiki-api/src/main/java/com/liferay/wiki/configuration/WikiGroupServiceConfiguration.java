@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 @Meta.OCD(
 	id = "com.liferay.wiki.configuration.WikiGroupServiceConfiguration",
 	localization = "content/Language",
-	name = "wiki.group.service.configuration.name"
+	name = "wiki-group-service-configuration-name"
 )
 public interface WikiGroupServiceConfiguration {
 

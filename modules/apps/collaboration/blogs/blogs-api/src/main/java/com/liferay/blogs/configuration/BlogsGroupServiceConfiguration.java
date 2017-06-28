@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.blogs.configuration.BlogsGroupServiceConfiguration",
 	localization = "content/Language",
-	name = "blogs.group.service.configuration.name"
+	name = "blogs-group-service-configuration-name"
 )
 public interface BlogsGroupServiceConfiguration {
 

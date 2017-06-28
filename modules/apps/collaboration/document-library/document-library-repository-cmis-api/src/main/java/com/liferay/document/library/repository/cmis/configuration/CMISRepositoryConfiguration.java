@@ -25,13 +25,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.document.library.repository.cmis.configuration.CMISRepositoryConfiguration",
 	localization = "content/Language",
-	name = "cmis.repository.configuration.name"
+	name = "cmis-repository-configuration-name"
 )
 public interface CMISRepositoryConfiguration {
 
 	@Meta.AD(
-		deflt = "1", description = "delete.depth.description",
-		name = "delete.depth.name", required = false
+		deflt = "1", description = "delete-depth-description",
+		name = "delete-depth-name", required = false
 	)
 	public int deleteDepth();
 

@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "collaboration")
 @Meta.OCD(
 	id = "com.liferay.blogs.configuration.BlogsConfiguration",
-	localization = "content/Language", name = "blogs.configuration.name"
+	localization = "content/Language", name = "blogs-configuration-name"
 )
 public interface BlogsConfiguration {
 

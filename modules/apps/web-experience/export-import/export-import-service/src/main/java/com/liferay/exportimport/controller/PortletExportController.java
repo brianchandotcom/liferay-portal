@@ -41,6 +41,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSenderUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.lar.DeletionSystemEventExporter;
@@ -813,6 +814,9 @@ public class PortletExportController implements ExportController {
 		exportAssetLinks(portletDataContext);
 		exportExpandoTables(portletDataContext);
 		exportLocks(portletDataContext);
+
+		portletDataContext.addDeletionSystemEventStagedModelTypes(
+			new StagedModelType(StagedAssetLink.class));
 
 		_deletionSystemEventExporter.exportDeletionSystemEvents(
 			portletDataContext);

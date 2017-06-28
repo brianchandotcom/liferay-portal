@@ -38,9 +38,13 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.asset.model.impl.AssetLinkImpl;
 import com.liferay.portlet.asset.service.base.AssetLinkLocalServiceBaseImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -120,20 +124,48 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	}
 
 	@Override
+	public AssetLink deleteAssetLink(AssetLink assetLink) {
+		AssetLink deletedAssetLink = super.deleteAssetLink(assetLink);
+
+		addDeletionSystemEvent(assetLink);
+
+		return deletedAssetLink;
+	}
+
+	@Override
+	public AssetLink deleteAssetLink(long linkId) throws PortalException {
+		AssetLink assetLink = super.deleteAssetLink(linkId);
+
+		addDeletionSystemEvent(assetLink);
+
+		return assetLink;
+	}
+
+	@Override
 	public void deleteGroupLinks(long groupId) {
 		Session session = assetLinkPersistence.openSession();
 
 		try {
-			String sql = CustomSQLUtil.get(_DELETE_BY_ASSET_ENTRY_GROUP_ID);
+			String sql = CustomSQLUtil.get(_FIND_BY_ASSET_ENTRY_GROUP_ID);
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addEntity("AssetLink", AssetLinkImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(sqlQuery);
 
 			qPos.add(groupId);
 			qPos.add(groupId);
 
-			sqlQuery.executeUpdate();
+			List<AssetLink> assetLinks = sqlQuery.list();
+
+			if (ListUtil.isEmpty(assetLinks)) {
+				return;
+			}
+
+			for (AssetLink assetLink : assetLinks) {
+				deleteAssetLink(assetLink);
+			}
 		}
 		finally {
 			assetLinkPersistence.closeSession(session);
@@ -151,8 +183,10 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	public void deleteLink(AssetLink link) {
 		if (AssetLinkConstants.isTypeBi(link.getType())) {
 			try {
-				assetLinkPersistence.removeByE_E_T(
+				AssetLink assetLink = assetLinkPersistence.findByE_E_T(
 					link.getEntryId2(), link.getEntryId1(), link.getType());
+
+				deleteAssetLink(assetLink);
 			}
 			catch (NoSuchLinkException nsle) {
 				if (_log.isWarnEnabled()) {
@@ -162,6 +196,8 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		}
 
 		assetLinkPersistence.remove(link);
+
+		addDeletionSystemEvent(link);
 	}
 
 	/**
@@ -480,6 +516,30 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		}
 	}
 
+	protected void addDeletionSystemEvent(AssetLink assetLink) {
+		StagedAssetLink stagedAssetLink = ModelAdapterUtil.adapt(
+			assetLink, AssetLink.class, StagedAssetLink.class);
+
+		StagedModelType stagedModelType = stagedAssetLink.getStagedModelType();
+
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+			assetLink.getEntryId1());
+
+		if (assetEntry == null) {
+			return;
+		}
+
+		try {
+			systemEventLocalService.addSystemEvent(
+				0, assetEntry.getGroupId(), stagedModelType.getClassName(),
+				stagedAssetLink.getPrimaryKey(), stagedAssetLink.getUuid(),
+				null, SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
+	}
+
 	protected List<AssetLink> filterAssetLinks(
 		List<AssetLink> assetLinks, boolean excludeInvisibleLinks) {
 
@@ -503,9 +563,8 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		return assetLinks;
 	}
 
-	private static final String _DELETE_BY_ASSET_ENTRY_GROUP_ID =
-		AssetLinkLocalServiceImpl.class.getName() +
-			".deleteByAssetEntryGroupId";
+	private static final String _FIND_BY_ASSET_ENTRY_GROUP_ID =
+		AssetLinkLocalServiceImpl.class.getName() + ".findByAssetEntryGroupId";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetLinkLocalServiceImpl.class);

@@ -14,6 +14,7 @@
 
 package com.liferay.web.form.web.internal.portlet;
 
+import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.expando.kernel.model.ExpandoRow;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
@@ -23,7 +24,6 @@ import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
-import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

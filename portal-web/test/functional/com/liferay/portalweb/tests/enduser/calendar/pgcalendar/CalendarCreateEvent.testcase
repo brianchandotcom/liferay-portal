@@ -379,15 +379,27 @@
 
 		<execute macro="CalendarEvent#publish" />
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
+		<var name="i" value="0" />
+		<var name="refreshCount" value="5" />
+
+		<while>
+			<not>
+				<equals arg1="${i}" arg2="${refreshCount}" />
+			</not>
+			<then>
+				<execute macro="Navigator#gotoPage">
+					<var name="pageName" value="Calendar Page" />
+				</execute>
+
+				<execute function="Pause" locator1="1000" />
+
+				<execute function="AssertConsoleTextNotPresent" value1="OutOfMemoryError" />
+			</then>
+		</while>
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
-
-		<execute function="Pause" locator1="1000" />
 
 		<execute function="AssertConsoleTextNotPresent" value1="OutOfMemoryError" />
 	</command>

@@ -14,32 +14,36 @@
 
 package com.liferay.source.formatter.checks;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
 /**
  * @author Hugo Huijser
  * @author Peter Shin
  */
-public class JavaLiferayPortletRequestCheck extends BaseFileCheck {
+public class JavaUnsafeCastingCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		Matcher matcher = _pattern.matcher(content);
+		for (Class<?> unsafeClass : _UNSAFE_CLASSES) {
+			String s = "(" + unsafeClass.getSimpleName() + ")";
 
-		if (matcher.find()) {
-			addMessage(
-				fileName, "Use PortalUtil.getLiferayPortletRequest",
-				"liferay_portlet_request.markdown",
-				getLineCount(content, matcher.start()));
+			if (content.contains(s)) {
+				String message =
+					"Unsafe casting for '" + unsafeClass.getSimpleName() + "'";
+
+				addMessage(
+					fileName, message, "unsafe_casting.markdown",
+					getLineCount(content, content.indexOf(s)));
+			}
 		}
 
 		return content;
 	}
 
-	private final Pattern _pattern = Pattern.compile(
-		"\\(LiferayPortletRequest\\)");
+	private static final Class<?>[] _UNSAFE_CLASSES =
+		{LiferayPortletRequest.class, LiferayPortletResponse.class};
 
 }

@@ -74,8 +74,6 @@
 		<check name="JavaIndexableCheck" />
 		<check name="JavaInterfaceCheck" />
 		<check name="JavaIOExceptionCheck" />
-		<check name="JavaLiferayPortletRequestCheck" />
-		<check name="JavaLiferayPortletResponseCheck" />
 		<check name="JavaLineBreakCheck" />
 		<check name="JavaLocalSensitiveComparisonCheck" />
 		<check name="JavaLogClassNameCheck" />
@@ -97,6 +95,7 @@
 		<check name="JavaTermDividersCheck" />
 		<check name="JavaTermOrderCheck" />
 		<check name="JavaTermStylingCheck" />
+		<check name="JavaUnsafeCastingCheck" />
 		<check name="JavaWhitespaceCheck" />
 		<check name="MethodCallsOrderCheck" />
 		<check name="PrimitiveWrapperInstantiationCheck" />

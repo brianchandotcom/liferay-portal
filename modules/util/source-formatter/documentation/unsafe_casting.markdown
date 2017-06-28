@@ -1,7 +1,8 @@
-## Casting to LiferayPortletResponse
+## Unsafe Casting
 
 To avoid ClassCastExceptions, we want to use
 
+```PortalUtil.getLiferayPortletRequest(renderRequest)``` or
 ```PortalUtil.getLiferayPortletResponse(renderResponse)```
 
 ### Example
@@ -9,6 +10,9 @@ To avoid ClassCastExceptions, we want to use
 Incorrect:
 
 ```java
+LiferayPortletRequest liferayPortletRequest =
+	(LiferayPortletRequest)portletRequest;
+
 LiferayPortletResponse liferayPortletResponse =
 	(LiferayPortletResponse)portletResponse;
 ```
@@ -16,6 +20,9 @@ LiferayPortletResponse liferayPortletResponse =
 Correct:
 
 ```java
+LiferayPortletRequest liferayPortletRequest =
+	PortalUtil.getLiferayPortletRequest(portletRequest);
+
 LiferayPortletResponse liferayPortletResponse =
 	PortalUtil.getLiferayPortletResponse(portletResponse);
 ```

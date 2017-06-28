@@ -152,9 +152,4 @@ public interface ElasticsearchConfiguration {
 	@Meta.AD(deflt = "true", description = "sync-search", required = false)
 	public boolean syncSearch();
 
-	@Meta.AD(
-		deflt = "60000", description = "shutdown-wait-time", required = false
-	)
-	public long shutdownWaitTime();
-
 }

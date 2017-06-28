@@ -12,14 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.kernel.captcha;
+package com.liferay.captcha.util;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
+import com.liferay.captcha.configuration.CaptchaConfiguration;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.captcha.Captcha;
+import com.liferay.portal.kernel.captcha.CaptchaException;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
+
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
@@ -28,9 +35,23 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Pei-Jung Lan
  */
+@Component(
+	configurationPid = "com.liferay.captcha.configuration.CaptchaConfiguration",
+	immediate = true, service = CaptchaUtil.class
+)
 public class CaptchaUtil {
 
 	public static void check(HttpServletRequest request)
@@ -46,13 +67,7 @@ public class CaptchaUtil {
 	}
 
 	public static Captcha getCaptcha() {
-		PortalRuntimePermission.checkGetBeanProperty(CaptchaUtil.class);
-
-		if (_serviceTrackerMap == null) {
-			return null;
-		}
-
-		String captchaClassName = _captchaSettings.getCaptchaEngine();
+		String captchaClassName = _captchaConfiguration.captchaEngine();
 
 		return _serviceTrackerMap.getService(captchaClassName);
 	}
@@ -83,20 +98,47 @@ public class CaptchaUtil {
 		getCaptcha().serveImage(resourceRequest, resourceResponse);
 	}
 
-	public void setCaptcha(Captcha captcha) throws Exception {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+	public static void setCaptcha(Captcha captcha) throws Exception {
+		Configuration configuration = _configurationAdmin.getConfiguration(
+			CaptchaConfiguration.class.getName(), StringPool.QUESTION);
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		if (properties == null) {
+			properties = new Hashtable<>();
+		}
 
 		Class<?> clazz = captcha.getClass();
 
-		_captchaSettings.setCaptchaEngine(clazz.getName());
+		properties.put("captchaEngine", clazz.getName());
+
+		configuration.update(properties);
 	}
 
-	private static volatile CaptchaSettings _captchaSettings =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			CaptchaSettings.class, CaptchaUtil.class, "_captchaSettings",
-			false);
-	private static final ServiceTrackerMap<String, Captcha> _serviceTrackerMap =
-		ServiceTrackerCollections.openSingleValueMap(
-			Captcha.class, "captcha.engine.impl");
+	@Activate
+	@Modified
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_captchaConfiguration = ConfigurableUtil.createConfigurable(
+			CaptchaConfiguration.class, properties);
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, Captcha.class, "captcha.engine.impl");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+
+		_serviceTrackerMap = null;
+	}
+
+	private static volatile CaptchaConfiguration _captchaConfiguration;
+
+	@Reference
+	private static ConfigurationAdmin _configurationAdmin;
+
+	private static ServiceTrackerMap<String, Captcha> _serviceTrackerMap;
 
 }

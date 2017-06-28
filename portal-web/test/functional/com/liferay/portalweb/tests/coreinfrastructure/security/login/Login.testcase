@@ -73,10 +73,10 @@
 	<command name="FacebookSSOSmoke" priority="4">
 		<property name="test.name.skip.portal.instance" value="Login#FacebookSSOSmoke" />
 
-		<var name="facebookApplicationID" property-value="facebook.application.id" />
-		<var name="facebookApplicationSecret" property-value="facebook.application.secret" />
-		<var name="facebookEmail" property-value="facebook.email" />
-		<var name="facebookPassword" property-value="facebook.password" />
+		<var method="TestPropsUtil#get('facebook.application.id')" name="facebookApplicationID" />
+		<var method="TestPropsUtil#get('facebook.application.secret')" name="facebookApplicationSecret" />
+		<var method="TestPropsUtil#get('facebook.email')" name="facebookEmail" />
+		<var method="TestPropsUtil#get('facebook.password')" name="facebookPassword" />
 
 		<execute macro="User#firstLoginPG" />
 
@@ -120,10 +120,10 @@
 	<command name="GoogleSSOSmoke" priority="4">
 		<property name="test.name.skip.portal.instance" value="Login#GoogleSSOSmoke" />
 
-		<var name="googleClientID" property-value="google.client.id" />
-		<var name="googleClientSecret" property-value="google.client.secret" />
-		<var name="userEmailAddress" property-value="email.address.1" />
-		<var name="userPassword" property-value="email.password.1" />
+		<var method="TestPropsUtil#get('google.client.id')" name="googleClientID" />
+		<var method="TestPropsUtil#get('google.client.secret')" name="googleClientSecret" />
+		<var method="TestPropsUtil#get('email.address.1')" name="userEmailAddress" />
+		<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
 
 		<execute macro="User#firstLoginPG" />
 

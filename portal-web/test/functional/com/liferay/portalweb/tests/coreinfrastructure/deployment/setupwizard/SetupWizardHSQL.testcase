@@ -17,11 +17,11 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databasePassword" property-value="database.db2.password" />
+			<var method="TestPropsUtil#get('database.db2.password')" name="databasePassword" />
 			<var name="databaseType" value="DB2" />
-			<var name="databaseUserName" property-value="database.db2.username" />
-			<var name="jdbcDriverClassName" property-value="database.db2.driver" />
-			<var name="jdbcURL" property-value="database.db2.url" />
+			<var method="TestPropsUtil#get('database.db2.username')" name="databaseUserName" />
+			<var method="TestPropsUtil#get('database.db2.driver')" name="jdbcDriverClassName" />
+			<var method="TestPropsUtil#get('database.db2.url')" name="jdbcURL" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage">
@@ -48,11 +48,11 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databasePassword" property-value="database.db2.password" />
+			<var method="TestPropsUtil#get('database.db2.password')" name="databasePassword" />
 			<var name="databaseType" value="DB2" />
-			<var name="databaseUserName" property-value="database.db2.username" />
-			<var name="jdbcDriverClassName" property-value="database.db2.driver" />
-			<var name="jdbcURL" property-value="database.db2.url" />
+			<var method="TestPropsUtil#get('database.db2.username')" name="databaseUserName" />
+			<var method="TestPropsUtil#get('database.db2.driver')" name="jdbcDriverClassName" />
+			<var method="TestPropsUtil#get('database.db2.url')" name="jdbcURL" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />
@@ -66,11 +66,11 @@
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
 			<var name="databaseName" value="lportal1" />
-			<var name="databasePassword" property-value="database.hypersonic.password" />
+			<var method="TestPropsUtil#get('database.hypersonic.password')" name="databasePassword" />
 			<var name="databaseType" value="Hypersonic" />
-			<var name="databaseUserName" property-value="database.hypersonic.username" />
-			<var name="jdbcDriverClassName" property-value="database.hypersonic.driver" />
-			<var name="jdbcURL" property-value="database.hypersonic.url" />
+			<var method="TestPropsUtil#get('database.hypersonic.username')" name="databaseUserName" />
+			<var method="TestPropsUtil#get('database.hypersonic.driver')" name="jdbcDriverClassName" />
+			<var method="TestPropsUtil#get('database.hypersonic.url')" name="jdbcURL" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage">
@@ -88,11 +88,11 @@
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
 			<var name="databaseName" value="lportal1" />
-			<var name="databasePassword" property-value="database.hypersonic.password" />
+			<var method="TestPropsUtil#get('database.hypersonic.password')" name="databasePassword" />
 			<var name="databaseType" value="Hypersonic" />
-			<var name="databaseUserName" property-value="database.hypersonic.username" />
-			<var name="jdbcDriverClassName" property-value="database.hypersonic.driver" />
-			<var name="jdbcURL" property-value="database.hypersonic.url" />
+			<var method="TestPropsUtil#get('database.hypersonic.username')" name="databaseUserName" />
+			<var method="TestPropsUtil#get('database.hypersonic.driver')" name="jdbcDriverClassName" />
+			<var method="TestPropsUtil#get('database.hypersonic.url')" name="jdbcURL" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />
@@ -106,11 +106,11 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databasePassword" property-value="database.hypersonic.password" />
+			<var method="TestPropsUtil#get('database.hypersonic.password')" name="databasePassword" />
 			<var name="databaseType" value="Hypersonic" />
-			<var name="databaseUserName" property-value="database.hypersonic.username" />
-			<var name="jdbcDriverClassName" property-value="database.hypersonic.driver" />
-			<var name="jdbcURL" property-value="database.hypersonic.url" />
+			<var method="TestPropsUtil#get('database.hypersonic.username')" name="databaseUserName" />
+			<var method="TestPropsUtil#get('database.hypersonic.driver')" name="jdbcDriverClassName" />
+			<var method="TestPropsUtil#get('database.hypersonic.url')" name="jdbcURL" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />
@@ -127,11 +127,11 @@
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
 			<var name="databaseName" value="lportal1" />
-			<var name="databasePassword" property-value="database.mysql.password" />
+			<var method="TestPropsUtil#get('database.mysql.password')" name="databasePassword" />
 			<var name="databaseType" value="MySQL" />
-			<var name="databaseUserName" property-value="database.mysql.username" />
-			<var name="jdbcDriverClassName" property-value="database.mysql.driver" />
-			<var name="jdbcURL" property-value="database.mysql.url" />
+			<var method="TestPropsUtil#get('database.mysql.username')" name="databaseUserName" />
+			<var method="TestPropsUtil#get('database.mysql.driver')" name="jdbcDriverClassName" />
+			<var method="TestPropsUtil#get('database.mysql.url')" name="jdbcURL" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />
@@ -154,11 +154,11 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databasePassword" property-value="database.oracle.password" />
+			<var method="TestPropsUtil#get('database.oracle.password')" name="databasePassword" />
 			<var name="databaseType" value="Oracle" />
-			<var name="databaseUserName" property-value="database.oracle.username" />
-			<var name="jdbcDriverClassName" property-value="database.oracle.driver" />
-			<var name="jdbcURL" property-value="database.oracle.url" />
+			<var method="TestPropsUtil#get('database.oracle.username')" name="databaseUserName" />
+			<var method="TestPropsUtil#get('database.oracle.driver')" name="jdbcDriverClassName" />
+			<var method="TestPropsUtil#get('database.oracle.url')" name="jdbcURL" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage">
@@ -185,11 +185,11 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databasePassword" property-value="database.oracle.password" />
+			<var method="TestPropsUtil#get('database.oracle.password')" name="databasePassword" />
 			<var name="databaseType" value="Oracle" />
-			<var name="databaseUserName" property-value="database.oracle.username" />
-			<var name="jdbcDriverClassName" property-value="database.oracle.driver" />
-			<var name="jdbcURL" property-value="database.oracle.url" />
+			<var method="TestPropsUtil#get('database.oracle.username')" name="databaseUserName" />
+			<var method="TestPropsUtil#get('database.oracle.driver')" name="jdbcDriverClassName" />
+			<var method="TestPropsUtil#get('database.oracle.url')" name="jdbcURL" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />
@@ -204,11 +204,11 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databasePassword" property-value="database.postgresql.password" />
+			<var method="TestPropsUtil#get('database.postgresql.password')" name="databasePassword" />
 			<var name="databaseType" value="PostgreSQL" />
-			<var name="databaseUserName" property-value="database.postgresql.username" />
-			<var name="jdbcDriverClassName" property-value="database.postgresql.driver" />
-			<var name="jdbcURL" property-value="database.postgresql.url" />
+			<var method="TestPropsUtil#get('database.postgresql.username')" name="databaseUserName" />
+			<var method="TestPropsUtil#get('database.postgresql.driver')" name="jdbcDriverClassName" />
+			<var method="TestPropsUtil#get('database.postgresql.url')" name="jdbcURL" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage">
@@ -227,11 +227,11 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databasePassword" property-value="database.postgresql.password" />
+			<var method="TestPropsUtil#get('database.postgresql.password')" name="databasePassword" />
 			<var name="databaseType" value="PostgreSQL" />
-			<var name="databaseUserName" property-value="database.postgresql.username" />
-			<var name="jdbcDriverClassName" property-value="database.postgresql.driver" />
-			<var name="jdbcURL" property-value="database.postgresql.url" />
+			<var method="TestPropsUtil#get('database.postgresql.username')" name="databaseUserName" />
+			<var method="TestPropsUtil#get('database.postgresql.driver')" name="jdbcDriverClassName" />
+			<var method="TestPropsUtil#get('database.postgresql.url')" name="jdbcURL" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />
@@ -244,11 +244,11 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databasePassword" property-value="database.sybase.password" />
+			<var method="TestPropsUtil#get('database.sybase.password')" name="databasePassword" />
 			<var name="databaseType" value="Sybase" />
-			<var name="databaseUserName" property-value="database.sybase.username" />
-			<var name="jdbcDriverClassName" property-value="database.sybase.driver" />
-			<var name="jdbcURL" property-value="database.sybase.url" />
+			<var method="TestPropsUtil#get('database.sybase.username')" name="databaseUserName" />
+			<var method="TestPropsUtil#get('database.sybase.driver')" name="jdbcDriverClassName" />
+			<var method="TestPropsUtil#get('database.sybase.url')" name="jdbcURL" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage">
@@ -265,11 +265,11 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databasePassword" property-value="database.sybase.password" />
+			<var method="TestPropsUtil#get('database.sybase.password')" name="databasePassword" />
 			<var name="databaseType" value="Sybase" />
-			<var name="databaseUserName" property-value="database.sybase.username" />
-			<var name="jdbcDriverClassName" property-value="database.sybase.driver" />
-			<var name="jdbcURL" property-value="database.sybase.url" />
+			<var method="TestPropsUtil#get('database.sybase.username')" name="databaseUserName" />
+			<var method="TestPropsUtil#get('database.sybase.driver')" name="jdbcDriverClassName" />
+			<var method="TestPropsUtil#get('database.sybase.url')" name="jdbcURL" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />

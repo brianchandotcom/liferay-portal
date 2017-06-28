@@ -112,7 +112,7 @@ public class EmbeddedElasticsearchConnection
 		}
 		catch (InterruptedException ie) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Thread pool shutdown wait was interrupted", ie);
+				_log.warn("ThreadPool shutdown wait got interrupted", ie);
 			}
 		}
 

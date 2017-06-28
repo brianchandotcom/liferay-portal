@@ -14,17 +14,27 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorContext;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -57,14 +67,21 @@ public class AddRecordMVCCommandHelper {
 		DDMFormEvaluationResult ddmFormEvaluationResult = evaluate(
 			actionRequest, ddmForm, ddmFormValues, locale);
 
+		DDMFormLayout ddmFormLayout = getDDMFormLayout(actionRequest);
+
+		Set<String> fieldsFromDisabledPages = getFieldNamesFromDisabledPages(
+			ddmFormEvaluationResult, ddmFormLayout);
+
 		Set<String> invisibleFields = getInvisibleFields(
 			ddmFormEvaluationResult);
 
-		if (invisibleFields.isEmpty()) {
-			return;
+		if (!invisibleFields.isEmpty()) {
+			removeRequiredProperty(invisibleFields, requiredFields);
 		}
 
-		removeRequiredProperty(invisibleFields, requiredFields);
+		if (!fieldsFromDisabledPages.isEmpty()) {
+			removeRequiredProperty(fieldsFromDisabledPages, requiredFields);
+		}
 	}
 
 	protected DDMFormEvaluationResult evaluate(
@@ -81,6 +98,57 @@ public class AddRecordMVCCommandHelper {
 			"request", _portal.getHttpServletRequest(actionRequest));
 
 		return _ddmFormEvaluator.evaluate(ddmFormEvaluatorContext);
+	}
+
+	protected DDMFormLayout getDDMFormLayout(ActionRequest actionRequest)
+		throws PortalException {
+
+		if (_ddlRecordSetService == null) {
+			return new DDMFormLayout();
+		}
+
+		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
+
+		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			recordSet.getDDMStructureId());
+
+		return ddmStructure.getDDMFormLayout();
+	}
+
+	protected Set<String> getFieldNamesFromDisabledPages(
+		DDMFormEvaluationResult ddmFormEvaluationResult,
+		DDMFormLayout ddmFormLayout) {
+
+		HashSet<String> fieldNamesFromDisablePages = new HashSet<>();
+
+		for (int index : ddmFormEvaluationResult.getDisabledPagesIndexes()) {
+			fieldNamesFromDisablePages.addAll(
+				getFieldNamesFromPage(
+					ddmFormLayout.getDDMFormLayoutPage(index)));
+		}
+
+		return fieldNamesFromDisablePages;
+	}
+
+	protected Set<String> getFieldNamesFromPage(
+		DDMFormLayoutPage ddmFormLayoutPage) {
+
+		List<DDMFormLayoutRow> ddmFormLayoutRows =
+			ddmFormLayoutPage.getDDMFormLayoutRows();
+
+		HashSet<String> fieldNames = new HashSet<>();
+
+		for (DDMFormLayoutRow ddmFormLayoutRow : ddmFormLayoutRows) {
+			for (DDMFormLayoutColumn ddmFormLayoutColumn :
+					ddmFormLayoutRow.getDDMFormLayoutColumns()) {
+
+				fieldNames.addAll(ddmFormLayoutColumn.getDDMFormFieldNames());
+			}
+		}
+
+		return fieldNames;
 	}
 
 	protected Set<String> getInvisibleFields(
@@ -128,7 +196,13 @@ public class AddRecordMVCCommandHelper {
 	}
 
 	@Reference
+	private DDLRecordSetService _ddlRecordSetService;
+
+	@Reference
 	private DDMFormEvaluator _ddmFormEvaluator;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private Portal _portal;

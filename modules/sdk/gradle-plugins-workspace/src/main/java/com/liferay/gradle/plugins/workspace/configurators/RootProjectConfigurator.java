@@ -83,13 +83,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String DOWNLOAD_BUNDLE_TASK_NAME = "downloadBundle";
 
-	public static final String EMAIL_ADDRESS = "email.address";
-
-	public static final String FORCE = "force";
-
 	public static final String INIT_BUNDLE_TASK_NAME = "initBundle";
-
-	public static final String PASSWORD = "password";
 
 	/**
 	 * @deprecated As of 1.4.0, replaced by {@link
@@ -117,7 +111,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			GradleUtil.addDefaultRepositories(project);
 		}
 
-		CreateTokenTask createTokenTask = _addTaskCreateToken(project);
+		CreateTokenTask createTokenTask = _addTaskCreateToken(
+			project, workspaceExtension);
 
 		Download downloadBundleTask = _addTaskDownloadBundle(
 			createTokenTask, workspaceExtension);
@@ -203,15 +198,45 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return copy;
 	}
 
-	private CreateTokenTask _addTaskCreateToken(Project project) {
+	private CreateTokenTask _addTaskCreateToken(
+		Project project, final WorkspaceExtension workspaceExtension) {
+
 		CreateTokenTask createTokenTask = GradleUtil.addTask(
 			project, CREATE_TOKEN_TASK_NAME, CreateTokenTask.class);
 
 		createTokenTask.setDescription("Creates a liferay.com download token.");
-		createTokenTask.setEmailAddress(project.findProperty(EMAIL_ADDRESS));
-		createTokenTask.setForce(project.findProperty(FORCE));
+
+		createTokenTask.setEmailAddress(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return workspaceExtension.getBundleTokenEmailAddress();
+				}
+
+			});
+
+		createTokenTask.setForce(
+			new Callable<Boolean>() {
+
+				@Override
+				public Boolean call() throws Exception {
+					return workspaceExtension.isBundleTokenForce();
+				}
+
+			});
+
 		createTokenTask.setGroup(BUNDLE_GROUP);
-		createTokenTask.setPassword(project.findProperty(PASSWORD));
+
+		createTokenTask.setPassword(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return workspaceExtension.getBundleTokenPassword();
+				}
+
+			});
 
 		return createTokenTask;
 	}

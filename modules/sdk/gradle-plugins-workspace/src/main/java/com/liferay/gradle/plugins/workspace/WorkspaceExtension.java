@@ -53,6 +53,13 @@ public class WorkspaceExtension {
 			settings, "bundle.dist.root.dir", _BUNDLE_DIST_ROOT_DIR_NAME);
 		_bundleTokenDownload = _getProperty(
 			settings, "bundle.token.download", _BUNDLE_TOKEN_DOWNLOAD);
+		_bundleTokenEmailAddress = _getProperty(
+			settings, "bundle.token.email.address",
+			_BUNDLE_TOKEN_EMAIL_ADDRESS);
+		_bundleTokenForce = _getProperty(
+			settings, "bundle.token.force", _BUNDLE_TOKEN_FORCE);
+		_bundleTokenPassword = _getProperty(
+			settings, "bundle.token.password", _BUNDLE_TOKEN_PASSWORD);
 		_bundleUrl = _getProperty(
 			settings, "bundle.url", BundleSupportConstants.DEFAULT_BUNDLE_URL);
 		_configsDir = _getProperty(
@@ -69,6 +76,14 @@ public class WorkspaceExtension {
 
 	public String getBundleDistRootDirName() {
 		return GradleUtil.toString(_bundleDistRootDirName);
+	}
+
+	public String getBundleTokenEmailAddress() {
+		return GradleUtil.toString(_bundleTokenEmailAddress);
+	}
+
+	public String getBundleTokenPassword() {
+		return GradleUtil.toString(_bundleTokenPassword);
 	}
 
 	public String getBundleUrl() {
@@ -99,6 +114,10 @@ public class WorkspaceExtension {
 		return GradleUtil.toBoolean(_bundleTokenDownload);
 	}
 
+	public boolean isBundleTokenForce() {
+		return GradleUtil.toBoolean(_bundleTokenForce);
+	}
+
 	public ProjectConfigurator propertyMissing(String name) {
 		for (ProjectConfigurator projectConfigurator : _projectConfigurators) {
 			if (name.equals(projectConfigurator.getName())) {
@@ -115,6 +134,18 @@ public class WorkspaceExtension {
 
 	public void setBundleTokenDownload(Object bundleTokenDownload) {
 		_bundleTokenDownload = bundleTokenDownload;
+	}
+
+	public void setBundleTokenEmailAddress(Object bundleTokenEmailAddress) {
+		_bundleTokenEmailAddress = bundleTokenEmailAddress;
+	}
+
+	public void setBundleTokenForce(Object bundleTokenForce) {
+		_bundleTokenForce = bundleTokenForce;
+	}
+
+	public void setBundleTokenPassword(Object bundleTokenPassword) {
+		_bundleTokenPassword = bundleTokenPassword;
 	}
 
 	public void setBundleUrl(Object bundleUrl) {
@@ -151,8 +182,17 @@ public class WorkspaceExtension {
 
 	private static final boolean _BUNDLE_TOKEN_DOWNLOAD = false;
 
+	private static final String _BUNDLE_TOKEN_EMAIL_ADDRESS = null;
+
+	private static final boolean _BUNDLE_TOKEN_FORCE = false;
+
+	private static final String _BUNDLE_TOKEN_PASSWORD = null;
+
 	private Object _bundleDistRootDirName;
 	private Object _bundleTokenDownload;
+	private Object _bundleTokenEmailAddress;
+	private Object _bundleTokenForce;
+	private Object _bundleTokenPassword;
 	private Object _bundleUrl;
 	private Object _configsDir;
 	private Object _environment;

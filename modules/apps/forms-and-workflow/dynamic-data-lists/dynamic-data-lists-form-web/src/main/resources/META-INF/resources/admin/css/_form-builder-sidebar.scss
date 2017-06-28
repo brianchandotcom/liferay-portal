@@ -1,5 +1,5 @@
 .form-builder-sidebar {
-	$width: 500px;
+	$max-width: 500px;
 
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
@@ -7,20 +7,23 @@
 		width: 0;
 
 		&.open {
-			width: $width;
+			max-width: $max-width;
+			width: 100%;
 		}
 	}
 
 	.sidebar-body {
 		height: 100%;
+		max-width: $max-width;
 		padding: 0;
-		width: $width;
+		width: 100%;
 	}
 
 	.sidebar-content {
+		max-width: $max-width;
 		right: 0;
 		top: 0;
-		width: $width;
+		width: 100%;
 	}
 
 	.sidebar-header {
@@ -45,10 +48,11 @@
 
 	.tab-pane {
 		bottom: 0;
+		max-width: $max-width;
 		overflow: auto;
 		padding: 24px;
 		position: absolute;
 		top: 208px;
-		width: $width;
+		width: 100%;
 	}
 }

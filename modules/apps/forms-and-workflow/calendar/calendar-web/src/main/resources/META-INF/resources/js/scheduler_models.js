@@ -265,6 +265,27 @@ AUI.add(
 						);
 					},
 
+					_isPastEvent: function() {
+						var instance = this;
+
+						var endDate = instance.get('endDate');
+
+						var result;
+
+						var scheduler = instance.get('scheduler');
+
+						if (scheduler) {
+							var currentTime = scheduler.get('currentTime');
+
+							result = endDate.getTime() < currentTime.getTime();
+						}
+						else {
+							result = false;
+						}
+
+						return result;
+					},
+
 					_onLoadingChange: function(event) {
 						var instance = this;
 

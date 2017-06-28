@@ -160,6 +160,19 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			calendarContainer: calendarContainer,
 
 			<%
+			java.util.Calendar nowJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
+
+			int nowYear = nowJCalendar.get(java.util.Calendar.YEAR);
+			int nowMonth = nowJCalendar.get(java.util.Calendar.MONTH);
+			int nowDay = nowJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
+			int nowHour = nowJCalendar.get(java.util.Calendar.HOUR_OF_DAY);
+			int nowMinute = nowJCalendar.get(java.util.Calendar.MINUTE);
+			%>
+
+			currentTime: new Date(<%= nowYear %>, <%= nowMonth %>, <%= nowDay %>, <%= nowHour %>, <%= nowMinute %>),
+			currentTimeFn: A.bind(remoteServices.getCurrentTime, remoteServices),
+
+			<%
 			java.util.Calendar dateJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
 
 			dateJCalendar.setTimeInMillis(date);
@@ -169,7 +182,6 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			int dateDay = dateJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
 			%>
 
-			currentTimeFn: A.bind(remoteServices.getCurrentTime, remoteServices),
 			date: new Date(<%= dateYear %>, <%= dateMonth %>, <%= dateDay %>),
 
 			<c:if test="<%= !themeDisplay.isSignedIn() || ((defaultCalendar != null) && !CalendarPermission.contains(themeDisplay.getPermissionChecker(), defaultCalendar, CalendarActionKeys.MANAGE_BOOKINGS)) %>">

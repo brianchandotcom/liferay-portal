@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -95,9 +96,20 @@ public class GroupSelectorTag extends IncludeTag {
 
 		groupParams.put("site", Boolean.TRUE);
 
-		return GroupLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
-			groupParams, startAndEnd[0], startAndEnd[1], null);
+		if (_checkPermission(themeDisplay.getPermissionChecker())) {
+			return GroupLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
+				groupParams, startAndEnd[0], startAndEnd[1], null);
+		}
+		else {
+			return GroupLocalServiceUtil.search(
+				themeDisplay.getCompanyId(),
+				new long[] {
+					ClassNameLocalServiceUtil.getClassNameId(Group.class),
+					ClassNameLocalServiceUtil.getClassNameId(Organization.class)
+				},
+				keywords, groupParams, startAndEnd[0], startAndEnd[1], null);
+		}
 	}
 
 	protected int getGroupsCount(HttpServletRequest request) {
@@ -116,9 +128,20 @@ public class GroupSelectorTag extends IncludeTag {
 
 		groupParams.put("site", Boolean.TRUE);
 
-		return GroupLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
-			groupParams);
+		if (_checkPermission(themeDisplay.getPermissionChecker())) {
+			return GroupLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
+				groupParams);
+		}
+		else {
+			return GroupLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(),
+				new long[] {
+					ClassNameLocalServiceUtil.getClassNameId(Group.class),
+					ClassNameLocalServiceUtil.getClassNameId(Organization.class)
+				},
+				keywords, groupParams);
+		}
 	}
 
 	@Override
@@ -136,6 +159,14 @@ public class GroupSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-item-selector:group-selector:itemSelector",
 			ItemSelectorUtil.getItemSelector());
+	}
+
+	private boolean _checkPermission(PermissionChecker permissionChecker) {
+		if (permissionChecker.isCompanyAdmin()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final long[] _CLASSNAME_IDS = {

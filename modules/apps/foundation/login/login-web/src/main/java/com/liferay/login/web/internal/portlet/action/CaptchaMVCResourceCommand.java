@@ -14,8 +14,8 @@
 
 package com.liferay.login.web.internal.portlet.action;
 
+import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.login.web.constants.LoginPortletKeys;
-import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;

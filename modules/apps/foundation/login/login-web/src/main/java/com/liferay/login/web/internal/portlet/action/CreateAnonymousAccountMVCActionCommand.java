@@ -15,10 +15,10 @@
 package com.liferay.login.web.internal.portlet.action;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
+import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
-import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.EmailAddressException;

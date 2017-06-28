@@ -7,6 +7,7 @@ import globals from 'senna/src/globals/globals';
 import RenderURLScreen from './screen/RenderURLScreen.es';
 import Uri from 'metal-uri/src/Uri';
 import utils from 'senna/src/utils/utils';
+import {match} from 'metal-dom';
 
 var initSPA = function(callback) {
 	let app = new App();
@@ -64,6 +65,15 @@ var initSPA = function(callback) {
 					Liferay.Util._submitLocked = false;
 
 					globals.capturedFormElement = formElement;
+
+					const buttonSelector = 'button:not([type]),button[type=submit],input[type=submit]';
+
+					if (match(globals.document.activeElement, buttonSelector)) {
+						globals.capturedFormButtonElement = globals.document.activeElement;
+					}
+					else {
+						globals.capturedFormButtonElement = form.one(buttonSelector);
+					}
 
 					app.navigate(utils.getUrlPath(url));
 				}

@@ -44,6 +44,19 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Web Content Display" />
+			<var name="portletOption" value="Look and Feel Configuration" />
+		</execute>
+
+		<execute macro="Portlet#configureApplicationDecoratorViaLookandfeelPG">
+			<var name="applicationDecorator" value="Borderless" />
+		</execute>
+
+		<execute macro="Button#clickCancel" />
+
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="Portlet#viewApplicationDecorator">
 			<var name="decorator" value="decorate" />
 		</execute>

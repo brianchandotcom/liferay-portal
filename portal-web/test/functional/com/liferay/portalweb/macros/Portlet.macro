@@ -207,6 +207,8 @@
 	</command>
 
 	<command name="configureApplicationDecoratorViaLookandfeelPG">
+		<execute macro="IFrame#selectConfigurationFrame" />
+
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="General" />
 		</execute>
@@ -215,7 +217,7 @@
 	</command>
 
 	<command name="configureCustomStylesViaLookandfeelPG">
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute macro="IFrame#selectConfigurationFrame" />
 
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="Text Styles" />

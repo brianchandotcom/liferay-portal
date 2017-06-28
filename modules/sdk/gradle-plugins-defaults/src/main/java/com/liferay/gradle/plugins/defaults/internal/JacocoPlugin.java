@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.defaults.internal;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
+import com.liferay.gradle.util.Validator;
 
 import java.util.List;
 
@@ -44,9 +45,9 @@ public class JacocoPlugin implements Plugin<Project> {
 		Configuration jacocoAgentConfiguration = _addConfigurationJacocoAgent(
 			project);
 
-		_configureTaskTestJacocoAgent(
+		_configureTaskTestJacoco(
 			project, JavaPlugin.TEST_TASK_NAME, jacocoAgentConfiguration);
-		_configureTaskTestJacocoAgent(
+		_configureTaskTestJacoco(
 			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME,
 			jacocoAgentConfiguration);
 	}
@@ -82,7 +83,7 @@ public class JacocoPlugin implements Plugin<Project> {
 			"org.jacoco.agent", "0.7.9", "runtime", true);
 	}
 
-	private void _configureTaskTestJacocoAgent(
+	private void _configureTaskTestJacoco(
 		final Project project, final String taskName,
 		final Configuration jacocoAgentConfiguration) {
 
@@ -93,23 +94,23 @@ public class JacocoPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Task task) {
-					String jarFilePath = FileUtil.getAbsolutePath(
+					Test test = (Test)task;
+
+					String jacocoAgentFileName = FileUtil.getAbsolutePath(
 						jacocoAgentConfiguration.getSingleFile());
 
-					String jacocoDumpFile = System.getProperty(
+					String jacocoDumpFileName = System.getProperty(
 						"jacoco.dump.file");
 
-					if (jacocoDumpFile == null) {
-						jacocoDumpFile =
+					if (Validator.isNull(jacocoDumpFileName)) {
+						jacocoDumpFileName =
 							FileUtil.getAbsolutePath(project.getProjectDir()) +
 								"/build/jacoco/" + taskName + ".exec";
 					}
 
-					String jacocoAgent =
-						"-javaagent:" + jarFilePath + "=destfile=" +
-							jacocoDumpFile + ",output=file,append=true";
-
-					Test test = (Test)task;
+					String jacocoJvmArg =
+						"-javaagent:" + jacocoAgentFileName + "=destfile=" +
+							jacocoDumpFileName + ",output=file,append=true";
 
 					List<String> allJVMArgs = test.getAllJvmArgs();
 
@@ -117,11 +118,10 @@ public class JacocoPlugin implements Plugin<Project> {
 						String jvmArg = allJVMArgs.get(i);
 
 						if (jvmArg.contains("-javaagent:")) {
-							allJVMArgs.set(
-								i,
-								jvmArg.replaceFirst(
-									"-javaagent:",
-									jacocoAgent + " -javaagent:"));
+							jvmArg = jvmArg.replaceFirst(
+								"-javaagent:", jacocoJvmArg + " -javaagent:");
+
+							allJVMArgs.set(i, jvmArg);
 
 							test.setAllJvmArgs(allJVMArgs);
 
@@ -129,7 +129,7 @@ public class JacocoPlugin implements Plugin<Project> {
 						}
 					}
 
-					test.jvmArgs(jacocoAgent);
+					test.jvmArgs(jacocoJvmArg);
 				}
 
 			});

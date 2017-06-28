@@ -207,6 +207,8 @@
 	</command>
 
 	<command name="configureApplicationDecoratorViaLookandfeelPG">
+		<execute macro="IFrame#selectConfigurationFrame" />
+
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="General" />
 		</execute>

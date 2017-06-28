@@ -251,8 +251,12 @@
 	opacity: 0.5;
 }
 
-.calendar-portlet-event-draft, .calendar-portlet-event-maybe, .calendar-portlet-event-pending {
+.calendar-portlet-event-draft, .calendar-portlet-event-denied, .calendar-portlet-event-maybe, .calendar-portlet-event-pending {
 	opacity: 0.8;
+}
+
+.calendar-portlet-event-denied .scheduler-event-content {
+	text-decoration: line-through;
 }
 
 .calendar-portlet-event-recorder {

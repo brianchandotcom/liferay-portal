@@ -616,20 +616,9 @@
 			</then>
 		</if>
 
-		<if>
-			<equals arg1="${rsvp}" arg2="No" />
-			<then>
-				<execute macro="CalendarScheduler#viewSpecificEventNotPresent">
-					<var name="eventTitle" value="${eventTitle}" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="CalendarScheduler#viewRSVP">
-					<var name="eventTitle" value="${eventTitle}" />
-					<var name="rsvp"  value="${rsvp}" />
-				</execute>
-			</else>
-		</if>
+		<execute macro="CalendarScheduler#viewRSVP">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
 	</command>
 
 	<command name="addSetTime">

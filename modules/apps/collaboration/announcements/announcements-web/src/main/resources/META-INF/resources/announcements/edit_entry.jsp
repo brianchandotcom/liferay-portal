@@ -26,7 +26,7 @@ long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 String title = BeanParamUtil.getString(entry, request, "title");
 String content = BeanParamUtil.getString(entry, request, "content");
 
-boolean alert = ParamUtil.getBoolean(request, "alert");
+boolean alert = BeanParamUtil.getBoolean(entry, request, "alert");
 
 boolean displayImmediately = ParamUtil.getBoolean(request, "displayImmediately");
 
@@ -134,10 +134,19 @@ if (portletTitleBasedNavigation) {
 
 				</aui:select>
 
-				<aui:select name="priority">
-					<aui:option label="normal" selected="<%= (entry != null) && (entry.getPriority() == 0) %>" value="0" />
-					<aui:option label="important" selected="<%= (entry != null) && (entry.getPriority() == 1) %>" value="1" />
-				</aui:select>
+				<c:choose>
+					<c:when test="<%= alert %>">
+						<aui:select disabled="<%= true %>" name="priority">
+							<aui:option label="important" selected="<%= true %>" value="1" />
+						</aui:select>
+					</c:when>
+					<c:otherwise>
+						<aui:select name="priority">
+							<aui:option label="normal" selected="<%= (entry != null) && (entry.getPriority() == 0) %>" value="0" />
+							<aui:option label="important" selected="<%= (entry != null) && (entry.getPriority() == 1) %>" value="1" />
+						</aui:select>
+					</c:otherwise>
+				</c:choose>
 
 				<aui:input dateTogglerCheckboxLabel="display-immediately" disabled="<%= displayImmediately %>" name="displayDate" />
 

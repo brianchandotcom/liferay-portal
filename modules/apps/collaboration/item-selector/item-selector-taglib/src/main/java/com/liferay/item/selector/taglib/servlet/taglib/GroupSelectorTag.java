@@ -75,6 +75,10 @@ public class GroupSelectorTag extends IncludeTag {
 
 		String keywords = ParamUtil.getString(request, "keywords");
 
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
+
+		groupParams.put("site", Boolean.TRUE);
+
 		int cur = ParamUtil.getInteger(
 			request, SearchContainer.DEFAULT_CUR_PARAM,
 			SearchContainer.DEFAULT_CUR);
@@ -84,10 +88,6 @@ public class GroupSelectorTag extends IncludeTag {
 
 		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
 			cur, delta);
-
-		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
-
-		groupParams.put("site", Boolean.TRUE);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();

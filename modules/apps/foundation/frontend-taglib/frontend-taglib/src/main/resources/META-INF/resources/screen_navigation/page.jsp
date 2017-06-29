@@ -48,7 +48,7 @@ List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntr
 <div class="container-fluid-1280">
 	<c:if test="<%= screenNavigationEntries.size() > 1 %>">
 		<div class="col-md-3">
-			<ul class="nav nav-pills nav-stacked">
+			<ul class="nav">
 
 				<%
 				for (ScreenNavigationEntry screenNavigationEntry : screenNavigationEntries) {

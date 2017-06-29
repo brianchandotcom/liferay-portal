@@ -67,8 +67,6 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
-		<reference entity="TrashVersion" package-path="com.liferay.portlet.trash" />
 		<reference entity="WikiPage" package-path="com.liferay.wiki" />
 	</entity>
 	<entity local-service="true" name="WikiPage" remote-service="true" trash-enabled="true" uuid="true">
@@ -289,8 +287,6 @@
 		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
-		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
-		<reference entity="TrashVersion" package-path="com.liferay.portlet.trash" />
 		<reference entity="WikiNode" package-path="com.liferay.wiki" />
 		<reference entity="WikiPageResource" package-path="com.liferay.wiki" />
 	</entity>

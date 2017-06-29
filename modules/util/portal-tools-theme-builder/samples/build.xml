@@ -2,11 +2,11 @@
 <!DOCTYPE project>
 
 <project>
-	<path id="css.builder.classpath">
+	<path id="theme.builder.classpath">
 		<fileset dir="../../../../tools/sdk/dist" includes="com.liferay.portal.tools.theme.builder-*.jar" />
 	</path>
 
-	<taskdef classpathref="css.builder.classpath" resource="com/liferay/portal/tools/theme/builder/ant/taskdefs.properties" />
+	<taskdef classpathref="theme.builder.classpath" resource="com/liferay/portal/tools/theme/builder/ant/taskdefs.properties" />
 
 	<target name="build-theme">
 		<build-theme

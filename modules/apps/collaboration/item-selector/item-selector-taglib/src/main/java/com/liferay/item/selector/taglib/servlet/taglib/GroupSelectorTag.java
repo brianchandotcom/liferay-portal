@@ -18,8 +18,6 @@ import com.liferay.item.selector.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.item.selector.taglib.internal.servlet.item.selector.ItemSelectorUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -160,9 +158,6 @@ public class GroupSelectorTag extends IncludeTag {
 		ClassNameLocalServiceUtil.getClassNameId(Group.class),
 		ClassNameLocalServiceUtil.getClassNameId(Organization.class)
 	};
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		GroupSelectorTag.class);
 
 	private List<Group> _groups;
 	private int _groupsCount;

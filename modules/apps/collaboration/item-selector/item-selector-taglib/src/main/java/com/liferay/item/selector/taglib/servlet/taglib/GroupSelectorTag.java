@@ -94,17 +94,13 @@ public class GroupSelectorTag extends IncludeTag {
 
 		if (_checkPermission(themeDisplay.getPermissionChecker())) {
 			return GroupLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
-				groupParams, startAndEnd[0], startAndEnd[1], null);
+				themeDisplay.getCompanyId(), _COMPANY_ADMIN_CLASSNAME_IDS,
+				keywords, groupParams, startAndEnd[0], startAndEnd[1], null);
 		}
 		else {
 			return GroupLocalServiceUtil.search(
-				themeDisplay.getCompanyId(),
-				new long[] {
-					ClassNameLocalServiceUtil.getClassNameId(Group.class),
-					ClassNameLocalServiceUtil.getClassNameId(Organization.class)
-				},
-				keywords, groupParams, startAndEnd[0], startAndEnd[1], null);
+				themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
+				groupParams, startAndEnd[0], startAndEnd[1], null);
 		}
 	}
 
@@ -126,17 +122,13 @@ public class GroupSelectorTag extends IncludeTag {
 
 		if (_checkPermission(themeDisplay.getPermissionChecker())) {
 			return GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
-				groupParams);
+				themeDisplay.getCompanyId(), _COMPANY_ADMIN_CLASSNAME_IDS,
+				keywords, groupParams);
 		}
 		else {
 			return GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(),
-				new long[] {
-					ClassNameLocalServiceUtil.getClassNameId(Group.class),
-					ClassNameLocalServiceUtil.getClassNameId(Organization.class)
-				},
-				keywords, groupParams);
+				themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
+				groupParams);
 		}
 	}
 
@@ -166,6 +158,11 @@ public class GroupSelectorTag extends IncludeTag {
 	}
 
 	private static final long[] _CLASSNAME_IDS = {
+		ClassNameLocalServiceUtil.getClassNameId(Group.class),
+		ClassNameLocalServiceUtil.getClassNameId(Organization.class)
+	};
+
+	private static final long[] _COMPANY_ADMIN_CLASSNAME_IDS = {
 		ClassNameLocalServiceUtil.getClassNameId(Company.class),
 		ClassNameLocalServiceUtil.getClassNameId(Group.class),
 		ClassNameLocalServiceUtil.getClassNameId(Organization.class)

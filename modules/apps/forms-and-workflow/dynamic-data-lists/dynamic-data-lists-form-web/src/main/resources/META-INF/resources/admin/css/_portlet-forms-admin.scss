@@ -160,6 +160,11 @@
 		border-width: 0;
 		box-shadow: none;
 		margin: 0;
+
+		&:hover {
+			background-color: #F0F8FE;
+			cursor: pointer;
+		}
 	}
 
 	.form-builder-field-content-target {

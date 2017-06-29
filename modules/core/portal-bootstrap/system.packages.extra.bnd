@@ -348,6 +348,7 @@ Import-Package: !*
 	@lib/com.liferay.osgi.service.tracker.collections.jar,\
 	@lib/com.liferay.portal.app.license.api.jar,\
 	@lib/com.liferay.portal.impl.blogs.compat.jar,\
+	@lib/com.liferay.portal.impl.trash.compat.jar,\
 	@lib/com.liferay.portal.kernel.blogs.compat.jar,\
 	@lib/com.liferay.registry.api.jar
 -removeheaders:\

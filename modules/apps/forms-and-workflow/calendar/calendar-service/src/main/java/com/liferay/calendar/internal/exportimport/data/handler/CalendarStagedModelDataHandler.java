@@ -175,7 +175,7 @@ public class CalendarStagedModelDataHandler
 			}
 			else {
 				importedCalendar = _calendarLocalService.updateCalendar(
-					existingCalendar.getCalendarId(), calendar.getNameMap(),
+					existingCalendar.getCalendarId(), calendarNameMap,
 					calendar.getDescriptionMap(), calendar.getTimeZoneId(),
 					calendar.getColor(), calendar.isDefaultCalendar(),
 					calendar.isEnableComments(), calendar.isEnableRatings(),
@@ -204,8 +204,9 @@ public class CalendarStagedModelDataHandler
 
 		String calendarName = calendar.getName(LocaleUtil.getDefault());
 
-		if ((sourceGroup == null) ||
-			!calendarName.equals(sourceGroup.getDescriptiveName())) {
+		if (((sourceGroup == null) ||
+			 !calendarName.equals(sourceGroup.getDescriptiveName())) &&
+			!calendar.isDefaultCalendar()) {
 
 			return calendar.getNameMap();
 		}

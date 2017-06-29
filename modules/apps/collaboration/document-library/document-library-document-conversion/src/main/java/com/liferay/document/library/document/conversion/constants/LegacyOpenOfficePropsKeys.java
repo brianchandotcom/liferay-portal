@@ -19,15 +19,15 @@ package com.liferay.document.library.document.conversion.constants;
  */
 public class LegacyOpenOfficePropsKeys {
 
-	public static final String[] KEYS = {
-		LegacyOpenOfficePropsKeys.OPENOFFICE_CACHE_ENABLED,
+	public static final String OPENOFFICE_CACHE_ENABLED =
+		"openoffice.cache.enabled";
+
+	public static final String[] OPENOFFICE_KEYS = {
+		OPENOFFICE_CACHE_ENABLED,
 		LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_ENABLED,
 		LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_HOST,
 		LegacyOpenOfficePropsKeys.OPENOFFICE_SERVER_PORT
 	};
-
-	public static final String OPENOFFICE_CACHE_ENABLED =
-		"openoffice.cache.enabled";
 
 	public static final String OPENOFFICE_SERVER_ENABLED =
 		"openoffice.server.enabled";

@@ -156,7 +156,6 @@
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 		<reference entity="SocialActivity" package-path="com.liferay.portlet.social" />
 		<reference entity="SocialActivityCounter" package-path="com.liferay.portlet.social" />
-		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
 	<entity local-service="true" name="CalendarNotificationTemplate" remote-service="true" uuid="true">
 

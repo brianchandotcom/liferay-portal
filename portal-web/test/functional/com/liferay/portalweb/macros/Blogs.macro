@@ -93,11 +93,9 @@
 			<var name="entrySubtitle" value="${entrySubtitle}" />
 		</execute>
 
-		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
-
-		<execute function="Click" locator1="Button#EDITOR_SWITCH" />
-
-		<execute function="Type#sendKeysAceEditor" locator1="TextArea#ACE_EDITOR" value1="${entryContent}" />
+		<execute macro="AlloyEditor#addSourceContent">
+			<var name="content" value="${entryContent}" />
+		</execute>
 
 		<execute macro="PortletEntry#publish" />
 	</command>

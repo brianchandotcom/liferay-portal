@@ -115,6 +115,8 @@
 		</if>
 
 		<execute function="Pause" locator1="5000" />
+
+		<execute function="AssertConsoleTextNotPresent" value1="javax.portlet.PortletException: java.lang.NullPointerException" />
 	</command>
 
 	<command name="addEventRepeatDaily">

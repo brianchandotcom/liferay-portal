@@ -599,7 +599,7 @@ information.
 						<arg value="tasks" />
 						<arg value="--all" />
 						<env key="GRADLE_OPTS" value="${env.ANT_OPTS}" />
-						<redirector outputproperty="tasks.output" unless:blank="tasks.output" />
+						<redirector errorproperty="@{outputproperty}.error" outputproperty="tasks.output" unless:blank="tasks.output" />
 					</exec>
 
 					<condition else="false" property="task.available" value="true">

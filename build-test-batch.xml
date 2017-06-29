@@ -2574,9 +2574,11 @@ information. Make sure to commit in all build services results.
 			<try>
 				<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
 
-				<gradle-execute checktask="true" dir="${module.base.dir}" task="assemble" />
+				<gradle-execute checktask="true" dir="${module.base.dir}" outputproperty="gradle.output" task="assemble" />
 			</try>
 			<catch>
+				<echo message="${gradle.output.error}" />
+
 				<fail message="${failure.property}" />
 			</catch>
 			<finally>
@@ -2604,12 +2606,14 @@ information. Make sure to commit in all build services results.
 			<try>
 				<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
 
-				<gradle-execute checktask="true" dir="${module.base.dir}" task="pmdMain">
+				<gradle-execute checktask="true" dir="${module.base.dir}" outputproperty="gradle.output" task="pmdMain">
 					<arg value="pmdTest" />
 					<arg value="pmdTestIntegration" />
 				</gradle-execute>
 			</try>
 			<catch>
+				<echo message="${gradle.output.error}" />
+
 				<fail message="${failure.property}" />
 			</catch>
 			<finally>
@@ -2640,9 +2644,11 @@ information. Make sure to commit in all build services results.
 			<try>
 				<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
 
-				<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" task="baseline" />
+				<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" outputproperty="gradle.output" task="baseline" />
 			</try>
 			<catch>
+				<echo message="${gradle.output.error}" />
+
 				<fail message="${failure.property}" />
 			</catch>
 			<finally>
@@ -2688,11 +2694,13 @@ information. Make sure to commit in all build services results.
 			<try>
 				<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
 
-				<gradle-execute dir="${module.base.dir}" task="checkSourceFormatting">
+				<gradle-execute dir="${module.base.dir}" outputproperty="gradle.output" task="checkSourceFormatting">
 					<arg value="-PdependencyCheckerIgnoreFailures=false" />
 				</gradle-execute>
 			</try>
 			<catch>
+				<echo message="${gradle.output.error}" />
+
 				<fail message="${failure.property}" />
 			</catch>
 			<finally>
@@ -2710,9 +2718,11 @@ information. Make sure to commit in all build services results.
 			<try>
 				<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
 
-				<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" task="test" />
+				<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" outputproperty="gradle.output" task="test" />
 			</try>
 			<catch>
+				<echo message="${gradle.output.error}" />
+
 				<fail message="${failure.property}" />
 			</catch>
 			<finally>

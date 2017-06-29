@@ -10,6 +10,14 @@ dependencies {
 repositories {
 	if (!Boolean.getBoolean("maven.local.ignore")) {
 		mavenLocal()
+
+		File tmpMavenRepositoryDir = file("../.m2-tmp")
+
+		if (tmpMavenRepositoryDir.exists()) {
+			maven {
+				url tmpMavenRepositoryDir
+			}
+		}
 	}
 
 	maven {

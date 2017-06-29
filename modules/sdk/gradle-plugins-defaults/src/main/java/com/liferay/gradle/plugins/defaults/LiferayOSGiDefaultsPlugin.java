@@ -378,7 +378,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			_addTaskCheckOSGiBundleState(project);
 		}
 
-		InstallCacheTask installCacheTask = _addTaskInstallCache(project);
+		InstallCacheTask installCacheTask = _addTaskInstallCache(
+			project, portalRootDir);
 
 		_addTaskCommitCache(project, installCacheTask);
 
@@ -1021,7 +1022,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return copy;
 	}
 
-	private InstallCacheTask _addTaskInstallCache(final Project project) {
+	private InstallCacheTask _addTaskInstallCache(
+		final Project project, File portalRootDir) {
+
 		InstallCacheTask installCacheTask = GradleUtil.addTask(
 			project, INSTALL_CACHE_TASK_NAME, InstallCacheTask.class);
 
@@ -1076,6 +1079,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		if (portalRootDir != null) {
+			installCacheTask.setCacheFormat(InstallCacheTask.CacheFormat.MAVEN);
+			installCacheTask.setCacheRootDir(
+				new File(portalRootDir, _TMP_MAVEN_REPOSITORY_DIR_NAME));
+		}
 
 		installCacheTask.setDescription(
 			"Installs the project to the local Gradle cache for testing.");

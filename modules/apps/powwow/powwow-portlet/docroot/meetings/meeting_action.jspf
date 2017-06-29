@@ -1,0 +1,181 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+PowwowParticipant userPowwowParticipant = PowwowParticipantLocalServiceUtil.fetchPowwowParticipant(powwowMeeting.getPowwowMeetingId(), user.getEmailAddress());
+%>
+
+<c:if test="<%= PowwowMeetingPermission.contains(permissionChecker, powwowMeeting, userPowwowParticipant, ActionKeys.UPDATE) && (powwowMeeting.getStatus() != PowwowMeetingConstants.STATUS_IN_PROGRESS) %>">
+	<portlet:renderURL var="editURL">
+		<portlet:param name="mvcPath" value="/meetings/edit_meeting.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="powwowMeetingId" value="<%= String.valueOf(powwowMeeting.getPowwowMeetingId()) %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		iconCssClass="icon-edit"
+		label="<%= true %>"
+		message='<%= (powwowMeeting.getStatus() == PowwowMeetingConstants.STATUS_SCHEDULED) ? "edit" : "reschedule" %>'
+		url="<%= editURL %>"
+	/>
+</c:if>
+
+<c:if test="<%= PowwowMeetingPermission.contains(permissionChecker, powwowMeeting, userPowwowParticipant, ActionKeys.DELETE) %>">
+	<liferay-ui:icon
+		iconCssClass="icon-remove"
+		label="<%= true %>"
+		message="delete"
+		onClick='<%= renderResponse.getNamespace() + "deleteMeeting(" + String.valueOf(powwowMeeting.getPowwowMeetingId()) + ");" %>'
+		url="javascript:;"
+	/>
+</c:if>
+
+<c:if test="<%= PowwowMeetingPermission.contains(permissionChecker, powwowMeeting, userPowwowParticipant, ActionKeys.UPDATE) && (powwowMeeting.getStatus() == PowwowMeetingConstants.STATUS_IN_PROGRESS) %>">
+	<portlet:actionURL name="endPowwowMeeting" var="endURL">
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="powwowMeetingId" value="<%= String.valueOf(powwowMeeting.getPowwowMeetingId()) %>" />
+	</portlet:actionURL>
+
+	<liferay-ui:icon
+		iconCssClass="icon-unlink"
+		label="<%= true %>"
+		message="end-meeting"
+		url="<%= endURL %>"
+	/>
+</c:if>
+
+<c:if test="<%= (userPowwowParticipant != null) && ((powwowMeeting.getStatus() == PowwowMeetingConstants.STATUS_IN_PROGRESS) || (powwowMeeting.getStatus() == PowwowMeetingConstants.STATUS_SCHEDULED)) %>">
+	<liferay-ui:icon
+		iconCssClass="icon-comments-alt"
+		label="<%= true %>"
+		message='<%= ((powwowMeeting.getStatus() == PowwowMeetingConstants.STATUS_SCHEDULED) && (userPowwowParticipant.getType() == PowwowParticipantConstants.TYPE_HOST)) ? "start-meeting" : "join-meeting" %>'
+		url="<%= PowwowUtil.getInvitationURL(powwowMeeting.getPowwowMeetingId(), userPowwowParticipant, request) %>"
+	/>
+</c:if>
+
+<liferay-ui:icon
+	iconCssClass="icon-search"
+	label="<%= true %>"
+	message="view-invitation"
+	onClick='<%= renderResponse.getNamespace() + "viewInvitation(" + String.valueOf(powwowMeeting.getPowwowMeetingId()) + ");" %>'
+	url="javascript:;"
+/>
+
+<c:if test="<%= powwowMeeting.getCalendarBookingId() > 0 %>">
+	<portlet:resourceURL id="exportPowwowMeetingCalendar" var="exportPowwowMeetingCalendarURL">
+		<portlet:param name="powwowMeetingId" value="<%= String.valueOf(powwowMeeting.getPowwowMeetingId()) %>" />
+	</portlet:resourceURL>
+
+	<liferay-ui:icon
+		iconCssClass="icon-download-alt"
+		label="<%= true %>"
+		message="export"
+		url="<%= exportPowwowMeetingCalendarURL %>"
+	/>
+</c:if>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />displayError',
+		function(message) {
+			var errorMessage = AUI().one('#<portlet:namespace />errorMessage');
+
+			if (message) {
+				errorMessage.html('<div class="alert alert-error">' + message + '</div>');
+			}
+		}
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />deleteMeeting',
+		function(meetingId) {
+			var A = AUI();
+
+			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-meeting") %>')) {
+				var uri = '<portlet:actionURL name="deletePowwowMeeting"></portlet:actionURL>';
+
+				uri = Liferay.Util.addParams('<portlet:namespace />powwowMeetingId=' + meetingId, uri);
+
+				A.io.request(
+					uri,
+					{
+						after: {
+							success: function() {
+								var responseData = this.get('responseData');
+
+								if (responseData.success) {
+									document.location.href = '<portlet:renderURL><portlet:param name="mvcPath" value="/meetings/view.jsp" /></portlet:renderURL>';
+								}
+								else {
+									<portlet:namespace />displayError(responseData.message);
+								}
+
+							}
+						},
+						dataType: 'JSON'
+					}
+				);
+			}
+		},
+		['aui-io-request']
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />viewInvitation',
+		function(meetingId) {
+			var A = AUI();
+
+			A.io.request(
+				'<portlet:resourceURL id="getEmailNotificationPreview" />',
+				{
+					after: {
+						success: function() {
+							var responseData = this.get('responseData');
+
+							if (responseData.success) {
+								Liferay.Util.openWindow(
+									{
+										cache: false,
+										dialog: {
+											align: Liferay.Util.Window.ALIGN_CENTER,
+											bodyContent: '<div class="email-body-container">' + responseData.emailBody + '</div>',
+											modal: true,
+											width: 600
+										},
+										id: '<portlet:namespace />dialog',
+										title: responseData.emailSubject
+									}
+								);
+							}
+							else {
+								<portlet:namespace />displayError(responseData.message);
+							}
+
+						}
+					},
+					data: {
+						<portlet:namespace />powwowMeetingId: meetingId
+					},
+					dataType: 'JSON'
+				}
+			);
+		},
+		['aui-io-request']
+	);
+</aui:script>

@@ -1,0 +1,183 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+String tabs1 = ParamUtil.getString(request, "tabs1", "current");
+
+int[] statuses = new int[] {PowwowMeetingConstants.STATUS_IN_PROGRESS, PowwowMeetingConstants.STATUS_SCHEDULED};
+
+if (tabs1.equals("completed")) {
+	statuses = new int[] {PowwowMeetingConstants.STATUS_COMPLETED};
+}
+
+int delta = ParamUtil.getInteger(request, "delta", 10);
+String orderByCol = ParamUtil.getString(request, "orderByCol", "date");
+String orderByType = ParamUtil.getString(request, "orderByType", "desc");
+%>
+
+<div class="view-meetings">
+	<div id="<portlet:namespace />errorMessage"></div>
+
+	<aui:button-row>
+		<portlet:renderURL var="addPowwowMeetingURL">
+			<portlet:param name="mvcPath" value="/meetings/edit_meeting.jsp" />
+			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+		</portlet:renderURL>
+
+		<aui:button onClick="<%= addPowwowMeetingURL.toString() %>" value="add-meeting" />
+	</aui:button-row>
+
+	<liferay-ui:tabs
+		names="current,completed"
+		param="tabs1"
+		url="<%= portletURL.toString() %>"
+	/>
+
+	<liferay-ui:search-container
+		delta="<%= delta %>"
+		emptyResultsMessage="there-are-no-meetings"
+		iteratorURL="<%= portletURL %>"
+		orderByCol="<%= orderByCol %>"
+		orderByType="<%= orderByType %>"
+		total="<%= PowwowMeetingLocalServiceUtil.getParticipantPowwowMeetingsCount(themeDisplay.getUserId(), statuses) %>"
+	>
+		<liferay-ui:search-container-results>
+
+			<%
+			Indexer indexer = IndexerRegistryUtil.getIndexer(PowwowMeeting.class);
+
+			SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+			searchContext.setAttribute(Field.USER_ID, user.getUserId());
+			searchContext.setAttribute("paginationType", "regular");
+
+			String[] powwowParticipantKeys = new String[] {(user.getUserId() + StringPool.UNDERLINE + PowwowParticipantConstants.TYPE_ATTENDEE), (user.getUserId() + StringPool.UNDERLINE + PowwowParticipantConstants.TYPE_HOST)};
+
+			searchContext.setAttribute("powwowParticipantKeys", powwowParticipantKeys);
+
+			searchContext.setAttribute("statuses", statuses);
+			searchContext.setEnd(searchContainer.getEnd());
+			searchContext.setSorts(PowwowUtil.getPowwowMeetingSorts(orderByCol, orderByType));
+			searchContext.setStart(searchContainer.getStart());
+
+			Hits hits = indexer.search(searchContext);
+
+			List<PowwowMeeting> powwowMeetings = new ArrayList<PowwowMeeting>();
+
+			for (int i = 0; i < hits.getDocs().length; i++) {
+				Document document = hits.doc(i);
+
+				long resultPowwowMeetingId = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
+
+				PowwowMeeting resultPowwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(resultPowwowMeetingId);
+
+				if (resultPowwowMeeting == null) {
+					continue;
+				}
+
+				powwowMeetings.add(resultPowwowMeeting);
+			}
+
+			searchContainer.setResults(powwowMeetings);
+			%>
+
+		</liferay-ui:search-container-results>
+
+		<liferay-ui:search-container-row
+			className="com.liferay.powwow.model.PowwowMeeting"
+			escapedModel="<%= true %>"
+			keyProperty="powwowMeetingId"
+			modelVar="powwowMeeting"
+		>
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="mvcPath" value="/meetings/view_meeting.jsp" />
+				<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+				<portlet:param name="powwowMeetingId" value="<%= String.valueOf(powwowMeeting.getPowwowMeetingId()) %>" />
+			</portlet:renderURL>
+
+			<%
+			Calendar startCalendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+			startCalendar.setTime(powwowMeeting.getModifiedDate());
+
+			CalendarBooking calendarBooking = CalendarBookingServiceUtil.fetchCalendarBooking(powwowMeeting.getCalendarBookingId());
+
+			if (calendarBooking != null) {
+				startCalendar.setTime(new Date(calendarBooking.getStartTime()));
+			}
+			%>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="date"
+				orderable="<%= true %>"
+			>
+				<fmt:formatDate pattern="MM/dd/yyyy hh:mm a" timeZone="<%= timeZone.getDisplayName(false, 0) %>" value="<%= startCalendar.getTime() %>" />
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="name"
+				orderable="<%= true %>"
+				property="name"
+			/>
+
+			<%
+			PowwowParticipant powwowParticipant = PowwowParticipantLocalServiceUtil.fetchPowwowParticipant(powwowMeeting.getPowwowMeetingId(), user.getUserId());
+
+			String powwowParticipantTypeLabel = LanguageUtil.get(request, "creator");
+
+			if (powwowParticipant != null) {
+				powwowParticipantTypeLabel = PowwowParticipantConstants.getTypeLabel(powwowParticipant.getType());
+			}
+			%>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="participant-type"
+				value="<%= LanguageUtil.get(request, powwowParticipantTypeLabel) %>"
+			/>
+
+			<%
+			String powwowMeetingCreatorName = StringPool.BLANK;
+
+			User powwowMeetingCreatorUser = UserLocalServiceUtil.fetchUser(powwowMeeting.getUserId());
+
+			if (powwowMeetingCreatorUser != null) {
+				powwowMeetingCreatorName = powwowMeetingCreatorUser.getFullName();
+			}
+			%>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="created-by"
+				orderable="<%= true %>"
+				value="<%= powwowMeetingCreatorName %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="status"
+				translate="<%= true %>"
+				value="<%= LanguageUtil.get(request, PowwowMeetingConstants.getStatusLabel(powwowMeeting.getStatus())) %>"
+			/>
+
+			<liferay-ui:search-container-column-jsp path="/meetings/meeting_row_action.jsp" />
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
+</div>

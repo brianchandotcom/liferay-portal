@@ -100,33 +100,37 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 		URL resourceURL = _servletContext.getResource(requestPath);
 
+		String originalRequestPath = request.getRequestURI();
+
 		if (resourceURL == null) {
 			ServletContext resourceServletContext =
-				PortalWebResourcesUtil.getPathServletContext(requestPath);
+				PortalWebResourcesUtil.getPathServletContext(
+					originalRequestPath);
 
 			if (resourceServletContext != null) {
 				resourceURL = PortalWebResourcesUtil.getResource(
-					resourceServletContext, requestPath);
+					resourceServletContext, originalRequestPath);
 			}
 
 			if (resourceURL == null) {
 				resourceServletContext =
-					PortletResourcesUtil.getPathServletContext(requestPath);
+					PortletResourcesUtil.getPathServletContext(
+						originalRequestPath);
 
 				if (resourceServletContext != null) {
 					resourceURL = PortletResourcesUtil.getResource(
-						resourceServletContext, requestPath);
+						resourceServletContext, originalRequestPath);
 				}
 			}
 
 			if (resourceURL == null) {
 				resourceServletContext =
 					DynamicResourceIncludeUtil.getPathServletContext(
-						requestPath);
+						originalRequestPath);
 
 				if (resourceServletContext != null) {
 					resourceURL = DynamicResourceIncludeUtil.getResource(
-						resourceServletContext, requestPath);
+						resourceServletContext, originalRequestPath);
 				}
 			}
 
@@ -162,9 +166,9 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 		String content = null;
 
 		try {
-			if (requestPath.endsWith(_CSS_EXTENSION)) {
+			if (originalRequestPath.endsWith(_CSS_EXTENSION)) {
 				if (_log.isInfoEnabled()) {
-					_log.info("Replacing tokens on CSS " + requestPath);
+					_log.info("Replacing tokens on CSS " + originalRequestPath);
 				}
 
 				content = StringUtil.read(resourceURL.openStream());
@@ -176,10 +180,11 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 				FileUtil.write(cacheContentTypeFile, ContentTypes.TEXT_CSS);
 			}
-			else if (requestPath.endsWith(_JSP_EXTENSION)) {
+			else if (originalRequestPath.endsWith(_JSP_EXTENSION)) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Replacing tokens on JSP or servlet " + requestPath);
+						"Replacing tokens on JSP or servlet " +
+							originalRequestPath);
 				}
 
 				BufferCacheServletResponse bufferCacheServletResponse =
@@ -203,7 +208,8 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 			}
 		}
 		catch (Exception e) {
-			_log.error("Unable to replace tokens in CSS " + requestPath, e);
+			_log.error(
+				"Unable to replace tokens in CSS " + originalRequestPath, e);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(content);

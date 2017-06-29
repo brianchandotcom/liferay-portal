@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 
+import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.internal.notification.DDLFormEmailNotificationSender;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
@@ -27,7 +28,6 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -172,7 +172,7 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 
 		if (recordSetSettings.requireCaptcha()) {
 			try {
-				_captcha.check(actionRequest);
+				CaptchaUtil.check(actionRequest);
 			}
 			catch (CaptchaTextException cte) {
 				SessionErrors.add(
@@ -185,9 +185,6 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AddRecordMVCCommandHelper _addRecordMVCCommandHelper;
-
-	@Reference
-	private Captcha _captcha;
 
 	private DDLFormEmailNotificationSender _ddlFormEmailNotificationSender;
 	private DDLRecordService _ddlRecordService;

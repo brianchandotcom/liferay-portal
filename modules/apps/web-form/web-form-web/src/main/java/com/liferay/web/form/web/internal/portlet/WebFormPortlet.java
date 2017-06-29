@@ -14,6 +14,7 @@
 
 package com.liferay.web.form.web.internal.portlet;
 
+import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.expando.kernel.model.ExpandoRow;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
@@ -22,7 +23,6 @@ import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -165,7 +165,7 @@ public class WebFormPortlet extends MVCPortlet {
 
 		if (requireCaptcha) {
 			try {
-				_captcha.check(actionRequest);
+				CaptchaUtil.check(actionRequest);
 			}
 			catch (CaptchaTextException cte) {
 
@@ -531,7 +531,7 @@ public class WebFormPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		_captcha.serveImage(resourceRequest, resourceResponse);
+		CaptchaUtil.serveImage(resourceRequest, resourceResponse);
 	}
 
 	@Reference(unbind = "-")
@@ -626,9 +626,6 @@ public class WebFormPortlet extends MVCPortlet {
 	private static ExpandoTableLocalService _expandoTableLocalService;
 	private static ExpandoValueLocalService _expandoValueLocalService;
 	private static MailService _mailService;
-
-	@Reference
-	private Captcha _captcha;
 
 	@Reference
 	private Portal _portal;

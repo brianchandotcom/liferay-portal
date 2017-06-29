@@ -80,7 +80,10 @@ public class UpgradeUploadServletRequestConfiguration extends UpgradeProcess {
 
 		PortletPreferences portletPreferences = _prefsProps.getPreferences();
 
-		for (String key : LegacyUploadServletRequestPropsKeys.KEYS) {
+		for (String key :
+				LegacyUploadServletRequestPropsKeys.
+					UPLOAD_SERVLET_REQUEST_IMPL_KEYS) {
+
 			portletPreferences.reset(key);
 		}
 	}

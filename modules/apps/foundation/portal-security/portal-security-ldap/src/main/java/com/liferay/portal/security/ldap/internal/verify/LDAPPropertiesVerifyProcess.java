@@ -289,7 +289,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 				Set<String> keys = new HashSet<>();
 
 				Collections.addAll(
-					keys, LegacyLDAPPropsKeys.NONPOSTFIXED_LDAP_KEYS);
+					keys, LegacyLDAPPropsKeys.LDAP_KEYS_NONPOSTFIXED);
 
 				for (long ldapServerId : ldapServerIds) {
 					String postfix = _ldapSettings.getPropertyPostfix(
@@ -299,11 +299,11 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 						companyId, ldapServerId, postfix);
 
 					for (int i = 0;
-						i < LegacyLDAPPropsKeys.POSTFIXED_LDAP_KEYS.length;
+						i < LegacyLDAPPropsKeys.LDAP_KEYS_POSTFIXED.length;
 						i++) {
 
 						keys.add(
-							LegacyLDAPPropsKeys.POSTFIXED_LDAP_KEYS[i] +
+							LegacyLDAPPropsKeys.LDAP_KEYS_POSTFIXED[i] +
 								postfix);
 					}
 				}

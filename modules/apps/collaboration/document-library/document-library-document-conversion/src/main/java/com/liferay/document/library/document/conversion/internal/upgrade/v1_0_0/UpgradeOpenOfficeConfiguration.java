@@ -96,7 +96,7 @@ public class UpgradeOpenOfficeConfiguration extends UpgradeProcess {
 
 		PortletPreferences portletPreferences = _prefsProps.getPreferences();
 
-		for (String key : LegacyOpenOfficePropsKeys.KEYS) {
+		for (String key : LegacyOpenOfficePropsKeys.OPENOFFICE_KEYS) {
 			portletPreferences.reset(key);
 		}
 	}

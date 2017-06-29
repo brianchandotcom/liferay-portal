@@ -19,7 +19,7 @@ package com.liferay.portal.upload.constants;
  */
 public class LegacyUploadServletRequestPropsKeys {
 
-	public static final String[] KEYS = {
+	public static final String[] UPLOAD_SERVLET_REQUEST_IMPL_KEYS = {
 		LegacyUploadServletRequestPropsKeys.
 			UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
 		LegacyUploadServletRequestPropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_TEMP_DIR

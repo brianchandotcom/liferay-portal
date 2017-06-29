@@ -271,7 +271,7 @@ public class UpgradeCaptchaConfiguration extends UpgradeProcess {
 
 		PortletPreferences portletPreferences = _prefsProps.getPreferences();
 
-		for (String key : LegacyCaptchaPropsKeys.KEYS) {
+		for (String key : LegacyCaptchaPropsKeys.CAPTCHA_KEYS) {
 			portletPreferences.reset(key);
 		}
 	}

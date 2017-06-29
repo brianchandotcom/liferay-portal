@@ -134,11 +134,15 @@ public class CaptchaUtil {
 		_serviceTrackerMap = null;
 	}
 
+	@Reference(unbind = "-")
+	protected void setConfigurationAdmin(
+		ConfigurationAdmin configurationAdmin) {
+
+		_configurationAdmin = configurationAdmin;
+	}
+
 	private static volatile CaptchaConfiguration _captchaConfiguration;
-
-	@Reference
 	private static ConfigurationAdmin _configurationAdmin;
-
 	private static ServiceTrackerMap<String, Captcha> _serviceTrackerMap;
 
 }

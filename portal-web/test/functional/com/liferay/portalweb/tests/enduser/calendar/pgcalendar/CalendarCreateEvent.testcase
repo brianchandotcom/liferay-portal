@@ -391,17 +391,15 @@
 					<var name="pageName" value="Calendar Page" />
 				</execute>
 
+				<execute macro="CalendarEvent#view">
+					<var name="eventTitle" value="Calendar Event Title" />
+				</execute>
+
 				<execute function="Pause" locator1="1000" />
 
 				<execute function="AssertConsoleTextNotPresent" value1="OutOfMemoryError" />
 			</then>
 		</while>
-
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute function="AssertConsoleTextNotPresent" value1="OutOfMemoryError" />
 	</command>
 
 	<command name="AddRegular" priority="4">

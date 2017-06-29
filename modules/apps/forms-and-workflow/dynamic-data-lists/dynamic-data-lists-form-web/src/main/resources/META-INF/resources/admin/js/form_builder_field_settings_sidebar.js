@@ -216,6 +216,8 @@ AUI.add(
 								settingsForm.evaluate(
 									function() {
 										instance._removeLoading();
+
+										instance._setFocusToFirstPageField(settingsForm);
 									}
 								);
 
@@ -271,6 +273,18 @@ AUI.add(
 
 						if (content) {
 							instance.get('boundingBox').one('.sidebar-body').setHTML(content);
+						}
+					},
+
+					_setFocusToFirstPageField: function(settingsForm) {
+						var field = settingsForm.getFirstPageField();
+
+						var container = field.get('container');
+
+						var input = container.one('input');
+
+						if (input) {
+							input.focus();
 						}
 					},
 

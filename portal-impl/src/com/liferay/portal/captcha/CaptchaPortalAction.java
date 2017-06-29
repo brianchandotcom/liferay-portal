@@ -27,7 +27,9 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class CaptchaPortalAction extends Action {
 
 	@Override

@@ -121,14 +121,6 @@ public class TestResult {
 		downstreamBuildListItemElement.add(
 			Dom4JUtil.getNewAnchorElement(testReportURL, getDisplayName()));
 
-		if (errorStackTrace != null) {
-			String trimmedStackTrace = StringUtils.abbreviate(
-				errorStackTrace, _MAX_ERROR_STACK_DISPLAY_LENGTH);
-
-			downstreamBuildListItemElement.add(
-				Dom4JUtil.toCodeSnippetElement(trimmedStackTrace));
-		}
-
 		if (testReportURL.contains("com.liferay.poshi.runner/PoshiRunner")) {
 			Dom4JUtil.addToElement(
 				downstreamBuildListItemElement, " - ",
@@ -147,6 +139,13 @@ public class TestResult {
 					Dom4JUtil.getNewAnchorElement(
 						getLiferayLogURL(testrayLogsURL), "Liferay Log"));
 			}
+		}
+		else if (errorStackTrace != null) {
+			String trimmedStackTrace = StringUtils.abbreviate(
+				errorStackTrace, _MAX_ERROR_STACK_DISPLAY_LENGTH);
+
+			downstreamBuildListItemElement.add(
+				Dom4JUtil.toCodeSnippetElement(trimmedStackTrace));
 		}
 
 		return downstreamBuildListItemElement;

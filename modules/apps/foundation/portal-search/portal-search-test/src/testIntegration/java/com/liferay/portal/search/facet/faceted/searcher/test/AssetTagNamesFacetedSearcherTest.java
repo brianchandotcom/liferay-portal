@@ -102,7 +102,7 @@ public class AssetTagNamesFacetedSearcherTest
 	protected User addUser(String... assetTagNames) throws Exception {
 		Group group = userSearchFixture.addGroup();
 
-		return userSearchFixture.addUser(group, assetTagNames);
+		return addUser(group, assetTagNames);
 	}
 
 	protected void assertTags(String keywords, Map<String, String> expected)

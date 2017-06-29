@@ -71,7 +71,7 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		String keyword = RandomTestUtil.randomString();
 
-		userSearchFixture.addUser(group, keyword);
+		addUser(group, keyword);
 
 		SearchContext searchContext = getSearchContext(keyword);
 

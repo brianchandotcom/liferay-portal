@@ -232,6 +232,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_BODY_DUPLICATE</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/../following-sibling::div/following-sibling::div/div[contains(@data-fieldname,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_LABEL</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
 	<td></td>
@@ -260,6 +265,11 @@
 <tr>
 	<td>SIDEBAR_MENUITEM_REMOVE_FIELD</td>
 	<td>//a[@title='Remove Field']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_MENUITEM_DUPLICATE_FIELD</td>
+	<td>//a[@title='Duplicate Field']</td>
 	<td></td>
 </tr>
 <tr>

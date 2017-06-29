@@ -49,6 +49,14 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
 
+	<command name="gotoEditDuplicateField">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Click" locator1="Form#FIELD_BODY_DUPLICATE" />
+
+		<execute function="AssertElementPresent" locator1="Form#SIDEBAR_BASIC_TAB" />
+	</command>
+
 	<command name="gotoEditField">
 		<var name="key_fieldName" value="${fieldName}" />
 

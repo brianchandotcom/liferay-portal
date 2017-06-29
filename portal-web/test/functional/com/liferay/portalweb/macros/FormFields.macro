@@ -20,6 +20,12 @@
 		<execute function="Uncheck" locator1="FormFields#CHECKBOX" />
 	</command>
 
+	<command name="duplicateField">
+		<execute function="Click" locator1="Form#SIDEBAR_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="Form#SIDEBAR_MENUITEM_DUPLICATE_FIELD" value1="Duplicate Field" />
+	</command>
+
 	<command name="editBlankMultiTextFieldWithEnterKey">
 		<var name="key_fieldName" value="${fieldName}" />
 

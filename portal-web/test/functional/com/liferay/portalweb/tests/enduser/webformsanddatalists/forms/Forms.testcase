@@ -172,6 +172,44 @@
 		<execute macro="FormsAdmin#viewNoDuplicateForms" />
 	</command>
 
+	<command name="AddFormWithDuplicateTextFields" priority="4">
+		<description message="This is a use case for LPS-73274." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Text Field" />
+		</execute>
+
+		<execute macro="FormFields#duplicateField" />
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="FormsAdminNavigator#gotoEditDuplicateField">
+			<var name="fieldName" value="TextField" />
+		</execute>
+
+		<execute macro="FormFields#viewFieldName">
+			<var name="fieldName" value="TextField1" />
+		</execute>
+
+		<execute macro="Form#save" />
+	</command>
+
 	<command name="AddFormWithSpanishAsDefaultPortalLanguage" priority="5">
 		<property name="test.name.skip.portal.instance" value="Forms#AddFormWithSpanishAsDefaultPortalLanguage" />
 

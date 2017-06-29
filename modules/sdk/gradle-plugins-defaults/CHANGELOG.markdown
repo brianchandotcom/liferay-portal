@@ -1572,8 +1572,8 @@ Gradle Daemon:
 - [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.3.26.
 
 ### Fixed
-- [LPS-71201]: Allow to publish projects with a `.lfrbuild-releng-ignore` marker
-file from the master branch.
+- [LPS-71201]: Allow projects with a `.lfrbuild-releng-ignore` marker file to be
+published from the master branch.
 
 ## 3.7.5 - 2017-06-13
 
@@ -1610,11 +1610,11 @@ confidence warnings.
 ## 3.7.10 - 2017-06-23
 
 ### Added
-- [LPS-73271]: Set [Find Security Bugs] exit code, but ignore it by default.
+- [LPS-73271]: Set the [Find Security Bugs] exit code, but ignore it by default.
 
 ### Changed
 - [LPS-72705]: Update the [Liferay Gradle Plugins] dependency to version 3.3.32.
-- [LPS-73271]: Print the [Find Security Bugs] report location even in case of
+- [LPS-73271]: Print the [Find Security Bugs] report location, even in case of
 failure.
 
 ## 3.7.11 - 2017-06-27

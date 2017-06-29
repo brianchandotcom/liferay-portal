@@ -19,7 +19,6 @@ AUI.add(
 			{
 				ATTRS: {
 					alert: {
-						valueFn: '_valueAlert'
 					},
 
 					context: {
@@ -154,7 +153,6 @@ AUI.add(
 
 						clearInterval(instance._intervalId);
 
-						instance.get('alert').destroy();
 						instance.get('formBuilder').destroy();
 						instance.get('ruleBuilder').destroy();
 
@@ -789,14 +787,23 @@ AUI.add(
 
 						var alert = instance.get('alert');
 
+						if (alert) {
+							alert.destroy();
+						}
+
 						var icon = 'exclamation-full';
 
 						if (type === 'success') {
 							icon = 'check';
 						}
 
-						alert.setAttrs(
+						alert = new Liferay.Alert(
 							{
+								closeable: true,
+								delay: {
+									hide: 3000,
+									show: 0
+								},
 								icon: icon,
 								message: message,
 								type: type
@@ -808,6 +815,8 @@ AUI.add(
 						}
 
 						alert.show();
+
+						instance.set('alert', alert);
 					},
 
 					_syncDescription: function() {
@@ -838,16 +847,6 @@ AUI.add(
 						localizedName[editingLanguageId] = name;
 
 						instance._setName(name);
-					},
-
-					_valueAlert: function() {
-						var instance = this;
-
-						return new Liferay.Alert(
-							{
-								closeable: true
-							}
-						);
 					},
 
 					_valueFormBuilder: function() {

@@ -18,7 +18,6 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleProcessor;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -115,7 +114,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 		Matcher matcher = _moduleDefinitionPattern.matcher(urlContent);
 
-		if (!matcher.lookingAt()) {
+		if (!matcher.find()) {
 			return Collections.emptyList();
 		}
 
@@ -174,6 +173,10 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 		Enumeration<URL> urls = flatJSBundle.findEntries(
 			location, "*.js", true);
+
+		if (urls == null) {
+			return;
+		}
 
 		while (urls.hasMoreElements()) {
 			URL url = urls.nextElement();
@@ -252,11 +255,11 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			jsonObject = JSONFactoryUtil.createJSONObject(
 				_getResourceContent(flatJSBundle, location + "/package.json"));
 		}
-		catch (JSONException jsone) {
+		catch (Exception e) {
 			_log.error(
 				"Unable to parse package of " + flatJSBundle + ": " + location +
 					"/package.json",
-				jsone);
+				e);
 
 			return;
 		}

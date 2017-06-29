@@ -689,7 +689,7 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="Permissions#definePermissionViaAPI">
+		<execute macro="Permissions#definePermissionViaJSONAPI">
 			<var name="resourceAction" value="DELETE" />
 			<var name="resourceName" value="com.liferay.blogs.model.BlogsEntry" />
 			<var name="roleTitle" value="Roles Orgrole Name" />

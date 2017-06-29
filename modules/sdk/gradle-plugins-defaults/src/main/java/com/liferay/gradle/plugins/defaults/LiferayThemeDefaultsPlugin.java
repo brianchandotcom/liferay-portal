@@ -19,6 +19,7 @@ import com.liferay.gradle.plugins.cache.WriteDigestTask;
 import com.liferay.gradle.plugins.defaults.extensions.LiferayThemeDefaultsExtension;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
+import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure;
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
@@ -95,7 +96,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		File portalRootDir = GradleUtil.getRootDir(
 			project.getRootProject(), "portal-impl");
 
-		LiferayOSGiDefaultsPlugin.configureRepositories(project, portalRootDir);
+		GradlePluginsDefaultsUtil.configureRepositories(project, portalRootDir);
 
 		Configuration frontendCSSCommonConfiguration =
 			_addConfigurationFrontendCSSCommon(project);

@@ -498,16 +498,18 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	public ResourceBundle getResourceBundle() {
-		Locale locale = getSiteDefaultLocale();
+		ThemeDisplay themeDisplay =
+			_ddlFormAdminRequestHelper.getThemeDisplay();
 
 		ResourceBundleLoader portalResourceBundleLoader =
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 
 		ResourceBundle portalResourceBundle =
-			portalResourceBundleLoader.loadResourceBundle(locale);
+			portalResourceBundleLoader.loadResourceBundle(
+				themeDisplay.getLocale());
 
 		ResourceBundle portletResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getSiteDefaultLocale(), getClass());
+			"content.Language", themeDisplay.getLocale(), getClass());
 
 		return new AggregateResourceBundle(
 			portletResourceBundle, portalResourceBundle);

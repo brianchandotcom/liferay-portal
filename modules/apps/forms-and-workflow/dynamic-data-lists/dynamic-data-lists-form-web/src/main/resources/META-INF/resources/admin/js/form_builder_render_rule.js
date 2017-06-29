@@ -17,11 +17,7 @@ AUI.add(
 					},
 
 					logicOperator: {
-						setter: function(val) {
-							return val.toUpperCase();
-						},
-						validator: '_isValidLogicOperator',
-						value: Liferay.Language.get('or')
+						value: 'or'
 					},
 
 					pages: {
@@ -34,10 +30,12 @@ AUI.add(
 
 					strings: {
 						value: {
+							actions: Liferay.Language.get('actions'),
 							and: Liferay.Language.get('and'),
 							autofill: Liferay.Language.get('autofill'),
 							calculate: Liferay.Language.get('calculate'),
 							cancel: Liferay.Language.get('cancel'),
+							condition: Liferay.Language.get('condition'),
 							description: Liferay.Language.get('define-condition-and-action-to-change-fields-and-elements-on-the-form'),
 							do: Liferay.Language.get('do'),
 							enable: Liferay.Language.get('enable'),
@@ -143,7 +141,7 @@ AUI.add(
 							};
 						}
 
-						instance.set('logicOperator', rule['logical-operator']);
+						instance.set('logicOperator', rule['logical-operator'] || instance.get('logicOperator'));
 
 						contentBox.setHTML(instance._getRuleContainerTemplate(rule));
 
@@ -373,7 +371,7 @@ AUI.add(
 								conditions: rule ? rule.conditions : [],
 								deleteIcon: Liferay.Util.getLexiconIconTpl('trash', 'icon-monospaced'),
 								invalid: !instance._isValidRule(rule),
-								logicalOperator: instance.get('logicOperator'),
+								logicalOperator: instance.get('logicOperator').toLowerCase(),
 								plusIcon: Liferay.Util.getLexiconIconTpl('plus', 'icon-monospaced'),
 								showLabel: false,
 								strings: instance.get('strings')

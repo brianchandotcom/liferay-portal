@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var currentUser = {
 			dataType: 'user',
-			label: 'User',
+			label: Liferay.Language.get('user'),
 			value: 'user'
 		};
 
@@ -19,11 +19,7 @@ AUI.add(
 			},
 
 			logicOperator: {
-				setter: function(val) {
-					return val.toUpperCase();
-				},
-				validator: '_isValidLogicOperator',
-				value: Liferay.Language.get('or')
+				value: 'or'
 			}
 		};
 
@@ -348,7 +344,7 @@ AUI.add(
 
 				event.preventDefault();
 
-				instance.set('logicOperator', event.currentTarget.get('text'));
+				instance.set('logicOperator', event.currentTarget.getData('logical-operator-value'));
 
 				A.one('.dropdown-toggle-operator .dropdown-toggle-selected-value').setHTML(event.currentTarget.get('text'));
 			},
@@ -387,20 +383,6 @@ AUI.add(
 				var value = instance._getOperatorValue(index);
 
 				return value === 'is-email-address' || value === 'is-url' || value === 'is-empty' || value === 'not-is-empty';
-			},
-
-			_isValidLogicOperator: function(operator) {
-				var instance = this;
-
-				var strings = instance.get('strings');
-
-				if (A.Lang.isString(operator)) {
-					var upperCaseOperator = operator.toUpperCase();
-
-					return upperCaseOperator === strings.and || upperCaseOperator === strings.or;
-				}
-
-				return false;
 			},
 
 			_onLogicOperatorChange: function(event) {

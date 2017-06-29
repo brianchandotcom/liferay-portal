@@ -20,12 +20,13 @@
 			{let $showLogicalOperator: (length($conditions) > 1) ? true : false /}
 			{call .rulesHeader}
 				{param extraContent kind="html"}
-					{call .logicOperatorDropDown}
-						{param logicalOperator: $logicalOperator /}
+					{call .logicalOperatorDropDown}
+						{param logicalOperator: $strings[$logicalOperator] /}
+						{param strings: $strings /}
 					{/call}
 				{/param}
-				{param logicalOperator: $logicalOperator /}
-				{param title: 'Condition' /}
+				{param logicalOperator: $strings[$logicalOperator] /}
+				{param title: $strings.condition /}
 			{/call}
 
 			{foreach $condition in $conditions}
@@ -33,14 +34,14 @@
 					{param deleteIcon: $deleteIcon /}
 					{param if: $strings.if /}
 					{param index: index($condition) /}
-					{param logicOperator: $logicalOperator /}
+					{param logicalOperator: $strings[$logicalOperator] /}
 				{/call}
 				{ifempty}
 					{call .condition}
 						{param deleteIcon: $deleteIcon /}
 						{param if: $strings.if /}
 						{param index: 0 /}
-						{param logicOperator: $logicalOperator /}
+						{param logicalOperator: $strings[$logicalOperator] /}
 					{/call}
 			{/foreach}
 		</ul>
@@ -52,8 +53,8 @@
 
 		<ul class="action-list liferay-ddl-form-builder-rule-action-list liferay-ddl-form-rule-builder-timeline timeline {length($actions) > 1 ? 'can-remove-item' : ''}">
 			{call .rulesHeader}
-				{param logicalOperator: $logicalOperator /}
-				{param title: 'Actions' /}
+				{param logicalOperator: $strings[$logicalOperator] /}
+				{param title: $strings.actions /}
 			{/call}
 
 			{foreach $action in $actions}
@@ -93,7 +94,7 @@
  * @param deleteIcon
  * @param if
  * @param index
- * @param logicOperator
+ * @param logicalOperator
  */
 {template .condition autoescape="deprecated-contextual"}
 	<li class="form-builder-rule-condition-container-{$index} timeline-item">
@@ -114,7 +115,7 @@
 		</div>
 
 		<div class="operator panel panel-default panel-inline">
-			<div class="panel-body text-uppercase">{$logicOperator}</div>
+			<div class="panel-body text-uppercase">{$logicalOperator}</div>
 		</div>
 
 		<div class="container-trash">
@@ -170,19 +171,20 @@
 {/template}
 
 /**
- * Prints Logic Operator Dropdown
+ * Prints Logical Operator Dropdown
  * @param? logicalOperator
+ * @param strings
  */
-{template .logicOperatorDropDown autoescape="strict" kind="html"}
+{template .logicalOperatorDropDown autoescape="strict" kind="html"}
 	<div class="btn-group dropdown" style="block">
 		<button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" type="button">
 			<span class="dropdown-toggle-selected-value">{$logicalOperator}</span> <span class="caret"></span>
 		</button>
 
 		<ul class="dropdown-menu">
-			<li class="logic-operator text-uppercase"><a href="#">or</a></li>
+			<li class="logic-operator text-uppercase" data-logical-operator-value="or"><a href="#">{$strings.or}</a></li>
 			<li class="divider"></li>
-			<li class="logic-operator text-uppercase"><a href="#">and</a></li>
+			<li class="logic-operator text-uppercase" data-logical-operator-value="and"><a href="#">{$strings.and}</a></li>
 		</ul>
 	</div>
 {/template}

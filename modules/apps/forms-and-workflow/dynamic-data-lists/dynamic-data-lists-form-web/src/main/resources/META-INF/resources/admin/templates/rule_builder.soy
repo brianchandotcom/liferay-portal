@@ -36,11 +36,12 @@
 			<li class="list-group-item">
 				<div class="clamp-horizontal list-group-item-content">
 					<p class="form-builder-rule-builder-rule-description text-default">
-						<b>If </b>
+						<b>{$strings.if} </b>
 						{foreach $condition in $rule.conditions}
 							{call .condition}
 								{param operandType: $condition.operands[0].type /}
 								{param operandValue: $condition.operands[0].label /}
+								{param strings: $strings /}
 							{/call}
 
 							<b class="text-lowercase"><em> {$strings[$condition.operator]} </em></b>
@@ -49,12 +50,13 @@
 								{call .condition}
 									{param operandType: $condition.operands[1].type /}
 									{param operandValue: isNonnull($condition.operands[1].label) ? $condition.operands[1].label : $condition.operands[1].value /}
+									{param strings: $strings /}
 								{/call}
 							{/if}
 
 							{if not isLast($condition)}
 								<br />
-								<b> {$rule.logicOperator} </b>
+								<b> {$strings[$rule.logicOperator]} </b>
 							{/if}
 						{/foreach}
 
@@ -66,7 +68,7 @@
 							{/call}
 							{if not isLast($action)}
 							, <br />
-							<b> and </b>
+							<b> {$strings.and} </b>
 							{/if}
 						{/foreach}
 					</p>
@@ -147,10 +149,11 @@
  *
  * @param operandType
  * @param operandValue
+ * @param strings
  */
 {template .condition autoescape="deprecated-contextual"}
 	{if $operandType != 'user' and $operandType != 'list'}
-		<span>{$operandType} </span>
+		<span>{$strings[$operandType]} </span>
 	{/if}
 
 	{call .badge}

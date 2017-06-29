@@ -19,6 +19,15 @@ AUI.add(
 
 		var FormBuilderFieldList = A.Component.create(
 			{
+				ATTRS: {
+					strings: {
+						value: {
+							addField: Liferay.Language.get('add-field'),
+							pasteHere: Liferay.Language.get('paste-here')
+						}
+					}
+				},
+
 				EXTENDS: A.FormBuilderFieldList,
 
 				NAME: 'liferay-ddl-form-builder-field-list',

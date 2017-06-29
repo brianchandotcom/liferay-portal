@@ -11,26 +11,26 @@ if (typeof ddl.rule == 'undefined') { ddl.rule = {}; }
 
 
 ddl.rule.settings = function(opt_data, opt_ignored) {
-  var output = '<h2 class="form-builder-section-title text-default">' + soy.$$escapeHtml(opt_data.strings.title) + '</h2><h4 class="text-default">' + soy.$$escapeHtml(opt_data.strings.description) + '</h4><div class="ddl-form-body-content"><ul class="liferay-ddl-form-builder-rule-condition-list liferay-ddl-form-rule-builder-timeline timeline ' + soy.$$escapeHtmlAttribute(opt_data.conditions.length > 1 ? 'can-remove-item' : '') + '">';
-  var showLogicalOperator__soy85 = opt_data.conditions.length > 1 ? true : false;
-  output += ddl.rule.rulesHeader({extraContent: soydata.VERY_UNSAFE.$$ordainSanitizedHtmlForInternalBlocks('' + ddl.rule.logicOperatorDropDown(opt_data)), logicalOperator: opt_data.logicalOperator, title: 'Condition'});
-  var conditionList102 = opt_data.conditions;
-  var conditionListLen102 = conditionList102.length;
-  if (conditionListLen102 > 0) {
-    for (var conditionIndex102 = 0; conditionIndex102 < conditionListLen102; conditionIndex102++) {
-      var conditionData102 = conditionList102[conditionIndex102];
-      output += ddl.rule.condition({deleteIcon: opt_data.deleteIcon, if: opt_data.strings['if'], index: conditionIndex102, logicOperator: opt_data.logicalOperator});
+  var output = '<h2 class="form-builder-section-title text-default">' + soy.$$escapeHtml(opt_data.strings.title) + '</h2><h4 class="text-default">' + soy.$$escapeHtml(opt_data.strings.description) + '</h4><h3>' + soy.$$escapeHtml(opt_data.logicalOperator) + '</h3><div class="ddl-form-body-content"><ul class="liferay-ddl-form-builder-rule-condition-list liferay-ddl-form-rule-builder-timeline timeline ' + soy.$$escapeHtmlAttribute(opt_data.conditions.length > 1 ? 'can-remove-item' : '') + '">';
+  var showLogicalOperator__soy87 = opt_data.conditions.length > 1 ? true : false;
+  output += ddl.rule.rulesHeader({extraContent: soydata.VERY_UNSAFE.$$ordainSanitizedHtmlForInternalBlocks('' + ddl.rule.logicalOperatorDropDown({logicalOperator: opt_data.strings[opt_data.logicalOperator], strings: opt_data.strings})), logicalOperator: opt_data.strings[opt_data.logicalOperator], title: opt_data.strings.condition});
+  var conditionList105 = opt_data.conditions;
+  var conditionListLen105 = conditionList105.length;
+  if (conditionListLen105 > 0) {
+    for (var conditionIndex105 = 0; conditionIndex105 < conditionListLen105; conditionIndex105++) {
+      var conditionData105 = conditionList105[conditionIndex105];
+      output += ddl.rule.condition({deleteIcon: opt_data.deleteIcon, if: opt_data.strings['if'], index: conditionIndex105, logicalOperator: opt_data.strings[opt_data.logicalOperator]});
     }
   } else {
-    output += ddl.rule.condition({deleteIcon: opt_data.deleteIcon, if: opt_data.strings['if'], index: 0, logicOperator: opt_data.logicalOperator});
+    output += ddl.rule.condition({deleteIcon: opt_data.deleteIcon, if: opt_data.strings['if'], index: 0, logicalOperator: opt_data.strings[opt_data.logicalOperator]});
   }
-  output += '</ul>' + ddl.rule.btnAddNewTimelineItem({cssClass: 'form-builder-rule-add-condition', plusIcon: opt_data.plusIcon}) + '<ul class="action-list liferay-ddl-form-builder-rule-action-list liferay-ddl-form-rule-builder-timeline timeline ' + soy.$$escapeHtmlAttribute(opt_data.actions.length > 1 ? 'can-remove-item' : '') + '">' + ddl.rule.rulesHeader({logicalOperator: opt_data.logicalOperator, title: 'Actions'});
-  var actionList123 = opt_data.actions;
-  var actionListLen123 = actionList123.length;
-  if (actionListLen123 > 0) {
-    for (var actionIndex123 = 0; actionIndex123 < actionListLen123; actionIndex123++) {
-      var actionData123 = actionList123[actionIndex123];
-      output += ddl.rule.action({deleteIcon: opt_data.deleteIcon, do: opt_data.strings['do'], index: actionIndex123});
+  output += '</ul>' + ddl.rule.btnAddNewTimelineItem({cssClass: 'form-builder-rule-add-condition', plusIcon: opt_data.plusIcon}) + '<ul class="action-list liferay-ddl-form-builder-rule-action-list liferay-ddl-form-rule-builder-timeline timeline ' + soy.$$escapeHtmlAttribute(opt_data.actions.length > 1 ? 'can-remove-item' : '') + '">' + ddl.rule.rulesHeader({logicalOperator: opt_data.strings[opt_data.logicalOperator], title: opt_data.strings.actions});
+  var actionList126 = opt_data.actions;
+  var actionListLen126 = actionList126.length;
+  if (actionListLen126 > 0) {
+    for (var actionIndex126 = 0; actionIndex126 < actionListLen126; actionIndex126++) {
+      var actionData126 = actionList126[actionIndex126];
+      output += ddl.rule.action({deleteIcon: opt_data.deleteIcon, do: opt_data.strings['do'], index: actionIndex126});
     }
   } else {
     output += ddl.rule.action({deleteIcon: opt_data.deleteIcon, do: opt_data.strings['do'], index: 0});
@@ -44,7 +44,7 @@ if (goog.DEBUG) {
 
 
 ddl.rule.condition = function(opt_data, opt_ignored) {
-  return '<li class="form-builder-rule-condition-container-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' timeline-item"><div class="panel panel-default"><div class="flex-container panel-body"><h4>' + soy.$$escapeHtml(opt_data['if']) + '</h4><div class="condition-if-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-operator-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-the-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-type-value-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-type-value-options-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="timeline-increment-icon"><span class="timeline-icon"></span></div></div></div><div class="operator panel panel-default panel-inline"><div class="panel-body text-uppercase">' + soy.$$escapeHtml(opt_data.logicOperator) + '</div></div><div class="container-trash"><button class="btn btn-link condition-card-delete icon-monospaced" data-card-id="' + soy.$$escapeHtmlAttribute(opt_data.index) + '" href="javascript:;" type="button">' + soy.$$filterNoAutoescape(opt_data.deleteIcon) + '</button></div></li>';
+  return '<li class="form-builder-rule-condition-container-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' timeline-item"><div class="panel panel-default"><div class="flex-container panel-body"><h4>' + soy.$$escapeHtml(opt_data['if']) + '</h4><div class="condition-if-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-operator-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-the-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-type-value-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-type-value-options-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="timeline-increment-icon"><span class="timeline-icon"></span></div></div></div><div class="operator panel panel-default panel-inline"><div class="panel-body text-uppercase">' + soy.$$escapeHtml(opt_data.logicalOperator) + '</div></div><div class="container-trash"><button class="btn btn-link condition-card-delete icon-monospaced" data-card-id="' + soy.$$escapeHtmlAttribute(opt_data.index) + '" href="javascript:;" type="button">' + soy.$$filterNoAutoescape(opt_data.deleteIcon) + '</button></div></li>';
 };
 if (goog.DEBUG) {
   ddl.rule.condition.soyTemplateName = 'ddl.rule.condition';
@@ -67,12 +67,11 @@ if (goog.DEBUG) {
 }
 
 
-ddl.rule.logicOperatorDropDown = function(opt_data, opt_ignored) {
-  opt_data = opt_data || {};
-  return soydata.VERY_UNSAFE.ordainSanitizedHtml('<div class="btn-group dropdown" style="block"><button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" type="button"><span class="dropdown-toggle-selected-value">' + soy.$$escapeHtml(opt_data.logicalOperator) + '</span> <span class="caret"></span></button><ul class="dropdown-menu"><li class="logic-operator text-uppercase"><a href="#">or</a></li><li class="divider"></li><li class="logic-operator text-uppercase"><a href="#">and</a></li></ul></div>');
+ddl.rule.logicalOperatorDropDown = function(opt_data, opt_ignored) {
+  return soydata.VERY_UNSAFE.ordainSanitizedHtml('<div class="btn-group dropdown" style="block"><button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" type="button"><span class="dropdown-toggle-selected-value">' + soy.$$escapeHtml(opt_data.logicalOperator) + '</span> <span class="caret"></span></button><ul class="dropdown-menu"><li class="logic-operator text-uppercase" data-logical-operator-value="or"><a href="#">' + soy.$$escapeHtml(opt_data.strings.or) + '</a></li><li class="divider"></li><li class="logic-operator text-uppercase" data-logical-operator-value="and"><a href="#">' + soy.$$escapeHtml(opt_data.strings.and) + '</a></li></ul></div>');
 };
 if (goog.DEBUG) {
-  ddl.rule.logicOperatorDropDown.soyTemplateName = 'ddl.rule.logicOperatorDropDown';
+  ddl.rule.logicalOperatorDropDown.soyTemplateName = 'ddl.rule.logicalOperatorDropDown';
 }
 
 

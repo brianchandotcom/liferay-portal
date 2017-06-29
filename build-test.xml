@@ -8380,10 +8380,15 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		</if>
 	</target>
 
-	<target name="prepare-tomcat-root-xml">
-		<replace file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml">
-			<replacetoken><![CDATA[</Context>]]></replacetoken>
-			<replacevalue><![CDATA[	<Resources>
+	<target name="prepare-tomcat-ext-env">
+		<if>
+			<not>
+		    	<resourcecontains resource="${app.server.dir}/conf/Catalina/localhost/ROOT.xml" substring="ExtResourceSet" />
+		    </not>
+			<then>
+				<replace file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml">
+					<replacetoken><![CDATA[</Context>]]></replacetoken>
+					<replacevalue><![CDATA[	<Resources>
 		<PreResources
 			className="com.liferay.support.tomcat.webresources.ExtResourceSet"
 			base="${catalina.base}/lib/ext/portal"
@@ -8391,7 +8396,9 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		/>
 	</Resources>
 </Context>]]></replacevalue>
-		</replace>
+				</replace>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-virtual-host-name-properties">
@@ -9414,18 +9421,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<then>
 				<ant antfile="build-dist.xml" target="update-java-security-tomcat" />
 
-				<condition property="ext.workaround.enabled">
-					<not>
-				    	<resourcecontains resource="${app.server.dir}/conf/Catalina/localhost/ROOT.xml" substring="ExtResourceSet" />
-				    </not>
-				</condition>
-
-				<if>
-					<equals arg1="${ext.workaround.enabled}" arg2="true" />
-					<then>
-						<antcall target="prepare-tomcat-root-xml" />
-					</then>
-				</if>
+				<antcall target="prepare-tomcat-ext-env" />
 			</then>
 		</if>
 

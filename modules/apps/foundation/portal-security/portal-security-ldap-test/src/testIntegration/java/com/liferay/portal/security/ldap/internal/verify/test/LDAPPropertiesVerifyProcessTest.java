@@ -406,7 +406,7 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 					portletPreferences.getValue(
 						"ldap.server.ids", StringPool.BLANK)));
 
-			for (String key : LegacyLDAPPropsKeys.NONPOSTFIXED_LDAP_KEYS) {
+			for (String key : LegacyLDAPPropsKeys.LDAP_KEYS_NONPOSTFIXED) {
 				Assert.assertTrue(
 					Validator.isNull(
 						portletPreferences.getValue(key, StringPool.BLANK)));

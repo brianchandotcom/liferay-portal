@@ -1768,7 +1768,8 @@ dependency to version 1.0.8.
 `clean` task.
 
 ### Removed
-- [LPS-73147]: Remove unnecessary default Bnd instruction `-dsannotations: *`.
+- [LPS-73147]: Remove the unnecessary default Bnd instruction `-dsannotations:
+*`.
 
 ## 3.3.30 - 2017-06-19
 

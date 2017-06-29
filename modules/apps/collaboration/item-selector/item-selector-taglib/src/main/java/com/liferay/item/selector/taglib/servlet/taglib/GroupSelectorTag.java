@@ -89,7 +89,10 @@ public class GroupSelectorTag extends IncludeTag {
 
 		groupParams.put("site", Boolean.TRUE);
 
-		if (_checkPermission(themeDisplay.getPermissionChecker())) {
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (permissionChecker.isCompanyAdmin()) {
 			return GroupLocalServiceUtil.search(
 				themeDisplay.getCompanyId(), _COMPANY_ADMIN_CLASSNAME_IDS,
 				keywords, groupParams, startAndEnd[0], startAndEnd[1], null);
@@ -115,7 +118,10 @@ public class GroupSelectorTag extends IncludeTag {
 
 		groupParams.put("site", Boolean.TRUE);
 
-		if (_checkPermission(themeDisplay.getPermissionChecker())) {
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (permissionChecker.isCompanyAdmin()) {
 			return GroupLocalServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), _COMPANY_ADMIN_CLASSNAME_IDS,
 				keywords, groupParams);
@@ -142,14 +148,6 @@ public class GroupSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-item-selector:group-selector:itemSelector",
 			ItemSelectorUtil.getItemSelector());
-	}
-
-	private boolean _checkPermission(PermissionChecker permissionChecker) {
-		if (permissionChecker.isCompanyAdmin()) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final long[] _CLASSNAME_IDS = {

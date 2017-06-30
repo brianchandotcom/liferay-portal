@@ -14,9 +14,6 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-
 /**
  * @author Hugo Huijser
  * @author Peter Shin
@@ -32,12 +29,11 @@ public class JavaUnsafeCastingCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		for (Class<?> unsafeClass : _UNSAFE_CLASSES) {
-			String s = "(" + unsafeClass.getSimpleName() + ")";
+		for (String unsafeClassName : _UNSAFE_CLASS_NAMES) {
+			String s = "(" + unsafeClassName + ")";
 
 			if (content.contains(s)) {
-				String message =
-					"Unsafe casting for '" + unsafeClass.getSimpleName() + "'";
+				String message = "Unsafe casting for '" + unsafeClassName + "'";
 
 				addMessage(
 					fileName, message, "unsafe_casting.markdown",
@@ -48,7 +44,7 @@ public class JavaUnsafeCastingCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final Class<?>[] _UNSAFE_CLASSES =
-		{LiferayPortletRequest.class, LiferayPortletResponse.class};
+	private static final String[] _UNSAFE_CLASS_NAMES =
+		{"LiferayPortletRequest", "LiferayPortletResponse"};
 
 }

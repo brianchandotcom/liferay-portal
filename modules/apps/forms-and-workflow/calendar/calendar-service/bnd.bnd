@@ -9,7 +9,7 @@ Export-Package:\
 	com.liferay.calendar.service.permission,\
 	com.liferay.calendar.social,\
 	com.liferay.calendar.upgrade.v1_0_2,\
-	com.liferay.calendar.upgrade.v1_0_6,\
+	com.liferay.calendar.upgrade.v2_0_0,\
 	com.liferay.calendar.util,\
 	com.liferay.calendar.workflow
 Import-Package:\
@@ -24,5 +24,5 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Calendar
-Liferay-Require-SchemaVersion: 1.0.6
+Liferay-Require-SchemaVersion: 2.0.0
 Liferay-Service: true

@@ -38,7 +38,9 @@ import java.net.InetAddress;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -134,6 +136,14 @@ public class EmbeddedElasticsearchConnection
 
 			ScheduledExecutorService scheduledExecutorService =
 				threadPool.scheduler();
+
+			if (scheduledExecutorService instanceof ThreadPoolExecutor) {
+				ThreadPoolExecutor threadPoolExecutor =
+					(ThreadPoolExecutor)scheduledExecutorService;
+
+				threadPoolExecutor.setRejectedExecutionHandler(
+					_REJECTED_EXECUTION_HANDLER);
+			}
 
 			scheduledExecutorService.shutdown();
 
@@ -504,6 +514,25 @@ public class EmbeddedElasticsearchConnection
 
 			});
 	}
+
+	/**
+	 * Keep this as a static field to avoid the class loading failure during
+	 * tomcat shutdown.
+	 */
+	private static final RejectedExecutionHandler _REJECTED_EXECUTION_HANDLER =
+		new RejectedExecutionHandler() {
+
+			@Override
+			public void rejectedExecution(
+				Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Discarded " + runnable + " on " + threadPoolExecutor);
+				}
+			}
+
+		};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EmbeddedElasticsearchConnection.class);

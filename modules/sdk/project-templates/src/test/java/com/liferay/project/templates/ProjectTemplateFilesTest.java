@@ -157,7 +157,8 @@ public class ProjectTemplateFilesTest {
 
 	private void _testArchetypeMetadataXml(
 			Path projectTemplateDirPath, String projectTemplateDirName,
-			boolean requireAuthorProperty)
+			boolean requireAuthorProperty,
+			Set<String> archetypeResourcePropertyNames)
 		throws IOException {
 
 		Path archetypeMetadataXmlPath = projectTemplateDirPath.resolve(
@@ -205,6 +206,11 @@ public class ProjectTemplateFilesTest {
 					name.compareTo(previousName) > 0);
 			}
 
+			Assert.assertFalse(
+				"Forbidden \"" + name + "\" property in " +
+					archetypeMetadataXmlPath,
+				_archetypeMetadataXmlDefaultPropertyNames.contains(name));
+
 			requiredPropertyNames.add(name);
 		}
 
@@ -221,6 +227,22 @@ public class ProjectTemplateFilesTest {
 				"Forbidden \"author\" required property in " +
 					archetypeMetadataXmlPath,
 				authorProperty);
+		}
+
+		for (String name : requiredPropertyNames) {
+			Assert.assertTrue(
+				"Unused \"" + name + "\" required property in " +
+					archetypeMetadataXmlPath,
+				archetypeResourcePropertyNames.contains(name));
+		}
+
+		requiredPropertyNames.addAll(_archetypeMetadataXmlDefaultPropertyNames);
+
+		for (String name : archetypeResourcePropertyNames) {
+			Assert.assertTrue(
+				"Undeclared \"" + name + "\" required property in " +
+					archetypeMetadataXmlPath,
+				requiredPropertyNames.contains(name));
 		}
 	}
 
@@ -624,6 +646,7 @@ public class ProjectTemplateFilesTest {
 		_testPomXml(archetypeResourcesDirPath, documentBuilder);
 
 		final AtomicBoolean requireAuthorProperty = new AtomicBoolean();
+		final Set<String> archetypeResourcePropertyNames = new HashSet<>();
 
 		Files.walkFileTree(
 			archetypeResourcesDirPath,
@@ -682,7 +705,9 @@ public class ProjectTemplateFilesTest {
 					}
 
 					if (_isTextFile(fileName, extension)) {
-						_testTextFile(path, fileName, extension);
+						_testTextFile(
+							path, fileName, extension,
+							archetypeResourcePropertyNames);
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -692,7 +717,7 @@ public class ProjectTemplateFilesTest {
 
 		_testArchetypeMetadataXml(
 			projectTemplateDirPath, projectTemplateDirName,
-			requireAuthorProperty.get());
+			requireAuthorProperty.get(), archetypeResourcePropertyNames);
 	}
 
 	private void _testPropertyValue(
@@ -703,7 +728,9 @@ public class ProjectTemplateFilesTest {
 			properties.getProperty(key));
 	}
 
-	private void _testTextFile(Path path, String fileName, String extension)
+	private void _testTextFile(
+			Path path, String fileName, String extension,
+			Set<String> archetypeResourcePropertyNames)
 		throws IOException {
 
 		String text = FileUtil.read(path);
@@ -752,13 +779,28 @@ public class ProjectTemplateFilesTest {
 				"Incorrect XML declaration in " + path,
 				text.startsWith(xmlDeclaration));
 		}
+
+		matcher = _archetypeResourcePropertyNamePattern.matcher(text);
+
+		while (matcher.find()) {
+			String name = matcher.group(1);
+
+			if (!text.contains("#set ($" + name + " = ")) {
+				archetypeResourcePropertyNames.add(name);
+			}
+		}
 	}
 
 	private static final String[] _SOURCESET_NAMES =
 		{"main", "test", "testIntegration"};
 
+	private static final List<String>
+		_archetypeMetadataXmlDefaultPropertyNames = Arrays.asList(
+			"artifactId", "groupId", "package", "version");
 	private static final Pattern _archetypeMetadataXmlRequiredPropertyPattern =
-		Pattern.compile("<requiredProperty key=\"(.+)\">");
+		Pattern.compile("<requiredProperty key=\"(\\w+)\">");
+	private static final Pattern _archetypeResourcePropertyNamePattern =
+		Pattern.compile("\\$\\{(\\w+)\\}");
 	private static final Pattern _buildGradleDependencyPattern =
 		Pattern.compile(
 			"(compile(?:Only)?) group: \"(.+)\", name: \"(.+)\", " +

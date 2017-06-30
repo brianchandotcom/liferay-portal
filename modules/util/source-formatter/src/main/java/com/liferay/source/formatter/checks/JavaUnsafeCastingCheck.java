@@ -30,14 +30,14 @@ public class JavaUnsafeCastingCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		for (String unsafeClassName : _UNSAFE_CLASS_NAMES) {
-			String s = "(" + unsafeClassName + ")";
+			int pos = content.indexOf("(" + unsafeClassName + ")");
 
-			if (content.contains(s)) {
+			if (pos != -1) {
 				String message = "Unsafe casting for '" + unsafeClassName + "'";
 
 				addMessage(
 					fileName, message, "unsafe_casting.markdown",
-					getLineCount(content, content.indexOf(s)));
+					getLineCount(content, pos));
 			}
 		}
 

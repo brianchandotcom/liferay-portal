@@ -4433,6 +4433,2058 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 	private static final String _FINDER_COLUMN_FILEENTRYTYPEID_FILEENTRYTYPEID_2 =
 		"dlFileEntry.fileEntryTypeId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_SMALLIMAGEID =
+		new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySmallImageId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SMALLIMAGEID =
+		new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySmallImageId",
+			new String[] { Long.class.getName() },
+			DLFileEntryModelImpl.SMALLIMAGEID_COLUMN_BITMASK |
+			DLFileEntryModelImpl.FOLDERID_COLUMN_BITMASK |
+			DLFileEntryModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_SMALLIMAGEID = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySmallImageId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the document library file entries where smallImageId = &#63;.
+	 *
+	 * @param smallImageId the small image ID
+	 * @return the matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findBySmallImageId(long smallImageId) {
+		return findBySmallImageId(smallImageId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the document library file entries where smallImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param smallImageId the small image ID
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findBySmallImageId(long smallImageId, int start,
+		int end) {
+		return findBySmallImageId(smallImageId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entries where smallImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param smallImageId the small image ID
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findBySmallImageId(long smallImageId, int start,
+		int end, OrderByComparator<DLFileEntry> orderByComparator) {
+		return findBySmallImageId(smallImageId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entries where smallImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param smallImageId the small image ID
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findBySmallImageId(long smallImageId, int start,
+		int end, OrderByComparator<DLFileEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SMALLIMAGEID;
+			finderArgs = new Object[] { smallImageId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_SMALLIMAGEID;
+			finderArgs = new Object[] {
+					smallImageId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<DLFileEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<DLFileEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (DLFileEntry dlFileEntry : list) {
+					if ((smallImageId != dlFileEntry.getSmallImageId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_DLFILEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_SMALLIMAGEID_SMALLIMAGEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(DLFileEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(smallImageId);
+
+				if (!pagination) {
+					list = (List<DLFileEntry>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLFileEntry>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first document library file entry in the ordered set where smallImageId = &#63;.
+	 *
+	 * @param smallImageId the small image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry
+	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry findBySmallImageId_First(long smallImageId,
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
+		DLFileEntry dlFileEntry = fetchBySmallImageId_First(smallImageId,
+				orderByComparator);
+
+		if (dlFileEntry != null) {
+			return dlFileEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("smallImageId=");
+		msg.append(smallImageId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file entry in the ordered set where smallImageId = &#63;.
+	 *
+	 * @param smallImageId the small image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry fetchBySmallImageId_First(long smallImageId,
+		OrderByComparator<DLFileEntry> orderByComparator) {
+		List<DLFileEntry> list = findBySmallImageId(smallImageId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last document library file entry in the ordered set where smallImageId = &#63;.
+	 *
+	 * @param smallImageId the small image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry
+	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry findBySmallImageId_Last(long smallImageId,
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
+		DLFileEntry dlFileEntry = fetchBySmallImageId_Last(smallImageId,
+				orderByComparator);
+
+		if (dlFileEntry != null) {
+			return dlFileEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("smallImageId=");
+		msg.append(smallImageId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file entry in the ordered set where smallImageId = &#63;.
+	 *
+	 * @param smallImageId the small image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry fetchBySmallImageId_Last(long smallImageId,
+		OrderByComparator<DLFileEntry> orderByComparator) {
+		int count = countBySmallImageId(smallImageId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DLFileEntry> list = findBySmallImageId(smallImageId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set where smallImageId = &#63;.
+	 *
+	 * @param fileEntryId the primary key of the current document library file entry
+	 * @param smallImageId the small image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next document library file entry
+	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
+	 */
+	@Override
+	public DLFileEntry[] findBySmallImageId_PrevAndNext(long fileEntryId,
+		long smallImageId, OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
+		DLFileEntry dlFileEntry = findByPrimaryKey(fileEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DLFileEntry[] array = new DLFileEntryImpl[3];
+
+			array[0] = getBySmallImageId_PrevAndNext(session, dlFileEntry,
+					smallImageId, orderByComparator, true);
+
+			array[1] = dlFileEntry;
+
+			array[2] = getBySmallImageId_PrevAndNext(session, dlFileEntry,
+					smallImageId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DLFileEntry getBySmallImageId_PrevAndNext(Session session,
+		DLFileEntry dlFileEntry, long smallImageId,
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_DLFILEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_SMALLIMAGEID_SMALLIMAGEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(DLFileEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(smallImageId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(dlFileEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<DLFileEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the document library file entries where smallImageId = &#63; from the database.
+	 *
+	 * @param smallImageId the small image ID
+	 */
+	@Override
+	public void removeBySmallImageId(long smallImageId) {
+		for (DLFileEntry dlFileEntry : findBySmallImageId(smallImageId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(dlFileEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of document library file entries where smallImageId = &#63;.
+	 *
+	 * @param smallImageId the small image ID
+	 * @return the number of matching document library file entries
+	 */
+	@Override
+	public int countBySmallImageId(long smallImageId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_SMALLIMAGEID;
+
+		Object[] finderArgs = new Object[] { smallImageId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_DLFILEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_SMALLIMAGEID_SMALLIMAGEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(smallImageId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_SMALLIMAGEID_SMALLIMAGEID_2 = "dlFileEntry.smallImageId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LARGEIMAGEID =
+		new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLargeImageId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LARGEIMAGEID =
+		new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLargeImageId",
+			new String[] { Long.class.getName() },
+			DLFileEntryModelImpl.LARGEIMAGEID_COLUMN_BITMASK |
+			DLFileEntryModelImpl.FOLDERID_COLUMN_BITMASK |
+			DLFileEntryModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_LARGEIMAGEID = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLargeImageId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the document library file entries where largeImageId = &#63;.
+	 *
+	 * @param largeImageId the large image ID
+	 * @return the matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findByLargeImageId(long largeImageId) {
+		return findByLargeImageId(largeImageId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the document library file entries where largeImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param largeImageId the large image ID
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findByLargeImageId(long largeImageId, int start,
+		int end) {
+		return findByLargeImageId(largeImageId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entries where largeImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param largeImageId the large image ID
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findByLargeImageId(long largeImageId, int start,
+		int end, OrderByComparator<DLFileEntry> orderByComparator) {
+		return findByLargeImageId(largeImageId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entries where largeImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param largeImageId the large image ID
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findByLargeImageId(long largeImageId, int start,
+		int end, OrderByComparator<DLFileEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LARGEIMAGEID;
+			finderArgs = new Object[] { largeImageId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LARGEIMAGEID;
+			finderArgs = new Object[] {
+					largeImageId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<DLFileEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<DLFileEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (DLFileEntry dlFileEntry : list) {
+					if ((largeImageId != dlFileEntry.getLargeImageId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_DLFILEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_LARGEIMAGEID_LARGEIMAGEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(DLFileEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(largeImageId);
+
+				if (!pagination) {
+					list = (List<DLFileEntry>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLFileEntry>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first document library file entry in the ordered set where largeImageId = &#63;.
+	 *
+	 * @param largeImageId the large image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry
+	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry findByLargeImageId_First(long largeImageId,
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
+		DLFileEntry dlFileEntry = fetchByLargeImageId_First(largeImageId,
+				orderByComparator);
+
+		if (dlFileEntry != null) {
+			return dlFileEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("largeImageId=");
+		msg.append(largeImageId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file entry in the ordered set where largeImageId = &#63;.
+	 *
+	 * @param largeImageId the large image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry fetchByLargeImageId_First(long largeImageId,
+		OrderByComparator<DLFileEntry> orderByComparator) {
+		List<DLFileEntry> list = findByLargeImageId(largeImageId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last document library file entry in the ordered set where largeImageId = &#63;.
+	 *
+	 * @param largeImageId the large image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry
+	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry findByLargeImageId_Last(long largeImageId,
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
+		DLFileEntry dlFileEntry = fetchByLargeImageId_Last(largeImageId,
+				orderByComparator);
+
+		if (dlFileEntry != null) {
+			return dlFileEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("largeImageId=");
+		msg.append(largeImageId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file entry in the ordered set where largeImageId = &#63;.
+	 *
+	 * @param largeImageId the large image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry fetchByLargeImageId_Last(long largeImageId,
+		OrderByComparator<DLFileEntry> orderByComparator) {
+		int count = countByLargeImageId(largeImageId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DLFileEntry> list = findByLargeImageId(largeImageId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set where largeImageId = &#63;.
+	 *
+	 * @param fileEntryId the primary key of the current document library file entry
+	 * @param largeImageId the large image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next document library file entry
+	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
+	 */
+	@Override
+	public DLFileEntry[] findByLargeImageId_PrevAndNext(long fileEntryId,
+		long largeImageId, OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
+		DLFileEntry dlFileEntry = findByPrimaryKey(fileEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DLFileEntry[] array = new DLFileEntryImpl[3];
+
+			array[0] = getByLargeImageId_PrevAndNext(session, dlFileEntry,
+					largeImageId, orderByComparator, true);
+
+			array[1] = dlFileEntry;
+
+			array[2] = getByLargeImageId_PrevAndNext(session, dlFileEntry,
+					largeImageId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DLFileEntry getByLargeImageId_PrevAndNext(Session session,
+		DLFileEntry dlFileEntry, long largeImageId,
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_DLFILEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_LARGEIMAGEID_LARGEIMAGEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(DLFileEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(largeImageId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(dlFileEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<DLFileEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the document library file entries where largeImageId = &#63; from the database.
+	 *
+	 * @param largeImageId the large image ID
+	 */
+	@Override
+	public void removeByLargeImageId(long largeImageId) {
+		for (DLFileEntry dlFileEntry : findByLargeImageId(largeImageId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(dlFileEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of document library file entries where largeImageId = &#63;.
+	 *
+	 * @param largeImageId the large image ID
+	 * @return the number of matching document library file entries
+	 */
+	@Override
+	public int countByLargeImageId(long largeImageId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_LARGEIMAGEID;
+
+		Object[] finderArgs = new Object[] { largeImageId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_DLFILEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_LARGEIMAGEID_LARGEIMAGEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(largeImageId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_LARGEIMAGEID_LARGEIMAGEID_2 = "dlFileEntry.largeImageId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CUSTOM1IMAGEID =
+		new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCustom1ImageId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CUSTOM1IMAGEID =
+		new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCustom1ImageId",
+			new String[] { Long.class.getName() },
+			DLFileEntryModelImpl.CUSTOM1IMAGEID_COLUMN_BITMASK |
+			DLFileEntryModelImpl.FOLDERID_COLUMN_BITMASK |
+			DLFileEntryModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CUSTOM1IMAGEID = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCustom1ImageId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the document library file entries where custom1ImageId = &#63;.
+	 *
+	 * @param custom1ImageId the custom1 image ID
+	 * @return the matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findByCustom1ImageId(long custom1ImageId) {
+		return findByCustom1ImageId(custom1ImageId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the document library file entries where custom1ImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param custom1ImageId the custom1 image ID
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findByCustom1ImageId(long custom1ImageId,
+		int start, int end) {
+		return findByCustom1ImageId(custom1ImageId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entries where custom1ImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param custom1ImageId the custom1 image ID
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findByCustom1ImageId(long custom1ImageId,
+		int start, int end, OrderByComparator<DLFileEntry> orderByComparator) {
+		return findByCustom1ImageId(custom1ImageId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entries where custom1ImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param custom1ImageId the custom1 image ID
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findByCustom1ImageId(long custom1ImageId,
+		int start, int end, OrderByComparator<DLFileEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CUSTOM1IMAGEID;
+			finderArgs = new Object[] { custom1ImageId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CUSTOM1IMAGEID;
+			finderArgs = new Object[] {
+					custom1ImageId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<DLFileEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<DLFileEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (DLFileEntry dlFileEntry : list) {
+					if ((custom1ImageId != dlFileEntry.getCustom1ImageId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_DLFILEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_CUSTOM1IMAGEID_CUSTOM1IMAGEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(DLFileEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(custom1ImageId);
+
+				if (!pagination) {
+					list = (List<DLFileEntry>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLFileEntry>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first document library file entry in the ordered set where custom1ImageId = &#63;.
+	 *
+	 * @param custom1ImageId the custom1 image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry
+	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry findByCustom1ImageId_First(long custom1ImageId,
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
+		DLFileEntry dlFileEntry = fetchByCustom1ImageId_First(custom1ImageId,
+				orderByComparator);
+
+		if (dlFileEntry != null) {
+			return dlFileEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("custom1ImageId=");
+		msg.append(custom1ImageId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file entry in the ordered set where custom1ImageId = &#63;.
+	 *
+	 * @param custom1ImageId the custom1 image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry fetchByCustom1ImageId_First(long custom1ImageId,
+		OrderByComparator<DLFileEntry> orderByComparator) {
+		List<DLFileEntry> list = findByCustom1ImageId(custom1ImageId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last document library file entry in the ordered set where custom1ImageId = &#63;.
+	 *
+	 * @param custom1ImageId the custom1 image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry
+	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry findByCustom1ImageId_Last(long custom1ImageId,
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
+		DLFileEntry dlFileEntry = fetchByCustom1ImageId_Last(custom1ImageId,
+				orderByComparator);
+
+		if (dlFileEntry != null) {
+			return dlFileEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("custom1ImageId=");
+		msg.append(custom1ImageId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file entry in the ordered set where custom1ImageId = &#63;.
+	 *
+	 * @param custom1ImageId the custom1 image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry fetchByCustom1ImageId_Last(long custom1ImageId,
+		OrderByComparator<DLFileEntry> orderByComparator) {
+		int count = countByCustom1ImageId(custom1ImageId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DLFileEntry> list = findByCustom1ImageId(custom1ImageId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set where custom1ImageId = &#63;.
+	 *
+	 * @param fileEntryId the primary key of the current document library file entry
+	 * @param custom1ImageId the custom1 image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next document library file entry
+	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
+	 */
+	@Override
+	public DLFileEntry[] findByCustom1ImageId_PrevAndNext(long fileEntryId,
+		long custom1ImageId, OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
+		DLFileEntry dlFileEntry = findByPrimaryKey(fileEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DLFileEntry[] array = new DLFileEntryImpl[3];
+
+			array[0] = getByCustom1ImageId_PrevAndNext(session, dlFileEntry,
+					custom1ImageId, orderByComparator, true);
+
+			array[1] = dlFileEntry;
+
+			array[2] = getByCustom1ImageId_PrevAndNext(session, dlFileEntry,
+					custom1ImageId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DLFileEntry getByCustom1ImageId_PrevAndNext(Session session,
+		DLFileEntry dlFileEntry, long custom1ImageId,
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_DLFILEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_CUSTOM1IMAGEID_CUSTOM1IMAGEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(DLFileEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(custom1ImageId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(dlFileEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<DLFileEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the document library file entries where custom1ImageId = &#63; from the database.
+	 *
+	 * @param custom1ImageId the custom1 image ID
+	 */
+	@Override
+	public void removeByCustom1ImageId(long custom1ImageId) {
+		for (DLFileEntry dlFileEntry : findByCustom1ImageId(custom1ImageId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(dlFileEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of document library file entries where custom1ImageId = &#63;.
+	 *
+	 * @param custom1ImageId the custom1 image ID
+	 * @return the number of matching document library file entries
+	 */
+	@Override
+	public int countByCustom1ImageId(long custom1ImageId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CUSTOM1IMAGEID;
+
+		Object[] finderArgs = new Object[] { custom1ImageId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_DLFILEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_CUSTOM1IMAGEID_CUSTOM1IMAGEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(custom1ImageId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CUSTOM1IMAGEID_CUSTOM1IMAGEID_2 = "dlFileEntry.custom1ImageId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CUSTOM2IMAGEID =
+		new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCustom2ImageId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CUSTOM2IMAGEID =
+		new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCustom2ImageId",
+			new String[] { Long.class.getName() },
+			DLFileEntryModelImpl.CUSTOM2IMAGEID_COLUMN_BITMASK |
+			DLFileEntryModelImpl.FOLDERID_COLUMN_BITMASK |
+			DLFileEntryModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CUSTOM2IMAGEID = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCustom2ImageId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the document library file entries where custom2ImageId = &#63;.
+	 *
+	 * @param custom2ImageId the custom2 image ID
+	 * @return the matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findByCustom2ImageId(long custom2ImageId) {
+		return findByCustom2ImageId(custom2ImageId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the document library file entries where custom2ImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param custom2ImageId the custom2 image ID
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @return the range of matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findByCustom2ImageId(long custom2ImageId,
+		int start, int end) {
+		return findByCustom2ImageId(custom2ImageId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entries where custom2ImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param custom2ImageId the custom2 image ID
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findByCustom2ImageId(long custom2ImageId,
+		int start, int end, OrderByComparator<DLFileEntry> orderByComparator) {
+		return findByCustom2ImageId(custom2ImageId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entries where custom2ImageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLFileEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param custom2ImageId the custom2 image ID
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching document library file entries
+	 */
+	@Override
+	public List<DLFileEntry> findByCustom2ImageId(long custom2ImageId,
+		int start, int end, OrderByComparator<DLFileEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CUSTOM2IMAGEID;
+			finderArgs = new Object[] { custom2ImageId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CUSTOM2IMAGEID;
+			finderArgs = new Object[] {
+					custom2ImageId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<DLFileEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<DLFileEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (DLFileEntry dlFileEntry : list) {
+					if ((custom2ImageId != dlFileEntry.getCustom2ImageId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_DLFILEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_CUSTOM2IMAGEID_CUSTOM2IMAGEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(DLFileEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(custom2ImageId);
+
+				if (!pagination) {
+					list = (List<DLFileEntry>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DLFileEntry>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first document library file entry in the ordered set where custom2ImageId = &#63;.
+	 *
+	 * @param custom2ImageId the custom2 image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry
+	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry findByCustom2ImageId_First(long custom2ImageId,
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
+		DLFileEntry dlFileEntry = fetchByCustom2ImageId_First(custom2ImageId,
+				orderByComparator);
+
+		if (dlFileEntry != null) {
+			return dlFileEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("custom2ImageId=");
+		msg.append(custom2ImageId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file entry in the ordered set where custom2ImageId = &#63;.
+	 *
+	 * @param custom2ImageId the custom2 image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry fetchByCustom2ImageId_First(long custom2ImageId,
+		OrderByComparator<DLFileEntry> orderByComparator) {
+		List<DLFileEntry> list = findByCustom2ImageId(custom2ImageId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last document library file entry in the ordered set where custom2ImageId = &#63;.
+	 *
+	 * @param custom2ImageId the custom2 image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry
+	 * @throws NoSuchFileEntryException if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry findByCustom2ImageId_Last(long custom2ImageId,
+		OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
+		DLFileEntry dlFileEntry = fetchByCustom2ImageId_Last(custom2ImageId,
+				orderByComparator);
+
+		if (dlFileEntry != null) {
+			return dlFileEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("custom2ImageId=");
+		msg.append(custom2ImageId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file entry in the ordered set where custom2ImageId = &#63;.
+	 *
+	 * @param custom2ImageId the custom2 image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry fetchByCustom2ImageId_Last(long custom2ImageId,
+		OrderByComparator<DLFileEntry> orderByComparator) {
+		int count = countByCustom2ImageId(custom2ImageId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DLFileEntry> list = findByCustom2ImageId(custom2ImageId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the document library file entries before and after the current document library file entry in the ordered set where custom2ImageId = &#63;.
+	 *
+	 * @param fileEntryId the primary key of the current document library file entry
+	 * @param custom2ImageId the custom2 image ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next document library file entry
+	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
+	 */
+	@Override
+	public DLFileEntry[] findByCustom2ImageId_PrevAndNext(long fileEntryId,
+		long custom2ImageId, OrderByComparator<DLFileEntry> orderByComparator)
+		throws NoSuchFileEntryException {
+		DLFileEntry dlFileEntry = findByPrimaryKey(fileEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DLFileEntry[] array = new DLFileEntryImpl[3];
+
+			array[0] = getByCustom2ImageId_PrevAndNext(session, dlFileEntry,
+					custom2ImageId, orderByComparator, true);
+
+			array[1] = dlFileEntry;
+
+			array[2] = getByCustom2ImageId_PrevAndNext(session, dlFileEntry,
+					custom2ImageId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DLFileEntry getByCustom2ImageId_PrevAndNext(Session session,
+		DLFileEntry dlFileEntry, long custom2ImageId,
+		OrderByComparator<DLFileEntry> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_DLFILEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_CUSTOM2IMAGEID_CUSTOM2IMAGEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(DLFileEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(custom2ImageId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(dlFileEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<DLFileEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the document library file entries where custom2ImageId = &#63; from the database.
+	 *
+	 * @param custom2ImageId the custom2 image ID
+	 */
+	@Override
+	public void removeByCustom2ImageId(long custom2ImageId) {
+		for (DLFileEntry dlFileEntry : findByCustom2ImageId(custom2ImageId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(dlFileEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of document library file entries where custom2ImageId = &#63;.
+	 *
+	 * @param custom2ImageId the custom2 image ID
+	 * @return the number of matching document library file entries
+	 */
+	@Override
+	public int countByCustom2ImageId(long custom2ImageId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CUSTOM2IMAGEID;
+
+		Object[] finderArgs = new Object[] { custom2ImageId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_DLFILEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_CUSTOM2IMAGEID_CUSTOM2IMAGEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(custom2ImageId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CUSTOM2IMAGEID_CUSTOM2IMAGEID_2 = "dlFileEntry.custom2ImageId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U = new FinderPath(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryModelImpl.FINDER_CACHE_ENABLED, DLFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
@@ -12893,6 +14945,30 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FILEENTRYTYPEID,
 				args);
 
+			args = new Object[] { dlFileEntryModelImpl.getSmallImageId() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_SMALLIMAGEID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SMALLIMAGEID,
+				args);
+
+			args = new Object[] { dlFileEntryModelImpl.getLargeImageId() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_LARGEIMAGEID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LARGEIMAGEID,
+				args);
+
+			args = new Object[] { dlFileEntryModelImpl.getCustom1ImageId() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_CUSTOM1IMAGEID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CUSTOM1IMAGEID,
+				args);
+
+			args = new Object[] { dlFileEntryModelImpl.getCustom2ImageId() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_CUSTOM2IMAGEID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CUSTOM2IMAGEID,
+				args);
+
 			args = new Object[] {
 					dlFileEntryModelImpl.getGroupId(),
 					dlFileEntryModelImpl.getUserId()
@@ -13088,6 +15164,78 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_FILEENTRYTYPEID,
 					args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FILEENTRYTYPEID,
+					args);
+			}
+
+			if ((dlFileEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SMALLIMAGEID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						dlFileEntryModelImpl.getOriginalSmallImageId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_SMALLIMAGEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SMALLIMAGEID,
+					args);
+
+				args = new Object[] { dlFileEntryModelImpl.getSmallImageId() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_SMALLIMAGEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SMALLIMAGEID,
+					args);
+			}
+
+			if ((dlFileEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LARGEIMAGEID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						dlFileEntryModelImpl.getOriginalLargeImageId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_LARGEIMAGEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LARGEIMAGEID,
+					args);
+
+				args = new Object[] { dlFileEntryModelImpl.getLargeImageId() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_LARGEIMAGEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LARGEIMAGEID,
+					args);
+			}
+
+			if ((dlFileEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CUSTOM1IMAGEID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						dlFileEntryModelImpl.getOriginalCustom1ImageId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CUSTOM1IMAGEID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CUSTOM1IMAGEID,
+					args);
+
+				args = new Object[] { dlFileEntryModelImpl.getCustom1ImageId() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CUSTOM1IMAGEID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CUSTOM1IMAGEID,
+					args);
+			}
+
+			if ((dlFileEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CUSTOM2IMAGEID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						dlFileEntryModelImpl.getOriginalCustom2ImageId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CUSTOM2IMAGEID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CUSTOM2IMAGEID,
+					args);
+
+				args = new Object[] { dlFileEntryModelImpl.getCustom2ImageId() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CUSTOM2IMAGEID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CUSTOM2IMAGEID,
 					args);
 			}
 

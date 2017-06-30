@@ -57,7 +57,7 @@
  */
 {template .addRuleButton}
 	{@param pathThemeImages: string}
-	
+
 	<div class="addbutton-timeline-item">
 		<div class="add-condition timeline-increment-icon">
 			<button data-onclick="addRule_" class="btn btn-primary btn-xs form-builder-timeline-add-item form-builder-rule-add-condition" type="button">
@@ -109,7 +109,7 @@
 						<option class="" {if $rule.type == 'assetTags'}selected="selected"{/if} value="assetTags">{msg desc=""}tags{/msg}</option>
 					</select>
 				</div>
-				
+
 				{if $rule.type == 'assetCategories'}
 					{call CategorySelector.render}
 						{param eventName: $namespace + 'selectCategory' /}

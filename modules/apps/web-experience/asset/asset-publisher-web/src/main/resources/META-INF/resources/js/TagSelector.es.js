@@ -14,7 +14,7 @@ class TagSelector extends Component {
 	 */
 	rendered() {
 		AUI().use(
-			'liferay-asset-taglib-tags-selector', 
+			'liferay-asset-taglib-tags-selector',
 			function(A) {
 				this.input_ = this.element.querySelector('input[type="text"]');
 
@@ -36,7 +36,7 @@ class TagSelector extends Component {
 				this.element.addEventListener('click', this.focusTagInput_.bind(this));
 				entries.after('add', this.onEntriesChanged_, this);
 				entries.after('remove', this.onEntriesChanged_, this);
-				
+
 				this.tagsSelector_.render();
 				this.element.parentNode.removeAttribute('tabindex');
 			}.bind(this)
@@ -44,7 +44,7 @@ class TagSelector extends Component {
 	}
 
 	/**
-	 * Updates the calculated rule fields for `queryValues` every time a new 
+	 * Updates the calculated rule fields for `queryValues` every time a new
 	 * tag entry is added or removed to the selection
 	 * @protected
 	 */

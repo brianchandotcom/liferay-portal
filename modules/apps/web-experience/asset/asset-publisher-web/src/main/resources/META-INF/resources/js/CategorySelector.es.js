@@ -14,7 +14,7 @@ class CategorySelector extends Component {
 	 */
 	rendered() {
 		AUI().use(
-			'liferay-asset-taglib-categories-selector', 
+			'liferay-asset-taglib-categories-selector',
 			function(A) {
 				const config = {
 					categoryIds: this.rule.queryValues || '',
@@ -33,7 +33,7 @@ class CategorySelector extends Component {
 
 				entries.after('add', this.onEntriesChanged_, this);
 				entries.after('remove', this.onEntriesChanged_, this);
-				
+
 				this.categoriesSelector_.render();
 				this.element.parentNode.removeAttribute('tabindex');
 			}.bind(this)

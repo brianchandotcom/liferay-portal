@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-UnicodeProperties typeSettingsProperties = (UnicodeProperties)request.getAttribute("view.jsp-typeSettingsProperties");
+UnicodeProperties typeSettingsProperties = (UnicodeProperties)request.getAttribute("typeSettingsProperties");
 
 long lastImportDate = GetterUtil.getLong(typeSettingsProperties.getProperty("last-import-date"));
 

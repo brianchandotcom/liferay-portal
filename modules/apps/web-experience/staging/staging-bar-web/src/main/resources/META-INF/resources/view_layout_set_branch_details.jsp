@@ -17,10 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-LayoutRevision layoutRevision = (LayoutRevision)request.getAttribute("view.jsp-layoutRevision");
-LayoutSetBranch layoutSetBranch = (LayoutSetBranch)request.getAttribute("view.jsp-layoutSetBranch");
-List<LayoutSetBranch> layoutSetBranches = (List<LayoutSetBranch>)request.getAttribute("view.jsp-layoutSetBranches");
-String stagingURL = (String)request.getAttribute("view.jsp-stagingURL");
+LayoutRevision layoutRevision = (LayoutRevision)request.getAttribute("layoutRevision");
+LayoutSetBranch layoutSetBranch = (LayoutSetBranch)request.getAttribute("layoutSetBranch");
+List<LayoutSetBranch> layoutSetBranches = (List<LayoutSetBranch>)request.getAttribute("layoutSetBranches");
+String stagingURL = (String)request.getAttribute("stagingURL");
 %>
 
 <c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() >= 1) %>">

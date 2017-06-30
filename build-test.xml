@@ -6424,7 +6424,9 @@ persisted.scheduler.org.quartz.threadPool.threadCount=1
 
 axis.servlet.hosts.allowed=
 
-tunnel.servlet.hosts.allowed=</echo>
+tunnel.servlet.hosts.allowed=
+
+cluster.link.autodetect.address=</echo>
 
 		<if>
 			<equals arg1="${database.type}" arg2="oracle" />
@@ -6458,8 +6460,6 @@ cluster.link.channel.system.properties=\
 	jgroups.mping.mcast_addr:${multicast.group.address["cluster-link-mping"]},\
 	jgroups.mping.mcast_port:${multicast.group.port["cluster-link-mping"]},\
 	jgroups.mping.ip_ttl:8
-
-cluster.link.autodetect.address=
 
 web.server.display.node=true</echo>
 			</then>

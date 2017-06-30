@@ -187,8 +187,16 @@ public class ProjectTemplateFilesTest {
 				"<?xml version=\"1.0\"?>\n\n<archetype-descriptor name=\"" +
 					archetypeDescriptorName + "\">"));
 
-		boolean authorProperty = archetypeMetadataXml.contains(
-			"<requiredProperty key=\"author\">");
+		List<String> requiredPropertyNames = new ArrayList<>();
+
+		Matcher matcher = _archetypeMetadataXmlRequiredPropertyPattern.matcher(
+			archetypeMetadataXml);
+
+		while (matcher.find()) {
+			requiredPropertyNames.add(matcher.group(1));
+		}
+
+		boolean authorProperty = requiredPropertyNames.contains("author");
 
 		if (requireAuthorProperty) {
 			Assert.assertTrue(
@@ -737,6 +745,8 @@ public class ProjectTemplateFilesTest {
 	private static final String[] _SOURCESET_NAMES =
 		{"main", "test", "testIntegration"};
 
+	private static final Pattern _archetypeMetadataXmlRequiredPropertyPattern =
+		Pattern.compile("<requiredProperty key=\"(.+)\">");
 	private static final Pattern _buildGradleDependencyPattern =
 		Pattern.compile(
 			"(compile(?:Only)?) group: \"(.+)\", name: \"(.+)\", " +

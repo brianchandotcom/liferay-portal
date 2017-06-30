@@ -752,14 +752,15 @@ public class ProjectTemplateFilesTest {
 			}
 		}
 
-		Matcher matcher = _velocityIfPattern.matcher(text);
+		Matcher matcher = _velocityDirectivePattern.matcher(text);
 
 		while (matcher.find()) {
-			String condition = matcher.group(1);
+			String directive = matcher.group(1);
+			String content = matcher.group(2);
 
 			Assert.assertEquals(
 				"Source formatting error in " + path,
-				"#if (" + condition.trim() + ")", matcher.group());
+				"#" + directive + " (" + content.trim() + ")", matcher.group());
 		}
 
 		if (extension.equals("java")) {
@@ -842,8 +843,8 @@ public class ProjectTemplateFilesTest {
 	private static final Set<String> _textFileExtensions = new HashSet<>(
 		Arrays.asList(
 			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));
-	private static final Pattern _velocityIfPattern = Pattern.compile(
-		"#if\\s*\\(\\s*(.+)\\s*\\)");
+	private static final Pattern _velocityDirectivePattern = Pattern.compile(
+		"#(if|set)\\s*\\(\\s*(.+)\\s*\\)");
 	private static final Map<String, String> _xmlDeclarations = new HashMap<>();
 
 	static {

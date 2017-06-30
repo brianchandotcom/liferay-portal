@@ -75,13 +75,13 @@ public class AddRecordMVCCommandHelper {
 		Set<String> invisibleFields = getInvisibleFields(
 			ddmFormEvaluationResult);
 
-		if (!invisibleFields.isEmpty()) {
-			removeRequiredProperty(invisibleFields, requiredFields);
+		invisibleFields.addAll(fieldsFromDisabledPages);
+
+		if (invisibleFields.isEmpty()) {
+			return;
 		}
 
-		if (!fieldsFromDisabledPages.isEmpty()) {
-			removeRequiredProperty(fieldsFromDisabledPages, requiredFields);
-		}
+		removeRequiredProperty(invisibleFields, requiredFields);
 	}
 
 	protected DDMFormEvaluationResult evaluate(
@@ -103,10 +103,6 @@ public class AddRecordMVCCommandHelper {
 	protected DDMFormLayout getDDMFormLayout(ActionRequest actionRequest)
 		throws PortalException {
 
-		if (_ddlRecordSetService == null) {
-			return new DDMFormLayout();
-		}
-
 		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 
 		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
@@ -121,24 +117,28 @@ public class AddRecordMVCCommandHelper {
 		DDMFormEvaluationResult ddmFormEvaluationResult,
 		DDMFormLayout ddmFormLayout) {
 
-		HashSet<String> fieldNamesFromDisablePages = new HashSet<>();
+		Stream<Integer> disablePagesIndexesStream =
+			ddmFormEvaluationResult.getDisabledPagesIndexes().stream();
 
-		for (int index : ddmFormEvaluationResult.getDisabledPagesIndexes()) {
-			fieldNamesFromDisablePages.addAll(
-				getFieldNamesFromPage(
-					ddmFormLayout.getDDMFormLayoutPage(index)));
-		}
+		Stream<String> fieldsStream = disablePagesIndexesStream.map(
+			index -> getFieldNamesFromPage(index, ddmFormLayout)
+		).flatMap(
+			field -> field.stream()
+		);
 
-		return fieldNamesFromDisablePages;
+		return fieldsStream.collect(Collectors.toSet());
 	}
 
 	protected Set<String> getFieldNamesFromPage(
-		DDMFormLayoutPage ddmFormLayoutPage) {
+		int index, DDMFormLayout ddmFormLayout) {
+
+		DDMFormLayoutPage ddmFormLayoutPage =
+			ddmFormLayout.getDDMFormLayoutPage(index);
 
 		List<DDMFormLayoutRow> ddmFormLayoutRows =
 			ddmFormLayoutPage.getDDMFormLayoutRows();
 
-		HashSet<String> fieldNames = new HashSet<>();
+		Set<String> fieldNames = new HashSet<>();
 
 		for (DDMFormLayoutRow ddmFormLayoutRow : ddmFormLayoutRows) {
 			for (DDMFormLayoutColumn ddmFormLayoutColumn :

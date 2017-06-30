@@ -45,6 +45,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_REPLY_SUBJECT</td>
+	<td>//div[contains(@class,'list-group-card') and contains(.,'${key_threadBody}')]//h4[contains(.,'${key_threadSubject}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THREAD_SUBJECT</td>
 	<td>//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//h4[contains(.,'${key_threadSubject}')]</td>
 	<td></td>

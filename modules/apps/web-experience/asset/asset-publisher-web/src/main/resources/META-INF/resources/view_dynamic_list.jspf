@@ -42,10 +42,10 @@ for (AssetEntryResult assetEntryResult : assetEntryResults) {
 	<liferay-ddm:template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= new ArrayList<AssetEntry>() %>">
 
 		<%
-		Map<Long, Map<String, PortletURL>> addPortletURLs = assetPublisherDisplayContext.getScopeAddPortletURLs(1);
+		Map<Long, List<AssetPublisherAddItemHolder>> scopeAssetPublisherAddItemHolders = assetPublisherDisplayContext.getScopeAssetPublisherAddItemHolders(1);
 		%>
 
-		<c:if test="<%= MapUtil.isEmpty(addPortletURLs) && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName)) %>">
+		<c:if test="<%= MapUtil.isEmpty(scopeAssetPublisherAddItemHolders) && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName)) %>">
 
 			<%
 			renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);

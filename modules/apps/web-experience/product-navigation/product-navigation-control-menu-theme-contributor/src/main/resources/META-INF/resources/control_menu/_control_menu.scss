@@ -248,6 +248,8 @@
 	@include flex(1);
 	@include flex-wrap(wrap);
 
+	min-width: 50px;
+
 	> .control-menu-nav {
 		@include flex-wrap(wrap);
 		@include justify-content(center);

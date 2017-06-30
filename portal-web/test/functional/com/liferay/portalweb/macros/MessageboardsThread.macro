@@ -1149,7 +1149,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#THREAD_BODY" value1="${threadBody}" />
 	</command>
 
-	<command name="viewReplyPC">
+	<command name="viewReplyWithUpvote">
 		<var name="key_postsNumber" value="${postCount}" />
 		<var name="key_threadBody" value="${threadBody}" />
 		<var name="key_threadSubject" value="${threadSubject}" />

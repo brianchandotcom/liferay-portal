@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.elements;
 
+import com.liferay.poshi.runner.util.RegexUtil;
+
 import org.dom4j.Element;
 
 /**
@@ -31,21 +33,9 @@ public class ExecuteElement extends PoshiElement {
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
-		int contentStart = readableSyntax.indexOf("(") + 1;
-
-		String classCommandName = readableSyntax.substring(0, contentStart - 1);
-
-		classCommandName = classCommandName.replace(".", "#");
-
-		int contentEnd = readableSyntax.lastIndexOf(")");
-
-		String content = "";
-
-		if (contentEnd > contentStart) {
-			content = readableSyntax.substring(contentStart, contentEnd);
-		}
-
 		String executeType = "macro";
+
+		String content = getParentheticalContent(readableSyntax);
 
 		if (content.contains("locator1") || content.contains("locator2") ||
 			content.contains("value1") || content.contains("value2")) {
@@ -53,7 +43,12 @@ public class ExecuteElement extends PoshiElement {
 			executeType = "function";
 		}
 
-		addAttribute(executeType, classCommandName);
+		String executeCommandName = RegexUtil.getGroup(
+			readableSyntax, "([^\\s]*)\\(", 1);
+
+		executeCommandName = executeCommandName.replace(".", "#");
+
+		addAttribute(executeType, executeCommandName);
 
 		if (content.length() == 0) {
 			return;

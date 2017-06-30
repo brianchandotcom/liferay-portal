@@ -92,6 +92,10 @@ public abstract class PoshiElement extends DefaultElement {
 		return name.replaceAll("var ", "");
 	}
 
+	protected static String getParentheticalContent(String readableSyntax) {
+		return RegexUtil.getGroup(readableSyntax, ".*?\\((.*)\\)", 1);
+	}
+
 	protected static String getQuotedContent(String readableSyntax) {
 		return RegexUtil.getGroup(readableSyntax, ".*?\"(.*)\"", 1);
 	}

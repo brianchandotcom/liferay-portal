@@ -42,6 +42,336 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	 */
 
 	/**
+	* Returns all the cp definition links where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the matching cp definition links
+	*/
+	public java.util.List<CPDefinitionLink> findByUuid(java.lang.String uuid);
+
+	/**
+	* Returns a range of all the cp definition links where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @return the range of matching cp definition links
+	*/
+	public java.util.List<CPDefinitionLink> findByUuid(java.lang.String uuid,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the cp definition links where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp definition links
+	*/
+	public java.util.List<CPDefinitionLink> findByUuid(java.lang.String uuid,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the cp definition links where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp definition links
+	*/
+	public java.util.List<CPDefinitionLink> findByUuid(java.lang.String uuid,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first cp definition link in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public CPDefinitionLink findByUuid_First(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws NoSuchCPDefinitionLinkException;
+
+	/**
+	* Returns the first cp definition link in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public CPDefinitionLink fetchByUuid_First(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator);
+
+	/**
+	* Returns the last cp definition link in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public CPDefinitionLink findByUuid_Last(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws NoSuchCPDefinitionLinkException;
+
+	/**
+	* Returns the last cp definition link in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public CPDefinitionLink fetchByUuid_Last(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator);
+
+	/**
+	* Returns the cp definition links before and after the current cp definition link in the ordered set where uuid = &#63;.
+	*
+	* @param CPDefinitionLinkId the primary key of the current cp definition link
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a cp definition link with the primary key could not be found
+	*/
+	public CPDefinitionLink[] findByUuid_PrevAndNext(long CPDefinitionLinkId,
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws NoSuchCPDefinitionLinkException;
+
+	/**
+	* Removes all the cp definition links where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	*/
+	public void removeByUuid(java.lang.String uuid);
+
+	/**
+	* Returns the number of cp definition links where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching cp definition links
+	*/
+	public int countByUuid(java.lang.String uuid);
+
+	/**
+	* Returns the cp definition link where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCPDefinitionLinkException} if it could not be found.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public CPDefinitionLink findByUUID_G(java.lang.String uuid, long groupId)
+		throws NoSuchCPDefinitionLinkException;
+
+	/**
+	* Returns the cp definition link where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public CPDefinitionLink fetchByUUID_G(java.lang.String uuid, long groupId);
+
+	/**
+	* Returns the cp definition link where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public CPDefinitionLink fetchByUUID_G(java.lang.String uuid, long groupId,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the cp definition link where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the cp definition link that was removed
+	*/
+	public CPDefinitionLink removeByUUID_G(java.lang.String uuid, long groupId)
+		throws NoSuchCPDefinitionLinkException;
+
+	/**
+	* Returns the number of cp definition links where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching cp definition links
+	*/
+	public int countByUUID_G(java.lang.String uuid, long groupId);
+
+	/**
+	* Returns all the cp definition links where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the matching cp definition links
+	*/
+	public java.util.List<CPDefinitionLink> findByUuid_C(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of all the cp definition links where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @return the range of matching cp definition links
+	*/
+	public java.util.List<CPDefinitionLink> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the cp definition links where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp definition links
+	*/
+	public java.util.List<CPDefinitionLink> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the cp definition links where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPDefinitionLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp definition links
+	*/
+	public java.util.List<CPDefinitionLink> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first cp definition link in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public CPDefinitionLink findByUuid_C_First(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws NoSuchCPDefinitionLinkException;
+
+	/**
+	* Returns the first cp definition link in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public CPDefinitionLink fetchByUuid_C_First(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator);
+
+	/**
+	* Returns the last cp definition link in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
+	*/
+	public CPDefinitionLink findByUuid_C_Last(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws NoSuchCPDefinitionLinkException;
+
+	/**
+	* Returns the last cp definition link in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public CPDefinitionLink fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator);
+
+	/**
+	* Returns the cp definition links before and after the current cp definition link in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param CPDefinitionLinkId the primary key of the current cp definition link
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp definition link
+	* @throws NoSuchCPDefinitionLinkException if a cp definition link with the primary key could not be found
+	*/
+	public CPDefinitionLink[] findByUuid_C_PrevAndNext(
+		long CPDefinitionLinkId, java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws NoSuchCPDefinitionLinkException;
+
+	/**
+	* Removes all the cp definition links where uuid = &#63; and companyId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	*/
+	public void removeByUuid_C(java.lang.String uuid, long companyId);
+
+	/**
+	* Returns the number of cp definition links where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the number of matching cp definition links
+	*/
+	public int countByUuid_C(java.lang.String uuid, long companyId);
+
+	/**
 	* Returns all the cp definition links where CPDefinitionId1 = &#63;.
 	*
 	* @param CPDefinitionId1 the cp definition id1

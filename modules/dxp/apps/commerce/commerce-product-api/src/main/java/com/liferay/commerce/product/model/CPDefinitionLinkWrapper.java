@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -58,11 +60,14 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("CPDefinitionLinkId", getCPDefinitionLinkId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPDefinitionId1", getCPDefinitionId1());
 		attributes.put("CPDefinitionId2", getCPDefinitionId2());
 		attributes.put("priority", getPriority());
@@ -73,10 +78,22 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long CPDefinitionLinkId = (Long)attributes.get("CPDefinitionLinkId");
 
 		if (CPDefinitionLinkId != null) {
 			setCPDefinitionLinkId(CPDefinitionLinkId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -103,6 +120,12 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 			setCreateDate(createDate);
 		}
 
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
+		}
+
 		Long CPDefinitionId1 = (Long)attributes.get("CPDefinitionId1");
 
 		if (CPDefinitionId1 != null) {
@@ -126,6 +149,11 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 		if (type != null) {
 			setType(type);
 		}
+	}
+
+	@Override
+	public CPDefinition getCPDefinition1() {
+		return _cpDefinitionLink.getCPDefinition1();
 	}
 
 	@Override
@@ -228,6 +256,16 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 		return _cpDefinitionLink.getUserUuid();
 	}
 
+	/**
+	* Returns the uuid of this cp definition link.
+	*
+	* @return the uuid of this cp definition link
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _cpDefinitionLink.getUuid();
+	}
+
 	@Override
 	public java.lang.String toString() {
 		return _cpDefinitionLink.toString();
@@ -246,6 +284,16 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	@Override
 	public Date getCreateDate() {
 		return _cpDefinitionLink.getCreateDate();
+	}
+
+	/**
+	* Returns the modified date of this cp definition link.
+	*
+	* @return the modified date of this cp definition link
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _cpDefinitionLink.getModifiedDate();
 	}
 
 	/**
@@ -286,6 +334,16 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	@Override
 	public long getCompanyId() {
 		return _cpDefinitionLink.getCompanyId();
+	}
+
+	/**
+	* Returns the group ID of this cp definition link.
+	*
+	* @return the group ID of this cp definition link
+	*/
+	@Override
+	public long getGroupId() {
+		return _cpDefinitionLink.getGroupId();
 	}
 
 	/**
@@ -384,6 +442,26 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 		_cpDefinitionLink.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the group ID of this cp definition link.
+	*
+	* @param groupId the group ID of this cp definition link
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_cpDefinitionLink.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the modified date of this cp definition link.
+	*
+	* @param modifiedDate the modified date of this cp definition link
+	*/
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_cpDefinitionLink.setModifiedDate(modifiedDate);
+	}
+
 	@Override
 	public void setNew(boolean n) {
 		_cpDefinitionLink.setNew(n);
@@ -454,6 +532,16 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 		_cpDefinitionLink.setUserUuid(userUuid);
 	}
 
+	/**
+	* Sets the uuid of this cp definition link.
+	*
+	* @param uuid the uuid of this cp definition link
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_cpDefinitionLink.setUuid(uuid);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -472,6 +560,11 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _cpDefinitionLink.getStagedModelType();
 	}
 
 	@Override

@@ -43,11 +43,14 @@ create table CPDefinition (
 );
 
 create table CPDefinitionLink (
+	uuid_ VARCHAR(75) null,
 	CPDefinitionLinkId LONG not null primary key,
+	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
+	modifiedDate DATE null,
 	CPDefinitionId1 LONG,
 	CPDefinitionId2 LONG,
 	priority DOUBLE,

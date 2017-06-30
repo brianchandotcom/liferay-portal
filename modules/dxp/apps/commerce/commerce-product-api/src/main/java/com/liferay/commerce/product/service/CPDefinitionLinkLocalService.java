@@ -18,8 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPDefinitionLink;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -72,6 +75,10 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	public CPDefinitionLink addCPDefinitionLink(
 		CPDefinitionLink cpDefinitionLink);
 
+	public CPDefinitionLink addCPDefinitionLink(long cpDefinitionId1,
+		long cpDefinitionId2, double priority, int type,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new cp definition link with the primary key. Does not add the cp definition link to the database.
 	*
@@ -105,6 +112,17 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	public CPDefinitionLink fetchCPDefinitionLink(long CPDefinitionLinkId);
 
 	/**
+	* Returns the cp definition link matching the UUID and group.
+	*
+	* @param uuid the cp definition link's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionLink fetchCPDefinitionLinkByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	/**
 	* Returns the cp definition link with the primary key.
 	*
 	* @param CPDefinitionLinkId the primary key of the cp definition link
@@ -114,6 +132,18 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionLink getCPDefinitionLink(long CPDefinitionLinkId)
 		throws PortalException;
+
+	/**
+	* Returns the cp definition link matching the UUID and group.
+	*
+	* @param uuid the cp definition link's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition link
+	* @throws PortalException if a matching cp definition link could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionLink getCPDefinitionLinkByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Updates the cp definition link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -132,6 +162,10 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -229,6 +263,32 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 		int start, int end,
 		OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws PortalException;
+
+	/**
+	* Returns all the cp definition links matching the UUID and company.
+	*
+	* @param uuid the UUID of the cp definition links
+	* @param companyId the primary key of the company
+	* @return the matching cp definition links, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionLink> getCPDefinitionLinksByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of cp definition links matching the UUID and company.
+	*
+	* @param uuid the UUID of the cp definition links
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching cp definition links, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionLink> getCPDefinitionLinksByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

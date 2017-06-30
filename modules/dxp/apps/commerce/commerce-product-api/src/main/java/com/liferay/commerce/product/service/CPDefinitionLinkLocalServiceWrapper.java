@@ -46,6 +46,15 @@ public class CPDefinitionLinkLocalServiceWrapper
 		return _cpDefinitionLinkLocalService.addCPDefinitionLink(cpDefinitionLink);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionLink addCPDefinitionLink(
+		long cpDefinitionId1, long cpDefinitionId2, double priority, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLinkLocalService.addCPDefinitionLink(cpDefinitionId1,
+			cpDefinitionId2, priority, type, serviceContext);
+	}
+
 	/**
 	* Creates a new cp definition link with the primary key. Does not add the cp definition link to the database.
 	*
@@ -91,6 +100,20 @@ public class CPDefinitionLinkLocalServiceWrapper
 	}
 
 	/**
+	* Returns the cp definition link matching the UUID and group.
+	*
+	* @param uuid the cp definition link's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionLink fetchCPDefinitionLinkByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _cpDefinitionLinkLocalService.fetchCPDefinitionLinkByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns the cp definition link with the primary key.
 	*
 	* @param CPDefinitionLinkId the primary key of the cp definition link
@@ -102,6 +125,22 @@ public class CPDefinitionLinkLocalServiceWrapper
 		long CPDefinitionLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLinkLocalService.getCPDefinitionLink(CPDefinitionLinkId);
+	}
+
+	/**
+	* Returns the cp definition link matching the UUID and group.
+	*
+	* @param uuid the cp definition link's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition link
+	* @throws PortalException if a matching cp definition link could not be found
+	*/
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionLink getCPDefinitionLinkByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLinkLocalService.getCPDefinitionLinkByUuidAndGroupId(uuid,
+			groupId);
 	}
 
 	/**
@@ -132,6 +171,12 @@ public class CPDefinitionLinkLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _cpDefinitionLinkLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _cpDefinitionLinkLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
@@ -267,6 +312,38 @@ public class CPDefinitionLinkLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLinkLocalService.getCPDefinitionLinks(cpDefinitionId1,
 			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns all the cp definition links matching the UUID and company.
+	*
+	* @param uuid the UUID of the cp definition links
+	* @param companyId the primary key of the company
+	* @return the matching cp definition links, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinksByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _cpDefinitionLinkLocalService.getCPDefinitionLinksByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of cp definition links matching the UUID and company.
+	*
+	* @param uuid the UUID of the cp definition links
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of cp definition links
+	* @param end the upper bound of the range of cp definition links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching cp definition links, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinksByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator) {
+		return _cpDefinitionLinkLocalService.getCPDefinitionLinksByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	/**

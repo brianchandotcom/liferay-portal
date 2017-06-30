@@ -21,7 +21,9 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -43,7 +45,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface CPDefinitionLinkModel extends BaseModel<CPDefinitionLink>,
-	ShardedModel {
+	GroupedModel, ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -65,6 +67,23 @@ public interface CPDefinitionLinkModel extends BaseModel<CPDefinitionLink>,
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this cp definition link.
+	 *
+	 * @return the uuid of this cp definition link
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this cp definition link.
+	 *
+	 * @param uuid the uuid of this cp definition link
+	 */
+	@Override
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the cp definition link ID of this cp definition link.
 	 *
 	 * @return the cp definition link ID of this cp definition link
@@ -77,6 +96,22 @@ public interface CPDefinitionLinkModel extends BaseModel<CPDefinitionLink>,
 	 * @param CPDefinitionLinkId the cp definition link ID of this cp definition link
 	 */
 	public void setCPDefinitionLinkId(long CPDefinitionLinkId);
+
+	/**
+	 * Returns the group ID of this cp definition link.
+	 *
+	 * @return the group ID of this cp definition link
+	 */
+	@Override
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this cp definition link.
+	 *
+	 * @param groupId the group ID of this cp definition link
+	 */
+	@Override
+	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the company ID of this cp definition link.
@@ -99,6 +134,7 @@ public interface CPDefinitionLinkModel extends BaseModel<CPDefinitionLink>,
 	 *
 	 * @return the user ID of this cp definition link
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -106,6 +142,7 @@ public interface CPDefinitionLinkModel extends BaseModel<CPDefinitionLink>,
 	 *
 	 * @param userId the user ID of this cp definition link
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
@@ -113,6 +150,7 @@ public interface CPDefinitionLinkModel extends BaseModel<CPDefinitionLink>,
 	 *
 	 * @return the user uuid of this cp definition link
 	 */
+	@Override
 	public String getUserUuid();
 
 	/**
@@ -120,6 +158,7 @@ public interface CPDefinitionLinkModel extends BaseModel<CPDefinitionLink>,
 	 *
 	 * @param userUuid the user uuid of this cp definition link
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -128,6 +167,7 @@ public interface CPDefinitionLinkModel extends BaseModel<CPDefinitionLink>,
 	 * @return the user name of this cp definition link
 	 */
 	@AutoEscape
+	@Override
 	public String getUserName();
 
 	/**
@@ -135,6 +175,7 @@ public interface CPDefinitionLinkModel extends BaseModel<CPDefinitionLink>,
 	 *
 	 * @param userName the user name of this cp definition link
 	 */
+	@Override
 	public void setUserName(String userName);
 
 	/**
@@ -142,6 +183,7 @@ public interface CPDefinitionLinkModel extends BaseModel<CPDefinitionLink>,
 	 *
 	 * @return the create date of this cp definition link
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -149,7 +191,24 @@ public interface CPDefinitionLinkModel extends BaseModel<CPDefinitionLink>,
 	 *
 	 * @param createDate the create date of this cp definition link
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this cp definition link.
+	 *
+	 * @return the modified date of this cp definition link
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this cp definition link.
+	 *
+	 * @param modifiedDate the modified date of this cp definition link
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the cp definition id1 of this cp definition link.

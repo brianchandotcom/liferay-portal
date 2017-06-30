@@ -55,5 +55,7 @@ public interface CPDefinitionLink extends CPDefinitionLinkModel, PersistedModel 
 			}
 		};
 
+	public CPDefinition getCPDefinition1();
+
 	public CPDefinition getCPDefinition2();
 }

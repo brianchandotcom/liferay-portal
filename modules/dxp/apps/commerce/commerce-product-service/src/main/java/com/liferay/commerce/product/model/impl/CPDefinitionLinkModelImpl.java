@@ -23,6 +23,8 @@ import com.liferay.commerce.product.model.CPDefinitionLinkSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -70,11 +73,14 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 	 */
 	public static final String TABLE_NAME = "CPDefinitionLink";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "CPDefinitionLinkId", Types.BIGINT },
+			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
+			{ "modifiedDate", Types.TIMESTAMP },
 			{ "CPDefinitionId1", Types.BIGINT },
 			{ "CPDefinitionId2", Types.BIGINT },
 			{ "priority", Types.DOUBLE },
@@ -83,18 +89,21 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDefinitionLinkId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("CPDefinitionId1", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPDefinitionId2", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionLink (CPDefinitionLinkId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,CPDefinitionId1 LONG,CPDefinitionId2 LONG,priority DOUBLE,type_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionLink (uuid_ VARCHAR(75) null,CPDefinitionLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId1 LONG,CPDefinitionId2 LONG,priority DOUBLE,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionLink.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionLink.priority ASC";
@@ -112,8 +121,11 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 			true);
 	public static final long CPDEFINITIONID1_COLUMN_BITMASK = 1L;
 	public static final long CPDEFINITIONID2_COLUMN_BITMASK = 2L;
-	public static final long TYPE_COLUMN_BITMASK = 4L;
-	public static final long PRIORITY_COLUMN_BITMASK = 8L;
+	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long TYPE_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long PRIORITY_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -128,11 +140,14 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 		CPDefinitionLink model = new CPDefinitionLinkImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setCPDefinitionLinkId(soapModel.getCPDefinitionLinkId());
+		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCPDefinitionId1(soapModel.getCPDefinitionId1());
 		model.setCPDefinitionId2(soapModel.getCPDefinitionId2());
 		model.setPriority(soapModel.getPriority());
@@ -202,11 +217,14 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("CPDefinitionLinkId", getCPDefinitionLinkId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPDefinitionId1", getCPDefinitionId1());
 		attributes.put("CPDefinitionId2", getCPDefinitionId2());
 		attributes.put("priority", getPriority());
@@ -220,10 +238,22 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long CPDefinitionLinkId = (Long)attributes.get("CPDefinitionLinkId");
 
 		if (CPDefinitionLinkId != null) {
 			setCPDefinitionLinkId(CPDefinitionLinkId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -248,6 +278,12 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 		if (createDate != null) {
 			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long CPDefinitionId1 = (Long)attributes.get("CPDefinitionId1");
@@ -277,6 +313,30 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 	@JSON
 	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
+	}
+
+	@JSON
+	@Override
 	public long getCPDefinitionLinkId() {
 		return _CPDefinitionLinkId;
 	}
@@ -288,13 +348,48 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 	@JSON
 	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
+	}
+
+	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -349,6 +444,23 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 	@Override
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+	}
+
+	@JSON
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
+		_modifiedDate = modifiedDate;
 	}
 
 	@JSON
@@ -433,6 +545,12 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 		return _originalType;
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				CPDefinitionLink.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -464,11 +582,14 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 	public Object clone() {
 		CPDefinitionLinkImpl cpDefinitionLinkImpl = new CPDefinitionLinkImpl();
 
+		cpDefinitionLinkImpl.setUuid(getUuid());
 		cpDefinitionLinkImpl.setCPDefinitionLinkId(getCPDefinitionLinkId());
+		cpDefinitionLinkImpl.setGroupId(getGroupId());
 		cpDefinitionLinkImpl.setCompanyId(getCompanyId());
 		cpDefinitionLinkImpl.setUserId(getUserId());
 		cpDefinitionLinkImpl.setUserName(getUserName());
 		cpDefinitionLinkImpl.setCreateDate(getCreateDate());
+		cpDefinitionLinkImpl.setModifiedDate(getModifiedDate());
 		cpDefinitionLinkImpl.setCPDefinitionId1(getCPDefinitionId1());
 		cpDefinitionLinkImpl.setCPDefinitionId2(getCPDefinitionId2());
 		cpDefinitionLinkImpl.setPriority(getPriority());
@@ -541,6 +662,18 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 	public void resetOriginalValues() {
 		CPDefinitionLinkModelImpl cpDefinitionLinkModelImpl = this;
 
+		cpDefinitionLinkModelImpl._originalUuid = cpDefinitionLinkModelImpl._uuid;
+
+		cpDefinitionLinkModelImpl._originalGroupId = cpDefinitionLinkModelImpl._groupId;
+
+		cpDefinitionLinkModelImpl._setOriginalGroupId = false;
+
+		cpDefinitionLinkModelImpl._originalCompanyId = cpDefinitionLinkModelImpl._companyId;
+
+		cpDefinitionLinkModelImpl._setOriginalCompanyId = false;
+
+		cpDefinitionLinkModelImpl._setModifiedDate = false;
+
 		cpDefinitionLinkModelImpl._originalCPDefinitionId1 = cpDefinitionLinkModelImpl._CPDefinitionId1;
 
 		cpDefinitionLinkModelImpl._setOriginalCPDefinitionId1 = false;
@@ -560,7 +693,17 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 	public CacheModel<CPDefinitionLink> toCacheModel() {
 		CPDefinitionLinkCacheModel cpDefinitionLinkCacheModel = new CPDefinitionLinkCacheModel();
 
+		cpDefinitionLinkCacheModel.uuid = getUuid();
+
+		String uuid = cpDefinitionLinkCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			cpDefinitionLinkCacheModel.uuid = null;
+		}
+
 		cpDefinitionLinkCacheModel.CPDefinitionLinkId = getCPDefinitionLinkId();
+
+		cpDefinitionLinkCacheModel.groupId = getGroupId();
 
 		cpDefinitionLinkCacheModel.companyId = getCompanyId();
 
@@ -583,6 +726,15 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 			cpDefinitionLinkCacheModel.createDate = Long.MIN_VALUE;
 		}
 
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			cpDefinitionLinkCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			cpDefinitionLinkCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
 		cpDefinitionLinkCacheModel.CPDefinitionId1 = getCPDefinitionId1();
 
 		cpDefinitionLinkCacheModel.CPDefinitionId2 = getCPDefinitionId2();
@@ -596,10 +748,14 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{CPDefinitionLinkId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", CPDefinitionLinkId=");
 		sb.append(getCPDefinitionLinkId());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", userId=");
@@ -608,6 +764,8 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 		sb.append(getUserName());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
+		sb.append(", modifiedDate=");
+		sb.append(getModifiedDate());
 		sb.append(", CPDefinitionId1=");
 		sb.append(getCPDefinitionId1());
 		sb.append(", CPDefinitionId2=");
@@ -623,15 +781,23 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPDefinitionLink");
 		sb.append("</model-name>");
 
 		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>CPDefinitionLinkId</column-name><column-value><![CDATA[");
 		sb.append(getCPDefinitionLinkId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -648,6 +814,10 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
 		sb.append(getCreateDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
+		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>CPDefinitionId1</column-name><column-value><![CDATA[");
@@ -675,11 +845,20 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			CPDefinitionLink.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _CPDefinitionLinkId;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
+	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _CPDefinitionId1;
 	private long _originalCPDefinitionId1;
 	private boolean _setOriginalCPDefinitionId1;

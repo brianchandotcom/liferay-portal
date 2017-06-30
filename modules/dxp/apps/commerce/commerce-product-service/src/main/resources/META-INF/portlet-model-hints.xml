@@ -50,11 +50,14 @@
 		<field name="defaultLanguageId" type="String" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionLink">
+		<field name="uuid" type="String" />
 		<field name="CPDefinitionLinkId" type="long" />
+		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
 		<field name="CPDefinitionId1" type="long" />
 		<field name="CPDefinitionId2" type="long" />
 		<field name="priority" type="double" />

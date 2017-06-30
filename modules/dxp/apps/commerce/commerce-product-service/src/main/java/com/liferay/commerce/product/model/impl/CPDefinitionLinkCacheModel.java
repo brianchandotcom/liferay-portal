@@ -66,10 +66,14 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{CPDefinitionLinkId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", CPDefinitionLinkId=");
 		sb.append(CPDefinitionLinkId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -78,6 +82,8 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", CPDefinitionId1=");
 		sb.append(CPDefinitionId1);
 		sb.append(", CPDefinitionId2=");
@@ -95,7 +101,15 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 	public CPDefinitionLink toEntityModel() {
 		CPDefinitionLinkImpl cpDefinitionLinkImpl = new CPDefinitionLinkImpl();
 
+		if (uuid == null) {
+			cpDefinitionLinkImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			cpDefinitionLinkImpl.setUuid(uuid);
+		}
+
 		cpDefinitionLinkImpl.setCPDefinitionLinkId(CPDefinitionLinkId);
+		cpDefinitionLinkImpl.setGroupId(groupId);
 		cpDefinitionLinkImpl.setCompanyId(companyId);
 		cpDefinitionLinkImpl.setUserId(userId);
 
@@ -113,6 +127,13 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 			cpDefinitionLinkImpl.setCreateDate(new Date(createDate));
 		}
 
+		if (modifiedDate == Long.MIN_VALUE) {
+			cpDefinitionLinkImpl.setModifiedDate(null);
+		}
+		else {
+			cpDefinitionLinkImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		cpDefinitionLinkImpl.setCPDefinitionId1(CPDefinitionId1);
 		cpDefinitionLinkImpl.setCPDefinitionId2(CPDefinitionId2);
 		cpDefinitionLinkImpl.setPriority(priority);
@@ -125,13 +146,18 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		CPDefinitionLinkId = objectInput.readLong();
+
+		groupId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 
 		CPDefinitionId1 = objectInput.readLong();
 
@@ -145,7 +171,16 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(CPDefinitionLinkId);
+
+		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(companyId);
 
@@ -159,6 +194,7 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 		}
 
 		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(CPDefinitionId1);
 
@@ -169,11 +205,14 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 		objectOutput.writeInt(type);
 	}
 
+	public String uuid;
 	public long CPDefinitionLinkId;
+	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
+	public long modifiedDate;
 	public long CPDefinitionId1;
 	public long CPDefinitionId2;
 	public double priority;

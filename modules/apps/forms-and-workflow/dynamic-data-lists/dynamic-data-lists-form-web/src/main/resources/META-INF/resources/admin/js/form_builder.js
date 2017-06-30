@@ -218,6 +218,8 @@ AUI.add(
 
 						fieldList.addField(fieldCopy, fieldList.get('fields').length);
 
+						instance.showFieldSettingsPanel(fieldCopy);
+
 						var activeLayout = instance.getActiveLayout();
 
 						var row = instance.getFieldRow(field);

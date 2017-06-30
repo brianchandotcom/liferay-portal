@@ -15,6 +15,7 @@
 package com.liferay.poshi.runner.elements;
 
 import com.liferay.poshi.runner.util.Dom4JUtil;
+import com.liferay.poshi.runner.util.RegexUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,12 +92,8 @@ public abstract class PoshiElement extends DefaultElement {
 		return name.replaceAll("var ", "");
 	}
 
-	protected static String getValueFromAssignment(String assignment) {
-		int start = assignment.indexOf("\"") + 1;
-
-		int end = assignment.indexOf("\"", start);
-
-		return assignment.substring(start, end);
+	protected static String getQuotedContent(String readableSyntax) {
+		return RegexUtil.getGroup(readableSyntax, ".*?\"(.*)\"", 1);
 	}
 
 	protected void addElementFromReadableSyntax(String readableSyntax) {

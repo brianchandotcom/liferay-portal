@@ -83,7 +83,7 @@ public class CommandElement extends PoshiElement {
 
 			if (line.startsWith("@")) {
 				String name = getNameFromAssignment(line);
-				String value = getValueFromAssignment(line);
+				String value = getQuotedContent(line);
 
 				addAttribute(name, value);
 

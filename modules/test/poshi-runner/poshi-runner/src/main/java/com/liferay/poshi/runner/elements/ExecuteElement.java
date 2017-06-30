@@ -71,7 +71,7 @@ public class ExecuteElement extends PoshiElement {
 			}
 
 			String name = getNameFromAssignment(assignment);
-			String value = getValueFromAssignment(assignment);
+			String value = getQuotedContent(assignment);
 
 			addAttribute(name, value);
 		}

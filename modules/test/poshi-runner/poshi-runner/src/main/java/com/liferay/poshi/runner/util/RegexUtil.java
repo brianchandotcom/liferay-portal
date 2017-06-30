@@ -23,6 +23,18 @@ import java.util.regex.Pattern;
  */
 public class RegexUtil {
 
+	public static String getGroup(String content, String regex, int group) {
+		Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			return matcher.group(group);
+		}
+
+		return null;
+	}
+
 	public static String replace(String content, String regex, String group) {
 		Pattern pattern = Pattern.compile(regex);
 

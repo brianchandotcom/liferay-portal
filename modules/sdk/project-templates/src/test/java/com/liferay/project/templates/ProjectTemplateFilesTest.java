@@ -193,7 +193,19 @@ public class ProjectTemplateFilesTest {
 			archetypeMetadataXml);
 
 		while (matcher.find()) {
-			requiredPropertyNames.add(matcher.group(1));
+			String name = matcher.group(1);
+
+			if (!requiredPropertyNames.isEmpty()) {
+				String previousName = requiredPropertyNames.get(
+					requiredPropertyNames.size() - 1);
+
+				Assert.assertTrue(
+					"Required properties in " + archetypeMetadataXmlPath +
+						" are duplicated or not sorted",
+					name.compareTo(previousName) > 0);
+			}
+
+			requiredPropertyNames.add(name);
 		}
 
 		boolean authorProperty = requiredPropertyNames.contains("author");

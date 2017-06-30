@@ -55,9 +55,19 @@
 	<bean class="com.liferay.portal.spring.hibernate.PortalHibernateConfiguration" id="counterHibernateSessionFactory">
 		<property name="dataSource" ref="counterDataSource" />
 		<property name="mvccEnabled" value="false" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="javax.persistence.validation.mode">none</prop>
+			</props>
+		</property>
 	</bean>
 	<bean class="com.liferay.portal.spring.hibernate.PortalHibernateConfiguration" id="liferayHibernateSessionFactory">
 		<property name="dataSource" ref="liferayDataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="javax.persistence.validation.mode">none</prop>
+			</props>
+		</property>
 	</bean>
 	<bean class="com.liferay.portal.spring.transaction.TransactionManagerFactory" factory-method="createTransactionManager" id="counterTransactionManager">
 		<constructor-arg ref="counterDataSource" />

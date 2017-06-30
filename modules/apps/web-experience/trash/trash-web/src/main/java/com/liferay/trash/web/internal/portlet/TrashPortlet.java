@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
-import com.liferay.trash.exception.RestoreEntryException;
+import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.model.TrashEntryConstants;
 import com.liferay.trash.service.TrashEntryLocalService;

@@ -29,7 +29,7 @@ import com.liferay.portal.security.ldap.configuration.CompanyScopedConfiguration
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration",
-	localization = "content/Language", name = "ldap.auth.configuration.name"
+	localization = "content/Language", name = "ldap-auth-configuration-name"
 )
 public interface LDAPAuthConfiguration extends CompanyScopedConfiguration {
 

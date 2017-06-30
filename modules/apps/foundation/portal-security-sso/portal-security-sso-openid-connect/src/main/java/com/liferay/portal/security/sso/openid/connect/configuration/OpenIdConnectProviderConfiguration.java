@@ -29,7 +29,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	factory = true,
 	id = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectProviderConfiguration",
 	localization = "content/Language",
-	name = "open.id.connect.provider.configuration.name"
+	name = "open-id-connect-provider-configuration-name"
 )
 public interface OpenIdConnectProviderConfiguration {
 

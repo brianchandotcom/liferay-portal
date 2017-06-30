@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
 	id = "com.liferay.portal.store.cmis.configuration.CMISStoreConfiguration",
-	localization = "content/Language", name = "cmis.store.configuration.name"
+	localization = "content/Language", name = "cmis-store-configuration-name"
 )
 public interface CMISStoreConfiguration {
 

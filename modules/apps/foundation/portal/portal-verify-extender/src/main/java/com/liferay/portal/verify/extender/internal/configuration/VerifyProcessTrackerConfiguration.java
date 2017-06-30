@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.verify.extender.internal.configuration.VerifyProcessTrackerConfiguration",
 	localization = "content/Language",
-	name = "verify.process.configuration.name"
+	name = "verify-process-configuration-name"
 )
 public interface VerifyProcessTrackerConfiguration {
 

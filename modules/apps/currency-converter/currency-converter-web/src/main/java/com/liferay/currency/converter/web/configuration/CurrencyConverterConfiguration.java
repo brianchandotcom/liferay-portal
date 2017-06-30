@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.currency.converter.web.configuration.CurrencyConverterConfiguration",
 	localization = "content/Language",
-	name = "currency.converter.configuration.name"
+	name = "currency-converter-configuration-name"
 )
 public interface CurrencyConverterConfiguration {
 

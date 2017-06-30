@@ -271,12 +271,19 @@ public class DefaultExportImportContentProcessorTest {
 			binaryEntries, DLFileEntryConstants.getClassName(),
 			_fileEntry.getFileEntryId());
 
+		int count = 0;
+
 		for (String entry : testReaderWriter.getEntries()) {
 			if (entry.contains(DLFileEntryConstants.getClassName())) {
 				Assert.assertTrue(
 					content.contains("[$dl-reference=" + entry + "$]"));
+
+				count++;
 			}
 		}
+
+		Assert.assertTrue(
+			"There should be at least one file entry reference", count > 0);
 	}
 
 	@Test

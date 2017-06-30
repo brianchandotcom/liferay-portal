@@ -885,8 +885,6 @@
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 
-		<var name="key_userName" value="${userName}" />
-
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_LAST_POST" value1="${userName}" />
 
 		<var name="key_postsNumber" value="${postsNumber}" />

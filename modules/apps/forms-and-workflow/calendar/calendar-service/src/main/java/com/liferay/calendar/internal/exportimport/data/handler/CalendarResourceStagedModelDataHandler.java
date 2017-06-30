@@ -205,7 +205,7 @@ public class CalendarResourceStagedModelDataHandler
 				importedCalendarResource =
 					_calendarResourceLocalService.updateCalendarResource(
 						existingCalendarResource.getCalendarResourceId(),
-						calendarResource.getNameMap(),
+						calendarResourceNameMap,
 						calendarResource.getDescriptionMap(),
 						calendarResource.isActive(), serviceContext);
 			}
@@ -252,8 +252,9 @@ public class CalendarResourceStagedModelDataHandler
 		String calendarResourceName = calendarResource.getName(
 			LocaleUtil.getDefault());
 
-		if ((sourceGroup == null) ||
-			!calendarResourceName.equals(sourceGroup.getDescriptiveName())) {
+		if (((sourceGroup == null) ||
+			 !calendarResourceName.equals(sourceGroup.getDescriptiveName())) &&
+			!calendarResource.isGroup()) {
 
 			return calendarResource.getNameMap();
 		}

@@ -133,8 +133,8 @@ public class DummyReferenceStagedModelRepository
 		List<DummyReference> dummies = _dummyReferences.stream().filter(
 			dummyReference ->
 				dummyReference.getUuid().equals(uuid) &&
-				dummyReference.getGroupId() == groupId).collect(
-				Collectors.toList());
+				(dummyReference.getGroupId() == groupId)
+		).collect(Collectors.toList());
 
 		if (dummies.isEmpty()) {
 			return null;
@@ -150,8 +150,8 @@ public class DummyReferenceStagedModelRepository
 		return _dummyReferences.stream().filter(
 			dummyReference ->
 				dummyReference.getUuid().equals(uuid) &&
-				dummyReference.getCompanyId() == companyId).collect(
-				Collectors.toList());
+				(dummyReference.getCompanyId() == companyId)
+		).collect(Collectors.toList());
 	}
 
 	@Override
@@ -374,9 +374,8 @@ public class DummyReferenceStagedModelRepository
 						(CriteriaImpl.CriterionEntry)iterator.next();
 
 					result = result.stream().filter(
-						getPredicate(
-							criteriaImpl.toString())).collect(
-							Collectors.toList());
+						getPredicate(criteriaImpl.toString())
+					).collect(Collectors.toList());
 				}
 			}
 			catch (Exception e) {

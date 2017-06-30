@@ -131,8 +131,8 @@ public class DummyFolderStagedModelRepository
 		List<DummyFolder> dummyFolders = _dummyFolders.stream().filter(
 			dummyFolder ->
 				dummyFolder.getUuid().equals(uuid) &&
-				dummyFolder.getGroupId() == groupId).collect(
-				Collectors.toList());
+				(dummyFolder.getGroupId() == groupId)
+		).collect(Collectors.toList());
 
 		if (dummyFolders.isEmpty()) {
 			return null;
@@ -148,13 +148,14 @@ public class DummyFolderStagedModelRepository
 		return _dummyFolders.stream().filter(
 			dummyFolder ->
 				dummyFolder.getUuid().equals(uuid) &&
-				dummyFolder.getCompanyId() == companyId).collect(
-				Collectors.toList());
+				(dummyFolder.getCompanyId() == companyId)
+		).collect(Collectors.toList());
 	}
 
 	public List<DummyFolder> getDummyFolders(long groupId) {
 		return _dummyFolders.stream().filter(
-			d -> d.getGroupId() == groupId).collect(Collectors.toList());
+			d -> d.getGroupId() == groupId
+		).collect(Collectors.toList());
 	}
 
 	@Override
@@ -385,9 +386,8 @@ public class DummyFolderStagedModelRepository
 						(CriteriaImpl.CriterionEntry)iterator.next();
 
 					result = result.stream().filter(
-						getPredicate(
-							criteriaImpl.toString())).collect(
-							Collectors.toList());
+						getPredicate(criteriaImpl.toString())
+					).collect(Collectors.toList());
 				}
 			}
 			catch (Exception e) {

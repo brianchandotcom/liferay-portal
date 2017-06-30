@@ -373,9 +373,8 @@ public class DummyStagedModelRepository
 						(CriteriaImpl.CriterionEntry)iterator.next();
 
 					result = result.stream().filter(
-						getPredicate(
-							criteriaImpl.toString())).collect(
-							Collectors.toList());
+						getPredicate(criteriaImpl.toString())
+					).collect(Collectors.toList());
 				}
 			}
 			catch (Exception e) {

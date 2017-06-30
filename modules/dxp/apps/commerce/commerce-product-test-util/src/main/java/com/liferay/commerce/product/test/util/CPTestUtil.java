@@ -17,6 +17,7 @@ package com.liferay.commerce.product.test.util;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
@@ -24,6 +25,7 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUtil;
+import com.liferay.commerce.product.service.CPDefinitionLinkLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalServiceUtil;
@@ -135,6 +137,18 @@ public class CPTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return addCPDefinition(productTypeName, serviceContext);
+	}
+
+	public static CPDefinitionLink addCPDefinitionLink(
+			long groupId, long cpDefinitionId1, long cpDefinitionId2)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return CPDefinitionLinkLocalServiceUtil.addCPDefinitionLink(
+			cpDefinitionId1, cpDefinitionId2, RandomTestUtil.randomDouble(),
+			RandomTestUtil.randomInt(), serviceContext);
 	}
 
 	public static CPDefinitionOptionRel addCPDefinitionOptionRel(

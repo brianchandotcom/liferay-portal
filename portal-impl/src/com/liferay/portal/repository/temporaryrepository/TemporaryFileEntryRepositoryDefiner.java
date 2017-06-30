@@ -85,7 +85,7 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 		ServiceProxyFactory.newServiceTrackedInstance(
 			PortalCapabilityLocator.class,
 			TemporaryFileEntryRepositoryDefiner.class,
-			"_portalCapabilityLocator", false);
+			"_portalCapabilityLocator", false, true);
 
 	private RepositoryFactory _repositoryFactory;
 

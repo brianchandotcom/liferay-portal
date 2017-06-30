@@ -115,7 +115,7 @@ public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 		ServiceProxyFactory.newServiceTrackedInstance(
 			PortalCapabilityLocator.class,
 			LegacyExternalRepositoryDefiner.class, "_portalCapabilityLocator",
-			false);
+			false, true);
 
 	private final String _className;
 	private RepositoryConfiguration _repositoryConfiguration;

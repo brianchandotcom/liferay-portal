@@ -88,7 +88,7 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 	private static volatile PortalCapabilityLocator _portalCapabilityLocator =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			PortalCapabilityLocator.class, PortletRepositoryDefiner.class,
-			"_portalCapabilityLocator", false);
+			"_portalCapabilityLocator", false, true);
 
 	private RepositoryFactory _repositoryFactory;
 

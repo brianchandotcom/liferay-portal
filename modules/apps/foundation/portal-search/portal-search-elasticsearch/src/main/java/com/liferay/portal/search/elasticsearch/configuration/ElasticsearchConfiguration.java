@@ -26,7 +26,7 @@ import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 @Meta.OCD(
 	id = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
 	localization = "content/Language",
-	name = "elastic.search.configuration.name"
+	name = "elastic-search-configuration-name"
 )
 public interface ElasticsearchConfiguration {
 

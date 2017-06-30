@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration",
 	localization = "content/Language",
-	name = "open.id.connect.configuration.name"
+	name = "open-id-connect-configuration-name"
 )
 public interface OpenIdConnectConfiguration {
 

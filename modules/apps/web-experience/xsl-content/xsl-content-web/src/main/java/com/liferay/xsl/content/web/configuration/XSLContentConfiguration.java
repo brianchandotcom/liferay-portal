@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "web-experience")
 @Meta.OCD(
 	id = "com.liferay.xsl.content.web.configuration.XSLContentConfiguration",
-	localization = "content/Language", name = "xsl.content.configuration.name"
+	localization = "content/Language", name = "xsl-content-configuration-name"
 )
 public interface XSLContentConfiguration {
 

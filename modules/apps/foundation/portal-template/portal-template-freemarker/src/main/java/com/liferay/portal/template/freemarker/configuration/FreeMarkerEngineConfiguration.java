@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration",
 	localization = "content/Language",
-	name = "freemarker.engine.configuration.name"
+	name = "freemarker-engine-configuration-name"
 )
 public interface FreeMarkerEngineConfiguration {
 

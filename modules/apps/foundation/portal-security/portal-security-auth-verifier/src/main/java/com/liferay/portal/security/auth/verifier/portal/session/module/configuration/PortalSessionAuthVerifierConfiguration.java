@@ -29,7 +29,7 @@ import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVe
 	factory = true,
 	id = "com.liferay.portal.security.auth.verifier.portal.session.module.configuration.PortalSessionAuthVerifierConfiguration",
 	localization = "content/Language",
-	name = "portal.session.auth.verifier.configuration.name"
+	name = "portal-session-auth-verifier-configuration-name"
 )
 public interface PortalSessionAuthVerifierConfiguration
 	extends BaseAuthVerifierConfiguration {

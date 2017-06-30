@@ -7679,10 +7679,10 @@ public class JournalArticleLocalServiceImpl
 		else if (emailType.equals("requested")) {
 			localizedSubjectMap = LocalizationUtil.getMap(
 				journalGroupServiceConfiguration.
-					emailArticleApprovalGrantedSubject());
+					emailArticleApprovalRequestedSubject());
 			localizedBodyMap = LocalizationUtil.getMap(
 				journalGroupServiceConfiguration.
-					emailArticleApprovalGrantedBody());
+					emailArticleApprovalRequestedBody());
 		}
 		else if (emailType.equals("review")) {
 			localizedSubjectMap = LocalizationUtil.getMap(

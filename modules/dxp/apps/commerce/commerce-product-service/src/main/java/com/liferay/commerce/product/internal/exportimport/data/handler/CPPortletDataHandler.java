@@ -17,6 +17,7 @@ package com.liferay.commerce.product.internal.exportimport.data.handler;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
@@ -61,6 +62,7 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(CPAttachmentFileEntry.class),
 			new StagedModelType(CPDefinition.class),
+			new StagedModelType(CPDefinitionLink.class),
 			new StagedModelType(CPDefinitionOptionRel.class),
 			new StagedModelType(CPDefinitionOptionValueRel.class),
 			new StagedModelType(CPInstance.class),
@@ -107,6 +109,8 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 
 		_cpAttachmentFileEntryStagedModelRepository.deleteStagedModels(
 			portletDataContext);
+		_cpDefinitionLinkStagedModelRepository.deleteStagedModels(
+			portletDataContext);
 		_cpDefinitionOptionRelStagedModelRepository.deleteStagedModels(
 			portletDataContext);
 		_cpDefinitionOptionValueRelStagedModelRepository.deleteStagedModels(
@@ -136,6 +140,8 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "products")) {
 			exportModels(
 				portletDataContext, _cpDefinitionStagedModelRepository);
+			exportModels(
+				portletDataContext, _cpDefinitionLinkStagedModelRepository);
 			exportModels(
 				portletDataContext,
 				_cpDefinitionOptionRelStagedModelRepository);
@@ -185,6 +191,7 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "products")) {
 			importModels(portletDataContext, CPDefinition.class);
+			importModels(portletDataContext, CPDefinitionLink.class);
 			importModels(portletDataContext, CPDefinitionOptionRel.class);
 			importModels(portletDataContext, CPDefinitionOptionValueRel.class);
 		}
@@ -280,6 +287,12 @@ public class CPPortletDataHandler extends BasePortletDataHandler {
 	)
 	private StagedModelRepository<CPAttachmentFileEntry>
 		_cpAttachmentFileEntryStagedModelRepository;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinitionLink)"
+	)
+	private StagedModelRepository<CPDefinitionLink>
+		_cpDefinitionLinkStagedModelRepository;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinitionOptionRel)"

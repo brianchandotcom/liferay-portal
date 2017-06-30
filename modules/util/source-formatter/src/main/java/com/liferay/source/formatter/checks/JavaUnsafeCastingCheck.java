@@ -24,6 +24,11 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 public class JavaUnsafeCastingCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isPortalCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 

@@ -92,9 +92,9 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 				sb.append(matcher.group(1));
 				sb.append(" group: \"");
 				sb.append(matcher.group(2));
-				sb.append("\" name: \"");
+				sb.append("\", name: \"");
 				sb.append(matcher.group(3));
-				sb.append("\" version: \"");
+				sb.append("\", version: \"");
 				sb.append(matcher.group(4));
 				sb.append("\"");
 				sb.append(matcher.group(5));

@@ -63,22 +63,9 @@ request.setAttribute("websites.classPK", company.getAccountId());
 
 		form.fm('<%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
 
-		<portlet:namespace />saveLdap();
 		<portlet:namespace />saveLocales();
 
 		submitForm(form);
-	}
-
-	function <portlet:namespace />saveLdap() {
-		var $ = AUI.$;
-
-		var ldapServerIds = $('.ldap-servers .table-data tr').map(
-			function(index, item) {
-				return $(item).data('ldapserverid');
-			}
-		).get();
-
-		$(document.<portlet:namespace />fm).fm('settings--ldap.server.ids--').val(ldapServerIds.join(','));
 	}
 
 	function <portlet:namespace />saveLocales() {

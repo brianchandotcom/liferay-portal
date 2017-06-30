@@ -33,7 +33,9 @@
         </execute>
     </command>
 
-    <command description="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." name="Smoke" priority="5">
+    <command name="Smoke" priority="5">
+        <description message="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." />
+
         <property name="portal.smoke" value="true" />
         <property name="test.assert.warning.exceptions" value="true" />
 

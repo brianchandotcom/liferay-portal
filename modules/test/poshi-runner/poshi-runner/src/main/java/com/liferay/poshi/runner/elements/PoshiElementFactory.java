@@ -80,6 +80,12 @@ public class PoshiElementFactory {
 					return new ExecuteElement(readableSyntax);
 				}
 
+				if (line.startsWith("@description") &&
+					!readableSyntax.endsWith("}")) {
+
+					return new DescriptionElement(readableSyntax);
+				}
+
 				if (line.startsWith("@")) {
 					continue;
 				}

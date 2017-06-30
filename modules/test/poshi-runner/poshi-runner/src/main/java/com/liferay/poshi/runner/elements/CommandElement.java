@@ -81,6 +81,14 @@ public class CommandElement extends PoshiElement {
 				continue;
 			}
 
+			if (line.startsWith("@description")) {
+				PoshiElement poshiElement = new DescriptionElement(line);
+
+				add(poshiElement);
+
+				continue;
+			}
+
 			if (line.startsWith("@")) {
 				String name = getNameFromAssignment(line);
 				String value = getQuotedContent(line);
@@ -97,6 +105,14 @@ public class CommandElement extends PoshiElement {
 	@Override
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();
+
+		for (PoshiElement poshiElement :
+				toPoshiElements(elements("description"))) {
+
+			sb.append("\n\t@description = \"");
+			sb.append(poshiElement.attributeValue("message"));
+			sb.append("\"");
+		}
 
 		for (PoshiElementAttribute poshiElementAttribute :
 				toPoshiElementAttributes(attributeList())) {

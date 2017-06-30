@@ -163,6 +163,18 @@
 		<finder name="FileEntryTypeId" return-type="Collection">
 			<finder-column name="fileEntryTypeId" />
 		</finder>
+		<finder name="SmallImageId" return-type="Collection">
+			<finder-column name="smallImageId" />
+		</finder>
+		<finder name="LargeImageId" return-type="Collection">
+			<finder-column name="largeImageId" />
+		</finder>
+		<finder name="Custom1ImageId" return-type="Collection">
+			<finder-column name="custom1ImageId" />
+		</finder>
+		<finder name="Custom2ImageId" return-type="Collection">
+			<finder-column name="custom2ImageId" />
+		</finder>
 		<finder name="G_U" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />

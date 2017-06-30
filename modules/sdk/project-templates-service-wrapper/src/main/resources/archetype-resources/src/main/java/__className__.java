@@ -1,6 +1,6 @@
-#set( $lastIndexOf = $serviceWrapperClass.lastIndexOf(".") )
-#set( $substringIndex = $lastIndexOf + 1 )
-#set( $serviceWrapperClassName = $serviceWrapperClass.substring($substringIndex) )
+#set ($lastIndexOf = $serviceWrapperClass.lastIndexOf("."))
+#set ($substringIndex = $lastIndexOf + 1)
+#set ($serviceWrapperClassName = $serviceWrapperClass.substring($substringIndex))
 package ${package};
 
 import ${serviceWrapperClass};

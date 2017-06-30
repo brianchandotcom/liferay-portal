@@ -220,8 +220,6 @@ public class VerifyPermission extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		deleteDefaultPrivateLayoutPermissions();
-
 		checkPermissions();
 		fixOrganizationRolePermissions();
 		fixUserDefaultRolePermissions();

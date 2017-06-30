@@ -392,19 +392,19 @@ AUI.add(
 						);
 					},
 
-					_clearInputsLocalized: function(node) {
-						node.all('.language-value').attr('placeholder', '');
-						node.all('.lfr-input-localized-state').removeClass('lfr-input-localized-state-error');
-						node.all('.palette-item').removeClass('palette-item-selected');
-						node.all('.lfr-input-localized-default').addClass('palette-item-selected');
-					},
-
 					_clearHiddenRows: function(item, index) {
 						var instance = this;
 
 						if (instance._isHiddenRow(item)) {
 							item.remove(true);
 						}
+					},
+
+					_clearInputsLocalized: function(node) {
+						node.all('.language-value').attr('placeholder', '');
+						node.all('.lfr-input-localized-state').removeClass('lfr-input-localized-state-error');
+						node.all('.palette-item').removeClass('palette-item-selected');
+						node.all('.lfr-input-localized-default').addClass('palette-item-selected');
 					},
 
 					_createClone: function(node) {
@@ -594,6 +594,7 @@ AUI.add(
 
 					_registerInputLocalized: function(inputLocalized, guid) {
 						var inputLocalizedId = inputLocalized.get('id').replace(/([0-9]+)$/, guid);
+
 						var inputLocalizedNamespaceId = inputLocalized.get('namespace') + inputLocalizedId;
 
 						Liferay.InputLocalized.register(

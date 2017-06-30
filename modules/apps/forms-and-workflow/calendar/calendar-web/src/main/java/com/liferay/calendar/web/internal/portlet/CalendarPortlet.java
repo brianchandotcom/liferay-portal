@@ -119,6 +119,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -504,6 +505,8 @@ public class CalendarPortlet extends MVCPortlet {
 
 		long[] childCalendarIds = ParamUtil.getLongValues(
 			actionRequest, "childCalendarIds");
+		long[] reinvitableCalendarIds = ParamUtil.getLongValues(
+			actionRequest, "reinvitableCalendarIds");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 		Map<Locale, String> descriptionMap =
@@ -528,8 +531,9 @@ public class CalendarPortlet extends MVCPortlet {
 			CalendarBooking.class.getName(), actionRequest);
 
 		CalendarBooking calendarBooking = updateCalendarBooking(
-			calendarBookingId, calendar, childCalendarIds, titleMap,
-			descriptionMap, location, startTimeJCalendar.getTimeInMillis(),
+			calendarBookingId, calendar, childCalendarIds,
+			reinvitableCalendarIds, titleMap, descriptionMap, location,
+			startTimeJCalendar.getTimeInMillis(),
 			endTimeJCalendar.getTimeInMillis(), allDay, recurrence, reminders,
 			remindersType, instanceIndex, updateCalendarBookingInstance,
 			allFollowing, serviceContext);
@@ -608,8 +612,9 @@ public class CalendarPortlet extends MVCPortlet {
 			CalendarBooking.class.getName(), actionRequest);
 
 		calendarBooking = updateCalendarBooking(
-			calendarBookingId, calendar, childCalendarIds, titleMap,
-			descriptionMap, location, startTimeJCalendar.getTimeInMillis(),
+			calendarBookingId, calendar, childCalendarIds, new long[0],
+			titleMap, descriptionMap, location,
+			startTimeJCalendar.getTimeInMillis(),
 			endTimeJCalendar.getTimeInMillis(), allDay, recurrence, reminders,
 			remindersType, instanceIndex, updateInstance, allFollowing,
 			serviceContext);
@@ -670,6 +675,20 @@ public class CalendarPortlet extends MVCPortlet {
 		else {
 			super.doDispatch(renderRequest, renderResponse);
 		}
+	}
+
+	protected Set<Long> filterReinvitedCalendarIds(
+		long[] childCalendarIds, long[] reinvitableCalendarIds) {
+
+		Set<Long> reinvitedCalendarIds = new HashSet<>();
+
+		for (long childCalendarId : childCalendarIds) {
+			if (ArrayUtil.contains(reinvitableCalendarIds, childCalendarId)) {
+				reinvitedCalendarIds.add(childCalendarId);
+			}
+		}
+
+		return reinvitedCalendarIds;
 	}
 
 	protected void getCalendar(PortletRequest portletRequest) throws Exception {
@@ -1586,10 +1605,11 @@ public class CalendarPortlet extends MVCPortlet {
 
 	protected CalendarBooking updateCalendarBooking(
 			long calendarBookingId, Calendar calendar, long[] childCalendarIds,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String location, long startTime, long endTime, boolean allDay,
-			Recurrence recurrence, long[] reminders, String[] remindersType,
-			int instanceIndex, boolean updateInstance, boolean allFollowing,
+			long[] reinvitableCalendarIds, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String location, long startTime,
+			long endTime, boolean allDay, Recurrence recurrence,
+			long[] reminders, String[] remindersType, int instanceIndex,
+			boolean updateInstance, boolean allFollowing,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1670,6 +1690,33 @@ public class CalendarPortlet extends MVCPortlet {
 					calendarBooking.getEndTime(), allDay,
 					RecurrenceSerializer.serialize(recurrence), reminders[0],
 					remindersType[0], reminders[1], remindersType[1],
+					serviceContext);
+			}
+
+			Set<Long> reinvitedCalendarIds = filterReinvitedCalendarIds(
+				childCalendarIds, reinvitableCalendarIds);
+
+			List<CalendarBooking> childCalendarBookings =
+				calendarBooking.getChildCalendarBookings();
+
+			for (CalendarBooking childCalendarBooking : childCalendarBookings) {
+				long childCalendarId = childCalendarBooking.getCalendarId();
+
+				if (!reinvitedCalendarIds.contains(childCalendarId)) {
+					continue;
+				}
+
+				Calendar childCalendar = childCalendarBooking.getCalendar();
+
+				if (_calendarBookingLocalService.hasExclusiveCalendarBooking(
+						childCalendar, startTime, endTime)) {
+
+					continue;
+				}
+
+				_calendarBookingLocalService.updateStatus(
+					childCalendarBooking.getUserId(), childCalendarBooking,
+					CalendarBookingWorkflowConstants.STATUS_PENDING,
 					serviceContext);
 			}
 		}

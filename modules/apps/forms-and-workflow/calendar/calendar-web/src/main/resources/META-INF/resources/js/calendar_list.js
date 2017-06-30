@@ -172,6 +172,13 @@ AUI.add(
 							}
 						}
 
+						instance.fire(
+							'calendarRemoved',
+							{
+								calendar: calendar
+							}
+						);
+
 						instance.set('calendars', calendars);
 					},
 

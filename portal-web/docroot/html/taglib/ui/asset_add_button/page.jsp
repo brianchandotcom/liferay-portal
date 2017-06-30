@@ -29,9 +29,9 @@ boolean useDialog = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset
 boolean hasAddPortletURLs = false;
 
 for (long groupId : groupIds) {
-	List<AssetPortletAddURL> assetPortletAddURLs = AssetUtil.getAssetPortletAddURLs((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, groupId, classNameIds, classTypeIds, allAssetCategoryIds, allAssetTagNames, redirect);
+	List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders = AssetUtil.getAssetPublisherAddItemHolders((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, groupId, classNameIds, classTypeIds, allAssetCategoryIds, allAssetTagNames, redirect);
 
-	if ((assetPortletAddURLs != null) && !assetPortletAddURLs.isEmpty()) {
+	if ((assetPublisherAddItemHolders != null) && !assetPublisherAddItemHolders.isEmpty()) {
 		hasAddPortletURLs = true;
 	}
 %>
@@ -39,24 +39,24 @@ for (long groupId : groupIds) {
 	<c:if test="<%= hasAddPortletURLs %>">
 		<aui:nav>
 			<c:choose>
-				<c:when test="<%= assetPortletAddURLs.size() == 1 %>">
+				<c:when test="<%= assetPublisherAddItemHolders.size() == 1 %>">
 
 					<%
-					AssetPortletAddURL assetPortletAddURL = assetPortletAddURLs.get(0);
+					AssetPublisherAddItemHolder assetPublisherAddItemHolder = assetPublisherAddItemHolders.get(0);
 
-					String message = assetPortletAddURL.getModelResource();
+					String message = assetPublisherAddItemHolder.getModelResource();
 
 					long curGroupId = groupId;
 
 					Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-					if (!group.isStagedPortlet(assetPortletAddURL.getPortletId()) && !group.isStagedRemotely()) {
+					if (!group.isStagedPortlet(assetPublisherAddItemHolder.getPortletId()) && !group.isStagedRemotely()) {
 						curGroupId = group.getLiveGroupId();
 					}
 					%>
 
 					<aui:nav-item
-						href="<%= _getURL(curGroupId, plid, assetPortletAddURL.getAddPortletURL(), message, addDisplayPageParameter, layout, pageContext, portletResponse, useDialog) %>"
+						href="<%= _getURL(curGroupId, plid, assetPublisherAddItemHolder.getPortletURL(), message, addDisplayPageParameter, layout, pageContext, portletResponse, useDialog) %>"
 						label='<%= LanguageUtil.format(request, (groupIds.length == 1) ? "add-x" : "add-x-in-x", new Object[] {HtmlUtil.escape(message), HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}, false) %>'
 					/>
 				</c:when>
@@ -67,20 +67,20 @@ for (long groupId : groupIds) {
 					>
 
 						<%
-						for (AssetPortletAddURL assetPortletAddURL : assetPortletAddURLs) {
-							String message = assetPortletAddURL.getModelResource();
+						for (AssetPublisherAddItemHolder assetPublisherAddItemHolder : assetPublisherAddItemHolders) {
+							String message = assetPublisherAddItemHolder.getModelResource();
 
 							long curGroupId = groupId;
 
 							Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-							if (!group.isStagedPortlet(assetPortletAddURL.getPortletId()) && !group.isStagedRemotely()) {
+							if (!group.isStagedPortlet(assetPublisherAddItemHolder.getPortletId()) && !group.isStagedRemotely()) {
 								curGroupId = group.getLiveGroupId();
 							}
 						%>
 
 							<aui:nav-item
-								href="<%= _getURL(curGroupId, plid, assetPortletAddURL.getAddPortletURL(), message, addDisplayPageParameter, layout, pageContext, portletResponse, useDialog) %>"
+								href="<%= _getURL(curGroupId, plid, assetPublisherAddItemHolder.getPortletURL(), message, addDisplayPageParameter, layout, pageContext, portletResponse, useDialog) %>"
 								label="<%= HtmlUtil.escape(message) %>"
 							/>
 

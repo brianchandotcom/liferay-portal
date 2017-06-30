@@ -23,6 +23,8 @@ AssetEntry assetEntry = workflowTaskDisplayContext.getAssetEntry();
 AssetRenderer assetRenderer = workflowTaskDisplayContext.getAssetRenderer();
 AssetRendererFactory assetRendererFactory = workflowTaskDisplayContext.getAssetRendererFactory();
 
+String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null);
+
 request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 
 portletDisplay.setShowBackIcon(true);
@@ -37,4 +39,10 @@ renderResponse.setTitle(assetRenderer.getTitle(locale));
 		assetRenderer="<%= assetRenderer %>"
 		assetRendererFactory="<%= assetRendererFactory %>"
 	/>
+</c:if>
+
+<c:if test="<%= viewInContextURL != null %>">
+	<div class="asset-more">
+		<aui:a href="<%= viewInContextURL %>"><liferay-ui:message key="view-in-context" /> &raquo;</aui:a>
+	</div>
 </c:if>

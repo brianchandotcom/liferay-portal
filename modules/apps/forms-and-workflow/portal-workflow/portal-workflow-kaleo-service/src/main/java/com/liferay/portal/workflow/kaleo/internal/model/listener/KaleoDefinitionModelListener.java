@@ -105,10 +105,13 @@ public class KaleoDefinitionModelListener
 
 		if (serviceContext == null) {
 			serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(kaleoDefinition.getCompanyId());
-			serviceContext.setUserId(kaleoDefinition.getUserId());
 		}
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCompanyId(kaleoDefinition.getCompanyId());
+		serviceContext.setScopeGroupId(kaleoDefinition.getGroupId());
+		serviceContext.setUserId(kaleoDefinition.getUserId());
 
 		return serviceContext;
 	}

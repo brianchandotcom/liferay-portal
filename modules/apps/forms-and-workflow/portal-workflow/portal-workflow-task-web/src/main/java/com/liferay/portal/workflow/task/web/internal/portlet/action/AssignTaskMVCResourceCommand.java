@@ -14,8 +14,10 @@
 
 package com.liferay.portal.workflow.task.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,8 +27,8 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,10 +42,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_TASK,
 		"mvc.command.name=assignWorkflowTask"
 	},
-	service = MVCActionCommand.class
+	service = MVCResourceCommand.class
 )
-public class AssignTaskMVCActionCommand
-	extends WorkflowTaskBaseMVCActionCommand {
+public class AssignTaskMVCResourceCommand extends BaseMVCResourceCommand {
 
 	protected void checkWorkflowTaskAssignmentPermission(
 			long workflowTaskId, ThemeDisplay themeDisplay)
@@ -67,25 +68,27 @@ public class AssignTaskMVCActionCommand
 	}
 
 	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long workflowTaskId = ParamUtil.getLong(
-			actionRequest, "workflowTaskId");
+			resourceRequest, "workflowTaskId");
 
 		long assigneeUserId = ParamUtil.getLong(
-			actionRequest, "assigneeUserId");
-		String comment = ParamUtil.getString(actionRequest, "comment");
+			resourceRequest, "assigneeUserId");
+		String comment = ParamUtil.getString(resourceRequest, "comment");
 
 		checkWorkflowTaskAssignmentPermission(workflowTaskId, themeDisplay);
 
 		workflowTaskManager.assignWorkflowTaskToUser(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 			workflowTaskId, assigneeUserId, comment, null, null);
+
+		SessionMessages.add(resourceRequest, "requestProcessed", "");
 	}
 
 	@Reference

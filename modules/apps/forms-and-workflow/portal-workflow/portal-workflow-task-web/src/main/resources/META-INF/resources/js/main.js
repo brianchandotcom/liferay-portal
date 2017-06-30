@@ -19,10 +19,7 @@ AUI.add(
 
 					var originalColumnId = contentId.substring(0, 4);
 
-					if (contentId.search('[a-zA-Z]{4}update(Asignee|AsigneeToMe)') != -1) {
-						originalColumnId += 'updateDueDate';
-					}
-					else if (contentId.search('[a-zA-Z]{4}updateDueDate') != -1) {
+					if (contentId.search('[a-zA-Z]{4}updateDueDate') != -1) {
 						originalColumnId += 'updateAsignee';
 					}
 
@@ -60,14 +57,6 @@ AUI.add(
 
 				if (li.hasClass('task-due-date-link')) {
 					content = '#' + randomId + 'updateDueDate';
-
-					height = 410;
-				}
-				else if (li.hasClass('task-assign-to-me-link')) {
-					content = '#' + randomId + 'updateAsigneeToMe';
-				}
-				else if (li.hasClass('task-assign-link')) {
-					content = '#' + randomId + 'updateAsignee';
 
 					height = 410;
 				}

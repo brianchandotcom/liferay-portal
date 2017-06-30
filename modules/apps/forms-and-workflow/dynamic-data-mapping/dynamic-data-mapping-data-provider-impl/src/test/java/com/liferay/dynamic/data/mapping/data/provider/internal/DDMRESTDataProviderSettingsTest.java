@@ -290,7 +290,7 @@ public class DDMRESTDataProviderSettingsTest {
 		Assert.assertTrue(properties.containsKey("placeholder"));
 		Assert.assertTrue(properties.containsKey("tooltip"));
 
-		Assert.assertEquals("text", ddmFormField.getType());
+		Assert.assertEquals("password", ddmFormField.getType());
 	}
 
 	protected void assertStartPaginationParameterName(

@@ -46,7 +46,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.TABBED_MODE,
 	value = {
 		@DDMFormLayoutPage(
-			title = "basic",
+			title = "%basic",
 			value = {
 				@DDMFormLayoutRow(
 					{
@@ -62,7 +62,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 			}
 		),
 		@DDMFormLayoutPage(
-			title = "properties",
+			title = "%properties",
 			value = {
 				@DDMFormLayoutRow(
 					{

@@ -32,7 +32,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.TABBED_MODE,
 	value = {
 		@DDMFormLayoutPage(
-			title = "basic",
+			title = "%basic",
 			value = {
 				@DDMFormLayoutRow(
 					{
@@ -45,7 +45,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 			}
 		),
 		@DDMFormLayoutPage(
-			title = "properties",
+			title = "%properties",
 			value = {
 				@DDMFormLayoutRow(
 					{

@@ -19,36 +19,44 @@
 <%
 WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 
-String closeRedirect = ParamUtil.getString(request, "closeRedirect");
-
 boolean hasOtherAssignees = workflowTaskDisplayContext.hasOtherAssignees(workflowTask);
+
+long assigneeUserId = ParamUtil.getLong(renderRequest, "assigneeUserId");
+
+String redirect = ParamUtil.getString(request, "redirect");
 %>
 
-<liferay-portlet:actionURL name="assignWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="assignURL" />
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="assignWorkflowTask" var="assignURL" />
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= assignURL %>" method="post" name="assignFm">
-		<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 		<aui:input name="workflowTaskId" type="hidden" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 
-		<aui:select disabled="<%= !hasOtherAssignees %>" label="assign-to" name="assigneeUserId">
+		<c:choose>
+			<c:when test="<%= assigneeUserId > 0 %>">
+				<aui:input name="assigneeUserId" type="hidden" value="<%= String.valueOf(assigneeUserId) %>" />
+			</c:when>
+			<c:otherwise>
+				<aui:select disabled="<%= !hasOtherAssignees %>" label="assign-to" name="assigneeUserId">
 
-			<%
-			for (long pooledActorId : workflowTaskDisplayContext.getActorsIds(workflowTask)) {
-			%>
+					<%
+					for (long pooledActorId : workflowTaskDisplayContext.getActorsIds(workflowTask)) {
+					%>
 
-				<aui:option label="<%= workflowTaskDisplayContext.getActorName(pooledActorId) %>" selected="<%= workflowTask.getAssigneeUserId() == pooledActorId %>" value="<%= String.valueOf(pooledActorId) %>" />
+						<aui:option label="<%= workflowTaskDisplayContext.getActorName(pooledActorId) %>" selected="<%= workflowTask.getAssigneeUserId() == pooledActorId %>" value="<%= String.valueOf(pooledActorId) %>" />
 
-			<%
-			}
-			%>
+					<%
+					}
+					%>
 
-		</aui:select>
+				</aui:select>
+			</c:otherwise>
+		</c:choose>
 
-		<aui:input cols="55" disabled="<%= !hasOtherAssignees %>" name="comment" placeholder="comment" rows="1" type="textarea" />
+		<aui:input cols="55" disabled="<%= !hasOtherAssignees && assigneeUserId <= 0 %>" name="comment" placeholder="comment" rows="1" type="textarea" />
 
 		<aui:button-row>
-			<aui:button cssClass="btn-lg" disabled="<%= !hasOtherAssignees %>" name="done" primary="<%= true %>" value="done" />
+			<aui:button cssClass="btn-lg" disabled="<%= !hasOtherAssignees && assigneeUserId <= 0 %>" name="done" primary="<%= true %>" value="done" />
 
 			<aui:button cssClass="btn-lg" name="close" type="cancel" />
 		</aui:button-row>
@@ -56,18 +64,21 @@ boolean hasOtherAssignees = workflowTaskDisplayContext.hasOtherAssignees(workflo
 </div>
 
 <aui:script use="aui-base,aui-io-request">
-	A.one('#<portlet:namespace/>done').on('click', function(event) {
-		A.io.request(
-			'<%= assignURL.toString() %>',
-			{
-				method: 'POST',
-				form: {id: '<portlet:namespace/>assignFm'},
-				on: {
-					success: function() {
-						Liferay.Util.getWindow('<portlet:namespace />assignToDialog').destroy();
+	A.one('#<portlet:namespace/>done').on(
+		'click',
+		function(event) {
+			A.io.request(
+				'<%= assignURL.toString() %>',
+				{
+					method: 'POST',
+					form: {id: '<portlet:namespace/>assignFm'},
+					on: {
+						success: function() {
+							Liferay.Util.getOpener().<portlet:namespace />refreshPortlet('<%= redirect.toString() %>');
+							Liferay.Util.getWindow('<portlet:namespace />assignToDialog').destroy();
+						}
 					}
 				}
-			}
-		);
-	});
+			);
+		});
 </aui:script>

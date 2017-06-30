@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Workflow Task Web
 Bundle-SymbolicName: com.liferay.portal.workflow.task.web
-Bundle-Version: 1.0.21
+Bundle-Version: 1.0.23
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Workflow
 Web-ContextPath: /portal-workflow-task-web

@@ -4,4 +4,9 @@
  		<description>Toggle Description</description>
  		<owner>Clarissa Tampoya</owner>
  	</toggle>
+ 	<toggle name="LPS-71571">
+	 	<date>2017-06-28</date>
+	 	<description>Adding localization to Basic and Properties tabs on sidebar.</description>
+	 	<owner>Pedro Queiroz</owner>
+	</toggle>
 </toggles>

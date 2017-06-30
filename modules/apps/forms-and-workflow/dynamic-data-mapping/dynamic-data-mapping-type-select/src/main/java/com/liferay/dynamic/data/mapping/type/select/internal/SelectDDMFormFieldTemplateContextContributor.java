@@ -26,9 +26,12 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -94,6 +97,7 @@ public class SelectDDMFormFieldTemplateContextContributor
 			LanguageUtil.get(resourceBundle, "dynamically-loaded-data"));
 		stringsMap.put(
 			"emptyList", LanguageUtil.get(resourceBundle, "empty-list"));
+		stringsMap.put("search", LanguageUtil.get(resourceBundle, "search"));
 
 		parameters.put("strings", stringsMap);
 
@@ -127,8 +131,17 @@ public class SelectDDMFormFieldTemplateContextContributor
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		Class<?> clazz = getClass();
 
-		return ResourceBundleUtil.getBundle(
+		ResourceBundleLoader portalResourceBundleLoader =
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+
+		ResourceBundle portalResourceBundle =
+			portalResourceBundleLoader.loadResourceBundle(locale);
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, clazz.getClassLoader());
+
+		return new AggregateResourceBundle(
+			resourceBundle, portalResourceBundle);
 	}
 
 	protected List<String> getValue(String valueString) {

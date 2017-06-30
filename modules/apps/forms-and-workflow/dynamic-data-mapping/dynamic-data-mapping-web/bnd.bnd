@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Dynamic Data Mapping Web
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.web
-Bundle-Version: 1.0.35
+Bundle-Version: 1.0.36
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping

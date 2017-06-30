@@ -165,7 +165,16 @@ public class Provider extends javax.xml.ws.spi.Provider {
 
 	protected javax.xml.ws.spi.Provider getProvider() {
 		try {
-			return _serviceTracker.waitForService(10 * 1000L);
+			javax.xml.ws.spi.Provider provider = _serviceTracker.waitForService(
+				10_000L);
+
+			if (provider == null) {
+				throw new IllegalStateException(
+					"JAX-WS API bridge has been used but it is not properly " +
+						"initialized. Please configure it in System Settings");
+			}
+
+			return provider;
 		}
 		catch (InterruptedException ie) {
 			throw new RuntimeException(ie);

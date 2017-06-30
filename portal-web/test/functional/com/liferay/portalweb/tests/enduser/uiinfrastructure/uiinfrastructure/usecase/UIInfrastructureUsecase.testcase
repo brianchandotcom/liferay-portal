@@ -80,7 +80,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNonAsciiCharactersWithSPADisabled">
+	<command name="ViewNonASCIICharactersWithSPADisabled">
 		<description message="This is a use case for LPS-70390." />
 		<property name="custom.properties" value="javascript.single.page.application.enabled=false" />
 

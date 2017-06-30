@@ -16,4 +16,4 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.util.AssetPortletAddURL" %>
+<%@ page import="com.liferay.portlet.asset.util.AssetPublisherAddItemHolder" %>

@@ -28,16 +28,17 @@ import javax.portlet.PortletURL;
 /**
  * @author Preston Crary
  */
-public class AssetPortletAddURL implements Comparable<AssetPortletAddURL> {
+public class AssetPublisherAddItemHolder
+	implements Comparable<AssetPublisherAddItemHolder> {
 
-	public AssetPortletAddURL(
+	public AssetPublisherAddItemHolder(
 		String portletId, String name, ResourceBundle resourceBundle,
-		Locale locale, PortletURL addPortletURL) {
+		Locale locale, PortletURL portletURL) {
 
 		_portletId = portletId;
 		_name = name;
 		_locale = locale;
-		_addPortletURL = addPortletURL;
+		_portletURL = portletURL;
 
 		_modelResource = _getModelResource(resourceBundle);
 
@@ -45,13 +46,15 @@ public class AssetPortletAddURL implements Comparable<AssetPortletAddURL> {
 	}
 
 	@Override
-	public int compareTo(AssetPortletAddURL assetPortletAddURL) {
+	public int compareTo(
+		AssetPublisherAddItemHolder assetPublisherAddItemHolder) {
+
 		return _collator.compare(
-			_modelResource, assetPortletAddURL._modelResource);
+			_modelResource, assetPublisherAddItemHolder._modelResource);
 	}
 
-	public PortletURL getAddPortletURL() {
-		return _addPortletURL;
+	public PortletURL getPortletURL() {
+		return _portletURL;
 	}
 
 	public String getModelResource() {
@@ -88,11 +91,11 @@ public class AssetPortletAddURL implements Comparable<AssetPortletAddURL> {
 		return value;
 	}
 
-	private final PortletURL _addPortletURL;
 	private final Collator _collator;
 	private final Locale _locale;
 	private final String _modelResource;
 	private final String _name;
 	private final String _portletId;
+	private final PortletURL _portletURL;
 
 }

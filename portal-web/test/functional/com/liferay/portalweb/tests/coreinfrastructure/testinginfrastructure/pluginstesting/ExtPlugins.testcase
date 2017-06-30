@@ -3,6 +3,7 @@
 	<property name="ext.plugins.includes" value="sample-ext" />
 	<property name="portal.release.environment" value="true" />
 	<property name="portal.upstream" value="true" />
+	<property name="test.assert.warning.exceptions" value="true" />
 	<property name="testray.main.component.name" value="Test Plugins" />
 
 	<tear-down>

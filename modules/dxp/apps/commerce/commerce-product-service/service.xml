@@ -134,7 +134,7 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
-	<entity local-service="true" name="CPDefinitionLink" remote-service="true">
+	<entity local-service="true" name="CPDefinitionLink" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -146,6 +146,7 @@
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 

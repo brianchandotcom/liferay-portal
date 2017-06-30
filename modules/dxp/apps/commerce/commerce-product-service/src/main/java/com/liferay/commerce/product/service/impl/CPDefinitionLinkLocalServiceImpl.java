@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.service.base.CPDefinitionLinkLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +38,8 @@ public class CPDefinitionLinkLocalServiceImpl
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
+		CPDefinition cpDefinition1 = cpDefinitionPersistence.findByPrimaryKey(
+			cpDefinitionId1);
 
 		long cpDefinitionLinkId = counterLocalService.increment();
 
@@ -44,6 +47,7 @@ public class CPDefinitionLinkLocalServiceImpl
 			cpDefinitionLinkId);
 
 		cpDefinitionLink.setUuid(serviceContext.getUuid());
+		cpDefinitionLink.setGroupId(cpDefinition1.getGroupId());
 		cpDefinitionLink.setCompanyId(user.getCompanyId());
 		cpDefinitionLink.setUserId(user.getUserId());
 		cpDefinitionLink.setUserName(user.getFullName());

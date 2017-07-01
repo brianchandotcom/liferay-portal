@@ -11,26 +11,26 @@ if (typeof ddl.rule == 'undefined') { ddl.rule = {}; }
 
 
 ddl.rule.settings = function(opt_data, opt_ignored) {
-  var output = '<h2 class="form-builder-section-title text-default">' + soy.$$escapeHtml(opt_data.strings.title) + '</h2><h4 class="text-default">' + soy.$$escapeHtml(opt_data.strings.description) + '</h4><h3>' + soy.$$escapeHtml(opt_data.logicalOperator) + '</h3><div class="ddl-form-body-content"><ul class="liferay-ddl-form-builder-rule-condition-list liferay-ddl-form-rule-builder-timeline timeline ' + soy.$$escapeHtmlAttribute(opt_data.conditions.length > 1 ? 'can-remove-item' : '') + '">';
-  var showLogicalOperator__soy87 = opt_data.conditions.length > 1 ? true : false;
+  var output = '<h2 class="form-builder-section-title text-default">' + soy.$$escapeHtml(opt_data.strings.title) + '</h2><h4 class="text-default">' + soy.$$escapeHtml(opt_data.strings.description) + '</h4><div class="ddl-form-body-content"><ul class="liferay-ddl-form-builder-rule-condition-list liferay-ddl-form-rule-builder-timeline timeline ' + soy.$$escapeHtmlAttribute(opt_data.conditions.length > 1 ? 'can-remove-item' : '') + '">';
+  var showLogicalOperator__soy85 = opt_data.conditions.length > 1 ? true : false;
   output += ddl.rule.rulesHeader({extraContent: soydata.VERY_UNSAFE.$$ordainSanitizedHtmlForInternalBlocks('' + ddl.rule.logicalOperatorDropDown({logicalOperator: opt_data.strings[opt_data.logicalOperator], strings: opt_data.strings})), logicalOperator: opt_data.strings[opt_data.logicalOperator], title: opt_data.strings.condition});
-  var conditionList105 = opt_data.conditions;
-  var conditionListLen105 = conditionList105.length;
-  if (conditionListLen105 > 0) {
-    for (var conditionIndex105 = 0; conditionIndex105 < conditionListLen105; conditionIndex105++) {
-      var conditionData105 = conditionList105[conditionIndex105];
-      output += ddl.rule.condition({deleteIcon: opt_data.deleteIcon, if: opt_data.strings['if'], index: conditionIndex105, logicalOperator: opt_data.strings[opt_data.logicalOperator]});
+  var conditionList103 = opt_data.conditions;
+  var conditionListLen103 = conditionList103.length;
+  if (conditionListLen103 > 0) {
+    for (var conditionIndex103 = 0; conditionIndex103 < conditionListLen103; conditionIndex103++) {
+      var conditionData103 = conditionList103[conditionIndex103];
+      output += ddl.rule.condition({deleteIcon: opt_data.deleteIcon, if: opt_data.strings['if'], index: conditionIndex103, logicalOperator: opt_data.strings[opt_data.logicalOperator]});
     }
   } else {
     output += ddl.rule.condition({deleteIcon: opt_data.deleteIcon, if: opt_data.strings['if'], index: 0, logicalOperator: opt_data.strings[opt_data.logicalOperator]});
   }
   output += '</ul>' + ddl.rule.btnAddNewTimelineItem({cssClass: 'form-builder-rule-add-condition', plusIcon: opt_data.plusIcon}) + '<ul class="action-list liferay-ddl-form-builder-rule-action-list liferay-ddl-form-rule-builder-timeline timeline ' + soy.$$escapeHtmlAttribute(opt_data.actions.length > 1 ? 'can-remove-item' : '') + '">' + ddl.rule.rulesHeader({logicalOperator: opt_data.strings[opt_data.logicalOperator], title: opt_data.strings.actions});
-  var actionList126 = opt_data.actions;
-  var actionListLen126 = actionList126.length;
-  if (actionListLen126 > 0) {
-    for (var actionIndex126 = 0; actionIndex126 < actionListLen126; actionIndex126++) {
-      var actionData126 = actionList126[actionIndex126];
-      output += ddl.rule.action({deleteIcon: opt_data.deleteIcon, do: opt_data.strings['do'], index: actionIndex126});
+  var actionList124 = opt_data.actions;
+  var actionListLen124 = actionList124.length;
+  if (actionListLen124 > 0) {
+    for (var actionIndex124 = 0; actionIndex124 < actionListLen124; actionIndex124++) {
+      var actionData124 = actionList124[actionIndex124];
+      output += ddl.rule.action({deleteIcon: opt_data.deleteIcon, do: opt_data.strings['do'], index: actionIndex124});
     }
   } else {
     output += ddl.rule.action({deleteIcon: opt_data.deleteIcon, do: opt_data.strings['do'], index: 0});

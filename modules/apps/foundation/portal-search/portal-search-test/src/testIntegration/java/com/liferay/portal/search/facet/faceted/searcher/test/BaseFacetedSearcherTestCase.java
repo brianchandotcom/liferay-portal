@@ -41,6 +41,8 @@ import java.util.stream.Stream;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
+import org.junit.rules.TestName;
 
 /**
  * @author André de Oliveira
@@ -58,6 +60,23 @@ public abstract class BaseFacetedSearcherTestCase {
 	@After
 	public void tearDown() throws Exception {
 		userSearchFixture.tearDown();
+	}
+
+	@Rule
+	public TestName testName = new TestName();
+
+	protected User addUser(Group group, String... assetTagNames)
+		throws Exception {
+
+		String screenName = testName.getMethodName();
+
+		int size = _users.size();
+
+		if (size > 0) {
+			screenName = screenName.concat(String.valueOf(size));
+		}
+
+		return userSearchFixture.addUser(screenName, group, assetTagNames);
 	}
 
 	protected void assertAllHitsAreUsers(String keywords, Hits hits) {

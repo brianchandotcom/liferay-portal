@@ -1,0 +1,12 @@
+#
+# Liferay App Version 1.0.0
+#
+
+app.artifacts-1.0.0=\
+	com.liferay.social.privatemessaging.api-2.0.7.jar,\
+	com.liferay.social.privatemessaging.service-2.0.6.jar,\
+	com.liferay.social.privatemessaging.web-1.0.23.jar
+
+app.change.log-1.0.0=LPS-69730 LPS-71925 LPS-72046
+
+app.git.id-1.0.0=2d7438da970ac098e573bea65f0d3a872f660a74

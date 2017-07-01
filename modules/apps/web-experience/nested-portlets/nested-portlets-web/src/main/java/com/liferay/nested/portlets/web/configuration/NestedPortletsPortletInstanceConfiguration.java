@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.nested.portlets.web.configuration.NestedPortletsPortletInstanceConfiguration",
 	localization = "content/Language",
-	name = "nested.portlets.portlet.instance.configuration.name"
+	name = "nested-portlets-portlet-instance-configuration-name"
 )
 public interface NestedPortletsPortletInstanceConfiguration {
 

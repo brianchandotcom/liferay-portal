@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.asset.categories.admin.web.configuration.AssetCategoriesAdminWebConfiguration",
 	localization = "content/Language",
-	name = "asset.categories.admin.web.configuration.name"
+	name = "asset-categories-admin-web-configuration-name"
 )
 public interface AssetCategoriesAdminWebConfiguration {
 
@@ -38,7 +38,7 @@ public interface AssetCategoriesAdminWebConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "false",
-		description = "flattened.navigation.allowed.description",
+		description = "flattened-navigation-allowed-description",
 		required = false
 	)
 	public boolean flattenedNavigationAllowed();

@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
 	id = "com.liferay.portal.monitoring.configuration.MonitoringConfiguration",
-	localization = "content/Language", name = "monitoring.configuration.name"
+	localization = "content/Language", name = "monitoring-configuration-name"
 )
 public interface MonitoringConfiguration {
 

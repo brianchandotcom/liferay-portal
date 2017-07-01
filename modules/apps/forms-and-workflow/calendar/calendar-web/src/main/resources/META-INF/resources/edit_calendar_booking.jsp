@@ -552,7 +552,7 @@ while (manageableCalendarsIterator.hasNext()) {
 	</c:if>
 </aui:script>
 
-<aui:script use="json,liferay-calendar-interval-selector,liferay-calendar-interval-selector-scheduler-event-link,liferay-calendar-list,liferay-calendar-recurrence-util,liferay-calendar-reminders,liferay-calendar-simple-menu,liferay-calendar-util">
+<aui:script use="json,liferay-calendar-date-picker-sanitizer,liferay-calendar-interval-selector,liferay-calendar-interval-selector-scheduler-event-link,liferay-calendar-list,liferay-calendar-recurrence-util,liferay-calendar-reminders,liferay-calendar-simple-menu,liferay-calendar-util">
 	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
 
 	var defaultCalendarId = <%= calendarId %>;
@@ -711,6 +711,18 @@ while (manageableCalendarsIterator.hasNext()) {
 	</c:if>
 
 	syncCalendarsMap();
+
+	new Liferay.DatePickerSanitizer(
+		{
+			datePickers : [
+				Liferay.component('<portlet:namespace />endTimeDatePicker'),
+				Liferay.component('<portlet:namespace />endTimeDatePicker')
+			],
+			defaultDate: new Date(<%= endTimeYear %>, <%= endTimeMonth %>, <%= endTimeDay %>, <%= endTimeHour %>, <%= endTimeMinute %>),
+			maximumDate: new Date(2099, 11, 31, 23, 59, 59, 999),
+			minimumDate: new Date(0)
+		}
+	);
 
 	var intervalSelector = new Liferay.IntervalSelector(
 		{

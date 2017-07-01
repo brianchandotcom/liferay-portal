@@ -16,6 +16,12 @@
 								'liferay-portlet-base'
 							]
 						},
+						'liferay-calendar-date-picker-sanitizer': {
+							path: 'date_picker_sanitizer.js',
+							requires: [
+								'aui-base'
+							]
+						},
 						'liferay-calendar-interval-selector': {
 							path: 'interval_selector.js',
 							requires: [

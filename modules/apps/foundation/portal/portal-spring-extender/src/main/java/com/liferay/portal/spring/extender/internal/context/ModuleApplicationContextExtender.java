@@ -65,7 +65,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
-		_dependencyManager = new DependencyManager(bundleContext);
 		_logger = new Logger(bundleContext);
 
 		start(bundleContext);
@@ -130,7 +129,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		_logger.log(Logger.LOG_DEBUG, "[" + bundle + "] " + s);
 	}
 
-	private DependencyManager _dependencyManager;
 	private Logger _logger;
 	private ServiceConfigurator _serviceConfigurator;
 
@@ -138,6 +136,9 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 		public ModuleApplicationContextExtension(Bundle bundle) {
 			_bundle = bundle;
+
+			_dependencyManager = new DependencyManager(
+				bundle.getBundleContext());
 		}
 
 		@Override
@@ -339,6 +340,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 		private final Bundle _bundle;
 		private org.apache.felix.dm.Component _component;
+		private final DependencyManager _dependencyManager;
 		private List<ServiceRegistration<UpgradeStep>>
 			_upgradeStepServiceRegistrations;
 

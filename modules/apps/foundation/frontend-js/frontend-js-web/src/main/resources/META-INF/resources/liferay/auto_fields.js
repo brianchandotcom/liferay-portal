@@ -400,6 +400,13 @@ AUI.add(
 						}
 					},
 
+					_clearInputsLocalized: function(node) {
+						node.all('.language-value').attr('placeholder', '');
+						node.all('.lfr-input-localized-state').removeClass('lfr-input-localized-state-error');
+						node.all('.palette-item').removeClass('palette-item-selected');
+						node.all('.lfr-input-localized-default').addClass('palette-item-selected');
+					},
+
 					_createClone: function(node) {
 						var instance = this;
 
@@ -411,19 +418,21 @@ AUI.add(
 
 						var formValidator = instance._getFormValidator(node);
 
+						var inputsLocalized = node.all('.language-value');
+
 						var clonedRow;
 
 						if (instance.url) {
 							clonedRow = instance._createCloneFromURL(clone, guid);
 						}
 						else {
-							clonedRow = instance._createCloneFromMarkup(clone, guid, formValidator);
+							clonedRow = instance._createCloneFromMarkup(clone, guid, formValidator, inputsLocalized);
 						}
 
 						return clonedRow;
 					},
 
-					_createCloneFromMarkup: function(node, guid, formValidator) {
+					_createCloneFromMarkup: function(node, guid, formValidator, inputsLocalized) {
 						var instance = this;
 
 						var rules;
@@ -432,16 +441,14 @@ AUI.add(
 							rules = formValidator.get('rules');
 						}
 
-						node.all('input, select, textarea, span').each(
+						node.all('input, select, textarea, span, div').each(
 							function(item, index) {
 								var inputNodeName = item.attr('nodeName');
 								var inputType = item.attr('type');
 
 								var oldName = item.attr('name') || item.attr('id');
 
-								var originalName = oldName.replace(/([0-9]+)$/, '');
-
-								var newName = originalName + guid;
+								var newName = oldName.replace(/([0-9]+)([_A-Za-z]*)$/, guid + '$2');
 
 								if (inputType == 'radio') {
 									oldName = item.attr('id');
@@ -450,7 +457,7 @@ AUI.add(
 									item.attr('value', guid);
 									item.attr('id', newName);
 								}
-								else if (inputNodeName == 'button' || inputNodeName == 'span') {
+								else if (inputNodeName == 'button' || inputNodeName == 'div' || inputNodeName == 'span') {
 									if (oldName) {
 										item.attr('id', newName);
 									}
@@ -464,7 +471,33 @@ AUI.add(
 									rules[newName] = rules[oldName];
 								}
 
+								if (item.attr('aria-describedby')) {
+									item.attr('aria-describedby', newName + '_desc');
+								}
+
 								node.all('label[for=' + oldName + ']').attr('for', newName);
+							}
+						);
+
+						instance._clearInputsLocalized(node);
+
+						inputsLocalized.each(
+							function(item, index) {
+								var inputId = item.attr('id');
+
+								var inputLocalized;
+
+								if (inputId) {
+									inputLocalized = Liferay.InputLocalized._registered[inputId];
+
+									if (inputLocalized) {
+										Liferay.component(inputId).render();
+									}
+
+									inputLocalized = Liferay.InputLocalized._instances[inputId];
+								}
+
+								instance._registerInputLocalized(inputLocalized, guid);
 							}
 						);
 
@@ -555,6 +588,33 @@ AUI.add(
 										}
 									}
 								);
+							}
+						);
+					},
+
+					_registerInputLocalized: function(inputLocalized, guid) {
+						var inputLocalizedId = inputLocalized.get('id').replace(/([0-9]+)$/, guid);
+
+						var inputLocalizedNamespaceId = inputLocalized.get('namespace') + inputLocalizedId;
+
+						Liferay.InputLocalized.register(
+							inputLocalizedNamespaceId,
+							{
+								boundingBox: '#' + inputLocalizedNamespaceId + 'BoundingBox',
+								columns: inputLocalized.get('columns'),
+								contentBox: '#' + inputLocalizedNamespaceId + 'ContentBox',
+								defaultLanguageId: inputLocalized.get('defaultLanguageId'),
+								fieldPrefix: inputLocalized.get('fieldPrefix'),
+								fieldPrefixSeparator: inputLocalized.get('fieldPrefixSeparator'),
+								id: inputLocalizedId,
+								inputPlaceholder: '#' + inputLocalizedNamespaceId,
+								items: inputLocalized.get('items'),
+								itemsError: inputLocalized.get('itemsError'),
+								lazy: true,
+								name: inputLocalizedId,
+								namespace: inputLocalized.get('namespace'),
+								toggleSelection: inputLocalized.get('toggleSelection'),
+								translatedLanguages: inputLocalized.get('translatedLanguages')
 							}
 						);
 					},

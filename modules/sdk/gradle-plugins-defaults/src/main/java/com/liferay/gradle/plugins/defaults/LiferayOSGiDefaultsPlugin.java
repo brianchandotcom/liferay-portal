@@ -30,6 +30,7 @@ import com.liferay.gradle.plugins.defaults.internal.WhipDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.BackupFilesBuildAdapter;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GitUtil;
+import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure;
 import com.liferay.gradle.plugins.defaults.internal.util.copy.RenameDependencyAction;
@@ -145,9 +146,6 @@ import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.artifacts.maven.MavenDeployer;
-import org.gradle.api.artifacts.repositories.AuthenticationContainer;
-import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
-import org.gradle.api.artifacts.repositories.PasswordCredentials;
 import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.CopySpec;
@@ -203,7 +201,6 @@ import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
 import org.gradle.execution.ProjectConfigurer;
 import org.gradle.external.javadoc.CoreJavadocOptions;
 import org.gradle.external.javadoc.StandardJavadocDocletOptions;
-import org.gradle.internal.authentication.DefaultBasicAuthentication;
 import org.gradle.internal.service.ServiceRegistry;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
 import org.gradle.plugins.ide.api.XmlFileContentMerger;
@@ -240,8 +237,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
 
 	public static final String DEFAULT_REPOSITORY_URL =
-		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
-			"/public";
+		GradlePluginsDefaultsUtil.DEFAULT_REPOSITORY_URL;
 
 	public static final String DEPLOY_APP_SERVER_LIB_TASK_NAME =
 		"deployAppServerLib";
@@ -378,7 +374,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			_addTaskCheckOSGiBundleState(project);
 		}
 
-		InstallCacheTask installCacheTask = _addTaskInstallCache(project);
+		InstallCacheTask installCacheTask = _addTaskInstallCache(
+			project, portalRootDir);
 
 		_addTaskCommitCache(project, installCacheTask);
 
@@ -421,7 +418,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			_SOURCE_FORMATTER_PORTAL_TOOL_NAME);
 		_configurePmd(project);
 		_configureProject(project);
-		configureRepositories(project);
+		GradlePluginsDefaultsUtil.configureRepositories(project, portalRootDir);
 		_configureSourceSetMain(project);
 		_configureTaskDeploy(project, deployDependenciesTask);
 		_configureTaskJar(project, testProject);
@@ -530,81 +527,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			});
 	}
 
+	/**
+	 * @deprecated As of 3.8.0, replaced by {@link
+	 *             GradlePluginsDefaultsUtil#configureRepositories(Project, File)}
+	 */
+	@Deprecated
 	protected static void configureRepositories(Project project) {
-		RepositoryHandler repositoryHandler = project.getRepositories();
-
-		if (!Boolean.getBoolean("maven.local.ignore")) {
-			repositoryHandler.mavenLocal();
-		}
-
-		repositoryHandler.maven(
-			new Action<MavenArtifactRepository>() {
-
-				@Override
-				public void execute(
-					MavenArtifactRepository mavenArtifactRepository) {
-
-					String url = System.getProperty(
-						"repository.url", DEFAULT_REPOSITORY_URL);
-
-					mavenArtifactRepository.setUrl(url);
-				}
-
-			});
-
-		final String repositoryPrivatePassword = System.getProperty(
-			"repository.private.password");
-		final String repositoryPrivateUrl = System.getProperty(
-			"repository.private.url");
-		final String repositoryPrivateUsername = System.getProperty(
-			"repository.private.username");
-
-		if (Validator.isNotNull(repositoryPrivatePassword) &&
-			Validator.isNotNull(repositoryPrivateUrl) &&
-			Validator.isNotNull(repositoryPrivateUsername)) {
-
-			MavenArtifactRepository mavenArtifactRepository =
-				repositoryHandler.maven(
-					new Action<MavenArtifactRepository>() {
-
-						@Override
-						public void execute(
-							MavenArtifactRepository mavenArtifactRepository) {
-
-							mavenArtifactRepository.setUrl(
-								repositoryPrivateUrl);
-						}
-
-					});
-
-			mavenArtifactRepository.authentication(
-				new Action<AuthenticationContainer>() {
-
-					@Override
-					public void execute(
-						AuthenticationContainer authenticationContainer) {
-
-						authenticationContainer.add(
-							new DefaultBasicAuthentication("basic"));
-					}
-
-				});
-
-			mavenArtifactRepository.credentials(
-				new Action<PasswordCredentials>() {
-
-					@Override
-					public void execute(
-						PasswordCredentials passwordCredentials) {
-
-						passwordCredentials.setPassword(
-							repositoryPrivatePassword);
-						passwordCredentials.setUsername(
-							repositoryPrivateUsername);
-					}
-
-				});
-		}
+		GradlePluginsDefaultsUtil.configureRepositories(project, null);
 	}
 
 	private Configuration _addConfigurationAspectJWeaver(
@@ -1015,7 +944,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return copy;
 	}
 
-	private InstallCacheTask _addTaskInstallCache(final Project project) {
+	private InstallCacheTask _addTaskInstallCache(
+		final Project project, File portalRootDir) {
+
 		InstallCacheTask installCacheTask = GradleUtil.addTask(
 			project, INSTALL_CACHE_TASK_NAME, InstallCacheTask.class);
 
@@ -1070,6 +1001,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		if (portalRootDir != null) {
+			installCacheTask.setCacheFormat(InstallCacheTask.CacheFormat.MAVEN);
+			installCacheTask.setCacheRootDir(
+				new File(
+					portalRootDir,
+					GradlePluginsDefaultsUtil.TMP_MAVEN_REPOSITORY_DIR_NAME));
+		}
 
 		installCacheTask.setDescription(
 			"Installs the project to the local Gradle cache for testing.");

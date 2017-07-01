@@ -61,6 +61,22 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 	public static final String SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT";
 
+	public static MavenArtifactRepository addMavenArtifactRepository(
+		RepositoryHandler repositoryHandler, final Object url) {
+
+		return repositoryHandler.maven(
+			new Action<MavenArtifactRepository>() {
+
+				@Override
+				public void execute(
+					MavenArtifactRepository mavenArtifactRepository) {
+
+					mavenArtifactRepository.setUrl(url);
+				}
+
+			});
+	}
+
 	public static <T extends Task> T addTask(
 		Project project, String name, Class<T> clazz, boolean overwrite) {
 

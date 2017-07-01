@@ -130,6 +130,7 @@
 		<check name="JavaServiceUtilCheck" />
 		<check name="JavaSystemEventAnnotationCheck" />
 		<check name="JavaTestMethodAnnotationsCheck" />
+		<check name="JavaUnsafeCastingCheck" />
 		<check name="JavaUpgradeClassCheck" />
 		<check name="JavaVariableTypeCheck" />
 		<check name="JavaVerifyUpgradeConnectionCheck" />

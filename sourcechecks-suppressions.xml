@@ -14,6 +14,7 @@
 	<suppress checks="JavaDiamondOperatorCheck" files="portal-kernel/src/com/liferay/portal/kernel/repository/BaseRepositoryImpl\.java" />
 	<suppress checks="JavaDiamondOperatorCheck" files="portal-kernel/src/com/liferay/portal/kernel/search/generic/BooleanClauseFactoryImpl\.java" />
 	<suppress checks="JavaDiamondOperatorCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ListUtil\.java" />
+	<suppress checks="JavaUnsafeCastingCheck" files="portal-impl/src/com/liferay/portal/util/PortalImpl\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="portal-impl/test/unit/com/liferay/portal/json/One\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="portal-impl/test/unit/com/liferay/portal/json/Two\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/PathHolder\.java" />

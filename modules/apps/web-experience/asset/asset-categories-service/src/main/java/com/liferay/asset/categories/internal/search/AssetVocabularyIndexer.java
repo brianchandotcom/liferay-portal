@@ -15,7 +15,7 @@
 package com.liferay.asset.categories.internal.search;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,15 +27,15 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 
@@ -44,10 +44,13 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Istvan Andras Dezsi
  */
-@OSGiBeanProperties
+@Component(immediate = true, service = Indexer.class)
 public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 
 	public static final String CLASS_NAME = AssetVocabulary.class.getName();
@@ -71,8 +74,8 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		AssetVocabulary vocabulary =
-			AssetVocabularyLocalServiceUtil.getVocabulary(entryClassPK);
+		AssetVocabulary vocabulary = _assetVocabularyLocalService.getVocabulary(
+			entryClassPK);
 
 		return AssetVocabularyPermission.contains(
 			permissionChecker, vocabulary, ActionKeys.VIEW);
@@ -115,7 +118,7 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 		document.addKeyword(
 			Field.ASSET_VOCABULARY_ID, assetVocabulary.getVocabularyId());
 
-		Locale siteDefaultLocale = PortalUtil.getSiteDefaultLocale(
+		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(
 			assetVocabulary.getGroupId());
 
 		addLocalizedField(
@@ -153,8 +156,8 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		AssetVocabulary vocabulary =
-			AssetVocabularyLocalServiceUtil.getVocabulary(classPK);
+		AssetVocabulary vocabulary = _assetVocabularyLocalService.getVocabulary(
+			classPK);
 
 		doReindex(vocabulary);
 	}
@@ -170,8 +173,7 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 		throws PortalException {
 
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			AssetVocabularyLocalServiceUtil.
-				getIndexableActionableDynamicQuery();
+			_assetVocabularyLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
@@ -202,5 +204,11 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetVocabularyIndexer.class);
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

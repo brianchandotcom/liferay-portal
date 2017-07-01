@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "other")
 @Meta.OCD(
 	id = "com.liferay.translator.web.configuration.TranslatorConfiguration",
-	localization = "content/Language", name = "translator.configuration.name"
+	localization = "content/Language", name = "translator-configuration-name"
 )
 public interface TranslatorConfiguration {
 

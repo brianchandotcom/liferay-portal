@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.push.notifications.sender.sms.internal.configuration.SMSPushNotificationsSenderConfiguration",
 	localization = "content/Language",
-	name = "sms.push.notifications.sender.configuration.name"
+	name = "sms-push-notifications-sender-configuration-name"
 )
 public interface SMSPushNotificationsSenderConfiguration {
 

@@ -34,7 +34,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.cas.configuration.CASConfiguration",
-	localization = "content/Language", name = "cas.configuration.name"
+	localization = "content/Language", name = "cas-configuration-name"
 )
 public interface CASConfiguration {
 

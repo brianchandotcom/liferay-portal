@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
 	id = "com.liferay.portal.security.antisamy.configuration.AntiSamyConfiguration",
-	localization = "content/Language", name = "anti.samy.configuration.name"
+	localization = "content/Language", name = "anti-samy-configuration-name"
 )
 public interface AntiSamyConfiguration {
 

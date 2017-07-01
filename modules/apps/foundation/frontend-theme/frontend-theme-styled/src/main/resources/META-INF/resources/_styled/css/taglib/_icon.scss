@@ -18,6 +18,11 @@ a.taglib-icon {
 	}
 }
 
+.taglib-icon[lang] > img {
+	vertical-align: baseline;
+	width: 16px;
+}
+
 .taglib-icon-label {
 	margin-left: 5px;
 }

@@ -251,14 +251,6 @@ AUI.add(
 
 						return [
 							{
-								label: strings.autofill,
-								value: 'auto-fill'
-							},
-							{
-								label: strings.calculate,
-								value: 'calculate'
-							},
-							{
 								label: strings.show,
 								value: 'show'
 							},
@@ -267,12 +259,20 @@ AUI.add(
 								value: 'enable'
 							},
 							{
+								label: strings.require,
+								value: 'require'
+							},
+							{
+								label: strings.autofill,
+								value: 'auto-fill'
+							},
+							{
 								label: strings.jumpToPage,
 								value: 'jump-to-page'
 							},
 							{
-								label: strings.require,
-								value: 'require'
+								label: strings.calculate,
+								value: 'calculate'
 							}
 						];
 					},

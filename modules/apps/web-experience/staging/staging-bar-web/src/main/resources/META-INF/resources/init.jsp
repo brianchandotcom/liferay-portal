@@ -34,10 +34,8 @@ page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.exception.LayoutBranchNameException" %><%@
 page import="com.liferay.portal.kernel.exception.LayoutSetBranchNameException" %><%@
-page import="com.liferay.portal.kernel.exception.SystemException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.log.Log" %><%@
-page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.model.LayoutBranch" %><%@
 page import="com.liferay.portal.kernel.model.LayoutRevision" %><%@
@@ -49,7 +47,6 @@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.auth.AuthException" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.LayoutBranchLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
@@ -58,6 +55,7 @@ page import="com.liferay.portal.kernel.service.permission.GroupPermissionUtil" %
 page import="com.liferay.portal.kernel.service.permission.LayoutBranchPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.LayoutPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.LayoutSetBranchPermissionUtil" %><%@
+page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
@@ -94,21 +92,9 @@ page import="javax.portlet.PortletURL" %>
 <portlet:defineObjects />
 
 <%
-layout = LayoutLocalServiceUtil.fetchLayout(plid);
-
-Layout selLayout = layout;
-
-long selPlid = ParamUtil.getLong(request, "selPlid");
-
-if (selPlid > 0) {
-	selLayout = LayoutLocalServiceUtil.getLayout(selPlid);
-}
-
-if (selLayout != null) {
-	group = selLayout.getGroup();
-
-	privateLayout = selLayout.isPrivateLayout();
-}
+group = (Group)renderRequest.getAttribute(WebKeys.GROUP);
+layout = (Layout)renderRequest.getAttribute(WebKeys.LAYOUT);
+privateLayout = (boolean)renderRequest.getAttribute(WebKeys.PRIVATE_LAYOUT);
 
 LayoutBranchDisplayContext layoutBranchDisplayContext = new LayoutBranchDisplayContext(request);
 LayoutSetBranchDisplayContext layoutSetBranchDisplayContext = new LayoutSetBranchDisplayContext(request);

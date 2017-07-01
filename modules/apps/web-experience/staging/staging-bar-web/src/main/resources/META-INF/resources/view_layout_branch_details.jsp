@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-LayoutBranch layoutBranch = (LayoutBranch)request.getAttribute("view.jsp-layoutBranch");
-LayoutRevision layoutRevision = (LayoutRevision)request.getAttribute("view.jsp-layoutRevision");
-String stagingURL = (String)request.getAttribute("view.jsp-stagingURL");
+LayoutBranch layoutBranch = (LayoutBranch)request.getAttribute(StagingProcessesWebKeys.LAYOUT_BRANCH);
+LayoutRevision layoutRevision = (LayoutRevision)request.getAttribute(WebKeys.LAYOUT_REVISION);
+String stagingURL = (String)request.getAttribute(StagingProcessesWebKeys.STAGING_URL);
 %>
 
 <%

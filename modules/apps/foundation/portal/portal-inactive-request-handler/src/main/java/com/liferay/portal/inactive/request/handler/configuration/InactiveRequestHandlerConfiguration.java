@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.inactive.request.handler.configuration.InactiveRequestHandlerConfiguration",
 	localization = "content/Language",
-	name = "inactive.request.handler.configuration.name"
+	name = "inactive-request-handler-configuration-name"
 )
 public interface InactiveRequestHandlerConfiguration {
 

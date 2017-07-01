@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.upload.configuration.UploadServletRequestConfiguration",
 	localization = "content/Language",
-	name = "upload.servlet.request.configuration.name"
+	name = "upload-servlet-request-configuration-name"
 )
 public interface UploadServletRequestConfiguration {
 

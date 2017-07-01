@@ -678,11 +678,11 @@
 
 		<execute macro="Site#searchMembershipCP">
 			<var name="emptyResults" value="true" />
-			<var name="searchValue">"Organization Name 2"</var>
+			<var name="searchValue" value="&quot;Organization Name 2&quot;" />
 		</execute>
 
 		<execute macro="Site#searchMembershipCP">
-			<var name="searchValue">"Organization Name 1"</var>
+			<var name="searchValue" value="&quot;Organization Name 1&quot;" />
 		</execute>
 	</command>
 
@@ -717,11 +717,11 @@
 
 		<execute macro="Site#searchMembershipCP">
 			<var name="emptyResults" value="true" />
-			<var name="searchValue">"User Group Name 2"</var>
+			<var name="searchValue" value="&quot;User Group Name 2&quot;" />
 		</execute>
 
 		<execute macro="Site#searchMembershipCP">
-			<var name="searchValue">"User Group Name 1"</var>
+			<var name="searchValue" value="&quot;User Group Name 1&quot;" />
 		</execute>
 	</command>
 

@@ -157,7 +157,8 @@ public class ProjectTemplateFilesTest {
 
 	private void _testArchetypeMetadataXml(
 			Path projectTemplateDirPath, String projectTemplateDirName,
-			boolean requireAuthorProperty)
+			boolean requireAuthorProperty,
+			Set<String> archetypeResourcePropertyNames)
 		throws IOException {
 
 		Path archetypeMetadataXmlPath = projectTemplateDirPath.resolve(
@@ -187,8 +188,33 @@ public class ProjectTemplateFilesTest {
 				"<?xml version=\"1.0\"?>\n\n<archetype-descriptor name=\"" +
 					archetypeDescriptorName + "\">"));
 
-		boolean authorProperty = archetypeMetadataXml.contains(
-			"<requiredProperty key=\"author\">");
+		List<String> requiredPropertyNames = new ArrayList<>();
+
+		Matcher matcher = _archetypeMetadataXmlRequiredPropertyPattern.matcher(
+			archetypeMetadataXml);
+
+		while (matcher.find()) {
+			String name = matcher.group(1);
+
+			if (!requiredPropertyNames.isEmpty()) {
+				String previousName = requiredPropertyNames.get(
+					requiredPropertyNames.size() - 1);
+
+				Assert.assertTrue(
+					"Required properties in " + archetypeMetadataXmlPath +
+						" are duplicated or not sorted",
+					name.compareTo(previousName) > 0);
+			}
+
+			Assert.assertFalse(
+				"Forbidden \"" + name + "\" property in " +
+					archetypeMetadataXmlPath,
+				_archetypeMetadataXmlDefaultPropertyNames.contains(name));
+
+			requiredPropertyNames.add(name);
+		}
+
+		boolean authorProperty = requiredPropertyNames.contains("author");
 
 		if (requireAuthorProperty) {
 			Assert.assertTrue(
@@ -201,6 +227,22 @@ public class ProjectTemplateFilesTest {
 				"Forbidden \"author\" required property in " +
 					archetypeMetadataXmlPath,
 				authorProperty);
+		}
+
+		for (String name : requiredPropertyNames) {
+			Assert.assertTrue(
+				"Unused \"" + name + "\" required property in " +
+					archetypeMetadataXmlPath,
+				archetypeResourcePropertyNames.contains(name));
+		}
+
+		requiredPropertyNames.addAll(_archetypeMetadataXmlDefaultPropertyNames);
+
+		for (String name : archetypeResourcePropertyNames) {
+			Assert.assertTrue(
+				"Undeclared \"" + name + "\" required property in " +
+					archetypeMetadataXmlPath,
+				requiredPropertyNames.contains(name));
 		}
 	}
 
@@ -604,6 +646,7 @@ public class ProjectTemplateFilesTest {
 		_testPomXml(archetypeResourcesDirPath, documentBuilder);
 
 		final AtomicBoolean requireAuthorProperty = new AtomicBoolean();
+		final Set<String> archetypeResourcePropertyNames = new HashSet<>();
 
 		Files.walkFileTree(
 			archetypeResourcesDirPath,
@@ -662,7 +705,9 @@ public class ProjectTemplateFilesTest {
 					}
 
 					if (_isTextFile(fileName, extension)) {
-						_testTextFile(path, fileName, extension);
+						_testTextFile(
+							path, fileName, extension,
+							archetypeResourcePropertyNames);
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -672,7 +717,7 @@ public class ProjectTemplateFilesTest {
 
 		_testArchetypeMetadataXml(
 			projectTemplateDirPath, projectTemplateDirName,
-			requireAuthorProperty.get());
+			requireAuthorProperty.get(), archetypeResourcePropertyNames);
 	}
 
 	private void _testPropertyValue(
@@ -683,7 +728,9 @@ public class ProjectTemplateFilesTest {
 			properties.getProperty(key));
 	}
 
-	private void _testTextFile(Path path, String fileName, String extension)
+	private void _testTextFile(
+			Path path, String fileName, String extension,
+			Set<String> archetypeResourcePropertyNames)
 		throws IOException {
 
 		String text = FileUtil.read(path);
@@ -705,14 +752,15 @@ public class ProjectTemplateFilesTest {
 			}
 		}
 
-		Matcher matcher = _velocityIfPattern.matcher(text);
+		Matcher matcher = _velocityDirectivePattern.matcher(text);
 
 		while (matcher.find()) {
-			String condition = matcher.group(1);
+			String directive = matcher.group(1);
+			String content = matcher.group(2);
 
 			Assert.assertEquals(
 				"Source formatting error in " + path,
-				"#if (" + condition.trim() + ")", matcher.group());
+				"#" + directive + " (" + content.trim() + ")", matcher.group());
 		}
 
 		if (extension.equals("java")) {
@@ -732,11 +780,28 @@ public class ProjectTemplateFilesTest {
 				"Incorrect XML declaration in " + path,
 				text.startsWith(xmlDeclaration));
 		}
+
+		matcher = _archetypeResourcePropertyNamePattern.matcher(text);
+
+		while (matcher.find()) {
+			String name = matcher.group(1);
+
+			if (!text.contains("#set ($" + name + " = ")) {
+				archetypeResourcePropertyNames.add(name);
+			}
+		}
 	}
 
 	private static final String[] _SOURCESET_NAMES =
 		{"main", "test", "testIntegration"};
 
+	private static final List<String>
+		_archetypeMetadataXmlDefaultPropertyNames = Arrays.asList(
+			"artifactId", "groupId", "package", "version");
+	private static final Pattern _archetypeMetadataXmlRequiredPropertyPattern =
+		Pattern.compile("<requiredProperty key=\"(\\w+)\">");
+	private static final Pattern _archetypeResourcePropertyNamePattern =
+		Pattern.compile("\\$\\{(\\w+)\\}");
 	private static final Pattern _buildGradleDependencyPattern =
 		Pattern.compile(
 			"(compile(?:Only)?) group: \"(.+)\", name: \"(.+)\", " +
@@ -778,8 +843,8 @@ public class ProjectTemplateFilesTest {
 	private static final Set<String> _textFileExtensions = new HashSet<>(
 		Arrays.asList(
 			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));
-	private static final Pattern _velocityIfPattern = Pattern.compile(
-		"#if\\s*\\(\\s*(.+)\\s*\\)");
+	private static final Pattern _velocityDirectivePattern = Pattern.compile(
+		"#(if|set)\\s*\\(\\s*(.+)\\s*\\)");
 	private static final Map<String, String> _xmlDeclarations = new HashMap<>();
 
 	static {

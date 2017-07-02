@@ -14,7 +14,6 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -66,22 +65,6 @@ public class VerifyAsset extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		deleteOrphanedAssetEntries();
-		rebuildTree();
-	}
-
-	protected void rebuildTree() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
-				"select distinct groupId from AssetCategory where " +
-					"(leftCategoryId is null) or (rightCategoryId is null)");
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-
-				AssetCategoryLocalServiceUtil.rebuildTree(groupId, true);
-			}
-		}
 	}
 
 }

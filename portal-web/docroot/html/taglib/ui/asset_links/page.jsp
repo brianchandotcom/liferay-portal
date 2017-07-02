@@ -67,6 +67,13 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:asset-links
 			if (assetRenderer.hasViewPermission(permissionChecker)) {
 				String asseLinktEntryTitle = assetLinkEntry.getTitle(locale);
 
+				Group group = GroupLocalServiceUtil.getGroup(assetLinkEntry.getGroupId());
+				Group scopeGroup = themeDisplay.getScopeGroup();
+
+				if (group.isStaged() && (group.isStagingGroup() ^ scopeGroup.isStagingGroup())) {
+					continue;
+				}
+
 				PortletURL viewAssetURL = null;
 
 				if (portletURL != null) {

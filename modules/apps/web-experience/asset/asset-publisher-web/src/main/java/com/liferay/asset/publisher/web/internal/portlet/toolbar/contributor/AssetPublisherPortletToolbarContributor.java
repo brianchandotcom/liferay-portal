@@ -14,8 +14,6 @@
 
 package com.liferay.asset.publisher.web.internal.portlet.toolbar.contributor;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
@@ -39,6 +37,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.ArrayList;
@@ -105,34 +104,36 @@ public class AssetPublisherPortletToolbarContributor
 			return;
 		}
 
-		Map<Long, Map<String, PortletURL>> scopeAddPortletURLs =
-			assetPublisherDisplayContext.getScopeAddPortletURLs(1);
+		Map<Long, List<AssetPublisherAddItemHolder>>
+			scopeAssetPublisherAddItemHolders =
+				assetPublisherDisplayContext.
+					getScopeAssetPublisherAddItemHolders(1);
 
-		if (MapUtil.isEmpty(scopeAddPortletURLs)) {
+		if (MapUtil.isEmpty(scopeAssetPublisherAddItemHolders)) {
 			return;
 		}
 
-		if (scopeAddPortletURLs.size() == 1) {
-			Set<Map.Entry<Long, Map<String, PortletURL>>> entrySet =
-				scopeAddPortletURLs.entrySet();
+		if (scopeAssetPublisherAddItemHolders.size() == 1) {
+			Set<Map.Entry<Long, List<AssetPublisherAddItemHolder>>> entrySet =
+				scopeAssetPublisherAddItemHolders.entrySet();
 
-			Iterator<Map.Entry<Long, Map<String, PortletURL>>> iterator =
-				entrySet.iterator();
+			Iterator<Map.Entry<Long, List<AssetPublisherAddItemHolder>>>
+				iterator = entrySet.iterator();
 
-			Map.Entry<Long, Map<String, PortletURL>> scopeAddPortletURL =
-				iterator.next();
+			Map.Entry<Long, List<AssetPublisherAddItemHolder>>
+				scopeAddPortletURL = iterator.next();
 
 			long groupId = scopeAddPortletURL.getKey();
 
-			Map<String, PortletURL> addPortletURLs =
+			List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
 				scopeAddPortletURL.getValue();
 
-			for (Map.Entry<String, PortletURL> entry :
-					addPortletURLs.entrySet()) {
+			for (AssetPublisherAddItemHolder assetPublisherAddItemHolder :
+					assetPublisherAddItemHolders) {
 
 				URLMenuItem urlMenuItem = _getPortletTitleAddAssetEntryMenuItem(
 					themeDisplay, assetPublisherDisplayContext, groupId,
-					entry.getKey(), entry.getValue());
+					assetPublisherAddItemHolder);
 
 				menuItems.add(urlMenuItem);
 			}
@@ -200,7 +201,7 @@ public class AssetPublisherPortletToolbarContributor
 	private URLMenuItem _getPortletTitleAddAssetEntryMenuItem(
 		ThemeDisplay themeDisplay,
 		AssetPublisherDisplayContext assetPublisherDisplayContext, long groupId,
-		String className, PortletURL portletURL) {
+		AssetPublisherAddItemHolder assetPublisherAddItemHolder) {
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
@@ -211,8 +212,7 @@ public class AssetPublisherPortletToolbarContributor
 		data.put(
 			"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
 
-		String message = AssetUtil.getClassNameMessage(
-			className, themeDisplay.getLocale());
+		String message = assetPublisherAddItemHolder.getModelResource();
 
 		String title = LanguageUtil.format(
 			themeDisplay.getLocale(), "new-x", message, false);
@@ -227,11 +227,8 @@ public class AssetPublisherPortletToolbarContributor
 
 		Group group = _groupLocalService.fetchGroup(groupId);
 
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				AssetUtil.getClassName(className));
-
-		if (!group.isStagedPortlet(assetRendererFactory.getPortletId()) &&
+		if (!group.isStagedPortlet(
+				assetPublisherAddItemHolder.getPortletId()) &&
 			!group.isStagedRemotely()) {
 
 			curGroupId = group.getLiveGroupId();
@@ -242,9 +239,9 @@ public class AssetPublisherPortletToolbarContributor
 			assetPublisherDisplayContext.getPortletResource());
 
 		String url = AssetUtil.getAddURLPopUp(
-			curGroupId, themeDisplay.getPlid(), portletURL,
-			assetRendererFactory.getPortletId(), addDisplayPageParameter,
-			themeDisplay.getLayout());
+			curGroupId, themeDisplay.getPlid(),
+			assetPublisherAddItemHolder.getPortletURL(),
+			addDisplayPageParameter, themeDisplay.getLayout());
 
 		urlMenuItem.setURL(url);
 

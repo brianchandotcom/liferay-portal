@@ -7,11 +7,10 @@ task buildCKEditor(type: Copy)
 
 String ckEditorVersion = "4.6.2"
 
-File editorDestinationDir = file("tmp/META-INF/resources")
 File editorSrcDir = file("src/main/resources/META-INF/resources")
 
 buildCKEditor {
-	File ckEditorDestinationDir = new File(editorDestinationDir, "ckeditor")
+	File ckEditorDestinationDir = new File(sourceSets.main.output.resourcesDir, "META-INF/resources/ckeditor")
 
 	doFirst {
 		delete ckEditorDestinationDir
@@ -50,10 +49,6 @@ buildCKEditorBBCode {
 
 classes {
 	dependsOn buildCKEditor
-}
-
-clean {
-	delete "tmp"
 }
 
 dependencies {

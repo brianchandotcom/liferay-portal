@@ -1402,7 +1402,7 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 			<if>
 				<equals arg1="${test.poshi.runner.local.release}" arg2="true" />
 				<then>
-					<gradle-execute dir="modules/test/poshi-runner" task="deploy" />
+					<gradle-execute dir="modules/test/poshi-runner/poshi-runner" task="deploy" />
 				</then>
 			</if>
 

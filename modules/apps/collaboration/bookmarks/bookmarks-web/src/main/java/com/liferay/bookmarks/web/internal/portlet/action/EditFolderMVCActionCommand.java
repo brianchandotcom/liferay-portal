@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.trash.kernel.service.TrashEntryService;
+import com.liferay.trash.service.TrashEntryService;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.trash.kernel.service.TrashEntryService;
+import com.liferay.trash.service.TrashEntryService;
 
 import java.util.ArrayList;
 import java.util.HashMap;

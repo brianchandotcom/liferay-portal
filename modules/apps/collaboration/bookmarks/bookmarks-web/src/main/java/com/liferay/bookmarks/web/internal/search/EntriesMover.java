@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.dao.search.RowMoverDropTarget;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.model.TrashEntry;
 
 /**
  * @author Sergio González

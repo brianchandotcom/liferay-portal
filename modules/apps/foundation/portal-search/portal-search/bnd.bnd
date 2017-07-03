@@ -6,7 +6,8 @@ Export-Package:\
 	com.liferay.portal.search.buffer,\
 	com.liferay.portal.search.configuration,\
 	com.liferay.portal.search.facet.tag,\
-	com.liferay.portal.search.index
+	com.liferay.portal.search.index,\
+	com.liferay.portal.search.permission
 Import-Package:\
 	com.liferay.portal.kernel.search;version="[7.1.0,8)",\
 	\

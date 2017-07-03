@@ -1638,7 +1638,7 @@ Maven repository.
 artifact in a Maven repository.
 - [LPS-73141]: Configure the `installCache` task to install the project's
 artifact in the `.m2-tmp` directory by default.
-- [LPS-73352]: Add Jacoco Java Agent to the `test` and `testIntegration` tasks,
+- [LPS-73352]: Add JaCoCo Java Agent to the `test` and `testIntegration` tasks,
 if the system property `jacoco.code.coverage` is set to `true`.
 
 ## 3.8.1 - 2017-06-30

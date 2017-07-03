@@ -35,24 +35,24 @@ import org.gradle.api.tasks.testing.Test;
  * @author Andrea Di Giorgi
  * @author Tina Tian
  */
-public class JacocoPlugin implements Plugin<Project> {
+public class JaCoCoPlugin implements Plugin<Project> {
 
-	public static final Plugin<Project> INSTANCE = new JacocoPlugin();
+	public static final Plugin<Project> INSTANCE = new JaCoCoPlugin();
 
-	public static final String JACOCO_AGENT_CONFIGURATION_NAME = "jacocoAgent";
+	public static final String JACOCO_AGENT_CONFIGURATION_NAME = "jaCoCoAgent";
 
 	@Override
 	public void apply(Project project) {
-		Configuration jacocoAgentConfiguration = _addConfigurationJacocoAgent(
+		Configuration jaCoCoAgentConfiguration = _addConfigurationJaCoCoAgent(
 			project);
 
-		_configureTasksTest(project, jacocoAgentConfiguration);
+		_configureTasksTest(project, jaCoCoAgentConfiguration);
 	}
 
-	private JacocoPlugin() {
+	private JaCoCoPlugin() {
 	}
 
-	private Configuration _addConfigurationJacocoAgent(final Project project) {
+	private Configuration _addConfigurationJaCoCoAgent(final Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, JACOCO_AGENT_CONFIGURATION_NAME);
 
@@ -61,27 +61,27 @@ public class JacocoPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					_addDependenciesJacocoAgent(project);
+					_addDependenciesJaCoCoAgent(project);
 				}
 
 			});
 
 		configuration.setDescription(
-			"Configures Jacoco Agent to apply to the test tasks.");
+			"Configures JaCoCo Agent to apply to the test tasks.");
 		configuration.setTransitive(false);
 		configuration.setVisible(false);
 
 		return configuration;
 	}
 
-	private void _addDependenciesJacocoAgent(Project project) {
+	private void _addDependenciesJaCoCoAgent(Project project) {
 		GradleUtil.addDependency(
 			project, JACOCO_AGENT_CONFIGURATION_NAME, "org.jacoco",
 			"org.jacoco.agent", "0.7.9", "runtime", true);
 	}
 
 	private void _configureTasksTest(
-		Project project, final Configuration jacocoAgentConfiguration) {
+		Project project, final Configuration jaCoCoAgentConfiguration) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -91,14 +91,14 @@ public class JacocoPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Test test) {
-					_configureTaskTest(test, jacocoAgentConfiguration);
+					_configureTaskTest(test, jaCoCoAgentConfiguration);
 				}
 
 			});
 	}
 
 	private void _configureTaskTest(
-		Test test, final Configuration jacocoAgentConfiguration) {
+		Test test, final Configuration jaCoCoAgentConfiguration) {
 
 		test.doFirst(
 			new Action<Task>() {
@@ -109,24 +109,24 @@ public class JacocoPlugin implements Plugin<Project> {
 
 					Project project = test.getProject();
 
-					String jacocoAgentFileName = FileUtil.getAbsolutePath(
-						jacocoAgentConfiguration.getSingleFile());
+					String jaCoCoAgentFileName = FileUtil.getAbsolutePath(
+						jaCoCoAgentConfiguration.getSingleFile());
 
-					String jacocoDumpFileName = System.getProperty(
+					String jaCoCoDumpFileName = System.getProperty(
 						"jacoco.dump.file");
 
-					if (Validator.isNull(jacocoDumpFileName)) {
-						File jacocoDumpFile = new File(
+					if (Validator.isNull(jaCoCoDumpFileName)) {
+						File jaCoCoDumpFile = new File(
 							project.getBuildDir(),
 							"jacoco/" + test.getName() + ".exec");
 
-						jacocoDumpFileName = FileUtil.getAbsolutePath(
-							jacocoDumpFile);
+						jaCoCoDumpFileName = FileUtil.getAbsolutePath(
+							jaCoCoDumpFile);
 					}
 
-					String jacocoJvmArg =
-						"-javaagent:" + jacocoAgentFileName + "=destfile=" +
-							jacocoDumpFileName + ",output=file,append=true";
+					String jaCoCoJvmArg =
+						"-javaagent:" + jaCoCoAgentFileName + "=destfile=" +
+							jaCoCoDumpFileName + ",output=file,append=true";
 
 					List<String> allJVMArgs = test.getAllJvmArgs();
 
@@ -135,7 +135,7 @@ public class JacocoPlugin implements Plugin<Project> {
 
 						if (jvmArg.contains("-javaagent:")) {
 							jvmArg = jvmArg.replaceFirst(
-								"-javaagent:", jacocoJvmArg + " -javaagent:");
+								"-javaagent:", jaCoCoJvmArg + " -javaagent:");
 
 							allJVMArgs.set(i, jvmArg);
 
@@ -145,7 +145,7 @@ public class JacocoPlugin implements Plugin<Project> {
 						}
 					}
 
-					test.jvmArgs(jacocoJvmArg);
+					test.jvmArgs(jaCoCoJvmArg);
 				}
 
 			});

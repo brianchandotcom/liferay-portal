@@ -25,7 +25,7 @@ import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
 import com.liferay.gradle.plugins.defaults.internal.FindSecurityBugsPlugin;
-import com.liferay.gradle.plugins.defaults.internal.JacocoPlugin;
+import com.liferay.gradle.plugins.defaults.internal.JaCoCoPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
 import com.liferay.gradle.plugins.defaults.internal.WhipDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.BackupFilesBuildAdapter;
@@ -360,7 +360,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				aspectJWeaverConfiguration);
 
 			if (Boolean.getBoolean("jacoco.code.coverage")) {
-				JacocoPlugin.INSTANCE.apply(project);
+				JaCoCoPlugin.INSTANCE.apply(project);
 			}
 		}
 

@@ -100,6 +100,10 @@ public class KBServicePreAction extends Action {
 
 		String redirect = _portal.escapeRedirect(themeDisplay.getURLCurrent());
 
+		if (Validator.isNull(redirect)) {
+			return;
+		}
+
 		redirect = _http.setParameter(redirect, "p_p_auth", actual_p_p_auth);
 
 		response.sendRedirect(redirect);

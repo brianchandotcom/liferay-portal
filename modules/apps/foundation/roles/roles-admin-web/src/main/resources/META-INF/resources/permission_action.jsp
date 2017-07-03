@@ -23,6 +23,16 @@ Object[] objArray = (Object[])row.getObject();
 
 Permission permission = (Permission)objArray[0];
 Role role = (Role)objArray[1];
+
+String languageKey = "";
+
+if (ResourceBlockLocalServiceUtil.isSupported(permission.getName()))
+{
+	languageKey = "removing-this-permission-will-remove-all-permissions-of-this-type-from-the-entity.-are-your-sure-you-want-to-remove-this-permission";
+}
+else {
+	languageKey = "are-you-sure-you-want-to-remove-this-permission";
+}
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
@@ -37,7 +47,7 @@ Role role = (Role)objArray[1];
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete
-		confirmation="are-your-sure-you-want-to-remove-this-permission"
+		confirmation="<%= languageKey %>"
 		message="remove"
 		url="<%= deletePermissionURL %>"
 	/>

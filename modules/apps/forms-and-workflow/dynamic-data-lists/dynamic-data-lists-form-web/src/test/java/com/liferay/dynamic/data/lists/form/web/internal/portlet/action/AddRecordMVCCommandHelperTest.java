@@ -14,12 +14,17 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorContext;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
@@ -102,6 +107,8 @@ public class AddRecordMVCCommandHelperTest extends PowerMockito {
 
 		ddmFormFieldEvaluationResult.setVisible(false);
 
+		mockGetDDMFormLayout();
+
 		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
@@ -115,19 +122,57 @@ public class AddRecordMVCCommandHelperTest extends PowerMockito {
 
 		ddmFormFieldEvaluationResult.setVisible(true);
 
+		mockGetDDMFormLayout();
+
 		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Assert.assertTrue(_ddmFormField.isRequired());
 	}
 
+	protected void mockGetDDMFormLayout() throws Exception {
+		DDLRecordSet recordSet = mock(DDLRecordSet.class);
+
+		when(
+			_ddlRecordSetService, "getRecordSet", Matchers.anyLong()
+		).thenReturn(
+			recordSet
+		);
+
+		DDMStructure ddmStructure = mock(DDMStructure.class);
+
+		when(
+			_ddmStructureLocalService, "getStructure", Matchers.anyLong()
+		).thenReturn(
+			ddmStructure
+		);
+
+		when(
+			ddmStructure, "getDDMFormLayout"
+		).thenReturn(
+			new DDMFormLayout()
+		);
+	}
+
 	protected void setUpAddRecordMVCCommandHelper() throws Exception {
 		_addRecordMVCCommandHelper = new AddRecordMVCCommandHelper();
+
+		field(
+			AddRecordMVCCommandHelper.class, "_ddlRecordSetService"
+		).set(
+			_addRecordMVCCommandHelper, _ddlRecordSetService
+		);
 
 		field(
 			AddRecordMVCCommandHelper.class, "_ddmFormEvaluator"
 		).set(
 			_addRecordMVCCommandHelper, _ddmFormEvaluator
+		);
+
+		field(
+			AddRecordMVCCommandHelper.class, "_ddmStructureLocalService"
+		).set(
+			_addRecordMVCCommandHelper, _ddmStructureLocalService
 		);
 
 		field(
@@ -210,6 +255,10 @@ public class AddRecordMVCCommandHelperTest extends PowerMockito {
 	private ActionRequest _actionRequest;
 
 	private AddRecordMVCCommandHelper _addRecordMVCCommandHelper;
+
+	@Mock
+	private DDLRecordSetService _ddlRecordSetService;
+
 	private DDMForm _ddmForm;
 
 	@Mock
@@ -217,6 +266,9 @@ public class AddRecordMVCCommandHelperTest extends PowerMockito {
 
 	private DDMFormField _ddmFormField;
 	private DDMFormValues _ddmFormValues;
+
+	@Mock
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Mock
 	private Portal _portal;

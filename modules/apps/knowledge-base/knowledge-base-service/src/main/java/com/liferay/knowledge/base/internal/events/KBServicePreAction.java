@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -97,8 +98,13 @@ public class KBServicePreAction extends Action {
 		// A guest user that signs in will cause the original portlet
 		// authentication token to become stale. See SessionAuthToken.
 
-		String redirect = _http.setParameter(
-			themeDisplay.getURLCurrent(), "p_p_auth", actual_p_p_auth);
+		String redirect = _portal.escapeRedirect(themeDisplay.getURLCurrent());
+
+		if (Validator.isNull(redirect)) {
+			return;
+		}
+
+		redirect = _http.setParameter(redirect, "p_p_auth", actual_p_p_auth);
 
 		response.sendRedirect(redirect);
 	}
@@ -113,5 +119,8 @@ public class KBServicePreAction extends Action {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -87,6 +87,7 @@ boolean ldapExportEnabled = !(ldapImportConfiguration.importUserPasswordAutogene
 
 <aui:fieldset>
 	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/ldap" />
+	<aui:input name='<%= "ldap--" + LDAPConstants.AUTH_SERVER_PRIORITY +"--" %>' type="hidden" />
 
 	<c:if test="<%= !ldapServerConfigurations.isEmpty() %>">
 		<br /><br />
@@ -243,6 +244,8 @@ boolean ldapExportEnabled = !(ldapImportConfiguration.importUserPasswordAutogene
 		if (swapLdapServer.length) {
 			ldapServer[(action === 'next') ? 'before' : 'after'](swapLdapServer);
 		}
+
+		<portlet:namespace />saveLdap();
 	}
 
 	function <portlet:namespace />lowerLDAPServerPriority(ldapServerId) {
@@ -251,6 +254,18 @@ boolean ldapExportEnabled = !(ldapImportConfiguration.importUserPasswordAutogene
 
 	function <portlet:namespace />raiseLDAPServerPriority(ldapServerId) {
 		<portlet:namespace />changeLDAPServerPriority(ldapServerId, 'prev');
+	}
+
+	function <portlet:namespace />saveLdap() {
+		var $ = AUI.$;
+
+		var ldapServerIds = $('.ldap-servers .table-data tr').map(
+			function(index, item) {
+				return $(item).data('ldapserverid');
+			}
+		).get();
+
+		$(document.<portlet:namespace />fm).fm('ldap--<%= LDAPConstants.AUTH_SERVER_PRIORITY %>--').val(ldapServerIds.join(','));
 	}
 
 	Liferay.Util.toggleBoxes('<portlet:namespace />ldapImportEnabled', '<portlet:namespace />importEnabledSettings');

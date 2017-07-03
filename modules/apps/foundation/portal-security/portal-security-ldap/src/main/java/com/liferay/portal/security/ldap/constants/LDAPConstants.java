@@ -32,6 +32,8 @@ public class LDAPConstants {
 
 	public static final String AUTH_SEARCH_FILTER = "authSearchFilter";
 
+	public static final String AUTH_SERVER_PRIORITY = "authServerPriority";
+
 	public static final String BASE_DN = "baseDN";
 
 	public static final String BASE_PROVIDER_URL = "baseProviderURL";

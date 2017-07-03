@@ -59,7 +59,9 @@ public class ConfigurationImpl
 	 */
 	@Deprecated
 	public ConfigurationImpl(ClassLoader classLoader, String name) {
-		this(classLoader, name, CompanyConstants.SYSTEM);
+		this(
+			classLoader, name, CompanyConstants.SYSTEM,
+			_getWebId(CompanyConstants.SYSTEM));
 	}
 
 	/**
@@ -70,24 +72,7 @@ public class ConfigurationImpl
 	public ConfigurationImpl(
 		ClassLoader classLoader, String name, long companyId) {
 
-		String webId = null;
-
-		if (companyId > CompanyConstants.SYSTEM) {
-			try {
-				Company company = CompanyLocalServiceUtil.getCompanyById(
-					companyId);
-
-				webId = company.getWebId();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-
-		_componentConfiguration = new ClassLoaderComponentConfiguration(
-			classLoader, webId, name);
-
-		printSources(companyId, webId);
+		this(classLoader, name, companyId, _getWebId(companyId));
 	}
 
 	public ConfigurationImpl(
@@ -431,6 +416,22 @@ public class ConfigurationImpl
 		Properties properties) {
 
 		return (Map)properties;
+	}
+
+	private static String _getWebId(long companyId) {
+		if (companyId > CompanyConstants.SYSTEM) {
+			try {
+				Company company = CompanyLocalServiceUtil.getCompanyById(
+					companyId);
+
+				return company.getWebId();
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+
+		return null;
 	}
 
 	private FilterCacheKey _buildFilterCacheKey(String key, Filter filter) {

@@ -165,7 +165,7 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 	var maxHeight = (viewportRegion.height);
 	var maxWidth = (viewportRegion.width);
 
-	var playingVideoIndex = -1;
+	var playingMediaIndex = -1;
 
 	var imageViewer = new A.ImageViewer(
 		{
@@ -199,17 +199,17 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 			maxWidth: maxWidth,
 			on: {
 				'currentIndexChange': function() {
-					if (playingVideoIndex != -1) {
+					if (playingMediaIndex != -1) {
 						Liferay.fire('<portlet:namespace />ImageViewer:currentIndexChange');
 
-						playingVideoIndex = -1;
+						playingMediaIndex = -1;
 					}
 				},
 				'visibleChange': function(event) {
-					if (!event.newVal && playingVideoIndex != -1) {
+					if (!event.newVal && playingMediaIndex != -1) {
 						Liferay.fire('<portlet:namespace />ImageViewer:close');
 
-						playingVideoIndex = -1;
+						playingMediaIndex = -1;
 					}
 				}
 			},
@@ -245,7 +245,16 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 		function() {
 			imageViewer.pause();
 
-			playingVideoIndex = this.get('currentIndex');
+			playingMediaIndex = this.get('currentIndex');
+		}
+	);
+
+	Liferay.on(
+		'<portlet:namespace />Audio:play',
+		function() {
+			imageViewer.pause();
+
+			playingMediaIndex = this.get('currentIndex');
 		}
 	);
 

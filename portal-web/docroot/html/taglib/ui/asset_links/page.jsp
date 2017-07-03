@@ -65,7 +65,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:asset-links
 			AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(assetLinkEntry.getClassPK());
 
 			if (assetRenderer.hasViewPermission(permissionChecker)) {
-				String asseLinktEntryTitle = assetLinkEntry.getTitle(locale);
+				String assetLinkEntryTitle = assetLinkEntry.getTitle(locale);
 
 				Group group = GroupLocalServiceUtil.getGroup(assetLinkEntry.getGroupId());
 				Group scopeGroup = themeDisplay.getScopeGroup();
@@ -109,7 +109,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:asset-links
 
 				<li class="asset-links-list-item">
 					<aui:a href="<%= urlViewInContext %>" target='<%= themeDisplay.isStatePopUp() ? "_blank" : "_self" %>'>
-						<%= asseLinktEntryTitle %>
+						<%= assetLinkEntryTitle %>
 					</aui:a>
 				</li>
 

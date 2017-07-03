@@ -16,6 +16,7 @@ package com.liferay.asset.categories.admin.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.asset.categories.admin.web.constants.AssetCategoriesNavigationDisplayStyleKeys;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -42,5 +43,17 @@ public interface AssetCategoriesAdminWebConfiguration {
 		required = false
 	)
 	public boolean flattenedNavigationAllowed();
+
+	@Meta.AD(
+		deflt = AssetCategoriesNavigationDisplayStyleKeys.DEFAULT,
+		name = "category-navigation-display-style",
+		optionLabels = {"Default", "Flattened Tree"},
+		optionValues = {
+			AssetCategoriesNavigationDisplayStyleKeys.DEFAULT,
+			AssetCategoriesNavigationDisplayStyleKeys.FLATTENED_TREE
+		},
+		required = false
+	)
+	public String categoryNavigationDisplayStyle();
 
 }

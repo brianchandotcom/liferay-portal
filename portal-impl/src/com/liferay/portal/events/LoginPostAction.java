@@ -18,12 +18,14 @@ import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -32,6 +34,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -114,6 +118,28 @@ public class LoginPostAction extends Action {
 		catch (Exception e) {
 			throw new ActionException(e);
 		}
+	}
+
+	private int _getPasswordRemainingDays(User user) throws PortalException {
+		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+		if ((passwordPolicy != null) && passwordPolicy.isExpireable()) {
+			Date now = new Date();
+
+			long timeModified = user.getPasswordModifiedDate().getTime();
+
+			long passwordExpiresOn =
+				(passwordPolicy.getMaxAge() * 1000) + timeModified;
+
+			long dayTime = 24 * 60 * 60 * 1000;
+
+			int remainingDays =
+				(int)((passwordExpiresOn - now.getTime()) / dayTime);
+
+			return (remainingDays > 0) ? remainingDays : 0;
+		}
+
+		return -1;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

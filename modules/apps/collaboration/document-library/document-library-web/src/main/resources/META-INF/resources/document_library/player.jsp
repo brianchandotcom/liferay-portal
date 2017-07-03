@@ -112,6 +112,13 @@ for (String previewFileURL : previewFileURLs) {
 					}
 				}
 			);
+
+			window.parent.Liferay.on(
+				'<portlet:namespace /><%= randomNamespace %>ImageViewer:close',
+				function() {
+					video.load();
+				}
+			);
 		</aui:script>
 	</c:when>
 </c:choose>

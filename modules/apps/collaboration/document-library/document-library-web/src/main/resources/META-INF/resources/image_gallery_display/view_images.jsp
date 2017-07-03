@@ -204,6 +204,13 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 
 						playingVideoIndex = -1;
 					}
+				},
+				'visibleChange': function(event) {
+					if (!event.newVal && playingVideoIndex != -1) {
+						Liferay.fire('<portlet:namespace />ImageViewer:close');
+
+						playingVideoIndex = -1;
+					}
 				}
 			},
 			playingLabel: '(<liferay-ui:message key="playing" />)',

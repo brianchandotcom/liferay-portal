@@ -1017,17 +1017,10 @@ information.
 				</then>
 			</if>
 
-			<var name="gradle.build.binaries.cache.dir" value="${project.dir}/${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1" />
-
-			<if>
-				<available file="${gradle.build.binaries.cache.dir}" type="dir" />
-				<then>
-					<sync-dir
-						dir="${gradle.build.binaries.cache.dir}"
-						toDir="${project.dir}/.gradle/caches/modules-2/files-2.1"
-					/>
-				</then>
-			</if>
+			<sync-dir
+				dir="${project.dir}/${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1"
+				toDir="${project.dir}/.gradle/caches/modules-2/files-2.1"
+			/>
 
 			<property name="setup.binaries.cache.executed" value="true" />
 		</sequential>

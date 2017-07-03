@@ -1641,6 +1641,11 @@ artifact in the `.m2-tmp` directory by default.
 - [LPS-73352]: Add Jacoco Java Agent to the `test` and `testIntegration` tasks,
 if the system property `jacoco.code.coverage` is set to `true`.
 
+## 3.8.1 - 2017-06-30
+
+### Changed
+- [LPS-65930]: Update the [Liferay Gradle Plugins] dependency to version 3.3.34.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1658,6 +1663,7 @@ if the system property `jacoco.code.coverage` is set to `true`.
 [LPS-63943]: https://issues.liferay.com/browse/LPS-63943
 [LPS-64098]: https://issues.liferay.com/browse/LPS-64098
 [LPS-65179]: https://issues.liferay.com/browse/LPS-65179
+[LPS-65930]: https://issues.liferay.com/browse/LPS-65930
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66762]: https://issues.liferay.com/browse/LPS-66762
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853

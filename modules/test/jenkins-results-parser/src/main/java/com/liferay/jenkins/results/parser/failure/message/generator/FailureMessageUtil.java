@@ -46,6 +46,22 @@ public class FailureMessageUtil {
 			buildURL, consoleOutput, project.getProperties());
 	}
 
+	public static String getFailureMessage(String consoleLog) throws Exception {
+		for (FailureMessageGenerator failureMessageGenerator :
+				_simpleFailureMessageGenerators) {
+
+			String message = failureMessageGenerator.getMessage(
+				null, consoleLog, null);
+
+			if (message != null) {
+				return message;
+			}
+		}
+
+		return _genericFailureMessageGenerator.getMessage(
+			null, consoleLog, null);
+	}
+
 	private static final FailureMessageGenerator[] _failureMessageGenerators = {
 		new PoshiValidationFailureMessageGenerator(),
 
@@ -62,5 +78,12 @@ public class FailureMessageUtil {
 
 	private static final GenericFailureMessageGenerator
 		_genericFailureMessageGenerator = new GenericFailureMessageGenerator();
+	private static final FailureMessageGenerator[]
+		_simpleFailureMessageGenerators = {
+			new IntegrationTestTimeoutFailureMessageGenerator(),
+			new LocalGitMirrorFailureMessageGenerator(),
+			new PoshiValidationFailureMessageGenerator(),
+			new SourceFormatFailureMessageGenerator()
+		};
 
 }

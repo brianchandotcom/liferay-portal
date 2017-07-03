@@ -4,20 +4,13 @@ import com.liferay.gradle.util.tasks.ConcatenateTask
 
 task buildCKEditorBBCode(type: ConcatenateTask)
 task buildCKEditor(type: Copy)
-task buildCKEditorScayt(type: Copy)
-task buildCKEditorWsc(type: Copy)
 
-String ckEditorVersion = "4.6.0"
+String ckEditorVersion = "4.6.2"
 
-String ckEditorScaytUrl = "http://download.ckeditor.com/scayt/releases/scayt_${ckEditorVersion}.zip"
-String ckEditorWscUrl = "http://download.ckeditor.com/wsc/releases/wsc_${ckEditorVersion}.zip"
-
-File editorDestinationDir = file("tmp/META-INF/resources")
 File editorSrcDir = file("src/main/resources/META-INF/resources")
 
 buildCKEditor {
-	File ckEditorDestinationDir = new File(editorDestinationDir, "ckeditor")
-	File ckEditorZipFile = file("third-party/ckeditor_${ckEditorVersion}_liferay.zip")
+	File ckEditorDestinationDir = new File(sourceSets.main.output.resourcesDir, "META-INF/resources/ckeditor")
 
 	doFirst {
 		delete ckEditorDestinationDir
@@ -25,19 +18,18 @@ buildCKEditor {
 
 	duplicatesStrategy = "exclude"
 
-	from(zipTree(ckEditorZipFile)) {
+	from {
+		zipTree(FileUtil.get(project, "https://github.com/ckeditor/ckeditor-releases/archive/full/${ckEditorVersion}.zip"))
+	} {
 		eachFile new StripPathSegmentsAction(1)
-		exclude "ckeditor/samples/"
-		include "ckeditor/"
+
+		exclude "ckeditor-releases-full-${ckEditorVersion}/*.json"
+		exclude "ckeditor-releases-full-${ckEditorVersion}/samples/"
 	}
 
 	from new File(editorSrcDir, "_diffs")
 	includeEmptyDirs = false
 	into ckEditorDestinationDir
-
-	onlyIf {
-		!FileUtil.isUpToDate(project, ckEditorZipFile, ckEditorDestinationDir)
-	}
 }
 
 buildCKEditorBBCode {
@@ -55,36 +47,8 @@ buildCKEditorBBCode {
 	sourceFiles new File(bbCodeDir, "converter.js")
 }
 
-buildCKEditorScayt {
-	dependsOn buildCKEditor
-
-	from {
-		File ckEditorScaytFile = FileUtil.get(project, ckEditorScaytUrl)
-
-		zipTree(ckEditorScaytFile)
-	}
-
-	into new File(editorDestinationDir, "ckeditor/plugins")
-}
-
-buildCKEditorWsc {
-	dependsOn buildCKEditor
-
-	from {
-		File ckEditorWscFile = FileUtil.get(project, ckEditorWscUrl)
-
-		zipTree(ckEditorWscFile)
-	}
-
-	into new File(editorDestinationDir, "ckeditor/plugins")
-}
-
 classes {
-	dependsOn buildCKEditor, buildCKEditorScayt, buildCKEditorWsc
-}
-
-clean {
-	delete "tmp"
+	dependsOn buildCKEditor
 }
 
 dependencies {

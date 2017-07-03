@@ -111,8 +111,27 @@ public class LoginPostAction extends Action {
 
 			User user = PortalUtil.getUser(request);
 
-			if (UserLocalServiceUtil.isPasswordExpiringSoon(user)) {
-				SessionMessages.add(request, "passwordExpiringSoon");
+			PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+			if ((passwordPolicy != null) && passwordPolicy.isExpireable() &&
+				(passwordPolicy.getWarningTime() > 0)) {
+
+				int passwordExpireInXDays = _getPasswordRemainingDays(
+					passwordPolicy, user);
+
+				if (passwordExpireInXDays >= 0) {
+					SessionMessages.add(
+						request, "passwordExpireInXDays",
+						passwordExpireInXDays);
+				}
+				else if (passwordExpireInXDays == -1) {
+					int graceLoginRemaining =
+						passwordPolicy.getGraceLimit() -
+							user.getGraceLoginCount();
+
+					SessionMessages.add(
+						request, "graceLoginRemaining", graceLoginRemaining);
+				}
 			}
 		}
 		catch (Exception e) {
@@ -120,26 +139,36 @@ public class LoginPostAction extends Action {
 		}
 	}
 
-	private int _getPasswordRemainingDays(User user) throws PortalException {
-		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+	private int _getPasswordRemainingDays(
+			PasswordPolicy passwordPolicy, User user)
+		throws PortalException {
 
-		if ((passwordPolicy != null) && passwordPolicy.isExpireable()) {
-			Date now = new Date();
+		Date now = new Date();
 
-			long timeModified = user.getPasswordModifiedDate().getTime();
+		if (user.getPasswordModifiedDate() == null) {
+			user.setPasswordModifiedDate(now);
 
-			long passwordExpiresOn =
-				(passwordPolicy.getMaxAge() * 1000) + timeModified;
+			UserLocalServiceUtil.updateUser(user);
+		}
 
+		long timeModified = user.getPasswordModifiedDate().getTime();
+
+		long passwordExpiresOn =
+			(passwordPolicy.getMaxAge() * 1000) + timeModified;
+
+		long timeStartWarning =
+			passwordExpiresOn - (passwordPolicy.getWarningTime() * 1000);
+
+		if (now.getTime() > timeStartWarning) {
 			long dayTime = 24 * 60 * 60 * 1000;
 
 			int remainingDays =
 				(int)((passwordExpiresOn - now.getTime()) / dayTime);
 
-			return (remainingDays > 0) ? remainingDays : 0;
+			return (remainingDays > -1) ? remainingDays : -1;
 		}
 
-		return -1;
+		return -2;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

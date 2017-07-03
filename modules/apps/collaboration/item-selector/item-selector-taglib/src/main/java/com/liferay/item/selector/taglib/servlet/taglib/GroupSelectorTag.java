@@ -95,11 +95,10 @@ public class GroupSelectorTag extends IncludeTag {
 				themeDisplay.getCompanyId(), _COMPANY_ADMIN_CLASSNAME_IDS,
 				keywords, groupParams, startAndEnd[0], startAndEnd[1], null);
 		}
-		else {
-			return GroupLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
-				groupParams, startAndEnd[0], startAndEnd[1], null);
-		}
+
+		return GroupLocalServiceUtil.search(
+			themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords, groupParams,
+			startAndEnd[0], startAndEnd[1], null);
 	}
 
 	protected int getGroupsCount(HttpServletRequest request) {
@@ -124,11 +123,9 @@ public class GroupSelectorTag extends IncludeTag {
 				themeDisplay.getCompanyId(), _COMPANY_ADMIN_CLASSNAME_IDS,
 				keywords, groupParams);
 		}
-		else {
-			return GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
-				groupParams);
-		}
+
+		return GroupLocalServiceUtil.searchCount(
+			themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords, groupParams);
 	}
 
 	@Override

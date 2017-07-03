@@ -12,7 +12,7 @@ class TagSelector extends Component {
 	/**
 	 * @inheritDoc
 	 */
-	rendered() {
+	attached() {
 		AUI().use(
 			'liferay-asset-taglib-tags-selector',
 			function(A) {
@@ -55,7 +55,7 @@ class TagSelector extends Component {
 	/**
 	 * Focuses the input field using for adding new tags.
 	 * This method uses the private input_ attribute, which is
-	 * stablished inside rendered() method.
+	 * stablished inside attached() method.
 	 * @private
 	 */
 	focusTagInput_() {

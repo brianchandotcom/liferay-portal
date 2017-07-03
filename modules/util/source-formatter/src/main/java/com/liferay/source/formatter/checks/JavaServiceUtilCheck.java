@@ -36,7 +36,6 @@ public class JavaServiceUtilCheck extends BaseFileCheck {
 		if (!absolutePath.contains("/wsrp/internal/bind/") &&
 			!className.equals("BaseServiceImpl") &&
 			className.endsWith("ServiceImpl") &&
-			content.contains("ServiceUtil.") &&
 			content.matches(_REGEX_IMPORT_PORTAL_KERNEL_SERVICE_UTIL)) {
 
 			addMessage(

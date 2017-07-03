@@ -910,7 +910,7 @@ public class AssetPublisherUtil {
 
 		Map<Locale, String> emailAssetEntryAddedSubjectMap =
 			LocalizationUtil.getLocalizationMap(
-				portletPreferences, "emailAssetEntryAddedBody",
+				portletPreferences, "emailAssetEntryAddedSubject",
 				StringPool.BLANK, StringPool.BLANK,
 				AssetPublisherUtil.class.getClassLoader());
 

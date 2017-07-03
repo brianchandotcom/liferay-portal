@@ -1004,23 +1004,30 @@ information.
 		<sequential>
 			<if>
 				<and>
-					<available file="${project.dir}/${build.binaries.cache.dir}" type="dir" />
 					<not>
-						<isset property="env.JENKINS_HOME" />
+						<equals arg1="${build.binaries.cache.dir}" arg2="" />
 					</not>
+					<available file="${project.dir}/${build.binaries.cache.dir}" type="dir" />
 				</and>
 				<then>
-					<exec dir="${project.dir}/${build.binaries.cache.dir}" executable="git" failonerror="true">
-						<arg value="pull" />
-						<arg value="--rebase" />
-					</exec>
+					<if>
+						<not>
+							<isset property="env.JENKINS_HOME" />
+						</not>
+						<then>
+							<exec dir="${project.dir}/${build.binaries.cache.dir}" executable="git" failonerror="true">
+								<arg value="pull" />
+								<arg value="--rebase" />
+							</exec>
+						</then>
+					</if>
+
+					<sync-dir
+						dir="${project.dir}/${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1"
+						toDir="${project.dir}/.gradle/caches/modules-2/files-2.1"
+					/>
 				</then>
 			</if>
-
-			<sync-dir
-				dir="${project.dir}/${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1"
-				toDir="${project.dir}/.gradle/caches/modules-2/files-2.1"
-			/>
 
 			<property name="setup.binaries.cache.executed" value="true" />
 		</sequential>

@@ -80,6 +80,7 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -104,6 +105,89 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	@After
 	public void tearDown() throws Exception {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Ignore
+	@Test
+	public void testCleanAssetCategoriesAndTags() throws Exception {
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		StagedModel stagedModel = addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		AssetEntry assetEntry = fetchAssetEntry(stagedModel, stagingGroup);
+
+		if (assetEntry == null) {
+			return;
+		}
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			stagingGroup.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			stagingGroup.getGroupId(), assetVocabulary.getVocabularyId());
+
+		AssetTag assetTag = AssetTestUtil.addTag(stagingGroup.getGroupId());
+
+		assetEntry = AssetEntryLocalServiceUtil.updateEntry(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			assetEntry.getCreateDate(), assetEntry.getModifiedDate(),
+			assetEntry.getClassName(), assetEntry.getClassPK(),
+			assetEntry.getClassUuid(), assetEntry.getClassTypeId(),
+			new long[] {assetCategory.getCategoryId()},
+			new String[] {assetTag.getName()}, assetEntry.isListable(),
+			assetEntry.isVisible(), assetEntry.getStartDate(),
+			assetEntry.getEndDate(), assetEntry.getPublishDate(),
+			assetEntry.getExpirationDate(), assetEntry.getMimeType(),
+			assetEntry.getTitle(), assetEntry.getDescription(),
+			assetEntry.getSummary(), assetEntry.getUrl(),
+			assetEntry.getLayoutUuid(), assetEntry.getHeight(),
+			assetEntry.getWidth(), assetEntry.getPriority());
+
+		exportImportStagedModel(stagedModel);
+
+		StagedModel importedStagedModel = getStagedModel(
+			stagedModel.getUuid(), liveGroup);
+
+		Assert.assertNotNull(importedStagedModel);
+
+		AssetEntry importedAssetEntry = fetchAssetEntry(
+			importedStagedModel, liveGroup);
+
+		Assert.assertNotNull(importedAssetEntry);
+
+		Assert.assertFalse(importedAssetEntry.getTags().isEmpty());
+		Assert.assertFalse(importedAssetEntry.getCategories().isEmpty());
+
+		assetEntry = fetchAssetEntry(stagedModel, stagingGroup);
+
+		assetEntry = AssetEntryLocalServiceUtil.updateEntry(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			assetEntry.getCreateDate(), assetEntry.getModifiedDate(),
+			assetEntry.getClassName(), assetEntry.getClassPK(),
+			assetEntry.getClassUuid(), assetEntry.getClassTypeId(), new long[0],
+			new String[0], assetEntry.isListable(), assetEntry.isVisible(),
+			assetEntry.getStartDate(), assetEntry.getEndDate(),
+			assetEntry.getPublishDate(), assetEntry.getExpirationDate(),
+			assetEntry.getMimeType(), assetEntry.getTitle(),
+			assetEntry.getDescription(), assetEntry.getSummary(),
+			assetEntry.getUrl(), assetEntry.getLayoutUuid(),
+			assetEntry.getHeight(), assetEntry.getWidth(),
+			assetEntry.getPriority());
+
+		exportImportStagedModel(stagedModel);
+
+		importedStagedModel = getStagedModel(stagedModel.getUuid(), liveGroup);
+
+		Assert.assertNotNull(importedStagedModel);
+
+		importedAssetEntry = fetchAssetEntry(importedStagedModel, liveGroup);
+
+		Assert.assertNotNull(importedAssetEntry);
+
+		Assert.assertTrue(importedAssetEntry.getTags().isEmpty());
+		Assert.assertTrue(importedAssetEntry.getCategories().isEmpty());
 	}
 
 	@Test

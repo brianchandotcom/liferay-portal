@@ -14,11 +14,13 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -56,12 +58,18 @@ public class ScreenNavigationRegistry {
 		_screenNavigationEntriesMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, ScreenNavigationEntry.class, null,
-				new ScreenNavigationEntriesServiceReferenceMapper());
+				new ScreenNavigationEntriesServiceReferenceMapper(),
+				Collections.reverseOrder(
+					new PropertyServiceReferenceComparator(
+						"screen.navigation.entry.order")));
 
 		_screenNavigationCategoriesMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, ScreenNavigationCategory.class, null,
-				new ScreenNavigationCategoriesServiceReferenceMapper());
+				new ScreenNavigationCategoriesServiceReferenceMapper(),
+				Collections.reverseOrder(
+					new PropertyServiceReferenceComparator(
+						"screen.navigation.category.order")));
 	}
 
 	@Deactivate

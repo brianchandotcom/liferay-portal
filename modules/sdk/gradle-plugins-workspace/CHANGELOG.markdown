@@ -139,6 +139,6 @@ property to `true` in `gradle.properties`.
 [LPS-70677]: https://issues.liferay.com/browse/LPS-70677
 [LPS-71724]: https://issues.liferay.com/browse/LPS-71724
 [LPS-72252]: https://issues.liferay.com/browse/LPS-72252
-[LPS-73056]: https://issues.liferay.com/browse/LPS-73506
+[LPS-73056]: https://issues.liferay.com/browse/LPS-73056
 [LPS-73156]: https://issues.liferay.com/browse/LPS-73156
 [LPS-73248]: https://issues.liferay.com/browse/LPS-73248

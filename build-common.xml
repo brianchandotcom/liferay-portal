@@ -193,10 +193,10 @@
 	</fail>
 
 	<condition property="correct.ant.version">
-		<antversion atleast="1.7.0" />
+		<antversion atleast="1.9.3" />
 	</condition>
 
-	<fail message="Please use Ant 1.7.0 or above.">
+	<fail message="Please use Ant 1.9.3 or above.">
 		<condition>
 			<not>
 				<istrue value="${correct.ant.version}" />

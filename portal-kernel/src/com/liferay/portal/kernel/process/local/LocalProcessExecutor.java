@@ -142,6 +142,17 @@ public class LocalProcessExecutor implements ProcessExecutor {
 
 			ProcessBuilder processBuilder = new ProcessBuilder(commands);
 
+			Map<String, String> environment = processConfig.getEnvironment();
+
+			if (environment != null) {
+				Map<String, String> currentEnvironment =
+					processBuilder.environment();
+
+				currentEnvironment.clear();
+
+				currentEnvironment.putAll(environment);
+			}
+
 			final Process process = processBuilder.start();
 
 			ObjectOutputStream bootstrapObjectOutputStream =

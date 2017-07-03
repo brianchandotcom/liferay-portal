@@ -12,7 +12,6 @@ File editorSrcDir = file("src/main/resources/META-INF/resources")
 
 buildCKEditor {
 	File ckEditorDestinationDir = new File(editorDestinationDir, "ckeditor")
-	File ckEditorZipFile = file("third-party/ckeditor_${ckEditorVersion}.zip")
 
 	doFirst {
 		delete ckEditorDestinationDir
@@ -20,19 +19,18 @@ buildCKEditor {
 
 	duplicatesStrategy = "exclude"
 
-	from(zipTree(ckEditorZipFile)) {
+	from {
+		zipTree(FileUtil.get(project, "https://github.com/ckeditor/ckeditor-releases/archive/full/${ckEditorVersion}.zip"))
+	} {
 		eachFile new StripPathSegmentsAction(1)
-		exclude "ckeditor/samples/"
-		include "ckeditor/"
+
+		exclude "ckeditor-releases-full-${ckEditorVersion}/*.json"
+		exclude "ckeditor-releases-full-${ckEditorVersion}/samples/"
 	}
 
 	from new File(editorSrcDir, "_diffs")
 	includeEmptyDirs = false
 	into ckEditorDestinationDir
-
-	onlyIf {
-		!FileUtil.isUpToDate(project, ckEditorZipFile, ckEditorDestinationDir)
-	}
 }
 
 buildCKEditorBBCode {

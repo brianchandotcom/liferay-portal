@@ -496,25 +496,6 @@
 		</execute>
 	</command>
 
-	<command name="SearchDocument" priority="4">
-		<execute macro="DMRepository#gotoCP">
-			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_2.odt" />
-			<var name="dmDocumentTitle" value="Document_2.odt" />
-		</execute>
-
-		<execute macro="DMDocument#searchCP">
-			<var name="dmDocumentKeyword" value="Document_2.odt" />
-		</execute>
-
-		<execute macro="DMDocument#viewSearchResultsCP">
-			<var name="dmDocumentTitle" value="Document_2.odt" />
-		</execute>
-	</command>
-
 	<command name="SearchDocumentViaHome" priority="4">
 		<property name="test.name.skip.portal.instance" value="CPSharepoint#SearchDocumentViaHome" />
 

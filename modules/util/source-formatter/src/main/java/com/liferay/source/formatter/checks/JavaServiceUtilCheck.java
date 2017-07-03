@@ -36,7 +36,9 @@ public class JavaServiceUtilCheck extends BaseFileCheck {
 		if (!absolutePath.contains("/wsrp/internal/bind/") &&
 			!className.equals("BaseServiceImpl") &&
 			className.endsWith("ServiceImpl") &&
-			content.matches(_REGEX_IMPORT_PORTAL_KERNEL_SERVICE_UTIL)) {
+			content.matches(
+				"(?s).*import com\\.liferay\\.[a-z]+\\.kernel\\..*" +
+					"ServiceUtil;.*")) {
 
 			addMessage(
 				fileName,
@@ -46,8 +48,5 @@ public class JavaServiceUtilCheck extends BaseFileCheck {
 
 		return content;
 	}
-
-	private static final String _REGEX_IMPORT_PORTAL_KERNEL_SERVICE_UTIL =
-		"(?s).*import com\\.liferay\\.[a-z]+\\.kernel\\..*ServiceUtil;.*";
 
 }

@@ -273,7 +273,7 @@ AUI.add(
 										if (!serviceQueryObj) {
 											serviceQueryObj = {
 												end: 20,
-												groupIds: instance.get('groupIds').filter(function (groupId) { return groupId; }),
+												groupIds: instance.get('groupIds'),
 												name: '%' + term + '%',
 												start: 0,
 												tagProperties: ''

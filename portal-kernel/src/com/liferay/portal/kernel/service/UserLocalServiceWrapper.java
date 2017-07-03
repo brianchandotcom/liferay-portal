@@ -149,7 +149,9 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* @param user the user
 	* @return <code>true</code> if the user's password is expiring soon;
 	<code>false</code> otherwise
+	* @deprecated As of 7.0.0
 	*/
+	@Deprecated
 	@Override
 	public boolean isPasswordExpiringSoon(
 		com.liferay.portal.kernel.model.User user)

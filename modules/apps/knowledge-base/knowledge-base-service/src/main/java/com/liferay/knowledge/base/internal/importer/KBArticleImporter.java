@@ -292,14 +292,10 @@ public class KBArticleImporter {
 		return importedKBArticlesCount;
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBArchiveFactory(KBArchiveFactory kbArchiveFactory) {
-		_kbArchiveFactory = kbArchiveFactory;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleImporter.class);
 
+	@Reference
 	private KBArchiveFactory _kbArchiveFactory;
 
 	@Reference

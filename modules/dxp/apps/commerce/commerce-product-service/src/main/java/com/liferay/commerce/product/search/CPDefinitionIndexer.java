@@ -14,8 +14,12 @@
 
 package com.liferay.commerce.product.search;
 
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -33,15 +37,19 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -58,6 +66,13 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	public static final String CLASS_NAME = CPDefinition.class.getName();
 
 	public static final String FIELD_BASE_SKU = "baseSKU";
+
+	public static final String FIELD_DEFAULT_IMAGE_FILE_ENTRY_ID =
+		"defaultImageFileEntryId";
+
+	public static final String FIELD_OPTION_IDS = "optionsIds";
+
+	public static final String FIELD_OPTION_NAMES = "optionsNames";
 
 	public static final String FIELD_SKUS = "skus";
 
@@ -158,13 +173,23 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			_cpDefinitionLocalService.getCPDefinitionLocalizationLanguageIds(
 				cpDefinition.getCPDefinitionId());
 
+		long classNameId = _classNameLocalService.getClassNameId(
+			CPDefinition.class);
+
+		Map<String, String> languageIdToUrlTitleMap =
+			_cpFriendlyURLEntryLocalService.getLanguageIdToUrlTitleMap(
+				cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
+				classNameId, cpDefinition.getCPDefinitionId());
+
 		for (String languageId : languageIds) {
 			String description = cpDefinition.getDescription(languageId);
 			String title = cpDefinition.getTitle(languageId);
+			String urlTitle = languageIdToUrlTitleMap.get(languageId);
 
 			if (languageId.equals(cpDefinitionDefaultLanguageId)) {
 				document.addText(Field.DESCRIPTION, description);
 				document.addText(Field.TITLE, title);
+				document.addText(Field.URL, urlTitle);
 				document.addText("defaultLanguageId", languageId);
 			}
 
@@ -175,6 +200,9 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 				LocalizationUtil.getLocalizedName(
 					Field.DESCRIPTION, languageId),
 				description);
+			document.addText(
+				LocalizationUtil.getLocalizedName(Field.URL, languageId),
+				urlTitle);
 
 			document.addText(Field.CONTENT, description);
 		}
@@ -182,10 +210,76 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		document.addText(Field.TITLE, cpDefinition.getTitle());
 		document.addText(FIELD_BASE_SKU, cpDefinition.getBaseSKU());
 
+		List<String> optionNames = new ArrayList<>();
+		List<Long> optionIds = new ArrayList<>();
+
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			cpDefinition.getCPDefinitionOptionRels();
+
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				cpDefinitionOptionRels) {
+
+			if (!cpDefinitionOptionRel.isFacetable()) {
+				continue;
+			}
+
+			optionNames.add(cpDefinitionOptionRel.getName());
+			optionIds.add(cpDefinitionOptionRel.getCPOptionId());
+
+			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+				cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
+
+			List<String> optionValueNames = new ArrayList<>();
+			List<Long> optionValueIds = new ArrayList<>();
+
+			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+					cpDefinitionOptionValueRels) {
+
+				optionValueNames.add(
+					StringUtil.toLowerCase(
+						cpDefinitionOptionValueRel.getName()));
+				optionValueIds.add(
+					cpDefinitionOptionValueRel.
+						getCPDefinitionOptionValueRelId());
+			}
+
+			document.addText(
+				"ATTRIBUTE_" + cpDefinitionOptionRel.getName() +
+					"_VALUES_NAMES",
+				ArrayUtil.toStringArray(optionValueNames));
+			document.addNumber(
+				"ATTRIBUTE_" + cpDefinitionOptionRel.getName() +
+					"_VALUES_IDS",
+				ArrayUtil.toLongArray(optionValueIds));
+
+			document.addText(
+				"ATTRIBUTE_" + cpDefinitionOptionRel.getCPOptionId() +
+					"_VALUES_NAMES",
+				ArrayUtil.toStringArray(optionValueNames));
+			document.addNumber(
+				"ATTRIBUTE_" + cpDefinitionOptionRel.getCPOptionId() +
+					"_VALUES_IDS",
+				ArrayUtil.toLongArray(optionValueIds));
+		}
+
+		document.addText(
+			FIELD_OPTION_NAMES, ArrayUtil.toStringArray(optionNames));
+		document.addNumber(FIELD_OPTION_IDS, ArrayUtil.toLongArray(optionIds));
+
 		String[] skus = _cpInstanceLocalService.getSKUs(
 			cpDefinition.getCPDefinitionId());
 
 		document.addText(FIELD_SKUS, skus);
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			_cpDefinitionLocalService.getDefaultImage(
+				cpDefinition.getCPDefinitionId());
+
+		if (cpAttachmentFileEntry != null) {
+			document.addNumber(
+				FIELD_DEFAULT_IMAGE_FILE_ENTRY_ID,
+				cpAttachmentFileEntry.getFileEntryId());
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + cpDefinition + " indexed successfully");
@@ -266,7 +360,13 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		CPDefinitionIndexer.class);
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

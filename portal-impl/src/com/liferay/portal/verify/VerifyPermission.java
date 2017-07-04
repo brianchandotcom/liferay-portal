@@ -158,6 +158,10 @@ public class VerifyPermission extends VerifyProcess {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void deleteDefaultPrivateLayoutPermissions() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
@@ -175,6 +179,10 @@ public class VerifyPermission extends VerifyProcess {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void deleteDefaultPrivateLayoutPermissions_6(long companyId)
 		throws Exception {
 
@@ -220,8 +228,6 @@ public class VerifyPermission extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		deleteDefaultPrivateLayoutPermissions();
-
 		checkPermissions();
 		fixOrganizationRolePermissions();
 		fixUserDefaultRolePermissions();
@@ -462,6 +468,10 @@ public class VerifyPermission extends VerifyProcess {
 		runSQL("alter table ResourcePermission drop column plid");
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected boolean isPrivateLayout(String name, String primKey)
 		throws PortalException {
 

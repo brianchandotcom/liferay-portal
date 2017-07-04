@@ -34,16 +34,20 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchCo
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.io.IOException;
+
+import java.util.Optional;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.Optional;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -97,26 +101,27 @@ public class CPSearchResultsPortlet
 		portletSharedSearchSettings.addCondition(
 			new BooleanClauseImpl(
 				new TermQueryImpl(
-					Field.ASSET_CATEGORY_IDS, String.valueOf(assetCategory.getCategoryId())),
+					Field.ASSET_CATEGORY_IDS,
+					String.valueOf(assetCategory.getCategoryId())),
 				BooleanClauseOccur.MUST));
 
-		SearchContext searchContext = portletSharedSearchSettings.getSearchContext();
+		SearchContext searchContext =
+			portletSharedSearchSettings.getSearchContext();
 
 		QueryConfig queryConfig = portletSharedSearchSettings.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
 
-		searchContext.setSorts(SortFactoryUtil.create(Field.TITLE,false));
+		searchContext.setSorts(SortFactoryUtil.create(Field.TITLE, false));
 
 		filterByThisSite(portletSharedSearchSettings);
 
 		paginate(portletSharedSearchSettings);
-
 	}
 
 	@Override
 	public void render(
-		RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
@@ -130,8 +135,7 @@ public class CPSearchResultsPortlet
 				_dlAppService, httpServletRequest, portletSharedSearchResponse);
 
 		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			cpSearchResultsDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT, cpSearchResultsDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -139,8 +143,7 @@ public class CPSearchResultsPortlet
 	protected void filterByThisSite(
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
-		long groupIdOptional = getScopeGroupId(
-			portletSharedSearchSettings);
+		long groupIdOptional = getScopeGroupId(portletSharedSearchSettings);
 
 		portletSharedSearchSettings.addCondition(
 			new BooleanClauseImpl(
@@ -161,7 +164,6 @@ public class CPSearchResultsPortlet
 	protected void paginate(
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
-
 		String paginationStartParameterName = "start";
 
 		portletSharedSearchSettings.setPaginationStartParameterName(
@@ -177,17 +179,11 @@ public class CPSearchResultsPortlet
 		paginationStartOptional.ifPresent(
 			portletSharedSearchSettings::setPaginationStart);
 
-
 		int paginationDelta = 20;
 
 		portletSharedSearchSettings.setPaginationDeltaParameterName("delta");
 		portletSharedSearchSettings.setPaginationDelta(paginationDelta);
-
-
 	}
-
-	@Reference
-	private PortletSharedSearchRequest _portletSharedSearchRequest;
 
 	@Reference
 	private DLAppService _dlAppService;
@@ -195,6 +191,7 @@ public class CPSearchResultsPortlet
 	@Reference
 	private Portal _portal;
 
-
+	@Reference
+	private PortletSharedSearchRequest _portletSharedSearchRequest;
 
 }

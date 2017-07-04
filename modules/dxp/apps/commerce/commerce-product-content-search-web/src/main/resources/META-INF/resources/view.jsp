@@ -16,7 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-
 <%
 CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
@@ -35,25 +34,25 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 		>
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 				<h4>
+
 					<%
 						String img = cpSearchResultsDisplayContext.getProductDefaultImage(document, themeDisplay);
 					%>
+
 					<div>
 						<c:if test="<%= Validator.isNotNull(img) %>">
-
 							<img src="<%= img %>">
 						</c:if>
 					</div>
+
 					<div>
 						<a href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(themeDisplay.getPortalURL(), document) %>">
 							<strong><%= cpSearchResultsDisplayContext.getTitle(document) %></strong>
 						</a>
 					</div>
 				</h4>
-
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
-
 
 		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" type="more" />
 	</liferay-ui:search-container>

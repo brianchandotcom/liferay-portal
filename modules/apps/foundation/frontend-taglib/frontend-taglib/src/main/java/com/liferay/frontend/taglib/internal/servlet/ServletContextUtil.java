@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class ServletContextUtil {
 
-	public static final ScreenNavigationRegistry getScreenNavigationHelper() {
-		return _instance._getScreenNavigationHelper();
+	public static final ScreenNavigationRegistry getScreenNavigationRegistry() {
+		return _instance._getScreenNavigationRegistry();
 	}
 
 	public static final ServletContext getServletContext() {
@@ -55,8 +55,8 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
-	private ScreenNavigationRegistry _getScreenNavigationHelper() {
-		return _screenNavigationHelper;
+	private ScreenNavigationRegistry _getScreenNavigationRegistry() {
+		return _screenNavigationRegistry;
 	}
 
 	private ServletContext _getServletContext() {
@@ -66,7 +66,7 @@ public class ServletContextUtil {
 	private static ServletContextUtil _instance;
 
 	@Reference
-	private ScreenNavigationRegistry _screenNavigationHelper;
+	private ScreenNavigationRegistry _screenNavigationRegistry;
 
 	private ServletContext _servletContext;
 

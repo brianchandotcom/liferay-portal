@@ -45,11 +45,11 @@ public class ScreenNavigationTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		ScreenNavigationRegistry screenNavigationHelper =
-			ServletContextUtil.getScreenNavigationHelper();
+		ScreenNavigationRegistry screenNavigationRegistry =
+			ServletContextUtil.getScreenNavigationRegistry();
 
 		_screenNavigationCategories = ListUtil.filter(
-			screenNavigationHelper.getScreenNavigationCategories(_key),
+			screenNavigationRegistry.getScreenNavigationCategories(_key),
 			new PredicateFilter<ScreenNavigationCategory>() {
 
 				@Override
@@ -57,7 +57,7 @@ public class ScreenNavigationTag extends IncludeTag {
 					ScreenNavigationCategory screenNavigationCategory) {
 
 					List<ScreenNavigationEntry> screenNavigationEntries =
-						screenNavigationHelper.getScreenNavigationEntries(
+						screenNavigationRegistry.getScreenNavigationEntries(
 							screenNavigationCategory);
 
 					return ListUtil.isNotEmpty(screenNavigationEntries);
@@ -135,13 +135,13 @@ public class ScreenNavigationTag extends IncludeTag {
 	}
 
 	private List<ScreenNavigationEntry> _getScreenNavigationEntries() {
-		ScreenNavigationRegistry screenNavigationHelper =
-			ServletContextUtil.getScreenNavigationHelper();
+		ScreenNavigationRegistry screenNavigationRegistry =
+			ServletContextUtil.getScreenNavigationRegistry();
 
 		ScreenNavigationCategory selectedScreenNavigationCategory =
 			_getSelectedScreenNavigationCategory();
 
-		return screenNavigationHelper.getScreenNavigationEntries(
+		return screenNavigationRegistry.getScreenNavigationEntries(
 			selectedScreenNavigationCategory);
 	}
 

@@ -115,6 +115,24 @@ public class CPFriendlyURLEntryLocalServiceImpl
 			groupId, companyId, classNameId, languageId, urlTitle);
 	}
 
+	public Map<String, String> getLanguageIdToUrlTitleMap(
+		long groupId, long companyId, long classNameId, long classPK) {
+
+		Map<String, String> languageIdToUrlTitleMap = new HashMap<>();
+
+		List<CPFriendlyURLEntry> cpFriendlyURLEntries =
+			cpFriendlyURLEntryPersistence.findByG_C_C_C_M(
+				groupId, companyId, classNameId, classPK, true);
+
+		for (CPFriendlyURLEntry cpFriendlyURLEntry : cpFriendlyURLEntries) {
+			languageIdToUrlTitleMap.put(
+				cpFriendlyURLEntry.getLanguageId(),
+				cpFriendlyURLEntry.getUrlTitle());
+		}
+
+		return languageIdToUrlTitleMap;
+	}
+
 	@Override
 	public Map<Locale, String> getUrlTitleMap(
 		long groupId, long companyId, long classNameId, long classPK) {
@@ -224,24 +242,6 @@ public class CPFriendlyURLEntryLocalServiceImpl
 		cpFriendlyURLEntry.setMain(true);
 
 		return cpFriendlyURLEntryPersistence.update(cpFriendlyURLEntry);
-	}
-
-	protected Map<String, String> getLanguageIdToUrlTitleMap(
-		long groupId, long companyId, long classNameId, long classPK) {
-
-		Map<String, String> languageIdToUrlTitleMap = new HashMap<>();
-
-		List<CPFriendlyURLEntry> cpFriendlyURLEntries =
-			cpFriendlyURLEntryPersistence.findByG_C_C_C_M(
-				groupId, companyId, classNameId, classPK, true);
-
-		for (CPFriendlyURLEntry cpFriendlyURLEntry : cpFriendlyURLEntries) {
-			languageIdToUrlTitleMap.put(
-				cpFriendlyURLEntry.getLanguageId(),
-				cpFriendlyURLEntry.getUrlTitle());
-		}
-
-		return languageIdToUrlTitleMap;
 	}
 
 	protected String getUniqueUrlTitle(

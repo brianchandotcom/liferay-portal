@@ -44,6 +44,8 @@ import com.liferay.portal.search.web.internal.result.display.context.SearchResul
 
 import java.util.Locale;
 
+import javax.portlet.PortletURL;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -69,6 +71,42 @@ public class SearchResultSummaryDisplayBuilderTest {
 		setUpProps();
 
 		themeDisplay = createThemeDisplay();
+	}
+
+	@Test
+	public void testClassFieldsWithoutAssetTagsOrCategories() throws Exception {
+		PortletURL portletURL = Mockito.mock(PortletURL.class);
+
+		Mockito.doReturn(
+			portletURL
+		).when(
+			portletURLFactory
+		).getPortletURL();
+
+		String entryClassName = RandomTestUtil.randomString();
+
+		long entryClassPK = RandomTestUtil.randomLong();
+
+		whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+
+		whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
+			entryClassName);
+
+		SearchResultSummaryDisplayBuilder searchResultSummaryDisplayBuilder =
+			createSearchResultSummaryDisplayBuilder();
+
+		searchResultSummaryDisplayBuilder.setDocument(
+			createDocument(entryClassName, entryClassPK));
+
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
+			searchResultSummaryDisplayBuilder.build();
+
+		Assert.assertEquals(
+			entryClassName, searchResultSummaryDisplayContext.getClassName());
+		Assert.assertEquals(
+			entryClassPK, searchResultSummaryDisplayContext.getClassPK());
+		Assert.assertEquals(
+			portletURL, searchResultSummaryDisplayContext.getPortletURL());
 	}
 
 	@Test
@@ -303,7 +341,7 @@ public class SearchResultSummaryDisplayBuilderTest {
 			Mockito.mock(Language.class));
 		searchResultSummaryDisplayBuilder.setLocale(Locale.US);
 		searchResultSummaryDisplayBuilder.setPortletURLFactory(
-			Mockito.mock(PortletURLFactory.class));
+			portletURLFactory);
 		searchResultSummaryDisplayBuilder.setResourceActions(
 			Mockito.mock(ResourceActions.class));
 		searchResultSummaryDisplayBuilder.setSearchResultPreferences(
@@ -446,6 +484,9 @@ public class SearchResultSummaryDisplayBuilderTest {
 
 	@Mock
 	protected PermissionChecker permissionChecker;
+
+	@Mock
+	protected PortletURLFactory portletURLFactory;
 
 	protected ThemeDisplay themeDisplay;
 

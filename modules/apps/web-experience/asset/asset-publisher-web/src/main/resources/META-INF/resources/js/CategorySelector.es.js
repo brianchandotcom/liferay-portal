@@ -54,14 +54,43 @@ class CategorySelector extends Component {
 }
 
 CategorySelector.STATE = {
+	/**
+	 * Portlet ID used for selecting categories.
+	 * For this component it's required because is the only way
+	 * to select categories.
+	 */
 	categorySelectorURL: Config.string().value(''),
-	divId: Config.string().value(''),
+	
+	/**
+	 * Name of the event that will be dispatched when the
+	 * category selector dialog is closed
+	 */
 	eventName: Config.string().value(''),
+
+	/**
+	 * Array of group ids (sites) where categories will be searched.
+   * It defaults to an empty array, which is the current site.
+	 */
 	groupIds: Config.string().value(''),
+
+	/**
+	 * Id of the hidden input used to pass the selected categories
+	 */
 	hiddenInput: Config.string().value(''),
-	index: Config.number().value(0),
-	namespace: Config.string().value(''),
+
+	/**
+	 * Existing information of the form.
+   * @prop {string[]} queryValues Categories that are already selected.
+   *  This property is updated as the user selects new categories.
+	 * @prop {string[]} categoryIdsTitles Titles of the categories that are
+	 * 	already selected. It is kept in sync with `queryValues`
+	 */
 	rule: Config.object().value({}),
+
+	/**
+	 * Ids of the vocabularies parents of the selected categories.
+	 * Vocabularies are super groups which group a set of categories.
+	 */
 	vocabularyIds: Config.string().value('')
 }
 

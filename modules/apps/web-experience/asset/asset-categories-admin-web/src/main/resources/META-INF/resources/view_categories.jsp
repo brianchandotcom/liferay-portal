@@ -58,11 +58,32 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 	searchContainerId="assetCategories"
 >
 	<liferay-frontend:management-bar-buttons>
+
+		<%
+		String label = null;
+
+		if (assetCategoriesDisplayContext.isNavigationCategory()) {
+			label = assetCategoriesDisplayContext.getCategoryTitle();
+		}
+		%>
+
 		<liferay-frontend:management-bar-filters>
 			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(assetCategoriesDisplayContext.getIteratorURL(), liferayPortletResponse) %>"
-			/>
+				label="<%= label %>"
+			>
+
+				<%
+				PortletURL viewCategoryHomeURL = PortletURLUtil.clone(assetCategoriesDisplayContext.getIteratorURL(), liferayPortletResponse);
+
+				viewCategoryHomeURL.setParameter("navigation", "all");
+				%>
+
+				<liferay-frontend:management-bar-filter-item active="<%= assetCategoriesDisplayContext.isNavigationHome() %>" label="all" url="<%= viewCategoryHomeURL.toString() %>" />
+
+				<c:if test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">
+					<liferay-frontend:management-bar-filter-item active="<%= assetCategoriesDisplayContext.isNavigationCategory() %>" id="selectCategory" label="category" url="javascript:;" />
+				</c:if>
+			</liferay-frontend:management-bar-navigation>
 
 			<liferay-frontend:management-bar-sort
 				orderByCol="<%= assetCategoriesDisplayContext.getOrderByCol() %>"
@@ -258,7 +279,51 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 	<aui:input name="vocabularyId" type="hidden" />
 </aui:form>
 
-<aui:script sandbox="<%= true %>">
+<aui:script sandbox="<%= true %>" use="liferay-item-selector-dialog">
+
+	<%
+	PortletURL viewCategoryFilteredURL = renderResponse.createRenderURL();
+
+	viewCategoryFilteredURL.setParameter("mvcPath", "/view_categories.jsp");
+	viewCategoryFilteredURL.setParameter("navigation", "all");
+	viewCategoryFilteredURL.setParameter("vocabularyId", String.valueOf(assetCategoriesDisplayContext.getVocabularyId()));
+	%>
+
+	$('#<portlet:namespace />selectCategory').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: '<portlet:namespace />selectCategory',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
+							var category = selectedItem ? selectedItem[Object.keys(selectedItem)[0]] : null;
+
+							if (category) {
+								var uri = '<%= viewCategoryFilteredURL.toString() %>';
+
+								uri = Liferay.Util.addParams('<portlet:namespace />categoryId=' + category.categoryId, uri);
+
+								location.href = uri;
+							}
+						}
+					},
+					strings: {
+						add: '<liferay-ui:message key="select" />',
+						cancel: '<liferay-ui:message key="cancel" />'
+					},
+					title: '<liferay-ui:message key="select-category" />',
+					url: '<%= assetCategoriesDisplayContext.getAssetCategoriesSelectorURL() %>'
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
+
 	$('#<portlet:namespace />deleteSelectedCategories').on(
 		'click',
 		function() {

@@ -313,6 +313,10 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().getCPDefinitionsCount();
 	}
 
+	public static int getCPDefinitionsCountByCategoryId(long categoryId) {
+		return getService().getCPDefinitionsCountByCategoryId(categoryId);
+	}
+
 	public static java.lang.String getLayoutUuid(long cpDefinitionId) {
 		return getService().getLayoutUuid(cpDefinitionId);
 	}
@@ -408,6 +412,11 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().getCPDefinitions(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitionsByCategoryId(
+		long categoryId, int start, int end) {
+		return getService().getCPDefinitionsByCategoryId(categoryId, start, end);
+	}
+
 	/**
 	* Returns all the cp definitions matching the UUID and company.
 	*
@@ -485,6 +494,11 @@ public class CPDefinitionLocalServiceUtil {
 	public static void checkCPDefinitions()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkCPDefinitions();
+	}
+
+	public static void deleteAssetCategoryCPDefinition(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteAssetCategoryCPDefinition(cpDefinitionId);
 	}
 
 	public static void deleteCPDefinitions(long groupId)

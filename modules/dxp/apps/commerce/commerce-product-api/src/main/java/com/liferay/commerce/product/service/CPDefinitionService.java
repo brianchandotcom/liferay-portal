@@ -126,6 +126,9 @@ public interface CPDefinitionService extends BaseService {
 		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionsCountByCategoryId(long categoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getLayoutUuid(long cpDefinitionId)
 		throws PortalException;
 
@@ -145,6 +148,13 @@ public interface CPDefinitionService extends BaseService {
 		java.lang.String productTypeName, java.lang.String languageId,
 		int status, int start, int end,
 		OrderByComparator<CPDefinition> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinition> getCPDefinitionsByCategoryId(long categoryId,
+		int start, int end);
+
+	public void deleteAssetCategoryCPDefinition(long cpDefinitionId)
 		throws PortalException;
 
 	public void restoreCPDefinitionFromTrash(long cpDefinitionId)

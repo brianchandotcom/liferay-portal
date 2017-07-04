@@ -278,6 +278,9 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	public int getCPDefinitionsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionsCountByCategoryId(long categoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getLayoutUuid(long cpDefinitionId);
 
 	/**
@@ -352,6 +355,10 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinition> getCPDefinitions(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinition> getCPDefinitionsByCategoryId(long categoryId,
+		int start, int end);
+
 	/**
 	* Returns all the cp definitions matching the UUID and company.
 	*
@@ -412,6 +419,9 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		Projection projection);
 
 	public void checkCPDefinitions() throws PortalException;
+
+	public void deleteAssetCategoryCPDefinition(long cpDefinitionId)
+		throws PortalException;
 
 	public void deleteCPDefinitions(long groupId) throws PortalException;
 

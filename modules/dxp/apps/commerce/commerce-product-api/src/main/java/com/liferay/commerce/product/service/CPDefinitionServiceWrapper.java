@@ -148,6 +148,11 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 	}
 
 	@Override
+	public int getCPDefinitionsCountByCategoryId(long categoryId) {
+		return _cpDefinitionService.getCPDefinitionsCountByCategoryId(categoryId);
+	}
+
+	@Override
 	public java.lang.String getLayoutUuid(long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionService.getLayoutUuid(cpDefinitionId);
@@ -177,6 +182,19 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionService.getCPDefinitions(groupId, productTypeName,
 			languageId, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitionsByCategoryId(
+		long categoryId, int start, int end) {
+		return _cpDefinitionService.getCPDefinitionsByCategoryId(categoryId,
+			start, end);
+	}
+
+	@Override
+	public void deleteAssetCategoryCPDefinition(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpDefinitionService.deleteAssetCategoryCPDefinition(cpDefinitionId);
 	}
 
 	@Override

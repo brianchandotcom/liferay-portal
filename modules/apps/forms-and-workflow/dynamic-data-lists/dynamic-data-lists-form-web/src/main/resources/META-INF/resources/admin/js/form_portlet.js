@@ -421,21 +421,29 @@ AUI.add(
 									Settings.autosaveURL,
 									{
 										after: {
-											success: function() {
-												var responseData = this.get('responseData');
+											success: function(event, id, xhr) {
+												var requestURL = this.get('uri');
+												var responseURL = xhr.responseURL;
 
-												instance._defineIds(responseData);
+												if (requestURL !== responseURL) {
+													window.location.reload();
+												}
+												else {
+													var responseData = this.get('responseData');
 
-												instance.savedState = state;
+													instance._defineIds(responseData);
 
-												instance.fire(
-													'autosave',
-													{
-														modifiedDate: responseData.modifiedDate
-													}
-												);
+													instance.savedState = state;
 
-												callback.call();
+													instance.fire(
+															'autosave',
+															{
+																modifiedDate: responseData.modifiedDate
+															}
+													);
+
+													callback.call();
+												}
 											}
 										},
 										data: formData,
@@ -686,16 +694,26 @@ AUI.add(
 									Settings.publishRecordSetURL,
 									{
 										after: {
-											success: function() {
-												instance.set('published', newPublishedValue);
+											success: function(event, id, xhr) {
+												var requestURL = this.get('uri');
+												var responseURL = xhr.responseURL;
 
-												instance.syncInputValues();
-
-												if (newPublishedValue) {
-													instance._handlePublishAction();
+												if (requestURL !== responseURL) {
+													window.location.reload();
 												}
 												else {
-													instance._handleUnpublishAction();
+													var responseData = this.get('responseData');
+
+													instance.set('published', newPublishedValue);
+
+													instance.syncInputValues();
+
+													if (newPublishedValue) {
+														instance._handlePublishAction();
+													}
+													else {
+														instance._handleUnpublishAction();
+													}
 												}
 											}
 										},

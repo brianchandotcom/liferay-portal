@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.util.Portal;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -59,21 +61,35 @@ public class PublishRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		long recordSetId = ParamUtil.getLong(resourceRequest, "recordSetId");
+		try {
+			long recordSetId = ParamUtil.getLong(
+				resourceRequest, "recordSetId");
 
-		boolean published = ParamUtil.getBoolean(resourceRequest, "published");
+			if (recordSetId == 0) {
+				return;
+			}
 
-		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
+			boolean published = ParamUtil.getBoolean(
+				resourceRequest, "published");
 
-		updateRecordSetPermission(resourceRequest, recordSetId, published);
+			updateRecordSetPermission(resourceRequest, recordSetId, published);
 
-		DDMFormValues settingsDDMFormValues =
-			recordSet.getSettingsDDMFormValues();
+			DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(
+				recordSetId);
 
-		updatePublishedDDMFormFieldValue(settingsDDMFormValues, published);
+			DDMFormValues settingsDDMFormValues =
+				recordSet.getSettingsDDMFormValues();
 
-		_ddlRecordSetService.updateRecordSet(
-			recordSetId, settingsDDMFormValues);
+			updatePublishedDDMFormFieldValue(settingsDDMFormValues, published);
+
+			_ddlRecordSetService.updateRecordSet(
+				recordSetId, settingsDDMFormValues);
+		}
+		catch (Throwable t) {
+			resourceResponse.setProperty(
+				ResourceResponse.HTTP_STATUS_CODE,
+				String.valueOf(HttpServletResponse.SC_BAD_REQUEST));
+		}
 	}
 
 	@Reference(unbind = "-")

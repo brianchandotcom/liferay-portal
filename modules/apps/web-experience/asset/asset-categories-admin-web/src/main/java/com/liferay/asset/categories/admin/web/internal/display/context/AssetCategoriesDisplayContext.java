@@ -701,12 +701,9 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public boolean isFlattenedNavigationAllowed() {
-		String navigationStyle =
-			_assetCategoriesAdminWebConfiguration.
-				categoryNavigationDisplayStyle();
-
 		if (StringUtil.equals(
-				navigationStyle,
+				_assetCategoriesAdminWebConfiguration.
+					categoryNavigationDisplayStyle(),
 				AssetCategoriesNavigationDisplayStyleKeys.FLATTENED_TREE)) {
 
 			return true;

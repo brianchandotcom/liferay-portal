@@ -65,6 +65,18 @@ class TagSelector extends Component {
 
 TagSelector.STATE = {
 	/**
+	 * Number used for avoiding conflicts between different
+	 * instances of the component/portlet.
+	 */
+	index: Config.number().value(0),
+
+	/**
+	 * String used for avoiding conflicts between different
+	 * instances of the component/portlet.
+	 */
+	namespace: Config.string().value(''),
+
+	/**
 	 * Name of the event that will be fired when the tag selector dialog
 	 * request being closed
 	 */

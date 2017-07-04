@@ -55,6 +55,18 @@ class CategorySelector extends Component {
 
 CategorySelector.STATE = {
 	/**
+	 * Number used for avoiding conflicts between different
+	 * instances of the component/portlet.
+	 */
+	index: Config.number().value(0),
+
+	/**
+	 * String used for avoiding conflicts between different
+	 * instances of the component/portlet.
+	 */
+	namespace: Config.string().value(''),
+
+	/**
 	 * Portlet ID used for selecting categories.
 	 * For this component it's required because is the only way
 	 * to select categories.

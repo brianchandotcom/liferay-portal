@@ -311,6 +311,34 @@ public class DLFileEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountBySmallImageId() throws Exception {
+		_persistence.countBySmallImageId(RandomTestUtil.nextLong());
+
+		_persistence.countBySmallImageId(0L);
+	}
+
+	@Test
+	public void testCountByLargeImageId() throws Exception {
+		_persistence.countByLargeImageId(RandomTestUtil.nextLong());
+
+		_persistence.countByLargeImageId(0L);
+	}
+
+	@Test
+	public void testCountByCustom1ImageId() throws Exception {
+		_persistence.countByCustom1ImageId(RandomTestUtil.nextLong());
+
+		_persistence.countByCustom1ImageId(0L);
+	}
+
+	@Test
+	public void testCountByCustom2ImageId() throws Exception {
+		_persistence.countByCustom2ImageId(RandomTestUtil.nextLong());
+
+		_persistence.countByCustom2ImageId(0L);
+	}
+
+	@Test
 	public void testCountByG_U() throws Exception {
 		_persistence.countByG_U(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());

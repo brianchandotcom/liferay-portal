@@ -1027,7 +1027,35 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public DLFileEntry fetchFileEntryByAnyImageId(long imageId) {
-		return dlFileEntryFinder.fetchByAnyImageId(imageId);
+		DLFileEntry fileEntry =
+			dlFileEntryPersistence.fetchBySmallImageId_First(imageId, null);
+
+		if (fileEntry != null) {
+			return fileEntry;
+		}
+
+		fileEntry = dlFileEntryPersistence.fetchByLargeImageId_First(
+			imageId, null);
+
+		if (fileEntry != null) {
+			return fileEntry;
+		}
+
+		fileEntry = dlFileEntryPersistence.fetchByCustom1ImageId_First(
+			imageId, null);
+
+		if (fileEntry != null) {
+			return fileEntry;
+		}
+
+		fileEntry = dlFileEntryPersistence.fetchByCustom2ImageId_First(
+			imageId, null);
+
+		if (fileEntry != null) {
+			return fileEntry;
+		}
+
+		return null;
 	}
 
 	@Override

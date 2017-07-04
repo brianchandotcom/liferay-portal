@@ -52,6 +52,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Stream;
 
 import org.junit.After;
 import org.junit.Assume;
@@ -136,8 +137,10 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 		(statement, description) -> new Statement() {
 			@Override
 			public void evaluate() throws Throwable {
+				Stream<Method> methodStream = _parentTestMethods.stream();
+
 				Assume.assumeTrue(
-					_parentTestMethods.stream().noneMatch(
+					methodStream.noneMatch(
 						m -> Objects.equals(
 							m.getName(), description.getMethodName())));
 
@@ -200,7 +203,11 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter(
 				new File(larFilePath));
 
-			zipReader.getEntries().stream().forEach(
+			List<String> entries = zipReader.getEntries();
+
+			Stream<String> entriesStream = entries.stream();
+
+			entriesStream.forEach(
 				zipEntry -> {
 					try {
 						if (zipEntry.equals("manifest.xml")) {

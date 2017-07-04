@@ -64,15 +64,38 @@ class TagSelector extends Component {
 }
 
 TagSelector.STATE = {
-	divId: Config.string().value(''),
+	/**
+	 * Name of the event that will be fired when the tag selector dialog
+	 * request being closed
+	 */
 	eventName: Config.string().value(''),
+
+	/**
+	 * Array of group ids (sites) where tags will be searched.
+   * It defaults to an empty array, which is the current site.
+	 */
 	groupIds: Config.string().value(''),
+
+	/**
+	 * Id of the hidden input used to pass the selected tags
+	 */
 	hiddenInput: Config.string().value(''),
-	index: Config.number().value(0),
-	namespace: Config.string().value(''),
+
+	/**
+	 * Existing information of the form.
+   * Currently only rule.queryValues is present.
+   * @prop {string[]} queryValues Tags that are already selected.
+   *  This property is updated as the user selects new tags.
+	 */
 	rule: Config.object().value({}),
+
+	/**
+	 * When specified, this porlet (found for the given ID) will
+   * be used for tag selection as a popup. If no ID is given,
+   * the select button will not appear.
+	 */
 	tagSelectorURL: Config.string().value('')
-}
+};
 
 Soy.register(TagSelector, templates);
 

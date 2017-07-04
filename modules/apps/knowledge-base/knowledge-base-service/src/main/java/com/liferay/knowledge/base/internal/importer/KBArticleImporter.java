@@ -139,8 +139,7 @@ public class KBArticleImporter {
 		try {
 			String html =
 				kbArticleMarkdownConverter.processAttachmentsReferences(
-					userId, kbArticle, zipReader,
-					new HashMap<String, FileEntry>());
+					userId, kbArticle, zipReader, new HashMap<>());
 
 			kbArticle = _kbArticleLocalService.updateKBArticle(
 				userId, kbArticle.getResourcePrimKey(),

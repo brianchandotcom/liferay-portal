@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -51,6 +52,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
 
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
 import javax.media.jai.LookupTableJAI;
@@ -219,7 +221,29 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 			FileUtil.mkdirs(spriteDir);
 
-			ImageIO.write(renderedImage, "png", spriteFile);
+			try {
+				ImageIO.write(renderedImage, "png", spriteFile);
+			}
+			catch (Exception e) {
+				if (e instanceof IIOException ||
+					e instanceof NullPointerException) {
+
+					if (_log.isWarnEnabled()) {
+						StringBundler sb = new StringBundler(4);
+
+						sb.append("Unable to generate ");
+						sb.append(spriteFileName);
+						sb.append(" for ");
+						sb.append(servletContext.getServletContextName());
+
+						_log.warn(sb.toString());
+					}
+
+					return null;
+				}
+
+				throw e;
+			}
 
 			if (lastModified > 0) {
 				spriteFile.setLastModified(lastModified);

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.asset.util;
+package com.liferay.asset.categories.internal.search;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -36,7 +37,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
@@ -47,12 +48,13 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Istvan Andras Dezsi
- * @deprecated As of 7.0.0, moved to {@link
- *             com.liferay.asset.categories.internal.search.AssetCategoryIndexer}
  */
-@Deprecated
+@Component(immediate = true, service = Indexer.class)
 public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 
 	public static final String CLASS_NAME = AssetCategory.class.getName();
@@ -76,7 +78,7 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		AssetCategory category = AssetCategoryLocalServiceUtil.getCategory(
+		AssetCategory category = _assetCategoryLocalService.getCategory(
 			entryClassPK);
 
 		return AssetCategoryPermission.contains(
@@ -172,7 +174,7 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 		document.addKeyword(
 			Field.ASSET_VOCABULARY_ID, assetCategory.getVocabularyId());
 
-		Locale siteDefaultLocale = PortalUtil.getSiteDefaultLocale(
+		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(
 			assetCategory.getGroupId());
 
 		addLocalizedField(
@@ -212,7 +214,7 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		AssetCategory category = AssetCategoryLocalServiceUtil.getCategory(
+		AssetCategory category = _assetCategoryLocalService.getCategory(
 			classPK);
 
 		doReindex(category);
@@ -229,7 +231,7 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 		throws PortalException {
 
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			AssetCategoryLocalServiceUtil.getIndexableActionableDynamicQuery();
+			_assetCategoryLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
@@ -263,5 +265,11 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetCategoryIndexer.class);
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

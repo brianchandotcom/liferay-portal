@@ -75,17 +75,28 @@ class AutoField extends Component {
 
 AutoField.STATE = {
 	/**
-	 * rules
+	 * Array of rules being rendered as children. Each rule
+	 * represents a step on the filtering process, being either
+	 * a TagSelector or a CategorySelector.
 	 * @type {array}
 	 */
 	rules: {
 		value: [DEFAULT_RULE],
 	},
 
+	/**
+	 * Array of group (sites) ids where the information is going
+	 * to be fetched. This parementer is passed by to the child
+	 * components being rendered as rules.
+	 */
 	groupIds: {
 		value: []
 	},
 
+	/**
+	 * List of indices (rules) that must be sent to the server.
+	 * @see onRulesChanged_ method por more information.
+	 */
 	queryLogicIndexes: {
 		value: '0'
 	}

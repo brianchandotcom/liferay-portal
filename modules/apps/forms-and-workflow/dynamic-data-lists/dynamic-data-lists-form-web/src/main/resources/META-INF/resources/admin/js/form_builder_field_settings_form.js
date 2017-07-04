@@ -29,7 +29,7 @@ AUI.add(
 						instance._eventHandlers.push(
 							instance.after('render', instance._afterSettingsFormRender),
 							instance.on('*:addOption', instance._afterAddOption),
-							instance.on('*:removeOption', instance.alignModal)
+							instance.on('*:removeOption', instance._afterRemoveOption)
 						);
 
 						instance._fieldEventHandlers = [];
@@ -93,6 +93,16 @@ AUI.add(
 						var instance = this;
 
 						return new A.Do.AlterReturn(null, instance.get('field').generateFieldName(A.Do.originalRetVal));
+					},
+
+					_afterRemoveOption: function(event) {
+						var instance = this;
+
+						var formBuilderField = instance.get('field');
+
+						formBuilderField.set('context.settingsContext', instance.get('context'));
+
+						formBuilderField.saveSettings();
 					},
 
 					_afterSettingsFormRender: function() {

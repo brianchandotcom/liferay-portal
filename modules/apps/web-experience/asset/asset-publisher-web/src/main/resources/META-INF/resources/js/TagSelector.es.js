@@ -13,11 +13,12 @@ class TagSelector extends Component {
 	 * @inheritDoc
 	 */
 	attached() {
+		this.input_ = this.element.querySelector('input[type="text"]');
+		this.element.addEventListener('click', this.focusTagInput_.bind(this));
+
 		AUI().use(
 			'liferay-asset-taglib-tags-selector',
 			function(A) {
-				this.input_ = this.element.querySelector('input[type="text"]');
-
 				const config = {
 					allowAddEntry: true,
 					contentBox: this.element,
@@ -33,7 +34,6 @@ class TagSelector extends Component {
 
 				const entries = this.tagsSelector_.entries;
 
-				this.element.addEventListener('click', this.focusTagInput_.bind(this));
 				entries.after('add', this.onEntriesChanged_, this);
 				entries.after('remove', this.onEntriesChanged_, this);
 

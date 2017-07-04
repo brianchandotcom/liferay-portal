@@ -28,12 +28,16 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.asset.kernel.model.AssetCategory" %><%@
 page import="com.liferay.commerce.product.asset.categories.web.internal.display.context.CategoryCPAttachmentFileEntriesDisplayContext" %><%@
 page import="com.liferay.commerce.product.asset.categories.web.internal.servlet.taglib.ui.CategoryCPAttachmentFormNavigatorConstants" %><%@
+page import="com.liferay.commerce.product.asset.categories.web.internal.util.CPAssetCategoryWebPortletUtil" %><%@
 page import="com.liferay.commerce.product.constants.CPConstants" %><%@
 page import="com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException" %><%@
 page import="com.liferay.commerce.product.exception.CPAttachmentFileEntryFileEntryIdException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException" %><%@
 page import="com.liferay.commerce.product.model.CPAttachmentFileEntry" %><%@
+page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.service.CPAttachmentFileEntryService" %><%@
+page import="com.liferay.commerce.product.service.CPDefinitionService" %><%@
+page import="com.liferay.commerce.product.type.CPType" %><%@
 page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@

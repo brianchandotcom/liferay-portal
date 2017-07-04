@@ -50,6 +50,7 @@ cpDefinitionSearchContainer.setResults(cpDefinitions);
 				keyProperty="CPDefinitionId"
 				modelVar="cpDefinition"
 			>
+
 				<%
 				String thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
 

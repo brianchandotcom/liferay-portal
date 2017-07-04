@@ -16,19 +16,21 @@ package com.liferay.commerce.product.asset.categories.web.internal.util;
 
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  */
 @Component(service = CPAssetCategoryWebPortletUtil.class)
 public class CPAssetCategoryWebPortletUtil {
 
-    public CPType getCPType(String name) {
-        return _cpTypeServicesTracker.getCPType(name);
-    }
+	public CPType getCPType(String name) {
+		return _cpTypeServicesTracker.getCPType(name);
+	}
 
-    @Reference
-    private CPTypeServicesTracker _cpTypeServicesTracker;
+	@Reference
+	private CPTypeServicesTracker _cpTypeServicesTracker;
 
 }

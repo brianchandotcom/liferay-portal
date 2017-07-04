@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.item.selector.web.internal;
 
+import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
@@ -46,6 +47,9 @@ import javax.servlet.ServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Roberto Díaz
@@ -108,12 +112,27 @@ public class KBAttachmentItemSelectorView
 				KB_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			kbAttachmentItemSelectorViewDisplayContext);
 
+		request.setAttribute(
+			KBItemSelectorWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
+			_dlMimeTypeDisplayContext);
+
 		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/kb_article_attachments.jsp");
 
 		requestDispatcher.include(request, response);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	public void setDLMimeTypeDisplayContext(
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
+
+		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 	}
 
 	@Reference(unbind = "-")
@@ -131,6 +150,12 @@ public class KBAttachmentItemSelectorView
 	)
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
+	}
+
+	public void unsetDLMimeTypeDisplayContext(
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
+
+		_dlMimeTypeDisplayContext = null;
 	}
 
 	@Reference(
@@ -152,6 +177,7 @@ public class KBAttachmentItemSelectorView
 					new URLItemSelectorReturnType()
 				}));
 
+	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
 	private ResourceBundleLoader _resourceBundleLoader;

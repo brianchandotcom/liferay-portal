@@ -12,7 +12,7 @@ class CategorySelector extends Component {
 	/**
 	 * @inheritDoc
 	 */
-	rendered() {
+	attached() {
 		AUI().use(
 			'liferay-asset-taglib-categories-selector',
 			function(A) {

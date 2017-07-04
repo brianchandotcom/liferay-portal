@@ -30,40 +30,53 @@ List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.
 			<li>
 				<a class="" href="#avoooo"><span><%= HtmlUtil.escape(assetCategory.getTitle(locale)) %></span></a>
 
-				<ul class="child-menu dropdown-menu" role="menu">
+				<div class="child-menu dropdown-menu" role="menu">
+					<div class="container-fluid-1280">
 
-					<%
-					for (AssetCategory assetCategoryLevel1 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategory.getCategoryId())) {
-					%>
+						<%
+						for (AssetCategory assetCategoryLevel1 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategory.getCategoryId())) {
+						%>
 
-						<li>
-							<a href="#hghg" role="menuitem"><%= HtmlUtil.escape(assetCategoryLevel1.getTitle(locale)) %></a>
+							<div class="child-menu-level-1">
+								<h5><%= HtmlUtil.escape(assetCategoryLevel1.getTitle(locale)) %></h5>
 
-							<ul class="">
+								<ul class="">
 
-								<%
-								for (AssetCategory assetCategoryLevel2 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategoryLevel1.getCategoryId())) {
-								%>
+									<%
+									for (AssetCategory assetCategoryLevel2 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategoryLevel1.getCategoryId())) {
+									%>
 
-									<li>
-										<a href="#hghg" role="menuitem"><%= HtmlUtil.escape(assetCategoryLevel2.getTitle(locale)) %></a>
-									</li>
+										<li>
+											<a href="<%= cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(assetCategoryLevel2.getCategoryId(), themeDisplay) %>" role="menuitem"><%= HtmlUtil.escape(assetCategoryLevel2.getTitle(locale)) %></a>
+										</li>
 
-								<%
-								}
-								%>
+									<%
+									}
+									%>
 
-							</ul>
-						</li>
+								</ul>
 
-					<%
-					}
-					%>
+							</div>
 
-					<li>
-						<%= assetCategory.getDescription(locale) %>
-					</li>
-				</ul>
+						<%
+						}
+						%>
+
+						<div class="category-description">
+
+							<%
+							String imgURL = cpAssetCategoriesNavigationDisplayContext.getDefaultImageSrc(assetCategory.getCategoryId(), themeDisplay);
+							%>
+
+							<c:if test="<%= Validator.isNotNull(imgURL) %>">
+								<img src="<%= imgURL %>" />
+							</c:if>
+
+							<h5><%= assetCategory.getTitle(locale) %></h5>
+							<p class="description"><%= assetCategory.getDescription(locale) %></p>
+						</div>
+					</div>
+				</div>
 			</li>
 
 		<%

@@ -19,14 +19,23 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.commerce.product.asset.categories.navigation.web.internal.configuration.CPAssetCategoriesNavigationPortletInstanceConfiguration;
+import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPFriendlyURLEntry;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -43,12 +52,18 @@ public class CPAssetCategoriesNavigationDisplayContext {
 	public CPAssetCategoriesNavigationDisplayContext(
 			HttpServletRequest httpServletRequest,
 			AssetCategoryService assetCategoryService,
-			AssetVocabularyService assetVocabularyService)
+			AssetVocabularyService assetVocabularyService,
+			CPAttachmentFileEntryService cpAttachmentFileEntryService,
+			CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService,
+			Portal portal)
 		throws ConfigurationException {
 
 		_httpServletRequest = httpServletRequest;
 		_assetCategoryService = assetCategoryService;
 		_assetVocabularyService = assetVocabularyService;
+		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
+		_cpFriendlyURLEntryLocalService = cpFriendlyURLEntryLocalService;
+		_portal = portal;
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -133,6 +148,71 @@ public class CPAssetCategoriesNavigationDisplayContext {
 		return _cpAssetCategoriesNavigationPortletInstanceConfiguration;
 	}
 
+	public String getDefaultImageSrc(long categoryId, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		CPAttachmentFileEntry cpAttachmentFileEntry = null;
+
+		long classNameId = _portal.getClassNameId(AssetCategory.class);
+
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			_cpAttachmentFileEntryService.getCPAttachmentFileEntries(
+				classNameId, categoryId,
+				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE, 0, 1);
+
+		if (cpAttachmentFileEntries.isEmpty()) {
+			return null;
+		}
+
+		cpAttachmentFileEntry = cpAttachmentFileEntries.get(0);
+
+		if (cpAttachmentFileEntry == null) {
+			return null;
+		}
+
+		FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+
+		if (fileEntry == null) {
+			return null;
+		}
+
+		return DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
+	}
+
+	public String getFriendlyURL(long categoryId, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		CPAttachmentFileEntry cpAttachmentFileEntry = null;
+
+		long classNameId = _portal.getClassNameId(AssetCategory.class);
+
+		AssetCategory assetCategory = _assetCategoryService.fetchCategory(
+			categoryId);
+
+		if (assetCategory == null) {
+			return "";
+		}
+
+		String languageId = LanguageUtil.getLanguageId(
+			themeDisplay.getLocale());
+
+		CPFriendlyURLEntry cpFriendlyURLEntry =
+			_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
+				assetCategory.getGroupId(), assetCategory.getCompanyId(),
+				classNameId, categoryId, languageId, true);
+
+		if (cpFriendlyURLEntry == null) {
+			return "";
+		}
+
+		String url =
+			themeDisplay.getPortalURL() +
+				CPConstants.ASSET_CATEGORY_URL_SEPARATOR +
+					cpFriendlyURLEntry.getUrlTitle();
+
+		return url;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPAssetCategoriesNavigationDisplayContext.class);
 
@@ -143,6 +223,10 @@ public class CPAssetCategoriesNavigationDisplayContext {
 	private final AssetVocabularyService _assetVocabularyService;
 	private final CPAssetCategoriesNavigationPortletInstanceConfiguration
 		_cpAssetCategoriesNavigationPortletInstanceConfiguration;
+	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
+	private final CPFriendlyURLEntryLocalService
+		_cpFriendlyURLEntryLocalService;
 	private final HttpServletRequest _httpServletRequest;
+	private final Portal _portal;
 
 }

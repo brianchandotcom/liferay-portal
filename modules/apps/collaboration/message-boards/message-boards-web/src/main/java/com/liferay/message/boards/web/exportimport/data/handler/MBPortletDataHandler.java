@@ -99,7 +99,8 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 				MBCategory.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "messages", true, false, null,
-				MBMessage.class.getName()),
+				MBMessage.class.getName(),
+				StagedModelType.REFERRER_CLASS_NAME_ALL),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "thread-flags", true, false, null,
 				MBThreadFlag.class.getName()),

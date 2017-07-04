@@ -15,6 +15,7 @@
 package com.liferay.asset.categories.admin.web.internal.display.context;
 
 import com.liferay.asset.categories.admin.web.configuration.AssetCategoriesAdminWebConfiguration;
+import com.liferay.asset.categories.admin.web.constants.AssetCategoriesNavigationDisplayStyleKeys;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminWebKeys;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
@@ -56,6 +57,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
@@ -699,8 +701,15 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public boolean isFlattenedNavigationAllowed() {
-		return _assetCategoriesAdminWebConfiguration.
-			flattenedNavigationAllowed();
+		if (StringUtil.equals(
+				_assetCategoriesAdminWebConfiguration.
+					categoryNavigationDisplayStyle(),
+				AssetCategoriesNavigationDisplayStyleKeys.FLATTENED_TREE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowCategoriesAddButton() {

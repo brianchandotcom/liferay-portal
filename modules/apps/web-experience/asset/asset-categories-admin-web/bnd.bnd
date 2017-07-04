@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Asset Categories Admin Web
 Bundle-SymbolicName: com.liferay.asset.categories.admin.web
-Bundle-Version: 1.1.1
+Bundle-Version: 1.2.0
 Export-Package: com.liferay.asset.categories.admin.web.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Asset

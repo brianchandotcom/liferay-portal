@@ -19,7 +19,9 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
@@ -61,6 +63,12 @@ public class AssetCategoryUtil {
 		portletURL.setParameter("mvcPath", "/view_categories.jsp");
 		portletURL.setParameter(
 			"vocabularyId", String.valueOf(vocabulary.getVocabularyId()));
+
+		String navigation = ParamUtil.getString(request, "navigation");
+
+		if (Validator.isNotNull(navigation)) {
+			portletURL.setParameter("navigation", navigation);
+		}
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, vocabulary.getTitle(themeDisplay.getLocale()),

@@ -34,16 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_ALL_CONTENT</td>
-	<td>//input[contains(@id,'allContent')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_CHOOSE_CONTENT</td>
-	<td>//input[contains(@id,'chooseContent')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CUSTOM_ABSTRACT</td>
 	<td>//label[contains(.,'Custom Abstract')]/input[contains(@id,'customAbstract')]</td>
 	<td></td>

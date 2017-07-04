@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ADD_EVENT_BUTTON</td>
-	<td>//button[contains(@id,'_addButton')]</td>
+	<td>//button[contains(@id,'addButton')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,12 +41,12 @@
 <!--DATE-->
 <tr>
 	<td>DATE_NOW_RADIO</td>
-	<td>//input[contains(@id,'_publishingEventNow')]</td>
+	<td>//input[contains(@id,'publishingEventNow')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATE_SCHEDULE_RADIO</td>
-	<td>//input[contains(@id,'_publishingEventSchedule')]</td>
+	<td>//input[contains(@id,'publishingEventSchedule')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,12 +61,12 @@
 </tr>
 <tr>
 	<td>DATE_SCHEDULE_END_DATE_NO_END_DATE_RADIO</td>
-	<td>//input[contains(@id,'_schedulerNoEndDate')]</td>
+	<td>//input[contains(@id,'schedulerNoEndDate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATE_SCHEDULE_REPEAT_DAILY_RADIO</td>
-	<td>//input[contains(@id,'_recurrenceTypeDaily')]</td>
+	<td>//input[contains(@id,'recurrenceTypeDaily')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -88,17 +88,32 @@
 <!--APPLICATION_CONFIGURATION-->
 <tr>
 	<td>APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO</td>
-	<td>//input[contains(@id,'_allApplications')]</td>
+	<td>//input[contains(@id,'allApplications')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO</td>
-	<td>//input[contains(@id,'_chooseApplications')]</td>
+	<td>//input[contains(@id,'chooseApplications')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX</td>
-	<td>//ul[contains(@id,'_selectApplications')]//label[contains(.,'${key_applicationName}')]/input[2]</td>
+	<td>//ul[contains(@id,'selectApplications')]//label[contains(.,'${key_applicationName}')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_CONFIGURATION_APPLICATION_CHANGE_LINK</td>
+	<td>//a[@data-portlettitle='${key_applicationName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_CHECKBOX</td>
+	<td>//div[contains(@class,'widget-content-expanded') and contains(.,'${key_applicationName}')]//div[contains(@class,'modal-body')]//input[@data-name='${key_subApplication}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_OK_BUTTON</td>
+	<td>//div[contains(@class,'widget-content-expanded') and contains(.,'${key_applicationName}')]//button[contains(.,'OK')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -119,12 +134,12 @@
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK</td>
-	<td>//a[@data-portlettitle='${key_contentName}']</td>
+	<td>//a[@data-portlettitle='${key_uncheckContent}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX</td>
-	<td>//div[contains(@class,'widget-content-expanded') and contains(.,'${key_contentName}')]//div[contains(@class,'modal-body')]//input[contains(@data-name,'${key_subContent}')]</td>
+	<td>//input[contains(@data-name,'Referenced Content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -141,6 +156,11 @@
 <tr>
 	<td>CHOOSE_CONTENT_DATE_RANGE_STATUS</td>
 	<td>//span[contains(@id,'_selectedRange')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK</td>
+	<td>//a[contains(@id,'rangeLink')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -294,6 +294,10 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap(
+		long groupId, long companyId, long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Locale, java.lang.String> getUrlTitleMap(long groupId,
 		long companyId, long classNameId, long classPK);
 

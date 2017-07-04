@@ -350,6 +350,13 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap(
+		long groupId, long companyId, long classNameId, long classPK) {
+		return _cpFriendlyURLEntryLocalService.getLanguageIdToUrlTitleMap(groupId,
+			companyId, classNameId, classPK);
+	}
+
+	@Override
 	public java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap(
 		long groupId, long companyId, long classNameId, long classPK) {
 		return _cpFriendlyURLEntryLocalService.getUrlTitleMap(groupId,

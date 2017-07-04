@@ -333,6 +333,13 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 			start, end, orderByComparator);
 	}
 
+	public static java.util.Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap(
+		long groupId, long companyId, long classNameId, long classPK) {
+		return getService()
+				   .getLanguageIdToUrlTitleMap(groupId, companyId, classNameId,
+			classPK);
+	}
+
 	public static java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap(
 		long groupId, long companyId, long classNameId, long classPK) {
 		return getService()

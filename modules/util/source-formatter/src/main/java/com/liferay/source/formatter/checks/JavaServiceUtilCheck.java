@@ -18,6 +18,7 @@ import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 /**
  * @author Hugo Huijser
+ * @author Brent Krone-Schmidt
  */
 public class JavaServiceUtilCheck extends BaseFileCheck {
 
@@ -35,12 +36,14 @@ public class JavaServiceUtilCheck extends BaseFileCheck {
 		if (!absolutePath.contains("/wsrp/internal/bind/") &&
 			!className.equals("BaseServiceImpl") &&
 			className.endsWith("ServiceImpl") &&
-			content.contains("ServiceUtil.")) {
+			content.matches(
+				"(?s).*import com\\.liferay\\.[a-z]+\\.kernel\\..*" +
+					"ServiceUtil;.*")) {
 
 			addMessage(
 				fileName,
-				"Do not use *ServiceUtil in *ServiceImpl class, create a " +
-					"reference via service.xml instead");
+				"Do not use a portal-kernel *ServiceUtil in a *ServiceImpl " +
+					"class, create a reference via service.xml instead");
 		}
 
 		return content;

@@ -27,7 +27,7 @@ public class WebFormServiceConfigurationBeanDeclaration
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return WebFormGroupServiceConfiguration.class;
+		return WebFormServiceConfiguration.class;
 	}
 
 }

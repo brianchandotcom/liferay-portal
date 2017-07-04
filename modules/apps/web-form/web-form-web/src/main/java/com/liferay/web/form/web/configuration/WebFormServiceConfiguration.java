@@ -22,14 +22,15 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Peter Fellwock
  */
 @ExtendedObjectClassDefinition(
-	category = "other", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "forms-and-workflow",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.web.form.web.configuration.WebFormConfiguration",
+	id = "com.liferay.web.form.web.configuration.WebFormServiceConfiguration",
 	localization = "content/Language",
 	name = "web.form.service.configuration.name"
 )
-public interface WebFormGroupServiceConfiguration {
+public interface WebFormServiceConfiguration {
 
 	@Meta.AD(deflt = ";", required = false)
 	public String csvSeparator();

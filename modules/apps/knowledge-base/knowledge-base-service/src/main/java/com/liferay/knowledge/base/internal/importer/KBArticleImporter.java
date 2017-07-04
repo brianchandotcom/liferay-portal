@@ -20,7 +20,7 @@ import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.knowledge.base.internal.importer.util.KBArticleMarkdownConverter;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -97,9 +97,8 @@ public class KBArticleImporter {
 
 		String urlTitle = kbArticleMarkdownConverter.getUrlTitle();
 
-		KBArticle kbArticle =
-			KBArticleLocalServiceUtil.fetchKBArticleByUrlTitle(
-				groupId, parentKBFolderId, urlTitle);
+		KBArticle kbArticle = _kbArticleLocalService.fetchKBArticleByUrlTitle(
+			groupId, parentKBFolderId, urlTitle);
 
 		boolean newKBArticle = false;
 
@@ -114,7 +113,7 @@ public class KBArticleImporter {
 				serviceContext.setWorkflowAction(
 					WorkflowConstants.ACTION_SAVE_DRAFT);
 
-				kbArticle = KBArticleLocalServiceUtil.addKBArticle(
+				kbArticle = _kbArticleLocalService.addKBArticle(
 					userId, parentResourceClassNameId, parentResourcePrimaryKey,
 					kbArticleMarkdownConverter.getTitle(), urlTitle, markdown,
 					null, kbArticleMarkdownConverter.getSourceURL(), null, null,
@@ -143,7 +142,7 @@ public class KBArticleImporter {
 					userId, kbArticle, zipReader,
 					new HashMap<String, FileEntry>());
 
-			kbArticle = KBArticleLocalServiceUtil.updateKBArticle(
+			kbArticle = _kbArticleLocalService.updateKBArticle(
 				userId, kbArticle.getResourcePrimKey(),
 				kbArticleMarkdownConverter.getTitle(), html,
 				kbArticle.getDescription(),
@@ -302,6 +301,9 @@ public class KBArticleImporter {
 		KBArticleImporter.class);
 
 	private KBArchiveFactory _kbArchiveFactory;
+
+	@Reference
+	private KBArticleLocalService _kbArticleLocalService;
 
 	@Reference
 	private Portal _portal;

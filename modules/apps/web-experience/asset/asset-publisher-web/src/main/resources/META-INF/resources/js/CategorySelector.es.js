@@ -72,7 +72,7 @@ CategorySelector.STATE = {
 	 * to select categories.
 	 */
 	categorySelectorURL: Config.string().value(''),
-	
+
 	/**
 	 * Name of the event that will be dispatched when the
 	 * category selector dialog is closed
@@ -81,7 +81,7 @@ CategorySelector.STATE = {
 
 	/**
 	 * Array of group ids (sites) where categories will be searched.
-   * It defaults to an empty array, which is the current site.
+	 * It defaults to an empty array, which is the current site.
 	 */
 	groupIds: Config.string().value(''),
 
@@ -92,8 +92,8 @@ CategorySelector.STATE = {
 
 	/**
 	 * Existing information of the form.
-   * @prop {string[]} queryValues Categories that are already selected.
-   *  This property is updated as the user selects new categories.
+	 * @prop {string[]} queryValues Categories that are already selected.
+	 *  This property is updated as the user selects new categories.
 	 * @prop {string[]} categoryIdsTitles Titles of the categories that are
 	 * 	already selected. It is kept in sync with `queryValues`
 	 */

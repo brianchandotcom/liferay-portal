@@ -36,4 +36,5 @@ dependencies {
 	provided group: "rome", name: "rome", version: "1.0"
 	provided project(":apps:forms-and-workflow:calendar:calendar-api")
 	provided project(":apps:foundation:portal-search:portal-search")
+	provided project(":apps:web-experience:trash:trash-api")
 }

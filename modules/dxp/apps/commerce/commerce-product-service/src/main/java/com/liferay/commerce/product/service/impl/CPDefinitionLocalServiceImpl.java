@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
@@ -206,6 +207,14 @@ public class CPDefinitionLocalServiceImpl
 		checkCPDefinitionsByExpirationDate(now);
 	}
 
+	@Override
+	public void deleteAssetCategoryCPDefinition(long cpDefinitionId)
+		throws PortalException {
+
+		assetEntryLocalService.deleteEntry(
+			CPDefinition.class.getName(), cpDefinitionId);
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
@@ -352,6 +361,43 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return availableLanguageIds;
+	}
+
+	@Override
+	public List<CPDefinition> getCPDefinitionsByCategoryId(
+		long categoryId, int start, int end) {
+
+		List<CPDefinition> cpDefinitions = new ArrayList<>();
+
+		long[] categoryIds = new long[] {categoryId};
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setClassName(CPDefinition.class.getName());
+		assetEntryQuery.setAllCategoryIds(categoryIds);
+		assetEntryQuery.setStart(start);
+		assetEntryQuery.setEnd(end);
+
+		List<AssetEntry> assetEntries = assetEntryLocalService.getEntries(
+			assetEntryQuery);
+
+		for (AssetEntry assetEntry : assetEntries) {
+			long classPK = assetEntry.getClassPK();
+
+			CPDefinition cpDefinition = fetchCPDefinition(classPK);
+
+			if (cpDefinition != null) {
+				cpDefinitions.add(cpDefinition);
+			}
+		}
+
+		return cpDefinitions;
+	}
+
+	@Override
+	public int getCPDefinitionsCountByCategoryId(long categoryId) {
+		return assetEntryLocalService.getAssetCategoryAssetEntriesCount(
+			categoryId);
 	}
 
 	@Override

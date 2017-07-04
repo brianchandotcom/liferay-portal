@@ -69,6 +69,17 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteAssetCategoryCPDefinition(long cpDefinitionId)
+		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
+
+		cpDefinitionLocalService.deleteAssetCategoryCPDefinition(
+			cpDefinitionId);
+	}
+
+	@Override
 	public CPDefinition deleteCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
@@ -122,6 +133,14 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
+	public List<CPDefinition> getCPDefinitionsByCategoryId(
+		long categoryId, int start, int end) {
+
+		return cpDefinitionLocalService.getCPDefinitionsByCategoryId(
+			categoryId, start, end);
+	}
+
+	@Override
 	public int getCPDefinitionsCount(
 		long groupId, String productTypeName, String languageId, int status) {
 
@@ -134,6 +153,12 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionFinder.filterCountByG_P_S(
 			groupId, productTypeName, languageId, queryDefinition);
+	}
+
+	@Override
+	public int getCPDefinitionsCountByCategoryId(long categoryId) {
+		return cpDefinitionLocalService.getCPDefinitionsCountByCategoryId(
+			categoryId);
 	}
 
 	@Override

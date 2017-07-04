@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component
 public class
-CPSearchResultsPortletInstanceConfigurationBeanDeclaration
+	CPSearchResultsPortletInstanceConfigurationBeanDeclaration
 		implements ConfigurationBeanDeclaration {
 
 	@Override

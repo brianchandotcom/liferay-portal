@@ -73,8 +73,8 @@ public class CPSearchResultsDisplayContext {
 		if (fileEntryId > 0) {
 			try {
 				fileEntry = _dlAppService.getFileEntry(fileEntryId);
-
-			}catch(NoSuchFileEntryException nsfee) {
+			}
+			catch (NoSuchFileEntryException nsfee) {
 			}
 		}
 

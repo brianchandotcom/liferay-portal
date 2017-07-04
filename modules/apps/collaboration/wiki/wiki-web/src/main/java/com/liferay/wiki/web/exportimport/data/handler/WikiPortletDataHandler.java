@@ -101,6 +101,9 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(WikiPage.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
+				NAMESPACE, "wiki-nodes", false, true, null,
+				WikiNode.class.getName()),
+			new PortletDataHandlerBoolean(
 				NAMESPACE, "wiki-pages", true, false,
 				new PortletDataHandlerControl[] {
 					new PortletDataHandlerBoolean(

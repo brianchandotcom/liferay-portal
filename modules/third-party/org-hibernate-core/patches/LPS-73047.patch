@@ -1,9 +1,3 @@
-commit b9cc9749b8cfde8389eb64b54301035ca0d4f95f
-Author: Rodrigo Paulino <rodrigo.paulino@liferay.com>
-Date:   Wed Jun 21 15:34:12 2017 -0300
-
-    Update
-
 diff --git a/org/hibernate/engine/jdbc/BlobProxy.java b/org/hibernate/engine/jdbc/BlobProxy.java
 index f81e4b4..16e1d58 100644
 --- a/org/hibernate/engine/jdbc/BlobProxy.java
@@ -20,6 +14,8 @@ index f81e4b4..16e1d58 100644
 +		return BlobImplementer.class.getClassLoader();
  	}
  }
++/* @generated */
+\ No newline at end of file
 diff --git a/org/hibernate/engine/jdbc/ClobProxy.java b/org/hibernate/engine/jdbc/ClobProxy.java
 index 97ae85a..0302dfd 100644
 --- a/org/hibernate/engine/jdbc/ClobProxy.java
@@ -36,6 +32,8 @@ index 97ae85a..0302dfd 100644
 +		return ClobImplementer.class.getClassLoader();
  	}
  }
++/* @generated */
+\ No newline at end of file
 diff --git a/org/hibernate/engine/jdbc/NClobProxy.java b/org/hibernate/engine/jdbc/NClobProxy.java
 index e5a1739..a624b02 100644
 --- a/org/hibernate/engine/jdbc/NClobProxy.java
@@ -52,6 +50,8 @@ index e5a1739..a624b02 100644
 +		return NClobImplementer.class.getClassLoader();
  	}
  }
++/* @generated */
+\ No newline at end of file
 diff --git a/org/hibernate/engine/jdbc/SerializableBlobProxy.java b/org/hibernate/engine/jdbc/SerializableBlobProxy.java
 index 1f857ee..2c4dfc8 100644
 --- a/org/hibernate/engine/jdbc/SerializableBlobProxy.java
@@ -68,6 +68,8 @@ index 1f857ee..2c4dfc8 100644
 +		return WrappedBlob.class.getClassLoader();
  	}
  }
++/* @generated */
+\ No newline at end of file
 diff --git a/org/hibernate/engine/jdbc/SerializableClobProxy.java b/org/hibernate/engine/jdbc/SerializableClobProxy.java
 index 87ee1ee..7e63404 100644
 --- a/org/hibernate/engine/jdbc/SerializableClobProxy.java
@@ -84,3 +86,5 @@ index 87ee1ee..7e63404 100644
 +		return WrappedClob.class.getClassLoader();
  	}
  }
++/* @generated */
+\ No newline at end of file

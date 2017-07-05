@@ -18,7 +18,7 @@ class CategorySelector extends Component {
 			function(A) {
 				const config = {
 					categoryIds: this.rule.queryValues || '',
-					categoryTitles: this.rule.categoryIdsTitles ? this.rule.categoryIdsTitles : [],
+					categoryTitles: this.rule.categoryIdsTitles || [],
 					contentBox: this.element,
 					eventName: this.eventName,
 					groupIds: this.groupIds,

@@ -18,10 +18,14 @@ import com.liferay.calendar.internal.upgrade.v1_0_4.UpgradeClassNames;
 import com.liferay.calendar.internal.upgrade.v1_0_5.UpgradeCalendarResource;
 import com.liferay.calendar.internal.upgrade.v1_0_5.UpgradeCompanyId;
 import com.liferay.calendar.internal.upgrade.v1_0_5.UpgradeLastPublishDate;
+import com.liferay.calendar.internal.upgrade.v1_0_6.UpgradeResourcePermission;
 import com.liferay.calendar.upgrade.v1_0_2.UpgradeCalendar;
 import com.liferay.calendar.upgrade.v2_0_0.UpgradeSchema;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourceBlockLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -71,7 +75,13 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeCompanyId(), new UpgradeLastPublishDate());
 
 		registry.register(
-			"com.liferay.calendar.service", "1.0.5", "2.0.0",
+			"com.liferay.calendar.service", "1.0.5", "1.0.6",
+			new UpgradeResourcePermission(
+				_resourceActionLocalService, _resourceBlockLocalService,
+				_roleLocalService));
+
+		registry.register(
+			"com.liferay.calendar.service", "1.0.6", "2.0.0",
 			new UpgradeSchema());
 	}
 
@@ -90,12 +100,34 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	@Reference(unbind = "-")
+	protected void setResourceActionLocalService(
+		ResourceActionLocalService resourceActionLocalService) {
+
+		_resourceActionLocalService = resourceActionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourceBlockLocalService(
+		ResourceBlockLocalService resourceBlockLocalService) {
+
+		_resourceBlockLocalService = resourceBlockLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
 
 	private ClassNameLocalService _classNameLocalService;
 	private CompanyLocalService _companyLocalService;
+	private ResourceActionLocalService _resourceActionLocalService;
+	private ResourceBlockLocalService _resourceBlockLocalService;
+	private RoleLocalService _roleLocalService;
 	private UserLocalService _userLocalService;
 
 }

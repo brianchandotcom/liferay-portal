@@ -17,6 +17,7 @@ package com.liferay.calendar.upgrade.v1_0_5.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
+import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,10 +31,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,6 +40,8 @@ import java.sql.SQLException;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -50,6 +50,11 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class UpgradeCalendarResourceTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Before
 	public void setUp() throws Exception {
@@ -131,32 +136,8 @@ public class UpgradeCalendarResourceTest {
 	}
 
 	protected void setUpUpgradeCalendarResource() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		UpgradeStepRegistrator upgradeStepRegistror = registry.getService(
-			"com.liferay.calendar.internal.upgrade.CalendarServiceUpgrade");
-
-		upgradeStepRegistror.register(
-			new UpgradeStepRegistrator.Registry() {
-
-				@Override
-				public void register(
-					String bundleSymbolicName, String fromSchemaVersionString,
-					String toSchemaVersionString, UpgradeStep... upgradeSteps) {
-
-					for (UpgradeStep upgradeStep : upgradeSteps) {
-						Class<?> clazz = upgradeStep.getClass();
-
-						String className = clazz.getName();
-
-						if (className.contains("UpgradeCalendarResource")) {
-							_upgradeCalendarResource =
-								(UpgradeProcess)upgradeStep;
-						}
-					}
-				}
-
-			});
+		_upgradeCalendarResource = CalendarUpgradeTestUtil.getUpgradeStep(
+			"UpgradeCalendarResource");
 	}
 
 	@DeleteAfterTestRun

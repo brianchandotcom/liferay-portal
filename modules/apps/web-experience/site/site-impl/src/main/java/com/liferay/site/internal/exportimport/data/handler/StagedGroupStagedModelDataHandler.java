@@ -33,7 +33,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContextFactory;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSenderUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSender;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
@@ -214,7 +214,7 @@ public class StagedGroupStagedModelDataHandler
 			ManifestSummary manifestSummary =
 				portletDataContext.getManifestSummary();
 
-			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
+			_portletDataHandlerStatusMessageSender.sendStatusMessage(
 				"layout", ArrayUtil.toStringArray(dataSiteLevelPortletIds),
 				manifestSummary);
 
@@ -314,7 +314,7 @@ public class StagedGroupStagedModelDataHandler
 				portletIds.add(portletId);
 			}
 
-			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
+			_portletDataHandlerStatusMessageSender.sendStatusMessage(
 				"layout", ArrayUtil.toStringArray(portletIds),
 				portletDataContext.getManifestSummary());
 		}
@@ -534,7 +534,7 @@ public class StagedGroupStagedModelDataHandler
 			portletDataContext.setPortletId(portletId);
 
 			if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
-				PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
+				_portletDataHandlerStatusMessageSender.sendStatusMessage(
 					"portlet", portletId,
 					portletDataContext.getManifestSummary());
 			}
@@ -781,6 +781,10 @@ public class StagedGroupStagedModelDataHandler
 
 	@Reference
 	private PortletDataContextFactory _portletDataContextFactory;
+
+	@Reference
+	private PortletDataHandlerStatusMessageSender
+		_portletDataHandlerStatusMessageSender;
 
 	@Reference
 	private PortletExportController _portletExportController;

@@ -122,7 +122,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 		String[] dependencies = group.split(",");
 
-		if(dependencies.length==1 && dependencies[0].equals("")) {
+		if ((dependencies.length == 1) && dependencies[0].equals("")) {
 			return Collections.emptyList();
 		}
 

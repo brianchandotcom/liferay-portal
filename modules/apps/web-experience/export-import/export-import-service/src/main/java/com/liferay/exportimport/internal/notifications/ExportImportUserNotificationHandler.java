@@ -88,12 +88,13 @@ public class ExportImportUserNotificationHandler
 						jsonObject.getLong("exportImportConfigurationId"));
 		}
 		catch (PortalException pe) {
-			_log.error(pe, pe);
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 
-			return LanguageUtil.format(
-				resourceBundle, "unable-to-find-x",
-				LanguageUtil.get(
-					resourceBundle, "export-import-configuration"));
+			return LanguageUtil.get(
+				resourceBundle,
+				"the-process-referenced-by-this-notification-does-not-exist");
 		}
 
 		String message =

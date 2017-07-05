@@ -123,18 +123,22 @@ public class RequestBackedPortletURLFactoryUtil {
 			String portletId, Group group, long refererGroupId,
 			long refererPlid, String lifecycle) {
 
+			Layout controlPanelLayout = null;
+
 			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			if (group == null) {
-				group = themeDisplay.getScopeGroup();
+			if (themeDisplay != null) {
+				controlPanelLayout = themeDisplay.getControlPanelLayout();
+
+				if (group == null) {
+					group = themeDisplay.getScopeGroup();
+				}
 			}
 
 			LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 				_request, portletId,
-				_getControlPanelLayout(
-					themeDisplay.getControlPanelLayout(), group),
-				lifecycle);
+				_getControlPanelLayout(controlPanelLayout, group), lifecycle);
 
 			return _populateControlPanelPortletURL(
 				liferayPortletURL, refererGroupId, refererPlid);
@@ -212,19 +216,23 @@ public class RequestBackedPortletURLFactoryUtil {
 			String portletId, Group group, long refererGroupId,
 			long refererPlid, String lifecycle) {
 
+			Layout controlPanelLayout = null;
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)_liferayPortletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			if (group == null) {
-				group = themeDisplay.getScopeGroup();
+			if (themeDisplay != null) {
+				controlPanelLayout = themeDisplay.getControlPanelLayout();
+
+				if (group == null) {
+					group = themeDisplay.getScopeGroup();
+				}
 			}
 
 			LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 				_liferayPortletRequest, portletId,
-				_getControlPanelLayout(
-					themeDisplay.getControlPanelLayout(), group),
-				lifecycle);
+				_getControlPanelLayout(controlPanelLayout, group), lifecycle);
 
 			return _populateControlPanelPortletURL(
 				liferayPortletURL, refererGroupId, refererPlid);

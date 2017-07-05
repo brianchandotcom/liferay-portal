@@ -29,7 +29,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContextFactory;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -374,7 +374,7 @@ public class StagedGroupStagedModelDataHandler
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_PORTLET_EXPORT_STARTED, getProcessFlag(),
 				portletDataContext.getExportImportProcessId(),
-				PortletDataContextFactoryUtil.clonePortletDataContext(
+				_portletDataContextFactory.clonePortletDataContext(
 					portletDataContext));
 
 			_portletExportController.exportPortlet(
@@ -395,14 +395,14 @@ public class StagedGroupStagedModelDataHandler
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_PORTLET_EXPORT_SUCCEEDED, getProcessFlag(),
 				portletDataContext.getExportImportProcessId(),
-				PortletDataContextFactoryUtil.clonePortletDataContext(
+				_portletDataContextFactory.clonePortletDataContext(
 					portletDataContext));
 		}
 		catch (Throwable t) {
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_PORTLET_EXPORT_FAILED, getProcessFlag(),
 				portletDataContext.getExportImportProcessId(),
-				PortletDataContextFactoryUtil.clonePortletDataContext(
+				_portletDataContextFactory.clonePortletDataContext(
 					portletDataContext),
 				t);
 
@@ -569,7 +569,7 @@ public class StagedGroupStagedModelDataHandler
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					EVENT_PORTLET_IMPORT_STARTED, getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
-					PortletDataContextFactoryUtil.clonePortletDataContext(
+					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext));
 
 				// Portlet preferences
@@ -598,14 +598,14 @@ public class StagedGroupStagedModelDataHandler
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					EVENT_PORTLET_IMPORT_SUCCEEDED, getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
-					PortletDataContextFactoryUtil.clonePortletDataContext(
+					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext));
 			}
 			catch (Throwable t) {
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					EVENT_PORTLET_IMPORT_FAILED, getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
-					PortletDataContextFactoryUtil.clonePortletDataContext(
+					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext),
 					t);
 
@@ -778,6 +778,9 @@ public class StagedGroupStagedModelDataHandler
 
 	private final PermissionImporter _permissionImporter =
 		PermissionImporter.getInstance();
+
+	@Reference
+	private PortletDataContextFactory _portletDataContextFactory;
 
 	@Reference
 	private PortletExportController _portletExportController;

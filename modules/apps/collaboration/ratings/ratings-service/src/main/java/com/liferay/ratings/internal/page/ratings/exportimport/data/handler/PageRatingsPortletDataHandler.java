@@ -19,7 +19,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContextFactory;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -110,7 +110,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		PortletDataContext clonedPortletDataContext =
-			PortletDataContextFactoryUtil.clonePortletDataContext(
+			_portletDataContextFactory.clonePortletDataContext(
 				portletDataContext);
 
 		_exportImportProcessCallbackRegistry.registerCallback(
@@ -272,6 +272,9 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 	@Reference
 	private ExportImportProcessCallbackRegistry
 		_exportImportProcessCallbackRegistry;
+
+	@Reference
+	private PortletDataContextFactory _portletDataContextFactory;
 
 	private RatingsEntryLocalService _ratingsEntryLocalService;
 

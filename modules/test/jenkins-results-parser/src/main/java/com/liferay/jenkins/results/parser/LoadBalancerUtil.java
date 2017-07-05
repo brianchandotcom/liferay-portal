@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.IOException;
 import java.io.StringReader;
 
 import java.util.ArrayList;
@@ -23,14 +22,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.json.JSONObject;
 
 /**
  * @author Peter Yoo
@@ -171,45 +167,6 @@ public class LoadBalancerUtil {
 		return getMostAvailableMasterURL(properties);
 	}
 
-	public static String getMostAvailableMasterURLService(
-		String baseInvocationURL, int invokedBatchSize) {
-
-		String loadBalancerServiceURL =
-			_LOAD_BALANCER_SERVICE_URL_TEMPLATE.replace(
-				"${baseInvocationURL}", baseInvocationURL);
-
-		loadBalancerServiceURL = loadBalancerServiceURL.replace(
-			"${invokedBatchSize}", Integer.toString(invokedBatchSize));
-
-		try {
-			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				loadBalancerServiceURL);
-
-			return jsonObject.getString("mostAvailableMasterURL");
-		}
-		catch (IOException ioe) {
-			Properties buildProperties = null;
-
-			try {
-				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-			}
-			catch (IOException ioe2) {
-				throw new RuntimeException(
-					"Unable to get build properties", ioe2);
-			}
-
-			List<JenkinsMaster> masters = getJenkinsMasters(
-				getMasterPrefix(baseInvocationURL), buildProperties);
-
-			Random random = new Random(System.currentTimeMillis());
-
-			JenkinsMaster randomJenkinsMaster = masters.get(
-				random.nextInt(masters.size()));
-
-			return "http://" + randomJenkinsMaster.getMasterName();
-		}
-	}
-
 	public static void setUpdateInterval(long interval) {
 		_updateInterval = interval;
 	}
@@ -348,8 +305,6 @@ public class LoadBalancerUtil {
 		}
 	}
 
-	private static final String _LOAD_BALANCER_SERVICE_URL_TEMPLATE;
-
 	private static final int _MAX_RETRIES = 3;
 
 	private static final Map<String, List<JenkinsMaster>> _jenkinsMasters =
@@ -359,15 +314,5 @@ public class LoadBalancerUtil {
 	private static long _updateInterval = 1000 * 10;
 	private static final Pattern _urlPattern = Pattern.compile(
 		"http://(?<masterPrefix>.+-\\d?).liferay.com");
-
-	static {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/");
-		sb.append("load_balancer?baseInvocationURL=${baseInvocationURL}");
-		sb.append("&invokedJobBatchSize=${invokedBatchSize}");
-
-		_LOAD_BALANCER_SERVICE_URL_TEMPLATE = sb.toString();
-	}
 
 }

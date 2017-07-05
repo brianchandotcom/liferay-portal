@@ -25,21 +25,21 @@ import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.RenderRequest;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + CPPortletKeys.CP_SEARCH_RESULTS
-	},
+	property = {"javax.portlet.name=" + CPPortletKeys.CP_SEARCH_RESULTS},
 	service = ConfigurationAction.class
 )
 public class CPSearchResultsConfigurationAction

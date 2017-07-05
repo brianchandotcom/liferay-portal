@@ -17,7 +17,6 @@ package com.liferay.commerce.product.content.search.web.internal.portlet.templat
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSearchResultsDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.portlet.CPSearchResultsPortlet;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -42,7 +41,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true, property = {"javax.portlet.name=" + CPPortletKeys.CP_SEARCH_RESULTS},
+	immediate = true,
+	property = {"javax.portlet.name=" + CPPortletKeys.CP_SEARCH_RESULTS},
 	service = TemplateHandler.class
 )
 public class CPSearchResultsPortletDisplayTemplateHandler
@@ -97,7 +97,8 @@ public class CPSearchResultsPortletDisplayTemplateHandler
 			new TemplateVariableGroup(
 				"cp-definition-services", restrictedVariables);
 
-		cpDefinitionsServicesTemplateVariableGroup.setAutocompleteEnabled(false);
+		cpDefinitionsServicesTemplateVariableGroup.setAutocompleteEnabled(
+			false);
 
 		cpDefinitionsServicesTemplateVariableGroup.addServiceLocatorVariables(
 			CPDefinitionLocalService.class, CPDefinitionService.class);
@@ -117,6 +118,5 @@ public class CPSearchResultsPortletDisplayTemplateHandler
 
 	@Reference
 	private Portal _portal;
-
 
 }

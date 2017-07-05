@@ -40,11 +40,11 @@
 
 					<div id="<portlet:namespace />categoriesContainer">
 						<div class="lfr-use-categories-header">
-							<aui:input checked="<%= cpSearchResultsDisplayContext.useCategories() %>" label="use-categories" id="useAssetCategories" name="preferences--useAssetCategories--" type="checkbox" />
+							<aui:input checked="<%= cpSearchResultsDisplayContext.useCategories() %>" id="useAssetCategories" label="use-categories" name="preferences--useAssetCategories--" type="checkbox" />
 						</div>
 
 						<div class="lfr-use-categories-content toggler-content-collapsed">
-							<aui:input name="preferences--assetCategoryIds--" id="preferencesAssetCategoryIds" type="hidden" />
+							<aui:input id="preferencesAssetCategoryIds" name="preferences--assetCategoryIds--" type="hidden" />
 
 							<liferay-asset:asset-categories-selector
 								curCategoryIds="<%= cpSearchResultsDisplayContext.getCategoryIds() %>"

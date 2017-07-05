@@ -3,11 +3,13 @@
 <#if entries?has_content>
 	<div class="row">
 		<#list entries as curDocument>
-			<#assign image = cpSearchResultsDisplayContext.getProductDefaultImage(curDocument, themeDisplay) />
+			<#assign
+				image = cpSearchResultsDisplayContext.getProductDefaultImage(curDocument, themeDisplay)
 
-			<#assign friendlyURL = cpSearchResultsDisplayContext.getProductFriendlyURL(themeDisplay.getPortalURL(), curDocument) />
+				friendlyURL = cpSearchResultsDisplayContext.getProductFriendlyURL(themeDisplay.getPortalURL(), curDocument)
 
-			<#assign title = cpSearchResultsDisplayContext.getTitle(curDocument) />
+				title = cpSearchResultsDisplayContext.getTitle(curDocument)
+			/>
 
 			<div class="col-md-4">
 				<div>
@@ -25,6 +27,7 @@
 
 			<#if count gte 3>
 				</div>
+
 				<div class="row">
 			</#if>
 		</#list>

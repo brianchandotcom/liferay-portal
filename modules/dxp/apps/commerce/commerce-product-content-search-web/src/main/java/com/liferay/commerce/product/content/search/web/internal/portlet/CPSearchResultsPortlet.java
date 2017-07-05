@@ -95,9 +95,8 @@ public class CPSearchResultsPortlet
 		RenderRequest renderRequest =
 			portletSharedSearchSettings.getRenderRequest();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)renderRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -233,11 +232,11 @@ public class CPSearchResultsPortlet
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPSearchResultsPortlet.class);
 
-	private CPSearchResultsPortletInstanceConfiguration
-		_cpSearchResultsPortletInstanceConfiguration;
-
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	private CPSearchResultsPortletInstanceConfiguration
+		_cpSearchResultsPortletInstanceConfiguration;
 
 	@Reference
 	private DLAppService _dlAppService;

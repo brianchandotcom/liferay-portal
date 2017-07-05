@@ -31,6 +31,7 @@ SearchContainer searchContainer = cpSearchResultsDisplayContext.getSearchContain
 	displayStyleGroupId="<%= cpSearchResultsDisplayContext.getDisplayStyleGroupId() %>"
 	entries="<%= searchContainer.getResults() %>"
 >
+
 	<%
 	for (Object object : searchContainer.getResults()) {
 		Document document = (Document)object;

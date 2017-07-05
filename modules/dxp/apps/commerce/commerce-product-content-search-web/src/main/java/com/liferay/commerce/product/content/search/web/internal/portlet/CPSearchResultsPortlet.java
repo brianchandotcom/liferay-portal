@@ -15,10 +15,15 @@
 package com.liferay.commerce.product.content.search.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.search.web.internal.configuration.CPSearchResultsPortletInstanceConfiguration;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSearchResultsDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -27,8 +32,11 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -87,8 +95,20 @@ public class CPSearchResultsPortlet
 		RenderRequest renderRequest =
 			portletSharedSearchSettings.getRenderRequest();
 
-		AssetCategory assetCategory = (AssetCategory)renderRequest.getAttribute(
-			WebKeys.ASSET_CATEGORY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)renderRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		try {
+			_cpSearchResultsPortletInstanceConfiguration =
+				portletDisplay.getPortletInstanceConfiguration(
+					CPSearchResultsPortletInstanceConfiguration.class);
+		}
+		catch (ConfigurationException ce) {
+			_log.error(ce, ce);
+		}
 
 		portletSharedSearchSettings.setKeywords("*");
 
@@ -98,12 +118,31 @@ public class CPSearchResultsPortlet
 					Field.ENTRY_CLASS_NAME, CPDefinition.class.getName()),
 				BooleanClauseOccur.MUST));
 
-		portletSharedSearchSettings.addCondition(
-			new BooleanClauseImpl(
-				new TermQueryImpl(
-					Field.ASSET_CATEGORY_IDS,
-					String.valueOf(assetCategory.getCategoryId())),
-				BooleanClauseOccur.MUST));
+		if (_cpSearchResultsPortletInstanceConfiguration.useAssetCategories()) {
+			String[] assetCategoryIds =
+				_cpSearchResultsPortletInstanceConfiguration.assetCategoryIds();
+
+			portletSharedSearchSettings.addCondition(
+				new BooleanClauseImpl(
+					new TermQueryImpl(
+						Field.ASSET_CATEGORY_IDS,
+						StringUtil.merge(assetCategoryIds, StringPool.COMMA)),
+					BooleanClauseOccur.MUST));
+		}
+		else {
+			AssetCategory assetCategory =
+				(AssetCategory)renderRequest.getAttribute(
+					WebKeys.ASSET_CATEGORY);
+
+			if (assetCategory != null) {
+				portletSharedSearchSettings.addCondition(
+					new BooleanClauseImpl(
+						new TermQueryImpl(
+							Field.ASSET_CATEGORY_IDS,
+							String.valueOf(assetCategory.getCategoryId())),
+						BooleanClauseOccur.MUST));
+			}
+		}
 
 		SearchContext searchContext =
 			portletSharedSearchSettings.getSearchContext();
@@ -130,12 +169,18 @@ public class CPSearchResultsPortlet
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			_portletSharedSearchRequest.search(renderRequest);
 
-		CPSearchResultsDisplayContext cpSearchResultsDisplayContext =
-			new CPSearchResultsDisplayContext(
-				_dlAppService, httpServletRequest, portletSharedSearchResponse);
+		try {
+			CPSearchResultsDisplayContext cpSearchResultsDisplayContext =
+				new CPSearchResultsDisplayContext(
+					_dlAppService, httpServletRequest,
+					portletSharedSearchResponse);
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, cpSearchResultsDisplayContext);
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT, cpSearchResultsDisplayContext);
+		}
+		catch (ConfigurationException ce) {
+			_log.error(ce, ce);
+		}
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -184,6 +229,15 @@ public class CPSearchResultsPortlet
 		portletSharedSearchSettings.setPaginationDeltaParameterName("delta");
 		portletSharedSearchSettings.setPaginationDelta(paginationDelta);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPSearchResultsPortlet.class);
+
+	private CPSearchResultsPortletInstanceConfiguration
+		_cpSearchResultsPortletInstanceConfiguration;
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;

@@ -48,6 +48,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Random;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -640,6 +641,45 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return masters;
+	}
+
+	public static String getMostAvailableMasterURL(
+		String baseInvocationURL, int invokedBatchSize) {
+
+		String loadBalancerServiceURL =
+			_LOAD_BALANCER_SERVICE_URL_TEMPLATE.replace(
+				"${baseInvocationURL}", baseInvocationURL);
+
+		loadBalancerServiceURL = loadBalancerServiceURL.replace(
+			"${invokedBatchSize}", Integer.toString(invokedBatchSize));
+
+		try {
+			JSONObject jsonObject = toJSONObject(loadBalancerServiceURL);
+
+			return jsonObject.getString("mostAvailableMasterURL");
+		}
+		catch (IOException ioe) {
+			Properties buildProperties = null;
+
+			try {
+				buildProperties = getBuildProperties();
+			}
+			catch (IOException ioe2) {
+				throw new RuntimeException(
+					"Unable to get build properties", ioe2);
+			}
+
+			List<JenkinsMaster> masters = LoadBalancerUtil.getJenkinsMasters(
+				LoadBalancerUtil.getMasterPrefix(baseInvocationURL),
+				buildProperties);
+
+			Random random = new Random(System.currentTimeMillis());
+
+			JenkinsMaster randomJenkinsMaster = masters.get(
+				random.nextInt(masters.size()));
+
+			return "http://" + randomJenkinsMaster.getMasterName();
+		}
 	}
 
 	public static String getNounForm(
@@ -1316,6 +1356,8 @@ public class JenkinsResultsParserUtil {
 
 	private static final long _BASH_COMMAND_TIMEOUT_DEFAULT = 1000 * 60 * 60;
 
+	private static final String _LOAD_BALANCER_SERVICE_URL_TEMPLATE;
+
 	private static final int _MAX_RETRIES_DEFAULT = 3;
 
 	private static final long _MILLIS_IN_DAY = 24L * 60L * 60L * 1000L;
@@ -1357,6 +1399,14 @@ public class JenkinsResultsParserUtil {
 
 		System.setErr(SecurePrintStream.getInstance());
 		System.setOut(SecurePrintStream.getInstance());
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/");
+		sb.append("load_balancer?baseInvocationURL=${baseInvocationURL}");
+		sb.append("&invokedJobBatchSize=${invokedBatchSize}");
+
+		_LOAD_BALANCER_SERVICE_URL_TEMPLATE = sb.toString();
 	}
 
 }

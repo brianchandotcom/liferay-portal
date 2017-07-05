@@ -27,7 +27,7 @@ import com.liferay.exportimport.controller.PortletImportController;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
-import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
@@ -1396,7 +1396,7 @@ public class LayoutStagedModelDataHandler
 			return;
 		}
 
-		ExportImportProcessCallbackRegistryUtil.registerCallback(
+		_exportImportProcessCallbackRegistry.registerCallback(
 			portletDataContext.getExportImportProcessId(),
 			new ImportLinkedLayoutCallable(
 				portletDataContext.getScopeGroupId(),
@@ -1843,6 +1843,11 @@ public class LayoutStagedModelDataHandler
 	private ExportImportHelper _exportImportHelper;
 
 	private ExportImportLifecycleManager _exportImportLifecycleManager;
+
+	@Reference
+	private ExportImportProcessCallbackRegistry
+		_exportImportProcessCallbackRegistry;
+
 	private GroupLocalService _groupLocalService;
 	private ImageLocalService _imageLocalService;
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;

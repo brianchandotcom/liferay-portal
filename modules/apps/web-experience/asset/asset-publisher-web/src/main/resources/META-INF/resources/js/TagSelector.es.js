@@ -13,7 +13,6 @@ class TagSelector extends Component {
 	 * @inheritDoc
 	 */
 	attached() {
-		this.input_ = this.element.querySelector('input[type="text"]');
 		this.element.addEventListener('click', this.focusTagInput_.bind(this));
 
 		AUI().use(
@@ -24,8 +23,8 @@ class TagSelector extends Component {
 					contentBox: this.element,
 					eventName: this.eventName,
 					groupIds: this.groupIds,
-					hiddenInput: `#${this.element.querySelector('input[type="hidden"]').getAttribute('id')}`,
-					input: `#${this.input_.getAttribute('id')}`,
+					hiddenInput: `#${this.refs.hiddenInput.getAttribute('id')}`,
+					input: `#${this.refs.tagInput.getAttribute('id')}`,
 					portletURL: this.tagSelectorURL,
 					tagNames: this.rule.queryValues || ''
 				};
@@ -53,13 +52,11 @@ class TagSelector extends Component {
 	}
 
 	/**
-	 * Focuses the input field using for adding new tags.
-	 * This method uses the private input_ attribute, which is
-	 * stablished inside attached() method.
+	 * Focuses the input field (tagInput ref) used for adding new tags.
 	 * @private
 	 */
 	focusTagInput_() {
-		this.input_.focus();
+		this.refs.tagInput.focus();
 	}
 }
 

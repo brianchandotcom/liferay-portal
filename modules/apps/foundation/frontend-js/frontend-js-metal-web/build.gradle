@@ -10,6 +10,10 @@ configJSModules {
 	moduleFormat "/.soy/g,.soy.js"
 }
 
+node {
+	nodeVersion = "8.1.0"
+}
+
 transpileJS {
 	skipWhenEmpty = false
 	sourceDir = npmInstall.nodeModulesDir

@@ -28,9 +28,7 @@ public class PortalClassLoaderUtil {
 	}
 
 	public static boolean isPortalClassLoader(ClassLoader classLoader) {
-		if ((classLoader == _classLoader) ||
-			(classLoader == _classLoader.getParent())) {
-
+		if (classLoader == _classLoader) {
 			return true;
 		}
 

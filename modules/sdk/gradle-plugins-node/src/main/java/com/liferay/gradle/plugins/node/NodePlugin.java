@@ -68,9 +68,21 @@ public class NodePlugin implements Plugin<Project> {
 		NpmInstallTask npmInstallTask = _addTaskNpmInstall(
 			project, cleanNpmTask);
 
+		Map<String, Object> packageJsonMap = null;
+
+		File packageJsonFile = npmInstallTask.getPackageJsonFile();
+
+		if (packageJsonFile.exists()) {
+			JsonSlurper jsonSlurper = new JsonSlurper();
+
+			packageJsonMap = (Map<String, Object>)jsonSlurper.parse(
+				packageJsonFile);
+		}
+
 		_addTaskNpmShrinkwrap(project, cleanNpmTask, npmInstallTask);
 
-		_configureTasksDownloadNodeModule(project, npmInstallTask);
+		_configureTasksDownloadNodeModule(
+			project, npmInstallTask, packageJsonMap);
 
 		_configureTasksExecuteNode(
 			project, nodeExtension, GradleUtil.isRunningInsideDaemon());
@@ -247,7 +259,8 @@ public class NodePlugin implements Plugin<Project> {
 
 	private void _configureTaskDownloadNodeModule(
 		DownloadNodeModuleTask downloadNodeModuleTask,
-		final NpmInstallTask npmInstallTask) {
+		final NpmInstallTask npmInstallTask,
+		final Map<String, Object> packageJsonMap) {
 
 		downloadNodeModuleTask.onlyIf(
 			new Spec<Task>() {
@@ -267,18 +280,11 @@ public class NodePlugin implements Plugin<Project> {
 						return true;
 					}
 
-					File packageJsonFile = npmInstallTask.getPackageJsonFile();
-
-					if (!packageJsonFile.exists()) {
+					if (packageJsonMap == null) {
 						return true;
 					}
 
 					String moduleName = downloadNodeModuleTask.getModuleName();
-
-					JsonSlurper jsonSlurper = new JsonSlurper();
-
-					Map<String, Object> packageJsonMap =
-						(Map<String, Object>)jsonSlurper.parse(packageJsonFile);
 
 					Map<String, Object> dependenciesJsonMap =
 						(Map<String, Object>)packageJsonMap.get("dependencies");
@@ -380,7 +386,8 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	private void _configureTasksDownloadNodeModule(
-		Project project, final NpmInstallTask npmInstallTask) {
+		Project project, final NpmInstallTask npmInstallTask,
+		final Map<String, Object> packageJsonMap) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -393,7 +400,7 @@ public class NodePlugin implements Plugin<Project> {
 					DownloadNodeModuleTask downloadNodeModuleTask) {
 
 					_configureTaskDownloadNodeModule(
-						downloadNodeModuleTask, npmInstallTask);
+						downloadNodeModuleTask, npmInstallTask, packageJsonMap);
 				}
 
 			});

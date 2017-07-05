@@ -240,6 +240,12 @@ public class WikiPageStagedModelDataHandler
 					serviceContext);
 			}
 			else {
+				_wikiPageLocalService.updateAsset(
+					userId, existingPage, serviceContext.getAssetCategoryIds(),
+					serviceContext.getAssetTagNames(),
+					serviceContext.getAssetLinkEntryIds(),
+					serviceContext.getAssetPriority());
+
 				importedPage = existingPage;
 			}
 		}

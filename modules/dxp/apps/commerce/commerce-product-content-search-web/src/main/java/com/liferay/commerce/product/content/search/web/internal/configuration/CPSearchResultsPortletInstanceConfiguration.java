@@ -20,6 +20,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @ExtendedObjectClassDefinition(
 	category = "commerce",
@@ -32,7 +33,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CPSearchResultsPortletInstanceConfiguration {
 
+	@Meta.AD(deflt = "false", required = false)
+	public boolean useAssetCategories();
+
 	@Meta.AD(required = false)
-	public String assetVocabularyId();
+	public String[] assetCategoryIds();
+
+	@Meta.AD(deflt = "", required = false)
+	public String displayStyle();
+
+	@Meta.AD(deflt = "0", required = false)
+	public long displayStyleGroupId();
 
 }

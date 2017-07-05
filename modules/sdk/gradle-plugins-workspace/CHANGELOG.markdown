@@ -105,7 +105,7 @@ in `gradle.properties`.
 ### Changed
 - [LPS-72252]: Update the [Liferay Gradle Plugins] dependency to version 3.3.9.
 
-## 1.5.0 - *(Unreleased)*
+## 1.5.0 - 2017-07-05
 
 ### Added
 - [LPS-73056]: Add the ability to download the Liferay bundle from
@@ -114,8 +114,8 @@ behavior can be enabled by setting the `liferay.workspace.bundle.token.download`
 property to `true` in `gradle.properties`.
 
 ### Changed
-- [LPS-73156]: Update the [Liferay Gradle Plugins] dependency to version 3.3.31.
 - [LPS-73248]: Use Liferay 7.0.3 GA4 by default.
+- [LPS-73383]: Update the [Liferay Gradle Plugins] dependency to version 3.3.35.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -140,5 +140,5 @@ property to `true` in `gradle.properties`.
 [LPS-71724]: https://issues.liferay.com/browse/LPS-71724
 [LPS-72252]: https://issues.liferay.com/browse/LPS-72252
 [LPS-73056]: https://issues.liferay.com/browse/LPS-73056
-[LPS-73156]: https://issues.liferay.com/browse/LPS-73156
 [LPS-73248]: https://issues.liferay.com/browse/LPS-73248
+[LPS-73383]: https://issues.liferay.com/browse/LPS-73383

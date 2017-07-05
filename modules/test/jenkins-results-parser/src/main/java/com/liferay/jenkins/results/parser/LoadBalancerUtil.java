@@ -180,7 +180,7 @@ public class LoadBalancerUtil {
 			allJenkinsMasters = new ArrayList<>();
 
 			for (String jenkinsMasterName :
-					JenkinsResultsParserUtil.getJenkinsMasterNames(
+					JenkinsResultsParserUtil.getJenkinsMasters(
 						properties, masterPrefix)) {
 
 				JenkinsMaster jenkinsMaster = new JenkinsMaster(

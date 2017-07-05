@@ -533,7 +533,7 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static List<String> getJenkinsMasterNames(
+	public static List<String> getJenkinsMasters(
 		Properties buildProperties, String prefix) {
 
 		List<String> masterNames = new ArrayList<>();

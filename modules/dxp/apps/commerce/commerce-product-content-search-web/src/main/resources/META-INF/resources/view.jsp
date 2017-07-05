@@ -17,43 +17,48 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+Map<String, Object> contextObjects = new HashMap<>();
+
+contextObjects.put("cpSearchResultsDisplayContext", cpSearchResultsDisplayContext);
+
+SearchContainer searchContainer = cpSearchResultsDisplayContext.getSearchContainer();
 %>
 
-<div class="container-fluid-1280">
-	<liferay-ui:search-container
-			id="cpSearchResults"
-			searchContainer="<%= cpSearchResultsDisplayContext.getSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.search.Document"
-				escapedModel="<%= false %>"
-				keyProperty="UID"
-				modelVar="document"
-				stringKey="<%= true %>"
-		>
-			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-				<h4>
+<liferay-ddm:template-renderer
+	className="<%= CPSearchResultsPortlet.class.getName() %>"
+	contextObjects="<%= contextObjects %>"
+	displayStyle="<%= cpSearchResultsDisplayContext.getDisplayStyle() %>"
+	displayStyleGroupId="<%= cpSearchResultsDisplayContext.getDisplayStyleGroupId() %>"
+	entries="<%= searchContainer.getResults() %>"
+>
+	<%
+	for (Object object : searchContainer.getResults()) {
+		Document document = (Document)object;
+	%>
 
-					<%
-						String img = cpSearchResultsDisplayContext.getProductDefaultImage(document, themeDisplay);
-					%>
+		<h4>
 
-					<div>
-						<c:if test="<%= Validator.isNotNull(img) %>">
-							<img src="<%= img %>">
-						</c:if>
-					</div>
+			<%
+			String img = cpSearchResultsDisplayContext.getProductDefaultImage(document, themeDisplay);
+			%>
 
-					<div>
-						<a href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(themeDisplay.getPortalURL(), document) %>">
-							<strong><%= cpSearchResultsDisplayContext.getTitle(document) %></strong>
-						</a>
-					</div>
-				</h4>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
+			<div>
+				<c:if test="<%= Validator.isNotNull(img) %>">
+					<img src="<%= img %>">
+				</c:if>
+			</div>
 
-		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" type="more" />
-	</liferay-ui:search-container>
-</div>
+			<div>
+				<a href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(themeDisplay.getPortalURL(), document) %>">
+					<strong><%= cpSearchResultsDisplayContext.getTitle(document) %></strong>
+				</a>
+			</div>
+		</h4>
+
+	<%
+	}
+	%>
+
+</liferay-ddm:template-renderer>
+
+<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />

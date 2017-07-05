@@ -12,21 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_3;
+package com.liferay.portal.upgrade.v7_0_4;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_0_3.util.EmailAddressTable;
+import com.liferay.portal.upgrade.v7_0_3.UpgradeMVCCVersion;
+import com.liferay.portal.upgrade.v7_0_4.util.ContactTable;
 
 /**
- * @author Ugurcan Cetin
+ * @author Adolfo Pérez
  */
-public class UpgradeEmailAddress extends UpgradeProcess {
+public class UpgradeSchema extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			EmailAddressTable.class,
-			new AlterColumnType("address", "VARCHAR(254) null"));
+		upgrade(UpgradeMVCCVersion.class);
 	}
 
+	/**
+	 * @author Ugurcan Cetin
+	 */
+	public static class UpgradeContact extends UpgradeProcess {
+
+		@Override
+		protected void doUpgrade() throws Exception {
+			alter(
+				ContactTable.class,
+				new AlterColumnType("emailAddress", "VARCHAR(254) null"));
+		}
+
+	}
 }

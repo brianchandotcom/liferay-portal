@@ -12,18 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_3;
+package com.liferay.portal.upgrade.v7_0_4;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.upgrade.v7_0_4.util.UserTable;
 
 /**
- * @author Adolfo Pérez
+ * @author Ugurcan Cetin
  */
-public class UpgradeSchema extends UpgradeProcess {
+public class UpgradeUser extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeMVCCVersion.class);
+		alter(
+			UserTable.class,
+			new AlterColumnType("emailAddress", "VARCHAR(254) null"));
 	}
 
 }

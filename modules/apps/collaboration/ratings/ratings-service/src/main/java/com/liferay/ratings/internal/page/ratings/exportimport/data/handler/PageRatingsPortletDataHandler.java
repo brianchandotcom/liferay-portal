@@ -15,7 +15,7 @@
 package com.liferay.ratings.internal.page.ratings.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
-import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -241,7 +241,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 						exportActionableDynamicQuery.getStagedModelType();
 
 					long modelDeletionCount =
-						ExportImportHelperUtil.getModelDeletionCount(
+						_exportImportHelper.getModelDeletionCount(
 							portletDataContext, stagedModelType);
 
 					manifestSummary.addModelDeletionCount(
@@ -265,6 +265,9 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PageRatingsPortletDataHandler.class);
+
+	@Reference
+	private ExportImportHelper _exportImportHelper;
 
 	private RatingsEntryLocalService _ratingsEntryLocalService;
 

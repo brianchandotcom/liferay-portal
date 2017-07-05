@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.content.search.web.internal.display.context;
 
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.content.search.web.internal.configuration.CPSearchResultsPortletInstanceConfiguration;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
@@ -22,16 +23,18 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.*;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -44,8 +47,9 @@ import javax.servlet.http.HttpServletRequest;
 public class CPSearchResultsDisplayContext {
 
 	public CPSearchResultsDisplayContext(
-		DLAppService dlAppService, HttpServletRequest httpServletRequest,
-		PortletSharedSearchResponse portletSharedSearchResponse) {
+			DLAppService dlAppService, HttpServletRequest httpServletRequest,
+			PortletSharedSearchResponse portletSharedSearchResponse)
+		throws ConfigurationException {
 
 		_dlAppService = dlAppService;
 		_httpServletRequest = httpServletRequest;
@@ -58,6 +62,27 @@ public class CPSearchResultsDisplayContext {
 		_liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
 
 		_locale = httpServletRequest.getLocale();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		_cpSearchResultsPortletInstanceConfiguration =
+			portletDisplay.getPortletInstanceConfiguration(
+				CPSearchResultsPortletInstanceConfiguration.class);
+
+	}
+
+	public boolean useCategories() {
+		return _cpSearchResultsPortletInstanceConfiguration.useAssetCategories();
+	}
+
+	public String getCategoryIds() {
+		return StringUtil.merge(
+			_cpSearchResultsPortletInstanceConfiguration.assetCategoryIds(),
+			StringPool.COMMA) ;
 	}
 
 	public String getProductDefaultImage(
@@ -122,6 +147,30 @@ public class CPSearchResultsDisplayContext {
 		return title;
 	}
 
+
+	public String getDisplayStyle(){
+		return _cpSearchResultsPortletInstanceConfiguration.displayStyle();
+	}
+
+	public long getDisplayStyleGroupId() {
+		if (_displayStyleGroupId != 0) {
+			return _displayStyleGroupId;
+		}
+
+		_displayStyleGroupId = _cpSearchResultsPortletInstanceConfiguration.
+			displayStyleGroupId();
+
+		if (_displayStyleGroupId <= 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+		}
+
+		return _displayStyleGroupId;
+	}
+
 	private final DLAppService _dlAppService;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
@@ -129,5 +178,7 @@ public class CPSearchResultsDisplayContext {
 	private final Locale _locale;
 	private final PortletSharedSearchResponse _portletSharedSearchResponse;
 	private SearchContainer<Document> _searchContainer;
-
+	private final CPSearchResultsPortletInstanceConfiguration
+		_cpSearchResultsPortletInstanceConfiguration;
+	private long _displayStyleGroupId;
 }

@@ -154,14 +154,26 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="build-lib-versions">
+		<delete dir="${project.dir}/tmp/license-reports" quiet="true" />
+
+		<gradle-execute dir="${project.dir}/modules" task="generateLicenseReport">
+			<arg value="-Dbuild.profile=portal" />
+			<arg value="-Dlicense.report.enabled=true" />
+			<arg value="-Dlicense.report.output.dir=${project.dir}/tmp/license-reports" />
+		</gradle-execute>
+
+		<pathconvert pathsep="," property="modules.lib.versions.files">
+			<fileset dir="${project.dir}/tmp/license-reports" includes="*.xml" />
+		</pathconvert>
+
 		<java
 			classname="com.liferay.portal.tools.XSLTBuilder"
 			classpathref="project.classpath"
 			fork="true"
+			inputstring="${modules.lib.versions.files},${project.dir}/lib/versions.xml,${project.dir}/lib/versions-ext.xml"
 			newenvironment="true"
 		>
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg value="${project.dir}/lib/versions.xml,${project.dir}/lib/versions-ext.xml" />
 			<arg value="${project.dir}/lib/versions.xsl" />
 			<arg value="${project.dir}/lib/versions.html" />
 		</java>

@@ -1573,6 +1573,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	protected MissingReference validateMissingReference(
 		PortletDataContext portletDataContext, Element element) {
 
+		// Missing reference is exported after added as missing
+
+		if (Validator.isNotNull(element.attributeValue("element-path"))) {
+			return null;
+		}
+
 		String className = element.attributeValue("class-name");
 
 		StagedModelDataHandler<?> stagedModelDataHandler =

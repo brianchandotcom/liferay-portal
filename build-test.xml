@@ -8380,27 +8380,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		</if>
 	</target>
 
-	<target name="prepare-tomcat-ext-env">
-		<if>
-			<not>
-		    	<resourcecontains resource="${app.server.dir}/conf/Catalina/localhost/ROOT.xml" substring="ExtResourceSet" />
-		    </not>
-			<then>
-				<replace file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml">
-					<replacetoken><![CDATA[</Context>]]></replacetoken>
-					<replacevalue><![CDATA[	<Resources>
-		<PreResources
-			className="com.liferay.support.tomcat.webresources.ExtResourceSet"
-			base="${catalina.base}/lib/ext/portal"
-			webAppMount="/WEB-INF/lib"
-		/>
-	</Resources>
-</Context>]]></replacevalue>
-				</replace>
-			</then>
-		</if>
-	</target>
-
 	<target name="prepare-virtual-host-name-properties">
 		<if>
 			<isset property="virtual.host.name" />
@@ -9420,8 +9399,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
 				<ant antfile="build-dist.xml" target="update-java-security-tomcat" />
-
-				<antcall target="prepare-tomcat-ext-env" />
 			</then>
 		</if>
 

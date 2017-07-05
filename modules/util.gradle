@@ -103,6 +103,14 @@ printDependencyPath {
 repositories {
 	mavenLocal()
 
+	File tmpMavenRepositoryDir = file("../.m2-tmp")
+
+	if (tmpMavenRepositoryDir.exists()) {
+		maven {
+			url tmpMavenRepositoryDir
+		}
+	}
+
 	maven {
 		url System.properties["repository.url"] ?: "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
 	}

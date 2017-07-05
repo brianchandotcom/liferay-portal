@@ -79,11 +79,7 @@ public class FailureMessageUtil {
 	private static final GenericFailureMessageGenerator
 		_genericFailureMessageGenerator = new GenericFailureMessageGenerator();
 	private static final FailureMessageGenerator[]
-		_simpleFailureMessageGenerators = {
-			new IntegrationTestTimeoutFailureMessageGenerator(),
-			new LocalGitMirrorFailureMessageGenerator(),
-			new PoshiValidationFailureMessageGenerator(),
-			new SourceFormatFailureMessageGenerator()
-		};
+		_simpleFailureMessageGenerators =
+			{new SubrepositorySourceFormatFailureMessageGenerator()};
 
 }

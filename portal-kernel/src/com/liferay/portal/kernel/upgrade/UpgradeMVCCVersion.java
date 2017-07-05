@@ -47,7 +47,7 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 
 		DBInspector dbInspector = new DBInspector(connection);
 
-		tableName = normalizeName(tableName, databaseMetaData);
+		tableName = dbInspector.normalizeName(tableName, databaseMetaData);
 
 		try (ResultSet tableResultSet = databaseMetaData.getTables(
 				dbInspector.getCatalog(), dbInspector.getSchema(), tableName,
@@ -62,7 +62,8 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 			try (ResultSet columnResultSet = databaseMetaData.getColumns(
 					dbInspector.getCatalog(), dbInspector.getSchema(),
 					tableName,
-					normalizeName("mvccVersion", databaseMetaData))) {
+					dbInspector.normalizeName(
+						"mvccVersion", databaseMetaData))) {
 
 				if (columnResultSet.next()) {
 					return;

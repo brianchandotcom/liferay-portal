@@ -44,7 +44,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.MissingReference;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContextFactory;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -223,7 +223,7 @@ public class PortletImportController implements ImportController {
 				EVENT_PORTLET_IMPORT_STARTED, getProcessFlag(),
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
-				PortletDataContextFactoryUtil.clonePortletDataContext(
+				_portletDataContextFactory.clonePortletDataContext(
 					portletDataContext));
 
 			Map<String, Serializable> settingsMap =
@@ -239,7 +239,7 @@ public class PortletImportController implements ImportController {
 				EVENT_PORTLET_IMPORT_SUCCEEDED, getProcessFlag(),
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
-				PortletDataContextFactoryUtil.clonePortletDataContext(
+				_portletDataContextFactory.clonePortletDataContext(
 					portletDataContext),
 				userId);
 		}
@@ -250,7 +250,7 @@ public class PortletImportController implements ImportController {
 				EVENT_PORTLET_IMPORT_FAILED, getProcessFlag(),
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
-				PortletDataContextFactoryUtil.clonePortletDataContext(
+				_portletDataContextFactory.clonePortletDataContext(
 					portletDataContext),
 				t);
 
@@ -1022,7 +1022,7 @@ public class PortletImportController implements ImportController {
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
 		PortletDataContext portletDataContext =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
+			_portletDataContextFactory.createImportPortletDataContext(
 				layout.getCompanyId(), targetGroupId, parameterMap,
 				userIdStrategy, zipReader);
 
@@ -1507,6 +1507,9 @@ public class PortletImportController implements ImportController {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletDataContextFactory _portletDataContextFactory;
 
 	@Reference
 	private PortletDataHandlerProvider _portletDataHandlerProvider;

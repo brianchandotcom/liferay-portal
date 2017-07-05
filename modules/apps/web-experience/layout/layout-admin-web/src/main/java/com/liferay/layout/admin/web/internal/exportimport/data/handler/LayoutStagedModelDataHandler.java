@@ -29,7 +29,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContextFactory;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSenderUtil;
@@ -799,7 +799,7 @@ public class LayoutStagedModelDataHandler
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					EVENT_PORTLET_EXPORT_STARTED, getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
-					PortletDataContextFactoryUtil.clonePortletDataContext(
+					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext));
 
 				_portletExportController.exportPortlet(
@@ -817,14 +817,14 @@ public class LayoutStagedModelDataHandler
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					EVENT_PORTLET_EXPORT_SUCCEEDED, getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
-					PortletDataContextFactoryUtil.clonePortletDataContext(
+					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext));
 			}
 			catch (Throwable t) {
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					EVENT_PORTLET_EXPORT_FAILED, getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
-					PortletDataContextFactoryUtil.clonePortletDataContext(
+					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext),
 					t);
 
@@ -1305,7 +1305,7 @@ public class LayoutStagedModelDataHandler
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					EVENT_PORTLET_IMPORT_STARTED, getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
-					PortletDataContextFactoryUtil.clonePortletDataContext(
+					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext));
 
 				// Portlet preferences
@@ -1334,14 +1334,14 @@ public class LayoutStagedModelDataHandler
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					EVENT_PORTLET_IMPORT_SUCCEEDED, getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
-					PortletDataContextFactoryUtil.clonePortletDataContext(
+					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext));
 			}
 			catch (Throwable t) {
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					EVENT_PORTLET_IMPORT_FAILED, getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
-					PortletDataContextFactoryUtil.clonePortletDataContext(
+					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext),
 					t);
 
@@ -1858,6 +1858,10 @@ public class LayoutStagedModelDataHandler
 	private LayoutTemplateLocalService _layoutTemplateLocalService;
 	private final PermissionImporter _permissionImporter =
 		PermissionImporter.getInstance();
+
+	@Reference
+	private PortletDataContextFactory _portletDataContextFactory;
+
 	private PortletExportController _portletExportController;
 	private PortletImportController _portletImportController;
 	private PortletLocalService _portletLocalService;

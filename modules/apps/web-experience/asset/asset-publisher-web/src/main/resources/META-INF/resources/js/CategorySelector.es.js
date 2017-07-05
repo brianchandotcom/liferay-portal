@@ -38,7 +38,6 @@ class CategorySelector extends Component {
 				this.element.parentNode.removeAttribute('tabindex');
 			}.bind(this)
 		);
-
 	}
 
 	/**
@@ -50,7 +49,6 @@ class CategorySelector extends Component {
 		this.rule.categoryIdsTitles = this.categoriesSelector_.entries.values.map((element) => element.value);
 		this.rule.queryValues = this.categoriesSelector_.entries.keys.join(',');
 	}
-
 }
 
 CategorySelector.STATE = {

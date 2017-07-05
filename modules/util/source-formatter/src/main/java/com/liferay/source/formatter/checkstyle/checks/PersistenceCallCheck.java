@@ -15,9 +15,10 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
+import com.liferay.source.formatter.util.ThreadSafeSortedClassLibraryBuilder;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -26,19 +27,22 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-import com.thoughtworks.qdox.JavaDocBuilder;
-import com.thoughtworks.qdox.model.DefaultDocletTagFactory;
+import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaField;
-import com.thoughtworks.qdox.model.Type;
+import com.thoughtworks.qdox.model.JavaSource;
 import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -71,23 +75,23 @@ public class PersistenceCallCheck extends AbstractCheck {
 
 		String content = (String)fileText.getFullText();
 
-		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(
-			new DefaultDocletTagFactory(), new ThreadSafeClassLibrary());
+		JavaProjectBuilder javaProjectBuilder = new JavaProjectBuilder(
+			new ThreadSafeSortedClassLibraryBuilder());
 
 		try {
-			javaDocBuilder.addSource(new UnsyncStringReader(content));
+			javaProjectBuilder.addSource(new UnsyncStringReader(content));
 		}
 		catch (ParseException pe) {
 			return;
 		}
 
-		JavaClass javaClass = _getJavaClass(javaDocBuilder, fileName);
+		JavaClass javaClass = _getJavaClass(javaProjectBuilder, fileName);
 
-		javaDocBuilder = _addExtendedClassSource(
-			javaDocBuilder, javaClass, fileName);
+		javaProjectBuilder = _addExtendedClassSource(
+			javaProjectBuilder, javaClass, content, fileName);
 
 		List<String> importNames = _getImportNames(detailAST);
-		Map<String, String> variablesMap = _getVariablesMap(javaDocBuilder);
+		Map<String, String> variablesMap = _getVariablesMap(javaProjectBuilder);
 
 		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_CALL);
@@ -99,15 +103,28 @@ public class PersistenceCallCheck extends AbstractCheck {
 		}
 	}
 
-	private JavaDocBuilder _addExtendedClassSource(
-		JavaDocBuilder javaDocBuilder, JavaClass javaClass, String fileName) {
+	private JavaProjectBuilder _addExtendedClassSource(
+		JavaProjectBuilder javaProjectBuilder, JavaClass javaClass,
+		String content, String fileName) {
 
-		Type superClassType = javaClass.getSuperClass();
+		Pattern pattern = Pattern.compile(
+			"\\s" + javaClass.getName() + "\\s+extends\\s+(\\S+)\\s");
 
-		String fullyQualifiedName = superClassType.getFullyQualifiedName();
+		Matcher matcher = pattern.matcher(content);
 
-		if (!fullyQualifiedName.startsWith("com.liferay")) {
-			return javaDocBuilder;
+		if (!matcher.find()) {
+			return javaProjectBuilder;
+		}
+
+		String extendedClassName = matcher.group(1);
+
+		String fullyQualifiedName = _getFullyQualifiedName(
+			extendedClassName, javaProjectBuilder);
+
+		if ((fullyQualifiedName == null) ||
+			!fullyQualifiedName.startsWith("com.liferay")) {
+
+			return javaProjectBuilder;
 		}
 
 		int pos = fileName.lastIndexOf("/com/liferay/");
@@ -117,12 +134,12 @@ public class PersistenceCallCheck extends AbstractCheck {
 				StringUtil.replace(fullyQualifiedName, '.', '/') + ".java";
 
 		try {
-			javaDocBuilder.addSource(new File(extendedClassFileName));
+			javaProjectBuilder.addSource(new File(extendedClassFileName));
 		}
 		catch (Exception e) {
 		}
 
-		return javaDocBuilder;
+		return javaProjectBuilder;
 	}
 
 	private void _checkClass(
@@ -208,6 +225,34 @@ public class PersistenceCallCheck extends AbstractCheck {
 		}
 	}
 
+	private String _getFullyQualifiedName(
+		String className, JavaProjectBuilder javaProjectBuilder) {
+
+		Collection<JavaSource> sources = javaProjectBuilder.getSources();
+
+		Iterator<JavaSource> iterator = sources.iterator();
+
+		String packageName = null;
+
+		while (iterator.hasNext()) {
+			JavaSource javaSource = iterator.next();
+
+			List<String> imports = javaSource.getImports();
+
+			for (String importString : imports) {
+				if (importString.endsWith(StringPool.PERIOD + className)) {
+					return importString;
+				}
+			}
+
+			if (packageName == null) {
+				packageName = javaSource.getPackageName();
+			}
+		}
+
+		return packageName + StringPool.PERIOD + className;
+	}
+
 	private List<String> _getImportNames(DetailAST detailAST) {
 		List<String> importASTList = new ArrayList<>();
 
@@ -230,13 +275,13 @@ public class PersistenceCallCheck extends AbstractCheck {
 	}
 
 	private JavaClass _getJavaClass(
-		JavaDocBuilder javaDocBuilder, String fileName) {
+		JavaProjectBuilder javaProjectBuilder, String fileName) {
 
 		int pos = fileName.lastIndexOf("/");
 
 		String className = fileName.substring(pos + 1, fileName.length() - 5);
 
-		for (JavaClass javaClass : javaDocBuilder.getClasses()) {
+		for (JavaClass javaClass : javaProjectBuilder.getClasses()) {
 			if (className.equals(javaClass.getName())) {
 				return javaClass;
 			}
@@ -246,20 +291,40 @@ public class PersistenceCallCheck extends AbstractCheck {
 	}
 
 	private Map<String, String> _getVariablesMap(
-		JavaDocBuilder javaDocBuilder) {
+		JavaProjectBuilder javaProjectBuilder) {
 
 		Map<String, String> variablesMap = new HashMap<>();
 
-		for (JavaClass javaClass : javaDocBuilder.getClasses()) {
+		for (JavaClass javaClass : javaProjectBuilder.getClasses()) {
 			for (JavaField javaField : javaClass.getFields()) {
 				String fieldName = javaField.getName();
 
-				Type fieldType = javaField.getType();
+				JavaClass fieldTypeClass = javaField.getType();
 
-				String fullyQualifiedTypeName =
-					fieldType.getFullyQualifiedName();
+				String fieldTypeClassName = null;
 
-				variablesMap.put(fieldName, fullyQualifiedTypeName);
+				try {
+					fieldTypeClassName = fieldTypeClass.getName();
+				}
+				catch (Throwable t) {
+					Pattern pattern = Pattern.compile(
+						"\\s(\\S+)\\s+(\\S+\\.)?" + fieldName);
+
+					Matcher matcher = pattern.matcher(javaField.toString());
+
+					if (matcher.find()) {
+						fieldTypeClassName = matcher.group(1);
+					}
+				}
+
+				if (fieldTypeClassName != null) {
+					if (!fieldTypeClassName.contains(StringPool.PERIOD)) {
+						fieldTypeClassName = _getFullyQualifiedName(
+							fieldTypeClassName, javaProjectBuilder);
+					}
+
+					variablesMap.put(fieldName, fieldTypeClassName);
+				}
 			}
 		}
 

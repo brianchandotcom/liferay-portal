@@ -29,13 +29,12 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
-import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
+import com.liferay.source.formatter.util.ThreadSafeSortedClassLibraryBuilder;
 
-import com.thoughtworks.qdox.JavaDocBuilder;
-import com.thoughtworks.qdox.model.DefaultDocletTagFactory;
+import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaMethod;
-import com.thoughtworks.qdox.model.Type;
+import com.thoughtworks.qdox.model.JavaType;
 import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
@@ -122,8 +121,6 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			"set" + TextFormatter.format(attribute, TextFormatter.G);
 
 		for (String dataType : _primitiveTagAttributeDataTypes) {
-			Type javaType = new Type(dataType);
-
 			JavaMethod setAttributeMethod = null;
 
 			while (true) {
@@ -132,8 +129,8 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 				// can throw NPE as a result of a race condition
 
 				try {
-					setAttributeMethod = tagJavaClass.getMethodBySignature(
-						setAttributeMethodName, new Type[] {javaType}, true);
+					setAttributeMethod = _getSetAttributeMethod(
+						tagJavaClass, setAttributeMethodName, dataType);
 
 					break;
 				}
@@ -163,9 +160,8 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			return line;
 		}
 
-		JavaMethod setAttributeMethod = tagJavaClass.getMethodBySignature(
-			setAttributeMethodName, new Type[] {new Type("java.lang.String")},
-			true);
+		JavaMethod setAttributeMethod = _getSetAttributeMethod(
+			tagJavaClass, setAttributeMethodName, "java.lang.String");
 
 		if (setAttributeMethod == null) {
 			return line;
@@ -306,6 +302,34 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			});
 	}
 
+	private JavaMethod _getSetAttributeMethod(
+		JavaClass javaClass, String methodName, String parameterTypeName) {
+
+		List<JavaMethod> methods = javaClass.getMethods(true);
+
+		for (JavaMethod method : methods) {
+			if (!methodName.equals(method.getName())) {
+				continue;
+			}
+
+			List<JavaType> parameterTypes = method.getParameterTypes();
+
+			if (parameterTypes.size() != 1) {
+				continue;
+			}
+
+			JavaType parameterType = parameterTypes.get(0);
+
+			if (parameterTypeName.equals(
+					parameterType.getFullyQualifiedName())) {
+
+				return method;
+			}
+		}
+
+		return null;
+	}
+
 	private Map<String, JavaClass> _getTagJavaClassesMap() throws Exception {
 		Map<String, JavaClass> tagJavaClassesMap = new HashMap<>();
 
@@ -373,18 +397,17 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 					continue;
 				}
 
-				JavaDocBuilder javaDocBuilder = new JavaDocBuilder(
-					new DefaultDocletTagFactory(),
-					new ThreadSafeClassLibrary());
+				JavaProjectBuilder javaProjectBuilder = new JavaProjectBuilder(
+					new ThreadSafeSortedClassLibraryBuilder());
 
 				try {
-					javaDocBuilder.addSource(tagJavaFile);
+					javaProjectBuilder.addSource(tagJavaFile);
 				}
 				catch (ParseException pe) {
 					continue;
 				}
 
-				JavaClass tagJavaClass = javaDocBuilder.getClassByName(
+				JavaClass tagJavaClass = javaProjectBuilder.getClassByName(
 					tagClassName);
 
 				Element tagNameElement = tagElement.element("name");

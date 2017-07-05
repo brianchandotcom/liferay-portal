@@ -1,7 +1,8 @@
 {
 	"dependencies": {
 		"metal-component": "^2.4.5",
-		"metal-soy": "^2.4.5"
+		"metal-soy": "^2.4.5",
+		"metal-state": "^2.13.2"
 	},
 	"devDependencies": {
 		"liferay-module-config-generator": "^1.2.1",

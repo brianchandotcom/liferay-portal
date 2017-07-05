@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -57,7 +58,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -1942,7 +1942,7 @@ public class LayoutTypePortletImpl
 
 		UnicodeProperties newTypeSettingsProperties = new UnicodeProperties();
 
-		StringBundler sb = new StringBundler(typeSettingsProperties.size() * 2);
+		String nestedPortletIds = "";
 
 		for (Map.Entry<String, String> entry :
 				typeSettingsProperties.entrySet()) {
@@ -1950,15 +1950,13 @@ public class LayoutTypePortletImpl
 			String key = entry.getKey();
 
 			if (key.startsWith(portletNamespace)) {
-				sb.append(entry.getValue());
-				sb.append(StringPool.COMMA);
+				nestedPortletIds += entry.getValue();
+				nestedPortletIds += CharPool.COMMA;
 			}
 		}
 
-		if (sb.index() != 0) {
-			sb.setIndex(sb.index() - 1);
-
-			for (String nestedPortletId : StringUtil.split(sb.toString())) {
+		if (Validator.isNotNull(nestedPortletIds)) {
+			for (String nestedPortletId : StringUtil.split(nestedPortletIds)) {
 				String childNestedPortletNamespace =
 					PortalUtil.getPortletNamespace(nestedPortletId);
 

@@ -292,7 +292,7 @@ public interface LiferaySelenium {
 
 	public void openWindow(String url, String windowID) throws Exception;
 
-	public void paste(String locator);
+	public void paste(String locator) throws Exception;
 
 	public void pause(String waitTime) throws Exception;
 
@@ -332,9 +332,10 @@ public interface LiferaySelenium {
 	public void sendEmail(String to, String subject, String body)
 		throws Exception;
 
-	public void sendKeys(String locator, String value);
+	public void sendKeys(String locator, String value) throws Exception;
 
-	public void sendKeysAceEditor(String locator, String value);
+	public void sendKeysAceEditor(String locator, String value)
+		throws Exception;
 
 	public void sendLogger(String id, String status);
 
@@ -394,9 +395,9 @@ public interface LiferaySelenium {
 
 	public void stopLogger();
 
-	public void type(String locator, String value);
+	public void type(String locator, String value) throws Exception;
 
-	public void typeAceEditor(String locator, String value);
+	public void typeAceEditor(String locator, String value) throws Exception;
 
 	public void typeAlloyEditor(String locator, String value);
 
@@ -404,7 +405,7 @@ public interface LiferaySelenium {
 
 	public void typeEditor(String locator, String value);
 
-	public void typeKeys(String locator, String value);
+	public void typeKeys(String locator, String value) throws Exception;
 
 	public void typeScreen(String value);
 

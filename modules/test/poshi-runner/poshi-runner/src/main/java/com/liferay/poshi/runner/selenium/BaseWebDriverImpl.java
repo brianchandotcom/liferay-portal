@@ -2011,7 +2011,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void paste(String location) {
+	public void paste(String location) throws Exception {
 		type(location, _clipBoard);
 	}
 
@@ -2282,12 +2282,14 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void sendKeys(String locator, String value) {
+	public void sendKeys(String locator, String value) throws Exception {
 		typeKeys(locator, value);
 	}
 
 	@Override
-	public void sendKeysAceEditor(String locator, String value) {
+	public void sendKeysAceEditor(String locator, String value)
+		throws Exception {
+
 		WebElement webElement = getWebElement(locator);
 
 		webElement.sendKeys(Keys.chord(Keys.CONTROL, Keys.END));
@@ -2679,8 +2681,13 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void type(String locator, String value) {
+	public void type(String locator, String value) throws Exception {
 		WebElement webElement = getWebElement(locator);
+
+		if (webElement == null) {
+			throw new Exception(
+				"Element is not present at \"" + locator + "\"");
+		}
 
 		if (!webElement.isEnabled()) {
 			return;
@@ -2692,7 +2699,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void typeAceEditor(String locator, String value) {
+	public void typeAceEditor(String locator, String value) throws Exception {
 		WebElement webElement = getWebElement(locator);
 
 		webElement.sendKeys(Keys.chord(Keys.CONTROL, "a"));
@@ -2810,8 +2817,13 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void typeKeys(String locator, String value) {
+	public void typeKeys(String locator, String value) throws Exception {
 		WebElement webElement = getWebElement(locator);
+
+		if (webElement == null) {
+			throw new Exception(
+				"Element is not present at \"" + locator + "\"");
+		}
 
 		if (!webElement.isEnabled()) {
 			return;

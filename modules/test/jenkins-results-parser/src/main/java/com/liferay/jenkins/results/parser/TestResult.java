@@ -79,6 +79,8 @@ public class TestResult {
 		status = caseJSONObject.getString("status");
 
 		if (status.equals("FAILED")) {
+			errorDetails = caseJSONObject.getString("errorDetails");
+
 			errorStackTrace = caseJSONObject.getString("errorStackTrace");
 		}
 	}
@@ -131,7 +133,8 @@ public class TestResult {
 					getPoshiSummaryURL(testrayLogsURL), "Poshi Summary"),
 				" - ",
 				Dom4JUtil.getNewAnchorElement(
-					getConsoleOutputURL(testrayLogsURL), "Console Output"));
+					getConsoleOutputURL(testrayLogsURL), "Console Output"),
+				Dom4JUtil.toCodeSnippetElement(errorDetails));
 
 			if (hasLiferayLog(testrayLogsURL)) {
 				Dom4JUtil.addToElement(
@@ -240,6 +243,7 @@ public class TestResult {
 	protected AxisBuild axisBuild;
 	protected String className;
 	protected long duration;
+	protected String errorDetails;
 	protected String errorStackTrace;
 	protected String packageName;
 	protected String simpleClassName;

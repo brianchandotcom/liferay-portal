@@ -14,22 +14,6 @@
 
 package com.liferay.poshi.runner.elements;
 
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.BACKGROUND;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.DESCRIPTION;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.FEATURE;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.PRIORITY;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.SCENARIO;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.SET_UP;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.TEAR_DOWN;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THESE_PROPERTIES;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THESE_VARIABLES;
-import static com.liferay.poshi.runner.util.StringPool.COLON;
-import static com.liferay.poshi.runner.util.StringPool.SPACE;
-
-import com.liferay.poshi.runner.util.StringUtil;
-
-import java.util.List;
-
 import org.dom4j.Element;
 
 /**
@@ -54,40 +38,59 @@ public class CommandElement extends PoshiElement {
 	}
 
 	@Override
-	public void addAttributes(String readableSyntax) {
-		if (readableSyntax.contains(DESCRIPTION + COLON)) {
-			_addDescriptionAttribute(readableSyntax);
-		}
+	public void parseReadableSyntax(String readableSyntax) {
+		StringBuilder sb = new StringBuilder();
 
-		addAttribute("name", _getCommandName(readableSyntax));
+		for (String line : readableSyntax.split("\n")) {
+			line = line.trim();
 
-		_addPriorityAttribute(readableSyntax);
-	}
+			String endKey = " {";
 
-	@Override
-	public void addElements(String readableSyntax) {
-		List<String> readableBlocks = StringUtil.partition(
-			readableSyntax, READABLE_EXECUTE_BLOCK_KEYS);
+			if (line.endsWith(endKey)) {
+				String startKey = "test";
 
-		for (String readableBlock : readableBlocks) {
-			if (readableBlock.contains(BACKGROUND) ||
-				readableBlock.contains(FEATURE) ||
-				readableBlock.contains(SCENARIO) ||
-				readableBlock.contains(SET_UP) ||
-				readableBlock.contains(TEAR_DOWN)) {
+				if (line.startsWith(startKey)) {
+					int start = startKey.length();
+					int end = line.length() - endKey.length();
+
+					String name = line.substring(start, end);
+
+					addAttribute("name", name);
+				}
 
 				continue;
 			}
 
-			if (readableBlock.contains(THESE_PROPERTIES) ||
-				readableBlock.contains(THESE_VARIABLES)) {
+			if (line.equals(");")) {
+				sb.append(line);
 
-				addVariableElements(readableBlock);
+				addElementFromReadableSyntax(sb.toString());
+
+				sb.setLength(0);
 
 				continue;
 			}
 
-			add(PoshiElementFactory.newPoshiElement(readableBlock));
+			if (line.endsWith(";")) {
+				addElementFromReadableSyntax(line);
+
+				continue;
+			}
+
+			if (line.equals("}")) {
+				continue;
+			}
+
+			if (line.startsWith("@")) {
+				String name = getNameFromAssignment(line);
+				String value = getValueFromAssignment(line);
+
+				addAttribute(name, value);
+
+				continue;
+			}
+
+			sb.append(line);
 		}
 	}
 
@@ -95,59 +98,33 @@ public class CommandElement extends PoshiElement {
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("\n");
-		sb.append(getReadableCommandTitle());
+		for (PoshiElementAttribute poshiElementAttribute :
+				toPoshiElementAttributes(attributeList())) {
 
-		if (attributeValue("name") != null) {
-			String name = attributeValue("name");
+			String name = poshiElementAttribute.getName();
 
-			sb.append(toPhrase(name));
+			if (name.equals("name")) {
+				continue;
+			}
+
+			sb.append("\n\t@");
+			sb.append(poshiElementAttribute.toReadableSyntax());
 		}
 
-		if (attributeValue("description") != null) {
-			String description = attributeValue("description");
+		String readableSyntax = super.toReadableSyntax();
 
-			sb.append("\n");
-			sb.append(DESCRIPTION);
-			sb.append(": ");
-			sb.append(description);
-		}
-
-		if (attributeValue("priority") != null) {
-			String priority = attributeValue("priority");
-
-			sb.append("\n");
-			sb.append(PRIORITY);
-			sb.append(": ");
-			sb.append(priority);
-		}
-
-		sb.append(super.toReadableSyntax());
+		sb.append(createReadableBlock(readableSyntax));
 
 		return sb.toString();
 	}
 
+	@Override
+	protected String getBlockName() {
+		return getReadableCommandTitle();
+	}
+
 	protected String getReadableCommandTitle() {
-		return SCENARIO + COLON + SPACE;
-	}
-
-	private void _addDescriptionAttribute(String readableSyntax) {
-		String description = getAttributeValue(
-			DESCRIPTION + COLON, readableSyntax);
-
-		addAttribute("description", description);
-	}
-
-	private void _addPriorityAttribute(String readableSyntax) {
-		String priority = getAttributeValue(PRIORITY + COLON, readableSyntax);
-
-		addAttribute("priority", priority);
-	}
-
-	private String _getCommandName(String readableSyntax) {
-		String scenario = getAttributeValue(SCENARIO + COLON, readableSyntax);
-
-		return StringUtil.removeSpaces(scenario);
+		return "test" + attributeValue("name");
 	}
 
 }

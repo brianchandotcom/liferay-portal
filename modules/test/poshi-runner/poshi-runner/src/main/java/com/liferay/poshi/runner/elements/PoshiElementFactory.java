@@ -14,16 +14,6 @@
 
 package com.liferay.poshi.runner.elements;
 
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.AND;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.FEATURE;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.GIVEN;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.SCENARIO;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.SET_UP;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.TEAR_DOWN;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THEN;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.WHEN;
-import static com.liferay.poshi.runner.util.StringPool.PIPE;
-
 import com.liferay.poshi.runner.util.Dom4JUtil;
 import com.liferay.poshi.runner.util.FileUtil;
 
@@ -86,29 +76,35 @@ public class PoshiElementFactory {
 					continue;
 				}
 
-				if (line.startsWith(FEATURE)) {
-					return new DefinitionElement(readableSyntax);
-				}
-
-				if (line.startsWith(SCENARIO)) {
-					return new CommandElement(readableSyntax);
-				}
-
-				if (line.startsWith(SET_UP)) {
-					return new SetUpElement(readableSyntax);
-				}
-
-				if (line.startsWith(TEAR_DOWN)) {
-					return new TearDownElement(readableSyntax);
-				}
-
-				if (line.startsWith(AND) || line.startsWith(GIVEN) ||
-					line.startsWith(THEN) || line.startsWith(WHEN)) {
-
+				if (line.endsWith(");")) {
 					return new ExecuteElement(readableSyntax);
 				}
 
-				if (line.startsWith(PIPE)) {
+				if (line.startsWith("@")) {
+					continue;
+				}
+
+				if (line.startsWith("definition {")) {
+					return new DefinitionElement(readableSyntax);
+				}
+
+				if (line.startsWith("property ")) {
+					return new PropertyElement(readableSyntax);
+				}
+
+				if (line.startsWith("setUp {")) {
+					return new SetUpElement(readableSyntax);
+				}
+
+				if (line.startsWith("tearDown {")) {
+					return new TearDownElement(readableSyntax);
+				}
+
+				if (line.startsWith("test") && line.endsWith(" {")) {
+					return new CommandElement(readableSyntax);
+				}
+
+				if (line.startsWith("var ")) {
 					return new VarElement(readableSyntax);
 				}
 			}

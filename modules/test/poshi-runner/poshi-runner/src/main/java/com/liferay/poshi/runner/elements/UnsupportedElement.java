@@ -30,35 +30,12 @@ public class UnsupportedElement extends PoshiElement {
 	}
 
 	@Override
-	public void addAttributes(String readableSyntax) {
+	public void parseReadableSyntax(String readableSyntax) {
 	}
 
 	@Override
-	public void addElements(String readableSyntax) {
-	}
-
-	@Override
-	public String toReadableSyntax() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("\n");
-
-		for (int i = 0; i < 80; i++) {
-			sb.append("#");
-		}
-
-		sb.append("\n");
-		sb.append("The Poshi \"");
-		sb.append(getName());
-		sb.append("\" element is not supported in the readable syntax. ");
-		sb.append("Please update this test.");
-		sb.append("\n");
-
-		for (int i = 0; i < 80; i++) {
-			sb.append("#");
-		}
-
-		return sb.toString();
+	protected String getBlockName() {
+		return null;
 	}
 
 }

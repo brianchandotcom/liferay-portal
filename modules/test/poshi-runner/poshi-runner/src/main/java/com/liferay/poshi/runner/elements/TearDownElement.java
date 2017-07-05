@@ -30,12 +30,8 @@ public class TearDownElement extends CommandElement {
 	}
 
 	@Override
-	public void addAttributes(String readableSyntax) {
-	}
-
 	protected String getReadableCommandTitle() {
-		return ReadableSyntaxKeys.TEAR_DOWN +
-			": This executes after each scenario";
+		return "tearDown";
 	}
 
 }

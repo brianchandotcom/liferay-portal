@@ -14,18 +14,6 @@
 
 package com.liferay.poshi.runner.elements;
 
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.AND;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.BACKGROUND;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.FEATURE;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.GIVEN;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THESE_PROPERTIES;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THESE_VARIABLES;
-import static com.liferay.poshi.runner.util.StringPool.COLON;
-
-import com.liferay.poshi.runner.util.StringUtil;
-
-import java.util.List;
-
 import org.dom4j.Element;
 
 /**
@@ -42,92 +30,110 @@ public class DefinitionElement extends PoshiElement {
 	}
 
 	@Override
-	public void addAttributes(String readableSyntax) {
-		addAttribute("component-name", "portal-acceptance");
-	}
+	public void parseReadableSyntax(String readableSyntax) {
+		StringBuilder sb = new StringBuilder();
 
-	@Override
-	public void addElements(String readableSyntax) {
-		List<String> readableBlocks = StringUtil.partition(
-			readableSyntax, READABLE_COMMAND_BLOCK_KEYS);
+		for (String line : readableSyntax.split("\n")) {
+			line = line.trim();
 
-		for (String readableBlock : readableBlocks) {
-			if (readableBlock.startsWith(FEATURE)) {
+			if (line.length() == 0) {
 				continue;
 			}
-			else if (readableBlock.startsWith(BACKGROUND)) {
-				List<String> readableCommandBlocks = StringUtil.partition(
-					readableBlock, READABLE_COMMAND_BLOCK_KEYS);
 
-				for (String readableCommandBlock : readableCommandBlocks) {
-					addVariableElements(readableCommandBlock);
+			if (line.startsWith("@") && !line.contains("@description") &&
+				!line.contains("@priority")) {
+
+				String name = getNameFromAssignment(line);
+				String value = getValueFromAssignment(line);
+
+				addAttribute(name, value);
+
+				continue;
+			}
+
+			if (line.startsWith("definition {")) {
+				continue;
+			}
+
+			if ((line.startsWith("property") || line.startsWith("var")) &&
+				(sb.length() == 0)) {
+
+				addElementFromReadableSyntax(line);
+
+				continue;
+			}
+
+			if (line.equals("}")) {
+				sb.append(line);
+
+				if (sb.length() > 1) {
+					addElementFromReadableSyntax(sb.toString());
+
+					sb.setLength(0);
+
+					continue;
 				}
-
-				continue;
 			}
 
-			PoshiElement poshiElement = PoshiElementFactory.newPoshiElement(
-				readableBlock);
-
-			add(poshiElement);
+			sb.append(line);
+			sb.append("\n");
 		}
 	}
 
 	@Override
 	public String toReadableSyntax() {
-		prepareVarElementsForReadableSyntax();
-
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(FEATURE);
-		sb.append(COLON);
-		sb.append("\n\n");
-		sb.append(BACKGROUND);
-		sb.append(": This executes once per feature file");
-		sb.append("\n\t");
-		sb.append(GIVEN);
-		sb.append(" ");
-		sb.append(THESE_PROPERTIES);
+		for (PoshiElementAttribute poshiElementAttribute :
+				toPoshiElementAttributes(attributeList())) {
+
+			sb.append("\n@");
+
+			sb.append(poshiElementAttribute.toReadableSyntax());
+		}
+
+		StringBuilder content = new StringBuilder();
 
 		for (PoshiElement poshiElement :
 				toPoshiElements(elements("property"))) {
 
-			sb.append(poshiElement.toReadableSyntax());
+			content.append(poshiElement.toReadableSyntax());
 		}
 
-		List<Element> elements = elements("var");
-
-		if (!elements.isEmpty()) {
-			sb.append("\n\t");
-			sb.append(AND);
-			sb.append(" ");
-			sb.append(THESE_VARIABLES);
-
-			for (PoshiElement poshiElement : toPoshiElements(elements())) {
-				sb.append(poshiElement.toReadableSyntax());
-			}
-		}
-
-		sb.append("\n");
+		content.append("\n");
 
 		for (PoshiElement poshiElement : toPoshiElements(elements("set-up"))) {
-			sb.append(poshiElement.toReadableSyntax());
+			content.append(poshiElement.toReadableSyntax());
 		}
 
-		sb.append("\n");
+		content.append("\n");
 
 		for (PoshiElement poshiElement :
 				toPoshiElements(elements("tear-down"))) {
 
-			sb.append(poshiElement.toReadableSyntax());
+			content.append(poshiElement.toReadableSyntax());
 		}
 
 		for (PoshiElement poshiElement : toPoshiElements(elements("command"))) {
-			sb.append("\n");
-			sb.append(poshiElement.toReadableSyntax());
+			content.append("\n");
+			content.append(poshiElement.toReadableSyntax());
 		}
 
-		return sb.toString();
+		sb.append(createReadableBlock(content.toString()));
+
+		String sbString = sb.toString();
+
+		return sbString.trim();
+	}
+
+	@Override
+	protected String getBlockName() {
+		return "definition";
+	}
+
+	@Override
+	protected String getPad() {
+		return "";
 	}
 
 }

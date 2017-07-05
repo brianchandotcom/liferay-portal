@@ -14,20 +14,6 @@
 
 package com.liferay.poshi.runner.elements;
 
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.AND;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.AT_LOCATOR;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.GIVEN;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THEN;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.THE_VALUE;
-import static com.liferay.poshi.runner.elements.ReadableSyntaxKeys.WHEN;
-
-import com.liferay.poshi.runner.util.StringUtil;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.dom4j.Element;
 
 /**
@@ -44,184 +30,120 @@ public class ExecuteElement extends PoshiElement {
 	}
 
 	@Override
-	public void addAttributes(String readableSyntax) {
-		if (readableSyntax.contains(AT_LOCATOR) ||
-			readableSyntax.contains(THE_VALUE)) {
+	public void parseReadableSyntax(String readableSyntax) {
+		int contentStart = readableSyntax.indexOf("(") + 1;
 
-			_addFunctionAttributes(readableSyntax);
+		String classCommandName = readableSyntax.substring(0, contentStart - 1);
 
+		classCommandName = classCommandName.replace(".", "#");
+
+		int contentEnd = readableSyntax.lastIndexOf(")");
+
+		String content = "";
+
+		if (contentEnd > contentStart) {
+			content = readableSyntax.substring(contentStart, contentEnd);
+		}
+
+		String executeType = "macro";
+
+		if (content.contains("locator1") || content.contains("locator2") ||
+			content.contains("value1") || content.contains("value2")) {
+
+			executeType = "function";
+		}
+
+		addAttribute(executeType, classCommandName);
+
+		if (content.length() == 0) {
 			return;
 		}
 
-		addAttribute("macro", _getClassCommandName(readableSyntax));
-	}
+		String[] assignments = content.split(",");
 
-	@Override
-	public void addElements(String readableSyntax) {
-		List<String> readableBlocks = StringUtil.partition(
-			readableSyntax, READABLE_VARIABLE_BLOCK_KEYS);
+		for (String assignment : assignments) {
+			if (executeType.equals("macro")) {
+				assignment = "var " + assignment;
 
-		for (String readableBlock : readableBlocks) {
-			readableBlock = readableBlock.trim();
-
-			if (readableBlock.contains(AND) || readableBlock.contains(GIVEN) ||
-				readableBlock.contains(THEN) || readableBlock.contains(WHEN)) {
+				addElementFromReadableSyntax(assignment);
 
 				continue;
 			}
 
-			PoshiElement poshiElement = PoshiElementFactory.newPoshiElement(
-				readableBlock);
+			String name = getNameFromAssignment(assignment);
+			String value = getValueFromAssignment(assignment);
 
-			add(poshiElement);
+			addAttribute(name, value);
 		}
 	}
 
 	@Override
 	public String toReadableSyntax() {
+		if (attributeValue("function") != null) {
+			StringBuilder sb = new StringBuilder();
+
+			for (PoshiElementAttribute poshiElementAttribute :
+					toPoshiElementAttributes(attributeList())) {
+
+				String name = poshiElementAttribute.getName();
+
+				if (name.equals("function")) {
+					continue;
+				}
+
+				sb.append(poshiElementAttribute.toReadableSyntax());
+
+				sb.append(", ");
+			}
+
+			if (sb.length() > 2) {
+				sb.setLength(sb.length() - 2);
+			}
+
+			return createReadableBlock(sb.toString());
+		}
+
+		String readableSyntax = super.toReadableSyntax();
+
+		return createReadableBlock(readableSyntax);
+	}
+
+	@Override
+	protected String createReadableBlock(String content) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("\n\t");
-		sb.append(getReadableExecuteKey());
+		String blockName = getBlockName();
+		String pad = getPad();
 
-		if (attributeValue("function") != null) {
-			sb.append(" ");
+		sb.append("\n\n");
+		sb.append(pad);
+		sb.append(blockName.replace("#", "."));
+		sb.append("(");
 
-			String function = attributeValue("function");
+		String trimmedContent = content.trim();
 
-			sb.append(_getReadableSyntaxCommandPhrase(function));
-
-			List<String> functionAttributeNames = Arrays.asList(
-				"value1", "locator1", "value2", "locator2");
-
-			for (String functionAttributeName : functionAttributeNames) {
-				String functionAttributeValue = attributeValue(
-					functionAttributeName);
-
-				if (functionAttributeValue != null) {
-					if (functionAttributeName.startsWith("locator")) {
-						sb.append(" ");
-						sb.append(AT_LOCATOR);
-					}
-					else {
-						sb.append(" ");
-						sb.append(THE_VALUE);
-					}
-
-					sb.append(" '");
-					sb.append(functionAttributeValue);
-					sb.append("'");
-				}
+		if (!trimmedContent.equals("")) {
+			if (content.contains("\n")) {
+				content = content.replaceAll("\n", ",\n" + pad);
+				content = content.replaceFirst(",", "");
+				content = content + "\n" + pad;
 			}
-		}
-		else if (attributeValue("macro") != null) {
-			sb.append(" ");
 
-			String macro = attributeValue("macro");
-
-			sb.append(_getReadableSyntaxCommandPhrase(macro));
+			sb.append(content);
 		}
 
-		sb.append(super.toReadableSyntax());
+		sb.append(");");
 
 		return sb.toString();
 	}
 
-	private void _addFunctionAttribute(
-		String readableSyntax, String attributeName) {
-
-		String attributeValue = getAttributeValue("'", "'", readableSyntax);
-
-		if (attributeValue(attributeName + "1") == null) {
-			addAttribute(attributeName + "1", attributeValue);
-
-			return;
+	@Override
+	protected String getBlockName() {
+		if (attributeValue("function") != null) {
+			return attributeValue("function");
 		}
 
-		addAttribute(attributeName + "2", attributeValue);
-	}
-
-	private void _addFunctionAttributes(String readableSyntax) {
-		String[] keys = {AT_LOCATOR, THE_VALUE};
-
-		List<String> functionItems = StringUtil.partition(readableSyntax, keys);
-
-		for (String functionItem : functionItems) {
-			if (functionItem.contains(AT_LOCATOR)) {
-				_addFunctionAttribute(functionItem, "locator");
-
-				continue;
-			}
-
-			if (functionItem.contains(THE_VALUE)) {
-				_addFunctionAttribute(functionItem, "value");
-
-				continue;
-			}
-
-			addAttribute("function", _getClassCommandName(functionItem));
-		}
-	}
-
-	private String _getClassCommandName(String readableSyntax) {
-		int index = readableSyntax.indexOf("\n");
-
-		if (index < 0) {
-			index = readableSyntax.length();
-		}
-
-		String line = readableSyntax.substring(0, index);
-
-		for (String key : READABLE_EXECUTE_BLOCK_KEYS) {
-			if (!line.startsWith(key)) {
-				continue;
-			}
-
-			Pattern pattern = Pattern.compile(".*?" + key + ".*?.([A-z]*)(.*)");
-
-			Matcher matcher = pattern.matcher(line);
-
-			if (matcher.find()) {
-				StringBuilder sb = new StringBuilder();
-
-				sb.append(matcher.group(1));
-
-				String commandName = matcher.group(2);
-
-				commandName = StringUtil.removeSpaces(commandName);
-
-				if (commandName.length() > 0) {
-					sb.append("#");
-					sb.append(commandName);
-				}
-
-				return sb.toString();
-			}
-		}
-
-		return null;
-	}
-
-	private String _getReadableSyntaxCommandPhrase(String classCommandName) {
-		StringBuilder sb = new StringBuilder();
-
-		if (classCommandName.contains("#")) {
-			String className = classCommandName.split("#")[0];
-
-			sb.append(className);
-
-			sb.append(" ");
-
-			String commandName = classCommandName.split("#")[1];
-
-			String commandPhrase = toPhrase(commandName);
-
-			sb.append(commandPhrase);
-
-			return sb.toString();
-		}
-
-		return classCommandName;
+		return attributeValue("macro");
 	}
 
 }

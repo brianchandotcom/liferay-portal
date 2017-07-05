@@ -1,43 +1,56 @@
-Feature:
+@component-name = "portal-acceptance"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Smoke";
 
-Background: This executes once per feature file
-	Given these properties
-		| portal.release              | true  |
-		| portal.upstream             | true  |
-		| testray.main.component.name | Smoke |
+	setUp {
+		TestCase.setUpPortalInstance();
 
-Set Up: This executes before each scenario
-	Given TestCase set Up Portal Instance
-	Then SignIn sign In
+		SignIn.signIn();
+	}
 
-Tear Down: This executes after each scenario
-	Given PortalInstances tear Down CP
-		| testPortalInstance | TestPropsUtil#get('test.portal.instance') |
+	tearDown {
+		PortalInstances.tearDownCP(
+			testPortalInstance = "TestPropsUtil.get('test.portal.instance')"
+		);
+	}
 
-Scenario: Add User
-Priority: 5
-	Given these variables
-		| userEmailAddress | userea@liferay.com |
-		| userFirstName    | userfn             |
-		| userLastName     | userln             |
-	And ProductMenu goto Control Panel Users
-		| portlet | Users and Organizations |
-	Then User add CP
-		| userEmailAddress | ${userEmailAddress} |
-		| userFirstName    | ${userFirstName}    |
-		| userLastName     | ${userLastName}     |
-		| userScreenName   | ${userScreenName}   |
-		| userScreenName   |                     |
+	@priority = "5"
+	testAddUser {
+		var userEmailAddress = "userea@liferay.com";
+		var userFirstName = "userfn";
+		var userLastName = "userln";
 
-Scenario: Smoke
-Description: Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages.
-Priority: 5
-	Given these properties
-		| portal.smoke                   | true |
-		| test.assert.warning.exceptions | true |
-	And Smoke view Welcome Page
-	And Smoke run Smoke
-	And AssertElementPresent the value 'Welcome' at locator 'Home#PAGE'
-	And Click at locator 'Home#PAGE'
-	And Type the value 'Welcome'
-	Then AssertElementPresent assert Element Present the value 'Welcome' at locator 'Home#PAGE'
+		ProductMenu.gotoControlPanelUsers(
+			portlet = "Users and Organizations"
+		);
+
+		User.addCP(
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}",
+			userScreenName = ""
+		);
+	}
+
+	@description = "Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages."
+	@priority = "5"
+	testSmoke {
+		property portal.smoke = "true";
+		property test.assert.warning.exceptions = "true";
+
+		Smoke.viewWelcomePage();
+
+		Smoke.runSmoke();
+
+		AssertElementPresent(locator1 = "Home#PAGE", value1 = "Welcome");
+
+		Click(locator1 = "Home#PAGE");
+
+		Type(value1 = "Welcome");
+
+		AssertElementPresent.assertElementPresent(locator1 = "Home#PAGE", value1 = "Welcome");
+	}
+}

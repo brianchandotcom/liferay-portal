@@ -51,7 +51,7 @@ public class LoadBalancerUtil {
 					return baseInvocationURL;
 				}
 
-				List<JenkinsMaster> jenkinsMasters = getJenkinsMasters(
+				List<JenkinsMaster> jenkinsMasters = getAvailableJenkinsMasters(
 					masterPrefix, properties);
 
 				long nextUpdateTimestamp = _getNextUpdateTimestamp(
@@ -171,7 +171,7 @@ public class LoadBalancerUtil {
 		_updateInterval = interval;
 	}
 
-	protected static List<JenkinsMaster> getJenkinsMasters(
+	protected static List<JenkinsMaster> getAvailableJenkinsMasters(
 		String masterPrefix, Properties properties) {
 
 		List<JenkinsMaster> allJenkinsMasters = null;
@@ -179,15 +179,15 @@ public class LoadBalancerUtil {
 		if (!_jenkinsMasters.containsKey(masterPrefix)) {
 			allJenkinsMasters = new ArrayList<>();
 
-			for (String masterName :
-					JenkinsResultsParserUtil.getMasters(
+			for (String jenkinsMasterName :
+					JenkinsResultsParserUtil.getJenkinsMasterNames(
 						properties, masterPrefix)) {
 
 				JenkinsMaster jenkinsMaster = new JenkinsMaster(
-					masterName,
+					jenkinsMasterName,
 					properties.getProperty(
 						JenkinsResultsParserUtil.combine(
-							"jenkins.local.url[", masterName, "]")));
+							"jenkins.local.url[", jenkinsMasterName, "]")));
 
 				allJenkinsMasters.add(jenkinsMaster);
 			}

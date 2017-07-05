@@ -22,7 +22,7 @@ class CategorySelector extends Component {
 					contentBox: this.element,
 					eventName: this.eventName,
 					groupIds: this.groupIds,
-					hiddenInput:  `#${this.element.querySelector('input[type="hidden"]').getAttribute('id')}`,
+					hiddenInput:  `#${this.refs.hiddenInput.getAttribute('id')}`,
 					portletURL: this.categorySelectorURL,
 					vocabularyIds: this.vocabularyIds,
 				};

@@ -31,10 +31,13 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.*;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -72,17 +75,35 @@ public class CPSearchResultsDisplayContext {
 		_cpSearchResultsPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
 				CPSearchResultsPortletInstanceConfiguration.class);
-
-	}
-
-	public boolean useCategories() {
-		return _cpSearchResultsPortletInstanceConfiguration.useAssetCategories();
 	}
 
 	public String getCategoryIds() {
 		return StringUtil.merge(
 			_cpSearchResultsPortletInstanceConfiguration.assetCategoryIds(),
-			StringPool.COMMA) ;
+			StringPool.COMMA);
+	}
+
+	public String getDisplayStyle() {
+		return _cpSearchResultsPortletInstanceConfiguration.displayStyle();
+	}
+
+	public long getDisplayStyleGroupId() {
+		if (_displayStyleGroupId != 0) {
+			return _displayStyleGroupId;
+		}
+
+		_displayStyleGroupId =
+			_cpSearchResultsPortletInstanceConfiguration.displayStyleGroupId();
+
+		if (_displayStyleGroupId <= 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+		}
+
+		return _displayStyleGroupId;
 	}
 
 	public String getProductDefaultImage(
@@ -147,30 +168,14 @@ public class CPSearchResultsDisplayContext {
 		return title;
 	}
 
-
-	public String getDisplayStyle(){
-		return _cpSearchResultsPortletInstanceConfiguration.displayStyle();
+	public boolean useCategories() {
+		return
+			_cpSearchResultsPortletInstanceConfiguration.useAssetCategories();
 	}
 
-	public long getDisplayStyleGroupId() {
-		if (_displayStyleGroupId != 0) {
-			return _displayStyleGroupId;
-		}
-
-		_displayStyleGroupId = _cpSearchResultsPortletInstanceConfiguration.
-			displayStyleGroupId();
-
-		if (_displayStyleGroupId <= 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			_displayStyleGroupId = themeDisplay.getScopeGroupId();
-		}
-
-		return _displayStyleGroupId;
-	}
-
+	private final CPSearchResultsPortletInstanceConfiguration
+		_cpSearchResultsPortletInstanceConfiguration;
+	private long _displayStyleGroupId;
 	private final DLAppService _dlAppService;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
@@ -178,7 +183,5 @@ public class CPSearchResultsDisplayContext {
 	private final Locale _locale;
 	private final PortletSharedSearchResponse _portletSharedSearchResponse;
 	private SearchContainer<Document> _searchContainer;
-	private final CPSearchResultsPortletInstanceConfiguration
-		_cpSearchResultsPortletInstanceConfiguration;
-	private long _displayStyleGroupId;
+
 }

@@ -33,7 +33,7 @@ import com.liferay.exportimport.kernel.exception.LayoutImportException;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
-import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -606,7 +606,7 @@ public class PortletExportController implements ExportController {
 			DateRange adjustedDateRange = new DateRange(
 				portletLastPublishDate, portletDataContext.getEndDate());
 
-			ExportImportProcessCallbackRegistryUtil.registerCallback(
+			_exportImportProcessCallbackRegistry.registerCallback(
 				portletDataContext.getExportImportProcessId(),
 				new UpdatePortletLastPublishDateCallable(
 					adjustedDateRange, portletDataContext.getEndDate(),
@@ -1386,6 +1386,11 @@ public class PortletExportController implements ExportController {
 	private ExportImportHelper _exportImportHelper;
 
 	private ExportImportLifecycleManager _exportImportLifecycleManager;
+
+	@Reference
+	private ExportImportProcessCallbackRegistry
+		_exportImportProcessCallbackRegistry;
+
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private final PermissionExporter _permissionExporter =

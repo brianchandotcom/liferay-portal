@@ -25,7 +25,7 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.exportimport.controller.PortletExportController;
 import com.liferay.exportimport.controller.PortletImportController;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
-import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -791,7 +791,7 @@ public class LayoutStagedModelDataHandler
 			portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
 
 			Map<String, Boolean> exportPortletControlsMap =
-				ExportImportHelperUtil.getExportPortletControlsMap(
+				_exportImportHelper.getExportPortletControlsMap(
 					layout.getCompanyId(), portletId, parameterMap,
 					portletDataContext.getType());
 
@@ -1292,7 +1292,7 @@ public class LayoutStagedModelDataHandler
 			Element portletDataElement = portletElement.element("portlet-data");
 
 			Map<String, Boolean> importPortletControlsMap =
-				ExportImportHelperUtil.getImportPortletControlsMap(
+				_exportImportHelper.getImportPortletControlsMap(
 					portletDataContext.getCompanyId(), portletId, parameterMap,
 					portletDataElement,
 					portletDataContext.getManifestSummary());
@@ -1838,6 +1838,10 @@ public class LayoutStagedModelDataHandler
 			new Class<?>[] {PortalException.class, SystemException.class});
 
 	private CounterLocalService _counterLocalService;
+
+	@Reference
+	private ExportImportHelper _exportImportHelper;
+
 	private ExportImportLifecycleManager _exportImportLifecycleManager;
 	private GroupLocalService _groupLocalService;
 	private ImageLocalService _imageLocalService;

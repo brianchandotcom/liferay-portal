@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	factory = true,
 	id = "com.liferay.portal.messaging.configuration.DestinationWorkerConfiguration",
 	localization = "content/Language",
-	name = "destination.workfer.configuration.name"
+	name = "destination-workfer-configuration-name"
 )
 public interface DestinationWorkerConfiguration {
 

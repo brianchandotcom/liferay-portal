@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration",
-	localization = "content/Language", name = "ntlm.configuration.name"
+	localization = "content/Language", name = "ntlm-configuration-name"
 )
 public interface NtlmConfiguration {
 

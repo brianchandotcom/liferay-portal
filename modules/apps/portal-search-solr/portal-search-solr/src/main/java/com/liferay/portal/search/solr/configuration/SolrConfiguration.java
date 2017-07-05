@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
 	id = "com.liferay.portal.search.solr.configuration.SolrConfiguration",
-	localization = "content/Language", name = "solr.configuration.name"
+	localization = "content/Language", name = "solr-configuration-name"
 )
 public interface SolrConfiguration {
 

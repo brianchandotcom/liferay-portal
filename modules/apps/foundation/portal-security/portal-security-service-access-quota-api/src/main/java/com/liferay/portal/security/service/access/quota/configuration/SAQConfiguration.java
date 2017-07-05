@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.portal.security.service.access.quota.configuration.SAQConfiguration",
-	localization = "content/Language", name = "saq.configuration.name"
+	localization = "content/Language", name = "saq-configuration-name"
 )
 @ProviderType
 public interface SAQConfiguration {

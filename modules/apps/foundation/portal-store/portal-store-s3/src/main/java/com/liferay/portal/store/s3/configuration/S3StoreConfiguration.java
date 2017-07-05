@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
 	id = "com.liferay.portal.store.s3.configuration.S3StoreConfiguration",
-	localization = "content/Language", name = "s3.store.configuration.name"
+	localization = "content/Language", name = "s3-store-configuration-name"
 )
 public interface S3StoreConfiguration {
 

@@ -25,13 +25,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.microsoft.translator.internal.configuration.MicrosoftTranslatorConfiguration",
 	localization = "content/Language",
-	name = "microsoft.translator.configuration.name"
+	name = "microsoft-translator-configuration-name"
 )
 public interface MicrosoftTranslatorConfiguration {
 
 	@Meta.AD(
-		description = "subscription.key.description",
-		name = "subscription.key.name", required = false
+		description = "subscription-key-description",
+		name = "subscription-key-name", required = false
 	)
 	public String subscriptionKey();
 

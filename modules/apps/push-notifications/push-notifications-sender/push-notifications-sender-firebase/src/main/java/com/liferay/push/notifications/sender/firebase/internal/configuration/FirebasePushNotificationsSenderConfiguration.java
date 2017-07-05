@@ -25,13 +25,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.push.notifications.sender.firebase.internal.configuration.FirebasePushNotificationsSenderConfiguration",
 	localization = "content/Language",
-	name = "firebase.push.notifications.sender.configuration.name"
+	name = "firebase-push-notifications-sender-configuration-name"
 )
 public interface FirebasePushNotificationsSenderConfiguration {
 
 	@Meta.AD(
-		description = "firebase.api.key.description",
-		name = "firebase.api.key.name", required = false
+		description = "firebase-api-key-description",
+		name = "firebase-api-key-name", required = false
 	)
 	public String apiKey();
 

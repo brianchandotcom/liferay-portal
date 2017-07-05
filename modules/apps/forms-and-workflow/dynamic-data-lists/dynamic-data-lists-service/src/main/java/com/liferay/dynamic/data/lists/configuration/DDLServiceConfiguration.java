@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "forms-and-workflow")
 @Meta.OCD(
 	id = "com.liferay.dynamic.data.lists.configuration.DDLServiceConfiguration",
-	localization = "content/Language", name = "ddl.service.configuration.name"
+	localization = "content/Language", name = "ddl-service-configuration-name"
 )
 public interface DDLServiceConfiguration {
 

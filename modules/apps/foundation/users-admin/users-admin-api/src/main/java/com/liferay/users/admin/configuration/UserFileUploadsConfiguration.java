@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.users.admin.configuration.UserFileUploadsConfiguration",
 	localization = "content/Language",
-	name = "user.file.uploads.configuration.name"
+	name = "user-file-uploads-configuration-name"
 )
 public interface UserFileUploadsConfiguration {
 

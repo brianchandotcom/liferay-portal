@@ -45,13 +45,13 @@ public class LoadBalancerUtil {
 				String baseInvocationURL = properties.getProperty(
 					"base.invocation.url");
 
-				String masterPrefix = _getMasterPrefix(baseInvocationURL);
+				String masterPrefix = getMasterPrefix(baseInvocationURL);
 
 				if (masterPrefix.equals(baseInvocationURL)) {
 					return baseInvocationURL;
 				}
 
-				List<JenkinsMaster> jenkinsMasters = _getJenkinsMasters(
+				List<JenkinsMaster> jenkinsMasters = getAvailableJenkinsMasters(
 					masterPrefix, properties);
 
 				long nextUpdateTimestamp = _getNextUpdateTimestamp(
@@ -171,26 +171,7 @@ public class LoadBalancerUtil {
 		_updateInterval = interval;
 	}
 
-	private static List<String> _getBlacklist(Properties properties) {
-		String blacklistString = properties.getProperty(
-			"jenkins.load.balancer.blacklist", "");
-
-		System.out.println("Blacklist: " + blacklistString);
-
-		if (blacklistString.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<String> blacklist = new ArrayList<>();
-
-		for (String blacklistItem : blacklistString.split(",")) {
-			blacklist.add(blacklistItem.trim());
-		}
-
-		return blacklist;
-	}
-
-	private static List<JenkinsMaster> _getJenkinsMasters(
+	protected static List<JenkinsMaster> getAvailableJenkinsMasters(
 		String masterPrefix, Properties properties) {
 
 		List<JenkinsMaster> allJenkinsMasters = null;
@@ -198,15 +179,15 @@ public class LoadBalancerUtil {
 		if (!_jenkinsMasters.containsKey(masterPrefix)) {
 			allJenkinsMasters = new ArrayList<>();
 
-			for (String masterName :
-					JenkinsResultsParserUtil.getMasters(
+			for (String jenkinsMasterName :
+					JenkinsResultsParserUtil.getJenkinsMasterNames(
 						properties, masterPrefix)) {
 
 				JenkinsMaster jenkinsMaster = new JenkinsMaster(
-					masterName,
+					jenkinsMasterName,
 					properties.getProperty(
 						JenkinsResultsParserUtil.combine(
-							"jenkins.local.url[", masterName, "]")));
+							"jenkins.local.url[", jenkinsMasterName, "]")));
 
 				allJenkinsMasters.add(jenkinsMaster);
 			}
@@ -237,7 +218,7 @@ public class LoadBalancerUtil {
 		return filteredJenkinsMasters;
 	}
 
-	private static String _getMasterPrefix(String baseInvocationURL) {
+	protected static String getMasterPrefix(String baseInvocationURL) {
 		Matcher matcher = _urlPattern.matcher(baseInvocationURL);
 
 		if (!matcher.find()) {
@@ -245,6 +226,25 @@ public class LoadBalancerUtil {
 		}
 
 		return matcher.group("masterPrefix");
+	}
+
+	private static List<String> _getBlacklist(Properties properties) {
+		String blacklistString = properties.getProperty(
+			"jenkins.load.balancer.blacklist", "");
+
+		System.out.println("Blacklist: " + blacklistString);
+
+		if (blacklistString.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<String> blacklist = new ArrayList<>();
+
+		for (String blacklistItem : blacklistString.split(",")) {
+			blacklist.add(blacklistItem.trim());
+		}
+
+		return blacklist;
 	}
 
 	private static long _getNextUpdateTimestamp(String masterPrefix) {

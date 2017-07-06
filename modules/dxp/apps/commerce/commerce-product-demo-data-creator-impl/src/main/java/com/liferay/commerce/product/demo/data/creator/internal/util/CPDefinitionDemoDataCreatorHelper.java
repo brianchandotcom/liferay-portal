@@ -96,7 +96,7 @@ public class CPDefinitionDemoDataCreatorHelper
 				productJSONObject.getJSONArray("images");
 
 			_cpAttachmentFileEntryDemoDataCreatorHelper.
-				addCPAttachmentFileEntries(
+				addCPDefinitionAttachmentFileEntries(
 					userId, groupId, cpDefinition.getCPDefinitionId(),
 					cpAttachmentFileEntriesJSONArray);
 

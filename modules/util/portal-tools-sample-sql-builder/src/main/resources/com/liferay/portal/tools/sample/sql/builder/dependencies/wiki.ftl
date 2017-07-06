@@ -13,8 +13,8 @@
 		${dataFactory.toInsertSQL(dataFactory.newWikiPageResourceModel(wikiPageModel))}
 
 		<@insertAssetEntry
-			_entry = wikiPageModel
-			_categoryAndTag = true
+			_categoryAndTag=true
+			_entry=wikiPageModel
 		/>
 
 		<#assign
@@ -23,12 +23,12 @@
 		/>
 
 		<@insertMBDiscussion
-			_classNameId = dataFactory.wikiPageClassNameId
-			_classPK = wikiPageModel.resourcePrimKey
-			_groupId = groupId
-			_maxCommentCount = dataFactory.maxWikiPageCommentCount
-			_mbRootMessageId = mbRootMessageId
-			_mbThreadId = mbThreadId
+			_classNameId=dataFactory.wikiPageClassNameId
+			_classPK=wikiPageModel.resourcePrimKey
+			_groupId=groupId
+			_maxCommentCount=dataFactory.maxWikiPageCommentCount
+			_mbRootMessageId=mbRootMessageId
+			_mbThreadId=mbThreadId
 		/>
 
 		${dataFactory.getCSVWriter("wiki").write(wikiNodeModel.nodeId + "," + wikiNodeModel.name + "," + wikiPageModel.resourcePrimKey + "," + wikiPageModel.title + "," + mbThreadId + "," + mbRootMessageId + "\n")}

@@ -4,9 +4,7 @@
 	</#if>
 
 	<div class="alert alert-info">
-		<@liferay_ui["message"]
-			key="there-are-no-results"
-		/>
+		<@liferay_ui["message"] key="there-are-no-results" />
 	</div>
 </#if>
 

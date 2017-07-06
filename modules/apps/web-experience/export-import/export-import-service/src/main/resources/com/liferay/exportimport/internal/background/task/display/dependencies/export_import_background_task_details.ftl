@@ -41,9 +41,9 @@
 	<div class="alert upload-error">
 		<span class="error-message">
 			<#if (messageListItemsJSONArray.iterator())?has_content>
-				<@liferay.language key="consider-that-the-following-data-would-not-have-been-published-either"/>
+				<@liferay.language key="consider-that-the-following-data-would-not-have-been-published-either" />
 			<#else>
-				<@liferay.language key="the-following-data-has-not-been-published"/>
+				<@liferay.language key="the-following-data-has-not-been-published" />
 			</#if>
 		</span>
 

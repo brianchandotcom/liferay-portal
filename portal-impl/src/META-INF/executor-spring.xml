@@ -36,9 +36,7 @@
 		<constructor-arg name="priority">
 			<util:constant static-field="java.lang.Thread.NORM_PRIORITY" />
 		</constructor-arg>
-		<constructor-arg name="contextClassLoader">
-			<bean class="com.liferay.portal.kernel.util.PortalClassLoaderUtil" factory-method="getClassLoader" />
-		</constructor-arg>
+		<constructor-arg name="contextClassLoader" value="#{T(com.liferay.portal.kernel.util.PortalClassLoaderUtil).classLoader}" />
 	</bean>
 
 	<!-- Intraband message bridging dispatching -->
@@ -68,9 +66,7 @@
 		<constructor-arg name="priority">
 			<util:constant static-field="java.lang.Thread.NORM_PRIORITY" />
 		</constructor-arg>
-		<constructor-arg name="contextClassLoader">
-			<bean class="com.liferay.portal.kernel.util.PortalClassLoaderUtil" factory-method="getClassLoader" />
-		</constructor-arg>
+		<constructor-arg name="contextClassLoader" value="#{T(com.liferay.portal.kernel.util.PortalClassLoaderUtil).classLoader}" />
 	</bean>
 
 	<!-- Server side parallel rendering -->
@@ -108,9 +104,7 @@
 		<constructor-arg name="priority">
 			<util:constant static-field="java.lang.Thread.NORM_PRIORITY" />
 		</constructor-arg>
-		<constructor-arg name="contextClassLoader">
-			<bean class="com.liferay.portal.kernel.util.PortalClassLoaderUtil" factory-method="getClassLoader" />
-		</constructor-arg>
+		<constructor-arg name="contextClassLoader" value="#{T(com.liferay.portal.kernel.util.PortalClassLoaderUtil).classLoader}" />
 	</bean>
 
 	<!-- Process executor -->

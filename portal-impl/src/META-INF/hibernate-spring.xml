@@ -9,17 +9,13 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
 >
 	<bean class="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl" id="counterSessionFactory">
-		<property name="sessionFactoryClassLoader">
-			<bean class="com.liferay.portal.kernel.util.PortalClassLoaderUtil" factory-method="getClassLoader" />
-		</property>
+		<property name="sessionFactoryClassLoader" value="#{T(com.liferay.portal.kernel.util.PortalClassLoaderUtil).classLoader}" />
 		<property name="sessionFactoryImplementor" ref="counterHibernateSessionFactory" />
 	</bean>
 	<bean class="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper" factory-method="createVerifySessionFactoryWrapper" id="liferaySessionFactory">
 		<constructor-arg>
 			<bean class="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl">
-				<property name="sessionFactoryClassLoader">
-					<bean class="com.liferay.portal.kernel.util.PortalClassLoaderUtil" factory-method="getClassLoader" />
-				</property>
+				<property name="sessionFactoryClassLoader" value="#{T(com.liferay.portal.kernel.util.PortalClassLoaderUtil).classLoader}" />
 				<property name="sessionFactoryImplementor" ref="liferayHibernateSessionFactory" />
 			</bean>
 		</constructor-arg>

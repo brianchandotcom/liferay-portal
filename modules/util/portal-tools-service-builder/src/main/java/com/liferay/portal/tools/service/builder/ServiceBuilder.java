@@ -1698,27 +1698,33 @@ public class ServiceBuilder {
 
 			return false;
 		}
-		else if (methodName.endsWith("Finder") &&
-				 (methodName.startsWith("get") ||
-				  methodName.startsWith("set"))) {
 
-			return false;
-		}
-		else if (methodName.endsWith("Persistence") &&
-				 (methodName.startsWith("get") ||
-				  methodName.startsWith("set"))) {
+		JavaClass javaClass = method.getParentClass();
 
-			return false;
-		}
-		else if (methodName.endsWith("Service") &&
-				 (methodName.startsWith("get") ||
-				  methodName.startsWith("set"))) {
+		String packageName = javaClass.getPackageName();
 
-			return false;
+		if (packageName.endsWith(".service.base")) {
+			if (methodName.endsWith("Finder") &&
+				(methodName.startsWith("get") ||
+				 methodName.startsWith("set"))) {
+
+				return false;
+			}
+			else if (methodName.endsWith("Persistence") &&
+					 (methodName.startsWith("get") ||
+					  methodName.startsWith("set"))) {
+
+				return false;
+			}
+			else if (methodName.endsWith("Service") &&
+					 (methodName.startsWith("get") ||
+					  methodName.startsWith("set"))) {
+
+				return false;
+			}
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	public boolean isHBMCamelCasePropertyAccessor(String propertyName) {

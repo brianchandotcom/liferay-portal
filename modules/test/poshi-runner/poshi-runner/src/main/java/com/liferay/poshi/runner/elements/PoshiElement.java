@@ -193,6 +193,30 @@ public abstract class PoshiElement extends DefaultElement {
 		return stack.isEmpty();
 	}
 
+	protected boolean isBalanceValidationRequired(String readableSyntax) {
+		return false;
+	}
+
+	protected boolean isValidReadableBlock(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if (readableSyntax.startsWith("property") ||
+			readableSyntax.startsWith("var")) {
+
+			if (readableSyntax.endsWith(";")) {
+				return true;
+			}
+
+			return false;
+		}
+
+		if (isBalanceValidationRequired(readableSyntax)) {
+			return isBalancedReadableSyntax(readableSyntax);
+		}
+
+		return false;
+	}
+
 	protected List<PoshiElementAttribute> toPoshiElementAttributes(
 		List<?> list) {
 

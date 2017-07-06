@@ -17,14 +17,12 @@ package com.liferay.portal.upgrade;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeGroup;
-import com.liferay.portal.upgrade.v7_0_4.UpgradeMBMailingList;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeModules;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeOracle;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeOrganization;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeSQLServer;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeSybase;
-import com.liferay.portal.upgrade.v7_0_4.UpgradeUser;
 
 /**
  * @author Adolfo Pérez

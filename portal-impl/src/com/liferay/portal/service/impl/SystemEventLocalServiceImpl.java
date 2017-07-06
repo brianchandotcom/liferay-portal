@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLoca
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.SystemEventLocalServiceBaseImpl;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Date;
 import java.util.List;
@@ -113,6 +114,24 @@ public class SystemEventLocalServiceImpl
 			groupId, classNameId, classPK, type);
 	}
 
+	public boolean validateGroup(long groupId) throws PortalException {
+		if (groupId > 0) {
+			Group group = groupLocalService.getGroup(groupId);
+
+			if (group.hasStagingGroup() && !group.isStagedRemotely()) {
+				return false;
+			}
+
+			if (group.hasRemoteStagingGroup() &&
+				!PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	protected SystemEvent addSystemEvent(
 			long userId, long companyId, long groupId, String className,
 			long classPK, String classUuid, String referrerClassName, int type,
@@ -142,6 +161,10 @@ public class SystemEventLocalServiceImpl
 			if (companyGroup.getGroupId() == groupId) {
 				groupId = 0;
 			}
+		}
+
+		if (!validateGroup(groupId)) {
+			return null;
 		}
 
 		if (Validator.isNotNull(referrerClassName) &&

@@ -146,6 +146,8 @@ public class CSSBuilder implements AutoCloseable {
 		if (_cleanPortalCommonDir) {
 			_deltree(_portalCommonDirName);
 		}
+
+		_sassCompiler.close();
 	}
 
 	public void execute(List<String> dirNames) throws Exception {

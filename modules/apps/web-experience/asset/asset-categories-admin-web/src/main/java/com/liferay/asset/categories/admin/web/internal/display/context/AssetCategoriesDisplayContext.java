@@ -449,16 +449,17 @@ public class AssetCategoriesDisplayContext {
 
 		iteratorURL.setParameter("mvcPath", "/view_categories.jsp");
 		iteratorURL.setParameter("redirect", currentURL.toString());
-		iteratorURL.setParameter(
-			"vocabularyId", String.valueOf(getVocabularyId()));
-		iteratorURL.setParameter("displayStyle", getDisplayStyle());
-		iteratorURL.setParameter("keywords", getKeywords());
-		iteratorURL.setParameter("navigation", getNavigation());
 
 		if (!isFlattenedNavigationAllowed()) {
 			iteratorURL.setParameter(
 				"categoryId", String.valueOf(getCategoryId()));
 		}
+
+		iteratorURL.setParameter(
+			"vocabularyId", String.valueOf(getVocabularyId()));
+		iteratorURL.setParameter("displayStyle", getDisplayStyle());
+		iteratorURL.setParameter("keywords", getKeywords());
+		iteratorURL.setParameter("navigation", getNavigation());
 
 		return iteratorURL;
 	}
@@ -761,9 +762,9 @@ public class AssetCategoriesDisplayContext {
 		return false;
 	}
 
-	public boolean isNavigationCategory() {
-		if (isFlattenedNavigationAllowed() &&
-			Objects.equals(getNavigation(), "category")) {
+	public boolean isNavigationAll() {
+		if (!isFlattenedNavigationAllowed() ||
+			Objects.equals(getNavigation(), "all")) {
 
 			return true;
 		}
@@ -771,9 +772,9 @@ public class AssetCategoriesDisplayContext {
 		return false;
 	}
 
-	public boolean isNavigationHome() {
-		if (!isFlattenedNavigationAllowed() ||
-			Objects.equals(getNavigation(), "all")) {
+	public boolean isNavigationCategory() {
+		if (isFlattenedNavigationAllowed() &&
+			Objects.equals(getNavigation(), "category")) {
 
 			return true;
 		}

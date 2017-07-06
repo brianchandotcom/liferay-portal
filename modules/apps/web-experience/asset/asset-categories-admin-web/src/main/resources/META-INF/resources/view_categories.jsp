@@ -58,18 +58,9 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 	searchContainerId="assetCategories"
 >
 	<liferay-frontend:management-bar-buttons>
-
-		<%
-		String label = null;
-
-		if (assetCategoriesDisplayContext.isNavigationCategory()) {
-			label = assetCategoriesDisplayContext.getCategoryTitle();
-		}
-		%>
-
 		<liferay-frontend:management-bar-filters>
 			<liferay-frontend:management-bar-navigation
-				label="<%= label %>"
+				label="<%= assetCategoriesDisplayContext.isNavigationCategory() ? assetCategoriesDisplayContext.getCategoryTitle() : null %>"
 			>
 
 				<%
@@ -78,7 +69,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 				viewCategoryHomeURL.setParameter("navigation", "all");
 				%>
 
-				<liferay-frontend:management-bar-filter-item active="<%= assetCategoriesDisplayContext.isNavigationHome() %>" label="all" url="<%= viewCategoryHomeURL.toString() %>" />
+				<liferay-frontend:management-bar-filter-item active="<%= assetCategoriesDisplayContext.isNavigationAll() %>" label="all" url="<%= viewCategoryHomeURL.toString() %>" />
 
 				<c:if test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">
 					<liferay-frontend:management-bar-filter-item active="<%= assetCategoriesDisplayContext.isNavigationCategory() %>" id="selectCategory" label="category" url="javascript:;" />
@@ -280,15 +271,6 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 </aui:form>
 
 <aui:script sandbox="<%= true %>" use="liferay-item-selector-dialog">
-
-	<%
-	PortletURL viewCategoryFilteredURL = renderResponse.createRenderURL();
-
-	viewCategoryFilteredURL.setParameter("mvcPath", "/view_categories.jsp");
-	viewCategoryFilteredURL.setParameter("navigation", "all");
-	viewCategoryFilteredURL.setParameter("vocabularyId", String.valueOf(assetCategoriesDisplayContext.getVocabularyId()));
-	%>
-
 	$('#<portlet:namespace />selectCategory').on(
 		'click',
 		function(event) {
@@ -303,7 +285,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 							var category = selectedItem ? selectedItem[Object.keys(selectedItem)[0]] : null;
 
 							if (category) {
-								var uri = '<%= viewCategoryFilteredURL.toString() %>';
+								var uri = '<portlet:renderURL><portlet:param name="mvcPath" value="/view_categories.jsp" /><portlet:param name="navigation" value="all" /><portlet:param name="vocabularyId" value="<%= String.valueOf(assetCategoriesDisplayContext.getVocabularyId()) %>" /></portlet:renderURL>';
 
 								uri = Liferay.Util.addParams('<portlet:namespace />categoryId=' + category.categoryId, uri);
 

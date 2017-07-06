@@ -18,8 +18,9 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
+import com.liferay.source.formatter.util.ThreadSafeSortedClassLibraryBuilder;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -28,13 +29,12 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-import com.thoughtworks.qdox.JavaDocBuilder;
-import com.thoughtworks.qdox.model.DefaultDocletTagFactory;
+import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.JavaPackage;
 import com.thoughtworks.qdox.model.JavaSource;
 import com.thoughtworks.qdox.parser.ParseException;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -63,14 +63,19 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 		}
 
 		if (detailAST.getType() == TokenTypes.LITERAL_CATCH) {
-			_checkUnprocessedException(detailAST);
+			FileText fileText = fileContents.getText();
+
+			_checkUnprocessedException(
+				detailAST, (String)fileText.getFullText());
 		}
 		else {
 			_checkUnprocessedThrownException(detailAST);
 		}
 	}
 
-	private void _checkUnprocessedException(DetailAST detailAST) {
+	private void _checkUnprocessedException(
+		DetailAST detailAST, String content) {
+
 		DetailAST parameterDefAST = detailAST.findFirstToken(
 			TokenTypes.PARAMETER_DEF);
 
@@ -91,11 +96,15 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 
 		String originalExceptionClassName = exceptionClassName;
 
-		JavaDocBuilder javaDocBuilder = _getJavaDocBuilder();
+		JavaProjectBuilder javaProjectBuilder = _getJavaProjectBuilder(content);
+
+		if (javaProjectBuilder == null) {
+			return;
+		}
 
 		if (!exceptionClassName.contains(StringPool.PERIOD)) {
 			for (String importedExceptionClassName :
-					_getImportedExceptionClassNames(javaDocBuilder)) {
+					_getImportedExceptionClassNames(javaProjectBuilder)) {
 
 				if (importedExceptionClassName.endsWith(
 						StringPool.PERIOD + exceptionClassName)) {
@@ -109,11 +118,11 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 
 		if (!exceptionClassName.contains(StringPool.PERIOD)) {
 			exceptionClassName =
-				_getPackagePath(javaDocBuilder) + StringPool.PERIOD +
+				JavaSourceUtil.getPackagePath(content) + StringPool.PERIOD +
 					exceptionClassName;
 		}
 
-		JavaClass exceptionClass = javaDocBuilder.getClassByName(
+		JavaClass exceptionClass = javaProjectBuilder.getClassByName(
 			exceptionClassName);
 
 		if (exceptionClass == null) {
@@ -225,11 +234,13 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 	}
 
 	private Set<String> _getImportedExceptionClassNames(
-		JavaDocBuilder javaDocBuilder) {
+		JavaProjectBuilder javaProjectBuilder) {
 
 		Set<String> exceptionClassNames = new HashSet<>();
 
-		JavaSource javaSource = javaDocBuilder.getSources()[0];
+		Collection<JavaSource> sources = javaProjectBuilder.getSources();
+
+		JavaSource javaSource = sources.iterator().next();
 
 		for (String importClassName : javaSource.getImports()) {
 			if (importClassName.endsWith("Exception")) {
@@ -240,22 +251,18 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 		return exceptionClassNames;
 	}
 
-	private JavaDocBuilder _getJavaDocBuilder() {
-		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(
-			new DefaultDocletTagFactory(), new ThreadSafeClassLibrary());
-
-		FileContents fileContents = getFileContents();
-
-		FileText fileText = fileContents.getText();
+	private JavaProjectBuilder _getJavaProjectBuilder(String content) {
+		JavaProjectBuilder javaProjectBuilder = new JavaProjectBuilder(
+			new ThreadSafeSortedClassLibraryBuilder());
 
 		try {
-			javaDocBuilder.addSource(
-				new UnsyncStringReader((String)fileText.getFullText()));
+			javaProjectBuilder.addSource(new UnsyncStringReader(content));
 		}
 		catch (ParseException pe) {
+			return null;
 		}
 
-		return javaDocBuilder;
+		return javaProjectBuilder;
 	}
 
 	private String _getName(DetailAST detailAST) {
@@ -274,12 +281,6 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 		}
 
 		return null;
-	}
-
-	private String _getPackagePath(JavaDocBuilder javaDocBuilder) {
-		JavaPackage javaPackage = javaDocBuilder.getPackages()[0];
-
-		return javaPackage.getName();
 	}
 
 	private static final String _MSG_UNPROCESSED_EXCEPTION =

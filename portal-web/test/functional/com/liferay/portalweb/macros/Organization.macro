@@ -404,23 +404,6 @@
 		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
-	<command name="editOrganizationCreateSite">
-		<execute macro="Organization#editOrganizationInformationCP">
-			<var name="orgName" value="${orgName}" />
-			<var name="panelHeading" value="Organization Site" />
-		</execute>
-
-		<execute function="Check" locator1="UsersAndOrganizationsEditOrganization#ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Organization#gotoOrganizationInformationCP">
-			<var name="panelHeading" value="Organization Site" />
-		</execute>
-
-		<execute function="AssertChecked" locator1="UsersAndOrganizationsEditOrganization#ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
-	</command>
-
 	<command name="deleteCP">
 		<execute macro="Organization#gotoActionsCmd">
 			<var name="orgName" value="${orgName}" />
@@ -467,6 +450,23 @@
 		<execute macro="Organization#gotoMiscellaneousCP">
 			<var name="panelHeading" value="${panelHeading}" />
 		</execute>
+	</command>
+
+	<command name="editOrganizationCreateSite">
+		<execute macro="Organization#editOrganizationInformationCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="panelHeading" value="Organization Site" />
+		</execute>
+
+		<execute function="Check" locator1="UsersAndOrganizationsEditOrganization#ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Organization#gotoOrganizationInformationCP">
+			<var name="panelHeading" value="Organization Site" />
+		</execute>
+
+		<execute function="AssertChecked" locator1="UsersAndOrganizationsEditOrganization#ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
 	</command>
 
 	<command name="editOrganizationInformationCP">

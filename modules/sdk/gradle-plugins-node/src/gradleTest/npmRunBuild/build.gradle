@@ -1,0 +1,25 @@
+import java.util.jar.JarEntry
+import java.util.jar.JarFile
+
+apply plugin: "com.liferay.node"
+apply plugin: "java"
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn jar
+
+	doLast {
+		JarFile jarFile = new JarFile(jar.archivePath)
+
+		jarFile.withCloseable {
+			JarEntry jarEntry = jarFile.getEntry("foo.txt")
+
+			InputStream inputStream = jarFile.getInputStream(jarEntry)
+
+			inputStream.withStream {
+				assert it.text == "XXXXXXXfoo"
+			}
+		}
+	}
+}
